@@ -1,3 +1,10 @@
+# Mac files
+**/.DS_Store
+
+# Android APK files
+/codebase/android/app/debug
+/codebase/android/app/release
+
 # Built application files
 *.apk
 *.aar
@@ -38,29 +45,55 @@ captures/
 
 # IntelliJ
 *.iml
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/gradle.xml
-.idea/assetWizardSettings.xml
-.idea/dictionaries
-.idea/libraries
+
+# Contains information about your workspace on Android Studio
+**/.idea/workspace.xml
+**/.idea/tasks.xml
+
+# The local path to your gradle version, and also contains the path to your module
+**/.idea/gradle.xml
+
+# Last icon added with the Android Studio Wizard
+**/.idea/assetWizardSettings.xml
+
+# Uncomment if dictionaries are not required in vcs
+# **/.idea/dictionaries
+
+# Indicates where the jar files of your libraries are stored
+**/.idea/libraries
+
+# compiler configuration
+**/.idea/compiler.xml
+
+**/.idea/.name
+**/.idea/misc.xml
+
+# Stores the run configurations you may add by clicking Edit Configurations.
+#.idea/runConfigurations.xml
+
+/out
+**/shelf/
+
 # Android Studio 3 in .gitignore file.
-.idea/caches
-.idea/modules.xml
+**/.idea/caches
+
+# path to your modules .iml file
+**/.idea/modules.xml
+
 # Comment next line if keeping position of elements in Navigation Editor is relevant for you
-.idea/navEditor.xml
+**/.idea/navEditor.xml
 
 # Keystore files
-# Uncomment the following lines if you do not want to check your keystore files in.
-#*.jks
-#*.keystore
+# Comment the following lines if you do  want to check your keystore files in.
+*.jks
+*.keystore
 
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
 .cxx/
 
 # Google Services (e.g. APIs or Firebase)
-# google-services.json
+google-services.json
 
 # Freeline
 freeline.py
