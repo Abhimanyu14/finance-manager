@@ -1,2 +1,2 @@
-# finance-manager
+# Finance Manager
 A simple finance manager app
