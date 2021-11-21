@@ -1,18 +1,257 @@
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
+
     ext {
-        compose_version = '1.0.0'
+
+        // App version code
+        appVersionCode = 3
+
+        // App version name
+        appVersionName = "1.0.0.2"
+
+        // Gradle build tools
+        gradleBuildToolsVersion = "7.0.3"
+
+        // Kotlin version
+        kotlinVersion = "1.5.31"
+
+        // Google services gradle plugin
+        googleServicesVersion = "4.3.5"
+
+        // Navigation
+        navigationVersion = "2.4.0-beta01"
+
+        // Navigation gradle plugin
+        navigationPluginVersion = "2.4.0-alpha08"
+
+        // Crashlytics gradle plugin
+        crashlyticsPluginVersion = "2.5.2"
+
+        // Hilt
+        hiltVersion = "2.35"
+
+        // Hilt plugin
+        hiltPluginVersion = "2.29.1-alpha"
+
+        // Open source software licenses plugin
+        ossPluginVersion = "0.10.4"
+
+        // Compile SDK version
+        compileSdkVersion = 31
+
+        // Build tools version
+        buildToolsVersion = "30.0.2"
+
+        // Minimum SDK version
+        minSdkVersion = 21
+
+        // Target SDK version
+        targetSdkVersion = 31
+
+        // Kotlin data binding compiler
+        kotlinCompilerVersion = "3.1.4"
+
+        // Kotlin reflection
+        kotlinReflectionVersion = "1.5.31"
+
+        // Kotlin androidx core
+        androidXCoreVersion = "1.7.0"
+
+        // Androidx legacy support
+        androidxLegacySupportVersion = "1.0.0"
+
+        // Androidx fragment
+        androidxFragmentVersion = "1.3.6"
+
+        // Androidx activity
+        androidxActivityVersion = "1.3.1"
+
+        // Lifecycle components
+        lifecycleViewModelVersion = "2.4.0"
+
+        // Lifecycle live data
+        lifecycleLiveDataVersion = "2.4.0"
+
+        // Lifecycle components
+        lifecycleExtensionsVersion = "2.2.0"
+
+        // Lifecycle runtime
+        lifecycleRuntimeVersion = "2.4.0"
+
+        // Kotlin coroutines
+        kotlinCoroutinesVersion = "1.5.1"
+
+        // Kotlin coroutines play services
+        kotlinCoroutinesPlayServicesVersion = "1.1.1"
+
+        // Appcompat
+        appCompatVersion = "1.3.1"
+
+        // Constraint layout
+        constraintLayoutVersion = "2.1.1"
+
+        // Recycler view
+        recyclerViewVersion = "1.2.1"
+
+        // Jetpack compose
+        jetpackComposeVersion = "1.1.0-beta03"
+
+        // Jetpack compose material 3
+        jetpackComposeMaterial3Version = "1.0.0-alpha01"
+
+        // Jetpack compose material design adapter
+        jetpackComposeMaterialDesignAdapterVersion = "1.1.0"
+
+        // Jetpack compose constraint layout
+        jetpackComposeConstraintLayoutVersion = "1.0.0-rc01"
+
+        // Jetpack compose integration with activities
+        jetpackComposeActivityIntegrationVersion = "1.4.0"
+
+        // Jetpack compose integration with view models
+        jetpackComposeViewmodelIntegrationVersion = "2.4.0"
+
+        // Jetpack compose navigation
+        jetpackComposeNavigationVersion = "2.4.0-beta01"
+
+        // Accompanist
+        accompanistVersion = "0.16.0"
+
+        // Hilt navigation compose
+        hiltNavigationComposeVersion = "1.0.0-alpha03"
+
+        // Room
+        roomVersion = "2.4.0-beta01"
+
+        // Camera X
+        cameraXVersion = "1.1.0-alpha10"
+
+        // Camera X view
+        cameraXViewVersion = "1.0.0-alpha30"
+
+        // Open source software licenses
+        openSourceSoftwareLicensesVersion = "17.0.0"
+
+        // Gson
+        gsonVersion = "2.8.8"
+
+        // Material design
+        materialDesignVersion = "1.4.0"
+
+        // Paging
+        pagingVersion = "1.0.1"
+
+        // Dagger
+        daggerVersion = "2.29.1"
+
+        // Dagger support
+        daggerSupportVersion = "2.24"
+
+        // Dagger android
+        daggerAndroidVersion = "2.35.1"
+
+        // Hilt lifecycle viewmodel
+        hiltLifecycleViewmodelVersion = "1.0.0-alpha03"
+
+        // Hilt compiler
+        hiltCompilerVersion = "1.0.0"
+
+        // Glide
+        glideVersion = "4.11.0"
+
+        // Firebase BoM
+        firebaseBomVersion = "25.12.0"
+
+        // Firebase analytics
+        firebaseAnalyticsVersion = "20.0.0"
+
+        // Firebase crashlytics
+        firebaseCrashlyticsVersion = "18.2.4"
+
+        // Google play services vision
+        googlePlayServicesVision = "20.1.3"
+
+        // ML Kit Barcode Scanning
+        mlKitBarcodeScanningVersion = "16.2.1"
+
+        // Firebase ML vision
+        firebaseMlVisionVersion = "24.1.0"
+
+        // Firebase ML vision barcode model
+        firebaseMlVisionBarcodeModelVersion = "16.1.2"
+
+        // Firebase remote config
+        firebaseRemoteConfigVersion = "21.0.1"
+
+        // Firebase dynamic links
+        firebaseDynamicLinksVersion = "19.1.0"
+
+        // Zxing
+        zxingVersion = "3.4.0"
+
+        // Leak canary
+        leakCanaryVersion = "2.4"
+
+        // Play core
+        playCoreVersion = "1.8.1"
+
+        // AndroidX core testing
+        androidXCoreTestingVersion = "2.1.0"
+
+        // JUnit testing
+        junitVersion = "4.13.2"
+
+        // AndroidX JUnit extension
+        androidXJUnitExtensionVersion = "1.1.3"
+
+        // AndroidX test core
+        androidXTestCoreVersion = "1.4.0"
+
+        // Robolectric
+        robolectricVersion = "4.4-alpha-2"
+
+        // Hamcrest
+        hamcrestVersion = "1.3"
+
+        // Nhaarman Mockito
+        nhaarmanMockitoVersion = "1.5.0"
+
+        // Nhaarman Mockito
+        nhaarmanMockitoVersion2 = "2.0.0-RC3"
+
+        // Fragment testing version
+        fragmentTestingVersion = "1.3.6"
+
+        // AndroidX core testing
+        androidXCoreTestingVersion = "2.1.0"
+
+        // Espresso
+        espressoVersion = "3.4.0"
+
+        // Test runner
+        testRunnerVersion = "1.4.0"
+
+        // Test rules
+        testRulesVersion = "1.4.0"
+
+        // Mockito
+        mockitoVersion = "2.8.9"
+
+        // Dex maker
+        dexMakerVersion = "2.12.1"
     }
+
     repositories {
         google()
         mavenCentral()
     }
-    dependencies {
-        classpath "com.android.tools.build:gradle:7.0.0"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.10"
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+    dependencies {
+
+        // Build tools
+        classpath "com.android.tools.build:gradle:$gradleBuildToolsVersion"
+
+        // Kotlin gradle plugin
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
 }
 
