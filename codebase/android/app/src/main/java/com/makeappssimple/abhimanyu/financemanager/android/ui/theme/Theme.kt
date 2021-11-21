@@ -1,36 +1,112 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 
-private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
+private val Material2DarkColorPalette = darkColors(
+    primary = Primary,
+    primaryVariant = PrimaryVariant,
+    onPrimary = OnPrimary,
+    secondary = Secondary,
+    secondaryVariant = SecondaryVariant,
+    onSecondary = OnSecondary,
 )
 
-private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
+private val Material2LightColorPalette = lightColors(
+    primary = Primary,
+    primaryVariant = PrimaryVariant,
+    onPrimary = OnPrimary,
+    secondary = Secondary,
+    secondaryVariant = SecondaryVariant,
+    onSecondary = OnSecondary,
+)
 
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
+private val LightColorPalette = lightColorScheme(
+    primary = Primary,
+    onPrimary = OnPrimary,
+    primaryContainer = PrimaryContainer,
+    onPrimaryContainer = OnPrimaryContainer,
+    inversePrimary = InversePrimary,
+    secondary = Secondary,
+    onSecondary = OnSecondary,
+    secondaryContainer = SecondaryContainer,
+    onSecondaryContainer = OnSecondaryContainer,
+    tertiary = Tertiary,
+    onTertiary = OnTertiary,
+    tertiaryContainer = TertiaryContainer,
+    onTertiaryContainer = OnTertiaryContainer,
+    background = Background,
+    onBackground = OnBackground,
+    surface = Surface,
+    onSurface = OnSurface,
+    surfaceVariant = SurfaceVariant,
+    onSurfaceVariant = OnSurfaceVariant,
+    inverseSurface = InverseSurface,
+    inverseOnSurface = InverseOnSurface,
+    error = Error,
+    onError = OnError,
+    errorContainer = ErrorContainer,
+    onErrorContainer = OnErrorContainer,
+    outline = Outline,
+)
+
+private val DarkColorPalette = darkColorScheme(
+    primary = Primary,
+    onPrimary = OnPrimary,
+    primaryContainer = PrimaryContainer,
+    onPrimaryContainer = OnPrimaryContainer,
+    inversePrimary = InversePrimary,
+    secondary = Secondary,
+    onSecondary = OnSecondary,
+    secondaryContainer = SecondaryContainer,
+    onSecondaryContainer = OnSecondaryContainer,
+    tertiary = Tertiary,
+    onTertiary = OnTertiary,
+    tertiaryContainer = TertiaryContainer,
+    onTertiaryContainer = OnTertiaryContainer,
+    background = Background,
+    onBackground = OnBackground,
+    surface = Surface,
+    onSurface = OnSurface,
+    surfaceVariant = SurfaceVariant,
+    onSurfaceVariant = OnSurfaceVariant,
+    inverseSurface = InverseSurface,
+    inverseOnSurface = InverseOnSurface,
+    error = Error,
+    onError = OnError,
+    errorContainer = ErrorContainer,
+    onErrorContainer = OnErrorContainer,
+    outline = Outline,
 )
 
 @Composable
-fun FinanceManagerTheme(
+fun Material2AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
+) {
+    val colors = if (darkTheme) {
+        Material2DarkColorPalette
+    } else {
+        Material2LightColorPalette
+    }
+
+    androidx.compose.material.MaterialTheme(
+        colors = colors,
+        typography = Material2Typography,
+        shapes = Shapes,
+        content = content
+    )
+}
+
+@Composable
+fun Material3AppTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit,
 ) {
     val colors = if (darkTheme) {
         DarkColorPalette
@@ -39,9 +115,19 @@ fun FinanceManagerTheme(
     }
 
     MaterialTheme(
-        colors = colors,
+        colorScheme = colors,
         typography = Typography,
-        shapes = Shapes,
         content = content
+    )
+}
+
+@Composable
+fun MyAppTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit,
+) {
+    Material2AppTheme(
+        darkTheme = darkTheme,
+        content = content,
     )
 }
