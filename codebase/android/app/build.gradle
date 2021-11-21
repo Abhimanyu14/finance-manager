@@ -88,6 +88,9 @@ dependencies {
     // Jetpack compose integration with activities
     implementation "androidx.activity:activity-compose:$rootProject.jetpackComposeActivityIntegrationVersion"
 
+    // Jetpack compose integration with view models
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$rootProject.jetpackComposeViewmodelIntegrationVersion"
+
     // Hilt
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
     kapt "com.google.dagger:hilt-compiler:$rootProject.hiltVersion"
