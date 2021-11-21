@@ -27,7 +27,7 @@ buildscript {
         crashlyticsPluginVersion = "2.5.2"
 
         // Hilt
-        hiltVersion = "2.35"
+        hiltVersion = "2.39"
 
         // Hilt plugin
         hiltPluginVersion = "2.29.1-alpha"
@@ -252,6 +252,9 @@ buildscript {
 
         // Kotlin gradle plugin
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+
+        // Hilt
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltPluginVersion"
     }
 }
 
