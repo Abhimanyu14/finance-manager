@@ -113,11 +113,11 @@ buildscript {
         // Jetpack compose navigation
         jetpackComposeNavigationVersion = "2.4.0-beta02"
 
+        // Jetpack compose navigation with hilt
+        hiltNavigationComposeVersion = "1.0.0-beta01"
+
         // Accompanist
         accompanistVersion = "0.16.0"
-
-        // Hilt navigation compose
-        hiltNavigationComposeVersion = "1.0.0-alpha03"
 
         // Room
         roomVersion = "2.4.0-beta01"
