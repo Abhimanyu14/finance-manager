@@ -111,7 +111,7 @@ buildscript {
         jetpackComposeViewmodelIntegrationVersion = "2.4.0"
 
         // Jetpack compose navigation
-        jetpackComposeNavigationVersion = "2.4.0-beta01"
+        jetpackComposeNavigationVersion = "2.4.0-beta02"
 
         // Accompanist
         accompanistVersion = "0.16.0"
