@@ -9,6 +9,8 @@ import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
 
 class AddTransactionPage extends StatefulWidget {
+  const AddTransactionPage({Key key}) : super(key: key);
+
   @override
   _AddTransactionPageState createState() => _AddTransactionPageState();
 }
@@ -21,7 +23,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
   final TextEditingController _dateTextEditingController =
       TextEditingController();
 
-  Transaction _transaction = Transaction();
+  final Transaction _transaction = Transaction();
   Transactions transactions;
 
   @override
@@ -40,7 +42,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
     );
     return Scaffold(
       appBar: AppBar(
-        title: const Text(ADD_TRANSACTION_PAGE_APP_BAR_TITLE),
+        title: const Text(addTransactionPageAppBarTitle),
         brightness: Brightness.dark,
       ),
       body: SafeArea(
@@ -52,19 +54,17 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 8.0,
                   ),
                   ...[
                     TextFormField(
                       decoration: buildTextFormFieldInputDecoration(
-                        labelText:
-                            ADD_TRANSACTION_PAGE_TEXT_FORM_FIELD_AMOUNT_LABEL,
-                        hintText:
-                            ADD_TRANSACTION_PAGE_TEXT_FORM_FIELD_AMOUNT_HINT,
+                        labelText: addTransactionPageTextFormFieldAmountLabel,
+                        hintText: addTransactionPageTextFormFieldAmountHint,
                         prefixIcon: Icons.attach_money_rounded,
                       ),
-                      keyboardType: TextInputType.numberWithOptions(
+                      keyboardType: const TextInputType.numberWithOptions(
                         signed: false,
                         decimal: true,
                       ),
@@ -76,7 +76,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                       },
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return ADD_TRANSACTION_PAGE_TEXT_FORM_FIELD_AMOUNT_ERROR;
+                          return addTransactionPageTextFormFieldAmountError;
                         }
                         return null;
                       },
@@ -89,10 +89,8 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                     ),
                     TextFormField(
                       decoration: buildTextFormFieldInputDecoration(
-                        labelText:
-                            ADD_TRANSACTION_PAGE_TEXT_FORM_FIELD_TITLE_LABEL,
-                        hintText:
-                            ADD_TRANSACTION_PAGE_TEXT_FORM_FIELD_TITLE_HINT,
+                        labelText: addTransactionPageTextFormFieldTitleLabel,
+                        hintText: addTransactionPageTextFormFieldTitleHint,
                         prefixIcon: Icons.title_rounded,
                       ),
                       keyboardType: TextInputType.text,
@@ -108,9 +106,9 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                     TextFormField(
                       decoration: buildTextFormFieldInputDecoration(
                         labelText:
-                            ADD_TRANSACTION_PAGE_TEXT_FORM_FIELD_DESCRIPTION_LABEL,
+                            addTransactionPageTextFormFieldDescriptionLabel,
                         hintText:
-                            ADD_TRANSACTION_PAGE_TEXT_FORM_FIELD_DESCRIPTION_HINT,
+                            addTransactionPageTextFormFieldDescriptionHint,
                         prefixIcon: Icons.description_rounded,
                       ),
                       keyboardType: TextInputType.text,
@@ -128,10 +126,8 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                     TextFormField(
                       controller: _categoryTextEditingController,
                       decoration: buildTextFormFieldInputDecoration(
-                        labelText:
-                            ADD_TRANSACTION_PAGE_TEXT_FORM_FIELD_CATEGORY_LABEL,
-                        hintText:
-                            ADD_TRANSACTION_PAGE_TEXT_FORM_FIELD_CATEGORY_HINT,
+                        labelText: addTransactionPageTextFormFieldCategoryLabel,
+                        hintText: addTransactionPageTextFormFieldCategoryHint,
                         prefixIcon: Icons.category_rounded,
                       ),
                       readOnly: true,
@@ -144,9 +140,9 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                       controller: _dateTextEditingController,
                       decoration: buildTextFormFieldInputDecoration(
                         labelText:
-                            ADD_TRANSACTION_PAGE_TEXT_FORM_FIELD_TRANSACTION_DATE_LABEL,
+                            addTransactionPageTextFormFieldTransactionDateLabel,
                         hintText:
-                            ADD_TRANSACTION_PAGE_TEXT_FORM_FIELD_TRANSACTION_DATE_HINT,
+                            addTransactionPageTextFormFieldTransactionDateHint,
                         prefixIcon: Icons.date_range_rounded,
                       ),
                       readOnly: true,
@@ -175,9 +171,8 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
         child: const Icon(
           Icons.done_rounded,
         ),
-        tooltip:
-            ADD_TRANSACTION_PAGE_FLOATING_ACTION_BUTTON_TOOLTIP_SAVE_TRANSACTION,
-        backgroundColor: PRIMARY_COLOR,
+        tooltip: addTransactionPageFloatingActionButtonTooltipSaveTransaction,
+        backgroundColor: primaryColor,
         onPressed: () {
           handleFormSubmission(context);
         },
@@ -213,7 +208,7 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
             maxHeight: MediaQuery.of(context).size.height * 0.8,
           ),
           child: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(12.0),
                 topRight: Radius.circular(12.0),
@@ -227,10 +222,10 @@ class _AddTransactionPageState extends State<AddTransactionPage> {
                   children: [
                     TextButton(
                       onPressed: () => Navigator.pop(context),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: const Text(
-                          ADD_TRANSACTION_PAGE_CATEGORY_SELECTION_BOTTOM_SHEET_SAVE_BUTTON,
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Text(
+                          addTransactionPageCategorySelectionBottomSheetSaveButton,
                         ),
                       ),
                     ),

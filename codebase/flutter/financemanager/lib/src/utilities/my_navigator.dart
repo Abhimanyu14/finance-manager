@@ -5,7 +5,7 @@ void navigateFromHomePageToAddTransactionPage(BuildContext context) {
   Navigator.push(
     context,
     MaterialPageRoute(
-      builder: (context) => AddTransactionPage(),
+      builder: (context) => const AddTransactionPage(),
     ),
   );
 }

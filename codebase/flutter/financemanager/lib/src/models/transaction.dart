@@ -15,16 +15,16 @@ class Transaction {
     creationTimestamp,
     transactionTimestamp,
   }) {
-    this._amount = amount ?? defaultAmount;
-    this._category = category ?? defaultCategory;
-    this._id = id ?? 0;
-    this._description = description;
-    this._title = title;
-    this._creationTimestamp = creationTimestamp ??
+    _amount = amount ?? defaultAmount;
+    _category = category ?? defaultCategory;
+    _id = id ?? 0;
+    _description = description;
+    _title = title;
+    _creationTimestamp = creationTimestamp ??
         Timestamp.fromDateTime(
           dateTime: DateTime.now(),
         );
-    this._transactionTimestamp = transactionTimestamp ??
+    _transactionTimestamp = transactionTimestamp ??
         Timestamp.fromDateTime(
           dateTime: DateTime.now(),
         );

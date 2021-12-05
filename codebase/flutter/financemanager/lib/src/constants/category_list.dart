@@ -17,14 +17,14 @@ Category defaultCategory = Category(
   // subCategories: [
   //   defaultSubCategory,
   // ],
-  description: DEFAULT_CATEGORY_DESCRIPTION,
-  title: DEFAULT_CATEGORY_TITLE,
+  description: defaultCategoryDescription,
+  title: defaultCategoryTitle,
 );
 
 SubCategory defaultSubCategory = SubCategory(
   id: 1,
-  title: DEFAULT_SUB_CATEGORY_TITLE,
-  description: DEFAULT_SUB_CATEGORY_DESCRIPTION,
+  title: defaultSubCategoryTitle,
+  description: defaultSubCategoryDescription,
   // ignore: todo
   // TODO: Link sub category to main category
   // mainCategories: [

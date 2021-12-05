@@ -1,19 +1,19 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-enum Unit { INR, USD }
+enum Unit { inr, usd }
 
 class Amount {
   Amount({
     value = 0.0,
     id = 0,
-    unit = Unit.INR,
+    unit = Unit.inr,
   }) {
     assert(value >= 0.0);
     assert(id >= 0);
-    this._value = value;
-    this._id = id;
-    this._unit = unit;
+    _value = value;
+    _id = id;
+    _unit = unit;
   }
 
   double _value;

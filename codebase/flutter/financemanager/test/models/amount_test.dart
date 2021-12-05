@@ -6,7 +6,7 @@ void main() {
     test('A new amount object is created with given values and default values', () {
       double value = 45.00;
       int id = 0;
-      Unit defaultUnit = Unit.INR;
+      Unit defaultUnit = Unit.inr;
       Amount amount = Amount(
         value: value,
         id: id,
@@ -20,7 +20,7 @@ void main() {
     test('A new amount object is created with given values', () {
       double value = 45.00;
       int id = 0;
-      Unit unit = Unit.USD;
+      Unit unit = Unit.usd;
       Amount amount = Amount(
         value: value,
         id: id,
@@ -64,14 +64,14 @@ void main() {
     test('Update amount unit', () {
       double value = 45.00;
       int id = 0;
-      Unit defaultUnit = Unit.INR;
+      Unit defaultUnit = Unit.inr;
       Amount amount = Amount(
         value: value,
         id: id,
       );
       expect(amount.unit, defaultUnit);
 
-      Unit updatedUnit = Unit.USD;
+      Unit updatedUnit = Unit.usd;
       bool result = amount.updateUnit(updatedUnit: updatedUnit);
       expect(result, true);
       expect(amount.unit, updatedUnit);

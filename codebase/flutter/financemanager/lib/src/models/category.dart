@@ -14,11 +14,11 @@ class Category {
     description,
     @required title,
   }) {
-    this._id = id;
+    _id = id;
     // TODO: Handle sub categories later
     // this._subCategories = subCategories;
-    this._description = description;
-    this._title = title;
+    _description = description;
+    _title = title;
   }
 
   int _id;

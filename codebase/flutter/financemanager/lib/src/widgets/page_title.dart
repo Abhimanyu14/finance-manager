@@ -18,14 +18,14 @@ class PageTitle extends StatelessWidget {
       child: Text(
         title,
         // ignore: todo
-        // TODO: TO resolve Google font depedencies
+        // TODO: TO resolve Google font dependencies
         // style: GoogleFonts.lato(
         //   textStyle: TextStyle(
         //     fontSize: 32.0,
         //   ),
         //   fontStyle: FontStyle.normal,
         // ),
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 32.0,
         ),
       ),

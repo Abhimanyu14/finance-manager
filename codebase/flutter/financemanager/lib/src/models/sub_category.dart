@@ -9,10 +9,10 @@ class SubCategory {
     description,
     @required title,
   }) {
-    this._parentCategory = parentCategory;
-    this._id = id;
-    this._description = description;
-    this._title = title;
+    _parentCategory = parentCategory;
+    _id = id;
+    _description = description;
+    _title = title;
   }
 
   Category _parentCategory;

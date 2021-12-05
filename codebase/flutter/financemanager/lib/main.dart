@@ -14,10 +14,10 @@ class MyApp extends StatelessWidget {
       create: (context) => Transactions(),
       child: MaterialApp(
         home: MyHomePage(),
-        title: APP_TITLE,
+        title: appTitle,
         theme: ThemeData(
           visualDensity: VisualDensity.adaptivePlatformDensity,
-          primaryColor: PRIMARY_COLOR,
+          primaryColor: primaryColor,
         ),
       ),
     );

@@ -11,10 +11,12 @@ import 'package:provider/provider.dart';
 // TODO: Handle status bar icon color
 // import 'package:flutter/services.dart';
 // ignore: todo
-// TODO: TO resolve Google font depedencies
+// TODO: TO resolve Google font dependencies
 // import 'package:google_fonts/google_fonts.dart';
 
 class MyHomePage extends StatelessWidget {
+  const MyHomePage({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     Transactions transactions = Provider.of<Transactions>(context);
@@ -32,9 +34,9 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Column(
-          children: [
+          children: const [
             PageTitle(
-              title: MY_HOME_PAGE_PAGE_TITLE,
+              title: myHomePagePageTitle,
             ),
           ],
         ),
@@ -43,16 +45,16 @@ class MyHomePage extends StatelessWidget {
         child: const Icon(
           Icons.add_rounded,
         ),
-        tooltip: MY_HOME_PAGE_FLOATING_ACTION_BUTTON_TOOLTIP_ADD_TRANSACTION,
-        backgroundColor: PRIMARY_COLOR,
+        tooltip: myHomePageFloatingActionButtonTooltipAddTransaction,
+        backgroundColor: primaryColor,
         onPressed: () {
           handleAddTransactionPageNavigation(context);
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
-        color: PRIMARY_COLOR,
-        shape: CircularNotchedRectangle(),
+        color: primaryColor,
+        shape: const CircularNotchedRectangle(),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           mainAxisSize: MainAxisSize.max,
@@ -61,12 +63,12 @@ class MyHomePage extends StatelessWidget {
             BottomAppBarButton(
               icon: Icons.menu_rounded,
               onPressed: () {},
-              tooltip: MY_HOME_PAGE_BOTTOM_APP_BAR_BUTTON_TOOLTIP_MENU,
+              tooltip: myHomePageBottomAppBarButtonTooltipMenu,
             ),
             BottomAppBarButton(
               icon: Icons.more_vert_rounded,
               onPressed: () {},
-              tooltip: MY_HOME_PAGE_BOTTOM_APP_BAR_BUTTON_TOOLTIP_MORE_OPTIONS,
+              tooltip: myHomePageBottomAppBarButtonTooltipMoreOptions,
             ),
           ],
         ),

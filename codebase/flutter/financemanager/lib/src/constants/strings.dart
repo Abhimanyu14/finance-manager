@@ -1,36 +1,33 @@
 // Main
-const APP_TITLE = 'Expense Tracker';
+const appTitle = 'Expense Tracker';
 
 // HomePage
-const MY_HOME_PAGE_BOTTOM_APP_BAR_BUTTON_TOOLTIP_MENU = 'Menu';
-const MY_HOME_PAGE_BOTTOM_APP_BAR_BUTTON_TOOLTIP_MORE_OPTIONS = 'More options';
-const MY_HOME_PAGE_FLOATING_ACTION_BUTTON_TOOLTIP_ADD_TRANSACTION =
-    'Add Transaction';
-const MY_HOME_PAGE_PAGE_TITLE = 'My Transactions';
+const myHomePageBottomAppBarButtonTooltipMenu = 'Menu';
+const myHomePageBottomAppBarButtonTooltipMoreOptions = 'More options';
+const myHomePageFloatingActionButtonTooltipAddTransaction = 'Add Transaction';
+const myHomePagePageTitle = 'My Transactions';
 
 // AddTransactionPage
-const ADD_TRANSACTION_PAGE_APP_BAR_TITLE = 'Enter Transaction Details';
-const ADD_TRANSACTION_PAGE_TEXT_FORM_FIELD_AMOUNT_LABEL = 'Amount*';
-const ADD_TRANSACTION_PAGE_TEXT_FORM_FIELD_AMOUNT_HINT = 'Enter the amount...';
-const ADD_TRANSACTION_PAGE_TEXT_FORM_FIELD_AMOUNT_ERROR = 'Amount required';
-const ADD_TRANSACTION_PAGE_TEXT_FORM_FIELD_TITLE_LABEL = 'Title';
-const ADD_TRANSACTION_PAGE_TEXT_FORM_FIELD_TITLE_HINT = 'Enter a title...';
-const ADD_TRANSACTION_PAGE_TEXT_FORM_FIELD_DESCRIPTION_LABEL = 'Description';
-const ADD_TRANSACTION_PAGE_TEXT_FORM_FIELD_DESCRIPTION_HINT =
+const addTransactionPageAppBarTitle = 'Enter Transaction Details';
+const addTransactionPageTextFormFieldAmountLabel = 'Amount*';
+const addTransactionPageTextFormFieldAmountHint = 'Enter the amount...';
+const addTransactionPageTextFormFieldAmountError = 'Amount required';
+const addTransactionPageTextFormFieldTitleLabel = 'Title';
+const addTransactionPageTextFormFieldTitleHint = 'Enter a title...';
+const addTransactionPageTextFormFieldDescriptionLabel = 'Description';
+const addTransactionPageTextFormFieldDescriptionHint =
     'Enter the description...';
-const ADD_TRANSACTION_PAGE_TEXT_FORM_FIELD_CATEGORY_LABEL = 'Category';
-const ADD_TRANSACTION_PAGE_TEXT_FORM_FIELD_CATEGORY_HINT =
-    'Select the category...';
-const ADD_TRANSACTION_PAGE_TEXT_FORM_FIELD_TRANSACTION_DATE_LABEL =
-    'Transaction date';
-const ADD_TRANSACTION_PAGE_TEXT_FORM_FIELD_TRANSACTION_DATE_HINT =
+const addTransactionPageTextFormFieldCategoryLabel = 'Category';
+const addTransactionPageTextFormFieldCategoryHint = 'Select the category...';
+const addTransactionPageTextFormFieldTransactionDateLabel = 'Transaction date';
+const addTransactionPageTextFormFieldTransactionDateHint =
     'Select the transaction date...';
-const ADD_TRANSACTION_PAGE_FLOATING_ACTION_BUTTON_TOOLTIP_SAVE_TRANSACTION =
+const addTransactionPageFloatingActionButtonTooltipSaveTransaction =
     'Save Transaction';
-const ADD_TRANSACTION_PAGE_CATEGORY_SELECTION_BOTTOM_SHEET_SAVE_BUTTON = 'Save';
+const addTransactionPageCategorySelectionBottomSheetSaveButton = 'Save';
 
 // CategoryList
-const DEFAULT_CATEGORY_TITLE = 'Default';
-const DEFAULT_CATEGORY_DESCRIPTION = 'The default category';
-const DEFAULT_SUB_CATEGORY_TITLE = 'Default';
-const DEFAULT_SUB_CATEGORY_DESCRIPTION = 'The default sub category';
+const defaultCategoryTitle = 'Default';
+const defaultCategoryDescription = 'The default category';
+const defaultSubCategoryTitle = 'Default';
+const defaultSubCategoryDescription = 'The default sub category';

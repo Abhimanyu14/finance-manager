@@ -6,23 +6,23 @@ class Timestamp {
     @required date,
     @required time,
   }) {
-    RegExp dateRegExp = new RegExp(
+    RegExp dateRegExp = RegExp(
       r"^\d{2}-\d{2}-\d{4}$",
     );
     assert(dateRegExp.hasMatch(date));
-    RegExp timeRegExp = new RegExp(
+    RegExp timeRegExp = RegExp(
       r"^\d{2}:\d{2}:\d{2}$",
     );
     assert(dateRegExp.hasMatch(date));
     assert(timeRegExp.hasMatch(time));
-    this._date = date;
-    this._time = time;
+    _date = date;
+    _time = time;
   }
 
   Timestamp.fromDateTime({DateTime dateTime}) {
-    this._date =
+    _date =
         '${dateTime.day.toString().padLeft(2, '0')}-${dateTime.month.toString().padLeft(2, '0')}-${dateTime.year.toString().padLeft(2, '4')}';
-    this._time =
+    _time =
         '${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}:${dateTime.second.toString().padLeft(2, '0')}';
   }
 
