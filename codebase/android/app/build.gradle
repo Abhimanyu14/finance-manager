@@ -46,6 +46,15 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
         useIR = true
+        freeCompilerArgs += "-Xopt-in=kotlin.RequiresOptIn"
+        freeCompilerArgs += "-Xopt-in=kotlin.time.ExperimentalTime"
+        freeCompilerArgs += "-Xopt-in=kotlin.contracts.ExperimentalContracts"
+        freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.ObsoleteCoroutinesApi"
+        freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+        freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.InternalCoroutinesApi"
+        freeCompilerArgs += "-Xopt-in=kotlinx.coroutines.FlowPreview"
+        freeCompilerArgs += "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi"
+        freeCompilerArgs += "-Xopt-in=androidx.compose.animation.core.InternalAnimationApi"
     }
 
     buildFeatures {
@@ -95,7 +104,10 @@ dependencies {
     implementation "androidx.navigation:navigation-compose:$rootProject.jetpackComposeNavigationVersion"
 
     // Jetpack compose navigation with hilt
-    implementation "androidx.hilt:hilt-navigation-compose:$rootProject.hiltNavigationComposeVersion"
+    implementation "androidx.hilt:hilt-navigation-compose:$rootProject.jetpackComposeNavigationHiltVersion"
+
+    // Accompanist
+    implementation "com.google.accompanist:accompanist-insets:$rootProject.accompanistVersion"
 
     // Hilt
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"

@@ -12,7 +12,7 @@ buildscript {
         gradleBuildToolsVersion = "7.0.3"
 
         // Kotlin version
-        kotlinVersion = "1.5.31"
+        kotlinVersion = "1.6.0"
 
         // Google services gradle plugin
         googleServicesVersion = "4.3.5"
@@ -93,13 +93,13 @@ buildscript {
         recyclerViewVersion = "1.2.1"
 
         // Jetpack compose
-        jetpackComposeVersion = "1.1.0-beta03"
+        jetpackComposeVersion = "1.1.0-beta04"
 
         // Jetpack compose material 3
-        jetpackComposeMaterial3Version = "1.0.0-alpha01"
+        jetpackComposeMaterial3Version = "1.0.0-alpha02"
 
         // Jetpack compose material design adapter
-        jetpackComposeMaterialDesignAdapterVersion = "1.1.0"
+        jetpackComposeMaterialDesignAdapterVersion = "1.1.1"
 
         // Jetpack compose constraint layout
         jetpackComposeConstraintLayoutVersion = "1.0.0-rc01"
@@ -114,10 +114,10 @@ buildscript {
         jetpackComposeNavigationVersion = "2.4.0-beta02"
 
         // Jetpack compose navigation with hilt
-        hiltNavigationComposeVersion = "1.0.0-beta01"
+        jetpackComposeNavigationHiltVersion = "1.0.0-beta01"
 
         // Accompanist
-        accompanistVersion = "0.16.0"
+        accompanistVersion = "0.21.2-beta"
 
         // Room
         roomVersion = "2.4.0-beta01"

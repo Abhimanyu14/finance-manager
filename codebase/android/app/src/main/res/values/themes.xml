@@ -14,7 +14,10 @@
         <item name="colorOnSecondary">@color/colorOnSecondary</item>
 
         <!-- Status bar color -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/status_bar</item>
+        <item name="android:statusBarColor">@color/status_bar</item>
+
+        <!-- Navigation bar color -->
+        <item name="android:navigationBarColor">@color/navigation_bar</item>
 
     </style>
 

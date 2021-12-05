@@ -15,6 +15,12 @@ private val Material2DarkColorPalette = darkColors(
     secondary = Secondary,
     secondaryVariant = SecondaryVariant,
     onSecondary = OnSecondary,
+    background = Background,
+    surface = Surface,
+    error = Error,
+    onBackground = OnBackground,
+    onSurface = OnSurface,
+    onError = OnError,
 )
 
 private val Material2LightColorPalette = lightColors(
@@ -24,6 +30,12 @@ private val Material2LightColorPalette = lightColors(
     secondary = Secondary,
     secondaryVariant = SecondaryVariant,
     onSecondary = OnSecondary,
+    background = Background,
+    surface = Surface,
+    error = Error,
+    onBackground = OnBackground,
+    onSurface = OnSurface,
+    onError = OnError,
 )
 
 private val LightColorPalette = lightColorScheme(
@@ -126,7 +138,7 @@ fun MyAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
-    Material2AppTheme(
+    Material3AppTheme(
         darkTheme = darkTheme,
         content = content,
     )
