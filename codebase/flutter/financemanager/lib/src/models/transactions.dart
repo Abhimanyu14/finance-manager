@@ -1,14 +1,14 @@
-import 'package:financemanager/src/models/transaction.dart';
+import 'package:financemanager/src/models/my_transaction/my_transaction.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// The [Transactions] class holds a list of transactions saved by the user.
 class Transactions extends ChangeNotifier {
-  final List<Transaction> _transactions = [];
+  final List<MyTransaction> _transactions = [];
 
-  List<Transaction> get value => _transactions;
+  List<MyTransaction> get value => _transactions;
 
-  bool add(Transaction transaction) {
+  bool add(MyTransaction transaction) {
     _transactions.add(transaction);
     notifyListeners();
     return true;
@@ -28,6 +28,9 @@ class Transactions extends ChangeNotifier {
 
   @override
   String toString() {
-    return '${objectRuntimeType(this, 'Transactions')}($_transactions)';
+    return '${objectRuntimeType(this, 'Transactions')}'
+        '('
+        '$_transactions'
+        ')';
   }
 }

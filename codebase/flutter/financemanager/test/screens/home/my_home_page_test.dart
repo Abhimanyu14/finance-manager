@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 
-Transactions transactions;
+late Transactions transactions;
 
 Widget createMyHomePage() {
   return ChangeNotifierProvider<Transactions>(
@@ -12,7 +12,7 @@ Widget createMyHomePage() {
       transactions = Transactions();
       return transactions;
     },
-    child: MaterialApp(
+    child: const MaterialApp(
       home: MyHomePage(),
     ),
   );

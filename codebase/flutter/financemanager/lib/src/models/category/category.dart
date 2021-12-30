@@ -1,18 +1,34 @@
 // TODO: Handle sub categories later
 // import 'package:financemanager/src/models/sub_category.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 // TODO: Handle sub categories later
 // import 'package:collection/collection.dart';
 
+part 'category.freezed.dart';
+part 'category.g.dart';
+
+@freezed
+class Category with _$Category {
+  const Category._();
+  const factory Category({
+    required int id,
+    @Default('') String description,
+    required String title,
+  }) = _Category;
+
+  factory Category.fromJson(Map<String, dynamic> json) =>
+      _$CategoryFromJson(json);
+}
+
+/*
 class Category {
   Category({
-    @required id,
+    required id,
     // TODO: Handle sub categories later
     // subCategories = const <SubCategory>[],
     description,
-    @required title,
+    required title,
   }) {
     _id = id;
     // TODO: Handle sub categories later
@@ -21,12 +37,12 @@ class Category {
     _title = title;
   }
 
-  int _id;
+  int _id = 0;
 
   // TODO: Handle sub categories later
   // List<SubCategory> _subCategories;
-  String _description;
-  String _title;
+  String _description = '';
+  String _title = '';
 
   int get id => _id;
 
@@ -62,6 +78,12 @@ class Category {
 
   @override
   String toString() {
-    return '${objectRuntimeType(this, 'Category')}($_id, $_description, $_title)';
+    return '${objectRuntimeType(this, 'Category')}'
+        '('
+        '$_id, '
+        '$_description, '
+        '$_title'
+        ')';
   }
 }
+*/

@@ -1,9 +1,11 @@
-import 'package:financemanager/src/models/amount.dart';
+import 'package:financemanager/src/models/amount/amount.dart';
+import 'package:financemanager/src/models/unit/unit.dart';
 import 'package:test/test.dart';
 
 void main() {
   group('Amount Unit Tests : ', () {
-    test('A new amount object is created with given values and default values', () {
+    test('A new amount object is created with given values and default values',
+        () {
       double value = 45.00;
       int id = 0;
       Unit defaultUnit = Unit.inr;

@@ -10,7 +10,8 @@ void main() {
 
     binding.framePolicy = LiveTestWidgetsFlutterBindingFramePolicy.fullyLive;
 
-    testWidgets('Testing navigation to add transaction page', (tester) async {
+    testWidgets('Testing navigation to add my_transaction page',
+        (tester) async {
       await tester.pumpWidget(MyApp());
       expect(find.text('My Transactions'), findsOneWidget);
 

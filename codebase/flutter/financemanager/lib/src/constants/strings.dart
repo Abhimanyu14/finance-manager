@@ -1,11 +1,15 @@
 // Main
-const appTitle = 'Expense Tracker';
+const appTitle = 'Finance Manager';
+
+// Symbols
+const symbolInr = '\u{20B9}';
 
 // HomePage
+const myHomePageAppBarTitle = appTitle;
+const myHomePagePageTitle = 'My Transactions';
 const myHomePageBottomAppBarButtonTooltipMenu = 'Menu';
 const myHomePageBottomAppBarButtonTooltipMoreOptions = 'More options';
 const myHomePageFloatingActionButtonTooltipAddTransaction = 'Add Transaction';
-const myHomePagePageTitle = 'My Transactions';
 
 // AddTransactionPage
 const addTransactionPageAppBarTitle = 'Enter Transaction Details';
@@ -21,10 +25,13 @@ const addTransactionPageTextFormFieldCategoryLabel = 'Category';
 const addTransactionPageTextFormFieldCategoryHint = 'Select the category...';
 const addTransactionPageTextFormFieldTransactionDateLabel = 'Transaction date';
 const addTransactionPageTextFormFieldTransactionDateHint =
-    'Select the transaction date...';
+    'Select the my_transaction date...';
 const addTransactionPageFloatingActionButtonTooltipSaveTransaction =
     'Save Transaction';
 const addTransactionPageCategorySelectionBottomSheetSaveButton = 'Save';
+
+// BalanceDetailsPage
+const balanceDetailsPageAppBarTitle = 'Balance Details';
 
 // CategoryList
 const defaultCategoryTitle = 'Default';

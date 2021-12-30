@@ -1,4 +1,4 @@
-import 'package:financemanager/src/models/timestamp.dart';
+import 'package:financemanager/src/models/timestamp/timestamp.dart';
 import 'package:test/test.dart';
 
 void main() {

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 
-Transactions transactions;
+late Transactions transactions;
 
 Widget createAddTransactionPage() {
   return ChangeNotifierProvider<Transactions>(
@@ -69,7 +69,7 @@ void main() {
       expect(find.text('Default'), findsOneWidget);
 
       expect(find.text('Transaction date'), findsOneWidget);
-      expect(find.text('Select the transaction date...'), findsOneWidget);
+      expect(find.text('Select the my_transaction date...'), findsOneWidget);
     });
 
     testWidgets('Testing amount form field error ', (tester) async {
@@ -117,7 +117,7 @@ void main() {
     // TODO: Add test to check amount format is correct
     // TODO: Add test to verify Title is within character limit
     // TODO: Add test to verify Description is within character limit
-    // TODO: Add test to add transaction with category selection
-    // TODO: Add test to add transaction with transaction date selection
+    // TODO: Add test to add my_transaction with category selection
+    // TODO: Add test to add my_transaction with my_transaction date selection
   });
 }

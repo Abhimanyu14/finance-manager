@@ -106,6 +106,9 @@ proguard/
 # Indicates where the jar files of your libraries are stored
 **/.idea/libraries
 
+# It is auto-generated and has only redundant information about remote jar repositories.
+**/.idea/jarRepositories.xml
+
 # compiler configuration
 **/.idea/compiler.xml
 

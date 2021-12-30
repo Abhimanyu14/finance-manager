@@ -1,9 +1,11 @@
-import 'package:financemanager/src/models/category.dart';
+import 'package:financemanager/src/models/category/category.dart';
 import 'package:test/test.dart';
 
 void main() {
   group('Category Unit Tests : ', () {
-    test('A new category object is created with given values and default values', () {
+    test(
+        'A new category object is created with given values and default values',
+        () {
       int id = 0;
       // TODO: Handle sub categories later
       // List<SubCategory> defaultSubCategories = <SubCategory>[];

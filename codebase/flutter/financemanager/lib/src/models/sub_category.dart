@@ -1,13 +1,14 @@
-import 'package:financemanager/src/models/category.dart';
+import 'package:financemanager/src/constants/category_list.dart';
+import 'package:financemanager/src/models/category/category.dart';
 import 'package:flutter/foundation.dart' hide Category;
 import 'package:flutter/material.dart';
 
 class SubCategory {
   SubCategory({
     parentCategory,
-    @required id,
+    required id,
     description,
-    @required title,
+    required title,
   }) {
     _parentCategory = parentCategory;
     _id = id;
@@ -15,10 +16,10 @@ class SubCategory {
     _title = title;
   }
 
-  Category _parentCategory;
-  int _id;
-  String _description;
-  String _title;
+  Category _parentCategory = defaultCategory;
+  int _id = 0;
+  String _description = '';
+  String _title = '';
 
   Category get parentCategory => _parentCategory;
 
@@ -52,6 +53,12 @@ class SubCategory {
 
   @override
   String toString() {
-    return '${objectRuntimeType(this, 'SubCategory')}($_parentCategory, $_id, $_description,$_title)';
+    return '${objectRuntimeType(this, 'SubCategory')}'
+        '('
+        '$_parentCategory, '
+        '$_id, '
+        '$_description, '
+        '$_title'
+        ')';
   }
 }

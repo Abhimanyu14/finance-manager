@@ -1,12 +1,14 @@
-import 'package:financemanager/src/models/amount.dart';
-import 'package:financemanager/src/models/category.dart';
-import 'package:financemanager/src/models/timestamp.dart';
-import 'package:financemanager/src/models/transaction.dart';
+import 'package:financemanager/src/models/amount/amount.dart';
+import 'package:financemanager/src/models/category/category.dart';
+import 'package:financemanager/src/models/timestamp/timestamp.dart';
+import 'package:financemanager/src/models/transaction/my_transaction.dart';
 import 'package:test/test.dart';
 
 void main() {
   group('Transaction Unit Tests : ', () {
-    test('A new transaction object is created with given values and default values', () {
+    test(
+        'A new my_transaction object is created with given values and default values',
+        () {
       Amount amount = Amount(
         value: 45.0,
         id: 0,
@@ -25,7 +27,7 @@ void main() {
         date: '10-04-2021',
         time: '06:54:00',
       );
-      Transaction transaction = Transaction(
+      MyTransaction transaction = MyTransaction(
         amount: amount,
         id: 0,
         creationTimestamp: creationTimestamp,
@@ -40,7 +42,7 @@ void main() {
       expect(transaction.transactionTimestamp, transactionTimestamp);
     });
 
-    test('A new transaction object is created with given values', () {
+    test('A new my_transaction object is created with given values', () {
       Amount amount = Amount(
         value: 45.0,
         id: 0,
@@ -61,7 +63,7 @@ void main() {
         date: '10-04-2021',
         time: '06:54:00',
       );
-      Transaction transaction = Transaction(
+      MyTransaction transaction = MyTransaction(
         amount: amount,
         category: category,
         id: id,
@@ -73,7 +75,7 @@ void main() {
       expect(transaction.amount, amount);
       // ignore: todo
       // TODO: fix this test
-      // expect(transaction.category, category);
+      // expect(my_transaction.category, category);
       expect(transaction.id, id);
       expect(transaction.description, description);
       expect(transaction.title, title);

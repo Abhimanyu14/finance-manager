@@ -1,12 +1,12 @@
-import 'package:financemanager/src/models/amount.dart';
-import 'package:financemanager/src/models/timestamp.dart';
-import 'package:financemanager/src/models/transaction.dart';
+import 'package:financemanager/src/models/amount/amount.dart';
+import 'package:financemanager/src/models/timestamp/timestamp.dart';
+import 'package:financemanager/src/models/transaction/my_transaction.dart';
 import 'package:financemanager/src/models/transactions.dart';
 import 'package:test/test.dart';
 
 void main() {
   group('Transactions Unit Tests : ', () {
-    Transaction _transaction1 = Transaction(
+    MyTransaction _transaction1 = MyTransaction(
       amount: Amount(
         value: 50.00,
         id: 0,
@@ -21,7 +21,7 @@ void main() {
         time: '22:42:00',
       ),
     );
-    Transaction _transaction2 = Transaction(
+    MyTransaction _transaction2 = MyTransaction(
       amount: Amount(
         value: 200.00,
         id: 0,
@@ -51,7 +51,7 @@ void main() {
       expect(transactions.value, [_transaction1, _transaction2]);
     });
 
-    test('Removing a transaction', () {
+    test('Removing a my_transaction', () {
       Transactions transactions = Transactions();
       transactions.add(_transaction1);
       expect(transactions.value, [_transaction1]);
@@ -68,7 +68,7 @@ void main() {
       expect(transactions.value, []);
     });
 
-    test('Removing an invalid transaction', () {
+    test('Removing an invalid my_transaction', () {
       Transactions transactions = Transactions();
       transactions.add(_transaction1);
       expect(transactions.value, [_transaction1]);

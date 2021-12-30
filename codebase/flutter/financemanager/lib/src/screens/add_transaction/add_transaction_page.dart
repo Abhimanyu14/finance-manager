@@ -1,269 +1,66 @@
-import 'package:financemanager/src/constants/colors.dart';
 import 'package:financemanager/src/constants/strings.dart';
-import 'package:financemanager/src/models/timestamp.dart';
-import 'package:financemanager/src/models/transaction.dart';
+import 'package:financemanager/src/models/my_transaction/my_transaction.dart';
 import 'package:financemanager/src/models/transactions.dart';
+import 'package:financemanager/src/screens/add_transaction/add_transaction_page_body.dart';
+import 'package:financemanager/src/screens/add_transaction/add_transaction_page_floating_action_button.dart';
+import 'package:financemanager/src/widgets/my_app_bar.dart';
+import 'package:financemanager/src/widgets/scaffold_body_container.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:intl/intl.dart' as intl;
 import 'package:provider/provider.dart';
 
 class AddTransactionPage extends StatefulWidget {
-  const AddTransactionPage({Key key}) : super(key: key);
+  const AddTransactionPage({
+    Key? key,
+  }) : super(key: key);
 
   @override
   _AddTransactionPageState createState() => _AddTransactionPageState();
 }
 
 class _AddTransactionPageState extends State<AddTransactionPage> {
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   final TextEditingController _categoryTextEditingController =
       TextEditingController();
   final TextEditingController _dateTextEditingController =
       TextEditingController();
 
-  final Transaction _transaction = Transaction();
-  Transactions transactions;
+  final MyTransaction _transaction = const MyTransaction();
+  late Transactions transactions;
 
   @override
   void dispose() {
     _categoryTextEditingController.dispose();
-    _dateTextEditingController.dispose();
+    // _dateTextEditingController.dispose();
     super.dispose();
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+  ) {
     transactions = Provider.of<Transactions>(context);
     _categoryTextEditingController.text = _transaction.category.title;
-    _dateTextEditingController.text = intl.DateFormat.yMMMd().format(
-      _transaction.transactionTimestamp.toDateTime(),
-    );
+    // _dateTextEditingController.text = intl.DateFormat.yMMMd().format(
+    //   _transaction.transactionTimestamp.toDateTime(),
+    // );
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(addTransactionPageAppBarTitle),
-        brightness: Brightness.dark,
+      appBar: const MyAppBar(
+        title: addTransactionPageAppBarTitle,
       ),
-      body: SafeArea(
-        child: Form(
-          key: _formKey,
-          child: Scrollbar(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(
-                    height: 8.0,
-                  ),
-                  ...[
-                    TextFormField(
-                      decoration: buildTextFormFieldInputDecoration(
-                        labelText: addTransactionPageTextFormFieldAmountLabel,
-                        hintText: addTransactionPageTextFormFieldAmountHint,
-                        prefixIcon: Icons.attach_money_rounded,
-                      ),
-                      keyboardType: const TextInputType.numberWithOptions(
-                        signed: false,
-                        decimal: true,
-                      ),
-                      textInputAction: TextInputAction.next,
-                      onChanged: (value) {
-                        setState(() {
-                          _transaction.updateAmountValue(double.parse(value));
-                        });
-                      },
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return addTransactionPageTextFormFieldAmountError;
-                        }
-                        return null;
-                      },
-                      inputFormatters: [
-                        FilteringTextInputFormatter.allow(
-                          RegExp(r'^\d*\.?\d{0,2}'),
-                        ),
-                      ],
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                    ),
-                    TextFormField(
-                      decoration: buildTextFormFieldInputDecoration(
-                        labelText: addTransactionPageTextFormFieldTitleLabel,
-                        hintText: addTransactionPageTextFormFieldTitleHint,
-                        prefixIcon: Icons.title_rounded,
-                      ),
-                      keyboardType: TextInputType.text,
-                      textCapitalization: TextCapitalization.words,
-                      textInputAction: TextInputAction.next,
-                      maxLength: 36,
-                      onChanged: (value) {
-                        setState(() {
-                          _transaction.setTitle(value);
-                        });
-                      },
-                    ),
-                    TextFormField(
-                      decoration: buildTextFormFieldInputDecoration(
-                        labelText:
-                            addTransactionPageTextFormFieldDescriptionLabel,
-                        hintText:
-                            addTransactionPageTextFormFieldDescriptionHint,
-                        prefixIcon: Icons.description_rounded,
-                      ),
-                      keyboardType: TextInputType.text,
-                      textCapitalization: TextCapitalization.words,
-                      textInputAction: TextInputAction.done,
-                      maxLines: 2,
-                      minLines: 1,
-                      maxLength: 72,
-                      onChanged: (value) {
-                        setState(() {
-                          _transaction.setDescription(value);
-                        });
-                      },
-                    ),
-                    TextFormField(
-                      controller: _categoryTextEditingController,
-                      decoration: buildTextFormFieldInputDecoration(
-                        labelText: addTransactionPageTextFormFieldCategoryLabel,
-                        hintText: addTransactionPageTextFormFieldCategoryHint,
-                        prefixIcon: Icons.category_rounded,
-                      ),
-                      readOnly: true,
-                      textInputAction: TextInputAction.next,
-                      onTap: () {
-                        showCategorySelectionBottomSheet(context);
-                      },
-                    ),
-                    TextFormField(
-                      controller: _dateTextEditingController,
-                      decoration: buildTextFormFieldInputDecoration(
-                        labelText:
-                            addTransactionPageTextFormFieldTransactionDateLabel,
-                        hintText:
-                            addTransactionPageTextFormFieldTransactionDateHint,
-                        prefixIcon: Icons.date_range_rounded,
-                      ),
-                      readOnly: true,
-                      onTap: () async {
-                        await handleTransactionDateSelection(context);
-                      },
-                    ),
-                  ].expand(
-                    (widget) => [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0,
-                          vertical: 8.0,
-                        ),
-                        child: widget,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+      body: ScaffoldBodyContainer(
+        child: AddTransactionPageBody(
+          formKey: _formKey,
+          categoryTextEditingController: _categoryTextEditingController,
+          dateTextEditingController: _dateTextEditingController,
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: const Icon(
-          Icons.done_rounded,
-        ),
-        tooltip: addTransactionPageFloatingActionButtonTooltipSaveTransaction,
-        backgroundColor: primaryColor,
-        onPressed: () {
-          handleFormSubmission(context);
-        },
+      floatingActionButton: AddTransactionPageFloatingActionButton(
+        formKey: _formKey,
+        transactions: transactions,
+        transaction: _transaction,
       ),
     );
-  }
-
-  InputDecoration buildTextFormFieldInputDecoration({
-    String labelText = '',
-    String hintText = '',
-    IconData prefixIcon,
-  }) {
-    return InputDecoration(
-      labelText: labelText,
-      hintText: hintText,
-      prefixIcon: Icon(prefixIcon),
-      filled: false,
-      border: const OutlineInputBorder(),
-    );
-  }
-
-  void showCategorySelectionBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      useRootNavigator: true,
-      isScrollControlled: true,
-      context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      builder: (BuildContext context) {
-        return ConstrainedBox(
-          constraints: BoxConstraints(
-            maxHeight: MediaQuery.of(context).size.height * 0.8,
-          ),
-          child: Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(12.0),
-                topRight: Radius.circular(12.0),
-              ),
-              color: Colors.white,
-            ),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    TextButton(
-                      onPressed: () => Navigator.pop(context),
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          addTransactionPageCategorySelectionBottomSheetSaveButton,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Future handleTransactionDateSelection(BuildContext context) async {
-    DateTime newDate = await showDatePicker(
-      context: context,
-      initialDate: _transaction.transactionTimestamp.toDateTime(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2100),
-    );
-
-    if (newDate != null) {
-      setState(() {
-        _dateTextEditingController.text =
-            intl.DateFormat.yMMMd().format(newDate);
-        _transaction.setTransactionTimestamp(
-          Timestamp.fromDateTime(
-            dateTime: newDate,
-          ),
-        );
-      });
-    }
-  }
-
-  void handleFormSubmission(BuildContext context) {
-    transactions.add(_transaction);
-    if (_formKey.currentState.validate()) {
-      Navigator.pop(context);
-    }
   }
 }

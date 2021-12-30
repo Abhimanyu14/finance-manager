@@ -1,12 +1,47 @@
-import 'package:financemanager/src/constants/category_list.dart';
-import 'package:financemanager/src/models/amount.dart';
-import 'package:financemanager/src/models/category.dart';
-import 'package:financemanager/src/models/timestamp.dart';
-import 'package:flutter/foundation.dart' hide Category;
-import 'package:flutter/material.dart';
+import 'package:financemanager/src/constants/strings.dart';
+import 'package:financemanager/src/models/amount/amount.dart';
+import 'package:financemanager/src/models/category/category.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-class Transaction {
-  Transaction({
+part 'my_transaction.freezed.dart';
+part 'my_transaction.g.dart';
+
+@freezed
+class MyTransaction with _$MyTransaction {
+  const MyTransaction._();
+  const factory MyTransaction({
+    @Default(
+      Amount(
+        value: 0.0,
+        id: 0,
+      ),
+    )
+        Amount amount,
+    @Default(
+      Category(
+        id: 0,
+        description: defaultCategoryDescription,
+        title: defaultCategoryTitle,
+      ),
+    )
+        Category category,
+    @Default(0)
+        int id,
+    @Default('')
+        String description,
+    @Default('')
+        String title,
+    // required Timestamp creationTimestamp,
+    // required Timestamp transactionTimestamp,
+  }) = _MyTransaction;
+
+  factory MyTransaction.fromJson(Map<String, dynamic> json) =>
+      _$MyTransactionFromJson(json);
+}
+
+/*
+class MyTransaction {
+  MyTransaction({
     amount,
     category,
     id,
@@ -30,13 +65,13 @@ class Transaction {
         );
   }
 
-  Amount _amount;
-  Category _category;
-  int _id;
-  String _description;
-  String _title;
-  Timestamp _creationTimestamp;
-  Timestamp _transactionTimestamp;
+  Amount _amount = defaultAmount;
+  Category _category = defaultCategory;
+  int _id = 0;
+  String _description = '';
+  String _title = '';
+  Timestamp _creationTimestamp = defaultTimestamp;
+  Timestamp _transactionTimestamp = defaultTimestamp;
 
   Amount get amount => _amount;
 
@@ -53,15 +88,17 @@ class Transaction {
   Timestamp get transactionTimestamp => _transactionTimestamp;
 
   bool updateAmountValue(double updatedAmountValue) {
-    return _amount.updateValue(
-      updatedValue: updatedAmountValue,
+    _amount = _amount.copyWith(
+      value: updatedAmountValue,
     );
+    return true;
   }
 
   bool updateAmountUnit(Unit updatedAmountUnit) {
-    return _amount.updateUnit(
-      updatedUnit: updatedAmountUnit,
+    _amount = _amount.copyWith(
+      unit: updatedAmountUnit,
     );
+    return true;
   }
 
   bool setCategory(Category newCategory) {
@@ -89,7 +126,7 @@ class Transaction {
     if (other.runtimeType != runtimeType) {
       return false;
     }
-    return other is Transaction &&
+    return other is MyTransaction &&
         other.amount == _amount &&
         other.category == _category &&
         other.id == _id &&
@@ -114,6 +151,25 @@ class Transaction {
 
   @override
   String toString() {
-    return '${objectRuntimeType(this, 'Transaction')}($_amount, $_category, $_id,$_description, $_title, $_creationTimestamp, $_transactionTimestamp)';
+    return '${objectRuntimeType(this, 'Transaction')}'
+        '('
+        '$_amount, '
+        '$_category, '
+        '$_id, '
+        '$_description, '
+        '$_title, '
+        '$_creationTimestamp, '
+        '$_transactionTimestamp'
+        ')';
+  }
+
+  // Convert a my_transaction into a Map.
+  // The keys must correspond to the names of the columns in the database.
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+    };
   }
 }
+*/
