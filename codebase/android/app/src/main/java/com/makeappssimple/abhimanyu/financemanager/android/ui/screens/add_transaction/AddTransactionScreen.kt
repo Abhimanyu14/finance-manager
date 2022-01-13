@@ -9,15 +9,19 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 @ExperimentalMaterial3Api
 @Composable
 fun AddTransactionScreen(
-    viewModel: AddTransactionViewModel = hiltViewModel(),
+    screenViewModel: AddTransactionViewModel = hiltViewModel(),
 ) {
     logError("Inside AddTransactionScreen")
 
     LaunchedEffect(
         key1 = Unit,
     ) {
-        viewModel.trackScreen()
+        screenViewModel.trackScreen()
     }
 
-    AddTransactionScreenView()
+    AddTransactionScreenView(
+        data = AddTransactionScreenViewData(
+            screenViewModel = screenViewModel,
+        ),
+    )
 }

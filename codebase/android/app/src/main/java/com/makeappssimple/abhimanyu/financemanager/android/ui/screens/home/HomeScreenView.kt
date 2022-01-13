@@ -66,12 +66,9 @@ fun HomeScreenView(
                     }
                 },
                 modifier = Modifier
-                    .background(Surface)
-                    .statusBarsPadding()
-                    .navigationBarsPadding(),
+                    .background(Surface),
             )
         },
-        backgroundColor = BottomAppBarBackground,
         bottomBar = {
             Column {
                 BottomAppBar(
@@ -105,8 +102,7 @@ fun HomeScreenView(
                 Spacer(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(BottomAppBarBackground)
-                        .navigationBarsPadding(),
+                        .background(BottomAppBarBackground),
                 )
             }
         },
@@ -137,7 +133,6 @@ fun HomeScreenView(
             modifier = Modifier
                 .background(Surface)
                 .fillMaxSize()
-                .navigationBarsPadding()
                 .padding(
                     paddingValues = innerPadding,
                 ),

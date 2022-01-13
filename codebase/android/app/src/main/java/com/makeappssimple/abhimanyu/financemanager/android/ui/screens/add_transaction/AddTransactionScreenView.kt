@@ -10,7 +10,6 @@ import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material.rememberScaffoldState
@@ -25,18 +24,24 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.google.accompanist.insets.navigationBarsPadding
 import com.google.accompanist.insets.statusBarsPadding
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.ui.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBarBackground
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.FloatingActionButtonBackground
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.FloatingActionButtonIconTint
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.MyAppTheme
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Secondary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.TopBarNavigationIconTint
 
+data class AddTransactionScreenViewData(
+    val screenViewModel: AddTransactionViewModel,
+)
+
 @ExperimentalMaterial3Api
 @Composable
-fun AddTransactionScreenView() {
+fun AddTransactionScreenView(
+    data: AddTransactionScreenViewData,
+) {
     val scaffoldState = rememberScaffoldState()
 
     Scaffold(
@@ -56,10 +61,12 @@ fun AddTransactionScreenView() {
                 navigationIcon = {
                     IconButton(
                         onClick = {
-                            // navigateUp()
+                            navigateUp(
+                                navigationManager = data.screenViewModel.navigationManager,
+                            )
                         },
                     ) {
-                        androidx.compose.material.Icon(
+                        Icon(
                             imageVector = Icons.Rounded.ArrowBack,
                             contentDescription = stringResource(
                                 id = R.string.navigation_icon_content_description,
@@ -69,20 +76,15 @@ fun AddTransactionScreenView() {
                     }
                 },
                 modifier = Modifier
-                    .background(Surface)
-                    .statusBarsPadding()
-                    .navigationBarsPadding(),
+                    .background(Surface),
             )
         },
-        backgroundColor = BottomAppBarBackground,
         floatingActionButton = {
             FloatingActionButton(
                 backgroundColor = FloatingActionButtonBackground,
                 onClick = {
-                    // data.navigateToAddTransactionScreen()
                 },
-                modifier = Modifier
-                    .navigationBarsPadding(),
+                modifier = Modifier,
             ) {
                 Icon(
                     imageVector = Icons.Rounded.Done,
@@ -99,9 +101,8 @@ fun AddTransactionScreenView() {
     ) { innerPadding ->
         Box(
             modifier = Modifier
-                .background(Secondary)
+                .background(Surface)
                 .fillMaxSize()
-                .navigationBarsPadding()
                 .padding(
                     paddingValues = innerPadding,
                 ),
@@ -114,7 +115,9 @@ fun AddTransactionScreenView() {
 @Preview
 @Composable
 private fun AddTransactionScreenViewPreview() {
+    /*
     MyAppTheme {
         AddTransactionScreenView()
     }
+    */
 }
