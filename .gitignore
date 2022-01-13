@@ -112,6 +112,9 @@ proguard/
 # compiler configuration
 **/.idea/compiler.xml
 
+# git toolbox
+**/.idea/git_toolbox_prj.xml
+
 **/.idea/.name
 **/.idea/misc.xml
 
