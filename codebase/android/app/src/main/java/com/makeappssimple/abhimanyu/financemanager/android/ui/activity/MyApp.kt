@@ -2,14 +2,22 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.activity
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
-import androidx.navigation.compose.rememberNavController
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 
 @ExperimentalMaterial3Api
 @Composable
 fun MyApp() {
-    val navHostController = rememberNavController()
+    val viewModelStoreOwner = checkNotNull(
+        value = LocalViewModelStoreOwner.current,
+    ) {
+        "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+    }
+    val activityViewModel = hiltViewModel<MainActivityViewModel>(
+        viewModelStoreOwner = viewModelStoreOwner,
+    )
 
     MyAppView(
-        navHostController = navHostController,
+        activityViewModel = activityViewModel,
     )
 }

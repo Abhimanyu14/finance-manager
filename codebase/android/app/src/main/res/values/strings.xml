@@ -5,5 +5,18 @@
 
     <!-- Screens -->
     <string name="screen_home">Finance Manager</string>
+    <string name="screen_add_transaction">Enter Transaction Details</string>
+
+    <!-- Common -->
+    <string name="navigation_icon_content_description">Navigate Back</string>
+
+    <!-- home screen -->
+    <string name="screen_home_appbar_title">Finance Manager</string>
+    <string name="screen_home_floating_action_button_content_description">Add</string>
+    <string name="screen_home_bottom_app_bar_button_content_description">Menu</string>
+
+    <!-- add transaction screen -->
+    <string name="screen_add_transaction_appbar_title">Enter Transaction Details</string>
+    <string name="screen_add_transaction_floating_action_button_content_description">Save Transaction</string>
 
 </resources>

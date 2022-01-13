@@ -1,7 +1,7 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <!-- Base application theme -->
-    <style name="Theme.FinanceManager" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.MyApp" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
 
         <!-- Primary brand color -->
         <item name="colorPrimary">@color/colorPrimary</item>
@@ -17,11 +17,11 @@
         <item name="android:statusBarColor">@color/status_bar</item>
 
         <!-- Navigation bar color -->
-        <item name="android:navigationBarColor">@color/navigation_bar</item>
+        <!-- <item name="android:navigationBarColor">@color/navigation_bar</item> -->
 
     </style>
 
-    <style name="Theme.FinanceManager.NoActionBar" parent="Theme.FinanceManager">
+    <style name="Theme.MyApp.NoActionBar" parent="Theme.MyApp">
 
         <!-- To remove actionbar -->
         <item name="windowActionBar">false</item>

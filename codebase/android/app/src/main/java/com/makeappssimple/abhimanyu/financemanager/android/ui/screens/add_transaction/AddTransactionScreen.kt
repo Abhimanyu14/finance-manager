@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
+package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction
 
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
@@ -8,20 +8,16 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 
 @ExperimentalMaterial3Api
 @Composable
-fun HomeScreen(
-    screenViewModel: HomeViewModel = hiltViewModel(),
+fun AddTransactionScreen(
+    viewModel: AddTransactionViewModel = hiltViewModel(),
 ) {
-    logError("Inside HomeScreen")
+    logError("Inside AddTransactionScreen")
 
     LaunchedEffect(
         key1 = Unit,
     ) {
-        screenViewModel.trackScreen()
+        viewModel.trackScreen()
     }
 
-    HomeScreenView(
-        data = HomeScreenViewData(
-            screenViewModel = screenViewModel,
-        ),
-    )
+    AddTransactionScreenView()
 }

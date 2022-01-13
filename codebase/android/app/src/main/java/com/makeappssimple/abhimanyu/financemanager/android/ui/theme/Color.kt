@@ -3,21 +3,22 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.theme
 import androidx.compose.ui.graphics.Color
 
 // Standard colors
-val Red = Color.Red
-val Blue = Color.Blue
-val Green = Color.Green
-val Black = Color.Black
-val White = Color.White
-val Transparent = Color.Transparent
-val LightGray = Color.LightGray
-val Gray = Color.Gray
-val DarkGray = Color.DarkGray
+private val Red = Color.Red
+private val Blue = Color.Blue
+private val Green = Color.Green
+private val Black = Color.Black
+private val White = Color.White
+private val Transparent = Color.Transparent
+private val LightGray = Color.LightGray
+private val Gray = Color.Gray
+private val DarkGray = Color.DarkGray
 
-val Cyan = Color.Cyan
-val Magenta = Color.Magenta
-val Yellow = Color.Yellow
+private val Cyan = Color.Cyan
+private val Magenta = Color.Magenta
+private val Yellow = Color.Yellow
 
 
+// Palette
 private val CarrotOrange = Color(0xFFF8931F)
 private val OrangeDark = Color(0xFFCF760F)
 private val DodgerBlue = Color(0xFF1A73E8)
@@ -74,23 +75,24 @@ private val Green700 = Color(0xFF74B375)
 private val Green100 = Color(0xFFDAF5D7)
 private val Green10 = Color(0xFFF4FFF2)
 
+
 // Theme colors
 
 // Material 2
-val PrimaryVariant = Brown900
-val SecondaryVariant = Brown900
+val PrimaryVariant = Blue900
+val SecondaryVariant = Blue900
 
 // Material 3
-val Primary = Brown900
+val Primary = Blue900
 val OnPrimary = White
-val PrimaryContainer = Brown100
-val OnPrimaryContainer = Brown1000
+val PrimaryContainer = Blue100
+val OnPrimaryContainer = Blue1000
 val InversePrimary = Primary80
 
-val Secondary = Blue900
+val Secondary = Brown900
 val OnSecondary = White
-val SecondaryContainer = Blue100
-val OnSecondaryContainer = Blue1000
+val SecondaryContainer = Brown100
+val OnSecondaryContainer = Brown1000
 
 val Tertiary = Green900
 val OnTertiary = White
@@ -100,7 +102,7 @@ val OnTertiaryContainer = Green1000
 val Background = Neutral99
 val OnBackground = Neutral10
 
-val Surface = Brown10
+val Surface = Blue10
 val OnSurface = Neutral10
 val SurfaceVariant = NeutralVariant90
 val OnSurfaceVariant = NeutralVariant30
@@ -113,3 +115,13 @@ val ErrorContainer = Error90
 val OnErrorContainer = Error10
 
 val Outline = NeutralVariant50
+
+
+// App colors
+
+val TopBarNavigationIconTint = Blue900
+val FloatingActionButtonBackground = Blue900
+val FloatingActionButtonIconTint = White
+val BottomAppBarBackground = Blue900
+val BottomAppBarIconTint = White
+
