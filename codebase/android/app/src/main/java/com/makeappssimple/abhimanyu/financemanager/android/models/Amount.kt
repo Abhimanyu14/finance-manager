@@ -1,6 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.models
 
+enum class Currency {
+    INR,
+    USD,
+}
+
 data class Amount(
-    val value: Double = 0.0,
-    val unit: Unit = Unit.INR,
+    val currency: Currency = Currency.INR,
+    val value: Float = 0F,
 )
