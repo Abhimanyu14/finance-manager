@@ -1,6 +1,6 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.navigation.di
+package com.makeappssimple.abhimanyu.financemanager.android.navigation.di
 
-import com.makeappssimple.abhimanyu.financemanager.android.ui.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

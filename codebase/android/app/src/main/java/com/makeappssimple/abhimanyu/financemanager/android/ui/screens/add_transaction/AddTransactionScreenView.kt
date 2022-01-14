@@ -21,15 +21,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.google.accompanist.insets.navigationBarsPadding
-import com.google.accompanist.insets.statusBarsPadding
 import com.makeappssimple.abhimanyu.financemanager.android.R
-import com.makeappssimple.abhimanyu.financemanager.android.ui.navigation.utils.navigateUp
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBarBackground
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.FloatingActionButtonBackground
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.FloatingActionButtonIconTint
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Secondary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.TopBarNavigationIconTint
 

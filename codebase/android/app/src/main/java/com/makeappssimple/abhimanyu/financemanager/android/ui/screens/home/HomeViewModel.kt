@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
 
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.ui.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 

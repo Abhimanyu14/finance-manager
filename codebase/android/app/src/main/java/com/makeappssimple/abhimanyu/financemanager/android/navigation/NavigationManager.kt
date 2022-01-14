@@ -1,6 +1,6 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.navigation
+package com.makeappssimple.abhimanyu.financemanager.android.navigation
 
-import com.makeappssimple.abhimanyu.financemanager.android.ui.navigation.MyNavigationDirections.default
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.MyNavigationDirections.default
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class NavigationManager {

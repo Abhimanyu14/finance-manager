@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.navigation
+package com.makeappssimple.abhimanyu.financemanager.android.navigation
 
 import androidx.navigation.NamedNavArgument
 
