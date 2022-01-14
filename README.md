@@ -4,8 +4,10 @@ A simple finance manager app
 
 # Features
 
-1. Transactions - CRUD
-2. Stats
+1. Transaction - CRUD
+2. Source - CRUD
+3. Category - CRUD
+4. Statistics
 
 # Database
 
