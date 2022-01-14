@@ -75,6 +75,9 @@ fun HomeScreenView(
                     backgroundColor = BottomAppBarBackground,
                     cutoutShape = CircleShape,
                 ) {
+                    /*
+                    TODO-Abhi: Add menu later
+
                     // Leading icons should typically have a high content alpha
                     CompositionLocalProvider(
                         LocalContentAlpha provides ContentAlpha.high,
@@ -92,6 +95,7 @@ fun HomeScreenView(
                             )
                         }
                     }
+                    */
                     Spacer(
                         modifier = Modifier
                             .weight(
