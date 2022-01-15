@@ -1,17 +1,15 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources
+package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 
-@ExperimentalMaterialApi
 @Composable
-fun SourcesScreen(
-    screenViewModel: SourcesViewModel = hiltViewModel(),
+fun AddSourceScreen(
+    screenViewModel: AddSourceViewModel = hiltViewModel(),
 ) {
-    logError("Inside SourcesScreen")
+    logError("Inside AddSourceScreen")
 
     LaunchedEffect(
         key1 = Unit,
@@ -19,8 +17,8 @@ fun SourcesScreen(
         screenViewModel.trackScreen()
     }
 
-    SourcesScreenView(
-        data = SourcesScreenViewData(
+    AddSourceScreenView(
+        data = AddSourceScreenViewData(
             screenViewModel = screenViewModel,
         ),
     )

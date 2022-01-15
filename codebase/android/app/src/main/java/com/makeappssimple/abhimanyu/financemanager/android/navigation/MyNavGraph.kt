@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.makeappssimple.abhimanyu.financemanager.android.ui.activity.MainActivityViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source.AddSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.AddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.CategoriesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.HomeScreen
@@ -80,6 +81,12 @@ fun MyNavGraph(
         navController = navHostController,
         startDestination = Screen.Home.route,
     ) {
+        composable(
+            route = Screen.AddSource.route,
+        ) {
+            AddSourceScreen()
+        }
+
         composable(
             route = Screen.AddTransaction.route,
         ) {

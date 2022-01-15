@@ -18,10 +18,15 @@
 
     <!-- add source screen -->
     <string name="screen_add_source_appbar_title">Enter Source Details</string>
+    <string name="screen_add_source_name">Name</string>
+    <string name="screen_add_source_clear_name">Clear Name</string>
+    <string name="screen_add_source_balance_amount">Balance Amount</string>
+    <string name="screen_add_source_clear_balance_amount">Clear Balance Amount</string>
+    <string name="screen_add_source_floating_action_button_content_description">SAVE</string>
 
     <!-- add transaction screen -->
     <string name="screen_add_transaction_appbar_title">Enter Transaction Details</string>
-    <string name="screen_add_transaction_floating_action_button_content_description">Save Transaction</string>
+    <string name="screen_add_transaction_floating_action_button_content_description">Save</string>
 
     <!-- balance details screen -->
     <string name="screen_balance_details_appbar_title">Balance Details</string>

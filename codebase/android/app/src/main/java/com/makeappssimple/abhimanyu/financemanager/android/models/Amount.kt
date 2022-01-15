@@ -8,4 +8,8 @@ enum class Currency {
 data class Amount(
     val currency: Currency = Currency.INR,
     val value: Float = 0F,
-)
+) {
+    override fun toString(): String {
+        return "$value $currency"
+    }
+}
