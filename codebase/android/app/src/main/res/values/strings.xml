@@ -3,20 +3,47 @@
     <!-- App name -->
     <string name="app_name">Finance Manager</string>
 
+
     <!-- Screens -->
     <string name="screen_home">Finance Manager</string>
     <string name="screen_add_transaction">Enter Transaction Details</string>
 
+
     <!-- Common -->
     <string name="navigation_icon_content_description">Navigate Back</string>
 
-    <!-- home screen -->
-    <string name="screen_home_appbar_title">Finance Manager</string>
-    <string name="screen_home_floating_action_button_content_description">Add</string>
-    <string name="screen_home_bottom_app_bar_button_content_description">Menu</string>
+
+    <!-- add category screen -->
+    <string name="screen_add_category_appbar_title">Enter Category Details</string>
+
+    <!-- add source screen -->
+    <string name="screen_add_source_appbar_title">Enter Source Details</string>
 
     <!-- add transaction screen -->
     <string name="screen_add_transaction_appbar_title">Enter Transaction Details</string>
     <string name="screen_add_transaction_floating_action_button_content_description">Save Transaction</string>
+
+    <!-- balance details screen -->
+    <string name="screen_balance_details_appbar_title">Balance Details</string>
+
+    <!-- categories screen -->
+    <string name="screen_categories_appbar_title">Categories</string>
+
+    <!-- category details screen -->
+    <string name="screen_category_details_appbar_title">Category Details</string>
+
+    <!-- home screen -->
+    <string name="screen_home_appbar_title">Finance Manager</string>
+    <string name="screen_home_floating_action_button_content_description">Add Transaction</string>
+    <string name="screen_home_bottom_app_bar_button_content_description">Menu</string>
+    <string name="screen_home_bottom_sheet_sources">Sources</string>
+    <string name="screen_home_bottom_sheet_categories">Categories</string>
+
+    <!-- source details screen -->
+    <string name="screen_source_details_appbar_title">Source Details</string>
+
+    <!-- sources screen -->
+    <string name="screen_sources_appbar_title">Sources</string>
+    <string name="screen_sources_floating_action_button_content_description">Add Source</string>
 
 </resources>

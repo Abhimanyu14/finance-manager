@@ -27,11 +27,20 @@ fun clearTillRoot(
     )
 }
 
-fun navigateToHomeScreen(
+
+fun navigateToAddCategoryScreen(
     navigationManager: NavigationManager,
 ) {
     navigationManager.navigate(
-        direction = MyNavigationDirections.home()
+        direction = MyNavigationDirections.addCategory()
+    )
+}
+
+fun navigateToAddSourceScreen(
+    navigationManager: NavigationManager,
+) {
+    navigationManager.navigate(
+        direction = MyNavigationDirections.addSource()
     )
 }
 
@@ -40,5 +49,53 @@ fun navigateToAddTransactionScreen(
 ) {
     navigationManager.navigate(
         direction = MyNavigationDirections.addTransaction()
+    )
+}
+
+fun navigateToBalanceDetailsScreen(
+    navigationManager: NavigationManager,
+) {
+    navigationManager.navigate(
+        direction = MyNavigationDirections.balanceDetails()
+    )
+}
+
+fun navigateToCategoriesScreen(
+    navigationManager: NavigationManager,
+) {
+    navigationManager.navigate(
+        direction = MyNavigationDirections.categories()
+    )
+}
+
+fun navigateToCategoryDetailsScreen(
+    navigationManager: NavigationManager,
+) {
+    navigationManager.navigate(
+        direction = MyNavigationDirections.categoryDetails()
+    )
+}
+
+fun navigateToHomeScreen(
+    navigationManager: NavigationManager,
+) {
+    navigationManager.navigate(
+        direction = MyNavigationDirections.home()
+    )
+}
+
+fun navigateToSourceDetailsScreen(
+    navigationManager: NavigationManager,
+) {
+    navigationManager.navigate(
+        direction = MyNavigationDirections.sourceDetails()
+    )
+}
+
+fun navigateToSourcesScreen(
+    navigationManager: NavigationManager,
+) {
+    navigationManager.navigate(
+        direction = MyNavigationDirections.sources()
     )
 }

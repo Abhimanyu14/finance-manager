@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction
+package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -10,17 +10,16 @@ import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.IconButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Done
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.NavigationArrowBackIcon
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.FloatingActionButtonBackground
@@ -28,14 +27,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.FloatingActi
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 
-data class AddTransactionScreenViewData(
-    val screenViewModel: AddTransactionViewModel,
+data class CategoriesScreenViewData(
+    val screenViewModel: CategoriesViewModel,
 )
 
-@ExperimentalMaterial3Api
 @Composable
-fun AddTransactionScreenView(
-    data: AddTransactionScreenViewData,
+fun CategoriesScreenView(
+    data: CategoriesScreenViewData,
 ) {
     val scaffoldState = rememberScaffoldState()
 
@@ -47,7 +45,7 @@ fun AddTransactionScreenView(
                     Row {
                         Text(
                             text = stringResource(
-                                id = R.string.screen_add_transaction_appbar_title,
+                                id = R.string.screen_categories_appbar_title,
                             ),
                             color = Primary,
                         )
@@ -74,19 +72,22 @@ fun AddTransactionScreenView(
             FloatingActionButton(
                 backgroundColor = FloatingActionButtonBackground,
                 onClick = {
+                    navigateToAddCategoryScreen(
+                        navigationManager = data.screenViewModel.navigationManager,
+                    )
                 },
-                modifier = Modifier,
             ) {
                 Icon(
-                    imageVector = Icons.Rounded.Done,
+                    imageVector = Icons.Rounded.Add,
                     contentDescription = stringResource(
-                        id = R.string.screen_add_transaction_floating_action_button_content_description,
+                        id = R.string.screen_sources_floating_action_button_content_description,
                     ),
                     tint = FloatingActionButtonIconTint,
                 )
             }
         },
         floatingActionButtonPosition = FabPosition.End,
+        isFloatingActionButtonDocked = true,
         modifier = Modifier
             .fillMaxSize(),
     ) { innerPadding ->
@@ -102,15 +103,4 @@ fun AddTransactionScreenView(
         ) {
         }
     }
-}
-
-@ExperimentalMaterial3Api
-@Preview
-@Composable
-private fun AddTransactionScreenViewPreview() {
-    /*
-    MyAppTheme {
-        AddTransactionScreenView()
-    }
-    */
 }
