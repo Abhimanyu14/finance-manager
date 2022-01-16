@@ -42,6 +42,7 @@ fun SourcesScreenView(
     data: SourcesScreenViewData,
 ) {
     val scaffoldState = rememberScaffoldState()
+
     val sources by data.screenViewModel.sources.collectAsState(
         initial = emptyList(),
     )

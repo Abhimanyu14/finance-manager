@@ -1,17 +1,15 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories
+package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_category
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 
-@ExperimentalMaterialApi
 @Composable
-fun CategoriesScreen(
-    screenViewModel: CategoriesViewModel = hiltViewModel(),
+fun AddCategoryScreen(
+    screenViewModel: AddCategoryViewModel = hiltViewModel(),
 ) {
-    logError("Inside CategoriesScreen")
+    logError("Inside AddCategoryScreen")
 
     LaunchedEffect(
         key1 = Unit,
@@ -19,8 +17,8 @@ fun CategoriesScreen(
         screenViewModel.trackScreen()
     }
 
-    CategoriesScreenView(
-        data = CategoriesScreenViewData(
+    AddCategoryScreenView(
+        data = AddCategoryScreenViewData(
             screenViewModel = screenViewModel,
         ),
     )

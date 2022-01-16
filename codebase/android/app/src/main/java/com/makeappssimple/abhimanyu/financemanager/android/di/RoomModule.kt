@@ -1,6 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.di
 
 import android.content.Context
+import com.makeappssimple.abhimanyu.financemanager.android.data.category.CategoryDao
+import com.makeappssimple.abhimanyu.financemanager.android.data.category.CategoryRepository
 import com.makeappssimple.abhimanyu.financemanager.android.data.database.MyRoomDatabase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceRepository
@@ -36,6 +38,22 @@ class RoomModule {
     ): SourceRepository {
         return SourceRepository(
             sourceDao = sourceDao,
+        )
+    }
+
+    @Provides
+    fun providesCategoryDao(
+        myRoomDatabase: MyRoomDatabase,
+    ): CategoryDao {
+        return myRoomDatabase.categoryDao()
+    }
+
+    @Provides
+    fun providesCategoryRepository(
+        categoryDao: CategoryDao,
+    ): CategoryRepository {
+        return CategoryRepository(
+            categoryDao = categoryDao,
         )
     }
 }

@@ -15,6 +15,11 @@
 
     <!-- add category screen -->
     <string name="screen_add_category_appbar_title">Enter Category Details</string>
+    <string name="screen_add_category_title">Title</string>
+    <string name="screen_add_category_clear_title">Clear Title</string>
+    <string name="screen_add_category_description">Description</string>
+    <string name="screen_add_category_clear_description">Clear Description</string>
+    <string name="screen_add_category_floating_action_button_content_description">SAVE</string>
 
     <!-- add source screen -->
     <string name="screen_add_source_appbar_title">Enter Source Details</string>

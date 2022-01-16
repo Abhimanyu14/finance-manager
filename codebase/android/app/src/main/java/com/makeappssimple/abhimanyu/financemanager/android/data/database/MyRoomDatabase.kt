@@ -8,14 +8,19 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.AutoMigrationSpec
+import com.makeappssimple.abhimanyu.financemanager.android.data.category.CategoryDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.converters.AmountConverter
+import com.makeappssimple.abhimanyu.financemanager.android.data.converters.CategoriesConverter
+import com.makeappssimple.abhimanyu.financemanager.android.data.converters.CategoryConverter
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceDao
+import com.makeappssimple.abhimanyu.financemanager.android.models.Category
 import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 
 @Database(
-    version = 2,
+    version = 3,
     entities = [
         Source::class,
+        Category::class,
     ],
     autoMigrations = [
         AutoMigration(
@@ -28,10 +33,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 )
 @TypeConverters(
     AmountConverter::class,
+    CategoryConverter::class,
+    CategoriesConverter::class,
 )
 abstract class MyRoomDatabase : RoomDatabase() {
 
     abstract fun sourceDao(): SourceDao
+    abstract fun categoryDao(): CategoryDao
 
     /**
      * Room auto-migration
@@ -64,6 +72,9 @@ abstract class MyRoomDatabase : RoomDatabase() {
                         context.applicationContext,
                         MyRoomDatabase::class.java,
                         "finance_manager_database",
+                    )
+                    .addMigrations(
+                        MIGRATION_2_3,
                     )
                     .build()
                 INSTANCE = instance
