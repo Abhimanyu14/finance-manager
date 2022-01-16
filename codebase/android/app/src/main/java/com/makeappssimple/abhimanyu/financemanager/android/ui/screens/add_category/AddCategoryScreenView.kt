@@ -99,24 +99,6 @@ fun AddCategoryScreenView(
                     ),
             )
         },
-        floatingActionButton = {
-            FloatingActionButton(
-                backgroundColor = FloatingActionButtonBackground,
-                onClick = {
-                    data.screenViewModel.insertCategory()
-                },
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.Done,
-                    contentDescription = stringResource(
-                        id = R.string.screen_add_category_floating_action_button_content_description,
-                    ),
-                    tint = FloatingActionButtonIconTint,
-                )
-            }
-        },
-        floatingActionButtonPosition = FabPosition.End,
-        isFloatingActionButtonDocked = true,
         modifier = Modifier
             .fillMaxSize(),
     ) { innerPadding ->
