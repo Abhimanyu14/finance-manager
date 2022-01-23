@@ -15,12 +15,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.converters.Categ
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.models.Category
 import com.makeappssimple.abhimanyu.financemanager.android.models.Source
+import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
 
 @Database(
-    version = 3,
+    version = 4,
     entities = [
         Source::class,
         Category::class,
+        Transaction::class,
     ],
     autoMigrations = [
         AutoMigration(
@@ -33,8 +35,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 )
 @TypeConverters(
     AmountConverter::class,
-    CategoryConverter::class,
     CategoriesConverter::class,
+    CategoryConverter::class,
 )
 abstract class MyRoomDatabase : RoomDatabase() {
 
@@ -75,6 +77,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     )
                     .addMigrations(
                         MIGRATION_2_3,
+                        MIGRATION_3_4,
                     )
                     .build()
                 INSTANCE = instance
