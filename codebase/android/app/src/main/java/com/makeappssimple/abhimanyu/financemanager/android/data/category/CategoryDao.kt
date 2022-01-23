@@ -22,11 +22,6 @@ interface CategoryDao {
     )
 
     @Delete
-    suspend fun deleteCategory(
-        category: Category,
-    )
-
-    @Delete
     suspend fun deleteCategories(
         vararg categories: Category,
     )

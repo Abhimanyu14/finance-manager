@@ -15,7 +15,7 @@ class CategoryRepository(
         category: Category,
     ) {
         categoryDao.insertCategory(
-            category = category
+            category = category,
         )
     }
 
@@ -23,7 +23,7 @@ class CategoryRepository(
         vararg categories: Category,
     ) {
         categoryDao.deleteCategories(
-            categories = categories
+            categories = categories,
         )
     }
 }

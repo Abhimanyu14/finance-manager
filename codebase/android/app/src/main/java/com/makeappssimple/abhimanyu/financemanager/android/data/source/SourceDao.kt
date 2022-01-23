@@ -22,11 +22,6 @@ interface SourceDao {
     )
 
     @Delete
-    suspend fun deleteSource(
-        source: Source,
-    )
-
-    @Delete
     suspend fun deleteSources(
         vararg sources: Source,
     )
