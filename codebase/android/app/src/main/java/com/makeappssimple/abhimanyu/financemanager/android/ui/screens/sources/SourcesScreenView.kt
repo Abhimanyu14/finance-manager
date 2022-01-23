@@ -116,7 +116,7 @@ fun SourcesScreenView(
                     ListItem(
                         text = {
                             Text(
-                                text = "${source.name} ${source.type}",
+                                text = "${source.name} (${source.type.title})",
                             )
                         },
                         secondaryText = {

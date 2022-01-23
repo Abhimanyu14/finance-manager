@@ -23,7 +23,6 @@ import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Icon
-import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -46,6 +45,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.models.SourceType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyExtendedFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButton
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.NavigationArrowBackIcon
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
@@ -232,38 +233,17 @@ fun AddSourceScreenView(
                             vertical = 8.dp,
                         ),
                 )
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier,
-                ) {
-                    RadioButton(
-                        selected = data.screenViewModel.type == SourceType.CASH,
-                        onClick = {
-                            data.screenViewModel.type = SourceType.CASH
-                        },
-                    )
-                    Text(
-                        text = "Cash",
-                    )
-                    RadioButton(
-                        selected = data.screenViewModel.type == SourceType.BANK,
-                        onClick = {
-                            data.screenViewModel.type = SourceType.BANK
-                        },
-                    )
-                    Text(
-                        text = "Bank",
-                    )
-                    RadioButton(
-                        selected = data.screenViewModel.type == SourceType.E_WALLET,
-                        onClick = {
-                            data.screenViewModel.type = SourceType.E_WALLET
-                        },
-                    )
-                    Text(
-                        text = "E-Wallet",
-                    )
-                }
+                MyRadioGroup(
+                    items = SourceType.values().map { sourceType ->
+                        MyRadioGroupItem(
+                            text = sourceType.title,
+                        )
+                    },
+                    selectedItemIndex = data.screenViewModel.type.ordinal,
+                    onSelectionChange = { ordinal ->
+                        data.screenViewModel.type = SourceType.values()[ordinal]
+                    },
+                )
                 MyExtendedFloatingActionButton(
                     onClickLabel = stringResource(
                         id = R.string.screen_add_source_floating_action_button_content_description,

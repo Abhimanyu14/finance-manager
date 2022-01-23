@@ -4,10 +4,18 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-enum class SourceType {
-    BANK,
-    CASH,
-    E_WALLET,
+enum class SourceType(
+    val title: String,
+) {
+    BANK(
+        title = "Bank",
+    ),
+    CASH(
+        title = "Cash",
+    ),
+    E_WALLET(
+        title = "E-Wallet",
+    ),
 }
 
 @Entity(tableName = "source_table")
