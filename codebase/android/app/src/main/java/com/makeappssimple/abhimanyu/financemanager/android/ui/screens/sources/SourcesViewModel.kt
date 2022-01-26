@@ -10,10 +10,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SourcesViewModel @Inject constructor(
+    sourceRepository: SourceRepository,
     val navigationManager: NavigationManager,
-    private val sourceRepository: SourceRepository,
 ) : BaseViewModel() {
-    var sources: Flow<List<Source>> = sourceRepository.sources
+    val sources: Flow<List<Source>> = sourceRepository.sources
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code

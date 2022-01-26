@@ -10,10 +10,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CategoriesViewModel @Inject constructor(
+    categoryRepository: CategoryRepository,
     val navigationManager: NavigationManager,
-    private val categoryRepository: CategoryRepository,
 ) : BaseViewModel() {
-    var categories: Flow<List<Category>> = categoryRepository.categories
+    val categories: Flow<List<Category>> = categoryRepository.categories
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code

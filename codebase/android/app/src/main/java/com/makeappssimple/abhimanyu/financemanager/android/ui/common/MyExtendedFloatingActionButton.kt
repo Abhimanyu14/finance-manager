@@ -159,9 +159,10 @@ fun MyExtendedLoadingFloatingActionButton(
                     ) {
                         CircularProgressIndicator(
                             strokeWidth = 2.dp,
-                            modifier = Modifier.size(
-                                24.dp
-                            ),
+                            modifier = Modifier
+                                .size(
+                                    24.dp
+                                ),
                         )
                     }
 

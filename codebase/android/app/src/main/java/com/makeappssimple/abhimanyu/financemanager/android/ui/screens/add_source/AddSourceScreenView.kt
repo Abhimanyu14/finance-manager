@@ -171,7 +171,9 @@ fun AddSourceScreenView(
                     singleLine = true,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .focusRequester(focusRequester)
+                        .focusRequester(
+                            focusRequester = focusRequester,
+                        )
                         .padding(
                             horizontal = 16.dp,
                             vertical = 8.dp,
@@ -241,7 +243,8 @@ fun AddSourceScreenView(
                     },
                     selectedItemIndex = data.screenViewModel.type.ordinal,
                     onSelectionChange = { ordinal ->
-                        data.screenViewModel.type = SourceType.values()[ordinal]
+                        data.screenViewModel.type =
+                            SourceType.values().getOrElse(ordinal) { SourceType.CASH }
                     },
                 )
                 MyExtendedFloatingActionButton(

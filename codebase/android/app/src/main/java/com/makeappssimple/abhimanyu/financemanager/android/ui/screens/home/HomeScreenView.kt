@@ -13,6 +13,7 @@ import androidx.compose.material.ContentAlpha
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.ListItem
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
@@ -29,6 +30,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -59,6 +62,10 @@ fun HomeScreenView(
     val scaffoldState = rememberScaffoldState()
     val modalBottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
+    )
+
+    val transactions by data.screenViewModel.transactions.collectAsState(
+        initial = emptyList(),
     )
 
     ModalBottomSheetLayout(
@@ -196,6 +203,22 @@ fun HomeScreenView(
                         paddingValues = innerPadding,
                     ),
             ) {
+                Column {
+                    transactions.forEach { transaction ->
+                        ListItem(
+                            text = {
+                                Text(
+                                    text = transaction.amount.toString(),
+                                )
+                            },
+                            secondaryText = {
+                                Text(
+                                    text = transaction.title,
+                                )
+                            },
+                        )
+                    }
+                }
             }
         }
     }

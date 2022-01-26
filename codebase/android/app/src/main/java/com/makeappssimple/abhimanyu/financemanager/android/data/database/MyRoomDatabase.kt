@@ -13,12 +13,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.converters.Amoun
 import com.makeappssimple.abhimanyu.financemanager.android.data.converters.CategoriesConverter
 import com.makeappssimple.abhimanyu.financemanager.android.data.converters.CategoryConverter
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceDao
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.models.Category
 import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
 
 @Database(
-    version = 4,
+    version = 5,
     entities = [
         Source::class,
         Category::class,
@@ -42,6 +43,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
     abstract fun sourceDao(): SourceDao
     abstract fun categoryDao(): CategoryDao
+    abstract fun transactionDao(): TransactionDao
 
     /**
      * Room auto-migration
@@ -78,6 +80,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     .addMigrations(
                         MIGRATION_2_3,
                         MIGRATION_3_4,
+                        MIGRATION_4_5,
                     )
                     .build()
                 INSTANCE = instance

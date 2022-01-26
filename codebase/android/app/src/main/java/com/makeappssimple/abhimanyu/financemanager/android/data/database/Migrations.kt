@@ -25,18 +25,18 @@ val MIGRATION_3_4 = object : Migration(3, 4) {
 /**
  * Column data type change
  */
-val MIGRATION_DATA_TYPE_CHANGE_EXAMPLE = object : Migration(3, 4) {
+val MIGRATION_4_5 = object : Migration(4, 5) {
     override fun migrate(
         database: SupportSQLiteDatabase,
     ) {
         // Create the new table
-        database.execSQL("CREATE TABLE IF NOT EXISTS `transaction_table_new` (`amount` TEXT NOT NULL, `category` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `description` TEXT NOT NULL, `title` TEXT NOT NULL, `creation_timestamp` REAL NOT NULL, `transaction_timestamp` REAL NOT NULL, `Transaction_for` TEXT NOT NULL, `transaction_type` TEXT NOT NULL)")
+        database.execSQL("CREATE TABLE IF NOT EXISTS `transaction_table_new` (`amount` TEXT NOT NULL, `categoryId` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `description` TEXT NOT NULL, `title` TEXT NOT NULL, `creation_timestamp` INTEGER NOT NULL, `transaction_timestamp` INTEGER NOT NULL, `transaction_for` TEXT NOT NULL, `transaction_type` TEXT NOT NULL)")
 
         // Copy the data
-        database.execSQL("INSERT INTO transaction_table_new (userid, username, last_update) SELECT userid, username, last_update FROM transaction_table")
+        database.execSQL("INSERT INTO transaction_table_new (amount, id, description, title, creation_timestamp, transaction_timestamp, transaction_for, transaction_type) SELECT amount, id, description, title, creation_timestamp, transaction_timestamp, transaction_for, transaction_type FROM transaction_table")
 
         // Remove the old table
-        database.execSQL("DROP TABLE transaction_table_new")
+        database.execSQL("DROP TABLE transaction_table")
 
         // Change the table name to the correct one
         database.execSQL("ALTER TABLE transaction_table_new RENAME TO transaction_table")

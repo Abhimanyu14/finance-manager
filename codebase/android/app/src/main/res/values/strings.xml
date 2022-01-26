@@ -31,6 +31,14 @@
 
     <!-- add transaction screen -->
     <string name="screen_add_transaction_appbar_title">Enter Transaction Details</string>
+    <string name="screen_add_transaction_amount">Amount</string>
+    <string name="screen_add_transaction_clear_amount">Clear Amount</string>
+    <string name="screen_add_transaction_title">Title</string>
+    <string name="screen_add_transaction_clear_title">Clear Title</string>
+    <string name="screen_add_transaction_description">Description</string>
+    <string name="screen_add_transaction_clear_description">Clear Description</string>
+    <string name="screen_add_transaction_transaction_date">Transaction Date</string>
+    <string name="screen_add_transaction_category">Category</string>
     <string name="screen_add_transaction_floating_action_button_content_description">Save</string>
 
     <!-- balance details screen -->

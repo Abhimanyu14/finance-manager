@@ -6,6 +6,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.category.Categor
 import com.makeappssimple.abhimanyu.financemanager.android.data.database.MyRoomDatabase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.TransactionDao
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.TransactionRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -54,6 +56,22 @@ class RoomModule {
     ): CategoryRepository {
         return CategoryRepository(
             categoryDao = categoryDao,
+        )
+    }
+
+    @Provides
+    fun providesTransactionDao(
+        myRoomDatabase: MyRoomDatabase,
+    ): TransactionDao {
+        return myRoomDatabase.transactionDao()
+    }
+
+    @Provides
+    fun providesTransactionRepository(
+        transactionDao: TransactionDao,
+    ): TransactionRepository {
+        return TransactionRepository(
+            transactionDao = transactionDao,
         )
     }
 }

@@ -120,7 +120,7 @@ buildscript {
         accompanistVersion = "0.21.2-beta"
 
         // Room
-        roomVersion = "2.4.0"
+        roomVersion = "2.4.1"
 
         // Camera X
         cameraXVersion = "1.1.0-alpha10"

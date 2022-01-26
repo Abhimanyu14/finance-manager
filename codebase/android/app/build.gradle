@@ -120,6 +120,7 @@ dependencies {
 
     // Accompanist
     implementation "com.google.accompanist:accompanist-insets:$rootProject.accompanistVersion"
+    implementation "com.google.accompanist:accompanist-flowlayout:$rootProject.accompanistVersion"
 
     // Hilt
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"

@@ -4,32 +4,52 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-enum class TransactionFor {
-    SELF,
-    COMMON,
-    OTHERS,
+enum class TransactionFor(
+    val title: String,
+) {
+    SELF(
+        title = "Self",
+    ),
+    COMMON(
+        title = "Common",
+    ),
+    OTHERS(
+        title = "Others",
+    ),
 }
 
-enum class TransactionType {
-    INCOME,
-    EXPENSE,
-    TRANSFER,
-    LOAN,
-    REPAYMENT,
+enum class TransactionType(
+    val title: String,
+) {
+    INCOME(
+        title = "Income",
+    ),
+    EXPENSE(
+        title = "Expense",
+    ),
+    TRANSFER(
+        title = "Transfer",
+    ),
+    LOAN(
+        title = "Loan",
+    ),
+    REPAYMENT(
+        title = "Repayment",
+    ),
 }
 
 @Entity(tableName = "transaction_table")
 data class Transaction(
     val amount: Amount,
-    val category: Category,
+    val categoryId: Int = 0,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val description: String = "",
     val title: String,
     @ColumnInfo(name = "creation_timestamp")
-    val creationTimestamp: Double,
+    val creationTimestamp: Long,
     @ColumnInfo(name = "transaction_timestamp")
-    val transactionTimestamp: Double,
+    val transactionTimestamp: Long,
     @ColumnInfo(name = "transaction_for")
     val transactionFor: TransactionFor = TransactionFor.SELF,
     @ColumnInfo(name = "transaction_type")

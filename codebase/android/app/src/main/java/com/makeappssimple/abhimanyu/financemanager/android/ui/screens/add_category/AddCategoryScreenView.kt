@@ -168,7 +168,9 @@ fun AddCategoryScreenView(
                     singleLine = true,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .focusRequester(focusRequester)
+                        .focusRequester(
+                            focusRequester = focusRequester,
+                        )
                         .padding(
                             horizontal = 16.dp,
                             vertical = 8.dp,

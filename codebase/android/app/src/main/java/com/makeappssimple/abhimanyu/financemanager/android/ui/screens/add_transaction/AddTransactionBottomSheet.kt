@@ -1,8 +1,9 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
+package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
@@ -15,33 +16,36 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.MyAppTheme
 
-data class HomeBottomSheetItemData(
+data class AddTransactionSelectCategoryBottomSheetItemData(
     val text: String,
     val onClick: () -> Unit,
 )
 
-data class HomeBottomSheetData(
-    val list: List<HomeBottomSheetItemData>,
+data class AddTransactionSelectCategoryBottomSheetData(
+    val list: List<AddTransactionSelectCategoryBottomSheetItemData>,
 )
 
 @Composable
-fun HomeBottomSheet(
-    data: HomeBottomSheetData,
+fun AddTransactionSelectCategoryBottomSheet(
+    data: AddTransactionSelectCategoryBottomSheetData,
 ) {
     Column(
-        modifier = Modifier,
+        modifier = Modifier
+            .defaultMinSize(
+                minHeight = 24.dp,
+            ),
     ) {
-        data.list.forEach { homeBottomSheetItemData ->
-            HomeBottomSheetItem(
-                data = homeBottomSheetItemData,
+        data.list.forEach { addTransactionSelectCategoryBottomSheetItemData ->
+            AddTransactionSelectCategoryBottomSheetItem(
+                data = addTransactionSelectCategoryBottomSheetItemData,
             )
         }
     }
 }
 
 @Composable
-private fun HomeBottomSheetItem(
-    data: HomeBottomSheetItemData,
+private fun AddTransactionSelectCategoryBottomSheetItem(
+    data: AddTransactionSelectCategoryBottomSheetItemData,
 ) {
     Row(
         modifier = Modifier
@@ -68,14 +72,14 @@ private fun HomeBottomSheetItem(
 @Composable
 private fun MyBottomSheetContentPreview() {
     MyAppTheme {
-        HomeBottomSheet(
-            data = HomeBottomSheetData(
+        AddTransactionSelectCategoryBottomSheet(
+            data = AddTransactionSelectCategoryBottomSheetData(
                 list = listOf(
-                    HomeBottomSheetItemData(
+                    AddTransactionSelectCategoryBottomSheetItemData(
                         text = "Sources",
                         onClick = {},
                     ),
-                    HomeBottomSheetItemData(
+                    AddTransactionSelectCategoryBottomSheetItemData(
                         text = "Categories",
                         onClick = {},
                     ),
