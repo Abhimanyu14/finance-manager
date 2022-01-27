@@ -21,6 +21,13 @@ interface SourceDao {
         source: Source,
     )
 
+    @Query(
+        value = "DELETE FROM source_table WHERE id = :id",
+    )
+    suspend fun deleteSource(
+        id: Int,
+    )
+
     @Delete
     suspend fun deleteSources(
         vararg sources: Source,

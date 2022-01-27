@@ -246,6 +246,10 @@ fun AddSourceScreenView(
                         data.screenViewModel.type =
                             SourceType.values().getOrElse(ordinal) { SourceType.CASH }
                     },
+                    modifier = Modifier.padding(
+                        horizontal = 16.dp,
+                        vertical = 8.dp,
+                    ),
                 )
                 MyExtendedFloatingActionButton(
                     onClickLabel = stringResource(

@@ -75,7 +75,7 @@ class AddTransactionViewModel @Inject constructor(
             transactionRepository.insertTransaction(
                 transaction = Transaction(
                     amount = Amount(
-                        value = amount.toFloat(),
+                        value = amount.toLong(),
                     ),
                     categoryId = category?.id ?: 0,
                     description = description,

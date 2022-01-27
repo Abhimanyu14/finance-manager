@@ -42,7 +42,7 @@ class AddSourceViewModel @Inject constructor(
             sourceRepository.insertSource(
                 source = Source(
                     balanceAmount = Amount(
-                        value = balanceAmount.toFloat(),
+                        value = balanceAmount.toLong(),
                     ),
                     type = type,
                     name = name,

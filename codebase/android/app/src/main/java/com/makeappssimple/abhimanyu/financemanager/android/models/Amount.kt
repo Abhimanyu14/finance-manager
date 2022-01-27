@@ -1,15 +1,17 @@
 package com.makeappssimple.abhimanyu.financemanager.android.models
 
-enum class Currency {
-    INR,
-    USD,
-}
+import com.makeappssimple.abhimanyu.financemanager.android.utils.formattedCurrencyValue
+import java.util.*
 
 data class Amount(
-    val currency: Currency = Currency.INR,
-    val value: Float = 0F,
+    val currency: Currency = Currency.getInstance("INR"),
+    val value: Long = 0,
 ) {
     override fun toString(): String {
-        return "$value $currency"
+        val formattedValue = formattedCurrencyValue(
+            value = value,
+        )
+
+        return "${currency.symbol} $formattedValue"
     }
 }

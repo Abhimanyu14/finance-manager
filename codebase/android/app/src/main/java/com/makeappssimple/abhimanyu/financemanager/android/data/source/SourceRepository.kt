@@ -19,6 +19,14 @@ class SourceRepository(
         )
     }
 
+    suspend fun deleteSource(
+        id: Int,
+    ) {
+        sourceDao.deleteSource(
+            id = id,
+        )
+    }
+
     suspend fun deleteSources(
         vararg sources: Source,
     ) {

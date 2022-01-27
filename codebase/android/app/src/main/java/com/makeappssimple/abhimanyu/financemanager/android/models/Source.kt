@@ -22,10 +22,23 @@ enum class SourceType(
 data class Source(
     @ColumnInfo(name = "balance_amount")
     val balanceAmount: Amount = Amount(
-        value = 0F,
+        value = 0,
     ),
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     val type: SourceType = SourceType.CASH,
     val name: String,
 )
+
+val SourceType.sortOrder: Int
+    get() = when (this) {
+        SourceType.CASH -> {
+            1
+        }
+        SourceType.BANK -> {
+            2
+        }
+        SourceType.E_WALLET -> {
+            3
+        }
+    }
