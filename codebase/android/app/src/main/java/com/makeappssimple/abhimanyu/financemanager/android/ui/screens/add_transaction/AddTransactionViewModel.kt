@@ -7,9 +7,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.CategoryRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceRepository
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.models.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.models.Category
+import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
@@ -27,10 +29,12 @@ import javax.inject.Inject
 @HiltViewModel
 class AddTransactionViewModel @Inject constructor(
     categoryRepository: CategoryRepository,
+    sourceRepository: SourceRepository,
     val navigationManager: NavigationManager,
     private val transactionRepository: TransactionRepository,
 ) : BaseViewModel() {
     val categories: Flow<List<Category>> = categoryRepository.categories
+    val sources: Flow<List<Source>> = sourceRepository.sources
 
     var amount by mutableStateOf(
         value = "",
@@ -41,6 +45,14 @@ class AddTransactionViewModel @Inject constructor(
     val categoryTextFieldValue by derivedStateOf {
         TextFieldValue(
             text = category?.title ?: "",
+        )
+    }
+    var source: Source? by mutableStateOf(
+        value = null,
+    )
+    val sourceTextFieldValue by derivedStateOf {
+        TextFieldValue(
+            text = source?.name ?: "",
         )
     }
     var description by mutableStateOf(
@@ -78,6 +90,7 @@ class AddTransactionViewModel @Inject constructor(
                         value = amount.toLong(),
                     ),
                     categoryId = category?.id ?: 0,
+                    sourceId = source?.id ?: 0,
                     description = description,
                     title = title,
                     creationTimestamp = Calendar.getInstance().timeInMillis,

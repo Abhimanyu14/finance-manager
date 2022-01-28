@@ -11,23 +11,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.MyAppTheme
 
-data class AddTransactionSelectCategoryBottomSheetItemData(
+data class AddTransactionSelectSourceBottomSheetItemData(
     val text: String,
     val onClick: () -> Unit,
 )
 
-data class AddTransactionSelectCategoryBottomSheetData(
-    val list: List<AddTransactionSelectCategoryBottomSheetItemData>,
+data class AddTransactionSelectSourceBottomSheetData(
+    val list: List<AddTransactionSelectSourceBottomSheetItemData>,
 )
 
 @Composable
-fun AddTransactionSelectCategoryBottomSheet(
-    data: AddTransactionSelectCategoryBottomSheetData,
+fun AddTransactionSelectSourceBottomSheet(
+    data: AddTransactionSelectSourceBottomSheetData,
 ) {
     Column(
         modifier = Modifier
@@ -35,17 +33,17 @@ fun AddTransactionSelectCategoryBottomSheet(
                 minHeight = 24.dp,
             ),
     ) {
-        data.list.forEach { addTransactionSelectCategoryBottomSheetItemData ->
-            AddTransactionSelectCategoryBottomSheetItem(
-                data = addTransactionSelectCategoryBottomSheetItemData,
+        data.list.forEach { addTransactionSelectSourceBottomSheetItemData ->
+            AddTransactionSelectSourceBottomSheetItem(
+                data = addTransactionSelectSourceBottomSheetItemData,
             )
         }
     }
 }
 
 @Composable
-private fun AddTransactionSelectCategoryBottomSheetItem(
-    data: AddTransactionSelectCategoryBottomSheetItemData,
+private fun AddTransactionSelectSourceBottomSheetItem(
+    data: AddTransactionSelectSourceBottomSheetItemData,
 ) {
     Row(
         modifier = Modifier
@@ -64,27 +62,6 @@ private fun AddTransactionSelectCategoryBottomSheetItem(
             fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier,
-        )
-    }
-}
-
-@Preview
-@Composable
-private fun MyBottomSheetContentPreview() {
-    MyAppTheme {
-        AddTransactionSelectCategoryBottomSheet(
-            data = AddTransactionSelectCategoryBottomSheetData(
-                list = listOf(
-                    AddTransactionSelectCategoryBottomSheetItemData(
-                        text = "Sources",
-                        onClick = {},
-                    ),
-                    AddTransactionSelectCategoryBottomSheetItemData(
-                        text = "Categories",
-                        onClick = {},
-                    ),
-                ),
-            ),
         )
     }
 }

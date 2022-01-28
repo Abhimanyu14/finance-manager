@@ -36,8 +36,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -51,7 +53,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionFor
@@ -72,6 +73,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.mont
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.setDate
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.year
 import java.util.*
+
+enum class AddTransactionBottomSheet {
+    NONE,
+    SELECT_CATEGORY,
+    SELECT_SOURCE,
+}
 
 data class AddTransactionScreenViewData(
     val screenViewModel: AddTransactionViewModel,
@@ -97,6 +104,9 @@ fun AddTransactionScreenView(
     val categories by data.screenViewModel.categories.collectAsState(
         initial = emptyList(),
     )
+    val sources by data.screenViewModel.sources.collectAsState(
+        initial = emptyList(),
+    )
     val onDateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
         data.screenViewModel.transactionCalendar =
             (data.screenViewModel.transactionCalendar.clone() as Calendar)
@@ -113,6 +123,11 @@ fun AddTransactionScreenView(
         data.screenViewModel.transactionCalendar.month,
         data.screenViewModel.transactionCalendar.dayOfMonth,
     )
+    var addTransactionBottomSheet by remember {
+        mutableStateOf(
+            value = AddTransactionBottomSheet.NONE,
+        )
+    }
 
     LaunchedEffect(
         key1 = categories,
@@ -122,26 +137,68 @@ fun AddTransactionScreenView(
         }
     }
 
+    LaunchedEffect(
+        key1 = sources,
+    ) {
+        data.screenViewModel.source = sources.firstOrNull {
+            it.name.contains("Cash")
+        }
+    }
+
     ModalBottomSheetLayout(
         sheetState = modalBottomSheetState,
         sheetContent = {
-            AddTransactionSelectCategoryBottomSheet(
-                data = AddTransactionSelectCategoryBottomSheetData(
-                    list = categories.map { category ->
-                        AddTransactionSelectCategoryBottomSheetItemData(
-                            text = category.title,
-                            onClick = {
-                                toggleModalBottomSheetState(
-                                    coroutineScope = coroutineScope,
-                                    modalBottomSheetState = modalBottomSheetState,
-                                ) {
-                                    data.screenViewModel.category = category
-                                }
-                            },
-                        )
-                    }.toList(),
-                ),
-            )
+            when (addTransactionBottomSheet) {
+                AddTransactionBottomSheet.NONE -> {
+                    Spacer(
+                        modifier = Modifier.height(
+                            height = 100.dp,
+                        ),
+                    )
+                }
+                AddTransactionBottomSheet.SELECT_CATEGORY -> {
+                    AddTransactionSelectCategoryBottomSheet(
+                        data = AddTransactionSelectCategoryBottomSheetData(
+                            list = categories.map { category ->
+                                AddTransactionSelectCategoryBottomSheetItemData(
+                                    text = category.title,
+                                    onClick = {
+                                        toggleModalBottomSheetState(
+                                            coroutineScope = coroutineScope,
+                                            modalBottomSheetState = modalBottomSheetState,
+                                        ) {
+                                            data.screenViewModel.category = category
+                                            addTransactionBottomSheet =
+                                                AddTransactionBottomSheet.NONE
+                                        }
+                                    },
+                                )
+                            }.toList(),
+                        ),
+                    )
+                }
+                AddTransactionBottomSheet.SELECT_SOURCE -> {
+                    AddTransactionSelectSourceBottomSheet(
+                        data = AddTransactionSelectSourceBottomSheetData(
+                            list = sources.map { source ->
+                                AddTransactionSelectSourceBottomSheetItemData(
+                                    text = source.name,
+                                    onClick = {
+                                        toggleModalBottomSheetState(
+                                            coroutineScope = coroutineScope,
+                                            modalBottomSheetState = modalBottomSheetState,
+                                        ) {
+                                            data.screenViewModel.source = source
+                                            addTransactionBottomSheet =
+                                                AddTransactionBottomSheet.NONE
+                                        }
+                                    },
+                                )
+                            }.toList(),
+                        ),
+                    )
+                }
+            }
         },
     ) {
         Scaffold(
@@ -412,7 +469,6 @@ fun AddTransactionScreenView(
                     )
                     ReadonlyTextField(
                         value = data.screenViewModel.transactionDateTextFieldValue,
-                        onValueChange = {},
                         onClick = {
                             transactionDatePickerDialog.show()
                         },
@@ -431,8 +487,8 @@ fun AddTransactionScreenView(
                     )
                     ReadonlyTextField(
                         value = data.screenViewModel.categoryTextFieldValue,
-                        onValueChange = {},
                         onClick = {
+                            addTransactionBottomSheet = AddTransactionBottomSheet.SELECT_CATEGORY
                             toggleModalBottomSheetState(
                                 coroutineScope = coroutineScope,
                                 modalBottomSheetState = modalBottomSheetState,
@@ -448,7 +504,33 @@ fun AddTransactionScreenView(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(
-                                all = 16.dp,
+                                start = 16.dp,
+                                end = 16.dp,
+                                top = 16.dp,
+                            ),
+                    )
+                    ReadonlyTextField(
+                        value = data.screenViewModel.sourceTextFieldValue,
+                        onClick = {
+                            addTransactionBottomSheet = AddTransactionBottomSheet.SELECT_SOURCE
+                            toggleModalBottomSheetState(
+                                coroutineScope = coroutineScope,
+                                modalBottomSheetState = modalBottomSheetState,
+                            ) {}
+                        },
+                        label = {
+                            Text(
+                                text = stringResource(
+                                    id = R.string.screen_add_transaction_source,
+                                ),
+                            )
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                start = 16.dp,
+                                end = 16.dp,
+                                top = 16.dp,
                             ),
                     )
                     MyExtendedFloatingActionButton(

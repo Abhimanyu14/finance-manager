@@ -224,7 +224,7 @@ fun AddSourceScreenView(
                         },
                     ),
                     keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number,
+                        keyboardType = KeyboardType.NumberPassword,
                         imeAction = ImeAction.Done,
                     ),
                     singleLine = true,

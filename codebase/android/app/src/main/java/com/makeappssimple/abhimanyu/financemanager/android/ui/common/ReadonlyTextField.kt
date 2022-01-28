@@ -12,14 +12,13 @@ import androidx.compose.ui.text.input.TextFieldValue
 fun ReadonlyTextField(
     value: TextFieldValue,
     modifier: Modifier = Modifier,
-    onValueChange: (TextFieldValue) -> Unit,
     onClick: () -> Unit,
     label: @Composable () -> Unit,
 ) {
     Box {
         OutlinedTextField(
             value = value,
-            onValueChange = onValueChange,
+            onValueChange = {},
             modifier = modifier,
             label = label
         )

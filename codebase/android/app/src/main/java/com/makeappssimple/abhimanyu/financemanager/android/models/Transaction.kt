@@ -30,12 +30,13 @@ enum class TransactionType(
     TRANSFER(
         title = "Transfer",
     ),
-    LOAN(
-        title = "Loan",
-    ),
-    REPAYMENT(
-        title = "Repayment",
-    ),
+    //    TODO-Abhi: Add Loans later
+    //    LOAN(
+    //        title = "Loan",
+    //    ),
+    //    REPAYMENT(
+    //        title = "Repayment",
+    //    ),
 }
 
 @Entity(tableName = "transaction_table")
