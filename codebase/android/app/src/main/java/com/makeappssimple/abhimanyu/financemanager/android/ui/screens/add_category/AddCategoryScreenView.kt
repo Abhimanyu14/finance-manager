@@ -160,10 +160,13 @@ fun AddCategoryScreenView(
                                 focusDirection = FocusDirection.Down,
                             )
                         },
+                        onDone = {
+                            focusManager.clearFocus()
+                        },
                     ),
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Text,
-                        imeAction = ImeAction.Next,
+                        imeAction = ImeAction.Done,
                     ),
                     singleLine = true,
                     modifier = Modifier
@@ -221,7 +224,7 @@ fun AddCategoryScreenView(
                         },
                     ),
                     keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Number,
+                        keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Done,
                     ),
                     singleLine = true,

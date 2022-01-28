@@ -19,6 +19,14 @@ class CategoryRepository(
         )
     }
 
+    suspend fun deleteCategory(
+        id: Int,
+    ) {
+        categoryDao.deleteCategory(
+            id = id,
+        )
+    }
+
     suspend fun deleteCategories(
         vararg categories: Category,
     ) {

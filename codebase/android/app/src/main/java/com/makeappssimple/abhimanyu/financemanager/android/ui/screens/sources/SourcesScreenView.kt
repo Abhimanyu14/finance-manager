@@ -125,9 +125,7 @@ fun SourcesScreenView(
                     paddingValues = innerPadding,
                 ),
         ) {
-            LazyColumn(
-                modifier = Modifier,
-            ) {
+            LazyColumn {
                 itemsIndexed(
                     items = sources
                         .sortedWith(
@@ -138,13 +136,13 @@ fun SourcesScreenView(
                     key = { _, listItem ->
                         listItem.hashCode()
                     },
-                ) { _, source ->
+                ) { _, listItem ->
                     val dismissState = rememberDismissState(
                         confirmStateChange = { dismissValue ->
                             when (dismissValue) {
                                 DismissValue.DismissedToEnd -> {
                                     data.screenViewModel.deleteSource(
-                                        id = source.id,
+                                        id = listItem.id,
                                     )
                                     true
                                 }
@@ -206,7 +204,7 @@ fun SourcesScreenView(
                         },
                     ) {
                         SourceListItem(
-                            source = source,
+                            source = listItem,
                         )
                     }
                 }
