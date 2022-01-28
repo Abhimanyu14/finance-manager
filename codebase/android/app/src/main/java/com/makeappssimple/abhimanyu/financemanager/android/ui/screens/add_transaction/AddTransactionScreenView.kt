@@ -490,14 +490,3 @@ fun AddTransactionScreenView(
         }
     }
 }
-
-
-@Preview
-@Composable
-private fun AddTransactionScreenViewPreview() {
-    /*
-    MyAppTheme {
-        AddTransactionScreenView()
-    }
-    */
-}

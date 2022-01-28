@@ -42,3 +42,15 @@ val MIGRATION_4_5 = object : Migration(4, 5) {
         database.execSQL("ALTER TABLE transaction_table_new RENAME TO transaction_table")
     }
 }
+
+/**
+ * Column added
+ */
+val MIGRATION_6_7 = object : Migration(6, 7) {
+    override fun migrate(
+        database: SupportSQLiteDatabase,
+    ) {
+        // Add column with a default value
+        database.execSQL("ALTER TABLE transaction_table ADD COLUMN source_id INTEGER  DEFAULT 0 NOT NULL")
+    }
+}

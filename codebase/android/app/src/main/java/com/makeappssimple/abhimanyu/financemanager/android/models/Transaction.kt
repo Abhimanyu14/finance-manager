@@ -45,6 +45,8 @@ data class Transaction(
     val categoryId: Int = 0,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
+    @ColumnInfo(name = "source_id")
+    val sourceId: Int = 0,
     val description: String = "",
     val title: String,
     @ColumnInfo(name = "creation_timestamp")
