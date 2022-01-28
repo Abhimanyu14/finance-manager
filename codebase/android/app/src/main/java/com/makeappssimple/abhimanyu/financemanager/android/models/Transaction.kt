@@ -41,6 +41,7 @@ enum class TransactionType(
 @Entity(tableName = "transaction_table")
 data class Transaction(
     val amount: Amount,
+    @ColumnInfo(name = "category_id")
     val categoryId: Int = 0,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
