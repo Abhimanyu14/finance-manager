@@ -118,7 +118,7 @@ fun AddTransactionScreenView(
         key1 = categories,
     ) {
         data.screenViewModel.category = categories.firstOrNull {
-            it.title == "Default"
+            it.title.contains("Default")
         }
     }
 
@@ -243,7 +243,7 @@ fun AddTransactionScreenView(
                             },
                         ),
                         keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Number,
+                            keyboardType = KeyboardType.NumberPassword,
                             imeAction = ImeAction.Next,
                         ),
                         singleLine = true,

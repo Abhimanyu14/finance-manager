@@ -63,6 +63,8 @@ fun AddCategoryScreenView(
         FocusRequester()
     }
 
+    // TODO-Abhi: Add check to restrict category name with text "default"
+
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
