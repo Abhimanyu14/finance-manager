@@ -1,24 +1,34 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.common
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.DarkGray
 import androidx.compose.ui.graphics.Color.Companion.LightGray
+import androidx.compose.ui.graphics.Color.Companion.Transparent
+import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.google.accompanist.flowlayout.FlowRow
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 
 data class MyRadioGroupItem(
     val text: String,
+    val defaultTextColor: Color = DarkGray,
+    val selectedTextColor: Color = White,
+    val defaultBackgroundColor: Color = LightGray,
+    val selectedBackgroundColor: Color = Primary,
 )
 
 @Composable
@@ -54,17 +64,35 @@ private fun MyRadioGroupItemView(
     Row(
         modifier = Modifier
             .padding(
-                all = 4.dp,
+                horizontal = 4.dp,
             )
     ) {
         Text(
             text = item.text,
-            style = MaterialTheme.typography.body1.merge(),
-            color = Color.White,
+            style = TextStyle(
+                color = if (isSelected) {
+                    item.selectedTextColor
+                } else {
+                    item.defaultTextColor
+                },
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Thin,
+            ),
             modifier = Modifier
                 .clip(
                     shape = RoundedCornerShape(
-                        size = 12.dp,
+                        size = 16.dp,
+                    ),
+                )
+                .border(
+                    width = 1.dp,
+                    color = if (isSelected) {
+                        Transparent
+                    } else {
+                        item.defaultBackgroundColor
+                    },
+                    shape = RoundedCornerShape(
+                        size = 16.dp,
                     ),
                 )
                 .clickable {
@@ -72,13 +100,13 @@ private fun MyRadioGroupItemView(
                 }
                 .background(
                     if (isSelected) {
-                        Primary
+                        item.selectedBackgroundColor
                     } else {
-                        LightGray
+                        Transparent
                     }
                 )
                 .padding(
-                    vertical = 12.dp,
+                    vertical = 6.dp,
                     horizontal = 16.dp,
                 ),
         )

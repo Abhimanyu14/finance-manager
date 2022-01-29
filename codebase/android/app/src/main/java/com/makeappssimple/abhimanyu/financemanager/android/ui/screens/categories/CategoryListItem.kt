@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -32,14 +31,12 @@ fun CategoryListItem(
                 vertical = 12.dp,
             ),
     ) {
-        Column {
-            Text(
-                text = category.title,
-                style = TextStyle(
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.SemiBold,
-                ),
-            )
-        }
+        Text(
+            text = category.title,
+            style = TextStyle(
+                fontSize = 14.sp,
+                fontWeight = FontWeight.SemiBold,
+            ),
+        )
     }
 }
