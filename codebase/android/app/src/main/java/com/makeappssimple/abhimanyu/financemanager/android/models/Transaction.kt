@@ -48,6 +48,8 @@ data class Transaction(
     val id: Int = 0,
     @ColumnInfo(name = "source_id")
     val sourceId: Int = 0,
+    @ColumnInfo(name = "source_to_id")
+    val sourceToId: Int? = 0,
     val description: String = "",
     val title: String,
     @ColumnInfo(name = "creation_timestamp")

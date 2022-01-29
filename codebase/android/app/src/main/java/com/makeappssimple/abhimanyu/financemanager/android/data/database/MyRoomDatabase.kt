@@ -19,7 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
 
 @Database(
-    version = 9,
+    version = 11,
     entities = [
         Source::class,
         Category::class,
@@ -35,6 +35,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
             from = 5,
             to = 6,
             spec = MyRoomDatabase.AutoMigration5to6::class,
+        ),
+        AutoMigration(
+            from = 10,
+            to = 11,
+            spec = MyRoomDatabase.AutoMigration10to11::class,
         ),
     ],
     exportSchema = true,
@@ -68,6 +73,14 @@ abstract class MyRoomDatabase : RoomDatabase() {
     )
     class AutoMigration5to6 : AutoMigrationSpec
 
+    @RenameColumn(
+        tableName = "transaction_table",
+        fromColumnName = "sourceToId",
+        toColumnName = "source_to_id",
+    )
+    class AutoMigration10to11 : AutoMigrationSpec
+
+
     companion object {
 
         @Volatile
@@ -96,6 +109,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                         MIGRATION_6_7,
                         MIGRATION_7_8,
                         MIGRATION_8_9,
+                        MIGRATION_9_10,
                     )
                     .build()
                 INSTANCE = instance
