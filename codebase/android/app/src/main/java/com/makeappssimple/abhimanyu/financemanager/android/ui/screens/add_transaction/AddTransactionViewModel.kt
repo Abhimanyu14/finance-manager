@@ -115,7 +115,7 @@ class AddTransactionViewModel @Inject constructor(
                         value = amount.toLong(),
                     ),
                     categoryId = category?.id ?: 0,
-                    sourceId = source?.id ?: 0,
+                    sourceFromId = source?.id ?: 0,
                     description = description,
                     title = title,
                     creationTimestamp = Calendar.getInstance().timeInMillis,

@@ -19,13 +19,18 @@ import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
 
 @Database(
-    version = 11,
+    version = 12,
     entities = [
         Source::class,
         Category::class,
         Transaction::class,
     ],
     autoMigrations = [
+        AutoMigration(
+            from = 11,
+            to = 12,
+            spec = MyRoomDatabase.AutoMigration11to12::class,
+        ),
         AutoMigration(
             from = 10,
             to = 11,
@@ -61,16 +66,25 @@ abstract class MyRoomDatabase : RoomDatabase() {
      */
     @RenameColumn(
         tableName = "transaction_table",
+        fromColumnName = "source_id",
+        toColumnName = "source_from_id",
+    )
+    class AutoMigration11to12 : AutoMigrationSpec
+
+    @RenameColumn(
+        tableName = "transaction_table",
         fromColumnName = "sourceToId",
         toColumnName = "source_to_id",
     )
     class AutoMigration10to11 : AutoMigrationSpec
+
     @RenameColumn(
         tableName = "transaction_table",
         fromColumnName = "categoryId",
         toColumnName = "category_id",
     )
     class AutoMigration5to6 : AutoMigrationSpec
+
     @RenameColumn(
         tableName = "source_table",
         fromColumnName = "balanceAmount",
