@@ -17,4 +17,6 @@ data class Category(
     val subCategories: List<Category>? = null,
     val description: String = "",
     val title: String,
+    @ColumnInfo(name = "transaction_type")
+    val transactionType: TransactionType,
 )

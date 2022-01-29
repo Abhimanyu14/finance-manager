@@ -19,7 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
 
 @Database(
-    version = 7,
+    version = 8,
     entities = [
         Source::class,
         Category::class,
@@ -94,6 +94,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                         MIGRATION_3_4,
                         MIGRATION_4_5,
                         MIGRATION_6_7,
+                        MIGRATION_7_8,
                     )
                     .build()
                 INSTANCE = instance
