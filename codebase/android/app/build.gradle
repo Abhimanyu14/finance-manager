@@ -5,6 +5,10 @@ plugins {
     id "dagger.hilt.android.plugin"
 }
 
+def apikeyPropertiesFile = rootProject.file("apikey.properties")
+def apikeyProperties = new Properties()
+apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
+
 android {
     compileSdk rootProject.compileSdkVersion
     buildToolsVersion rootProject.buildToolsVersion
@@ -27,6 +31,9 @@ android {
                 arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
+
+        // should correspond to key/value pairs inside the file
+        buildConfigField("String", "OPEN_EMOJI_KEY", apikeyProperties['OPEN_EMOJI_KEY'])
     }
 
     buildTypes {
@@ -92,6 +99,9 @@ dependencies {
     // Lifecycle components
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$rootProject.lifecycleViewModelVersion"
 
+    // Appcompat
+    implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
+
     // Jetpack compose
     implementation "androidx.compose.ui:ui:$rootProject.jetpackComposeVersion"
 
@@ -130,6 +140,15 @@ dependencies {
     kapt "com.google.dagger:hilt-compiler:$rootProject.hiltVersion"
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$rootProject.hiltLifecycleViewmodelVersion"
     kapt "androidx.hilt:hilt-compiler:$rootProject.hiltCompilerVersion"
+
+    // Moshi
+    implementation "com.squareup.moshi:moshi-kotlin:$rootProject.moshiVersion"
+
+    // Retrofit with Moshi Converter
+    implementation "com.squareup.retrofit2:converter-moshi:$rootProject.retrofitMoshiConverterVersion"
+
+    // Coil
+    implementation "io.coil-kt:coil:$rootProject.coilVersion"
 
     // Gson
     implementation "com.google.code.gson:gson:$rootProject.gsonVersion"

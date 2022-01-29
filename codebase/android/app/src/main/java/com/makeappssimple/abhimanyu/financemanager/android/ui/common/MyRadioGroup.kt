@@ -39,8 +39,6 @@ fun MyRadioGroup(
     onSelectionChange: (index: Int) -> Unit,
 ) {
     FlowRow(
-        // verticalAlignment = Alignment.CenterVertically,
-        // horizontalArrangement = Arrangement.SpaceAround,
         modifier = modifier.fillMaxSize(),
     ) {
         items.forEachIndexed { index, item ->

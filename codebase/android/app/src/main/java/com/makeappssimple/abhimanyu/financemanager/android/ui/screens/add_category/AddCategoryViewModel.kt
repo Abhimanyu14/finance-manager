@@ -4,7 +4,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.BuildConfig
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.CategoryRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.Emoji
+import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.EmojiApi
 import com.makeappssimple.abhimanyu.financemanager.android.models.Category
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
@@ -25,6 +28,32 @@ class AddCategoryViewModel @Inject constructor(
     var title by mutableStateOf(
         value = "",
     )
+    var emoji by mutableStateOf(
+        value = "⏳",
+    )
+    var emojis: List<Emoji> by mutableStateOf(
+        value = emptyList(),
+    )
+
+
+    init {
+        viewModelScope.launch {
+            val result = EmojiApi
+                .retrofitService
+                .getEmojis(
+                    accessKey = BuildConfig.OPEN_EMOJI_KEY,
+                )
+            emojis = result
+                .distinctBy {
+                    it.codePoint
+                }
+                .filter {
+                    !it.unicodeName.contains("skin tone")
+                }
+            emoji = "😃"
+        }
+    }
+
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code
