@@ -59,6 +59,9 @@ key.properties
 *.jks
 *.keystore
 
+# API keys
+**/apikey.properties
+
 # Local configuration file (sdk path, etc)
 local.properties
 
