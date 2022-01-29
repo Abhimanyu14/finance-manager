@@ -66,3 +66,32 @@ val MIGRATION_7_8 = object : Migration(7, 8) {
         database.execSQL("ALTER TABLE category_table ADD COLUMN transaction_type TEXT DEFAULT 'EXPENSE' NOT NULL")
     }
 }
+
+/**
+ * Column data type changes
+ *
+ * 1. parentCategory: Category? -> parentCategoryId: Int?
+ * 2. parentCategoryId: Int? -> subCategoryIds: List<Int>?
+ */
+val MIGRATION_8_9 = object : Migration(8, 9) {
+    override fun migrate(
+        database: SupportSQLiteDatabase,
+    ) {
+
+        database.execSQL("CREATE TABLE IF NOT EXISTS `category_table` (`parent_category` TEXT, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sub_categories` TEXT, `description` TEXT NOT NULL, `title` TEXT NOT NULL, `transaction_type` TEXT NOT NULL)")
+
+        database.execSQL("CREATE TABLE IF NOT EXISTS `category_table` (`parent_category` INTEGER, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sub_categories` TEXT, `description` TEXT NOT NULL, `title` TEXT NOT NULL, `transaction_type` TEXT NOT NULL)")
+
+        // Create the new table
+        database.execSQL("CREATE TABLE IF NOT EXISTS `category_table_new` (`parent_category` INTEGER, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sub_categories` TEXT, `description` TEXT NOT NULL, `title` TEXT NOT NULL, `transaction_type` TEXT NOT NULL)")
+
+        // Copy the data
+        database.execSQL("INSERT INTO category_table_new (id, sub_categories, description, title, transaction_type) SELECT id, sub_categories, description, title, transaction_type FROM category_table")
+
+        // Remove the old table
+        database.execSQL("DROP TABLE category_table")
+
+        // Change the table name to the correct one
+        database.execSQL("ALTER TABLE category_table_new RENAME TO category_table")
+    }
+}

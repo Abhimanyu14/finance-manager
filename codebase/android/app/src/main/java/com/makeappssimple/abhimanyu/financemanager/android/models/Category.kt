@@ -4,17 +4,17 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.makeappssimple.abhimanyu.financemanager.android.data.converters.CategoriesConverter
+import com.makeappssimple.abhimanyu.financemanager.android.data.converters.CategoryIdsConverter
 
 @Entity(tableName = "category_table")
 data class Category(
     @ColumnInfo(name = "parent_category")
-    val parentCategory: Category? = null,
+    val parentCategoryId: Int? = null,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @ColumnInfo(name = "sub_categories")
-    @TypeConverters(CategoriesConverter::class)
-    val subCategories: List<Category>? = null,
+    @TypeConverters(CategoryIdsConverter::class)
+    val subCategoryIds: List<Int>? = null,
     val description: String = "",
     val title: String,
     @ColumnInfo(name = "transaction_type")

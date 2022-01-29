@@ -10,8 +10,8 @@ import androidx.room.TypeConverters
 import androidx.room.migration.AutoMigrationSpec
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.CategoryDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.converters.AmountConverter
-import com.makeappssimple.abhimanyu.financemanager.android.data.converters.CategoriesConverter
 import com.makeappssimple.abhimanyu.financemanager.android.data.converters.CategoryConverter
+import com.makeappssimple.abhimanyu.financemanager.android.data.converters.CategoryIdsConverter
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.models.Category
@@ -19,7 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
 
 @Database(
-    version = 8,
+    version = 9,
     entities = [
         Source::class,
         Category::class,
@@ -41,7 +41,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
 )
 @TypeConverters(
     AmountConverter::class,
-    CategoriesConverter::class,
+    CategoryIdsConverter::class,
     CategoryConverter::class,
 )
 abstract class MyRoomDatabase : RoomDatabase() {
@@ -95,6 +95,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                         MIGRATION_4_5,
                         MIGRATION_6_7,
                         MIGRATION_7_8,
+                        MIGRATION_8_9,
                     )
                     .build()
                 INSTANCE = instance

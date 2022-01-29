@@ -3,19 +3,18 @@ package com.makeappssimple.abhimanyu.financemanager.android.data.converters
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.makeappssimple.abhimanyu.financemanager.android.models.Category
 
-class CategoriesConverter {
+class CategoryIdsConverter {
 
     @TypeConverter
     fun stringToCategories(
         value: String?,
-    ): List<Category>? {
+    ): List<Int>? {
         if (value.isNullOrBlank()) {
             return null
         }
         val gson = Gson()
-        val listType = object : TypeToken<List<Category>>() {}.type
+        val listType = object : TypeToken<List<Int>>() {}.type
         return gson.fromJson(
             value,
             listType,
@@ -24,14 +23,14 @@ class CategoriesConverter {
 
     @TypeConverter
     fun categoryToString(
-        categories: List<Category>?,
+        categoryIds: List<Int>?,
     ): String {
-        if (categories == null) {
+        if (categoryIds == null) {
             return ""
         }
         val gson = Gson()
         return gson.toJson(
-            categories,
+            categoryIds,
         )
     }
 }
