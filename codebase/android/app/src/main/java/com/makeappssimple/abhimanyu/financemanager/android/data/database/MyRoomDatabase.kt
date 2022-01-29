@@ -27,9 +27,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
     ],
     autoMigrations = [
         AutoMigration(
-            from = 1,
-            to = 2,
-            spec = MyRoomDatabase.AutoMigration1to2::class,
+            from = 10,
+            to = 11,
+            spec = MyRoomDatabase.AutoMigration10to11::class,
         ),
         AutoMigration(
             from = 5,
@@ -37,9 +37,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
             spec = MyRoomDatabase.AutoMigration5to6::class,
         ),
         AutoMigration(
-            from = 10,
-            to = 11,
-            spec = MyRoomDatabase.AutoMigration10to11::class,
+            from = 1,
+            to = 2,
+            spec = MyRoomDatabase.AutoMigration1to2::class,
         ),
     ],
     exportSchema = true,
@@ -60,25 +60,23 @@ abstract class MyRoomDatabase : RoomDatabase() {
      * Source - https://developer.android.com/training/data-storage/room/migrating-db-versions#automigrationspec
      */
     @RenameColumn(
-        tableName = "source_table",
-        fromColumnName = "balanceAmount",
-        toColumnName = "balance_amount",
+        tableName = "transaction_table",
+        fromColumnName = "sourceToId",
+        toColumnName = "source_to_id",
     )
-    class AutoMigration1to2 : AutoMigrationSpec
-
+    class AutoMigration10to11 : AutoMigrationSpec
     @RenameColumn(
         tableName = "transaction_table",
         fromColumnName = "categoryId",
         toColumnName = "category_id",
     )
     class AutoMigration5to6 : AutoMigrationSpec
-
     @RenameColumn(
-        tableName = "transaction_table",
-        fromColumnName = "sourceToId",
-        toColumnName = "source_to_id",
+        tableName = "source_table",
+        fromColumnName = "balanceAmount",
+        toColumnName = "balance_amount",
     )
-    class AutoMigration10to11 : AutoMigrationSpec
+    class AutoMigration1to2 : AutoMigrationSpec
 
 
     companion object {
@@ -103,13 +101,13 @@ abstract class MyRoomDatabase : RoomDatabase() {
                         "finance_manager_database",
                     )
                     .addMigrations(
-                        MIGRATION_2_3,
-                        MIGRATION_3_4,
-                        MIGRATION_4_5,
-                        MIGRATION_6_7,
-                        MIGRATION_7_8,
-                        MIGRATION_8_9,
                         MIGRATION_9_10,
+                        MIGRATION_8_9,
+                        MIGRATION_7_8,
+                        MIGRATION_6_7,
+                        MIGRATION_4_5,
+                        MIGRATION_3_4,
+                        MIGRATION_2_3,
                     )
                     .build()
                 INSTANCE = instance
