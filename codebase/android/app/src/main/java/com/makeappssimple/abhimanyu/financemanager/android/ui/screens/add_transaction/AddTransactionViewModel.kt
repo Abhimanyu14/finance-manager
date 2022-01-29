@@ -75,9 +75,34 @@ class AddTransactionViewModel @Inject constructor(
     var transactionType by mutableStateOf(
         value = TransactionType.EXPENSE,
     )
+        private set
+
+    var expenseDefaultCategory: Category? = null
+    var expenseDefaultSource: Source? = null
+    var incomeDefaultCategory: Category? = null
+    var incomeDefaultSource: Source? = null
+
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code
+    }
+
+    fun updateTransactionType(
+        updatedTransactionType: TransactionType,
+    ) {
+        transactionType = updatedTransactionType
+
+        when (transactionType) {
+            TransactionType.INCOME -> {
+                source = incomeDefaultSource
+                category = incomeDefaultCategory
+            }
+            TransactionType.EXPENSE -> {
+                source = expenseDefaultSource
+                category = expenseDefaultCategory
+            }
+            TransactionType.TRANSFER -> {}
+        }
     }
 
     fun insertTransaction() {
@@ -95,7 +120,17 @@ class AddTransactionViewModel @Inject constructor(
                     title = title,
                     creationTimestamp = Calendar.getInstance().timeInMillis,
                     transactionTimestamp = transactionCalendar.timeInMillis,
-                    transactionFor = transactionFor,
+                    transactionFor = when (transactionType) {
+                        TransactionType.INCOME -> {
+                            TransactionFor.SELF
+                        }
+                        TransactionType.EXPENSE -> {
+                            transactionFor
+                        }
+                        TransactionType.TRANSFER -> {
+                            TransactionFor.SELF
+                        }
+                    },
                     transactionType = transactionType,
                 ),
             )

@@ -132,17 +132,39 @@ fun AddTransactionScreenView(
     LaunchedEffect(
         key1 = categories,
     ) {
-        data.screenViewModel.category = categories.firstOrNull {
-            it.title.contains("Default")
+        data.screenViewModel.expenseDefaultCategory = categories.firstOrNull {
+            it.title.contains(
+                other = "Default",
+                ignoreCase = true,
+            )
         }
+        data.screenViewModel.incomeDefaultCategory = categories.firstOrNull {
+            it.title.contains(
+                other = "Salary",
+                ignoreCase = true,
+            )
+        }
+
+        data.screenViewModel.category = data.screenViewModel.expenseDefaultCategory
     }
 
     LaunchedEffect(
         key1 = sources,
     ) {
-        data.screenViewModel.source = sources.firstOrNull {
-            it.name.contains("Cash")
+        data.screenViewModel.expenseDefaultSource = sources.firstOrNull {
+            it.name.contains(
+                other = "Cash",
+                ignoreCase = true,
+            )
         }
+        data.screenViewModel.incomeDefaultSource = sources.firstOrNull {
+            it.name.contains(
+                other = "Cash",
+                ignoreCase = true,
+            )
+        }
+
+        data.screenViewModel.source = data.screenViewModel.expenseDefaultSource
     }
 
     ModalBottomSheetLayout(
@@ -159,21 +181,26 @@ fun AddTransactionScreenView(
                 AddTransactionBottomSheet.SELECT_CATEGORY -> {
                     AddTransactionSelectCategoryBottomSheet(
                         data = AddTransactionSelectCategoryBottomSheetData(
-                            list = categories.map { category ->
-                                AddTransactionSelectCategoryBottomSheetItemData(
-                                    text = category.title,
-                                    onClick = {
-                                        toggleModalBottomSheetState(
-                                            coroutineScope = coroutineScope,
-                                            modalBottomSheetState = modalBottomSheetState,
-                                        ) {
-                                            data.screenViewModel.category = category
-                                            addTransactionBottomSheet =
-                                                AddTransactionBottomSheet.NONE
-                                        }
-                                    },
-                                )
-                            }.toList(),
+                            list = categories
+                                .filter { category ->
+                                    data.screenViewModel.transactionType == category.transactionType
+                                }
+                                .map { category ->
+                                    AddTransactionSelectCategoryBottomSheetItemData(
+                                        text = category.title,
+                                        onClick = {
+                                            toggleModalBottomSheetState(
+                                                coroutineScope = coroutineScope,
+                                                modalBottomSheetState = modalBottomSheetState,
+                                            ) {
+                                                data.screenViewModel.category = category
+                                                addTransactionBottomSheet =
+                                                    AddTransactionBottomSheet.NONE
+                                            }
+                                        },
+                                    )
+                                }
+                                .toList(),
                         ),
                     )
                 }
@@ -253,6 +280,27 @@ fun AddTransactionScreenView(
                             state = rememberScrollState(),
                         ),
                 ) {
+                    MyRadioGroup(
+                        items = TransactionType.values().map { transactionType ->
+                            MyRadioGroupItem(
+                                text = transactionType.title,
+                            )
+                        },
+                        selectedItemIndex = data.screenViewModel.transactionType.ordinal,
+                        onSelectionChange = { ordinal ->
+                            data.screenViewModel.updateTransactionType(
+                                updatedTransactionType = TransactionType.values()
+                                    .getOrElse(ordinal) {
+                                        TransactionType.EXPENSE
+                                    }
+                            )
+                        },
+                        modifier = Modifier
+                            .padding(
+                                horizontal = 16.dp,
+                                vertical = 4.dp,
+                            ),
+                    )
                     OutlinedTextField(
                         value = data.screenViewModel.amount,
                         label = {
@@ -311,7 +359,7 @@ fun AddTransactionScreenView(
                             )
                             .padding(
                                 horizontal = 16.dp,
-                                vertical = 8.dp,
+                                vertical = 4.dp,
                             ),
                     )
                     OutlinedTextField(
@@ -369,9 +417,60 @@ fun AddTransactionScreenView(
                             .fillMaxWidth()
                             .padding(
                                 horizontal = 16.dp,
-                                vertical = 8.dp,
+                                vertical = 4.dp,
                             ),
                     )
+                    AnimatedVisibility(
+                        visible = data.screenViewModel.transactionType == TransactionType.EXPENSE ||
+                                data.screenViewModel.transactionType == TransactionType.INCOME,
+                    ) {
+                        ReadonlyTextField(
+                            value = data.screenViewModel.categoryTextFieldValue,
+                            onClick = {
+                                addTransactionBottomSheet =
+                                    AddTransactionBottomSheet.SELECT_CATEGORY
+                                toggleModalBottomSheetState(
+                                    coroutineScope = coroutineScope,
+                                    modalBottomSheetState = modalBottomSheetState,
+                                ) {}
+                            },
+                            label = {
+                                Text(
+                                    text = stringResource(
+                                        id = R.string.screen_add_transaction_category,
+                                    ),
+                                )
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    horizontal = 16.dp,
+                                    vertical = 4.dp,
+                                ),
+                        )
+                    }
+                    AnimatedVisibility(
+                        visible = data.screenViewModel.transactionType == TransactionType.EXPENSE,
+                    ) {
+                        MyRadioGroup(
+                            items = TransactionFor.values().map { transactionFor ->
+                                MyRadioGroupItem(
+                                    text = transactionFor.title,
+                                )
+                            },
+                            selectedItemIndex = data.screenViewModel.transactionFor.ordinal,
+                            onSelectionChange = { ordinal ->
+                                data.screenViewModel.transactionFor =
+                                    TransactionFor.values()
+                                        .getOrElse(ordinal) { TransactionFor.SELF }
+                            },
+                            modifier = Modifier
+                                .padding(
+                                    horizontal = 16.dp,
+                                    vertical = 4.dp,
+                                ),
+                        )
+                    }
                     OutlinedTextField(
                         value = data.screenViewModel.description,
                         label = {
@@ -425,88 +524,7 @@ fun AddTransactionScreenView(
                             .fillMaxWidth()
                             .padding(
                                 horizontal = 16.dp,
-                                vertical = 8.dp,
-                            ),
-                    )
-                    MyRadioGroup(
-                        items = TransactionFor.values().map { transactionFor ->
-                            MyRadioGroupItem(
-                                text = transactionFor.title,
-                            )
-                        },
-                        selectedItemIndex = data.screenViewModel.transactionFor.ordinal,
-                        onSelectionChange = { ordinal ->
-                            data.screenViewModel.transactionFor =
-                                TransactionFor.values().getOrElse(ordinal) { TransactionFor.SELF }
-                        },
-                        modifier = Modifier
-                            .padding(
-                                all = 12.dp,
-                            ),
-                    )
-                    Spacer(
-                        modifier = Modifier
-                            .height(
-                                height = 0.dp,
-                            ),
-                    )
-                    MyRadioGroup(
-                        items = TransactionType.values().map { transactionType ->
-                            MyRadioGroupItem(
-                                text = transactionType.title,
-                            )
-                        },
-                        selectedItemIndex = data.screenViewModel.transactionType.ordinal,
-                        onSelectionChange = { ordinal ->
-                            data.screenViewModel.transactionType =
-                                TransactionType.values()
-                                    .getOrElse(ordinal) { TransactionType.EXPENSE }
-                        },
-                        modifier = Modifier
-                            .padding(
-                                all = 12.dp,
-                            ),
-                    )
-                    ReadonlyTextField(
-                        value = data.screenViewModel.transactionDateTextFieldValue,
-                        onClick = {
-                            transactionDatePickerDialog.show()
-                        },
-                        label = {
-                            Text(
-                                text = stringResource(
-                                    id = R.string.screen_add_transaction_transaction_date,
-                                ),
-                            )
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                horizontal = 16.dp,
-                            ),
-                    )
-                    ReadonlyTextField(
-                        value = data.screenViewModel.categoryTextFieldValue,
-                        onClick = {
-                            addTransactionBottomSheet = AddTransactionBottomSheet.SELECT_CATEGORY
-                            toggleModalBottomSheetState(
-                                coroutineScope = coroutineScope,
-                                modalBottomSheetState = modalBottomSheetState,
-                            ) {}
-                        },
-                        label = {
-                            Text(
-                                text = stringResource(
-                                    id = R.string.screen_add_transaction_category,
-                                ),
-                            )
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                start = 16.dp,
-                                end = 16.dp,
-                                top = 16.dp,
+                                vertical = 4.dp,
                             ),
                     )
                     ReadonlyTextField(
@@ -528,9 +546,27 @@ fun AddTransactionScreenView(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(
-                                start = 16.dp,
-                                end = 16.dp,
-                                top = 16.dp,
+                                horizontal = 16.dp,
+                                vertical = 4.dp,
+                            ),
+                    )
+                    ReadonlyTextField(
+                        value = data.screenViewModel.transactionDateTextFieldValue,
+                        onClick = {
+                            transactionDatePickerDialog.show()
+                        },
+                        label = {
+                            Text(
+                                text = stringResource(
+                                    id = R.string.screen_add_transaction_transaction_date,
+                                ),
+                            )
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                horizontal = 16.dp,
+                                vertical = 4.dp,
                             ),
                     )
                     MyExtendedFloatingActionButton(
@@ -544,7 +580,8 @@ fun AddTransactionScreenView(
                         },
                         modifier = Modifier
                             .padding(
-                                all = 16.dp,
+                                horizontal = 16.dp,
+                                vertical = 4.dp,
                             ),
                     ) {
                         Text(
