@@ -63,6 +63,7 @@ fun AddSourceScreenView(
         FocusRequester()
     }
 
+    // TODO-Abhi: Make 'cash' keyword restricted
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
@@ -108,11 +109,15 @@ fun AddSourceScreenView(
                     ),
             ) {
                 MyRadioGroup(
-                    items = SourceType.values().map { sourceType ->
-                        MyRadioGroupItem(
-                            text = sourceType.title,
-                        )
-                    },
+                    items = SourceType.values()
+                        .filter {
+                            it != SourceType.CASH
+                        }
+                        .map { sourceType ->
+                            MyRadioGroupItem(
+                                text = sourceType.title,
+                            )
+                        },
                     selectedItemIndex = data.screenViewModel.type.ordinal,
                     onSelectionChange = { ordinal ->
                         data.screenViewModel.type =

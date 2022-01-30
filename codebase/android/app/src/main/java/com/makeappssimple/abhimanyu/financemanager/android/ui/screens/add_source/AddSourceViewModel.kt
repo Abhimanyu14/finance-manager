@@ -25,7 +25,7 @@ class AddSourceViewModel @Inject constructor(
         value = "",
     )
     var type by mutableStateOf(
-        value = SourceType.CASH,
+        value = SourceType.BANK,
     )
     var name by mutableStateOf(
         value = "",
