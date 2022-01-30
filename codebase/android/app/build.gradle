@@ -132,7 +132,15 @@ dependencies {
 
     // Accompanist
     implementation "com.google.accompanist:accompanist-insets:$rootProject.accompanistVersion"
+
+    // Accompanist flow layout
     implementation "com.google.accompanist:accompanist-flowlayout:$rootProject.accompanistVersion"
+
+    // Accompanist pager
+    implementation "com.google.accompanist:accompanist-pager:$rootProject.accompanistVersion"
+
+    // Accompanist pager indicators
+    implementation "com.google.accompanist:accompanist-pager-indicators:$rootProject.accompanistVersion"
 
     // Hilt
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"

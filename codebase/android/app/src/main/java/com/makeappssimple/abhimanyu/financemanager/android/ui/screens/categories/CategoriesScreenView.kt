@@ -16,6 +16,8 @@ import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SwipeToDismiss
+import androidx.compose.material.Tab
+import androidx.compose.material.TabRow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.DeleteForever
@@ -27,12 +29,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.pager.ExperimentalPagerApi
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.NavigationBackButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.FloatingActionButtonBackground
@@ -44,6 +52,7 @@ data class CategoriesScreenViewData(
     val screenViewModel: CategoriesViewModel,
 )
 
+@OptIn(ExperimentalPagerApi::class)
 @ExperimentalMaterialApi
 @Composable
 fun CategoriesScreenView(
@@ -53,6 +62,15 @@ fun CategoriesScreenView(
 
     val categories by data.screenViewModel.categories.collectAsState(
         initial = emptyList(),
+    )
+    var selectedTabIndex by remember {
+        mutableStateOf(
+            value = 0,
+        )
+    }
+    val transactionTypes = listOf(
+        TransactionType.EXPENSE,
+        TransactionType.INCOME,
     )
 
     Scaffold(
@@ -111,90 +129,118 @@ fun CategoriesScreenView(
                     paddingValues = innerPadding,
                 ),
         ) {
-            LazyColumn {
-                itemsIndexed(categories) { _, category ->
-                    CategoryListItem(
-                        category = category,
-                    )
-                }
-            }
-
-            LazyColumn {
-                itemsIndexed(
-                    items = categories,
-                    key = { _, listItem ->
-                        listItem.hashCode()
-                    },
-                ) { _, listItem ->
-                    val dismissState = rememberDismissState(
-                        confirmStateChange = { dismissValue ->
-                            when (dismissValue) {
-                                DismissValue.DismissedToEnd -> {
-                                    data.screenViewModel.deleteCategory(
-                                        id = listItem.id,
+            Column {
+                TabRow(
+                    selectedTabIndex = selectedTabIndex,
+                    backgroundColor = Surface,
+                    contentColor = Primary,
+                ) {
+                    transactionTypes
+                        .map {
+                            it.title
+                        }
+                        .forEachIndexed { index, title ->
+                            Tab(
+                                text = {
+                                    Text(
+                                        text = title,
+                                        color = if (selectedTabIndex == index) {
+                                            Primary
+                                        } else {
+                                            Color.DarkGray
+                                        },
+                                        fontWeight = FontWeight.SemiBold,
                                     )
-                                    true
-                                }
-                                DismissValue.DismissedToStart -> {
-                                    false
-                                }
-                                DismissValue.Default -> {
-                                    false
-                                }
-                            }
-                        },
-                    )
-
-                    SwipeToDismiss(
-                        state = dismissState,
-                        directions = mutableSetOf(
-                            DismissDirection.StartToEnd,
-                        ),
-                        background = {
-
-                            val color by animateColorAsState(
-                                when (dismissState.targetValue) {
-                                    DismissValue.Default -> Color.LightGray
-                                    DismissValue.DismissedToEnd -> Color.Red
-                                    DismissValue.DismissedToStart -> Color.White
-                                }
+                                },
+                                selected = selectedTabIndex == index,
+                                onClick = {
+                                    selectedTabIndex = index
+                                },
+                                selectedContentColor = Primary,
+                                unselectedContentColor = Primary,
                             )
-                            val scale by animateFloatAsState(
-                                if (dismissState.targetValue == DismissValue.Default) {
-                                    1f
-                                } else {
-                                    1.25f
-                                }
-                            )
-
-                            Column(
-                                modifier = Modifier
-                                    .fillMaxSize()
-                                    .background(
-                                        color = color,
-                                    ),
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Rounded.DeleteForever,
-                                    contentDescription = null,
-                                    tint = Color.White,
-                                    modifier = Modifier
-                                        .weight(
-                                            weight = 1f,
-                                        )
-                                        .scale(
-                                            scale = scale,
-                                        )
-                                        .padding(
-                                            start = 16.dp,
-                                        ),
-                                )
-                            }
+                        }
+                }
+                LazyColumn {
+                    itemsIndexed(
+                        items = categories
+                            .filter {
+                                it.transactionType == transactionTypes[selectedTabIndex]
+                            },
+                        key = { _, listItem ->
+                            listItem.hashCode()
                         },
-                    ) {
-                        CategoryListItem(
-                            category = listItem,
+                    ) { _, listItem ->
+                        val dismissState = rememberDismissState(
+                            confirmStateChange = { dismissValue ->
+                                when (dismissValue) {
+                                    DismissValue.DismissedToEnd -> {
+                                        data.screenViewModel.deleteCategory(
+                                            id = listItem.id,
+                                        )
+                                        true
+                                    }
+                                    DismissValue.DismissedToStart -> {
+                                        false
+                                    }
+                                    DismissValue.Default -> {
+                                        false
+                                    }
+                                }
+                            },
                         )
+
+                        SwipeToDismiss(
+                            state = dismissState,
+                            directions = mutableSetOf(
+                                DismissDirection.StartToEnd,
+                            ),
+                            background = {
+
+                                val color by animateColorAsState(
+                                    when (dismissState.targetValue) {
+                                        DismissValue.Default -> Color.LightGray
+                                        DismissValue.DismissedToEnd -> Color.Red
+                                        DismissValue.DismissedToStart -> Color.White
+                                    }
+                                )
+                                val scale by animateFloatAsState(
+                                    if (dismissState.targetValue == DismissValue.Default) {
+                                        1f
+                                    } else {
+                                        1.25f
+                                    }
+                                )
+
+                                Column(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .background(
+                                            color = color,
+                                        ),
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Rounded.DeleteForever,
+                                        contentDescription = null,
+                                        tint = Color.White,
+                                        modifier = Modifier
+                                            .weight(
+                                                weight = 1f,
+                                            )
+                                            .scale(
+                                                scale = scale,
+                                            )
+                                            .padding(
+                                                start = 16.dp,
+                                            ),
+                                    )
+                                }
+                            },
+                        ) {
+                            CategoryListItem(
+                                category = listItem,
+                            )
+                        }
                     }
                 }
             }
