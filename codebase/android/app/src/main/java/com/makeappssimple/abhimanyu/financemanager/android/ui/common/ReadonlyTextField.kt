@@ -6,6 +6,8 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 
 @Composable
@@ -20,7 +22,10 @@ fun ReadonlyTextField(
             value = value,
             onValueChange = {},
             modifier = modifier,
-            label = label
+            textStyle = TextStyle(
+                color = Color.DarkGray,
+            ),
+            label = label,
         )
         Box(
             modifier = Modifier

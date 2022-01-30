@@ -133,7 +133,7 @@ private fun SourceListItemView(
     ) {
         Icon(
             imageVector = getIcon(
-                name = source.type.title
+                name = source.type.title,
             ),
             contentDescription = null,
             tint = Primary,

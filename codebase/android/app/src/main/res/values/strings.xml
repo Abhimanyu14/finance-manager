@@ -40,6 +40,8 @@
     <string name="screen_add_transaction_transaction_date">Transaction Date</string>
     <string name="screen_add_transaction_category">Category</string>
     <string name="screen_add_transaction_source">Source</string>
+    <string name="screen_add_transaction_source_from">Source From</string>
+    <string name="screen_add_transaction_source_to">Source To</string>
     <string name="screen_add_transaction_floating_action_button_content_description">Save</string>
 
     <!-- balance details screen -->

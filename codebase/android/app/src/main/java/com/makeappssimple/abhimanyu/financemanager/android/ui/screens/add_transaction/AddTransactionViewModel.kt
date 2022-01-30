@@ -47,12 +47,20 @@ class AddTransactionViewModel @Inject constructor(
             text = category?.title ?: "",
         )
     }
-    var source: Source? by mutableStateOf(
+    var sourceFrom: Source? by mutableStateOf(
         value = null,
     )
-    val sourceTextFieldValue by derivedStateOf {
+    val sourceFromTextFieldValue by derivedStateOf {
         TextFieldValue(
-            text = source?.name ?: "",
+            text = sourceFrom?.name ?: "",
+        )
+    }
+    var sourceTo: Source? by mutableStateOf(
+        value = null,
+    )
+    val sourceToTextFieldValue by derivedStateOf {
+        TextFieldValue(
+            text = sourceTo?.name ?: "",
         )
     }
     var description by mutableStateOf(
@@ -94,11 +102,11 @@ class AddTransactionViewModel @Inject constructor(
 
         when (transactionType) {
             TransactionType.INCOME -> {
-                source = incomeDefaultSource
+                sourceFrom = incomeDefaultSource
                 category = incomeDefaultCategory
             }
             TransactionType.EXPENSE -> {
-                source = expenseDefaultSource
+                sourceFrom = expenseDefaultSource
                 category = expenseDefaultCategory
             }
             TransactionType.TRANSFER -> {}
@@ -115,7 +123,8 @@ class AddTransactionViewModel @Inject constructor(
                         value = amount.toLong(),
                     ),
                     categoryId = category?.id ?: 0,
-                    sourceFromId = source?.id ?: 0,
+                    sourceFromId = sourceFrom?.id ?: 0,
+                    sourceToId = sourceTo?.id ?: 0,
                     description = description,
                     title = title,
                     creationTimestamp = Calendar.getInstance().timeInMillis,

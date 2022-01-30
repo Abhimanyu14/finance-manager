@@ -39,7 +39,10 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.MyAppTheme
 
 enum class MyExtendedLoadingFloatingActionButtonState {
-    DEFAULT, LOADING, SUCCESS, FAILURE
+    DEFAULT,
+    LOADING,
+    SUCCESS,
+    FAILURE,
 }
 
 @ExperimentalAnimationApi

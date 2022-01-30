@@ -10,6 +10,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -63,6 +64,7 @@ private fun AddTransactionSelectCategoryBottomSheetItem(
     ) {
         Text(
             text = data.text,
+            color = Color.DarkGray,
             fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier,

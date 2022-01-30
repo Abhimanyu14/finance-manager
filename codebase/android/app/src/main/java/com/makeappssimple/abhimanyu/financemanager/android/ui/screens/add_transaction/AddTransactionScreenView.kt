@@ -4,7 +4,10 @@ import android.app.DatePickerDialog
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,6 +20,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
@@ -55,6 +59,7 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.models.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyExtendedFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
@@ -74,7 +79,8 @@ import java.util.*
 enum class AddTransactionBottomSheet {
     NONE,
     SELECT_CATEGORY,
-    SELECT_SOURCE,
+    SELECT_SOURCE_FROM,
+    SELECT_SOURCE_TO,
 }
 
 data class AddTransactionScreenViewData(
@@ -161,7 +167,8 @@ fun AddTransactionScreenView(
             )
         }
 
-        data.screenViewModel.source = data.screenViewModel.expenseDefaultSource
+        data.screenViewModel.sourceFrom = data.screenViewModel.expenseDefaultSource
+        data.screenViewModel.sourceTo = data.screenViewModel.expenseDefaultSource
     }
 
     ModalBottomSheetLayout(
@@ -201,24 +208,61 @@ fun AddTransactionScreenView(
                         ),
                     )
                 }
-                AddTransactionBottomSheet.SELECT_SOURCE -> {
+                AddTransactionBottomSheet.SELECT_SOURCE_FROM -> {
                     AddTransactionSelectSourceBottomSheet(
                         data = AddTransactionSelectSourceBottomSheetData(
-                            items = sources.map { source ->
-                                AddTransactionSelectSourceBottomSheetItemData(
-                                    text = source.name,
-                                    onClick = {
-                                        toggleModalBottomSheetState(
-                                            coroutineScope = coroutineScope,
-                                            modalBottomSheetState = modalBottomSheetState,
-                                        ) {
-                                            data.screenViewModel.source = source
-                                            addTransactionBottomSheet =
-                                                AddTransactionBottomSheet.NONE
-                                        }
-                                    },
+                            items = sources
+                                .sortedWith(
+                                    comparator = compareBy {
+                                        it.type.sortOrder
+                                    }
                                 )
-                            }.toList(),
+                                .map { source ->
+                                    AddTransactionSelectSourceBottomSheetItemData(
+                                        text = source.name,
+                                        iconKey = source.type.title,
+                                        onClick = {
+                                            toggleModalBottomSheetState(
+                                                coroutineScope = coroutineScope,
+                                                modalBottomSheetState = modalBottomSheetState,
+                                            ) {
+                                                data.screenViewModel.sourceFrom = source
+                                                addTransactionBottomSheet =
+                                                    AddTransactionBottomSheet.NONE
+                                            }
+                                        },
+                                    )
+                                }
+                                .toList(),
+                        ),
+                    )
+                }
+                AddTransactionBottomSheet.SELECT_SOURCE_TO -> {
+                    AddTransactionSelectSourceBottomSheet(
+                        data = AddTransactionSelectSourceBottomSheetData(
+                            items = sources
+                                .sortedWith(
+                                    comparator = compareBy {
+                                        it.type.sortOrder
+                                    }
+                                )
+                                .map { source ->
+                                    AddTransactionSelectSourceBottomSheetItemData(
+                                        text = source.name,
+                                        iconKey = source.type.title,
+                                        onClick = {
+                                            toggleModalBottomSheetState(
+                                                coroutineScope = coroutineScope,
+                                                modalBottomSheetState = modalBottomSheetState,
+                                            ) {
+                                                data.screenViewModel.sourceTo = source
+                                                addTransactionBottomSheet =
+                                                    AddTransactionBottomSheet.NONE
+                                            }
+                                        },
+                                    )
+                                }
+                                .toList(),
                         ),
                     )
                 }
@@ -257,6 +301,14 @@ fun AddTransactionScreenView(
                         color = Surface,
                     )
                     .fillMaxSize()
+                    .clickable(
+                        indication = null,
+                        interactionSource = remember {
+                            MutableInteractionSource()
+                        },
+                    ) {
+                        focusManager.clearFocus()
+                    }
                     .padding(
                         paddingValues = innerPadding,
                     ),
@@ -297,6 +349,7 @@ fun AddTransactionScreenView(
                                 text = stringResource(
                                     id = R.string.screen_add_transaction_amount,
                                 ),
+                                color = Color.DarkGray,
                             )
                         },
                         trailingIcon = {
@@ -319,6 +372,7 @@ fun AddTransactionScreenView(
                                 ) {
                                     Icon(
                                         imageVector = Icons.Rounded.Clear,
+                                        tint = Color.DarkGray,
                                         contentDescription = stringResource(
                                             id = R.string.screen_add_transaction_clear_amount,
                                         ),
@@ -358,6 +412,7 @@ fun AddTransactionScreenView(
                                 text = stringResource(
                                     id = R.string.screen_add_transaction_title,
                                 ),
+                                color = Color.DarkGray,
                             )
                         },
                         trailingIcon = {
@@ -380,6 +435,7 @@ fun AddTransactionScreenView(
                                 ) {
                                     Icon(
                                         imageVector = Icons.Rounded.Clear,
+                                        tint = Color.DarkGray,
                                         contentDescription = stringResource(
                                             id = R.string.screen_add_transaction_clear_title,
                                         ),
@@ -391,15 +447,13 @@ fun AddTransactionScreenView(
                             data.screenViewModel.title = it
                         },
                         keyboardActions = KeyboardActions(
-                            onNext = {
-                                focusManager.moveFocus(
-                                    focusDirection = FocusDirection.Down,
-                                )
+                            onDone = {
+                                focusManager.clearFocus()
                             },
                         ),
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Text,
-                            imeAction = ImeAction.Next,
+                            imeAction = ImeAction.Done,
                         ),
                         singleLine = true,
                         modifier = Modifier
@@ -418,6 +472,7 @@ fun AddTransactionScreenView(
                             onClick = {
                                 addTransactionBottomSheet =
                                     AddTransactionBottomSheet.SELECT_CATEGORY
+                                focusManager.clearFocus()
                                 toggleModalBottomSheetState(
                                     coroutineScope = coroutineScope,
                                     modalBottomSheetState = modalBottomSheetState,
@@ -428,6 +483,7 @@ fun AddTransactionScreenView(
                                     text = stringResource(
                                         id = R.string.screen_add_transaction_category,
                                     ),
+                                    color = Color.DarkGray,
                                 )
                             },
                             modifier = Modifier
@@ -467,6 +523,7 @@ fun AddTransactionScreenView(
                                 text = stringResource(
                                     id = R.string.screen_add_transaction_description,
                                 ),
+                                color = Color.DarkGray,
                             )
                         },
                         trailingIcon = {
@@ -489,6 +546,7 @@ fun AddTransactionScreenView(
                                 ) {
                                     Icon(
                                         imageVector = Icons.Rounded.Clear,
+                                        tint = Color.DarkGray,
                                         contentDescription = stringResource(
                                             id = R.string.screen_add_transaction_clear_description,
                                         ),
@@ -517,9 +575,10 @@ fun AddTransactionScreenView(
                             ),
                     )
                     ReadonlyTextField(
-                        value = data.screenViewModel.sourceTextFieldValue,
+                        value = data.screenViewModel.sourceFromTextFieldValue,
                         onClick = {
-                            addTransactionBottomSheet = AddTransactionBottomSheet.SELECT_SOURCE
+                            addTransactionBottomSheet = AddTransactionBottomSheet.SELECT_SOURCE_FROM
+                            focusManager.clearFocus()
                             toggleModalBottomSheetState(
                                 coroutineScope = coroutineScope,
                                 modalBottomSheetState = modalBottomSheetState,
@@ -528,8 +587,13 @@ fun AddTransactionScreenView(
                         label = {
                             Text(
                                 text = stringResource(
-                                    id = R.string.screen_add_transaction_source,
+                                    id = if (data.screenViewModel.transactionType == TransactionType.TRANSFER) {
+                                        R.string.screen_add_transaction_source_from
+                                    } else {
+                                        R.string.screen_add_transaction_source
+                                    },
                                 ),
+                                color = Color.DarkGray,
                             )
                         },
                         modifier = Modifier
@@ -539,6 +603,36 @@ fun AddTransactionScreenView(
                                 vertical = 4.dp,
                             ),
                     )
+                    AnimatedVisibility(
+                        visible = data.screenViewModel.transactionType == TransactionType.TRANSFER,
+                    ) {
+                        ReadonlyTextField(
+                            value = data.screenViewModel.sourceToTextFieldValue,
+                            onClick = {
+                                addTransactionBottomSheet =
+                                    AddTransactionBottomSheet.SELECT_SOURCE_TO
+                                focusManager.clearFocus()
+                                toggleModalBottomSheetState(
+                                    coroutineScope = coroutineScope,
+                                    modalBottomSheetState = modalBottomSheetState,
+                                ) {}
+                            },
+                            label = {
+                                Text(
+                                    text = stringResource(
+                                        id = R.string.screen_add_transaction_source_to,
+                                    ),
+                                    color = Color.DarkGray,
+                                )
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    horizontal = 16.dp,
+                                    vertical = 4.dp,
+                                ),
+                        )
+                    }
                     ReadonlyTextField(
                         value = data.screenViewModel.transactionDateTextFieldValue,
                         onClick = {
@@ -549,6 +643,7 @@ fun AddTransactionScreenView(
                                 text = stringResource(
                                     id = R.string.screen_add_transaction_transaction_date,
                                 ),
+                                color = Color.DarkGray,
                             )
                         },
                         modifier = Modifier
@@ -564,6 +659,19 @@ fun AddTransactionScreenView(
                         ),
                         enabled = data.screenViewModel.amount.isNotNullOrBlank() &&
                                 data.screenViewModel.title.isNotNullOrBlank(),
+                        colors = ButtonDefaults.buttonColors(
+                            disabledBackgroundColor = Color.Transparent,
+                        ),
+                        border = BorderStroke(
+                            width = 1.dp,
+                            color = if (data.screenViewModel.amount.isNotNullOrBlank() &&
+                                data.screenViewModel.title.isNotNullOrBlank()
+                            ) {
+                                Color.Transparent
+                            } else {
+                                Color.LightGray
+                            },
+                        ),
                         onClick = {
                             data.screenViewModel.insertTransaction()
                         },
@@ -578,14 +686,14 @@ fun AddTransactionScreenView(
                                 id = R.string.screen_add_transaction_floating_action_button_content_description,
                             ),
                             textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.Bold,
+                            fontWeight = FontWeight.SemiBold,
                             color = if (
                                 data.screenViewModel.amount.isNotNullOrBlank() &&
                                 data.screenViewModel.title.isNotNullOrBlank()
                             ) {
                                 Color.White
                             } else {
-                                Color.DarkGray
+                                Color.LightGray
                             },
                             modifier = Modifier
                                 .defaultMinSize(
