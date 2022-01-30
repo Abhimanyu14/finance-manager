@@ -7,7 +7,6 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,7 +18,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.IconButton
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.OutlinedTextField
@@ -57,12 +55,11 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyExtendedFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.NavigationArrowBackIcon
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.NavigationBackButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ReadonlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
@@ -233,25 +230,17 @@ fun AddTransactionScreenView(
             topBar = {
                 CenterAlignedTopAppBar(
                     title = {
-                        Row {
-                            Text(
-                                text = stringResource(
-                                    id = R.string.screen_add_transaction_appbar_title,
-                                ),
-                                color = Primary,
-                            )
-                        }
+                        Text(
+                            text = stringResource(
+                                id = R.string.screen_add_transaction_appbar_title,
+                            ),
+                            color = Primary,
+                        )
                     },
                     navigationIcon = {
-                        IconButton(
-                            onClick = {
-                                navigateUp(
-                                    navigationManager = data.screenViewModel.navigationManager,
-                                )
-                            },
-                        ) {
-                            NavigationArrowBackIcon()
-                        }
+                        NavigationBackButton(
+                            navigationManager = data.screenViewModel.navigationManager,
+                        )
                     },
                     modifier = Modifier
                         .background(

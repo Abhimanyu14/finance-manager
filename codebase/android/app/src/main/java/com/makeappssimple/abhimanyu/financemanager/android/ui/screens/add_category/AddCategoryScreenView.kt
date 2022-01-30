@@ -17,7 +17,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.IconButton
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.OutlinedTextField
@@ -48,14 +47,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiPickerBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiPickerBottomSheetData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyExtendedFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.NavigationArrowBackIcon
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.NavigationBackButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
@@ -105,25 +103,17 @@ fun AddCategoryScreenView(
             topBar = {
                 CenterAlignedTopAppBar(
                     title = {
-                        Row {
-                            Text(
-                                text = stringResource(
-                                    id = R.string.screen_add_category_appbar_title,
-                                ),
-                                color = Primary,
-                            )
-                        }
+                        Text(
+                            text = stringResource(
+                                id = R.string.screen_add_category_appbar_title,
+                            ),
+                            color = Primary,
+                        )
                     },
                     navigationIcon = {
-                        IconButton(
-                            onClick = {
-                                navigateUp(
-                                    navigationManager = data.screenViewModel.navigationManager,
-                                )
-                            },
-                        ) {
-                            NavigationArrowBackIcon()
-                        }
+                        NavigationBackButton(
+                            navigationManager = data.screenViewModel.navigationManager,
+                        )
                     },
                     modifier = Modifier
                         .background(
