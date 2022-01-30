@@ -21,6 +21,13 @@ interface TransactionDao {
         transaction: Transaction,
     )
 
+    @Query(
+        value = "DELETE FROM transaction_table WHERE id = :id",
+    )
+    suspend fun deleteTransaction(
+        id: Int,
+    )
+
     @Delete
     suspend fun deleteTransactions(
         vararg transactions: Transaction,

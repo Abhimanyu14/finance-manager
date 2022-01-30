@@ -19,6 +19,14 @@ class TransactionRepository(
         )
     }
 
+    suspend fun deleteTransaction(
+        id: Int,
+    ) {
+        transactionDao.deleteTransaction(
+            id = id,
+        )
+    }
+
     suspend fun deleteTransactions(
         vararg transactions: Transaction,
     ) {
