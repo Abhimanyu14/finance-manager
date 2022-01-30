@@ -1,35 +1,35 @@
-package com.makeappssimple.abhimanyu.financemanager.android.data.converters
+package com.makeappssimple.abhimanyu.financemanager.android.data.local.database.converters
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
-import com.makeappssimple.abhimanyu.financemanager.android.models.Category
+import com.makeappssimple.abhimanyu.financemanager.android.models.Amount
 
-class CategoryConverter {
+class AmountConverter {
 
     @TypeConverter
-    fun stringToCategory(
+    fun stringToAmount(
         value: String?,
-    ): Category? {
+    ): Amount? {
         if (value.isNullOrBlank()) {
             return null
         }
         val gson = Gson()
         return gson.fromJson(
             value,
-            Category::class.java,
+            Amount::class.java,
         )
     }
 
     @TypeConverter
-    fun categoryToString(
-        category: Category?,
+    fun amountToString(
+        amount: Amount?,
     ): String {
-        if (category == null) {
+        if (amount == null) {
             return ""
         }
         val gson = Gson()
         return gson.toJson(
-            category,
+            amount,
         )
     }
 }

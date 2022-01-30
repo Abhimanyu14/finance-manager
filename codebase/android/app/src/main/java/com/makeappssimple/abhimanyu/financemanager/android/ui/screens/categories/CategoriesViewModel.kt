@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories
 
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.data.category.CategoryRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.local.category.CategoryRepository
 import com.makeappssimple.abhimanyu.financemanager.android.models.Category
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel

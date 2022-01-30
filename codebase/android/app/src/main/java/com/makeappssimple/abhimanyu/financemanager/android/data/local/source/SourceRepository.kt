@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.data.source
+package com.makeappssimple.abhimanyu.financemanager.android.data.local.source
 
 import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 

@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.data.transaction
+package com.makeappssimple.abhimanyu.financemanager.android.data.local.transaction
 
 import androidx.room.Dao
 import androidx.room.Delete

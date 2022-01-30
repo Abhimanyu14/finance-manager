@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.makeappssimple.abhimanyu.financemanager.android.data.converters.CategoryIdsConverter
+import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.converters.CategoryIdsConverter
 
 @Entity(tableName = "category_table")
 data class Category(

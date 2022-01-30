@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
 
-import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.TransactionRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.local.transaction.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel

@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources
 
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.local.source.SourceRepository
 import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel

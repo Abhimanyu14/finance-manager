@@ -1,36 +1,35 @@
-package com.makeappssimple.abhimanyu.financemanager.android.data.converters
+package com.makeappssimple.abhimanyu.financemanager.android.data.local.database.converters
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.makeappssimple.abhimanyu.financemanager.android.models.Category
 
-class CategoryIdsConverter {
+class CategoryConverter {
 
     @TypeConverter
-    fun stringToCategories(
+    fun stringToCategory(
         value: String?,
-    ): List<Int>? {
+    ): Category? {
         if (value.isNullOrBlank()) {
             return null
         }
         val gson = Gson()
-        val listType = object : TypeToken<List<Int>>() {}.type
         return gson.fromJson(
             value,
-            listType,
+            Category::class.java,
         )
     }
 
     @TypeConverter
     fun categoryToString(
-        categoryIds: List<Int>?,
+        category: Category?,
     ): String {
-        if (categoryIds == null) {
+        if (category == null) {
             return ""
         }
         val gson = Gson()
         return gson.toJson(
-            categoryIds,
+            category,
         )
     }
 }

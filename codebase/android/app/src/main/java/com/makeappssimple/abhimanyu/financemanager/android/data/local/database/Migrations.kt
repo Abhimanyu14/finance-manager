@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.data.database
+package com.makeappssimple.abhimanyu.financemanager.android.data.local.database
 
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase

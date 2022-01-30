@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.google.accompanist.flowlayout.FlowRow
-import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.Emoji
+import com.makeappssimple.abhimanyu.financemanager.android.data.remote.emoji.Emoji
 
 data class EmojiPickerBottomSheetItemData(
     val emoji: Emoji,

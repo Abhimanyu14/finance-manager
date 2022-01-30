@@ -4,8 +4,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.data.category.CategoryRepository
-import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.Emoji
+import com.makeappssimple.abhimanyu.financemanager.android.data.local.category.CategoryRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.remote.emoji.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.models.Category
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager

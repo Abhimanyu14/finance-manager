@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.data.category
+package com.makeappssimple.abhimanyu.financemanager.android.data.local.category
 
 import com.makeappssimple.abhimanyu.financemanager.android.models.Category
 

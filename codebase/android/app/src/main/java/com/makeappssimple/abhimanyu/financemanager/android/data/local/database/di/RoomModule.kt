@@ -1,13 +1,13 @@
-package com.makeappssimple.abhimanyu.financemanager.android.di
+package com.makeappssimple.abhimanyu.financemanager.android.data.local.database.di
 
 import android.content.Context
-import com.makeappssimple.abhimanyu.financemanager.android.data.category.CategoryDao
-import com.makeappssimple.abhimanyu.financemanager.android.data.category.CategoryRepository
-import com.makeappssimple.abhimanyu.financemanager.android.data.database.MyRoomDatabase
-import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceDao
-import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceRepository
-import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.TransactionDao
-import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.TransactionRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.local.category.CategoryDao
+import com.makeappssimple.abhimanyu.financemanager.android.data.local.category.CategoryRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.MyRoomDatabase
+import com.makeappssimple.abhimanyu.financemanager.android.data.local.source.SourceDao
+import com.makeappssimple.abhimanyu.financemanager.android.data.local.source.SourceRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.local.transaction.TransactionDao
+import com.makeappssimple.abhimanyu.financemanager.android.data.local.transaction.TransactionRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
