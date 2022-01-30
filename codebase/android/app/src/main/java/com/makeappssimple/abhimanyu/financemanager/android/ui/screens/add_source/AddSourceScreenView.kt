@@ -107,6 +107,22 @@ fun AddSourceScreenView(
                         state = rememberScrollState(),
                     ),
             ) {
+                MyRadioGroup(
+                    items = SourceType.values().map { sourceType ->
+                        MyRadioGroupItem(
+                            text = sourceType.title,
+                        )
+                    },
+                    selectedItemIndex = data.screenViewModel.type.ordinal,
+                    onSelectionChange = { ordinal ->
+                        data.screenViewModel.type =
+                            SourceType.values().getOrElse(ordinal) { SourceType.CASH }
+                    },
+                    modifier = Modifier.padding(
+                        horizontal = 16.dp,
+                        vertical = 8.dp,
+                    ),
+                )
                 OutlinedTextField(
                     value = data.screenViewModel.name,
                     label = {
@@ -223,22 +239,6 @@ fun AddSourceScreenView(
                             horizontal = 16.dp,
                             vertical = 8.dp,
                         ),
-                )
-                MyRadioGroup(
-                    items = SourceType.values().map { sourceType ->
-                        MyRadioGroupItem(
-                            text = sourceType.title,
-                        )
-                    },
-                    selectedItemIndex = data.screenViewModel.type.ordinal,
-                    onSelectionChange = { ordinal ->
-                        data.screenViewModel.type =
-                            SourceType.values().getOrElse(ordinal) { SourceType.CASH }
-                    },
-                    modifier = Modifier.padding(
-                        horizontal = 16.dp,
-                        vertical = 8.dp,
-                    ),
                 )
                 MyExtendedFloatingActionButton(
                     onClickLabel = stringResource(
