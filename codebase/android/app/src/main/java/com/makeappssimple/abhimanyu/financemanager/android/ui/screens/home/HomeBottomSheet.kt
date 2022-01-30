@@ -1,13 +1,16 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,17 +24,22 @@ data class HomeBottomSheetItemData(
 )
 
 data class HomeBottomSheetData(
-    val list: List<HomeBottomSheetItemData>,
+    val items: List<HomeBottomSheetItemData>,
 )
 
 @Composable
 fun HomeBottomSheet(
     data: HomeBottomSheetData,
 ) {
-    Column(
-        modifier = Modifier,
+    LazyColumn(
+        modifier = Modifier
+            .defaultMinSize(
+                minHeight = 100.dp,
+            ),
     ) {
-        data.list.forEach { homeBottomSheetItemData ->
+        items(
+            items = data.items,
+        ) { homeBottomSheetItemData ->
             HomeBottomSheetItem(
                 data = homeBottomSheetItemData,
             )
@@ -57,6 +65,7 @@ private fun HomeBottomSheetItem(
     ) {
         Text(
             text = data.text,
+            color = Color.DarkGray,
             fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier,
@@ -70,7 +79,7 @@ private fun MyBottomSheetContentPreview() {
     MyAppTheme {
         HomeBottomSheet(
             data = HomeBottomSheetData(
-                list = listOf(
+                items = listOf(
                     HomeBottomSheetItemData(
                         text = "Sources",
                         onClick = {},

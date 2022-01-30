@@ -2,11 +2,11 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.ContentAlpha
@@ -73,7 +73,7 @@ fun HomeScreenView(
         sheetContent = {
             HomeBottomSheet(
                 data = HomeBottomSheetData(
-                    list = listOf(
+                    items = listOf(
                         HomeBottomSheetItemData(
                             text = stringResource(
                                 id = R.string.screen_home_bottom_sheet_sources,
@@ -128,44 +128,35 @@ fun HomeScreenView(
                 )
             },
             bottomBar = {
-                Column {
-                    BottomAppBar(
-                        backgroundColor = BottomAppBarBackground,
-                        cutoutShape = CircleShape,
+                BottomAppBar(
+                    backgroundColor = BottomAppBarBackground,
+                    cutoutShape = CircleShape,
+                ) {
+                    // Leading icons should typically have a high content alpha
+                    CompositionLocalProvider(
+                        LocalContentAlpha provides ContentAlpha.high,
                     ) {
-                        // Leading icons should typically have a high content alpha
-                        CompositionLocalProvider(
-                            LocalContentAlpha provides ContentAlpha.high,
+                        IconButton(
+                            onClick = {
+                                toggleModalBottomSheetState(
+                                    coroutineScope = coroutineScope,
+                                    modalBottomSheetState = modalBottomSheetState,
+                                ) {}
+                            },
                         ) {
-                            IconButton(
-                                onClick = {
-                                    toggleModalBottomSheetState(
-                                        coroutineScope = coroutineScope,
-                                        modalBottomSheetState = modalBottomSheetState,
-                                    ) {}
-                                },
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Rounded.Menu,
-                                    contentDescription = stringResource(
-                                        id = R.string.screen_home_bottom_app_bar_button_content_description,
-                                    ),
-                                    tint = BottomAppBarIconTint,
-                                )
-                            }
-                        }
-                        Spacer(
-                            modifier = Modifier
-                                .weight(
-                                    weight = 1f,
+                            Icon(
+                                imageVector = Icons.Rounded.Menu,
+                                contentDescription = stringResource(
+                                    id = R.string.screen_home_bottom_app_bar_button_content_description,
                                 ),
-                        )
+                                tint = BottomAppBarIconTint,
+                            )
+                        }
                     }
                     Spacer(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .background(
-                                color = BottomAppBarBackground,
+                            .weight(
+                                weight = 1f,
                             ),
                     )
                 }
@@ -203,8 +194,10 @@ fun HomeScreenView(
                         paddingValues = innerPadding,
                     ),
             ) {
-                Column {
-                    transactions.forEach { transaction ->
+                LazyColumn {
+                    items(
+                        items = transactions,
+                    ) { transaction ->
                         ListItem(
                             text = {
                                 Text(

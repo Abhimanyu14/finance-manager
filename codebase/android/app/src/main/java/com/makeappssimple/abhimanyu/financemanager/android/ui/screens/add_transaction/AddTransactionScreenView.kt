@@ -178,7 +178,7 @@ fun AddTransactionScreenView(
                 AddTransactionBottomSheet.SELECT_CATEGORY -> {
                     AddTransactionSelectCategoryBottomSheet(
                         data = AddTransactionSelectCategoryBottomSheetData(
-                            list = categories
+                            items = categories
                                 .filter { category ->
                                     data.screenViewModel.transactionType == category.transactionType
                                 }
@@ -204,7 +204,7 @@ fun AddTransactionScreenView(
                 AddTransactionBottomSheet.SELECT_SOURCE -> {
                     AddTransactionSelectSourceBottomSheet(
                         data = AddTransactionSelectSourceBottomSheetData(
-                            list = sources.map { source ->
+                            items = sources.map { source ->
                                 AddTransactionSelectSourceBottomSheetItemData(
                                     text = source.name,
                                     onClick = {
