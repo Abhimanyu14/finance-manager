@@ -8,8 +8,11 @@ class AmountConverter {
 
     @TypeConverter
     fun stringToAmount(
-        value: String,
-    ): Amount {
+        value: String?,
+    ): Amount? {
+        if (value.isNullOrBlank()) {
+            return null
+        }
         val gson = Gson()
         return gson.fromJson(
             value,
@@ -19,8 +22,11 @@ class AmountConverter {
 
     @TypeConverter
     fun amountToString(
-        amount: Amount,
+        amount: Amount?,
     ): String {
+        if (amount == null) {
+            return ""
+        }
         val gson = Gson()
         return gson.toJson(
             amount,
