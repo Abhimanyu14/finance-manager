@@ -146,6 +146,7 @@ private fun SourceListItemView(
             Text(
                 text = source.name,
                 style = TextStyle(
+                    color = DarkGray,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal,
                 ),
@@ -153,9 +154,9 @@ private fun SourceListItemView(
             Text(
                 text = source.balanceAmount.toString(),
                 style = TextStyle(
+                    color = DarkGray,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.SemiBold,
-                    color = DarkGray,
                 )
             )
         }

@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_categ
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,6 +17,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
@@ -36,7 +38,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color.Companion.DarkGray
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -212,6 +215,7 @@ fun AddCategoryScreenView(
                                 text = stringResource(
                                     id = R.string.screen_add_category_title,
                                 ),
+                                color = Color.DarkGray,
                             )
                         },
                         trailingIcon = {
@@ -276,6 +280,7 @@ fun AddCategoryScreenView(
                                 text = stringResource(
                                     id = R.string.screen_add_category_description,
                                 ),
+                                color = Color.DarkGray,
                             )
                         },
                         trailingIcon = {
@@ -330,6 +335,17 @@ fun AddCategoryScreenView(
                             id = R.string.screen_add_category_floating_action_button_content_description,
                         ),
                         enabled = data.screenViewModel.title.isNotNullOrBlank(),
+                        colors = ButtonDefaults.buttonColors(
+                            disabledBackgroundColor = Color.Transparent,
+                        ),
+                        border = BorderStroke(
+                            width = 1.dp,
+                            color = if (data.screenViewModel.title.isNotNullOrBlank()) {
+                                Color.Transparent
+                            } else {
+                                LightGray
+                            },
+                        ),
                         onClick = {
                             data.screenViewModel.insertCategory()
                         },
@@ -343,13 +359,11 @@ fun AddCategoryScreenView(
                                 id = R.string.screen_add_category_floating_action_button_content_description,
                             ),
                             textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.Bold,
-                            color = if (
-                                data.screenViewModel.title.isNotNullOrBlank()
-                            ) {
+                            fontWeight = FontWeight.SemiBold,
+                            color = if (data.screenViewModel.title.isNotNullOrBlank()) {
                                 White
                             } else {
-                                DarkGray
+                                LightGray
                             },
                             modifier = Modifier
                                 .defaultMinSize(

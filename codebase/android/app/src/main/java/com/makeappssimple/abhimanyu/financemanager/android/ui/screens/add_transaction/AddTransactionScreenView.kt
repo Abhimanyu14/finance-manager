@@ -664,7 +664,8 @@ fun AddTransactionScreenView(
                         ),
                         border = BorderStroke(
                             width = 1.dp,
-                            color = if (data.screenViewModel.amount.isNotNullOrBlank() &&
+                            color = if (
+                                data.screenViewModel.amount.isNotNullOrBlank() &&
                                 data.screenViewModel.title.isNotNullOrBlank()
                             ) {
                                 Color.Transparent
