@@ -43,6 +43,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.NavigationBackButton
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.getDismissState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.FloatingActionButtonBackground
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.FloatingActionButtonIconTint
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
@@ -171,22 +172,11 @@ fun CategoriesScreenView(
                             listItem.hashCode()
                         },
                     ) { _, listItem ->
-                        val dismissState = rememberDismissState(
-                            confirmStateChange = { dismissValue ->
-                                when (dismissValue) {
-                                    DismissValue.DismissedToEnd -> {
-                                        data.screenViewModel.deleteCategory(
-                                            id = listItem.id,
-                                        )
-                                        true
-                                    }
-                                    DismissValue.DismissedToStart -> {
-                                        false
-                                    }
-                                    DismissValue.Default -> {
-                                        false
-                                    }
-                                }
+                        val dismissState = getDismissState(
+                            dismissedToEndAction = {
+                                data.screenViewModel.deleteCategory(
+                                    id = listItem.id,
+                                )
                             },
                         )
 

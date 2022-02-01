@@ -14,7 +14,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.DeleteForever
-import androidx.compose.material.rememberDismissState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.getDismissState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -39,20 +39,9 @@ fun HomeListItem(
     deleteTransaction: () -> Unit,
 ) {
     if (swipeToDelete) {
-        val dismissState = rememberDismissState(
-            confirmStateChange = { dismissValue ->
-                when (dismissValue) {
-                    DismissValue.DismissedToEnd -> {
-                        deleteTransaction()
-                        true
-                    }
-                    DismissValue.DismissedToStart -> {
-                        false
-                    }
-                    DismissValue.Default -> {
-                        false
-                    }
-                }
+        val dismissState = getDismissState(
+            dismissedToEndAction = {
+                deleteTransaction()
             },
         )
 

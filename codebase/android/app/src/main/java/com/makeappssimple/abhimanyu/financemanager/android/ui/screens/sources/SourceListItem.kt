@@ -14,7 +14,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.DeleteForever
-import androidx.compose.material.rememberDismissState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.models.Source
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.getDismissState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getIcon
@@ -41,20 +41,9 @@ fun SourceListItem(
     deleteSource: () -> Unit,
 ) {
     if (swipeToDeleteEnabled) {
-        val dismissState = rememberDismissState(
-            confirmStateChange = { dismissValue ->
-                when (dismissValue) {
-                    DismissValue.DismissedToEnd -> {
-                        deleteSource()
-                        true
-                    }
-                    DismissValue.DismissedToStart -> {
-                        false
-                    }
-                    DismissValue.Default -> {
-                        false
-                    }
-                }
+        val dismissState = getDismissState(
+            dismissedToEndAction = {
+                deleteSource()
             },
         )
 
