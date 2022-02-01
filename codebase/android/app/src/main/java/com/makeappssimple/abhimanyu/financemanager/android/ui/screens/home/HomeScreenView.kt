@@ -13,7 +13,6 @@ import androidx.compose.material.ContentAlpha
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.ListItem
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
@@ -34,9 +33,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToCategoriesScreen
@@ -198,18 +195,12 @@ fun HomeScreenView(
                 LazyColumn {
                     items(
                         items = transactions,
-                    ) { transaction ->
-                        ListItem(
-                            text = {
-                                Text(
-                                    text = transaction.amount.toString(),
-                                    color = Color.DarkGray,
-                                )
-                            },
-                            secondaryText = {
-                                Text(
-                                    text = transaction.title,
-                                    color = Color.DarkGray,
+                    ) { listItem ->
+                        HomeListItem(
+                            transaction = listItem,
+                            deleteTransaction = {
+                                data.screenViewModel.deleteTransaction(
+                                    id = listItem.id,
                                 )
                             },
                         )
@@ -218,19 +209,4 @@ fun HomeScreenView(
             }
         }
     }
-}
-
-@ExperimentalMaterial3Api
-@Preview
-@Composable
-private fun HomeScreenViewPreview() {
-    /*
-    MyAppTheme {
-        HomeScreenView(
-            data = HomeScreenViewData(
-                screenViewModel = hiltViewModel(),
-            ),
-        )
-    }
-    */
 }

@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources
+package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
 
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
@@ -28,24 +28,22 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.makeappssimple.abhimanyu.financemanager.android.models.Source
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
+import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
-import com.makeappssimple.abhimanyu.financemanager.android.utils.getIcon
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun SourceListItem(
-    source: Source,
-    swipeToDeleteEnabled: Boolean,
-    deleteSource: () -> Unit,
+fun HomeListItem(
+    transaction: Transaction,
+    swipeToDelete: Boolean = true,
+    deleteTransaction: () -> Unit,
 ) {
-    if (swipeToDeleteEnabled) {
+    if (swipeToDelete) {
         val dismissState = rememberDismissState(
             confirmStateChange = { dismissValue ->
                 when (dismissValue) {
                     DismissValue.DismissedToEnd -> {
-                        deleteSource()
+                        deleteTransaction()
                         true
                     }
                     DismissValue.DismissedToStart -> {
@@ -104,20 +102,20 @@ fun SourceListItem(
                 }
             },
         ) {
-            SourceListItemView(
-                source = source,
+            HomeListItemView(
+                transaction = transaction,
             )
         }
     } else {
-        SourceListItemView(
-            source = source,
+        HomeListItemView(
+            transaction = transaction,
         )
     }
 }
 
 @Composable
-private fun SourceListItemView(
-    source: Source,
+private fun HomeListItemView(
+    transaction: Transaction,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -131,20 +129,9 @@ private fun SourceListItemView(
                 vertical = 8.dp,
             ),
     ) {
-        Icon(
-            imageVector = getIcon(
-                name = source.type.title,
-            ),
-            contentDescription = null,
-            tint = Primary,
-            modifier = Modifier
-                .padding(
-                    end = 8.dp,
-                ),
-        )
         Column {
             Text(
-                text = source.name,
+                text = transaction.amount.toString(),
                 style = TextStyle(
                     color = DarkGray,
                     fontSize = 14.sp,
@@ -152,7 +139,7 @@ private fun SourceListItemView(
                 ),
             )
             Text(
-                text = source.balanceAmount.toString(),
+                text = transaction.title,
                 style = TextStyle(
                     color = DarkGray,
                     fontSize = 12.sp,

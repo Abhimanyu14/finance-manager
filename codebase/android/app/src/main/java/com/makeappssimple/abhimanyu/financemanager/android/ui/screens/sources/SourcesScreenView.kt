@@ -115,7 +115,7 @@ fun SourcesScreenView(
                 ) { _, listItem ->
                     SourceListItem(
                         source = listItem,
-                        swipeToDelete = !listItem.name.contains(
+                        swipeToDeleteEnabled = !listItem.name.contains(
                             other = "Cash",
                             ignoreCase = false,
                         ),
