@@ -196,8 +196,15 @@ fun HomeScreenView(
                     items(
                         items = transactions,
                     ) { listItem ->
+                        val source by data.screenViewModel.getSource(
+                            listItem.sourceFromId
+                        ).collectAsState(
+                            initial = null
+                        )
+
                         HomeListItem(
                             transaction = listItem,
+                            source = source,
                             deleteTransaction = {
                                 data.screenViewModel.deleteTransaction(
                                     id = listItem.id,

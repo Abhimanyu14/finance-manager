@@ -16,6 +16,13 @@ interface SourceDao {
     )
     fun getSources(): Flow<List<Source>>
 
+    @Query(
+        value = "SELECT * from source_table WHERE id = :id",
+    )
+    fun getSource(
+        id: Int,
+    ): Flow<Source>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertSource(
         source: Source,

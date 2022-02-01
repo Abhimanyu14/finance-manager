@@ -18,23 +18,26 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.DarkGray
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.getDismissState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
+import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateString
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeListItem(
     transaction: Transaction,
+    source: Source?,
     swipeToDelete: Boolean = true,
     deleteTransaction: () -> Unit,
 ) {
@@ -93,11 +96,13 @@ fun HomeListItem(
         ) {
             HomeListItemView(
                 transaction = transaction,
+                source = source,
             )
         }
     } else {
         HomeListItemView(
             transaction = transaction,
+            source = source,
         )
     }
 }
@@ -105,9 +110,9 @@ fun HomeListItem(
 @Composable
 private fun HomeListItemView(
     transaction: Transaction,
+    source: Source?,
 ) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(
@@ -118,22 +123,70 @@ private fun HomeListItemView(
                 vertical = 8.dp,
             ),
     ) {
-        Column {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+        ) {
             Text(
-                text = transaction.amount.toString(),
+                text = transaction.title,
                 style = TextStyle(
                     color = DarkGray,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal,
                 ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(
+                        weight = 1F,
+                    ),
             )
             Text(
-                text = transaction.title,
+                text = transaction.amount.toString(),
+                textAlign = TextAlign.End,
+                style = TextStyle(
+                    color = DarkGray,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Normal,
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(
+                        weight = 1F,
+                    ),
+            )
+        }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+        ) {
+            Text(
+                text = getDateString(
+                    timestamp = transaction.transactionTimestamp,
+                ),
                 style = TextStyle(
                     color = DarkGray,
                     fontSize = 12.sp,
-                    fontWeight = FontWeight.SemiBold,
-                )
+                    fontWeight = FontWeight.Normal,
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(
+                        weight = 1F,
+                    ),
+            )
+            Text(
+                text = source?.name ?: "",
+                textAlign = TextAlign.End,
+                style = TextStyle(
+                    color = DarkGray,
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Normal,
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(
+                        weight = 1F,
+                    ),
             )
         }
     }

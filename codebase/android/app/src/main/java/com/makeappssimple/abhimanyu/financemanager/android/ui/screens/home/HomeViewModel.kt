@@ -1,7 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
 
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.data.local.source.SourceRepository
 import com.makeappssimple.abhimanyu.financemanager.android.data.local.transaction.TransactionRepository
+import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel
@@ -14,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     val navigationManager: NavigationManager,
+    private val sourceRepository: SourceRepository,
     private val transactionRepository: TransactionRepository,
 ) : BaseViewModel() {
     val transactions: Flow<List<Transaction>> = transactionRepository.transactions
@@ -32,5 +35,13 @@ class HomeViewModel @Inject constructor(
                 id = id,
             )
         }
+    }
+
+    fun getSource(
+        id: Int,
+    ): Flow<Source> {
+        return sourceRepository.getSource(
+            id = id,
+        )
     }
 }
