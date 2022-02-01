@@ -22,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.DarkGray
+import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -29,7 +30,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.getDismissState
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.OnTertiaryContainer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateString
 
@@ -57,7 +60,7 @@ fun HomeListItem(
                 val color by animateColorAsState(
                     when (dismissState.targetValue) {
                         DismissValue.Default -> Color.LightGray
-                        DismissValue.DismissedToEnd -> Color.Red
+                        DismissValue.DismissedToEnd -> Red
                         DismissValue.DismissedToStart -> Color.White
                     }
                 )
@@ -144,9 +147,19 @@ private fun HomeListItemView(
                 text = transaction.amount.toString(),
                 textAlign = TextAlign.End,
                 style = TextStyle(
-                    color = DarkGray,
+                    color = when (transaction.transactionType) {
+                        TransactionType.INCOME -> {
+                            OnTertiaryContainer
+                        }
+                        TransactionType.EXPENSE -> {
+                            Red
+                        }
+                        TransactionType.TRANSFER -> {
+                            DarkGray
+                        }
+                    },
                     fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal,
+                    fontWeight = FontWeight.SemiBold,
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
