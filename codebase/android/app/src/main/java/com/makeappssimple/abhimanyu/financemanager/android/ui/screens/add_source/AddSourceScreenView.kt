@@ -42,7 +42,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
-import com.makeappssimple.abhimanyu.financemanager.android.models.SourceType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyExtendedFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
@@ -112,19 +111,15 @@ fun AddSourceScreenView(
                     ),
             ) {
                 MyRadioGroup(
-                    items = SourceType.values()
-                        .filter {
-                            it != SourceType.CASH
-                        }
+                    items = data.screenViewModel.sourceTypes
                         .map { sourceType ->
                             MyRadioGroupItem(
                                 text = sourceType.title,
                             )
                         },
-                    selectedItemIndex = data.screenViewModel.type.ordinal,
-                    onSelectionChange = { ordinal ->
-                        data.screenViewModel.type =
-                            SourceType.values().getOrElse(ordinal) { SourceType.CASH }
+                    selectedItemIndex = data.screenViewModel.selectedSourceTypeIndex,
+                    onSelectionChange = { index ->
+                        data.screenViewModel.selectedSourceTypeIndex = index
                     },
                     modifier = Modifier.padding(
                         horizontal = 16.dp,

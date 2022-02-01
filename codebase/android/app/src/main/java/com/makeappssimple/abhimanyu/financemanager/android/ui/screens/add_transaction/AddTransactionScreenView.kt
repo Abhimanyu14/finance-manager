@@ -57,7 +57,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
-import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.models.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyExtendedFloatingActionButton
@@ -110,7 +109,7 @@ fun AddTransactionScreenView(
     val sources by data.screenViewModel.sources.collectAsState(
         initial = emptyList(),
     )
-    val onDateSetListener = DatePickerDialog.OnDateSetListener { view, year, month, dayOfMonth ->
+    val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
         data.screenViewModel.transactionCalendar =
             (data.screenViewModel.transactionCalendar.clone() as Calendar)
                 .setDate(
@@ -187,7 +186,7 @@ fun AddTransactionScreenView(
                         data = AddTransactionSelectCategoryBottomSheetData(
                             items = categories
                                 .filter { category ->
-                                    data.screenViewModel.transactionType == category.transactionType
+                                    category.transactionType == data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex]
                                 }
                                 .map { category ->
                                     AddTransactionSelectCategoryBottomSheetItemData(
@@ -327,13 +326,10 @@ fun AddTransactionScreenView(
                                 text = transactionType.title,
                             )
                         },
-                        selectedItemIndex = data.screenViewModel.transactionType.ordinal,
-                        onSelectionChange = { ordinal ->
-                            data.screenViewModel.updateTransactionType(
-                                updatedTransactionType = TransactionType.values()
-                                    .getOrElse(ordinal) {
-                                        TransactionType.EXPENSE
-                                    }
+                        selectedItemIndex = data.screenViewModel.selectedTransactionTypeIndex,
+                        onSelectionChange = { index ->
+                            data.screenViewModel.updateSelectedTransactionTypeIndex(
+                                updatedSelectedTransactionTypeIndex = index
                             )
                         },
                         modifier = Modifier
@@ -464,8 +460,8 @@ fun AddTransactionScreenView(
                             ),
                     )
                     AnimatedVisibility(
-                        visible = data.screenViewModel.transactionType == TransactionType.EXPENSE ||
-                                data.screenViewModel.transactionType == TransactionType.INCOME,
+                        visible = data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.EXPENSE ||
+                                data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.INCOME,
                     ) {
                         ReadonlyTextField(
                             value = data.screenViewModel.categoryTextFieldValue,
@@ -495,19 +491,18 @@ fun AddTransactionScreenView(
                         )
                     }
                     AnimatedVisibility(
-                        visible = data.screenViewModel.transactionType == TransactionType.EXPENSE,
+                        visible = data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.EXPENSE,
                     ) {
                         MyRadioGroup(
-                            items = TransactionFor.values().map { transactionFor ->
-                                MyRadioGroupItem(
-                                    text = transactionFor.title,
-                                )
-                            },
-                            selectedItemIndex = data.screenViewModel.transactionFor.ordinal,
-                            onSelectionChange = { ordinal ->
-                                data.screenViewModel.transactionFor =
-                                    TransactionFor.values()
-                                        .getOrElse(ordinal) { TransactionFor.SELF }
+                            items = data.screenViewModel.transactionForValues
+                                .map { transactionFor ->
+                                    MyRadioGroupItem(
+                                        text = transactionFor.title,
+                                    )
+                                },
+                            selectedItemIndex = data.screenViewModel.selectedTransactionForIndex,
+                            onSelectionChange = { index ->
+                                data.screenViewModel.selectedTransactionForIndex = index
                             },
                             modifier = Modifier
                                 .padding(
@@ -587,7 +582,7 @@ fun AddTransactionScreenView(
                         label = {
                             Text(
                                 text = stringResource(
-                                    id = if (data.screenViewModel.transactionType == TransactionType.TRANSFER) {
+                                    id = if (data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER) {
                                         R.string.screen_add_transaction_source_from
                                     } else {
                                         R.string.screen_add_transaction_source
@@ -604,7 +599,7 @@ fun AddTransactionScreenView(
                             ),
                     )
                     AnimatedVisibility(
-                        visible = data.screenViewModel.transactionType == TransactionType.TRANSFER,
+                        visible = data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER,
                     ) {
                         ReadonlyTextField(
                             value = data.screenViewModel.sourceToTextFieldValue,

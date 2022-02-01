@@ -21,14 +21,20 @@ class AddCategoryViewModel @Inject constructor(
     val navigationManager: NavigationManager,
     private val categoryRepository: CategoryRepository,
 ) : BaseViewModel() {
+    val transactionTypes = TransactionType.values()
+        .filter {
+            it != TransactionType.TRANSFER
+        }
     var description by mutableStateOf(
         value = "",
     )
     var title by mutableStateOf(
         value = "",
     )
-    var transactionType by mutableStateOf(
-        value = TransactionType.EXPENSE,
+    var selectedTransactionTypeIndex by mutableStateOf(
+        value = transactionTypes.indexOf(
+            element = TransactionType.EXPENSE,
+        ),
     )
     var emoji by mutableStateOf(
         value = "⏳",
@@ -72,7 +78,7 @@ class AddCategoryViewModel @Inject constructor(
                 category = Category(
                     description = description,
                     title = title,
-                    transactionType = transactionType,
+                    transactionType = transactionTypes[selectedTransactionTypeIndex],
                 ),
             )
             navigateUp(

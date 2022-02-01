@@ -49,7 +49,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
-import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiPickerBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiPickerBottomSheetData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyExtendedFloatingActionButton
@@ -186,21 +185,15 @@ fun AddCategoryScreenView(
                             .fillMaxWidth(),
                     ) {
                         MyRadioGroup(
-                            items = TransactionType.values()
-                                .filter {
-                                    it != TransactionType.TRANSFER
-                                }
+                            items = data.screenViewModel.transactionTypes
                                 .map { transactionType ->
                                     MyRadioGroupItem(
                                         text = transactionType.title,
                                     )
                                 },
-                            selectedItemIndex = data.screenViewModel.transactionType.ordinal,
-                            onSelectionChange = { ordinal ->
-                                data.screenViewModel.transactionType = TransactionType.values()
-                                    .getOrElse(ordinal) {
-                                        TransactionType.EXPENSE
-                                    }
+                            selectedItemIndex = data.screenViewModel.selectedTransactionTypeIndex,
+                            onSelectionChange = { index ->
+                                data.screenViewModel.selectedTransactionTypeIndex = index
                             },
                             modifier = Modifier
                                 .padding(

@@ -21,11 +21,17 @@ class AddSourceViewModel @Inject constructor(
     val navigationManager: NavigationManager,
     private val sourceRepository: SourceRepository,
 ) : BaseViewModel() {
+    val sourceTypes = SourceType.values()
+        .filter {
+            it != SourceType.CASH
+        }
     var balanceAmount by mutableStateOf(
         value = "",
     )
-    var type by mutableStateOf(
-        value = SourceType.BANK,
+    var selectedSourceTypeIndex by mutableStateOf(
+        value = sourceTypes.indexOf(
+            element = SourceType.BANK,
+        ),
     )
     var name by mutableStateOf(
         value = "",
@@ -44,7 +50,7 @@ class AddSourceViewModel @Inject constructor(
                     balanceAmount = Amount(
                         value = balanceAmount.toLong(),
                     ),
-                    type = type,
+                    type = sourceTypes[selectedSourceTypeIndex],
                     name = name,
                 ),
             )

@@ -33,6 +33,8 @@ class AddTransactionViewModel @Inject constructor(
     val navigationManager: NavigationManager,
     private val transactionRepository: TransactionRepository,
 ) : BaseViewModel() {
+    val transactionForValues = TransactionFor.values()
+    val transactionTypes = TransactionType.values()
     val categories: Flow<List<Category>> = categoryRepository.categories
     val sources: Flow<List<Source>> = sourceRepository.sources
 
@@ -77,11 +79,15 @@ class AddTransactionViewModel @Inject constructor(
             text = transactionCalendar.formattedDate(),
         )
     }
-    var transactionFor by mutableStateOf(
-        value = TransactionFor.SELF,
+    var selectedTransactionForIndex by mutableStateOf(
+        value = transactionForValues.indexOf(
+            element = TransactionFor.SELF,
+        ),
     )
-    var transactionType by mutableStateOf(
-        value = TransactionType.EXPENSE,
+    var selectedTransactionTypeIndex by mutableStateOf(
+        value = transactionTypes.indexOf(
+            element = TransactionType.EXPENSE,
+        ),
     )
         private set
 
@@ -95,12 +101,12 @@ class AddTransactionViewModel @Inject constructor(
         // TODO-Abhi: Add screen tracking code
     }
 
-    fun updateTransactionType(
-        updatedTransactionType: TransactionType,
+    fun updateSelectedTransactionTypeIndex(
+        updatedSelectedTransactionTypeIndex: Int,
     ) {
-        transactionType = updatedTransactionType
+        selectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex
 
-        when (transactionType) {
+        when (transactionTypes[selectedTransactionTypeIndex]) {
             TransactionType.INCOME -> {
                 sourceFrom = incomeDefaultSource
                 category = incomeDefaultCategory
@@ -129,18 +135,18 @@ class AddTransactionViewModel @Inject constructor(
                     title = title,
                     creationTimestamp = Calendar.getInstance().timeInMillis,
                     transactionTimestamp = transactionCalendar.timeInMillis,
-                    transactionFor = when (transactionType) {
+                    transactionFor = when (transactionTypes[selectedTransactionTypeIndex]) {
                         TransactionType.INCOME -> {
                             TransactionFor.SELF
                         }
                         TransactionType.EXPENSE -> {
-                            transactionFor
+                            transactionForValues[selectedTransactionForIndex]
                         }
                         TransactionType.TRANSFER -> {
                             TransactionFor.SELF
                         }
                     },
-                    transactionType = transactionType,
+                    transactionType = transactionTypes[selectedTransactionTypeIndex],
                 ),
             )
             navigateUp(
