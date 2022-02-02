@@ -176,9 +176,10 @@ fun AddTransactionScreenView(
             when (addTransactionBottomSheet) {
                 AddTransactionBottomSheet.NONE -> {
                     Spacer(
-                        modifier = Modifier.height(
-                            height = 100.dp,
-                        ),
+                        modifier = Modifier
+                            .height(
+                                height = 100.dp,
+                            ),
                     )
                 }
                 AddTransactionBottomSheet.SELECT_CATEGORY -> {

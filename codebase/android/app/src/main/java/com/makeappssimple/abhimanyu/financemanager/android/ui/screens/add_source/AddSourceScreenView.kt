@@ -121,10 +121,11 @@ fun AddSourceScreenView(
                     onSelectionChange = { index ->
                         data.screenViewModel.selectedSourceTypeIndex = index
                     },
-                    modifier = Modifier.padding(
-                        horizontal = 16.dp,
-                        vertical = 8.dp,
-                    ),
+                    modifier = Modifier
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 8.dp,
+                        ),
                 )
                 OutlinedTextField(
                     value = data.screenViewModel.name,

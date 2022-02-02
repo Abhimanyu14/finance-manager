@@ -34,7 +34,7 @@ fun HomeBottomSheet(
     LazyColumn(
         modifier = Modifier
             .defaultMinSize(
-                minHeight = 100.dp,
+                minHeight = 24.dp,
             ),
     ) {
         items(

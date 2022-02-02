@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.ContentAlpha
@@ -193,9 +193,12 @@ fun HomeScreenView(
                     ),
             ) {
                 LazyColumn {
-                    items(
+                    itemsIndexed(
                         items = transactions,
-                    ) { listItem ->
+                        key = { _, listItem ->
+                            listItem.hashCode()
+                        },
+                    ) { _, listItem ->
                         val source by data.screenViewModel.getSource(
                             listItem.sourceFromId
                         ).collectAsState(

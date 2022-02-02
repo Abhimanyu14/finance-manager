@@ -114,6 +114,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                         MyRoomDatabase::class.java,
                         "finance_manager_database",
                     )
+                    .createFromAsset("database/finance_manager_database.db")
                     .addMigrations(
                         MIGRATION_9_10,
                         MIGRATION_8_9,
