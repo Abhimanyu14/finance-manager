@@ -115,6 +115,7 @@ fun AddSourceScreenView(
                         .map { sourceType ->
                             MyRadioGroupItem(
                                 text = sourceType.title,
+                                iconKey = sourceType.title,
                             )
                         },
                     selectedItemIndex = data.screenViewModel.selectedSourceTypeIndex,
