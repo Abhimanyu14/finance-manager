@@ -65,6 +65,12 @@ fun HomeScreenView(
     val transactions by data.screenViewModel.transactions.collectAsState(
         initial = emptyList(),
     )
+    val sourceFromList by data.screenViewModel.sourceFromList.collectAsState(
+        initial = emptyList(),
+    )
+    val sourceToList by data.screenViewModel.sourceToList.collectAsState(
+        initial = emptyList(),
+    )
 
     ModalBottomSheetLayout(
         sheetState = modalBottomSheetState,
@@ -198,16 +204,11 @@ fun HomeScreenView(
                         key = { _, listItem ->
                             listItem.hashCode()
                         },
-                    ) { _, listItem ->
-                        val source by data.screenViewModel.getSource(
-                            listItem.sourceFromId
-                        ).collectAsState(
-                            initial = null
-                        )
-
+                    ) { index, listItem ->
                         HomeListItem(
                             transaction = listItem,
-                            source = source,
+                            sourceFrom = sourceFromList.getOrNull(index),
+                            sourceTo = sourceToList.getOrNull(index),
                             deleteTransaction = {
                                 data.screenViewModel.deleteTransaction(
                                     id = listItem.id,

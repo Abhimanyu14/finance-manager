@@ -29,8 +29,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AddTransactionViewModel @Inject constructor(
     categoryRepository: CategoryRepository,
-    sourceRepository: SourceRepository,
     val navigationManager: NavigationManager,
+    private val sourceRepository: SourceRepository,
     private val transactionRepository: TransactionRepository,
 ) : BaseViewModel() {
     val transactionForValues = TransactionFor.values()
@@ -108,17 +108,23 @@ class AddTransactionViewModel @Inject constructor(
 
         when (transactionTypes[selectedTransactionTypeIndex]) {
             TransactionType.INCOME -> {
-                sourceFrom = incomeDefaultSource
+                sourceFrom = null
+                sourceTo = incomeDefaultSource
                 category = incomeDefaultCategory
             }
             TransactionType.EXPENSE -> {
                 sourceFrom = expenseDefaultSource
+                sourceTo = null
                 category = expenseDefaultCategory
             }
-            TransactionType.TRANSFER -> {}
+            TransactionType.TRANSFER -> {
+                sourceFrom = expenseDefaultSource
+                sourceTo = incomeDefaultSource
+            }
         }
     }
 
+    // TODO-Abhi: Restrict transfer between same source
     fun insertTransaction() {
         viewModelScope.launch(
             context = Dispatchers.IO,
@@ -149,6 +155,24 @@ class AddTransactionViewModel @Inject constructor(
                     transactionType = transactionTypes[selectedTransactionTypeIndex],
                 ),
             )
+            sourceFrom?.let { sourceFrom ->
+                sourceRepository.updateSources(
+                    sourceFrom.copy(
+                        balanceAmount = sourceFrom.balanceAmount.copy(
+                            value = sourceFrom.balanceAmount.value - amount.toLong(),
+                        )
+                    ),
+                )
+            }
+            sourceTo?.let { sourceTo ->
+                sourceRepository.updateSources(
+                    sourceTo.copy(
+                        balanceAmount = sourceTo.balanceAmount.copy(
+                            value = sourceTo.balanceAmount.value + amount.toLong(),
+                        )
+                    ),
+                )
+            }
             navigateUp(
                 navigationManager = navigationManager,
             )

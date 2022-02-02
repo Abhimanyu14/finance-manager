@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 import kotlinx.coroutines.flow.Flow
 
@@ -19,13 +20,18 @@ interface SourceDao {
     @Query(
         value = "SELECT * from source_table WHERE id = :id",
     )
-    fun getSource(
+    suspend fun getSource(
         id: Int,
-    ): Flow<Source>
+    ): Source?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertSource(
         source: Source,
+    )
+
+    @Update
+    suspend fun updateSources(
+        vararg sources: Source,
     )
 
     @Query(

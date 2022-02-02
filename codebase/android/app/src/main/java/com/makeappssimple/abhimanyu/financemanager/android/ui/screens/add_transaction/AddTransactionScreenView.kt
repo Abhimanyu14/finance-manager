@@ -167,7 +167,6 @@ fun AddTransactionScreenView(
         }
 
         data.screenViewModel.sourceFrom = data.screenViewModel.expenseDefaultSource
-        data.screenViewModel.sourceTo = data.screenViewModel.expenseDefaultSource
     }
 
     ModalBottomSheetLayout(
@@ -570,37 +569,44 @@ fun AddTransactionScreenView(
                                 vertical = 4.dp,
                             ),
                     )
-                    ReadonlyTextField(
-                        value = data.screenViewModel.sourceFromTextFieldValue,
-                        onClick = {
-                            addTransactionBottomSheet = AddTransactionBottomSheet.SELECT_SOURCE_FROM
-                            focusManager.clearFocus()
-                            toggleModalBottomSheetState(
-                                coroutineScope = coroutineScope,
-                                modalBottomSheetState = modalBottomSheetState,
-                            ) {}
-                        },
-                        label = {
-                            Text(
-                                text = stringResource(
-                                    id = if (data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER) {
-                                        R.string.screen_add_transaction_source_from
-                                    } else {
-                                        R.string.screen_add_transaction_source
-                                    },
-                                ),
-                                color = Color.DarkGray,
-                            )
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                horizontal = 16.dp,
-                                vertical = 4.dp,
-                            ),
-                    )
                     AnimatedVisibility(
-                        visible = data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER,
+                        visible = data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.EXPENSE ||
+                                data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER,
+                    ) {
+                        ReadonlyTextField(
+                            value = data.screenViewModel.sourceFromTextFieldValue,
+                            onClick = {
+                                addTransactionBottomSheet =
+                                    AddTransactionBottomSheet.SELECT_SOURCE_FROM
+                                focusManager.clearFocus()
+                                toggleModalBottomSheetState(
+                                    coroutineScope = coroutineScope,
+                                    modalBottomSheetState = modalBottomSheetState,
+                                ) {}
+                            },
+                            label = {
+                                Text(
+                                    text = stringResource(
+                                        id = if (data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER) {
+                                            R.string.screen_add_transaction_source_from
+                                        } else {
+                                            R.string.screen_add_transaction_source
+                                        },
+                                    ),
+                                    color = Color.DarkGray,
+                                )
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    horizontal = 16.dp,
+                                    vertical = 4.dp,
+                                ),
+                        )
+                    }
+                    AnimatedVisibility(
+                        visible = data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.INCOME ||
+                                data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER,
                     ) {
                         ReadonlyTextField(
                             value = data.screenViewModel.sourceToTextFieldValue,
@@ -616,7 +622,11 @@ fun AddTransactionScreenView(
                             label = {
                                 Text(
                                     text = stringResource(
-                                        id = R.string.screen_add_transaction_source_to,
+                                        id = if (data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER) {
+                                            R.string.screen_add_transaction_source_to
+                                        } else {
+                                            R.string.screen_add_transaction_source
+                                        },
                                     ),
                                     color = Color.DarkGray,
                                 )

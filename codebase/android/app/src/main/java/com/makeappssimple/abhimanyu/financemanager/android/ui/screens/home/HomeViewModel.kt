@@ -10,6 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,6 +21,21 @@ class HomeViewModel @Inject constructor(
     private val transactionRepository: TransactionRepository,
 ) : BaseViewModel() {
     val transactions: Flow<List<Transaction>> = transactionRepository.transactions
+    val sourceFromList: Flow<List<Source?>> = transactions.map {
+        it.map { transaction ->
+            transaction.sourceFromId?.let { id ->
+                sourceRepository.getSource(id)
+            }
+        }
+    }
+    val sourceToList: Flow<List<Source?>> = transactions.map {
+        it.map { transaction ->
+            transaction.sourceToId?.let { id ->
+                sourceRepository.getSource(id)
+            }
+        }
+    }
+
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code
@@ -35,13 +51,5 @@ class HomeViewModel @Inject constructor(
                 id = id,
             )
         }
-    }
-
-    fun getSource(
-        id: Int,
-    ): Flow<Source> {
-        return sourceRepository.getSource(
-            id = id,
-        )
     }
 }

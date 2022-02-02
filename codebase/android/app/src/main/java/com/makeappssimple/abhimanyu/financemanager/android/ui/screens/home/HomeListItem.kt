@@ -40,7 +40,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateString
 @Composable
 fun HomeListItem(
     transaction: Transaction,
-    source: Source?,
+    sourceFrom: Source? = null,
+    sourceTo: Source? = null,
     swipeToDelete: Boolean = true,
     deleteTransaction: () -> Unit,
 ) {
@@ -99,13 +100,15 @@ fun HomeListItem(
         ) {
             HomeListItemView(
                 transaction = transaction,
-                source = source,
+                sourceFrom = sourceFrom,
+                sourceTo = sourceTo,
             )
         }
     } else {
         HomeListItemView(
             transaction = transaction,
-            source = source,
+            sourceFrom = sourceFrom,
+            sourceTo = sourceTo,
         )
     }
 }
@@ -113,7 +116,8 @@ fun HomeListItem(
 @Composable
 private fun HomeListItemView(
     transaction: Transaction,
-    source: Source?,
+    sourceFrom: Source?,
+    sourceTo: Source?,
 ) {
     Column(
         modifier = Modifier
@@ -188,7 +192,13 @@ private fun HomeListItemView(
                     ),
             )
             Text(
-                text = source?.name ?: "",
+                text = if (sourceFrom != null && sourceTo != null) {
+                    "${sourceFrom.name} -> ${sourceTo.name}"
+                } else if (sourceFrom != null) {
+                    sourceFrom.name
+                } else {
+                    sourceTo?.name ?: ""
+                },
                 textAlign = TextAlign.End,
                 style = TextStyle(
                     color = DarkGray,
