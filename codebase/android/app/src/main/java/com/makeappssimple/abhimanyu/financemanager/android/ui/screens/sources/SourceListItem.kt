@@ -146,7 +146,7 @@ private fun SourceListItemView(
                     color = DarkGray,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.SemiBold,
-                )
+                ),
             )
         }
     }
