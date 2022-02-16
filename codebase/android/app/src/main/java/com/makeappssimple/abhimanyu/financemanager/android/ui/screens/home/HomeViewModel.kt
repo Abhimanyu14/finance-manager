@@ -21,17 +21,22 @@ class HomeViewModel @Inject constructor(
     private val transactionRepository: TransactionRepository,
 ) : BaseViewModel() {
     val transactions: Flow<List<Transaction>> = transactionRepository.transactions
+    val sources: Flow<List<Source>> = sourceRepository.sources
     val sourceFromList: Flow<List<Source?>> = transactions.map {
         it.map { transaction ->
-            transaction.sourceFromId?.let { id ->
-                sourceRepository.getSource(id)
+            transaction.sourceFromId.let { id ->
+                sourceRepository.getSource(
+                    id = id,
+                )
             }
         }
     }
     val sourceToList: Flow<List<Source?>> = transactions.map {
         it.map { transaction ->
             transaction.sourceToId?.let { id ->
-                sourceRepository.getSource(id)
+                sourceRepository.getSource(
+                    id = id,
+                )
             }
         }
     }

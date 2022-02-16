@@ -65,16 +65,16 @@ private val Brown100 = Color(0xFFF1C6A4)
 private val Brown50 = Color(0xFFFFD7B5)
 private val Brown10 = Color(0xFFFFF8F2)
 
-private val Blue1000 = Color(0xFF0346B2)
-private val Blue900 = Color(0xFF1858BA)
-private val Blue700 = Color(0xFF427BCA)
-private val Blue100 = Color(0xFFC0E3F8)
+val Blue1000 = Color(0xFF0346B2)
+val Blue900 = Color(0xFF1858BA)
+val Blue700 = Color(0xFF427BCA)
+val Blue100 = Color(0xFFC0E3F8)
 private val Blue10 = Color(0xFFEAF9FF)
 
 private val Green1000 = Color(0xFF419243)
-private val Green900 = Color(0xFF529E54)
-private val Green700 = Color(0xFF74B375)
-private val Green100 = Color(0xFFDAF5D7)
+val Green900 = Color(0xFF529E54)
+val Green700 = Color(0xFF74B375)
+val Green100 = Color(0xFFDAF5D7)
 private val Green10 = Color(0xFFF4FFF2)
 
 
