@@ -23,7 +23,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 fun MyNavGraph(
     activityViewModel: MainActivityViewModel,
 ) {
-    logError("Inside MyNavGraph")
+    logError(
+        message = "Inside MyNavGraph",
+    )
     val navHostController = rememberNavController()
 
     activityViewModel.navigationManager.command.collectAsState().value.also { command ->

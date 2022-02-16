@@ -11,7 +11,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 fun SourcesScreen(
     screenViewModel: SourcesViewModel = hiltViewModel(),
 ) {
-    logError("Inside SourcesScreen")
+    logError(
+        message = "Inside SourcesScreen",
+    )
 
     LaunchedEffect(
         key1 = Unit,

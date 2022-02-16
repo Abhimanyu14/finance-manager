@@ -11,7 +11,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 fun CategoriesScreen(
     screenViewModel: CategoriesViewModel = hiltViewModel(),
 ) {
-    logError("Inside CategoriesScreen")
+    logError(
+        message = "Inside CategoriesScreen",
+    )
 
     LaunchedEffect(
         key1 = Unit,

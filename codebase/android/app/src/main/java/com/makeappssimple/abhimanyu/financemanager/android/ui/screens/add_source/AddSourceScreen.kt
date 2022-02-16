@@ -9,7 +9,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 fun AddSourceScreen(
     screenViewModel: AddSourceViewModel = hiltViewModel(),
 ) {
-    logError("Inside AddSourceScreen")
+    logError(
+        message = "Inside AddSourceScreen",
+    )
 
     LaunchedEffect(
         key1 = Unit,

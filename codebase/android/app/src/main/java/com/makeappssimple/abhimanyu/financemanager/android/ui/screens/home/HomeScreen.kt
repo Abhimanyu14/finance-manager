@@ -13,7 +13,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 fun HomeScreen(
     screenViewModel: HomeViewModel = hiltViewModel(),
 ) {
-    logError("Inside HomeScreen")
+    logError(
+        message = "Inside HomeScreen",
+    )
 
     LaunchedEffect(
         key1 = Unit,

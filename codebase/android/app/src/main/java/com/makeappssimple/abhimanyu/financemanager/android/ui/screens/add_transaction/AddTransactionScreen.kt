@@ -13,7 +13,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 fun AddTransactionScreen(
     screenViewModel: AddTransactionViewModel = hiltViewModel(),
 ) {
-    logError("Inside AddTransactionScreen")
+    logError(
+        message = "Inside AddTransactionScreen",
+    )
 
     LaunchedEffect(
         key1 = Unit,
