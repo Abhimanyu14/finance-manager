@@ -42,6 +42,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddCategoryScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.NavigationBackButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.getDismissState
@@ -79,24 +80,12 @@ fun CategoriesScreenView(
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(
-                            id = R.string.screen_categories_appbar_title,
-                        ),
-                        color = Primary,
-                    )
-                },
-                navigationIcon = {
-                    NavigationBackButton(
-                        navigationManager = data.screenViewModel.navigationManager,
-                    )
-                },
-                modifier = Modifier
-                    .background(
-                        color = Surface,
-                    ),
+            MyTopAppBar(
+                navigationManager = data.screenViewModel.navigationManager,
+                titleText = stringResource(
+                    id = R.string.screen_categories_appbar_title,
+                ),
+                isNavigationIconVisible = true,
             )
         },
         floatingActionButton = {

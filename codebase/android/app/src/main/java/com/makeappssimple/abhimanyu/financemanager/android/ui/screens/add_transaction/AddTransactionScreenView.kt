@@ -5,7 +5,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
@@ -27,7 +26,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -60,12 +58,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyExtendedF
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.NavigationBackButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyReadOnlyTextField
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.dayOfMonth
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.month
@@ -269,24 +265,12 @@ fun AddTransactionScreenView(
         Scaffold(
             scaffoldState = scaffoldState,
             topBar = {
-                CenterAlignedTopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(
-                                id = R.string.screen_add_transaction_appbar_title,
-                            ),
-                            color = Primary,
-                        )
-                    },
-                    navigationIcon = {
-                        NavigationBackButton(
-                            navigationManager = data.screenViewModel.navigationManager,
-                        )
-                    },
-                    modifier = Modifier
-                        .background(
-                            color = Surface,
-                        ),
+                MyTopAppBar(
+                    navigationManager = data.screenViewModel.navigationManager,
+                    titleText = stringResource(
+                        id = R.string.screen_add_transaction_appbar_title,
+                    ),
+                    isNavigationIconVisible = true,
                 )
             },
             modifier = Modifier

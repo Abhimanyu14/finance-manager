@@ -1,10 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
@@ -44,6 +42,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.models.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToCategoriesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSourcesScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBarBackground
@@ -140,19 +139,12 @@ fun HomeScreenView(
         Scaffold(
             scaffoldState = scaffoldState,
             topBar = {
-                CenterAlignedTopAppBar(
-                    title = {
-                        Text(
-                            text = stringResource(
-                                id = R.string.screen_home_appbar_title,
-                            ),
-                            color = Primary,
-                        )
-                    },
-                    modifier = Modifier
-                        .background(
-                            color = Surface,
-                        ),
+                MyTopAppBar(
+                    navigationManager = data.screenViewModel.navigationManager,
+                    titleText = stringResource(
+                        id = R.string.screen_home_appbar_title,
+                    ),
+                    isNavigationIconVisible = false,
                 )
             },
             bottomBar = {

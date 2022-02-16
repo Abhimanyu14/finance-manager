@@ -46,6 +46,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyExtendedF
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.NavigationBackButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
@@ -70,24 +71,12 @@ fun AddSourceScreenView(
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(
-                            id = R.string.screen_add_source_appbar_title,
-                        ),
-                        color = Primary,
-                    )
-                },
-                navigationIcon = {
-                    NavigationBackButton(
-                        navigationManager = data.screenViewModel.navigationManager,
-                    )
-                },
-                modifier = Modifier
-                    .background(
-                        color = Surface,
-                    ),
+            MyTopAppBar(
+                navigationManager = data.screenViewModel.navigationManager,
+                titleText = stringResource(
+                    id = R.string.screen_add_source_appbar_title,
+                ),
+                isNavigationIconVisible = true,
             )
         },
         modifier = Modifier

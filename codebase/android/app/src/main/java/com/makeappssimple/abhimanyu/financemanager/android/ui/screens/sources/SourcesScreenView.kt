@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -34,7 +33,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.models.sortOrder
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddSourceScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.NavigationBackButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.FloatingActionButtonBackground
@@ -74,24 +75,12 @@ fun SourcesScreenView(
     Scaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            CenterAlignedTopAppBar(
-                title = {
-                    Text(
-                        text = stringResource(
-                            id = R.string.screen_sources_appbar_title,
-                        ),
-                        color = Primary,
-                    )
-                },
-                navigationIcon = {
-                    NavigationBackButton(
-                        navigationManager = data.screenViewModel.navigationManager,
-                    )
-                },
-                modifier = Modifier
-                    .background(
-                        color = Surface,
-                    ),
+            MyTopAppBar(
+                navigationManager = data.screenViewModel.navigationManager,
+                titleText = stringResource(
+                    id = R.string.screen_sources_appbar_title,
+                ),
+                isNavigationIconVisible = true,
             )
         },
         floatingActionButton = {
