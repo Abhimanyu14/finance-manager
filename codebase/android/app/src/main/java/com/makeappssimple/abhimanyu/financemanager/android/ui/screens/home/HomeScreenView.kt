@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -10,21 +9,17 @@ import androidx.compose.material.BottomAppBar
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FabPosition
-import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
@@ -42,15 +37,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.models.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToCategoriesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSourcesScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBarBackground
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBarIconTint
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.FloatingActionButtonBackground
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.FloatingActionButtonIconTint
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 
 data class HomeScreenViewData(
     val screenViewModel: HomeViewModel,
@@ -182,22 +174,16 @@ fun HomeScreenView(
                 }
             },
             floatingActionButton = {
-                FloatingActionButton(
-                    backgroundColor = FloatingActionButtonBackground,
+                MyFloatingActionButton(
+                    contentDescription = stringResource(
+                        id = R.string.screen_home_floating_action_button_content_description,
+                    ),
                     onClick = {
                         navigateToAddTransactionScreen(
                             navigationManager = data.screenViewModel.navigationManager,
                         )
                     },
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.Add,
-                        contentDescription = stringResource(
-                            id = R.string.screen_home_floating_action_button_content_description,
-                        ),
-                        tint = FloatingActionButtonIconTint,
-                    )
-                }
+                )
             },
             floatingActionButtonPosition = FabPosition.End,
             isFloatingActionButtonDocked = true,

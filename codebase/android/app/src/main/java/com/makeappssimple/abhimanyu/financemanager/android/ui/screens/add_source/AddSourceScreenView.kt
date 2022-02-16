@@ -4,8 +4,6 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
@@ -21,7 +19,6 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,10 +44,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButto
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.NavigationBackButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 
 data class AddSourceScreenViewData(

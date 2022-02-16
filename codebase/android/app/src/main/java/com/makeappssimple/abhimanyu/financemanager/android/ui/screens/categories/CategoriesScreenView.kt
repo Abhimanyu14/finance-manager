@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categorie
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -13,16 +12,13 @@ import androidx.compose.material.DismissDirection
 import androidx.compose.material.DismissValue
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FabPosition
-import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.DeleteForever
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -42,12 +38,10 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddCategoryScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.NavigationBackButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.getDismissState
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.FloatingActionButtonBackground
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.FloatingActionButtonIconTint
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 
@@ -89,22 +83,16 @@ fun CategoriesScreenView(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
-                backgroundColor = FloatingActionButtonBackground,
+            MyFloatingActionButton(
+                contentDescription = stringResource(
+                    id = R.string.screen_sources_floating_action_button_content_description,
+                ),
                 onClick = {
                     navigateToAddCategoryScreen(
                         navigationManager = data.screenViewModel.navigationManager,
                     )
                 },
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.Add,
-                    contentDescription = stringResource(
-                        id = R.string.screen_sources_floating_action_button_content_description,
-                    ),
-                    tint = FloatingActionButtonIconTint,
-                )
-            }
+            )
         },
         floatingActionButtonPosition = FabPosition.End,
         isFloatingActionButtonDocked = true,

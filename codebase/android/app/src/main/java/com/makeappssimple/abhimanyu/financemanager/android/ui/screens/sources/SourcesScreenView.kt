@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -8,13 +7,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FabPosition
-import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Scaffold
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -33,15 +27,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.models.sortOrder
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddSourceScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.NavigationBackButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.FloatingActionButtonBackground
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.FloatingActionButtonIconTint
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 
 data class SourcesScreenViewData(
     val screenViewModel: SourcesViewModel,
@@ -84,22 +74,16 @@ fun SourcesScreenView(
             )
         },
         floatingActionButton = {
-            FloatingActionButton(
-                backgroundColor = FloatingActionButtonBackground,
+            MyFloatingActionButton(
+                contentDescription = stringResource(
+                    id = R.string.screen_sources_floating_action_button_content_description,
+                ),
                 onClick = {
                     navigateToAddSourceScreen(
                         navigationManager = data.screenViewModel.navigationManager,
                     )
                 },
-            ) {
-                Icon(
-                    imageVector = Icons.Rounded.Add,
-                    contentDescription = stringResource(
-                        id = R.string.screen_sources_floating_action_button_content_description,
-                    ),
-                    tint = FloatingActionButtonIconTint,
-                )
-            }
+            )
         },
         floatingActionButtonPosition = FabPosition.End,
         isFloatingActionButtonDocked = true,
