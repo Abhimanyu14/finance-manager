@@ -6,9 +6,6 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
@@ -64,7 +61,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButto
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.NavigationBackButton
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ReadOnlyTextField
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyReadOnlyTextField
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
@@ -93,12 +91,12 @@ fun AddTransactionScreenView(
     data: AddTransactionScreenViewData,
 ) {
     val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
     val coroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
     val modalBottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
     )
-    val focusManager = LocalFocusManager.current
     val focusRequester = remember {
         FocusRequester()
     }
@@ -294,23 +292,11 @@ fun AddTransactionScreenView(
             modifier = Modifier
                 .fillMaxSize(),
         ) { innerPadding ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Surface,
-                    )
-                    .fillMaxSize()
-                    .clickable(
-                        indication = null,
-                        interactionSource = remember {
-                            MutableInteractionSource()
-                        },
-                    ) {
-                        focusManager.clearFocus()
-                    }
-                    .padding(
-                        paddingValues = innerPadding,
-                    ),
+            ScaffoldContentWrapper(
+                innerPadding = innerPadding,
+                onClick = {
+                    focusManager.clearFocus()
+                },
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -463,7 +449,7 @@ fun AddTransactionScreenView(
                         visible = data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.EXPENSE ||
                                 data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.INCOME,
                     ) {
-                        ReadOnlyTextField(
+                        MyReadOnlyTextField(
                             value = data.screenViewModel.categoryTextFieldValue,
                             onClick = {
                                 addTransactionBottomSheet =
@@ -573,7 +559,7 @@ fun AddTransactionScreenView(
                         visible = data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.EXPENSE ||
                                 data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER,
                     ) {
-                        ReadOnlyTextField(
+                        MyReadOnlyTextField(
                             value = data.screenViewModel.sourceFromTextFieldValue,
                             onClick = {
                                 addTransactionBottomSheet =
@@ -608,7 +594,7 @@ fun AddTransactionScreenView(
                         visible = data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.INCOME ||
                                 data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER,
                     ) {
-                        ReadOnlyTextField(
+                        MyReadOnlyTextField(
                             value = data.screenViewModel.sourceToTextFieldValue,
                             onClick = {
                                 addTransactionBottomSheet =
@@ -639,7 +625,7 @@ fun AddTransactionScreenView(
                                 ),
                         )
                     }
-                    ReadOnlyTextField(
+                    MyReadOnlyTextField(
                         value = data.screenViewModel.transactionDateTextFieldValue,
                         onClick = {
                             transactionDatePickerDialog.show()

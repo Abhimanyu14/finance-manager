@@ -37,12 +37,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.models.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToCategoriesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSourcesScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBarBackground
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBarIconTint
@@ -61,6 +63,7 @@ data class HomeScreenViewData(
 fun HomeScreenView(
     data: HomeScreenViewData,
 ) {
+    val focusManager = LocalFocusManager.current
     val coroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
     val modalBottomSheetState = rememberModalBottomSheetState(
@@ -209,15 +212,11 @@ fun HomeScreenView(
             modifier = Modifier
                 .fillMaxSize(),
         ) { innerPadding ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Surface,
-                    )
-                    .fillMaxSize()
-                    .padding(
-                        paddingValues = innerPadding,
-                    ),
+            ScaffoldContentWrapper(
+                innerPadding = innerPadding,
+                onClick = {
+                    focusManager.clearFocus()
+                },
             ) {
                 LazyColumn {
                     item {

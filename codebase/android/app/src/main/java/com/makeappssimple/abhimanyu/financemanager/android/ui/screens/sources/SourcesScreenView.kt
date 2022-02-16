@@ -25,6 +25,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -35,6 +36,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.models.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.NavigationBackButton
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.FloatingActionButtonBackground
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.FloatingActionButtonIconTint
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
@@ -49,6 +51,7 @@ data class SourcesScreenViewData(
 fun SourcesScreenView(
     data: SourcesScreenViewData,
 ) {
+    val focusManager = LocalFocusManager.current
     val scaffoldState = rememberScaffoldState()
 
     val sources by data.screenViewModel.sources.collectAsState(
@@ -114,15 +117,11 @@ fun SourcesScreenView(
         modifier = Modifier
             .fillMaxSize(),
     ) { innerPadding ->
-        Box(
-            modifier = Modifier
-                .background(
-                    color = Surface,
-                )
-                .fillMaxSize()
-                .padding(
-                    paddingValues = innerPadding,
-                ),
+        ScaffoldContentWrapper(
+            innerPadding = innerPadding,
+            onClick = {
+                focusManager.clearFocus()
+            },
         ) {
             LazyColumn {
                 item {

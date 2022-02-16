@@ -34,6 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -42,6 +43,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.NavigationBackButton
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.getDismissState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.FloatingActionButtonBackground
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.FloatingActionButtonIconTint
@@ -58,6 +60,7 @@ data class CategoriesScreenViewData(
 fun CategoriesScreenView(
     data: CategoriesScreenViewData,
 ) {
+    val focusManager = LocalFocusManager.current
     val scaffoldState = rememberScaffoldState()
 
     val categories by data.screenViewModel.categories.collectAsState(
@@ -119,15 +122,11 @@ fun CategoriesScreenView(
         modifier = Modifier
             .fillMaxSize(),
     ) { innerPadding ->
-        Box(
-            modifier = Modifier
-                .background(
-                    color = Surface,
-                )
-                .fillMaxSize()
-                .padding(
-                    paddingValues = innerPadding,
-                ),
+        ScaffoldContentWrapper(
+            innerPadding = innerPadding,
+            onClick = {
+                focusManager.clearFocus()
+            },
         ) {
             Column {
                 TabRow(

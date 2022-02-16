@@ -11,7 +11,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.TextFieldValue
 
 @Composable
-fun ReadOnlyTextField(
+fun MyReadOnlyTextField(
     value: TextFieldValue,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,

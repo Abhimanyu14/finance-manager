@@ -56,6 +56,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButto
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.NavigationBackButton
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
@@ -70,12 +71,12 @@ data class AddCategoryScreenViewData(
 fun AddCategoryScreenView(
     data: AddCategoryScreenViewData,
 ) {
+    val focusManager = LocalFocusManager.current
     val coroutineScope = rememberCoroutineScope()
     val scaffoldState = rememberScaffoldState()
     val modalBottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
     )
-    val focusManager = LocalFocusManager.current
     val focusRequester = remember {
         FocusRequester()
     }
@@ -126,15 +127,11 @@ fun AddCategoryScreenView(
             modifier = Modifier
                 .fillMaxSize(),
         ) { innerPadding ->
-            Box(
-                modifier = Modifier
-                    .background(
-                        color = Surface,
-                    )
-                    .fillMaxSize()
-                    .padding(
-                        paddingValues = innerPadding,
-                    ),
+            ScaffoldContentWrapper(
+                innerPadding = innerPadding,
+                onClick = {
+                    focusManager.clearFocus()
+                },
             ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
