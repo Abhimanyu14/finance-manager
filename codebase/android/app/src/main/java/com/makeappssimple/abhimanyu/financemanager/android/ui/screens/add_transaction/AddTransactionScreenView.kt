@@ -64,7 +64,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButto
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.NavigationBackButton
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ReadonlyTextField
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
@@ -463,7 +463,7 @@ fun AddTransactionScreenView(
                         visible = data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.EXPENSE ||
                                 data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.INCOME,
                     ) {
-                        ReadonlyTextField(
+                        ReadOnlyTextField(
                             value = data.screenViewModel.categoryTextFieldValue,
                             onClick = {
                                 addTransactionBottomSheet =
@@ -573,7 +573,7 @@ fun AddTransactionScreenView(
                         visible = data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.EXPENSE ||
                                 data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER,
                     ) {
-                        ReadonlyTextField(
+                        ReadOnlyTextField(
                             value = data.screenViewModel.sourceFromTextFieldValue,
                             onClick = {
                                 addTransactionBottomSheet =
@@ -608,7 +608,7 @@ fun AddTransactionScreenView(
                         visible = data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.INCOME ||
                                 data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER,
                     ) {
-                        ReadonlyTextField(
+                        ReadOnlyTextField(
                             value = data.screenViewModel.sourceToTextFieldValue,
                             onClick = {
                                 addTransactionBottomSheet =
@@ -639,7 +639,7 @@ fun AddTransactionScreenView(
                                 ),
                         )
                     }
-                    ReadonlyTextField(
+                    ReadOnlyTextField(
                         value = data.screenViewModel.transactionDateTextFieldValue,
                         onClick = {
                             transactionDatePickerDialog.show()
