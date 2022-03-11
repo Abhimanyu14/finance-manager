@@ -3,6 +3,7 @@ plugins {
     id "kotlin-android"
     id "kotlin-kapt"
     id "dagger.hilt.android.plugin"
+    id "com.google.gms.google-services"
 }
 
 def apikeyPropertiesFile = rootProject.file("apikey.properties")
@@ -166,6 +167,12 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$rootProject.roomVersion"
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
+
+    // Firebase BoM
+    implementation platform("com.google.firebase:firebase-bom:$rootProject.firebaseBomVersion")
+
+    // Firebase analytics
+    implementation "com.google.firebase:firebase-analytics-ktx"
 
     // Testing
     testImplementation "junit:junit:$rootProject.junitVersion"
