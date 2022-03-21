@@ -260,7 +260,7 @@ fun AddSourceScreenView(
                             id = R.string.screen_add_source_floating_action_button_content_description,
                         ),
                         textAlign = TextAlign.Center,
-                        fontWeight = FontWeight.SemiBold,
+                        fontWeight = FontWeight.Bold,
                         color = if (
                             data.screenViewModel.name.isNotNullOrBlank() &&
                             data.screenViewModel.balanceAmount.isNotNullOrBlank()

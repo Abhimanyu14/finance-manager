@@ -145,7 +145,7 @@ private fun SourceListItemView(
                 style = TextStyle(
                     color = DarkGray,
                     fontSize = 12.sp,
-                    fontWeight = FontWeight.SemiBold,
+                    fontWeight = FontWeight.Bold,
                 ),
             )
         }

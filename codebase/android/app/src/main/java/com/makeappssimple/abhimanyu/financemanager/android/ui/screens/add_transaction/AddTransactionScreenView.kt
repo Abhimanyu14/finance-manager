@@ -663,7 +663,7 @@ fun AddTransactionScreenView(
                                 id = R.string.screen_add_transaction_floating_action_button_content_description,
                             ),
                             textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.SemiBold,
+                            fontWeight = FontWeight.Bold,
                             color = if (
                                 data.screenViewModel.amount.isNotNullOrBlank() &&
                                 data.screenViewModel.title.isNotNullOrBlank()

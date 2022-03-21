@@ -37,7 +37,7 @@ fun CategoryListItem(
             style = TextStyle(
                 color = Color.DarkGray,
                 fontSize = 14.sp,
-                fontWeight = FontWeight.SemiBold,
+                fontWeight = FontWeight.Bold,
             ),
         )
     }

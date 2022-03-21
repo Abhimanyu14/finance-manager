@@ -53,7 +53,7 @@ fun TotalBalanceCard(
                 style = TextStyle(
                     color = Color.White,
                     fontSize = 14.sp,
-                    fontWeight = FontWeight.SemiBold,
+                    fontWeight = FontWeight.Bold,
                 ),
                 modifier = Modifier
                     .fillMaxWidth(),

@@ -125,7 +125,7 @@ fun CategoriesScreenView(
                                         } else {
                                             Color.DarkGray
                                         },
-                                        fontWeight = FontWeight.SemiBold,
+                                        fontWeight = FontWeight.Bold,
                                     )
                                 },
                                 selected = selectedTabIndex == index,

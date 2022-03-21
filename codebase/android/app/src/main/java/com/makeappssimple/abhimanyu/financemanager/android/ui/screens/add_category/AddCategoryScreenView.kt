@@ -332,7 +332,7 @@ fun AddCategoryScreenView(
                                 id = R.string.screen_add_category_floating_action_button_content_description,
                             ),
                             textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.SemiBold,
+                            fontWeight = FontWeight.Bold,
                             color = if (data.screenViewModel.title.isNotNullOrBlank()) {
                                 White
                             } else {

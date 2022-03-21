@@ -128,7 +128,7 @@ private fun MyRadioGroupItemView(
                     item.defaultTextColor
                 },
                 fontSize = 14.sp,
-                fontWeight = FontWeight.Thin,
+                fontWeight = FontWeight.Normal,
             ),
             modifier = Modifier
                 .padding(
