@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.models
 
 import com.makeappssimple.abhimanyu.financemanager.android.utils.formattedCurrencyValue
-import java.util.*
+import java.util.Currency
 
 const val CURRENCY_CODE_INR = "INR"
 

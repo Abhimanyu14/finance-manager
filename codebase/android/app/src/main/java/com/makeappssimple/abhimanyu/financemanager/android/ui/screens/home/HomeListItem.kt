@@ -35,7 +35,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.models.amountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.getDismissState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
-import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateString
+import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateAndTimeString
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -173,7 +173,7 @@ private fun HomeListItemView(
                 .fillMaxWidth(),
         ) {
             Text(
-                text = getDateString(
+                text = getDateAndTimeString(
                     timestamp = transaction.transactionTimestamp,
                 ),
                 style = TextStyle(

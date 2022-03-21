@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.utils.extensions
 
-import java.util.*
+import java.util.Calendar
 
 var Calendar.dayOfMonth: Int
     get() = this[Calendar.DAY_OF_MONTH]

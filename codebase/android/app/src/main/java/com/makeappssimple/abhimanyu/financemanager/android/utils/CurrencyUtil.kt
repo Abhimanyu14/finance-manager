@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.utils
 
 import java.text.NumberFormat
-import java.util.*
+import java.util.Locale
 
 fun formattedCurrencyValue(
     value: Long,
