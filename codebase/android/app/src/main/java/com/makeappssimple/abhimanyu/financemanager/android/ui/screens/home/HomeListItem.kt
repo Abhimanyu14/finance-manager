@@ -5,8 +5,10 @@ import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.DismissDirection
 import androidx.compose.material.DismissValue
@@ -30,9 +32,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.models.amountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.getDismissState
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.OnTertiaryContainer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateString
 
@@ -139,7 +140,7 @@ private fun HomeListItemView(
                 style = TextStyle(
                     color = DarkGray,
                     fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal,
+                    fontWeight = FontWeight.Bold,
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -151,17 +152,7 @@ private fun HomeListItemView(
                 text = transaction.amount.toString(),
                 textAlign = TextAlign.End,
                 style = TextStyle(
-                    color = when (transaction.transactionType) {
-                        TransactionType.INCOME -> {
-                            OnTertiaryContainer
-                        }
-                        TransactionType.EXPENSE -> {
-                            Red
-                        }
-                        TransactionType.TRANSFER -> {
-                            DarkGray
-                        }
-                    },
+                    color = transaction.transactionType.amountTextColor,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                 ),
@@ -172,6 +163,11 @@ private fun HomeListItemView(
                     ),
             )
         }
+        Spacer(
+            modifier = Modifier.height(
+                height = 4.dp,
+            ),
+        )
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -194,10 +190,8 @@ private fun HomeListItemView(
             Text(
                 text = if (sourceFrom != null && sourceTo != null) {
                     "${sourceFrom.name} -> ${sourceTo.name}"
-                } else if (sourceFrom != null) {
-                    sourceFrom.name
                 } else {
-                    sourceTo?.name ?: ""
+                    sourceFrom?.name ?: (sourceTo?.name ?: "")
                 },
                 textAlign = TextAlign.End,
                 style = TextStyle(

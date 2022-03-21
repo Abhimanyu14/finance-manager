@@ -1,8 +1,10 @@
 package com.makeappssimple.abhimanyu.financemanager.android.models
 
+import androidx.compose.ui.graphics.Color
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.OnTertiaryContainer
 
 enum class TransactionFor(
     val title: String,
@@ -61,3 +63,16 @@ data class Transaction(
     @ColumnInfo(name = "transaction_type")
     val transactionType: TransactionType = TransactionType.EXPENSE,
 )
+
+val TransactionType.amountTextColor: Color
+    get() = when (this) {
+        TransactionType.INCOME -> {
+            OnTertiaryContainer
+        }
+        TransactionType.EXPENSE -> {
+            Color.Red
+        }
+        TransactionType.TRANSFER -> {
+            Color.DarkGray
+        }
+    }
