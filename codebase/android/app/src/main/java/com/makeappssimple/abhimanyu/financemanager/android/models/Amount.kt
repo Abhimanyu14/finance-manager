@@ -3,8 +3,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.models
 import com.makeappssimple.abhimanyu.financemanager.android.utils.formattedCurrencyValue
 import java.util.*
 
+const val CURRENCY_CODE_INR = "INR"
+
 data class Amount(
-    val currency: Currency = Currency.getInstance("INR"),
+    val currency: Currency = Currency.getInstance(CURRENCY_CODE_INR),
     val value: Long = 0,
 ) {
     override fun toString(): String {
