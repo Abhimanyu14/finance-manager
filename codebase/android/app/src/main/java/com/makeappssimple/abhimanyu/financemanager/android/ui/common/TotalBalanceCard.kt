@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
+package com.makeappssimple.abhimanyu.financemanager.android.ui.common
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -22,11 +22,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Green700
 @Composable
 fun TotalBalanceCard(
     total: String,
-    onClick: () -> Unit,
+    onClick: (() -> Unit)? = null,
 ) {
     Card(
         onClick = {
-            onClick()
+            onClick?.invoke()
         },
         shape = RoundedCornerShape(
             size = 16.dp,

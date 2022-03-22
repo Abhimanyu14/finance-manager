@@ -1,15 +1,12 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FabPosition
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -20,18 +17,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.models.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.models.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.TotalBalanceCard
 
 data class SourcesScreenViewData(
     val screenViewModel: SourcesViewModel,
@@ -50,7 +43,7 @@ fun SourcesScreenView(
     )
     var total by remember {
         mutableStateOf(
-            value = "",
+            value = 0L,
         )
     }
 
@@ -59,7 +52,7 @@ fun SourcesScreenView(
     ) {
         total = sources.sumOf {
             it.balanceAmount.value
-        }.toString()
+        }
     }
 
     Scaffold(
@@ -98,20 +91,10 @@ fun SourcesScreenView(
         ) {
             LazyColumn {
                 item {
-                    Text(
-                        text = "TOTAL : $total",
-                        textAlign = TextAlign.Center,
-                        style = TextStyle(
-                            color = Primary,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold,
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                horizontal = 16.dp,
-                                vertical = 8.dp,
-                            ),
+                    TotalBalanceCard(
+                        total = Amount(
+                            value = total,
+                        ).toString(),
                     )
                 }
                 itemsIndexed(
