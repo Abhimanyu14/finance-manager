@@ -16,4 +16,13 @@ data class Amount(
 
         return "${currency.symbol} $formattedValue"
     }
+
+    operator fun plus(
+        amount: Amount,
+    ): Amount {
+        return Amount(
+            currency = currency,
+            value = value + amount.value,
+        )
+    }
 }
