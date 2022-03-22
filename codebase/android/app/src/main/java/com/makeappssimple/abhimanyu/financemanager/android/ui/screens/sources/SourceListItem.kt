@@ -131,23 +131,25 @@ private fun SourceListItemView(
                     end = 8.dp,
                 ),
         )
-        Column {
-            Text(
-                text = source.name,
-                style = TextStyle(
-                    color = DarkGray,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Normal,
+        Text(
+            text = source.name,
+            style = TextStyle(
+                color = DarkGray,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+            ),
+            modifier = Modifier
+                .weight(
+                    weight = 1f,
                 ),
-            )
-            Text(
-                text = source.balanceAmount.toString(),
-                style = TextStyle(
-                    color = DarkGray,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Bold,
-                ),
-            )
-        }
+        )
+        Text(
+            text = source.balanceAmount.toString(),
+            style = TextStyle(
+                color = DarkGray,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+            ),
+        )
     }
 }
