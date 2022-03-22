@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.utils.extensions
 
+import android.text.format.DateFormat
 import java.util.Calendar
 
 var Calendar.dayOfMonth: Int
@@ -20,6 +21,18 @@ var Calendar.year: Int
         this[Calendar.YEAR] = value
     }
 
+var Calendar.hour: Int
+    get() = this[Calendar.HOUR]
+    set(value) {
+        this[Calendar.HOUR] = value
+    }
+
+var Calendar.minute: Int
+    get() = this[Calendar.MINUTE]
+    set(value) {
+        this[Calendar.MINUTE] = value
+    }
+
 fun Calendar.setDate(
     dayOfMonth: Int,
     month: Int,
@@ -31,10 +44,19 @@ fun Calendar.setDate(
     return this
 }
 
+fun Calendar.setTime(
+    hour: Int,
+    minute: Int,
+): Calendar {
+    this.hour = hour
+    this.minute = minute
+    return this
+}
+
 fun Calendar.formattedDate(): String {
-    return this.dayOfMonth.padStartWithZero(length = 2) +
-            "/" +
-            (this.month + 1).padStartWithZero(length = 2) +
-            "/" +
-            "${this.year}"
+    return DateFormat.format("dd/MM/yyyy", this).toString()
+}
+
+fun Calendar.formattedTime(): String {
+    return DateFormat.format("hh:mm a", this).toString()
 }

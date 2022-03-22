@@ -38,6 +38,7 @@
     <string name="screen_add_transaction_description">Description</string>
     <string name="screen_add_transaction_clear_description">Clear Description</string>
     <string name="screen_add_transaction_transaction_date">Transaction Date</string>
+    <string name="screen_add_transaction_transaction_time">Transaction Time</string>
     <string name="screen_add_transaction_category">Category</string>
     <string name="screen_add_transaction_source">Source</string>
     <string name="screen_add_transaction_source_from">Source From</string>

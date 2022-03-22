@@ -23,5 +23,5 @@ fun getDateAndTimeString(
 
     return "${DateFormat.format("dd MMM, yyyy", calendar)}" +
             " at " +
-            "${DateFormat.format("hh-mm a", calendar)}"
+            "${DateFormat.format("hh:mm a", calendar)}"
 }

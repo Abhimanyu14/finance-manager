@@ -19,6 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.Navigation
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.formattedDate
+import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.formattedTime
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -77,6 +78,11 @@ class AddTransactionViewModel @Inject constructor(
     val transactionDateTextFieldValue by derivedStateOf {
         TextFieldValue(
             text = transactionCalendar.formattedDate(),
+        )
+    }
+    val transactionTimeTextFieldValue by derivedStateOf {
+        TextFieldValue(
+            text = transactionCalendar.formattedTime(),
         )
     }
     var selectedTransactionForIndex by mutableStateOf(

@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction
 
 import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -63,9 +64,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.dayOfMonth
+import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.hour
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
+import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.minute
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.month
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.setDate
+import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.setTime
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.year
 import java.util.Calendar
 
@@ -112,12 +116,27 @@ fun AddTransactionScreenView(
                     year = year,
                 )
     }
+    val onTimeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+        data.screenViewModel.transactionCalendar =
+            (data.screenViewModel.transactionCalendar.clone() as Calendar)
+                .setTime(
+                    hour = hour,
+                    minute = minute,
+                )
+    }
     val transactionDatePickerDialog = DatePickerDialog(
         context,
         onDateSetListener,
         data.screenViewModel.transactionCalendar.year,
         data.screenViewModel.transactionCalendar.month,
         data.screenViewModel.transactionCalendar.dayOfMonth,
+    )
+    val transactionTimePickerDialog = TimePickerDialog(
+        context,
+        onTimeSetListener,
+        data.screenViewModel.transactionCalendar.hour,
+        data.screenViewModel.transactionCalendar.minute,
+        false,
     )
     var addTransactionBottomSheet by remember {
         mutableStateOf(
@@ -618,6 +637,26 @@ fun AddTransactionScreenView(
                             Text(
                                 text = stringResource(
                                     id = R.string.screen_add_transaction_transaction_date,
+                                ),
+                                color = Color.DarkGray,
+                            )
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                horizontal = 16.dp,
+                                vertical = 4.dp,
+                            ),
+                    )
+                    MyReadOnlyTextField(
+                        value = data.screenViewModel.transactionTimeTextFieldValue,
+                        onClick = {
+                            transactionTimePickerDialog.show()
+                        },
+                        label = {
+                            Text(
+                                text = stringResource(
+                                    id = R.string.screen_add_transaction_transaction_time,
                                 ),
                                 color = Color.DarkGray,
                             )
