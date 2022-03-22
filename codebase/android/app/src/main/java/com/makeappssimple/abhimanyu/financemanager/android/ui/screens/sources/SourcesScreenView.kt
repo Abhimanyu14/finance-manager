@@ -8,12 +8,8 @@ import androidx.compose.material.FabPosition
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -41,19 +37,9 @@ fun SourcesScreenView(
     val sources by data.screenViewModel.sources.collectAsState(
         initial = emptyList(),
     )
-    var total by remember {
-        mutableStateOf(
-            value = 0L,
-        )
-    }
-
-    LaunchedEffect(
-        key1 = sources,
-    ) {
-        total = sources.sumOf {
-            it.balanceAmount.value
-        }
-    }
+    val totalBalanceAmount by data.screenViewModel.sourcesTotalBalanceAmountValue.collectAsState(
+        initial = 0L,
+    )
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -93,7 +79,7 @@ fun SourcesScreenView(
                 item {
                     TotalBalanceCard(
                         total = Amount(
-                            value = total,
+                            value = totalBalanceAmount,
                         ).toString(),
                     )
                 }

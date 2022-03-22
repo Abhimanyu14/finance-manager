@@ -22,13 +22,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
@@ -65,8 +61,8 @@ fun HomeScreenView(
     val transactions by data.screenViewModel.transactions.collectAsState(
         initial = emptyList(),
     )
-    val sources by data.screenViewModel.sources.collectAsState(
-        initial = emptyList(),
+    val totalBalanceAmount by data.screenViewModel.sourcesTotalBalanceAmountValue.collectAsState(
+        initial = 0L,
     )
     val sourceFromList by data.screenViewModel.sourceFromList.collectAsState(
         initial = emptyList(),
@@ -74,19 +70,6 @@ fun HomeScreenView(
     val sourceToList by data.screenViewModel.sourceToList.collectAsState(
         initial = emptyList(),
     )
-    var total by remember {
-        mutableStateOf(
-            value = 0L,
-        )
-    }
-
-    LaunchedEffect(
-        key1 = sources,
-    ) {
-        total = sources.sumOf {
-            it.balanceAmount.value
-        }
-    }
 
     ModalBottomSheetLayout(
         sheetState = modalBottomSheetState,
@@ -201,7 +184,7 @@ fun HomeScreenView(
                     item {
                         TotalBalanceCard(
                             total = Amount(
-                                value = total,
+                                value = totalBalanceAmount,
                             ).toString(),
                             onClick = {
                                 navigateToSourcesScreen(

@@ -10,6 +10,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectIndexed
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -21,7 +23,15 @@ class HomeViewModel @Inject constructor(
     private val transactionRepository: TransactionRepository,
 ) : BaseViewModel() {
     val transactions: Flow<List<Transaction>> = transactionRepository.transactions
-    val sources: Flow<List<Source>> = sourceRepository.sources
+    val sourcesTotalBalanceAmountValue = flow {
+        sourceRepository.sources.collectIndexed { _, sources ->
+            emit(
+                value = sources.sumOf { source ->
+                    source.balanceAmount.value
+                },
+            )
+        }
+    }
     val sourceFromList: Flow<List<Source?>> = transactions.map {
         it.map { transaction ->
             transaction.sourceFromId.let { id ->
