@@ -22,6 +22,7 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -59,6 +60,12 @@ fun AddSourceScreenView(
     val scaffoldState = rememberScaffoldState()
     val focusRequester = remember {
         FocusRequester()
+    }
+
+    LaunchedEffect(
+        key1 = Unit,
+    ) {
+        focusRequester.requestFocus()
     }
 
     // TODO-Abhi: Make 'cash' keyword restricted

@@ -4,6 +4,8 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,6 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.HomeS
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.SourcesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 
+@OptIn(ExperimentalComposeUiApi::class)
 @ExperimentalMaterialApi
 @ExperimentalMaterial3Api
 @Composable
@@ -27,8 +30,10 @@ fun MyNavGraph(
         message = "Inside MyNavGraph",
     )
     val navHostController = rememberNavController()
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     activityViewModel.navigationManager.command.collectAsState().value.also { command ->
+        keyboardController?.hide()
         when (command.command) {
             Command.NAVIGATE -> {
                 navHostController.navigate(

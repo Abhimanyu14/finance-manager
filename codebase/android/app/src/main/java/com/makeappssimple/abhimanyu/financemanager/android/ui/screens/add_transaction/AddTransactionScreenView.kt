@@ -101,6 +101,12 @@ fun AddTransactionScreenView(
         FocusRequester()
     }
 
+    LaunchedEffect(
+        key1 = Unit,
+    ) {
+        focusRequester.requestFocus()
+    }
+
     val categories by data.screenViewModel.categories.collectAsState(
         initial = emptyList(),
     )

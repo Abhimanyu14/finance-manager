@@ -28,6 +28,7 @@ import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -76,6 +77,11 @@ fun AddCategoryScreenView(
         FocusRequester()
     }
 
+    LaunchedEffect(
+        key1 = Unit,
+    ) {
+        focusRequester.requestFocus()
+    }
     // TODO-Abhi: Add check to restrict category name with text "default"
 
     ModalBottomSheetLayout(
