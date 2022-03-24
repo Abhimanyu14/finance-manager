@@ -25,5 +25,6 @@ fun CategoriesScreen(
         data = CategoriesScreenViewData(
             screenViewModel = screenViewModel,
         ),
+        state = rememberCategoriesScreenViewState(),
     )
 }

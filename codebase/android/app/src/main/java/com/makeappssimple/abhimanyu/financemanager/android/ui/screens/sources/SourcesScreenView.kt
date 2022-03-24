@@ -6,12 +6,10 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FabPosition
 import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.models.Amount
@@ -30,10 +28,8 @@ data class SourcesScreenViewData(
 @Composable
 fun SourcesScreenView(
     data: SourcesScreenViewData,
+    state: SourcesScreenViewState,
 ) {
-    val focusManager = LocalFocusManager.current
-    val scaffoldState = rememberScaffoldState()
-
     val sources by data.screenViewModel.sources.collectAsState(
         initial = emptyList(),
     )
@@ -42,7 +38,7 @@ fun SourcesScreenView(
     )
 
     Scaffold(
-        scaffoldState = scaffoldState,
+        scaffoldState = state.scaffoldState,
         topBar = {
             MyTopAppBar(
                 navigationManager = data.screenViewModel.navigationManager,
@@ -72,7 +68,7 @@ fun SourcesScreenView(
         ScaffoldContentWrapper(
             innerPadding = innerPadding,
             onClick = {
-                focusManager.clearFocus()
+                state.focusManager.clearFocus()
             },
         ) {
             LazyColumn {

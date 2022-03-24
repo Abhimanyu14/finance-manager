@@ -18,28 +18,21 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Clear
-import androidx.compose.material.rememberModalBottomSheetState
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.graphics.Color.Companion.White
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -47,15 +40,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiPickerBottomSheet
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiPickerBottomSheetData
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmptySpace
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyExtendedFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 
 data class AddCategoryScreenViewData(
@@ -66,27 +57,21 @@ data class AddCategoryScreenViewData(
 @Composable
 fun AddCategoryScreenView(
     data: AddCategoryScreenViewData,
+    state: AddCategoryScreenViewState,
 ) {
-    val focusManager = LocalFocusManager.current
-    val coroutineScope = rememberCoroutineScope()
-    val scaffoldState = rememberScaffoldState()
-    val modalBottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-    )
-    val focusRequester = remember {
-        FocusRequester()
-    }
-
     LaunchedEffect(
         key1 = Unit,
     ) {
-        focusRequester.requestFocus()
+        state.focusRequester.requestFocus()
     }
     // TODO-Abhi: Add check to restrict category name with text "default"
 
     ModalBottomSheetLayout(
-        sheetState = modalBottomSheetState,
+        sheetState = state.modalBottomSheetState,
         sheetContent = {
+            EmptySpace()
+            /*
+            TODO-Abhi: Emoji Picker
             EmojiPickerBottomSheet(
                 data = EmojiPickerBottomSheetData(
                     emojis = data.screenViewModel.emojis,
@@ -100,10 +85,11 @@ fun AddCategoryScreenView(
                     },
                 ),
             )
+            */
         },
     ) {
         Scaffold(
-            scaffoldState = scaffoldState,
+            scaffoldState = state.scaffoldState,
             topBar = {
                 MyTopAppBar(
                     navigationManager = data.screenViewModel.navigationManager,
@@ -119,7 +105,7 @@ fun AddCategoryScreenView(
             ScaffoldContentWrapper(
                 innerPadding = innerPadding,
                 onClick = {
-                    focusManager.clearFocus()
+                    state.focusManager.clearFocus()
                 },
             ) {
                 Column(
@@ -229,12 +215,12 @@ fun AddCategoryScreenView(
                         },
                         keyboardActions = KeyboardActions(
                             onNext = {
-                                focusManager.moveFocus(
+                                state.focusManager.moveFocus(
                                     focusDirection = FocusDirection.Down,
                                 )
                             },
                             onDone = {
-                                focusManager.clearFocus()
+                                state.focusManager.clearFocus()
                             },
                         ),
                         keyboardOptions = KeyboardOptions(
@@ -245,7 +231,7 @@ fun AddCategoryScreenView(
                         modifier = Modifier
                             .fillMaxWidth()
                             .focusRequester(
-                                focusRequester = focusRequester,
+                                focusRequester = state.focusRequester,
                             )
                             .padding(
                                 horizontal = 16.dp,
@@ -294,7 +280,7 @@ fun AddCategoryScreenView(
                         },
                         keyboardActions = KeyboardActions(
                             onDone = {
-                                focusManager.clearFocus()
+                                state.focusManager.clearFocus()
                             },
                         ),
                         keyboardOptions = KeyboardOptions(

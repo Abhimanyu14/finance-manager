@@ -25,5 +25,6 @@ fun AddCategoryScreen(
         data = AddCategoryScreenViewData(
             screenViewModel = screenViewModel,
         ),
+        state = rememberAddCategoryScreenViewState(),
     )
 }

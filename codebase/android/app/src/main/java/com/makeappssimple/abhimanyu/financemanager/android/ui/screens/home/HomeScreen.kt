@@ -27,5 +27,6 @@ fun HomeScreen(
         data = HomeScreenViewData(
             screenViewModel = screenViewModel,
         ),
+        state = rememberHomeScreenViewState(),
     )
 }

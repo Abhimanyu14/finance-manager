@@ -27,5 +27,6 @@ fun AddTransactionScreen(
         data = AddTransactionScreenViewData(
             screenViewModel = screenViewModel,
         ),
+        state = rememberAddTransactionScreenViewState(),
     )
 }

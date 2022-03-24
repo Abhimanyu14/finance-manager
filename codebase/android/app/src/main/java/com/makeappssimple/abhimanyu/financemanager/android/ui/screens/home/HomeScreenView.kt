@@ -11,12 +11,9 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FabPosition
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Menu
-import androidx.compose.material.rememberModalBottomSheetState
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -24,9 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.models.Amount
@@ -50,14 +45,8 @@ data class HomeScreenViewData(
 @Composable
 fun HomeScreenView(
     data: HomeScreenViewData,
+    state: HomeScreenViewState,
 ) {
-    val focusManager = LocalFocusManager.current
-    val coroutineScope = rememberCoroutineScope()
-    val scaffoldState = rememberScaffoldState()
-    val modalBottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-    )
-
     val transactions by data.screenViewModel.transactions.collectAsState(
         initial = emptyList(),
     )
@@ -72,7 +61,7 @@ fun HomeScreenView(
     )
 
     ModalBottomSheetLayout(
-        sheetState = modalBottomSheetState,
+        sheetState = state.modalBottomSheetState,
         sheetContent = {
             HomeBottomSheet(
                 data = HomeBottomSheetData(
@@ -83,8 +72,8 @@ fun HomeScreenView(
                             ),
                             onClick = {
                                 toggleModalBottomSheetState(
-                                    coroutineScope = coroutineScope,
-                                    modalBottomSheetState = modalBottomSheetState,
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
                                 ) {
                                     navigateToSourcesScreen(
                                         navigationManager = data.screenViewModel.navigationManager,
@@ -98,8 +87,8 @@ fun HomeScreenView(
                             ),
                             onClick = {
                                 toggleModalBottomSheetState(
-                                    coroutineScope = coroutineScope,
-                                    modalBottomSheetState = modalBottomSheetState,
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
                                 ) {
                                     navigateToCategoriesScreen(
                                         navigationManager = data.screenViewModel.navigationManager,
@@ -113,7 +102,7 @@ fun HomeScreenView(
         },
     ) {
         Scaffold(
-            scaffoldState = scaffoldState,
+            scaffoldState = state.scaffoldState,
             topBar = {
                 MyTopAppBar(
                     navigationManager = data.screenViewModel.navigationManager,
@@ -135,8 +124,8 @@ fun HomeScreenView(
                         IconButton(
                             onClick = {
                                 toggleModalBottomSheetState(
-                                    coroutineScope = coroutineScope,
-                                    modalBottomSheetState = modalBottomSheetState,
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
                                 ) {}
                             },
                         ) {
@@ -177,7 +166,7 @@ fun HomeScreenView(
             ScaffoldContentWrapper(
                 innerPadding = innerPadding,
                 onClick = {
-                    focusManager.clearFocus()
+                    state.focusManager.clearFocus()
                 },
             ) {
                 LazyColumn {

@@ -23,5 +23,6 @@ fun AddSourceScreen(
         data = AddSourceScreenViewData(
             screenViewModel = screenViewModel,
         ),
+        state = rememberAddSourceScreenViewState(),
     )
 }

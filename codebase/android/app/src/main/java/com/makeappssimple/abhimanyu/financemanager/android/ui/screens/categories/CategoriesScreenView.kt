@@ -18,7 +18,6 @@ import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.DeleteForever
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,7 +29,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -54,10 +52,8 @@ data class CategoriesScreenViewData(
 @Composable
 fun CategoriesScreenView(
     data: CategoriesScreenViewData,
+    state: CategoriesScreenViewState,
 ) {
-    val focusManager = LocalFocusManager.current
-    val scaffoldState = rememberScaffoldState()
-
     val categories by data.screenViewModel.categories.collectAsState(
         initial = emptyList(),
     )
@@ -72,7 +68,7 @@ fun CategoriesScreenView(
     )
 
     Scaffold(
-        scaffoldState = scaffoldState,
+        scaffoldState = state.scaffoldState,
         topBar = {
             MyTopAppBar(
                 navigationManager = data.screenViewModel.navigationManager,
@@ -102,7 +98,7 @@ fun CategoriesScreenView(
         ScaffoldContentWrapper(
             innerPadding = innerPadding,
             onClick = {
-                focusManager.clearFocus()
+                state.focusManager.clearFocus()
             },
         ) {
             Column {

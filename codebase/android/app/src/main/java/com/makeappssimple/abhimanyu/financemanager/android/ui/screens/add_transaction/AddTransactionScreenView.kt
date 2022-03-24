@@ -7,11 +7,9 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
@@ -20,13 +18,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
-import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Clear
-import androidx.compose.material.rememberModalBottomSheetState
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -36,16 +31,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -55,6 +46,7 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.models.sortOrder
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmptySpace
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyExtendedFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
@@ -89,22 +81,12 @@ data class AddTransactionScreenViewData(
 @Composable
 fun AddTransactionScreenView(
     data: AddTransactionScreenViewData,
+    state: AddTransactionScreenViewState,
 ) {
-    val context = LocalContext.current
-    val focusManager = LocalFocusManager.current
-    val coroutineScope = rememberCoroutineScope()
-    val scaffoldState = rememberScaffoldState()
-    val modalBottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-    )
-    val focusRequester = remember {
-        FocusRequester()
-    }
-
     LaunchedEffect(
         key1 = Unit,
     ) {
-        focusRequester.requestFocus()
+        state.focusRequester.requestFocus()
     }
 
     val categories by data.screenViewModel.categories.collectAsState(
@@ -131,14 +113,14 @@ fun AddTransactionScreenView(
                 )
     }
     val transactionDatePickerDialog = DatePickerDialog(
-        context,
+        state.context,
         onDateSetListener,
         data.screenViewModel.transactionCalendar.year,
         data.screenViewModel.transactionCalendar.month,
         data.screenViewModel.transactionCalendar.dayOfMonth,
     )
     val transactionTimePickerDialog = TimePickerDialog(
-        context,
+        state.context,
         onTimeSetListener,
         data.screenViewModel.transactionCalendar.hour,
         data.screenViewModel.transactionCalendar.minute,
@@ -189,16 +171,11 @@ fun AddTransactionScreenView(
     }
 
     ModalBottomSheetLayout(
-        sheetState = modalBottomSheetState,
+        sheetState = state.modalBottomSheetState,
         sheetContent = {
             when (addTransactionBottomSheet) {
                 AddTransactionBottomSheet.NONE -> {
-                    Spacer(
-                        modifier = Modifier
-                            .height(
-                                height = 100.dp,
-                            ),
-                    )
+                    EmptySpace()
                 }
                 AddTransactionBottomSheet.SELECT_CATEGORY -> {
                     AddTransactionSelectCategoryBottomSheet(
@@ -212,8 +189,8 @@ fun AddTransactionScreenView(
                                         text = category.title,
                                         onClick = {
                                             toggleModalBottomSheetState(
-                                                coroutineScope = coroutineScope,
-                                                modalBottomSheetState = modalBottomSheetState,
+                                                coroutineScope = state.coroutineScope,
+                                                modalBottomSheetState = state.modalBottomSheetState,
                                             ) {
                                                 data.screenViewModel.category = category
                                                 addTransactionBottomSheet =
@@ -241,8 +218,8 @@ fun AddTransactionScreenView(
                                         iconKey = source.type.title,
                                         onClick = {
                                             toggleModalBottomSheetState(
-                                                coroutineScope = coroutineScope,
-                                                modalBottomSheetState = modalBottomSheetState,
+                                                coroutineScope = state.coroutineScope,
+                                                modalBottomSheetState = state.modalBottomSheetState,
                                             ) {
                                                 data.screenViewModel.sourceFrom = source
                                                 addTransactionBottomSheet =
@@ -270,8 +247,8 @@ fun AddTransactionScreenView(
                                         iconKey = source.type.title,
                                         onClick = {
                                             toggleModalBottomSheetState(
-                                                coroutineScope = coroutineScope,
-                                                modalBottomSheetState = modalBottomSheetState,
+                                                coroutineScope = state.coroutineScope,
+                                                modalBottomSheetState = state.modalBottomSheetState,
                                             ) {
                                                 data.screenViewModel.sourceTo = source
                                                 addTransactionBottomSheet =
@@ -288,7 +265,7 @@ fun AddTransactionScreenView(
         },
     ) {
         Scaffold(
-            scaffoldState = scaffoldState,
+            scaffoldState = state.scaffoldState,
             topBar = {
                 MyTopAppBar(
                     navigationManager = data.screenViewModel.navigationManager,
@@ -304,7 +281,7 @@ fun AddTransactionScreenView(
             ScaffoldContentWrapper(
                 innerPadding = innerPadding,
                 onClick = {
-                    focusManager.clearFocus()
+                    state.focusManager.clearFocus()
                 },
             ) {
                 Column(
@@ -376,7 +353,7 @@ fun AddTransactionScreenView(
                         },
                         keyboardActions = KeyboardActions(
                             onNext = {
-                                focusManager.moveFocus(
+                                state.focusManager.moveFocus(
                                     focusDirection = FocusDirection.Down,
                                 )
                             },
@@ -389,7 +366,7 @@ fun AddTransactionScreenView(
                         modifier = Modifier
                             .fillMaxWidth()
                             .focusRequester(
-                                focusRequester = focusRequester,
+                                focusRequester = state.focusRequester,
                             )
                             .padding(
                                 horizontal = 16.dp,
@@ -439,7 +416,7 @@ fun AddTransactionScreenView(
                         },
                         keyboardActions = KeyboardActions(
                             onDone = {
-                                focusManager.clearFocus()
+                                state.focusManager.clearFocus()
                             },
                         ),
                         keyboardOptions = KeyboardOptions(
@@ -463,10 +440,10 @@ fun AddTransactionScreenView(
                             onClick = {
                                 addTransactionBottomSheet =
                                     AddTransactionBottomSheet.SELECT_CATEGORY
-                                focusManager.clearFocus()
+                                state.focusManager.clearFocus()
                                 toggleModalBottomSheetState(
-                                    coroutineScope = coroutineScope,
-                                    modalBottomSheetState = modalBottomSheetState,
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
                                 ) {}
                             },
                             label = {
@@ -549,7 +526,7 @@ fun AddTransactionScreenView(
                         },
                         keyboardActions = KeyboardActions(
                             onDone = {
-                                focusManager.clearFocus()
+                                state.focusManager.clearFocus()
                             },
                         ),
                         keyboardOptions = KeyboardOptions(
@@ -573,10 +550,10 @@ fun AddTransactionScreenView(
                             onClick = {
                                 addTransactionBottomSheet =
                                     AddTransactionBottomSheet.SELECT_SOURCE_FROM
-                                focusManager.clearFocus()
+                                state.focusManager.clearFocus()
                                 toggleModalBottomSheetState(
-                                    coroutineScope = coroutineScope,
-                                    modalBottomSheetState = modalBottomSheetState,
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
                                 ) {}
                             },
                             label = {
@@ -608,10 +585,10 @@ fun AddTransactionScreenView(
                             onClick = {
                                 addTransactionBottomSheet =
                                     AddTransactionBottomSheet.SELECT_SOURCE_TO
-                                focusManager.clearFocus()
+                                state.focusManager.clearFocus()
                                 toggleModalBottomSheetState(
-                                    coroutineScope = coroutineScope,
-                                    modalBottomSheetState = modalBottomSheetState,
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
                                 ) {}
                             },
                             label = {

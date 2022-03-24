@@ -5,7 +5,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.data.local.category.CategoryRepository
-import com.makeappssimple.abhimanyu.financemanager.android.data.remote.emoji.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.models.Category
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
@@ -36,18 +35,22 @@ class AddCategoryViewModel @Inject constructor(
             element = TransactionType.EXPENSE,
         ),
     )
+    /*
+    TODO-Abhi: Emoji Picker
     var emoji by mutableStateOf(
         value = "⏳",
     )
     var emojis: List<Emoji> by mutableStateOf(
         value = emptyList(),
     )
+    */
 
 
     init {
+        /*
+        TODO-Abhi: Emoji Picker
         viewModelScope.launch {
-            /*
-            TODO-Abhi: Emoji Picker
+
             val result = EmojiApi
                 .retrofitService
                 .getEmojis(
@@ -60,9 +63,10 @@ class AddCategoryViewModel @Inject constructor(
                 .filter {
                     !it.unicodeName.contains("skin tone")
                 }
-             */
             emoji = "😃"
+
         }
+        */
     }
 
 

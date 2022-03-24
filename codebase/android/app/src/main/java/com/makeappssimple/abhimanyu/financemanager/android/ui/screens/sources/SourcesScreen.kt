@@ -25,5 +25,6 @@ fun SourcesScreen(
         data = SourcesScreenViewData(
             screenViewModel = screenViewModel,
         ),
+        state = rememberSourcesScreenViewState(),
     )
 }
