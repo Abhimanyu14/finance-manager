@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -39,6 +40,7 @@ fun SourceListItem(
     source: Source,
     swipeToDeleteEnabled: Boolean,
     deleteSource: () -> Unit,
+    onClick: () -> Unit,
 ) {
     if (swipeToDeleteEnabled) {
         val dismissState = getDismissState(
@@ -81,7 +83,7 @@ fun SourceListItem(
                         tint = Color.White,
                         modifier = Modifier
                             .weight(
-                                weight = 1f,
+                                weight = 1F,
                             )
                             .scale(
                                 scale = scale,
@@ -95,11 +97,13 @@ fun SourceListItem(
         ) {
             SourceListItemView(
                 source = source,
+                onClick = onClick,
             )
         }
     } else {
         SourceListItemView(
             source = source,
+            onClick = onClick,
         )
     }
 }
@@ -107,6 +111,7 @@ fun SourceListItem(
 @Composable
 private fun SourceListItemView(
     source: Source,
+    onClick: () -> Unit,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -115,6 +120,9 @@ private fun SourceListItemView(
             .background(
                 color = Surface,
             )
+            .clickable {
+                onClick()
+            }
             .padding(
                 horizontal = 16.dp,
                 vertical = 8.dp,
@@ -140,7 +148,7 @@ private fun SourceListItemView(
             ),
             modifier = Modifier
                 .weight(
-                    weight = 1f,
+                    weight = 1F,
                 ),
         )
         Text(
