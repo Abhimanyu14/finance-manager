@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_trans
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -298,11 +299,12 @@ fun AddTransactionScreenView(
                         ),
                 ) {
                     MyRadioGroup(
-                        items = TransactionType.values().map { transactionType ->
-                            MyRadioGroupItem(
-                                text = transactionType.title,
-                            )
-                        },
+                        items = data.screenViewModel.getTransactionTypesForNewTransaction()
+                            .map { transactionType ->
+                                MyRadioGroupItem(
+                                    text = transactionType.title,
+                                )
+                            },
                         selectedItemIndex = data.screenViewModel.selectedTransactionTypeIndex,
                         onSelectionChange = { index ->
                             data.screenViewModel.updateSelectedTransactionTypeIndex(
@@ -318,11 +320,8 @@ fun AddTransactionScreenView(
                     OutlinedTextField(
                         value = data.screenViewModel.amount,
                         label = {
-                            Text(
-                                text = stringResource(
-                                    id = R.string.screen_add_transaction_amount,
-                                ),
-                                color = Color.DarkGray,
+                            OutlinedTextFieldLabelText(
+                                id = R.string.screen_add_transaction_amount,
                             )
                         },
                         trailingIcon = {
@@ -381,11 +380,8 @@ fun AddTransactionScreenView(
                     OutlinedTextField(
                         value = data.screenViewModel.title,
                         label = {
-                            Text(
-                                text = stringResource(
-                                    id = R.string.screen_add_transaction_title,
-                                ),
-                                color = Color.DarkGray,
+                            OutlinedTextFieldLabelText(
+                                id = R.string.screen_add_transaction_title,
                             )
                         },
                         trailingIcon = {
@@ -437,8 +433,7 @@ fun AddTransactionScreenView(
                             ),
                     )
                     AnimatedVisibility(
-                        visible = data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.EXPENSE ||
-                                data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.INCOME,
+                        visible = data.screenViewModel.isCategoryTextFieldVisible(),
                     ) {
                         MyReadOnlyTextField(
                             value = data.screenViewModel.categoryTextFieldValue,
@@ -452,11 +447,8 @@ fun AddTransactionScreenView(
                                 ) {}
                             },
                             label = {
-                                Text(
-                                    text = stringResource(
-                                        id = R.string.screen_add_transaction_category,
-                                    ),
-                                    color = Color.DarkGray,
+                                OutlinedTextFieldLabelText(
+                                    id = R.string.screen_add_transaction_category,
                                 )
                             },
                             modifier = Modifier
@@ -468,7 +460,7 @@ fun AddTransactionScreenView(
                         )
                     }
                     AnimatedVisibility(
-                        visible = data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.EXPENSE,
+                        visible = data.screenViewModel.isTransactionForRadioGroupVisible(),
                     ) {
                         MyRadioGroup(
                             items = data.screenViewModel.transactionForValues
@@ -491,11 +483,8 @@ fun AddTransactionScreenView(
                     OutlinedTextField(
                         value = data.screenViewModel.description,
                         label = {
-                            Text(
-                                text = stringResource(
-                                    id = R.string.screen_add_transaction_description,
-                                ),
-                                color = Color.DarkGray,
+                            OutlinedTextFieldLabelText(
+                                id = R.string.screen_add_transaction_description,
                             )
                         },
                         trailingIcon = {
@@ -547,8 +536,7 @@ fun AddTransactionScreenView(
                             ),
                     )
                     AnimatedVisibility(
-                        visible = data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.EXPENSE ||
-                                data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER,
+                        visible = data.screenViewModel.isSourceFromTextFieldVisible(),
                     ) {
                         MyReadOnlyTextField(
                             value = data.screenViewModel.sourceFromTextFieldValue,
@@ -562,15 +550,12 @@ fun AddTransactionScreenView(
                                 ) {}
                             },
                             label = {
-                                Text(
-                                    text = stringResource(
-                                        id = if (data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER) {
-                                            R.string.screen_add_transaction_source_from
-                                        } else {
-                                            R.string.screen_add_transaction_source
-                                        },
-                                    ),
-                                    color = Color.DarkGray,
+                                OutlinedTextFieldLabelText(
+                                    id = if (data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER) {
+                                        R.string.screen_add_transaction_source_from
+                                    } else {
+                                        R.string.screen_add_transaction_source
+                                    },
                                 )
                             },
                             modifier = Modifier
@@ -582,8 +567,7 @@ fun AddTransactionScreenView(
                         )
                     }
                     AnimatedVisibility(
-                        visible = data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.INCOME ||
-                                data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER,
+                        visible = data.screenViewModel.isSourceToTextFieldVisible(),
                     ) {
                         MyReadOnlyTextField(
                             value = data.screenViewModel.sourceToTextFieldValue,
@@ -597,15 +581,12 @@ fun AddTransactionScreenView(
                                 ) {}
                             },
                             label = {
-                                Text(
-                                    text = stringResource(
-                                        id = if (data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER) {
-                                            R.string.screen_add_transaction_source_to
-                                        } else {
-                                            R.string.screen_add_transaction_source
-                                        },
-                                    ),
-                                    color = Color.DarkGray,
+                                OutlinedTextFieldLabelText(
+                                    id = if (data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER) {
+                                        R.string.screen_add_transaction_source_to
+                                    } else {
+                                        R.string.screen_add_transaction_source
+                                    },
                                 )
                             },
                             modifier = Modifier
@@ -622,11 +603,8 @@ fun AddTransactionScreenView(
                             transactionDatePickerDialog.show()
                         },
                         label = {
-                            Text(
-                                text = stringResource(
-                                    id = R.string.screen_add_transaction_transaction_date,
-                                ),
-                                color = Color.DarkGray,
+                            OutlinedTextFieldLabelText(
+                                id = R.string.screen_add_transaction_transaction_date,
                             )
                         },
                         modifier = Modifier
@@ -642,11 +620,8 @@ fun AddTransactionScreenView(
                             transactionTimePickerDialog.show()
                         },
                         label = {
-                            Text(
-                                text = stringResource(
-                                    id = R.string.screen_add_transaction_transaction_time,
-                                ),
-                                color = Color.DarkGray,
+                            OutlinedTextFieldLabelText(
+                                id = R.string.screen_add_transaction_transaction_time,
                             )
                         },
                         modifier = Modifier
@@ -709,4 +684,16 @@ fun AddTransactionScreenView(
             }
         }
     }
+}
+
+@Composable
+fun OutlinedTextFieldLabelText(
+    @StringRes id: Int,
+) {
+    Text(
+        text = stringResource(
+            id = id,
+        ),
+        color = Color.DarkGray,
+    )
 }

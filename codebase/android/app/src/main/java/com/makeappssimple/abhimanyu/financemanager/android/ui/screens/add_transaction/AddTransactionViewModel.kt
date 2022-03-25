@@ -184,4 +184,27 @@ class AddTransactionViewModel @Inject constructor(
             )
         }
     }
+
+    fun getTransactionTypesForNewTransaction(): Array<TransactionType> {
+        return TransactionType.values()
+    }
+
+    fun isCategoryTextFieldVisible(): Boolean {
+        return transactionTypes[selectedTransactionTypeIndex] == TransactionType.EXPENSE ||
+                transactionTypes[selectedTransactionTypeIndex] == TransactionType.INCOME
+    }
+
+    fun isTransactionForRadioGroupVisible(): Boolean {
+        return transactionTypes[selectedTransactionTypeIndex] == TransactionType.EXPENSE
+    }
+
+    fun isSourceFromTextFieldVisible(): Boolean {
+        return transactionTypes[selectedTransactionTypeIndex] == TransactionType.EXPENSE ||
+                transactionTypes[selectedTransactionTypeIndex] == TransactionType.TRANSFER
+    }
+
+    fun isSourceToTextFieldVisible(): Boolean {
+        return transactionTypes[selectedTransactionTypeIndex] == TransactionType.INCOME ||
+                transactionTypes[selectedTransactionTypeIndex] == TransactionType.TRANSFER
+    }
 }
