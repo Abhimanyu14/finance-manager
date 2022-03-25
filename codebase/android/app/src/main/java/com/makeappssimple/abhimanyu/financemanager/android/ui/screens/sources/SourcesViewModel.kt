@@ -33,6 +33,18 @@ class SourcesViewModel @Inject constructor(
         // TODO-Abhi: Add screen tracking code
     }
 
+    fun updateSource(
+        source: Source,
+    ) {
+        viewModelScope.launch(
+            context = Dispatchers.IO,
+        ) {
+            sourceRepository.updateSources(
+                source,
+            )
+        }
+    }
+
     fun deleteSource(
         id: Int,
     ) {
