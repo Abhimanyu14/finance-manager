@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,6 +36,21 @@ fun AddTransactionSelectCategoryBottomSheet(
                 minHeight = 24.dp,
             ),
     ) {
+        item {
+            Text(
+                text = "Select Category",
+                style = TextStyle(
+                    color = Color.DarkGray,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Bold,
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        all = 16.dp,
+                    ),
+            )
+        }
         items(
             items = data.items,
         ) { addTransactionSelectCategoryBottomSheetItemData ->
