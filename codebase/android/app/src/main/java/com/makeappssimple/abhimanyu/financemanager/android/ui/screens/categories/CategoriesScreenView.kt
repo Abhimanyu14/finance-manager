@@ -186,7 +186,7 @@ fun CategoriesScreenView(
                                         tint = Color.White,
                                         modifier = Modifier
                                             .weight(
-                                                weight = 1f,
+                                                weight = 1F,
                                             )
                                             .scale(
                                                 scale = scale,
