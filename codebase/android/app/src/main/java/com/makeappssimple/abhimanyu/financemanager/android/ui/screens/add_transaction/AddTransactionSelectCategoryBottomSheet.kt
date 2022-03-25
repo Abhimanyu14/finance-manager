@@ -29,7 +29,6 @@ data class AddTransactionSelectCategoryBottomSheetData(
 fun AddTransactionSelectCategoryBottomSheet(
     data: AddTransactionSelectCategoryBottomSheetData,
 ) {
-
     LazyColumn(
         modifier = Modifier
             .defaultMinSize(
