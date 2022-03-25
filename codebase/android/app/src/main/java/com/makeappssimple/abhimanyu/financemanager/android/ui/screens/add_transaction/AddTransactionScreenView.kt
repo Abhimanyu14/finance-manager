@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -47,7 +46,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.models.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmptySpace
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyExtendedFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButton
@@ -57,6 +55,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyReadOnlyT
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.dayOfMonth
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.hour
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
@@ -153,31 +152,9 @@ fun AddTransactionScreenView(
         data.screenViewModel.category = data.screenViewModel.expenseDefaultCategory
     }
 
-    LaunchedEffect(
-        key1 = sources,
-    ) {
-        data.screenViewModel.expenseDefaultSource = sources.firstOrNull {
-            it.name.contains(
-                other = "Cash",
-                ignoreCase = true,
-            )
-        }
-        data.screenViewModel.incomeDefaultSource = sources.firstOrNull {
-            it.name.contains(
-                other = "Cash",
-                ignoreCase = true,
-            )
-        }
-
-        data.screenViewModel.sourceFrom = data.screenViewModel.expenseDefaultSource
-    }
-
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
-        sheetShape = RoundedCornerShape(
-            topStart = 16.dp,
-            topEnd = 16.dp,
-        ),
+        sheetShape = BottomSheetShape,
         sheetContent = {
             when (addTransactionBottomSheetType) {
                 AddTransactionBottomSheetType.NONE -> {
@@ -213,11 +190,6 @@ fun AddTransactionScreenView(
                     AddTransactionSelectSourceBottomSheet(
                         data = AddTransactionSelectSourceBottomSheetData(
                             items = sources
-                                .sortedWith(
-                                    comparator = compareBy {
-                                        it.type.sortOrder
-                                    }
-                                )
                                 .map { source ->
                                     AddTransactionSelectSourceBottomSheetItemData(
                                         text = source.name,
@@ -242,11 +214,6 @@ fun AddTransactionScreenView(
                     AddTransactionSelectSourceBottomSheet(
                         data = AddTransactionSelectSourceBottomSheetData(
                             items = sources
-                                .sortedWith(
-                                    comparator = compareBy {
-                                        it.type.sortOrder
-                                    }
-                                )
                                 .map { source ->
                                     AddTransactionSelectSourceBottomSheetItemData(
                                         text = source.name,

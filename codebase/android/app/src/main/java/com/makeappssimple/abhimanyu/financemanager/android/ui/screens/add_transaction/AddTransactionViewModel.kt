@@ -15,6 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.models.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel
@@ -23,6 +24,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.form
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectIndexed
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import javax.inject.Inject
@@ -37,8 +40,10 @@ class AddTransactionViewModel @Inject constructor(
     val transactionForValues = TransactionFor.values()
     val transactionTypes = TransactionType.values()
     val categories: Flow<List<Category>> = categoryRepository.categories
-    val sources: Flow<List<Source>> = sourceRepository.sources
-
+    var expenseDefaultSource: Source? = null
+    var incomeDefaultSource: Source? = null
+    var expenseDefaultCategory: Category? = null
+    var incomeDefaultCategory: Category? = null
     var amount by mutableStateOf(
         value = "",
     )
@@ -96,11 +101,25 @@ class AddTransactionViewModel @Inject constructor(
         ),
     )
         private set
-
-    var expenseDefaultCategory: Category? = null
-    var expenseDefaultSource: Source? = null
-    var incomeDefaultCategory: Category? = null
-    var incomeDefaultSource: Source? = null
+    val sources: Flow<List<Source>> = flow {
+        sourceRepository.sources.collectIndexed { _, value ->
+            expenseDefaultSource = value.firstOrNull {
+                it.name.contains(
+                    other = "Cash",
+                    ignoreCase = true,
+                )
+            }
+            incomeDefaultSource = expenseDefaultSource
+            sourceFrom = expenseDefaultSource
+            emit(
+                value = value.sortedWith(
+                    comparator = compareBy {
+                        it.type.sortOrder
+                    }
+                ),
+            )
+        }
+    }
 
 
     override fun trackScreen() {
