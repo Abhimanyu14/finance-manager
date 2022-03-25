@@ -65,7 +65,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.setT
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.year
 import java.util.Calendar
 
-enum class AddTransactionBottomSheet {
+enum class AddTransactionBottomSheetType {
     NONE,
     SELECT_CATEGORY,
     SELECT_SOURCE_FROM,
@@ -126,9 +126,9 @@ fun AddTransactionScreenView(
         data.screenViewModel.transactionCalendar.minute,
         false,
     )
-    var addTransactionBottomSheet by remember {
+    var addTransactionBottomSheetType by remember {
         mutableStateOf(
-            value = AddTransactionBottomSheet.NONE,
+            value = AddTransactionBottomSheetType.NONE,
         )
     }
 
@@ -173,11 +173,11 @@ fun AddTransactionScreenView(
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
         sheetContent = {
-            when (addTransactionBottomSheet) {
-                AddTransactionBottomSheet.NONE -> {
+            when (addTransactionBottomSheetType) {
+                AddTransactionBottomSheetType.NONE -> {
                     EmptySpace()
                 }
-                AddTransactionBottomSheet.SELECT_CATEGORY -> {
+                AddTransactionBottomSheetType.SELECT_CATEGORY -> {
                     AddTransactionSelectCategoryBottomSheet(
                         data = AddTransactionSelectCategoryBottomSheetData(
                             items = categories
@@ -193,8 +193,8 @@ fun AddTransactionScreenView(
                                                 modalBottomSheetState = state.modalBottomSheetState,
                                             ) {
                                                 data.screenViewModel.category = category
-                                                addTransactionBottomSheet =
-                                                    AddTransactionBottomSheet.NONE
+                                                addTransactionBottomSheetType =
+                                                    AddTransactionBottomSheetType.NONE
                                             }
                                         },
                                     )
@@ -203,7 +203,7 @@ fun AddTransactionScreenView(
                         ),
                     )
                 }
-                AddTransactionBottomSheet.SELECT_SOURCE_FROM -> {
+                AddTransactionBottomSheetType.SELECT_SOURCE_FROM -> {
                     AddTransactionSelectSourceBottomSheet(
                         data = AddTransactionSelectSourceBottomSheetData(
                             items = sources
@@ -222,8 +222,8 @@ fun AddTransactionScreenView(
                                                 modalBottomSheetState = state.modalBottomSheetState,
                                             ) {
                                                 data.screenViewModel.sourceFrom = source
-                                                addTransactionBottomSheet =
-                                                    AddTransactionBottomSheet.NONE
+                                                addTransactionBottomSheetType =
+                                                    AddTransactionBottomSheetType.NONE
                                             }
                                         },
                                     )
@@ -232,7 +232,7 @@ fun AddTransactionScreenView(
                         ),
                     )
                 }
-                AddTransactionBottomSheet.SELECT_SOURCE_TO -> {
+                AddTransactionBottomSheetType.SELECT_SOURCE_TO -> {
                     AddTransactionSelectSourceBottomSheet(
                         data = AddTransactionSelectSourceBottomSheetData(
                             items = sources
@@ -251,8 +251,8 @@ fun AddTransactionScreenView(
                                                 modalBottomSheetState = state.modalBottomSheetState,
                                             ) {
                                                 data.screenViewModel.sourceTo = source
-                                                addTransactionBottomSheet =
-                                                    AddTransactionBottomSheet.NONE
+                                                addTransactionBottomSheetType =
+                                                    AddTransactionBottomSheetType.NONE
                                             }
                                         },
                                     )
@@ -438,8 +438,8 @@ fun AddTransactionScreenView(
                         MyReadOnlyTextField(
                             value = data.screenViewModel.categoryTextFieldValue,
                             onClick = {
-                                addTransactionBottomSheet =
-                                    AddTransactionBottomSheet.SELECT_CATEGORY
+                                addTransactionBottomSheetType =
+                                    AddTransactionBottomSheetType.SELECT_CATEGORY
                                 state.focusManager.clearFocus()
                                 toggleModalBottomSheetState(
                                     coroutineScope = state.coroutineScope,
@@ -548,8 +548,8 @@ fun AddTransactionScreenView(
                         MyReadOnlyTextField(
                             value = data.screenViewModel.sourceFromTextFieldValue,
                             onClick = {
-                                addTransactionBottomSheet =
-                                    AddTransactionBottomSheet.SELECT_SOURCE_FROM
+                                addTransactionBottomSheetType =
+                                    AddTransactionBottomSheetType.SELECT_SOURCE_FROM
                                 state.focusManager.clearFocus()
                                 toggleModalBottomSheetState(
                                     coroutineScope = state.coroutineScope,
@@ -583,8 +583,8 @@ fun AddTransactionScreenView(
                         MyReadOnlyTextField(
                             value = data.screenViewModel.sourceToTextFieldValue,
                             onClick = {
-                                addTransactionBottomSheet =
-                                    AddTransactionBottomSheet.SELECT_SOURCE_TO
+                                addTransactionBottomSheetType =
+                                    AddTransactionBottomSheetType.SELECT_SOURCE_TO
                                 state.focusManager.clearFocus()
                                 toggleModalBottomSheetState(
                                     coroutineScope = state.coroutineScope,
