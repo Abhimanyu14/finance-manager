@@ -158,7 +158,11 @@ class AddTransactionViewModel @Inject constructor(
             transactionRepository.insertTransaction(
                 transaction = Transaction(
                     amount = Amount(
-                        value = amount.toLong(),
+                        value = if (transactionTypes[selectedTransactionTypeIndex] == TransactionType.EXPENSE) {
+                            -1 * amount.toLong()
+                        } else {
+                            amount.toLong()
+                        },
                     ),
                     categoryId = category?.id ?: 0,
                     sourceFromId = sourceFrom?.id ?: 0,
@@ -297,7 +301,7 @@ class AddTransactionViewModel @Inject constructor(
                 amount.isNotNullOrBlank() && title.isNotNullOrBlank()
             }
             TransactionType.TRANSFER -> {
-                amount.isNotNullOrBlank()
+                amount.isNotNullOrBlank() && sourceFrom?.id != sourceTo?.id
             }
         }
     }

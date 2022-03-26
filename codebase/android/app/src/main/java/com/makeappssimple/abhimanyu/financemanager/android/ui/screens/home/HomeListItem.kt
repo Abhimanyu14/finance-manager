@@ -32,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.models.amountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.getDismissState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
@@ -149,7 +150,11 @@ private fun HomeListItemView(
                     ),
             )
             Text(
-                text = transaction.amount.toString(),
+                text = if (transaction.transactionType == TransactionType.INCOME) {
+                    transaction.amount.getPositiveString()
+                } else {
+                    transaction.amount.toString()
+                },
                 textAlign = TextAlign.End,
                 style = TextStyle(
                     color = transaction.transactionType.amountTextColor,

@@ -332,10 +332,17 @@ fun AddTransactionScreenView(
                                     focusDirection = FocusDirection.Down,
                                 )
                             },
+                            onDone = {
+                                state.focusManager.clearFocus()
+                            },
                         ),
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.NumberPassword,
-                            imeAction = ImeAction.Next,
+                            imeAction = if (data.screenViewModel.isTitleTextFieldVisible()) {
+                                ImeAction.Next
+                            } else {
+                                ImeAction.Done
+                            },
                         ),
                         singleLine = true,
                         modifier = Modifier
