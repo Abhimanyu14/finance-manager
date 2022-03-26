@@ -11,6 +11,14 @@ class TransactionRepository(
     // Observed Flow will notify the observer when the data has changed.
     val transactions = transactionDao.getTransactions()
 
+    suspend fun getTransaction(
+        id: Int,
+    ): Transaction? {
+        return transactionDao.getTransaction(
+            id = id,
+        )
+    }
+
     suspend fun insertTransaction(
         transaction: Transaction,
     ) {

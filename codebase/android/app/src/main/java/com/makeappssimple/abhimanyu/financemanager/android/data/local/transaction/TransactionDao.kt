@@ -16,6 +16,13 @@ interface TransactionDao {
     )
     fun getTransactions(): Flow<List<Transaction>>
 
+    @Query(
+        value = "SELECT * from transaction_table WHERE id = :id",
+    )
+    suspend fun getTransaction(
+        id: Int,
+    ): Transaction?
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTransaction(
         transaction: Transaction,

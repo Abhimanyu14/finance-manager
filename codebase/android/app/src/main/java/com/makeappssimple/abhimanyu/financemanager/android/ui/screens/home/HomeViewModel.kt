@@ -62,9 +62,38 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch(
             context = Dispatchers.IO,
         ) {
+            val transaction = transactionRepository.getTransaction(
+                id = id,
+            )
             transactionRepository.deleteTransaction(
                 id = id,
             )
+            transaction?.sourceFromId?.let {
+                sourceRepository.getSource(
+                    id = transaction.sourceFromId,
+                )?.let { sourceFrom ->
+                    sourceRepository.updateSources(
+                        sourceFrom.copy(
+                            balanceAmount = sourceFrom.balanceAmount.copy(
+                                value = sourceFrom.balanceAmount.value + transaction.amount.value,
+                            )
+                        ),
+                    )
+                }
+            }
+            transaction?.sourceToId?.let {
+                sourceRepository.getSource(
+                    id = transaction.sourceToId,
+                )?.let { sourceTo ->
+                    sourceRepository.updateSources(
+                        sourceTo.copy(
+                            balanceAmount = sourceTo.balanceAmount.copy(
+                                value = sourceTo.balanceAmount.value - transaction.amount.value,
+                            )
+                        ),
+                    )
+                }
+            }
         }
     }
 }
