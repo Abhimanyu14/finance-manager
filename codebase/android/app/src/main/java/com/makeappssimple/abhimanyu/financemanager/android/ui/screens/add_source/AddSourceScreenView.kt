@@ -16,14 +16,12 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -33,6 +31,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButto
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.OutlinedTextFieldLabelText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
@@ -102,11 +101,8 @@ fun AddSourceScreenView(
                 OutlinedTextField(
                     value = data.screenViewModel.name,
                     label = {
-                        Text(
-                            text = stringResource(
-                                id = R.string.screen_add_source_name,
-                            ),
-                            color = Color.DarkGray,
+                        OutlinedTextFieldLabelText(
+                            textStringResourceId = R.string.screen_add_source_name,
                         )
                     },
                     trailingIcon = {
@@ -164,11 +160,8 @@ fun AddSourceScreenView(
                 OutlinedTextField(
                     value = data.screenViewModel.balanceAmount,
                     label = {
-                        Text(
-                            text = stringResource(
-                                id = R.string.screen_add_source_balance_amount,
-                            ),
-                            color = Color.DarkGray,
+                        OutlinedTextFieldLabelText(
+                            textStringResourceId = R.string.screen_add_source_balance_amount,
                         )
                     },
                     trailingIcon = {

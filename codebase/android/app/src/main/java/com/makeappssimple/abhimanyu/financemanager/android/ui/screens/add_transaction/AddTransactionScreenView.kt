@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_trans
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -22,7 +21,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -47,6 +45,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGrou
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.OutlinedTextFieldLabelText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
@@ -604,16 +603,4 @@ fun AddTransactionScreenView(
             }
         }
     }
-}
-
-@Composable
-fun OutlinedTextFieldLabelText(
-    @StringRes textStringResourceId: Int,
-) {
-    Text(
-        text = stringResource(
-            id = textStringResourceId,
-        ),
-        color = Color.DarkGray,
-    )
 }
