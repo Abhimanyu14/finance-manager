@@ -152,10 +152,9 @@ fun AddTransactionScreenView(
 
     LaunchedEffect(
         key1 = state.modalBottomSheetState,
-        block = {
-            keyboardController?.hide()
-        },
-    )
+    ) {
+        keyboardController?.hide()
+    }
 
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
@@ -349,61 +348,65 @@ fun AddTransactionScreenView(
                                 vertical = 4.dp,
                             ),
                     )
-                    OutlinedTextField(
-                        value = data.screenViewModel.title,
-                        label = {
-                            OutlinedTextFieldLabelText(
-                                textStringResourceId = R.string.screen_add_transaction_title,
-                            )
-                        },
-                        trailingIcon = {
-                            AnimatedVisibility(
-                                visible = data.screenViewModel.title.isNotNullOrBlank(),
-                                enter = fadeIn(),
-                                exit = fadeOut(),
-                            ) {
-                                MyIconButton(
-                                    onClickLabel = stringResource(
-                                        id = R.string.screen_add_transaction_clear_title,
-                                    ),
-                                    onClick = {
-                                        data.screenViewModel.title = ""
-                                    },
-                                    modifier = Modifier
-                                        .padding(
-                                            end = 4.dp,
-                                        ),
+                    AnimatedVisibility(
+                        visible = data.screenViewModel.isTitleTextFieldVisible(),
+                    ) {
+                        OutlinedTextField(
+                            value = data.screenViewModel.title,
+                            label = {
+                                OutlinedTextFieldLabelText(
+                                    textStringResourceId = R.string.screen_add_transaction_title,
+                                )
+                            },
+                            trailingIcon = {
+                                AnimatedVisibility(
+                                    visible = data.screenViewModel.title.isNotNullOrBlank(),
+                                    enter = fadeIn(),
+                                    exit = fadeOut(),
                                 ) {
-                                    Icon(
-                                        imageVector = Icons.Rounded.Clear,
-                                        tint = Color.DarkGray,
-                                        contentDescription = stringResource(
+                                    MyIconButton(
+                                        onClickLabel = stringResource(
                                             id = R.string.screen_add_transaction_clear_title,
                                         ),
-                                    )
+                                        onClick = {
+                                            data.screenViewModel.title = ""
+                                        },
+                                        modifier = Modifier
+                                            .padding(
+                                                end = 4.dp,
+                                            ),
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Rounded.Clear,
+                                            tint = Color.DarkGray,
+                                            contentDescription = stringResource(
+                                                id = R.string.screen_add_transaction_clear_title,
+                                            ),
+                                        )
+                                    }
                                 }
-                            }
-                        },
-                        onValueChange = {
-                            data.screenViewModel.title = it
-                        },
-                        keyboardActions = KeyboardActions(
-                            onDone = {
-                                state.focusManager.clearFocus()
                             },
-                        ),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Text,
-                            imeAction = ImeAction.Done,
-                        ),
-                        singleLine = true,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                horizontal = 16.dp,
-                                vertical = 4.dp,
+                            onValueChange = {
+                                data.screenViewModel.title = it
+                            },
+                            keyboardActions = KeyboardActions(
+                                onDone = {
+                                    state.focusManager.clearFocus()
+                                },
                             ),
-                    )
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Text,
+                                imeAction = ImeAction.Done,
+                            ),
+                            singleLine = true,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    horizontal = 16.dp,
+                                    vertical = 4.dp,
+                                ),
+                        )
+                    }
                     AnimatedVisibility(
                         visible = data.screenViewModel.isCategoryTextFieldVisible(),
                     ) {
@@ -452,61 +455,65 @@ fun AddTransactionScreenView(
                                 ),
                         )
                     }
-                    OutlinedTextField(
-                        value = data.screenViewModel.description,
-                        label = {
-                            OutlinedTextFieldLabelText(
-                                textStringResourceId = R.string.screen_add_transaction_description,
-                            )
-                        },
-                        trailingIcon = {
-                            AnimatedVisibility(
-                                visible = data.screenViewModel.description.isNotNullOrBlank(),
-                                enter = fadeIn(),
-                                exit = fadeOut(),
-                            ) {
-                                MyIconButton(
-                                    onClickLabel = stringResource(
-                                        id = R.string.screen_add_transaction_clear_description,
-                                    ),
-                                    onClick = {
-                                        data.screenViewModel.description = ""
-                                    },
-                                    modifier = Modifier
-                                        .padding(
-                                            end = 4.dp,
-                                        ),
+                    AnimatedVisibility(
+                        visible = data.screenViewModel.isDescriptionTextFieldVisible(),
+                    ) {
+                        OutlinedTextField(
+                            value = data.screenViewModel.description,
+                            label = {
+                                OutlinedTextFieldLabelText(
+                                    textStringResourceId = R.string.screen_add_transaction_description,
+                                )
+                            },
+                            trailingIcon = {
+                                AnimatedVisibility(
+                                    visible = data.screenViewModel.description.isNotNullOrBlank(),
+                                    enter = fadeIn(),
+                                    exit = fadeOut(),
                                 ) {
-                                    Icon(
-                                        imageVector = Icons.Rounded.Clear,
-                                        tint = Color.DarkGray,
-                                        contentDescription = stringResource(
+                                    MyIconButton(
+                                        onClickLabel = stringResource(
                                             id = R.string.screen_add_transaction_clear_description,
                                         ),
-                                    )
+                                        onClick = {
+                                            data.screenViewModel.description = ""
+                                        },
+                                        modifier = Modifier
+                                            .padding(
+                                                end = 4.dp,
+                                            ),
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Rounded.Clear,
+                                            tint = Color.DarkGray,
+                                            contentDescription = stringResource(
+                                                id = R.string.screen_add_transaction_clear_description,
+                                            ),
+                                        )
+                                    }
                                 }
-                            }
-                        },
-                        onValueChange = {
-                            data.screenViewModel.description = it
-                        },
-                        keyboardActions = KeyboardActions(
-                            onDone = {
-                                state.focusManager.clearFocus()
                             },
-                        ),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Text,
-                            imeAction = ImeAction.Done,
-                        ),
-                        singleLine = true,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                horizontal = 16.dp,
-                                vertical = 4.dp,
+                            onValueChange = {
+                                data.screenViewModel.description = it
+                            },
+                            keyboardActions = KeyboardActions(
+                                onDone = {
+                                    state.focusManager.clearFocus()
+                                },
                             ),
-                    )
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Text,
+                                imeAction = ImeAction.Done,
+                            ),
+                            singleLine = true,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    horizontal = 16.dp,
+                                    vertical = 4.dp,
+                                ),
+                        )
+                    }
                     AnimatedVisibility(
                         visible = data.screenViewModel.isSourceFromTextFieldVisible(),
                     ) {

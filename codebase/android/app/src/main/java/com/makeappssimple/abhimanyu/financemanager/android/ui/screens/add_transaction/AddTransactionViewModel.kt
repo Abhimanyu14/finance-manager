@@ -164,7 +164,11 @@ class AddTransactionViewModel @Inject constructor(
                     sourceFromId = sourceFrom?.id ?: 0,
                     sourceToId = sourceTo?.id ?: 0,
                     description = description,
-                    title = title,
+                    title = if (transactionTypes[selectedTransactionTypeIndex] == TransactionType.TRANSFER) {
+                        "Transfer"
+                    } else {
+                        title
+                    },
                     creationTimestamp = Calendar.getInstance().timeInMillis,
                     transactionTimestamp = transactionCalendar.timeInMillis,
                     transactionFor = when (transactionTypes[selectedTransactionTypeIndex]) {
@@ -209,26 +213,91 @@ class AddTransactionViewModel @Inject constructor(
         return TransactionType.values()
     }
 
+    fun isTitleTextFieldVisible(): Boolean {
+        return when (transactionTypes[selectedTransactionTypeIndex]) {
+            TransactionType.INCOME -> {
+                true
+            }
+            TransactionType.EXPENSE -> {
+                true
+            }
+            TransactionType.TRANSFER -> {
+                false
+            }
+        }
+    }
+
+    fun isDescriptionTextFieldVisible(): Boolean {
+        return false
+    }
+
     fun isCategoryTextFieldVisible(): Boolean {
-        return transactionTypes[selectedTransactionTypeIndex] == TransactionType.EXPENSE ||
-                transactionTypes[selectedTransactionTypeIndex] == TransactionType.INCOME
+        return when (transactionTypes[selectedTransactionTypeIndex]) {
+            TransactionType.INCOME -> {
+                true
+            }
+            TransactionType.EXPENSE -> {
+                true
+            }
+            TransactionType.TRANSFER -> {
+                false
+            }
+        }
     }
 
     fun isTransactionForRadioGroupVisible(): Boolean {
-        return transactionTypes[selectedTransactionTypeIndex] == TransactionType.EXPENSE
+        return when (transactionTypes[selectedTransactionTypeIndex]) {
+            TransactionType.INCOME -> {
+                false
+            }
+            TransactionType.EXPENSE -> {
+                true
+            }
+            TransactionType.TRANSFER -> {
+                false
+            }
+        }
     }
 
     fun isSourceFromTextFieldVisible(): Boolean {
-        return transactionTypes[selectedTransactionTypeIndex] == TransactionType.EXPENSE ||
-                transactionTypes[selectedTransactionTypeIndex] == TransactionType.TRANSFER
+        return when (transactionTypes[selectedTransactionTypeIndex]) {
+            TransactionType.INCOME -> {
+                false
+            }
+            TransactionType.EXPENSE -> {
+                true
+            }
+            TransactionType.TRANSFER -> {
+                true
+            }
+        }
     }
 
     fun isSourceToTextFieldVisible(): Boolean {
-        return transactionTypes[selectedTransactionTypeIndex] == TransactionType.INCOME ||
-                transactionTypes[selectedTransactionTypeIndex] == TransactionType.TRANSFER
+        return when (transactionTypes[selectedTransactionTypeIndex]) {
+            TransactionType.INCOME -> {
+                true
+            }
+            TransactionType.EXPENSE -> {
+                false
+            }
+            TransactionType.TRANSFER -> {
+                true
+            }
+        }
     }
 
     fun isValidTransactionData(): Boolean {
-        return amount.isNotNullOrBlank() && title.isNotNullOrBlank()
+        return when (transactionTypes[selectedTransactionTypeIndex]) {
+            TransactionType.INCOME -> {
+                amount.isNotNullOrBlank() && title.isNotNullOrBlank()
+            }
+            TransactionType.EXPENSE -> {
+                amount.isNotNullOrBlank() && title.isNotNullOrBlank()
+            }
+            TransactionType.TRANSFER -> {
+                amount.isNotNullOrBlank()
+            }
+        }
     }
 }
