@@ -6,9 +6,10 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FabPosition
 import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -65,12 +66,14 @@ fun SourcesScreenView(
         )
     }
 
-    LaunchedEffect(
-        key1 = state.modalBottomSheetState,
-        block = {
-            keyboardController?.hide()
-        },
-    )
+    if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
+        DisposableEffect(Unit) {
+            onDispose {
+                sourcesBottomSheetType = SourcesBottomSheetType.NONE
+                keyboardController?.hide()
+            }
+        }
+    }
 
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
@@ -99,10 +102,6 @@ fun SourcesScreenView(
                                             source = updatedSource,
                                         )
                                     }
-
-                                    // TODO-Abhi: Update balance amount
-                                    sourcesBottomSheetType = SourcesBottomSheetType.NONE
-                                    keyboardController?.hide()
                                 }
                             },
                         ),
@@ -176,15 +175,12 @@ fun SourcesScreenView(
                                 )
                             },
                             onClick = {
-                                /*
-                                TODO-Abhi: Source edit balance amount bottom sheet on click
                                 clickedSource = listItem
                                 sourcesBottomSheetType = SourcesBottomSheetType.EDIT_BALANCE_AMOUNT
                                 toggleModalBottomSheetState(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,
                                 ) {}
-                                */
                             },
                         )
                     }
