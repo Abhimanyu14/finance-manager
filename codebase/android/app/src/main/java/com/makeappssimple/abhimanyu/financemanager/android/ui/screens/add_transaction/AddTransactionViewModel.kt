@@ -210,6 +210,7 @@ class AddTransactionViewModel @Inject constructor(
     }
 
     fun getTransactionTypesForNewTransaction(): Array<TransactionType> {
+        // TODO-Abhi: Hide transfer when only one source is there
         return TransactionType.values()
     }
 
