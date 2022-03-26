@@ -29,10 +29,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -71,6 +73,7 @@ data class AddTransactionScreenViewData(
     val screenViewModel: AddTransactionViewModel,
 )
 
+@OptIn(ExperimentalComposeUiApi::class)
 @ExperimentalMaterialApi
 @ExperimentalMaterial3Api
 @Composable
@@ -78,12 +81,7 @@ fun AddTransactionScreenView(
     data: AddTransactionScreenViewData,
     state: AddTransactionScreenViewState,
 ) {
-    LaunchedEffect(
-        key1 = Unit,
-    ) {
-        state.focusRequester.requestFocus()
-    }
-
+    val keyboardController = LocalSoftwareKeyboardController.current
     val categories by data.screenViewModel.categories.collectAsState(
         initial = emptyList(),
     )
@@ -128,6 +126,12 @@ fun AddTransactionScreenView(
     }
 
     LaunchedEffect(
+        key1 = Unit,
+    ) {
+        state.focusRequester.requestFocus()
+    }
+
+    LaunchedEffect(
         key1 = categories,
     ) {
         data.screenViewModel.expenseDefaultCategory = categories.firstOrNull {
@@ -145,6 +149,13 @@ fun AddTransactionScreenView(
 
         data.screenViewModel.category = data.screenViewModel.expenseDefaultCategory
     }
+
+    LaunchedEffect(
+        key1 = state.modalBottomSheetState,
+        block = {
+            keyboardController?.hide()
+        },
+    )
 
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,

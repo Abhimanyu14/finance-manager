@@ -8,6 +8,7 @@ import androidx.compose.material.FabPosition
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -63,6 +64,13 @@ fun SourcesScreenView(
             value = SourcesBottomSheetType.NONE,
         )
     }
+
+    LaunchedEffect(
+        key1 = state.modalBottomSheetState,
+        block = {
+            keyboardController?.hide()
+        },
+    )
 
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
