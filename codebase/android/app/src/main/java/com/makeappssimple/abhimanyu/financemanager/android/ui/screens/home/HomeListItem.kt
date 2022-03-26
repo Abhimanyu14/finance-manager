@@ -157,7 +157,7 @@ private fun HomeListItemView(
                 },
                 textAlign = TextAlign.End,
                 style = TextStyle(
-                    color = transaction.transactionType.amountTextColor,
+                    color = transaction.amountTextColor,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                 ),

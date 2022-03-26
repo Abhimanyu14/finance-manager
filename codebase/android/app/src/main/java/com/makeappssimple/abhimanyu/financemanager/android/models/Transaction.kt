@@ -32,6 +32,9 @@ enum class TransactionType(
     TRANSFER(
         title = "Transfer",
     ),
+    ADJUSTMENT(
+        title = "Adjustment",
+    ),
     /*
     TODO-Abhi: Add Loans later
     LOAN(
@@ -66,8 +69,8 @@ data class Transaction(
     val transactionType: TransactionType = TransactionType.EXPENSE,
 )
 
-val TransactionType.amountTextColor: Color
-    get() = when (this) {
+val Transaction.amountTextColor: Color
+    get() = when (this.transactionType) {
         TransactionType.INCOME -> {
             OnTertiaryContainer
         }
@@ -76,5 +79,18 @@ val TransactionType.amountTextColor: Color
         }
         TransactionType.TRANSFER -> {
             Color.DarkGray
+        }
+        TransactionType.ADJUSTMENT -> {
+            when {
+                this.amount.value > 0 -> {
+                    OnTertiaryContainer
+                }
+                this.amount.value < 0 -> {
+                    Color.Red
+                }
+                else -> {
+                    Color.DarkGray
+                }
+            }
         }
     }

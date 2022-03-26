@@ -131,7 +131,6 @@ class AddTransactionViewModel @Inject constructor(
         updatedSelectedTransactionTypeIndex: Int,
     ) {
         selectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex
-
         when (transactionTypes[selectedTransactionTypeIndex]) {
             TransactionType.INCOME -> {
                 sourceFrom = null
@@ -147,6 +146,7 @@ class AddTransactionViewModel @Inject constructor(
                 sourceFrom = expenseDefaultSource
                 sourceTo = incomeDefaultSource
             }
+            TransactionType.ADJUSTMENT -> {}
         }
     }
 
@@ -185,6 +185,9 @@ class AddTransactionViewModel @Inject constructor(
                         TransactionType.TRANSFER -> {
                             TransactionFor.SELF
                         }
+                        TransactionType.ADJUSTMENT -> {
+                            TransactionFor.SELF
+                        }
                     },
                     transactionType = transactionTypes[selectedTransactionTypeIndex],
                 ),
@@ -215,7 +218,9 @@ class AddTransactionViewModel @Inject constructor(
 
     fun getTransactionTypesForNewTransaction(): Array<TransactionType> {
         // TODO-Abhi: Hide transfer when only one source is there
-        return TransactionType.values()
+        return TransactionType.values().filter {
+            it != TransactionType.ADJUSTMENT
+        }.toTypedArray()
     }
 
     fun isTitleTextFieldVisible(): Boolean {
@@ -227,6 +232,9 @@ class AddTransactionViewModel @Inject constructor(
                 true
             }
             TransactionType.TRANSFER -> {
+                false
+            }
+            TransactionType.ADJUSTMENT -> {
                 false
             }
         }
@@ -247,6 +255,9 @@ class AddTransactionViewModel @Inject constructor(
             TransactionType.TRANSFER -> {
                 false
             }
+            TransactionType.ADJUSTMENT -> {
+                false
+            }
         }
     }
 
@@ -259,6 +270,9 @@ class AddTransactionViewModel @Inject constructor(
                 true
             }
             TransactionType.TRANSFER -> {
+                false
+            }
+            TransactionType.ADJUSTMENT -> {
                 false
             }
         }
@@ -275,6 +289,9 @@ class AddTransactionViewModel @Inject constructor(
             TransactionType.TRANSFER -> {
                 true
             }
+            TransactionType.ADJUSTMENT -> {
+                false
+            }
         }
     }
 
@@ -289,6 +306,9 @@ class AddTransactionViewModel @Inject constructor(
             TransactionType.TRANSFER -> {
                 true
             }
+            TransactionType.ADJUSTMENT -> {
+                false
+            }
         }
     }
 
@@ -302,6 +322,9 @@ class AddTransactionViewModel @Inject constructor(
             }
             TransactionType.TRANSFER -> {
                 amount.isNotNullOrBlank() && sourceFrom?.id != sourceTo?.id
+            }
+            TransactionType.ADJUSTMENT -> {
+                false
             }
         }
     }

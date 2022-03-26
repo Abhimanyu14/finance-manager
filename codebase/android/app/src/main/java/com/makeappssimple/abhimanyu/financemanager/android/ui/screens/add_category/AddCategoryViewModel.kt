@@ -23,7 +23,7 @@ class AddCategoryViewModel @Inject constructor(
 ) : BaseViewModel() {
     val transactionTypes = TransactionType.values()
         .filter {
-            it != TransactionType.TRANSFER
+            it != TransactionType.TRANSFER && it != TransactionType.ADJUSTMENT
         }
     var description by mutableStateOf(
         value = "",
