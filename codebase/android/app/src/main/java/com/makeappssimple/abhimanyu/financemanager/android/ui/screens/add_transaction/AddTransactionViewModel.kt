@@ -21,6 +21,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navi
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.formattedDate
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.formattedTime
+import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -225,5 +226,9 @@ class AddTransactionViewModel @Inject constructor(
     fun isSourceToTextFieldVisible(): Boolean {
         return transactionTypes[selectedTransactionTypeIndex] == TransactionType.INCOME ||
                 transactionTypes[selectedTransactionTypeIndex] == TransactionType.TRANSFER
+    }
+
+    fun isValidTransactionData(): Boolean {
+        return amount.isNotNullOrBlank() && title.isNotNullOrBlank()
     }
 }

@@ -6,9 +6,7 @@ import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -16,7 +14,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.OutlinedTextField
@@ -39,20 +36,18 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmptySpace
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyExtendedFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
@@ -288,7 +283,7 @@ fun AddTransactionScreenView(
                         value = data.screenViewModel.amount,
                         label = {
                             OutlinedTextFieldLabelText(
-                                id = R.string.screen_add_transaction_amount,
+                                textStringResourceId = R.string.screen_add_transaction_amount,
                             )
                         },
                         trailingIcon = {
@@ -348,7 +343,7 @@ fun AddTransactionScreenView(
                         value = data.screenViewModel.title,
                         label = {
                             OutlinedTextFieldLabelText(
-                                id = R.string.screen_add_transaction_title,
+                                textStringResourceId = R.string.screen_add_transaction_title,
                             )
                         },
                         trailingIcon = {
@@ -415,7 +410,7 @@ fun AddTransactionScreenView(
                             },
                             label = {
                                 OutlinedTextFieldLabelText(
-                                    id = R.string.screen_add_transaction_category,
+                                    textStringResourceId = R.string.screen_add_transaction_category,
                                 )
                             },
                             modifier = Modifier
@@ -451,7 +446,7 @@ fun AddTransactionScreenView(
                         value = data.screenViewModel.description,
                         label = {
                             OutlinedTextFieldLabelText(
-                                id = R.string.screen_add_transaction_description,
+                                textStringResourceId = R.string.screen_add_transaction_description,
                             )
                         },
                         trailingIcon = {
@@ -518,7 +513,7 @@ fun AddTransactionScreenView(
                             },
                             label = {
                                 OutlinedTextFieldLabelText(
-                                    id = if (data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER) {
+                                    textStringResourceId = if (data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER) {
                                         R.string.screen_add_transaction_source_from
                                     } else {
                                         R.string.screen_add_transaction_source
@@ -549,7 +544,7 @@ fun AddTransactionScreenView(
                             },
                             label = {
                                 OutlinedTextFieldLabelText(
-                                    id = if (data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER) {
+                                    textStringResourceId = if (data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER) {
                                         R.string.screen_add_transaction_source_to
                                     } else {
                                         R.string.screen_add_transaction_source
@@ -571,7 +566,7 @@ fun AddTransactionScreenView(
                         },
                         label = {
                             OutlinedTextFieldLabelText(
-                                id = R.string.screen_add_transaction_transaction_date,
+                                textStringResourceId = R.string.screen_add_transaction_transaction_date,
                             )
                         },
                         modifier = Modifier
@@ -588,7 +583,7 @@ fun AddTransactionScreenView(
                         },
                         label = {
                             OutlinedTextFieldLabelText(
-                                id = R.string.screen_add_transaction_transaction_time,
+                                textStringResourceId = R.string.screen_add_transaction_transaction_time,
                             )
                         },
                         modifier = Modifier
@@ -598,55 +593,13 @@ fun AddTransactionScreenView(
                                 vertical = 4.dp,
                             ),
                     )
-                    MyExtendedFloatingActionButton(
-                        onClickLabel = stringResource(
-                            id = R.string.screen_add_transaction_floating_action_button_content_description,
-                        ),
-                        enabled = data.screenViewModel.amount.isNotNullOrBlank() &&
-                                data.screenViewModel.title.isNotNullOrBlank(),
-                        colors = ButtonDefaults.buttonColors(
-                            disabledBackgroundColor = Color.Transparent,
-                        ),
-                        border = BorderStroke(
-                            width = 1.dp,
-                            color = if (
-                                data.screenViewModel.amount.isNotNullOrBlank() &&
-                                data.screenViewModel.title.isNotNullOrBlank()
-                            ) {
-                                Color.Transparent
-                            } else {
-                                Color.LightGray
-                            },
-                        ),
+                    SaveButton(
+                        textStringResourceId = R.string.screen_add_transaction_floating_action_button_content_description,
+                        isEnabled = data.screenViewModel.isValidTransactionData(),
                         onClick = {
                             data.screenViewModel.insertTransaction()
                         },
-                        modifier = Modifier
-                            .padding(
-                                horizontal = 16.dp,
-                                vertical = 4.dp,
-                            ),
-                    ) {
-                        Text(
-                            text = stringResource(
-                                id = R.string.screen_add_transaction_floating_action_button_content_description,
-                            ),
-                            textAlign = TextAlign.Center,
-                            fontWeight = FontWeight.Bold,
-                            color = if (
-                                data.screenViewModel.amount.isNotNullOrBlank() &&
-                                data.screenViewModel.title.isNotNullOrBlank()
-                            ) {
-                                Color.White
-                            } else {
-                                Color.LightGray
-                            },
-                            modifier = Modifier
-                                .defaultMinSize(
-                                    minWidth = 100.dp,
-                                ),
-                        )
-                    }
+                    )
                 }
             }
         }
@@ -655,11 +608,11 @@ fun AddTransactionScreenView(
 
 @Composable
 fun OutlinedTextFieldLabelText(
-    @StringRes id: Int,
+    @StringRes textStringResourceId: Int,
 ) {
     Text(
         text = stringResource(
-            id = id,
+            id = textStringResourceId,
         ),
         color = Color.DarkGray,
     )

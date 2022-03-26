@@ -3,9 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_sourc
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,7 +11,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
@@ -27,20 +24,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.LightGray
-import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyExtendedFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 
@@ -225,54 +218,13 @@ fun AddSourceScreenView(
                             vertical = 8.dp,
                         ),
                 )
-                MyExtendedFloatingActionButton(
-                    onClickLabel = stringResource(
-                        id = R.string.screen_add_source_floating_action_button_content_description,
-                    ),
-                    enabled = data.screenViewModel.name.isNotNullOrBlank() &&
-                            data.screenViewModel.balanceAmount.isNotNullOrBlank(),
-                    colors = ButtonDefaults.buttonColors(
-                        disabledBackgroundColor = Color.Transparent,
-                    ),
-                    border = BorderStroke(
-                        width = 1.dp,
-                        color = if (
-                            data.screenViewModel.name.isNotNullOrBlank() &&
-                            data.screenViewModel.balanceAmount.isNotNullOrBlank()
-                        ) {
-                            Color.Transparent
-                        } else {
-                            LightGray
-                        },
-                    ),
+                SaveButton(
+                    textStringResourceId = R.string.screen_add_source_floating_action_button_content_description,
+                    isEnabled = data.screenViewModel.isValidSourceData(),
                     onClick = {
                         data.screenViewModel.insertSource()
                     },
-                    modifier = Modifier
-                        .padding(
-                            all = 16.dp,
-                        ),
-                ) {
-                    Text(
-                        text = stringResource(
-                            id = R.string.screen_add_source_floating_action_button_content_description,
-                        ),
-                        textAlign = TextAlign.Center,
-                        fontWeight = FontWeight.Bold,
-                        color = if (
-                            data.screenViewModel.name.isNotNullOrBlank() &&
-                            data.screenViewModel.balanceAmount.isNotNullOrBlank()
-                        ) {
-                            White
-                        } else {
-                            LightGray
-                        },
-                        modifier = Modifier
-                            .defaultMinSize(
-                                minWidth = 100.dp,
-                            ),
-                    )
-                }
+                )
             }
         }
     }

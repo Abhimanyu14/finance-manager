@@ -10,6 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionTyp
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -89,5 +90,9 @@ class AddCategoryViewModel @Inject constructor(
                 navigationManager = navigationManager,
             )
         }
+    }
+
+    fun isValidCategoryData(): Boolean {
+        return title.isNotNullOrBlank()
     }
 }
