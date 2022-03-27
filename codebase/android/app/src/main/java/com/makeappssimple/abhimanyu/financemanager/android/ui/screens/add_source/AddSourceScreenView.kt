@@ -157,60 +157,6 @@ fun AddSourceScreenView(
                             vertical = 8.dp,
                         ),
                 )
-                OutlinedTextField(
-                    value = data.screenViewModel.balanceAmount,
-                    label = {
-                        OutlinedTextFieldLabelText(
-                            textStringResourceId = R.string.screen_add_source_balance_amount,
-                        )
-                    },
-                    trailingIcon = {
-                        AnimatedVisibility(
-                            visible = data.screenViewModel.balanceAmount.isNotNullOrBlank(),
-                            enter = fadeIn(),
-                            exit = fadeOut(),
-                        ) {
-                            MyIconButton(
-                                onClickLabel = stringResource(
-                                    id = R.string.screen_add_source_clear_balance_amount,
-                                ),
-                                onClick = {
-                                    data.screenViewModel.balanceAmount = ""
-                                },
-                                modifier = Modifier
-                                    .padding(
-                                        end = 4.dp,
-                                    ),
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Rounded.Clear,
-                                    contentDescription = stringResource(
-                                        id = R.string.screen_add_source_clear_balance_amount,
-                                    ),
-                                )
-                            }
-                        }
-                    },
-                    onValueChange = {
-                        data.screenViewModel.balanceAmount = it
-                    },
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            state.focusManager.clearFocus()
-                        },
-                    ),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.NumberPassword,
-                        imeAction = ImeAction.Done,
-                    ),
-                    singleLine = true,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            horizontal = 16.dp,
-                            vertical = 8.dp,
-                        ),
-                )
                 SaveButton(
                     textStringResourceId = R.string.screen_add_source_floating_action_button_content_description,
                     isEnabled = data.screenViewModel.isValidSourceData(),

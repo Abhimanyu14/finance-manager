@@ -68,9 +68,16 @@ class HomeViewModel @Inject constructor(
             transactionRepository.deleteTransaction(
                 id = id,
             )
-            transaction?.sourceFromId?.let {
+            val sourceFromId = transaction?.sourceFromId
+            val sourceToId = transaction?.sourceToId
+            if (
+                sourceFromId != null &&
+                sourceToId != null &&
+                sourceFromId != 0 &&
+                sourceToId != 0
+            ) {
                 sourceRepository.getSource(
-                    id = transaction.sourceFromId,
+                    id = sourceFromId,
                 )?.let { sourceFrom ->
                     sourceRepository.updateSources(
                         sourceFrom.copy(
@@ -80,10 +87,8 @@ class HomeViewModel @Inject constructor(
                         ),
                     )
                 }
-            }
-            transaction?.sourceToId?.let {
                 sourceRepository.getSource(
-                    id = transaction.sourceToId,
+                    id = sourceToId,
                 )?.let { sourceTo ->
                     sourceRepository.updateSources(
                         sourceTo.copy(
@@ -92,6 +97,33 @@ class HomeViewModel @Inject constructor(
                             )
                         ),
                     )
+                }
+            } else {
+                sourceFromId?.let {
+                    sourceRepository.getSource(
+                        id = transaction.sourceFromId,
+                    )?.let { sourceFrom ->
+                        sourceRepository.updateSources(
+                            sourceFrom.copy(
+                                balanceAmount = sourceFrom.balanceAmount.copy(
+                                    value = sourceFrom.balanceAmount.value - transaction.amount.value,
+                                )
+                            ),
+                        )
+                    }
+                }
+                sourceToId?.let {
+                    sourceRepository.getSource(
+                        id = transaction.sourceToId,
+                    )?.let { sourceTo ->
+                        sourceRepository.updateSources(
+                            sourceTo.copy(
+                                balanceAmount = sourceTo.balanceAmount.copy(
+                                    value = sourceTo.balanceAmount.value - transaction.amount.value,
+                                )
+                            ),
+                        )
+                    }
                 }
             }
         }

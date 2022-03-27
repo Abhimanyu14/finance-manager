@@ -97,7 +97,7 @@ fun SourcesEditBalanceAmountBottomSheet(
                 ),
                 keyboardOptions = KeyboardOptions(
                     keyboardType = KeyboardType.NumberPassword,
-                    imeAction = ImeAction.Next,
+                    imeAction = ImeAction.Done,
                 ),
                 modifier = Modifier
                     .weight(

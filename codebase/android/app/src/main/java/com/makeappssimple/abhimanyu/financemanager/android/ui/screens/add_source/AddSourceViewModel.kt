@@ -26,9 +26,6 @@ class AddSourceViewModel @Inject constructor(
         .filter {
             it != SourceType.CASH
         }
-    var balanceAmount by mutableStateOf(
-        value = "",
-    )
     var selectedSourceTypeIndex by mutableStateOf(
         value = sourceTypes.indexOf(
             element = SourceType.BANK,
@@ -49,7 +46,7 @@ class AddSourceViewModel @Inject constructor(
             sourceRepository.insertSource(
                 source = Source(
                     balanceAmount = Amount(
-                        value = balanceAmount.toLong(),
+                        value = 0L,
                     ),
                     type = sourceTypes[selectedSourceTypeIndex],
                     name = name,
@@ -62,6 +59,6 @@ class AddSourceViewModel @Inject constructor(
     }
 
     fun isValidSourceData(): Boolean {
-        return name.isNotNullOrBlank() && balanceAmount.isNotNullOrBlank()
+        return name.isNotNullOrBlank()
     }
 }

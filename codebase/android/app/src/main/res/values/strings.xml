@@ -25,8 +25,6 @@
     <string name="screen_add_source_appbar_title">Enter Source Details</string>
     <string name="screen_add_source_name">Name</string>
     <string name="screen_add_source_clear_name">Clear Name</string>
-    <string name="screen_add_source_balance_amount">Balance Amount</string>
-    <string name="screen_add_source_clear_balance_amount">Clear Balance Amount</string>
     <string name="screen_add_source_floating_action_button_content_description">SAVE</string>
 
     <!-- add transaction screen -->

@@ -93,13 +93,15 @@ fun SourcesScreenView(
                                     modalBottomSheetState = state.modalBottomSheetState,
                                 ) {
                                     clickedSource?.let {
+                                        val amount = updatedBalance - it.balanceAmount.value
                                         val updatedSource = it.copy(
                                             balanceAmount = it.balanceAmount.copy(
                                                 value = updatedBalance.toLong(),
                                             ),
                                         )
-                                        data.screenViewModel.updateSource(
-                                            source = updatedSource,
+                                        data.screenViewModel.insertTransaction(
+                                            amountValue = amount,
+                                            sourceTo = updatedSource,
                                         )
                                     }
                                 }

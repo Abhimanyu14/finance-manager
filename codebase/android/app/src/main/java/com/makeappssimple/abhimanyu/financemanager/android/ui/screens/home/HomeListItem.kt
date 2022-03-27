@@ -150,8 +150,11 @@ private fun HomeListItemView(
                     ),
             )
             Text(
-                text = if (transaction.transactionType == TransactionType.INCOME) {
-                    transaction.amount.getPositiveString()
+                text = if (transaction.transactionType == TransactionType.INCOME ||
+                    (transaction.transactionType == TransactionType.ADJUSTMENT
+                            && transaction.amount.value > 0)
+                ) {
+                    transaction.amount.toSignedString()
                 } else {
                     transaction.amount.toString()
                 },

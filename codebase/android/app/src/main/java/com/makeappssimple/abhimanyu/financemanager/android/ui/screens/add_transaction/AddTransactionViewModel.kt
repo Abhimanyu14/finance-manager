@@ -150,7 +150,6 @@ class AddTransactionViewModel @Inject constructor(
         }
     }
 
-    // TODO-Abhi: Restrict transfer between same source
     fun insertTransaction() {
         viewModelScope.launch(
             context = Dispatchers.IO,
@@ -169,7 +168,7 @@ class AddTransactionViewModel @Inject constructor(
                     sourceToId = sourceTo?.id ?: 0,
                     description = description,
                     title = if (transactionTypes[selectedTransactionTypeIndex] == TransactionType.TRANSFER) {
-                        "Transfer"
+                        TransactionType.TRANSFER.title
                     } else {
                         title
                     },
