@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 interface TransactionDao {
 
     @Query(
-        value = "SELECT * from transaction_table ORDER BY id ASC",
+        value = "SELECT * from transaction_table ORDER BY id DESC",
     )
     fun getTransactions(): Flow<List<Transaction>>
 
