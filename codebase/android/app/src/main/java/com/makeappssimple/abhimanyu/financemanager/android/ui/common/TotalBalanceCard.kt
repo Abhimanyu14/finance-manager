@@ -11,11 +11,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Green700
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -48,7 +50,9 @@ fun TotalBalanceCard(
                 ),
         ) {
             Text(
-                text = "Total Balance",
+                text = stringResource(
+                    id = R.string.total_balance_card_title,
+                ),
                 textAlign = TextAlign.Center,
                 style = TextStyle(
                     color = Color.White,

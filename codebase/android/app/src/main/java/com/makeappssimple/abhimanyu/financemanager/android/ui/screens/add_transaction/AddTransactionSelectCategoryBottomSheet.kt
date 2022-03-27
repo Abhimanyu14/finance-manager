@@ -11,11 +11,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.makeappssimple.abhimanyu.financemanager.android.R
 
 data class AddTransactionSelectCategoryBottomSheetItemData(
     val text: String,
@@ -38,7 +40,9 @@ fun AddTransactionSelectCategoryBottomSheet(
     ) {
         item {
             Text(
-                text = "Select Category",
+                text = stringResource(
+                    id = R.string.bottom_sheet_add_transaction_select_category_title,
+                ),
                 style = TextStyle(
                     color = Color.DarkGray,
                     fontSize = 14.sp,

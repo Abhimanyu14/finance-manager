@@ -31,7 +31,7 @@ private fun NavigationArrowBackIcon() {
     Icon(
         imageVector = Icons.Rounded.ArrowBack,
         contentDescription = stringResource(
-            id = R.string.navigation_icon_content_description,
+            id = R.string.navigation_back_button_navigation_icon_content_description,
         ),
         tint = TopBarNavigationIconTint,
     )

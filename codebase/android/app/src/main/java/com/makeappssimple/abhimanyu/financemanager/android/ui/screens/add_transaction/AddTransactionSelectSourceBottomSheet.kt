@@ -13,11 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getIcon
 
@@ -43,7 +45,9 @@ fun AddTransactionSelectSourceBottomSheet(
     ) {
         item {
             Text(
-                text = "Select Source",
+                text = stringResource(
+                    id = R.string.bottom_sheet_add_transaction_select_source_title,
+                ),
                 style = TextStyle(
                     color = Color.DarkGray,
                     fontSize = 14.sp,

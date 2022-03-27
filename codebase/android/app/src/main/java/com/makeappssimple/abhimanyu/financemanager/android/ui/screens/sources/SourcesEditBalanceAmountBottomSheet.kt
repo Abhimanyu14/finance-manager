@@ -22,6 +22,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -30,6 +31,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.makeappssimple.abhimanyu.financemanager.android.R
 
 data class SourcesEditBalanceAmountBottomSheetData(
     val balanceAmount: Int,
@@ -71,7 +73,9 @@ fun SourcesEditBalanceAmountBottomSheet(
             .fillMaxWidth(),
     ) {
         Text(
-            text = "Edit Balance Amount",
+            text = stringResource(
+                id = R.string.bottom_sheet_sources_edit_balance_amount_title,
+            ),
             style = TextStyle(
                 color = Color.DarkGray,
                 fontSize = 14.sp,
@@ -120,7 +124,11 @@ fun SourcesEditBalanceAmountBottomSheet(
                     )
                 },
             ) {
-                Text(text = "Save")
+                Text(
+                    text = stringResource(
+                        id = R.string.bottom_sheet_sources_edit_balance_amount_save,
+                    ),
+                )
             }
         }
     }

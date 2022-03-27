@@ -25,11 +25,13 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.DarkGray
 import androidx.compose.ui.graphics.Color.Companion.Red
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
@@ -197,7 +199,11 @@ private fun HomeListItemView(
             )
             Text(
                 text = if (sourceFrom != null && sourceTo != null) {
-                    "${sourceFrom.name} -> ${sourceTo.name}"
+                    stringResource(
+                        id = R.string.list_item_sources,
+                        sourceFrom.name,
+                        sourceTo.name,
+                    )
                 } else {
                     sourceFrom?.name ?: (sourceTo?.name ?: "")
                 },
