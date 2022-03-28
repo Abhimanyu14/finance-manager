@@ -1,17 +1,18 @@
-package com.makeappssimple.abhimanyu.financemanager.android.data.local.source
+package com.makeappssimple.abhimanyu.financemanager.android.data.source.repository
 
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO
 // instead of the whole database, because you only need access to the DAO
-class SourceRepository(
+class SourceRepositoryImpl(
     private val sourceDao: SourceDao,
-) {
+) : SourceRepository {
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
-    val sources = sourceDao.getSources()
+    override val sources = sourceDao.getSources()
 
-    suspend fun getSource(
+    override suspend fun getSource(
         id: Int,
     ): Source? {
         return sourceDao.getSource(
@@ -19,7 +20,7 @@ class SourceRepository(
         )
     }
 
-    suspend fun insertSource(
+    override suspend fun insertSource(
         source: Source,
     ) {
         sourceDao.insertSource(
@@ -27,7 +28,7 @@ class SourceRepository(
         )
     }
 
-    suspend fun updateSources(
+    override suspend fun updateSources(
         vararg sources: Source,
     ) {
         sourceDao.updateSources(
@@ -35,7 +36,7 @@ class SourceRepository(
         )
     }
 
-    suspend fun deleteSource(
+    override suspend fun deleteSource(
         id: Int,
     ) {
         sourceDao.deleteSource(
@@ -43,7 +44,7 @@ class SourceRepository(
         )
     }
 
-    suspend fun deleteSources(
+    override suspend fun deleteSources(
         vararg sources: Source,
     ) {
         sourceDao.deleteSources(

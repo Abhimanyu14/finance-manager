@@ -1,17 +1,18 @@
-package com.makeappssimple.abhimanyu.financemanager.android.data.local.category
+package com.makeappssimple.abhimanyu.financemanager.android.data.category.repository
 
+import com.makeappssimple.abhimanyu.financemanager.android.data.category.CategoryDao
 import com.makeappssimple.abhimanyu.financemanager.android.models.Category
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO
 // instead of the whole database, because you only need access to the DAO
-class CategoryRepository(
+class CategoryRepositoryImpl(
     private val categoryDao: CategoryDao,
-) {
+): CategoryRepository {
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
-    val categories = categoryDao.getCategories()
+    override val categories = categoryDao.getCategories()
 
-    suspend fun insertCategory(
+    override suspend fun insertCategory(
         category: Category,
     ) {
         categoryDao.insertCategory(
@@ -19,7 +20,7 @@ class CategoryRepository(
         )
     }
 
-    suspend fun deleteCategory(
+    override suspend fun deleteCategory(
         id: Int,
     ) {
         categoryDao.deleteCategory(
@@ -27,7 +28,7 @@ class CategoryRepository(
         )
     }
 
-    suspend fun deleteCategories(
+    override suspend fun deleteCategories(
         vararg categories: Category,
     ) {
         categoryDao.deleteCategories(

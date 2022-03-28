@@ -8,12 +8,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.AutoMigrationSpec
-import com.makeappssimple.abhimanyu.financemanager.android.data.local.category.CategoryDao
+import com.makeappssimple.abhimanyu.financemanager.android.data.category.CategoryDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.converters.AmountConverter
 import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.converters.CategoryConverter
 import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.converters.CategoryIdsConverter
-import com.makeappssimple.abhimanyu.financemanager.android.data.local.source.SourceDao
-import com.makeappssimple.abhimanyu.financemanager.android.data.local.transaction.TransactionDao
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceDao
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.models.Category
 import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction

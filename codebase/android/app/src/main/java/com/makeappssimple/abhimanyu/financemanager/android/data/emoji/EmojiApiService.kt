@@ -1,5 +1,6 @@
-package com.makeappssimple.abhimanyu.financemanager.android.data.remote.emoji
+package com.makeappssimple.abhimanyu.financemanager.android.data.emoji
 
+import com.makeappssimple.abhimanyu.financemanager.android.models.Emoji
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.Retrofit

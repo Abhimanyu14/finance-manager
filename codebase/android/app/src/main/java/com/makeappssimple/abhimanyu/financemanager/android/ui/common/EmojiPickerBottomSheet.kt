@@ -21,7 +21,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.google.accompanist.flowlayout.FlowRow
-import com.makeappssimple.abhimanyu.financemanager.android.data.remote.emoji.Emoji
+import com.makeappssimple.abhimanyu.financemanager.android.models.Emoji
 
 data class EmojiPickerBottomSheetItemData(
     val emoji: Emoji,
@@ -51,11 +51,11 @@ fun EmojiPickerBottomSheet(
             ),
     ) {
         grouped.forEach { (group, emojis) ->
-            GroupName(
+            EmojiGroupName(
                 name = "$group (${emojis.size})"
             )
             FlowRow {
-                emojis.forEachIndexed { index, item ->
+                emojis.forEachIndexed { _, item ->
                     EmojiPickerBottomSheetItem(
                         data = EmojiPickerBottomSheetItemData(
                             emoji = item,
@@ -100,7 +100,7 @@ private fun EmojiPickerBottomSheetItem(
 }
 
 @Composable
-private fun GroupName(
+private fun EmojiGroupName(
     name: String,
 ) {
     Text(

@@ -4,7 +4,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.data.local.category.CategoryRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.category.repository.CategoryRepository
+import com.makeappssimple.abhimanyu.financemanager.android.models.Emoji
+import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.repository.EmojiRepository
 import com.makeappssimple.abhimanyu.financemanager.android.models.Category
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
@@ -20,6 +22,7 @@ import javax.inject.Inject
 class AddCategoryViewModel @Inject constructor(
     val navigationManager: NavigationManager,
     private val categoryRepository: CategoryRepository,
+    private val emojiRepository: EmojiRepository,
 ) : BaseViewModel() {
     val transactionTypes = TransactionType.values()
         .filter {
@@ -36,38 +39,21 @@ class AddCategoryViewModel @Inject constructor(
             element = TransactionType.EXPENSE,
         ),
     )
-    /*
-    TODO-Abhi: Emoji Picker
     var emoji by mutableStateOf(
         value = "⏳",
     )
     var emojis: List<Emoji> by mutableStateOf(
         value = emptyList(),
     )
-    */
 
 
     init {
-        /*
-        TODO-Abhi: Emoji Picker
-        viewModelScope.launch {
-
-            val result = EmojiApi
-                .retrofitService
-                .getEmojis(
-                    accessKey = BuildConfig.OPEN_EMOJI_KEY,
-                )
-            emojis = result
-                .distinctBy {
-                    it.codePoint
-                }
-                .filter {
-                    !it.unicodeName.contains("skin tone")
-                }
+        viewModelScope.launch(
+            context = Dispatchers.IO,
+        ) {
+            emojis = emojiRepository.getEmojis()
             emoji = "😃"
-
         }
-        */
     }
 
 

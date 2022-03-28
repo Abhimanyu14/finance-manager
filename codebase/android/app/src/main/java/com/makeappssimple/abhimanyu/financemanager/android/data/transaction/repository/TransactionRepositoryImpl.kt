@@ -1,17 +1,18 @@
-package com.makeappssimple.abhimanyu.financemanager.android.data.local.transaction
+package com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repository
 
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO
 // instead of the whole database, because you only need access to the DAO
-class TransactionRepository(
+class TransactionRepositoryImpl(
     private val transactionDao: TransactionDao,
-) {
+) : TransactionRepository {
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
-    val transactions = transactionDao.getTransactions()
+    override val transactions = transactionDao.getTransactions()
 
-    suspend fun getTransaction(
+    override suspend fun getTransaction(
         id: Int,
     ): Transaction? {
         return transactionDao.getTransaction(
@@ -19,7 +20,7 @@ class TransactionRepository(
         )
     }
 
-    suspend fun insertTransaction(
+    override suspend fun insertTransaction(
         transaction: Transaction,
     ) {
         transactionDao.insertTransaction(
@@ -27,7 +28,7 @@ class TransactionRepository(
         )
     }
 
-    suspend fun deleteTransaction(
+    override suspend fun deleteTransaction(
         id: Int,
     ) {
         transactionDao.deleteTransaction(
@@ -35,7 +36,7 @@ class TransactionRepository(
         )
     }
 
-    suspend fun deleteTransactions(
+    override suspend fun deleteTransactions(
         vararg transactions: Transaction,
     ) {
         transactionDao.deleteTransactions(

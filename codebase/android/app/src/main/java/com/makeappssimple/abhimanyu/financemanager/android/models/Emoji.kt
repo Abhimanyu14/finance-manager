@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.data.remote.emoji
+package com.makeappssimple.abhimanyu.financemanager.android.models
 
 data class Emoji(
     val character: String,

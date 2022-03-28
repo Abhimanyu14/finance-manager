@@ -1,13 +1,16 @@
 package com.makeappssimple.abhimanyu.financemanager.android.data.local.database.di
 
 import android.content.Context
-import com.makeappssimple.abhimanyu.financemanager.android.data.local.category.CategoryDao
-import com.makeappssimple.abhimanyu.financemanager.android.data.local.category.CategoryRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.category.CategoryDao
+import com.makeappssimple.abhimanyu.financemanager.android.data.category.repository.CategoryRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.category.repository.CategoryRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.MyRoomDatabase
-import com.makeappssimple.abhimanyu.financemanager.android.data.local.source.SourceDao
-import com.makeappssimple.abhimanyu.financemanager.android.data.local.source.SourceRepository
-import com.makeappssimple.abhimanyu.financemanager.android.data.local.transaction.TransactionDao
-import com.makeappssimple.abhimanyu.financemanager.android.data.local.transaction.TransactionRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceDao
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepositoryImpl
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.TransactionDao
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repository.TransactionRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repository.TransactionRepositoryImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -38,7 +41,7 @@ class RoomModule {
     fun providesSourceRepository(
         sourceDao: SourceDao,
     ): SourceRepository {
-        return SourceRepository(
+        return SourceRepositoryImpl(
             sourceDao = sourceDao,
         )
     }
@@ -54,7 +57,7 @@ class RoomModule {
     fun providesCategoryRepository(
         categoryDao: CategoryDao,
     ): CategoryRepository {
-        return CategoryRepository(
+        return CategoryRepositoryImpl(
             categoryDao = categoryDao,
         )
     }
@@ -70,7 +73,7 @@ class RoomModule {
     fun providesTransactionRepository(
         transactionDao: TransactionDao,
     ): TransactionRepository {
-        return TransactionRepository(
+        return TransactionRepositoryImpl(
             transactionDao = transactionDao,
         )
     }
