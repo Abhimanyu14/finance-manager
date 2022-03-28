@@ -4,6 +4,17 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 /**
+ * Adding new table
+ */
+val MIGRATION_12_13 = object : Migration(12, 13) {
+    override fun migrate(
+        database: SupportSQLiteDatabase,
+    ) {
+        database.execSQL("CREATE TABLE IF NOT EXISTS `emoji_table` (`character` TEXT NOT NULL, `code_point` TEXT NOT NULL, `group` TEXT NOT NULL, `unicode_name` TEXT NOT NULL, PRIMARY KEY(`character`))")
+    }
+}
+
+/**
  * Column added
  */
 val MIGRATION_9_10 = object : Migration(9, 10) {

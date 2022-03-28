@@ -9,20 +9,23 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.AutoMigrationSpec
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.CategoryDao
+import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.datasource.local.EmojiDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.converters.AmountConverter
 import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.converters.CategoryConverter
 import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.converters.CategoryIdsConverter
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.models.Category
+import com.makeappssimple.abhimanyu.financemanager.android.models.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
 
 @Database(
-    version = 12,
+    version = 13,
     entities = [
-        Source::class,
         Category::class,
+        EmojiLocalEntity::class,
+        Source::class,
         Transaction::class,
     ],
     autoMigrations = [
@@ -56,8 +59,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
 )
 abstract class MyRoomDatabase : RoomDatabase() {
 
-    abstract fun sourceDao(): SourceDao
     abstract fun categoryDao(): CategoryDao
+    abstract fun emojiDao(): EmojiDao
+    abstract fun sourceDao(): SourceDao
     abstract fun transactionDao(): TransactionDao
 
     /**
@@ -116,7 +120,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     )
                     .createFromAsset("database/finance_manager_database.db")
                     .addMigrations(
-                        MIGRATION_9_10,
+                        MIGRATION_12_13,
                         MIGRATION_8_9,
                         MIGRATION_7_8,
                         MIGRATION_6_7,
