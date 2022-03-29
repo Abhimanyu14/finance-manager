@@ -4,6 +4,9 @@ import android.content.Context
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.CategoryDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.repository.CategoryRepository
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.repository.CategoryRepositoryImpl
+import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.datasource.local.EmojiDao
+import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.repository.EmojiRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.repository.EmojiRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.MyRoomDatabase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
@@ -31,22 +34,6 @@ class RoomModule {
     }
 
     @Provides
-    fun providesSourceDao(
-        myRoomDatabase: MyRoomDatabase,
-    ): SourceDao {
-        return myRoomDatabase.sourceDao()
-    }
-
-    @Provides
-    fun providesSourceRepository(
-        sourceDao: SourceDao,
-    ): SourceRepository {
-        return SourceRepositoryImpl(
-            sourceDao = sourceDao,
-        )
-    }
-
-    @Provides
     fun providesCategoryDao(
         myRoomDatabase: MyRoomDatabase,
     ): CategoryDao {
@@ -59,6 +46,38 @@ class RoomModule {
     ): CategoryRepository {
         return CategoryRepositoryImpl(
             categoryDao = categoryDao,
+        )
+    }
+
+    @Provides
+    fun providesEmojiDao(
+        myRoomDatabase: MyRoomDatabase,
+    ): EmojiDao {
+        return myRoomDatabase.emojiDao()
+    }
+
+    @Provides
+    fun providesEmojiRepository(
+        emojiDao: EmojiDao,
+    ): EmojiRepository {
+        return EmojiRepositoryImpl(
+            emojiDao = emojiDao,
+        )
+    }
+
+    @Provides
+    fun providesSourceDao(
+        myRoomDatabase: MyRoomDatabase,
+    ): SourceDao {
+        return myRoomDatabase.sourceDao()
+    }
+
+    @Provides
+    fun providesSourceRepository(
+        sourceDao: SourceDao,
+    ): SourceRepository {
+        return SourceRepositoryImpl(
+            sourceDao = sourceDao,
         )
     }
 

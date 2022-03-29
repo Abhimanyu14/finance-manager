@@ -5,10 +5,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.repository.CategoryRepository
-import com.makeappssimple.abhimanyu.financemanager.android.models.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.repository.EmojiRepository
 import com.makeappssimple.abhimanyu.financemanager.android.models.Category
 import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.models.emoji.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel
@@ -16,6 +16,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -51,8 +52,14 @@ class AddCategoryViewModel @Inject constructor(
         viewModelScope.launch(
             context = Dispatchers.IO,
         ) {
-            emojis = emojiRepository.getEmojis()
-            emoji = "😃"
+            emojiRepository.emojis.collect {
+                withContext(
+                    context = Dispatchers.Main,
+                ) {
+                    emojis = it
+                    emoji = "😃"
+                }
+            }
         }
     }
 

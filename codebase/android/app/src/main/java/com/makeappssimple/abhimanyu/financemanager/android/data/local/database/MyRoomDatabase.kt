@@ -16,9 +16,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.c
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.models.Category
-import com.makeappssimple.abhimanyu.financemanager.android.models.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.models.Source
 import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.models.emoji.EmojiLocalEntity
 
 @Database(
     version = 13,
