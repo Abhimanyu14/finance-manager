@@ -27,6 +27,8 @@ import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -66,6 +68,11 @@ fun AddCategoryScreenView(
     state: AddCategoryScreenViewState,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
+    val description by data.screenViewModel.description.collectAsState()
+    val title by data.screenViewModel.title.collectAsState()
+    val selectedTransactionTypeIndex by data.screenViewModel.selectedTransactionTypeIndex.collectAsState()
+    val emoji by data.screenViewModel.emoji.collectAsState()
+    val emojis by data.screenViewModel.emojis.collectAsState()
 
     LaunchedEffect(
         key1 = Unit,
@@ -81,13 +88,15 @@ fun AddCategoryScreenView(
             // TODO-Abhi: Emoji Picker
             EmojiPickerBottomSheet(
                 data = EmojiPickerBottomSheetData(
-                    emojis = data.screenViewModel.emojis,
+                    emojis = emojis,
                     onEmojiSelection = { emoji ->
                         toggleModalBottomSheetState(
                             coroutineScope = state.coroutineScope,
                             modalBottomSheetState = state.modalBottomSheetState,
                         ) {
-                            data.screenViewModel.emoji = emoji.character
+                            data.screenViewModel.updateEmoji(
+                                updatedEmoji = emoji.character,
+                            )
                         }
                     },
                 ),
@@ -143,14 +152,14 @@ fun AddCategoryScreenView(
                             factory = { context ->
                                 AppCompatTextView(context).apply {
                                     setTextColor(Color.Black.toArgb())
-                                    text = data.screenViewModel.emoji
+                                    text = emoji
                                     textSize = 28F
                                     textAlignment = View.TEXT_ALIGNMENT_CENTER
                                 }
                             },
                             update = {
                                 it.apply {
-                                    text = data.screenViewModel.emoji
+                                    text = emoji
                                 }
                             },
                         )
@@ -168,9 +177,11 @@ fun AddCategoryScreenView(
                                         text = transactionType.title,
                                     )
                                 },
-                            selectedItemIndex = data.screenViewModel.selectedTransactionTypeIndex,
+                            selectedItemIndex = selectedTransactionTypeIndex,
                             onSelectionChange = { index ->
-                                data.screenViewModel.selectedTransactionTypeIndex = index
+                                data.screenViewModel.updateSelectedTransactionTypeIndex(
+                                    updatedIndex = index,
+                                )
                             },
                             modifier = Modifier
                                 .padding(
@@ -179,7 +190,7 @@ fun AddCategoryScreenView(
                         )
                     }
                     OutlinedTextField(
-                        value = data.screenViewModel.title,
+                        value = title,
                         label = {
                             OutlinedTextFieldLabelText(
                                 textStringResourceId = R.string.screen_add_category_title,
@@ -187,7 +198,7 @@ fun AddCategoryScreenView(
                         },
                         trailingIcon = {
                             AnimatedVisibility(
-                                visible = data.screenViewModel.title.isNotNullOrBlank(),
+                                visible = title.isNotNullOrBlank(),
                                 enter = fadeIn(),
                                 exit = fadeOut(),
                             ) {
@@ -196,7 +207,7 @@ fun AddCategoryScreenView(
                                         id = R.string.screen_add_category_clear_title,
                                     ),
                                     onClick = {
-                                        data.screenViewModel.title = ""
+                                        data.screenViewModel.clearTitle()
                                     },
                                     modifier = Modifier
                                         .padding(
@@ -213,7 +224,9 @@ fun AddCategoryScreenView(
                             }
                         },
                         onValueChange = {
-                            data.screenViewModel.title = it
+                            data.screenViewModel.updateTitle(
+                                updatedTitle = it,
+                            )
                         },
                         keyboardActions = KeyboardActions(
                             onNext = {
@@ -241,7 +254,7 @@ fun AddCategoryScreenView(
                             ),
                     )
                     OutlinedTextField(
-                        value = data.screenViewModel.description,
+                        value = description,
                         label = {
                             OutlinedTextFieldLabelText(
                                 textStringResourceId = R.string.screen_add_category_description,
@@ -249,7 +262,7 @@ fun AddCategoryScreenView(
                         },
                         trailingIcon = {
                             AnimatedVisibility(
-                                visible = data.screenViewModel.description.isNotNullOrBlank(),
+                                visible = description.isNotNullOrBlank(),
                                 enter = fadeIn(),
                                 exit = fadeOut(),
                             ) {
@@ -258,7 +271,7 @@ fun AddCategoryScreenView(
                                         id = R.string.screen_add_category_clear_description,
                                     ),
                                     onClick = {
-                                        data.screenViewModel.description = ""
+                                        data.screenViewModel.clearDescription()
                                     },
                                     modifier = Modifier
                                         .padding(
@@ -275,7 +288,9 @@ fun AddCategoryScreenView(
                             }
                         },
                         onValueChange = {
-                            data.screenViewModel.description = it
+                            data.screenViewModel.updateDescription(
+                                updatedDescription = it,
+                            )
                         },
                         keyboardActions = KeyboardActions(
                             onDone = {

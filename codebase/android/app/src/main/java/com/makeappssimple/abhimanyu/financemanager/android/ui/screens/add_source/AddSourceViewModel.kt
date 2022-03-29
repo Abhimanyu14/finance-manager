@@ -1,8 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
 import com.makeappssimple.abhimanyu.financemanager.android.models.Amount
@@ -14,6 +11,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,14 +25,16 @@ class AddSourceViewModel @Inject constructor(
         .filter {
             it != SourceType.CASH
         }
-    var selectedSourceTypeIndex by mutableStateOf(
+    private val _selectedSourceTypeIndex = MutableStateFlow(
         value = sourceTypes.indexOf(
             element = SourceType.BANK,
         ),
     )
-    var name by mutableStateOf(
+    val selectedSourceTypeIndex: StateFlow<Int> = _selectedSourceTypeIndex
+    private val _name = MutableStateFlow(
         value = "",
     )
+    val name: StateFlow<String> = _name
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code
@@ -48,8 +49,8 @@ class AddSourceViewModel @Inject constructor(
                     balanceAmount = Amount(
                         value = 0L,
                     ),
-                    type = sourceTypes[selectedSourceTypeIndex],
-                    name = name,
+                    type = sourceTypes[selectedSourceTypeIndex.value],
+                    name = name.value,
                 ),
             )
             navigateUp(
@@ -59,6 +60,22 @@ class AddSourceViewModel @Inject constructor(
     }
 
     fun isValidSourceData(): Boolean {
-        return name.isNotNullOrBlank()
+        return name.value.isNotNullOrBlank()
+    }
+
+    fun clearName() {
+        _name.value = ""
+    }
+
+    fun updateName(
+        updatedName: String,
+    ) {
+        _name.value = updatedName
+    }
+
+    fun updateSelectedSourceTypeIndex(
+        updatedIndex: Int,
+    ) {
+        _selectedSourceTypeIndex.value = updatedIndex
     }
 }

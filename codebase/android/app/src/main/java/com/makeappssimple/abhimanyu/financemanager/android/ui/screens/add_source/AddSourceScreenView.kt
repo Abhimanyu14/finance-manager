@@ -18,6 +18,8 @@ import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -45,6 +47,9 @@ fun AddSourceScreenView(
     data: AddSourceScreenViewData,
     state: AddSourceScreenViewState,
 ) {
+    val selectedSourceTypeIndex by data.screenViewModel.selectedSourceTypeIndex.collectAsState()
+    val name by data.screenViewModel.name.collectAsState()
+
     LaunchedEffect(
         key1 = Unit,
     ) {
@@ -88,9 +93,11 @@ fun AddSourceScreenView(
                                 iconKey = sourceType.title,
                             )
                         },
-                    selectedItemIndex = data.screenViewModel.selectedSourceTypeIndex,
+                    selectedItemIndex = selectedSourceTypeIndex,
                     onSelectionChange = { index ->
-                        data.screenViewModel.selectedSourceTypeIndex = index
+                        data.screenViewModel.updateSelectedSourceTypeIndex(
+                            updatedIndex = index,
+                        )
                     },
                     modifier = Modifier
                         .padding(
@@ -99,7 +106,7 @@ fun AddSourceScreenView(
                         ),
                 )
                 OutlinedTextField(
-                    value = data.screenViewModel.name,
+                    value = name,
                     label = {
                         OutlinedTextFieldLabelText(
                             textStringResourceId = R.string.screen_add_source_name,
@@ -107,7 +114,7 @@ fun AddSourceScreenView(
                     },
                     trailingIcon = {
                         AnimatedVisibility(
-                            visible = data.screenViewModel.name.isNotNullOrBlank(),
+                            visible = name.isNotNullOrBlank(),
                             enter = fadeIn(),
                             exit = fadeOut(),
                         ) {
@@ -116,7 +123,7 @@ fun AddSourceScreenView(
                                     id = R.string.screen_add_source_clear_name,
                                 ),
                                 onClick = {
-                                    data.screenViewModel.name = ""
+                                    data.screenViewModel.clearName()
                                 },
                                 modifier = Modifier
                                     .padding(
@@ -133,7 +140,9 @@ fun AddSourceScreenView(
                         }
                     },
                     onValueChange = {
-                        data.screenViewModel.name = it
+                        data.screenViewModel.updateName(
+                            updatedName = it,
+                        )
                     },
                     keyboardActions = KeyboardActions(
                         onNext = {
