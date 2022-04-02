@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.data.emoji.repository
 
-import com.makeappssimple.abhimanyu.financemanager.android.models.emoji.Emoji
-import com.makeappssimple.abhimanyu.financemanager.android.models.emoji.EmojiLocalEntity
+import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.Emoji
+import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.EmojiLocalEntity
 import kotlinx.coroutines.flow.Flow
 
 interface EmojiRepository {

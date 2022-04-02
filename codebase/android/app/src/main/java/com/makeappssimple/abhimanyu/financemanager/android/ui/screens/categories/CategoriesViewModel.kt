@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categorie
 
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.repository.CategoryRepository
-import com.makeappssimple.abhimanyu.financemanager.android.models.Category
+import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

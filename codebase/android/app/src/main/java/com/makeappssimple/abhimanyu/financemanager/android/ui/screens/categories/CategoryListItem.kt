@@ -13,7 +13,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.makeappssimple.abhimanyu.financemanager.android.models.Category
+import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 
 @Composable

@@ -8,6 +8,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.AutoMigrationSpec
+import androidx.sqlite.db.SupportSQLiteDatabase
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.CategoryDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.datasource.local.EmojiDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.converters.AmountConverter
@@ -15,10 +16,16 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.c
 import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.converters.CategoryIdsConverter
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.TransactionDao
-import com.makeappssimple.abhimanyu.financemanager.android.models.Category
-import com.makeappssimple.abhimanyu.financemanager.android.models.Source
-import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.models.emoji.EmojiLocalEntity
+import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
+import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.EmojiLocalEntity
+import com.makeappssimple.abhimanyu.financemanager.android.entities.initialdatabasedata.InitialDatabaseData
+import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
+import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.utils.readInitialDataFromAssets
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.concurrent.Executors
 
 @Database(
     version = 13,
@@ -58,7 +65,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.models.emoji.EmojiLoc
     CategoryConverter::class,
 )
 abstract class MyRoomDatabase : RoomDatabase() {
-
     abstract fun categoryDao(): CategoryDao
     abstract fun emojiDao(): EmojiDao
     abstract fun sourceDao(): SourceDao
@@ -98,7 +104,6 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
 
     companion object {
-
         @Volatile
         private var INSTANCE: MyRoomDatabase? = null
 
@@ -107,18 +112,39 @@ abstract class MyRoomDatabase : RoomDatabase() {
         ): MyRoomDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
+                // tempInstance.populateInitialData()
                 return tempInstance
             }
             synchronized(
                 lock = this,
             ) {
+                val callback: Callback = object : Callback() {
+                    override fun onCreate(
+                        supportSQLiteDatabase: SupportSQLiteDatabase,
+                    ) {
+                        // do something after database has been created
+                    }
+
+                    override fun onOpen(
+                        supportSQLiteDatabase: SupportSQLiteDatabase,
+                    ) {
+                        // do something every time database is open
+                        Executors
+                            .newSingleThreadScheduledExecutor()
+                            .execute {
+                                populateInitialData(
+                                    context = context,
+                                )
+                            }
+                    }
+                }
+
                 val instance = Room
                     .databaseBuilder(
                         context.applicationContext,
                         MyRoomDatabase::class.java,
                         "finance_manager_database",
                     )
-                    .createFromAsset("database/finance_manager_database.db")
                     .addMigrations(
                         MIGRATION_12_13,
                         MIGRATION_8_9,
@@ -128,9 +154,77 @@ abstract class MyRoomDatabase : RoomDatabase() {
                         MIGRATION_3_4,
                         MIGRATION_2_3,
                     )
+                    .addCallback(callback)
                     .build()
                 INSTANCE = instance
                 return instance
+            }
+        }
+
+        private fun populateInitialData(
+            context: Context,
+        ) {
+            val myRoomDatabase = getDatabase(
+                context = context,
+            )
+            myRoomDatabase.runInTransaction {
+                CoroutineScope(
+                    context = Dispatchers.IO,
+                ).launch {
+                    val initialDatabaseData = readInitialDataFromAssets(
+                        context = context,
+                    )
+                    initialDatabaseData?.let {
+                        populateCategoryData(
+                            myRoomDatabase = myRoomDatabase,
+                            initialDatabaseData = initialDatabaseData,
+                        )
+                        populateEmojiData(
+                            myRoomDatabase = myRoomDatabase,
+                            initialDatabaseData = initialDatabaseData,
+                        )
+                        populateSourceData(
+                            myRoomDatabase = myRoomDatabase,
+                            initialDatabaseData = initialDatabaseData,
+                        )
+                    }
+                }
+            }
+        }
+
+        private suspend fun populateCategoryData(
+            myRoomDatabase: MyRoomDatabase,
+            initialDatabaseData: InitialDatabaseData,
+        ) {
+            val categoryDao = myRoomDatabase.categoryDao()
+            if (categoryDao.getCategoriesCount() == 0) {
+                categoryDao.insertCategories(
+                    *initialDatabaseData.categories.toTypedArray(),
+                )
+            }
+        }
+
+        private suspend fun populateEmojiData(
+            myRoomDatabase: MyRoomDatabase,
+            initialDatabaseData: InitialDatabaseData,
+        ) {
+            val emojiDao = myRoomDatabase.emojiDao()
+            if (emojiDao.getEmojisCount() == 0) {
+                emojiDao.insertEmojis(
+                    *initialDatabaseData.emojis.toTypedArray(),
+                )
+            }
+        }
+
+        private suspend fun populateSourceData(
+            myRoomDatabase: MyRoomDatabase,
+            initialDatabaseData: InitialDatabaseData,
+        ) {
+            val sourceDao = myRoomDatabase.sourceDao()
+            if (sourceDao.getSourcesCount() == 0) {
+                sourceDao.insertSources(
+                    *initialDatabaseData.sources.toTypedArray(),
+                )
             }
         }
     }

@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.data.source.repository
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceDao
-import com.makeappssimple.abhimanyu.financemanager.android.models.Source
+import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO
 // instead of the whole database, because you only need access to the DAO

@@ -165,7 +165,7 @@ buildscript {
         coilVersion = "1.2.2"
 
         // Room
-        roomVersion = "2.4.0-beta02"
+        roomVersion = "2.5.0-alpha01"
 
         // Glide
         glideVersion = "4.11.0"

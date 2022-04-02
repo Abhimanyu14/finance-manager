@@ -3,24 +3,23 @@ package com.makeappssimple.abhimanyu.financemanager.android.data.emoji.repositor
 import com.makeappssimple.abhimanyu.financemanager.android.BuildConfig
 import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.datasource.local.EmojiDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.datasource.remote.EmojiApi
-import com.makeappssimple.abhimanyu.financemanager.android.models.emoji.Emoji
-import com.makeappssimple.abhimanyu.financemanager.android.models.emoji.EmojiLocalEntity
+import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.Emoji
+import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.EmojiLocalEntity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 
 class EmojiRepositoryImpl(
     private val emojiDao: EmojiDao,
 ) : EmojiRepository {
+    private val scope: CoroutineScope = CoroutineScope(
+        context = Dispatchers.IO
+    )
+
     override val emojis: Flow<List<Emoji>> = emojiDao.getEmojis()
-    //            .map {
-    //                it.ifEmpty {
-    //                    getEmojisDataFromRemote()
-    //                }
-    //            }
 
     init {
-//        runBlocking(
-//            context = Dispatchers.IO,
-//        ) {
+//        scope.launch {
 //            emojis.collect {
 //                if (it.isEmpty()) {
 //                    saveEmojisToDatabase()

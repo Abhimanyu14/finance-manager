@@ -28,7 +28,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.makeappssimple.abhimanyu.financemanager.android.models.Source
+import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.getDismissState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface

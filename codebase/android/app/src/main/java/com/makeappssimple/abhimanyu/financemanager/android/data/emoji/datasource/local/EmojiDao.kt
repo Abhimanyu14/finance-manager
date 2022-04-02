@@ -5,20 +5,19 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.makeappssimple.abhimanyu.financemanager.android.models.emoji.EmojiLocalEntity
+import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.EmojiLocalEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface EmojiDao {
 
-    @Query(
-        value = "SELECT * from emoji_table",
-    )
+    @Query(value = "SELECT * from emoji_table")
     fun getEmojis(): Flow<List<EmojiLocalEntity>>
 
-    @Query(
-        value = "SELECT * from emoji_table WHERE character = :character",
-    )
+    @Query(value = "SELECT COUNT(*) FROM emoji_table")
+    suspend fun getEmojisCount(): Int
+
+    @Query(value = "SELECT * from emoji_table WHERE character = :character")
     suspend fun getEmoji(
         character: String,
     ): EmojiLocalEntity?
@@ -28,9 +27,12 @@ interface EmojiDao {
         emoji: EmojiLocalEntity,
     )
 
-    @Query(
-        value = "DELETE FROM emoji_table WHERE character = :character",
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertEmojis(
+        vararg emojis: EmojiLocalEntity,
     )
+
+    @Query(value = "DELETE FROM emoji_table WHERE character = :character")
     suspend fun deleteEmoji(
         character: String,
     )
@@ -40,8 +42,6 @@ interface EmojiDao {
         vararg emojis: EmojiLocalEntity,
     )
 
-    @Query(
-        value = "DELETE FROM emoji_table",
-    )
+    @Query(value = "DELETE FROM emoji_table")
     suspend fun deleteAllEmojis()
 }

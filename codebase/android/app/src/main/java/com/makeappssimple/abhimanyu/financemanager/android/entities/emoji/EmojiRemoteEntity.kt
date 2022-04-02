@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.models.emoji
+package com.makeappssimple.abhimanyu.financemanager.android.entities.emoji
 
 data class EmojiRemoteEntity(
     override val character: String,

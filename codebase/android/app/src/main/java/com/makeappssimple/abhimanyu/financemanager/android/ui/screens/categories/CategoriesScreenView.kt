@@ -34,7 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.makeappssimple.abhimanyu.financemanager.android.R
-import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar

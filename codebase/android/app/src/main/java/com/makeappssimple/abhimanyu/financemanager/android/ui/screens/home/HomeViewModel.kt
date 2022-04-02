@@ -3,8 +3,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repository.TransactionRepository
-import com.makeappssimple.abhimanyu.financemanager.android.models.Source
-import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
+import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

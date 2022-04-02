@@ -1,9 +1,11 @@
-package com.makeappssimple.abhimanyu.financemanager.android.models.emoji
+package com.makeappssimple.abhimanyu.financemanager.android.entities.emoji
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = true)
 @Entity(tableName = "emoji_table")
 data class EmojiLocalEntity(
     @PrimaryKey

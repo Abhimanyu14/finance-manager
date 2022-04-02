@@ -26,7 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
-import com.makeappssimple.abhimanyu.financemanager.android.models.Amount
+import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToCategoriesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSourcesScreen

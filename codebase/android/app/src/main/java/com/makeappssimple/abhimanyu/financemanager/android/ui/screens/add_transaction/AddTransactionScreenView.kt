@@ -40,7 +40,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
-import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmptySpace
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup

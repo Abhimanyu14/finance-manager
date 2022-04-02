@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.data.local.database.
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
-import com.makeappssimple.abhimanyu.financemanager.android.models.Amount
+import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
 
 class AmountConverter {
 

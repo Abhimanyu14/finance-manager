@@ -6,27 +6,31 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.makeappssimple.abhimanyu.financemanager.android.models.Source
+import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SourceDao {
 
-    @Query(
-        value = "SELECT * from source_table ORDER BY id ASC",
-    )
+    @Query(value = "SELECT * from source_table ORDER BY id ASC")
     fun getSources(): Flow<List<Source>>
 
-    @Query(
-        value = "SELECT * from source_table WHERE id = :id",
-    )
+    @Query(value = "SELECT * from source_table WHERE id = :id")
     suspend fun getSource(
         id: Int,
     ): Source?
 
+    @Query(value = "SELECT COUNT(*) FROM source_table")
+    suspend fun getSourcesCount(): Int
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertSource(
         source: Source,
+    )
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertSources(
+        vararg sources: Source,
     )
 
     @Update
@@ -34,9 +38,7 @@ interface SourceDao {
         vararg sources: Source,
     )
 
-    @Query(
-        value = "DELETE FROM source_table WHERE id = :id",
-    )
+    @Query(value = "DELETE FROM source_table WHERE id = :id")
     suspend fun deleteSource(
         id: Int,
     )
@@ -46,8 +48,6 @@ interface SourceDao {
         vararg sources: Source,
     )
 
-    @Query(
-        value = "DELETE FROM source_table",
-    )
+    @Query(value = "DELETE FROM source_table")
     suspend fun deleteAll()
 }

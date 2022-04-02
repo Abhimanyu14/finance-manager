@@ -3,9 +3,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_categ
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.repository.CategoryRepository
 import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.repository.EmojiRepository
-import com.makeappssimple.abhimanyu.financemanager.android.models.Category
-import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.models.emoji.Emoji
+import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
+import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel

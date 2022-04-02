@@ -1,8 +1,12 @@
-package com.makeappssimple.abhimanyu.financemanager.android.models
+package com.makeappssimple.abhimanyu.financemanager.android.entities.source
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
+import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 enum class SourceType(
     val title: String,
@@ -18,9 +22,12 @@ enum class SourceType(
     ),
 }
 
+@JsonClass(generateAdapter = true)
 @Entity(tableName = "source_table")
 data class Source(
     @ColumnInfo(name = "balance_amount")
+    @SerializedName(value = "balance_amount")
+    @Json(name = "balance_amount")
     val balanceAmount: Amount = Amount(
         value = 0,
     ),

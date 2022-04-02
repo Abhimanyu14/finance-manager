@@ -20,9 +20,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.R
-import com.makeappssimple.abhimanyu.financemanager.android.models.Amount
-import com.makeappssimple.abhimanyu.financemanager.android.models.Source
-import com.makeappssimple.abhimanyu.financemanager.android.models.sortOrder
+import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
+import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
+import com.makeappssimple.abhimanyu.financemanager.android.entities.source.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmptySpace
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton

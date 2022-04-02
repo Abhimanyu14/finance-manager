@@ -5,7 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -22,6 +22,11 @@ interface TransactionDao {
     suspend fun getTransaction(
         id: Int,
     ): Transaction?
+
+    @Query(
+        value = "SELECT COUNT(*) FROM transaction_table",
+    )
+    suspend fun getTransactionsCount(): Int
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTransaction(

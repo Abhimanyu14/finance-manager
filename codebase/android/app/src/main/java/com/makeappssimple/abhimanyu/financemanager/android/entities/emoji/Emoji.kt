@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.models.emoji
+package com.makeappssimple.abhimanyu.financemanager.android.entities.emoji
 
 interface Emoji {
     val character: String

@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repository
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.TransactionDao
-import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO
 // instead of the whole database, because you only need access to the DAO

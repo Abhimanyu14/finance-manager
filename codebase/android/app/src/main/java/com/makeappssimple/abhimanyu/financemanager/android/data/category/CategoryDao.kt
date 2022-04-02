@@ -5,25 +5,29 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.makeappssimple.abhimanyu.financemanager.android.models.Category
+import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CategoryDao {
 
-    @Query(
-        value = "SELECT * from category_table ORDER BY id ASC",
-    )
+    @Query(value = "SELECT * from category_table ORDER BY id ASC")
     fun getCategories(): Flow<List<Category>>
+
+    @Query(value = "SELECT COUNT(*) FROM category_table")
+    suspend fun getCategoriesCount(): Int
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCategory(
         category: Category,
     )
 
-    @Query(
-        value = "DELETE FROM category_table WHERE id = :id",
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertCategories(
+        vararg categories: Category,
     )
+
+    @Query(value = "DELETE FROM category_table WHERE id = :id")
     suspend fun deleteCategory(
         id: Int,
     )
@@ -33,8 +37,6 @@ interface CategoryDao {
         vararg categories: Category,
     )
 
-    @Query(
-        value = "DELETE FROM category_table",
-    )
+    @Query(value = "DELETE FROM category_table")
     suspend fun deleteAllCategories()
 }

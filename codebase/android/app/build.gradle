@@ -4,6 +4,8 @@ plugins {
     id "kotlin-kapt"
     id "dagger.hilt.android.plugin"
     id "com.google.gms.google-services"
+    // id "org.jetbrains.kotlin.jvm" version "1.6.10"
+    // id "com.google.devtools.ksp" version "1.6.10-1.0.4"
 }
 
 def apikeyPropertiesFile = rootProject.file("apikey.properties")
@@ -33,7 +35,7 @@ android {
         }
 
         // should correspond to key/value pairs inside the file
-        buildConfigField("String", "OPEN_EMOJI_KEY", apikeyProperties['OPEN_EMOJI_KEY'])
+        buildConfigField("String", "OPEN_EMOJI_KEY", apikeyProperties["OPEN_EMOJI_KEY"])
     }
 
     buildTypes {
@@ -149,8 +151,14 @@ dependencies {
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$rootProject.hiltLifecycleViewmodelVersion"
     kapt "androidx.hilt:hilt-compiler:$rootProject.hiltCompilerVersion"
 
+    // KSP
+    // implementation "com.google.devtools.ksp:symbol-processing-api:1.6.10-1.0.4"
+    
     // Moshi
+    implementation "com.squareup.moshi:moshi:1.13.0"
     implementation "com.squareup.moshi:moshi-kotlin:$rootProject.moshiVersion"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
+    // ksp "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
 
     // Retrofit with Moshi Converter
     implementation "com.squareup.retrofit2:converter-moshi:$rootProject.retrofitMoshiConverterVersion"

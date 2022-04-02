@@ -1,9 +1,11 @@
-package com.makeappssimple.abhimanyu.financemanager.android.models
+package com.makeappssimple.abhimanyu.financemanager.android.entities.transaction
 
 import androidx.compose.ui.graphics.Color
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
+import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.OnTertiaryContainer
 
 enum class TransactionFor(
@@ -50,22 +52,29 @@ enum class TransactionType(
 data class Transaction(
     val amount: Amount,
     @ColumnInfo(name = "category_id")
+    @SerializedName(value = "category_id")
     val categoryId: Int = 0,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @ColumnInfo(name = "source_from_id")
+    @SerializedName(value = "source_from_id")
     val sourceFromId: Int = 0,
     @ColumnInfo(name = "source_to_id")
+    @SerializedName(value = "source_to_id")
     val sourceToId: Int? = 0,
     val description: String = "",
     val title: String,
     @ColumnInfo(name = "creation_timestamp")
+    @SerializedName(value = "creation_timestamp")
     val creationTimestamp: Long,
     @ColumnInfo(name = "transaction_timestamp")
+    @SerializedName(value = "transaction_timestamp")
     val transactionTimestamp: Long,
     @ColumnInfo(name = "transaction_for")
+    @SerializedName(value = "transaction_for")
     val transactionFor: TransactionFor = TransactionFor.SELF,
     @ColumnInfo(name = "transaction_type")
+    @SerializedName(value = "transaction_type")
     val transactionType: TransactionType = TransactionType.EXPENSE,
 )
 

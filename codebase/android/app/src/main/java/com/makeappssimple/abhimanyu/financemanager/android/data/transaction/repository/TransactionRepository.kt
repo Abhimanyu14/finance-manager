@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repository
 
-import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
 import kotlinx.coroutines.flow.Flow
 
 interface TransactionRepository {

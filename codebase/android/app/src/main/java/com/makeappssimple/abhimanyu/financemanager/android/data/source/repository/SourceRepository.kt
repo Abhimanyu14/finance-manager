@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.data.source.repository
 
-import com.makeappssimple.abhimanyu.financemanager.android.models.Source
+import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import kotlinx.coroutines.flow.Flow
 
 interface SourceRepository {

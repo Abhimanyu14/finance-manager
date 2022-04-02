@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.data.category.repository
 
-import com.makeappssimple.abhimanyu.financemanager.android.models.Category
+import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import kotlinx.coroutines.flow.Flow
 
 interface CategoryRepository {

@@ -32,10 +32,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.R
-import com.makeappssimple.abhimanyu.financemanager.android.models.Source
-import com.makeappssimple.abhimanyu.financemanager.android.models.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.models.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.models.amountTextColor
+import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
+import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.amountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.getDismissState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateAndTimeString
