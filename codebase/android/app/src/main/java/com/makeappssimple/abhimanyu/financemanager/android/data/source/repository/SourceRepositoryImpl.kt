@@ -12,6 +12,10 @@ class SourceRepositoryImpl(
     // Observed Flow will notify the observer when the data has changed.
     override val sources = sourceDao.getSources()
 
+    override suspend fun getSourcesCount(): Int {
+        return sourceDao.getSourcesCount()
+    }
+
     override suspend fun getSource(
         id: Int,
     ): Source? {
@@ -25,6 +29,14 @@ class SourceRepositoryImpl(
     ) {
         sourceDao.insertSource(
             source = source,
+        )
+    }
+
+    override suspend fun insertSources(
+        vararg sources: Source,
+    ) {
+        sourceDao.insertSources(
+            sources = sources,
         )
     }
 

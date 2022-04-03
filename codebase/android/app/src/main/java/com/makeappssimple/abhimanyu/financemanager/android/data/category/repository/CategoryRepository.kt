@@ -6,8 +6,14 @@ import kotlinx.coroutines.flow.Flow
 interface CategoryRepository {
     val categories: Flow<List<Category>>
 
+    suspend fun getCategoriesCount(): Int
+
     suspend fun insertCategory(
         category: Category,
+    )
+
+    suspend fun insertCategories(
+        vararg categories: Category,
     )
 
     suspend fun deleteCategory(

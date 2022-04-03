@@ -11,21 +11,15 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TransactionDao {
 
-    @Query(
-        value = "SELECT * from transaction_table ORDER BY id DESC",
-    )
+    @Query(value = "SELECT * from transaction_table ORDER BY id DESC")
     fun getTransactions(): Flow<List<Transaction>>
 
-    @Query(
-        value = "SELECT * from transaction_table WHERE id = :id",
-    )
+    @Query(value = "SELECT * from transaction_table WHERE id = :id")
     suspend fun getTransaction(
         id: Int,
     ): Transaction?
 
-    @Query(
-        value = "SELECT COUNT(*) FROM transaction_table",
-    )
+    @Query(value = "SELECT COUNT(*) FROM transaction_table")
     suspend fun getTransactionsCount(): Int
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -33,9 +27,12 @@ interface TransactionDao {
         transaction: Transaction,
     )
 
-    @Query(
-        value = "DELETE FROM transaction_table WHERE id = :id",
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertTransactions(
+        vararg transactions: Transaction,
     )
+
+    @Query(value = "DELETE FROM transaction_table WHERE id = :id")
     suspend fun deleteTransaction(
         id: Int,
     )
@@ -45,8 +42,6 @@ interface TransactionDao {
         vararg transactions: Transaction,
     )
 
-    @Query(
-        value = "DELETE FROM transaction_table",
-    )
+    @Query(value = "DELETE FROM transaction_table")
     suspend fun deleteAllTransactions()
 }

@@ -15,7 +15,7 @@ fun getDateString(
 }
 
 fun getDateAndTimeString(
-    timestamp: Long,
+    timestamp: Long = System.currentTimeMillis(),
 ): String {
     val calendar = Calendar.getInstance(Locale.getDefault()).apply {
         timeInMillis = timestamp

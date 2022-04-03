@@ -174,9 +174,10 @@ private fun HomeListItemView(
             )
         }
         Spacer(
-            modifier = Modifier.height(
-                height = 4.dp,
-            ),
+            modifier = Modifier
+                .height(
+                    height = 4.dp,
+                ),
         )
         Row(
             modifier = Modifier

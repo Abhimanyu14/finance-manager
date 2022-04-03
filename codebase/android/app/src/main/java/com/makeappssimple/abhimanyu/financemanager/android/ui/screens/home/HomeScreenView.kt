@@ -29,6 +29,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToCategoriesScreen
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSettingsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSourcesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
@@ -93,6 +94,21 @@ fun HomeScreenView(
                                     modalBottomSheetState = state.modalBottomSheetState,
                                 ) {
                                     navigateToCategoriesScreen(
+                                        navigationManager = data.screenViewModel.navigationManager,
+                                    )
+                                }
+                            },
+                        ),
+                        HomeBottomSheetItemData(
+                            text = stringResource(
+                                id = R.string.screen_home_bottom_sheet_settings,
+                            ),
+                            onClick = {
+                                toggleModalBottomSheetState(
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
+                                ) {
+                                    navigateToSettingsScreen(
                                         navigationManager = data.screenViewModel.navigationManager,
                                     )
                                 }

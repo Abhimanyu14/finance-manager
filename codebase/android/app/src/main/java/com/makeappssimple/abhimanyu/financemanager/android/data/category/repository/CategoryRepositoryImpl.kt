@@ -7,16 +7,28 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Cat
 // instead of the whole database, because you only need access to the DAO
 class CategoryRepositoryImpl(
     private val categoryDao: CategoryDao,
-): CategoryRepository {
+) : CategoryRepository {
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
     override val categories = categoryDao.getCategories()
+
+    override suspend fun getCategoriesCount(): Int {
+        return categoryDao.getCategoriesCount()
+    }
 
     override suspend fun insertCategory(
         category: Category,
     ) {
         categoryDao.insertCategory(
             category = category,
+        )
+    }
+
+    override suspend fun insertCategories(
+        vararg categories: Category,
+    ) {
+        categoryDao.insertCategories(
+            categories = categories,
         )
     }
 

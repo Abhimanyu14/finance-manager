@@ -84,6 +84,14 @@ fun navigateToHomeScreen(
     )
 }
 
+fun navigateToSettingsScreen(
+    navigationManager: NavigationManager,
+) {
+    navigationManager.navigate(
+        direction = MyNavigationDirections.settings()
+    )
+}
+
 fun navigateToSourceDetailsScreen(
     navigationManager: NavigationManager,
 ) {

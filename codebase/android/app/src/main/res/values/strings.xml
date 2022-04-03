@@ -58,12 +58,18 @@
     <string name="screen_home_appbar_title">Finance Manager</string>
     <string name="screen_home_floating_action_button_content_description">Add Transaction</string>
     <string name="screen_home_bottom_app_bar_button_content_description">Menu</string>
-    <string name="screen_home_bottom_sheet_sources">Sources</string>
     <string name="screen_home_bottom_sheet_categories">Categories</string>
+    <string name="screen_home_bottom_sheet_settings">Settings</string>
+    <string name="screen_home_bottom_sheet_sources">Sources</string>
 
     <!-- home menu bottom sheet -->
     <string name="bottom_sheet_home_menu_sources">Sources</string>
     <string name="bottom_sheet_home_menu_categories">Categories</string>
+
+    <!-- settings screen -->
+    <string name="screen_settings_appbar_title">Settings</string>
+    <string name="screen_settings_backup">Backup data</string>
+    <string name="screen_settings_restore">Restore data</string>
 
     <!-- sources list item -->
     <string name="list_item_sources">%1$s -> %2$s</string>

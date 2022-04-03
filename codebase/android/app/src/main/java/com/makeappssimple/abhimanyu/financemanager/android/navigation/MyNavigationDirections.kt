@@ -101,6 +101,14 @@ object MyNavigationDirections {
         }
     }
 
+    fun settings(): NavigationCommand {
+        return object : NavigationCommand {
+            override val arguments = emptyList<NamedNavArgument>()
+            override val destination = Screen.Settings.route
+            override val command = Command.NAVIGATE
+        }
+    }
+
     fun sourceDetails(): NavigationCommand {
         return object : NavigationCommand {
             override val arguments = emptyList<NamedNavArgument>()

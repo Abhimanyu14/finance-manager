@@ -28,6 +28,14 @@ class TransactionRepositoryImpl(
         )
     }
 
+    override suspend fun insertTransactions(
+        vararg transactions: Transaction,
+    ) {
+        transactionDao.insertTransactions(
+            transactions = transactions,
+        )
+    }
+
     override suspend fun deleteTransaction(
         id: Int,
     ) {

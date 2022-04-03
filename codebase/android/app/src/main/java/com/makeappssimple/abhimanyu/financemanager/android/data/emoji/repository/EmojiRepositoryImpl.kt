@@ -16,16 +16,20 @@ class EmojiRepositoryImpl(
         context = Dispatchers.IO
     )
 
-    override val emojis: Flow<List<Emoji>> = emojiDao.getEmojis()
+    override val emojis: Flow<List<EmojiLocalEntity>> = emojiDao.getEmojis()
 
     init {
-//        scope.launch {
-//            emojis.collect {
-//                if (it.isEmpty()) {
-//                    saveEmojisToDatabase()
-//                }
-//            }
-//        }
+        //        scope.launch {
+        //            emojis.collect {
+        //                if (it.isEmpty()) {
+        //                    saveEmojisToDatabase()
+        //                }
+        //            }
+        //        }
+    }
+
+    override suspend fun getEmojisCount(): Int {
+        return emojiDao.getEmojisCount()
     }
 
     override suspend fun getEmoji(
@@ -41,6 +45,14 @@ class EmojiRepositoryImpl(
     ) {
         emojiDao.insertEmoji(
             emoji = emoji,
+        )
+    }
+
+    override suspend fun insertEmojis(
+        vararg emojis: EmojiLocalEntity,
+    ) {
+        emojiDao.insertEmojis(
+            emojis = emojis,
         )
     }
 

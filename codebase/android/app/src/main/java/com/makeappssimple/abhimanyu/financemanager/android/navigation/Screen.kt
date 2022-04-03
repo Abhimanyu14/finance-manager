@@ -32,6 +32,10 @@ sealed class Screen(
         route = "home",
     )
 
+    object Settings : Screen(
+        route = "settings",
+    )
+
     object SourceDetails : Screen(
         route = "source_details",
     )

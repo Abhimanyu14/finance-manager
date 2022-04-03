@@ -16,6 +16,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.AddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.CategoriesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.HomeScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.settings.SettingsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.SourcesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 
@@ -117,6 +118,12 @@ fun MyNavGraph(
             route = Screen.Home.route,
         ) {
             HomeScreen()
+        }
+
+        composable(
+            route = Screen.Settings.route,
+        ) {
+            SettingsScreen()
         }
 
         composable(
