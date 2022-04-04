@@ -23,7 +23,7 @@ data class SettingsScreenViewData(
     val screenViewModel: SettingsViewModel,
 )
 
-const val JSON_MIMETYPE = "application/json"
+private const val JSON_MIMETYPE = "application/json"
 
 @ExperimentalMaterialApi
 @ExperimentalMaterial3Api
@@ -52,7 +52,6 @@ fun SettingsScreenView(
             )
         }
     }
-
 
     Scaffold(
         scaffoldState = state.scaffoldState,
