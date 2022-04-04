@@ -22,12 +22,12 @@ interface TransactionDao {
     @Query(value = "SELECT COUNT(*) FROM transaction_table")
     suspend fun getTransactionsCount(): Int
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTransaction(
         transaction: Transaction,
     )
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTransactions(
         vararg transactions: Transaction,
     )

@@ -17,12 +17,12 @@ interface CategoryDao {
     @Query(value = "SELECT COUNT(*) FROM category_table")
     suspend fun getCategoriesCount(): Int
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCategory(
         category: Category,
     )
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCategories(
         vararg categories: Category,
     )

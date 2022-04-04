@@ -22,12 +22,12 @@ interface EmojiDao {
         character: String,
     ): EmojiLocalEntity?
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertEmoji(
         emoji: EmojiLocalEntity,
     )
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertEmojis(
         vararg emojis: EmojiLocalEntity,
     )

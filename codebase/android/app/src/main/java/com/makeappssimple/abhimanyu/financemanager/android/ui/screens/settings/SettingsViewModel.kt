@@ -10,6 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Cat
 import com.makeappssimple.abhimanyu.financemanager.android.entities.databasebackupdata.DatabaseBackupData
 import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
+import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.utils.JsonUtil
@@ -18,6 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,6 +35,7 @@ class SettingsViewModel @Inject constructor(
     val categories: Flow<List<Category>> = categoryRepository.categories
     val emojis: Flow<List<EmojiLocalEntity>> = emojiRepository.emojis
     val sources: Flow<List<Source>> = sourceRepository.sources
+    val transactions: Flow<List<Transaction>> = transactionRepository.transactions
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code
@@ -44,40 +47,55 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch(
             context = Dispatchers.IO,
         ) {
+            var categoriesUpdated = false
+            var emojisUpdated = false
+            var sourcesUpdated = false
+            var transactionsUpdated = false
             val databaseBackupData = DatabaseBackupData(
                 lastBackupTime = getDateAndTimeString(),
                 lastBackupTimestamp = System.currentTimeMillis().toString(),
             )
-            categories.collect { categories ->
-                if (categories.isNotEmpty()) {
-                    databaseBackupData.categories = categories
-                }
-                jsonUtil.writeDatabaseBackupDataToFile(
-                    uri = uri,
-                    databaseBackupData = databaseBackupData,
-                )
-                logError(databaseBackupData.toString())
-            }
-            /*
-            TODO-Abhi: Combine and backup whole database
             combine(
                 flow = categories,
                 flow2 = emojis,
                 flow3 = sources,
-            ) { categories, emojis, sources ->
-                if (categories.isNotEmpty()) {
+                flow4 = transactions,
+            ) { categories, emojis, sources, transactions ->
+                if (!categoriesUpdated && categories.isNotEmpty()) {
                     databaseBackupData.categories = categories
+                    categoriesUpdated = true
                 }
-                if (emojis.isNotEmpty()) {
+                if (!emojisUpdated && emojis.isNotEmpty()) {
                     databaseBackupData.emojis = emojis
+                    emojisUpdated = true
                 }
-                if (sources.isNotEmpty()) {
+                if (!sourcesUpdated && sources.isNotEmpty()) {
                     databaseBackupData.sources = sources
+                    sourcesUpdated = true
                 }
-
-                logError(databaseBackupData.toString())
+                if (!transactionsUpdated && transactions.isNotEmpty()) {
+                    databaseBackupData.transactions = transactions
+                    transactionsUpdated = true
+                }
+                databaseBackupData
+            }.collect {
+                if (
+                    categoriesUpdated &&
+                    emojisUpdated &&
+                    sourcesUpdated &&
+                    transactionsUpdated
+                ) {
+                    jsonUtil.writeDatabaseBackupDataToFile(
+                        uri = uri,
+                        databaseBackupData = it,
+                    )
+                    categoriesUpdated = false
+                    emojisUpdated = false
+                    sourcesUpdated = false
+                    transactionsUpdated = false
+                    logError("backed up data")
+                }
             }
-            */
         }
     }
 

@@ -23,12 +23,12 @@ interface SourceDao {
     @Query(value = "SELECT COUNT(*) FROM source_table")
     suspend fun getSourcesCount(): Int
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSource(
         source: Source,
     )
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSources(
         vararg sources: Source,
     )
