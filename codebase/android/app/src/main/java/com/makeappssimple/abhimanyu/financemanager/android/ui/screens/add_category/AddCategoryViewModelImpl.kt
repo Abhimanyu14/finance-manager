@@ -70,7 +70,6 @@ class AddCategoryViewModelImpl @Inject constructor(
         }
     }
 
-
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code
     }

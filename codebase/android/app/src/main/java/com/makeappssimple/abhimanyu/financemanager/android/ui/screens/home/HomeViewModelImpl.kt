@@ -10,8 +10,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.Navigation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collectIndexed
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -23,15 +21,9 @@ class HomeViewModelImpl @Inject constructor(
     private val transactionRepository: TransactionRepository,
 ) : HomeViewModel, ViewModel() {
     override val transactions: Flow<List<Transaction>> = transactionRepository.transactions
-    override val sourcesTotalBalanceAmountValue: Flow<Long> = flow {
-        sourceRepository.sources.collectIndexed { _, sources ->
-            emit(
-                value = sources.sumOf { source ->
-                    source.balanceAmount.value
-                },
-            )
-        }
-    }
+    override val sourcesTotalBalanceAmountValue: Flow<Long> =
+        sourceRepository.sourcesTotalBalanceAmountValue
+
     override val sourceFromList: Flow<List<Source?>> = transactions.map {
         it.map { transaction ->
             transaction.sourceFromId.let { id ->
@@ -50,7 +42,6 @@ class HomeViewModelImpl @Inject constructor(
             }
         }
     }
-
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code

@@ -2,6 +2,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.data.source.reposito
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO
 // instead of the whole database, because you only need access to the DAO
@@ -11,6 +13,11 @@ class SourceRepositoryImpl(
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
     override val sources = sourceDao.getSources()
+    override val sourcesTotalBalanceAmountValue: Flow<Long> = sources.map {
+        it.sumOf { source ->
+            source.balanceAmount.value
+        }
+    }
 
     override suspend fun getSourcesCount(): Int {
         return sourceDao.getSourcesCount()
