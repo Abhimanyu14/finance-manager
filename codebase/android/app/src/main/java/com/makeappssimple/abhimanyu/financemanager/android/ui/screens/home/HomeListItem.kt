@@ -1,8 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
 
+import android.view.View
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.DismissDirection
 import androidx.compose.material.DismissValue
 import androidx.compose.material.ExperimentalMaterialApi
@@ -20,18 +24,25 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.DarkGray
+import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.graphics.Color.Companion.Red
+import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
@@ -44,6 +55,7 @@ data class HomeListItemViewData(
     val transaction: Transaction,
     val sourceFrom: Source? = null,
     val sourceTo: Source? = null,
+    val category: Category? = null,
 )
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -68,9 +80,9 @@ fun HomeListItem(
             background = {
                 val color by animateColorAsState(
                     when (dismissState.targetValue) {
-                        DismissValue.Default -> Color.LightGray
+                        DismissValue.Default -> LightGray
                         DismissValue.DismissedToEnd -> Red
-                        DismissValue.DismissedToStart -> Color.White
+                        DismissValue.DismissedToStart -> White
                     }
                 )
                 val scale by animateFloatAsState(
@@ -91,7 +103,7 @@ fun HomeListItem(
                     Icon(
                         imageVector = Icons.Rounded.DeleteForever,
                         contentDescription = null,
-                        tint = Color.White,
+                        tint = White,
                         modifier = Modifier
                             .weight(
                                 weight = 1F,
@@ -121,7 +133,8 @@ fun HomeListItem(
 private fun HomeListItemView(
     data: HomeListItemViewData,
 ) {
-    Column(
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
             .background(
@@ -132,92 +145,128 @@ private fun HomeListItemView(
                 vertical = 8.dp,
             ),
     ) {
-        Row(
+        Box(
             modifier = Modifier
-                .fillMaxWidth(),
+                .clip(
+                    shape = CircleShape,
+                )
+                .background(
+                    color = LightGray,
+                )
+                .padding(
+                    all = 2.dp,
+                ),
         ) {
-            Text(
-                text = data.transaction.title,
-                style = TextStyle(
-                    color = DarkGray,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(
-                        weight = 1F,
-                    ),
-            )
-            Text(
-                text = if (data.transaction.transactionType == TransactionType.INCOME ||
-                    (data.transaction.transactionType == TransactionType.ADJUSTMENT
-                            && data.transaction.amount.value > 0)
-                ) {
-                    data.transaction.amount.toSignedString()
-                } else {
-                    data.transaction.amount.toString()
+            AndroidView(
+                factory = { context ->
+                    AppCompatTextView(context).apply {
+                        setTextColor(Color.Black.toArgb())
+                        text = "🍜"
+                        textSize = 20F
+                        textAlignment = View.TEXT_ALIGNMENT_CENTER
+                    }
                 },
-                textAlign = TextAlign.End,
-                style = TextStyle(
-                    color = data.transaction.amountTextColor,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(
-                        weight = 1F,
-                    ),
+                update = {
+                    it.apply {
+                        text = "🍜"
+                    }
+                },
             )
         }
-        Spacer(
+        Column(
             modifier = Modifier
-                .height(
-                    height = 4.dp,
+                .fillMaxWidth()
+                .padding(
+                    start = 8.dp,
                 ),
-        )
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
         ) {
-            Text(
-                text = getDateAndTimeString(
-                    timestamp = data.transaction.transactionTimestamp,
-                ),
-                style = TextStyle(
-                    color = DarkGray,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Normal,
-                ),
+            Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(
-                        weight = 1F,
+                    .fillMaxWidth(),
+            ) {
+                Text(
+                    text = data.transaction.title,
+                    style = TextStyle(
+                        color = DarkGray,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(
+                            weight = 1F,
+                        ),
+                )
+                Text(
+                    text = if (data.transaction.transactionType == TransactionType.INCOME ||
+                        (data.transaction.transactionType == TransactionType.ADJUSTMENT
+                                && data.transaction.amount.value > 0)
+                    ) {
+                        data.transaction.amount.toSignedString()
+                    } else {
+                        data.transaction.amount.toString()
+                    },
+                    textAlign = TextAlign.End,
+                    style = TextStyle(
+                        color = data.transaction.amountTextColor,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(
+                            weight = 1F,
+                        ),
+                )
+            }
+            Spacer(
+                modifier = Modifier
+                    .height(
+                        height = 4.dp,
                     ),
             )
-            Text(
-                text = if (data.sourceFrom != null && data.sourceTo != null) {
-                    stringResource(
-                        id = R.string.list_item_sources,
-                        data.sourceFrom.name,
-                        data.sourceTo.name,
-                    )
-                } else {
-                    data.sourceFrom?.name ?: (data.sourceTo?.name ?: "")
-                },
-                textAlign = TextAlign.End,
-                style = TextStyle(
-                    color = DarkGray,
-                    fontSize = 12.sp,
-                    fontWeight = FontWeight.Normal,
-                ),
+            Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(
-                        weight = 1F,
+                    .fillMaxWidth(),
+            ) {
+                Text(
+                    text = getDateAndTimeString(
+                        timestamp = data.transaction.transactionTimestamp,
                     ),
-            )
+                    style = TextStyle(
+                        color = DarkGray,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Normal,
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(
+                            weight = 1F,
+                        ),
+                )
+                Text(
+                    text = if (data.sourceFrom != null && data.sourceTo != null) {
+                        stringResource(
+                            id = R.string.list_item_sources,
+                            data.sourceFrom.name,
+                            data.sourceTo.name,
+                        )
+                    } else {
+                        data.sourceFrom?.name ?: (data.sourceTo?.name ?: "")
+                    },
+                    textAlign = TextAlign.End,
+                    style = TextStyle(
+                        color = DarkGray,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Normal,
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(
+                            weight = 1F,
+                        ),
+                )
+            }
         }
     }
 }
