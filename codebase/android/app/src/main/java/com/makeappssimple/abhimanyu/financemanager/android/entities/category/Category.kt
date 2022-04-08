@@ -25,6 +25,7 @@ data class Category(
     @TypeConverters(CategoryIdsConverter::class)
     val subCategoryIds: List<Int>? = null,
     val description: String = "",
+    val emoji: String,
     val title: String,
     @ColumnInfo(name = "transaction_type")
     @SerializedName(value = "transaction_type")

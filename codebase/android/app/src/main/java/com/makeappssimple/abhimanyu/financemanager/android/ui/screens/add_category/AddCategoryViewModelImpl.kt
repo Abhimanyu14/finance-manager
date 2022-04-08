@@ -24,9 +24,9 @@ const val loadingCompletedEmoji = "😃"
 
 @HiltViewModel
 class AddCategoryViewModelImpl @Inject constructor(
+    emojiRepository: EmojiRepository,
     override val navigationManager: NavigationManager,
     private val categoryRepository: CategoryRepository,
-    private val emojiRepository: EmojiRepository,
 ) : AddCategoryViewModel, ViewModel() {
     override val transactionTypes: List<TransactionType> = TransactionType.values()
         .filter {
@@ -69,6 +69,7 @@ class AddCategoryViewModelImpl @Inject constructor(
             categoryRepository.insertCategory(
                 category = Category(
                     description = description.value,
+                    emoji = emoji.value,
                     title = title.value,
                     transactionType = transactionTypes[selectedTransactionTypeIndex.value],
                 ),

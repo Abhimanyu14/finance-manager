@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.data.category.repository.CategoryRepository
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
@@ -15,6 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModelImpl @Inject constructor(
     override val navigationManager: NavigationManager,
+    private val categoryRepository: CategoryRepository,
     private val sourceRepository: SourceRepository,
     private val transactionRepository: TransactionRepository,
 ) : HomeViewModel, ViewModel() {
@@ -24,6 +26,11 @@ class HomeViewModelImpl @Inject constructor(
         transactionRepository.transactions.map {
             it.map { transaction ->
                 HomeListItemViewData(
+                    category = transaction.categoryId.let { id ->
+                        categoryRepository.getCategory(
+                            id = id,
+                        )
+                    },
                     transaction = transaction,
                     sourceFrom = transaction.sourceFromId.let { id ->
                         sourceRepository.getSource(

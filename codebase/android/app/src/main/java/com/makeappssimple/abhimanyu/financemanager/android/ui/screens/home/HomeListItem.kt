@@ -53,9 +53,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateAndTimeS
 
 data class HomeListItemViewData(
     val transaction: Transaction,
+    val category: Category? = null,
     val sourceFrom: Source? = null,
     val sourceTo: Source? = null,
-    val category: Category? = null,
 )
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -161,14 +161,14 @@ private fun HomeListItemView(
                 factory = { context ->
                     AppCompatTextView(context).apply {
                         setTextColor(Color.Black.toArgb())
-                        text = "🍜"
+                        text = data.category?.emoji ?: "😟"
                         textSize = 20F
                         textAlignment = View.TEXT_ALIGNMENT_CENTER
                     }
                 },
                 update = {
                     it.apply {
-                        text = "🍜"
+                        text = data.category?.emoji ?: "😟"
                     }
                 },
             )

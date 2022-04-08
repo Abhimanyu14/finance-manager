@@ -8,6 +8,10 @@ interface CategoryRepository {
 
     suspend fun getCategoriesCount(): Int
 
+    suspend fun getCategory(
+        id: Int,
+    ): Category?
+
     suspend fun insertCategory(
         category: Category,
     )

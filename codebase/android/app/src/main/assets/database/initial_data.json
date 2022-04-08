@@ -2,52 +2,62 @@
   "categories": [
     {
       "id": 1,
-      "title": "🙁 Default",
+      "emoji": "🙁",
+      "title": "Default",
       "transaction_type": "EXPENSE"
     },
     {
       "id": 2,
-      "title": "💸 Salary",
+      "emoji": "💸",
+      "title": "Salary",
       "transaction_type": "INCOME"
     },
     {
       "id": 3,
-      "title": "🍜 Food",
+      "emoji": "🍜",
+      "title": "Food",
       "transaction_type": "EXPENSE"
     },
     {
       "id": 4,
-      "title": "👔 Clothes",
+      "emoji": "👔",
+      "title": "Clothes",
       "transaction_type": "EXPENSE"
     },
     {
       "id": 5,
-      "title": "💻 Electronics",
+      "emoji": "💻",
+      "title": "Electronics",
       "transaction_type": "EXPENSE"
     },
     {
       "id": 6,
-      "title": "🏠 Household",
+      "emoji": "🏠",
+      "title": "Household",
       "transaction_type": "EXPENSE"
     },
     {
       "id": 7,
-      "title": "🚎 Travel",
+      "emoji": "🚎",
+      "title": "Travel",
       "transaction_type": "EXPENSE"
     },
     {
       "id": 8,
-      "title": "💊 Medical",
+      "emoji": "💊",
+      "title": "Medical",
       "transaction_type": "EXPENSE"
     },
     {
       "id": 9,
-      "title": "💰 Refund",
+      "emoji": "💰",
+      "title": "Refund",
       "transaction_type": "INCOME"
     },
     {
       "id": 10,
-      "title": "💎 Rewards",
+      "emoji": "💎",
+      "title": "Rewards",
       "transaction_type": "INCOME"
     }
   ],

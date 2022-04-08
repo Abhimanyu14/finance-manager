@@ -4,6 +4,18 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 /**
+ * Column added
+ */
+val MIGRATION_13_14 = object : Migration(13, 14) {
+    override fun migrate(
+        database: SupportSQLiteDatabase,
+    ) {
+        // Add column with a default value
+        database.execSQL("ALTER TABLE category_table ADD COLUMN `emoji` TEXT  DEFAULT '😟' NOT NULL")
+    }
+}
+
+/**
  * Adding new table
  */
 val MIGRATION_12_13 = object : Migration(12, 13) {
@@ -21,7 +33,7 @@ val MIGRATION_9_10 = object : Migration(9, 10) {
     override fun migrate(
         database: SupportSQLiteDatabase,
     ) {
-        // Add column with a default value
+        // Add column
         database.execSQL("ALTER TABLE transaction_table ADD COLUMN `sourceToId` INTEGER")
     }
 }

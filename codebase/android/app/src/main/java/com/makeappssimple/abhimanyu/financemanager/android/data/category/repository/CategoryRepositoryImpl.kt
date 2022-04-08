@@ -16,6 +16,14 @@ class CategoryRepositoryImpl(
         return categoryDao.getCategoriesCount()
     }
 
+    override suspend fun getCategory(
+        id: Int,
+    ): Category? {
+        return categoryDao.getCategory(
+            id = id,
+        )
+    }
+
     override suspend fun insertCategory(
         category: Category,
     ) {

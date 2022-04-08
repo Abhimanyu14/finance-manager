@@ -29,6 +29,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.DarkGray
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -119,7 +120,7 @@ fun CategoriesScreenView(
                                         color = if (selectedTabIndex == index) {
                                             Primary
                                         } else {
-                                            Color.DarkGray
+                                            DarkGray
                                         },
                                         fontWeight = FontWeight.Bold,
                                     )
