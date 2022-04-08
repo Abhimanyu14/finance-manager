@@ -40,12 +40,16 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.getDismissS
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateAndTimeString
 
+data class HomeListItemViewData(
+    val transaction: Transaction,
+    val sourceFrom: Source? = null,
+    val sourceTo: Source? = null,
+)
+
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeListItem(
-    transaction: Transaction,
-    sourceFrom: Source? = null,
-    sourceTo: Source? = null,
+    data: HomeListItemViewData,
     swipeToDelete: Boolean = true,
     deleteTransaction: () -> Unit,
 ) {
@@ -103,25 +107,19 @@ fun HomeListItem(
             },
         ) {
             HomeListItemView(
-                transaction = transaction,
-                sourceFrom = sourceFrom,
-                sourceTo = sourceTo,
+                data = data,
             )
         }
     } else {
         HomeListItemView(
-            transaction = transaction,
-            sourceFrom = sourceFrom,
-            sourceTo = sourceTo,
+            data = data,
         )
     }
 }
 
 @Composable
 private fun HomeListItemView(
-    transaction: Transaction,
-    sourceFrom: Source?,
-    sourceTo: Source?,
+    data: HomeListItemViewData,
 ) {
     Column(
         modifier = Modifier
@@ -139,7 +137,7 @@ private fun HomeListItemView(
                 .fillMaxWidth(),
         ) {
             Text(
-                text = transaction.title,
+                text = data.transaction.title,
                 style = TextStyle(
                     color = DarkGray,
                     fontSize = 14.sp,
@@ -152,17 +150,17 @@ private fun HomeListItemView(
                     ),
             )
             Text(
-                text = if (transaction.transactionType == TransactionType.INCOME ||
-                    (transaction.transactionType == TransactionType.ADJUSTMENT
-                            && transaction.amount.value > 0)
+                text = if (data.transaction.transactionType == TransactionType.INCOME ||
+                    (data.transaction.transactionType == TransactionType.ADJUSTMENT
+                            && data.transaction.amount.value > 0)
                 ) {
-                    transaction.amount.toSignedString()
+                    data.transaction.amount.toSignedString()
                 } else {
-                    transaction.amount.toString()
+                    data.transaction.amount.toString()
                 },
                 textAlign = TextAlign.End,
                 style = TextStyle(
-                    color = transaction.amountTextColor,
+                    color = data.transaction.amountTextColor,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                 ),
@@ -185,7 +183,7 @@ private fun HomeListItemView(
         ) {
             Text(
                 text = getDateAndTimeString(
-                    timestamp = transaction.transactionTimestamp,
+                    timestamp = data.transaction.transactionTimestamp,
                 ),
                 style = TextStyle(
                     color = DarkGray,
@@ -199,14 +197,14 @@ private fun HomeListItemView(
                     ),
             )
             Text(
-                text = if (sourceFrom != null && sourceTo != null) {
+                text = if (data.sourceFrom != null && data.sourceTo != null) {
                     stringResource(
                         id = R.string.list_item_sources,
-                        sourceFrom.name,
-                        sourceTo.name,
+                        data.sourceFrom.name,
+                        data.sourceTo.name,
                     )
                 } else {
-                    sourceFrom?.name ?: (sourceTo?.name ?: "")
+                    data.sourceFrom?.name ?: (data.sourceTo?.name ?: "")
                 },
                 textAlign = TextAlign.End,
                 style = TextStyle(

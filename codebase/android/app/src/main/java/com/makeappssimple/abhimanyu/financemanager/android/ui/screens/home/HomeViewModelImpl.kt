@@ -4,8 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repository.TransactionRepository
-import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
-import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -20,28 +18,26 @@ class HomeViewModelImpl @Inject constructor(
     private val sourceRepository: SourceRepository,
     private val transactionRepository: TransactionRepository,
 ) : HomeViewModel, ViewModel() {
-    override val transactions: Flow<List<Transaction>> = transactionRepository.transactions
     override val sourcesTotalBalanceAmountValue: Flow<Long> =
         sourceRepository.sourcesTotalBalanceAmountValue
-
-    override val sourceFromList: Flow<List<Source?>> = transactions.map {
-        it.map { transaction ->
-            transaction.sourceFromId.let { id ->
-                sourceRepository.getSource(
-                    id = id,
+    override val homeListItemViewData: Flow<List<HomeListItemViewData>> =
+        transactionRepository.transactions.map {
+            it.map { transaction ->
+                HomeListItemViewData(
+                    transaction = transaction,
+                    sourceFrom = transaction.sourceFromId.let { id ->
+                        sourceRepository.getSource(
+                            id = id,
+                        )
+                    },
+                    sourceTo = transaction.sourceToId?.let { id ->
+                        sourceRepository.getSource(
+                            id = id,
+                        )
+                    },
                 )
             }
         }
-    }
-    override val sourceToList: Flow<List<Source?>> = transactions.map {
-        it.map { transaction ->
-            transaction.sourceToId?.let { id ->
-                sourceRepository.getSource(
-                    id = id,
-                )
-            }
-        }
-    }
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code
