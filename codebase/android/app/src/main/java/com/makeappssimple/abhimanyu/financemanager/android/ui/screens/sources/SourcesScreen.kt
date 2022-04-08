@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 @ExperimentalMaterialApi
 @Composable
 fun SourcesScreen(
-    screenViewModel: SourcesViewModel = hiltViewModel(),
+    screenViewModel: SourcesViewModel = hiltViewModel<SourcesViewModelImpl>(),
 ) {
     logError(
         message = "Inside SourcesScreen",
