@@ -13,10 +13,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import javax.inject.Inject
+
+const val loadingEmoji = "⏳"
+const val loadingCompletedEmoji = "😃"
 
 @HiltViewModel
 class AddCategoryViewModelImpl @Inject constructor(
@@ -41,34 +45,18 @@ class AddCategoryViewModelImpl @Inject constructor(
         ),
     )
     private val _emoji = MutableStateFlow(
-        value = "⏳",
-    )
-    private val _emojis = MutableStateFlow(
-        value = emptyList<Emoji>(),
+        value = loadingEmoji,
     )
 
     override val description: StateFlow<String> = _description
     override val title: StateFlow<String> = _title
     override val selectedTransactionTypeIndex: StateFlow<Int> = _selectedTransactionTypeIndex
     override val emoji: StateFlow<String> = _emoji
-    override val emojis: StateFlow<List<Emoji>> = _emojis
-
-
-    init {
-        viewModelScope.launch(
-            context = Dispatchers.IO,
-        ) {
-            emojiRepository.emojis.collect {
-                // To execute UI changes in main thread
-                withContext(
-                    context = Dispatchers.Main,
-                ) {
-                    _emojis.value = it
-                    _emoji.value = "😃"
-                }
-            }
-        }
-    }
+    override val emojis: StateFlow<List<Emoji>> = emojiRepository.emojis.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+        initialValue = emptyList(),
+    )
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code

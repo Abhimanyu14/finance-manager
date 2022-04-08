@@ -79,6 +79,16 @@ fun AddCategoryScreenView(
     ) {
         state.focusRequester.requestFocus()
     }
+    LaunchedEffect(
+        key1 = emojis,
+    ) {
+        if (emojis.isNotEmpty()) {
+            data.screenViewModel.updateEmoji(
+                updatedEmoji = loadingCompletedEmoji,
+            )
+        }
+    }
+
     // TODO-Abhi: Add check to restrict category name with text "default"
 
     ModalBottomSheetLayout(

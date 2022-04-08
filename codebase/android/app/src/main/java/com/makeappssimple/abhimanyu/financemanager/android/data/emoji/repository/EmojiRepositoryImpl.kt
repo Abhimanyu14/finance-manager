@@ -5,28 +5,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.datasource
 import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.datasource.remote.EmojiApi
 import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.EmojiLocalEntity
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 
 class EmojiRepositoryImpl(
     private val emojiDao: EmojiDao,
 ) : EmojiRepository {
-    private val scope: CoroutineScope = CoroutineScope(
-        context = Dispatchers.IO
-    )
-
     override val emojis: Flow<List<EmojiLocalEntity>> = emojiDao.getEmojis()
-
-    init {
-        //        scope.launch {
-        //            emojis.collect {
-        //                if (it.isEmpty()) {
-        //                    saveEmojisToDatabase()
-        //                }
-        //            }
-        //        }
-    }
 
     override suspend fun getEmojisCount(): Int {
         return emojiDao.getEmojisCount()
