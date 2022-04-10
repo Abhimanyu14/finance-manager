@@ -1,9 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.entities.amount
 
 import com.squareup.moshi.FromJson
+import com.squareup.moshi.JsonClass
 import com.squareup.moshi.ToJson
 import java.util.Currency
 
+@JsonClass(generateAdapter = true)
 data class AmountJson(
     val currency: String,
     val value: Long = 0,
@@ -11,7 +13,9 @@ data class AmountJson(
 
 class AmountJsonAdapter {
     @ToJson
-    fun toJson(amount: Amount): AmountJson {
+    fun toJson(
+        amount: Amount,
+    ): AmountJson {
         return AmountJson(
             currency = amount.currency.currencyCode,
             value = amount.value,

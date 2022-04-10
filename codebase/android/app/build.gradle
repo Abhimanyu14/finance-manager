@@ -4,7 +4,6 @@ plugins {
     id "kotlin-kapt"
     id "dagger.hilt.android.plugin"
     id "com.google.gms.google-services"
-    // id "org.jetbrains.kotlin.jvm" version "1.6.10"
     // id "com.google.devtools.ksp" version "1.6.10-1.0.4"
 }
 
@@ -155,9 +154,9 @@ dependencies {
     // implementation "com.google.devtools.ksp:symbol-processing-api:1.6.10-1.0.4"
     
     // Moshi
-    implementation "com.squareup.moshi:moshi:1.13.0"
-    implementation "com.squareup.moshi:moshi-kotlin:$rootProject.moshiVersion"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
+    implementation "com.squareup.moshi:moshi:$rootProject.moshiVersion"
+    implementation "com.squareup.moshi:moshi-kotlin:$rootProject.moshiKotlinVersion"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$rootProject.moshiKotlinCodegenVersion"
     // ksp "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
 
     // Retrofit with Moshi Converter

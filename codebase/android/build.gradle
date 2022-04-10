@@ -156,7 +156,13 @@ buildscript {
         hiltCompilerVersion = "1.0.0"
 
         // Moshi
-        moshiVersion = "1.9.3"
+        moshiVersion = "1.13.0"
+
+        // Moshi
+        moshiKotlinVersion = "1.9.3"
+
+        // Moshi
+        moshiKotlinCodegenVersion = "1.13.0"
 
         // Retrofit with moshi converter
         retrofitMoshiConverterVersion = "2.9.0"

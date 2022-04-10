@@ -7,7 +7,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.databaseback
 import com.makeappssimple.abhimanyu.financemanager.android.entities.initialdatabasedata.InitialDatabaseData
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.BufferedReader
 import java.io.FileNotFoundException
@@ -20,7 +19,6 @@ import javax.inject.Inject
 
 private val moshi = Moshi.Builder()
     .add(AmountJsonAdapter())
-    .add(KotlinJsonAdapterFactory())
     .build()
 private val initialDatabaseDataJsonAdapter: JsonAdapter<InitialDatabaseData> =
     moshi.adapter(InitialDatabaseData::class.java)

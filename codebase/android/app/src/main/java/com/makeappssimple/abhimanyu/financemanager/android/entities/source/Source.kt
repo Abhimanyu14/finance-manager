@@ -8,6 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amoun
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = false)
 enum class SourceType(
     val title: String,
 ) {

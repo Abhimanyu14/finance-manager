@@ -7,7 +7,9 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.OnTertiaryContainer
+import com.squareup.moshi.JsonClass
 
+@JsonClass(generateAdapter = false)
 enum class TransactionFor(
     val title: String,
 ) {
@@ -22,6 +24,7 @@ enum class TransactionFor(
     ),
 }
 
+@JsonClass(generateAdapter = false)
 enum class TransactionType(
     val title: String,
 ) {
@@ -48,6 +51,7 @@ enum class TransactionType(
     */
 }
 
+@JsonClass(generateAdapter = true)
 @Entity(tableName = "transaction_table")
 data class Transaction(
     val amount: Amount,
