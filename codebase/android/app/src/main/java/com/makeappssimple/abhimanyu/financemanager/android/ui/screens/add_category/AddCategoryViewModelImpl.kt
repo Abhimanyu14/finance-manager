@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_categ
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.InsertCategoryUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.repository.EmojiRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.usecase.GetEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
@@ -24,7 +24,7 @@ const val loadingCompletedEmoji = "😃"
 
 @HiltViewModel
 class AddCategoryViewModelImpl @Inject constructor(
-    emojiRepository: EmojiRepository,
+    getEmojisUseCase: GetEmojisUseCase,
     override val navigationManager: NavigationManager,
     private val insertCategoryUseCase: InsertCategoryUseCase,
 ) : AddCategoryViewModel, ViewModel() {
@@ -52,7 +52,7 @@ class AddCategoryViewModelImpl @Inject constructor(
     override val title: StateFlow<String> = _title
     override val selectedTransactionTypeIndex: StateFlow<Int> = _selectedTransactionTypeIndex
     override val emoji: StateFlow<String> = _emoji
-    override val emojis: StateFlow<List<Emoji>> = emojiRepository.emojis.stateIn(
+    override val emojis: StateFlow<List<Emoji>> = getEmojisUseCase().stateIn(
         scope = viewModelScope,
         started = SharingStarted.Eagerly,
         initialValue = emptyList(),

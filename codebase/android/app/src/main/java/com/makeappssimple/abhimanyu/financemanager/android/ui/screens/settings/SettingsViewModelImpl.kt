@@ -5,7 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.InsertCategoriesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.repository.EmojiRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.usecase.GetEmojisUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.usecase.InsertEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.InsertSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionsUseCase
@@ -29,17 +30,18 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModelImpl @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
+    getEmojisUseCase: GetEmojisUseCase,
     getSourcesUseCase: GetSourcesUseCase,
     getTransactionsUseCase: GetTransactionsUseCase,
     override val navigationManager: NavigationManager,
-    private val emojiRepository: EmojiRepository,
-    private val insertSourcesUseCase: InsertSourcesUseCase,
     private val insertCategoriesUseCase: InsertCategoriesUseCase,
+    private val insertEmojisUseCase: InsertEmojisUseCase,
+    private val insertSourcesUseCase: InsertSourcesUseCase,
     private val insertTransactionsUseCase: InsertTransactionsUseCase,
     private val jsonUtil: JsonUtil,
 ) : SettingsViewModel, ViewModel() {
     override val categories: Flow<List<Category>> = getCategoriesUseCase()
-    override val emojis: Flow<List<EmojiLocalEntity>> = emojiRepository.emojis
+    override val emojis: Flow<List<EmojiLocalEntity>> = getEmojisUseCase()
     override val sources: Flow<List<Source>> = getSourcesUseCase()
     override val transactions: Flow<List<Transaction>> = getTransactionsUseCase()
 
@@ -118,7 +120,7 @@ class SettingsViewModelImpl @Inject constructor(
                 insertCategoriesUseCase(
                     *databaseBackupData.categories.toTypedArray(),
                 )
-                emojiRepository.insertEmojis(
+                insertEmojisUseCase(
                     *databaseBackupData.emojis.toTypedArray(),
                 )
                 insertSourcesUseCase(
