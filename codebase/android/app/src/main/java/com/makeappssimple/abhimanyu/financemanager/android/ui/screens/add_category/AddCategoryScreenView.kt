@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_category
 
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -54,6 +55,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.OutlinedTex
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
+import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 
 data class AddCategoryScreenViewData(
@@ -106,6 +108,13 @@ fun AddCategoryScreenView(
                                 updatedEmoji = emoji.character,
                             )
                         }
+                    },
+                    onEmojiLongClick = {
+                        Toast.makeText(
+                            state.context,
+                            it.unicodeName.capitalizeWords(),
+                            Toast.LENGTH_SHORT,
+                        ).show()
                     },
                 ),
             )
