@@ -173,7 +173,7 @@ fun AddTransactionScreenView(
                                 }
                                 .map { category ->
                                     AddTransactionSelectCategoryBottomSheetItemData(
-                                        text = category.title,
+                                        category = category,
                                         onClick = {
                                             toggleModalBottomSheetState(
                                                 coroutineScope = state.coroutineScope,

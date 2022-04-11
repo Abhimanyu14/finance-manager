@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -18,9 +19,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiCircle
 
 data class AddTransactionSelectCategoryBottomSheetItemData(
-    val text: String,
+    val category: Category,
     val onClick: () -> Unit,
 )
 
@@ -70,23 +73,31 @@ private fun AddTransactionSelectCategoryBottomSheetItem(
     data: AddTransactionSelectCategoryBottomSheetItemData,
 ) {
     Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
             .clickable(
-                onClickLabel = data.text,
+                onClickLabel = data.category.title,
                 role = Role.Button,
                 onClick = data.onClick,
             )
             .padding(
-                all = 16.dp,
+                horizontal = 16.dp,
+                vertical = 8.dp,
             ),
     ) {
+        EmojiCircle(
+            emoji = data.category.emoji,
+        )
         Text(
-            text = data.text,
+            text = data.category.title,
             color = Color.DarkGray,
             fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier,
+            modifier = Modifier
+                .padding(
+                    start = 8.dp,
+                ),
         )
     }
 }
