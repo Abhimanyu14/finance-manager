@@ -27,4 +27,6 @@ interface EmojiRepository {
     suspend fun deleteEmojis(
         vararg emojis: EmojiLocalEntity,
     )
+
+    suspend fun deleteAllEmojis()
 }

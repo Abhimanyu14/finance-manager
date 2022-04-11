@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.data.transaction.rep
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.datasource.local.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
+import kotlinx.coroutines.flow.Flow
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO
 // instead of the whole database, because you only need access to the DAO
@@ -10,7 +11,11 @@ class TransactionRepositoryImpl(
 ) : TransactionRepository {
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
-    override val transactions = transactionDao.getTransactions()
+    override val transactions: Flow<List<Transaction>> = transactionDao.getTransactions()
+
+    override suspend fun getTransactionsCount(): Int {
+        return transactionDao.getTransactionsCount()
+    }
 
     override suspend fun getTransaction(
         id: Int,
@@ -50,5 +55,9 @@ class TransactionRepositoryImpl(
         transactionDao.deleteTransactions(
             transactions = transactions,
         )
+    }
+
+    override suspend fun deleteAllTransactions() {
+        transactionDao.deleteAllTransactions()
     }
 }

@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.Flow
 interface TransactionRepository {
     val transactions: Flow<List<Transaction>>
 
+    suspend fun getTransactionsCount(): Int
+
     suspend fun getTransaction(
         id: Int,
     ): Transaction?
@@ -25,4 +27,6 @@ interface TransactionRepository {
     suspend fun deleteTransactions(
         vararg transactions: Transaction,
     )
+
+    suspend fun deleteAllTransactions()
 }

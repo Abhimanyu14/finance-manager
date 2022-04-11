@@ -14,13 +14,13 @@ interface TransactionDao {
     @Query(value = "SELECT * from transaction_table ORDER BY id DESC")
     fun getTransactions(): Flow<List<Transaction>>
 
+    @Query(value = "SELECT COUNT(*) FROM transaction_table")
+    suspend fun getTransactionsCount(): Int
+
     @Query(value = "SELECT * from transaction_table WHERE id = :id")
     suspend fun getTransaction(
         id: Int,
     ): Transaction?
-
-    @Query(value = "SELECT COUNT(*) FROM transaction_table")
-    suspend fun getTransactionsCount(): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTransaction(

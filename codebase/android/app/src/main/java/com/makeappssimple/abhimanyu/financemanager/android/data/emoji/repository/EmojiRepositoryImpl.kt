@@ -79,4 +79,8 @@ class EmojiRepositoryImpl(
             )
         }
     }
+
+    override suspend fun deleteAllEmojis() {
+        emojiDao.deleteAllEmojis()
+    }
 }

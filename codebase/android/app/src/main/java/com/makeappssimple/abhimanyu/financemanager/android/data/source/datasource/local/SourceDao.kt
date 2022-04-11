@@ -15,13 +15,13 @@ interface SourceDao {
     @Query(value = "SELECT * from source_table ORDER BY id ASC")
     fun getSources(): Flow<List<Source>>
 
+    @Query(value = "SELECT COUNT(*) FROM source_table")
+    suspend fun getSourcesCount(): Int
+
     @Query(value = "SELECT * from source_table WHERE id = :id")
     suspend fun getSource(
         id: Int,
     ): Source?
-
-    @Query(value = "SELECT COUNT(*) FROM source_table")
-    suspend fun getSourcesCount(): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSource(
@@ -49,5 +49,5 @@ interface SourceDao {
     )
 
     @Query(value = "DELETE FROM source_table")
-    suspend fun deleteAll()
+    suspend fun deleteAllSources()
 }

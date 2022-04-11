@@ -27,4 +27,6 @@ interface CategoryRepository {
     suspend fun deleteCategories(
         vararg categories: Category,
     )
+
+    suspend fun deleteAllCategories()
 }

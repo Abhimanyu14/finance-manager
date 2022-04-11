@@ -12,7 +12,7 @@ class SourceRepositoryImpl(
 ) : SourceRepository {
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
-    override val sources = sourceDao.getSources()
+    override val sources: Flow<List<Source>> = sourceDao.getSources()
     override val sourcesTotalBalanceAmountValue: Flow<Long> = sources.map {
         it.sumOf { source ->
             source.balanceAmount.value
@@ -69,5 +69,9 @@ class SourceRepositoryImpl(
         sourceDao.deleteSources(
             sources = sources,
         )
+    }
+
+    override suspend fun deleteAllSources() {
+        sourceDao.deleteAllSources()
     }
 }
