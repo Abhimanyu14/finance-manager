@@ -119,6 +119,9 @@ buildscript {
         // Accompanist
         accompanistVersion = "0.21.2-beta"
 
+        // Data store
+        datastorePreferencesVersion = "1.0.0"
+
         // Room
         roomVersion = "2.5.0-alpha01"
 

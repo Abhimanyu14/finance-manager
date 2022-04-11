@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.data.local.database
 
 import android.content.Context
+import androidx.datastore.preferences.core.edit
 import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.RenameColumn
@@ -14,6 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.datasource
 import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.converters.AmountConverter
 import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.converters.CategoryConverter
 import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.converters.CategoryIdsConverter
+import com.makeappssimple.abhimanyu.financemanager.android.data.local.datastore.dataStore
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
@@ -21,9 +23,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.EmojiL
 import com.makeappssimple.abhimanyu.financemanager.android.entities.initialdatabasedata.InitialDatabaseData
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.utils.constants.EMOJI_DATA_VERSION_NUMBER
 import com.makeappssimple.abhimanyu.financemanager.android.utils.readInitialDataFromAssets
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 
@@ -112,7 +116,6 @@ abstract class MyRoomDatabase : RoomDatabase() {
         ): MyRoomDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
-                // tempInstance.populateInitialData()
                 return tempInstance
             }
             synchronized(
@@ -182,6 +185,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                             initialDatabaseData = initialDatabaseData,
                         )
                         populateEmojiData(
+                            context = context,
                             myRoomDatabase = myRoomDatabase,
                             initialDatabaseData = initialDatabaseData,
                         )
@@ -201,20 +205,38 @@ abstract class MyRoomDatabase : RoomDatabase() {
             val categoryDao = myRoomDatabase.categoryDao()
             if (categoryDao.getCategoriesCount() == 0) {
                 categoryDao.insertCategories(
-                    *initialDatabaseData.categories.toTypedArray(),
+                    *initialDatabaseData.defaultCategories.toTypedArray(),
                 )
             }
         }
 
         private suspend fun populateEmojiData(
+            context: Context,
             myRoomDatabase: MyRoomDatabase,
             initialDatabaseData: InitialDatabaseData,
         ) {
             val emojiDao = myRoomDatabase.emojiDao()
             if (emojiDao.getEmojisCount() == 0) {
                 emojiDao.insertEmojis(
-                    *initialDatabaseData.emojis.toTypedArray(),
+                    *initialDatabaseData.emojis.emojisData.toTypedArray(),
                 )
+            } else {
+                context.dataStore.data
+                    .map { preferences ->
+                        preferences[EMOJI_DATA_VERSION_NUMBER] ?: 0
+                    }
+                    .collect { emojiDataVersion ->
+                        if (emojiDataVersion != initialDatabaseData.emojis.versionNumber) {
+                            emojiDao.deleteAllEmojis()
+                            emojiDao.insertEmojis(
+                                *initialDatabaseData.emojis.emojisData.toTypedArray(),
+                            )
+                            context.dataStore.edit { preferences ->
+                                preferences[EMOJI_DATA_VERSION_NUMBER] =
+                                    initialDatabaseData.emojis.versionNumber
+                            }
+                        }
+                    }
             }
         }
 
@@ -225,7 +247,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
             val sourceDao = myRoomDatabase.sourceDao()
             if (sourceDao.getSourcesCount() == 0) {
                 sourceDao.insertSources(
-                    *initialDatabaseData.sources.toTypedArray(),
+                    *initialDatabaseData.defaultSources.toTypedArray(),
                 )
             }
         }
