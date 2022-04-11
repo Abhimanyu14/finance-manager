@@ -3,7 +3,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoryUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourceUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesTotalBalanceAmountValueUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionsUseCase
@@ -17,15 +19,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModelImpl @Inject constructor(
+    getSourcesTotalBalanceAmountValueUseCase: GetSourcesTotalBalanceAmountValueUseCase,
     getTransactionsUseCase: GetTransactionsUseCase,
     override val navigationManager: NavigationManager,
-    private val sourceRepository: SourceRepository,
+    private val getSourceUseCase: GetSourceUseCase,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val getTransactionUseCase: GetTransactionUseCase,
+    private val updateSourcesUseCase: UpdateSourcesUseCase,
 ) : HomeViewModel, ViewModel() {
     override val sourcesTotalBalanceAmountValue: Flow<Long> =
-        sourceRepository.sourcesTotalBalanceAmountValue
+        getSourcesTotalBalanceAmountValueUseCase()
     override val homeListItemViewData: Flow<List<HomeListItemViewData>> =
         getTransactionsUseCase().map {
             it.map { transaction ->
@@ -37,12 +41,12 @@ class HomeViewModelImpl @Inject constructor(
                     },
                     transaction = transaction,
                     sourceFrom = transaction.sourceFromId.let { id ->
-                        sourceRepository.getSource(
+                        getSourceUseCase(
                             id = id,
                         )
                     },
                     sourceTo = transaction.sourceToId?.let { id ->
-                        sourceRepository.getSource(
+                        getSourceUseCase(
                             id = id,
                         )
                     },
@@ -74,10 +78,10 @@ class HomeViewModelImpl @Inject constructor(
                 sourceFromId != 0 &&
                 sourceToId != 0
             ) {
-                sourceRepository.getSource(
+                getSourceUseCase(
                     id = sourceFromId,
                 )?.let { sourceFrom ->
-                    sourceRepository.updateSources(
+                    updateSourcesUseCase(
                         sourceFrom.copy(
                             balanceAmount = sourceFrom.balanceAmount.copy(
                                 value = sourceFrom.balanceAmount.value + transaction.amount.value,
@@ -85,10 +89,10 @@ class HomeViewModelImpl @Inject constructor(
                         ),
                     )
                 }
-                sourceRepository.getSource(
+                getSourceUseCase(
                     id = sourceToId,
                 )?.let { sourceTo ->
-                    sourceRepository.updateSources(
+                    updateSourcesUseCase(
                         sourceTo.copy(
                             balanceAmount = sourceTo.balanceAmount.copy(
                                 value = sourceTo.balanceAmount.value - transaction.amount.value,
@@ -98,10 +102,10 @@ class HomeViewModelImpl @Inject constructor(
                 }
             } else {
                 sourceFromId?.let {
-                    sourceRepository.getSource(
+                    getSourceUseCase(
                         id = transaction.sourceFromId,
                     )?.let { sourceFrom ->
-                        sourceRepository.updateSources(
+                        updateSourcesUseCase(
                             sourceFrom.copy(
                                 balanceAmount = sourceFrom.balanceAmount.copy(
                                     value = sourceFrom.balanceAmount.value - transaction.amount.value,
@@ -111,10 +115,10 @@ class HomeViewModelImpl @Inject constructor(
                     }
                 }
                 sourceToId?.let {
-                    sourceRepository.getSource(
+                    getSourceUseCase(
                         id = transaction.sourceToId,
                     )?.let { sourceTo ->
-                        sourceRepository.updateSources(
+                        updateSourcesUseCase(
                             sourceTo.copy(
                                 balanceAmount = sourceTo.balanceAmount.copy(
                                     value = sourceTo.balanceAmount.value - transaction.amount.value,

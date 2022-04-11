@@ -8,7 +8,9 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoriesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesTotalBalanceAmountValueUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.InsertTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
@@ -34,9 +36,10 @@ import javax.inject.Inject
 @HiltViewModel
 class AddTransactionViewModelImpl @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
+    getSourcesUseCase: GetSourcesUseCase,
     override val navigationManager: NavigationManager,
-    private val sourceRepository: SourceRepository,
     private val insertTransactionUseCase: InsertTransactionUseCase,
+    private val updateSourcesUseCase: UpdateSourcesUseCase,
 ) : AddTransactionViewModel, ViewModel() {
     override val transactionForValues: Array<TransactionFor> = TransactionFor.values()
     override val transactionTypes: Array<TransactionType> = TransactionType.values()
@@ -104,7 +107,7 @@ class AddTransactionViewModelImpl @Inject constructor(
         ),
     )
     override val sources: Flow<List<Source>> = flow {
-        sourceRepository.sources.collectIndexed { _, value ->
+        getSourcesUseCase().collectIndexed { _, value ->
             expenseDefaultSource = value.firstOrNull {
                 it.name.contains(
                     other = "Cash",
@@ -192,7 +195,7 @@ class AddTransactionViewModelImpl @Inject constructor(
                 ),
             )
             sourceFrom?.let { sourceFrom ->
-                sourceRepository.updateSources(
+                updateSourcesUseCase(
                     sourceFrom.copy(
                         balanceAmount = sourceFrom.balanceAmount.copy(
                             value = sourceFrom.balanceAmount.value - amount.toLong(),
@@ -201,7 +204,7 @@ class AddTransactionViewModelImpl @Inject constructor(
                 )
             }
             sourceTo?.let { sourceTo ->
-                sourceRepository.updateSources(
+                updateSourcesUseCase(
                     sourceTo.copy(
                         balanceAmount = sourceTo.balanceAmount.copy(
                             value = sourceTo.balanceAmount.value + amount.toLong(),

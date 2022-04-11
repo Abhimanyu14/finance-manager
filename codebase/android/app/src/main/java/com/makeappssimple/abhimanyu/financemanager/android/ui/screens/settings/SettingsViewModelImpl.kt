@@ -6,7 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.InsertCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.repository.EmojiRepository
-import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.InsertSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.InsertTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
@@ -28,17 +29,18 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModelImpl @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
+    getSourcesUseCase: GetSourcesUseCase,
     getTransactionsUseCase: GetTransactionsUseCase,
     override val navigationManager: NavigationManager,
     private val emojiRepository: EmojiRepository,
-    private val sourceRepository: SourceRepository,
+    private val insertSourcesUseCase: InsertSourcesUseCase,
     private val insertCategoriesUseCase: InsertCategoriesUseCase,
     private val insertTransactionsUseCase: InsertTransactionsUseCase,
     private val jsonUtil: JsonUtil,
 ) : SettingsViewModel, ViewModel() {
     override val categories: Flow<List<Category>> = getCategoriesUseCase()
     override val emojis: Flow<List<EmojiLocalEntity>> = emojiRepository.emojis
-    override val sources: Flow<List<Source>> = sourceRepository.sources
+    override val sources: Flow<List<Source>> = getSourcesUseCase()
     override val transactions: Flow<List<Transaction>> = getTransactionsUseCase()
 
     override fun trackScreen() {
@@ -119,7 +121,7 @@ class SettingsViewModelImpl @Inject constructor(
                 emojiRepository.insertEmojis(
                     *databaseBackupData.emojis.toTypedArray(),
                 )
-                sourceRepository.insertSources(
+                insertSourcesUseCase(
                     *databaseBackupData.sources.toTypedArray(),
                 )
                 insertTransactionsUseCase(

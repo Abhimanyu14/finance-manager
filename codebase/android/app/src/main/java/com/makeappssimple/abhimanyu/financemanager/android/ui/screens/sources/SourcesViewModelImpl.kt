@@ -2,7 +2,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.DeleteSourceUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesTotalBalanceAmountValueUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.InsertTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
@@ -19,13 +22,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SourcesViewModelImpl @Inject constructor(
+    getSourcesTotalBalanceAmountValueUseCase: GetSourcesTotalBalanceAmountValueUseCase,
+    getSourcesUseCase: GetSourcesUseCase,
     override val navigationManager: NavigationManager,
-    private val sourceRepository: SourceRepository,
+    private val deleteSourceUseCase: DeleteSourceUseCase,
+    private val updateSourcesUseCase: UpdateSourcesUseCase,
     private val insertTransactionUseCase: InsertTransactionUseCase,
 ) : SourcesViewModel, ViewModel() {
-    override val sources: Flow<List<Source>> = sourceRepository.sources
+    override val sources: Flow<List<Source>> = getSourcesUseCase()
     override val sourcesTotalBalanceAmountValue: Flow<Long> =
-        sourceRepository.sourcesTotalBalanceAmountValue
+        getSourcesTotalBalanceAmountValueUseCase()
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code
@@ -37,7 +43,7 @@ class SourcesViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = Dispatchers.IO,
         ) {
-            sourceRepository.updateSources(
+            updateSourcesUseCase(
                 source,
             )
         }
@@ -49,7 +55,7 @@ class SourcesViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = Dispatchers.IO,
         ) {
-            sourceRepository.deleteSource(
+            deleteSourceUseCase(
                 id = id,
             )
         }

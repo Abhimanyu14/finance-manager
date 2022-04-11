@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_sourc
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.InsertSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.SourceType
@@ -19,7 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddSourceViewModelImpl @Inject constructor(
     override val navigationManager: NavigationManager,
-    private val sourceRepository: SourceRepository,
+    private val insertSourceUseCase: InsertSourceUseCase,
 ) : AddSourceViewModel, ViewModel() {
     override val sourceTypes: List<SourceType> = SourceType.values()
         .filter {
@@ -45,7 +45,7 @@ class AddSourceViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = Dispatchers.IO,
         ) {
-            sourceRepository.insertSource(
+            insertSourceUseCase(
                 source = Source(
                     balanceAmount = Amount(
                         value = 0L,
