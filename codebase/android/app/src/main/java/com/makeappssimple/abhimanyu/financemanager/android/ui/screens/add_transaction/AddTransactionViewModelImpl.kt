@@ -7,7 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.data.category.repository.CategoryRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
@@ -33,14 +33,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AddTransactionViewModelImpl @Inject constructor(
-    categoryRepository: CategoryRepository,
+    getCategoriesUseCase: GetCategoriesUseCase,
     override val navigationManager: NavigationManager,
     private val sourceRepository: SourceRepository,
     private val transactionRepository: TransactionRepository,
 ) : AddTransactionViewModel, ViewModel() {
     override val transactionForValues: Array<TransactionFor> = TransactionFor.values()
     override val transactionTypes: Array<TransactionType> = TransactionType.values()
-    override val categories: Flow<List<Category>> = categoryRepository.categories
+    override val categories: Flow<List<Category>> = getCategoriesUseCase()
     override var expenseDefaultSource: Source? = null
     override var incomeDefaultSource: Source? = null
     override var expenseDefaultCategory: Category? = null

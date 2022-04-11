@@ -3,7 +3,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.settings
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.data.category.repository.CategoryRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoriesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.InsertCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.repository.EmojiRepository
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repository.TransactionRepository
@@ -25,14 +26,15 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SettingsViewModelImpl @Inject constructor(
+    getCategoriesUseCase: GetCategoriesUseCase,
     override val navigationManager: NavigationManager,
-    private val categoryRepository: CategoryRepository,
+    private val insertCategoriesUseCase: InsertCategoriesUseCase,
     private val emojiRepository: EmojiRepository,
     private val sourceRepository: SourceRepository,
     private val transactionRepository: TransactionRepository,
     private val jsonUtil: JsonUtil,
 ) : SettingsViewModel, ViewModel() {
-    override val categories: Flow<List<Category>> = categoryRepository.categories
+    override val categories: Flow<List<Category>> = getCategoriesUseCase()
     override val emojis: Flow<List<EmojiLocalEntity>> = emojiRepository.emojis
     override val sources: Flow<List<Source>> = sourceRepository.sources
     override val transactions: Flow<List<Transaction>> = transactionRepository.transactions
@@ -109,7 +111,7 @@ class SettingsViewModelImpl @Inject constructor(
                 uri = uri,
             )
             databaseBackupData?.let {
-                categoryRepository.insertCategories(
+                insertCategoriesUseCase(
                     *databaseBackupData.categories.toTypedArray(),
                 )
                 emojiRepository.insertEmojis(

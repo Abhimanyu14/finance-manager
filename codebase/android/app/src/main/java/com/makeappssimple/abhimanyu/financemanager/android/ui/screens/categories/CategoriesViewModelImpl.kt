@@ -2,7 +2,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categorie
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.data.category.repository.CategoryRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.DeleteCategoryUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,10 +14,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CategoriesViewModelImpl @Inject constructor(
+    getCategoriesUseCase: GetCategoriesUseCase,
     override val navigationManager: NavigationManager,
-    private val categoryRepository: CategoryRepository,
+    private val deleteCategoryUseCase: DeleteCategoryUseCase,
 ) : CategoriesViewModel, ViewModel() {
-    override val categories: Flow<List<Category>> = categoryRepository.categories
+    override val categories: Flow<List<Category>> = getCategoriesUseCase()
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code
@@ -28,7 +30,7 @@ class CategoriesViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = Dispatchers.IO,
         ) {
-            categoryRepository.deleteCategory(
+            deleteCategoryUseCase(
                 id = id,
             )
         }

@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_categ
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.data.category.repository.CategoryRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.InsertCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.repository.EmojiRepository
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.Emoji
@@ -26,7 +26,7 @@ const val loadingCompletedEmoji = "😃"
 class AddCategoryViewModelImpl @Inject constructor(
     emojiRepository: EmojiRepository,
     override val navigationManager: NavigationManager,
-    private val categoryRepository: CategoryRepository,
+    private val insertCategoryUseCase: InsertCategoryUseCase,
 ) : AddCategoryViewModel, ViewModel() {
     override val transactionTypes: List<TransactionType> = TransactionType.values()
         .filter {
@@ -66,7 +66,7 @@ class AddCategoryViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = Dispatchers.IO,
         ) {
-            categoryRepository.insertCategory(
+            insertCategoryUseCase(
                 category = Category(
                     description = description.value,
                     emoji = emoji.value,
