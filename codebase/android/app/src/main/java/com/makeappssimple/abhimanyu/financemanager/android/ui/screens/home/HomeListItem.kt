@@ -1,11 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
 
-import android.view.View
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.DismissDirection
 import androidx.compose.material.DismissValue
 import androidx.compose.material.ExperimentalMaterialApi
@@ -26,27 +22,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.DarkGray
 import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.Color.Companion.White
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.amountTextColor
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.getDismissState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateAndTimeString
@@ -145,34 +138,9 @@ private fun HomeListItemView(
                 vertical = 8.dp,
             ),
     ) {
-        Box(
-            modifier = Modifier
-                .clip(
-                    shape = CircleShape,
-                )
-                .background(
-                    color = LightGray,
-                )
-                .padding(
-                    all = 2.dp,
-                ),
-        ) {
-            AndroidView(
-                factory = { context ->
-                    AppCompatTextView(context).apply {
-                        setTextColor(Color.Black.toArgb())
-                        text = data.category?.emoji ?: "😟"
-                        textSize = 20F
-                        textAlignment = View.TEXT_ALIGNMENT_CENTER
-                    }
-                },
-                update = {
-                    it.apply {
-                        text = data.category?.emoji ?: "😟"
-                    }
-                },
-            )
-        }
+        EmojiCircle(
+            emoji = data.category?.emoji,
+        )
         Column(
             modifier = Modifier
                 .fillMaxWidth()
