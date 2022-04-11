@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.data.category.repository
 
-import com.makeappssimple.abhimanyu.financemanager.android.data.category.CategoryDao
+import com.makeappssimple.abhimanyu.financemanager.android.data.category.datasource.local.CategoryDao
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO

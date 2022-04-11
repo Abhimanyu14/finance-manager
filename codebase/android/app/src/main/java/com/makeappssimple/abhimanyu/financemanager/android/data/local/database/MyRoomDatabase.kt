@@ -10,14 +10,14 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.AutoMigrationSpec
 import androidx.sqlite.db.SupportSQLiteDatabase
-import com.makeappssimple.abhimanyu.financemanager.android.data.category.CategoryDao
+import com.makeappssimple.abhimanyu.financemanager.android.data.category.datasource.local.CategoryDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.datasource.local.EmojiDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.converters.AmountConverter
 import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.converters.CategoryConverter
 import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.converters.CategoryIdsConverter
 import com.makeappssimple.abhimanyu.financemanager.android.data.local.datastore.dataStore
-import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceDao
-import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.TransactionDao
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.datasource.local.SourceDao
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.datasource.local.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.entities.initialdatabasedata.InitialDatabaseData

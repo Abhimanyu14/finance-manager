@@ -1,17 +1,17 @@
 package com.makeappssimple.abhimanyu.financemanager.android.data.local.database.di
 
 import android.content.Context
-import com.makeappssimple.abhimanyu.financemanager.android.data.category.CategoryDao
+import com.makeappssimple.abhimanyu.financemanager.android.data.category.datasource.local.CategoryDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.repository.CategoryRepository
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.repository.CategoryRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.datasource.local.EmojiDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.repository.EmojiRepository
 import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.repository.EmojiRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.MyRoomDatabase
-import com.makeappssimple.abhimanyu.financemanager.android.data.source.SourceDao
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.datasource.local.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepositoryImpl
-import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.TransactionDao
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.datasource.local.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repository.TransactionRepositoryImpl
 import dagger.Module
