@@ -7,7 +7,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.InsertCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.repository.EmojiRepository
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
-import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repository.TransactionRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.InsertTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.entities.databasebackupdata.DatabaseBackupData
 import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.EmojiLocalEntity
@@ -27,17 +28,18 @@ import javax.inject.Inject
 @HiltViewModel
 class SettingsViewModelImpl @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
+    getTransactionsUseCase: GetTransactionsUseCase,
     override val navigationManager: NavigationManager,
-    private val insertCategoriesUseCase: InsertCategoriesUseCase,
     private val emojiRepository: EmojiRepository,
     private val sourceRepository: SourceRepository,
-    private val transactionRepository: TransactionRepository,
+    private val insertCategoriesUseCase: InsertCategoriesUseCase,
+    private val insertTransactionsUseCase: InsertTransactionsUseCase,
     private val jsonUtil: JsonUtil,
 ) : SettingsViewModel, ViewModel() {
     override val categories: Flow<List<Category>> = getCategoriesUseCase()
     override val emojis: Flow<List<EmojiLocalEntity>> = emojiRepository.emojis
     override val sources: Flow<List<Source>> = sourceRepository.sources
-    override val transactions: Flow<List<Transaction>> = transactionRepository.transactions
+    override val transactions: Flow<List<Transaction>> = getTransactionsUseCase()
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code
@@ -120,7 +122,7 @@ class SettingsViewModelImpl @Inject constructor(
                 sourceRepository.insertSources(
                     *databaseBackupData.sources.toTypedArray(),
                 )
-                transactionRepository.insertTransactions(
+                insertTransactionsUseCase(
                     *databaseBackupData.transactions.toTypedArray(),
                 )
             }

@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
-import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repository.TransactionRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.DeleteTransactionUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -15,15 +17,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModelImpl @Inject constructor(
+    getTransactionsUseCase: GetTransactionsUseCase,
     override val navigationManager: NavigationManager,
-    private val getCategoryUseCase: GetCategoryUseCase,
     private val sourceRepository: SourceRepository,
-    private val transactionRepository: TransactionRepository,
+    private val deleteTransactionUseCase: DeleteTransactionUseCase,
+    private val getCategoryUseCase: GetCategoryUseCase,
+    private val getTransactionUseCase: GetTransactionUseCase,
 ) : HomeViewModel, ViewModel() {
     override val sourcesTotalBalanceAmountValue: Flow<Long> =
         sourceRepository.sourcesTotalBalanceAmountValue
     override val homeListItemViewData: Flow<List<HomeListItemViewData>> =
-        transactionRepository.transactions.map {
+        getTransactionsUseCase().map {
             it.map { transaction ->
                 HomeListItemViewData(
                     category = transaction.categoryId.let { id ->
@@ -56,10 +60,10 @@ class HomeViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = Dispatchers.IO,
         ) {
-            val transaction = transactionRepository.getTransaction(
+            val transaction = getTransactionUseCase(
                 id = id,
             )
-            transactionRepository.deleteTransaction(
+            deleteTransactionUseCase(
                 id = id,
             )
             val sourceFromId = transaction?.sourceFromId

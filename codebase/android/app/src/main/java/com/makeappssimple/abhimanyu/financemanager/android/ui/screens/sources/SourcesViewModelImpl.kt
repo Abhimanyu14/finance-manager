@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
-import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repository.TransactionRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.InsertTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
@@ -21,7 +21,7 @@ import javax.inject.Inject
 class SourcesViewModelImpl @Inject constructor(
     override val navigationManager: NavigationManager,
     private val sourceRepository: SourceRepository,
-    private val transactionRepository: TransactionRepository,
+    private val insertTransactionUseCase: InsertTransactionUseCase,
 ) : SourcesViewModel, ViewModel() {
     override val sources: Flow<List<Source>> = sourceRepository.sources
     override val sourcesTotalBalanceAmountValue: Flow<Long> =
@@ -62,7 +62,7 @@ class SourcesViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = Dispatchers.IO,
         ) {
-            transactionRepository.insertTransaction(
+            insertTransactionUseCase(
                 transaction = Transaction(
                     amount = Amount(
                         value = amountValue,

@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
-import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repository.TransactionRepository
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.InsertTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
@@ -36,7 +36,7 @@ class AddTransactionViewModelImpl @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
     override val navigationManager: NavigationManager,
     private val sourceRepository: SourceRepository,
-    private val transactionRepository: TransactionRepository,
+    private val insertTransactionUseCase: InsertTransactionUseCase,
 ) : AddTransactionViewModel, ViewModel() {
     override val transactionForValues: Array<TransactionFor> = TransactionFor.values()
     override val transactionTypes: Array<TransactionType> = TransactionType.values()
@@ -154,7 +154,7 @@ class AddTransactionViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = Dispatchers.IO,
         ) {
-            transactionRepository.insertTransaction(
+            insertTransactionUseCase(
                 transaction = Transaction(
                     amount = Amount(
                         value = if (transactionTypes[selectedTransactionTypeIndex] == TransactionType.EXPENSE) {
