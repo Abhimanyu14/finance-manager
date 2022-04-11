@@ -86,7 +86,9 @@ private fun EmojiPickerBottomSheetItem(
                 shape = CircleShape,
             )
             .combinedClickable(
-                onClick = {data.onEmojiSelection(data.emoji)},
+                onClick = {
+                    data.onEmojiSelection(data.emoji)
+                },
                 onLongClick = {
                     data.onEmojiLongClick(data.emoji)
                 },

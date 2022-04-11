@@ -22,9 +22,9 @@ class HomeViewModelImpl @Inject constructor(
     getSourcesTotalBalanceAmountValueUseCase: GetSourcesTotalBalanceAmountValueUseCase,
     getTransactionsUseCase: GetTransactionsUseCase,
     override val navigationManager: NavigationManager,
-    private val getSourceUseCase: GetSourceUseCase,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
+    private val getSourceUseCase: GetSourceUseCase,
     private val getTransactionUseCase: GetTransactionUseCase,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
 ) : HomeViewModel, ViewModel() {

@@ -148,7 +148,6 @@ fun AddCategoryScreenView(
                             state = rememberScrollState(),
                         ),
                 ) {
-                    // TODO-Abhi: Emoji Picker
                     Box(
                         modifier = Modifier
                             .clip(

@@ -26,8 +26,8 @@ class SourcesViewModelImpl @Inject constructor(
     getSourcesUseCase: GetSourcesUseCase,
     override val navigationManager: NavigationManager,
     private val deleteSourceUseCase: DeleteSourceUseCase,
-    private val updateSourcesUseCase: UpdateSourcesUseCase,
     private val insertTransactionUseCase: InsertTransactionUseCase,
+    private val updateSourcesUseCase: UpdateSourcesUseCase,
 ) : SourcesViewModel, ViewModel() {
     override val sources: Flow<List<Source>> = getSourcesUseCase()
     override val sourcesTotalBalanceAmountValue: Flow<Long> =
