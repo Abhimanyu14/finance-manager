@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.data.local.database.
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
 
 class AmountConverter {
@@ -14,10 +15,16 @@ class AmountConverter {
             return null
         }
         val gson = Gson()
-        return gson.fromJson(
-            value,
-            Amount::class.java,
-        )
+        return try {
+            gson.fromJson(
+                value,
+                Amount::class.java,
+            )
+        } catch (
+            JsonSyntaxException: JsonSyntaxException,
+        ) {
+            null
+        }
     }
 
     @TypeConverter

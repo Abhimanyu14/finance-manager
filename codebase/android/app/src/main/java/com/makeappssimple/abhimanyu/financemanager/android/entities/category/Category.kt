@@ -13,12 +13,12 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 @Entity(tableName = "category_table")
 data class Category(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
     @ColumnInfo(name = "parent_category")
     @SerializedName(value = "parent_category")
     @Json(name = "parent_category")
     val parentCategoryId: Int? = null,
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
     @ColumnInfo(name = "sub_categories")
     @SerializedName(value = "sub_categories")
     @Json(name = "sub_categories")

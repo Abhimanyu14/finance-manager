@@ -2,12 +2,13 @@ package com.makeappssimple.abhimanyu.financemanager.android.data.local.database.
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
+import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
 
 class CategoryIdsConverter {
 
     @TypeConverter
-    fun stringToCategories(
+    fun stringToCategoryIds(
         value: String?,
     ): List<Int>? {
         if (value.isNullOrBlank()) {
@@ -15,14 +16,20 @@ class CategoryIdsConverter {
         }
         val gson = Gson()
         val listType = object : TypeToken<List<Int>>() {}.type
-        return gson.fromJson(
-            value,
-            listType,
-        )
+        return try {
+            gson.fromJson(
+                value,
+                listType,
+            )
+        } catch (
+            JsonSyntaxException: JsonSyntaxException,
+        ) {
+            null
+        }
     }
 
     @TypeConverter
-    fun categoryToString(
+    fun categoryIdsToString(
         categoryIds: List<Int>?,
     ): String {
         if (categoryIds == null) {
