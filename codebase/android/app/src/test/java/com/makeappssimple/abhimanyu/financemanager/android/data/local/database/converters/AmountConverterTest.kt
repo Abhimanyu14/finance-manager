@@ -1,18 +1,14 @@
 package com.makeappssimple.abhimanyu.financemanager.android.data.local.database.converters
 
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
-import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.CURRENCY_CODE_INR
+import com.makeappssimple.abhimanyu.financemanager.android.utils.getTestAmount
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import java.util.Currency
 
 class AmountConverterTest {
     private lateinit var amountConverter: AmountConverter
-    private val testAmount = Amount(
-        currency = Currency.getInstance(CURRENCY_CODE_INR),
-        value = 45,
-    )
+    private val testAmount = getTestAmount()
     private val testAmountString = """{"currency":"INR","value":45}"""
 
     @Before

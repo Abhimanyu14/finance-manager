@@ -8,8 +8,7 @@ import javax.inject.Inject
 class GetCategoriesUseCase @Inject constructor(
     private val categoryRepository: CategoryRepository,
 ) {
-    operator fun invoke(
-    ): Flow<List<Category>> {
+    operator fun invoke(): Flow<List<Category>> {
         return categoryRepository.categories
     }
 }

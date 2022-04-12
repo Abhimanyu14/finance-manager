@@ -185,8 +185,15 @@ dependencies {
     implementation "com.google.firebase:firebase-analytics-ktx"
 
     // Testing
+
+    // Junit
     testImplementation "junit:junit:$rootProject.junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXJUnitExtensionVersion"
+
+    // Mockito kotlin
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$rootProject.mockitoKotlinVersion"
+
+    // Espresso
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
 
     // Jetpack compose UI tests

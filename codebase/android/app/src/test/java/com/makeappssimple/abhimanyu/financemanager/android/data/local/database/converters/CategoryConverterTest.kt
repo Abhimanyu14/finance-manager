@@ -1,18 +1,14 @@
 package com.makeappssimple.abhimanyu.financemanager.android.data.local.database.converters
 
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
-import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.utils.getTestCategory
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
 class CategoryConverterTest {
     private lateinit var categoryConverter: CategoryConverter
-    private val testCategory = Category(
-        emoji = "emoji",
-        title = "title",
-        transactionType = TransactionType.EXPENSE,
-    )
+    private val testCategory = getTestCategory()
     private val testCategoryString =
         """{"id":0,"description":"","emoji":"emoji","title":"title","transaction_type":"EXPENSE"}"""
 
