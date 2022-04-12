@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import org.junit.Before
 import org.junit.Test
@@ -25,7 +26,11 @@ class GetSourcesTotalBalanceAmountValueUseCaseTest {
 
             verify(
                 mock = sourceRepository
-            ).sourcesTotalBalanceAmountValue
+            ).sources.map {
+                it.sumOf { source ->
+                    source.balanceAmount.value
+                }
+            }
         }
     }
 }

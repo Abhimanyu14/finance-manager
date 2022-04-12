@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface SourceRepository {
     val sources: Flow<List<Source>>
-    val sourcesTotalBalanceAmountValue: Flow<Long>
 
     suspend fun getSourcesCount(): Int
 
