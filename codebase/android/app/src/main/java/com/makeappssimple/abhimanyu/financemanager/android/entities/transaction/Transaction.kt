@@ -65,7 +65,7 @@ data class Transaction(
     val sourceFromId: Int = 0,
     @ColumnInfo(name = "source_to_id")
     @SerializedName(value = "source_to_id")
-    val sourceToId: Int? = 0,
+    val sourceToId: Int = 0,
     val description: String = "",
     val title: String,
     @ColumnInfo(name = "creation_timestamp")

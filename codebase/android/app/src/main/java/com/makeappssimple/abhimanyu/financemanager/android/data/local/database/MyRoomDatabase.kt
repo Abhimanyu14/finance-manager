@@ -32,7 +32,7 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 
 @Database(
-    version = 14,
+    version = 15,
     entities = [
         Category::class,
         EmojiLocalEntity::class,
@@ -149,6 +149,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                         "finance_manager_database",
                     )
                     .addMigrations(
+                        MIGRATION_14_15,
                         MIGRATION_13_14,
                         MIGRATION_12_13,
                         MIGRATION_9_10,

@@ -30,22 +30,16 @@ class HomeViewModelImpl @Inject constructor(
         getTransactionsUseCase().map {
             it.map { transaction ->
                 HomeListItemViewData(
-                    category = transaction.categoryId.let { id ->
-                        getCategoryUseCase(
-                            id = id,
-                        )
-                    },
+                    category = getCategoryUseCase(
+                        id = transaction.categoryId,
+                    ),
                     transaction = transaction,
-                    sourceFrom = transaction.sourceFromId.let { id ->
-                        getSourceUseCase(
-                            id = id,
-                        )
-                    },
-                    sourceTo = transaction.sourceToId?.let { id ->
-                        getSourceUseCase(
-                            id = id,
-                        )
-                    },
+                    sourceFrom = getSourceUseCase(
+                        id = transaction.sourceFromId,
+                    ),
+                    sourceTo = getSourceUseCase(
+                        id = transaction.sourceToId,
+                    ),
                 )
             }
         }
