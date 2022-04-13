@@ -70,7 +70,6 @@ fun AddCategoryScreenView(
     state: AddCategoryScreenViewState,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
-    val description by data.screenViewModel.description.collectAsState()
     val title by data.screenViewModel.title.collectAsState()
     val selectedTransactionTypeIndex by data.screenViewModel.selectedTransactionTypeIndex.collectAsState()
     val emoji by data.screenViewModel.emoji.collectAsState()
@@ -264,62 +263,6 @@ fun AddCategoryScreenView(
                             .focusRequester(
                                 focusRequester = state.focusRequester,
                             )
-                            .padding(
-                                horizontal = 16.dp,
-                                vertical = 8.dp,
-                            ),
-                    )
-                    OutlinedTextField(
-                        value = description,
-                        label = {
-                            OutlinedTextFieldLabelText(
-                                textStringResourceId = R.string.screen_add_category_description,
-                            )
-                        },
-                        trailingIcon = {
-                            AnimatedVisibility(
-                                visible = description.isNotNullOrBlank(),
-                                enter = fadeIn(),
-                                exit = fadeOut(),
-                            ) {
-                                MyIconButton(
-                                    onClickLabel = stringResource(
-                                        id = R.string.screen_add_category_clear_description,
-                                    ),
-                                    onClick = {
-                                        data.screenViewModel.clearDescription()
-                                    },
-                                    modifier = Modifier
-                                        .padding(
-                                            end = 4.dp,
-                                        ),
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Rounded.Clear,
-                                        contentDescription = stringResource(
-                                            id = R.string.screen_add_category_clear_description,
-                                        ),
-                                    )
-                                }
-                            }
-                        },
-                        onValueChange = {
-                            data.screenViewModel.updateDescription(
-                                updatedDescription = it,
-                            )
-                        },
-                        keyboardActions = KeyboardActions(
-                            onDone = {
-                                state.focusManager.clearFocus()
-                            },
-                        ),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Text,
-                            imeAction = ImeAction.Done,
-                        ),
-                        singleLine = true,
-                        modifier = Modifier
-                            .fillMaxWidth()
                             .padding(
                                 horizontal = 16.dp,
                                 vertical = 8.dp,

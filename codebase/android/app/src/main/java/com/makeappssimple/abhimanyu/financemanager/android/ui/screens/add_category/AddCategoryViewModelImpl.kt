@@ -33,9 +33,6 @@ class AddCategoryViewModelImpl @Inject constructor(
             it != TransactionType.TRANSFER && it != TransactionType.ADJUSTMENT
         }
 
-    private val _description = MutableStateFlow(
-        value = "",
-    )
     private val _title = MutableStateFlow(
         value = "",
     )
@@ -48,7 +45,6 @@ class AddCategoryViewModelImpl @Inject constructor(
         value = loadingEmoji,
     )
 
-    override val description: StateFlow<String> = _description
     override val title: StateFlow<String> = _title
     override val selectedTransactionTypeIndex: StateFlow<Int> = _selectedTransactionTypeIndex
     override val emoji: StateFlow<String> = _emoji
@@ -68,7 +64,6 @@ class AddCategoryViewModelImpl @Inject constructor(
         ) {
             insertCategoryUseCase(
                 category = Category(
-                    description = description.value,
                     emoji = emoji.value,
                     title = title.value,
                     transactionType = transactionTypes[selectedTransactionTypeIndex.value],
@@ -82,16 +77,6 @@ class AddCategoryViewModelImpl @Inject constructor(
 
     override fun isValidCategoryData(): Boolean {
         return title.value.isNotNullOrBlank()
-    }
-
-    override fun clearDescription() {
-        _description.value = ""
-    }
-
-    override fun updateDescription(
-        updatedDescription: String,
-    ) {
-        _description.value = updatedDescription
     }
 
     override fun clearTitle() {

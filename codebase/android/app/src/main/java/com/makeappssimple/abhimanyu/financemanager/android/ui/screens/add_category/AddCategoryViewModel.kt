@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.StateFlow
 interface AddCategoryViewModel : BaseViewModel {
     val navigationManager: NavigationManager
     val transactionTypes: List<TransactionType>
-    val description: StateFlow<String>
     val title: StateFlow<String>
     val selectedTransactionTypeIndex: StateFlow<Int>
     val emoji: StateFlow<String>
@@ -18,12 +17,6 @@ interface AddCategoryViewModel : BaseViewModel {
     fun insertCategory()
 
     fun isValidCategoryData(): Boolean
-
-    fun clearDescription()
-
-    fun updateDescription(
-        updatedDescription: String,
-    )
 
     fun clearTitle()
 
