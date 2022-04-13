@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_categ
 
 import android.view.View
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -30,6 +31,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -47,6 +51,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiPickerBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiPickerBottomSheetData
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmptySpace
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
@@ -57,6 +62,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldCon
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
+
+enum class AddCategoryBottomSheetType {
+    NONE,
+    SELECT_EMOJI,
+}
 
 data class AddCategoryScreenViewData(
     val screenViewModel: AddCategoryViewModel,
@@ -74,6 +84,11 @@ fun AddCategoryScreenView(
     val selectedTransactionTypeIndex by data.screenViewModel.selectedTransactionTypeIndex.collectAsState()
     val emoji by data.screenViewModel.emoji.collectAsState()
     val emojis by data.screenViewModel.emojis.collectAsState()
+    var addCategoryBottomSheetType by remember {
+        mutableStateOf(
+            value = AddCategoryBottomSheetType.NONE,
+        )
+    }
 
     LaunchedEffect(
         key1 = Unit,
@@ -92,31 +107,49 @@ fun AddCategoryScreenView(
 
     // TODO-Abhi: Add check to restrict category name with text "default"
 
+    BackHandler(
+        enabled = addCategoryBottomSheetType != AddCategoryBottomSheetType.NONE,
+    ) {
+        toggleModalBottomSheetState(
+            coroutineScope = state.coroutineScope,
+            modalBottomSheetState = state.modalBottomSheetState,
+        ) {
+            addCategoryBottomSheetType = AddCategoryBottomSheetType.NONE
+        }
+    }
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
         sheetContent = {
-            EmojiPickerBottomSheet(
-                data = EmojiPickerBottomSheetData(
-                    emojis = emojis,
-                    onEmojiSelection = { emoji ->
-                        toggleModalBottomSheetState(
-                            coroutineScope = state.coroutineScope,
-                            modalBottomSheetState = state.modalBottomSheetState,
-                        ) {
-                            data.screenViewModel.updateEmoji(
-                                updatedEmoji = emoji.character,
-                            )
-                        }
-                    },
-                    onEmojiLongClick = {
-                        Toast.makeText(
-                            state.context,
-                            it.unicodeName.capitalizeWords(),
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                    },
-                ),
-            )
+            when (addCategoryBottomSheetType) {
+                AddCategoryBottomSheetType.NONE -> {
+                    EmptySpace()
+                }
+                AddCategoryBottomSheetType.SELECT_EMOJI -> {
+                    EmojiPickerBottomSheet(
+                        data = EmojiPickerBottomSheetData(
+                            emojis = emojis,
+                            onEmojiSelection = { emoji ->
+                                toggleModalBottomSheetState(
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
+                                ) {
+                                    addCategoryBottomSheetType = AddCategoryBottomSheetType.NONE
+                                    data.screenViewModel.updateEmoji(
+                                        updatedEmoji = emoji.character,
+                                    )
+                                }
+                            },
+                            onEmojiLongClick = {
+                                Toast.makeText(
+                                    state.context,
+                                    it.unicodeName.capitalizeWords(),
+                                    Toast.LENGTH_SHORT,
+                                ).show()
+                            },
+                        ),
+                    )
+                }
+            }
         },
     ) {
         Scaffold(
@@ -154,6 +187,7 @@ fun AddCategoryScreenView(
                             )
                             .clickable {
                                 keyboardController?.hide()
+                                addCategoryBottomSheetType = AddCategoryBottomSheetType.SELECT_EMOJI
                                 toggleModalBottomSheetState(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,

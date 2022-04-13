@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_trans
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -159,6 +160,16 @@ fun AddTransactionScreenView(
         keyboardController?.hide()
     }
 
+    BackHandler(
+        enabled = addTransactionBottomSheetType != AddTransactionBottomSheetType.NONE,
+    ) {
+        toggleModalBottomSheetState(
+            coroutineScope = state.coroutineScope,
+            modalBottomSheetState = state.modalBottomSheetState,
+        ) {
+            addTransactionBottomSheetType = AddTransactionBottomSheetType.NONE
+        }
+    }
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
         sheetShape = BottomSheetShape,

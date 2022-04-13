@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -22,6 +23,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -31,6 +35,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navi
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToCategoriesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSettingsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSourcesScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmptySpace
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
@@ -38,6 +43,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.TotalBalanc
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBarBackground
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBarIconTint
+
+enum class HomeBottomSheetType {
+    NONE,
+    MENU,
+}
 
 data class HomeScreenViewData(
     val screenViewModel: HomeViewModel,
@@ -56,61 +66,86 @@ fun HomeScreenView(
     val totalBalanceAmount by data.screenViewModel.sourcesTotalBalanceAmountValue.collectAsState(
         initial = 0L,
     )
+    var homeBottomSheetType by remember {
+        mutableStateOf(
+            value = HomeBottomSheetType.NONE,
+        )
+    }
 
+    BackHandler(
+        enabled = homeBottomSheetType != HomeBottomSheetType.NONE,
+    ) {
+        toggleModalBottomSheetState(
+            coroutineScope = state.coroutineScope,
+            modalBottomSheetState = state.modalBottomSheetState,
+        ) {
+            homeBottomSheetType = HomeBottomSheetType.NONE
+        }
+    }
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
         sheetContent = {
-            HomeBottomSheet(
-                data = HomeBottomSheetData(
-                    items = listOf(
-                        HomeBottomSheetItemData(
-                            text = stringResource(
-                                id = R.string.screen_home_bottom_sheet_sources,
+            when (homeBottomSheetType) {
+                HomeBottomSheetType.NONE -> {
+                    EmptySpace()
+                }
+                HomeBottomSheetType.MENU -> {
+                    HomeBottomSheet(
+                        data = HomeBottomSheetData(
+                            items = listOf(
+                                HomeBottomSheetItemData(
+                                    text = stringResource(
+                                        id = R.string.screen_home_bottom_sheet_sources,
+                                    ),
+                                    onClick = {
+                                        toggleModalBottomSheetState(
+                                            coroutineScope = state.coroutineScope,
+                                            modalBottomSheetState = state.modalBottomSheetState,
+                                        ) {
+                                            homeBottomSheetType = HomeBottomSheetType.NONE
+                                            navigateToSourcesScreen(
+                                                navigationManager = data.screenViewModel.navigationManager,
+                                            )
+                                        }
+                                    },
+                                ),
+                                HomeBottomSheetItemData(
+                                    text = stringResource(
+                                        id = R.string.screen_home_bottom_sheet_categories,
+                                    ),
+                                    onClick = {
+                                        toggleModalBottomSheetState(
+                                            coroutineScope = state.coroutineScope,
+                                            modalBottomSheetState = state.modalBottomSheetState,
+                                        ) {
+                                            homeBottomSheetType = HomeBottomSheetType.NONE
+                                            navigateToCategoriesScreen(
+                                                navigationManager = data.screenViewModel.navigationManager,
+                                            )
+                                        }
+                                    },
+                                ),
+                                HomeBottomSheetItemData(
+                                    text = stringResource(
+                                        id = R.string.screen_home_bottom_sheet_settings,
+                                    ),
+                                    onClick = {
+                                        toggleModalBottomSheetState(
+                                            coroutineScope = state.coroutineScope,
+                                            modalBottomSheetState = state.modalBottomSheetState,
+                                        ) {
+                                            homeBottomSheetType = HomeBottomSheetType.NONE
+                                            navigateToSettingsScreen(
+                                                navigationManager = data.screenViewModel.navigationManager,
+                                            )
+                                        }
+                                    },
+                                ),
                             ),
-                            onClick = {
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                ) {
-                                    navigateToSourcesScreen(
-                                        navigationManager = data.screenViewModel.navigationManager,
-                                    )
-                                }
-                            },
                         ),
-                        HomeBottomSheetItemData(
-                            text = stringResource(
-                                id = R.string.screen_home_bottom_sheet_categories,
-                            ),
-                            onClick = {
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                ) {
-                                    navigateToCategoriesScreen(
-                                        navigationManager = data.screenViewModel.navigationManager,
-                                    )
-                                }
-                            },
-                        ),
-                        HomeBottomSheetItemData(
-                            text = stringResource(
-                                id = R.string.screen_home_bottom_sheet_settings,
-                            ),
-                            onClick = {
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                ) {
-                                    navigateToSettingsScreen(
-                                        navigationManager = data.screenViewModel.navigationManager,
-                                    )
-                                }
-                            },
-                        ),
-                    ),
-                ),
-            )
+                    )
+                }
+            }
         },
     ) {
         Scaffold(
@@ -135,6 +170,7 @@ fun HomeScreenView(
                     ) {
                         IconButton(
                             onClick = {
+                                homeBottomSheetType = HomeBottomSheetType.MENU
                                 toggleModalBottomSheetState(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,

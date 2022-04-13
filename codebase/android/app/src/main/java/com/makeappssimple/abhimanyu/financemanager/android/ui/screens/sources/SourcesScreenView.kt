@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -75,6 +76,16 @@ fun SourcesScreenView(
         }
     }
 
+    BackHandler(
+        enabled = sourcesBottomSheetType != SourcesBottomSheetType.NONE,
+    ) {
+        toggleModalBottomSheetState(
+            coroutineScope = state.coroutineScope,
+            modalBottomSheetState = state.modalBottomSheetState,
+        ) {
+            sourcesBottomSheetType = SourcesBottomSheetType.NONE
+        }
+    }
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
         sheetShape = BottomSheetShape,
