@@ -8,6 +8,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoriesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesCountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.InsertTransactionUseCase
@@ -26,6 +27,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectIndexed
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
@@ -37,6 +40,7 @@ class AddTransactionViewModelImpl @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
     getSourcesUseCase: GetSourcesUseCase,
     override val navigationManager: NavigationManager,
+    private val getSourcesCountUseCase: GetSourcesCountUseCase,
     private val insertTransactionUseCase: InsertTransactionUseCase,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
 ) : AddTransactionViewModel, ViewModel() {
@@ -123,6 +127,15 @@ class AddTransactionViewModelImpl @Inject constructor(
                 ),
             )
         }
+    }
+    private val _transactionTypesForNewTransaction = MutableStateFlow(
+        value = emptyList<TransactionType>(),
+    )
+    override val transactionTypesForNewTransaction: StateFlow<List<TransactionType>> =
+        _transactionTypesForNewTransaction
+
+    init {
+        initTransactionTypesForNewTransaction()
     }
 
     override fun trackScreen() {
@@ -215,13 +228,6 @@ class AddTransactionViewModelImpl @Inject constructor(
                 navigationManager = navigationManager,
             )
         }
-    }
-
-    override fun getTransactionTypesForNewTransaction(): Array<TransactionType> {
-        // TODO-Abhi: Hide transfer when only one source is there
-        return TransactionType.values().filter {
-            it != TransactionType.ADJUSTMENT
-        }.toTypedArray()
     }
 
     override fun isTitleTextFieldVisible(): Boolean {
@@ -326,6 +332,23 @@ class AddTransactionViewModelImpl @Inject constructor(
             }
             TransactionType.ADJUSTMENT -> {
                 false
+            }
+        }
+    }
+
+    private fun initTransactionTypesForNewTransaction() {
+        viewModelScope.launch(
+            context = Dispatchers.IO,
+        ) {
+            val sourcesCount = getSourcesCountUseCase()
+            _transactionTypesForNewTransaction.value = if (sourcesCount > 1) {
+                TransactionType.values().filter {
+                    it != TransactionType.ADJUSTMENT
+                }
+            } else {
+                TransactionType.values().filter {
+                    it != TransactionType.ADJUSTMENT && it != TransactionType.TRANSFER
+                }
             }
         }
     }

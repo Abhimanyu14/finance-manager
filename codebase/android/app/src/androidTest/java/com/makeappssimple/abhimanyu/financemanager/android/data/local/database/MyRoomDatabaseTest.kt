@@ -42,14 +42,14 @@ class MyRoomDatabaseTest {
         myRoomDatabase.close()
     }
 
-//    @Test
-//    @Throws(Exception::class)
-//    fun writeUserAndReadInList() {
-//        val user: User = TestUtil.createUser(3).apply {
-//            setName("george")
-//        }
-//        userDao.insert(user)
-//        val byName = userDao.findUsersByName("george")
-//        assertThat(byName.get(0), equalTo(user))
-//    }
+    //    @Test
+    //    @Throws(Exception::class)
+    //    fun writeUserAndReadInList() {
+    //        val user: User = TestUtil.createUser(3).apply {
+    //            setName("george")
+    //        }
+    //        userDao.insert(user)
+    //        val byName = userDao.findUsersByName("george")
+    //        assertThat(byName.get(0), equalTo(user))
+    //    }
 }

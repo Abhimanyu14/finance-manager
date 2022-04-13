@@ -88,6 +88,9 @@ fun AddTransactionScreenView(
     val sources by data.screenViewModel.sources.collectAsState(
         initial = emptyList(),
     )
+    val transactionTypesForNewTransaction by data.screenViewModel.transactionTypesForNewTransaction.collectAsState(
+        initial = emptyList(),
+    )
     val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
         data.screenViewModel.transactionCalendar =
             (data.screenViewModel.transactionCalendar.clone() as Calendar)
@@ -270,7 +273,7 @@ fun AddTransactionScreenView(
                         ),
                 ) {
                     MyRadioGroup(
-                        items = data.screenViewModel.getTransactionTypesForNewTransaction()
+                        items = transactionTypesForNewTransaction
                             .map { transactionType ->
                                 MyRadioGroupItem(
                                     text = transactionType.title,

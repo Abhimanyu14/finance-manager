@@ -10,10 +10,6 @@ interface SourcesViewModel : BaseViewModel {
     val sources: Flow<List<Source>>
     val sourcesTotalBalanceAmountValue: Flow<Long>
 
-    fun updateSource(
-        source: Source,
-    )
-
     fun deleteSource(
         id: Int,
     )

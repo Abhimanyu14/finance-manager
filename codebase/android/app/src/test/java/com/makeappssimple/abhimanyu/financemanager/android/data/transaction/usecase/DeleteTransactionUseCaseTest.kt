@@ -7,7 +7,7 @@ import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
-class DeleteTransactionUseCaseTest{
+class DeleteTransactionUseCaseTest {
     private val transactionRepository: TransactionRepository = mock()
     private lateinit var deleteTransactionUseCase: DeleteTransactionUseCase
 

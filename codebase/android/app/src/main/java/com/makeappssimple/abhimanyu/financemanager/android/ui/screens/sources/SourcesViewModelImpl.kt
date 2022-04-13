@@ -37,18 +37,6 @@ class SourcesViewModelImpl @Inject constructor(
         // TODO-Abhi: Add screen tracking code
     }
 
-    override fun updateSource(
-        source: Source,
-    ) {
-        viewModelScope.launch(
-            context = Dispatchers.IO,
-        ) {
-            updateSourcesUseCase(
-                source,
-            )
-        }
-    }
-
     override fun deleteSource(
         id: Int,
     ) {
@@ -86,6 +74,18 @@ class SourcesViewModelImpl @Inject constructor(
             )
             updateSource(
                 source = sourceTo,
+            )
+        }
+    }
+
+    private fun updateSource(
+        source: Source,
+    ) {
+        viewModelScope.launch(
+            context = Dispatchers.IO,
+        ) {
+            updateSourcesUseCase(
+                source,
             )
         }
     }

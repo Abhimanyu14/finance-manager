@@ -8,6 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
 import java.util.Calendar
 
 interface AddTransactionViewModel : BaseViewModel {
@@ -34,6 +35,7 @@ interface AddTransactionViewModel : BaseViewModel {
     var selectedTransactionForIndex: Int
     var selectedTransactionTypeIndex: Int
     val sources: Flow<List<Source>>
+    val transactionTypesForNewTransaction: StateFlow<List<TransactionType>>
 
 
     fun updateSelectedTransactionTypeIndex(
@@ -41,8 +43,6 @@ interface AddTransactionViewModel : BaseViewModel {
     )
 
     fun insertTransaction()
-
-    fun getTransactionTypesForNewTransaction(): Array<TransactionType>
 
     fun isTitleTextFieldVisible(): Boolean
 
