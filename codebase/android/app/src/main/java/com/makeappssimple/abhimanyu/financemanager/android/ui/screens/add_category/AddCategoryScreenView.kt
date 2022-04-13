@@ -83,7 +83,10 @@ fun AddCategoryScreenView(
     val title by data.screenViewModel.title.collectAsState()
     val selectedTransactionTypeIndex by data.screenViewModel.selectedTransactionTypeIndex.collectAsState()
     val emoji by data.screenViewModel.emoji.collectAsState()
-    val emojis by data.screenViewModel.emojis.collectAsState()
+    val searchText by data.screenViewModel.searchText.collectAsState()
+    val emojis by data.screenViewModel.filteredEmojis.collectAsState(
+        initial = emptyList(),
+    )
     var addCategoryBottomSheetType by remember {
         mutableStateOf(
             value = AddCategoryBottomSheetType.NONE,
@@ -128,7 +131,8 @@ fun AddCategoryScreenView(
                     EmojiPickerBottomSheet(
                         data = EmojiPickerBottomSheetData(
                             emojis = emojis,
-                            onEmojiSelection = { emoji ->
+                            searchText = searchText,
+                            onEmojiClick = { emoji ->
                                 toggleModalBottomSheetState(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,
@@ -139,13 +143,16 @@ fun AddCategoryScreenView(
                                     )
                                 }
                             },
-                            onEmojiLongClick = {
+                            onEmojiLongClick = { emoji ->
                                 Toast.makeText(
                                     state.context,
-                                    it.unicodeName.capitalizeWords(),
+                                    emoji.unicodeName.capitalizeWords(),
                                     Toast.LENGTH_SHORT,
                                 ).show()
                             },
+                            updateSearchText = { updatedSearchText ->
+                                data.screenViewModel.updateSearchText(updatedSearchText)
+                            }
                         ),
                     )
                 }

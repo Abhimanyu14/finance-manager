@@ -5,16 +5,19 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.InsertCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.usecase.GetEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
-import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.Emoji
+import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -44,14 +47,31 @@ class AddCategoryViewModelImpl @Inject constructor(
     private val _emoji = MutableStateFlow(
         value = loadingEmoji,
     )
-
-    override val title: StateFlow<String> = _title
-    override val selectedTransactionTypeIndex: StateFlow<Int> = _selectedTransactionTypeIndex
-    override val emoji: StateFlow<String> = _emoji
-    override val emojis: StateFlow<List<Emoji>> = getEmojisUseCase().stateIn(
+    private val _searchText = MutableStateFlow(
+        value = "",
+    )
+    private val emojis: StateFlow<List<EmojiLocalEntity>> = getEmojisUseCase().stateIn(
         scope = viewModelScope,
         started = SharingStarted.Eagerly,
         initialValue = emptyList(),
+    )
+    override val title: StateFlow<String> = _title
+    override val selectedTransactionTypeIndex: StateFlow<Int> = _selectedTransactionTypeIndex
+    override val emoji: StateFlow<String> = _emoji
+    override val searchText: StateFlow<String> = _searchText
+    override val filteredEmojis: Flow<List<EmojiLocalEntity>> = combine(
+        flow = emojis,
+        flow2 = searchText,
+    ) { emojis, searchText ->
+        emojis.filter { emoji ->
+            if (searchText.isBlank()) {
+                true
+            } else {
+                emoji.unicodeName.contains(searchText)
+            }
+        }
+    }.flowOn(
+        context = Dispatchers.IO,
     )
 
     override fun trackScreen() {
@@ -99,5 +119,11 @@ class AddCategoryViewModelImpl @Inject constructor(
         updatedEmoji: String,
     ) {
         _emoji.value = updatedEmoji
+    }
+
+    override fun updateSearchText(
+        updatedSearchText: String,
+    ) {
+        _searchText.value = updatedSearchText
     }
 }

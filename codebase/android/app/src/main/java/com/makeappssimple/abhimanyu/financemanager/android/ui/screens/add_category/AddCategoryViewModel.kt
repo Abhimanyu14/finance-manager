@@ -4,6 +4,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 interface AddCategoryViewModel : BaseViewModel {
@@ -12,7 +13,8 @@ interface AddCategoryViewModel : BaseViewModel {
     val title: StateFlow<String>
     val selectedTransactionTypeIndex: StateFlow<Int>
     val emoji: StateFlow<String>
-    val emojis: StateFlow<List<Emoji>>
+    val searchText: StateFlow<String>
+    val filteredEmojis: Flow<List<Emoji>>
 
     fun insertCategory()
 
@@ -30,5 +32,9 @@ interface AddCategoryViewModel : BaseViewModel {
 
     fun updateEmoji(
         updatedEmoji: String,
+    )
+
+    fun updateSearchText(
+        updatedSearchText: String,
     )
 }
