@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_sourc
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.InsertSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
@@ -10,7 +11,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.Navigation
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -19,6 +19,7 @@ import javax.inject.Inject
 @HiltViewModel
 class AddSourceViewModelImpl @Inject constructor(
     override val navigationManager: NavigationManager,
+    private val dispatcherProvider: DispatcherProvider,
     private val insertSourceUseCase: InsertSourceUseCase,
 ) : AddSourceViewModel, ViewModel() {
     override val sourceTypes: List<SourceType> = SourceType.values()
@@ -43,7 +44,7 @@ class AddSourceViewModelImpl @Inject constructor(
 
     override fun insertSource() {
         viewModelScope.launch(
-            context = Dispatchers.IO,
+            context = dispatcherProvider.io,
         ) {
             insertSourceUseCase(
                 source = Source(

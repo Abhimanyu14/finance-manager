@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_categ
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.InsertCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.usecase.GetEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
@@ -11,7 +12,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.Navigation
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -29,6 +29,7 @@ const val loadingCompletedEmoji = "😃"
 class AddCategoryViewModelImpl @Inject constructor(
     getEmojisUseCase: GetEmojisUseCase,
     override val navigationManager: NavigationManager,
+    private val dispatcherProvider: DispatcherProvider,
     private val insertCategoryUseCase: InsertCategoryUseCase,
 ) : AddCategoryViewModel, ViewModel() {
     override val transactionTypes: List<TransactionType> = TransactionType.values()
@@ -71,7 +72,7 @@ class AddCategoryViewModelImpl @Inject constructor(
             }
         }
     }.flowOn(
-        context = Dispatchers.IO,
+        context = dispatcherProvider.io,
     )
 
     override fun trackScreen() {
@@ -80,7 +81,7 @@ class AddCategoryViewModelImpl @Inject constructor(
 
     override fun insertCategory() {
         viewModelScope.launch(
-            context = Dispatchers.IO,
+            context = dispatcherProvider.io,
         ) {
             insertCategoryUseCase(
                 category = Category(

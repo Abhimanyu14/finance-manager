@@ -2,12 +2,12 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categorie
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.DeleteCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,6 +16,7 @@ import javax.inject.Inject
 class CategoriesViewModelImpl @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
     override val navigationManager: NavigationManager,
+    private val dispatcherProvider: DispatcherProvider,
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
 ) : CategoriesViewModel, ViewModel() {
     override val categories: Flow<List<Category>> = getCategoriesUseCase()
@@ -28,7 +29,7 @@ class CategoriesViewModelImpl @Inject constructor(
         id: Int,
     ) {
         viewModelScope.launch(
-            context = Dispatchers.IO,
+            context = dispatcherProvider.io,
         ) {
             deleteCategoryUseCase(
                 id = id,

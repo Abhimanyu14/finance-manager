@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesCountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesUseCase
@@ -25,7 +26,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.form
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.formattedTime
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -40,6 +40,7 @@ class AddTransactionViewModelImpl @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
     getSourcesUseCase: GetSourcesUseCase,
     override val navigationManager: NavigationManager,
+    private val dispatcherProvider: DispatcherProvider,
     private val getSourcesCountUseCase: GetSourcesCountUseCase,
     private val insertTransactionUseCase: InsertTransactionUseCase,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
@@ -167,7 +168,7 @@ class AddTransactionViewModelImpl @Inject constructor(
 
     override fun insertTransaction() {
         viewModelScope.launch(
-            context = Dispatchers.IO,
+            context = dispatcherProvider.io,
         ) {
             insertTransactionUseCase(
                 transaction = Transaction(
@@ -338,7 +339,7 @@ class AddTransactionViewModelImpl @Inject constructor(
 
     private fun initTransactionTypesForNewTransaction() {
         viewModelScope.launch(
-            context = Dispatchers.IO,
+            context = dispatcherProvider.io,
         ) {
             val sourcesCount = getSourcesCountUseCase()
             _transactionTypesForNewTransaction.value = if (sourcesCount > 1) {

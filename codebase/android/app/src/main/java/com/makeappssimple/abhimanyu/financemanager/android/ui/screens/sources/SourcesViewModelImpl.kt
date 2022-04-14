@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.DeleteSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesTotalBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesUseCase
@@ -14,7 +15,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -25,6 +25,7 @@ class SourcesViewModelImpl @Inject constructor(
     getSourcesTotalBalanceAmountValueUseCase: GetSourcesTotalBalanceAmountValueUseCase,
     getSourcesUseCase: GetSourcesUseCase,
     override val navigationManager: NavigationManager,
+    private val dispatcherProvider: DispatcherProvider,
     private val deleteSourceUseCase: DeleteSourceUseCase,
     private val insertTransactionUseCase: InsertTransactionUseCase,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
@@ -41,7 +42,7 @@ class SourcesViewModelImpl @Inject constructor(
         id: Int,
     ) {
         viewModelScope.launch(
-            context = Dispatchers.IO,
+            context = dispatcherProvider.io,
         ) {
             deleteSourceUseCase(
                 id = id,
@@ -54,7 +55,7 @@ class SourcesViewModelImpl @Inject constructor(
         sourceTo: Source,
     ) {
         viewModelScope.launch(
-            context = Dispatchers.IO,
+            context = dispatcherProvider.io,
         ) {
             insertTransactionUseCase(
                 transaction = Transaction(
@@ -82,7 +83,7 @@ class SourcesViewModelImpl @Inject constructor(
         source: Source,
     ) {
         viewModelScope.launch(
-            context = Dispatchers.IO,
+            context = dispatcherProvider.io,
         ) {
             updateSourcesUseCase(
                 source,
