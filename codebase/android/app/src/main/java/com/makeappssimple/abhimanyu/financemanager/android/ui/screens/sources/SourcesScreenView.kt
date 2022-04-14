@@ -75,7 +75,6 @@ fun SourcesScreenView(
             }
         }
     }
-
     BackHandler(
         enabled = sourcesBottomSheetType != SourcesBottomSheetType.NONE,
     ) {
@@ -86,6 +85,7 @@ fun SourcesScreenView(
             sourcesBottomSheetType = SourcesBottomSheetType.NONE
         }
     }
+
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
         sheetShape = BottomSheetShape,

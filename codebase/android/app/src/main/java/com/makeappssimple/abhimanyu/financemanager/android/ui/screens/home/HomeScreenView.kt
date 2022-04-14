@@ -13,6 +13,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FabPosition
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Menu
@@ -21,12 +22,15 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
@@ -53,6 +57,7 @@ data class HomeScreenViewData(
     val screenViewModel: HomeViewModel,
 )
 
+@OptIn(ExperimentalComposeUiApi::class)
 @ExperimentalMaterialApi
 @ExperimentalMaterial3Api
 @Composable
@@ -60,6 +65,7 @@ fun HomeScreenView(
     data: HomeScreenViewData,
     state: HomeScreenViewState,
 ) {
+    val keyboardController = LocalSoftwareKeyboardController.current
     val homeListItemViewData by data.screenViewModel.homeListItemViewData.collectAsState(
         initial = emptyList(),
     )
@@ -71,7 +77,14 @@ fun HomeScreenView(
             value = HomeBottomSheetType.NONE,
         )
     }
-
+    if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
+        DisposableEffect(Unit) {
+            onDispose {
+                homeBottomSheetType = HomeBottomSheetType.NONE
+                keyboardController?.hide()
+            }
+        }
+    }
     BackHandler(
         enabled = homeBottomSheetType != HomeBottomSheetType.NONE,
     ) {
@@ -82,6 +95,7 @@ fun HomeScreenView(
             homeBottomSheetType = HomeBottomSheetType.NONE
         }
     }
+
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
         sheetContent = {

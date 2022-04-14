@@ -16,6 +16,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
@@ -23,6 +24,7 @@ import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -159,7 +161,14 @@ fun AddTransactionScreenView(
     ) {
         keyboardController?.hide()
     }
-
+    if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
+        DisposableEffect(Unit) {
+            onDispose {
+                addTransactionBottomSheetType = AddTransactionBottomSheetType.NONE
+                keyboardController?.hide()
+            }
+        }
+    }
     BackHandler(
         enabled = addTransactionBottomSheetType != AddTransactionBottomSheetType.NONE,
     ) {
@@ -170,6 +179,7 @@ fun AddTransactionScreenView(
             addTransactionBottomSheetType = AddTransactionBottomSheetType.NONE
         }
     }
+
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
         sheetShape = BottomSheetShape,
