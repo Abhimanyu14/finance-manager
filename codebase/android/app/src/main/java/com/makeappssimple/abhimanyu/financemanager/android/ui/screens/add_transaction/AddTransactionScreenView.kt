@@ -44,6 +44,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.AmountCommaVisualTransformation
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmptySpace
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
@@ -350,6 +351,7 @@ fun AddTransactionScreenView(
                         onValueChange = {
                             data.screenViewModel.amount = it
                         },
+                        visualTransformation = AmountCommaVisualTransformation(),
                         keyboardActions = KeyboardActions(
                             onNext = {
                                 state.focusManager.moveFocus(

@@ -4,6 +4,7 @@ import androidx.annotation.VisibleForTesting
 import com.makeappssimple.abhimanyu.financemanager.android.utils.formattedCurrencyValue
 import com.squareup.moshi.JsonClass
 import java.util.Currency
+import kotlin.math.abs
 
 @VisibleForTesting
 internal const val CURRENCY_CODE_INR = "INR"
@@ -15,20 +16,24 @@ data class Amount(
 ) {
     fun toSignedString(): String {
         val formattedValue = formattedCurrencyValue(
-            value = value,
+            value = abs(value),
         )
         return if (value > 0) {
-            "${currency.symbol} +$formattedValue"
+            "+ ${currency.symbol}$formattedValue"
         } else {
-            "${currency.symbol} $formattedValue"
+            "- ${currency.symbol}$formattedValue"
         }
     }
 
     override fun toString(): String {
         val formattedValue = formattedCurrencyValue(
-            value = value,
+            value = abs(value),
         )
-        return "${currency.symbol} $formattedValue"
+        return if (value > 0) {
+            "${currency.symbol}$formattedValue"
+        } else {
+            "- ${currency.symbol}$formattedValue"
+        }
     }
 
     operator fun plus(

@@ -1,0 +1,37 @@
+package com.makeappssimple.abhimanyu.financemanager.android.ui.common
+
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.input.OffsetMapping
+import androidx.compose.ui.text.input.TransformedText
+import androidx.compose.ui.text.input.VisualTransformation
+import com.makeappssimple.abhimanyu.financemanager.android.utils.formattedCurrencyValue
+
+// format long to 123,456,789,9
+class AmountCommaVisualTransformation : VisualTransformation {
+    override fun filter(
+        text: AnnotatedString,
+    ): TransformedText {
+        return TransformedText(
+            text = AnnotatedString(
+                formattedCurrencyValue(
+                    value = text.text.toLongOrNull() ?: 0,
+                ),
+            ),
+            offsetMapping = object : OffsetMapping {
+                override fun originalToTransformed(
+                    offset: Int,
+                ): Int {
+                    return formattedCurrencyValue(
+                        value = text.text.toLongOrNull() ?: 0,
+                    ).length
+                }
+
+                override fun transformedToOriginal(
+                    offset: Int,
+                ): Int {
+                    return text.length
+                }
+            }
+        )
+    }
+}

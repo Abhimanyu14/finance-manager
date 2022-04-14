@@ -32,6 +32,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.AmountCommaVisualTransformation
 
 data class SourcesEditBalanceAmountBottomSheetData(
     val balanceAmount: Int,
@@ -94,6 +95,7 @@ fun SourcesEditBalanceAmountBottomSheet(
                 onValueChange = { value: TextFieldValue ->
                     updatedBalanceAmount = value
                 },
+                visualTransformation = AmountCommaVisualTransformation(),
                 keyboardActions = KeyboardActions(
                     onDone = {
                         focusManager.clearFocus()
