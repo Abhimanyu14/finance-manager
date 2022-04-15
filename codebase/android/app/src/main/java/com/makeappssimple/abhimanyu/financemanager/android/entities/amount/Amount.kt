@@ -18,10 +18,16 @@ data class Amount(
         val formattedValue = formattedCurrencyValue(
             value = abs(value),
         )
-        return if (value > 0) {
-            "+ ${currency.symbol}$formattedValue"
-        } else {
-            "- ${currency.symbol}$formattedValue"
+        return when {
+            value > 0 -> {
+                "+ ${currency.symbol}$formattedValue"
+            }
+            value < 0 -> {
+                "- ${currency.symbol}$formattedValue"
+            }
+            else -> {
+                "${currency.symbol}$formattedValue"
+            }
         }
     }
 
@@ -29,7 +35,7 @@ data class Amount(
         val formattedValue = formattedCurrencyValue(
             value = abs(value),
         )
-        return if (value > 0) {
+        return if (value >= 0) {
             "${currency.symbol}$formattedValue"
         } else {
             "- ${currency.symbol}$formattedValue"
