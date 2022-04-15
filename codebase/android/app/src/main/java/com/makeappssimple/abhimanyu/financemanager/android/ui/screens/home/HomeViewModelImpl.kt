@@ -27,22 +27,26 @@ class HomeViewModelImpl @Inject constructor(
 ) : HomeViewModel, ViewModel() {
     override val sourcesTotalBalanceAmountValue: Flow<Long> =
         getSourcesTotalBalanceAmountValueUseCase()
-    override val homeListItemViewData: Flow<List<HomeListItemViewData>> =
-        getTransactionsUseCase().map {
-            it.map { transaction ->
-                HomeListItemViewData(
-                    category = getCategoryUseCase(
-                        id = transaction.categoryId,
-                    ),
-                    transaction = transaction,
-                    sourceFrom = getSourceUseCase(
-                        id = transaction.sourceFromId,
-                    ),
-                    sourceTo = getSourceUseCase(
-                        id = transaction.sourceToId,
-                    ),
-                )
-            }
+    override val homeListItemViewData: Flow<List<HomeListItemViewData>> = getTransactionsUseCase()
+        .map { transactions ->
+            transactions
+                .sortedByDescending { transaction ->
+                    transaction.transactionTimestamp
+                }
+                .map { transaction ->
+                    HomeListItemViewData(
+                        category = getCategoryUseCase(
+                            id = transaction.categoryId,
+                        ),
+                        transaction = transaction,
+                        sourceFrom = getSourceUseCase(
+                            id = transaction.sourceFromId,
+                        ),
+                        sourceTo = getSourceUseCase(
+                            id = transaction.sourceToId,
+                        ),
+                    )
+                }
         }
 
     override fun trackScreen() {
