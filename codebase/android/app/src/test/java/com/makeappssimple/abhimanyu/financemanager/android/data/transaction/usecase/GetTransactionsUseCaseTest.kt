@@ -24,7 +24,7 @@ class GetTransactionsUseCaseTest {
             getTransactionsUseCase()
 
             verify(
-                mock = transactionRepository
+                mock = transactionRepository,
             ).transactions
         }
     }

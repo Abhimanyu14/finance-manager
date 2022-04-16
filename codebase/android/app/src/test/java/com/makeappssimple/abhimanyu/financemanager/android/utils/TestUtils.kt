@@ -36,6 +36,15 @@ fun getTestCategories(): Array<Category> {
     )
 }
 
+fun getTestEmoji(): EmojiLocalEntity {
+    return EmojiLocalEntity(
+        character = "character",
+        codePoint = "codePoint",
+        group = "group",
+        unicodeName = "unicodeName",
+    )
+}
+
 fun getTestEmojis(): Array<EmojiLocalEntity> {
     return arrayOf(
         EmojiLocalEntity(

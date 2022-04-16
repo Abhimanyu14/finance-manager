@@ -28,7 +28,7 @@ class UpdateSourcesUseCaseTest {
             )
 
             verify(
-                mock = sourceRepository
+                mock = sourceRepository,
             ).updateSources(
                 *sources,
             )

@@ -24,7 +24,7 @@ class GetSourcesUseCaseTest {
             getSourcesUseCase()
 
             verify(
-                mock = sourceRepository
+                mock = sourceRepository,
             ).sources
         }
     }

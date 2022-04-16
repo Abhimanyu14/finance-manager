@@ -27,7 +27,7 @@ class DeleteCategoryUseCaseTest {
             )
 
             verify(
-                mock = categoryRepository
+                mock = categoryRepository,
             ).deleteCategory(
                 id = id,
             )

@@ -27,7 +27,7 @@ class GetCategoryUseCaseTest {
             )
 
             verify(
-                mock = categoryRepository
+                mock = categoryRepository,
             ).getCategory(
                 id = id,
             )

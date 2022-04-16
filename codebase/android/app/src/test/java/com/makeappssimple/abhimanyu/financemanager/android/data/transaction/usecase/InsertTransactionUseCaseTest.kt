@@ -28,7 +28,7 @@ class InsertTransactionUseCaseTest {
             )
 
             verify(
-                mock = transactionRepository
+                mock = transactionRepository,
             ).insertTransaction(
                 transaction = transaction,
             )

@@ -28,7 +28,7 @@ class InsertEmojisUseCaseTest {
             )
 
             verify(
-                mock = emojiRepository
+                mock = emojiRepository,
             ).insertEmojis(
                 *emojis,
             )

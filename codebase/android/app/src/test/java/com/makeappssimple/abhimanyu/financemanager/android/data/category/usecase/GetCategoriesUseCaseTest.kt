@@ -24,7 +24,7 @@ class GetCategoriesUseCaseTest {
             getCategoriesUseCase()
 
             verify(
-                mock = categoryRepository
+                mock = categoryRepository,
             ).categories
         }
     }

@@ -28,7 +28,7 @@ class InsertSourceUseCaseTest {
             )
 
             verify(
-                mock = sourceRepository
+                mock = sourceRepository,
             ).insertSource(
                 source = source,
             )

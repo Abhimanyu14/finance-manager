@@ -27,7 +27,7 @@ class GetSourceUseCaseTest {
             )
 
             verify(
-                mock = sourceRepository
+                mock = sourceRepository,
             ).getSource(
                 id = id,
             )

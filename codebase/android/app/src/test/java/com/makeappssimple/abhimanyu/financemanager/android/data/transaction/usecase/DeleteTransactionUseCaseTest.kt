@@ -27,7 +27,7 @@ class DeleteTransactionUseCaseTest {
             )
 
             verify(
-                mock = transactionRepository
+                mock = transactionRepository,
             ).deleteTransaction(
                 id = id,
             )

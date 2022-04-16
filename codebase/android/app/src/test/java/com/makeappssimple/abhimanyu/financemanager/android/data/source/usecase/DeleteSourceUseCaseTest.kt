@@ -27,7 +27,7 @@ class DeleteSourceUseCaseTest {
             )
 
             verify(
-                mock = sourceRepository
+                mock = sourceRepository,
             ).deleteSource(
                 id = id,
             )

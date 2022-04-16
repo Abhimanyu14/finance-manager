@@ -24,7 +24,7 @@ class GetEmojisUseCaseTest {
             getEmojisUseCase()
 
             verify(
-                mock = emojiRepository
+                mock = emojiRepository,
             ).emojis
         }
     }

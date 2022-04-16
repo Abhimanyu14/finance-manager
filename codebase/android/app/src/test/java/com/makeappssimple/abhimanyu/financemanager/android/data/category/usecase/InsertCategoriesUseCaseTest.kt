@@ -28,7 +28,7 @@ class InsertCategoriesUseCaseTest {
             )
 
             verify(
-                mock = categoryRepository
+                mock = categoryRepository,
             ).insertCategories(
                 *categories,
             )
