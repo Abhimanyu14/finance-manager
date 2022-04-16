@@ -21,13 +21,13 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Icon
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Clear
-import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -197,39 +197,6 @@ fun AddCategoryScreenView(
                             state = rememberScrollState(),
                         ),
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .clip(
-                                shape = CircleShape,
-                            )
-                            .clickable {
-                                keyboardController?.hide()
-                                addCategoryBottomSheetType = AddCategoryBottomSheetType.SELECT_EMOJI
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                ) {}
-                            }
-                            .padding(
-                                all = 4.dp,
-                            ),
-                    ) {
-                        AndroidView(
-                            factory = { context ->
-                                AppCompatTextView(context).apply {
-                                    setTextColor(Color.Black.toArgb())
-                                    text = emoji
-                                    textSize = 28F
-                                    textAlignment = View.TEXT_ALIGNMENT_CENTER
-                                }
-                            },
-                            update = {
-                                it.apply {
-                                    text = emoji
-                                }
-                            },
-                        )
-                    }
                     Row(
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically,
@@ -255,70 +222,129 @@ fun AddCategoryScreenView(
                                 ),
                         )
                     }
-                    OutlinedTextField(
-                        value = title,
-                        label = {
-                            OutlinedTextFieldLabelText(
-                                textStringResourceId = R.string.screen_add_category_title,
-                            )
-                        },
-                        trailingIcon = {
-                            AnimatedVisibility(
-                                visible = title.isNotNullOrBlank(),
-                                enter = fadeIn(),
-                                exit = fadeOut(),
-                            ) {
-                                MyIconButton(
-                                    onClickLabel = stringResource(
-                                        id = R.string.screen_add_category_clear_title,
-                                    ),
-                                    onClick = {
-                                        data.screenViewModel.clearTitle()
-                                    },
-                                    modifier = Modifier
-                                        .padding(
-                                            end = 4.dp,
-                                        ),
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Rounded.Clear,
-                                        contentDescription = stringResource(
-                                            id = R.string.screen_add_category_clear_title,
-                                        ),
-                                    )
-                                }
-                            }
-                        },
-                        onValueChange = {
-                            data.screenViewModel.updateTitle(
-                                updatedTitle = it,
-                            )
-                        },
-                        keyboardActions = KeyboardActions(
-                            onNext = {
-                                state.focusManager.moveFocus(
-                                    focusDirection = FocusDirection.Down,
-                                )
-                            },
-                            onDone = {
-                                state.focusManager.clearFocus()
-                            },
-                        ),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Text,
-                            imeAction = ImeAction.Done,
-                        ),
-                        singleLine = true,
+//                    Text(
+//                        text = stringResource(
+//                            id = R.string.screen_add_category_title,
+//                        ),
+//                        style = TextStyle(
+//                            color = Color.DarkGray,
+//                            fontSize = 16.sp,
+//                            fontWeight = FontWeight.Bold,
+//                        ),
+//                        modifier = Modifier
+//                            .padding(
+//                                horizontal = 16.dp,
+//                            )
+//                            .fillMaxWidth(),
+//                    )
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .focusRequester(
-                                focusRequester = state.focusRequester,
-                            )
                             .padding(
                                 horizontal = 16.dp,
-                                vertical = 8.dp,
+                            )
+                            .fillMaxWidth(),
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .clip(
+                                    shape = CircleShape,
+                                )
+                                .clickable {
+                                    keyboardController?.hide()
+                                    addCategoryBottomSheetType =
+                                        AddCategoryBottomSheetType.SELECT_EMOJI
+                                    toggleModalBottomSheetState(
+                                        coroutineScope = state.coroutineScope,
+                                        modalBottomSheetState = state.modalBottomSheetState,
+                                    ) {}
+                                }
+                                .padding(
+                                    all = 4.dp,
+                                ),
+                        ) {
+                            AndroidView(
+                                factory = { context ->
+                                    AppCompatTextView(context).apply {
+                                        setTextColor(Color.Black.toArgb())
+                                        text = emoji
+                                        textSize = 28F
+                                        textAlignment = View.TEXT_ALIGNMENT_CENTER
+                                    }
+                                },
+                                update = {
+                                    it.apply {
+                                        text = emoji
+                                    }
+                                },
+                            )
+                        }
+                        OutlinedTextField(
+                            value = title,
+                            label = {
+                                OutlinedTextFieldLabelText(
+                                    textStringResourceId = R.string.screen_add_category_title,
+                                )
+                            },
+                            trailingIcon = {
+                                AnimatedVisibility(
+                                    visible = title.isNotNullOrBlank(),
+                                    enter = fadeIn(),
+                                    exit = fadeOut(),
+                                ) {
+                                    MyIconButton(
+                                        onClickLabel = stringResource(
+                                            id = R.string.screen_add_category_clear_title,
+                                        ),
+                                        onClick = {
+                                            data.screenViewModel.clearTitle()
+                                        },
+                                        modifier = Modifier
+                                            .padding(
+                                                end = 4.dp,
+                                            ),
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Rounded.Clear,
+                                            contentDescription = stringResource(
+                                                id = R.string.screen_add_category_clear_title,
+                                            ),
+                                        )
+                                    }
+                                }
+                            },
+                            onValueChange = {
+                                data.screenViewModel.updateTitle(
+                                    updatedTitle = it,
+                                )
+                            },
+                            keyboardActions = KeyboardActions(
+                                onNext = {
+                                    state.focusManager.moveFocus(
+                                        focusDirection = FocusDirection.Down,
+                                    )
+                                },
+                                onDone = {
+                                    state.focusManager.clearFocus()
+                                },
                             ),
-                    )
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Text,
+                                imeAction = ImeAction.Done,
+                            ),
+                            singleLine = true,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .focusRequester(
+                                    focusRequester = state.focusRequester,
+                                )
+                                .padding(
+                                    start = 4.dp,
+                                    top = 8.dp,
+                                    bottom = 8.dp,
+                                ),
+                        )
+                    }
                     SaveButton(
                         textStringResourceId = R.string.screen_add_category_floating_action_button_content_description,
                         isEnabled = data.screenViewModel.isValidCategoryData(),
