@@ -178,10 +178,11 @@ fun SourcesScreenView(
                     ) { _, listItem ->
                         SourceListItem(
                             source = listItem,
-                            swipeToDeleteEnabled = !listItem.name.contains(
-                                other = "Cash",
-                                ignoreCase = false,
-                            ),
+                            swipeToDeleteEnabled = false,
+                            //                            !listItem.name.contains(
+                            //                                other = "Cash",
+                            //                                ignoreCase = false,
+                            //                            ),
                             deleteSource = {
                                 data.screenViewModel.deleteSource(
                                     id = listItem.id,
