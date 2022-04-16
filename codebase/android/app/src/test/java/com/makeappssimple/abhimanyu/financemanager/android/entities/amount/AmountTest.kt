@@ -23,7 +23,7 @@ class AmountTest {
         val result = amount.toSignedString()
 
         Assert.assertEquals(
-            "₹ +23",
+            "+ ₹23",
             result,
         )
     }
@@ -33,7 +33,7 @@ class AmountTest {
         val result = amount.toString()
 
         Assert.assertEquals(
-            "₹ 23",
+            "₹23",
             result,
         )
     }

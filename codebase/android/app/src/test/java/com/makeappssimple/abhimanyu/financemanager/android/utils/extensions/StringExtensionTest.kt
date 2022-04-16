@@ -1,20 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.utils.extensions
 
-import org.junit.After
 import org.junit.Assert
-import org.junit.Before
 import org.junit.Test
 
 class StringExtensionTest {
 
-    @Before
-    fun setUp() {
-    }
-
-    @After
-    fun tearDown() {
-    }
-
+    // region isNotNullOrBlank tests
     @Test
     fun isNotNullOrBlank_stringIsNull_returnsFalse() {
         val input: String? = null
@@ -38,7 +29,9 @@ class StringExtensionTest {
         val input = "input"
         Assert.assertTrue(input.isNotNullOrBlank())
     }
+    // endregion
 
+    // region padStartWithZero tests
     @Test
     fun padStartWithZero_lengthIsGreaterThanStringLength() {
         val input = "23"
@@ -93,4 +86,16 @@ class StringExtensionTest {
             ),
         )
     }
+    // endregion
+
+    // region capitalizeWords tests
+    @Test
+    fun capitalizeWords_singleWordAllSmallLetters() {
+        val input = "test"
+        Assert.assertEquals(
+            "Test",
+            input.capitalizeWords(),
+        )
+    }
+    // endregion
 }
