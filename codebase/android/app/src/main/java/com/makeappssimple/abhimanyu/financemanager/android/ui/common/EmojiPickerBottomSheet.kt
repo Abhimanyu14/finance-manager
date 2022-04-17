@@ -205,6 +205,10 @@ private fun EmojiGroupName(
             fontWeight = FontWeight.Bold,
         ),
         modifier = Modifier
+            .fillMaxWidth()
+            .background(
+                color = Surface,
+            )
             .padding(
                 all = 8.dp,
             ),

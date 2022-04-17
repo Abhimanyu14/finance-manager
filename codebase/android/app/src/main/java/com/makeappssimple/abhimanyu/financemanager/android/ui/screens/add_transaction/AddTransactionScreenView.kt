@@ -55,6 +55,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.OutlinedTex
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.dayOfMonth
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.hour
@@ -183,7 +184,11 @@ fun AddTransactionScreenView(
 
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
-        sheetShape = BottomSheetShape,
+        sheetShape = if (state.modalBottomSheetState.currentValue == ModalBottomSheetValue.Expanded) {
+            BottomSheetExpandedShape
+        } else {
+            BottomSheetShape
+        },
         sheetContent = {
             when (addTransactionBottomSheetType) {
                 AddTransactionBottomSheetType.NONE -> {

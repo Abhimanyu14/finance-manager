@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
@@ -21,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiCircle
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 
 data class AddTransactionSelectCategoryBottomSheetItemData(
     val category: Category,
@@ -41,7 +43,7 @@ fun AddTransactionSelectCategoryBottomSheet(
                 minHeight = 24.dp,
             ),
     ) {
-        item {
+        stickyHeader {
             Text(
                 text = stringResource(
                     id = R.string.bottom_sheet_add_transaction_select_category_title,
@@ -53,6 +55,9 @@ fun AddTransactionSelectCategoryBottomSheet(
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
+                    .background(
+                        color = Surface,
+                    )
                     .padding(
                         all = 16.dp,
                     ),

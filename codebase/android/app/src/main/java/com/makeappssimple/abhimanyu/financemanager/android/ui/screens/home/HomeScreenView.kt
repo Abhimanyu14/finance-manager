@@ -47,6 +47,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.TotalBalanc
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBarBackground
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBarIconTint
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 
 enum class HomeBottomSheetType {
     NONE,
@@ -98,6 +99,7 @@ fun HomeScreenView(
 
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
+        sheetShape = BottomSheetShape,
         sheetContent = {
             when (homeBottomSheetType) {
                 HomeBottomSheetType.NONE -> {

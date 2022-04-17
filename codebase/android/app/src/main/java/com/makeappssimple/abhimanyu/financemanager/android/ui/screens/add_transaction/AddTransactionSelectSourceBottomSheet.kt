@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
@@ -21,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getIcon
 
 data class AddTransactionSelectSourceBottomSheetItemData(
@@ -43,7 +45,7 @@ fun AddTransactionSelectSourceBottomSheet(
                 minHeight = 24.dp,
             ),
     ) {
-        item {
+        stickyHeader {
             Text(
                 text = stringResource(
                     id = R.string.bottom_sheet_add_transaction_select_source_title,
@@ -55,6 +57,9 @@ fun AddTransactionSelectSourceBottomSheet(
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
+                    .background(
+                        color = Surface,
+                    )
                     .padding(
                         all = 16.dp,
                     ),
