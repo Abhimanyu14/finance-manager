@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.DarkGray
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
@@ -27,7 +28,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navi
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.getDismissState
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 
@@ -131,6 +132,8 @@ fun CategoriesScreenView(
                             listItem.hashCode()
                         },
                     ) { _, listItem ->
+                        /*
+                        // TODO-Abhi: Disabled swipe to dismiss
                         val dismissState = getDismissState(
                             dismissedToEndAction = {
                                 data.screenViewModel.deleteCategory(
@@ -138,12 +141,13 @@ fun CategoriesScreenView(
                                 )
                             },
                         )
+                        */
 
                         CategoryListItem(
                             category = listItem,
                         )
                         /*
-                        TODO-Abhi: Disabled swipe to dismiss
+                        // TODO-Abhi: Disabled swipe to dismiss
                         SwipeToDismiss(
                             state = dismissState,
                             directions = mutableSetOf(
@@ -195,6 +199,11 @@ fun CategoriesScreenView(
                             )
                         }
                         */
+                    }
+                    item {
+                        VerticalSpacer(
+                            height = 80.dp,
+                        )
                     }
                 }
             }

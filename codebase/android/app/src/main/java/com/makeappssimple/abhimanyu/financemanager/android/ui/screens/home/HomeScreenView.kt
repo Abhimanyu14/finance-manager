@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
@@ -39,11 +38,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navi
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToCategoriesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSettingsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSourcesScreen
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmptySpace
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.TotalBalanceCard
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBarBackground
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBarIconTint
@@ -103,7 +102,7 @@ fun HomeScreenView(
         sheetContent = {
             when (homeBottomSheetType) {
                 HomeBottomSheetType.NONE -> {
-                    EmptySpace()
+                    VerticalSpacer()
                 }
                 HomeBottomSheetType.MENU -> {
                     HomeBottomSheet(
@@ -263,11 +262,8 @@ fun HomeScreenView(
                         )
                     }
                     item {
-                        Spacer(
-                            modifier = Modifier
-                                .height(
-                                    height = 48.dp,
-                                ),
+                        VerticalSpacer(
+                            height = 48.dp,
                         )
                     }
                 }

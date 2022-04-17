@@ -20,16 +20,17 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddSourceScreen
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmptySpace
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.TotalBalanceCard
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 
@@ -92,7 +93,7 @@ fun SourcesScreenView(
         sheetContent = {
             when (sourcesBottomSheetType) {
                 SourcesBottomSheetType.NONE -> {
-                    EmptySpace()
+                    VerticalSpacer()
                 }
                 SourcesBottomSheetType.EDIT_BALANCE_AMOUNT -> {
                     SourcesEditBalanceAmountBottomSheet(
@@ -196,6 +197,11 @@ fun SourcesScreenView(
                                     modalBottomSheetState = state.modalBottomSheetState,
                                 ) {}
                             },
+                        )
+                    }
+                    item {
+                        VerticalSpacer(
+                            height = 80.dp,
                         )
                     }
                 }

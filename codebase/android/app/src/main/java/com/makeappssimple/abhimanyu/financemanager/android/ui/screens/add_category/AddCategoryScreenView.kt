@@ -53,7 +53,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiPickerBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiPickerBottomSheetData
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmptySpace
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
@@ -135,7 +135,7 @@ fun AddCategoryScreenView(
         sheetContent = {
             when (addCategoryBottomSheetType) {
                 AddCategoryBottomSheetType.NONE -> {
-                    EmptySpace()
+                    VerticalSpacer()
                 }
                 AddCategoryBottomSheetType.SELECT_EMOJI -> {
                     EmojiPickerBottomSheet(
