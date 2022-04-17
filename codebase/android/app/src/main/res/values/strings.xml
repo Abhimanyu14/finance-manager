@@ -71,6 +71,9 @@
     <string name="screen_settings_backup">Backup data</string>
     <string name="screen_settings_restore">Restore data</string>
 
+    <!-- source details screen -->
+    <string name="screen_source_details_appbar_title">Source Details</string>
+
     <!-- sources list item -->
     <string name="list_item_sources">%1$s -> %2$s</string>
 

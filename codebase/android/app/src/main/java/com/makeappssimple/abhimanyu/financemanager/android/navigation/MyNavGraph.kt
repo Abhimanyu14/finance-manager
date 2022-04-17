@@ -7,9 +7,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavArgs.SOURCE_ID
 import com.makeappssimple.abhimanyu.financemanager.android.ui.activity.MainActivityViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_category.AddCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source.AddSourceScreen
@@ -17,6 +20,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transa
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.CategoriesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.HomeScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.settings.SettingsScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.source_details.SourceDetailsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.SourcesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 
@@ -43,7 +47,7 @@ fun MyNavGraph(
 
                 // TODO-Abhi: Fix this hack to clear previous navigation command
                 activityViewModel.navigationManager.navigate(
-                    direction = MyNavigationDirections.default()
+                    navigationCommand = MyNavigationDirections.default()
                 )
             }
             Command.NAVIGATE_UP -> {
@@ -51,7 +55,7 @@ fun MyNavGraph(
 
                 // TODO-Abhi: Fix this hack to clear previous navigation command
                 activityViewModel.navigationManager.navigate(
-                    direction = MyNavigationDirections.default()
+                    navigationCommand = MyNavigationDirections.default()
                 )
             }
             Command.CLEAR_BACKSTACK_AND_NAVIGATE -> {
@@ -67,7 +71,7 @@ fun MyNavGraph(
 
                 // TODO-Abhi: Fix this hack to clear previous navigation command
                 activityViewModel.navigationManager.navigate(
-                    direction = MyNavigationDirections.default()
+                    navigationCommand = MyNavigationDirections.default()
                 )
             }
             Command.CLEAR_TILL_ROOT -> {
@@ -78,7 +82,7 @@ fun MyNavGraph(
 
                 // TODO-Abhi: Fix this hack to clear previous navigation command
                 activityViewModel.navigationManager.navigate(
-                    direction = MyNavigationDirections.default()
+                    navigationCommand = MyNavigationDirections.default()
                 )
             }
             Command.NOOP -> {
@@ -124,6 +128,19 @@ fun MyNavGraph(
             route = Screen.Settings.route,
         ) {
             SettingsScreen()
+        }
+
+        composable(
+            route = "${Screen.SourceDetails.route}/{${SOURCE_ID}}",
+            arguments = listOf(
+                navArgument(SOURCE_ID) {
+                    type = NavType.IntType
+                },
+            ),
+        ) { navBackStackEntry ->
+            SourceDetailsScreen(
+                sourceId = navBackStackEntry.arguments?.getInt(SOURCE_ID) ?: 0,
+            )
         }
 
         composable(

@@ -9,8 +9,8 @@ class NavigationManager {
     )
 
     fun navigate(
-        direction: NavigationCommand,
+        navigationCommand: NavigationCommand,
     ) {
-        command.value = direction
+        command.value = navigationCommand
     }
 }

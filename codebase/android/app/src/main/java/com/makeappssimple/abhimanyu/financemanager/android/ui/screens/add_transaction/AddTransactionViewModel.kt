@@ -37,7 +37,6 @@ interface AddTransactionViewModel : BaseViewModel {
     val sources: Flow<List<Source>>
     val transactionTypesForNewTransaction: StateFlow<List<TransactionType>>
 
-
     fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
     )

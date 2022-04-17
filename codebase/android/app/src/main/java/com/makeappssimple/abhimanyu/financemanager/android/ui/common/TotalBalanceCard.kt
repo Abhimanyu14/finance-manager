@@ -27,9 +27,6 @@ fun TotalBalanceCard(
     onClick: (() -> Unit)? = null,
 ) {
     Card(
-        onClick = {
-            onClick?.invoke()
-        },
         shape = RoundedCornerShape(
             size = 16.dp,
         ),
@@ -37,6 +34,9 @@ fun TotalBalanceCard(
             .padding(
                 vertical = 16.dp,
                 horizontal = 32.dp,
+            )
+            .conditionalClickable(
+                onClick = onClick,
             )
             .fillMaxWidth(),
     ) {

@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,6 +28,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.getDismissState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
@@ -109,9 +109,9 @@ fun SourceListItem(
 }
 
 @Composable
-private fun SourceListItemView(
+fun SourceListItemView(
     source: Source,
-    onClick: () -> Unit,
+    onClick: (() -> Unit)? = null,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -120,9 +120,9 @@ private fun SourceListItemView(
             .background(
                 color = Surface,
             )
-            .clickable {
-                onClick()
-            }
+            .conditionalClickable(
+                onClick = onClick,
+            )
             .padding(
                 horizontal = 16.dp,
                 vertical = 8.dp,

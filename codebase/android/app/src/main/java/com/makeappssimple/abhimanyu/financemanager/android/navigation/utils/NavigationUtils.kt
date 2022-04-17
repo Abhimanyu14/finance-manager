@@ -7,7 +7,7 @@ fun navigateUp(
     navigationManager: NavigationManager,
 ) {
     navigationManager.navigate(
-        direction = MyNavigationDirections.navigateUp()
+        navigationCommand = MyNavigationDirections.navigateUp()
     )
 }
 
@@ -15,7 +15,7 @@ fun clearBackstack(
     navigationManager: NavigationManager,
 ) {
     navigationManager.navigate(
-        direction = MyNavigationDirections.clearBackstack()
+        navigationCommand = MyNavigationDirections.clearBackstack()
     )
 }
 
@@ -23,7 +23,7 @@ fun clearTillRoot(
     navigationManager: NavigationManager,
 ) {
     navigationManager.navigate(
-        direction = MyNavigationDirections.clearTillRoot()
+        navigationCommand = MyNavigationDirections.clearTillRoot()
     )
 }
 
@@ -32,7 +32,7 @@ fun navigateToAddCategoryScreen(
     navigationManager: NavigationManager,
 ) {
     navigationManager.navigate(
-        direction = MyNavigationDirections.addCategory()
+        navigationCommand = MyNavigationDirections.addCategory()
     )
 }
 
@@ -40,7 +40,7 @@ fun navigateToAddSourceScreen(
     navigationManager: NavigationManager,
 ) {
     navigationManager.navigate(
-        direction = MyNavigationDirections.addSource()
+        navigationCommand = MyNavigationDirections.addSource()
     )
 }
 
@@ -48,7 +48,7 @@ fun navigateToAddTransactionScreen(
     navigationManager: NavigationManager,
 ) {
     navigationManager.navigate(
-        direction = MyNavigationDirections.addTransaction()
+        navigationCommand = MyNavigationDirections.addTransaction()
     )
 }
 
@@ -56,7 +56,7 @@ fun navigateToBalanceDetailsScreen(
     navigationManager: NavigationManager,
 ) {
     navigationManager.navigate(
-        direction = MyNavigationDirections.balanceDetails()
+        navigationCommand = MyNavigationDirections.balanceDetails()
     )
 }
 
@@ -64,7 +64,7 @@ fun navigateToCategoriesScreen(
     navigationManager: NavigationManager,
 ) {
     navigationManager.navigate(
-        direction = MyNavigationDirections.categories()
+        navigationCommand = MyNavigationDirections.categories()
     )
 }
 
@@ -72,7 +72,7 @@ fun navigateToCategoryDetailsScreen(
     navigationManager: NavigationManager,
 ) {
     navigationManager.navigate(
-        direction = MyNavigationDirections.categoryDetails()
+        navigationCommand = MyNavigationDirections.categoryDetails()
     )
 }
 
@@ -80,7 +80,7 @@ fun navigateToHomeScreen(
     navigationManager: NavigationManager,
 ) {
     navigationManager.navigate(
-        direction = MyNavigationDirections.home()
+        navigationCommand = MyNavigationDirections.home()
     )
 }
 
@@ -88,15 +88,18 @@ fun navigateToSettingsScreen(
     navigationManager: NavigationManager,
 ) {
     navigationManager.navigate(
-        direction = MyNavigationDirections.settings()
+        navigationCommand = MyNavigationDirections.settings()
     )
 }
 
 fun navigateToSourceDetailsScreen(
     navigationManager: NavigationManager,
+    sourceId: Int,
 ) {
     navigationManager.navigate(
-        direction = MyNavigationDirections.sourceDetails()
+        navigationCommand = MyNavigationDirections.sourceDetails(
+            sourceId = sourceId,
+        )
     )
 }
 
@@ -104,6 +107,6 @@ fun navigateToSourcesScreen(
     navigationManager: NavigationManager,
 ) {
     navigationManager.navigate(
-        direction = MyNavigationDirections.sources()
+        navigationCommand = MyNavigationDirections.sources()
     )
 }

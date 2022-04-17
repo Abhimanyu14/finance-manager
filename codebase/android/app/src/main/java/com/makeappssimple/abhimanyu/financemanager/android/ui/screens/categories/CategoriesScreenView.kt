@@ -80,7 +80,6 @@ fun CategoriesScreenView(
             )
         },
         floatingActionButtonPosition = FabPosition.End,
-        isFloatingActionButtonDocked = true,
         modifier = Modifier
             .fillMaxSize(),
     ) { innerPadding ->

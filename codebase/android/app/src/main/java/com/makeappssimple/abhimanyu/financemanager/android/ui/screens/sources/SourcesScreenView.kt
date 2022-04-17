@@ -23,9 +23,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
-import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddSourceScreen
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSourceDetailsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
@@ -36,7 +36,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetS
 
 enum class SourcesBottomSheetType {
     NONE,
-    EDIT_BALANCE_AMOUNT,
 }
 
 data class SourcesScreenViewData(
@@ -57,11 +56,6 @@ fun SourcesScreenView(
     val totalBalanceAmount by data.screenViewModel.sourcesTotalBalanceAmountValue.collectAsState(
         initial = 0L,
     )
-    var clickedSource: Source? by remember {
-        mutableStateOf(
-            value = null,
-        )
-    }
     var sourcesBottomSheetType by remember {
         mutableStateOf(
             value = SourcesBottomSheetType.NONE,
@@ -95,32 +89,6 @@ fun SourcesScreenView(
                 SourcesBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
-                SourcesBottomSheetType.EDIT_BALANCE_AMOUNT -> {
-                    SourcesEditBalanceAmountBottomSheet(
-                        data = SourcesEditBalanceAmountBottomSheetData(
-                            balanceAmount = clickedSource?.balanceAmount?.value?.toInt() ?: 0,
-                            updateBalanceAmount = { updatedBalance ->
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                ) {
-                                    clickedSource?.let {
-                                        val amount = updatedBalance - it.balanceAmount.value
-                                        val updatedSource = it.copy(
-                                            balanceAmount = it.balanceAmount.copy(
-                                                value = updatedBalance.toLong(),
-                                            ),
-                                        )
-                                        data.screenViewModel.insertTransaction(
-                                            amountValue = amount,
-                                            sourceTo = updatedSource,
-                                        )
-                                    }
-                                }
-                            },
-                        ),
-                    )
-                }
             }
         },
     ) {
@@ -148,7 +116,6 @@ fun SourcesScreenView(
                 )
             },
             floatingActionButtonPosition = FabPosition.End,
-            isFloatingActionButtonDocked = true,
             modifier = Modifier
                 .fillMaxSize(),
         ) { innerPadding ->
@@ -180,22 +147,21 @@ fun SourcesScreenView(
                         SourceListItem(
                             source = listItem,
                             swipeToDeleteEnabled = false,
-                            //                            !listItem.name.contains(
-                            //                                other = "Cash",
-                            //                                ignoreCase = false,
-                            //                            ),
+                            // TODO-Abhi: Cash can not be deleted
+                            // !listItem.name.contains(
+                            //     other = "Cash",
+                            //     ignoreCase = false,
+                            // ),
                             deleteSource = {
                                 data.screenViewModel.deleteSource(
                                     id = listItem.id,
                                 )
                             },
                             onClick = {
-                                clickedSource = listItem
-                                sourcesBottomSheetType = SourcesBottomSheetType.EDIT_BALANCE_AMOUNT
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                ) {}
+                                navigateToSourceDetailsScreen(
+                                    navigationManager = data.screenViewModel.navigationManager,
+                                    sourceId = listItem.id,
+                                )
                             },
                         )
                     }
@@ -209,3 +175,17 @@ fun SourcesScreenView(
         }
     }
 }
+
+/*
+// TODO-Abhi: Edit balance code
+val amount = updatedBalance - it.balanceAmount.value
+val updatedSource = it.copy(
+    balanceAmount = it.balanceAmount.copy(
+        value = updatedBalance.toLong(),
+    ),
+)
+data .screenViewModel.insertTransaction(
+    amountValue = amount,
+    sourceTo = updatedSource,
+)
+*/
