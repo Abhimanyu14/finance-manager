@@ -118,16 +118,6 @@ object MyNavigationDirections {
         }
     }
 
-    fun sourceDetails(
-        sourceId: Int,
-    ): NavigationCommand {
-        return object : NavigationCommand {
-            override val command = Command.NAVIGATE
-            override val destination = "${Screen.SourceDetails.route}/${sourceId}"
-            override val screen = Screen.SourceDetails.route
-        }
-    }
-
     fun sources(): NavigationCommand {
         return object : NavigationCommand {
             override val command = Command.NAVIGATE

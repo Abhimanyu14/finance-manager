@@ -103,17 +103,6 @@ fun navigateToSettingsScreen(
     )
 }
 
-fun navigateToSourceDetailsScreen(
-    navigationManager: NavigationManager,
-    sourceId: Int,
-) {
-    navigationManager.navigate(
-        navigationCommand = MyNavigationDirections.sourceDetails(
-            sourceId = sourceId,
-        )
-    )
-}
-
 fun navigateToSourcesScreen(
     navigationManager: NavigationManager,
 ) {

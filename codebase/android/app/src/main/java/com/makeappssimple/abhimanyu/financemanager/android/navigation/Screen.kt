@@ -40,10 +40,6 @@ sealed class Screen(
         route = "settings",
     )
 
-    object SourceDetails : Screen(
-        route = "source_details",
-    )
-
     object Sources : Screen(
         route = "sources",
     )
