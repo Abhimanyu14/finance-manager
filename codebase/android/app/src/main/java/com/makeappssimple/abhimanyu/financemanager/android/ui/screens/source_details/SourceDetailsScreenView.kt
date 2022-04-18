@@ -27,7 +27,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.SourceListItemView
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 
 enum class SourceDetailsBottomSheetType {
@@ -122,9 +121,9 @@ fun SourceDetailsScreenView(
                 },
             ) {
                 source?.let { source ->
-                    SourceListItemView(
-                        source = source,
-                    )
+//                    SourceListItemView(
+//                        source = source,
+//                    )
                 }
             }
         }

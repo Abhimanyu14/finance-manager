@@ -83,6 +83,13 @@ fun SourcesScreenView(
         }
     }
 
+
+    var expandedItemIndex by remember {
+        mutableStateOf(
+            value = -1,
+        )
+    }
+
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
         sheetShape = BottomSheetShape,
@@ -146,9 +153,10 @@ fun SourcesScreenView(
                         key = { _, listItem ->
                             listItem.hashCode()
                         },
-                    ) { _, listItem ->
+                    ) { index, listItem ->
                         SourceListItem(
                             source = listItem,
+                            expanded = index == expandedItemIndex,
                             swipeToDeleteEnabled = false,
                             // TODO-Abhi: Cash can not be deleted
                             // !listItem.name.contains(
@@ -161,10 +169,24 @@ fun SourcesScreenView(
                                 )
                             },
                             onClick = {
+                                expandedItemIndex = if (index == expandedItemIndex) {
+                                    -1
+                                } else {
+                                    index
+                                }
+                            },
+                            onEditClick = {
                                 navigateToEditSourceScreen(
                                     navigationManager = data.screenViewModel.navigationManager,
                                     sourceId = listItem.id,
                                 )
+                                expandedItemIndex = -1
+                            },
+                            onDeleteClick = {
+                                data.screenViewModel.deleteSource(
+                                    id = listItem.id,
+                                )
+                                expandedItemIndex = -1
                             },
                         )
                     }
@@ -178,4 +200,3 @@ fun SourcesScreenView(
         }
     }
 }
-
