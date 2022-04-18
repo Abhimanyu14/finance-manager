@@ -157,17 +157,6 @@ fun SourcesScreenView(
                         SourceListItem(
                             source = listItem,
                             expanded = index == expandedItemIndex,
-                            swipeToDeleteEnabled = false,
-                            // TODO-Abhi: Cash can not be deleted
-                            // !listItem.name.contains(
-                            //     other = "Cash",
-                            //     ignoreCase = false,
-                            // ),
-                            deleteSource = {
-                                data.screenViewModel.deleteSource(
-                                    id = listItem.id,
-                                )
-                            },
                             onClick = {
                                 expandedItemIndex = if (index == expandedItemIndex) {
                                     -1
@@ -182,13 +171,12 @@ fun SourcesScreenView(
                                 )
                                 expandedItemIndex = -1
                             },
-                            onDeleteClick = {
-                                data.screenViewModel.deleteSource(
-                                    id = listItem.id,
-                                )
-                                expandedItemIndex = -1
-                            },
-                        )
+                        ) {
+                            data.screenViewModel.deleteSource(
+                                id = listItem.id,
+                            )
+                            expandedItemIndex = -1
+                        }
                     }
                     item {
                         VerticalSpacer(

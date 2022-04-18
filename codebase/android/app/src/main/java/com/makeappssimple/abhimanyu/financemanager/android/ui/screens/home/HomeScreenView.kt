@@ -255,12 +255,6 @@ fun HomeScreenView(
                     ) { _, listItem ->
                         HomeListItem(
                             data = listItem,
-                            swipeToDelete = false,
-                            deleteTransaction = {
-                                data.screenViewModel.deleteTransaction(
-                                    id = listItem.transaction.id,
-                                )
-                            },
                         )
                     }
                     item {

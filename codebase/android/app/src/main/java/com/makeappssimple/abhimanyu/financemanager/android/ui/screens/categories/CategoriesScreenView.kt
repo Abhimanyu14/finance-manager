@@ -134,73 +134,9 @@ fun CategoriesScreenView(
                             listItem.hashCode()
                         },
                     ) { _, listItem ->
-                        /*
-                        // TODO-Abhi: Disabled swipe to dismiss
-                        val dismissState = getDismissState(
-                            dismissedToEndAction = {
-                                data.screenViewModel.deleteCategory(
-                                    id = listItem.id,
-                                )
-                            },
-                        )
-                        */
-
                         CategoryListItem(
                             category = listItem,
                         )
-                        /*
-                        // TODO-Abhi: Disabled swipe to dismiss
-                        SwipeToDismiss(
-                            state = dismissState,
-                            directions = mutableSetOf(
-                                DismissDirection.StartToEnd,
-                            ),
-                            background = {
-                                val color by animateColorAsState(
-                                    when (dismissState.targetValue) {
-                                        DismissValue.Default -> Color.LightGray
-                                        DismissValue.DismissedToEnd -> Color.Red
-                                        DismissValue.DismissedToStart -> Color.White
-                                    }
-                                )
-                                val scale by animateFloatAsState(
-                                    if (dismissState.targetValue == DismissValue.Default) {
-                                        1f
-                                    } else {
-                                        1.25f
-                                    }
-                                )
-
-                                Column(
-                                    modifier = Modifier
-                                        .fillMaxSize()
-                                        .background(
-                                            color = color,
-                                        ),
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Rounded.DeleteForever,
-                                        contentDescription = null,
-                                        tint = Color.White,
-                                        modifier = Modifier
-                                            .weight(
-                                                weight = 1F,
-                                            )
-                                            .scale(
-                                                scale = scale,
-                                            )
-                                            .padding(
-                                                start = 16.dp,
-                                            ),
-                                    )
-                                }
-                            },
-                        ) {
-                            CategoryListItem(
-                                category = listItem,
-                            )
-                        }
-                        */
                     }
                     item {
                         VerticalSpacer(

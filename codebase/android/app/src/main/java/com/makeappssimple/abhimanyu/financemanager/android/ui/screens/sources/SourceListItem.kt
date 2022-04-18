@@ -1,42 +1,36 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources
 
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.DismissDirection
-import androidx.compose.material.DismissValue
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.SwipeToDismiss
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.DeleteForever
 import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.DarkGray
+import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.getDismissState
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getIcon
@@ -46,121 +40,28 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.getIcon
 fun SourceListItem(
     source: Source,
     expanded: Boolean,
-    swipeToDeleteEnabled: Boolean,
-    deleteSource: () -> Unit,
     onClick: () -> Unit,
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
 ) {
-    if (swipeToDeleteEnabled) {
-        val dismissState = getDismissState(
-            dismissedToEndAction = {
-                deleteSource()
-            },
-        )
-
-        SwipeToDismiss(
-            state = dismissState,
-            directions = mutableSetOf(
-                DismissDirection.StartToEnd,
-            ),
-            background = {
-                val color by animateColorAsState(
-                    when (dismissState.targetValue) {
-                        DismissValue.Default -> Color.LightGray
-                        DismissValue.DismissedToEnd -> Color.Red
-                        DismissValue.DismissedToStart -> White
-                    }
-                )
-                val scale by animateFloatAsState(
-                    if (dismissState.targetValue == DismissValue.Default) {
-                        1f
-                    } else {
-                        1.25f
-                    }
-                )
-
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .background(
-                            color = color,
-                        ),
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.DeleteForever,
-                        contentDescription = null,
-                        tint = White,
-                        modifier = Modifier
-                            .weight(
-                                weight = 1F,
-                            )
-                            .scale(
-                                scale = scale,
-                            )
-                            .padding(
-                                start = 16.dp,
-                            ),
-                    )
-                }
-            },
-        ) {
-            SourceListItemView(
-                source = source,
-                expanded = expanded,
-                onClick = onClick,
-                onEditClick = onEditClick,
-                onDeleteClick = onDeleteClick,
-            )
-        }
-    } else {
-        SourceListItemView(
-            source = source,
-            expanded = expanded,
-            onClick = onClick,
-            onEditClick = onEditClick,
-            onDeleteClick = onDeleteClick,
-        )
-    }
-}
-
-@Composable
-fun SourceListItemView(
-    source: Source,
-    expanded: Boolean,
-    onClick: () -> Unit,
-    onEditClick: () -> Unit,
-    onDeleteClick: () -> Unit,
-) {
-    Column(
-        Modifier
-            .fillMaxWidth()
-            .padding(
-                horizontal = 8.dp,
-                vertical = 0.dp,
-            )
-            .clip(
-                shape = RoundedCornerShape(
-                    size = 24.dp,
-                ),
-            )
-            .background(
-                color = if (expanded) {
-                    White
-                } else {
-                    Surface
-                },
-            )
-            .animateContentSize(),
+    ExpandableItemViewWrapper(
+        expanded = expanded,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(
-                    shape = RoundedCornerShape(
-                        size = 24.dp,
-                    ),
+                    shape = if (expanded) {
+                        RoundedCornerShape(
+                            topStart = 24.dp,
+                            topEnd = 24.dp,
+                        )
+                    } else {
+                        RoundedCornerShape(
+                            size = 24.dp,
+                        )
+                    },
                 )
                 .clickable {
                     onClick()
@@ -213,6 +114,10 @@ fun SourceListItemView(
             )
         }
         if (expanded) {
+            Divider(
+                color = LightGray,
+                thickness = 0.5.dp,
+            )
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
@@ -220,63 +125,110 @@ fun SourceListItemView(
                     .padding(
                         start = 16.dp,
                         end = 16.dp,
-                        top = 4.dp,
-                        bottom = 16.dp,
+                        top = 8.dp,
+                        bottom = 8.dp,
                     ),
             ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                ExpandableItemIconButton(
+                    iconImageVector = Icons.Rounded.Edit,
+                    labelText = "Edit",
+                    enabled = true,
+                    onClick = onEditClick,
                     modifier = Modifier
                         .weight(
                             weight = 1F,
-                        )
-                        .clip(
-                            shape = CircleShape,
-                        )
-                        .clickable {
-                            onEditClick()
-                        },
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.Edit,
-                        contentDescription = null,
-                    )
-                    Text(
-                        text = "Edit",
-                        style = TextStyle(
-                            color = DarkGray,
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.Bold,
                         ),
-                    )
-                }
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                )
+                ExpandableItemIconButton(
+                    iconImageVector = Icons.Rounded.Delete,
+                    labelText = "Delete",
+                    enabled = !source.name.contains(
+                        other = "Cash",
+                        ignoreCase = false,
+                    ),
+                    onClick = onDeleteClick,
                     modifier = Modifier
                         .weight(
                             weight = 1F,
-                        )
-                        .clip(
-                            shape = CircleShape,
-                        )
-                        .clickable {
-                            onDeleteClick()
-                        },
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.Delete,
-                        contentDescription = null,
-                    )
-                    Text(
-                        text = "Delete",
-                        style = TextStyle(
-                            color = DarkGray,
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.Bold,
                         ),
-                    )
-                }
+                )
             }
         }
+    }
+}
+
+@Composable
+fun ExpandableItemIconButton(
+    iconImageVector: ImageVector,
+    labelText: String,
+    enabled: Boolean,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+            .clip(
+                shape = CircleShape,
+            )
+            .conditionalClickable(
+                onClick = if (enabled) {
+                    onClick
+                } else {
+                    null
+                }
+            ),
+    ) {
+        Icon(
+            imageVector = iconImageVector,
+            contentDescription = null,
+            tint = if (enabled) {
+                DarkGray
+            } else {
+                LightGray
+            },
+        )
+        Text(
+            text = labelText,
+            style = TextStyle(
+                color = if (enabled) {
+                    DarkGray
+                } else {
+                    LightGray
+                },
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Normal,
+            ),
+        )
+    }
+}
+
+@Composable
+fun ExpandableItemViewWrapper(
+    expanded: Boolean,
+    content: @Composable ColumnScope.() -> Unit,
+) {
+    Column(
+        Modifier
+            .fillMaxWidth()
+            .padding(
+                horizontal = 8.dp,
+                vertical = 0.dp,
+            )
+            .clip(
+                shape = RoundedCornerShape(
+                    size = 24.dp,
+                ),
+            )
+            .background(
+                color = if (expanded) {
+                    White
+                } else {
+                    Surface
+                },
+            )
+            .animateContentSize(),
+    ) {
+        content()
     }
 }
