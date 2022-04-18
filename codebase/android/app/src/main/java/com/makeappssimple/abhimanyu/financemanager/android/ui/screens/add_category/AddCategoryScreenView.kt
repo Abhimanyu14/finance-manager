@@ -53,7 +53,6 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiPickerBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiPickerBottomSheetData
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
@@ -61,6 +60,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.OutlinedTextFieldLabelText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
@@ -222,21 +222,21 @@ fun AddCategoryScreenView(
                                 ),
                         )
                     }
-//                    Text(
-//                        text = stringResource(
-//                            id = R.string.screen_add_category_title,
-//                        ),
-//                        style = TextStyle(
-//                            color = Color.DarkGray,
-//                            fontSize = 16.sp,
-//                            fontWeight = FontWeight.Bold,
-//                        ),
-//                        modifier = Modifier
-//                            .padding(
-//                                horizontal = 16.dp,
-//                            )
-//                            .fillMaxWidth(),
-//                    )
+                    //                    Text(
+                    //                        text = stringResource(
+                    //                            id = R.string.screen_add_category_title,
+                    //                        ),
+                    //                        style = TextStyle(
+                    //                            color = Color.DarkGray,
+                    //                            fontSize = 16.sp,
+                    //                            fontWeight = FontWeight.Bold,
+                    //                        ),
+                    //                        modifier = Modifier
+                    //                            .padding(
+                    //                                horizontal = 16.dp,
+                    //                            )
+                    //                            .fillMaxWidth(),
+                    //                    )
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                         modifier = Modifier
