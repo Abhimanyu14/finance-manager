@@ -9,6 +9,8 @@ import androidx.compose.material.FabPosition
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
@@ -25,7 +27,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddSourceScreen
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSourceDetailsScreen
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToEditSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
@@ -105,6 +107,7 @@ fun SourcesScreenView(
             },
             floatingActionButton = {
                 MyFloatingActionButton(
+                    iconImageVector = Icons.Rounded.Add,
                     contentDescription = stringResource(
                         id = R.string.screen_sources_floating_action_button_content_description,
                     ),
@@ -158,7 +161,7 @@ fun SourcesScreenView(
                                 )
                             },
                             onClick = {
-                                navigateToSourceDetailsScreen(
+                                navigateToEditSourceScreen(
                                     navigationManager = data.screenViewModel.navigationManager,
                                     sourceId = listItem.id,
                                 )
@@ -176,16 +179,3 @@ fun SourcesScreenView(
     }
 }
 
-/*
-// TODO-Abhi: Edit balance code
-val amount = updatedBalance - it.balanceAmount.value
-val updatedSource = it.copy(
-    balanceAmount = it.balanceAmount.copy(
-        value = updatedBalance.toLong(),
-    ),
-)
-data .screenViewModel.insertTransaction(
-    amountValue = amount,
-    sourceTo = updatedSource,
-)
-*/

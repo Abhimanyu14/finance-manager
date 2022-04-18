@@ -76,6 +76,17 @@ fun navigateToCategoryDetailsScreen(
     )
 }
 
+fun navigateToEditSourceScreen(
+    navigationManager: NavigationManager,
+    sourceId: Int,
+) {
+    navigationManager.navigate(
+        navigationCommand = MyNavigationDirections.editSource(
+            sourceId = sourceId,
+        )
+    )
+}
+
 fun navigateToHomeScreen(
     navigationManager: NavigationManager,
 ) {

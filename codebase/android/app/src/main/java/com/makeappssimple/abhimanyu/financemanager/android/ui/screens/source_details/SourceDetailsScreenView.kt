@@ -3,9 +3,12 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.source_de
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.FabPosition
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
@@ -18,6 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToEditSourceScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.VerticalSpacer
@@ -31,6 +36,7 @@ enum class SourceDetailsBottomSheetType {
 
 data class SourceDetailsScreenViewData(
     val screenViewModel: SourceDetailsViewModel,
+    val sourceId: Int,
 )
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -91,6 +97,21 @@ fun SourceDetailsScreenView(
                     isNavigationIconVisible = true,
                 )
             },
+            floatingActionButton = {
+                MyFloatingActionButton(
+                    iconImageVector = Icons.Rounded.Edit,
+                    contentDescription = stringResource(
+                        id = R.string.screen_source_details_floating_action_button_content_description,
+                    ),
+                    onClick = {
+                        navigateToEditSourceScreen(
+                            navigationManager = data.screenViewModel.navigationManager,
+                            sourceId = data.sourceId,
+                        )
+                    },
+                )
+            },
+            floatingActionButtonPosition = FabPosition.End,
             modifier = Modifier
                 .fillMaxSize(),
         ) { innerPadding ->

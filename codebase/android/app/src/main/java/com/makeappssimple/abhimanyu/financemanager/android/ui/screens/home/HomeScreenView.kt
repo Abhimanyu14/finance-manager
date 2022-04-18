@@ -15,6 +15,7 @@ import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -211,6 +212,7 @@ fun HomeScreenView(
             },
             floatingActionButton = {
                 MyFloatingActionButton(
+                    iconImageVector = Icons.Rounded.Add,
                     contentDescription = stringResource(
                         id = R.string.screen_home_floating_action_button_content_description,
                     ),

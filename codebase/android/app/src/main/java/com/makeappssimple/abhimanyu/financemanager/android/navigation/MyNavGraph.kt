@@ -18,6 +18,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_catego
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source.AddSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.AddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.CategoriesScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_source.EditSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.HomeScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.settings.SettingsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.source_details.SourceDetailsScreen
@@ -116,6 +117,19 @@ fun MyNavGraph(
             route = Screen.Categories.route,
         ) {
             CategoriesScreen()
+        }
+
+        composable(
+            route = "${Screen.EditSource.route}/{${SOURCE_ID}}",
+            arguments = listOf(
+                navArgument(SOURCE_ID) {
+                    type = NavType.IntType
+                },
+            ),
+        ) { navBackStackEntry ->
+            EditSourceScreen(
+                sourceId = navBackStackEntry.arguments?.getInt(SOURCE_ID) ?: 0,
+            )
         }
 
         composable(

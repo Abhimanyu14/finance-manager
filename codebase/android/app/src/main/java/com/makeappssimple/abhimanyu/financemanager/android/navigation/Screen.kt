@@ -28,6 +28,10 @@ sealed class Screen(
         route = "category_details",
     )
 
+    object EditSource : Screen(
+        route = "edit_source",
+    )
+
     object Home : Screen(
         route = "home",
     )

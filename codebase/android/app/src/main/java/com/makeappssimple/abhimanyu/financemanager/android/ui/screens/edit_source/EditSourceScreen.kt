@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.source_details
+package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_source
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
@@ -8,12 +8,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 
 @ExperimentalMaterialApi
 @Composable
-fun SourceDetailsScreen(
-    screenViewModel: SourceDetailsViewModel = hiltViewModel<SourceDetailsViewModelImpl>(),
+fun EditSourceScreen(
+    screenViewModel: EditSourceViewModel = hiltViewModel<EditSourceViewModelImpl>(),
     sourceId: Int,
 ) {
     logError(
-        message = "Inside SourceDetailsScreen",
+        message = "Inside EditSourceScreen",
     )
 
     LaunchedEffect(
@@ -25,11 +25,11 @@ fun SourceDetailsScreen(
         )
     }
 
-    SourceDetailsScreenView(
-        data = SourceDetailsScreenViewData(
+    EditSourceScreenView(
+        data = EditSourceScreenViewData(
             screenViewModel = screenViewModel,
             sourceId = sourceId,
         ),
-        state = rememberSourceDetailsScreenViewState(),
+        state = rememberEditSourceScreenViewState(),
     )
 }

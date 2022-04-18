@@ -9,6 +9,8 @@ import androidx.compose.material.FabPosition
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -69,6 +71,7 @@ fun CategoriesScreenView(
         },
         floatingActionButton = {
             MyFloatingActionButton(
+                iconImageVector = Icons.Rounded.Add,
                 contentDescription = stringResource(
                     id = R.string.screen_sources_floating_action_button_content_description,
                 ),

@@ -92,6 +92,16 @@ object MyNavigationDirections {
         }
     }
 
+    fun editSource(
+        sourceId: Int,
+    ): NavigationCommand {
+        return object : NavigationCommand {
+            override val command = Command.NAVIGATE
+            override val destination = "${Screen.EditSource.route}/${sourceId}"
+            override val screen = Screen.EditSource.route
+        }
+    }
+
     fun home(): NavigationCommand {
         return object : NavigationCommand {
             override val command = Command.NAVIGATE
