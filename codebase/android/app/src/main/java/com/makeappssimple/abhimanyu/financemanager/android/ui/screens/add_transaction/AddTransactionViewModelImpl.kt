@@ -48,8 +48,8 @@ class AddTransactionViewModelImpl @Inject constructor(
     override val transactionForValues: Array<TransactionFor> = TransactionFor.values()
     override val transactionTypes: Array<TransactionType> = TransactionType.values()
     override val categories: Flow<List<Category>> = getCategoriesUseCase()
-    override var expenseDefaultSource: Source? = null
-    override var incomeDefaultSource: Source? = null
+    private var expenseDefaultSource: Source? = null
+    private var incomeDefaultSource: Source? = null
     override var expenseDefaultCategory: Category? = null
     override var incomeDefaultCategory: Category? = null
     override var amount: String by mutableStateOf(
@@ -105,11 +105,12 @@ class AddTransactionViewModelImpl @Inject constructor(
     )
 
     // TODO-Abhi: Private setter
-    override var selectedTransactionTypeIndex: Int by mutableStateOf(
+    private var _selectedTransactionTypeIndex: Int by mutableStateOf(
         value = transactionTypes.indexOf(
             element = TransactionType.EXPENSE,
         ),
     )
+    override val selectedTransactionTypeIndex: Int = _selectedTransactionTypeIndex
     override val sources: Flow<List<Source>> = flow {
         getSourcesUseCase().collectIndexed { _, value ->
             expenseDefaultSource = value.firstOrNull {
@@ -129,6 +130,7 @@ class AddTransactionViewModelImpl @Inject constructor(
             )
         }
     }
+
     private val _transactionTypesForNewTransaction = MutableStateFlow(
         value = emptyList<TransactionType>(),
     )
@@ -146,7 +148,7 @@ class AddTransactionViewModelImpl @Inject constructor(
     override fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
     ) {
-        selectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex
+        _selectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex
         when (transactionTypes[selectedTransactionTypeIndex]) {
             TransactionType.INCOME -> {
                 sourceFrom = null

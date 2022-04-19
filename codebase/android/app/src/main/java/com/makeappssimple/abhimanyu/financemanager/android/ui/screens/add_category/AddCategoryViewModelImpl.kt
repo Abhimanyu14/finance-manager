@@ -40,26 +40,30 @@ class AddCategoryViewModelImpl @Inject constructor(
     private val _title = MutableStateFlow(
         value = "",
     )
+    override val title: StateFlow<String> = _title
+
     private val _selectedTransactionTypeIndex = MutableStateFlow(
         value = transactionTypes.indexOf(
             element = TransactionType.EXPENSE,
         ),
     )
+    override val selectedTransactionTypeIndex: StateFlow<Int> = _selectedTransactionTypeIndex
+
     private val _emoji = MutableStateFlow(
         value = loadingEmoji,
     )
+    override val emoji: StateFlow<String> = _emoji
+
     private val _searchText = MutableStateFlow(
         value = "",
     )
+    override val searchText: StateFlow<String> = _searchText
+
     private val emojis: StateFlow<List<EmojiLocalEntity>> = getEmojisUseCase().stateIn(
         scope = viewModelScope,
         started = SharingStarted.Eagerly,
         initialValue = emptyList(),
     )
-    override val title: StateFlow<String> = _title
-    override val selectedTransactionTypeIndex: StateFlow<Int> = _selectedTransactionTypeIndex
-    override val emoji: StateFlow<String> = _emoji
-    override val searchText: StateFlow<String> = _searchText
     override val filteredEmojis: Flow<List<EmojiLocalEntity>> = combine(
         flow = emojis,
         flow2 = searchText,

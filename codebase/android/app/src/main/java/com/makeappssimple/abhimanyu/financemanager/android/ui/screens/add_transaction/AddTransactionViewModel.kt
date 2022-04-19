@@ -16,8 +16,6 @@ interface AddTransactionViewModel : BaseViewModel {
     val transactionForValues: Array<TransactionFor>
     val transactionTypes: Array<TransactionType>
     val categories: Flow<List<Category>>
-    var expenseDefaultSource: Source?
-    var incomeDefaultSource: Source?
     var expenseDefaultCategory: Category?
     var incomeDefaultCategory: Category?
     var amount: String
@@ -33,7 +31,7 @@ interface AddTransactionViewModel : BaseViewModel {
     val transactionDateTextFieldValue: TextFieldValue
     val transactionTimeTextFieldValue: TextFieldValue
     var selectedTransactionForIndex: Int
-    var selectedTransactionTypeIndex: Int
+    val selectedTransactionTypeIndex: Int
     val sources: Flow<List<Source>>
     val transactionTypesForNewTransaction: StateFlow<List<TransactionType>>
 

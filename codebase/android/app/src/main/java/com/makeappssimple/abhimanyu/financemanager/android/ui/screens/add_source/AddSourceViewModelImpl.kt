@@ -26,16 +26,17 @@ class AddSourceViewModelImpl @Inject constructor(
         .filter {
             it != SourceType.CASH
         }
+
     private val _selectedSourceTypeIndex = MutableStateFlow(
         value = sourceTypes.indexOf(
             element = SourceType.BANK,
         ),
     )
+    override val selectedSourceTypeIndex: StateFlow<Int> = _selectedSourceTypeIndex
+
     private val _name = MutableStateFlow(
         value = "",
     )
-    override val selectedSourceTypeIndex: StateFlow<Int> = _selectedSourceTypeIndex
-
     override val name: StateFlow<String> = _name
 
     override fun trackScreen() {
