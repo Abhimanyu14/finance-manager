@@ -14,6 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.JsonUtil
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateAndTimeString
 import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import javax.inject.Inject
 
@@ -63,7 +64,7 @@ class BackupDataUseCase @Inject constructor(
                 transactionsUpdated = true
             }
             databaseBackupData
-        }.collect {
+        }.collectLatest {
             if (
                 categoriesUpdated &&
                 emojisUpdated &&

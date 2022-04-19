@@ -27,6 +27,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.constants.EMOJI
 import com.makeappssimple.abhimanyu.financemanager.android.utils.readInitialDataFromAssets
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
@@ -226,7 +227,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     .map { preferences ->
                         preferences[EMOJI_DATA_VERSION_NUMBER] ?: 0
                     }
-                    .collect { emojiDataVersion ->
+                    .collectLatest { emojiDataVersion ->
                         if (emojiDataVersion != initialDatabaseData.emojis.versionNumber) {
                             emojiDao.deleteAllEmojis()
                             emojiDao.insertEmojis(
