@@ -99,7 +99,7 @@ buildscript {
         jetpackComposeMaterial3Version = "1.0.0-alpha09"
 
         // Jetpack compose material design adapter
-        jetpackComposeMaterialDesignAdapterVersion = "1.1.6"
+        jetpackComposeMaterialDesignAdapterVersion = "1.1.7"
 
         // Jetpack compose constraint layout
         jetpackComposeConstraintLayoutVersion = "1.0.0-rc01"
