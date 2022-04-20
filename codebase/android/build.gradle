@@ -9,7 +9,7 @@ buildscript {
         appVersionName = "1.0.0.10"
 
         // Gradle build tools
-        gradleBuildToolsVersion = '7.1.2'
+        gradleBuildToolsVersion = '7.1.3'
 
         // Kotlin version
         kotlinVersion = "1.6.10"
