@@ -45,49 +45,27 @@ class AddTransactionViewModelImpl @Inject constructor(
     private val insertTransactionUseCase: InsertTransactionUseCase,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
 ) : AddTransactionViewModel, ViewModel() {
+    private var expenseDefaultSource: Source? = null
+    private var incomeDefaultSource: Source? = null
+
     override val transactionForValues: Array<TransactionFor> = TransactionFor.values()
     override val transactionTypes: Array<TransactionType> = TransactionType.values()
     override val categories: Flow<List<Category>> = getCategoriesUseCase()
-    private var expenseDefaultSource: Source? = null
-    private var incomeDefaultSource: Source? = null
-    override var expenseDefaultCategory: Category? = null
-    override var incomeDefaultCategory: Category? = null
-    override var amount: String by mutableStateOf(
-        value = "",
-    )
-    override var category: Category? by mutableStateOf(
-        value = null,
-    )
     override val categoryTextFieldValue: TextFieldValue by derivedStateOf {
         TextFieldValue(
             text = category?.title ?: "",
         )
     }
-    override var sourceFrom: Source? by mutableStateOf(
-        value = null,
-    )
     override val sourceFromTextFieldValue: TextFieldValue by derivedStateOf {
         TextFieldValue(
             text = sourceFrom?.name ?: "",
         )
     }
-    override var sourceTo: Source? by mutableStateOf(
-        value = null,
-    )
     override val sourceToTextFieldValue: TextFieldValue by derivedStateOf {
         TextFieldValue(
             text = sourceTo?.name ?: "",
         )
     }
-    override var description: String by mutableStateOf(
-        value = "",
-    )
-    override var title: String by mutableStateOf(
-        value = "",
-    )
-    override var transactionCalendar: Calendar by mutableStateOf(
-        Calendar.getInstance()
-    )
     override val transactionDateTextFieldValue: TextFieldValue by derivedStateOf {
         TextFieldValue(
             text = transactionCalendar.formattedDate(),
@@ -98,19 +76,6 @@ class AddTransactionViewModelImpl @Inject constructor(
             text = transactionCalendar.formattedTime(),
         )
     }
-    override var selectedTransactionForIndex: Int by mutableStateOf(
-        value = transactionForValues.indexOf(
-            element = TransactionFor.SELF,
-        ),
-    )
-
-    // TODO-Abhi: Private setter
-    private var _selectedTransactionTypeIndex: Int by mutableStateOf(
-        value = transactionTypes.indexOf(
-            element = TransactionType.EXPENSE,
-        ),
-    )
-    override val selectedTransactionTypeIndex: Int = _selectedTransactionTypeIndex
     override val sources: Flow<List<Source>> = flow {
         getSourcesUseCase().collectIndexed { _, value ->
             expenseDefaultSource = value.firstOrNull {
@@ -120,7 +85,7 @@ class AddTransactionViewModelImpl @Inject constructor(
                 )
             }
             incomeDefaultSource = expenseDefaultSource
-            sourceFrom = expenseDefaultSource
+            _sourceFrom = expenseDefaultSource
             emit(
                 value = value.sortedWith(
                     comparator = compareBy {
@@ -130,6 +95,63 @@ class AddTransactionViewModelImpl @Inject constructor(
             )
         }
     }
+
+    private var _expenseDefaultCategory: Category? = null
+    override var expenseDefaultCategory: Category? = _expenseDefaultCategory
+
+    private var _incomeDefaultCategory: Category? = null
+    override var incomeDefaultCategory: Category? = _incomeDefaultCategory
+
+    private var _transactionCalendar: Calendar by mutableStateOf(
+        Calendar.getInstance()
+    )
+    override var transactionCalendar: Calendar = _transactionCalendar
+
+
+    private var _selectedTransactionForIndex: Int by mutableStateOf(
+        value = transactionForValues.indexOf(
+            element = TransactionFor.SELF,
+        ),
+    )
+    override val selectedTransactionForIndex: Int = _selectedTransactionForIndex
+
+    private var _category: Category? by mutableStateOf(
+        value = null,
+    )
+    override val category: Category? = _category
+
+    private var _sourceFrom: Source? by mutableStateOf(
+        value = null,
+    )
+    override val sourceFrom: Source? = _sourceFrom
+
+    private var _sourceTo: Source? by mutableStateOf(
+        value = null,
+    )
+    override val sourceTo: Source? = _sourceTo
+
+
+    private var _amount: String by mutableStateOf(
+        value = "",
+    )
+    override val amount: String = _amount
+
+    private var _selectedTransactionTypeIndex: Int by mutableStateOf(
+        value = transactionTypes.indexOf(
+            element = TransactionType.EXPENSE,
+        ),
+    )
+    override val selectedTransactionTypeIndex: Int = _selectedTransactionTypeIndex
+
+    private var _title: String by mutableStateOf(
+        value = "",
+    )
+    override val title: String = _title
+
+    private var _description: String by mutableStateOf(
+        value = "",
+    )
+    override val description: String = _description
 
     private val _transactionTypesForNewTransaction = MutableStateFlow(
         value = emptyList<TransactionType>(),
@@ -151,18 +173,18 @@ class AddTransactionViewModelImpl @Inject constructor(
         _selectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex
         when (transactionTypes[selectedTransactionTypeIndex]) {
             TransactionType.INCOME -> {
-                sourceFrom = null
-                sourceTo = incomeDefaultSource
-                category = incomeDefaultCategory
+                _sourceFrom = null
+                _sourceTo = incomeDefaultSource
+                _category = incomeDefaultCategory
             }
             TransactionType.EXPENSE -> {
-                sourceFrom = expenseDefaultSource
-                sourceTo = null
-                category = expenseDefaultCategory
+                _sourceFrom = expenseDefaultSource
+                _sourceTo = null
+                _category = expenseDefaultCategory
             }
             TransactionType.TRANSFER -> {
-                sourceFrom = expenseDefaultSource
-                sourceTo = incomeDefaultSource
+                _sourceFrom = expenseDefaultSource
+                _sourceTo = incomeDefaultSource
             }
             TransactionType.ADJUSTMENT -> {}
         }
@@ -354,5 +376,77 @@ class AddTransactionViewModelImpl @Inject constructor(
                 }
             }
         }
+    }
+
+    override fun updateTitle(
+        updatedTitle: String,
+    ) {
+        _title = updatedTitle
+    }
+
+    override fun clearTitle() {
+        _title = ""
+    }
+
+    override fun updateDescription(
+        updatedDescription: String,
+    ) {
+        _description = updatedDescription
+    }
+
+    override fun clearDescription() {
+        _description = ""
+    }
+
+    override fun updateAmount(
+        updatedAmount: String,
+    ) {
+        _amount = updatedAmount
+    }
+
+    override fun clearAmount() {
+        _amount = ""
+    }
+
+    override fun updateSourceFrom(
+        updatedSourceFrom: Source,
+    ) {
+        _sourceFrom = updatedSourceFrom
+    }
+
+    override fun updateSourceTo(
+        updatedSourceTo: Source,
+    ) {
+        _sourceTo = updatedSourceTo
+    }
+
+    override fun updateCategory(
+        updatedCategory: Category?,
+    ) {
+        _category = updatedCategory
+    }
+
+    override fun updateSelectedTransactionForIndex(
+        updatedSelectedTransactionForIndex: Int,
+    ) {
+        _selectedTransactionForIndex = updatedSelectedTransactionForIndex
+    }
+
+    override fun updateTransactionCalendar(
+        updatedTransactionCalendar: Calendar,
+    ) {
+        _transactionCalendar = updatedTransactionCalendar
+    }
+
+    override fun updateExpenseDefaultCategory(
+        updatedExpenseDefaultCategory: Category?,
+    ) {
+        _expenseDefaultCategory = updatedExpenseDefaultCategory
+    }
+
+    override fun updateIncomeDefaultCategory(
+        updatedIncomeDefaultCategory: Category?,
+    ) {
+        _incomeDefaultCategory = updatedIncomeDefaultCategory
     }
 }

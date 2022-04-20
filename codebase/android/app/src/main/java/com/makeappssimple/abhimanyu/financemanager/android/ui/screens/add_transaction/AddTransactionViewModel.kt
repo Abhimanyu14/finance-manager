@@ -16,24 +16,24 @@ interface AddTransactionViewModel : BaseViewModel {
     val transactionForValues: Array<TransactionFor>
     val transactionTypes: Array<TransactionType>
     val categories: Flow<List<Category>>
-    var expenseDefaultCategory: Category?
-    var incomeDefaultCategory: Category?
-    var amount: String
-    var category: Category?
     val categoryTextFieldValue: TextFieldValue
-    var sourceFrom: Source?
     val sourceFromTextFieldValue: TextFieldValue
-    var sourceTo: Source?
     val sourceToTextFieldValue: TextFieldValue
-    var description: String
-    var title: String
-    var transactionCalendar: Calendar
+    val description: String
+    val title: String
     val transactionDateTextFieldValue: TextFieldValue
     val transactionTimeTextFieldValue: TextFieldValue
-    var selectedTransactionForIndex: Int
     val selectedTransactionTypeIndex: Int
     val sources: Flow<List<Source>>
     val transactionTypesForNewTransaction: StateFlow<List<TransactionType>>
+    val amount: String
+    val sourceFrom: Source?
+    val sourceTo: Source?
+    val category: Category?
+    val selectedTransactionForIndex: Int
+    val expenseDefaultCategory: Category?
+    val incomeDefaultCategory: Category?
+    val transactionCalendar: Calendar
 
     fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
@@ -54,4 +54,50 @@ interface AddTransactionViewModel : BaseViewModel {
     fun isSourceToTextFieldVisible(): Boolean
 
     fun isValidTransactionData(): Boolean
+
+    fun updateTitle(
+        updatedTitle: String,
+    )
+
+    fun clearTitle()
+
+    fun updateDescription(
+        updatedDescription: String,
+    )
+
+    fun clearDescription()
+
+    fun updateAmount(
+        updatedAmount: String,
+    )
+
+    fun clearAmount()
+
+    fun updateSourceFrom(
+        updatedSourceFrom: Source,
+    )
+
+    fun updateSourceTo(
+        updatedSourceTo: Source,
+    )
+
+    fun updateCategory(
+        updatedCategory: Category?,
+    )
+
+    fun updateSelectedTransactionForIndex(
+        updatedSelectedTransactionForIndex: Int,
+    )
+
+    fun updateTransactionCalendar(
+        updatedTransactionCalendar: Calendar,
+    )
+
+    fun updateExpenseDefaultCategory(
+        updatedExpenseDefaultCategory: Category?,
+    )
+
+    fun updateIncomeDefaultCategory(
+        updatedIncomeDefaultCategory: Category?,
+    )
 }

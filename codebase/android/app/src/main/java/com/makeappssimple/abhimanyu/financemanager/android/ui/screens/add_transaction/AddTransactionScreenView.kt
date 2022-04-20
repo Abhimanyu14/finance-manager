@@ -97,21 +97,24 @@ fun AddTransactionScreenView(
         initial = emptyList(),
     )
     val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-        data.screenViewModel.transactionCalendar =
-            (data.screenViewModel.transactionCalendar.clone() as Calendar)
+        data.screenViewModel.updateTransactionCalendar(
+            updatedTransactionCalendar = (data.screenViewModel.transactionCalendar.clone() as Calendar)
                 .setDate(
                     dayOfMonth = dayOfMonth,
                     month = month,
                     year = year,
-                )
+                ),
+        )
+
     }
     val onTimeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
-        data.screenViewModel.transactionCalendar =
-            (data.screenViewModel.transactionCalendar.clone() as Calendar)
+        data.screenViewModel.updateTransactionCalendar(
+            updatedTransactionCalendar = (data.screenViewModel.transactionCalendar.clone() as Calendar)
                 .setTime(
                     hour = hour,
                     minute = minute,
                 )
+        )
     }
     val transactionDatePickerDialog = DatePickerDialog(
         state.context,
@@ -142,20 +145,27 @@ fun AddTransactionScreenView(
     LaunchedEffect(
         key1 = categories,
     ) {
-        data.screenViewModel.expenseDefaultCategory = categories.firstOrNull {
+        val expenseDefaultCategory = categories.firstOrNull {
             it.title.contains(
                 other = "Default",
                 ignoreCase = true,
             )
         }
-        data.screenViewModel.incomeDefaultCategory = categories.firstOrNull {
-            it.title.contains(
-                other = "Salary",
-                ignoreCase = true,
-            )
-        }
+        data.screenViewModel.updateExpenseDefaultCategory(
+            updatedExpenseDefaultCategory = expenseDefaultCategory,
+        )
+        data.screenViewModel.updateIncomeDefaultCategory(
+            updatedIncomeDefaultCategory = categories.firstOrNull {
+                it.title.contains(
+                    other = "Salary",
+                    ignoreCase = true,
+                )
+            },
+        )
 
-        data.screenViewModel.category = data.screenViewModel.expenseDefaultCategory
+        data.screenViewModel.updateCategory(
+            updatedCategory = expenseDefaultCategory,
+        )
     }
 
     LaunchedEffect(
@@ -209,7 +219,9 @@ fun AddTransactionScreenView(
                                                 coroutineScope = state.coroutineScope,
                                                 modalBottomSheetState = state.modalBottomSheetState,
                                             ) {
-                                                data.screenViewModel.category = category
+                                                data.screenViewModel.updateCategory(
+                                                    updatedCategory = category,
+                                                )
                                                 addTransactionBottomSheetType =
                                                     AddTransactionBottomSheetType.NONE
                                             }
@@ -233,7 +245,9 @@ fun AddTransactionScreenView(
                                                 coroutineScope = state.coroutineScope,
                                                 modalBottomSheetState = state.modalBottomSheetState,
                                             ) {
-                                                data.screenViewModel.sourceFrom = source
+                                                data.screenViewModel.updateSourceFrom(
+                                                    updatedSourceFrom = source,
+                                                )
                                                 addTransactionBottomSheetType =
                                                     AddTransactionBottomSheetType.NONE
                                             }
@@ -257,7 +271,9 @@ fun AddTransactionScreenView(
                                                 coroutineScope = state.coroutineScope,
                                                 modalBottomSheetState = state.modalBottomSheetState,
                                             ) {
-                                                data.screenViewModel.sourceTo = source
+                                                data.screenViewModel.updateSourceTo(
+                                                    updatedSourceTo = source,
+                                                )
                                                 addTransactionBottomSheetType =
                                                     AddTransactionBottomSheetType.NONE
                                             }
@@ -336,7 +352,7 @@ fun AddTransactionScreenView(
                                         id = R.string.screen_add_transaction_clear_amount,
                                     ),
                                     onClick = {
-                                        data.screenViewModel.amount = ""
+                                        data.screenViewModel.clearAmount()
                                     },
                                     modifier = Modifier
                                         .padding(
@@ -354,7 +370,9 @@ fun AddTransactionScreenView(
                             }
                         },
                         onValueChange = {
-                            data.screenViewModel.amount = it
+                            data.screenViewModel.updateAmount(
+                                updatedAmount = it
+                            )
                         },
                         visualTransformation = AmountCommaVisualTransformation(),
                         keyboardActions = KeyboardActions(
@@ -407,7 +425,7 @@ fun AddTransactionScreenView(
                                             id = R.string.screen_add_transaction_clear_title,
                                         ),
                                         onClick = {
-                                            data.screenViewModel.title = ""
+                                            data.screenViewModel.clearTitle()
                                         },
                                         modifier = Modifier
                                             .padding(
@@ -425,7 +443,9 @@ fun AddTransactionScreenView(
                                 }
                             },
                             onValueChange = {
-                                data.screenViewModel.title = it
+                                data.screenViewModel.updateTitle(
+                                    updatedTitle = it
+                                )
                             },
                             keyboardActions = KeyboardActions(
                                 onDone = {
@@ -484,7 +504,9 @@ fun AddTransactionScreenView(
                                 },
                             selectedItemIndex = data.screenViewModel.selectedTransactionForIndex,
                             onSelectionChange = { index ->
-                                data.screenViewModel.selectedTransactionForIndex = index
+                                data.screenViewModel.updateSelectedTransactionForIndex(
+                                    updatedSelectedTransactionForIndex = index
+                                )
                             },
                             modifier = Modifier
                                 .padding(
@@ -514,7 +536,7 @@ fun AddTransactionScreenView(
                                             id = R.string.screen_add_transaction_clear_description,
                                         ),
                                         onClick = {
-                                            data.screenViewModel.description = ""
+                                            data.screenViewModel.clearDescription()
                                         },
                                         modifier = Modifier
                                             .padding(
@@ -532,7 +554,9 @@ fun AddTransactionScreenView(
                                 }
                             },
                             onValueChange = {
-                                data.screenViewModel.description = it
+                                data.screenViewModel.updateDescription(
+                                    updatedDescription = it,
+                                )
                             },
                             keyboardActions = KeyboardActions(
                                 onDone = {
