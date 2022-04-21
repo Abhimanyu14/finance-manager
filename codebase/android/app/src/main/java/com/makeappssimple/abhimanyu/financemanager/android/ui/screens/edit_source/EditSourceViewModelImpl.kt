@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_source
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.DispatcherProvider
@@ -14,6 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Sourc
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
@@ -26,6 +28,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EditSourceViewModelImpl @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
     private val deleteSourceUseCase: DeleteSourceUseCase,
@@ -60,6 +63,13 @@ class EditSourceViewModelImpl @Inject constructor(
         value = source.value?.balanceAmount?.value.toString(),
     )
     override val balanceAmountValue: StateFlow<String> = _balanceAmountValue
+
+    init {
+        val sourceId: Int = savedStateHandle.get<Int>(NavArgs.SOURCE_ID) ?: 0
+        getSource(
+            id = sourceId,
+        )
+    }
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code

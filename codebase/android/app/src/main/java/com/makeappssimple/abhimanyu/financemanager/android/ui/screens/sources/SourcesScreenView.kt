@@ -63,6 +63,11 @@ fun SourcesScreenView(
             value = SourcesBottomSheetType.NONE,
         )
     }
+    var expandedItemIndex by remember {
+        mutableStateOf(
+            value = -1,
+        )
+    }
 
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
         DisposableEffect(Unit) {
@@ -81,13 +86,6 @@ fun SourcesScreenView(
         ) {
             sourcesBottomSheetType = SourcesBottomSheetType.NONE
         }
-    }
-
-
-    var expandedItemIndex by remember {
-        mutableStateOf(
-            value = -1,
-        )
     }
 
     ModalBottomSheetLayout(
@@ -171,12 +169,13 @@ fun SourcesScreenView(
                                 )
                                 expandedItemIndex = -1
                             },
-                        ) {
-                            data.screenViewModel.deleteSource(
-                                id = listItem.id,
-                            )
-                            expandedItemIndex = -1
-                        }
+                            onDeleteClick = {
+                                data.screenViewModel.deleteSource(
+                                    id = listItem.id,
+                                )
+                                expandedItemIndex = -1
+                            },
+                        )
                     }
                     item {
                         VerticalSpacer(

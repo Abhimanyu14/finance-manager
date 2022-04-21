@@ -8,9 +8,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class CategoriesViewModelImpl @Inject constructor(

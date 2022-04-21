@@ -41,6 +41,14 @@ class CategoryRepositoryImpl(
         )
     }
 
+    override suspend fun updateCategories(
+        vararg categories: Category,
+    ) {
+        categoryDao.updateCategories(
+            categories = categories,
+        )
+    }
+
     override suspend fun deleteCategory(
         id: Int,
     ) {

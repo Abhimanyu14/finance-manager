@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_source
+package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_category
 
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
@@ -8,12 +8,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 
 @ExperimentalMaterialApi
 @Composable
-fun EditSourceScreen(
-    screenViewModel: EditSourceViewModel = hiltViewModel<EditSourceViewModelImpl>(),
-    sourceId: Int,
+fun EditCategoryScreen(
+    screenViewModel: EditCategoryViewModel = hiltViewModel<EditCategoryViewModelImpl>(),
+    categoryId: Int,
 ) {
     logError(
-        message = "Inside EditSourceScreen",
+        message = "Inside EditCategoryScreen",
     )
 
     LaunchedEffect(
@@ -22,11 +22,11 @@ fun EditSourceScreen(
         screenViewModel.trackScreen()
     }
 
-    EditSourceScreenView(
-        data = EditSourceScreenViewData(
+    EditCategoryScreenView(
+        data = EditCategoryScreenViewData(
             screenViewModel = screenViewModel,
-            sourceId = sourceId,
+            categoryId = categoryId,
         ),
-        state = rememberEditSourceScreenViewState(),
+        state = rememberEditCategoryScreenViewState(),
     )
 }

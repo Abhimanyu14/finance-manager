@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,7 +35,6 @@ data class HomeListItemViewData(
     val sourceTo: Source? = null,
 )
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun HomeListItem(
     data: HomeListItemViewData,

@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
@@ -13,7 +12,6 @@ class CategoriesScreenViewState constructor(
     val scaffoldState: ScaffoldState,
 )
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun rememberCategoriesScreenViewState(
     focusManager: FocusManager = LocalFocusManager.current,

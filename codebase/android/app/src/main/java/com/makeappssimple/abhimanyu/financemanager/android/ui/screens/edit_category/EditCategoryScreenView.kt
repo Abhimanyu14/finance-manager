@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_category
+package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_category
 
 import android.view.View
 import android.widget.Toast
@@ -21,7 +21,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.OutlinedTextField
@@ -62,24 +61,28 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_category.loadingCompletedEmoji
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_category.loadingEmoji
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 
-enum class AddCategoryBottomSheetType {
+enum class EditCategoryBottomSheetType {
     NONE,
     SELECT_EMOJI,
 }
 
-data class AddCategoryScreenViewData(
-    val screenViewModel: AddCategoryViewModel,
+data class EditCategoryScreenViewData(
+    val screenViewModel: EditCategoryViewModel,
+    val categoryId: Int,
 )
 
 @OptIn(ExperimentalComposeUiApi::class)
 @ExperimentalMaterialApi
 @Composable
-fun AddCategoryScreenView(
-    data: AddCategoryScreenViewData,
-    state: AddCategoryScreenViewState,
+fun EditCategoryScreenView(
+    data: EditCategoryScreenViewData,
+    state: EditCategoryScreenViewState,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val title by data.screenViewModel.title.collectAsState()
@@ -89,9 +92,9 @@ fun AddCategoryScreenView(
     val emojis by data.screenViewModel.filteredEmojis.collectAsState(
         initial = emptyList(),
     )
-    var addCategoryBottomSheetType by remember {
+    var editCategoryBottomSheetType by remember {
         mutableStateOf(
-            value = AddCategoryBottomSheetType.NONE,
+            value = EditCategoryBottomSheetType.NONE,
         )
     }
 
@@ -104,9 +107,11 @@ fun AddCategoryScreenView(
         key1 = emojis,
     ) {
         if (emojis.isNotEmpty()) {
-            data.screenViewModel.updateEmoji(
-                updatedEmoji = loadingCompletedEmoji,
-            )
+            if (emoji == loadingEmoji) {
+                data.screenViewModel.updateEmoji(
+                    updatedEmoji = loadingCompletedEmoji,
+                )
+            }
         }
     }
 
@@ -114,30 +119,31 @@ fun AddCategoryScreenView(
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
         DisposableEffect(Unit) {
             onDispose {
-                addCategoryBottomSheetType = AddCategoryBottomSheetType.NONE
+                editCategoryBottomSheetType = EditCategoryBottomSheetType.NONE
                 keyboardController?.hide()
             }
         }
     }
     BackHandler(
-        enabled = addCategoryBottomSheetType != AddCategoryBottomSheetType.NONE,
+        enabled = editCategoryBottomSheetType != EditCategoryBottomSheetType.NONE,
     ) {
         toggleModalBottomSheetState(
             coroutineScope = state.coroutineScope,
             modalBottomSheetState = state.modalBottomSheetState,
         ) {
-            addCategoryBottomSheetType = AddCategoryBottomSheetType.NONE
+            editCategoryBottomSheetType = EditCategoryBottomSheetType.NONE
         }
     }
 
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
+        sheetShape = BottomSheetShape,
         sheetContent = {
-            when (addCategoryBottomSheetType) {
-                AddCategoryBottomSheetType.NONE -> {
+            when (editCategoryBottomSheetType) {
+                EditCategoryBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
-                AddCategoryBottomSheetType.SELECT_EMOJI -> {
+                EditCategoryBottomSheetType.SELECT_EMOJI -> {
                     EmojiPickerBottomSheet(
                         data = EmojiPickerBottomSheetData(
                             emojis = emojis,
@@ -147,7 +153,7 @@ fun AddCategoryScreenView(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,
                                 ) {
-                                    addCategoryBottomSheetType = AddCategoryBottomSheetType.NONE
+                                    editCategoryBottomSheetType = EditCategoryBottomSheetType.NONE
                                     data.screenViewModel.updateEmoji(
                                         updatedEmoji = emoji.character,
                                     )
@@ -175,7 +181,7 @@ fun AddCategoryScreenView(
                 MyTopAppBar(
                     navigationManager = data.screenViewModel.navigationManager,
                     titleText = stringResource(
-                        id = R.string.screen_add_category_appbar_title,
+                        id = R.string.screen_edit_category_appbar_title,
                     ),
                     isNavigationIconVisible = true,
                 )
@@ -237,8 +243,8 @@ fun AddCategoryScreenView(
                                 )
                                 .clickable {
                                     keyboardController?.hide()
-                                    addCategoryBottomSheetType =
-                                        AddCategoryBottomSheetType.SELECT_EMOJI
+                                    editCategoryBottomSheetType =
+                                        EditCategoryBottomSheetType.SELECT_EMOJI
                                     toggleModalBottomSheetState(
                                         coroutineScope = state.coroutineScope,
                                         modalBottomSheetState = state.modalBottomSheetState,
@@ -268,7 +274,7 @@ fun AddCategoryScreenView(
                             value = title,
                             label = {
                                 OutlinedTextFieldLabelText(
-                                    textStringResourceId = R.string.screen_add_category_title,
+                                    textStringResourceId = R.string.screen_edit_category_title,
                                 )
                             },
                             trailingIcon = {
@@ -279,7 +285,7 @@ fun AddCategoryScreenView(
                                 ) {
                                     MyIconButton(
                                         onClickLabel = stringResource(
-                                            id = R.string.screen_add_category_clear_title,
+                                            id = R.string.screen_edit_category_clear_title,
                                         ),
                                         onClick = {
                                             data.screenViewModel.clearTitle()
@@ -289,10 +295,10 @@ fun AddCategoryScreenView(
                                                 end = 4.dp,
                                             ),
                                     ) {
-                                        Icon(
+                                        androidx.compose.material.Icon(
                                             imageVector = Icons.Rounded.Clear,
                                             contentDescription = stringResource(
-                                                id = R.string.screen_add_category_clear_title,
+                                                id = R.string.screen_edit_category_clear_title,
                                             ),
                                         )
                                     }
@@ -331,10 +337,10 @@ fun AddCategoryScreenView(
                         )
                     }
                     SaveButton(
-                        textStringResourceId = R.string.screen_add_category_floating_action_button_content_description,
+                        textStringResourceId = R.string.screen_edit_category_floating_action_button_content_description,
                         isEnabled = data.screenViewModel.isValidCategoryData(),
                         onClick = {
-                            data.screenViewModel.insertCategory()
+                            data.screenViewModel.updateCategory()
                         },
                     )
                 }

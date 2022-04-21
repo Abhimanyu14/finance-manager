@@ -54,8 +54,14 @@
     <!-- categories screen -->
     <string name="screen_categories_appbar_title">Categories</string>
 
+    <!-- edit category screen -->
+    <string name="screen_edit_category_appbar_title">Edit Category</string>
+    <string name="screen_edit_category_title">Title</string>
+    <string name="screen_edit_category_clear_title">Clear Title</string>
+    <string name="screen_edit_category_floating_action_button_content_description">UPDATE</string>
+
     <!-- edit source screen -->
-    <string name="screen_edit_source_appbar_title">Edit Source Details</string>
+    <string name="screen_edit_source_appbar_title">Edit Source</string>
     <string name="screen_edit_source_name">Name</string>
     <string name="screen_edit_source_clear_name">Clear Name</string>
     <string name="screen_edit_source_balance_amount_value">Balance Amount Value</string>

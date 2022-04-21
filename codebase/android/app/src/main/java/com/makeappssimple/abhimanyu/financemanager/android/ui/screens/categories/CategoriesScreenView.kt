@@ -23,10 +23,10 @@ import androidx.compose.ui.graphics.Color.Companion.DarkGray
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.pager.ExperimentalPagerApi
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddCategoryScreen
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToEditCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
@@ -38,7 +38,6 @@ data class CategoriesScreenViewData(
     val screenViewModel: CategoriesViewModel,
 )
 
-@OptIn(ExperimentalPagerApi::class)
 @ExperimentalMaterialApi
 @Composable
 fun CategoriesScreenView(
@@ -51,6 +50,11 @@ fun CategoriesScreenView(
     var selectedTabIndex by remember {
         mutableStateOf(
             value = 0,
+        )
+    }
+    var expandedItemIndex by remember {
+        mutableStateOf(
+            value = -1,
         )
     }
     val transactionTypes = listOf(
@@ -118,12 +122,16 @@ fun CategoriesScreenView(
                                 selected = selectedTabIndex == index,
                                 onClick = {
                                     selectedTabIndex = index
+                                    expandedItemIndex = -1
                                 },
                                 selectedContentColor = Primary,
                                 unselectedContentColor = Primary,
                             )
                         }
                 }
+                VerticalSpacer(
+                    height = 16.dp,
+                )
                 LazyColumn {
                     itemsIndexed(
                         items = categories
@@ -133,9 +141,30 @@ fun CategoriesScreenView(
                         key = { _, listItem ->
                             listItem.hashCode()
                         },
-                    ) { _, listItem ->
+                    ) { index, listItem ->
                         CategoryListItem(
                             category = listItem,
+                            expanded = index == expandedItemIndex,
+                            onClick = {
+                                expandedItemIndex = if (index == expandedItemIndex) {
+                                    -1
+                                } else {
+                                    index
+                                }
+                            },
+                            onEditClick = {
+                                navigateToEditCategoryScreen(
+                                    navigationManager = data.screenViewModel.navigationManager,
+                                    categoryId = listItem.id,
+                                )
+                                expandedItemIndex = -1
+                            },
+                            onDeleteClick = {
+                                data.screenViewModel.deleteCategory(
+                                    id = listItem.id,
+                                )
+                                expandedItemIndex = -1
+                            },
                         )
                     }
                     item {

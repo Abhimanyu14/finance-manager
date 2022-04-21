@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.utils.extensions
 
-import org.junit.After
 import org.junit.Assert
 import org.junit.Test
 import java.util.Calendar
@@ -8,10 +7,6 @@ import java.util.Calendar
 class CalendarExtensionsTest {
     private val calendar: Calendar = Calendar.getInstance().apply {
         timeInMillis = 1649354842327
-    }
-
-    @After
-    fun tearDown() {
     }
 
     @Test

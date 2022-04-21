@@ -3,8 +3,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.entities.amount
 import androidx.annotation.VisibleForTesting
 import com.makeappssimple.abhimanyu.financemanager.android.utils.formattedCurrencyValue
 import com.squareup.moshi.JsonClass
-import java.util.Currency
 import kotlin.math.abs
+import java.util.Currency
 
 @VisibleForTesting
 internal const val CURRENCY_CODE_INR = "INR"

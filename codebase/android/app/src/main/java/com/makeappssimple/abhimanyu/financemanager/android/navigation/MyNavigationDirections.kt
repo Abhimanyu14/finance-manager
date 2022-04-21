@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.navigation
 object NavArgs {
     const val WEBPAGE_URL = "webpageUrl"
     const val SOURCE_ID = "sourceId"
+    const val CATEGORY_ID = "categoryId"
 }
 
 object MyNavigationDirections {
@@ -89,6 +90,16 @@ object MyNavigationDirections {
             override val command = Command.NAVIGATE
             override val destination = Screen.CategoryDetails.route
             override val screen = Screen.CategoryDetails.route
+        }
+    }
+
+    fun editCategory(
+        categoryId: Int,
+    ): NavigationCommand {
+        return object : NavigationCommand {
+            override val command = Command.NAVIGATE
+            override val destination = "${Screen.EditCategory.route}/${categoryId}"
+            override val screen = Screen.EditCategory.route
         }
     }
 

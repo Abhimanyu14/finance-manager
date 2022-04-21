@@ -20,6 +20,10 @@ interface CategoryRepository {
         vararg categories: Category,
     )
 
+    suspend fun updateCategories(
+        vararg categories: Category,
+    )
+
     suspend fun deleteCategory(
         id: Int,
     )
