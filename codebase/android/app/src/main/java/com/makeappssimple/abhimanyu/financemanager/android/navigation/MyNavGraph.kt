@@ -14,6 +14,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavArgs.CATEGORY_ID
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavArgs.SOURCE_ID
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavArgs.TRANSACTION_ID
 import com.makeappssimple.abhimanyu.financemanager.android.ui.activity.MainActivityViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_category.AddCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source.AddSourceScreen
@@ -21,6 +22,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transa
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.CategoriesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_category.EditCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_source.EditSourceScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.EditTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.HomeScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.settings.SettingsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.SourcesScreen
@@ -143,6 +145,19 @@ fun MyNavGraph(
         ) { navBackStackEntry ->
             EditSourceScreen(
                 sourceId = navBackStackEntry.arguments?.getInt(SOURCE_ID) ?: 0,
+            )
+        }
+
+        composable(
+            route = "${Screen.EditTransaction.route}/{${TRANSACTION_ID}}",
+            arguments = listOf(
+                navArgument(TRANSACTION_ID) {
+                    type = NavType.IntType
+                },
+            ),
+        ) { navBackStackEntry ->
+            EditTransactionScreen(
+                transactionId = navBackStackEntry.arguments?.getInt(TRANSACTION_ID) ?: 0,
             )
         }
 

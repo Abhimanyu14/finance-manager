@@ -87,19 +87,6 @@ class EditSourceScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun getSource(
-        id: Int,
-    ) {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            _source.value = getSourceUseCase(
-                id = id,
-            )
-            updateInitialSourceValue()
-        }
-    }
-
     override fun updateSource() {
         source.value?.let { source ->
             val amountValue = balanceAmountValue.value.toInt() - source.balanceAmount.value
@@ -195,6 +182,19 @@ class EditSourceScreenViewModelImpl @Inject constructor(
         updatedIndex: Int,
     ) {
         _selectedSourceTypeIndex.value = updatedIndex
+    }
+
+    private fun getSource(
+        id: Int,
+    ) {
+        viewModelScope.launch(
+            context = dispatcherProvider.io,
+        ) {
+            _source.value = getSourceUseCase(
+                id = id,
+            )
+            updateInitialSourceValue()
+        }
     }
 
     private fun updateInitialSourceValue() {

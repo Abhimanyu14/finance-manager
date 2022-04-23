@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoryUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.InsertCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.UpdateCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.usecase.GetEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
@@ -33,7 +32,6 @@ class EditCategoryScreenViewModelImpl @Inject constructor(
     getEmojisUseCase: GetEmojisUseCase,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
-    private val insertCategoryUseCase: InsertCategoryUseCase,
     private val updateCategoriesUseCase: UpdateCategoriesUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
 ) : EditCategoryScreenViewModel, ViewModel() {
@@ -100,19 +98,6 @@ class EditCategoryScreenViewModelImpl @Inject constructor(
         // TODO-Abhi: Add screen tracking code
     }
 
-    override fun getCategory(
-        id: Int,
-    ) {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            _category.value = getCategoryUseCase(
-                id = id,
-            )
-            updateInitialCategoryValue()
-        }
-    }
-
     override fun updateCategory() {
         category.value?.let { category ->
             val updatedCategory = category.copy(
@@ -164,6 +149,19 @@ class EditCategoryScreenViewModelImpl @Inject constructor(
         updatedSearchText: String,
     ) {
         _searchText.value = updatedSearchText
+    }
+
+    private fun getCategory(
+        id: Int,
+    ) {
+        viewModelScope.launch(
+            context = dispatcherProvider.io,
+        ) {
+            _category.value = getCategoryUseCase(
+                id = id,
+            )
+            updateInitialCategoryValue()
+        }
     }
 
     private fun updateInitialCategoryValue() {

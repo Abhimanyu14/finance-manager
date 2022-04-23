@@ -68,6 +68,22 @@
     <string name="screen_edit_source_clear_balance_amount_value">Clear Balance Amount Value</string>
     <string name="screen_edit_source_floating_action_button_content_description">UPDATE</string>
 
+    <!-- edit transaction screen -->
+    <string name="screen_edit_transaction_appbar_title">Edit Transaction Details</string>
+    <string name="screen_edit_transaction_amount">Amount</string>
+    <string name="screen_edit_transaction_clear_amount">Clear Amount</string>
+    <string name="screen_edit_transaction_title">Title</string>
+    <string name="screen_edit_transaction_clear_title">Clear Title</string>
+    <string name="screen_edit_transaction_description">Description</string>
+    <string name="screen_edit_transaction_clear_description">Clear Description</string>
+    <string name="screen_edit_transaction_transaction_date">Transaction Date</string>
+    <string name="screen_edit_transaction_transaction_time">Transaction Time</string>
+    <string name="screen_edit_transaction_category">Category</string>
+    <string name="screen_edit_transaction_source">Source</string>
+    <string name="screen_edit_transaction_source_from">Source From</string>
+    <string name="screen_edit_transaction_source_to">Source To</string>
+    <string name="screen_edit_transaction_floating_action_button_content_description">UPDATE</string>
+
     <!-- home screen -->
     <string name="screen_home_appbar_title">Finance Manager</string>
     <string name="screen_home_floating_action_button_content_description">Add Transaction</string>

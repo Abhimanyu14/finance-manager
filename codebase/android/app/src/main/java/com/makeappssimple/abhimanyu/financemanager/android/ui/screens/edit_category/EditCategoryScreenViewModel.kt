@@ -18,10 +18,6 @@ interface EditCategoryScreenViewModel : BaseScreenViewModel {
     val searchText: StateFlow<String>
     val filteredEmojis: Flow<List<Emoji>>
 
-    fun getCategory(
-        id: Int,
-    )
-
     fun updateCategory()
 
     fun isValidCategoryData(): Boolean

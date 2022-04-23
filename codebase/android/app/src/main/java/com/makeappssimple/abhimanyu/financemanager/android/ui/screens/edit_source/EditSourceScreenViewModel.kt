@@ -35,10 +35,6 @@ interface EditSourceScreenViewModel : BaseScreenViewModel {
         updatedIndex: Int,
     )
 
-    fun getSource(
-        id: Int,
-    )
-
     fun deleteSource(
         id: Int,
     )

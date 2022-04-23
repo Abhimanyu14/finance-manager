@@ -98,6 +98,17 @@ fun navigateToEditSourceScreen(
     )
 }
 
+fun navigateToEditTransactionScreen(
+    navigationManager: NavigationManager,
+    transactionId: Int,
+) {
+    navigationManager.navigate(
+        navigationCommand = MyNavigationDirections.editTransaction(
+            transactionId = transactionId,
+        )
+    )
+}
+
 fun navigateToHomeScreen(
     navigationManager: NavigationManager,
 ) {
