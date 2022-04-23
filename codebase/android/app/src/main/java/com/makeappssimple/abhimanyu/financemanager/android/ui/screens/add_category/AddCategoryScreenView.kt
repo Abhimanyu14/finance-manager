@@ -71,7 +71,7 @@ enum class AddCategoryBottomSheetType {
 }
 
 data class AddCategoryScreenViewData(
-    val screenViewModel: AddCategoryViewModel,
+    val screenViewModel: AddCategoryScreenViewModel,
 )
 
 @OptIn(ExperimentalComposeUiApi::class)

@@ -35,7 +35,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 
 data class CategoriesScreenViewData(
-    val screenViewModel: CategoriesViewModel,
+    val screenViewModel: CategoriesScreenViewModel,
 )
 
 @ExperimentalMaterialApi

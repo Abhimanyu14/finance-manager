@@ -39,7 +39,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldCon
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 
 data class AddSourceScreenViewData(
-    val screenViewModel: AddSourceViewModel,
+    val screenViewModel: AddSourceScreenViewModel,
 )
 
 @Composable

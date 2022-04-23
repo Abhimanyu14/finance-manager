@@ -57,7 +57,7 @@ enum class EditSourceBottomSheetType {
 }
 
 data class EditSourceScreenViewData(
-    val screenViewModel: EditSourceViewModel,
+    val screenViewModel: EditSourceScreenViewModel,
     val sourceId: Int,
 )
 

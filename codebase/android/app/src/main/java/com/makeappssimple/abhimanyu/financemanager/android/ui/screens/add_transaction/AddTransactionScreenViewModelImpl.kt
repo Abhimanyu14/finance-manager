@@ -32,7 +32,7 @@ import java.util.Calendar
 import javax.inject.Inject
 
 @HiltViewModel
-class AddTransactionViewModelImpl @Inject constructor(
+class AddTransactionScreenViewModelImpl @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
     getSourcesUseCase: GetSourcesUseCase,
     override val navigationManager: NavigationManager,
@@ -40,7 +40,7 @@ class AddTransactionViewModelImpl @Inject constructor(
     private val getSourcesCountUseCase: GetSourcesCountUseCase,
     private val insertTransactionUseCase: InsertTransactionUseCase,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
-) : AddTransactionViewModel, ViewModel() {
+) : AddTransactionScreenViewModel, ViewModel() {
     private var expenseDefaultSource: Source? = null
     private var incomeDefaultSource: Source? = null
     private var _expenseDefaultCategory: Category? = null

@@ -3,11 +3,11 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_sour
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.SourceType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseScreenViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
-interface EditSourceViewModel : BaseViewModel {
+interface EditSourceScreenViewModel : BaseScreenViewModel {
     val navigationManager: NavigationManager
     val source: Flow<Source?>
     val sourceTypes: List<SourceType>

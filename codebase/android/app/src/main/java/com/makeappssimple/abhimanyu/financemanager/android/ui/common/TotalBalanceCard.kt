@@ -8,6 +8,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -16,14 +18,20 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Green700
 
 @Composable
 fun TotalBalanceCard(
-    total: String,
+    viewModel: TotalBalanceCardViewModel = hiltViewModel<TotalBalanceCardViewModelImpl>(),
     onClick: (() -> Unit)? = null,
 ) {
+    val totalBalanceAmount by viewModel.sourcesTotalBalanceAmountValue.collectAsState(
+        initial = 0L,
+    )
+
     Card(
         shape = RoundedCornerShape(
             size = 16.dp,
@@ -61,7 +69,9 @@ fun TotalBalanceCard(
                     .fillMaxWidth(),
             )
             Text(
-                text = total,
+                text = Amount(
+                    value = totalBalanceAmount,
+                ).toString(),
                 textAlign = TextAlign.Center,
                 style = TextStyle(
                     color = Color.White,

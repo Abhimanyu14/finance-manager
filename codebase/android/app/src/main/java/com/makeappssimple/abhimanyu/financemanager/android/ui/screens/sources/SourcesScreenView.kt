@@ -24,7 +24,6 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
-import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToEditSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton
@@ -40,7 +39,7 @@ enum class SourcesBottomSheetType {
 }
 
 data class SourcesScreenViewData(
-    val screenViewModel: SourcesViewModel,
+    val screenViewModel: SourcesScreenViewModel,
 )
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -56,9 +55,6 @@ fun SourcesScreenView(
     )
     val sourcesIsUsedInTransactions by data.screenViewModel.sourcesIsUsedInTransactions.collectAsState(
         initial = emptyList(),
-    )
-    val totalBalanceAmount by data.screenViewModel.sourcesTotalBalanceAmountValue.collectAsState(
-        initial = 0L,
     )
     var sourcesBottomSheetType by remember {
         mutableStateOf(
@@ -137,11 +133,7 @@ fun SourcesScreenView(
             ) {
                 LazyColumn {
                     item {
-                        TotalBalanceCard(
-                            total = Amount(
-                                value = totalBalanceAmount,
-                            ).toString(),
-                        )
+                        TotalBalanceCard()
                     }
                     itemsIndexed(
                         items = sources,

@@ -27,7 +27,7 @@ import java.util.Calendar
 import javax.inject.Inject
 
 @HiltViewModel
-class EditSourceViewModelImpl @Inject constructor(
+class EditSourceScreenViewModelImpl @Inject constructor(
     savedStateHandle: SavedStateHandle,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
@@ -36,7 +36,7 @@ class EditSourceViewModelImpl @Inject constructor(
     private val insertSourceUseCase: InsertSourceUseCase,
     private val insertTransactionUseCase: InsertTransactionUseCase,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
-) : EditSourceViewModel, ViewModel() {
+) : EditSourceScreenViewModel, ViewModel() {
     private val _source: MutableStateFlow<Source?> = MutableStateFlow(
         value = null,
     )

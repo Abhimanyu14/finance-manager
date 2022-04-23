@@ -5,12 +5,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Sourc
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseScreenViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import java.util.Calendar
 
-interface AddTransactionViewModel : BaseViewModel {
+interface AddTransactionScreenViewModel : BaseScreenViewModel {
     val navigationManager: NavigationManager
     val transactionForValues: Array<TransactionFor>
     val transactionTypes: Array<TransactionType>

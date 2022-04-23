@@ -34,7 +34,6 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
-import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToCategoriesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSettingsScreen
@@ -55,7 +54,7 @@ enum class HomeBottomSheetType {
 }
 
 data class HomeScreenViewData(
-    val screenViewModel: HomeViewModel,
+    val screenViewModel: HomeScreenViewModel,
 )
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -69,9 +68,6 @@ fun HomeScreenView(
     val keyboardController = LocalSoftwareKeyboardController.current
     val homeListItemViewData by data.screenViewModel.homeListItemViewData.collectAsState(
         initial = emptyList(),
-    )
-    val totalBalanceAmount by data.screenViewModel.sourcesTotalBalanceAmountValue.collectAsState(
-        initial = 0L,
     )
     var homeBottomSheetType by remember {
         mutableStateOf(
@@ -237,9 +233,6 @@ fun HomeScreenView(
                 LazyColumn {
                     item {
                         TotalBalanceCard(
-                            total = Amount(
-                                value = totalBalanceAmount,
-                            ).toString(),
                             onClick = {
                                 navigateToSourcesScreen(
                                     navigationManager = data.screenViewModel.navigationManager,

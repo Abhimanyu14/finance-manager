@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun AddCategoryScreen(
-    screenViewModel: AddCategoryViewModel = hiltViewModel<AddCategoryViewModelImpl>(),
+    screenViewModel: AddCategoryScreenViewModel = hiltViewModel<AddCategoryScreenViewModelImpl>(),
 ) {
     logError(
         message = "Inside AddCategoryScreen",

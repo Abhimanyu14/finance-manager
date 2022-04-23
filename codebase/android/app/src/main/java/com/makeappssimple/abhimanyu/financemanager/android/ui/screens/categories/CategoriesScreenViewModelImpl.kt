@@ -19,13 +19,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CategoriesViewModelImpl @Inject constructor(
+class CategoriesScreenViewModelImpl @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
     override val navigationManager: NavigationManager,
     private val checkIdCategoryIsUsedInTransactionsUseCase: CheckIfCategoryIsUsedInTransactionsUseCase,
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
     private val dispatcherProvider: DispatcherProvider,
-) : CategoriesViewModel, ViewModel() {
+) : CategoriesScreenViewModel, ViewModel() {
     private val transactionTypes = listOf(
         TransactionType.EXPENSE,
         TransactionType.INCOME,

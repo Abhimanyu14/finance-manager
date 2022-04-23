@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 @ExperimentalMaterial3Api
 @Composable
 fun HomeScreen(
-    screenViewModel: HomeViewModel = hiltViewModel<HomeViewModelImpl>(),
+    screenViewModel: HomeScreenViewModel = hiltViewModel<HomeScreenViewModelImpl>(),
 ) {
     logError(
         message = "Inside HomeScreen",

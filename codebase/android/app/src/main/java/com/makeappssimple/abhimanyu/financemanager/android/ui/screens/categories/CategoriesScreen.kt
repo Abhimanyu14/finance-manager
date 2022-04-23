@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 @ExperimentalMaterialApi
 @Composable
 fun CategoriesScreen(
-    screenViewModel: CategoriesViewModel = hiltViewModel<CategoriesViewModelImpl>(),
+    screenViewModel: CategoriesScreenViewModel = hiltViewModel<CategoriesScreenViewModelImpl>(),
 ) {
     logError(
         message = "Inside CategoriesScreen",

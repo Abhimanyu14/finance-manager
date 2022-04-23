@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class EditCategoryViewModelImpl @Inject constructor(
+class EditCategoryScreenViewModelImpl @Inject constructor(
     savedStateHandle: SavedStateHandle,
     getEmojisUseCase: GetEmojisUseCase,
     override val navigationManager: NavigationManager,
@@ -36,7 +36,7 @@ class EditCategoryViewModelImpl @Inject constructor(
     private val insertCategoryUseCase: InsertCategoryUseCase,
     private val updateCategoriesUseCase: UpdateCategoriesUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
-) : EditCategoryViewModel, ViewModel() {
+) : EditCategoryScreenViewModel, ViewModel() {
     private val _category: MutableStateFlow<Category?> = MutableStateFlow(
         value = null,
     )

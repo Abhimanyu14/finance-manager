@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.DeleteSourceUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesTotalBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.CheckIfSourceIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
@@ -20,14 +19,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SourcesViewModelImpl @Inject constructor(
-    getSourcesTotalBalanceAmountValueUseCase: GetSourcesTotalBalanceAmountValueUseCase,
+class SourcesScreenViewModelImpl @Inject constructor(
     getSourcesUseCase: GetSourcesUseCase,
     override val navigationManager: NavigationManager,
     private val checkIfSourceIsUsedInTransactionsUseCase: CheckIfSourceIsUsedInTransactionsUseCase,
     private val deleteSourceUseCase: DeleteSourceUseCase,
     private val dispatcherProvider: DispatcherProvider,
-) : SourcesViewModel, ViewModel() {
+) : SourcesScreenViewModel, ViewModel() {
     override val sources: StateFlow<List<Source>> = getSourcesUseCase()
         .map {
             it.sortedWith(
@@ -48,8 +46,6 @@ class SourcesViewModelImpl @Inject constructor(
                 )
             }
         }
-    override val sourcesTotalBalanceAmountValue: Flow<Long> =
-        getSourcesTotalBalanceAmountValueUseCase()
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code

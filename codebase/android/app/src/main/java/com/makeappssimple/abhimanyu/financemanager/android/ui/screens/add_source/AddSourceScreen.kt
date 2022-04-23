@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 
 @Composable
 fun AddSourceScreen(
-    screenViewModel: AddSourceViewModel = hiltViewModel<AddSourceViewModelImpl>(),
+    screenViewModel: AddSourceScreenViewModel = hiltViewModel<AddSourceScreenViewModelImpl>(),
 ) {
     logError(
         message = "Inside AddSourceScreen",

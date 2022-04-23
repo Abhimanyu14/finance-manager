@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 @ExperimentalMaterial3Api
 @Composable
 fun SettingsScreen(
-    screenViewModel: SettingsViewModel = hiltViewModel<SettingsViewModelImpl>(),
+    screenViewModel: SettingsScreenViewModel = hiltViewModel<SettingsScreenViewModelImpl>(),
 ) {
     logError(
         message = "Inside SettingsScreen",

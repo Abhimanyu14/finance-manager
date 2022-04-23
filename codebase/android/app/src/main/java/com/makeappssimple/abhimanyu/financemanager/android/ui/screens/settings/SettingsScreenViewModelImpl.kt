@@ -12,12 +12,12 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SettingsViewModelImpl @Inject constructor(
+class SettingsScreenViewModelImpl @Inject constructor(
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
     private val backupDataUseCase: BackupDataUseCase,
     private val restoreDataUseCase: RestoreDataUseCase,
-) : SettingsViewModel, ViewModel() {
+) : SettingsScreenViewModel, ViewModel() {
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code

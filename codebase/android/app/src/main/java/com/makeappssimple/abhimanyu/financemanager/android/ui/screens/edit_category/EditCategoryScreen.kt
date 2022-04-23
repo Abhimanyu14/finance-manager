@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 @ExperimentalMaterialApi
 @Composable
 fun EditCategoryScreen(
-    screenViewModel: EditCategoryViewModel = hiltViewModel<EditCategoryViewModelImpl>(),
+    screenViewModel: EditCategoryScreenViewModel = hiltViewModel<EditCategoryScreenViewModelImpl>(),
     categoryId: Int,
 ) {
     logError(

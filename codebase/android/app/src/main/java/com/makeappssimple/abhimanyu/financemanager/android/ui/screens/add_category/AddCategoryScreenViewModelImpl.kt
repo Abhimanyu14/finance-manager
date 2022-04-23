@@ -26,12 +26,12 @@ const val loadingEmoji = "⏳"
 const val loadingCompletedEmoji = "😃"
 
 @HiltViewModel
-class AddCategoryViewModelImpl @Inject constructor(
+class AddCategoryScreenViewModelImpl @Inject constructor(
     getEmojisUseCase: GetEmojisUseCase,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
     private val insertCategoryUseCase: InsertCategoryUseCase,
-) : AddCategoryViewModel, ViewModel() {
+) : AddCategoryScreenViewModel, ViewModel() {
     override val transactionTypes: List<TransactionType> = TransactionType.values()
         .filter {
             it != TransactionType.TRANSFER && it != TransactionType.ADJUSTMENT

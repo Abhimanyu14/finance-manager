@@ -73,7 +73,7 @@ enum class EditCategoryBottomSheetType {
 }
 
 data class EditCategoryScreenViewData(
-    val screenViewModel: EditCategoryViewModel,
+    val screenViewModel: EditCategoryScreenViewModel,
     val categoryId: Int,
 )
 

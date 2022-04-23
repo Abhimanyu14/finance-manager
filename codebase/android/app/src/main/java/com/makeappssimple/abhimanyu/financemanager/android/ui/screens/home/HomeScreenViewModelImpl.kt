@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourceUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesTotalBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.usecase.DeleteTransactionAndRevertOtherDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
@@ -16,17 +15,14 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HomeViewModelImpl @Inject constructor(
-    getSourcesTotalBalanceAmountValueUseCase: GetSourcesTotalBalanceAmountValueUseCase,
+class HomeScreenViewModelImpl @Inject constructor(
     getTransactionsUseCase: GetTransactionsUseCase,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
     private val deleteTransactionAndRevertOtherDataUseCase: DeleteTransactionAndRevertOtherDataUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val getSourceUseCase: GetSourceUseCase,
-) : HomeViewModel, ViewModel() {
-    override val sourcesTotalBalanceAmountValue: Flow<Long> =
-        getSourcesTotalBalanceAmountValueUseCase()
+) : HomeScreenViewModel, ViewModel() {
     override val homeListItemViewData: Flow<List<HomeListItemViewData>> = getTransactionsUseCase()
         .map { transactions ->
             transactions

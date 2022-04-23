@@ -17,11 +17,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class AddSourceViewModelImpl @Inject constructor(
+class AddSourceScreenViewModelImpl @Inject constructor(
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
     private val insertSourceUseCase: InsertSourceUseCase,
-) : AddSourceViewModel, ViewModel() {
+) : AddSourceScreenViewModel, ViewModel() {
     override val sourceTypes: List<SourceType> = SourceType.values()
         .filter {
             it != SourceType.CASH

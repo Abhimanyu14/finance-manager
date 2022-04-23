@@ -4,11 +4,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Cat
 import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseScreenViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
-interface EditCategoryViewModel : BaseViewModel {
+interface EditCategoryScreenViewModel : BaseScreenViewModel {
     val navigationManager: NavigationManager
     val category: StateFlow<Category?>
     val transactionTypes: List<TransactionType>

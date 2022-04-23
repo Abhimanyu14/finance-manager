@@ -20,7 +20,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 
 data class SettingsScreenViewData(
-    val screenViewModel: SettingsViewModel,
+    val screenViewModel: SettingsScreenViewModel,
 )
 
 private const val JSON_MIMETYPE = "application/json"

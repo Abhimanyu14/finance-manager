@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 @ExperimentalMaterialApi
 @Composable
 fun EditSourceScreen(
-    screenViewModel: EditSourceViewModel = hiltViewModel<EditSourceViewModelImpl>(),
+    screenViewModel: EditSourceScreenViewModel = hiltViewModel<EditSourceScreenViewModelImpl>(),
     sourceId: Int,
 ) {
     logError(

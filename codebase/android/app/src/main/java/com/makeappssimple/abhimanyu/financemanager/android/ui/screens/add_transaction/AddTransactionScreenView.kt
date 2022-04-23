@@ -78,7 +78,7 @@ enum class AddTransactionBottomSheetType {
 }
 
 data class AddTransactionScreenViewData(
-    val screenViewModel: AddTransactionViewModel,
+    val screenViewModel: AddTransactionScreenViewModel,
 )
 
 @OptIn(ExperimentalComposeUiApi::class)
