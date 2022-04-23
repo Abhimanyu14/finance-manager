@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.common
+package com.makeappssimple.abhimanyu.financemanager.android.ui.common.total_balance_card
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Green700
 
 @Composable

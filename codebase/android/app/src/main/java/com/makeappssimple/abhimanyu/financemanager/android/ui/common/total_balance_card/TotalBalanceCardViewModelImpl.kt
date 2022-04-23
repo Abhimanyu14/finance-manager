@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.common
+package com.makeappssimple.abhimanyu.financemanager.android.ui.common.total_balance_card
 
 import androidx.lifecycle.ViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesTotalBalanceAmountValueUseCase
