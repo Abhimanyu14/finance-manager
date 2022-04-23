@@ -8,6 +8,10 @@ interface TransactionRepository {
 
     suspend fun getTransactionsCount(): Int
 
+    suspend fun checkIfCategoryIsUsedInTransactions(
+        categoryId: Int,
+    ): Boolean
+
     suspend fun checkIfSourceIsUsedInTransactions(
         sourceId: Int,
     ): Boolean

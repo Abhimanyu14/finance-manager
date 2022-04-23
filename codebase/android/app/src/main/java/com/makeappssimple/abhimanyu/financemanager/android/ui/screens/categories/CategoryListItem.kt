@@ -28,6 +28,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableI
 fun CategoryListItem(
     category: Category,
     expanded: Boolean,
+    deleteEnabled: Boolean,
     onClick: () -> Unit,
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
@@ -114,11 +115,13 @@ fun CategoryListItem(
                 ExpandableItemIconButton(
                     iconImageVector = Icons.Rounded.Delete,
                     labelText = "Delete",
-                    enabled = true,
-//                    !source.name.contains(
-//                        other = "Cash",
-//                        ignoreCase = false,
-//                    ),
+                    enabled = !category.title.contains(
+                        other = "Default",
+                        ignoreCase = false,
+                    ) && !category.title.contains(
+                        other = "Salary",
+                        ignoreCase = false,
+                    ) && deleteEnabled,
                     onClick = onDeleteClick,
                     modifier = Modifier
                         .weight(

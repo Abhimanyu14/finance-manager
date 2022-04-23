@@ -17,6 +17,14 @@ class TransactionRepositoryImpl(
         return transactionDao.getTransactionsCount()
     }
 
+    override suspend fun checkIfCategoryIsUsedInTransactions(
+        categoryId: Int,
+    ): Boolean {
+        return transactionDao.checkIfCategoryIsUsedInTransactions(
+            categoryId = categoryId,
+        )
+    }
+
     override suspend fun checkIfSourceIsUsedInTransactions(
         sourceId: Int,
     ): Boolean {

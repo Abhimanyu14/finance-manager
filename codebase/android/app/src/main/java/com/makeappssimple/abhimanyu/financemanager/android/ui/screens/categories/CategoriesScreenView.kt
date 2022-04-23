@@ -44,14 +44,13 @@ fun CategoriesScreenView(
     data: CategoriesScreenViewData,
     state: CategoriesScreenViewState,
 ) {
-    val categories by data.screenViewModel.categories.collectAsState(
+    val selectedTabIndex by data.screenViewModel.selectedTabIndex.collectAsState()
+    val categories by data.screenViewModel.filteredCategories.collectAsState(
         initial = emptyList(),
     )
-    var selectedTabIndex by remember {
-        mutableStateOf(
-            value = 0,
-        )
-    }
+    val categoriesIsUsedInTransactions by data.screenViewModel.categoriesIsUsedInTransactions.collectAsState(
+        initial = emptyList(),
+    )
     var expandedItemIndex by remember {
         mutableStateOf(
             value = -1,
@@ -121,7 +120,9 @@ fun CategoriesScreenView(
                                 },
                                 selected = selectedTabIndex == index,
                                 onClick = {
-                                    selectedTabIndex = index
+                                    data.screenViewModel.updateSelectedTabIndex(
+                                        updatedSelectedTabIndex = index,
+                                    )
                                     expandedItemIndex = -1
                                 },
                                 selectedContentColor = Primary,
@@ -134,17 +135,18 @@ fun CategoriesScreenView(
                 )
                 LazyColumn {
                     itemsIndexed(
-                        items = categories
-                            .filter {
-                                it.transactionType == transactionTypes[selectedTabIndex]
-                            },
+                        items = categories,
                         key = { _, listItem ->
                             listItem.hashCode()
                         },
                     ) { index, listItem ->
+                        val deleteEnabled: Boolean? = categoriesIsUsedInTransactions.getOrNull(
+                            index = index,
+                        )?.not()
                         CategoryListItem(
                             category = listItem,
                             expanded = index == expandedItemIndex,
+                            deleteEnabled = deleteEnabled ?: false,
                             onClick = {
                                 expandedItemIndex = if (index == expandedItemIndex) {
                                     -1

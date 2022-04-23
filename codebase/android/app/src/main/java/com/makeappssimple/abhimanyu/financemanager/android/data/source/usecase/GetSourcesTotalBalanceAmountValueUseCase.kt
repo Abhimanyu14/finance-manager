@@ -1,9 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 class GetSourcesTotalBalanceAmountValueUseCase @Inject constructor(
     private val sourceRepository: SourceRepository,

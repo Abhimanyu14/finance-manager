@@ -8,7 +8,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.initialdatab
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import dagger.hilt.android.qualifiers.ApplicationContext
-import javax.inject.Inject
 import java.io.BufferedReader
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -16,6 +15,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.nio.charset.Charset
+import javax.inject.Inject
 
 private val moshi = Moshi.Builder()
     .add(AmountJsonAdapter())

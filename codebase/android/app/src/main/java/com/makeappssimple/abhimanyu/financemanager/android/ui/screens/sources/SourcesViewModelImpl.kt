@@ -16,7 +16,6 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -41,20 +40,14 @@ class SourcesViewModelImpl @Inject constructor(
             started = SharingStarted.Eagerly,
             initialValue = emptyList(),
         )
-    override val sourcesIsUsedInTransactions: Flow<List<Boolean>> = sources.transform {
-        val result: MutableList<Boolean> = mutableListOf<Boolean>()
-        it.forEach { source ->
-            val isUsedInTransaction = checkIfSourceIsUsedInTransactionsUseCase(
-                sourceId = source.id,
-            )
-            result.add(
-                element = isUsedInTransaction,
-            )
+    override val sourcesIsUsedInTransactions: Flow<List<Boolean>> = sources
+        .map {
+            it.map { source ->
+                checkIfSourceIsUsedInTransactionsUseCase(
+                    sourceId = source.id,
+                )
+            }
         }
-        emit(
-            value = result,
-        )
-    }
     override val sourcesTotalBalanceAmountValue: Flow<Long> =
         getSourcesTotalBalanceAmountValueUseCase()
 
