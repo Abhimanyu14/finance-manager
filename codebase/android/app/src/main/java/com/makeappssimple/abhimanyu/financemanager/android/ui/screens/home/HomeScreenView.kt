@@ -36,7 +36,6 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToCategoriesScreen
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToEditTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSettingsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSourcesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton
@@ -265,10 +264,11 @@ fun HomeScreenView(
                                 }
                             },
                             onEditClick = {
-                                navigateToEditTransactionScreen(
-                                    navigationManager = data.screenViewModel.navigationManager,
-                                    transactionId = listItem.transaction.id,
-                                )
+                                // TODO-Abhi: Edit transaction
+                                // navigateToEditTransactionScreen(
+                                //     navigationManager = data.screenViewModel.navigationManager,
+                                //     transactionId = listItem.transaction.id,
+                                // )
                                 expandedItemIndex = -1
                             },
                             onDeleteClick = {
