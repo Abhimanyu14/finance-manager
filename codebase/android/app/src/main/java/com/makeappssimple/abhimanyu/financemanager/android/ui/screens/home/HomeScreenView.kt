@@ -41,9 +41,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navi
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBarBackground
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBarIconTint
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
@@ -74,6 +74,12 @@ fun HomeScreenView(
             value = HomeBottomSheetType.NONE,
         )
     }
+    var expandedItemIndex by remember {
+        mutableStateOf(
+            value = -1,
+        )
+    }
+
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
         DisposableEffect(Unit) {
             onDispose {
@@ -245,9 +251,32 @@ fun HomeScreenView(
                         key = { _, listItem ->
                             listItem.hashCode()
                         },
-                    ) { _, listItem ->
+                    ) { index, listItem ->
                         HomeListItem(
                             data = listItem,
+                            expanded = index == expandedItemIndex,
+                            deleteEnabled = true,
+                            onClick = {
+                                expandedItemIndex = if (index == expandedItemIndex) {
+                                    -1
+                                } else {
+                                    index
+                                }
+                            },
+                            onEditClick = {
+                                // TODO-Abhi: Navigation
+                                // navigateToEditCategoryScreen(
+                                //     navigationManager = data.screenViewModel.navigationManager,
+                                //     categoryId = listItem.id,
+                                // )
+                                expandedItemIndex = -1
+                            },
+                            onDeleteClick = {
+                                data.screenViewModel.deleteTransaction(
+                                    id = listItem.transaction.id,
+                                )
+                                expandedItemIndex = -1
+                            },
                         )
                     }
                     item {
