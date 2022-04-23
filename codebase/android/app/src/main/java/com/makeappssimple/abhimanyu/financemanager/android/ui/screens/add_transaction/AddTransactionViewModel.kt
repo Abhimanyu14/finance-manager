@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction
 
-import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionFor
@@ -16,24 +15,17 @@ interface AddTransactionViewModel : BaseViewModel {
     val transactionForValues: Array<TransactionFor>
     val transactionTypes: Array<TransactionType>
     val categories: Flow<List<Category>>
-    val categoryTextFieldValue: TextFieldValue
-    val sourceFromTextFieldValue: TextFieldValue
-    val sourceToTextFieldValue: TextFieldValue
-    val description: String
-    val title: String
-    val transactionDateTextFieldValue: TextFieldValue
-    val transactionTimeTextFieldValue: TextFieldValue
-    val selectedTransactionTypeIndex: Int
+    val description: StateFlow<String>
+    val title: StateFlow<String>
+    val selectedTransactionTypeIndex: StateFlow<Int>
     val sources: Flow<List<Source>>
     val transactionTypesForNewTransaction: StateFlow<List<TransactionType>>
-    val amount: String
-    val sourceFrom: Source?
-    val sourceTo: Source?
-    val category: Category?
-    val selectedTransactionForIndex: Int
-    val expenseDefaultCategory: Category?
-    val incomeDefaultCategory: Category?
-    val transactionCalendar: Calendar
+    val amount: StateFlow<String>
+    val sourceFrom: StateFlow<Source?>
+    val sourceTo: StateFlow<Source?>
+    val category: StateFlow<Category?>
+    val selectedTransactionForIndex: StateFlow<Int>
+    val transactionCalendar: StateFlow<Calendar>
 
     fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,

@@ -31,6 +31,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.getIcon
 fun SourceListItem(
     source: Source,
     expanded: Boolean,
+    deleteEnabled: Boolean,
     onClick: () -> Unit,
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
@@ -136,7 +137,7 @@ fun SourceListItem(
                     enabled = !source.name.contains(
                         other = "Cash",
                         ignoreCase = false,
-                    ),
+                    ) && deleteEnabled,
                     onClick = onDeleteClick,
                     modifier = Modifier
                         .weight(

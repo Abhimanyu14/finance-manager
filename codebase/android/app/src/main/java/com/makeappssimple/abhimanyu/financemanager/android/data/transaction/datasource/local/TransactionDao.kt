@@ -17,6 +17,11 @@ interface TransactionDao {
     @Query(value = "SELECT COUNT(*) FROM transaction_table")
     suspend fun getTransactionsCount(): Int
 
+    @Query(value = "SELECT EXISTS(SELECT * from transaction_table WHERE source_from_id = :sourceId OR source_to_id = :sourceId)")
+    suspend fun checkIfSourceIsUsedInTransactions(
+        sourceId: Int,
+    ): Boolean
+
     @Query(value = "SELECT * from transaction_table WHERE id = :id")
     suspend fun getTransaction(
         id: Int,

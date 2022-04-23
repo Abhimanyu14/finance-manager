@@ -6,31 +6,55 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.Dispa
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.DeleteSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesTotalBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.UpdateSourcesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.InsertTransactionUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.CheckIfSourceIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
-import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.entities.source.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.transform
 import kotlinx.coroutines.launch
-import java.util.Calendar
+import javax.inject.Inject
 
 @HiltViewModel
 class SourcesViewModelImpl @Inject constructor(
     getSourcesTotalBalanceAmountValueUseCase: GetSourcesTotalBalanceAmountValueUseCase,
     getSourcesUseCase: GetSourcesUseCase,
     override val navigationManager: NavigationManager,
-    private val dispatcherProvider: DispatcherProvider,
+    private val checkIfSourceIsUsedInTransactionsUseCase: CheckIfSourceIsUsedInTransactionsUseCase,
     private val deleteSourceUseCase: DeleteSourceUseCase,
-    private val insertTransactionUseCase: InsertTransactionUseCase,
-    private val updateSourcesUseCase: UpdateSourcesUseCase,
+    private val dispatcherProvider: DispatcherProvider,
 ) : SourcesViewModel, ViewModel() {
-    override val sources: Flow<List<Source>> = getSourcesUseCase()
+    override val sources: StateFlow<List<Source>> = getSourcesUseCase()
+        .map {
+            it.sortedWith(
+                comparator = compareBy { source ->
+                    source.type.sortOrder
+                }
+            )
+        }.stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+            initialValue = emptyList(),
+        )
+    override val sourcesIsUsedInTransactions: Flow<List<Boolean>> = sources.transform {
+        val result: MutableList<Boolean> = mutableListOf<Boolean>()
+        it.forEach { source ->
+            val isUsedInTransaction = checkIfSourceIsUsedInTransactionsUseCase(
+                sourceId = source.id,
+            )
+            result.add(
+                element = isUsedInTransaction,
+            )
+        }
+        emit(
+            value = result,
+        )
+    }
     override val sourcesTotalBalanceAmountValue: Flow<Long> =
         getSourcesTotalBalanceAmountValueUseCase()
 
@@ -46,47 +70,6 @@ class SourcesViewModelImpl @Inject constructor(
         ) {
             deleteSourceUseCase(
                 id = id,
-            )
-        }
-    }
-
-    override fun insertTransaction(
-        amountValue: Long,
-        sourceTo: Source,
-    ) {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            insertTransactionUseCase(
-                transaction = Transaction(
-                    amount = Amount(
-                        value = amountValue,
-                    ),
-                    categoryId = 0,
-                    sourceFromId = 0,
-                    sourceToId = sourceTo.id,
-                    description = "",
-                    title = TransactionType.ADJUSTMENT.title,
-                    creationTimestamp = Calendar.getInstance().timeInMillis,
-                    transactionTimestamp = Calendar.getInstance().timeInMillis,
-                    transactionFor = TransactionFor.SELF,
-                    transactionType = TransactionType.ADJUSTMENT,
-                ),
-            )
-            updateSource(
-                source = sourceTo,
-            )
-        }
-    }
-
-    private fun updateSource(
-        source: Source,
-    ) {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            updateSourcesUseCase(
-                source,
             )
         }
     }

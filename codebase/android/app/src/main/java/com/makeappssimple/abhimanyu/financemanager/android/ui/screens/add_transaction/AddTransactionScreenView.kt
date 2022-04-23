@@ -41,6 +41,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
@@ -58,6 +59,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModal
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.dayOfMonth
+import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.formattedDate
+import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.formattedTime
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.hour
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.minute
@@ -87,6 +90,7 @@ fun AddTransactionScreenView(
     state: AddTransactionScreenViewState,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
+
     val categories by data.screenViewModel.categories.collectAsState(
         initial = emptyList(),
     )
@@ -96,9 +100,19 @@ fun AddTransactionScreenView(
     val transactionTypesForNewTransaction by data.screenViewModel.transactionTypesForNewTransaction.collectAsState(
         initial = emptyList(),
     )
+    val selectedTransactionTypeIndex by data.screenViewModel.selectedTransactionTypeIndex.collectAsState()
+    val amount by data.screenViewModel.amount.collectAsState()
+    val title by data.screenViewModel.title.collectAsState()
+    val description by data.screenViewModel.description.collectAsState()
+    val category by data.screenViewModel.category.collectAsState()
+    val sourceFrom by data.screenViewModel.sourceFrom.collectAsState()
+    val sourceTo by data.screenViewModel.sourceTo.collectAsState()
+    val selectedTransactionForIndex by data.screenViewModel.selectedTransactionForIndex.collectAsState()
+    val transactionCalendar by data.screenViewModel.transactionCalendar.collectAsState()
+
     val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
         data.screenViewModel.updateTransactionCalendar(
-            updatedTransactionCalendar = (data.screenViewModel.transactionCalendar.clone() as Calendar)
+            updatedTransactionCalendar = (transactionCalendar.clone() as Calendar)
                 .setDate(
                     dayOfMonth = dayOfMonth,
                     month = month,
@@ -109,7 +123,7 @@ fun AddTransactionScreenView(
     }
     val onTimeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
         data.screenViewModel.updateTransactionCalendar(
-            updatedTransactionCalendar = (data.screenViewModel.transactionCalendar.clone() as Calendar)
+            updatedTransactionCalendar = (transactionCalendar.clone() as Calendar)
                 .setTime(
                     hour = hour,
                     minute = minute,
@@ -119,15 +133,15 @@ fun AddTransactionScreenView(
     val transactionDatePickerDialog = DatePickerDialog(
         state.context,
         onDateSetListener,
-        data.screenViewModel.transactionCalendar.year,
-        data.screenViewModel.transactionCalendar.month,
-        data.screenViewModel.transactionCalendar.dayOfMonth,
+        transactionCalendar.year,
+        transactionCalendar.month,
+        transactionCalendar.dayOfMonth,
     )
     val transactionTimePickerDialog = TimePickerDialog(
         state.context,
         onTimeSetListener,
-        data.screenViewModel.transactionCalendar.hour,
-        data.screenViewModel.transactionCalendar.minute,
+        transactionCalendar.hour,
+        transactionCalendar.minute,
         false,
     )
     var addTransactionBottomSheetType by remember {
@@ -162,7 +176,6 @@ fun AddTransactionScreenView(
                 )
             },
         )
-
         data.screenViewModel.updateCategory(
             updatedCategory = expenseDefaultCategory,
         )
@@ -209,7 +222,7 @@ fun AddTransactionScreenView(
                         data = AddTransactionSelectCategoryBottomSheetData(
                             items = categories
                                 .filter { category ->
-                                    category.transactionType == data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex]
+                                    category.transactionType == data.screenViewModel.transactionTypes[selectedTransactionTypeIndex]
                                 }
                                 .map { category ->
                                     AddTransactionSelectCategoryBottomSheetItemData(
@@ -322,7 +335,7 @@ fun AddTransactionScreenView(
                                     text = transactionType.title,
                                 )
                             },
-                        selectedItemIndex = data.screenViewModel.selectedTransactionTypeIndex,
+                        selectedItemIndex = selectedTransactionTypeIndex,
                         onSelectionChange = { index ->
                             data.screenViewModel.updateSelectedTransactionTypeIndex(
                                 updatedSelectedTransactionTypeIndex = index
@@ -335,7 +348,7 @@ fun AddTransactionScreenView(
                             ),
                     )
                     OutlinedTextField(
-                        value = data.screenViewModel.amount,
+                        value = amount,
                         label = {
                             OutlinedTextFieldLabelText(
                                 textStringResourceId = R.string.screen_add_transaction_amount,
@@ -343,7 +356,7 @@ fun AddTransactionScreenView(
                         },
                         trailingIcon = {
                             AnimatedVisibility(
-                                visible = data.screenViewModel.amount.isNotNullOrBlank(),
+                                visible = amount.isNotNullOrBlank(),
                                 enter = fadeIn(),
                                 exit = fadeOut(),
                             ) {
@@ -408,7 +421,7 @@ fun AddTransactionScreenView(
                         visible = data.screenViewModel.isTitleTextFieldVisible(),
                     ) {
                         OutlinedTextField(
-                            value = data.screenViewModel.title,
+                            value = title,
                             label = {
                                 OutlinedTextFieldLabelText(
                                     textStringResourceId = R.string.screen_add_transaction_title,
@@ -416,7 +429,7 @@ fun AddTransactionScreenView(
                             },
                             trailingIcon = {
                                 AnimatedVisibility(
-                                    visible = data.screenViewModel.title.isNotNullOrBlank(),
+                                    visible = title.isNotNullOrBlank(),
                                     enter = fadeIn(),
                                     exit = fadeOut(),
                                 ) {
@@ -469,7 +482,9 @@ fun AddTransactionScreenView(
                         visible = data.screenViewModel.isCategoryTextFieldVisible(),
                     ) {
                         MyReadOnlyTextField(
-                            value = data.screenViewModel.categoryTextFieldValue,
+                            value = TextFieldValue(
+                                text = category?.title ?: "",
+                            ),
                             onClick = {
                                 addTransactionBottomSheetType =
                                     AddTransactionBottomSheetType.SELECT_CATEGORY
@@ -502,7 +517,7 @@ fun AddTransactionScreenView(
                                         text = transactionFor.title,
                                     )
                                 },
-                            selectedItemIndex = data.screenViewModel.selectedTransactionForIndex,
+                            selectedItemIndex = selectedTransactionForIndex,
                             onSelectionChange = { index ->
                                 data.screenViewModel.updateSelectedTransactionForIndex(
                                     updatedSelectedTransactionForIndex = index
@@ -519,7 +534,7 @@ fun AddTransactionScreenView(
                         visible = data.screenViewModel.isDescriptionTextFieldVisible(),
                     ) {
                         OutlinedTextField(
-                            value = data.screenViewModel.description,
+                            value = description,
                             label = {
                                 OutlinedTextFieldLabelText(
                                     textStringResourceId = R.string.screen_add_transaction_description,
@@ -527,7 +542,7 @@ fun AddTransactionScreenView(
                             },
                             trailingIcon = {
                                 AnimatedVisibility(
-                                    visible = data.screenViewModel.description.isNotNullOrBlank(),
+                                    visible = description.isNotNullOrBlank(),
                                     enter = fadeIn(),
                                     exit = fadeOut(),
                                 ) {
@@ -580,7 +595,9 @@ fun AddTransactionScreenView(
                         visible = data.screenViewModel.isSourceFromTextFieldVisible(),
                     ) {
                         MyReadOnlyTextField(
-                            value = data.screenViewModel.sourceFromTextFieldValue,
+                            value = TextFieldValue(
+                                text = sourceFrom?.name ?: "",
+                            ),
                             onClick = {
                                 addTransactionBottomSheetType =
                                     AddTransactionBottomSheetType.SELECT_SOURCE_FROM
@@ -592,7 +609,7 @@ fun AddTransactionScreenView(
                             },
                             label = {
                                 OutlinedTextFieldLabelText(
-                                    textStringResourceId = if (data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER) {
+                                    textStringResourceId = if (data.screenViewModel.transactionTypes[selectedTransactionTypeIndex] == TransactionType.TRANSFER) {
                                         R.string.screen_add_transaction_source_from
                                     } else {
                                         R.string.screen_add_transaction_source
@@ -611,7 +628,9 @@ fun AddTransactionScreenView(
                         visible = data.screenViewModel.isSourceToTextFieldVisible(),
                     ) {
                         MyReadOnlyTextField(
-                            value = data.screenViewModel.sourceToTextFieldValue,
+                            value = TextFieldValue(
+                                text = sourceTo?.name ?: "",
+                            ),
                             onClick = {
                                 addTransactionBottomSheetType =
                                     AddTransactionBottomSheetType.SELECT_SOURCE_TO
@@ -623,7 +642,7 @@ fun AddTransactionScreenView(
                             },
                             label = {
                                 OutlinedTextFieldLabelText(
-                                    textStringResourceId = if (data.screenViewModel.transactionTypes[data.screenViewModel.selectedTransactionTypeIndex] == TransactionType.TRANSFER) {
+                                    textStringResourceId = if (data.screenViewModel.transactionTypes[selectedTransactionTypeIndex] == TransactionType.TRANSFER) {
                                         R.string.screen_add_transaction_source_to
                                     } else {
                                         R.string.screen_add_transaction_source
@@ -639,7 +658,9 @@ fun AddTransactionScreenView(
                         )
                     }
                     MyReadOnlyTextField(
-                        value = data.screenViewModel.transactionDateTextFieldValue,
+                        value = TextFieldValue(
+                            text = transactionCalendar.formattedDate(),
+                        ),
                         onClick = {
                             transactionDatePickerDialog.show()
                         },
@@ -656,7 +677,9 @@ fun AddTransactionScreenView(
                             ),
                     )
                     MyReadOnlyTextField(
-                        value = data.screenViewModel.transactionTimeTextFieldValue,
+                        value = TextFieldValue(
+                            text = transactionCalendar.formattedTime(),
+                        ),
                         onClick = {
                             transactionTimePickerDialog.show()
                         },

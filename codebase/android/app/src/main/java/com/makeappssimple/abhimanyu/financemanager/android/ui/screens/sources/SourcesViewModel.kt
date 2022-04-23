@@ -8,14 +8,10 @@ import kotlinx.coroutines.flow.Flow
 interface SourcesViewModel : BaseViewModel {
     val navigationManager: NavigationManager
     val sources: Flow<List<Source>>
+    val sourcesIsUsedInTransactions: Flow<List<Boolean>>
     val sourcesTotalBalanceAmountValue: Flow<Long>
 
     fun deleteSource(
         id: Int,
-    )
-
-    fun insertTransaction(
-        amountValue: Long,
-        sourceTo: Source,
     )
 }

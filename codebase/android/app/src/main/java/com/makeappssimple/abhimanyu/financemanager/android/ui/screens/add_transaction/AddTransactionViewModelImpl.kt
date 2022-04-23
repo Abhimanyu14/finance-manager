@@ -1,10 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction
 
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.DispatcherProvider
@@ -22,8 +17,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
-import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.formattedDate
-import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.formattedTime
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
@@ -47,35 +40,12 @@ class AddTransactionViewModelImpl @Inject constructor(
 ) : AddTransactionViewModel, ViewModel() {
     private var expenseDefaultSource: Source? = null
     private var incomeDefaultSource: Source? = null
+    private var _expenseDefaultCategory: Category? = null
+    private var _incomeDefaultCategory: Category? = null
 
     override val transactionForValues: Array<TransactionFor> = TransactionFor.values()
     override val transactionTypes: Array<TransactionType> = TransactionType.values()
     override val categories: Flow<List<Category>> = getCategoriesUseCase()
-    override val categoryTextFieldValue: TextFieldValue by derivedStateOf {
-        TextFieldValue(
-            text = category?.title ?: "",
-        )
-    }
-    override val sourceFromTextFieldValue: TextFieldValue by derivedStateOf {
-        TextFieldValue(
-            text = sourceFrom?.name ?: "",
-        )
-    }
-    override val sourceToTextFieldValue: TextFieldValue by derivedStateOf {
-        TextFieldValue(
-            text = sourceTo?.name ?: "",
-        )
-    }
-    override val transactionDateTextFieldValue: TextFieldValue by derivedStateOf {
-        TextFieldValue(
-            text = transactionCalendar.formattedDate(),
-        )
-    }
-    override val transactionTimeTextFieldValue: TextFieldValue by derivedStateOf {
-        TextFieldValue(
-            text = transactionCalendar.formattedTime(),
-        )
-    }
     override val sources: Flow<List<Source>> = flow {
         getSourcesUseCase().collectIndexed { _, value ->
             expenseDefaultSource = value.firstOrNull {
@@ -85,7 +55,7 @@ class AddTransactionViewModelImpl @Inject constructor(
                 )
             }
             incomeDefaultSource = expenseDefaultSource
-            _sourceFrom = expenseDefaultSource
+            _sourceFrom.value = expenseDefaultSource
             emit(
                 value = value.sortedWith(
                     comparator = compareBy {
@@ -96,62 +66,55 @@ class AddTransactionViewModelImpl @Inject constructor(
         }
     }
 
-    private var _expenseDefaultCategory: Category? = null
-    override var expenseDefaultCategory: Category? = _expenseDefaultCategory
-
-    private var _incomeDefaultCategory: Category? = null
-    override var incomeDefaultCategory: Category? = _incomeDefaultCategory
-
-    private var _transactionCalendar: Calendar by mutableStateOf(
-        Calendar.getInstance()
+    private var _transactionCalendar = MutableStateFlow(
+        value = Calendar.getInstance(),
     )
-    override var transactionCalendar: Calendar = _transactionCalendar
+    override var transactionCalendar: StateFlow<Calendar> = _transactionCalendar
 
-
-    private var _selectedTransactionForIndex: Int by mutableStateOf(
+    private var _selectedTransactionForIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = transactionForValues.indexOf(
             element = TransactionFor.SELF,
         ),
     )
-    override val selectedTransactionForIndex: Int = _selectedTransactionForIndex
+    override val selectedTransactionForIndex: StateFlow<Int> = _selectedTransactionForIndex
 
-    private var _category: Category? by mutableStateOf(
+    private var _category: MutableStateFlow<Category?> = MutableStateFlow(
         value = null,
     )
-    override val category: Category? = _category
+    override val category: StateFlow<Category?> = _category
 
-    private var _sourceFrom: Source? by mutableStateOf(
+    private var _sourceFrom: MutableStateFlow<Source?> = MutableStateFlow(
         value = null,
     )
-    override val sourceFrom: Source? = _sourceFrom
+    override val sourceFrom: StateFlow<Source?> = _sourceFrom
 
-    private var _sourceTo: Source? by mutableStateOf(
+    private var _sourceTo: MutableStateFlow<Source?> = MutableStateFlow(
         value = null,
     )
-    override val sourceTo: Source? = _sourceTo
+    override val sourceTo: StateFlow<Source?> = _sourceTo
 
 
-    private var _amount: String by mutableStateOf(
+    private var _amount: MutableStateFlow<String> = MutableStateFlow(
         value = "",
     )
-    override val amount: String = _amount
+    override val amount: StateFlow<String> = _amount
 
-    private var _selectedTransactionTypeIndex: Int by mutableStateOf(
+    private var _selectedTransactionTypeIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = transactionTypes.indexOf(
             element = TransactionType.EXPENSE,
         ),
     )
-    override val selectedTransactionTypeIndex: Int = _selectedTransactionTypeIndex
+    override val selectedTransactionTypeIndex: StateFlow<Int> = _selectedTransactionTypeIndex
 
-    private var _title: String by mutableStateOf(
+    private var _title: MutableStateFlow<String> = MutableStateFlow(
         value = "",
     )
-    override val title: String = _title
+    override val title: StateFlow<String> = _title
 
-    private var _description: String by mutableStateOf(
+    private var _description: MutableStateFlow<String> = MutableStateFlow(
         value = "",
     )
-    override val description: String = _description
+    override val description: StateFlow<String> = _description
 
     private val _transactionTypesForNewTransaction = MutableStateFlow(
         value = emptyList<TransactionType>(),
@@ -170,21 +133,21 @@ class AddTransactionViewModelImpl @Inject constructor(
     override fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
     ) {
-        _selectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex
-        when (transactionTypes[selectedTransactionTypeIndex]) {
+        _selectedTransactionTypeIndex.value = updatedSelectedTransactionTypeIndex
+        when (transactionTypes[selectedTransactionTypeIndex.value]) {
             TransactionType.INCOME -> {
-                _sourceFrom = null
-                _sourceTo = incomeDefaultSource
-                _category = incomeDefaultCategory
+                _sourceFrom.value = null
+                _sourceTo.value = incomeDefaultSource
+                _category.value = _incomeDefaultCategory
             }
             TransactionType.EXPENSE -> {
-                _sourceFrom = expenseDefaultSource
-                _sourceTo = null
-                _category = expenseDefaultCategory
+                _sourceFrom.value = expenseDefaultSource
+                _sourceTo.value = null
+                _category.value = _expenseDefaultCategory
             }
             TransactionType.TRANSFER -> {
-                _sourceFrom = expenseDefaultSource
-                _sourceTo = incomeDefaultSource
+                _sourceFrom.value = expenseDefaultSource
+                _sourceTo.value = incomeDefaultSource
             }
             TransactionType.ADJUSTMENT -> {}
         }
@@ -197,29 +160,29 @@ class AddTransactionViewModelImpl @Inject constructor(
             insertTransactionUseCase(
                 transaction = Transaction(
                     amount = Amount(
-                        value = if (transactionTypes[selectedTransactionTypeIndex] == TransactionType.EXPENSE) {
-                            -1 * amount.toLong()
+                        value = if (transactionTypes[selectedTransactionTypeIndex.value] == TransactionType.EXPENSE) {
+                            -1 * amount.value.toLong()
                         } else {
-                            amount.toLong()
+                            amount.value.toLong()
                         },
                     ),
-                    categoryId = category?.id ?: 0,
-                    sourceFromId = sourceFrom?.id ?: 0,
-                    sourceToId = sourceTo?.id ?: 0,
-                    description = description,
-                    title = if (transactionTypes[selectedTransactionTypeIndex] == TransactionType.TRANSFER) {
+                    categoryId = category.value?.id ?: 0,
+                    sourceFromId = sourceFrom.value?.id ?: 0,
+                    sourceToId = sourceTo.value?.id ?: 0,
+                    description = description.value,
+                    title = if (transactionTypes[selectedTransactionTypeIndex.value] == TransactionType.TRANSFER) {
                         TransactionType.TRANSFER.title
                     } else {
-                        title
+                        title.value
                     },
                     creationTimestamp = Calendar.getInstance().timeInMillis,
-                    transactionTimestamp = transactionCalendar.timeInMillis,
-                    transactionFor = when (transactionTypes[selectedTransactionTypeIndex]) {
+                    transactionTimestamp = transactionCalendar.value.timeInMillis,
+                    transactionFor = when (transactionTypes[selectedTransactionTypeIndex.value]) {
                         TransactionType.INCOME -> {
                             TransactionFor.SELF
                         }
                         TransactionType.EXPENSE -> {
-                            transactionForValues[selectedTransactionForIndex]
+                            transactionForValues[selectedTransactionForIndex.value]
                         }
                         TransactionType.TRANSFER -> {
                             TransactionFor.SELF
@@ -228,23 +191,23 @@ class AddTransactionViewModelImpl @Inject constructor(
                             TransactionFor.SELF
                         }
                     },
-                    transactionType = transactionTypes[selectedTransactionTypeIndex],
+                    transactionType = transactionTypes[selectedTransactionTypeIndex.value],
                 ),
             )
-            sourceFrom?.let { sourceFrom ->
+            sourceFrom.value?.let { sourceFrom ->
                 updateSourcesUseCase(
                     sourceFrom.copy(
                         balanceAmount = sourceFrom.balanceAmount.copy(
-                            value = sourceFrom.balanceAmount.value - amount.toLong(),
+                            value = sourceFrom.balanceAmount.value - amount.value.toLong(),
                         )
                     ),
                 )
             }
-            sourceTo?.let { sourceTo ->
+            sourceTo.value?.let { sourceTo ->
                 updateSourcesUseCase(
                     sourceTo.copy(
                         balanceAmount = sourceTo.balanceAmount.copy(
-                            value = sourceTo.balanceAmount.value + amount.toLong(),
+                            value = sourceTo.balanceAmount.value + amount.value.toLong(),
                         )
                     ),
                 )
@@ -256,7 +219,7 @@ class AddTransactionViewModelImpl @Inject constructor(
     }
 
     override fun isTitleTextFieldVisible(): Boolean {
-        return when (transactionTypes[selectedTransactionTypeIndex]) {
+        return when (transactionTypes[selectedTransactionTypeIndex.value]) {
             TransactionType.INCOME -> {
                 true
             }
@@ -277,7 +240,7 @@ class AddTransactionViewModelImpl @Inject constructor(
     }
 
     override fun isCategoryTextFieldVisible(): Boolean {
-        return when (transactionTypes[selectedTransactionTypeIndex]) {
+        return when (transactionTypes[selectedTransactionTypeIndex.value]) {
             TransactionType.INCOME -> {
                 true
             }
@@ -294,7 +257,7 @@ class AddTransactionViewModelImpl @Inject constructor(
     }
 
     override fun isTransactionForRadioGroupVisible(): Boolean {
-        return when (transactionTypes[selectedTransactionTypeIndex]) {
+        return when (transactionTypes[selectedTransactionTypeIndex.value]) {
             TransactionType.INCOME -> {
                 false
             }
@@ -311,7 +274,7 @@ class AddTransactionViewModelImpl @Inject constructor(
     }
 
     override fun isSourceFromTextFieldVisible(): Boolean {
-        return when (transactionTypes[selectedTransactionTypeIndex]) {
+        return when (transactionTypes[selectedTransactionTypeIndex.value]) {
             TransactionType.INCOME -> {
                 false
             }
@@ -328,7 +291,7 @@ class AddTransactionViewModelImpl @Inject constructor(
     }
 
     override fun isSourceToTextFieldVisible(): Boolean {
-        return when (transactionTypes[selectedTransactionTypeIndex]) {
+        return when (transactionTypes[selectedTransactionTypeIndex.value]) {
             TransactionType.INCOME -> {
                 true
             }
@@ -345,15 +308,15 @@ class AddTransactionViewModelImpl @Inject constructor(
     }
 
     override fun isValidTransactionData(): Boolean {
-        return when (transactionTypes[selectedTransactionTypeIndex]) {
+        return when (transactionTypes[selectedTransactionTypeIndex.value]) {
             TransactionType.INCOME -> {
-                amount.isNotNullOrBlank() && title.isNotNullOrBlank()
+                amount.value.isNotNullOrBlank() && title.value.isNotNullOrBlank()
             }
             TransactionType.EXPENSE -> {
-                amount.isNotNullOrBlank() && title.isNotNullOrBlank()
+                amount.value.isNotNullOrBlank() && title.value.isNotNullOrBlank()
             }
             TransactionType.TRANSFER -> {
-                amount.isNotNullOrBlank() && sourceFrom?.id != sourceTo?.id
+                amount.value.isNotNullOrBlank() && sourceFrom.value?.id != sourceTo.value?.id
             }
             TransactionType.ADJUSTMENT -> {
                 false
@@ -381,61 +344,61 @@ class AddTransactionViewModelImpl @Inject constructor(
     override fun updateTitle(
         updatedTitle: String,
     ) {
-        _title = updatedTitle
+        _title.value = updatedTitle
     }
 
     override fun clearTitle() {
-        _title = ""
+        _title.value = ""
     }
 
     override fun updateDescription(
         updatedDescription: String,
     ) {
-        _description = updatedDescription
+        _description.value = updatedDescription
     }
 
     override fun clearDescription() {
-        _description = ""
+        _description.value = ""
     }
 
     override fun updateAmount(
         updatedAmount: String,
     ) {
-        _amount = updatedAmount
+        _amount.value = updatedAmount
     }
 
     override fun clearAmount() {
-        _amount = ""
+        _amount.value = ""
     }
 
     override fun updateSourceFrom(
         updatedSourceFrom: Source,
     ) {
-        _sourceFrom = updatedSourceFrom
+        _sourceFrom.value = updatedSourceFrom
     }
 
     override fun updateSourceTo(
         updatedSourceTo: Source,
     ) {
-        _sourceTo = updatedSourceTo
+        _sourceTo.value = updatedSourceTo
     }
 
     override fun updateCategory(
         updatedCategory: Category?,
     ) {
-        _category = updatedCategory
+        _category.value = updatedCategory
     }
 
     override fun updateSelectedTransactionForIndex(
         updatedSelectedTransactionForIndex: Int,
     ) {
-        _selectedTransactionForIndex = updatedSelectedTransactionForIndex
+        _selectedTransactionForIndex.value = updatedSelectedTransactionForIndex
     }
 
     override fun updateTransactionCalendar(
         updatedTransactionCalendar: Calendar,
     ) {
-        _transactionCalendar = updatedTransactionCalendar
+        _transactionCalendar.value = updatedTransactionCalendar
     }
 
     override fun updateExpenseDefaultCategory(

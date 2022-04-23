@@ -25,7 +25,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
-import com.makeappssimple.abhimanyu.financemanager.android.entities.source.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToEditSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton
@@ -53,6 +52,9 @@ fun SourcesScreenView(
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     val sources by data.screenViewModel.sources.collectAsState(
+        initial = emptyList(),
+    )
+    val sourcesIsUsedInTransactions by data.screenViewModel.sourcesIsUsedInTransactions.collectAsState(
         initial = emptyList(),
     )
     val totalBalanceAmount by data.screenViewModel.sourcesTotalBalanceAmountValue.collectAsState(
@@ -142,19 +144,18 @@ fun SourcesScreenView(
                         )
                     }
                     itemsIndexed(
-                        items = sources
-                            .sortedWith(
-                                comparator = compareBy {
-                                    it.type.sortOrder
-                                }
-                            ),
+                        items = sources,
                         key = { _, listItem ->
                             listItem.hashCode()
                         },
                     ) { index, listItem ->
+                        val deleteEnabled: Boolean? = sourcesIsUsedInTransactions.getOrNull(
+                            index = index,
+                        )?.not()
                         SourceListItem(
                             source = listItem,
                             expanded = index == expandedItemIndex,
+                            deleteEnabled = deleteEnabled ?: false,
                             onClick = {
                                 expandedItemIndex = if (index == expandedItemIndex) {
                                     -1
