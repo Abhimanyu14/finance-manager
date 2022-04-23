@@ -26,6 +26,7 @@ interface AddTransactionViewModel : BaseViewModel {
     val category: StateFlow<Category?>
     val selectedTransactionForIndex: StateFlow<Int>
     val transactionCalendar: StateFlow<Calendar>
+    val isValidTransactionData: StateFlow<Boolean>
 
     fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
@@ -44,8 +45,6 @@ interface AddTransactionViewModel : BaseViewModel {
     fun isSourceFromTextFieldVisible(): Boolean
 
     fun isSourceToTextFieldVisible(): Boolean
-
-    fun isValidTransactionData(): Boolean
 
     fun updateTitle(
         updatedTitle: String,

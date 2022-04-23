@@ -21,9 +21,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectIndexed
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import javax.inject.Inject
@@ -121,6 +124,33 @@ class AddTransactionViewModelImpl @Inject constructor(
     )
     override val transactionTypesForNewTransaction: StateFlow<List<TransactionType>> =
         _transactionTypesForNewTransaction
+
+    override val isValidTransactionData: StateFlow<Boolean> = combine(
+        flow = selectedTransactionTypeIndex,
+        flow2 = amount,
+        flow3 = title,
+        flow4 = sourceFrom,
+        flow5 = sourceTo,
+    ) { selectedTransactionTypeIndex, amount, title, sourceFrom, sourceTo ->
+        when (transactionTypes[selectedTransactionTypeIndex]) {
+            TransactionType.INCOME -> {
+                amount.isNotNullOrBlank() && title.isNotNullOrBlank()
+            }
+            TransactionType.EXPENSE -> {
+                amount.isNotNullOrBlank() && title.isNotNullOrBlank()
+            }
+            TransactionType.TRANSFER -> {
+                amount.isNotNullOrBlank() && sourceFrom?.id != sourceTo?.id
+            }
+            TransactionType.ADJUSTMENT -> {
+                false
+            }
+        }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+        initialValue = false,
+    )
 
     init {
         initTransactionTypesForNewTransaction()
@@ -307,40 +337,6 @@ class AddTransactionViewModelImpl @Inject constructor(
         }
     }
 
-    override fun isValidTransactionData(): Boolean {
-        return when (transactionTypes[selectedTransactionTypeIndex.value]) {
-            TransactionType.INCOME -> {
-                amount.value.isNotNullOrBlank() && title.value.isNotNullOrBlank()
-            }
-            TransactionType.EXPENSE -> {
-                amount.value.isNotNullOrBlank() && title.value.isNotNullOrBlank()
-            }
-            TransactionType.TRANSFER -> {
-                amount.value.isNotNullOrBlank() && sourceFrom.value?.id != sourceTo.value?.id
-            }
-            TransactionType.ADJUSTMENT -> {
-                false
-            }
-        }
-    }
-
-    private fun initTransactionTypesForNewTransaction() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            val sourcesCount = getSourcesCountUseCase()
-            _transactionTypesForNewTransaction.value = if (sourcesCount > 1) {
-                TransactionType.values().filter {
-                    it != TransactionType.ADJUSTMENT
-                }
-            } else {
-                TransactionType.values().filter {
-                    it != TransactionType.ADJUSTMENT && it != TransactionType.TRANSFER
-                }
-            }
-        }
-    }
-
     override fun updateTitle(
         updatedTitle: String,
     ) {
@@ -411,5 +407,22 @@ class AddTransactionViewModelImpl @Inject constructor(
         updatedIncomeDefaultCategory: Category?,
     ) {
         _incomeDefaultCategory = updatedIncomeDefaultCategory
+    }
+
+    private fun initTransactionTypesForNewTransaction() {
+        viewModelScope.launch(
+            context = dispatcherProvider.io,
+        ) {
+            val sourcesCount = getSourcesCountUseCase()
+            _transactionTypesForNewTransaction.value = if (sourcesCount > 1) {
+                TransactionType.values().filter {
+                    it != TransactionType.ADJUSTMENT
+                }
+            } else {
+                TransactionType.values().filter {
+                    it != TransactionType.ADJUSTMENT && it != TransactionType.TRANSFER
+                }
+            }
+        }
     }
 }

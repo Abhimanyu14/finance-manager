@@ -109,6 +109,7 @@ fun AddTransactionScreenView(
     val sourceTo by data.screenViewModel.sourceTo.collectAsState()
     val selectedTransactionForIndex by data.screenViewModel.selectedTransactionForIndex.collectAsState()
     val transactionCalendar by data.screenViewModel.transactionCalendar.collectAsState()
+    val isValidTransactionData by data.screenViewModel.isValidTransactionData.collectAsState()
 
     val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
         data.screenViewModel.updateTransactionCalendar(
@@ -186,6 +187,7 @@ fun AddTransactionScreenView(
     ) {
         keyboardController?.hide()
     }
+
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
         DisposableEffect(Unit) {
             onDispose {
@@ -697,7 +699,7 @@ fun AddTransactionScreenView(
                     )
                     SaveButton(
                         textStringResourceId = R.string.screen_add_transaction_floating_action_button_content_description,
-                        isEnabled = data.screenViewModel.isValidTransactionData(),
+                        isEnabled = isValidTransactionData,
                         onClick = {
                             data.screenViewModel.insertTransaction()
                         },
