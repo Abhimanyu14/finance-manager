@@ -6,7 +6,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseScreenViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import java.util.Calendar
 
@@ -14,11 +13,11 @@ interface EditTransactionScreenViewModel : BaseScreenViewModel {
     val navigationManager: NavigationManager
     val transactionForValues: Array<TransactionFor>
     val transactionTypes: Array<TransactionType>
-    val categories: Flow<List<Category>>
+    val categories: StateFlow<List<Category>>
     val description: StateFlow<String>
     val title: StateFlow<String>
     val selectedTransactionTypeIndex: StateFlow<Int>
-    val sources: Flow<List<Source>>
+    val sources: StateFlow<List<Source>>
     val transactionTypesForNewTransaction: StateFlow<List<TransactionType>>
     val amount: StateFlow<String>
     val sourceFrom: StateFlow<Source?>
@@ -82,13 +81,5 @@ interface EditTransactionScreenViewModel : BaseScreenViewModel {
 
     fun updateTransactionCalendar(
         updatedTransactionCalendar: Calendar,
-    )
-
-    fun updateExpenseDefaultCategory(
-        updatedExpenseDefaultCategory: Category?,
-    )
-
-    fun updateIncomeDefaultCategory(
-        updatedIncomeDefaultCategory: Category?,
     )
 }

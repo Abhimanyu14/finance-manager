@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
 import kotlinx.coroutines.flow.Flow
 
@@ -39,6 +40,11 @@ interface TransactionDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTransactions(
+        vararg transactions: Transaction,
+    )
+
+    @Update
+    suspend fun updateTransactions(
         vararg transactions: Transaction,
     )
 

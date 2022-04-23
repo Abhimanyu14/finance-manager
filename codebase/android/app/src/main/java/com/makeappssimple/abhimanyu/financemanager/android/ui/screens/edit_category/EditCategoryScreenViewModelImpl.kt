@@ -35,10 +35,9 @@ class EditCategoryScreenViewModelImpl @Inject constructor(
     private val updateCategoriesUseCase: UpdateCategoriesUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
 ) : EditCategoryScreenViewModel, ViewModel() {
-    private val _category: MutableStateFlow<Category?> = MutableStateFlow(
+    private val category: MutableStateFlow<Category?> = MutableStateFlow(
         value = null,
     )
-    override val category: StateFlow<Category?> = _category
 
     override val transactionTypes: List<TransactionType> = TransactionType.values()
         .filter {
@@ -157,7 +156,7 @@ class EditCategoryScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            _category.value = getCategoryUseCase(
+            category.value = getCategoryUseCase(
                 id = id,
             )
             updateInitialCategoryValue()

@@ -28,6 +28,10 @@ interface TransactionRepository {
         vararg transactions: Transaction,
     )
 
+    suspend fun updateTransactions(
+        vararg transactions: Transaction,
+    )
+
     suspend fun deleteTransaction(
         id: Int,
     )

@@ -8,7 +8,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesCountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.UpdateSourcesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.InsertTransactionUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.UpdateTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
@@ -21,7 +22,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.Navigation
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -32,6 +32,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import javax.inject.Inject
+import kotlin.math.abs
 
 @HiltViewModel
 class EditTransactionScreenViewModelImpl @Inject constructor(
@@ -41,27 +42,30 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
     private val getSourcesCountUseCase: GetSourcesCountUseCase,
-    private val insertTransactionUseCase: InsertTransactionUseCase,
+    private val getTransactionUseCase: GetTransactionUseCase,
+    private val updateTransactionsUseCase: UpdateTransactionsUseCase,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
 ) : EditTransactionScreenViewModel, ViewModel() {
-    private var expenseDefaultSource: Source? = null
-    private var incomeDefaultSource: Source? = null
-    private var _expenseDefaultCategory: Category? = null
-    private var _incomeDefaultCategory: Category? = null
-
+    private val transaction: MutableStateFlow<Transaction?> = MutableStateFlow(
+        value = null,
+    )
     override val transactionForValues: Array<TransactionFor> = TransactionFor.values()
     override val transactionTypes: Array<TransactionType> = TransactionType.values()
-    override val categories: Flow<List<Category>> = getCategoriesUseCase()
-    override val sources: Flow<List<Source>> = flow {
+    override val categories: StateFlow<List<Category>> = getCategoriesUseCase().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+        initialValue = emptyList(),
+    )
+    override val sources: StateFlow<List<Source>> = flow {
         getSourcesUseCase().collectIndexed { _, value ->
-            expenseDefaultSource = value.firstOrNull {
-                it.name.contains(
-                    other = "Cash",
-                    ignoreCase = true,
-                )
-            }
-            incomeDefaultSource = expenseDefaultSource
-            _sourceFrom.value = expenseDefaultSource
+            //            expenseDefaultSource = value.firstOrNull {
+            //                it.name.contains(
+            //                    other = "Cash",
+            //                    ignoreCase = true,
+            //                )
+            //            }
+            //            incomeDefaultSource = expenseDefaultSource
+            //            _sourceFrom.value = expenseDefaultSource
             emit(
                 value = value.sortedWith(
                     comparator = compareBy {
@@ -70,7 +74,11 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
                 ),
             )
         }
-    }
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+        initialValue = emptyList(),
+    )
 
     private var _transactionCalendar = MutableStateFlow(
         value = Calendar.getInstance(),
@@ -170,6 +178,9 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
 
     init {
         val transactionId: Int = savedStateHandle.get<Int>(NavArgs.TRANSACTION_ID) ?: 0
+        getTransaction(
+            id = transactionId,
+        )
     }
 
     override fun trackScreen() {
@@ -180,31 +191,31 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
         updatedSelectedTransactionTypeIndex: Int,
     ) {
         _selectedTransactionTypeIndex.value = updatedSelectedTransactionTypeIndex
-        when (transactionTypes[selectedTransactionTypeIndex.value]) {
-            TransactionType.INCOME -> {
-                _sourceFrom.value = null
-                _sourceTo.value = incomeDefaultSource
-                _category.value = _incomeDefaultCategory
-            }
-            TransactionType.EXPENSE -> {
-                _sourceFrom.value = expenseDefaultSource
-                _sourceTo.value = null
-                _category.value = _expenseDefaultCategory
-            }
-            TransactionType.TRANSFER -> {
-                _sourceFrom.value = expenseDefaultSource
-                _sourceTo.value = incomeDefaultSource
-            }
-            TransactionType.ADJUSTMENT -> {}
-        }
+        //        when (transactionTypes[selectedTransactionTypeIndex.value]) {
+        //            TransactionType.INCOME -> {
+        //                _sourceFrom.value = null
+        //                _sourceTo.value = incomeDefaultSource
+        //                _category.value = _incomeDefaultCategory
+        //            }
+        //            TransactionType.EXPENSE -> {
+        //                _sourceFrom.value = expenseDefaultSource
+        //                _sourceTo.value = null
+        //                _category.value = _expenseDefaultCategory
+        //            }
+        //            TransactionType.TRANSFER -> {
+        //                _sourceFrom.value = expenseDefaultSource
+        //                _sourceTo.value = incomeDefaultSource
+        //            }
+        //            TransactionType.ADJUSTMENT -> {}
+        //        }
     }
 
     override fun insertTransaction() {
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            insertTransactionUseCase(
-                transaction = Transaction(
+            updateTransactionsUseCase(
+                Transaction(
                     amount = Amount(
                         value = if (transactionTypes[selectedTransactionTypeIndex.value] == TransactionType.EXPENSE) {
                             -1 * amount.value.toLong()
@@ -413,15 +424,42 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
         _transactionCalendar.value = updatedTransactionCalendar
     }
 
-    override fun updateExpenseDefaultCategory(
-        updatedExpenseDefaultCategory: Category?,
+    private fun getTransaction(
+        id: Int,
     ) {
-        _expenseDefaultCategory = updatedExpenseDefaultCategory
+        viewModelScope.launch(
+            context = dispatcherProvider.io,
+        ) {
+            transaction.value = getTransactionUseCase(
+                id = id,
+            )
+            updateInitialTransactionValue()
+        }
     }
 
-    override fun updateIncomeDefaultCategory(
-        updatedIncomeDefaultCategory: Category?,
-    ) {
-        _incomeDefaultCategory = updatedIncomeDefaultCategory
+    private fun updateInitialTransactionValue() {
+        transaction.value?.let {
+            _selectedTransactionTypeIndex.value = transactionTypes.indexOf(
+                element = it.transactionType,
+            )
+            _amount.value = abs(it.amount.value).toString()
+            _title.value = it.title
+            _description.value = it.description
+            _selectedTransactionForIndex.value = transactionForValues.indexOf(
+                element = it.transactionFor,
+            )
+            _category.value = categories.value.find { category ->
+                category.id == it.categoryId
+            }
+            _sourceFrom.value = sources.value.find { source ->
+                source.id == it.sourceFromId
+            }
+            _sourceTo.value = sources.value.find { source ->
+                source.id == it.sourceToId
+            }
+            _transactionCalendar.value = Calendar.getInstance().apply {
+                timeInMillis = it.transactionTimestamp
+            }
+        }
     }
 }

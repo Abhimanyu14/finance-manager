@@ -158,30 +158,30 @@ fun EditTransactionScreenView(
         state.focusRequester.requestFocus()
     }
 
-    LaunchedEffect(
-        key1 = categories,
-    ) {
-        val expenseDefaultCategory = categories.firstOrNull {
-            it.title.contains(
-                other = "Default",
-                ignoreCase = true,
-            )
-        }
-        data.screenViewModel.updateExpenseDefaultCategory(
-            updatedExpenseDefaultCategory = expenseDefaultCategory,
-        )
-        data.screenViewModel.updateIncomeDefaultCategory(
-            updatedIncomeDefaultCategory = categories.firstOrNull {
-                it.title.contains(
-                    other = "Salary",
-                    ignoreCase = true,
-                )
-            },
-        )
-        data.screenViewModel.updateCategory(
-            updatedCategory = expenseDefaultCategory,
-        )
-    }
+//    LaunchedEffect(
+//        key1 = categories,
+//    ) {
+//        val expenseDefaultCategory = categories.firstOrNull {
+//            it.title.contains(
+//                other = "Default",
+//                ignoreCase = true,
+//            )
+//        }
+//        data.screenViewModel.updateExpenseDefaultCategory(
+//            updatedExpenseDefaultCategory = expenseDefaultCategory,
+//        )
+//        data.screenViewModel.updateIncomeDefaultCategory(
+//            updatedIncomeDefaultCategory = categories.firstOrNull {
+//                it.title.contains(
+//                    other = "Salary",
+//                    ignoreCase = true,
+//                )
+//            },
+//        )
+//        data.screenViewModel.updateCategory(
+//            updatedCategory = expenseDefaultCategory,
+//        )
+//    }
 
     LaunchedEffect(
         key1 = state.modalBottomSheetState,

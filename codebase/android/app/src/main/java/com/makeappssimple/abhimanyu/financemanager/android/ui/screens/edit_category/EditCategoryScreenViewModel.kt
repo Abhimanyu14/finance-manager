@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_category
 
-import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
@@ -10,7 +9,6 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface EditCategoryScreenViewModel : BaseScreenViewModel {
     val navigationManager: NavigationManager
-    val category: StateFlow<Category?>
     val transactionTypes: List<TransactionType>
     val title: StateFlow<String>
     val selectedTransactionTypeIndex: StateFlow<Int>
