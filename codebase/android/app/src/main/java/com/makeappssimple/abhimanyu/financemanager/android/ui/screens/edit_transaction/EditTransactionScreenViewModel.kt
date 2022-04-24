@@ -11,39 +11,25 @@ import java.util.Calendar
 
 interface EditTransactionScreenViewModel : BaseScreenViewModel {
     val navigationManager: NavigationManager
-    val transactionForValues: Array<TransactionFor>
-    val transactionTypes: Array<TransactionType>
-    val categories: StateFlow<List<Category>>
-    val description: StateFlow<String>
-    val title: StateFlow<String>
-    val selectedTransactionTypeIndex: StateFlow<Int>
-    val sources: StateFlow<List<Source>>
     val transactionTypesForNewTransaction: StateFlow<List<TransactionType>>
-    val amount: StateFlow<String>
-    val sourceFrom: StateFlow<Source?>
-    val sourceTo: StateFlow<Source?>
-    val category: StateFlow<Category?>
-    val selectedTransactionForIndex: StateFlow<Int>
-    val transactionCalendar: StateFlow<Calendar>
+    val transactionForValues: Array<TransactionFor>
+    val categories: StateFlow<List<Category>>
+    val sources: StateFlow<List<Source>>
+    val uiState: StateFlow<EditTransactionScreenUiState>
+    val selectedTransactionType: StateFlow<TransactionType?>
     val isValidTransactionData: StateFlow<Boolean>
+    val isTitleTextFieldVisible: StateFlow<Boolean>
+    val isDescriptionTextFieldVisible: StateFlow<Boolean>
+    val isCategoryTextFieldVisible: StateFlow<Boolean>
+    val isTransactionForRadioGroupVisible: StateFlow<Boolean>
+    val isSourceFromTextFieldVisible: StateFlow<Boolean>
+    val isSourceToTextFieldVisible: StateFlow<Boolean>
 
     fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
     )
 
     fun insertTransaction()
-
-    fun isTitleTextFieldVisible(): Boolean
-
-    fun isDescriptionTextFieldVisible(): Boolean
-
-    fun isCategoryTextFieldVisible(): Boolean
-
-    fun isTransactionForRadioGroupVisible(): Boolean
-
-    fun isSourceFromTextFieldVisible(): Boolean
-
-    fun isSourceToTextFieldVisible(): Boolean
 
     fun updateTitle(
         updatedTitle: String,
@@ -64,11 +50,11 @@ interface EditTransactionScreenViewModel : BaseScreenViewModel {
     fun clearAmount()
 
     fun updateSourceFrom(
-        updatedSourceFrom: Source,
+        updatedSourceFrom: Source?,
     )
 
     fun updateSourceTo(
-        updatedSourceTo: Source,
+        updatedSourceTo: Source?,
     )
 
     fun updateCategory(
