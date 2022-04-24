@@ -89,26 +89,24 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
             )
         }.defaultListStateIn()
 
-    private var _uiState: MutableStateFlow<EditTransactionScreenUiState> =
-        MutableStateFlow(
-            value = EditTransactionScreenUiState(
-                selectedTransactionTypeIndex = transactionTypesForNewTransaction.value.indexOf(
-                    element = TransactionType.EXPENSE,
-                ),
-                amount = "",
-                title = "",
-                description = "",
-                category = null,
-                selectedTransactionForIndex = transactionForValues.indexOf(
-                    element = TransactionFor.SELF,
-                ),
-                sourceFrom = null,
-                sourceTo = null,
-                transactionCalendar = Calendar.getInstance(),
+    private var _uiState: MutableStateFlow<EditTransactionScreenUiState> = MutableStateFlow(
+        value = EditTransactionScreenUiState(
+            selectedTransactionTypeIndex = transactionTypesForNewTransaction.value.indexOf(
+                element = TransactionType.EXPENSE,
             ),
-        )
-    override val uiState: StateFlow<EditTransactionScreenUiState> =
-        _uiState
+            amount = "",
+            title = "",
+            description = "",
+            category = null,
+            selectedTransactionForIndex = transactionForValues.indexOf(
+                element = TransactionFor.SELF,
+            ),
+            sourceFrom = null,
+            sourceTo = null,
+            transactionCalendar = Calendar.getInstance(),
+        ),
+    )
+    override val uiState: StateFlow<EditTransactionScreenUiState> = _uiState
 
     override val selectedTransactionType: StateFlow<TransactionType?> = combine(
         flow = transactionTypesForNewTransaction,
