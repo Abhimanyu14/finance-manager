@@ -22,6 +22,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.Navigation
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+import kotlin.math.abs
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -33,8 +35,6 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.launch
 import java.util.Calendar
-import javax.inject.Inject
-import kotlin.math.abs
 
 data class EditTransactionScreenUiState(
     val selectedTransactionTypeIndex: Int,
@@ -57,8 +57,8 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val getSourcesCountUseCase: GetSourcesCountUseCase,
     private val getTransactionUseCase: GetTransactionUseCase,
-    private val updateTransactionsUseCase: UpdateTransactionsUseCase,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
+    private val updateTransactionsUseCase: UpdateTransactionsUseCase,
 ) : EditTransactionScreenViewModel, ViewModel() {
     private val transaction: MutableStateFlow<Transaction?> = MutableStateFlow(
         value = null,
@@ -454,7 +454,6 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
     }
     // endregion
 
-    // Other methods
     private fun getTransaction(
         id: Int,
     ) {
