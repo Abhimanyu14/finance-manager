@@ -12,11 +12,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Sourc
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.utils.JsonUtil
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateAndTimeString
-import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
-import javax.inject.Inject
 
 class BackupDataUseCase @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
@@ -79,7 +78,6 @@ class BackupDataUseCase @Inject constructor(
                 emojisUpdated = false
                 sourcesUpdated = false
                 transactionsUpdated = false
-                logError("backed up data")
             }
         }
     }
