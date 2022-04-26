@@ -264,10 +264,11 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
         .defaultBooleanStateIn()
 
     init {
-        val transactionId: Int = savedStateHandle.get<Int>(NavArgs.TRANSACTION_ID) ?: -1
-        getTransaction(
-            id = transactionId,
-        )
+        savedStateHandle.get<Int>(NavArgs.TRANSACTION_ID)?.let { transactionId ->
+            getTransaction(
+                id = transactionId,
+            )
+        }
     }
 
     override fun trackScreen() {
@@ -290,9 +291,9 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
                                 uiState.value.amount.toLong()
                             },
                         ),
-                        categoryId = _uiState.value.category?.id ?: -1,
-                        sourceFromId = _uiState.value.sourceFrom?.id ?: -1,
-                        sourceToId = _uiState.value.sourceTo?.id ?: -1,
+                        categoryId = _uiState.value.category?.id,
+                        sourceFromId = _uiState.value.sourceFrom?.id,
+                        sourceToId = _uiState.value.sourceTo?.id,
                         description = _uiState.value.description,
                         title = if (selectedTransactionTypeValue == TransactionType.TRANSFER) {
                             TransactionType.TRANSFER.title

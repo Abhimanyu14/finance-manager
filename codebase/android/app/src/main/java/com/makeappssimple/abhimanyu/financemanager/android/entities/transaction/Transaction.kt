@@ -57,15 +57,15 @@ data class Transaction(
     val amount: Amount,
     @ColumnInfo(name = "category_id")
     @SerializedName(value = "category_id")
-    val categoryId: Int = 0,
+    val categoryId: Int? = null,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @ColumnInfo(name = "source_from_id")
     @SerializedName(value = "source_from_id")
-    val sourceFromId: Int = 0,
+    val sourceFromId: Int? = null,
     @ColumnInfo(name = "source_to_id")
     @SerializedName(value = "source_to_id")
-    val sourceToId: Int = 0,
+    val sourceToId: Int? = null,
     val description: String = "",
     val title: String,
     @ColumnInfo(name = "creation_timestamp")

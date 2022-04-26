@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 15,
-    "identityHash": "1dc62f3619fefdc7a33fb1c8a16b8264",
+    "version": 16,
+    "identityHash": "5da9e08e2cbd799561c345b31142a1c5",
     "entities": [
       {
         "tableName": "category_table",
@@ -138,7 +138,7 @@
       },
       {
         "tableName": "transaction_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`amount` TEXT NOT NULL, `category_id` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `source_from_id` INTEGER NOT NULL, `source_to_id` INTEGER NOT NULL, `description` TEXT NOT NULL, `title` TEXT NOT NULL, `creation_timestamp` INTEGER NOT NULL, `transaction_timestamp` INTEGER NOT NULL, `transaction_for` TEXT NOT NULL, `transaction_type` TEXT NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`amount` TEXT NOT NULL, `category_id` INTEGER, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `source_from_id` INTEGER, `source_to_id` INTEGER, `description` TEXT NOT NULL, `title` TEXT NOT NULL, `creation_timestamp` INTEGER NOT NULL, `transaction_timestamp` INTEGER NOT NULL, `transaction_for` TEXT NOT NULL, `transaction_type` TEXT NOT NULL)",
         "fields": [
           {
             "fieldPath": "amount",
@@ -150,7 +150,7 @@
             "fieldPath": "categoryId",
             "columnName": "category_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "id",
@@ -162,13 +162,13 @@
             "fieldPath": "sourceFromId",
             "columnName": "source_from_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "sourceToId",
             "columnName": "source_to_id",
             "affinity": "INTEGER",
-            "notNull": true
+            "notNull": false
           },
           {
             "fieldPath": "description",
@@ -220,7 +220,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '1dc62f3619fefdc7a33fb1c8a16b8264')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5da9e08e2cbd799561c345b31142a1c5')"
     ]
   }
 }

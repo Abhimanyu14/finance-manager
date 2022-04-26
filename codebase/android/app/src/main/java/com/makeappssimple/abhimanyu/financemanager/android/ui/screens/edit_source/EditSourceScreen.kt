@@ -10,7 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 @Composable
 fun EditSourceScreen(
     screenViewModel: EditSourceScreenViewModel = hiltViewModel<EditSourceScreenViewModelImpl>(),
-    sourceId: Int,
+    sourceId: Int?,
 ) {
     logError(
         message = "Inside EditSourceScreen",

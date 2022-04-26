@@ -2,8 +2,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.data.category.usecas
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.repository.CategoryRepository
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 
 class GetCategoriesUseCase @Inject constructor(
     private val categoryRepository: CategoryRepository,

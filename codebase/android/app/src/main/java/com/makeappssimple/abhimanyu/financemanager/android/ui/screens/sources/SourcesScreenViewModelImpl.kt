@@ -10,13 +10,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Sourc
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class SourcesScreenViewModelImpl @Inject constructor(

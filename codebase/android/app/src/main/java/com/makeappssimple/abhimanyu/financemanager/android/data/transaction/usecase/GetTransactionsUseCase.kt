@@ -2,8 +2,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.data.transaction.use
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 
 class GetTransactionsUseCase @Inject constructor(
     private val transactionRepository: TransactionRepository,

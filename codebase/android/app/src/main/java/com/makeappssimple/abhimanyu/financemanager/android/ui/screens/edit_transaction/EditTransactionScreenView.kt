@@ -79,7 +79,7 @@ enum class EditTransactionBottomSheetType {
 
 data class EditTransactionScreenViewData(
     val screenViewModel: EditTransactionScreenViewModel,
-    val transactionId: Int,
+    val transactionId: Int?,
 )
 
 @OptIn(ExperimentalComposeUiApi::class)

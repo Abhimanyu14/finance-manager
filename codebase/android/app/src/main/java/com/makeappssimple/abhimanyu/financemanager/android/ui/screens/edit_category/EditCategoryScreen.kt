@@ -10,7 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 @Composable
 fun EditCategoryScreen(
     screenViewModel: EditCategoryScreenViewModel = hiltViewModel<EditCategoryScreenViewModelImpl>(),
-    categoryId: Int,
+    categoryId: Int?,
 ) {
     logError(
         message = "Inside EditCategoryScreen",

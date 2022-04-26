@@ -8,8 +8,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.usecase.BackupDa
 import com.makeappssimple.abhimanyu.financemanager.android.data.usecase.RestoreDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class SettingsScreenViewModelImpl @Inject constructor(

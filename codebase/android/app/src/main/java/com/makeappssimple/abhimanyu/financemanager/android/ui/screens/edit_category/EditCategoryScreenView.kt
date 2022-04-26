@@ -74,7 +74,7 @@ enum class EditCategoryBottomSheetType {
 
 data class EditCategoryScreenViewData(
     val screenViewModel: EditCategoryScreenViewModel,
-    val categoryId: Int,
+    val categoryId: Int?,
 )
 
 @OptIn(ExperimentalComposeUiApi::class)

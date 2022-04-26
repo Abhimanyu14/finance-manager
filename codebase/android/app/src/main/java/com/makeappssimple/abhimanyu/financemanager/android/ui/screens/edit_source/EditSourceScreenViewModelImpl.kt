@@ -65,10 +65,11 @@ class EditSourceScreenViewModelImpl @Inject constructor(
     override val balanceAmountValue: StateFlow<String> = _balanceAmountValue
 
     init {
-        val sourceId: Int = savedStateHandle.get<Int>(NavArgs.SOURCE_ID) ?: -1
-        getSource(
-            id = sourceId,
-        )
+        savedStateHandle.get<Int>(NavArgs.SOURCE_ID)?.let { sourceId ->
+            getSource(
+                id = sourceId,
+            )
+        }
     }
 
     override fun trackScreen() {

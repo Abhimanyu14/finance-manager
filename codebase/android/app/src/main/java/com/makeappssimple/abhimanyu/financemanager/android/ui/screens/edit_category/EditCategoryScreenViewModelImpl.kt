@@ -87,10 +87,11 @@ class EditCategoryScreenViewModelImpl @Inject constructor(
     )
 
     init {
-        val categoryId: Int = savedStateHandle.get<Int>(NavArgs.CATEGORY_ID) ?: -1
-        getCategory(
-            id = categoryId,
-        )
+        savedStateHandle.get<Int>(NavArgs.CATEGORY_ID)?.let { categoryId ->
+            getCategory(
+                id = categoryId,
+            )
+        }
     }
 
     override fun trackScreen() {

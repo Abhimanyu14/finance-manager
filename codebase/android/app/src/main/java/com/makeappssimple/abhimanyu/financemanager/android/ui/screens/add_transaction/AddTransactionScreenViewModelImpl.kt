@@ -308,44 +308,44 @@ class AddTransactionScreenViewModelImpl @Inject constructor(
                 )
                 val categoryId = when (selectedTransactionTypeValue) {
                     TransactionType.INCOME -> {
-                        uiStateValue.category?.id ?: -1
+                        uiStateValue.category?.id
                     }
                     TransactionType.EXPENSE -> {
-                        uiStateValue.category?.id ?: -1
+                        uiStateValue.category?.id
                     }
                     TransactionType.TRANSFER -> {
-                        -1
+                        null
                     }
                     TransactionType.ADJUSTMENT -> {
-                        -1
+                        null
                     }
                 }
                 val sourceFromId = when (selectedTransactionTypeValue) {
                     TransactionType.INCOME -> {
-                        -1
+                        null
                     }
                     TransactionType.EXPENSE -> {
-                        uiStateValue.sourceFrom?.id ?: -1
+                        uiStateValue.sourceFrom?.id
                     }
                     TransactionType.TRANSFER -> {
-                        uiStateValue.sourceFrom?.id ?: -1
+                        uiStateValue.sourceFrom?.id
                     }
                     TransactionType.ADJUSTMENT -> {
-                        -1
+                        null
                     }
                 }
                 val sourceToId = when (selectedTransactionTypeValue) {
                     TransactionType.INCOME -> {
-                        uiStateValue.sourceTo?.id ?: -1
+                        uiStateValue.sourceTo?.id
                     }
                     TransactionType.EXPENSE -> {
-                        -1
+                        null
                     }
                     TransactionType.TRANSFER -> {
-                        uiStateValue.sourceTo?.id ?: -1
+                        uiStateValue.sourceTo?.id
                     }
                     TransactionType.ADJUSTMENT -> {
-                        -1
+                        null
                     }
                 }
                 val title = if (selectedTransactionTypeValue == TransactionType.TRANSFER) {

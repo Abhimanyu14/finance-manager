@@ -9,10 +9,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usec
 import com.makeappssimple.abhimanyu.financemanager.android.data.usecase.DeleteTransactionAndRevertOtherDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class HomeScreenViewModelImpl @Inject constructor(
@@ -30,17 +30,32 @@ class HomeScreenViewModelImpl @Inject constructor(
                     transaction.transactionTimestamp
                 }
                 .map { transaction ->
-                    HomeListItemViewData(
-                        category = getCategoryUseCase(
+                    val category = if (transaction.categoryId != null) {
+                        getCategoryUseCase(
                             id = transaction.categoryId,
-                        ),
-                        transaction = transaction,
-                        sourceFrom = getSourceUseCase(
+                        )
+                    } else {
+                        null
+                    }
+                    val sourceFrom = if (transaction.sourceFromId != null) {
+                        getSourceUseCase(
                             id = transaction.sourceFromId,
-                        ),
-                        sourceTo = getSourceUseCase(
+                        )
+                    } else {
+                        null
+                    }
+                    val sourceTo = if (transaction.sourceToId != null) {
+                        getSourceUseCase(
                             id = transaction.sourceToId,
-                        ),
+                        )
+                    } else {
+                        null
+                    }
+                    HomeListItemViewData(
+                        category = category,
+                        transaction = transaction,
+                        sourceFrom = sourceFrom,
+                        sourceTo = sourceTo,
                     )
                 }
         }

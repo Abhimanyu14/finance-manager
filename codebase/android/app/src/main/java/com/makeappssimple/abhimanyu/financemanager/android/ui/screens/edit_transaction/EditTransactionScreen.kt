@@ -11,8 +11,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 @ExperimentalMaterial3Api
 @Composable
 fun EditTransactionScreen(
-    transactionId: Int,
     screenViewModel: EditTransactionScreenViewModel = hiltViewModel<EditTransactionScreenViewModelImpl>(),
+    transactionId: Int?,
 ) {
     logError(
         message = "Inside EditTransactionScreen",

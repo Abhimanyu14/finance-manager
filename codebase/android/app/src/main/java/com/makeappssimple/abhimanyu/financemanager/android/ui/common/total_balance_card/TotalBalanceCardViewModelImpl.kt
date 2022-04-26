@@ -3,8 +3,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.common.total_bala
 import androidx.lifecycle.ViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesTotalBalanceAmountValueUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
 
 @HiltViewModel
 class TotalBalanceCardViewModelImpl @Inject constructor(
