@@ -20,11 +20,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.Navigation
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.util.Calendar
-import javax.inject.Inject
 
 @HiltViewModel
 class EditSourceScreenViewModelImpl @Inject constructor(
@@ -65,7 +65,7 @@ class EditSourceScreenViewModelImpl @Inject constructor(
     override val balanceAmountValue: StateFlow<String> = _balanceAmountValue
 
     init {
-        val sourceId: Int = savedStateHandle.get<Int>(NavArgs.SOURCE_ID) ?: 0
+        val sourceId: Int = savedStateHandle.get<Int>(NavArgs.SOURCE_ID) ?: -1
         getSource(
             id = sourceId,
         )

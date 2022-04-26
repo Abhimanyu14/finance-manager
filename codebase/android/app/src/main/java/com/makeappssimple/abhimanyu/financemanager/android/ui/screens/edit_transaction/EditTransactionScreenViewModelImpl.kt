@@ -264,7 +264,7 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
         .defaultBooleanStateIn()
 
     init {
-        val transactionId: Int = savedStateHandle.get<Int>(NavArgs.TRANSACTION_ID) ?: 0
+        val transactionId: Int = savedStateHandle.get<Int>(NavArgs.TRANSACTION_ID) ?: -1
         getTransaction(
             id = transactionId,
         )
@@ -290,9 +290,9 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
                                 uiState.value.amount.toLong()
                             },
                         ),
-                        categoryId = _uiState.value.category?.id ?: 0,
-                        sourceFromId = _uiState.value.sourceFrom?.id ?: 0,
-                        sourceToId = _uiState.value.sourceTo?.id ?: 0,
+                        categoryId = _uiState.value.category?.id ?: -1,
+                        sourceFromId = _uiState.value.sourceFrom?.id ?: -1,
+                        sourceToId = _uiState.value.sourceTo?.id ?: -1,
                         description = _uiState.value.description,
                         title = if (selectedTransactionTypeValue == TransactionType.TRANSFER) {
                             TransactionType.TRANSFER.title

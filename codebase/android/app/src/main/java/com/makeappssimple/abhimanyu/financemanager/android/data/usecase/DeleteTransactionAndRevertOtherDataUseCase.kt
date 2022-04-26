@@ -25,8 +25,8 @@ class DeleteTransactionAndRevertOtherDataUseCase @Inject constructor(
             val sourceFromId = transaction.sourceFromId
             val sourceToId = transaction.sourceToId
             if (
-                sourceFromId != 0 &&
-                sourceToId != 0
+                sourceFromId != -1 &&
+                sourceToId != -1
             ) {
                 handleTransferTransactions(
                     sourceFromId = sourceFromId,

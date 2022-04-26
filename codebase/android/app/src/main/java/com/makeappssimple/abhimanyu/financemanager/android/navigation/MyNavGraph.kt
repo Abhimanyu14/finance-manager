@@ -131,7 +131,7 @@ fun MyNavGraph(
             ),
         ) { navBackStackEntry ->
             EditCategoryScreen(
-                categoryId = navBackStackEntry.arguments?.getInt(CATEGORY_ID) ?: 0,
+                categoryId = navBackStackEntry.arguments?.getInt(CATEGORY_ID) ?: -1,
             )
         }
 
@@ -144,7 +144,7 @@ fun MyNavGraph(
             ),
         ) { navBackStackEntry ->
             EditSourceScreen(
-                sourceId = navBackStackEntry.arguments?.getInt(SOURCE_ID) ?: 0,
+                sourceId = navBackStackEntry.arguments?.getInt(SOURCE_ID) ?: -1,
             )
         }
 
@@ -157,7 +157,7 @@ fun MyNavGraph(
             ),
         ) { navBackStackEntry ->
             EditTransactionScreen(
-                transactionId = navBackStackEntry.arguments?.getInt(TRANSACTION_ID) ?: 0,
+                transactionId = navBackStackEntry.arguments?.getInt(TRANSACTION_ID) ?: -1,
             )
         }
 

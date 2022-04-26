@@ -6,26 +6,18 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseScreenViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import java.util.Calendar
 
 interface AddTransactionScreenViewModel : BaseScreenViewModel {
     val navigationManager: NavigationManager
-    val transactionForValues: Array<TransactionFor>
-    val transactionTypes: Array<TransactionType>
-    val categories: Flow<List<Category>>
-    val description: StateFlow<String>
-    val title: StateFlow<String>
-    val selectedTransactionTypeIndex: StateFlow<Int>
-    val sources: Flow<List<Source>>
     val transactionTypesForNewTransaction: StateFlow<List<TransactionType>>
-    val amount: StateFlow<String>
-    val sourceFrom: StateFlow<Source?>
-    val sourceTo: StateFlow<Source?>
-    val category: StateFlow<Category?>
-    val selectedTransactionForIndex: StateFlow<Int>
-    val transactionCalendar: StateFlow<Calendar>
+    val transactionForValues: Array<TransactionFor>
+    val categories: StateFlow<List<Category>>
+    val sources: StateFlow<List<Source>>
+    val uiState: StateFlow<AddTransactionScreenUiState>
+    val uiVisibilityState: StateFlow<AddTransactionScreenUiVisibilityState>
+    val selectedTransactionType: StateFlow<TransactionType?>
     val isValidTransactionData: StateFlow<Boolean>
 
     fun updateSelectedTransactionTypeIndex(
@@ -33,18 +25,6 @@ interface AddTransactionScreenViewModel : BaseScreenViewModel {
     )
 
     fun insertTransaction()
-
-    fun isTitleTextFieldVisible(): Boolean
-
-    fun isDescriptionTextFieldVisible(): Boolean
-
-    fun isCategoryTextFieldVisible(): Boolean
-
-    fun isTransactionForRadioGroupVisible(): Boolean
-
-    fun isSourceFromTextFieldVisible(): Boolean
-
-    fun isSourceToTextFieldVisible(): Boolean
 
     fun updateTitle(
         updatedTitle: String,
@@ -65,11 +45,11 @@ interface AddTransactionScreenViewModel : BaseScreenViewModel {
     fun clearAmount()
 
     fun updateSourceFrom(
-        updatedSourceFrom: Source,
+        updatedSourceFrom: Source?,
     )
 
     fun updateSourceTo(
-        updatedSourceTo: Source,
+        updatedSourceTo: Source?,
     )
 
     fun updateCategory(
@@ -82,13 +62,5 @@ interface AddTransactionScreenViewModel : BaseScreenViewModel {
 
     fun updateTransactionCalendar(
         updatedTransactionCalendar: Calendar,
-    )
-
-    fun updateExpenseDefaultCategory(
-        updatedExpenseDefaultCategory: Category?,
-    )
-
-    fun updateIncomeDefaultCategory(
-        updatedIncomeDefaultCategory: Category?,
     )
 }

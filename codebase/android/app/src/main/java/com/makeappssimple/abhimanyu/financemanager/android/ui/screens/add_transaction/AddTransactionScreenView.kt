@@ -100,20 +100,14 @@ fun AddTransactionScreenView(
     val transactionTypesForNewTransaction by data.screenViewModel.transactionTypesForNewTransaction.collectAsState(
         initial = emptyList(),
     )
-    val selectedTransactionTypeIndex by data.screenViewModel.selectedTransactionTypeIndex.collectAsState()
-    val amount by data.screenViewModel.amount.collectAsState()
-    val title by data.screenViewModel.title.collectAsState()
-    val description by data.screenViewModel.description.collectAsState()
-    val category by data.screenViewModel.category.collectAsState()
-    val sourceFrom by data.screenViewModel.sourceFrom.collectAsState()
-    val sourceTo by data.screenViewModel.sourceTo.collectAsState()
-    val selectedTransactionForIndex by data.screenViewModel.selectedTransactionForIndex.collectAsState()
-    val transactionCalendar by data.screenViewModel.transactionCalendar.collectAsState()
+    val uiState by data.screenViewModel.uiState.collectAsState()
+    val uiVisibilityState by data.screenViewModel.uiVisibilityState.collectAsState()
+    val selectedTransactionType by data.screenViewModel.selectedTransactionType.collectAsState()
     val isValidTransactionData by data.screenViewModel.isValidTransactionData.collectAsState()
 
     val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
         data.screenViewModel.updateTransactionCalendar(
-            updatedTransactionCalendar = (transactionCalendar.clone() as Calendar)
+            updatedTransactionCalendar = (uiState.transactionCalendar.clone() as Calendar)
                 .setDate(
                     dayOfMonth = dayOfMonth,
                     month = month,
@@ -124,7 +118,7 @@ fun AddTransactionScreenView(
     }
     val onTimeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
         data.screenViewModel.updateTransactionCalendar(
-            updatedTransactionCalendar = (transactionCalendar.clone() as Calendar)
+            updatedTransactionCalendar = (uiState.transactionCalendar.clone() as Calendar)
                 .setTime(
                     hour = hour,
                     minute = minute,
@@ -134,15 +128,15 @@ fun AddTransactionScreenView(
     val transactionDatePickerDialog = DatePickerDialog(
         state.context,
         onDateSetListener,
-        transactionCalendar.year,
-        transactionCalendar.month,
-        transactionCalendar.dayOfMonth,
+        uiState.transactionCalendar.year,
+        uiState.transactionCalendar.month,
+        uiState.transactionCalendar.dayOfMonth,
     )
     val transactionTimePickerDialog = TimePickerDialog(
         state.context,
         onTimeSetListener,
-        transactionCalendar.hour,
-        transactionCalendar.minute,
+        uiState.transactionCalendar.hour,
+        uiState.transactionCalendar.minute,
         false,
     )
     var addTransactionBottomSheetType by remember {
@@ -155,31 +149,6 @@ fun AddTransactionScreenView(
         key1 = Unit,
     ) {
         state.focusRequester.requestFocus()
-    }
-
-    LaunchedEffect(
-        key1 = categories,
-    ) {
-        val expenseDefaultCategory = categories.firstOrNull {
-            it.title.contains(
-                other = "Default",
-                ignoreCase = true,
-            )
-        }
-        data.screenViewModel.updateExpenseDefaultCategory(
-            updatedExpenseDefaultCategory = expenseDefaultCategory,
-        )
-        data.screenViewModel.updateIncomeDefaultCategory(
-            updatedIncomeDefaultCategory = categories.firstOrNull {
-                it.title.contains(
-                    other = "Salary",
-                    ignoreCase = true,
-                )
-            },
-        )
-        data.screenViewModel.updateCategory(
-            updatedCategory = expenseDefaultCategory,
-        )
     }
 
     LaunchedEffect(
@@ -224,7 +193,7 @@ fun AddTransactionScreenView(
                         data = AddTransactionSelectCategoryBottomSheetData(
                             items = categories
                                 .filter { category ->
-                                    category.transactionType == data.screenViewModel.transactionTypes[selectedTransactionTypeIndex]
+                                    category.transactionType == selectedTransactionType
                                 }
                                 .map { category ->
                                     AddTransactionSelectCategoryBottomSheetItemData(
@@ -337,7 +306,7 @@ fun AddTransactionScreenView(
                                     text = transactionType.title,
                                 )
                             },
-                        selectedItemIndex = selectedTransactionTypeIndex,
+                        selectedItemIndex = uiState.selectedTransactionTypeIndex,
                         onSelectionChange = { index ->
                             data.screenViewModel.updateSelectedTransactionTypeIndex(
                                 updatedSelectedTransactionTypeIndex = index
@@ -350,7 +319,7 @@ fun AddTransactionScreenView(
                             ),
                     )
                     OutlinedTextField(
-                        value = amount,
+                        value = uiState.amount,
                         label = {
                             OutlinedTextFieldLabelText(
                                 textStringResourceId = R.string.screen_add_transaction_amount,
@@ -358,7 +327,7 @@ fun AddTransactionScreenView(
                         },
                         trailingIcon = {
                             AnimatedVisibility(
-                                visible = amount.isNotNullOrBlank(),
+                                visible = uiState.amount.isNotNullOrBlank(),
                                 enter = fadeIn(),
                                 exit = fadeOut(),
                             ) {
@@ -402,7 +371,7 @@ fun AddTransactionScreenView(
                         ),
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.NumberPassword,
-                            imeAction = if (data.screenViewModel.isTitleTextFieldVisible()) {
+                            imeAction = if (uiVisibilityState.isTitleTextFieldVisible) {
                                 ImeAction.Next
                             } else {
                                 ImeAction.Done
@@ -420,10 +389,10 @@ fun AddTransactionScreenView(
                             ),
                     )
                     AnimatedVisibility(
-                        visible = data.screenViewModel.isTitleTextFieldVisible(),
+                        visible = uiVisibilityState.isTitleTextFieldVisible,
                     ) {
                         OutlinedTextField(
-                            value = title,
+                            value = uiState.title,
                             label = {
                                 OutlinedTextFieldLabelText(
                                     textStringResourceId = R.string.screen_add_transaction_title,
@@ -431,7 +400,7 @@ fun AddTransactionScreenView(
                             },
                             trailingIcon = {
                                 AnimatedVisibility(
-                                    visible = title.isNotNullOrBlank(),
+                                    visible = uiState.title.isNotNullOrBlank(),
                                     enter = fadeIn(),
                                     exit = fadeOut(),
                                 ) {
@@ -468,7 +437,7 @@ fun AddTransactionScreenView(
                                 },
                             ),
                             keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Text,
+                                keyboardType = KeyboardType.Password,
                                 imeAction = ImeAction.Done,
                             ),
                             singleLine = true,
@@ -481,11 +450,11 @@ fun AddTransactionScreenView(
                         )
                     }
                     AnimatedVisibility(
-                        visible = data.screenViewModel.isCategoryTextFieldVisible(),
+                        visible = uiVisibilityState.isCategoryTextFieldVisible,
                     ) {
                         MyReadOnlyTextField(
                             value = TextFieldValue(
-                                text = category?.title ?: "",
+                                text = uiState.category?.title ?: "",
                             ),
                             onClick = {
                                 addTransactionBottomSheetType =
@@ -510,7 +479,7 @@ fun AddTransactionScreenView(
                         )
                     }
                     AnimatedVisibility(
-                        visible = data.screenViewModel.isTransactionForRadioGroupVisible(),
+                        visible = uiVisibilityState.isTransactionForRadioGroupVisible,
                     ) {
                         MyRadioGroup(
                             items = data.screenViewModel.transactionForValues
@@ -519,7 +488,7 @@ fun AddTransactionScreenView(
                                         text = transactionFor.title,
                                     )
                                 },
-                            selectedItemIndex = selectedTransactionForIndex,
+                            selectedItemIndex = uiState.selectedTransactionForIndex,
                             onSelectionChange = { index ->
                                 data.screenViewModel.updateSelectedTransactionForIndex(
                                     updatedSelectedTransactionForIndex = index
@@ -533,10 +502,10 @@ fun AddTransactionScreenView(
                         )
                     }
                     AnimatedVisibility(
-                        visible = data.screenViewModel.isDescriptionTextFieldVisible(),
+                        visible = uiVisibilityState.isDescriptionTextFieldVisible,
                     ) {
                         OutlinedTextField(
-                            value = description,
+                            value = uiState.description,
                             label = {
                                 OutlinedTextFieldLabelText(
                                     textStringResourceId = R.string.screen_add_transaction_description,
@@ -544,7 +513,7 @@ fun AddTransactionScreenView(
                             },
                             trailingIcon = {
                                 AnimatedVisibility(
-                                    visible = description.isNotNullOrBlank(),
+                                    visible = uiState.description.isNotNullOrBlank(),
                                     enter = fadeIn(),
                                     exit = fadeOut(),
                                 ) {
@@ -594,11 +563,11 @@ fun AddTransactionScreenView(
                         )
                     }
                     AnimatedVisibility(
-                        visible = data.screenViewModel.isSourceFromTextFieldVisible(),
+                        visible = uiVisibilityState.isSourceFromTextFieldVisible,
                     ) {
                         MyReadOnlyTextField(
                             value = TextFieldValue(
-                                text = sourceFrom?.name ?: "",
+                                text = uiState.sourceFrom?.name ?: "",
                             ),
                             onClick = {
                                 addTransactionBottomSheetType =
@@ -611,7 +580,7 @@ fun AddTransactionScreenView(
                             },
                             label = {
                                 OutlinedTextFieldLabelText(
-                                    textStringResourceId = if (data.screenViewModel.transactionTypes[selectedTransactionTypeIndex] == TransactionType.TRANSFER) {
+                                    textStringResourceId = if (selectedTransactionType == TransactionType.TRANSFER) {
                                         R.string.screen_add_transaction_source_from
                                     } else {
                                         R.string.screen_add_transaction_source
@@ -627,11 +596,11 @@ fun AddTransactionScreenView(
                         )
                     }
                     AnimatedVisibility(
-                        visible = data.screenViewModel.isSourceToTextFieldVisible(),
+                        visible = uiVisibilityState.isSourceToTextFieldVisible,
                     ) {
                         MyReadOnlyTextField(
                             value = TextFieldValue(
-                                text = sourceTo?.name ?: "",
+                                text = uiState.sourceTo?.name ?: "",
                             ),
                             onClick = {
                                 addTransactionBottomSheetType =
@@ -644,7 +613,7 @@ fun AddTransactionScreenView(
                             },
                             label = {
                                 OutlinedTextFieldLabelText(
-                                    textStringResourceId = if (data.screenViewModel.transactionTypes[selectedTransactionTypeIndex] == TransactionType.TRANSFER) {
+                                    textStringResourceId = if (selectedTransactionType == TransactionType.TRANSFER) {
                                         R.string.screen_add_transaction_source_to
                                     } else {
                                         R.string.screen_add_transaction_source
@@ -661,7 +630,7 @@ fun AddTransactionScreenView(
                     }
                     MyReadOnlyTextField(
                         value = TextFieldValue(
-                            text = transactionCalendar.formattedDate(),
+                            text = uiState.transactionCalendar.formattedDate(),
                         ),
                         onClick = {
                             transactionDatePickerDialog.show()
@@ -680,7 +649,7 @@ fun AddTransactionScreenView(
                     )
                     MyReadOnlyTextField(
                         value = TextFieldValue(
-                            text = transactionCalendar.formattedTime(),
+                            text = uiState.transactionCalendar.formattedTime(),
                         ),
                         onClick = {
                             transactionTimePickerDialog.show()

@@ -16,6 +16,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navi
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_category.loadingEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -24,7 +25,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @HiltViewModel
 class EditCategoryScreenViewModelImpl @Inject constructor(
@@ -87,7 +87,7 @@ class EditCategoryScreenViewModelImpl @Inject constructor(
     )
 
     init {
-        val categoryId: Int = savedStateHandle.get<Int>(NavArgs.CATEGORY_ID) ?: 0
+        val categoryId: Int = savedStateHandle.get<Int>(NavArgs.CATEGORY_ID) ?: -1
         getCategory(
             id = categoryId,
         )
