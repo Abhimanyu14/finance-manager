@@ -204,6 +204,7 @@ fun EditTransactionScreenView(
                                 .map { category ->
                                     EditTransactionSelectCategoryBottomSheetItemData(
                                         category = category,
+                                        isSelected = category.id == uiState.category?.id,
                                         onClick = {
                                             toggleModalBottomSheetState(
                                                 coroutineScope = state.coroutineScope,
@@ -230,6 +231,7 @@ fun EditTransactionScreenView(
                                     EditTransactionSelectSourceBottomSheetItemData(
                                         text = source.name,
                                         iconKey = source.type.title,
+                                        isSelected = source.id == uiState.sourceFrom?.id,
                                         onClick = {
                                             toggleModalBottomSheetState(
                                                 coroutineScope = state.coroutineScope,
@@ -256,6 +258,7 @@ fun EditTransactionScreenView(
                                     EditTransactionSelectSourceBottomSheetItemData(
                                         text = source.name,
                                         iconKey = source.type.title,
+                                        isSelected = source.id == uiState.sourceTo?.id,
                                         onClick = {
                                             toggleModalBottomSheetState(
                                                 coroutineScope = state.coroutineScope,

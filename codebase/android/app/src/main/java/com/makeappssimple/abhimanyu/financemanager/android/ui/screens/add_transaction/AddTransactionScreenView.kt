@@ -198,6 +198,7 @@ fun AddTransactionScreenView(
                                 .map { category ->
                                     AddTransactionSelectCategoryBottomSheetItemData(
                                         category = category,
+                                        isSelected = category.id == uiState.category?.id,
                                         onClick = {
                                             toggleModalBottomSheetState(
                                                 coroutineScope = state.coroutineScope,
@@ -224,6 +225,7 @@ fun AddTransactionScreenView(
                                     AddTransactionSelectSourceBottomSheetItemData(
                                         text = source.name,
                                         iconKey = source.type.title,
+                                        isSelected = source.id == uiState.sourceFrom?.id,
                                         onClick = {
                                             toggleModalBottomSheetState(
                                                 coroutineScope = state.coroutineScope,
@@ -250,6 +252,7 @@ fun AddTransactionScreenView(
                                     AddTransactionSelectSourceBottomSheetItemData(
                                         text = source.name,
                                         iconKey = source.type.title,
+                                        isSelected = source.id == uiState.sourceTo?.id,
                                         onClick = {
                                             toggleModalBottomSheetState(
                                                 coroutineScope = state.coroutineScope,
