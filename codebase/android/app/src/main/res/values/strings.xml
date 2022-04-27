@@ -6,6 +6,9 @@
 
     <!-- Common -->
 
+    <!-- total balance card -->
+    <string name="emoji_picker_bottom_sheet_placeholder_text">Search emoji</string>
+
     <!-- navigation back button -->
     <string name="navigation_back_button_navigation_icon_content_description">Navigate Back</string>
 
