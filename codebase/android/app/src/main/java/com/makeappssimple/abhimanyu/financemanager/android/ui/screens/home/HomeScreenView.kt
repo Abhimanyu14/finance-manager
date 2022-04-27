@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,6 +36,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
@@ -255,13 +257,25 @@ fun HomeScreenView(
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
+                                .fillMaxWidth()
                                 .padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
+                                    start = 4.dp,
+                                    end = 4.dp,
                                     top = 16.dp,
                                     bottom = 8.dp,
                                 )
-                                .fillMaxWidth(),
+                                .clip(
+                                    shape = CircleShape,
+                                )
+                                .clickable {
+                                    navigateToTransactionsScreen(
+                                        navigationManager = data.screenViewModel.navigationManager,
+                                    )
+                                }
+                                .padding(
+                                    start = 12.dp,
+                                    end = 12.dp,
+                                ),
                         ) {
                             Text(
                                 text = stringResource(
