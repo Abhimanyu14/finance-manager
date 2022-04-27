@@ -73,7 +73,10 @@ fun SearchBar(
                             )
                             .clickable {
                                 data.updateSearchText("")
-                            },
+                            }
+                            .padding(
+                                all = 8.dp,
+                            ),
                     )
                 }
             } else {

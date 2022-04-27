@@ -37,6 +37,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navi
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.SearchBar
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.SearchBarData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
@@ -69,6 +71,11 @@ fun TransactionsScreenView(
         )
     }
     var expandedItemKey by remember {
+        mutableStateOf(
+            value = "",
+        )
+    }
+    val (searchText, updateSearchText) = remember {
         mutableStateOf(
             value = "",
         )
@@ -140,12 +147,34 @@ fun TransactionsScreenView(
                 },
             ) {
                 val transactionGrouped: Map<String, List<TransactionsListItemViewData>> =
-                    transactionsListItemViewData.groupBy {
-                        getDateString(
-                            it.transaction.transactionTimestamp
+                    transactionsListItemViewData
+                        .filter {
+                            if (searchText.isNotBlank()) {
+                                it.transaction.title.contains(
+                                    other = searchText,
+                                    ignoreCase = true,
+                                )
+                            } else {
+                                true
+                            }
+                        }
+                        .groupBy {
+                            getDateString(
+                                it.transaction.transactionTimestamp
+                            )
+                        }
+                LazyColumn {
+                    stickyHeader {
+                        SearchBar(
+                            data = SearchBarData(
+                                searchText = searchText,
+                                placeholderText = stringResource(
+                                    id = R.string.screen_transactions_searchbar_placeholder,
+                                ),
+                                updateSearchText = updateSearchText,
+                            ),
                         )
                     }
-                LazyColumn {
                     transactionGrouped.forEach { (date, listItemData) ->
                         stickyHeader {
                             Text(

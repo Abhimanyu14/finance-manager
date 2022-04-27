@@ -123,6 +123,7 @@
 
     <!-- transactions screen -->
     <string name="screen_transactions_appbar_title">Transactions</string>
+    <string name="screen_transactions_searchbar_placeholder">Search transactions</string>
     <string name="screen_transactions_floating_action_button_content_description">Add Transaction</string>
 
 </resources>
