@@ -28,8 +28,8 @@ fun ExpandableItemIconButton(
     iconImageVector: ImageVector,
     labelText: String,
     enabled: Boolean,
-    onClick: () -> Unit,
     modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -38,7 +38,7 @@ fun ExpandableItemIconButton(
                 shape = CircleShape,
             )
             .conditionalClickable(
-                onClick = if (enabled) {
+                onClick = if (enabled && onClick != null) {
                     onClick
                 } else {
                     null

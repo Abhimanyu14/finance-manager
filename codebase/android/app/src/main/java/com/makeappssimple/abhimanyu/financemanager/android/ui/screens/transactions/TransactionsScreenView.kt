@@ -112,7 +112,7 @@ fun TransactionsScreenView(
                     titleText = stringResource(
                         id = R.string.screen_transactions_appbar_title,
                     ),
-                    isNavigationIconVisible = false,
+                    isNavigationIconVisible = true,
                 )
             },
             floatingActionButton = {

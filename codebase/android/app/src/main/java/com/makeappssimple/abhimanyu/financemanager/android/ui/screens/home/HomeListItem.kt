@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -34,6 +33,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableItemViewWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateAndTimeString
 
 data class HomeListItemViewData(
@@ -46,11 +46,11 @@ data class HomeListItemViewData(
 @Composable
 fun HomeListItem(
     data: HomeListItemViewData,
-    expanded: Boolean,
-    deleteEnabled: Boolean,
-    onClick: () -> Unit,
-    onEditClick: () -> Unit,
-    onDeleteClick: () -> Unit,
+    expanded: Boolean = false,
+    deleteEnabled: Boolean = false,
+    onClick: (() -> Unit)? = null,
+    onEditClick: (() -> Unit)? = null,
+    onDeleteClick: (() -> Unit)? = null,
 ) {
     ExpandableItemViewWrapper(
         expanded = expanded,
@@ -71,9 +71,9 @@ fun HomeListItem(
                         )
                     },
                 )
-                .clickable {
-                    onClick()
-                }
+                .conditionalClickable(
+                    onClick = onClick,
+                )
                 .padding(
                     start = 16.dp,
                     end = 16.dp,

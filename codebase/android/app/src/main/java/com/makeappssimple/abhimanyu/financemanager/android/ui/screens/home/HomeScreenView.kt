@@ -1,24 +1,22 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.FabPosition
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -32,21 +30,20 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.R
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToCategoriesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSettingsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSourcesScreen
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToTransactionsScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.VerticalSpacer
@@ -55,8 +52,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.total_balan
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBarBackground
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBarIconTint
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
-import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateString
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
 
 enum class HomeBottomSheetType {
     NONE,
@@ -82,11 +78,6 @@ fun HomeScreenView(
     var homeBottomSheetType by remember {
         mutableStateOf(
             value = HomeBottomSheetType.NONE,
-        )
-    }
-    var expandedItemKey by remember {
-        mutableStateOf(
-            value = "",
         )
     }
 
@@ -222,21 +213,6 @@ fun HomeScreenView(
                     )
                 }
             },
-            floatingActionButton = {
-                MyFloatingActionButton(
-                    iconImageVector = Icons.Rounded.Add,
-                    contentDescription = stringResource(
-                        id = R.string.screen_home_floating_action_button_content_description,
-                    ),
-                    onClick = {
-                        navigateToAddTransactionScreen(
-                            navigationManager = data.screenViewModel.navigationManager,
-                        )
-                    },
-                )
-            },
-            floatingActionButtonPosition = FabPosition.End,
-            isFloatingActionButtonDocked = true,
             modifier = Modifier
                 .fillMaxSize(),
         ) { innerPadding ->
@@ -246,12 +222,6 @@ fun HomeScreenView(
                     state.focusManager.clearFocus()
                 },
             ) {
-                val transactionGrouped: Map<String, List<HomeListItemViewData>> =
-                    homeListItemViewData.groupBy {
-                        getDateString(
-                            it.transaction.transactionTimestamp
-                        )
-                    }
                 LazyColumn {
                     item {
                         TotalBalanceCard(
@@ -262,59 +232,57 @@ fun HomeScreenView(
                             },
                         )
                     }
-                    transactionGrouped.forEach { (date, listItemData) ->
-                        stickyHeader {
+                    item {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier
+                                .padding(
+                                    start = 16.dp,
+                                    end = 16.dp,
+                                    top = 16.dp,
+                                    bottom = 8.dp,
+                                )
+                                .fillMaxWidth(),
+                        ) {
                             Text(
-                                text = date,
-                                style = TextStyle(
-                                    color = Color.DarkGray,
-                                    fontSize = 12.sp,
-                                    fontWeight = FontWeight.Bold,
+                                text = stringResource(
+                                    id = R.string.screen_home_recent_transactions,
                                 ),
+                                fontWeight = FontWeight.Bold,
+                                color = DarkGray,
                                 modifier = Modifier
-                                    .background(
-                                        color = Surface,
-                                    )
-                                    .fillMaxWidth()
-                                    .padding(
-                                        start = 16.dp,
-                                        top = 8.dp,
-                                        bottom = 4.dp,
-                                        end = 16.dp,
+                                    .weight(
+                                        weight = 1F,
                                     ),
                             )
+                            MyIconButton(
+                                onClickLabel = stringResource(
+                                    id = R.string.screen_home_view_all_transactions,
+                                ),
+                                onClick = {
+                                    navigateToTransactionsScreen(
+                                        navigationManager = data.screenViewModel.navigationManager,
+                                    )
+                                },
+                                modifier = Modifier
+                                    .padding(
+                                        end = 4.dp,
+                                    ),
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Rounded.ChevronRight,
+                                    tint = Color.DarkGray,
+                                    contentDescription = stringResource(
+                                        id = R.string.screen_home_view_all_transactions,
+                                    ),
+                                )
+                            }
                         }
-                        itemsIndexed(
-                            items = listItemData,
-                            key = { _, listItem ->
-                                listItem.hashCode()
-                            },
-                        ) { index, listItem ->
+                    }
+                    homeListItemViewData.forEach { listItem ->
+                        item {
                             HomeListItem(
                                 data = listItem,
-                                expanded = "$date $index" == expandedItemKey,
-                                deleteEnabled = true,
-                                onClick = {
-                                    expandedItemKey = if ("$date $index" == expandedItemKey) {
-                                        ""
-                                    } else {
-                                        "$date $index"
-                                    }
-                                },
-                                onEditClick = {
-                                    // TODO-Abhi: Edit transaction
-                                    // navigateToEditTransactionScreen(
-                                    //     navigationManager = data.screenViewModel.navigationManager,
-                                    //     transactionId = listItem.transaction.id,
-                                    // )
-                                    expandedItemKey = ""
-                                },
-                                onDeleteClick = {
-                                    data.screenViewModel.deleteTransaction(
-                                        id = listItem.transaction.id,
-                                    )
-                                    expandedItemKey = ""
-                                },
                             )
                         }
                     }
