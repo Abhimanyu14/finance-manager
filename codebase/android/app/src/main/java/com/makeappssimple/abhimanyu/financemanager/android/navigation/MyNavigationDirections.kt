@@ -147,4 +147,12 @@ object MyNavigationDirections {
             override val screen = Screen.Sources.route
         }
     }
+
+    fun transactions(): NavigationCommand {
+        return object : NavigationCommand {
+            override val command = Command.NAVIGATE
+            override val destination = Screen.Transactions.route
+            override val screen = Screen.Transactions.route
+        }
+    }
 }

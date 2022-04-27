@@ -26,6 +26,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_trans
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.HomeScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.settings.SettingsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.SourcesScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.TransactionsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -177,6 +178,12 @@ fun MyNavGraph(
             route = Screen.Sources.route,
         ) {
             SourcesScreen()
+        }
+
+        composable(
+            route = Screen.Transactions.route,
+        ) {
+            TransactionsScreen()
         }
     }
 }

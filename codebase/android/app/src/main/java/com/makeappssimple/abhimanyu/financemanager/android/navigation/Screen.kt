@@ -51,4 +51,8 @@ sealed class Screen(
     object Sources : Screen(
         route = "sources",
     )
+
+    object Transactions : Screen(
+        route = "transactions",
+    )
 }

@@ -116,4 +116,8 @@
     <string name="screen_sources_appbar_title">Sources</string>
     <string name="screen_sources_floating_action_button_content_description">Add Source</string>
 
+    <!-- transactions screen -->
+    <string name="screen_transactions_appbar_title">Transactions</string>
+    <string name="screen_transactions_floating_action_button_content_description">Add Transaction</string>
+
 </resources>

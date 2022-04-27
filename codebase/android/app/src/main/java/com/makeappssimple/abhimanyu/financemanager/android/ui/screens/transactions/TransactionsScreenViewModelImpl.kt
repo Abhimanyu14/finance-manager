@@ -1,0 +1,79 @@
+package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions
+
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoryUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourceUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.usecase.DeleteTransactionAndRevertOtherDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
+
+@HiltViewModel
+class TransactionsScreenViewModelImpl @Inject constructor(
+    getTransactionsUseCase: GetTransactionsUseCase,
+    override val navigationManager: NavigationManager,
+    private val dispatcherProvider: DispatcherProvider,
+    private val deleteTransactionAndRevertOtherDataUseCase: DeleteTransactionAndRevertOtherDataUseCase,
+    private val getCategoryUseCase: GetCategoryUseCase,
+    private val getSourceUseCase: GetSourceUseCase,
+) : TransactionsScreenViewModel, ViewModel() {
+    override val transactionsListItemViewData: Flow<List<TransactionsListItemViewData>> =
+        getTransactionsUseCase()
+            .map { transactions ->
+                transactions
+                    .sortedByDescending { transaction ->
+                        transaction.transactionTimestamp
+                    }
+                    .map { transaction ->
+                        val category = if (transaction.categoryId != null) {
+                            getCategoryUseCase(
+                                id = transaction.categoryId,
+                            )
+                        } else {
+                            null
+                        }
+                        val sourceFrom = if (transaction.sourceFromId != null) {
+                            getSourceUseCase(
+                                id = transaction.sourceFromId,
+                            )
+                        } else {
+                            null
+                        }
+                        val sourceTo = if (transaction.sourceToId != null) {
+                            getSourceUseCase(
+                                id = transaction.sourceToId,
+                            )
+                        } else {
+                            null
+                        }
+                        TransactionsListItemViewData(
+                            category = category,
+                            transaction = transaction,
+                            sourceFrom = sourceFrom,
+                            sourceTo = sourceTo,
+                        )
+                    }
+            }
+
+    override fun trackScreen() {
+        // TODO-Abhi: Add screen tracking code
+    }
+
+    override fun deleteTransaction(
+        id: Int,
+    ) {
+        viewModelScope.launch(
+            context = dispatcherProvider.io,
+        ) {
+            deleteTransactionAndRevertOtherDataUseCase(
+                id = id,
+            )
+        }
+    }
+}

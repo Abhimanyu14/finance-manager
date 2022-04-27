@@ -132,3 +132,11 @@ fun navigateToSourcesScreen(
         navigationCommand = MyNavigationDirections.sources()
     )
 }
+
+fun navigateToTransactionsScreen(
+    navigationManager: NavigationManager,
+) {
+    navigationManager.navigate(
+        navigationCommand = MyNavigationDirections.transactions()
+    )
+}
