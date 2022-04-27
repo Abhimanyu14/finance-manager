@@ -13,6 +13,14 @@ class TransactionRepositoryImpl(
     // Observed Flow will notify the observer when the data has changed.
     override val transactions: Flow<List<Transaction>> = transactionDao.getTransactions()
 
+    override fun getRecentTransactions(
+        numberOfTransactions: Int,
+    ): Flow<List<Transaction>> {
+        return transactionDao.getRecentTransactions(
+            numberOfTransactions = numberOfTransactions,
+        )
+    }
+
     override suspend fun getTransactionsCount(): Int {
         return transactionDao.getTransactionsCount()
     }

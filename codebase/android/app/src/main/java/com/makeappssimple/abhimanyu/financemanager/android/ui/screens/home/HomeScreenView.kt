@@ -11,11 +11,13 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.FabPosition
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -39,10 +41,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToCategoriesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSettingsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSourcesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToTransactionsScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
@@ -213,6 +217,21 @@ fun HomeScreenView(
                     )
                 }
             },
+            floatingActionButton = {
+                MyFloatingActionButton(
+                    iconImageVector = Icons.Rounded.Add,
+                    contentDescription = stringResource(
+                        id = R.string.screen_home_floating_action_button_content_description,
+                    ),
+                    onClick = {
+                        navigateToAddTransactionScreen(
+                            navigationManager = data.screenViewModel.navigationManager,
+                        )
+                    },
+                )
+            },
+            floatingActionButtonPosition = FabPosition.End,
+            isFloatingActionButtonDocked = true,
             modifier = Modifier
                 .fillMaxSize(),
         ) { innerPadding ->

@@ -27,9 +27,6 @@ class TransactionsScreenViewModelImpl @Inject constructor(
         getTransactionsUseCase()
             .map { transactions ->
                 transactions
-                    .sortedByDescending { transaction ->
-                        transaction.transactionTimestamp
-                    }
                     .map { transaction ->
                         val category = if (transaction.categoryId != null) {
                             getCategoryUseCase(

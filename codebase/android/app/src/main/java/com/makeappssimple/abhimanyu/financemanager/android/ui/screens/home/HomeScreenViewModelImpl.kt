@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourceUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetRecentTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.usecase.DeleteTransactionAndRevertOtherDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,19 +16,16 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class HomeScreenViewModelImpl @Inject constructor(
-    getTransactionsUseCase: GetTransactionsUseCase,
+    getRecentTransactionsUseCase: GetRecentTransactionsUseCase,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
     private val deleteTransactionAndRevertOtherDataUseCase: DeleteTransactionAndRevertOtherDataUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val getSourceUseCase: GetSourceUseCase,
 ) : HomeScreenViewModel, ViewModel() {
-    override val homeListItemViewData: Flow<List<HomeListItemViewData>> = getTransactionsUseCase()
+    override val homeListItemViewData: Flow<List<HomeListItemViewData>> = getRecentTransactionsUseCase()
         .map { transactions ->
             transactions
-                .sortedByDescending { transaction ->
-                    transaction.transactionTimestamp
-                }
                 .map { transaction ->
                     val category = if (transaction.categoryId != null) {
                         getCategoryUseCase(

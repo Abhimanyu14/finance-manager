@@ -6,6 +6,10 @@ import kotlinx.coroutines.flow.Flow
 interface TransactionRepository {
     val transactions: Flow<List<Transaction>>
 
+    fun getRecentTransactions(
+        numberOfTransactions: Int,
+    ): Flow<List<Transaction>>
+
     suspend fun getTransactionsCount(): Int
 
     suspend fun checkIfCategoryIsUsedInTransactions(
