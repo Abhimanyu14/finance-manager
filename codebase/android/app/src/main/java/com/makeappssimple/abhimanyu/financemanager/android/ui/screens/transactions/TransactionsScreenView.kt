@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transacti
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -163,78 +164,81 @@ fun TransactionsScreenView(
                                 it.transaction.transactionTimestamp
                             )
                         }
-                LazyColumn {
-                    stickyHeader {
-                        SearchBar(
-                            data = SearchBarData(
-                                searchText = searchText,
-                                placeholderText = stringResource(
-                                    id = R.string.screen_transactions_searchbar_placeholder,
-                                ),
-                                updateSearchText = updateSearchText,
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                ) {
+                    SearchBar(
+                        data = SearchBarData(
+                            searchText = searchText,
+                            placeholderText = stringResource(
+                                id = R.string.screen_transactions_searchbar_placeholder,
                             ),
-                        )
-                    }
-                    transactionGrouped.forEach { (date, listItemData) ->
-                        stickyHeader {
-                            Text(
-                                text = date,
-                                style = TextStyle(
-                                    color = Color.DarkGray,
-                                    fontSize = 12.sp,
-                                    fontWeight = FontWeight.Bold,
-                                ),
-                                modifier = Modifier
-                                    .background(
-                                        color = Surface,
-                                    )
-                                    .fillMaxWidth()
-                                    .padding(
-                                        start = 16.dp,
-                                        top = 8.dp,
-                                        bottom = 4.dp,
-                                        end = 16.dp,
+                            updateSearchText = updateSearchText,
+                        ),
+                    )
+                    LazyColumn {
+                        transactionGrouped.forEach { (date, listItemData) ->
+                            stickyHeader {
+                                Text(
+                                    text = date,
+                                    style = TextStyle(
+                                        color = Color.DarkGray,
+                                        fontSize = 12.sp,
+                                        fontWeight = FontWeight.Bold,
                                     ),
+                                    modifier = Modifier
+                                        .background(
+                                            color = Surface,
+                                        )
+                                        .fillMaxWidth()
+                                        .padding(
+                                            start = 16.dp,
+                                            top = 8.dp,
+                                            bottom = 4.dp,
+                                            end = 16.dp,
+                                        ),
+                                )
+                            }
+                            itemsIndexed(
+                                items = listItemData,
+                                key = { _, listItem ->
+                                    listItem.hashCode()
+                                },
+                            ) { index, listItem ->
+                                TransactionsListItem(
+                                    data = listItem,
+                                    expanded = "$date $index" == expandedItemKey,
+                                    deleteEnabled = true,
+                                    onClick = {
+                                        expandedItemKey = if ("$date $index" == expandedItemKey) {
+                                            ""
+                                        } else {
+                                            "$date $index"
+                                        }
+                                    },
+                                    onEditClick = {
+                                        // TODO-Abhi: Edit transaction
+                                        // navigateToEditTransactionScreen(
+                                        //     navigationManager = data.screenViewModel.navigationManager,
+                                        //     transactionId = listItem.transaction.id,
+                                        // )
+                                        expandedItemKey = ""
+                                    },
+                                    onDeleteClick = {
+                                        data.screenViewModel.deleteTransaction(
+                                            id = listItem.transaction.id,
+                                        )
+                                        expandedItemKey = ""
+                                    },
+                                )
+                            }
+                        }
+                        item {
+                            VerticalSpacer(
+                                height = 48.dp,
                             )
                         }
-                        itemsIndexed(
-                            items = listItemData,
-                            key = { _, listItem ->
-                                listItem.hashCode()
-                            },
-                        ) { index, listItem ->
-                            TransactionsListItem(
-                                data = listItem,
-                                expanded = "$date $index" == expandedItemKey,
-                                deleteEnabled = true,
-                                onClick = {
-                                    expandedItemKey = if ("$date $index" == expandedItemKey) {
-                                        ""
-                                    } else {
-                                        "$date $index"
-                                    }
-                                },
-                                onEditClick = {
-                                    // TODO-Abhi: Edit transaction
-                                    // navigateToEditTransactionScreen(
-                                    //     navigationManager = data.screenViewModel.navigationManager,
-                                    //     transactionId = listItem.transaction.id,
-                                    // )
-                                    expandedItemKey = ""
-                                },
-                                onDeleteClick = {
-                                    data.screenViewModel.deleteTransaction(
-                                        id = listItem.transaction.id,
-                                    )
-                                    expandedItemKey = ""
-                                },
-                            )
-                        }
-                    }
-                    item {
-                        VerticalSpacer(
-                            height = 48.dp,
-                        )
                     }
                 }
             }

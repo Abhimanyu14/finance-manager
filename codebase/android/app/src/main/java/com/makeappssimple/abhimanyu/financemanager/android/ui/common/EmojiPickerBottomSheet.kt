@@ -5,6 +5,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -47,44 +48,47 @@ data class EmojiPickerBottomSheetData(
 fun EmojiPickerBottomSheet(
     data: EmojiPickerBottomSheetData,
 ) {
-    LazyColumn(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .defaultMinSize(
                 minHeight = 24.dp,
             ),
     ) {
-        stickyHeader {
-            SearchBar(
-                data = SearchBarData(
-                    searchText = data.searchText,
-                    placeholderText = stringResource(
-                        id = R.string.emoji_picker_bottom_sheet_placeholder_text,
-                    ),
-                    updateSearchText = data.updateSearchText,
+        SearchBar(
+            data = SearchBarData(
+                searchText = data.searchText,
+                placeholderText = stringResource(
+                    id = R.string.emoji_picker_bottom_sheet_placeholder_text,
                 ),
-            )
-        }
-        data.emojis.groupBy { emoji ->
-            emoji.group
-        }.forEach { (group, emojis) ->
-            item {
-                if (emojis.isNotEmpty()) {
-                    EmojiGroupName(
-                        name = "$group (${emojis.size})"
-                    )
-                }
-            }
-            item {
-                FlowRow {
-                    emojis.forEachIndexed { _, item ->
-                        EmojiPickerBottomSheetItem(
-                            data = EmojiPickerBottomSheetItemData(
-                                emoji = item,
-                                onEmojiSelection = data.onEmojiClick,
-                                onEmojiLongClick = data.onEmojiLongClick,
-                            ),
+                updateSearchText = data.updateSearchText,
+            ),
+        )
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxWidth(),
+        ) {
+            data.emojis.groupBy { emoji ->
+                emoji.group
+            }.forEach { (group, emojis) ->
+                item {
+                    if (emojis.isNotEmpty()) {
+                        EmojiGroupName(
+                            name = "$group (${emojis.size})"
                         )
+                    }
+                }
+                item {
+                    FlowRow {
+                        emojis.forEachIndexed { _, item ->
+                            EmojiPickerBottomSheetItem(
+                                data = EmojiPickerBottomSheetItemData(
+                                    emoji = item,
+                                    onEmojiSelection = data.onEmojiClick,
+                                    onEmojiLongClick = data.onEmojiLongClick,
+                                ),
+                            )
+                        }
                     }
                 }
             }
