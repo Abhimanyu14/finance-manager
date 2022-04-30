@@ -40,6 +40,7 @@ interface EditTransactionScreenViewModel : BaseScreenViewModel {
     val uiVisibilityState: StateFlow<EditTransactionScreenUiVisibilityState>
     val selectedTransactionType: StateFlow<TransactionType?>
     val isValidTransactionData: StateFlow<Boolean>
+    val titleSuggestions: StateFlow<List<String>>
 
     fun updateTransaction()
 

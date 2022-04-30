@@ -40,6 +40,7 @@ interface AddTransactionScreenViewModel : BaseScreenViewModel {
     val uiVisibilityState: StateFlow<AddTransactionScreenUiVisibilityState>
     val selectedTransactionType: StateFlow<TransactionType?>
     val isValidTransactionData: StateFlow<Boolean>
+    val titleSuggestions: StateFlow<List<String>>
 
     fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,

@@ -8,6 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesCountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.UpdateSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTitleSuggestionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.UpdateTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
@@ -32,6 +33,7 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.launch
@@ -41,6 +43,7 @@ import java.util.Calendar
 class EditTransactionScreenViewModelImpl @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
     getSourcesUseCase: GetSourcesUseCase,
+    getTitleSuggestionsUseCase: GetTitleSuggestionsUseCase,
     savedStateHandle: SavedStateHandle,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
@@ -147,6 +150,14 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
             }
         }
     }.defaultBooleanStateIn()
+
+    private val selectedCategoryId: StateFlow<Int?> = uiState.map {
+        it.category?.id
+    }.defaultObjectStateIn()
+    private val _titleSuggestions: MutableStateFlow<List<String>> = MutableStateFlow(
+        value = emptyList(),
+    )
+    override val titleSuggestions: StateFlow<List<String>> = _titleSuggestions
 
     init {
         savedStateHandle.get<Int>(NavArgs.TRANSACTION_ID)?.let { id ->
@@ -318,6 +329,15 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
                         )
                     }
                 }.collect()
+            }
+            launch {
+                selectedCategoryId.collectLatest {
+                    it?.let { selectedCategoryIdValue ->
+                        _titleSuggestions.value = getTitleSuggestionsUseCase(
+                            categoryId = selectedCategoryIdValue,
+                        )
+                    }
+                }
             }
         }
     }

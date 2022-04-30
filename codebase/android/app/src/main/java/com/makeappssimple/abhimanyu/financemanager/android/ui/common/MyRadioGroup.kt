@@ -3,8 +3,11 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.common
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.material3.Icon
@@ -46,6 +49,29 @@ fun MyRadioGroup(
         modifier = modifier,
     ) {
         items.forEachIndexed { index, item ->
+            MyRadioGroupItemView(
+                item = item,
+                isSelected = index == selectedItemIndex,
+                onSelectionChange = {
+                    onSelectionChange(index)
+                },
+            )
+        }
+    }
+}
+
+@Composable
+fun MyScrollableRadioGroup(
+    items: List<MyRadioGroupItem>,
+    selectedItemIndex: Int,
+    modifier: Modifier = Modifier,
+    onSelectionChange: (index: Int) -> Unit,
+) {
+    LazyRow(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = modifier,
+    ) {
+        itemsIndexed(items) { index, item ->
             MyRadioGroupItemView(
                 item = item,
                 isSelected = index == selectedItemIndex,

@@ -50,6 +50,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyIconButto
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyReadOnlyTextField
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyScrollableRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.OutlinedTextFieldLabelText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.SaveButton
@@ -105,6 +106,7 @@ fun EditTransactionScreenView(
     val uiVisibilityState by data.screenViewModel.uiVisibilityState.collectAsState()
     val selectedTransactionType by data.screenViewModel.selectedTransactionType.collectAsState()
     val isValidTransactionData by data.screenViewModel.isValidTransactionData.collectAsState()
+    val titleSuggestions by data.screenViewModel.titleSuggestions.collectAsState()
 
     val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
         data.screenViewModel.updateTransactionCalendar(
@@ -375,11 +377,7 @@ fun EditTransactionScreenView(
                         ),
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.NumberPassword,
-                            imeAction = if (uiVisibilityState.isTitleTextFieldVisible) {
-                                ImeAction.Next
-                            } else {
-                                ImeAction.Done
-                            },
+                            imeAction = ImeAction.Done,
                         ),
                         singleLine = true,
                         modifier = Modifier
@@ -392,6 +390,35 @@ fun EditTransactionScreenView(
                                 vertical = 4.dp,
                             ),
                     )
+                    AnimatedVisibility(
+                        visible = uiVisibilityState.isCategoryTextFieldVisible,
+                    ) {
+                        MyReadOnlyTextField(
+                            value = TextFieldValue(
+                                text = uiState.category?.title ?: "",
+                            ),
+                            onClick = {
+                                editTransactionBottomSheetType =
+                                    EditTransactionBottomSheetType.SELECT_CATEGORY
+                                state.focusManager.clearFocus()
+                                toggleModalBottomSheetState(
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
+                                ) {}
+                            },
+                            label = {
+                                OutlinedTextFieldLabelText(
+                                    textStringResourceId = R.string.screen_edit_transaction_category,
+                                )
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    horizontal = 16.dp,
+                                    vertical = 4.dp,
+                                ),
+                        )
+                    }
                     AnimatedVisibility(
                         visible = uiVisibilityState.isTitleTextFieldVisible,
                     ) {
@@ -453,35 +480,25 @@ fun EditTransactionScreenView(
                                 ),
                         )
                     }
-                    AnimatedVisibility(
-                        visible = uiVisibilityState.isCategoryTextFieldVisible,
-                    ) {
-                        MyReadOnlyTextField(
-                            value = TextFieldValue(
-                                text = uiState.category?.title ?: "",
-                            ),
-                            onClick = {
-                                editTransactionBottomSheetType =
-                                    EditTransactionBottomSheetType.SELECT_CATEGORY
-                                state.focusManager.clearFocus()
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                ) {}
-                            },
-                            label = {
-                                OutlinedTextFieldLabelText(
-                                    textStringResourceId = R.string.screen_edit_transaction_category,
+                    MyScrollableRadioGroup(
+                        items = titleSuggestions
+                            .map { title ->
+                                MyRadioGroupItem(
+                                    text = title,
                                 )
                             },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    horizontal = 16.dp,
-                                    vertical = 4.dp,
-                                ),
-                        )
-                    }
+                        selectedItemIndex = -1,
+                        onSelectionChange = { index ->
+                            data.screenViewModel.updateTitle(
+                                updatedTitle = titleSuggestions[index]
+                            )
+                        },
+                        modifier = Modifier
+                            .padding(
+                                horizontal = 16.dp,
+                                vertical = 4.dp,
+                            ),
+                    )
                     AnimatedVisibility(
                         visible = uiVisibilityState.isTransactionForRadioGroupVisible,
                     ) {

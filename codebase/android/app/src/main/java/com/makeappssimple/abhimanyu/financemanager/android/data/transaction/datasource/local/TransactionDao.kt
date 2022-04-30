@@ -23,6 +23,12 @@ interface TransactionDao {
     @Query(value = "SELECT COUNT(*) FROM transaction_table")
     suspend fun getTransactionsCount(): Int
 
+    @Query(value = "SELECT title from transaction_table WHERE category_id = :categoryId GROUP BY title ORDER BY COUNT(title) DESC LIMIT :numberOfSuggestions")
+    suspend fun getTitleSuggestions(
+        categoryId: Int,
+        numberOfSuggestions: Int,
+    ): List<String>
+
     @Query(value = "SELECT EXISTS(SELECT * from transaction_table WHERE category_id = :categoryId)")
     suspend fun checkIfCategoryIsUsedInTransactions(
         categoryId: Int,

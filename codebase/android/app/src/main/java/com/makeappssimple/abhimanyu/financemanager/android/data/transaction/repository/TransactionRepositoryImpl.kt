@@ -25,6 +25,16 @@ class TransactionRepositoryImpl(
         return transactionDao.getTransactionsCount()
     }
 
+    override suspend fun getTitleSuggestions(
+        categoryId: Int,
+        numberOfSuggestions: Int,
+    ): List<String> {
+        return transactionDao.getTitleSuggestions(
+            categoryId = categoryId,
+            numberOfSuggestions = numberOfSuggestions,
+        )
+    }
+
     override suspend fun checkIfCategoryIsUsedInTransactions(
         categoryId: Int,
     ): Boolean {

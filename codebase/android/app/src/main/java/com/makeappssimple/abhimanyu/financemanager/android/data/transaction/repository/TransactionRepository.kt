@@ -12,6 +12,11 @@ interface TransactionRepository {
 
     suspend fun getTransactionsCount(): Int
 
+    suspend fun getTitleSuggestions(
+        categoryId: Int,
+        numberOfSuggestions: Int,
+    ): List<String>
+
     suspend fun checkIfCategoryIsUsedInTransactions(
         categoryId: Int,
     ): Boolean

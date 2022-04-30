@@ -7,6 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesCountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.UpdateSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTitleSuggestionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.InsertTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
@@ -27,6 +28,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.launch
@@ -36,6 +38,7 @@ import java.util.Calendar
 class AddTransactionScreenViewModelImpl @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
     getSourcesUseCase: GetSourcesUseCase,
+    getTitleSuggestionsUseCase: GetTitleSuggestionsUseCase,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
     private val getSourcesCountUseCase: GetSourcesCountUseCase,
@@ -131,6 +134,14 @@ class AddTransactionScreenViewModelImpl @Inject constructor(
             }
         }
     }.defaultBooleanStateIn()
+
+    private val selectedCategoryId: StateFlow<Int?> = uiState.map {
+        it.category?.id
+    }.defaultObjectStateIn()
+    private val _titleSuggestions: MutableStateFlow<List<String>> = MutableStateFlow(
+        value = emptyList(),
+    )
+    override val titleSuggestions: StateFlow<List<String>> = _titleSuggestions
 
     init {
         viewModelScope.launch(
@@ -261,6 +272,15 @@ class AddTransactionScreenViewModelImpl @Inject constructor(
                         }
                         TransactionType.ADJUSTMENT -> {}
                         null -> {}
+                    }
+                }
+            }
+            launch {
+                selectedCategoryId.collectLatest {
+                    it?.let { selectedCategoryIdValue ->
+                        _titleSuggestions.value = getTitleSuggestionsUseCase(
+                            categoryId = selectedCategoryIdValue,
+                        )
                     }
                 }
             }
