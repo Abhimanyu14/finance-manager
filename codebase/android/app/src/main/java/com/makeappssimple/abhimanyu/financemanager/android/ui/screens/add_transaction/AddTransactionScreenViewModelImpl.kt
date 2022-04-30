@@ -32,27 +32,6 @@ import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
-data class AddTransactionScreenUiState(
-    val selectedTransactionTypeIndex: Int,
-    val amount: String,
-    val title: String,
-    val description: String,
-    val category: Category?,
-    val selectedTransactionForIndex: Int,
-    val sourceFrom: Source?,
-    val sourceTo: Source?,
-    val transactionCalendar: Calendar,
-)
-
-data class AddTransactionScreenUiVisibilityState(
-    val isTitleTextFieldVisible: Boolean = false,
-    val isDescriptionTextFieldVisible: Boolean = false,
-    val isCategoryTextFieldVisible: Boolean = false,
-    val isTransactionForRadioGroupVisible: Boolean = false,
-    val isSourceFromTextFieldVisible: Boolean = false,
-    val isSourceToTextFieldVisible: Boolean = false,
-)
-
 @HiltViewModel
 class AddTransactionScreenViewModelImpl @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
@@ -298,7 +277,7 @@ class AddTransactionScreenViewModelImpl @Inject constructor(
         ) {
             val selectedTransactionTypeValue = selectedTransactionType.value
             val uiStateValue = uiState.value
-            if (selectedTransactionTypeValue != null) {
+            selectedTransactionTypeValue?.let {
                 val amount = Amount(
                     value = if (selectedTransactionTypeValue == TransactionType.EXPENSE) {
                         -1 * uiStateValue.amount.toLong()

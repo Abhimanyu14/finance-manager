@@ -9,6 +9,27 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseScreenVie
 import kotlinx.coroutines.flow.StateFlow
 import java.util.Calendar
 
+data class EditTransactionScreenUiState(
+    val selectedTransactionTypeIndex: Int,
+    val amount: String,
+    val title: String,
+    val description: String,
+    val category: Category?,
+    val selectedTransactionForIndex: Int,
+    val sourceFrom: Source?,
+    val sourceTo: Source?,
+    val transactionCalendar: Calendar,
+)
+
+data class EditTransactionScreenUiVisibilityState(
+    val isTitleTextFieldVisible: Boolean = false,
+    val isDescriptionTextFieldVisible: Boolean = false,
+    val isCategoryTextFieldVisible: Boolean = false,
+    val isTransactionForRadioGroupVisible: Boolean = false,
+    val isSourceFromTextFieldVisible: Boolean = false,
+    val isSourceToTextFieldVisible: Boolean = false,
+)
+
 interface EditTransactionScreenViewModel : BaseScreenViewModel {
     val navigationManager: NavigationManager
     val transactionTypesForNewTransaction: StateFlow<List<TransactionType>>
@@ -16,20 +37,15 @@ interface EditTransactionScreenViewModel : BaseScreenViewModel {
     val categories: StateFlow<List<Category>>
     val sources: StateFlow<List<Source>>
     val uiState: StateFlow<EditTransactionScreenUiState>
+    val uiVisibilityState: StateFlow<EditTransactionScreenUiVisibilityState>
     val selectedTransactionType: StateFlow<TransactionType?>
     val isValidTransactionData: StateFlow<Boolean>
-    val isTitleTextFieldVisible: StateFlow<Boolean>
-    val isDescriptionTextFieldVisible: StateFlow<Boolean>
-    val isCategoryTextFieldVisible: StateFlow<Boolean>
-    val isTransactionForRadioGroupVisible: StateFlow<Boolean>
-    val isSourceFromTextFieldVisible: StateFlow<Boolean>
-    val isSourceToTextFieldVisible: StateFlow<Boolean>
+
+    fun updateTransaction()
 
     fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
     )
-
-    fun insertTransaction()
 
     fun updateTitle(
         updatedTitle: String,

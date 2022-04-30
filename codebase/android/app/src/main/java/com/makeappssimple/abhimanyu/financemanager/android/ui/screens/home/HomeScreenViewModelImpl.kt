@@ -23,39 +23,40 @@ class HomeScreenViewModelImpl @Inject constructor(
     private val getCategoryUseCase: GetCategoryUseCase,
     private val getSourceUseCase: GetSourceUseCase,
 ) : HomeScreenViewModel, ViewModel() {
-    override val homeListItemViewData: Flow<List<HomeListItemViewData>> = getRecentTransactionsUseCase()
-        .map { transactions ->
-            transactions
-                .map { transaction ->
-                    val category = if (transaction.categoryId != null) {
-                        getCategoryUseCase(
-                            id = transaction.categoryId,
+    override val homeListItemViewData: Flow<List<HomeListItemViewData>> =
+        getRecentTransactionsUseCase()
+            .map { transactions ->
+                transactions
+                    .map { transaction ->
+                        val category = if (transaction.categoryId != null) {
+                            getCategoryUseCase(
+                                id = transaction.categoryId,
+                            )
+                        } else {
+                            null
+                        }
+                        val sourceFrom = if (transaction.sourceFromId != null) {
+                            getSourceUseCase(
+                                id = transaction.sourceFromId,
+                            )
+                        } else {
+                            null
+                        }
+                        val sourceTo = if (transaction.sourceToId != null) {
+                            getSourceUseCase(
+                                id = transaction.sourceToId,
+                            )
+                        } else {
+                            null
+                        }
+                        HomeListItemViewData(
+                            category = category,
+                            transaction = transaction,
+                            sourceFrom = sourceFrom,
+                            sourceTo = sourceTo,
                         )
-                    } else {
-                        null
                     }
-                    val sourceFrom = if (transaction.sourceFromId != null) {
-                        getSourceUseCase(
-                            id = transaction.sourceFromId,
-                        )
-                    } else {
-                        null
-                    }
-                    val sourceTo = if (transaction.sourceToId != null) {
-                        getSourceUseCase(
-                            id = transaction.sourceToId,
-                        )
-                    } else {
-                        null
-                    }
-                    HomeListItemViewData(
-                        category = category,
-                        transaction = transaction,
-                        sourceFrom = sourceFrom,
-                        sourceTo = sourceTo,
-                    )
-                }
-        }
+            }
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code

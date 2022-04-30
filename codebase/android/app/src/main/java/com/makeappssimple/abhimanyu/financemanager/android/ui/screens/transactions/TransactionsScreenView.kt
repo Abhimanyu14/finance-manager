@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddTransactionScreen
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToEditTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
@@ -219,10 +220,10 @@ fun TransactionsScreenView(
                                     },
                                     onEditClick = {
                                         // TODO-Abhi: Edit transaction
-                                        // navigateToEditTransactionScreen(
-                                        //     navigationManager = data.screenViewModel.navigationManager,
-                                        //     transactionId = listItem.transaction.id,
-                                        // )
+                                        navigateToEditTransactionScreen(
+                                            navigationManager = data.screenViewModel.navigationManager,
+                                            transactionId = listItem.transaction.id,
+                                        )
                                         expandedItemKey = ""
                                     },
                                     onDeleteClick = {

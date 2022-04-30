@@ -102,14 +102,9 @@ fun EditTransactionScreenView(
         initial = emptyList(),
     )
     val uiState by data.screenViewModel.uiState.collectAsState()
+    val uiVisibilityState by data.screenViewModel.uiVisibilityState.collectAsState()
     val selectedTransactionType by data.screenViewModel.selectedTransactionType.collectAsState()
     val isValidTransactionData by data.screenViewModel.isValidTransactionData.collectAsState()
-    val isTitleTextFieldVisible by data.screenViewModel.isTitleTextFieldVisible.collectAsState()
-    val isDescriptionTextFieldVisible by data.screenViewModel.isDescriptionTextFieldVisible.collectAsState()
-    val isCategoryTextFieldVisible by data.screenViewModel.isCategoryTextFieldVisible.collectAsState()
-    val isTransactionForRadioGroupVisible by data.screenViewModel.isTransactionForRadioGroupVisible.collectAsState()
-    val isSourceFromTextFieldVisible by data.screenViewModel.isSourceFromTextFieldVisible.collectAsState()
-    val isSourceToTextFieldVisible by data.screenViewModel.isSourceToTextFieldVisible.collectAsState()
 
     val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
         data.screenViewModel.updateTransactionCalendar(
@@ -380,7 +375,7 @@ fun EditTransactionScreenView(
                         ),
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.NumberPassword,
-                            imeAction = if (isTitleTextFieldVisible) {
+                            imeAction = if (uiVisibilityState.isTitleTextFieldVisible) {
                                 ImeAction.Next
                             } else {
                                 ImeAction.Done
@@ -398,7 +393,7 @@ fun EditTransactionScreenView(
                             ),
                     )
                     AnimatedVisibility(
-                        visible = isTitleTextFieldVisible,
+                        visible = uiVisibilityState.isTitleTextFieldVisible,
                     ) {
                         OutlinedTextField(
                             value = uiState.title,
@@ -459,7 +454,7 @@ fun EditTransactionScreenView(
                         )
                     }
                     AnimatedVisibility(
-                        visible = isCategoryTextFieldVisible,
+                        visible = uiVisibilityState.isCategoryTextFieldVisible,
                     ) {
                         MyReadOnlyTextField(
                             value = TextFieldValue(
@@ -488,7 +483,7 @@ fun EditTransactionScreenView(
                         )
                     }
                     AnimatedVisibility(
-                        visible = isTransactionForRadioGroupVisible,
+                        visible = uiVisibilityState.isTransactionForRadioGroupVisible,
                     ) {
                         MyRadioGroup(
                             items = data.screenViewModel.transactionForValues
@@ -511,7 +506,7 @@ fun EditTransactionScreenView(
                         )
                     }
                     AnimatedVisibility(
-                        visible = isDescriptionTextFieldVisible,
+                        visible = uiVisibilityState.isDescriptionTextFieldVisible,
                     ) {
                         OutlinedTextField(
                             value = uiState.description,
@@ -572,7 +567,7 @@ fun EditTransactionScreenView(
                         )
                     }
                     AnimatedVisibility(
-                        visible = isSourceFromTextFieldVisible,
+                        visible = uiVisibilityState.isSourceFromTextFieldVisible,
                     ) {
                         MyReadOnlyTextField(
                             value = TextFieldValue(
@@ -605,7 +600,7 @@ fun EditTransactionScreenView(
                         )
                     }
                     AnimatedVisibility(
-                        visible = isSourceToTextFieldVisible,
+                        visible = uiVisibilityState.isSourceToTextFieldVisible,
                     ) {
                         MyReadOnlyTextField(
                             value = TextFieldValue(
@@ -679,7 +674,7 @@ fun EditTransactionScreenView(
                         textStringResourceId = R.string.screen_edit_transaction_floating_action_button_content_description,
                         isEnabled = isValidTransactionData,
                         onClick = {
-                            data.screenViewModel.insertTransaction()
+                            data.screenViewModel.updateTransaction()
                         },
                     )
                 }
