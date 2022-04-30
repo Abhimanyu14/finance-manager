@@ -21,6 +21,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
+import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -405,7 +406,7 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
                 val title = if (selectedTransactionTypeValue == TransactionType.TRANSFER) {
                     TransactionType.TRANSFER.title
                 } else {
-                    uiStateValue.title
+                    uiStateValue.title.capitalizeWords()
                 }
                 val transactionFor: TransactionFor = when (selectedTransactionTypeValue) {
                     TransactionType.INCOME -> {
