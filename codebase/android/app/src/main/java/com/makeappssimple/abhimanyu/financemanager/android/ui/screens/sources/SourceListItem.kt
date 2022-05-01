@@ -26,6 +26,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableI
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableItemViewWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getIcon
+import com.makeappssimple.abhimanyu.financemanager.android.utils.isCashSource
 
 @Composable
 fun SourceListItem(
@@ -134,9 +135,8 @@ fun SourceListItem(
                 ExpandableItemIconButton(
                     iconImageVector = Icons.Rounded.Delete,
                     labelText = "Delete",
-                    enabled = !source.name.contains(
-                        other = "Cash",
-                        ignoreCase = false,
+                    enabled = !isCashSource(
+                        source = source.name,
                     ) && deleteEnabled,
                     onClick = onDeleteClick,
                     modifier = Modifier

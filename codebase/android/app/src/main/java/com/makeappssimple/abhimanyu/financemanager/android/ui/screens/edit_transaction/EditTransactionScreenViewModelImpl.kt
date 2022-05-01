@@ -23,6 +23,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.Navigation
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
+import com.makeappssimple.abhimanyu.financemanager.android.utils.isCashSource
+import com.makeappssimple.abhimanyu.financemanager.android.utils.isDefaultCategory
+import com.makeappssimple.abhimanyu.financemanager.android.utils.isSalaryCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.math.abs
@@ -185,15 +188,13 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
                 categories.collectLatest {
                     if (it.isNotEmpty()) {
                         expenseDefaultCategory = it.firstOrNull { category ->
-                            category.title.contains(
-                                other = "Default",
-                                ignoreCase = true,
+                            isDefaultCategory(
+                                category = category.title,
                             )
                         }
                         incomeDefaultCategory = it.firstOrNull { category ->
-                            category.title.contains(
-                                other = "Salary",
-                                ignoreCase = true,
+                            isSalaryCategory(
+                                category = category.title,
                             )
                         }
                     }
@@ -203,9 +204,8 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
                 sources.collectLatest {
                     if (it.isNotEmpty()) {
                         defaultSource = it.firstOrNull { source ->
-                            source.name.contains(
-                                other = "Cash",
-                                ignoreCase = true,
+                            isCashSource(
+                                source = source.name,
                             )
                         }
                     }

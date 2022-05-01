@@ -23,6 +23,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Cat
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableItemViewWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.utils.isDefaultCategory
+import com.makeappssimple.abhimanyu.financemanager.android.utils.isSalaryCategory
 
 @Composable
 fun CategoryListItem(
@@ -115,12 +117,10 @@ fun CategoryListItem(
                 ExpandableItemIconButton(
                     iconImageVector = Icons.Rounded.Delete,
                     labelText = "Delete",
-                    enabled = !category.title.contains(
-                        other = "Default",
-                        ignoreCase = false,
-                    ) && !category.title.contains(
-                        other = "Salary",
-                        ignoreCase = false,
+                    enabled = !isDefaultCategory(
+                        category = category.title,
+                    ) && !isSalaryCategory(
+                        category = category.title,
                     ) && deleteEnabled,
                     onClick = onDeleteClick,
                     modifier = Modifier
