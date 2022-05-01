@@ -11,6 +11,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
+import com.makeappssimple.abhimanyu.financemanager.android.utils.isDefaultCategory
+import com.makeappssimple.abhimanyu.financemanager.android.utils.isSalaryCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -101,7 +103,13 @@ class AddCategoryScreenViewModelImpl @Inject constructor(
     }
 
     override fun isValidCategoryData(): Boolean {
-        return title.value.isNotNullOrBlank()
+        return title.value.isNotNullOrBlank() &&
+                !isSalaryCategory(
+                    category = title.value,
+                ) &&
+                !isDefaultCategory(
+                    category = title.value,
+                )
     }
 
     override fun clearTitle() {

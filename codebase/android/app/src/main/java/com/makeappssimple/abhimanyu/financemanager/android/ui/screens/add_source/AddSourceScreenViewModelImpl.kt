@@ -10,6 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Sourc
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
+import com.makeappssimple.abhimanyu.financemanager.android.utils.isCashSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -63,7 +64,10 @@ class AddSourceScreenViewModelImpl @Inject constructor(
     }
 
     override fun isValidSourceData(): Boolean {
-        return name.value.isNotNullOrBlank()
+        return name.value.isNotNullOrBlank() &&
+                !isCashSource(
+                    source = name.value,
+                )
     }
 
     override fun clearName() {

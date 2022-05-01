@@ -56,7 +56,6 @@ fun AddSourceScreenView(
         state.focusRequester.requestFocus()
     }
 
-    // TODO-Abhi: Make 'cash' keyword restricted
     Scaffold(
         scaffoldState = state.scaffoldState,
         topBar = {

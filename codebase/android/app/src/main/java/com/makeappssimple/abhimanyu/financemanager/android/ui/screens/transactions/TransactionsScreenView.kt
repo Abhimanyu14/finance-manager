@@ -219,7 +219,6 @@ fun TransactionsScreenView(
                                         }
                                     },
                                     onEditClick = {
-                                        // TODO-Abhi: Edit transaction
                                         navigateToEditTransactionScreen(
                                             navigationManager = data.screenViewModel.navigationManager,
                                             transactionId = listItem.transaction.id,

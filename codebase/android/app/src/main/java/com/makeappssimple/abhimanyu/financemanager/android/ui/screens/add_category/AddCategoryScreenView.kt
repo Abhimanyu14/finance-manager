@@ -110,7 +110,6 @@ fun AddCategoryScreenView(
         }
     }
 
-    // TODO-Abhi: Add check to restrict category name with text "default"
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
         DisposableEffect(Unit) {
             onDispose {
