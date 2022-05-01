@@ -9,8 +9,13 @@ interface SourcesScreenViewModel : BaseScreenViewModel {
     val navigationManager: NavigationManager
     val sources: Flow<List<Source>>
     val sourcesIsUsedInTransactions: Flow<List<Boolean>>
+    val defaultSourceId: Flow<Int?>
 
     fun deleteSource(
         id: Int,
+    )
+
+    fun setDefaultSourceIdInDataStore(
+        defaultSourceId: Int,
     )
 }

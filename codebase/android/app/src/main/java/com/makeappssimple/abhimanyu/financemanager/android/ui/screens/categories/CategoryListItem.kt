@@ -20,6 +20,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.DefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableItemViewWrapper
@@ -31,6 +32,7 @@ fun CategoryListItem(
     category: Category,
     expanded: Boolean,
     deleteEnabled: Boolean,
+    isDefault: Boolean,
     onClick: () -> Unit,
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
@@ -85,8 +87,12 @@ fun CategoryListItem(
                 modifier = Modifier
                     .padding(
                         start = 8.dp,
+                        end = 16.dp,
                     ),
             )
+            if (isDefault) {
+                DefaultTag()
+            }
         }
         if (expanded) {
             Divider(

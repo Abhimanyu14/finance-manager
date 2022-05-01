@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.DeleteCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoriesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.local.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.CheckIfCategoryIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
@@ -20,6 +21,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class CategoriesScreenViewModelImpl @Inject constructor(
+    dataStore: MyDataStore,
     getCategoriesUseCase: GetCategoriesUseCase,
     override val navigationManager: NavigationManager,
     private val checkIdCategoryIsUsedInTransactionsUseCase: CheckIfCategoryIsUsedInTransactionsUseCase,
@@ -53,6 +55,8 @@ class CategoriesScreenViewModelImpl @Inject constructor(
                 )
             }
         }
+    override val defaultExpenseCategoryId: Flow<Int?> = dataStore.getDefaultExpenseCategoryIdFromDataStore()
+    override val defaultIncomeCategoryId: Flow<Int?> = dataStore.getDefaultIncomeCategoryIdFromDataStore()
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code

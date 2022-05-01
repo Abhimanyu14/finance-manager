@@ -33,6 +33,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldCon
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
+import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.utils.isDefaultCategory
+import com.makeappssimple.abhimanyu.financemanager.android.utils.isSalaryCategory
 
 data class CategoriesScreenViewData(
     val screenViewModel: CategoriesScreenViewModel,
@@ -50,6 +53,12 @@ fun CategoriesScreenView(
     )
     val categoriesIsUsedInTransactions by data.screenViewModel.categoriesIsUsedInTransactions.collectAsState(
         initial = emptyList(),
+    )
+    val defaultExpenseCategoryId by data.screenViewModel.defaultExpenseCategoryId.collectAsState(
+        initial = null,
+    )
+    val defaultIncomeCategoryId by data.screenViewModel.defaultIncomeCategoryId.collectAsState(
+        initial = null,
     )
     var expandedItemIndex by remember {
         mutableStateOf(
@@ -143,10 +152,29 @@ fun CategoriesScreenView(
                         val deleteEnabled: Boolean? = categoriesIsUsedInTransactions.getOrNull(
                             index = index,
                         )?.not()
+                        val transactionType = transactionTypes[selectedTabIndex]
+                        val isDefault = if (transactionType == TransactionType.EXPENSE) {
+                            if (defaultExpenseCategoryId.isNull()) {
+                                isDefaultCategory(
+                                    category = listItem.title,
+                                )
+                            } else {
+                                defaultExpenseCategoryId == listItem.id
+                            }
+                        } else {
+                            if (defaultIncomeCategoryId.isNull()) {
+                                isSalaryCategory(
+                                    category = listItem.title,
+                                )
+                            } else {
+                                defaultIncomeCategoryId == listItem.id
+                            }
+                        }
                         CategoryListItem(
                             category = listItem,
                             expanded = index == expandedItemIndex,
                             deleteEnabled = deleteEnabled ?: false,
+                            isDefault = isDefault,
                             onClick = {
                                 expandedItemIndex = if (index == expandedItemIndex) {
                                     -1

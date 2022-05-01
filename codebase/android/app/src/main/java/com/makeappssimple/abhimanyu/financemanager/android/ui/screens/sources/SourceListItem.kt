@@ -1,7 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.DefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableItemViewWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
@@ -33,7 +35,9 @@ fun SourceListItem(
     source: Source,
     expanded: Boolean,
     deleteEnabled: Boolean,
+    isDefault: Boolean,
     onClick: () -> Unit,
+    onLongClick: () -> Unit,
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
 ) {
@@ -56,9 +60,14 @@ fun SourceListItem(
                         )
                     },
                 )
-                .clickable {
-                    onClick()
-                }
+                .combinedClickable(
+                    onClick = {
+                        onClick()
+                    },
+                    onLongClick = {
+                        onLongClick()
+                    },
+                )
                 .padding(
                     start = 16.dp,
                     end = 16.dp,
@@ -92,6 +101,15 @@ fun SourceListItem(
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                 ),
+                modifier = Modifier
+                    .padding(
+                        end = 16.dp,
+                    ),
+            )
+            if (isDefault) {
+                DefaultTag()
+            }
+            Spacer(
                 modifier = Modifier
                     .weight(
                         weight = 1F,

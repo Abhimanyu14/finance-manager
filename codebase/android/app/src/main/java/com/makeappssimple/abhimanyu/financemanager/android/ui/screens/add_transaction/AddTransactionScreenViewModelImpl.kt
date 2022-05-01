@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoriesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.local.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesCountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.UpdateSourcesUseCase
@@ -40,6 +41,7 @@ import java.util.Calendar
 
 @HiltViewModel
 class AddTransactionScreenViewModelImpl @Inject constructor(
+    dataStore: MyDataStore,
     getCategoriesUseCase: GetCategoriesUseCase,
     getSourcesUseCase: GetSourcesUseCase,
     getTitleSuggestionsUseCase: GetTitleSuggestionsUseCase,
@@ -147,6 +149,10 @@ class AddTransactionScreenViewModelImpl @Inject constructor(
     )
     override val titleSuggestions: StateFlow<List<String>> = _titleSuggestions
 
+    private val defaultSourceIdFromDataStore: StateFlow<Int?> =
+        dataStore.getDefaultSourceIdFromDataStore()
+            .defaultObjectStateIn()
+
     init {
         viewModelScope.launch(
             context = dispatcherProvider.io,
@@ -179,7 +185,9 @@ class AddTransactionScreenViewModelImpl @Inject constructor(
             }
             launch {
                 sources.collectLatest {
-                    defaultSource = it.firstOrNull { source ->
+                    defaultSource = getSource(
+                        sourceId = defaultSourceIdFromDataStore.value,
+                    ) ?: it.firstOrNull { source ->
                         isCashSource(
                             source = source.name,
                         )
@@ -527,6 +535,22 @@ class AddTransactionScreenViewModelImpl @Inject constructor(
         updatedAddTransactionScreenUiVisibilityState: AddTransactionScreenUiVisibilityState,
     ) {
         _uiVisibilityState.value = updatedAddTransactionScreenUiVisibilityState
+    }
+
+    private fun getCategory(
+        categoryId: Int?,
+    ): Category? {
+        return categories.value.find { category ->
+            category.id == categoryId
+        }
+    }
+
+    private fun getSource(
+        sourceId: Int?,
+    ): Source? {
+        return sources.value.find { source ->
+            source.id == sourceId
+        }
     }
 
     private fun Flow<Boolean>.defaultBooleanStateIn(): StateFlow<Boolean> {

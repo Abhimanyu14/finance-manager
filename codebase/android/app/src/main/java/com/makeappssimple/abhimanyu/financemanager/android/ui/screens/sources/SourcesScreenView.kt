@@ -33,9 +33,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.VerticalSpa
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
+import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.utils.isCashSource
 
 enum class SourcesBottomSheetType {
     NONE,
+    SET_AS_DEFAULT_CONFIRMATION,
 }
 
 data class SourcesScreenViewData(
@@ -56,12 +59,20 @@ fun SourcesScreenView(
     val sourcesIsUsedInTransactions by data.screenViewModel.sourcesIsUsedInTransactions.collectAsState(
         initial = emptyList(),
     )
+    val defaultSourceId by data.screenViewModel.defaultSourceId.collectAsState(
+        initial = null,
+    )
     var sourcesBottomSheetType by remember {
         mutableStateOf(
             value = SourcesBottomSheetType.NONE,
         )
     }
     var expandedItemIndex by remember {
+        mutableStateOf(
+            value = -1,
+        )
+    }
+    var clickedSourceId by remember {
         mutableStateOf(
             value = -1,
         )
@@ -93,6 +104,37 @@ fun SourcesScreenView(
             when (sourcesBottomSheetType) {
                 SourcesBottomSheetType.NONE -> {
                     VerticalSpacer()
+                }
+                SourcesBottomSheetType.SET_AS_DEFAULT_CONFIRMATION -> {
+                    SetAsDefaultBottomSheet(
+                        data = SetAsDefaultBottomSheetData(
+                            title = "Set as default Source",
+                            message = "Are you sure you want to set this as default source?",
+                            positiveButtonText = "Yes",
+                            negativeButtonText = "Cancel",
+                            onPositiveButtonClick = {
+                                toggleModalBottomSheetState(
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
+                                ) {
+                                    data.screenViewModel.setDefaultSourceIdInDataStore(
+                                        defaultSourceId = clickedSourceId,
+                                    )
+                                    sourcesBottomSheetType = SourcesBottomSheetType.NONE
+                                    clickedSourceId = -1
+                                }
+                            },
+                            onNegativeButtonClick = {
+                                toggleModalBottomSheetState(
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
+                                ) {
+                                    sourcesBottomSheetType = SourcesBottomSheetType.NONE
+                                    clickedSourceId = -1
+                                }
+                            },
+                        ),
+                    )
                 }
             }
         },
@@ -144,15 +186,34 @@ fun SourcesScreenView(
                         val deleteEnabled: Boolean? = sourcesIsUsedInTransactions.getOrNull(
                             index = index,
                         )?.not()
+                        val isDefault = if (defaultSourceId.isNull()) {
+                            isCashSource(
+                                source = listItem.name,
+                            )
+                        } else {
+                            defaultSourceId == listItem.id
+                        }
                         SourceListItem(
                             source = listItem,
                             expanded = index == expandedItemIndex,
                             deleteEnabled = deleteEnabled ?: false,
+                            isDefault = isDefault,
                             onClick = {
                                 expandedItemIndex = if (index == expandedItemIndex) {
                                     -1
                                 } else {
                                     index
+                                }
+                            },
+                            onLongClick = {
+                                if (!isDefault) {
+                                    sourcesBottomSheetType =
+                                        SourcesBottomSheetType.SET_AS_DEFAULT_CONFIRMATION
+                                    clickedSourceId = listItem.id
+                                    toggleModalBottomSheetState(
+                                        coroutineScope = state.coroutineScope,
+                                        modalBottomSheetState = state.modalBottomSheetState,
+                                    ) {}
                                 }
                             },
                             onEditClick = {

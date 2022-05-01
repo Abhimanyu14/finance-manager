@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.data.local.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.DeleteSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.CheckIfSourceIsUsedInTransactionsUseCase
@@ -23,6 +24,7 @@ class SourcesScreenViewModelImpl @Inject constructor(
     getSourcesUseCase: GetSourcesUseCase,
     override val navigationManager: NavigationManager,
     private val checkIfSourceIsUsedInTransactionsUseCase: CheckIfSourceIsUsedInTransactionsUseCase,
+    private val dataStore: MyDataStore,
     private val deleteSourceUseCase: DeleteSourceUseCase,
     private val dispatcherProvider: DispatcherProvider,
 ) : SourcesScreenViewModel, ViewModel() {
@@ -46,6 +48,7 @@ class SourcesScreenViewModelImpl @Inject constructor(
                 )
             }
         }
+    override val defaultSourceId: Flow<Int?> = dataStore.getDefaultSourceIdFromDataStore()
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code
@@ -59,6 +62,18 @@ class SourcesScreenViewModelImpl @Inject constructor(
         ) {
             deleteSourceUseCase(
                 id = id,
+            )
+        }
+    }
+
+    override fun setDefaultSourceIdInDataStore(
+        defaultSourceId: Int,
+    ) {
+        viewModelScope.launch(
+            context = dispatcherProvider.io,
+        ) {
+            dataStore.setDefaultSourceIdInDataStore(
+                defaultSourceId = defaultSourceId,
             )
         }
     }
