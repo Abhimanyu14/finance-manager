@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories
 
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -34,6 +34,7 @@ fun CategoryListItem(
     deleteEnabled: Boolean,
     isDefault: Boolean,
     onClick: () -> Unit,
+    onLongClick: () -> Unit,
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
 ) {
@@ -56,9 +57,14 @@ fun CategoryListItem(
                         )
                     },
                 )
-                .clickable {
-                    onClick()
-                }
+                .combinedClickable(
+                    onClick = {
+                        onClick()
+                    },
+                    onLongClick = {
+                        onLongClick()
+                    },
+                )
                 .padding(
                     start = 16.dp,
                     end = 16.dp,

@@ -21,10 +21,10 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class CategoriesScreenViewModelImpl @Inject constructor(
-    dataStore: MyDataStore,
     getCategoriesUseCase: GetCategoriesUseCase,
     override val navigationManager: NavigationManager,
     private val checkIdCategoryIsUsedInTransactionsUseCase: CheckIfCategoryIsUsedInTransactionsUseCase,
+    private val dataStore: MyDataStore,
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
     private val dispatcherProvider: DispatcherProvider,
 ) : CategoriesScreenViewModel, ViewModel() {
@@ -55,8 +55,10 @@ class CategoriesScreenViewModelImpl @Inject constructor(
                 )
             }
         }
-    override val defaultExpenseCategoryId: Flow<Int?> = dataStore.getDefaultExpenseCategoryIdFromDataStore()
-    override val defaultIncomeCategoryId: Flow<Int?> = dataStore.getDefaultIncomeCategoryIdFromDataStore()
+    override val defaultExpenseCategoryId: Flow<Int?> = dataStore
+        .getDefaultExpenseCategoryIdFromDataStore()
+    override val defaultIncomeCategoryId: Flow<Int?> = dataStore
+        .getDefaultIncomeCategoryIdFromDataStore()
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code
@@ -78,5 +80,24 @@ class CategoriesScreenViewModelImpl @Inject constructor(
         updatedSelectedTabIndex: Int,
     ) {
         _selectedTabIndex.value = updatedSelectedTabIndex
+    }
+
+    override fun setDefaultCategoryIdInDataStore(
+        defaultCategoryId: Int,
+        transactionType: TransactionType,
+    ) {
+        viewModelScope.launch(
+            context = dispatcherProvider.io,
+        ) {
+            if (transactionType == TransactionType.EXPENSE) {
+                dataStore.setDefaultExpenseCategoryIdInDataStore(
+                    defaultExpenseCategoryId = defaultCategoryId,
+                )
+            } else if (transactionType == TransactionType.INCOME) {
+                dataStore.setDefaultIncomeCategoryIdInDataStore(
+                    defaultIncomeCategoryId = defaultCategoryId,
+                )
+            }
+        }
     }
 }

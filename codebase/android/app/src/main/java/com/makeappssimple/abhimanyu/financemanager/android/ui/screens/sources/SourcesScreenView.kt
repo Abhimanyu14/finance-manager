@@ -72,7 +72,7 @@ fun SourcesScreenView(
             value = -1,
         )
     }
-    var clickedSourceId by remember {
+    var clickedItemId by remember {
         mutableStateOf(
             value = -1,
         )
@@ -108,20 +108,28 @@ fun SourcesScreenView(
                 SourcesBottomSheetType.SET_AS_DEFAULT_CONFIRMATION -> {
                     SetAsDefaultBottomSheet(
                         data = SetAsDefaultBottomSheetData(
-                            title = "Set as default Source",
-                            message = "Are you sure you want to set this as default source?",
-                            positiveButtonText = "Yes",
-                            negativeButtonText = "Cancel",
+                            title = stringResource(
+                                id = R.string.screen_sources_bottom_sheet_set_as_default_title,
+                            ),
+                            message = stringResource(
+                                id = R.string.screen_sources_bottom_sheet_set_as_default_message,
+                            ),
+                            positiveButtonText = stringResource(
+                                id = R.string.screen_sources_bottom_sheet_set_as_default_positive_button_text,
+                            ),
+                            negativeButtonText = stringResource(
+                                id = R.string.screen_sources_bottom_sheet_set_as_default_negative_button_text,
+                            ),
                             onPositiveButtonClick = {
                                 toggleModalBottomSheetState(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,
                                 ) {
                                     data.screenViewModel.setDefaultSourceIdInDataStore(
-                                        defaultSourceId = clickedSourceId,
+                                        defaultSourceId = clickedItemId,
                                     )
                                     sourcesBottomSheetType = SourcesBottomSheetType.NONE
-                                    clickedSourceId = -1
+                                    clickedItemId = -1
                                 }
                             },
                             onNegativeButtonClick = {
@@ -130,7 +138,7 @@ fun SourcesScreenView(
                                     modalBottomSheetState = state.modalBottomSheetState,
                                 ) {
                                     sourcesBottomSheetType = SourcesBottomSheetType.NONE
-                                    clickedSourceId = -1
+                                    clickedItemId = -1
                                 }
                             },
                         ),
@@ -207,9 +215,9 @@ fun SourcesScreenView(
                             },
                             onLongClick = {
                                 if (!isDefault) {
-                                    sourcesBottomSheetType =
-                                        SourcesBottomSheetType.SET_AS_DEFAULT_CONFIRMATION
-                                    clickedSourceId = listItem.id
+                                    sourcesBottomSheetType = SourcesBottomSheetType
+                                        .SET_AS_DEFAULT_CONFIRMATION
+                                    clickedItemId = listItem.id
                                     toggleModalBottomSheetState(
                                         coroutineScope = state.coroutineScope,
                                         modalBottomSheetState = state.modalBottomSheetState,

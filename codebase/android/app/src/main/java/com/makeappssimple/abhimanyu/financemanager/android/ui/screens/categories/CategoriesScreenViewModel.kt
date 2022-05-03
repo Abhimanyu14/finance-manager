@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories
 
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
+import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseScreenViewModel
 import kotlinx.coroutines.flow.Flow
@@ -20,5 +21,10 @@ interface CategoriesScreenViewModel : BaseScreenViewModel {
 
     fun updateSelectedTabIndex(
         updatedSelectedTabIndex: Int,
+    )
+
+    fun setDefaultCategoryIdInDataStore(
+        defaultCategoryId: Int,
+        transactionType: TransactionType,
     )
 }
