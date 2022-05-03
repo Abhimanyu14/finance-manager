@@ -4,6 +4,7 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
+import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNull
 
 class CategoryIdsConverter {
 
@@ -32,7 +33,7 @@ class CategoryIdsConverter {
     fun categoryIdsToString(
         categoryIds: List<Int>?,
     ): String {
-        if (categoryIds == null) {
+        if (categoryIds.isNull()) {
             return ""
         }
         val gson = Gson()

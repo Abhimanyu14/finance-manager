@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.flowlayout.FlowRow
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
+import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getIcon
 
 data class MyRadioGroupItem(
@@ -161,7 +162,7 @@ private fun MyRadioGroupItemView(
                     top = 6.dp,
                     bottom = 6.dp,
                     end = 16.dp,
-                    start = if (item.iconKey != null) {
+                    start = if (item.iconKey.isNotNull()) {
                         0.dp
                     } else {
                         16.dp

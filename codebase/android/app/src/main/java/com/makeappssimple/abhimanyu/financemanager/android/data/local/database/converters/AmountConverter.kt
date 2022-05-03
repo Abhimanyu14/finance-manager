@@ -4,6 +4,7 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
+import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNull
 
 class AmountConverter {
 
@@ -31,7 +32,7 @@ class AmountConverter {
     fun amountToString(
         amount: Amount?,
     ): String {
-        if (amount == null) {
+        if (amount.isNull()) {
             return ""
         }
         val gson = Gson()
