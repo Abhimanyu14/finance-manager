@@ -56,7 +56,7 @@ class EditSourceScreenViewModelImpl @Inject constructor(
     override val selectedSourceTypeIndex: StateFlow<Int> = _selectedSourceTypeIndex
 
     private val _name: MutableStateFlow<String> = MutableStateFlow(
-        value = source.value?.name ?: "",
+        value = source.value?.name.orEmpty(),
     )
     override val name: StateFlow<String> = _name
 

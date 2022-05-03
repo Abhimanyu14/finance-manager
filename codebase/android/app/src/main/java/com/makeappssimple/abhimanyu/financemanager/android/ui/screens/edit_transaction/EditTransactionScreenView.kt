@@ -395,7 +395,7 @@ fun EditTransactionScreenView(
                     ) {
                         MyReadOnlyTextField(
                             value = TextFieldValue(
-                                text = uiState.category?.title ?: "",
+                                text = uiState.category?.title.orEmpty(),
                             ),
                             onClick = {
                                 editTransactionBottomSheetType =
@@ -588,7 +588,7 @@ fun EditTransactionScreenView(
                     ) {
                         MyReadOnlyTextField(
                             value = TextFieldValue(
-                                text = uiState.sourceFrom?.name ?: "",
+                                text = uiState.sourceFrom?.name.orEmpty(),
                             ),
                             onClick = {
                                 editTransactionBottomSheetType =
@@ -621,7 +621,7 @@ fun EditTransactionScreenView(
                     ) {
                         MyReadOnlyTextField(
                             value = TextFieldValue(
-                                text = uiState.sourceTo?.name ?: "",
+                                text = uiState.sourceTo?.name.orEmpty(),
                             ),
                             onClick = {
                                 editTransactionBottomSheetType =

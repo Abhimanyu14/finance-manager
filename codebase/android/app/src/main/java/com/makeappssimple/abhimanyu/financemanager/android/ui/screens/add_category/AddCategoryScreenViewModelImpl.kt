@@ -10,6 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.EmojiL
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
+import com.makeappssimple.abhimanyu.financemanager.android.utils.constants.loadingEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isDefaultCategory
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isSalaryCategory
@@ -23,9 +24,6 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-
-const val loadingEmoji = "⏳"
-const val loadingCompletedEmoji = "😃"
 
 @HiltViewModel
 class AddCategoryScreenViewModelImpl @Inject constructor(

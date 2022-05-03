@@ -171,7 +171,7 @@ fun HomeListItem(
                                 data.sourceTo.name,
                             )
                         } else {
-                            data.sourceFrom?.name ?: (data.sourceTo?.name ?: "")
+                            data.sourceFrom?.name ?: data.sourceTo?.name.orEmpty()
                         },
                         textAlign = TextAlign.End,
                         style = TextStyle(
