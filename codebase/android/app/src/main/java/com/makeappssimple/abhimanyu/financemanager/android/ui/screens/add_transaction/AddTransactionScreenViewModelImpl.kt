@@ -149,9 +149,15 @@ class AddTransactionScreenViewModelImpl @Inject constructor(
     )
     override val titleSuggestions: StateFlow<List<String>> = _titleSuggestions
 
-    private val defaultSourceIdFromDataStore: StateFlow<Int?> =
-        dataStore.getDefaultSourceIdFromDataStore()
-            .defaultObjectStateIn()
+    private val defaultSourceIdFromDataStore: StateFlow<Int?> = dataStore
+        .getDefaultSourceIdFromDataStore()
+        .defaultObjectStateIn()
+    private val defaultIncomeCategoryIdFromDataStore: StateFlow<Int?> = dataStore
+        .getDefaultIncomeCategoryIdFromDataStore()
+        .defaultObjectStateIn()
+    private val defaultExpenseCategoryIdFromDataStore: StateFlow<Int?> = dataStore
+        .getDefaultExpenseCategoryIdFromDataStore()
+        .defaultObjectStateIn()
 
     init {
         viewModelScope.launch(
@@ -168,12 +174,16 @@ class AddTransactionScreenViewModelImpl @Inject constructor(
             }
             launch {
                 categories.collectLatest {
-                    expenseDefaultCategory = it.firstOrNull { category ->
+                    expenseDefaultCategory = getCategory(
+                        categoryId = defaultExpenseCategoryIdFromDataStore.value,
+                    ) ?: it.firstOrNull { category ->
                         isDefaultCategory(
                             category = category.title,
                         )
                     }
-                    incomeDefaultCategory = it.firstOrNull { category ->
+                    incomeDefaultCategory = getCategory(
+                        categoryId = defaultIncomeCategoryIdFromDataStore.value,
+                    ) ?: it.firstOrNull { category ->
                         isSalaryCategory(
                             category = category.title,
                         )
