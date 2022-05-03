@@ -13,7 +13,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_category.loadingEmoji
+import com.makeappssimple.abhimanyu.financemanager.android.utils.constants.loadingEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isDefaultCategory
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isSalaryCategory

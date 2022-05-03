@@ -62,6 +62,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
+import com.makeappssimple.abhimanyu.financemanager.android.utils.constants.loadingCompletedEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 
