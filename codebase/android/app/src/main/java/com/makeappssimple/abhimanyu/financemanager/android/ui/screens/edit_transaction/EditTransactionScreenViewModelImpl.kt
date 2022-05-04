@@ -439,8 +439,19 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
                         ),
                     )
                     uiStateValue.sourceFrom?.let { sourceFrom ->
-                        val updatedSourceFromBalanceAmount = sourceFrom.balanceAmount.value +
-                                (-1 * transaction.amount.value) - uiState.value.amount.toLong()
+                        transactionSourceFrom?.let { transactionSourceFrom ->
+                            val revertOriginalTransactionAmount = transactionSourceFrom
+                                .balanceAmount.value + (-1 * transaction.amount.value)
+                            updateSourcesUseCase(
+                                transactionSourceFrom.copy(
+                                    balanceAmount = transactionSourceFrom.balanceAmount.copy(
+                                        value = revertOriginalTransactionAmount,
+                                    )
+                                ),
+                            )
+                        }
+                        val updatedSourceFromBalanceAmount = sourceFrom.balanceAmount.value -
+                                uiState.value.amount.toLong()
                         updateSourcesUseCase(
                             sourceFrom.copy(
                                 balanceAmount = sourceFrom.balanceAmount.copy(
@@ -450,8 +461,19 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
                         )
                     }
                     uiStateValue.sourceTo?.let { sourceTo ->
-                        val updatedSourceToBalanceAmount = sourceTo.balanceAmount.value -
-                                transaction.amount.value + uiState.value.amount.toLong()
+                        transactionSourceTo?.let { transactionSourceTo ->
+                            val revertOriginalTransactionAmount = transactionSourceTo
+                                .balanceAmount.value - transaction.amount.value
+                            updateSourcesUseCase(
+                                transactionSourceTo.copy(
+                                    balanceAmount = transactionSourceTo.balanceAmount.copy(
+                                        value = revertOriginalTransactionAmount,
+                                    )
+                                ),
+                            )
+                        }
+                        val updatedSourceToBalanceAmount = sourceTo.balanceAmount.value +
+                                uiState.value.amount.toLong()
                         updateSourcesUseCase(
                             sourceTo.copy(
                                 balanceAmount = sourceTo.balanceAmount.copy(
