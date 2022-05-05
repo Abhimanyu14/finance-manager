@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.data.emoji.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.repository.EmojiRepository
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.kotlin.mock
@@ -19,13 +19,11 @@ class GetEmojisUseCaseTest {
     }
 
     @Test
-    fun invoke_defaultTest() {
-        runBlocking {
-            getEmojisUseCase()
+    fun invoke_defaultTest() = runTest {
+        getEmojisUseCase()
 
-            verify(
-                mock = emojiRepository,
-            ).emojis
-        }
+        verify(
+            mock = emojiRepository,
+        ).emojis
     }
 }

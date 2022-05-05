@@ -4,7 +4,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.data
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getTestTransaction
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getTestTransactions
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.kotlin.mock
@@ -34,99 +34,85 @@ class TransactionRepositoryImplTest {
     }
 
     @Test
-    fun getTransactionsCount() {
-        runBlocking {
-            transactionRepository.getTransactionsCount()
+    fun getTransactionsCount() = runTest {
+        transactionRepository.getTransactionsCount()
 
-            verify(
-                mock = transactionDao,
-            ).getTransactionsCount()
-        }
+        verify(
+            mock = transactionDao,
+        ).getTransactionsCount()
     }
 
     @Test
-    fun getTransaction() {
-        runBlocking {
-            transactionRepository.getTransaction(
-                id = id,
-            )
+    fun getTransaction() = runTest {
+        transactionRepository.getTransaction(
+            id = id,
+        )
 
-            verify(
-                mock = transactionDao,
-            ).getTransaction(
-                id = id,
-            )
-        }
+        verify(
+            mock = transactionDao,
+        ).getTransaction(
+            id = id,
+        )
     }
 
     @Test
-    fun insertTransaction() {
-        runBlocking {
-            transactionRepository.insertTransaction(
-                transaction = transaction,
-            )
+    fun insertTransaction() = runTest {
+        transactionRepository.insertTransaction(
+            transaction = transaction,
+        )
 
-            verify(
-                mock = transactionDao,
-            ).insertTransaction(
-                transaction = transaction,
-            )
-        }
+        verify(
+            mock = transactionDao,
+        ).insertTransaction(
+            transaction = transaction,
+        )
     }
 
     @Test
-    fun insertTransactions() {
-        runBlocking {
-            transactionRepository.insertTransactions(
-                *transactions,
-            )
+    fun insertTransactions() = runTest {
+        transactionRepository.insertTransactions(
+            *transactions,
+        )
 
-            verify(
-                mock = transactionDao,
-            ).insertTransactions(
-                *transactions,
-            )
-        }
+        verify(
+            mock = transactionDao,
+        ).insertTransactions(
+            *transactions,
+        )
     }
 
     @Test
-    fun deleteTransaction() {
-        runBlocking {
-            transactionRepository.deleteTransaction(
-                id = id,
-            )
+    fun deleteTransaction() = runTest {
+        transactionRepository.deleteTransaction(
+            id = id,
+        )
 
-            verify(
-                mock = transactionDao,
-            ).deleteTransaction(
-                id = id,
-            )
-        }
+        verify(
+            mock = transactionDao,
+        ).deleteTransaction(
+            id = id,
+        )
     }
 
     @Test
-    fun deleteTransactions() {
-        runBlocking {
-            transactionRepository.deleteTransactions(
-                *transactions,
-            )
+    fun deleteTransactions() = runTest {
+        transactionRepository.deleteTransactions(
+            *transactions,
+        )
 
-            verify(
-                mock = transactionDao,
-            ).deleteTransactions(
-                *transactions,
-            )
-        }
+        verify(
+            mock = transactionDao,
+        ).deleteTransactions(
+            *transactions,
+        )
     }
 
     @Test
-    fun deleteAllTransactions() {
-        runBlocking {
-            transactionRepository.deleteAllTransactions()
+    fun deleteAllTransactions() = runTest {
+        transactionRepository.deleteAllTransactions()
 
-            verify(
-                mock = transactionDao,
-            ).deleteAllTransactions()
-        }
+        verify(
+            mock = transactionDao,
+        ).deleteAllTransactions()
     }
 }

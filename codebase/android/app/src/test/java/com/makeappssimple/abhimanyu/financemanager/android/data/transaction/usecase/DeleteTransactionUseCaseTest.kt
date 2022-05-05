@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repository.TransactionRepository
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.kotlin.mock
@@ -19,18 +19,16 @@ class DeleteTransactionUseCaseTest {
     }
 
     @Test
-    fun invoke_defaultTest() {
+    fun invoke_defaultTest() = runTest {
         val id = 3
-        runBlocking {
-            deleteTransactionUseCase(
-                id = id,
-            )
+        deleteTransactionUseCase(
+            id = id,
+        )
 
-            verify(
-                mock = transactionRepository,
-            ).deleteTransaction(
-                id = id,
-            )
-        }
+        verify(
+            mock = transactionRepository,
+        ).deleteTransaction(
+            id = id,
+        )
     }
 }

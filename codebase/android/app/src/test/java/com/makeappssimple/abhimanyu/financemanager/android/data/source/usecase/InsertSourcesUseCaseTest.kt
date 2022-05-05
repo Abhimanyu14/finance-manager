@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getTestSources
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.kotlin.mock
@@ -14,24 +14,22 @@ class InsertSourcesUseCaseTest {
 
     @Before
     fun setUp() {
-        insertSourceUseCase = InsertSourcesUseCase(
+        insertSourceUseCase = InsertSourcesUseCaseImpl(
             sourceRepository = sourceRepository,
         )
     }
 
     @Test
-    fun invoke_defaultTest() {
+    fun invoke_defaultTest() = runTest {
         val sources = getTestSources()
-        runBlocking {
-            insertSourceUseCase(
-                *sources,
-            )
+        insertSourceUseCase(
+            *sources,
+        )
 
-            verify(
-                mock = sourceRepository,
-            ).insertSources(
-                *sources,
-            )
-        }
+        verify(
+            mock = sourceRepository,
+        ).insertSources(
+            *sources,
+        )
     }
 }

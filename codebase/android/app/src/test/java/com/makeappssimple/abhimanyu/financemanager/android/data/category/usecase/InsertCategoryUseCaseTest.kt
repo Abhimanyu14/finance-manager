@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.data.category.usecas
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.repository.CategoryRepository
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getTestCategory
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.kotlin.mock
@@ -14,24 +14,22 @@ class InsertCategoryUseCaseTest {
 
     @Before
     fun setUp() {
-        insertCategoryUseCase = InsertCategoryUseCase(
+        insertCategoryUseCase = InsertCategoryUseCaseImpl(
             categoryRepository = categoryRepository,
         )
     }
 
     @Test
-    fun invoke_defaultTest() {
+    fun invoke_defaultTest() = runTest {
         val category = getTestCategory()
-        runBlocking {
-            insertCategoryUseCase(
-                category = category,
-            )
+        insertCategoryUseCase(
+            category = category,
+        )
 
-            verify(
-                mock = categoryRepository,
-            ).insertCategory(
-                category = category,
-            )
-        }
+        verify(
+            mock = categoryRepository,
+        ).insertCategory(
+            category = category,
+        )
     }
 }

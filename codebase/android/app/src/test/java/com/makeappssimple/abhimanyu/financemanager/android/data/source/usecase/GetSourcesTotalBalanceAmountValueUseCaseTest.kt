@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.kotlin.mock
@@ -14,22 +14,20 @@ class GetSourcesTotalBalanceAmountValueUseCaseTest {
 
     @Before
     fun setUp() {
-        getSourcesTotalBalanceAmountValueUseCase = GetSourcesTotalBalanceAmountValueUseCase(
+        getSourcesTotalBalanceAmountValueUseCase = GetSourcesTotalBalanceAmountValueUseCaseImpl(
             sourceRepository = sourceRepository,
         )
     }
 
     @Test
-    fun invoke_defaultTest() {
-        runBlocking {
-            getSourcesTotalBalanceAmountValueUseCase()
+    fun invoke_defaultTest() = runTest {
+        getSourcesTotalBalanceAmountValueUseCase()
 
-            verify(
-                mock = sourceRepository,
-            ).sources.map {
-                it.sumOf { source ->
-                    source.balanceAmount.value
-                }
+        verify(
+            mock = sourceRepository,
+        ).sources.map {
+            it.sumOf { source ->
+                source.balanceAmount.value
             }
         }
     }

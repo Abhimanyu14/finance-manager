@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.data.transaction.use
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getTestTransaction
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.kotlin.mock
@@ -20,18 +20,16 @@ class InsertTransactionUseCaseTest {
     }
 
     @Test
-    fun invoke_defaultTest() {
+    fun invoke_defaultTest() = runTest {
         val transaction = getTestTransaction()
-        runBlocking {
-            insertTransactionUseCase(
-                transaction = transaction,
-            )
+        insertTransactionUseCase(
+            transaction = transaction,
+        )
 
-            verify(
-                mock = transactionRepository,
-            ).insertTransaction(
-                transaction = transaction,
-            )
-        }
+        verify(
+            mock = transactionRepository,
+        ).insertTransaction(
+            transaction = transaction,
+        )
     }
 }

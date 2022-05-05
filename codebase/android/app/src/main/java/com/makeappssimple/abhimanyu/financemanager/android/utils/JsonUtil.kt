@@ -7,7 +7,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.databaseback
 import com.makeappssimple.abhimanyu.financemanager.android.entities.initialdatabasedata.InitialDatabaseData
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
-import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import java.io.BufferedReader
 import java.io.FileNotFoundException
@@ -25,10 +24,21 @@ private val initialDatabaseDataJsonAdapter: JsonAdapter<InitialDatabaseData> =
 private val databaseBackupDataJsonAdapter: JsonAdapter<DatabaseBackupData> =
     moshi.adapter(DatabaseBackupData::class.java)
 
-class JsonUtil @Inject constructor(
-    @ApplicationContext private val context: Context,
-) {
+interface JsonUtil {
     fun readDatabaseBackupDataFromFile(
+        uri: Uri,
+    ): DatabaseBackupData?
+
+    fun writeDatabaseBackupDataToFile(
+        uri: Uri,
+        databaseBackupData: DatabaseBackupData,
+    )
+}
+
+class JsonUtilImpl @Inject constructor(
+    private val context: Context,
+) : JsonUtil {
+    override fun readDatabaseBackupDataFromFile(
         uri: Uri,
     ): DatabaseBackupData? {
         val contentResolver = context.contentResolver
@@ -46,7 +56,7 @@ class JsonUtil @Inject constructor(
         return databaseBackupDataJsonAdapter.fromJson(stringBuilder.toString())
     }
 
-    fun writeDatabaseBackupDataToFile(
+    override fun writeDatabaseBackupDataToFile(
         uri: Uri,
         databaseBackupData: DatabaseBackupData,
     ) {

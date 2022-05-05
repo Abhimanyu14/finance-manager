@@ -193,6 +193,9 @@ dependencies {
     // Mockito kotlin
     testImplementation "org.mockito.kotlin:mockito-kotlin:$rootProject.mockitoKotlinVersion"
 
+    // Coroutines test
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6"
+
     // Espresso
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
 

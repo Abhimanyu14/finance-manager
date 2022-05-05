@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.data.emoji.repositor
 import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.datasource.local.EmojiDao
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getTestEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getTestEmojis
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.kotlin.mock
@@ -33,99 +33,85 @@ class EmojiRepositoryImplTest {
     }
 
     @Test
-    fun getEmojisCount() {
-        runBlocking {
-            emojiRepository.getEmojisCount()
+    fun getEmojisCount() = runTest {
+        emojiRepository.getEmojisCount()
 
-            verify(
-                mock = emojiDao,
-            ).getEmojisCount()
-        }
+        verify(
+            mock = emojiDao,
+        ).getEmojisCount()
     }
 
     @Test
-    fun getEmoji() {
-        runBlocking {
-            emojiRepository.getEmoji(
-                character = character,
-            )
+    fun getEmoji() = runTest {
+        emojiRepository.getEmoji(
+            character = character,
+        )
 
-            verify(
-                mock = emojiDao,
-            ).getEmoji(
-                character = character,
-            )
-        }
+        verify(
+            mock = emojiDao,
+        ).getEmoji(
+            character = character,
+        )
     }
 
     @Test
-    fun insertEmoji() {
-        runBlocking {
-            emojiRepository.insertEmoji(
-                emoji = emoji,
-            )
+    fun insertEmoji() = runTest {
+        emojiRepository.insertEmoji(
+            emoji = emoji,
+        )
 
-            verify(
-                mock = emojiDao,
-            ).insertEmoji(
-                emoji = emoji,
-            )
-        }
+        verify(
+            mock = emojiDao,
+        ).insertEmoji(
+            emoji = emoji,
+        )
     }
 
     @Test
-    fun insertEmojis() {
-        runBlocking {
-            emojiRepository.insertEmojis(
-                *emojis,
-            )
+    fun insertEmojis() = runTest {
+        emojiRepository.insertEmojis(
+            *emojis,
+        )
 
-            verify(
-                mock = emojiDao,
-            ).insertEmojis(
-                *emojis,
-            )
-        }
+        verify(
+            mock = emojiDao,
+        ).insertEmojis(
+            *emojis,
+        )
     }
 
     @Test
-    fun deleteEmoji() {
-        runBlocking {
-            emojiRepository.deleteEmoji(
-                character = character,
-            )
+    fun deleteEmoji() = runTest {
+        emojiRepository.deleteEmoji(
+            character = character,
+        )
 
-            verify(
-                mock = emojiDao,
-            ).deleteEmoji(
-                character = character,
-            )
-        }
+        verify(
+            mock = emojiDao,
+        ).deleteEmoji(
+            character = character,
+        )
     }
 
     @Test
-    fun deleteEmojis() {
-        runBlocking {
-            emojiRepository.deleteEmojis(
-                *emojis,
-            )
+    fun deleteEmojis() = runTest {
+        emojiRepository.deleteEmojis(
+            *emojis,
+        )
 
-            verify(
-                mock = emojiDao,
-            ).deleteEmojis(
-                *emojis,
-            )
-        }
+        verify(
+            mock = emojiDao,
+        ).deleteEmojis(
+            *emojis,
+        )
     }
 
     @Test
-    fun deleteAllEmojis() {
-        runBlocking {
-            emojiRepository.deleteAllEmojis()
+    fun deleteAllEmojis() = runTest {
+        emojiRepository.deleteAllEmojis()
 
-            verify(
-                mock = emojiDao,
-            ).deleteAllEmojis()
-        }
+        verify(
+            mock = emojiDao,
+        ).deleteAllEmojis()
     }
 }

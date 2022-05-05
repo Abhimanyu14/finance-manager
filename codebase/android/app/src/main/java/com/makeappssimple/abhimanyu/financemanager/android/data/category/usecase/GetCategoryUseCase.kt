@@ -2,12 +2,17 @@ package com.makeappssimple.abhimanyu.financemanager.android.data.category.usecas
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.repository.CategoryRepository
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
-import javax.inject.Inject
 
-class GetCategoryUseCase @Inject constructor(
-    private val categoryRepository: CategoryRepository,
-) {
+interface GetCategoryUseCase {
     suspend operator fun invoke(
+        id: Int,
+    ): Category?
+}
+
+class GetCategoryUseCaseImpl(
+    private val categoryRepository: CategoryRepository,
+) : GetCategoryUseCase {
+    override suspend operator fun invoke(
         id: Int,
     ): Category? {
         return categoryRepository.getCategory(

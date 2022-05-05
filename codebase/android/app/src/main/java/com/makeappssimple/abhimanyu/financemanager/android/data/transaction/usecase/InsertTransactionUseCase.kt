@@ -4,7 +4,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repo
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
 import javax.inject.Inject
 
-class InsertTransactionUseCase @Inject constructor(
+open class InsertTransactionUseCase @Inject constructor(
     private val transactionRepository: TransactionRepository,
 ) {
     suspend operator fun invoke(

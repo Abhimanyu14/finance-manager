@@ -4,7 +4,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.source.datasourc
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getTestSource
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getTestSources
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.kotlin.mock
@@ -34,114 +34,98 @@ class SourceRepositoryImplTest {
     }
 
     @Test
-    fun getSourcesCount() {
-        runBlocking {
-            sourceRepository.getSourcesCount()
+    fun getSourcesCount() = runTest {
+        sourceRepository.getSourcesCount()
 
-            verify(
-                mock = sourceDao,
-            ).getSourcesCount()
-        }
+        verify(
+            mock = sourceDao,
+        ).getSourcesCount()
     }
 
     @Test
-    fun getSource() {
-        runBlocking {
-            sourceRepository.getSource(
-                id = id,
-            )
+    fun getSource() = runTest {
+        sourceRepository.getSource(
+            id = id,
+        )
 
-            verify(
-                mock = sourceDao,
-            ).getSource(
-                id = id,
-            )
-        }
+        verify(
+            mock = sourceDao,
+        ).getSource(
+            id = id,
+        )
     }
 
     @Test
-    fun insertSource() {
-        runBlocking {
-            sourceRepository.insertSource(
-                source = source,
-            )
+    fun insertSource() = runTest {
+        sourceRepository.insertSource(
+            source = source,
+        )
 
-            verify(
-                mock = sourceDao,
-            ).insertSource(
-                source = source,
-            )
-        }
+        verify(
+            mock = sourceDao,
+        ).insertSource(
+            source = source,
+        )
     }
 
     @Test
-    fun insertSources() {
-        runBlocking {
-            sourceRepository.insertSources(
-                *sources,
-            )
+    fun insertSources() = runTest {
+        sourceRepository.insertSources(
+            *sources,
+        )
 
-            verify(
-                mock = sourceDao,
-            ).insertSources(
-                *sources,
-            )
-        }
+        verify(
+            mock = sourceDao,
+        ).insertSources(
+            *sources,
+        )
     }
 
     @Test
-    fun updateSources() {
-        runBlocking {
-            sourceRepository.updateSources(
-                *sources,
-            )
+    fun updateSources() = runTest {
+        sourceRepository.updateSources(
+            *sources,
+        )
 
-            verify(
-                mock = sourceDao,
-            ).updateSources(
-                *sources,
-            )
-        }
+        verify(
+            mock = sourceDao,
+        ).updateSources(
+            *sources,
+        )
     }
 
     @Test
-    fun deleteSource() {
-        runBlocking {
-            sourceRepository.deleteSource(
-                id = id,
-            )
+    fun deleteSource() = runTest {
+        sourceRepository.deleteSource(
+            id = id,
+        )
 
-            verify(
-                mock = sourceDao,
-            ).deleteSource(
-                id = id,
-            )
-        }
+        verify(
+            mock = sourceDao,
+        ).deleteSource(
+            id = id,
+        )
     }
 
     @Test
-    fun deleteSources() {
-        runBlocking {
-            sourceRepository.deleteSources(
-                *sources,
-            )
+    fun deleteSources() = runTest {
+        sourceRepository.deleteSources(
+            *sources,
+        )
 
-            verify(
-                mock = sourceDao,
-            ).deleteSources(
-                *sources,
-            )
-        }
+        verify(
+            mock = sourceDao,
+        ).deleteSources(
+            *sources,
+        )
     }
 
     @Test
-    fun deleteAllSources() {
-        runBlocking {
-            sourceRepository.deleteAllSources()
+    fun deleteAllSources() = runTest {
+        sourceRepository.deleteAllSources()
 
-            verify(
-                mock = sourceDao,
-            ).deleteAllSources()
-        }
+        verify(
+            mock = sourceDao,
+        ).deleteAllSources()
     }
 }

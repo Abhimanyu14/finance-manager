@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repository.TransactionRepository
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.kotlin.mock
@@ -19,13 +19,11 @@ class GetTransactionsUseCaseTest {
     }
 
     @Test
-    fun invoke_defaultTest() {
-        runBlocking {
-            getTransactionsUseCase()
+    fun invoke_defaultTest() = runTest {
+        getTransactionsUseCase()
 
-            verify(
-                mock = transactionRepository,
-            ).transactions
-        }
+        verify(
+            mock = transactionRepository,
+        ).transactions
     }
 }

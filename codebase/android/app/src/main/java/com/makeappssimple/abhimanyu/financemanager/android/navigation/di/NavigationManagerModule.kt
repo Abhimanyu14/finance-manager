@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.navigation.di
 
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManagerImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,5 +14,5 @@ class NavigationManagerModule {
 
     @Singleton
     @Provides
-    fun providesNavigationManager() = NavigationManager()
+    fun providesNavigationManager(): NavigationManager = NavigationManagerImpl()
 }

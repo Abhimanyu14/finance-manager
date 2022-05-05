@@ -1,12 +1,15 @@
 package com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
-import javax.inject.Inject
 
-class GetSourcesCountUseCase @Inject constructor(
+interface GetSourcesCountUseCase {
+    suspend operator fun invoke(): Int
+}
+
+class GetSourcesCountUseCaseImpl(
     private val sourceRepository: SourceRepository,
-) {
-    suspend operator fun invoke(): Int {
+) : GetSourcesCountUseCase {
+    override suspend operator fun invoke(): Int {
         return sourceRepository.getSourcesCount()
     }
 }

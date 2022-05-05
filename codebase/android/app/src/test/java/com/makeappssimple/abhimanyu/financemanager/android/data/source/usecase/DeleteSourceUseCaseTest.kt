@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.kotlin.mock
@@ -13,24 +13,22 @@ class DeleteSourceUseCaseTest {
 
     @Before
     fun setUp() {
-        deleteSourceUseCase = DeleteSourceUseCase(
+        deleteSourceUseCase = DeleteSourceUseCaseImpl(
             sourceRepository = sourceRepository,
         )
     }
 
     @Test
-    fun invoke_defaultTest() {
+    fun invoke_defaultTest() = runTest {
         val id = 3
-        runBlocking {
-            deleteSourceUseCase(
-                id = id,
-            )
+        deleteSourceUseCase(
+            id = id,
+        )
 
-            verify(
-                mock = sourceRepository,
-            ).deleteSource(
-                id = id,
-            )
-        }
+        verify(
+            mock = sourceRepository,
+        ).deleteSource(
+            id = id,
+        )
     }
 }

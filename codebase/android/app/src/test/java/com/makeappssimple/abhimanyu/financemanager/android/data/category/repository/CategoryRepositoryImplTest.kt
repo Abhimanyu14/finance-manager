@@ -4,7 +4,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.category.datasou
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getTestCategories
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getTestCategory
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.kotlin.mock
@@ -34,99 +34,85 @@ class CategoryRepositoryImplTest {
     }
 
     @Test
-    fun getCategoriesCount() {
-        runBlocking {
-            categoryRepository.getCategoriesCount()
+    fun getCategoriesCount() = runTest {
+        categoryRepository.getCategoriesCount()
 
-            verify(
-                mock = categoryDao,
-            ).getCategoriesCount()
-        }
+        verify(
+            mock = categoryDao,
+        ).getCategoriesCount()
     }
 
     @Test
-    fun getCategory() {
-        runBlocking {
-            categoryRepository.getCategory(
-                id = id,
-            )
+    fun getCategory() = runTest {
+        categoryRepository.getCategory(
+            id = id,
+        )
 
-            verify(
-                mock = categoryDao,
-            ).getCategory(
-                id = id,
-            )
-        }
+        verify(
+            mock = categoryDao,
+        ).getCategory(
+            id = id,
+        )
     }
 
     @Test
-    fun insertCategory() {
-        runBlocking {
-            categoryRepository.insertCategory(
-                category = category,
-            )
+    fun insertCategory() = runTest {
+        categoryRepository.insertCategory(
+            category = category,
+        )
 
-            verify(
-                mock = categoryDao,
-            ).insertCategory(
-                category = category,
-            )
-        }
+        verify(
+            mock = categoryDao,
+        ).insertCategory(
+            category = category,
+        )
     }
 
     @Test
-    fun insertCategories() {
-        runBlocking {
-            categoryRepository.insertCategories(
-                *categories,
-            )
+    fun insertCategories() = runTest {
+        categoryRepository.insertCategories(
+            *categories,
+        )
 
-            verify(
-                mock = categoryDao,
-            ).insertCategories(
-                *categories,
-            )
-        }
+        verify(
+            mock = categoryDao,
+        ).insertCategories(
+            *categories,
+        )
     }
 
     @Test
-    fun deleteCategory() {
-        runBlocking {
-            categoryRepository.deleteCategory(
-                id = id,
-            )
+    fun deleteCategory() = runTest {
+        categoryRepository.deleteCategory(
+            id = id,
+        )
 
-            verify(
-                mock = categoryDao,
-            ).deleteCategory(
-                id = id,
-            )
-        }
+        verify(
+            mock = categoryDao,
+        ).deleteCategory(
+            id = id,
+        )
     }
 
     @Test
-    fun deleteCategories() {
-        runBlocking {
-            categoryRepository.deleteCategories(
-                *categories,
-            )
+    fun deleteCategories() = runTest {
+        categoryRepository.deleteCategories(
+            *categories,
+        )
 
-            verify(
-                mock = categoryDao,
-            ).deleteCategories(
-                *categories,
-            )
-        }
+        verify(
+            mock = categoryDao,
+        ).deleteCategories(
+            *categories,
+        )
     }
 
     @Test
-    fun deleteAllCategories() {
-        runBlocking {
-            categoryRepository.deleteAllCategories()
+    fun deleteAllCategories() = runTest {
+        categoryRepository.deleteAllCategories()
 
-            verify(
-                mock = categoryDao,
-            ).deleteAllCategories()
-        }
+        verify(
+            mock = categoryDao,
+        ).deleteAllCategories()
     }
 }

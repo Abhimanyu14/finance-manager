@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.kotlin.mock
@@ -13,19 +13,17 @@ class GetSourcesUseCaseTest {
 
     @Before
     fun setUp() {
-        getSourcesUseCase = GetSourcesUseCase(
+        getSourcesUseCase = GetSourcesUseCaseImpl(
             sourceRepository = sourceRepository,
         )
     }
 
     @Test
-    fun invoke_defaultTest() {
-        runBlocking {
-            getSourcesUseCase()
+    fun invoke_defaultTest() = runTest {
+        getSourcesUseCase()
 
-            verify(
-                mock = sourceRepository,
-            ).sources
-        }
+        verify(
+            mock = sourceRepository,
+        ).sources
     }
 }

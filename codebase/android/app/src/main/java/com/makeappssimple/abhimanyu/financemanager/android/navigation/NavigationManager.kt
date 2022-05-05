@@ -4,13 +4,21 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.MyNavigati
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class NavigationManager {
+interface NavigationManager {
+    val command: StateFlow<NavigationCommand>
+
+    fun navigate(
+        navigationCommand: NavigationCommand,
+    )
+}
+
+class NavigationManagerImpl : NavigationManager {
     private var _command: MutableStateFlow<NavigationCommand> = MutableStateFlow(
         value = default(),
     )
-    val command: StateFlow<NavigationCommand> = _command
+    override val command: StateFlow<NavigationCommand> = _command
 
-    fun navigate(
+    override fun navigate(
         navigationCommand: NavigationCommand,
     ) {
         _command.value = navigationCommand
