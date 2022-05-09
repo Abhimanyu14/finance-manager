@@ -5,8 +5,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.data.usecase.BackupDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.usecase.RecalculateTotalUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.usecase.RestoreDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -17,6 +19,7 @@ class SettingsScreenViewModelImpl @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val backupDataUseCase: BackupDataUseCase,
     private val restoreDataUseCase: RestoreDataUseCase,
+    private val recalculateTotalUseCase: RecalculateTotalUseCase,
 ) : SettingsScreenViewModel, ViewModel() {
 
     override fun trackScreen() {
@@ -43,6 +46,17 @@ class SettingsScreenViewModelImpl @Inject constructor(
         ) {
             restoreDataUseCase(
                 uri = uri,
+            )
+        }
+    }
+
+    override fun recalculateTotal() {
+        viewModelScope.launch (
+            context = dispatcherProvider.io,
+        ) {
+            recalculateTotalUseCase()
+            navigateUp(
+                navigationManager = navigationManager,
             )
         }
     }

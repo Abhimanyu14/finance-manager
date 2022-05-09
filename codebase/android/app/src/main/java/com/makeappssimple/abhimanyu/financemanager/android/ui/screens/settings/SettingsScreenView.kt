@@ -108,6 +108,21 @@ fun SettingsScreenView(
                             openDocument.launch(arrayOf(JSON_MIMETYPE))
                         },
                 )
+                ListItem(
+                    text = {
+                        Text(
+                            text = stringResource(
+                                id = R.string.screen_settings_recalculate_total,
+                            ),
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                        )
+                    },
+                    modifier = Modifier
+                        .clickable {
+                            data.screenViewModel.recalculateTotal()
+                        },
+                )
             }
         }
     }

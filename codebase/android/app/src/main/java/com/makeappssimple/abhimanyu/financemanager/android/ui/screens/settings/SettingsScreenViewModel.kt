@@ -14,4 +14,6 @@ interface SettingsScreenViewModel : BaseScreenViewModel {
     fun restoreDataFromDocument(
         uri: Uri,
     )
+
+    fun recalculateTotal()
 }

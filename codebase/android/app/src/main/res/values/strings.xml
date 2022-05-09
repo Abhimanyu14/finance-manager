@@ -113,6 +113,7 @@
     <string name="screen_settings_appbar_title">Settings</string>
     <string name="screen_settings_backup">Backup data</string>
     <string name="screen_settings_restore">Restore data</string>
+    <string name="screen_settings_recalculate_total">Recalculate Total</string>
 
     <!-- source details screen -->
     <string name="screen_source_details_appbar_title">Source Details</string>
