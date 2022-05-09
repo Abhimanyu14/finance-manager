@@ -12,10 +12,13 @@ buildscript {
         gradleBuildToolsVersion = '7.1.3'
 
         // Kotlin version
-        kotlinVersion = "1.6.10"
+        kotlinVersion = "1.6.20"
 
         // Google services gradle plugin
         googleServicesVersion = "4.3.10"
+
+        // Jacoco
+        jacocoVersion = '0.8.4'
 
         // Navigation
         navigationVersion = "2.4.0-beta01"
@@ -282,6 +285,9 @@ buildscript {
 
         // Google services gradle plugin for Firebase
         classpath "com.google.gms:google-services:$googleServicesVersion"
+
+        // Jacoco
+        classpath "org.jacoco:org.jacoco.core:$jacocoVersion"
     }
 }
 
