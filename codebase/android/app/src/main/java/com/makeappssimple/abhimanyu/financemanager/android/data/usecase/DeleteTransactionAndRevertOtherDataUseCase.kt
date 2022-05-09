@@ -99,7 +99,7 @@ class DeleteTransactionAndRevertOtherDataUseCase @Inject constructor(
                 sourceTo.copy(
                     balanceAmount = sourceTo.balanceAmount.copy(
                         value = sourceTo.balanceAmount.value - transaction.amount.value,
-                    )
+                    ),
                 ),
             )
         }
