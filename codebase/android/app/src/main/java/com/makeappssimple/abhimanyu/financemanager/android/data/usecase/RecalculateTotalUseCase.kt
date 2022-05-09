@@ -75,7 +75,7 @@ class RecalculateTotalUseCase @Inject constructor(
                             updateSourcesUseCase(
                                 source.copy(
                                     balanceAmount = source.balanceAmount.copy(
-                                        value = source.balanceAmount.value + it.amount.value,
+                                        value = source.balanceAmount.value - it.amount.value,
                                     ),
                                 ),
                             )
@@ -88,7 +88,7 @@ class RecalculateTotalUseCase @Inject constructor(
                             updateSourcesUseCase(
                                 source.copy(
                                     balanceAmount = source.balanceAmount.copy(
-                                        value = source.balanceAmount.value - it.amount.value,
+                                        value = source.balanceAmount.value + it.amount.value,
                                     ),
                                 ),
                             )
