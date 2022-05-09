@@ -236,7 +236,7 @@ fun TransactionsScreenView(
                         }
                         item {
                             VerticalSpacer(
-                                height = 48.dp,
+                                height = 72.dp,
                             )
                         }
                     }
