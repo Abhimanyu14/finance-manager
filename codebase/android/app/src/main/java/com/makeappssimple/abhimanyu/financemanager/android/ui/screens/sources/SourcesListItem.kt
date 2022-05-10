@@ -1,7 +1,8 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories
+package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources
 
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,27 +10,31 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.DarkGray
+import androidx.compose.ui.graphics.Color.Companion.LightGray
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
+import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.DefaultTag
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableItemViewWrapper
-import com.makeappssimple.abhimanyu.financemanager.android.utils.isDefaultCategory
-import com.makeappssimple.abhimanyu.financemanager.android.utils.isSalaryCategory
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
+import com.makeappssimple.abhimanyu.financemanager.android.utils.getIcon
+import com.makeappssimple.abhimanyu.financemanager.android.utils.isCashSource
 
 @Composable
-fun CategoryListItem(
-    category: Category,
+fun SourcesListItem(
+    source: Source,
     expanded: Boolean,
     deleteEnabled: Boolean,
     isDefault: Boolean,
@@ -80,29 +85,50 @@ fun CategoryListItem(
                     },
                 ),
         ) {
-            EmojiCircle(
-                emoji = category.emoji,
+            Icon(
+                imageVector = getIcon(
+                    name = source.type.title,
+                ),
+                contentDescription = null,
+                tint = Primary,
+                modifier = Modifier
+                    .padding(
+                        end = 8.dp,
+                    ),
             )
             Text(
-                text = category.title,
+                text = source.name,
                 style = TextStyle(
-                    color = Color.DarkGray,
-                    fontSize = 14.sp,
+                    color = DarkGray,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                 ),
                 modifier = Modifier
                     .padding(
-                        start = 8.dp,
                         end = 16.dp,
                     ),
             )
             if (isDefault) {
                 DefaultTag()
             }
+            Spacer(
+                modifier = Modifier
+                    .weight(
+                        weight = 1F,
+                    ),
+            )
+            Text(
+                text = source.balanceAmount.toString(),
+                style = TextStyle(
+                    color = DarkGray,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Bold,
+                ),
+            )
         }
         if (expanded) {
             Divider(
-                color = Color.LightGray,
+                color = LightGray,
                 thickness = 0.5.dp,
             )
             Row(
@@ -118,7 +144,9 @@ fun CategoryListItem(
             ) {
                 ExpandableItemIconButton(
                     iconImageVector = Icons.Rounded.Edit,
-                    labelText = "Edit",
+                    labelText = stringResource(
+                        id = R.string.list_item_sources_edit,
+                    ),
                     enabled = true,
                     onClick = onEditClick,
                     modifier = Modifier
@@ -128,11 +156,11 @@ fun CategoryListItem(
                 )
                 ExpandableItemIconButton(
                     iconImageVector = Icons.Rounded.Delete,
-                    labelText = "Delete",
-                    enabled = !isDefaultCategory(
-                        category = category.title,
-                    ) && !isSalaryCategory(
-                        category = category.title,
+                    labelText = stringResource(
+                        id = R.string.list_item_sources_delete,
+                    ),
+                    enabled = !isCashSource(
+                        source = source.name,
                     ) && deleteEnabled,
                     onClick = onDeleteClick,
                     modifier = Modifier

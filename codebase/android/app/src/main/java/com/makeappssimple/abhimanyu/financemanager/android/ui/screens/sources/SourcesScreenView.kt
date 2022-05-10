@@ -201,7 +201,7 @@ fun SourcesScreenView(
                         } else {
                             defaultSourceId == listItem.id
                         }
-                        SourceListItem(
+                        SourcesListItem(
                             source = listItem,
                             expanded = index == expandedItemIndex,
                             deleteEnabled = deleteEnabled ?: false,

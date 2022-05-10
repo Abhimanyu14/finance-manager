@@ -269,7 +269,7 @@ fun CategoriesScreenView(
                                     defaultIncomeCategoryId == listItem.id
                                 }
                             }
-                            CategoryListItem(
+                            CategoriesListItem(
                                 category = listItem,
                                 expanded = index == expandedItemIndex,
                                 deleteEnabled = deleteEnabled ?: false,

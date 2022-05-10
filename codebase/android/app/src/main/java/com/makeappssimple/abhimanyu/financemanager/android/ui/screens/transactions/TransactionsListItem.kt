@@ -166,7 +166,7 @@ fun TransactionsListItem(
                     Text(
                         text = if (data.sourceFrom != null && data.sourceTo != null) {
                             stringResource(
-                                id = R.string.list_item_sources,
+                                id = R.string.list_item_transactions_source,
                                 data.sourceFrom.name,
                                 data.sourceTo.name,
                             )
@@ -206,7 +206,9 @@ fun TransactionsListItem(
             ) {
                 ExpandableItemIconButton(
                     iconImageVector = Icons.Rounded.Edit,
-                    labelText = "Edit",
+                    labelText = stringResource(
+                        id = R.string.list_item_transactions_edit,
+                    ),
                     enabled = true,
                     onClick = onEditClick,
                     modifier = Modifier
@@ -216,7 +218,9 @@ fun TransactionsListItem(
                 )
                 ExpandableItemIconButton(
                     iconImageVector = Icons.Rounded.Delete,
-                    labelText = "Delete",
+                    labelText = stringResource(
+                        id = R.string.list_item_transactions_delete,
+                    ),
                     enabled = deleteEnabled,
                     onClick = onDeleteClick,
                     modifier = Modifier
