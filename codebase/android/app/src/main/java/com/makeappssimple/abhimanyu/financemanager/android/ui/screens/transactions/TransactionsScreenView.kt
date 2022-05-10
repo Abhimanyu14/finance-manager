@@ -104,6 +104,12 @@ fun TransactionsScreenView(
     val categories: List<Category> by data.screenViewModel.categories.collectAsState(
         initial = emptyList(),
     )
+    val expenseCategories = categories.filter {
+        it.transactionType == TransactionType.EXPENSE
+    }
+    val incomeCategories = categories.filter {
+        it.transactionType == TransactionType.INCOME
+    }
     val sources: List<Source> by data.screenViewModel.sources.collectAsState(
         initial = emptyList(),
     )
@@ -147,7 +153,10 @@ fun TransactionsScreenView(
     }
 
     // Filter
-    val selectedCategoryIndices = remember {
+    val selectedExpenseCategoryIndices = remember {
+        mutableStateListOf<Int>()
+    }
+    val selectedIncomeCategoryIndices = remember {
         mutableStateListOf<Int>()
     }
     val selectedSourceIndices = remember {
@@ -157,6 +166,83 @@ fun TransactionsScreenView(
     val selectedTransactionTypesIndices = remember {
         mutableStateListOf<Int>()
     }
+
+    // Transactions search, filter and sort
+    val searchedTransactions = if (searchText.isNotBlank()) {
+        transactionsListItemViewData
+            .filter {
+                it.transaction.title.contains(
+                    other = searchText,
+                    ignoreCase = true,
+                )
+            }
+    } else {
+        transactionsListItemViewData
+    }
+    val transactionTypeFilteredTransactions =
+        if (selectedTransactionTypesIndices.isNotEmpty()) {
+            searchedTransactions.filter {
+                selectedTransactionTypesIndices.contains(
+                    transactionTypes.indexOf(it.transaction.transactionType)
+                )
+            }
+        } else {
+            searchedTransactions
+        }
+    val sourceFilteredTransactions = if (selectedSourceIndices.isNotEmpty()) {
+        transactionTypeFilteredTransactions.filter {
+            selectedSourceIndices.contains(sources.indexOf(it.sourceFrom)) ||
+                    selectedSourceIndices.contains(sources.indexOf(it.sourceTo))
+        }
+    } else {
+        transactionTypeFilteredTransactions
+    }
+    val categoryFilteredTransactions =
+        if (selectedExpenseCategoryIndices.isNotEmpty() || selectedIncomeCategoryIndices.isNotEmpty()) {
+            sourceFilteredTransactions.filter {
+                selectedExpenseCategoryIndices.contains(expenseCategories.indexOf(it.category)) ||
+                        selectedIncomeCategoryIndices.contains(incomeCategories.indexOf(it.category))
+            }
+        } else {
+            sourceFilteredTransactions
+        }
+    val filteredTransactions = categoryFilteredTransactions
+    val sortedTransactions = when (selectedSortOption) {
+        SortOption.AMOUNT_ASC -> {
+            filteredTransactions.sortedBy {
+                abs(it.transaction.amount.value)
+            }
+        }
+        SortOption.AMOUNT_DESC -> {
+            filteredTransactions.sortedByDescending {
+                abs(it.transaction.amount.value)
+            }
+        }
+        SortOption.LATEST_FIRST -> {
+            filteredTransactions.sortedByDescending {
+                it.transaction.transactionTimestamp
+            }
+        }
+        SortOption.OLDEST_FIRST -> {
+            filteredTransactions.sortedBy {
+                it.transaction.transactionTimestamp
+            }
+        }
+    }
+    val groupedTransactions: Map<String, List<TransactionsListItemViewData>> =
+        if (selectedSortOption == SortOption.LATEST_FIRST || selectedSortOption == SortOption.OLDEST_FIRST) {
+            sortedTransactions
+                .groupBy {
+                    getDateString(
+                        it.transaction.transactionTimestamp
+                    )
+                }
+        } else {
+            sortedTransactions.groupBy {
+                ""
+            }
+        }
+
 
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
         DisposableEffect(Unit) {
@@ -192,18 +278,22 @@ fun TransactionsScreenView(
                 TransactionsBottomSheetType.FILTERS -> {
                     TransactionsFiltersBottomSheet(
                         data = TransactionsFilterBottomSheetData(
-                            categories = categories,
+                            expenseCategories = expenseCategories,
+                            incomeCategories = incomeCategories,
                             sources = sources,
                             transactionTypes = transactionTypes,
-                            selectedCategoryIndices = selectedCategoryIndices,
+                            selectedExpenseCategoryIndices = selectedExpenseCategoryIndices,
+                            selectedIncomeCategoryIndices = selectedIncomeCategoryIndices,
                             selectedSourceIndices = selectedSourceIndices,
                             selectedTransactionTypesIndices = selectedTransactionTypesIndices,
                             onPositiveButtonClick = {
-                                selectedCategoryIndices.clear()
+                                selectedExpenseCategoryIndices.clear()
+                                selectedIncomeCategoryIndices.clear()
                                 selectedSourceIndices.clear()
                                 selectedTransactionTypesIndices.clear()
 
-                                selectedCategoryIndices.addAll(it.selectedCategoryIndices)
+                                selectedExpenseCategoryIndices.addAll(it.selectedExpenseCategoryIndices)
+                                selectedIncomeCategoryIndices.addAll(it.selectedIncomeCategoryIndices)
                                 selectedSourceIndices.addAll(it.selectedSourceIndices)
                                 selectedTransactionTypesIndices.addAll(it.selectedTransactionTypeIndices)
 
@@ -256,213 +346,145 @@ fun TransactionsScreenView(
                     state.focusManager.clearFocus()
                 },
             ) {
-                val searchedTransactions = if (searchText.isNotBlank()) {
-                    transactionsListItemViewData
-                        .filter {
-                            it.transaction.title.contains(
-                                other = searchText,
-                                ignoreCase = true,
-                            )
-                        }
-                } else {
-                    transactionsListItemViewData
-                }
-                val transactionTypeFilteredTransactions =
-                    if (selectedTransactionTypesIndices.isNotEmpty()) {
-                        searchedTransactions.filter {
-                            selectedTransactionTypesIndices.contains(
-                                transactionTypes.indexOf(it.transaction.transactionType)
-                            )
-                        }
-                    } else {
-                        searchedTransactions
-                    }
-                val sourceFilteredTransactions = if (selectedSourceIndices.isNotEmpty()) {
-                    transactionTypeFilteredTransactions.filter {
-                        selectedSourceIndices.contains(sources.indexOf(it.sourceFrom)) ||
-                                selectedSourceIndices.contains(sources.indexOf(it.sourceTo))
-                    }
-                } else {
-                    transactionTypeFilteredTransactions
-                }
-                val categoryFilteredTransactions = if (selectedCategoryIndices.isNotEmpty()) {
-                    sourceFilteredTransactions.filter {
-                        selectedCategoryIndices.contains(categories.indexOf(it.category))
-                    }
-                } else {
-                    sourceFilteredTransactions
-                }
-                val filteredTransactions = categoryFilteredTransactions
-                val sortedTransactions = when (selectedSortOption) {
-                    SortOption.AMOUNT_ASC -> {
-                        filteredTransactions.sortedBy {
-                            abs(it.transaction.amount.value)
-                        }
-                    }
-                    SortOption.AMOUNT_DESC -> {
-                        filteredTransactions.sortedByDescending {
-                            abs(it.transaction.amount.value)
-                        }
-                    }
-                    SortOption.LATEST_FIRST -> {
-                        filteredTransactions.sortedByDescending {
-                            it.transaction.transactionTimestamp
-                        }
-                    }
-                    SortOption.OLDEST_FIRST -> {
-                        filteredTransactions.sortedBy {
-                            it.transaction.transactionTimestamp
-                        }
-                    }
-                }
-                val groupedTransactions: Map<String, List<TransactionsListItemViewData>> =
-                    if (selectedSortOption == SortOption.LATEST_FIRST || selectedSortOption == SortOption.OLDEST_FIRST) {
-                        sortedTransactions
-                            .groupBy {
-                                getDateString(
-                                    it.transaction.transactionTimestamp
-                                )
-                            }
-                    } else {
-                        sortedTransactions.groupBy {
-                            ""
-                        }
-                    }
                 Column(
                     modifier = Modifier
                         .fillMaxSize(),
                 ) {
-                    Row(
-                        horizontalArrangement = Arrangement.End,
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .defaultMinSize(
-                                minHeight = 84.dp,
-                            )
-                            .padding(
-                                start = 16.dp,
-                                end = 16.dp,
-                                bottom = 2.dp,
-                            ),
+                    AnimatedVisibility(
+                        visible = groupedTransactions.isNotEmpty(),
                     ) {
-                        AnimatedVisibility(
-                            visible = isSearchbarVisible,
+                        Row(
+                            horizontalArrangement = Arrangement.End,
+                            verticalAlignment = Alignment.CenterVertically,
                             modifier = Modifier
-                                .weight(
-                                    weight = 1F,
+                                .fillMaxWidth()
+                                .defaultMinSize(
+                                    minHeight = 84.dp,
+                                )
+                                .padding(
+                                    start = 16.dp,
+                                    end = 16.dp,
+                                    bottom = 2.dp,
                                 ),
                         ) {
-                            SearchBar(
-                                data = SearchBarData(
-                                    searchText = searchText,
-                                    placeholderText = stringResource(
-                                        id = R.string.screen_transactions_searchbar_placeholder,
-                                    ),
-                                    updateSearchText = updateSearchText,
-                                ),
-                            )
-                        }
-                        AnimatedVisibility(
-                            visible = isSortOptionsVisible,
-                            modifier = Modifier
-                                .weight(
-                                    weight = 1F,
-                                ),
-                        ) {
-                            MyScrollableRadioGroup(
-                                items = sortOptions
-                                    .map { sortOption ->
-                                        MyRadioGroupItem(
-                                            text = sortOption.title,
-                                        )
-                                    },
-                                selectedItemIndex = sortOptions.indexOf(selectedSortOption),
-                                onSelectionChange = { index ->
-                                    updateSelectedSortOption(sortOptions[index])
-                                    setIsSortOptionsVisible(!isSortOptionsVisible)
-                                },
+                            AnimatedVisibility(
+                                visible = isSearchbarVisible,
                                 modifier = Modifier
-                                    .padding(
-                                        all = 12.dp,
+                                    .weight(
+                                        weight = 1F,
                                     ),
-                            )
-                        }
-                        AnimatedVisibility(
-                            visible = !isSortOptionsVisible,
-                        ) {
-                            ElevatedCard(
-                                onClick = {
-                                    setIsSearchbarVisible(!isSearchbarVisible)
-                                    updateSearchText("")
-                                },
-                                modifier = Modifier,
                             ) {
-                                Icon(
-                                    imageVector = if (isSearchbarVisible) {
-                                        Icons.Rounded.Clear
-                                    } else {
-                                        Icons.Rounded.Search
-                                    },
-                                    contentDescription = stringResource(
-                                        id = R.string.screen_add_category_clear_title,
+                                SearchBar(
+                                    data = SearchBarData(
+                                        searchText = searchText,
+                                        placeholderText = stringResource(
+                                            id = R.string.screen_transactions_searchbar_placeholder,
+                                        ),
+                                        updateSearchText = updateSearchText,
                                     ),
+                                )
+                            }
+                            AnimatedVisibility(
+                                visible = isSortOptionsVisible,
+                                modifier = Modifier
+                                    .weight(
+                                        weight = 1F,
+                                    ),
+                            ) {
+                                MyScrollableRadioGroup(
+                                    items = sortOptions
+                                        .map { sortOption ->
+                                            MyRadioGroupItem(
+                                                text = sortOption.title,
+                                            )
+                                        },
+                                    selectedItemIndex = sortOptions.indexOf(selectedSortOption),
+                                    onSelectionChange = { index ->
+                                        updateSelectedSortOption(sortOptions[index])
+                                        setIsSortOptionsVisible(!isSortOptionsVisible)
+                                    },
                                     modifier = Modifier
                                         .padding(
-                                            all = 8.dp,
+                                            all = 12.dp,
                                         ),
                                 )
                             }
-                        }
-                        AnimatedVisibility(
-                            visible = !isSearchbarVisible,
-                        ) {
-                            ElevatedCard(
-                                onClick = {
-                                    setIsSortOptionsVisible(!isSortOptionsVisible)
-                                },
-                                modifier = Modifier,
+                            AnimatedVisibility(
+                                visible = !isSortOptionsVisible,
                             ) {
-                                Icon(
-                                    imageVector = if (isSortOptionsVisible) {
-                                        Icons.Rounded.Clear
-                                    } else {
-                                        Icons.Rounded.SwapVert
+                                ElevatedCard(
+                                    onClick = {
+                                        setIsSearchbarVisible(!isSearchbarVisible)
+                                        updateSearchText("")
                                     },
-                                    contentDescription = stringResource(
-                                        id = R.string.screen_add_category_clear_title,
-                                    ),
-                                    modifier = Modifier
-                                        .padding(
-                                            all = 8.dp,
+                                    modifier = Modifier,
+                                ) {
+                                    Icon(
+                                        imageVector = if (isSearchbarVisible) {
+                                            Icons.Rounded.Clear
+                                        } else {
+                                            Icons.Rounded.Search
+                                        },
+                                        contentDescription = stringResource(
+                                            id = R.string.screen_add_category_clear_title,
                                         ),
-                                )
+                                        modifier = Modifier
+                                            .padding(
+                                                all = 8.dp,
+                                            ),
+                                    )
+                                }
                             }
-                        }
-                        AnimatedVisibility(
-                            visible = !isSearchbarVisible && !isSortOptionsVisible,
-                        ) {
-                            ElevatedCard(
-                                onClick = {
-                                    transactionsBottomSheetType =
-                                        TransactionsBottomSheetType.FILTERS
-                                    toggleModalBottomSheetState(
-                                        coroutineScope = state.coroutineScope,
-                                        modalBottomSheetState = state.modalBottomSheetState,
-                                    ) {}
-                                },
-                                modifier = Modifier,
+                            AnimatedVisibility(
+                                visible = !isSearchbarVisible,
                             ) {
-                                Icon(
-                                    imageVector = Icons.Rounded.FilterAlt,
-                                    contentDescription = stringResource(
-                                        id = R.string.screen_add_category_clear_title,
-                                    ),
-                                    modifier = Modifier
-                                        .padding(
-                                            all = 8.dp,
+                                ElevatedCard(
+                                    onClick = {
+                                        setIsSortOptionsVisible(!isSortOptionsVisible)
+                                    },
+                                    modifier = Modifier,
+                                ) {
+                                    Icon(
+                                        imageVector = if (isSortOptionsVisible) {
+                                            Icons.Rounded.Clear
+                                        } else {
+                                            Icons.Rounded.SwapVert
+                                        },
+                                        contentDescription = stringResource(
+                                            id = R.string.screen_add_category_clear_title,
                                         ),
-                                )
+                                        modifier = Modifier
+                                            .padding(
+                                                all = 8.dp,
+                                            ),
+                                    )
+                                }
+                            }
+                            AnimatedVisibility(
+                                visible = !isSearchbarVisible && !isSortOptionsVisible,
+                            ) {
+                                ElevatedCard(
+                                    onClick = {
+                                        transactionsBottomSheetType =
+                                            TransactionsBottomSheetType.FILTERS
+                                        toggleModalBottomSheetState(
+                                            coroutineScope = state.coroutineScope,
+                                            modalBottomSheetState = state.modalBottomSheetState,
+                                        ) {}
+                                    },
+                                    modifier = Modifier,
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Rounded.FilterAlt,
+                                        contentDescription = stringResource(
+                                            id = R.string.screen_add_category_clear_title,
+                                        ),
+                                        modifier = Modifier
+                                            .padding(
+                                                all = 8.dp,
+                                            ),
+                                    )
+                                }
                             }
                         }
                     }

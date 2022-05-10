@@ -33,16 +33,19 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MySelection
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.VerticalSpacer
 
 data class TransactionsFilterBottomSheetSelectionData(
-    val selectedCategoryIndices: List<Int>,
+    val selectedExpenseCategoryIndices: List<Int>,
+    val selectedIncomeCategoryIndices: List<Int>,
     val selectedSourceIndices: List<Int>,
     val selectedTransactionTypeIndices: List<Int>
 )
 
 data class TransactionsFilterBottomSheetData(
-    val categories: List<Category>,
+    val expenseCategories: List<Category>,
+    val incomeCategories: List<Category>,
     val sources: List<Source>,
     val transactionTypes: List<TransactionType>,
-    val selectedCategoryIndices: List<Int>,
+    val selectedExpenseCategoryIndices: List<Int>,
+    val selectedIncomeCategoryIndices: List<Int>,
     val selectedSourceIndices: List<Int>,
     val selectedTransactionTypesIndices: List<Int>,
     val onPositiveButtonClick: (data: TransactionsFilterBottomSheetSelectionData) -> Unit,
@@ -53,9 +56,14 @@ data class TransactionsFilterBottomSheetData(
 fun TransactionsFiltersBottomSheet(
     data: TransactionsFilterBottomSheetData,
 ) {
-    val selectedCategoryIndices = remember {
+    val selectedExpenseCategoryIndices = remember {
         mutableStateListOf(
-            *data.selectedCategoryIndices.toTypedArray(),
+            *data.selectedExpenseCategoryIndices.toTypedArray(),
+        )
+    }
+    val selectedIncomeCategoryIndices = remember {
+        mutableStateListOf(
+            *data.selectedIncomeCategoryIndices.toTypedArray(),
         )
     }
     val selectedSourceIndices = remember {
@@ -96,7 +104,7 @@ fun TransactionsFiltersBottomSheet(
             ) {
                 Text(
                     text = stringResource(
-                        id = R.string.bottom_sheet_transactions_filter_select_categories,
+                        id = R.string.bottom_sheet_transactions_filter_select_expense_categories,
                     ),
                     style = TextStyle(
                         color = Color.DarkGray,
@@ -114,7 +122,7 @@ fun TransactionsFiltersBottomSheet(
                 )
                 TextButton(
                     onClick = {
-                        selectedCategoryIndices.clear()
+                        selectedExpenseCategoryIndices.clear()
                     },
                     modifier = Modifier
                         .padding(
@@ -129,18 +137,78 @@ fun TransactionsFiltersBottomSheet(
                 }
             }
             MySelectionGroup(
-                items = data.categories
+                items = data.expenseCategories
                     .map { category ->
                         MyRadioGroupItem(
                             text = category.title,
                         )
                     },
-                selectedItemsIndices = selectedCategoryIndices,
+                selectedItemsIndices = selectedExpenseCategoryIndices,
                 onSelectionChange = { index ->
-                    if (selectedCategoryIndices.contains(index)) {
-                        selectedCategoryIndices.remove(index)
+                    if (selectedExpenseCategoryIndices.contains(index)) {
+                        selectedExpenseCategoryIndices.remove(index)
                     } else {
-                        selectedCategoryIndices.add(index)
+                        selectedExpenseCategoryIndices.add(index)
+                    }
+                },
+                modifier = Modifier
+                    .padding(
+                        horizontal = 16.dp,
+                        vertical = 4.dp,
+                    ),
+            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth(),
+            ) {
+                Text(
+                    text = stringResource(
+                        id = R.string.bottom_sheet_transactions_filter_select_income_categories,
+                    ),
+                    style = TextStyle(
+                        color = Color.DarkGray,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                    ),
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier
+                        .weight(
+                            weight = 1F,
+                        )
+                        .padding(
+                            all = 16.dp,
+                        ),
+                )
+                TextButton(
+                    onClick = {
+                        selectedIncomeCategoryIndices.clear()
+                    },
+                    modifier = Modifier
+                        .padding(
+                            horizontal = 16.dp,
+                        ),
+                ) {
+                    Text(
+                        text = stringResource(
+                            id = R.string.bottom_sheet_transactions_filter_clear,
+                        ),
+                    )
+                }
+            }
+            MySelectionGroup(
+                items = data.incomeCategories
+                    .map { category ->
+                        MyRadioGroupItem(
+                            text = category.title,
+                        )
+                    },
+                selectedItemsIndices = selectedIncomeCategoryIndices,
+                onSelectionChange = { index ->
+                    if (selectedIncomeCategoryIndices.contains(index)) {
+                        selectedIncomeCategoryIndices.remove(index)
+                    } else {
+                        selectedIncomeCategoryIndices.add(index)
                     }
                 },
                 modifier = Modifier
@@ -277,7 +345,8 @@ fun TransactionsFiltersBottomSheet(
         ) {
             OutlinedButton(
                 onClick = {
-                    selectedCategoryIndices.clear()
+                    selectedExpenseCategoryIndices.clear()
+                    selectedIncomeCategoryIndices.clear()
                     selectedSourceIndices.clear()
                     selectedTransactionTypesIndices.clear()
                     data.onNegativeButtonClick()
@@ -300,7 +369,8 @@ fun TransactionsFiltersBottomSheet(
                 onClick = {
                     data.onPositiveButtonClick(
                         TransactionsFilterBottomSheetSelectionData(
-                            selectedCategoryIndices = selectedCategoryIndices,
+                            selectedExpenseCategoryIndices = selectedExpenseCategoryIndices,
+                            selectedIncomeCategoryIndices = selectedIncomeCategoryIndices,
                             selectedSourceIndices = selectedSourceIndices,
                             selectedTransactionTypeIndices = selectedTransactionTypesIndices,
                         )
