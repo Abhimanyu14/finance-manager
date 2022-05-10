@@ -238,10 +238,12 @@ fun CategoriesScreenView(
                                 )
                             }
                     }
-                    VerticalSpacer(
-                        height = 16.dp,
-                    )
                     LazyColumn {
+                        item {
+                            VerticalSpacer(
+                                height = 16.dp,
+                            )
+                        }
                         itemsIndexed(
                             items = categories,
                             key = { _, listItem ->
