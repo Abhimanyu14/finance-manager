@@ -3,10 +3,14 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transacti
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourceUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.usecase.DeleteTransactionAndRevertOtherDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
+import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -16,6 +20,8 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class TransactionsScreenViewModelImpl @Inject constructor(
+    getCategoriesUseCase: GetCategoriesUseCase,
+    getSourcesUseCase: GetSourcesUseCase,
     getTransactionsUseCase: GetTransactionsUseCase,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
@@ -23,6 +29,8 @@ class TransactionsScreenViewModelImpl @Inject constructor(
     private val getCategoryUseCase: GetCategoryUseCase,
     private val getSourceUseCase: GetSourceUseCase,
 ) : TransactionsScreenViewModel, ViewModel() {
+    override val categories: Flow<List<Category>> = getCategoriesUseCase()
+    override val sources: Flow<List<Source>> = getSourcesUseCase()
     override val transactionsListItemViewData: Flow<List<TransactionsListItemViewData>> =
         getTransactionsUseCase()
             .map { transactions ->

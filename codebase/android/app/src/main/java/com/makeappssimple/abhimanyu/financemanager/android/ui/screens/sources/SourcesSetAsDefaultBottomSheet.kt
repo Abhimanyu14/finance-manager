@@ -18,7 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-data class SetAsDefaultBottomSheetData(
+data class SourcesSetAsDefaultBottomSheetData(
     val title: String,
     val message: String,
     val positiveButtonText: String,
@@ -28,8 +28,8 @@ data class SetAsDefaultBottomSheetData(
 )
 
 @Composable
-fun SetAsDefaultBottomSheet(
-    data: SetAsDefaultBottomSheetData,
+fun SourcesSetAsDefaultBottomSheet(
+    data: SourcesSetAsDefaultBottomSheetData,
 ) {
     Column(
         modifier = Modifier
@@ -45,7 +45,7 @@ fun SetAsDefaultBottomSheet(
             text = data.title,
             style = TextStyle(
                 color = Color.DarkGray,
-                fontSize = 14.sp,
+                fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
             ),
             textAlign = TextAlign.Center,

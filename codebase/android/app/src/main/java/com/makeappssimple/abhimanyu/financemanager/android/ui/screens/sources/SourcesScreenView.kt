@@ -106,8 +106,8 @@ fun SourcesScreenView(
                     VerticalSpacer()
                 }
                 SourcesBottomSheetType.SET_AS_DEFAULT_CONFIRMATION -> {
-                    SetAsDefaultBottomSheet(
-                        data = SetAsDefaultBottomSheetData(
+                    SourcesSetAsDefaultBottomSheet(
+                        data = SourcesSetAsDefaultBottomSheetData(
                             title = stringResource(
                                 id = R.string.screen_sources_bottom_sheet_set_as_default_title,
                             ),

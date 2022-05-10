@@ -40,6 +40,28 @@ data class MyRadioGroupItem(
 )
 
 @Composable
+fun MySelectionGroup(
+    items: List<MyRadioGroupItem>,
+    selectedItemsIndices: List<Int>,
+    modifier: Modifier = Modifier,
+    onSelectionChange: (index: Int) -> Unit,
+) {
+    FlowRow(
+        modifier = modifier,
+    ) {
+        items.forEachIndexed { index, item ->
+            MyRadioGroupItemView(
+                item = item,
+                isSelected = selectedItemsIndices.contains(index),
+                onSelectionChange = {
+                    onSelectionChange(index)
+                },
+            )
+        }
+    }
+}
+
+@Composable
 fun MyRadioGroup(
     items: List<MyRadioGroupItem>,
     selectedItemIndex: Int,
@@ -99,6 +121,7 @@ private fun MyRadioGroupItemView(
         modifier = Modifier
             .padding(
                 horizontal = 4.dp,
+                vertical = 4.dp,
             )
             .clip(
                 shape = shape,

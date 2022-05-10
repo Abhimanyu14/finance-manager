@@ -55,15 +55,17 @@ fun EmojiPickerBottomSheet(
                 minHeight = 24.dp,
             ),
     ) {
-        SearchBar(
-            data = SearchBarData(
-                searchText = data.searchText,
-                placeholderText = stringResource(
-                    id = R.string.emoji_picker_bottom_sheet_placeholder_text,
+        SearchBarContainer {
+            SearchBar(
+                data = SearchBarData(
+                    searchText = data.searchText,
+                    placeholderText = stringResource(
+                        id = R.string.emoji_picker_bottom_sheet_placeholder_text,
+                    ),
+                    updateSearchText = data.updateSearchText,
                 ),
-                updateSearchText = data.updateSearchText,
-            ),
-        )
+            )
+        }
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth(),

@@ -38,8 +38,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.SetAsDefaultBottomSheet
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.SetAsDefaultBottomSheetData
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.SourcesSetAsDefaultBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.SourcesSetAsDefaultBottomSheetData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
@@ -126,8 +126,8 @@ fun CategoriesScreenView(
                 }
                 CategoriesBottomSheetType.SET_AS_DEFAULT_CONFIRMATION -> {
                     val transactionType: TransactionType = transactionTypes[selectedTabIndex]
-                    SetAsDefaultBottomSheet(
-                        data = SetAsDefaultBottomSheetData(
+                    SourcesSetAsDefaultBottomSheet(
+                        data = SourcesSetAsDefaultBottomSheetData(
                             title = stringResource(
                                 id = R.string.screen_categories_bottom_sheet_set_as_default_title,
                             ),

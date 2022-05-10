@@ -31,72 +31,79 @@ data class SearchBarData(
 )
 
 @Composable
-fun SearchBar(
-    data: SearchBarData,
+fun SearchBarContainer(
+    content: @Composable () -> Unit
 ) {
     Box(
         modifier = Modifier
             .background(
                 color = Surface,
             )
-            .fillMaxWidth(),
-    ) {
-        TextField(
-            value = data.searchText,
-            onValueChange = {
-                data.updateSearchText(it)
-            },
-            shape = RoundedCornerShape(
-                percent = 50,
+            .fillMaxWidth()
+            .padding(
+                vertical = 8.dp,
+                horizontal = 16.dp,
             ),
-            singleLine = true,
-            colors = TextFieldDefaults
-                .textFieldColors(
-                    backgroundColor = Blue100,
-                    focusedIndicatorColor = Color.Transparent,
-                    unfocusedIndicatorColor = Color.Transparent,
-                ),
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Rounded.Search,
-                    contentDescription = null,
-                )
-            },
-            trailingIcon = if (data.searchText.isNotBlank()) {
-                {
-                    Icon(
-                        imageVector = Icons.Rounded.Close,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .clip(
-                                shape = CircleShape,
-                            )
-                            .clickable {
-                                data.updateSearchText("")
-                            }
-                            .padding(
-                                all = 8.dp,
-                            ),
-                    )
-                }
-            } else {
-                null
-            },
-            placeholder = {
-                Text(
-                    text = data.placeholderText,
-                    style = TextStyle(
-                        color = Color.DarkGray,
-                        fontWeight = FontWeight.Bold,
-                    ),
-                )
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    vertical = 8.dp,
-                    horizontal = 16.dp,
-                ),
-        )
+    ) {
+        content()
     }
+}
+
+@Composable
+fun SearchBar(
+    data: SearchBarData,
+) {
+    TextField(
+        value = data.searchText,
+        onValueChange = {
+            data.updateSearchText(it)
+        },
+        shape = RoundedCornerShape(
+            percent = 50,
+        ),
+        singleLine = true,
+        colors = TextFieldDefaults
+            .textFieldColors(
+                backgroundColor = Blue100,
+                focusedIndicatorColor = Color.Transparent,
+                unfocusedIndicatorColor = Color.Transparent,
+            ),
+        leadingIcon = {
+            Icon(
+                imageVector = Icons.Rounded.Search,
+                contentDescription = null,
+            )
+        },
+        trailingIcon = if (data.searchText.isNotBlank()) {
+            {
+                Icon(
+                    imageVector = Icons.Rounded.Close,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .clip(
+                            shape = CircleShape,
+                        )
+                        .clickable {
+                            data.updateSearchText("")
+                        }
+                        .padding(
+                            all = 8.dp,
+                        ),
+                )
+            }
+        } else {
+            null
+        },
+        placeholder = {
+            Text(
+                text = data.placeholderText,
+                style = TextStyle(
+                    color = Color.DarkGray,
+                    fontWeight = FontWeight.Bold,
+                ),
+            )
+        },
+        modifier = Modifier
+            .fillMaxWidth(),
+    )
 }

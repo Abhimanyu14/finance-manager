@@ -145,4 +145,12 @@
         Add Transaction
     </string>
 
+    <!-- transactions filter bottom sheet -->
+    <string name="bottom_sheet_transactions_filter_clear">Clear</string>
+    <string name="bottom_sheet_transactions_filter_reset">Reset</string>
+    <string name="bottom_sheet_transactions_filter_apply">Apply</string>
+    <string name="bottom_sheet_transactions_filter_select_categories">Select Categories</string>
+    <string name="bottom_sheet_transactions_filter_select_sources">Select Categories</string>
+    <string name="bottom_sheet_transactions_filter_select_transaction_types">Select Transaction Types</string>
+
 </resources>
