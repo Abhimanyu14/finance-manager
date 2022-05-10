@@ -18,7 +18,7 @@ buildscript {
         googleServicesVersion = "4.3.10"
 
         // Jacoco
-        jacocoVersion = '0.8.4'
+        jacocoVersion = '0.8.7'
 
         // Navigation
         navigationVersion = "2.4.0-beta01"
@@ -290,6 +290,19 @@ buildscript {
         classpath "org.jacoco:org.jacoco.core:$jacocoVersion"
     }
 }
+
+// TODO-Abhi: Jacoco
+//subprojects {
+//    configurations.all {
+//        resolutionStrategy {
+//            eachDependency { details ->
+//                if ('org.jacoco' == details.requested.group) {
+//                    details.useVersion "0.8.7"
+//                }
+//            }
+//        }
+//    }
+//}
 
 task clean(type: Delete) {
     delete rootProject.buildDir

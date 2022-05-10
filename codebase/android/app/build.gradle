@@ -8,30 +8,46 @@ plugins {
     // id "com.google.devtools.ksp" version "1.6.10-1.0.4"
 }
 
+// TODO-Abhi: Jacoco
 // Jacoco
-jacoco {
-    toolVersion = "$jacocoVersion"
-}
+//jacoco {
+//    toolVersion = "$jacocoVersion"
+//}
+//
+//tasks.withType(Test) {
+//    jacoco {
+//        includeNoLocationClasses = true
+//        excludes = ['jdk.internal.*'] // Allows it to run on Java 11
+//    }
+//}
+//
+//task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
+//    reports {
+//        xml.enabled true
+//        html.enabled true
+//    }
+//    def fileFilter = [
+//            '**/R.class',
+//            '**/R$*.class',
+//            '**/BuildConfig.*',
+//            '**/Manifest*.*',
+//            '**/*Test*.*',
+//            'android/**/*.*',
+//            '**/*$[0-9].*'
+//    ]
+//    def mainSrc = "$project.projectDir/src/main/java"
+//    def javaDebugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
+//    def kotlinDebugTree = fileTree(dir: "${buildDir}/tmp/kotlin-classes/debug", excludes: fileFilter)
+//
+//    sourceDirectories.from = files([mainSrc])
+//    classDirectories.from = files([javaDebugTree], [kotlinDebugTree])
+//    executionData.from = fileTree(dir: project.buildDir, includes: [
+//            "jacoco/testDebugUnitTest.exec",
+//            "outputs/code-coverage/connected/*coverage.ec",
+//            "outputs/code_coverage/debugAndroidTest/connected/**/*.ec"
+//    ])
+//}
 
-tasks.withType(Test) {
-    jacoco.includeNoLocationClasses = true
-}
-
-task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
-    reports {
-        xml.enabled true
-        html.enabled true
-    }
-    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
-    def debugTree = fileTree(dir: "$project.buildDir/intermediates/javac/debug", excludes: fileFilter)
-    def mainSrc = "$project.projectDir/src/main/java"
-
-    sourceDirectories.from = files([mainSrc])
-    classDirectories.from = files([debugTree])
-    executionData.from = fileTree(dir: project.buildDir, includes: [
-            'jacoco/testDebugUnitTest.exec', 'outputs/code_coverage/debugAndroidTest/connected/**/*.ec'
-    ])
-}
 
 // API Key
 def apikeyPropertiesFile = rootProject.file("apikey.properties")
@@ -83,15 +99,22 @@ android {
         }
     }
 
+    // TODO-Abhi: Jacoco
     // Jacoco
-    testOptions {
-        /*execution 'ANDROIDX_TEST_ORCHESTRATOR'*/
-        animationsDisabled true
-
-        unitTests {
-            includeAndroidResources = true
-        }
-    }
+//    testOptions {
+//        /*execution 'ANDROIDX_TEST_ORCHESTRATOR'*/
+//        animationsDisabled true
+//
+//        unitTests {
+//            all {
+//                jvmArgs '-noverify', '-ea'
+//                jacoco {
+//                    includeNoLocationClasses = true
+//                }
+//            }
+//            includeAndroidResources = true
+//        }
+//    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
