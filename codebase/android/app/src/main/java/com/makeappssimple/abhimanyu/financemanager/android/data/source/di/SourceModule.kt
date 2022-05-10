@@ -4,6 +4,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.M
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.datasource.local.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepository
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.repository.SourceRepositoryImpl
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.DeleteAllSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.DeleteAllSourcesUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.DeleteSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.DeleteSourceUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourceUseCase
@@ -42,6 +44,15 @@ class SourceModule {
     ): SourceRepository {
         return SourceRepositoryImpl(
             sourceDao = sourceDao,
+        )
+    }
+
+    @Provides
+    fun providesDeleteAllSourcesUseCase(
+        sourceRepository: SourceRepository,
+    ): DeleteAllSourcesUseCase {
+        return DeleteAllSourcesUseCaseImpl(
+            sourceRepository = sourceRepository,
         )
     }
 
