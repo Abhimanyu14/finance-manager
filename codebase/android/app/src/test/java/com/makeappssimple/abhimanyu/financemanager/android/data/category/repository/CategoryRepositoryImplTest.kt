@@ -82,6 +82,19 @@ class CategoryRepositoryImplTest {
     }
 
     @Test
+    fun updateCategories() = runTest {
+        categoryRepository.updateCategories(
+            *categories,
+        )
+
+        verify(
+            mock = categoryDao,
+        ).updateCategories(
+            *categories,
+        )
+    }
+
+    @Test
     fun deleteCategory() = runTest {
         categoryRepository.deleteCategory(
             id = id,

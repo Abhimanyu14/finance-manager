@@ -7,6 +7,8 @@ import org.junit.Test
 class AmountTest {
     private lateinit var amount: Amount
     private lateinit var amount1: Amount
+    private lateinit var amount2: Amount
+    private lateinit var amount3: Amount
 
     @Before
     fun setUp() {
@@ -16,10 +18,16 @@ class AmountTest {
         amount1 = Amount(
             value = 27,
         )
+        amount2 = Amount(
+            value = -31,
+        )
+        amount3 = Amount(
+            value = 0,
+        )
     }
 
     @Test
-    fun toSignedString() {
+    fun toSignedString_valueIsPositive() {
         val result = amount.toSignedString()
 
         Assert.assertEquals(
@@ -29,11 +37,41 @@ class AmountTest {
     }
 
     @Test
-    fun toString_defaultTest() {
+    fun toSignedString_valueIsNegative() {
+        val result = amount2.toSignedString()
+
+        Assert.assertEquals(
+            "- ₹31",
+            result,
+        )
+    }
+
+    @Test
+    fun toSignedString_valueIsZero() {
+        val result = amount3.toSignedString()
+
+        Assert.assertEquals(
+            "₹0",
+            result,
+        )
+    }
+
+    @Test
+    fun toString_valueIsNonNegative() {
         val result = amount.toString()
 
         Assert.assertEquals(
             "₹23",
+            result,
+        )
+    }
+
+    @Test
+    fun toString_valueIsNegative() {
+        val result = amount2.toString()
+
+        Assert.assertEquals(
+            "- ₹31",
             result,
         )
     }
