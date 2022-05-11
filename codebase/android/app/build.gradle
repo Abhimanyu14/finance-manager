@@ -27,6 +27,33 @@ kover {
     // true to run all tests in all projects if `koverHtmlReport`, `koverXmlReport`, `koverReport`, `koverVerify` or `check` tasks executed on some project
 }
 
+tasks.koverHtmlReport {
+    excludes = [
+            // Hilt
+            "*.di.*",
+            "dagger.hilt.**",
+            "hilt_aggregated_deps.*",
+            "com.makeappssimple.abhimanyu.financemanager.android.*.*_Factory",
+
+            // Room
+            // MyRoomDatabase_AutoMigration_*_Impl, *Dao_Impl
+            "com.makeappssimple.abhimanyu.financemanager.android.*.*_Impl*",
+
+            // BuildConfig
+            "com.makeappssimple.abhimanyu.financemanager.android.BuildConfig",
+
+            // Moshi - Json Adapter
+            "com.makeappssimple.abhimanyu.financemanager.android.*.*JsonAdapter",
+
+            // UI
+            "com.makeappssimple.abhimanyu.financemanager.android.ui.*"
+    ]
+}
+
+tasks.koverXmlReport {
+    excludes = ["com.makeappssimple.abhimanyu.financemanager.android.navigation.di.NavigationManagerModule"]
+}
+
 // TODO-Abhi: Jacoco
 // Jacoco
 //jacoco {
