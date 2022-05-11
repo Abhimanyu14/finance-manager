@@ -5,6 +5,7 @@ plugins {
     id "dagger.hilt.android.plugin"
     id "com.google.gms.google-services"
     id "jacoco"
+    id "org.jetbrains.kotlinx.kover" version "0.5.0"
     // id "com.google.devtools.ksp" version "1.6.10-1.0.4"
 }
 
