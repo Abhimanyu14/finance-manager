@@ -69,3 +69,25 @@ A simple finance manager app
   - USD
 
 ---
+
+Commands
+
+1. Screen mirroring
+
+`scrcpy -m1024`
+
+2. Clean build
+
+`./gradlew clean :app:assembleDebug`
+
+3. Unit Test
+
+`./gradlew testDebugUnitTest `
+
+4. Test coverage report
+
+`./gradlew createDebugCoverageReport`
+
+5. Kover report
+
+`./gradlew koverHtmlReport`
