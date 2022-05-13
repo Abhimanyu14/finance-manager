@@ -35,60 +35,56 @@ class RecalculateTotalUseCase @Inject constructor(
             )
         }
 
-        collectedTransactions.forEach {
-            when (it.transactionType) {
+        collectedTransactions.forEach collectedTransactionsLoop@{ transaction ->
+            when (transaction.transactionType) {
                 TransactionType.INCOME -> {
-                    it.sourceToId?.let { sourceToId ->
-                        getSourceUseCase(
-                            id = sourceToId,
-                        )?.let { source ->
-                            updateSourcesUseCase(
-                                source.copy(
-                                    balanceAmount = source.balanceAmount.copy(
-                                        value = source.balanceAmount.value + it.amount.value,
-                                    ),
-                                ),
-                            )
-                        }
-                    }
+                    val sourceId = transaction.sourceToId ?: return@collectedTransactionsLoop
+                    val source = getSourceUseCase(
+                        id = sourceId,
+                    ) ?: return@collectedTransactionsLoop
+                    updateSourcesUseCase(
+                        source.copy(
+                            balanceAmount = source.balanceAmount.copy(
+                                value = source.balanceAmount.value + transaction.amount.value,
+                            ),
+                        ),
+                    )
                 }
                 TransactionType.EXPENSE -> {
-                    it.sourceFromId?.let { sourceFromId ->
-                        getSourceUseCase(
-                            id = sourceFromId,
-                        )?.let { source ->
-                            updateSourcesUseCase(
-                                source.copy(
-                                    balanceAmount = source.balanceAmount.copy(
-                                        value = source.balanceAmount.value + it.amount.value,
-                                    ),
-                                ),
-                            )
-                        }
-                    }
+                    val sourceId = transaction.sourceFromId ?: return@collectedTransactionsLoop
+                    val source = getSourceUseCase(
+                        id = sourceId,
+                    ) ?: return@collectedTransactionsLoop
+                    updateSourcesUseCase(
+                        source.copy(
+                            balanceAmount = source.balanceAmount.copy(
+                                value = source.balanceAmount.value + transaction.amount.value,
+                            ),
+                        ),
+                    )
                 }
                 TransactionType.TRANSFER -> {
-                    it.sourceFromId?.let { sourceFromId ->
+                    transaction.sourceFromId?.let { sourceId ->
                         getSourceUseCase(
-                            id = sourceFromId,
+                            id = sourceId,
                         )?.let { source ->
                             updateSourcesUseCase(
                                 source.copy(
                                     balanceAmount = source.balanceAmount.copy(
-                                        value = source.balanceAmount.value - it.amount.value,
+                                        value = source.balanceAmount.value - transaction.amount.value,
                                     ),
                                 ),
                             )
                         }
                     }
-                    it.sourceToId?.let { sourceToId ->
+                    transaction.sourceToId?.let { sourceId ->
                         getSourceUseCase(
-                            id = sourceToId,
+                            id = sourceId,
                         )?.let { source ->
                             updateSourcesUseCase(
                                 source.copy(
                                     balanceAmount = source.balanceAmount.copy(
-                                        value = source.balanceAmount.value + it.amount.value,
+                                        value = source.balanceAmount.value + transaction.amount.value,
                                     ),
                                 ),
                             )
@@ -96,19 +92,17 @@ class RecalculateTotalUseCase @Inject constructor(
                     }
                 }
                 TransactionType.ADJUSTMENT -> {
-                    it.sourceToId?.let { sourceToId ->
-                        getSourceUseCase(
-                            id = sourceToId,
-                        )?.let { source ->
-                            updateSourcesUseCase(
-                                source.copy(
-                                    balanceAmount = source.balanceAmount.copy(
-                                        value = source.balanceAmount.value + it.amount.value,
-                                    ),
-                                ),
-                            )
-                        }
-                    }
+                    val sourceId = transaction.sourceToId ?: return@collectedTransactionsLoop
+                    val source = getSourceUseCase(
+                        id = sourceId,
+                    ) ?: return@collectedTransactionsLoop
+                    updateSourcesUseCase(
+                        source.copy(
+                            balanceAmount = source.balanceAmount.copy(
+                                value = source.balanceAmount.value + transaction.amount.value,
+                            ),
+                        ),
+                    )
                 }
             }
         }

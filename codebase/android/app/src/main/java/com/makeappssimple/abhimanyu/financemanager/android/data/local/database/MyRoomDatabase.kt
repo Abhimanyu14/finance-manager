@@ -181,22 +181,20 @@ abstract class MyRoomDatabase : RoomDatabase() {
                 ).launch {
                     val initialDatabaseData = readInitialDataFromAssets(
                         context = context,
+                    ) ?: return@launch
+                    populateCategoryData(
+                        myRoomDatabase = myRoomDatabase,
+                        initialDatabaseData = initialDatabaseData,
                     )
-                    initialDatabaseData?.let {
-                        populateCategoryData(
-                            myRoomDatabase = myRoomDatabase,
-                            initialDatabaseData = initialDatabaseData,
-                        )
-                        populateEmojiData(
-                            context = context,
-                            myRoomDatabase = myRoomDatabase,
-                            initialDatabaseData = initialDatabaseData,
-                        )
-                        populateSourceData(
-                            myRoomDatabase = myRoomDatabase,
-                            initialDatabaseData = initialDatabaseData,
-                        )
-                    }
+                    populateEmojiData(
+                        context = context,
+                        myRoomDatabase = myRoomDatabase,
+                        initialDatabaseData = initialDatabaseData,
+                    )
+                    populateSourceData(
+                        myRoomDatabase = myRoomDatabase,
+                        initialDatabaseData = initialDatabaseData,
+                    )
                 }
             }
         }

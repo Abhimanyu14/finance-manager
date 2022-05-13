@@ -101,23 +101,22 @@ class EditCategoryScreenViewModelImpl @Inject constructor(
     }
 
     override fun updateCategory() {
-        category.value?.let { category ->
-            val updatedCategory = category.copy(
-                emoji = emoji.value,
-                title = title.value,
-                transactionType = transactionTypes[selectedTransactionTypeIndex.value],
-            )
+        val category = category.value ?: return
+        val updatedCategory = category.copy(
+            emoji = emoji.value,
+            title = title.value,
+            transactionType = transactionTypes[selectedTransactionTypeIndex.value],
+        )
 
-            viewModelScope.launch(
-                context = dispatcherProvider.io,
-            ) {
-                updateCategoriesUseCase(
-                    updatedCategory,
-                )
-                navigateUp(
-                    navigationManager = navigationManager,
-                )
-            }
+        viewModelScope.launch(
+            context = dispatcherProvider.io,
+        ) {
+            updateCategoriesUseCase(
+                updatedCategory,
+            )
+            navigateUp(
+                navigationManager = navigationManager,
+            )
         }
     }
 
@@ -173,12 +172,11 @@ class EditCategoryScreenViewModelImpl @Inject constructor(
     }
 
     private fun updateInitialCategoryValue() {
-        category.value?.let {
-            _selectedTransactionTypeIndex.value = transactionTypes.indexOf(
-                element = it.transactionType,
-            )
-            _title.value = it.title
-            _emoji.value = it.emoji
-        }
+        val category = category.value ?: return
+        _selectedTransactionTypeIndex.value = transactionTypes.indexOf(
+            element = category.transactionType,
+        )
+        _title.value = category.title
+        _emoji.value = category.emoji
     }
 }

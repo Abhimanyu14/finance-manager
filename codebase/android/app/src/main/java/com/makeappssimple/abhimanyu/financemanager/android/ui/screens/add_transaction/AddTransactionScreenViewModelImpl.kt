@@ -296,11 +296,10 @@ class AddTransactionScreenViewModelImpl @Inject constructor(
             }
             launch {
                 selectedCategoryId.collectLatest {
-                    it?.let { selectedCategoryIdValue ->
-                        _titleSuggestions.value = getTitleSuggestionsUseCase(
-                            categoryId = selectedCategoryIdValue,
-                        )
-                    }
+                    val selectedCategoryIdValue = it ?: return@collectLatest
+                    _titleSuggestions.value = getTitleSuggestionsUseCase(
+                        categoryId = selectedCategoryIdValue,
+                    )
                 }
             }
         }

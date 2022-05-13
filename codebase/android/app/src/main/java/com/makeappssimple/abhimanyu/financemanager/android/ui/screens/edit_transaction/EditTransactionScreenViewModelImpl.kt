@@ -213,94 +213,93 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
             }
             launch {
                 selectedTransactionType.collectLatest {
-                    it?.let {
-                        val uiVisibilityState: EditTransactionScreenUiVisibilityState? = when (it) {
-                            TransactionType.INCOME -> {
-                                EditTransactionScreenUiVisibilityState(
-                                    isTitleTextFieldVisible = true,
-                                    isDescriptionTextFieldVisible = false,
-                                    isCategoryTextFieldVisible = true,
-                                    isTransactionForRadioGroupVisible = false,
-                                    isSourceFromTextFieldVisible = false,
-                                    isSourceToTextFieldVisible = true,
-                                )
-                            }
-                            TransactionType.EXPENSE -> {
-                                EditTransactionScreenUiVisibilityState(
-                                    isTitleTextFieldVisible = true,
-                                    isDescriptionTextFieldVisible = false,
-                                    isCategoryTextFieldVisible = true,
-                                    isTransactionForRadioGroupVisible = true,
-                                    isSourceFromTextFieldVisible = true,
-                                    isSourceToTextFieldVisible = false,
-                                )
-                            }
-                            TransactionType.TRANSFER -> {
-                                EditTransactionScreenUiVisibilityState(
-                                    isTitleTextFieldVisible = false,
-                                    isDescriptionTextFieldVisible = false,
-                                    isCategoryTextFieldVisible = false,
-                                    isTransactionForRadioGroupVisible = false,
-                                    isSourceFromTextFieldVisible = true,
-                                    isSourceToTextFieldVisible = true,
-                                )
-                            }
-                            TransactionType.ADJUSTMENT -> {
-                                null
-                            }
-                        }
-                        uiVisibilityState?.let {
-                            updateEditTransactionScreenUiVisibilityState(
-                                updatedEditTransactionScreenUiVisibilityState = uiVisibilityState,
+                    it ?: return@collectLatest
+                    val uiVisibilityState: EditTransactionScreenUiVisibilityState? = when (it) {
+                        TransactionType.INCOME -> {
+                            EditTransactionScreenUiVisibilityState(
+                                isTitleTextFieldVisible = true,
+                                isDescriptionTextFieldVisible = false,
+                                isCategoryTextFieldVisible = true,
+                                isTransactionForRadioGroupVisible = false,
+                                isSourceFromTextFieldVisible = false,
+                                isSourceToTextFieldVisible = true,
                             )
                         }
-                        when (it) {
-                            TransactionType.INCOME -> {
-                                val updatedCategory =
-                                    if (selectedTransactionType.value == transaction.value?.transactionType) {
-                                        transactionCategory ?: incomeDefaultCategory
-                                    } else {
-                                        incomeDefaultCategory
-                                    }
-                                updateCategory(
-                                    updatedCategory = updatedCategory,
-                                )
-
-                                updateSourceFrom(
-                                    updatedSourceFrom = null,
-                                )
-                                updateSourceTo(
-                                    updatedSourceTo = transactionSourceTo ?: defaultSource,
-                                )
-                            }
-                            TransactionType.EXPENSE -> {
-                                val updatedCategory =
-                                    if (selectedTransactionType.value == transaction.value?.transactionType) {
-                                        transactionCategory ?: expenseDefaultCategory
-                                    } else {
-                                        incomeDefaultCategory
-                                    }
-                                updateCategory(
-                                    updatedCategory = updatedCategory,
-                                )
-
-                                updateSourceFrom(
-                                    updatedSourceFrom = transactionSourceFrom ?: defaultSource,
-                                )
-                                updateSourceTo(
-                                    updatedSourceTo = null,
-                                )
-                            }
-                            TransactionType.TRANSFER -> {
-                                updateSourceFrom(
-                                    updatedSourceFrom = transactionSourceFrom ?: defaultSource,
-                                )
-                                updateSourceTo(
-                                    updatedSourceTo = transactionSourceTo ?: defaultSource,
-                                )
-                            }
-                            TransactionType.ADJUSTMENT -> {}
+                        TransactionType.EXPENSE -> {
+                            EditTransactionScreenUiVisibilityState(
+                                isTitleTextFieldVisible = true,
+                                isDescriptionTextFieldVisible = false,
+                                isCategoryTextFieldVisible = true,
+                                isTransactionForRadioGroupVisible = true,
+                                isSourceFromTextFieldVisible = true,
+                                isSourceToTextFieldVisible = false,
+                            )
                         }
+                        TransactionType.TRANSFER -> {
+                            EditTransactionScreenUiVisibilityState(
+                                isTitleTextFieldVisible = false,
+                                isDescriptionTextFieldVisible = false,
+                                isCategoryTextFieldVisible = false,
+                                isTransactionForRadioGroupVisible = false,
+                                isSourceFromTextFieldVisible = true,
+                                isSourceToTextFieldVisible = true,
+                            )
+                        }
+                        TransactionType.ADJUSTMENT -> {
+                            null
+                        }
+                    }
+                    uiVisibilityState?.let {
+                        updateEditTransactionScreenUiVisibilityState(
+                            updatedEditTransactionScreenUiVisibilityState = uiVisibilityState,
+                        )
+                    }
+                    when (it) {
+                        TransactionType.INCOME -> {
+                            val updatedCategory =
+                                if (selectedTransactionType.value == transaction.value?.transactionType) {
+                                    transactionCategory ?: incomeDefaultCategory
+                                } else {
+                                    incomeDefaultCategory
+                                }
+                            updateCategory(
+                                updatedCategory = updatedCategory,
+                            )
+
+                            updateSourceFrom(
+                                updatedSourceFrom = null,
+                            )
+                            updateSourceTo(
+                                updatedSourceTo = transactionSourceTo ?: defaultSource,
+                            )
+                        }
+                        TransactionType.EXPENSE -> {
+                            val updatedCategory =
+                                if (selectedTransactionType.value == transaction.value?.transactionType) {
+                                    transactionCategory ?: expenseDefaultCategory
+                                } else {
+                                    incomeDefaultCategory
+                                }
+                            updateCategory(
+                                updatedCategory = updatedCategory,
+                            )
+
+                            updateSourceFrom(
+                                updatedSourceFrom = transactionSourceFrom ?: defaultSource,
+                            )
+                            updateSourceTo(
+                                updatedSourceTo = null,
+                            )
+                        }
+                        TransactionType.TRANSFER -> {
+                            updateSourceFrom(
+                                updatedSourceFrom = transactionSourceFrom ?: defaultSource,
+                            )
+                            updateSourceTo(
+                                updatedSourceTo = transactionSourceTo ?: defaultSource,
+                            )
+                        }
+                        TransactionType.ADJUSTMENT -> {}
                     }
                 }
             }
@@ -333,11 +332,10 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
             }
             launch {
                 selectedCategoryId.collectLatest {
-                    it?.let { selectedCategoryIdValue ->
-                        _titleSuggestions.value = getTitleSuggestionsUseCase(
-                            categoryId = selectedCategoryIdValue,
-                        )
-                    }
+                    val selectedCategoryIdValue = it ?: return@collectLatest
+                    _titleSuggestions.value = getTitleSuggestionsUseCase(
+                        categoryId = selectedCategoryIdValue,
+                    )
                 }
             }
         }
@@ -606,10 +604,9 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            val fetchedTransaction: Transaction? = getTransactionUseCase(
+            getTransactionUseCase(
                 id = id,
-            )
-            fetchedTransaction?.let {
+            )?.let {
                 transaction.value = it
             }
         }

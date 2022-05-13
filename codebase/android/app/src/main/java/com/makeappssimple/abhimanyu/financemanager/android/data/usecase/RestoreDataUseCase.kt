@@ -28,25 +28,23 @@ class RestoreDataUseCase @Inject constructor(
     ) {
         val databaseBackupData = jsonUtil.readDatabaseBackupDataFromFile(
             uri = uri,
-        )
-        databaseBackupData?.let {
-            deleteAllCategoriesUseCase()
-            deleteAllEmojisUseCase()
-            deleteAllSourcesUseCase()
-            deleteAllTransactionsUseCase()
+        ) ?: return
+        deleteAllCategoriesUseCase()
+        deleteAllEmojisUseCase()
+        deleteAllSourcesUseCase()
+        deleteAllTransactionsUseCase()
 
-            insertCategoriesUseCase(
-                *databaseBackupData.categories.toTypedArray(),
-            )
-            insertEmojisUseCase(
-                *databaseBackupData.emojis.toTypedArray(),
-            )
-            insertSourcesUseCase(
-                *databaseBackupData.sources.toTypedArray(),
-            )
-            insertTransactionsUseCase(
-                *databaseBackupData.transactions.toTypedArray(),
-            )
-        }
+        insertCategoriesUseCase(
+            *databaseBackupData.categories.toTypedArray(),
+        )
+        insertEmojisUseCase(
+            *databaseBackupData.emojis.toTypedArray(),
+        )
+        insertSourcesUseCase(
+            *databaseBackupData.sources.toTypedArray(),
+        )
+        insertTransactionsUseCase(
+            *databaseBackupData.transactions.toTypedArray(),
+        )
     }
 }

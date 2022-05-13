@@ -16,63 +16,29 @@ class DeleteTransactionAndRevertOtherDataUseCase @Inject constructor(
     suspend operator fun invoke(
         id: Int,
     ) {
-        getTransactionUseCase(
+        val transaction = getTransactionUseCase(
             id = id,
-        )?.let { transaction ->
-            deleteTransactionUseCase(
-                id = id,
+        ) ?: return
+        deleteTransactionUseCase(
+            id = id,
+        )
+        val sourceFromId = transaction.sourceFromId
+        val sourceToId = transaction.sourceToId
+        if (
+            sourceFromId != null &&
+            sourceToId != null
+        ) {
+            handleTransferTransactions(
+                sourceFromId = sourceFromId,
+                sourceToId = sourceToId,
+                transaction = transaction,
             )
-            val sourceFromId = transaction.sourceFromId
-            val sourceToId = transaction.sourceToId
-            if (
-                sourceFromId != null &&
-                sourceToId != null
-            ) {
-                handleTransferTransactions(
-                    sourceFromId = sourceFromId,
-                    sourceToId = sourceToId,
-                    transaction = transaction,
-                )
-            } else {
-                handleNonTransferTransactions(
-                    sourceFromId = sourceFromId,
-                    sourceToId = sourceToId,
-                    transaction = transaction,
-                )
-            }
-        }
-    }
-
-    private suspend fun handleNonTransferTransactions(
-        sourceFromId: Int?,
-        sourceToId: Int?,
-        transaction: Transaction,
-    ) {
-        sourceFromId?.let {
-            getSourceUseCase(
-                id = sourceFromId,
-            )?.let { sourceFrom ->
-                updateSourcesUseCase(
-                    sourceFrom.copy(
-                        balanceAmount = sourceFrom.balanceAmount.copy(
-                            value = sourceFrom.balanceAmount.value - transaction.amount.value,
-                        )
-                    ),
-                )
-            }
-        }
-        sourceToId?.let {
-            getSourceUseCase(
-                id = sourceToId,
-            )?.let { sourceTo ->
-                updateSourcesUseCase(
-                    sourceTo.copy(
-                        balanceAmount = sourceTo.balanceAmount.copy(
-                            value = sourceTo.balanceAmount.value - transaction.amount.value,
-                        )
-                    ),
-                )
-            }
+        } else {
+            handleNonTransferTransactions(
+                sourceFromId = sourceFromId,
+                sourceToId = sourceToId,
+                transaction = transaction,
+            )
         }
     }
 
@@ -81,27 +47,94 @@ class DeleteTransactionAndRevertOtherDataUseCase @Inject constructor(
         sourceToId: Int,
         transaction: Transaction,
     ) {
-        getSourceUseCase(
+        handleTransferTransactionsSourceFrom(
+            sourceFromId = sourceFromId,
+            transaction = transaction,
+        )
+        handleTransferTransactionsSourceTo(
+            sourceToId = sourceToId,
+            transaction = transaction,
+        )
+    }
+
+    private suspend fun handleTransferTransactionsSourceFrom(
+        sourceFromId: Int,
+        transaction: Transaction
+    ) {
+        val source = getSourceUseCase(
             id = sourceFromId,
-        )?.let { sourceFrom ->
-            updateSourcesUseCase(
-                sourceFrom.copy(
-                    balanceAmount = sourceFrom.balanceAmount.copy(
-                        value = sourceFrom.balanceAmount.value + transaction.amount.value,
-                    )
-                ),
-            )
-        }
-        getSourceUseCase(
+        ) ?: return
+        updateSourcesUseCase(
+            source.copy(
+                balanceAmount = source.balanceAmount.copy(
+                    value = source.balanceAmount.value + transaction.amount.value,
+                )
+            ),
+        )
+    }
+
+    private suspend fun handleTransferTransactionsSourceTo(
+        sourceToId: Int,
+        transaction: Transaction
+    ) {
+        val source = getSourceUseCase(
             id = sourceToId,
-        )?.let { sourceTo ->
-            updateSourcesUseCase(
-                sourceTo.copy(
-                    balanceAmount = sourceTo.balanceAmount.copy(
-                        value = sourceTo.balanceAmount.value - transaction.amount.value,
-                    ),
+        ) ?: return
+        updateSourcesUseCase(
+            source.copy(
+                balanceAmount = source.balanceAmount.copy(
+                    value = source.balanceAmount.value - transaction.amount.value,
                 ),
-            )
-        }
+            ),
+        )
+    }
+
+    private suspend fun handleNonTransferTransactions(
+        sourceFromId: Int?,
+        sourceToId: Int?,
+        transaction: Transaction,
+    ) {
+        handleNonTransferTransactionsSourceFrom(
+            sourceFromId = sourceFromId,
+            transaction = transaction
+        )
+        handleNonTransferTransactionsSourceTo(
+            sourceToId = sourceToId,
+            transaction = transaction,
+        )
+    }
+
+    private suspend fun handleNonTransferTransactionsSourceFrom(
+        sourceFromId: Int?,
+        transaction: Transaction
+    ) {
+        sourceFromId ?: return
+        val source = getSourceUseCase(
+            id = sourceFromId,
+        ) ?: return
+        updateSourcesUseCase(
+            source.copy(
+                balanceAmount = source.balanceAmount.copy(
+                    value = source.balanceAmount.value - transaction.amount.value,
+                )
+            ),
+        )
+    }
+
+    private suspend fun handleNonTransferTransactionsSourceTo(
+        sourceToId: Int?,
+        transaction: Transaction
+    ) {
+        sourceToId ?: return
+        val source = getSourceUseCase(
+            id = sourceToId,
+        ) ?: return
+        updateSourcesUseCase(
+            source.copy(
+                balanceAmount = source.balanceAmount.copy(
+                    value = source.balanceAmount.value - transaction.amount.value,
+                )
+            ),
+        )
     }
 }

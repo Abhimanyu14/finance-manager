@@ -90,50 +90,49 @@ class EditSourceScreenViewModelImpl @Inject constructor(
     }
 
     override fun updateSource() {
-        source.value?.let { source ->
-            val amountValue = balanceAmountValue.value.toInt() - source.balanceAmount.value
-            val updatedSource = source.copy(
-                balanceAmount = source.balanceAmount.copy(
-                    value = balanceAmountValue.value.toLong(),
-                ),
-                type = if (source.type != SourceType.CASH) {
-                    sourceTypes[selectedSourceTypeIndex.value]
-                } else {
-                    source.type
-                },
-                name = name.value.ifBlank {
-                    source.name
-                },
-            )
+        val source = source.value ?: return
+        val amountValue = balanceAmountValue.value.toInt() - source.balanceAmount.value
+        val updatedSource = source.copy(
+            balanceAmount = source.balanceAmount.copy(
+                value = balanceAmountValue.value.toLong(),
+            ),
+            type = if (source.type != SourceType.CASH) {
+                sourceTypes[selectedSourceTypeIndex.value]
+            } else {
+                source.type
+            },
+            name = name.value.ifBlank {
+                source.name
+            },
+        )
 
-            viewModelScope.launch(
-                context = dispatcherProvider.io,
-            ) {
-                if (amountValue != 0L) {
-                    insertTransactionUseCase(
-                        transaction = Transaction(
-                            amount = Amount(
-                                value = amountValue,
-                            ),
-                            categoryId = 0,
-                            sourceFromId = 0,
-                            sourceToId = updatedSource.id,
-                            description = "",
-                            title = TransactionType.ADJUSTMENT.title,
-                            creationTimestamp = Calendar.getInstance().timeInMillis,
-                            transactionTimestamp = Calendar.getInstance().timeInMillis,
-                            transactionFor = TransactionFor.SELF,
-                            transactionType = TransactionType.ADJUSTMENT,
+        viewModelScope.launch(
+            context = dispatcherProvider.io,
+        ) {
+            if (amountValue != 0L) {
+                insertTransactionUseCase(
+                    transaction = Transaction(
+                        amount = Amount(
+                            value = amountValue,
                         ),
-                    )
-                }
-                updateSourcesUseCase(
-                    updatedSource,
-                )
-                navigateUp(
-                    navigationManager = navigationManager,
+                        categoryId = 0,
+                        sourceFromId = 0,
+                        sourceToId = updatedSource.id,
+                        description = "",
+                        title = TransactionType.ADJUSTMENT.title,
+                        creationTimestamp = Calendar.getInstance().timeInMillis,
+                        transactionTimestamp = Calendar.getInstance().timeInMillis,
+                        transactionFor = TransactionFor.SELF,
+                        transactionType = TransactionType.ADJUSTMENT,
+                    ),
                 )
             }
+            updateSourcesUseCase(
+                updatedSource,
+            )
+            navigateUp(
+                navigationManager = navigationManager,
+            )
         }
     }
 
@@ -203,12 +202,11 @@ class EditSourceScreenViewModelImpl @Inject constructor(
     }
 
     private fun updateInitialSourceValue() {
-        source.value?.let {
-            _selectedSourceTypeIndex.value = sourceTypes.indexOf(
-                element = it.type,
-            )
-            _name.value = it.name
-            _balanceAmountValue.value = it.balanceAmount.value.toString()
-        }
+        val source = source.value ?: return
+        _selectedSourceTypeIndex.value = sourceTypes.indexOf(
+            element = source.type,
+        )
+        _name.value = source.name
+        _balanceAmountValue.value = source.balanceAmount.value.toString()
     }
 }

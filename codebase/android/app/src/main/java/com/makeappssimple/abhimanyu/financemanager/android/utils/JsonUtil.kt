@@ -7,7 +7,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.databaseback
 import com.makeappssimple.abhimanyu.financemanager.android.entities.initialdatabasedata.InitialDatabaseData
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
-import javax.inject.Inject
 import java.io.BufferedReader
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -35,7 +34,7 @@ interface JsonUtil {
     )
 }
 
-class JsonUtilImpl @Inject constructor(
+class JsonUtilImpl(
     private val context: Context,
 ) : JsonUtil {
     override fun readDatabaseBackupDataFromFile(
