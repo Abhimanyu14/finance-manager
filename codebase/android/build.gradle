@@ -69,7 +69,7 @@ buildscript {
         androidxActivityVersion = "1.3.1"
 
         // Lifecycle components
-        lifecycleViewModelVersion = "2.5.0-beta01"
+        lifecycleViewModelVersion = "2.5.0-rc01"
 
         // Lifecycle live data
         lifecycleLiveDataVersion = "2.4.0"
@@ -96,13 +96,13 @@ buildscript {
         recyclerViewVersion = "1.2.1"
 
         // Jetpack compose
-        jetpackComposeVersion = "1.2.0-alpha08"
+        jetpackComposeVersion = "1.2.0-beta01"
 
         // Jetpack compose material 3
-        jetpackComposeMaterial3Version = "1.0.0-alpha10"
+        jetpackComposeMaterial3Version = "1.0.0-alpha11"
 
         // Jetpack compose material design adapter
-        jetpackComposeMaterialDesignAdapterVersion = "1.1.7"
+        jetpackComposeMaterialDesignAdapterVersion = "1.1.9"
 
         // Jetpack compose constraint layout
         jetpackComposeConstraintLayoutVersion = "1.0.0-rc01"
@@ -111,10 +111,10 @@ buildscript {
         jetpackComposeActivityIntegrationVersion = "1.6.0-alpha03"
 
         // Jetpack compose integration with view models
-        jetpackComposeViewmodelIntegrationVersion = "2.5.0-alpha06"
+        jetpackComposeViewmodelIntegrationVersion = "2.5.0-rc01"
 
         // Jetpack compose navigation
-        jetpackComposeNavigationVersion = "2.5.0-beta01"
+        jetpackComposeNavigationVersion = "2.5.0-rc01"
 
         // Jetpack compose navigation with hilt
         jetpackComposeNavigationHiltVersion = "1.0.0"
@@ -238,6 +238,9 @@ buildscript {
 
         // Mockito kotlin
         mockitoKotlinVersion = "4.0.0"
+
+        // Coroutines test
+        coroutinesTestVersion = "1.6.1"
 
         // Nhaarman Mockito
         nhaarmanMockitoVersion = "1.5.0"
