@@ -1,12 +1,15 @@
 package com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repository.TransactionRepository
-import javax.inject.Inject
 
-class DeleteAllTransactionsUseCase @Inject constructor(
+interface DeleteAllTransactionsUseCase {
+    suspend operator fun invoke()
+}
+
+class DeleteAllTransactionsUseCaseImpl(
     private val transactionRepository: TransactionRepository,
-) {
-    suspend operator fun invoke() {
+) : DeleteAllTransactionsUseCase {
+    override suspend operator fun invoke() {
         return transactionRepository.deleteAllTransactions()
     }
 }

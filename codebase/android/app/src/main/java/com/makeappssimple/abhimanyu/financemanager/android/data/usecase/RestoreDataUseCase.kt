@@ -10,9 +10,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.I
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.DeleteAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.InsertTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.utils.JsonUtil
-import javax.inject.Inject
 
-class RestoreDataUseCase @Inject constructor(
+interface RestoreDataUseCase {
+    suspend operator fun invoke(
+        uri: Uri,
+    )
+}
+
+class RestoreDataUseCaseImpl(
     private val insertCategoriesUseCase: InsertCategoriesUseCase,
     private val insertEmojisUseCase: InsertEmojisUseCase,
     private val insertSourcesUseCase: InsertSourcesUseCase,
@@ -22,8 +27,8 @@ class RestoreDataUseCase @Inject constructor(
     private val deleteAllSourcesUseCase: DeleteAllSourcesUseCase,
     private val deleteAllTransactionsUseCase: DeleteAllTransactionsUseCase,
     private val jsonUtil: JsonUtil,
-) {
-    suspend operator fun invoke(
+) : RestoreDataUseCase {
+    override suspend operator fun invoke(
         uri: Uri,
     ) {
         val databaseBackupData = jsonUtil.readDatabaseBackupDataFromFile(

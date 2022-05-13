@@ -13,7 +13,7 @@ class GetTransactionsUseCaseTest {
 
     @Before
     fun setUp() {
-        getTransactionsUseCase = GetTransactionsUseCase(
+        getTransactionsUseCase = GetTransactionsUseCaseImpl(
             transactionRepository = transactionRepository,
         )
     }

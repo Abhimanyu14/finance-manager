@@ -1,12 +1,15 @@
 package com.makeappssimple.abhimanyu.financemanager.android.data.emoji.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.emoji.repository.EmojiRepository
-import javax.inject.Inject
 
-class DeleteAllEmojisUseCase @Inject constructor(
+interface DeleteAllEmojisUseCase {
+    suspend operator fun invoke()
+}
+
+class DeleteAllEmojisUseCaseImpl(
     private val emojiRepository: EmojiRepository,
-) {
-    suspend operator fun invoke() {
+) : DeleteAllEmojisUseCase {
+    override suspend operator fun invoke() {
         return emojiRepository.deleteAllEmojis()
     }
 }

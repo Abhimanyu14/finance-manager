@@ -7,20 +7,23 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usec
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 
-class RecalculateTotalUseCase @Inject constructor(
+interface RecalculateTotalUseCase {
+    suspend operator fun invoke()
+}
+
+class RecalculateTotalUseCaseImpl(
     getSourcesUseCase: GetSourcesUseCase,
     getTransactionsUseCase: GetTransactionsUseCase,
     private val getSourceUseCase: GetSourceUseCase,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
-) {
+) : RecalculateTotalUseCase {
     private val sources: Flow<List<Source>> = getSourcesUseCase()
     private val transactionsListItemViewData: Flow<List<Transaction>> = getTransactionsUseCase()
 
-    suspend operator fun invoke() {
+    override suspend operator fun invoke() {
         val collectedSources = sources.first()
         val collectedTransactions = transactionsListItemViewData.first()
 

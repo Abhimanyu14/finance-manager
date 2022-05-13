@@ -14,7 +14,7 @@ class InsertTransactionsUseCaseTest {
 
     @Before
     fun setUp() {
-        insertTransactionsUseCase = InsertTransactionsUseCase(
+        insertTransactionsUseCase = InsertTransactionsUseCaseImpl(
             transactionRepository = transactionRepository,
         )
     }

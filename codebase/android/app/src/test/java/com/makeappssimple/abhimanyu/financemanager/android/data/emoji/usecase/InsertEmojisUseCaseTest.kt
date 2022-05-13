@@ -14,7 +14,7 @@ class InsertEmojisUseCaseTest {
 
     @Before
     fun setUp() {
-        insertEmojisUseCase = InsertEmojisUseCase(
+        insertEmojisUseCase = InsertEmojisUseCaseImpl(
             emojiRepository = emojiRepository,
         )
     }

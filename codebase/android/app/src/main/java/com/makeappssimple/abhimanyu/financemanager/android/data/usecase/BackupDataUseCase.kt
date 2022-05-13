@@ -12,24 +12,29 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Sourc
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.utils.JsonUtil
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateAndTimeString
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 
-class BackupDataUseCase @Inject constructor(
+interface BackupDataUseCase {
+    suspend operator fun invoke(
+        uri: Uri,
+    )
+}
+
+class BackupDataUseCaseImpl(
     getCategoriesUseCase: GetCategoriesUseCase,
     getEmojisUseCase: GetEmojisUseCase,
     getSourcesUseCase: GetSourcesUseCase,
     getTransactionsUseCase: GetTransactionsUseCase,
     private val jsonUtil: JsonUtil,
-) {
+) : BackupDataUseCase {
     val categories: Flow<List<Category>> = getCategoriesUseCase()
     val emojis: Flow<List<EmojiLocalEntity>> = getEmojisUseCase()
     val sources: Flow<List<Source>> = getSourcesUseCase()
     val transactions: Flow<List<Transaction>> = getTransactionsUseCase()
 
-    suspend operator fun invoke(
+    override suspend operator fun invoke(
         uri: Uri,
     ) {
         var categoriesUpdated = false

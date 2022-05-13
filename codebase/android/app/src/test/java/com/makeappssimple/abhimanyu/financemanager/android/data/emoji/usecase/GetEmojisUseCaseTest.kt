@@ -13,7 +13,7 @@ class GetEmojisUseCaseTest {
 
     @Before
     fun setUp() {
-        getEmojisUseCase = GetEmojisUseCase(
+        getEmojisUseCase = GetEmojisUseCaseImpl(
             emojiRepository = emojiRepository,
         )
     }

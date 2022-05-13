@@ -13,7 +13,7 @@ class DeleteTransactionUseCaseTest {
 
     @Before
     fun setUp() {
-        deleteTransactionUseCase = DeleteTransactionUseCase(
+        deleteTransactionUseCase = DeleteTransactionUseCaseImpl(
             transactionRepository = transactionRepository,
         )
     }

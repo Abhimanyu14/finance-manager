@@ -5,15 +5,20 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.U
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
-import javax.inject.Inject
 
-class DeleteTransactionAndRevertOtherDataUseCase @Inject constructor(
+interface DeleteTransactionAndRevertOtherDataUseCase {
+    suspend operator fun invoke(
+        id: Int,
+    )
+}
+
+class DeleteTransactionAndRevertOtherDataUseCaseImpl(
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
     private val getSourceUseCase: GetSourceUseCase,
     private val getTransactionUseCase: GetTransactionUseCase,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
-) {
-    suspend operator fun invoke(
+) : DeleteTransactionAndRevertOtherDataUseCase {
+    override suspend operator fun invoke(
         id: Int,
     ) {
         val transaction = getTransactionUseCase(
