@@ -3,9 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categorie
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.ScaffoldState
 import androidx.compose.material.rememberModalBottomSheetState
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -16,7 +14,6 @@ import kotlinx.coroutines.CoroutineScope
 class CategoriesScreenViewState @OptIn(ExperimentalMaterialApi::class) constructor(
     val focusManager: FocusManager,
     val coroutineScope: CoroutineScope,
-    val scaffoldState: ScaffoldState,
     val modalBottomSheetState: ModalBottomSheetState,
 )
 
@@ -25,7 +22,6 @@ class CategoriesScreenViewState @OptIn(ExperimentalMaterialApi::class) construct
 fun rememberCategoriesScreenViewState(
     focusManager: FocusManager = LocalFocusManager.current,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    scaffoldState: ScaffoldState = rememberScaffoldState(),
     modalBottomSheetState: ModalBottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
     ),
@@ -33,7 +29,6 @@ fun rememberCategoriesScreenViewState(
     CategoriesScreenViewState(
         focusManager = focusManager,
         coroutineScope = coroutineScope,
-        scaffoldState = scaffoldState,
         modalBottomSheetState = modalBottomSheetState,
     )
 }

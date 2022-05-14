@@ -169,7 +169,6 @@ fun CategoriesScreenView(
         },
     ) {
         Scaffold(
-            scaffoldState = state.scaffoldState,
             topBar = {
                 MyTopAppBar(
                     navigationManager = data.screenViewModel.navigationManager,

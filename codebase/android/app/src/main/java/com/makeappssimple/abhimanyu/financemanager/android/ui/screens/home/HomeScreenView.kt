@@ -173,7 +173,6 @@ fun HomeScreenView(
         },
     ) {
         Scaffold(
-            scaffoldState = state.scaffoldState,
             topBar = {
                 MyTopAppBar(
                     navigationManager = data.screenViewModel.navigationManager,
