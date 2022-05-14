@@ -12,7 +12,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.FabPosition
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
@@ -232,7 +231,6 @@ fun HomeScreenView(
                     },
                 )
             },
-            floatingActionButtonPosition = FabPosition.End,
             isFloatingActionButtonDocked = true,
             modifier = Modifier
                 .fillMaxSize(),

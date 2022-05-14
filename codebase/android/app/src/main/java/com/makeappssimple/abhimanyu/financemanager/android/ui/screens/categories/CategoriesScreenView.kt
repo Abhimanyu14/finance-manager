@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.FabPosition
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
@@ -193,7 +192,6 @@ fun CategoriesScreenView(
                     },
                 )
             },
-            floatingActionButtonPosition = FabPosition.End,
             modifier = Modifier
                 .fillMaxSize(),
         ) { innerPadding ->
