@@ -12,7 +12,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.Divider
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,6 +33,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableItemViewWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateAndTimeString
 
 data class TransactionsListItemViewData(
@@ -103,7 +103,7 @@ fun TransactionsListItem(
                     modifier = Modifier
                         .fillMaxWidth(),
                 ) {
-                    Text(
+                    MyText(
                         text = data.transaction.title,
                         style = TextStyle(
                             color = DarkGray,
@@ -116,7 +116,7 @@ fun TransactionsListItem(
                                 weight = 1F,
                             ),
                     )
-                    Text(
+                    MyText(
                         text = if (data.transaction.transactionType == TransactionType.INCOME ||
                             (data.transaction.transactionType == TransactionType.ADJUSTMENT
                                     && data.transaction.amount.value > 0)
@@ -148,7 +148,7 @@ fun TransactionsListItem(
                     modifier = Modifier
                         .fillMaxWidth(),
                 ) {
-                    Text(
+                    MyText(
                         text = getDateAndTimeString(
                             timestamp = data.transaction.transactionTimestamp,
                         ),
@@ -163,7 +163,7 @@ fun TransactionsListItem(
                                 weight = 1F,
                             ),
                     )
-                    Text(
+                    MyText(
                         text = if (data.sourceFrom != null && data.sourceTo != null) {
                             stringResource(
                                 id = R.string.list_item_transactions_source,

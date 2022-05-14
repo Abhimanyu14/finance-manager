@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -23,6 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.conditionalClickable
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Green700
 
 @Composable
@@ -59,7 +59,7 @@ fun TotalBalanceCard(
                     all = 16.dp,
                 ),
         ) {
-            Text(
+            MyText(
                 text = stringResource(
                     id = R.string.total_balance_card_title,
                 ),
@@ -72,7 +72,7 @@ fun TotalBalanceCard(
                 modifier = Modifier
                     .fillMaxWidth(),
             )
-            Text(
+            MyText(
                 text = Amount(
                     value = totalBalanceAmount,
                 ).toString(),

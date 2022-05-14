@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Icon
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.runtime.Composable
@@ -26,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiCircle
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 
 data class EditTransactionSelectCategoryBottomSheetItemData(
@@ -49,7 +49,7 @@ fun EditTransactionSelectCategoryBottomSheet(
             ),
     ) {
         stickyHeader {
-            Text(
+            MyText(
                 text = stringResource(
                     id = R.string.bottom_sheet_add_transaction_select_category_title,
                 ),
@@ -99,7 +99,7 @@ private fun EditTransactionSelectCategoryBottomSheetItem(
         EmojiCircle(
             emoji = data.category.emoji,
         )
-        Text(
+        MyText(
             text = data.category.title,
             color = Color.DarkGray,
             fontSize = 14.sp,

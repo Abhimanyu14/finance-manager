@@ -26,7 +26,6 @@ import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.SwapVert
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
@@ -60,6 +59,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.SearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.SearchBarData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
@@ -492,7 +492,7 @@ fun TransactionsScreenView(
                         groupedTransactions.forEach { (date, listItemData) ->
                             if (date.isNotBlank()) {
                                 stickyHeader {
-                                    Text(
+                                    MyText(
                                         text = date,
                                         style = TextStyle(
                                             color = Color.DarkGray,

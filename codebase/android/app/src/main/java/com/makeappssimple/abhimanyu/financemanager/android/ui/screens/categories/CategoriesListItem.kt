@@ -9,7 +9,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.Divider
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,6 +25,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.DefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableItemViewWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isDefaultCategory
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isSalaryCategory
 
@@ -85,7 +85,7 @@ fun CategoriesListItem(
             EmojiCircle(
                 emoji = category.emoji,
             )
-            Text(
+            MyText(
                 text = category.title,
                 style = TextStyle(
                     color = Color.DarkGray,

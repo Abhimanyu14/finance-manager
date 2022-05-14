@@ -10,7 +10,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
 import androidx.compose.material.Scaffold
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,6 +17,7 @@ import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 
 data class SettingsScreenViewData(
     val screenViewModel: SettingsScreenViewModel,
@@ -80,7 +80,7 @@ fun SettingsScreenView(
             ) {
                 ListItem(
                     text = {
-                        Text(
+                        MyText(
                             text = stringResource(
                                 id = R.string.screen_settings_backup,
                             ),
@@ -95,7 +95,7 @@ fun SettingsScreenView(
                 )
                 ListItem(
                     text = {
-                        Text(
+                        MyText(
                             text = stringResource(
                                 id = R.string.screen_settings_restore,
                             ),
@@ -110,7 +110,7 @@ fun SettingsScreenView(
                 )
                 ListItem(
                     text = {
-                        Text(
+                        MyText(
                             text = stringResource(
                                 id = R.string.screen_settings_recalculate_total,
                             ),

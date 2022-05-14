@@ -11,7 +11,6 @@ import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,6 +27,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Sourc
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.DefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableItemViewWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getIcon
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isCashSource
@@ -96,7 +96,7 @@ fun SourcesListItem(
                         end = 8.dp,
                     ),
             )
-            Text(
+            MyText(
                 text = source.name,
                 style = TextStyle(
                     color = DarkGray,
@@ -117,7 +117,7 @@ fun SourcesListItem(
                         weight = 1F,
                     ),
             )
-            Text(
+            MyText(
                 text = source.balanceAmount.toString(),
                 style = TextStyle(
                     color = DarkGray,

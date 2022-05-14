@@ -23,7 +23,6 @@ import androidx.compose.material.ButtonElevation
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -36,6 +35,7 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.MyAppTheme
 
 enum class MyExtendedLoadingFloatingActionButtonState {
@@ -240,7 +240,7 @@ private fun MyExtendedLoadingFloatingActionButtonLoadingPreview() {
             buttonState = MyExtendedLoadingFloatingActionButtonState.LOADING,
             onClick = {},
         ) {
-            Text(
+            MyText(
                 text = "Create Barcode",
             )
         }
@@ -256,7 +256,7 @@ private fun MyExtendedFloatingActionButtonPreview() {
             onClickLabel = "",
             onClick = {},
         ) {
-            Text(
+            MyText(
                 text = "Create Barcode",
             )
         }

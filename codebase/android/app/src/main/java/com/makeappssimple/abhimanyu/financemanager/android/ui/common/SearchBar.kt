@@ -13,7 +13,6 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Search
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Blue100
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 
@@ -95,7 +95,7 @@ fun SearchBar(
             null
         },
         placeholder = {
-            Text(
+            MyText(
                 text = data.placeholderText,
                 style = TextStyle(
                     color = Color.DarkGray,

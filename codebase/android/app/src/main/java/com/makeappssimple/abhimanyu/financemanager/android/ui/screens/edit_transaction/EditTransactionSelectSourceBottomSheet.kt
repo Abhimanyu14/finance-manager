@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material3.Icon
@@ -24,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getIcon
@@ -50,7 +50,7 @@ fun EditTransactionSelectSourceBottomSheet(
             ),
     ) {
         stickyHeader {
-            Text(
+            MyText(
                 text = stringResource(
                     id = R.string.bottom_sheet_add_transaction_select_source_title,
                 ),
@@ -107,7 +107,7 @@ private fun EditTransactionSelectSourceBottomSheetItem(
                     end = 8.dp,
                 ),
         )
-        Text(
+        MyText(
             text = data.text,
             color = Color.DarkGray,
             fontSize = 14.sp,

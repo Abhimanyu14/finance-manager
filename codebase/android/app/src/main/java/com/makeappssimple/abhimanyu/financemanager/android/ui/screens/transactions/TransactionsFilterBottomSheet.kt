@@ -10,7 +10,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
@@ -31,6 +30,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MySelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.VerticalSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 
 data class TransactionsFilterBottomSheetSelectionData(
     val selectedExpenseCategoryIndices: List<Int>,
@@ -102,7 +102,7 @@ fun TransactionsFiltersBottomSheet(
                 modifier = Modifier
                     .fillMaxWidth(),
             ) {
-                Text(
+                MyText(
                     text = stringResource(
                         id = R.string.bottom_sheet_transactions_filter_select_expense_categories,
                     ),
@@ -129,7 +129,7 @@ fun TransactionsFiltersBottomSheet(
                             horizontal = 16.dp,
                         ),
                 ) {
-                    Text(
+                    MyText(
                         text = stringResource(
                             id = R.string.bottom_sheet_transactions_filter_clear,
                         ),
@@ -162,7 +162,7 @@ fun TransactionsFiltersBottomSheet(
                 modifier = Modifier
                     .fillMaxWidth(),
             ) {
-                Text(
+                MyText(
                     text = stringResource(
                         id = R.string.bottom_sheet_transactions_filter_select_income_categories,
                     ),
@@ -189,7 +189,7 @@ fun TransactionsFiltersBottomSheet(
                             horizontal = 16.dp,
                         ),
                 ) {
-                    Text(
+                    MyText(
                         text = stringResource(
                             id = R.string.bottom_sheet_transactions_filter_clear,
                         ),
@@ -222,7 +222,7 @@ fun TransactionsFiltersBottomSheet(
                 modifier = Modifier
                     .fillMaxWidth(),
             ) {
-                Text(
+                MyText(
                     text = stringResource(
                         id = R.string.bottom_sheet_transactions_filter_select_sources,
                     ),
@@ -249,7 +249,7 @@ fun TransactionsFiltersBottomSheet(
                             horizontal = 16.dp,
                         ),
                 ) {
-                    Text(
+                    MyText(
                         text = stringResource(
                             id = R.string.bottom_sheet_transactions_filter_clear,
                         ),
@@ -282,7 +282,7 @@ fun TransactionsFiltersBottomSheet(
                 modifier = Modifier
                     .fillMaxWidth(),
             ) {
-                Text(
+                MyText(
                     text = stringResource(
                         id = R.string.bottom_sheet_transactions_filter_select_transaction_types,
                     ),
@@ -309,7 +309,7 @@ fun TransactionsFiltersBottomSheet(
                             horizontal = 16.dp,
                         ),
                 ) {
-                    Text(
+                    MyText(
                         text = stringResource(
                             id = R.string.bottom_sheet_transactions_filter_clear,
                         ),
@@ -359,7 +359,7 @@ fun TransactionsFiltersBottomSheet(
                         weight = 1F,
                     ),
             ) {
-                Text(
+                MyText(
                     text = stringResource(
                         id = R.string.bottom_sheet_transactions_filter_reset,
                     ),
@@ -384,7 +384,7 @@ fun TransactionsFiltersBottomSheet(
                         weight = 1F,
                     ),
             ) {
-                Text(
+                MyText(
                     text = stringResource(
                         id = R.string.bottom_sheet_transactions_filter_apply,
                     ),

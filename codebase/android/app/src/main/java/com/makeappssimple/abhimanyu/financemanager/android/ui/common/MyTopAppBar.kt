@@ -2,10 +2,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.common
 
 import androidx.compose.foundation.background
 import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 
@@ -17,7 +17,7 @@ fun MyTopAppBar(
 ) {
     CenterAlignedTopAppBar(
         title = {
-            Text(
+            MyText(
                 text = titleText,
                 color = Primary,
             )

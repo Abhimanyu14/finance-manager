@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -27,6 +26,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.amountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableItemViewWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateAndTimeString
 
 data class HomeListItemViewData(
@@ -73,7 +73,7 @@ fun HomeListItem(
                     modifier = Modifier
                         .fillMaxWidth(),
                 ) {
-                    Text(
+                    MyText(
                         text = data.transaction.title,
                         style = TextStyle(
                             color = DarkGray,
@@ -86,7 +86,7 @@ fun HomeListItem(
                                 weight = 1F,
                             ),
                     )
-                    Text(
+                    MyText(
                         text = if (data.transaction.transactionType == TransactionType.INCOME ||
                             (data.transaction.transactionType == TransactionType.ADJUSTMENT
                                     && data.transaction.amount.value > 0)
@@ -118,7 +118,7 @@ fun HomeListItem(
                     modifier = Modifier
                         .fillMaxWidth(),
                 ) {
-                    Text(
+                    MyText(
                         text = getDateAndTimeString(
                             timestamp = data.transaction.transactionTimestamp,
                         ),
@@ -133,7 +133,7 @@ fun HomeListItem(
                                 weight = 1F,
                             ),
                     )
-                    Text(
+                    MyText(
                         text = if (data.sourceFrom != null && data.sourceTo != null) {
                             stringResource(
                                 id = R.string.list_item_home_source,
