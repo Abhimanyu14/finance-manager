@@ -27,6 +27,7 @@ import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Clear
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -294,7 +295,7 @@ fun EditCategoryScreenView(
                                                 end = 4.dp,
                                             ),
                                     ) {
-                                        androidx.compose.material.Icon(
+                                        Icon(
                                             imageVector = Icons.Rounded.Clear,
                                             contentDescription = stringResource(
                                                 id = R.string.screen_edit_category_clear_title,

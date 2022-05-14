@@ -10,10 +10,10 @@ import androidx.compose.material.FabPosition
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
@@ -206,7 +206,7 @@ fun CategoriesScreenView(
                 Column {
                     TabRow(
                         selectedTabIndex = selectedTabIndex,
-                        backgroundColor = Surface,
+                        containerColor = Surface,
                         contentColor = Primary,
                     ) {
                         transactionTypes
