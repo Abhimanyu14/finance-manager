@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.utils
 
-import android.text.format.DateFormat
+import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.formattedDate
+import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.formattedTime
 import java.util.Calendar
 import java.util.Locale
 
@@ -10,8 +11,7 @@ fun getDateString(
     val calendar = Calendar.getInstance(Locale.getDefault()).apply {
         timeInMillis = timestamp
     }
-
-    return DateFormat.format("dd MMM, yyyy", calendar).toString()
+    return calendar.formattedDate()
 }
 
 fun getDateAndTimeString(
@@ -20,8 +20,5 @@ fun getDateAndTimeString(
     val calendar = Calendar.getInstance(Locale.getDefault()).apply {
         timeInMillis = timestamp
     }
-
-    return "${DateFormat.format("dd MMM, yyyy", calendar)}" +
-            " at " +
-            "${DateFormat.format("hh:mm a", calendar)}"
+    return "${calendar.formattedDate()} at ${calendar.formattedTime()}"
 }

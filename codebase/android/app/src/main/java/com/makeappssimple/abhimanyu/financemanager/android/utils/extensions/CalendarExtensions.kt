@@ -54,9 +54,11 @@ fun Calendar.setTime(
 }
 
 fun Calendar.formattedDate(): String {
-    return DateFormat.format("dd/MM/yyyy", this).toString()
+    return DateFormat.format("dd MMM, yyyy", this).toString()
 }
 
 fun Calendar.formattedTime(): String {
     return DateFormat.format("hh:mm a", this).toString()
+        .replace("am", "AM")
+        .replace("pm", "PM")
 }
