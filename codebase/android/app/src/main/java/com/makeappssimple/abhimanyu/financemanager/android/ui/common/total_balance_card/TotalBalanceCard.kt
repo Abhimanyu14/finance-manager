@@ -5,7 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -25,6 +26,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.conditional
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Green700
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TotalBalanceCard(
     viewModel: TotalBalanceCardViewModel = hiltViewModel<TotalBalanceCardViewModelImpl>(),

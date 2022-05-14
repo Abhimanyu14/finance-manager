@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.common
 
-import androidx.compose.material.IconButton
+import androidx.compose.material3.IconButton
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material3.Icon

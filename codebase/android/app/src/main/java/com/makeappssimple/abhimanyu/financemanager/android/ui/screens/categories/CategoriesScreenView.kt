@@ -8,9 +8,10 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
@@ -55,7 +56,7 @@ data class CategoriesScreenViewData(
     val screenViewModel: CategoriesScreenViewModel,
 )
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @ExperimentalMaterialApi
 @Composable
 fun CategoriesScreenView(

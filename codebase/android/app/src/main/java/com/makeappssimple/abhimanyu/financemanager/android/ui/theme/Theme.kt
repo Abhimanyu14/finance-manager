@@ -111,7 +111,7 @@ fun Material2AppTheme(
         colors = colors,
         typography = Material2Typography,
         shapes = Shapes,
-        content = content
+        content = content,
     )
 }
 
@@ -129,7 +129,7 @@ fun Material3AppTheme(
     MaterialTheme(
         colorScheme = colors,
         typography = Typography,
-        content = content
+        content = content,
     )
 }
 

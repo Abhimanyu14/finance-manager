@@ -4,7 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.ButtonDefaults
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,7 +26,7 @@ fun SaveButton(
         ),
         enabled = isEnabled,
         colors = ButtonDefaults.buttonColors(
-            disabledBackgroundColor = Color.Transparent,
+            disabledContainerColor = Color.Transparent,
         ),
         border = BorderStroke(
             width = 1.dp,

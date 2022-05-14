@@ -51,7 +51,7 @@ class SettingsScreenViewModelImpl @Inject constructor(
     }
 
     override fun recalculateTotal() {
-        viewModelScope.launch (
+        viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
             recalculateTotalUseCase()

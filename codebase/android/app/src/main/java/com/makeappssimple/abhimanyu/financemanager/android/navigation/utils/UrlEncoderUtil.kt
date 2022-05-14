@@ -4,8 +4,8 @@ import java.net.URLDecoder
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
-class UrlEncoderUtil  {
-     fun encodeString(
+class UrlEncoderUtil {
+    fun encodeString(
         string: String,
     ): String {
         return URLEncoder.encode(
@@ -14,7 +14,7 @@ class UrlEncoderUtil  {
         )
     }
 
-     fun decodeString(
+    fun decodeString(
         string: String?,
         defaultValue: String = "",
     ): String {
