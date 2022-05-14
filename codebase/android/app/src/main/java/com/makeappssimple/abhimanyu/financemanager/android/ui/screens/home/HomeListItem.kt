@@ -114,6 +114,22 @@ fun HomeListItem(
                             height = 4.dp,
                         ),
                 )
+                MyText(
+                    text = data.transaction.transactionFor.title,
+                    style = TextStyle(
+                        color = DarkGray,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Normal,
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                )
+                Spacer(
+                    modifier = Modifier
+                        .height(
+                            height = 4.dp,
+                        ),
+                )
                 Row(
                     modifier = Modifier
                         .fillMaxWidth(),
