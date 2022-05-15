@@ -8,22 +8,31 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ListItem
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Backup
+import androidx.compose.material.icons.rounded.Calculate
+import androidx.compose.material.icons.rounded.Restore
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
+import com.makeappssimple.abhimanyu.financemanager.android.utils.CreateJsonDocument
+import com.makeappssimple.abhimanyu.financemanager.android.utils.JSON_MIMETYPE
 
 data class SettingsScreenViewData(
     val screenViewModel: SettingsScreenViewModel,
 )
-
-private const val JSON_MIMETYPE = "application/json"
 
 @ExperimentalMaterialApi
 @ExperimentalMaterial3Api
@@ -33,9 +42,7 @@ fun SettingsScreenView(
     state: SettingsScreenViewState,
 ) {
     val createDocument = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.CreateDocument(
-            mimeType = JSON_MIMETYPE,
-        ),
+        contract = CreateJsonDocument(),
     ) { uri ->
         uri?.let {
             data.screenViewModel.backupDataToDocument(
@@ -78,10 +85,22 @@ fun SettingsScreenView(
                     .fillMaxWidth(),
             ) {
                 ListItem(
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Rounded.Backup,
+                            contentDescription = null,
+                            tint = DarkGray,
+                        )
+                    },
                     text = {
                         MyText(
                             text = stringResource(
                                 id = R.string.screen_settings_backup,
+                            ),
+                            style = TextStyle(
+                                color = DarkGray,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Normal,
                             ),
                             modifier = Modifier
                                 .fillMaxWidth(),
@@ -93,10 +112,22 @@ fun SettingsScreenView(
                         },
                 )
                 ListItem(
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Rounded.Restore,
+                            contentDescription = null,
+                            tint = DarkGray,
+                        )
+                    },
                     text = {
                         MyText(
                             text = stringResource(
                                 id = R.string.screen_settings_restore,
+                            ),
+                            style = TextStyle(
+                                color = DarkGray,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Normal,
                             ),
                             modifier = Modifier
                                 .fillMaxWidth(),
@@ -108,10 +139,22 @@ fun SettingsScreenView(
                         },
                 )
                 ListItem(
+                    icon = {
+                        Icon(
+                            imageVector = Icons.Rounded.Calculate,
+                            contentDescription = null,
+                            tint = DarkGray,
+                        )
+                    },
                     text = {
                         MyText(
                             text = stringResource(
                                 id = R.string.screen_settings_recalculate_total,
+                            ),
+                            style = TextStyle(
+                                color = DarkGray,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.Normal,
                             ),
                             modifier = Modifier
                                 .fillMaxWidth(),

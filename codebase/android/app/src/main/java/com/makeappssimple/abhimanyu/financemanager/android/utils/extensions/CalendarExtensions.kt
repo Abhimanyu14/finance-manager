@@ -57,6 +57,12 @@ fun Calendar.formattedDate(): String {
     return DateFormat.format("dd MMM, yyyy", this).toString()
 }
 
+fun Calendar.formattedDateAndTime(): String {
+    return DateFormat.format("yyyy-MMM-dd, hh-mm a", this).toString()
+        .replace("am", "AM")
+        .replace("pm", "PM")
+}
+
 fun Calendar.formattedTime(): String {
     return DateFormat.format("hh:mm a", this).toString()
         .replace("am", "AM")
