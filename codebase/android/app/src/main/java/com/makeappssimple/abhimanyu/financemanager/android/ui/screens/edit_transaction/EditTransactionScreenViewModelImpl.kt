@@ -23,6 +23,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.Navigation
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
+import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotZero
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isCashSource
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isDefaultCategory
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isSalaryCategory
@@ -134,17 +135,17 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
             TransactionType.INCOME -> {
                 uiState.amount.isNotNullOrBlank() &&
                         uiState.title.isNotNullOrBlank() &&
-                        uiState.amount.toInt() != 0
+                        uiState.amount.toInt().isNotZero()
             }
             TransactionType.EXPENSE -> {
                 uiState.amount.isNotNullOrBlank() &&
                         uiState.title.isNotNullOrBlank() &&
-                        uiState.amount.toInt() != 0
+                        uiState.amount.toInt().isNotZero()
             }
             TransactionType.TRANSFER -> {
                 uiState.amount.isNotNullOrBlank() &&
                         uiState.sourceFrom?.id != uiState.sourceTo?.id &&
-                        uiState.amount.toInt() != 0
+                        uiState.amount.toInt().isNotZero()
             }
             TransactionType.ADJUSTMENT -> {
                 false
