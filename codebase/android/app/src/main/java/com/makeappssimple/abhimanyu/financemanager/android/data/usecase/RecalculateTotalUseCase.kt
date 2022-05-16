@@ -58,6 +58,7 @@ class RecalculateTotalUseCaseImpl(
                     val source = getSourceUseCase(
                         id = sourceId,
                     ) ?: return@collectedTransactionsLoop
+                    // TODO-Abhi: Amount sign change
                     updateSourcesUseCase(
                         source.copy(
                             balanceAmount = source.balanceAmount.copy(

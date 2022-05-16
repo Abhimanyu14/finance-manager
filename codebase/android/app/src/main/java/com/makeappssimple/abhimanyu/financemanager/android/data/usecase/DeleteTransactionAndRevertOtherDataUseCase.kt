@@ -5,6 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.U
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 
 interface DeleteTransactionAndRevertOtherDataUseCase {
     suspend operator fun invoke(
@@ -29,21 +30,37 @@ class DeleteTransactionAndRevertOtherDataUseCaseImpl(
         )
         val sourceFromId = transaction.sourceFromId
         val sourceToId = transaction.sourceToId
-        if (
-            sourceFromId != null &&
-            sourceToId != null
-        ) {
-            handleTransferTransactions(
-                sourceFromId = sourceFromId,
-                sourceToId = sourceToId,
-                transaction = transaction,
-            )
-        } else {
-            handleNonTransferTransactions(
-                sourceFromId = sourceFromId,
-                sourceToId = sourceToId,
-                transaction = transaction,
-            )
+        when (transaction.transactionType) {
+            TransactionType.INCOME -> {
+                handleNonTransferTransactionsSourceTo(
+                    sourceToId = sourceToId,
+                    transaction = transaction,
+                )
+            }
+            TransactionType.EXPENSE -> {
+                handleNonTransferTransactionsSourceFrom(
+                    sourceFromId = sourceFromId,
+                    transaction = transaction
+                )
+            }
+            TransactionType.TRANSFER -> {
+                if (
+                    sourceFromId != null &&
+                    sourceToId != null
+                ) {
+                    handleTransferTransactions(
+                        sourceFromId = sourceFromId,
+                        sourceToId = sourceToId,
+                        transaction = transaction,
+                    )
+                }
+            }
+            TransactionType.ADJUSTMENT -> {
+                handleNonTransferTransactionsSourceTo(
+                    sourceToId = sourceToId,
+                    transaction = transaction,
+                )
+            }
         }
     }
 
@@ -82,6 +99,7 @@ class DeleteTransactionAndRevertOtherDataUseCaseImpl(
         sourceToId: Int,
         transaction: Transaction
     ) {
+        // TODO-Abhi: Amount sign change
         val source = getSourceUseCase(
             id = sourceToId,
         ) ?: return
@@ -94,25 +112,11 @@ class DeleteTransactionAndRevertOtherDataUseCaseImpl(
         )
     }
 
-    private suspend fun handleNonTransferTransactions(
-        sourceFromId: Int?,
-        sourceToId: Int?,
-        transaction: Transaction,
-    ) {
-        handleNonTransferTransactionsSourceFrom(
-            sourceFromId = sourceFromId,
-            transaction = transaction
-        )
-        handleNonTransferTransactionsSourceTo(
-            sourceToId = sourceToId,
-            transaction = transaction,
-        )
-    }
-
     private suspend fun handleNonTransferTransactionsSourceFrom(
         sourceFromId: Int?,
         transaction: Transaction
     ) {
+        // TODO-Abhi: Amount sign change
         sourceFromId ?: return
         val source = getSourceUseCase(
             id = sourceFromId,
@@ -130,6 +134,7 @@ class DeleteTransactionAndRevertOtherDataUseCaseImpl(
         sourceToId: Int?,
         transaction: Transaction
     ) {
+        // TODO-Abhi: Amount sign change
         sourceToId ?: return
         val source = getSourceUseCase(
             id = sourceToId,

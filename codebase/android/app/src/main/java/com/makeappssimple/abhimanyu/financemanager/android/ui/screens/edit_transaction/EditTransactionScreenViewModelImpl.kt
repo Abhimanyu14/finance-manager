@@ -353,6 +353,7 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
             val selectedTransactionTypeValue = selectedTransactionType.value
             val uiStateValue = uiState.value
             selectedTransactionTypeValue?.let {
+                // TODO-Abhi: Amount sign change
                 val amount = Amount(
                     value = if (selectedTransactionTypeValue == TransactionType.EXPENSE) {
                         -1 * uiStateValue.amount.toLong()
