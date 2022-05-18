@@ -9,6 +9,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.D
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.InsertSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.DeleteAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.InsertTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.utils.JsonUtil
 
 interface RestoreDataUseCase {
@@ -48,8 +50,38 @@ class RestoreDataUseCaseImpl(
         insertSourcesUseCase(
             *databaseBackupData.sources.toTypedArray(),
         )
-        insertTransactionsUseCase(
-            *databaseBackupData.transactions.toTypedArray(),
+        val transactions = transactionsCleanUp(
+            transactions = databaseBackupData.transactions,
         )
+        insertTransactionsUseCase(
+            *transactions.toTypedArray(),
+        )
+    }
+
+    private fun transactionsCleanUp(
+        transactions: List<Transaction>,
+    ): List<Transaction> {
+        return transactions.map {
+            when (it.transactionType) {
+                TransactionType.INCOME -> {
+                    it.copy(
+                        sourceFromId = null,
+                    )
+                }
+                TransactionType.EXPENSE -> {
+                    it.copy(
+                        sourceToId = null,
+                    )
+                }
+                TransactionType.TRANSFER -> {
+                    it
+                }
+                TransactionType.ADJUSTMENT -> {
+                    it.copy(
+                        sourceFromId = null,
+                    )
+                }
+            }
+        }
     }
 }
