@@ -9,48 +9,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amoun
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.OnTertiaryContainer
 import com.squareup.moshi.JsonClass
 
-@JsonClass(generateAdapter = false)
-enum class TransactionFor(
-    val title: String,
-) {
-    SELF(
-        title = "Self",
-    ),
-    COMMON(
-        title = "Common",
-    ),
-    OTHERS(
-        title = "Others",
-    ),
-}
-
-@JsonClass(generateAdapter = false)
-enum class TransactionType(
-    val title: String,
-) {
-    INCOME(
-        title = "Income",
-    ),
-    EXPENSE(
-        title = "Expense",
-    ),
-    TRANSFER(
-        title = "Transfer",
-    ),
-    ADJUSTMENT(
-        title = "Adjustment",
-    ),
-    /*
-    // TODO-Abhi: Add Loans later
-    LOAN(
-        title = "Loan",
-    ),
-    REPAYMENT(
-        title = "Repayment",
-    ),
-    */
-}
-
 @JsonClass(generateAdapter = true)
 @Entity(tableName = "transaction_table")
 data class Transaction(
