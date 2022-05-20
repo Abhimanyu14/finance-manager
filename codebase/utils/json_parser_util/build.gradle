@@ -1,19 +1,28 @@
 plugins {
-    id 'java'
-    id 'org.jetbrains.kotlin.jvm' version '1.5.31'
+    id "java"
+    id "org.jetbrains.kotlin.jvm" version "1.6.10"
+    id "org.jetbrains.kotlin.kapt" version "1.6.21"
+    id "com.google.devtools.ksp" version "1.6.21-1.0.5"
 }
 
-group 'com.makeappssimple.abhimanyu.financemanager'
-version '1.0-SNAPSHOT'
+group "com.makeappssimple.abhimanyu.financemanager"
+version "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    // classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10"
+    
+    implementation "com.squareup.moshi:moshi-kotlin:1.9.3"
+    implementation "com.google.devtools.ksp:symbol-processing-api:1.6.10-1.0.2"
+    // ksp "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
+
     implementation "org.jetbrains.kotlin:kotlin-stdlib"
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    testImplementation "org.junit.jupiter:junit-jupiter-api:5.7.0"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.7.0"
 }
 
 test {
