@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.google.gson.annotations.SerializedName
 import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.converters.CategoryIdsConverter
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.squareup.moshi.Json
@@ -16,11 +15,9 @@ data class Category(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @ColumnInfo(name = "parent_category")
-    @SerializedName(value = "parent_category")
     @Json(name = "parent_category")
     val parentCategoryId: Int? = null,
     @ColumnInfo(name = "sub_categories")
-    @SerializedName(value = "sub_categories")
     @Json(name = "sub_categories")
     @TypeConverters(CategoryIdsConverter::class)
     val subCategoryIds: List<Int>? = null,
@@ -28,7 +25,6 @@ data class Category(
     val emoji: String,
     val title: String,
     @ColumnInfo(name = "transaction_type")
-    @SerializedName(value = "transaction_type")
     @Json(name = "transaction_type")
     val transactionType: TransactionType,
 )

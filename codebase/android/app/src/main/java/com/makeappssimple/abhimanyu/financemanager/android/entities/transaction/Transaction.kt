@@ -4,9 +4,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.google.gson.annotations.SerializedName
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.OnTertiaryContainer
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
@@ -14,29 +14,29 @@ import com.squareup.moshi.JsonClass
 data class Transaction(
     val amount: Amount,
     @ColumnInfo(name = "category_id")
-    @SerializedName(value = "category_id")
+    @Json(name = "category_id")
     val categoryId: Int? = null,
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @ColumnInfo(name = "source_from_id")
-    @SerializedName(value = "source_from_id")
+    @Json(name = "source_from_id")
     val sourceFromId: Int? = null,
     @ColumnInfo(name = "source_to_id")
-    @SerializedName(value = "source_to_id")
+    @Json(name = "source_to_id")
     val sourceToId: Int? = null,
     val description: String = "",
     val title: String,
     @ColumnInfo(name = "creation_timestamp")
-    @SerializedName(value = "creation_timestamp")
+    @Json(name = "creation_timestamp")
     val creationTimestamp: Long,
     @ColumnInfo(name = "transaction_timestamp")
-    @SerializedName(value = "transaction_timestamp")
+    @Json(name = "transaction_timestamp")
     val transactionTimestamp: Long,
     @ColumnInfo(name = "transaction_for")
-    @SerializedName(value = "transaction_for")
+    @Json(name = "transaction_for")
     val transactionFor: TransactionFor = TransactionFor.SELF,
     @ColumnInfo(name = "transaction_type")
-    @SerializedName(value = "transaction_type")
+    @Json(name = "transaction_type")
     val transactionType: TransactionType = TransactionType.EXPENSE,
 )
 
