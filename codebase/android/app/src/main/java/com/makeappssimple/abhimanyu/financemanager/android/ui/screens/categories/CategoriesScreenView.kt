@@ -16,10 +16,12 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -28,6 +30,9 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.rememberPagerState
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddCategoryScreen
@@ -46,6 +51,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isDefaultCategory
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isSalaryCategory
+import kotlinx.coroutines.launch
 
 enum class CategoriesBottomSheetType {
     NONE,
@@ -56,7 +62,11 @@ data class CategoriesScreenViewData(
     val screenViewModel: CategoriesScreenViewModel,
 )
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
+@OptIn(
+    ExperimentalComposeUiApi::class,
+    ExperimentalMaterial3Api::class,
+    ExperimentalPagerApi::class,
+)
 @ExperimentalMaterialApi
 @Composable
 fun CategoriesScreenView(
@@ -64,11 +74,18 @@ fun CategoriesScreenView(
     state: CategoriesScreenViewState,
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
+    val coroutineScope = rememberCoroutineScope()
     val selectedTabIndex by data.screenViewModel.selectedTabIndex.collectAsState()
-    val categories by data.screenViewModel.filteredCategories.collectAsState(
+    val expenseCategories by data.screenViewModel.expenseCategories.collectAsState(
         initial = emptyList(),
     )
-    val categoriesIsUsedInTransactions by data.screenViewModel.categoriesIsUsedInTransactions.collectAsState(
+    val incomeCategories by data.screenViewModel.incomeCategories.collectAsState(
+        initial = emptyList(),
+    )
+    val expenseCategoryIsUsedInTransactions by data.screenViewModel.expenseCategoryIsUsedInTransactions.collectAsState(
+        initial = emptyList(),
+    )
+    val incomeCategoryIsUsedInTransactions by data.screenViewModel.incomeCategoryIsUsedInTransactions.collectAsState(
         initial = emptyList(),
     )
     val defaultExpenseCategoryId by data.screenViewModel.defaultExpenseCategoryId.collectAsState(
@@ -77,25 +94,48 @@ fun CategoriesScreenView(
     val defaultIncomeCategoryId by data.screenViewModel.defaultIncomeCategoryId.collectAsState(
         initial = null,
     )
+    val pagerState = rememberPagerState(
+        initialPage = 0,
+    )
     var categoriesBottomSheetType by remember {
         mutableStateOf(
             value = CategoriesBottomSheetType.NONE,
         )
     }
-    var expandedItemIndex by remember {
+    var expenseExpandedItemIndex: Int? by remember {
         mutableStateOf(
-            value = -1,
+            value = null,
         )
     }
-    var clickedItemId by remember {
+    var incomeExpandedItemIndex: Int? by remember {
         mutableStateOf(
-            value = -1,
+            value = null,
+        )
+    }
+    var clickedItemId: Int? by remember {
+        mutableStateOf(
+            value = null,
         )
     }
     val transactionTypes = listOf(
         TransactionType.EXPENSE,
         TransactionType.INCOME,
     )
+
+    LaunchedEffect(
+        key1 = pagerState.currentPage,
+    ) {
+        data.screenViewModel.updateSelectedTabIndex(
+            updatedSelectedTabIndex = pagerState.currentPage,
+        )
+    }
+    LaunchedEffect(
+        key1 = selectedTabIndex,
+    ) {
+        coroutineScope.launch {
+            pagerState.animateScrollToPage(selectedTabIndex)
+        }
+    }
 
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
         DisposableEffect(Unit) {
@@ -146,12 +186,14 @@ fun CategoriesScreenView(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,
                                 ) {
-                                    data.screenViewModel.setDefaultCategoryIdInDataStore(
-                                        defaultCategoryId = clickedItemId,
-                                        transactionType = transactionType,
-                                    )
+                                    clickedItemId?.let { clickedItemIdValue ->
+                                        data.screenViewModel.setDefaultCategoryIdInDataStore(
+                                            defaultCategoryId = clickedItemIdValue,
+                                            transactionType = transactionType,
+                                        )
+                                    }
                                     categoriesBottomSheetType = CategoriesBottomSheetType.NONE
-                                    clickedItemId = -1
+                                    clickedItemId = null
                                 }
                             },
                             onNegativeButtonClick = {
@@ -160,7 +202,7 @@ fun CategoriesScreenView(
                                     modalBottomSheetState = state.modalBottomSheetState,
                                 ) {
                                     categoriesBottomSheetType = CategoriesBottomSheetType.NONE
-                                    clickedItemId = -1
+                                    clickedItemId = null
                                 }
                             },
                         ),
@@ -201,7 +243,10 @@ fun CategoriesScreenView(
                     state.focusManager.clearFocus()
                 },
             ) {
-                Column {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                ) {
                     TabRow(
                         selectedTabIndex = selectedTabIndex,
                         containerColor = Surface,
@@ -229,88 +274,126 @@ fun CategoriesScreenView(
                                         data.screenViewModel.updateSelectedTabIndex(
                                             updatedSelectedTabIndex = index,
                                         )
-                                        expandedItemIndex = -1
                                     },
                                     selectedContentColor = Primary,
                                     unselectedContentColor = Primary,
                                 )
                             }
                     }
-                    LazyColumn {
-                        item {
-                            VerticalSpacer(
-                                height = 16.dp,
-                            )
-                        }
-                        itemsIndexed(
-                            items = categories,
-                            key = { _, listItem ->
-                                listItem.hashCode()
-                            },
-                        ) { index, listItem ->
-                            val deleteEnabled: Boolean? = categoriesIsUsedInTransactions.getOrNull(
-                                index = index,
-                            )?.not()
-                            val transactionType = transactionTypes[selectedTabIndex]
-                            val isDefault = if (transactionType == TransactionType.EXPENSE) {
-                                if (defaultExpenseCategoryId.isNull()) {
-                                    isDefaultCategory(
-                                        category = listItem.title,
-                                    )
-                                } else {
-                                    defaultExpenseCategoryId == listItem.id
-                                }
-                            } else {
-                                if (defaultIncomeCategoryId.isNull()) {
-                                    isSalaryCategory(
-                                        category = listItem.title,
-                                    )
-                                } else {
-                                    defaultIncomeCategoryId == listItem.id
-                                }
+                    HorizontalPager(
+                        count = 2,
+                        state = pagerState,
+                        modifier = Modifier
+                            .weight(
+                                weight = 1F,
+                            ),
+                    ) { page ->
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxSize(),
+                        ) {
+                            val transactionType = transactionTypes[page]
+                            item {
+                                VerticalSpacer(
+                                    height = 16.dp,
+                                )
                             }
-                            CategoriesListItem(
-                                category = listItem,
-                                expanded = index == expandedItemIndex,
-                                deleteEnabled = deleteEnabled ?: false,
-                                isDefault = isDefault,
-                                onClick = {
-                                    expandedItemIndex = if (index == expandedItemIndex) {
-                                        -1
+                            itemsIndexed(
+                                items = if (transactionType == TransactionType.EXPENSE) {
+                                    expenseCategories
+                                } else {
+                                    incomeCategories
+                                },
+                                key = { _, listItem ->
+                                    listItem.hashCode()
+                                },
+                            ) { index, listItem ->
+                                val deleteEnabled: Boolean? =
+                                    if (transactionType == TransactionType.EXPENSE) {
+                                        expenseCategoryIsUsedInTransactions.getOrNull(
+                                            index = index,
+                                        )?.not()
                                     } else {
-                                        index
+                                        incomeCategoryIsUsedInTransactions.getOrNull(
+                                            index = index,
+                                        )?.not()
                                     }
-                                },
-                                onLongClick = {
-                                    if (!isDefault) {
-                                        categoriesBottomSheetType =
-                                            CategoriesBottomSheetType.SET_AS_DEFAULT_CONFIRMATION
-                                        clickedItemId = listItem.id
-                                        toggleModalBottomSheetState(
-                                            coroutineScope = state.coroutineScope,
-                                            modalBottomSheetState = state.modalBottomSheetState,
-                                        ) {}
+                                val isDefault = if (transactionType == TransactionType.EXPENSE) {
+                                    if (defaultExpenseCategoryId.isNull()) {
+                                        isDefaultCategory(
+                                            category = listItem.title,
+                                        )
+                                    } else {
+                                        defaultExpenseCategoryId == listItem.id
                                     }
-                                },
-                                onEditClick = {
-                                    navigateToEditCategoryScreen(
-                                        navigationManager = data.screenViewModel.navigationManager,
-                                        categoryId = listItem.id,
-                                    )
-                                    expandedItemIndex = -1
-                                },
-                                onDeleteClick = {
-                                    data.screenViewModel.deleteCategory(
-                                        id = listItem.id,
-                                    )
-                                    expandedItemIndex = -1
-                                },
-                            )
-                        }
-                        item {
-                            VerticalSpacer(
-                                height = 80.dp,
-                            )
+                                } else {
+                                    if (defaultIncomeCategoryId.isNull()) {
+                                        isSalaryCategory(
+                                            category = listItem.title,
+                                        )
+                                    } else {
+                                        defaultIncomeCategoryId == listItem.id
+                                    }
+                                }
+                                CategoriesListItem(
+                                    category = listItem,
+                                    expanded = if (transactionType == TransactionType.EXPENSE) {
+                                        index == expenseExpandedItemIndex
+                                    } else {
+                                        index == incomeExpandedItemIndex
+                                    },
+                                    deleteEnabled = deleteEnabled ?: false,
+                                    isDefault = isDefault,
+                                    onClick = {
+                                        if (transactionType == TransactionType.EXPENSE) {
+                                            expenseExpandedItemIndex =
+                                                if (index == expenseExpandedItemIndex) {
+                                                    null
+                                                } else {
+                                                    index
+                                                }
+                                        } else {
+                                            incomeExpandedItemIndex =
+                                                if (index == incomeExpandedItemIndex) {
+                                                    null
+                                                } else {
+                                                    index
+                                                }
+                                        }
+                                    },
+                                    onLongClick = {
+                                        if (!isDefault) {
+                                            categoriesBottomSheetType =
+                                                CategoriesBottomSheetType.SET_AS_DEFAULT_CONFIRMATION
+                                            clickedItemId = listItem.id
+                                            toggleModalBottomSheetState(
+                                                coroutineScope = state.coroutineScope,
+                                                modalBottomSheetState = state.modalBottomSheetState,
+                                            ) {}
+                                        }
+                                    },
+                                    onEditClick = {
+                                        navigateToEditCategoryScreen(
+                                            navigationManager = data.screenViewModel.navigationManager,
+                                            categoryId = listItem.id,
+                                        )
+                                        expenseExpandedItemIndex = null
+                                        incomeExpandedItemIndex = null
+                                    },
+                                    onDeleteClick = {
+                                        data.screenViewModel.deleteCategory(
+                                            id = listItem.id,
+                                        )
+                                        expenseExpandedItemIndex = null
+                                        incomeExpandedItemIndex = null
+                                    },
+                                )
+                            }
+                            item {
+                                VerticalSpacer(
+                                    height = 80.dp,
+                                )
+                            }
                         }
                     }
                 }

@@ -15,7 +15,6 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
@@ -28,26 +27,31 @@ class CategoriesScreenViewModelImpl @Inject constructor(
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
     private val dispatcherProvider: DispatcherProvider,
 ) : CategoriesScreenViewModel, ViewModel() {
-    private val transactionTypes = listOf(
-        TransactionType.EXPENSE,
-        TransactionType.INCOME,
-    )
-
     private var _selectedTabIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = 0,
     )
     override val selectedTabIndex: StateFlow<Int> = _selectedTabIndex
 
     private val categories: Flow<List<Category>> = getCategoriesUseCase()
-    override val filteredCategories: Flow<List<Category>> = combine(
-        flow = categories,
-        flow2 = selectedTabIndex,
-    ) { categories, selectedTabIndex ->
+    override val expenseCategories: Flow<List<Category>> = categories.map { categories ->
         categories.filter { category ->
-            category.transactionType == transactionTypes[selectedTabIndex]
+            category.transactionType == TransactionType.EXPENSE
         }
     }
-    override val categoriesIsUsedInTransactions: Flow<List<Boolean>> = filteredCategories
+    override val incomeCategories: Flow<List<Category>> = categories.map { categories ->
+        categories.filter { category ->
+            category.transactionType == TransactionType.INCOME
+        }
+    }
+    override val expenseCategoryIsUsedInTransactions: Flow<List<Boolean>> = expenseCategories
+        .map {
+            it.map { category ->
+                checkIdCategoryIsUsedInTransactionsUseCase(
+                    categoryId = category.id,
+                )
+            }
+        }
+    override val incomeCategoryIsUsedInTransactions: Flow<List<Boolean>> = incomeCategories
         .map {
             it.map { category ->
                 checkIdCategoryIsUsedInTransactionsUseCase(

@@ -10,8 +10,10 @@ import kotlinx.coroutines.flow.StateFlow
 interface CategoriesScreenViewModel : BaseScreenViewModel {
     val navigationManager: NavigationManager
     val selectedTabIndex: StateFlow<Int>
-    val filteredCategories: Flow<List<Category>>
-    val categoriesIsUsedInTransactions: Flow<List<Boolean>>
+    val expenseCategories: Flow<List<Category>>
+    val incomeCategories: Flow<List<Category>>
+    val expenseCategoryIsUsedInTransactions: Flow<List<Boolean>>
+    val incomeCategoryIsUsedInTransactions: Flow<List<Boolean>>
     val defaultExpenseCategoryId: Flow<Int?>
     val defaultIncomeCategoryId: Flow<Int?>
 
