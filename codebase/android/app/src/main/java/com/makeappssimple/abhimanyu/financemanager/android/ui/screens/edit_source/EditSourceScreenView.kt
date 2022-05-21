@@ -116,9 +116,7 @@ fun EditSourceScreenView(
             topBar = {
                 MyTopAppBar(
                     navigationManager = data.screenViewModel.navigationManager,
-                    titleText = stringResource(
-                        id = R.string.screen_edit_source_appbar_title,
-                    ),
+                    titleTextStringResourceId = R.string.screen_edit_source_appbar_title,
                     isNavigationIconVisible = true,
                 )
             },

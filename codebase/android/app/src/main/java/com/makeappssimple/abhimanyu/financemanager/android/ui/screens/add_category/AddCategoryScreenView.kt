@@ -174,9 +174,7 @@ fun AddCategoryScreenView(
             topBar = {
                 MyTopAppBar(
                     navigationManager = data.screenViewModel.navigationManager,
-                    titleText = stringResource(
-                        id = R.string.screen_add_category_appbar_title,
-                    ),
+                    titleTextStringResourceId = R.string.screen_add_category_appbar_title,
                     isNavigationIconVisible = true,
                 )
             },

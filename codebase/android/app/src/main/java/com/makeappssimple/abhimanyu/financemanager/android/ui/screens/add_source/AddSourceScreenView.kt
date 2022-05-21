@@ -62,9 +62,7 @@ fun AddSourceScreenView(
         topBar = {
             MyTopAppBar(
                 navigationManager = data.screenViewModel.navigationManager,
-                titleText = stringResource(
-                    id = R.string.screen_add_source_appbar_title,
-                ),
+                titleTextStringResourceId = R.string.screen_add_source_appbar_title,
                 isNavigationIconVisible = true,
             )
         },

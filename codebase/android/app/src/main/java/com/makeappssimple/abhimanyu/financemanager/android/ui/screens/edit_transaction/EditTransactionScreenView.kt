@@ -281,9 +281,7 @@ fun EditTransactionScreenView(
             topBar = {
                 MyTopAppBar(
                     navigationManager = data.screenViewModel.navigationManager,
-                    titleText = stringResource(
-                        id = R.string.screen_edit_transaction_appbar_title,
-                    ),
+                    titleTextStringResourceId = R.string.screen_edit_transaction_appbar_title,
                     isNavigationIconVisible = true,
                 )
             },

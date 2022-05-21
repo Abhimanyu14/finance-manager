@@ -215,9 +215,7 @@ fun CategoriesScreenView(
             topBar = {
                 MyTopAppBar(
                     navigationManager = data.screenViewModel.navigationManager,
-                    titleText = stringResource(
-                        id = R.string.screen_categories_appbar_title,
-                    ),
+                    titleTextStringResourceId = R.string.screen_categories_appbar_title,
                     isNavigationIconVisible = true,
                 )
             },

@@ -180,9 +180,7 @@ fun EditCategoryScreenView(
             topBar = {
                 MyTopAppBar(
                     navigationManager = data.screenViewModel.navigationManager,
-                    titleText = stringResource(
-                        id = R.string.screen_edit_category_appbar_title,
-                    ),
+                    titleTextStringResourceId = R.string.screen_edit_category_appbar_title,
                     isNavigationIconVisible = true,
                 )
             },
