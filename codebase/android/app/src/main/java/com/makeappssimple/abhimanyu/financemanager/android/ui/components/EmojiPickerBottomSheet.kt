@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.common
+package com.makeappssimple.abhimanyu.financemanager.android.ui.components
 
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
@@ -26,7 +26,9 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.google.accompanist.flowlayout.FlowRow
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.Emoji
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.SearchBar
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.SearchBarContainer
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.SearchBarData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.capitalizeWords
 

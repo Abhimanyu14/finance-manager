@@ -24,8 +24,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Sourc
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.amountTextColor
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiCircle
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableItemViewWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.EmojiCircle
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.ExpandableItemViewWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateAndTimeString
 

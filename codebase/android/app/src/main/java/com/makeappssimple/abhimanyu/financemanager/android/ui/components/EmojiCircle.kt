@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.common
+package com.makeappssimple.abhimanyu.financemanager.android.ui.components
 
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView

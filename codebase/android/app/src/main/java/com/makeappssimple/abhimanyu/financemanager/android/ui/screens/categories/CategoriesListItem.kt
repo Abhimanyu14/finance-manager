@@ -21,10 +21,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.DefaultTag
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.EmojiCircle
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableItemIconButton
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ExpandableItemViewWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.DefaultTag
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.EmojiCircle
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.ExpandableItemIconButton
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.ExpandableItemViewWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isDefaultCategory
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isSalaryCategory

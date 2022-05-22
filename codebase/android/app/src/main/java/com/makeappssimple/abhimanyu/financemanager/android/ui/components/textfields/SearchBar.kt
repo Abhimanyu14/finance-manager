@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.common
+package com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

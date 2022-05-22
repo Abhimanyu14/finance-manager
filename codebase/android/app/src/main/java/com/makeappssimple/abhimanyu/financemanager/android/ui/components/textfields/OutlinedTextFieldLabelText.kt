@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.common
+package com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable

@@ -34,7 +34,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.OutlinedTextFieldLabelText
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.OutlinedTextFieldLabelText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank

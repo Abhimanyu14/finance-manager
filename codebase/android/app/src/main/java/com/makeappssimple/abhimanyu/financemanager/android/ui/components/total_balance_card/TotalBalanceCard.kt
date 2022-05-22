@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.common.total_balance_card
+package com.makeappssimple.abhimanyu.financemanager.android.ui.components.total_balance_card
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

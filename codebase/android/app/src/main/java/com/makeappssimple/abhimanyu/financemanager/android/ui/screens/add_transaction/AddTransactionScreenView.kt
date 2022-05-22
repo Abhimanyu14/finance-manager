@@ -49,10 +49,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.AmountComma
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyReadOnlyTextField
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyScrollableRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.OutlinedTextFieldLabelText
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.OutlinedTextFieldLabelText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
