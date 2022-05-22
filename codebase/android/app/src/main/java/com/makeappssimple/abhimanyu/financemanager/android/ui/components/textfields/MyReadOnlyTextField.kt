@@ -9,11 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.TextFieldValue
 
 @Composable
 fun MyReadOnlyTextField(
-    value: TextFieldValue,
+    value: String,
     @StringRes labelTextStringResourceId: Int,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,

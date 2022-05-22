@@ -41,7 +41,6 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
@@ -146,6 +145,10 @@ fun EditTransactionScreenView(
         mutableStateOf(
             value = EditTransactionBottomSheetType.NONE,
         )
+    }
+
+    val clearFocus = {
+        state.focusManager.clearFocus()
     }
 
     LaunchedEffect(
@@ -291,7 +294,7 @@ fun EditTransactionScreenView(
             ScaffoldContentWrapper(
                 innerPadding = innerPadding,
                 onClick = {
-                    state.focusManager.clearFocus()
+                    clearFocus()
                 },
             ) {
                 Column(
@@ -369,7 +372,7 @@ fun EditTransactionScreenView(
                                 )
                             },
                             onDone = {
-                                state.focusManager.clearFocus()
+                                clearFocus()
                             },
                         ),
                         keyboardOptions = KeyboardOptions(
@@ -391,14 +394,12 @@ fun EditTransactionScreenView(
                         visible = uiVisibilityState.isCategoryTextFieldVisible,
                     ) {
                         MyReadOnlyTextField(
-                            value = TextFieldValue(
-                                text = uiState.category?.title.orEmpty(),
-                            ),
+                            value = uiState.category?.title.orEmpty(),
                             labelTextStringResourceId = R.string.screen_edit_transaction_category,
                             onClick = {
                                 editTransactionBottomSheetType =
                                     EditTransactionBottomSheetType.SELECT_CATEGORY
-                                state.focusManager.clearFocus()
+                                clearFocus()
                                 toggleModalBottomSheetState(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,
@@ -457,7 +458,7 @@ fun EditTransactionScreenView(
                             },
                             keyboardActions = KeyboardActions(
                                 onDone = {
-                                    state.focusManager.clearFocus()
+                                    clearFocus()
                                 },
                             ),
                             keyboardOptions = KeyboardOptions(
@@ -560,7 +561,7 @@ fun EditTransactionScreenView(
                             },
                             keyboardActions = KeyboardActions(
                                 onDone = {
-                                    state.focusManager.clearFocus()
+                                    clearFocus()
                                 },
                             ),
                             keyboardOptions = KeyboardOptions(
@@ -580,9 +581,7 @@ fun EditTransactionScreenView(
                         visible = uiVisibilityState.isSourceFromTextFieldVisible,
                     ) {
                         MyReadOnlyTextField(
-                            value = TextFieldValue(
-                                text = uiState.sourceFrom?.name.orEmpty(),
-                            ),
+                            value = uiState.sourceFrom?.name.orEmpty(),
                             labelTextStringResourceId = if (selectedTransactionType == TransactionType.TRANSFER) {
                                 R.string.screen_edit_transaction_source_from
                             } else {
@@ -591,7 +590,7 @@ fun EditTransactionScreenView(
                             onClick = {
                                 editTransactionBottomSheetType =
                                     EditTransactionBottomSheetType.SELECT_SOURCE_FROM
-                                state.focusManager.clearFocus()
+                                clearFocus()
                                 toggleModalBottomSheetState(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,
@@ -609,9 +608,7 @@ fun EditTransactionScreenView(
                         visible = uiVisibilityState.isSourceToTextFieldVisible,
                     ) {
                         MyReadOnlyTextField(
-                            value = TextFieldValue(
-                                text = uiState.sourceTo?.name.orEmpty(),
-                            ),
+                            value = uiState.sourceTo?.name.orEmpty(),
                             labelTextStringResourceId = if (selectedTransactionType == TransactionType.TRANSFER) {
                                 R.string.screen_edit_transaction_source_to
                             } else {
@@ -620,7 +617,7 @@ fun EditTransactionScreenView(
                             onClick = {
                                 editTransactionBottomSheetType =
                                     EditTransactionBottomSheetType.SELECT_SOURCE_TO
-                                state.focusManager.clearFocus()
+                                clearFocus()
                                 toggleModalBottomSheetState(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,
@@ -635,9 +632,7 @@ fun EditTransactionScreenView(
                         )
                     }
                     MyReadOnlyTextField(
-                        value = TextFieldValue(
-                            text = uiState.transactionCalendar.formattedDate(),
-                        ),
+                        value = uiState.transactionCalendar.formattedDate(),
                         labelTextStringResourceId = R.string.screen_edit_transaction_transaction_date,
                         onClick = {
                             transactionDatePickerDialog.show()
@@ -650,9 +645,7 @@ fun EditTransactionScreenView(
                             ),
                     )
                     MyReadOnlyTextField(
-                        value = TextFieldValue(
-                            text = uiState.transactionCalendar.formattedTime(),
-                        ),
+                        value = uiState.transactionCalendar.formattedTime(),
                         labelTextStringResourceId = R.string.screen_edit_transaction_transaction_time,
                         onClick = {
                             transactionTimePickerDialog.show()
