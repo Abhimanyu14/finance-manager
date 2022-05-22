@@ -17,7 +17,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -29,8 +28,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Sourc
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MySelectionGroup
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
 
 data class TransactionsFilterBottomSheetSelectionData(
     val selectedExpenseCategoryIndices: List<Int>,
@@ -103,9 +102,7 @@ fun TransactionsFiltersBottomSheet(
                     .fillMaxWidth(),
             ) {
                 MyText(
-                    text = stringResource(
-                        id = R.string.bottom_sheet_transactions_filter_select_expense_categories,
-                    ),
+                    textStringResourceId = R.string.bottom_sheet_transactions_filter_select_expense_categories,
                     style = TextStyle(
                         color = Color.DarkGray,
                         fontSize = 16.sp,
@@ -130,9 +127,7 @@ fun TransactionsFiltersBottomSheet(
                         ),
                 ) {
                     MyText(
-                        text = stringResource(
-                            id = R.string.bottom_sheet_transactions_filter_clear,
-                        ),
+                        textStringResourceId = R.string.bottom_sheet_transactions_filter_clear,
                     )
                 }
             }
@@ -163,9 +158,7 @@ fun TransactionsFiltersBottomSheet(
                     .fillMaxWidth(),
             ) {
                 MyText(
-                    text = stringResource(
-                        id = R.string.bottom_sheet_transactions_filter_select_income_categories,
-                    ),
+                    textStringResourceId = R.string.bottom_sheet_transactions_filter_select_income_categories,
                     style = TextStyle(
                         color = Color.DarkGray,
                         fontSize = 16.sp,
@@ -190,9 +183,7 @@ fun TransactionsFiltersBottomSheet(
                         ),
                 ) {
                     MyText(
-                        text = stringResource(
-                            id = R.string.bottom_sheet_transactions_filter_clear,
-                        ),
+                        textStringResourceId = R.string.bottom_sheet_transactions_filter_clear,
                     )
                 }
             }
@@ -223,9 +214,7 @@ fun TransactionsFiltersBottomSheet(
                     .fillMaxWidth(),
             ) {
                 MyText(
-                    text = stringResource(
-                        id = R.string.bottom_sheet_transactions_filter_select_sources,
-                    ),
+                    textStringResourceId = R.string.bottom_sheet_transactions_filter_select_sources,
                     style = TextStyle(
                         color = Color.DarkGray,
                         fontSize = 16.sp,
@@ -250,9 +239,7 @@ fun TransactionsFiltersBottomSheet(
                         ),
                 ) {
                     MyText(
-                        text = stringResource(
-                            id = R.string.bottom_sheet_transactions_filter_clear,
-                        ),
+                        textStringResourceId = R.string.bottom_sheet_transactions_filter_clear,
                     )
                 }
             }
@@ -283,9 +270,7 @@ fun TransactionsFiltersBottomSheet(
                     .fillMaxWidth(),
             ) {
                 MyText(
-                    text = stringResource(
-                        id = R.string.bottom_sheet_transactions_filter_select_transaction_types,
-                    ),
+                    textStringResourceId = R.string.bottom_sheet_transactions_filter_select_transaction_types,
                     style = TextStyle(
                         color = Color.DarkGray,
                         fontSize = 16.sp,
@@ -310,9 +295,7 @@ fun TransactionsFiltersBottomSheet(
                         ),
                 ) {
                     MyText(
-                        text = stringResource(
-                            id = R.string.bottom_sheet_transactions_filter_clear,
-                        ),
+                        textStringResourceId = R.string.bottom_sheet_transactions_filter_clear,
                     )
                 }
             }
@@ -360,9 +343,7 @@ fun TransactionsFiltersBottomSheet(
                     ),
             ) {
                 MyText(
-                    text = stringResource(
-                        id = R.string.bottom_sheet_transactions_filter_reset,
-                    ),
+                    textStringResourceId = R.string.bottom_sheet_transactions_filter_reset,
                 )
             }
             Button(
@@ -385,9 +366,7 @@ fun TransactionsFiltersBottomSheet(
                     ),
             ) {
                 MyText(
-                    text = stringResource(
-                        id = R.string.bottom_sheet_transactions_filter_apply,
-                    ),
+                    textStringResourceId = R.string.bottom_sheet_transactions_filter_apply,
                 )
             }
         }

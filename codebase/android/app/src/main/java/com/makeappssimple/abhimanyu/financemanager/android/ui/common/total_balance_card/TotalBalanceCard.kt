@@ -13,7 +13,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -62,9 +61,7 @@ fun TotalBalanceCard(
                 ),
         ) {
             MyText(
-                text = stringResource(
-                    id = R.string.total_balance_card_title,
-                ),
+                textStringResourceId = R.string.total_balance_card_title,
                 textAlign = TextAlign.Center,
                 style = TextStyle(
                     color = Color.White,

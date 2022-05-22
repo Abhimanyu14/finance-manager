@@ -45,9 +45,7 @@ fun SaveButton(
             ),
     ) {
         MyText(
-            text = stringResource(
-                id = textStringResourceId,
-            ),
+            textStringResourceId = textStringResourceId,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
             color = if (isEnabled) {

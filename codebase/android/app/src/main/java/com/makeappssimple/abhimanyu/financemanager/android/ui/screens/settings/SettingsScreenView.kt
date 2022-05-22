@@ -18,14 +18,13 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.R
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.utils.CreateJsonDocument
 import com.makeappssimple.abhimanyu.financemanager.android.utils.JSON_MIMETYPE
@@ -92,9 +91,7 @@ fun SettingsScreenView(
                     },
                     text = {
                         MyText(
-                            text = stringResource(
-                                id = R.string.screen_settings_backup,
-                            ),
+                            textStringResourceId = R.string.screen_settings_backup,
                             style = TextStyle(
                                 color = DarkGray,
                                 fontSize = 16.sp,
@@ -119,9 +116,7 @@ fun SettingsScreenView(
                     },
                     text = {
                         MyText(
-                            text = stringResource(
-                                id = R.string.screen_settings_restore,
-                            ),
+                            textStringResourceId = R.string.screen_settings_restore,
                             style = TextStyle(
                                 color = DarkGray,
                                 fontSize = 16.sp,
@@ -146,9 +141,7 @@ fun SettingsScreenView(
                     },
                     text = {
                         MyText(
-                            text = stringResource(
-                                id = R.string.screen_settings_recalculate_total,
-                            ),
+                            textStringResourceId = R.string.screen_settings_recalculate_total,
                             style = TextStyle(
                                 color = DarkGray,
                                 fontSize = 16.sp,
