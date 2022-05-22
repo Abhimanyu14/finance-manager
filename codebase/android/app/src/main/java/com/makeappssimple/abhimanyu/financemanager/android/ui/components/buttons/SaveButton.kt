@@ -1,18 +1,18 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.common
+package com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.FloatingActionButtonBackground
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.White
 
 @Composable
 fun SaveButton(
@@ -20,25 +20,17 @@ fun SaveButton(
     isEnabled: Boolean,
     onClick: () -> Unit,
 ) {
-    MyExtendedFloatingActionButton(
-        onClickLabel = stringResource(
-            id = textStringResourceId,
-        ),
+    ElevatedButton(
+        onClick = onClick,
         enabled = isEnabled,
+        elevation = ButtonDefaults.elevatedButtonElevation(
+            defaultElevation = 6.dp,
+            pressedElevation = 12.dp,
+        ),
         colors = ButtonDefaults.buttonColors(
-            disabledContainerColor = Color.Transparent,
+            containerColor = FloatingActionButtonBackground,
+            contentColor = White,
         ),
-        border = BorderStroke(
-            width = 1.dp,
-            color = if (isEnabled) {
-                Color.Transparent
-            } else {
-                Color.LightGray
-            },
-        ),
-        onClick = {
-            onClick()
-        },
         modifier = Modifier
             .padding(
                 all = 16.dp,
@@ -48,14 +40,12 @@ fun SaveButton(
             textStringResourceId = textStringResourceId,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
-            color = if (isEnabled) {
-                Color.White
-            } else {
-                Color.LightGray
-            },
             modifier = Modifier
+                .padding(
+                    all = 6.dp,
+                )
                 .defaultMinSize(
-                    minWidth = 100.dp,
+                    minWidth = 80.dp,
                 ),
         )
     }
