@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.OutlinedTextField
@@ -13,9 +14,9 @@ import androidx.compose.ui.text.input.TextFieldValue
 @Composable
 fun MyReadOnlyTextField(
     value: TextFieldValue,
+    @StringRes labelTextStringResourceId: Int,
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
-    label: @Composable () -> Unit,
 ) {
     Box {
         OutlinedTextField(
@@ -25,7 +26,11 @@ fun MyReadOnlyTextField(
             textStyle = TextStyle(
                 color = Color.DarkGray,
             ),
-            label = label,
+            label = {
+                OutlinedTextFieldLabelText(
+                    textStringResourceId = labelTextStringResourceId,
+                )
+            },
         )
         Box(
             modifier = Modifier

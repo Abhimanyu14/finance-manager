@@ -394,6 +394,7 @@ fun EditTransactionScreenView(
                             value = TextFieldValue(
                                 text = uiState.category?.title.orEmpty(),
                             ),
+                            labelTextStringResourceId = R.string.screen_edit_transaction_category,
                             onClick = {
                                 editTransactionBottomSheetType =
                                     EditTransactionBottomSheetType.SELECT_CATEGORY
@@ -402,11 +403,6 @@ fun EditTransactionScreenView(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,
                                 ) {}
-                            },
-                            label = {
-                                OutlinedTextFieldLabelText(
-                                    textStringResourceId = R.string.screen_edit_transaction_category,
-                                )
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -587,6 +583,11 @@ fun EditTransactionScreenView(
                             value = TextFieldValue(
                                 text = uiState.sourceFrom?.name.orEmpty(),
                             ),
+                            labelTextStringResourceId = if (selectedTransactionType == TransactionType.TRANSFER) {
+                                R.string.screen_edit_transaction_source_from
+                            } else {
+                                R.string.screen_edit_transaction_source
+                            },
                             onClick = {
                                 editTransactionBottomSheetType =
                                     EditTransactionBottomSheetType.SELECT_SOURCE_FROM
@@ -595,15 +596,6 @@ fun EditTransactionScreenView(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,
                                 ) {}
-                            },
-                            label = {
-                                OutlinedTextFieldLabelText(
-                                    textStringResourceId = if (selectedTransactionType == TransactionType.TRANSFER) {
-                                        R.string.screen_edit_transaction_source_from
-                                    } else {
-                                        R.string.screen_edit_transaction_source
-                                    },
-                                )
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -620,6 +612,11 @@ fun EditTransactionScreenView(
                             value = TextFieldValue(
                                 text = uiState.sourceTo?.name.orEmpty(),
                             ),
+                            labelTextStringResourceId = if (selectedTransactionType == TransactionType.TRANSFER) {
+                                R.string.screen_edit_transaction_source_to
+                            } else {
+                                R.string.screen_edit_transaction_source
+                            },
                             onClick = {
                                 editTransactionBottomSheetType =
                                     EditTransactionBottomSheetType.SELECT_SOURCE_TO
@@ -628,15 +625,6 @@ fun EditTransactionScreenView(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,
                                 ) {}
-                            },
-                            label = {
-                                OutlinedTextFieldLabelText(
-                                    textStringResourceId = if (selectedTransactionType == TransactionType.TRANSFER) {
-                                        R.string.screen_edit_transaction_source_to
-                                    } else {
-                                        R.string.screen_edit_transaction_source
-                                    },
-                                )
                             },
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -650,13 +638,9 @@ fun EditTransactionScreenView(
                         value = TextFieldValue(
                             text = uiState.transactionCalendar.formattedDate(),
                         ),
+                        labelTextStringResourceId = R.string.screen_edit_transaction_transaction_date,
                         onClick = {
                             transactionDatePickerDialog.show()
-                        },
-                        label = {
-                            OutlinedTextFieldLabelText(
-                                textStringResourceId = R.string.screen_edit_transaction_transaction_date,
-                            )
                         },
                         modifier = Modifier
                             .fillMaxWidth()
@@ -669,13 +653,9 @@ fun EditTransactionScreenView(
                         value = TextFieldValue(
                             text = uiState.transactionCalendar.formattedTime(),
                         ),
+                        labelTextStringResourceId = R.string.screen_edit_transaction_transaction_time,
                         onClick = {
                             transactionTimePickerDialog.show()
-                        },
-                        label = {
-                            OutlinedTextFieldLabelText(
-                                textStringResourceId = R.string.screen_edit_transaction_transaction_time,
-                            )
                         },
                         modifier = Modifier
                             .fillMaxWidth()
