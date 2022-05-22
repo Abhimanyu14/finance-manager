@@ -12,8 +12,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -25,10 +23,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color.Companion.DarkGray
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -42,12 +38,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.SourcesSetAsDefaultBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.SourcesSetAsDefaultBottomSheetData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isDefaultCategory
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isSalaryCategory
@@ -245,39 +238,22 @@ fun CategoriesScreenView(
                     modifier = Modifier
                         .fillMaxSize(),
                 ) {
-                    TabRow(
-                        selectedTabIndex = selectedTabIndex,
-                        containerColor = Surface,
-                        contentColor = Primary,
-                    ) {
-                        transactionTypes
-                            .map {
-                                it.title
-                            }
-                            .forEachIndexed { index, title ->
-                                Tab(
-                                    text = {
-                                        MyText(
-                                            text = title,
-                                            color = if (selectedTabIndex == index) {
-                                                Primary
-                                            } else {
-                                                DarkGray
-                                            },
-                                            fontWeight = FontWeight.Bold,
-                                        )
-                                    },
-                                    selected = selectedTabIndex == index,
-                                    onClick = {
-                                        data.screenViewModel.updateSelectedTabIndex(
-                                            updatedSelectedTabIndex = index,
-                                        )
-                                    },
-                                    selectedContentColor = Primary,
-                                    unselectedContentColor = Primary,
+                    CategoriesTabRow(
+                        data = CategoriesTabRowData(
+                            selectedTabIndex = selectedTabIndex,
+                            updateSelectedTabIndex = {
+                                data.screenViewModel.updateSelectedTabIndex(
+                                    updatedSelectedTabIndex = it,
                                 )
-                            }
-                    }
+                            },
+                            tabData = transactionTypes
+                                .map {
+                                    CategoriesTabData(
+                                        title = it.title
+                                    )
+                                },
+                        ),
+                    )
                     HorizontalPager(
                         count = 2,
                         state = pagerState,
