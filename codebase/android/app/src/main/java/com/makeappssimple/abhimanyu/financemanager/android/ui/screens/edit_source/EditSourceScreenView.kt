@@ -1,9 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_source
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,11 +12,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -34,7 +27,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -47,11 +39,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadio
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.SaveButton
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.OutlinedTextFieldLabelText
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
-import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 
 enum class EditSourceBottomSheetType {
     NONE,
@@ -158,39 +148,12 @@ fun EditSourceScreenView(
                                     vertical = 8.dp,
                                 ),
                         )
-                        OutlinedTextField(
+                        MyOutlinedTextField(
                             value = name,
-                            label = {
-                                OutlinedTextFieldLabelText(
-                                    textStringResourceId = R.string.screen_edit_source_name,
-                                )
-                            },
-                            trailingIcon = {
-                                AnimatedVisibility(
-                                    visible = name.isNotNullOrBlank(),
-                                    enter = fadeIn(),
-                                    exit = fadeOut(),
-                                ) {
-                                    MyIconButton(
-                                        onClickLabel = stringResource(
-                                            id = R.string.screen_edit_source_clear_name,
-                                        ),
-                                        onClick = {
-                                            data.screenViewModel.clearName()
-                                        },
-                                        modifier = Modifier
-                                            .padding(
-                                                end = 4.dp,
-                                            ),
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Rounded.Clear,
-                                            contentDescription = stringResource(
-                                                id = R.string.screen_edit_source_clear_name,
-                                            ),
-                                        )
-                                    }
-                                }
+                            labelTextStringResourceId = R.string.screen_edit_source_name,
+                            trailingIconContentDescriptionTextStringResourceId = R.string.screen_edit_source_clear_name,
+                            onClickTrailingIcon = {
+                                data.screenViewModel.clearName()
                             },
                             onValueChange = {
                                 data.screenViewModel.updateName(
@@ -208,7 +171,6 @@ fun EditSourceScreenView(
                                 keyboardType = KeyboardType.Text,
                                 imeAction = ImeAction.Next,
                             ),
-                            singleLine = true,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .focusRequester(
@@ -220,39 +182,12 @@ fun EditSourceScreenView(
                                 ),
                         )
                     }
-                    OutlinedTextField(
+                    MyOutlinedTextField(
                         value = balanceAmountValue,
-                        label = {
-                            OutlinedTextFieldLabelText(
-                                textStringResourceId = R.string.screen_edit_source_balance_amount_value,
-                            )
-                        },
-                        trailingIcon = {
-                            AnimatedVisibility(
-                                visible = balanceAmountValue.isNotNullOrBlank(),
-                                enter = fadeIn(),
-                                exit = fadeOut(),
-                            ) {
-                                MyIconButton(
-                                    onClickLabel = stringResource(
-                                        id = R.string.screen_edit_source_clear_balance_amount_value,
-                                    ),
-                                    onClick = {
-                                        data.screenViewModel.clearBalanceAmountValue()
-                                    },
-                                    modifier = Modifier
-                                        .padding(
-                                            end = 4.dp,
-                                        ),
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Rounded.Clear,
-                                        contentDescription = stringResource(
-                                            id = R.string.screen_edit_source_clear_balance_amount_value,
-                                        ),
-                                    )
-                                }
-                            }
+                        labelTextStringResourceId = R.string.screen_edit_source_balance_amount_value,
+                        trailingIconContentDescriptionTextStringResourceId = R.string.screen_edit_source_clear_balance_amount_value,
+                        onClickTrailingIcon = {
+                            data.screenViewModel.clearBalanceAmountValue()
                         },
                         onValueChange = {
                             data.screenViewModel.updateBalanceAmountValue(
@@ -274,7 +209,6 @@ fun EditSourceScreenView(
                             keyboardType = KeyboardType.NumberPassword,
                             imeAction = ImeAction.Done,
                         ),
-                        singleLine = true,
                         modifier = Modifier
                             .fillMaxWidth()
                             .focusRequester(

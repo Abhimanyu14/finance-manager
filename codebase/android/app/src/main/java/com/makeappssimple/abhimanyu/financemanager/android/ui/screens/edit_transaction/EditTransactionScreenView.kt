@@ -4,8 +4,6 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,11 +15,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -36,9 +30,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -52,17 +44,15 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadio
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyScrollableRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.SaveButton
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.MyReadOnlyTextField
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.OutlinedTextFieldLabelText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.dayOfMonth
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.formattedDate
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.formattedTime
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.hour
-import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.minute
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.month
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.setDate
@@ -160,7 +150,9 @@ fun EditTransactionScreenView(
     LaunchedEffect(
         key1 = state.modalBottomSheetState,
     ) {
-        keyboardController?.hide()
+        if (state.modalBottomSheetState.isVisible) {
+            keyboardController?.hide()
+        }
     }
 
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
@@ -324,40 +316,12 @@ fun EditTransactionScreenView(
                                 vertical = 4.dp,
                             ),
                     )
-                    OutlinedTextField(
+                    MyOutlinedTextField(
                         value = uiState.amount,
-                        label = {
-                            OutlinedTextFieldLabelText(
-                                textStringResourceId = R.string.screen_edit_transaction_amount,
-                            )
-                        },
-                        trailingIcon = {
-                            AnimatedVisibility(
-                                visible = uiState.amount.isNotNullOrBlank(),
-                                enter = fadeIn(),
-                                exit = fadeOut(),
-                            ) {
-                                MyIconButton(
-                                    onClickLabel = stringResource(
-                                        id = R.string.screen_edit_transaction_clear_amount,
-                                    ),
-                                    onClick = {
-                                        data.screenViewModel.clearAmount()
-                                    },
-                                    modifier = Modifier
-                                        .padding(
-                                            end = 4.dp,
-                                        ),
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Rounded.Clear,
-                                        tint = Color.DarkGray,
-                                        contentDescription = stringResource(
-                                            id = R.string.screen_edit_transaction_clear_amount,
-                                        ),
-                                    )
-                                }
-                            }
+                        labelTextStringResourceId = R.string.screen_edit_transaction_amount,
+                        trailingIconContentDescriptionTextStringResourceId = R.string.screen_edit_transaction_clear_amount,
+                        onClickTrailingIcon = {
+                            data.screenViewModel.clearAmount()
                         },
                         onValueChange = {
                             data.screenViewModel.updateAmount(
@@ -379,7 +343,6 @@ fun EditTransactionScreenView(
                             keyboardType = KeyboardType.NumberPassword,
                             imeAction = ImeAction.Done,
                         ),
-                        singleLine = true,
                         modifier = Modifier
                             .fillMaxWidth()
                             .focusRequester(
@@ -416,40 +379,12 @@ fun EditTransactionScreenView(
                     AnimatedVisibility(
                         visible = uiVisibilityState.isTitleTextFieldVisible,
                     ) {
-                        OutlinedTextField(
+                        MyOutlinedTextField(
                             value = uiState.title,
-                            label = {
-                                OutlinedTextFieldLabelText(
-                                    textStringResourceId = R.string.screen_edit_transaction_title,
-                                )
-                            },
-                            trailingIcon = {
-                                AnimatedVisibility(
-                                    visible = uiState.title.isNotNullOrBlank(),
-                                    enter = fadeIn(),
-                                    exit = fadeOut(),
-                                ) {
-                                    MyIconButton(
-                                        onClickLabel = stringResource(
-                                            id = R.string.screen_edit_transaction_clear_title,
-                                        ),
-                                        onClick = {
-                                            data.screenViewModel.clearTitle()
-                                        },
-                                        modifier = Modifier
-                                            .padding(
-                                                end = 4.dp,
-                                            ),
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Rounded.Clear,
-                                            tint = Color.DarkGray,
-                                            contentDescription = stringResource(
-                                                id = R.string.screen_edit_transaction_clear_title,
-                                            ),
-                                        )
-                                    }
-                                }
+                            labelTextStringResourceId = R.string.screen_edit_transaction_title,
+                            trailingIconContentDescriptionTextStringResourceId = R.string.screen_edit_transaction_clear_title,
+                            onClickTrailingIcon = {
+                                data.screenViewModel.clearTitle()
                             },
                             onValueChange = {
                                 data.screenViewModel.updateTitle(
@@ -465,7 +400,6 @@ fun EditTransactionScreenView(
                                 keyboardType = KeyboardType.Text,
                                 imeAction = ImeAction.Done,
                             ),
-                            singleLine = true,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(
@@ -486,6 +420,7 @@ fun EditTransactionScreenView(
                             data.screenViewModel.updateTitle(
                                 updatedTitle = titleSuggestions[index]
                             )
+                            clearFocus()
                         },
                         modifier = Modifier
                             .padding(
@@ -519,40 +454,12 @@ fun EditTransactionScreenView(
                     AnimatedVisibility(
                         visible = uiVisibilityState.isDescriptionTextFieldVisible,
                     ) {
-                        OutlinedTextField(
+                        MyOutlinedTextField(
                             value = uiState.description,
-                            label = {
-                                OutlinedTextFieldLabelText(
-                                    textStringResourceId = R.string.screen_edit_transaction_description,
-                                )
-                            },
-                            trailingIcon = {
-                                AnimatedVisibility(
-                                    visible = uiState.description.isNotNullOrBlank(),
-                                    enter = fadeIn(),
-                                    exit = fadeOut(),
-                                ) {
-                                    MyIconButton(
-                                        onClickLabel = stringResource(
-                                            id = R.string.screen_edit_transaction_clear_description,
-                                        ),
-                                        onClick = {
-                                            data.screenViewModel.clearDescription()
-                                        },
-                                        modifier = Modifier
-                                            .padding(
-                                                end = 4.dp,
-                                            ),
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Rounded.Clear,
-                                            tint = Color.DarkGray,
-                                            contentDescription = stringResource(
-                                                id = R.string.screen_edit_transaction_clear_description,
-                                            ),
-                                        )
-                                    }
-                                }
+                            labelTextStringResourceId = R.string.screen_edit_transaction_description,
+                            trailingIconContentDescriptionTextStringResourceId = R.string.screen_edit_transaction_clear_description,
+                            onClickTrailingIcon = {
+                                data.screenViewModel.clearDescription()
                             },
                             onValueChange = {
                                 data.screenViewModel.updateDescription(
@@ -568,7 +475,6 @@ fun EditTransactionScreenView(
                                 keyboardType = KeyboardType.Text,
                                 imeAction = ImeAction.Done,
                             ),
-                            singleLine = true,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(

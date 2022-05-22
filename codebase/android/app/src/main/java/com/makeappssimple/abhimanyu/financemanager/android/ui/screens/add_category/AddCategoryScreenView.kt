@@ -4,9 +4,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,11 +20,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -46,7 +39,6 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -60,12 +52,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadio
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.SaveButton
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.OutlinedTextFieldLabelText
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.utils.constants.loadingCompletedEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.capitalizeWords
-import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 
 enum class AddCategoryBottomSheetType {
     NONE,
@@ -262,39 +252,12 @@ fun AddCategoryScreenView(
                                 },
                             )
                         }
-                        OutlinedTextField(
+                        MyOutlinedTextField(
                             value = title,
-                            label = {
-                                OutlinedTextFieldLabelText(
-                                    textStringResourceId = R.string.screen_add_category_title,
-                                )
-                            },
-                            trailingIcon = {
-                                AnimatedVisibility(
-                                    visible = title.isNotNullOrBlank(),
-                                    enter = fadeIn(),
-                                    exit = fadeOut(),
-                                ) {
-                                    MyIconButton(
-                                        onClickLabel = stringResource(
-                                            id = R.string.screen_add_category_clear_title,
-                                        ),
-                                        onClick = {
-                                            data.screenViewModel.clearTitle()
-                                        },
-                                        modifier = Modifier
-                                            .padding(
-                                                end = 4.dp,
-                                            ),
-                                    ) {
-                                        Icon(
-                                            imageVector = Icons.Rounded.Clear,
-                                            contentDescription = stringResource(
-                                                id = R.string.screen_add_category_clear_title,
-                                            ),
-                                        )
-                                    }
-                                }
+                            labelTextStringResourceId = R.string.screen_add_category_title,
+                            trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_category_clear_title,
+                            onClickTrailingIcon = {
+                                data.screenViewModel.clearTitle()
                             },
                             onValueChange = {
                                 data.screenViewModel.updateTitle(
@@ -315,7 +278,6 @@ fun AddCategoryScreenView(
                                 keyboardType = KeyboardType.Text,
                                 imeAction = ImeAction.Done,
                             ),
-                            singleLine = true,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .focusRequester(

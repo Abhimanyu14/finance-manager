@@ -1,8 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -11,11 +8,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,7 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -34,10 +26,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldCon
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.SaveButton
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.OutlinedTextFieldLabelText
-import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.MyOutlinedTextField
 
 data class AddSourceScreenViewData(
     val screenViewModel: AddSourceScreenViewModel,
@@ -103,39 +93,12 @@ fun AddSourceScreenView(
                             vertical = 8.dp,
                         ),
                 )
-                OutlinedTextField(
+                MyOutlinedTextField(
                     value = name,
-                    label = {
-                        OutlinedTextFieldLabelText(
-                            textStringResourceId = R.string.screen_add_source_name,
-                        )
-                    },
-                    trailingIcon = {
-                        AnimatedVisibility(
-                            visible = name.isNotNullOrBlank(),
-                            enter = fadeIn(),
-                            exit = fadeOut(),
-                        ) {
-                            MyIconButton(
-                                onClickLabel = stringResource(
-                                    id = R.string.screen_add_source_clear_name,
-                                ),
-                                onClick = {
-                                    data.screenViewModel.clearName()
-                                },
-                                modifier = Modifier
-                                    .padding(
-                                        end = 4.dp,
-                                    ),
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Rounded.Clear,
-                                    contentDescription = stringResource(
-                                        id = R.string.screen_add_source_clear_name,
-                                    ),
-                                )
-                            }
-                        }
+                    labelTextStringResourceId = R.string.screen_add_source_name,
+                    trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_source_clear_name,
+                    onClickTrailingIcon = {
+                        data.screenViewModel.clearName()
                     },
                     onValueChange = {
                         data.screenViewModel.updateName(
@@ -153,7 +116,6 @@ fun AddSourceScreenView(
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Next,
                     ),
-                    singleLine = true,
                     modifier = Modifier
                         .fillMaxWidth()
                         .focusRequester(
