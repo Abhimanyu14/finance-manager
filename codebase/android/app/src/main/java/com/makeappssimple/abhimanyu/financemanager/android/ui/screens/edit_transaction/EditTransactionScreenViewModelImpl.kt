@@ -96,7 +96,7 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
 
     private var _uiState: MutableStateFlow<EditTransactionScreenUiState> = MutableStateFlow(
         value = EditTransactionScreenUiState(
-            selectedTransactionTypeIndex = -1,
+            selectedTransactionTypeIndex = null,
             amount = "",
             title = "",
             description = "",
@@ -122,9 +122,11 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
         flow = transactionTypesForNewTransaction,
         flow2 = uiState,
     ) { transactionTypesForNewTransaction, uiState ->
-        transactionTypesForNewTransaction.getOrNull(
-            index = uiState.selectedTransactionTypeIndex,
-        )
+        uiState.selectedTransactionTypeIndex?.let {
+            transactionTypesForNewTransaction.getOrNull(
+                index = uiState.selectedTransactionTypeIndex,
+            )
+        }
     }.defaultObjectStateIn()
 
     override val isValidTransactionData: StateFlow<Boolean> = combine(

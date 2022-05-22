@@ -82,7 +82,7 @@ class AddTransactionScreenViewModelImpl @Inject constructor(
 
     private var _uiState: MutableStateFlow<AddTransactionScreenUiState> = MutableStateFlow(
         value = AddTransactionScreenUiState(
-            selectedTransactionTypeIndex = -1,
+            selectedTransactionTypeIndex = null,
             amount = "",
             title = "",
             description = "",
@@ -108,9 +108,11 @@ class AddTransactionScreenViewModelImpl @Inject constructor(
         flow = transactionTypesForNewTransaction,
         flow2 = uiState,
     ) { transactionTypesForNewTransaction, uiState ->
-        transactionTypesForNewTransaction.getOrNull(
-            index = uiState.selectedTransactionTypeIndex,
-        )
+        uiState.selectedTransactionTypeIndex?.let {
+            transactionTypesForNewTransaction.getOrNull(
+                index = uiState.selectedTransactionTypeIndex,
+            )
+        }
     }.defaultObjectStateIn()
 
     override val isValidTransactionData: StateFlow<Boolean> = combine(

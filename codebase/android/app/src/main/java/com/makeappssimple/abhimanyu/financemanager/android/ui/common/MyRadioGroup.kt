@@ -64,7 +64,7 @@ fun MySelectionGroup(
 @Composable
 fun MyRadioGroup(
     items: List<MyRadioGroupItem>,
-    selectedItemIndex: Int,
+    selectedItemIndex: Int?,
     modifier: Modifier = Modifier,
     onSelectionChange: (index: Int) -> Unit,
 ) {
@@ -86,7 +86,7 @@ fun MyRadioGroup(
 @Composable
 fun MyScrollableRadioGroup(
     items: List<MyRadioGroupItem>,
-    selectedItemIndex: Int,
+    selectedItemIndex: Int?,
     modifier: Modifier = Modifier,
     onSelectionChange: (index: Int) -> Unit,
 ) {

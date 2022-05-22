@@ -67,14 +67,14 @@ fun SourcesScreenView(
             value = SourcesBottomSheetType.NONE,
         )
     }
-    var expandedItemIndex by remember {
+    var expandedItemIndex: Int? by remember {
         mutableStateOf(
-            value = -1,
+            value = null,
         )
     }
-    var clickedItemId by remember {
+    var clickedItemId: Int? by remember {
         mutableStateOf(
-            value = -1,
+            value = null,
         )
     }
 
@@ -125,11 +125,13 @@ fun SourcesScreenView(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,
                                 ) {
-                                    data.screenViewModel.setDefaultSourceIdInDataStore(
-                                        defaultSourceId = clickedItemId,
-                                    )
+                                    clickedItemId?.let {  clickedItemIdValue ->
+                                        data.screenViewModel.setDefaultSourceIdInDataStore(
+                                            defaultSourceId = clickedItemIdValue,
+                                        )
+                                        clickedItemId = null
+                                    }
                                     sourcesBottomSheetType = SourcesBottomSheetType.NONE
-                                    clickedItemId = -1
                                 }
                             },
                             onNegativeButtonClick = {
@@ -138,7 +140,7 @@ fun SourcesScreenView(
                                     modalBottomSheetState = state.modalBottomSheetState,
                                 ) {
                                     sourcesBottomSheetType = SourcesBottomSheetType.NONE
-                                    clickedItemId = -1
+                                    clickedItemId = null
                                 }
                             },
                         ),
@@ -204,7 +206,7 @@ fun SourcesScreenView(
                             isDefault = isDefault,
                             onClick = {
                                 expandedItemIndex = if (index == expandedItemIndex) {
-                                    -1
+                                    null
                                 } else {
                                     index
                                 }
@@ -225,13 +227,13 @@ fun SourcesScreenView(
                                     navigationManager = data.screenViewModel.navigationManager,
                                     sourceId = listItem.id,
                                 )
-                                expandedItemIndex = -1
+                                expandedItemIndex = null
                             },
                             onDeleteClick = {
                                 data.screenViewModel.deleteSource(
                                     id = listItem.id,
                                 )
-                                expandedItemIndex = -1
+                                expandedItemIndex = null
                             },
                         )
                     }

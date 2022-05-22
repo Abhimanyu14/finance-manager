@@ -184,9 +184,9 @@ fun CategoriesScreenView(
                                             defaultCategoryId = clickedItemIdValue,
                                             transactionType = transactionType,
                                         )
+                                        clickedItemId = null
                                     }
                                     categoriesBottomSheetType = CategoriesBottomSheetType.NONE
-                                    clickedItemId = null
                                 }
                             },
                             onNegativeButtonClick = {

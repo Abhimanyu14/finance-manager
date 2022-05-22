@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 import java.util.Calendar
 
 data class AddTransactionScreenUiState(
-    val selectedTransactionTypeIndex: Int,
+    val selectedTransactionTypeIndex: Int?,
     val amount: String,
     val title: String,
     val description: String,

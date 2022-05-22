@@ -484,7 +484,7 @@ fun EditTransactionScreenView(
                                     text = title,
                                 )
                             },
-                        selectedItemIndex = -1,
+                        selectedItemIndex = null,
                         onSelectionChange = { index ->
                             data.screenViewModel.updateTitle(
                                 updatedTitle = titleSuggestions[index]
