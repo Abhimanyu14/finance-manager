@@ -26,8 +26,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MyRadioGroupItem
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.MySelectionGroup
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadioGroupItem
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MySelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
 
