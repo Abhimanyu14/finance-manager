@@ -290,8 +290,13 @@ buildscript {
 
         // Jacoco
         classpath "org.jacoco:org.jacoco.core:$jacocoVersion"
+
+        // Detekt
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.18.1"
     }
 }
+
+apply plugin: "io.gitlab.arturbosch.detekt"
 
 // TODO-Abhi: Jacoco
 //subprojects {
