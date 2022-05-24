@@ -30,8 +30,8 @@ fun MyFloatingActionButton(
 
 @Composable
 fun MyFloatingActionButton(
-    onClickLabel: String,
     modifier: Modifier = Modifier,
+    onClickLabel: String,
     onClick: () -> Unit,
     content: @Composable () -> Unit,
 ) {

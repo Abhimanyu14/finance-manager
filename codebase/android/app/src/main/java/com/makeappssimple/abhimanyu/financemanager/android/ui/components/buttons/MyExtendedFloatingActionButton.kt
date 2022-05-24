@@ -184,8 +184,8 @@ fun MyExtendedLoadingFloatingActionButton(
 
 @Composable
 fun MyExtendedFloatingActionButton(
-    onClickLabel: String,
     modifier: Modifier = Modifier,
+    onClickLabel: String,
     enabled: Boolean = true,
     interactionSource: MutableInteractionSource = remember {
         MutableInteractionSource()

@@ -25,10 +25,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 
 @Composable
 fun ExpandableItemIconButton(
+    modifier: Modifier = Modifier,
     iconImageVector: ImageVector,
     labelText: String,
     enabled: Boolean,
-    modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
 ) {
     Column(

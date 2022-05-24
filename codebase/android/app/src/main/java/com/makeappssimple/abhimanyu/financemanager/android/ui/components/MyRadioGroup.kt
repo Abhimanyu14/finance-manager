@@ -40,9 +40,9 @@ data class MyRadioGroupItem(
 
 @Composable
 fun MySelectionGroup(
+    modifier: Modifier = Modifier,
     items: List<MyRadioGroupItem>,
     selectedItemsIndices: List<Int>,
-    modifier: Modifier = Modifier,
     onSelectionChange: (index: Int) -> Unit,
 ) {
     FlowRow(
@@ -62,9 +62,9 @@ fun MySelectionGroup(
 
 @Composable
 fun MyRadioGroup(
+    modifier: Modifier = Modifier,
     items: List<MyRadioGroupItem>,
     selectedItemIndex: Int?,
-    modifier: Modifier = Modifier,
     onSelectionChange: (index: Int) -> Unit,
 ) {
     FlowRow(
@@ -84,9 +84,9 @@ fun MyRadioGroup(
 
 @Composable
 fun MyScrollableRadioGroup(
+    modifier: Modifier = Modifier,
     items: List<MyRadioGroupItem>,
     selectedItemIndex: Int?,
-    modifier: Modifier = Modifier,
     onSelectionChange: (index: Int) -> Unit,
 ) {
     LazyRow(

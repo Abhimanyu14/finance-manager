@@ -12,9 +12,9 @@ import androidx.compose.ui.text.TextStyle
 
 @Composable
 fun MyReadOnlyTextField(
+    modifier: Modifier = Modifier,
     value: String,
     @StringRes labelTextStringResourceId: Int,
-    modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {
     Box {

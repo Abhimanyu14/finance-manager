@@ -22,10 +22,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNo
 
 @Composable
 fun MyOutlinedTextField(
+    modifier: Modifier = Modifier,
     value: String,
     @StringRes labelTextStringResourceId: Int,
     @StringRes trailingIconContentDescriptionTextStringResourceId: Int,
-    modifier: Modifier = Modifier,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardActions: KeyboardActions,
     keyboardOptions: KeyboardOptions,
