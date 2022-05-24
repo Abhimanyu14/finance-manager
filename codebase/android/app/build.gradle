@@ -275,6 +275,9 @@ dependencies {
     // Accompanist pager indicators
     implementation "com.google.accompanist:accompanist-pager-indicators:$rootProject.accompanistVersion"
 
+    // Detekt compose
+    detektPlugins("ru.kode:detekt-rules-compose:1.0.0")
+
     // Hilt
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
     kapt "com.google.dagger:hilt-compiler:$rootProject.hiltVersion"
