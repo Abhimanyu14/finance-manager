@@ -101,10 +101,9 @@ fun MyExtendedLoadingFloatingActionButton(
 
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier
+        modifier = modifier
             .background(Red),
     ) {
-
         Button(
             onClick = onClick,
             enabled = isDefaultState && enabled,
@@ -129,7 +128,7 @@ fun MyExtendedLoadingFloatingActionButton(
                     vertical = 0.dp,
                 )
             },
-            modifier = modifier
+            modifier = Modifier
                 .size(
                     width = buttonWidth,
                     height = 48.dp,

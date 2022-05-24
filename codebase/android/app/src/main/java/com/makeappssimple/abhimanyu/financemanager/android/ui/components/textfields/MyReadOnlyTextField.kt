@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfi
 import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,11 +18,14 @@ fun MyReadOnlyTextField(
     @StringRes labelTextStringResourceId: Int,
     onClick: () -> Unit,
 ) {
-    Box {
+    Box(
+        modifier = modifier,
+    ) {
         OutlinedTextField(
             value = value,
             onValueChange = {},
-            modifier = modifier,
+            modifier = Modifier
+                .fillMaxWidth(),
             textStyle = TextStyle(
                 color = Color.DarkGray,
             ),
