@@ -556,6 +556,7 @@ potential-bugs:
     active: false
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
     excludeAnnotatedProperties: []
+    # ignoreAnnotated: []
     ignoreOnClassesPattern: ''
   MapGetWithNotNullAssertionOperator:
     active: false
@@ -643,6 +644,7 @@ style:
     ignoreOverridableFunction: true
     ignoreActualFunction: true
     excludedFunctions: ''
+    # excludeAnnotatedFunction:
     excludeAnnotatedFunction:
       - 'dagger.Provides'
   LibraryCodeMustSpecifyReturnType:
@@ -733,9 +735,11 @@ style:
     active: false
   UnderscoresInNumericLiterals:
     active: false
+    # acceptableLength: 5
     acceptableDecimalLength: 5
   UnnecessaryAbstractClass:
     active: true
+    # ignoreAnnotated:
     excludeAnnotatedClasses:
       - 'dagger.Module'
   UnnecessaryAnnotationUseSiteTarget:
@@ -767,6 +771,7 @@ style:
     active: false
   UseDataClass:
     active: false
+    # ignoreAnnotated: []
     excludeAnnotatedClasses: []
     allowVars: false
   UseEmptyCounterpart:
@@ -793,7 +798,6 @@ style:
     active: true
     excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
     excludeImports:
-      - 'java.util.*'
       - 'kotlinx.android.synthetic.*'
 
 compose:

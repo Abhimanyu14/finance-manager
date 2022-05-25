@@ -19,6 +19,9 @@ buildscript {
         // Jacoco
         jacocoVersion = "0.8.7"
 
+        // Detekt
+        detektVersion = "1.18.0"
+
         // Navigation
         navigationVersion = "2.4.0-beta01"
 
@@ -120,6 +123,12 @@ buildscript {
 
         // Accompanist
         accompanistVersion = "0.21.2-beta"
+
+        // Detekt formatting
+        detektFormattingVersion = "1.0.0"
+
+        // Detekt compose
+        detektComposeVersion = "1.0.0"
 
         // Data store
         datastorePreferencesVersion = "1.0.0"
@@ -292,7 +301,7 @@ buildscript {
         classpath "org.jacoco:org.jacoco.core:$jacocoVersion"
 
         // Detekt
-        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:1.18.1"
+        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion"
     }
 }
 

@@ -275,8 +275,11 @@ dependencies {
     // Accompanist pager indicators
     implementation "com.google.accompanist:accompanist-pager-indicators:$rootProject.accompanistVersion"
 
+    // Detekt formatting
+    // detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$rootProject.detektFormattingVersion")
+
     // Detekt compose
-    detektPlugins("ru.kode:detekt-rules-compose:1.0.0")
+    detektPlugins("ru.kode:detekt-rules-compose:$rootProject.detektComposeVersion")
 
     // Hilt
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
