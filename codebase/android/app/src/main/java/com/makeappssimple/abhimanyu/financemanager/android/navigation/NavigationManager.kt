@@ -13,7 +13,7 @@ interface NavigationManager {
 }
 
 class NavigationManagerImpl : NavigationManager {
-    private var _command: MutableStateFlow<NavigationCommand> = MutableStateFlow(
+    private val _command: MutableStateFlow<NavigationCommand> = MutableStateFlow(
         value = default(),
     )
     override val command: StateFlow<NavigationCommand> = _command

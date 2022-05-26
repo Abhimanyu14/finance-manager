@@ -27,7 +27,7 @@ class CategoriesScreenViewModelImpl @Inject constructor(
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
     private val dispatcherProvider: DispatcherProvider,
 ) : CategoriesScreenViewModel, ViewModel() {
-    private var _selectedTabIndex: MutableStateFlow<Int> = MutableStateFlow(
+    private val _selectedTabIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = 0,
     )
     override val selectedTabIndex: StateFlow<Int> = _selectedTabIndex

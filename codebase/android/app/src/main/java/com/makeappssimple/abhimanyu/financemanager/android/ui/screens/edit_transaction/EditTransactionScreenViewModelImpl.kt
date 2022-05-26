@@ -94,7 +94,7 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
             )
         }.defaultListStateIn()
 
-    private var _uiState: MutableStateFlow<EditTransactionScreenUiState> = MutableStateFlow(
+    private val _uiState: MutableStateFlow<EditTransactionScreenUiState> = MutableStateFlow(
         value = EditTransactionScreenUiState(
             selectedTransactionTypeIndex = null,
             amount = "",
