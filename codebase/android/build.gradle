@@ -20,7 +20,7 @@ buildscript {
         jacocoVersion = "0.8.7"
 
         // Detekt
-        detektVersion = "1.18.0"
+        detektVersion = "1.20.0"
 
         // Navigation
         navigationVersion = "2.4.0-beta01"
