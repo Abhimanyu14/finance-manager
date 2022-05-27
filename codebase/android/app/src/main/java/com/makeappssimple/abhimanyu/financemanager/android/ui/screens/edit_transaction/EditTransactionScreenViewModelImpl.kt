@@ -226,6 +226,7 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
                                 isTransactionForRadioGroupVisible = false,
                                 isSourceFromTextFieldVisible = false,
                                 isSourceToTextFieldVisible = true,
+                                isTitleSuggestionsVisible = true,
                             )
                         }
                         TransactionType.EXPENSE -> {
@@ -236,6 +237,7 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
                                 isTransactionForRadioGroupVisible = true,
                                 isSourceFromTextFieldVisible = true,
                                 isSourceToTextFieldVisible = false,
+                                isTitleSuggestionsVisible = true,
                             )
                         }
                         TransactionType.TRANSFER -> {
@@ -246,6 +248,7 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
                                 isTransactionForRadioGroupVisible = false,
                                 isSourceFromTextFieldVisible = true,
                                 isSourceToTextFieldVisible = true,
+                                isTitleSuggestionsVisible = false,
                             )
                         }
                         TransactionType.ADJUSTMENT -> {

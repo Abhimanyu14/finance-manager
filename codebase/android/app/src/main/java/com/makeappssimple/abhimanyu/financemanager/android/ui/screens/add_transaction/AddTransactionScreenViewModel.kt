@@ -28,6 +28,7 @@ data class AddTransactionScreenUiVisibilityState(
     val isTransactionForRadioGroupVisible: Boolean = false,
     val isSourceFromTextFieldVisible: Boolean = false,
     val isSourceToTextFieldVisible: Boolean = false,
+    val isTitleSuggestionsVisible: Boolean = false,
 )
 
 interface AddTransactionScreenViewModel : BaseScreenViewModel {

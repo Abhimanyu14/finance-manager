@@ -401,26 +401,30 @@ fun AddTransactionScreenView(
                                 ),
                         )
                     }
-                    MyScrollableRadioGroup(
-                        items = titleSuggestions
-                            .map { title ->
-                                MyRadioGroupItem(
-                                    text = title,
+                    AnimatedVisibility(
+                        visible = uiVisibilityState.isTitleSuggestionsVisible,
+                    ) {
+                        MyScrollableRadioGroup(
+                            items = titleSuggestions
+                                .map { title ->
+                                    MyRadioGroupItem(
+                                        text = title,
+                                    )
+                                },
+                            selectedItemIndex = null,
+                            onSelectionChange = { index ->
+                                data.screenViewModel.updateTitle(
+                                    updatedTitle = titleSuggestions[index]
                                 )
+                                clearFocus()
                             },
-                        selectedItemIndex = null,
-                        onSelectionChange = { index ->
-                            data.screenViewModel.updateTitle(
-                                updatedTitle = titleSuggestions[index]
-                            )
-                            clearFocus()
-                        },
-                        modifier = Modifier
-                            .padding(
-                                horizontal = 16.dp,
-                                vertical = 4.dp,
-                            ),
-                    )
+                            modifier = Modifier
+                                .padding(
+                                    horizontal = 16.dp,
+                                    vertical = 4.dp,
+                                ),
+                        )
+                    }
                     AnimatedVisibility(
                         visible = uiVisibilityState.isTransactionForRadioGroupVisible,
                     ) {
