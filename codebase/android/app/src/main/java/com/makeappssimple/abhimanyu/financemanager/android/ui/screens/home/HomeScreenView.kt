@@ -46,14 +46,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navi
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSettingsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSourcesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToTransactionsScreen
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyFloatingActionButton
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyFloatingActionButton
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBarBackground
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBarIconTint
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
@@ -249,60 +248,10 @@ fun HomeScreenView(
                         )
                     }
                     item {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    start = 4.dp,
-                                    end = 4.dp,
-                                    top = 16.dp,
-                                    bottom = 8.dp,
-                                )
-                                .clip(
-                                    shape = CircleShape,
-                                )
-                                .clickable {
-                                    navigateToTransactionsScreen(
-                                        navigationManager = data.screenViewModel.navigationManager,
-                                    )
-                                }
-                                .padding(
-                                    start = 12.dp,
-                                    end = 12.dp,
-                                ),
-                        ) {
-                            MyText(
-                                textStringResourceId = R.string.screen_home_recent_transactions,
-                                fontWeight = FontWeight.Bold,
-                                color = DarkGray,
-                                modifier = Modifier
-                                    .weight(
-                                        weight = 1F,
-                                    ),
+                        RecentTransactionsView {
+                            navigateToTransactionsScreen(
+                                navigationManager = data.screenViewModel.navigationManager,
                             )
-                            MyIconButton(
-                                onClickLabel = stringResource(
-                                    id = R.string.screen_home_view_all_transactions,
-                                ),
-                                onClick = {
-                                    navigateToTransactionsScreen(
-                                        navigationManager = data.screenViewModel.navigationManager,
-                                    )
-                                },
-                                modifier = Modifier
-                                    .padding(
-                                        end = 4.dp,
-                                    ),
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Rounded.ChevronRight,
-                                    tint = Color.DarkGray,
-                                    contentDescription = stringResource(
-                                        id = R.string.screen_home_view_all_transactions,
-                                    ),
-                                )
-                            }
                         }
                     }
                     homeListItemViewData.forEach { listItem ->
@@ -320,5 +269,54 @@ fun HomeScreenView(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun RecentTransactionsView(
+    onClick: () -> Unit,
+) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(
+                start = 8.dp,
+                end = 8.dp,
+                top = 16.dp,
+                bottom = 8.dp,
+            )
+            .clip(
+                shape = CircleShape,
+            )
+            .clickable(
+                onClickLabel = stringResource(
+                    id = R.string.screen_home_view_all_transactions,
+                ),
+                onClick = onClick,
+            )
+            .padding(
+                top = 8.dp,
+                start = 12.dp,
+                end = 12.dp,
+                bottom = 8.dp,
+            ),
+    ) {
+        MyText(
+            textStringResourceId = R.string.screen_home_recent_transactions,
+            fontWeight = FontWeight.Bold,
+            color = DarkGray,
+            modifier = Modifier
+                .weight(
+                    weight = 1F,
+                ),
+        )
+        Icon(
+            imageVector = Icons.Rounded.ChevronRight,
+            tint = Color.DarkGray,
+            contentDescription = stringResource(
+                id = R.string.screen_home_view_all_transactions,
+            ),
+        )
     }
 }
