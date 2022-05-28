@@ -61,6 +61,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfie
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.SearchBarData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateString
 import kotlin.math.abs
@@ -422,6 +423,7 @@ fun TransactionsScreenView(
                                         contentDescription = stringResource(
                                             id = R.string.screen_add_category_clear_title,
                                         ),
+                                        tint = DarkGray,
                                         modifier = Modifier
                                             .padding(
                                                 all = 8.dp,
@@ -447,6 +449,7 @@ fun TransactionsScreenView(
                                         contentDescription = stringResource(
                                             id = R.string.screen_add_category_clear_title,
                                         ),
+                                        tint = DarkGray,
                                         modifier = Modifier
                                             .padding(
                                                 all = 8.dp,
@@ -473,6 +476,7 @@ fun TransactionsScreenView(
                                         contentDescription = stringResource(
                                             id = R.string.screen_add_category_clear_title,
                                         ),
+                                        tint = DarkGray,
                                         modifier = Modifier
                                             .padding(
                                                 all = 8.dp,
