@@ -56,6 +56,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyScrol
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.ConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.ConfirmationBottomSheetData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.SearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.SearchBarData
@@ -69,6 +71,7 @@ import kotlin.math.abs
 enum class TransactionsBottomSheetType {
     NONE,
     FILTERS,
+    DELETE_CONFIRMATION,
 }
 
 enum class SortOption(
@@ -124,6 +127,11 @@ fun TransactionsScreenView(
     var expandedItemKey by remember {
         mutableStateOf(
             value = "",
+        )
+    }
+    var transactionIdToDelete: Int? by remember {
+        mutableStateOf(
+            value = null,
         )
     }
 
@@ -305,6 +313,48 @@ fun TransactionsScreenView(
                                 }
                             },
                             onNegativeButtonClick = {},
+                        ),
+                    )
+                }
+                TransactionsBottomSheetType.DELETE_CONFIRMATION -> {
+                    ConfirmationBottomSheet(
+                        data = ConfirmationBottomSheetData(
+                            title = stringResource(
+                                id = R.string.screen_transactions_bottom_sheet_delete_title,
+                            ),
+                            message = stringResource(
+                                id = R.string.screen_transactions_bottom_sheet_delete_message,
+                            ),
+                            positiveButtonText = stringResource(
+                                id = R.string.screen_transactions_bottom_sheet_delete_positive_button_text,
+                            ),
+                            negativeButtonText = stringResource(
+                                id = R.string.screen_transactions_bottom_sheet_delete_negative_button_text,
+                            ),
+                            onPositiveButtonClick = {
+                                toggleModalBottomSheetState(
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
+                                ) {
+                                    transactionIdToDelete?.let { transactionIdToDeleteValue ->
+                                        data.screenViewModel.deleteTransaction(
+                                            id = transactionIdToDeleteValue,
+                                        )
+                                        transactionIdToDelete = null
+                                        expandedItemKey = ""
+                                    }
+                                    transactionsBottomSheetType = TransactionsBottomSheetType.NONE
+                                }
+                            },
+                            onNegativeButtonClick = {
+                                toggleModalBottomSheetState(
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
+                                ) {
+                                    transactionsBottomSheetType = TransactionsBottomSheetType.NONE
+                                    transactionIdToDelete = null
+                                }
+                            },
                         ),
                     )
                 }
@@ -536,10 +586,13 @@ fun TransactionsScreenView(
                                         expandedItemKey = ""
                                     },
                                     onDeleteClick = {
-                                        data.screenViewModel.deleteTransaction(
-                                            id = listItem.transaction.id,
-                                        )
-                                        expandedItemKey = ""
+                                        transactionIdToDelete = listItem.transaction.id
+                                        transactionsBottomSheetType = TransactionsBottomSheetType
+                                            .DELETE_CONFIRMATION
+                                        toggleModalBottomSheetState(
+                                            coroutineScope = state.coroutineScope,
+                                            modalBottomSheetState = state.modalBottomSheetState,
+                                        ) {}
                                     },
                                 )
                             }

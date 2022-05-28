@@ -41,6 +41,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.isCashSource
 enum class SourcesBottomSheetType {
     NONE,
     SET_AS_DEFAULT_CONFIRMATION,
+    DELETE_CONFIRMATION,
 }
 
 data class SourcesScreenViewData(
@@ -75,6 +76,11 @@ fun SourcesScreenView(
         )
     }
     var clickedItemId: Int? by remember {
+        mutableStateOf(
+            value = null,
+        )
+    }
+    var sourceIdToDelete: Int? by remember {
         mutableStateOf(
             value = null,
         )
@@ -127,7 +133,7 @@ fun SourcesScreenView(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,
                                 ) {
-                                    clickedItemId?.let {  clickedItemIdValue ->
+                                    clickedItemId?.let { clickedItemIdValue ->
                                         data.screenViewModel.setDefaultSourceIdInDataStore(
                                             defaultSourceId = clickedItemIdValue,
                                         )
@@ -143,6 +149,48 @@ fun SourcesScreenView(
                                 ) {
                                     sourcesBottomSheetType = SourcesBottomSheetType.NONE
                                     clickedItemId = null
+                                }
+                            },
+                        ),
+                    )
+                }
+                SourcesBottomSheetType.DELETE_CONFIRMATION -> {
+                    ConfirmationBottomSheet(
+                        data = ConfirmationBottomSheetData(
+                            title = stringResource(
+                                id = R.string.screen_sources_bottom_sheet_delete_title,
+                            ),
+                            message = stringResource(
+                                id = R.string.screen_sources_bottom_sheet_delete_message,
+                            ),
+                            positiveButtonText = stringResource(
+                                id = R.string.screen_sources_bottom_sheet_delete_positive_button_text,
+                            ),
+                            negativeButtonText = stringResource(
+                                id = R.string.screen_sources_bottom_sheet_delete_negative_button_text,
+                            ),
+                            onPositiveButtonClick = {
+                                toggleModalBottomSheetState(
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
+                                ) {
+                                    sourceIdToDelete?.let { transactionIdToDeleteValue ->
+                                        data.screenViewModel.deleteSource(
+                                            id = transactionIdToDeleteValue,
+                                        )
+                                        sourceIdToDelete = null
+                                        expandedItemIndex = null
+                                    }
+                                    sourcesBottomSheetType = SourcesBottomSheetType.NONE
+                                }
+                            },
+                            onNegativeButtonClick = {
+                                toggleModalBottomSheetState(
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
+                                ) {
+                                    sourcesBottomSheetType = SourcesBottomSheetType.NONE
+                                    sourceIdToDelete = null
                                 }
                             },
                         ),
@@ -232,10 +280,13 @@ fun SourcesScreenView(
                                 expandedItemIndex = null
                             },
                             onDeleteClick = {
-                                data.screenViewModel.deleteSource(
-                                    id = listItem.id,
-                                )
-                                expandedItemIndex = null
+                                sourceIdToDelete = listItem.id
+                                sourcesBottomSheetType =
+                                    SourcesBottomSheetType.DELETE_CONFIRMATION
+                                toggleModalBottomSheetState(
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
+                                ) {}
                             },
                         )
                     }

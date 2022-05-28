@@ -49,6 +49,7 @@ import kotlinx.coroutines.launch
 enum class CategoriesBottomSheetType {
     NONE,
     SET_AS_DEFAULT_CONFIRMATION,
+    DELETE_CONFIRMATION,
 }
 
 data class CategoriesScreenViewData(
@@ -106,6 +107,11 @@ fun CategoriesScreenView(
         )
     }
     var clickedItemId: Int? by remember {
+        mutableStateOf(
+            value = null,
+        )
+    }
+    var categoryIdToDelete: Int? by remember {
         mutableStateOf(
             value = null,
         )
@@ -196,6 +202,49 @@ fun CategoriesScreenView(
                                 ) {
                                     categoriesBottomSheetType = CategoriesBottomSheetType.NONE
                                     clickedItemId = null
+                                }
+                            },
+                        ),
+                    )
+                }
+                CategoriesBottomSheetType.DELETE_CONFIRMATION -> {
+                    ConfirmationBottomSheet(
+                        data = ConfirmationBottomSheetData(
+                            title = stringResource(
+                                id = R.string.screen_sources_bottom_sheet_delete_title,
+                            ),
+                            message = stringResource(
+                                id = R.string.screen_sources_bottom_sheet_delete_message,
+                            ),
+                            positiveButtonText = stringResource(
+                                id = R.string.screen_sources_bottom_sheet_delete_positive_button_text,
+                            ),
+                            negativeButtonText = stringResource(
+                                id = R.string.screen_sources_bottom_sheet_delete_negative_button_text,
+                            ),
+                            onPositiveButtonClick = {
+                                toggleModalBottomSheetState(
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
+                                ) {
+                                    categoryIdToDelete?.let { categoryIdToDeleteValue ->
+                                        data.screenViewModel.deleteCategory(
+                                            id = categoryIdToDeleteValue,
+                                        )
+                                        categoryIdToDelete = null
+                                        expenseExpandedItemIndex = null
+                                        incomeExpandedItemIndex = null
+                                    }
+                                    categoriesBottomSheetType = CategoriesBottomSheetType.NONE
+                                }
+                            },
+                            onNegativeButtonClick = {
+                                toggleModalBottomSheetState(
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
+                                ) {
+                                    categoriesBottomSheetType = CategoriesBottomSheetType.NONE
+                                    categoryIdToDelete = null
                                 }
                             },
                         ),
@@ -355,11 +404,13 @@ fun CategoriesScreenView(
                                         incomeExpandedItemIndex = null
                                     },
                                     onDeleteClick = {
-                                        data.screenViewModel.deleteCategory(
-                                            id = listItem.id,
-                                        )
-                                        expenseExpandedItemIndex = null
-                                        incomeExpandedItemIndex = null
+                                        categoryIdToDelete = listItem.id
+                                        categoriesBottomSheetType =
+                                            CategoriesBottomSheetType.DELETE_CONFIRMATION
+                                        toggleModalBottomSheetState(
+                                            coroutineScope = state.coroutineScope,
+                                            modalBottomSheetState = state.modalBottomSheetState,
+                                        ) {}
                                     },
                                 )
                             }

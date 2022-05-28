@@ -66,6 +66,12 @@
     </string>
     <string name="screen_categories_bottom_sheet_set_as_default_positive_button_text">Yes</string>
     <string name="screen_categories_bottom_sheet_set_as_default_negative_button_text">Cancel</string>
+    <string name="screen_categories_bottom_sheet_delete_title">Delete Category</string>
+    <string name="screen_categories_bottom_sheet_delete_message">
+        Are you sure you want to delete?
+    </string>
+    <string name="screen_categories_bottom_sheet_delete_positive_button_text">Yes</string>
+    <string name="screen_categories_bottom_sheet_delete_negative_button_text">Cancel</string>
 
     <!-- edit category screen -->
     <string name="screen_edit_category_appbar_title">Edit Category</string>
@@ -146,6 +152,12 @@
     </string>
     <string name="screen_sources_bottom_sheet_set_as_default_positive_button_text">Yes</string>
     <string name="screen_sources_bottom_sheet_set_as_default_negative_button_text">Cancel</string>
+    <string name="screen_sources_bottom_sheet_delete_title">Delete Source</string>
+    <string name="screen_sources_bottom_sheet_delete_message">
+        Are you sure you want to delete?
+    </string>
+    <string name="screen_sources_bottom_sheet_delete_positive_button_text">Yes</string>
+    <string name="screen_sources_bottom_sheet_delete_negative_button_text">Cancel</string>
 
     <!-- transactions list item -->
     <string name="list_item_transactions_source">%1$s -> %2$s</string>
@@ -158,6 +170,12 @@
     <string name="screen_transactions_floating_action_button_content_description">
         Add Transaction
     </string>
+    <string name="screen_transactions_bottom_sheet_delete_title">Delete Transaction</string>
+    <string name="screen_transactions_bottom_sheet_delete_message">
+        Are you sure you want to delete?
+    </string>
+    <string name="screen_transactions_bottom_sheet_delete_positive_button_text">Yes</string>
+    <string name="screen_transactions_bottom_sheet_delete_negative_button_text">Cancel</string>
 
     <!-- transactions filter bottom sheet -->
     <string name="bottom_sheet_transactions_filter_clear">Clear</string>
