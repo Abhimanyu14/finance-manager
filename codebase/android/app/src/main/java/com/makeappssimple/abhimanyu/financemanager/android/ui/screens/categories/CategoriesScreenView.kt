@@ -37,9 +37,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldCon
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.ConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.ConfirmationBottomSheetData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyFloatingActionButton
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.SourcesSetAsDefaultBottomSheet
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.SourcesSetAsDefaultBottomSheetData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isDefaultCategory
@@ -159,8 +159,8 @@ fun CategoriesScreenView(
                 }
                 CategoriesBottomSheetType.SET_AS_DEFAULT_CONFIRMATION -> {
                     val transactionType: TransactionType = transactionTypes[selectedTabIndex]
-                    SourcesSetAsDefaultBottomSheet(
-                        data = SourcesSetAsDefaultBottomSheetData(
+                    ConfirmationBottomSheet(
+                        data = ConfirmationBottomSheetData(
                             title = stringResource(
                                 id = R.string.screen_categories_bottom_sheet_set_as_default_title,
                             ),

@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources
+package com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 
-data class SourcesSetAsDefaultBottomSheetData(
+data class ConfirmationBottomSheetData(
     val title: String,
     val message: String,
     val positiveButtonText: String,
@@ -28,8 +28,8 @@ data class SourcesSetAsDefaultBottomSheetData(
 )
 
 @Composable
-fun SourcesSetAsDefaultBottomSheet(
-    data: SourcesSetAsDefaultBottomSheetData,
+fun ConfirmationBottomSheet(
+    data: ConfirmationBottomSheetData,
 ) {
     Column(
         modifier = Modifier

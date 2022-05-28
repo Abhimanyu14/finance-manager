@@ -26,11 +26,13 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToEditSourceScreen
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyFloatingActionButton
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.ConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.ConfirmationBottomSheetData
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNull
@@ -106,8 +108,8 @@ fun SourcesScreenView(
                     VerticalSpacer()
                 }
                 SourcesBottomSheetType.SET_AS_DEFAULT_CONFIRMATION -> {
-                    SourcesSetAsDefaultBottomSheet(
-                        data = SourcesSetAsDefaultBottomSheetData(
+                    ConfirmationBottomSheet(
+                        data = ConfirmationBottomSheetData(
                             title = stringResource(
                                 id = R.string.screen_sources_bottom_sheet_set_as_default_title,
                             ),
