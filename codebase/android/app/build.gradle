@@ -256,7 +256,7 @@ dependencies {
     implementation "androidx.activity:activity-compose:$rootProject.jetpackComposeActivityIntegrationVersion"
 
     // Jetpack compose integration with view models
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$rootProject.jetpackComposeViewmodelIntegrationVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$rootProject.jetpackComposeViewModelIntegrationVersion"
 
     // Jetpack compose navigation
     implementation "androidx.navigation:navigation-compose:$rootProject.jetpackComposeNavigationVersion"
@@ -277,7 +277,7 @@ dependencies {
     implementation "com.google.accompanist:accompanist-pager-indicators:$rootProject.accompanistVersion"
 
     // Detekt formatting
-    // detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$rootProject.detektFormattingVersion")
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$rootProject.detektFormattingVersion")
 
     // Detekt compose
     detektPlugins("ru.kode:detekt-rules-compose:$rootProject.detektComposeVersion")
@@ -285,7 +285,7 @@ dependencies {
     // Hilt
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
     kapt "com.google.dagger:hilt-compiler:$rootProject.hiltVersion"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$rootProject.hiltLifecycleViewmodelVersion"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$rootProject.hiltLifecycleViewModelVersion"
     kapt "androidx.hilt:hilt-compiler:$rootProject.hiltCompilerVersion"
 
     // KSP

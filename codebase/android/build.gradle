@@ -32,7 +32,7 @@ buildscript {
         crashlyticsPluginVersion = "2.5.2"
 
         // Hilt
-        hiltVersion = "2.39"
+        hiltVersion = "2.42"
 
         // Hilt plugin
         hiltPluginVersion = "2.40.1"
@@ -113,7 +113,7 @@ buildscript {
         jetpackComposeActivityIntegrationVersion = "1.6.0-alpha03"
 
         // Jetpack compose integration with view models
-        jetpackComposeViewmodelIntegrationVersion = "2.5.0-rc01"
+        jetpackComposeViewModelIntegrationVersion = "2.5.0-rc01"
 
         // Jetpack compose navigation
         jetpackComposeNavigationVersion = "2.5.0-rc01"
@@ -122,10 +122,10 @@ buildscript {
         jetpackComposeNavigationHiltVersion = "1.0.0"
 
         // Accompanist
-        accompanistVersion = "0.21.2-beta"
+        accompanistVersion = "0.24.1-alpha"
 
         // Detekt formatting
-        detektFormattingVersion = "1.0.0"
+        detektFormattingVersion = "1.20.0"
 
         // Detekt compose
         detektComposeVersion = "1.0.0"
@@ -146,7 +146,7 @@ buildscript {
         openSourceSoftwareLicensesVersion = "17.0.0"
 
         // Gson
-        gsonVersion = "2.8.9"
+        gsonVersion = "2.9.0"
 
         // Material design
         materialDesignVersion = "1.4.0"
@@ -163,8 +163,8 @@ buildscript {
         // Dagger android
         daggerAndroidVersion = "2.35.1"
 
-        // Hilt lifecycle viewmodel
-        hiltLifecycleViewmodelVersion = "1.0.0-alpha03"
+        // Hilt lifecycle view model
+        hiltLifecycleViewModelVersion = "1.0.0-alpha03"
 
         // Hilt compiler
         hiltCompilerVersion = "1.0.0"
@@ -173,7 +173,7 @@ buildscript {
         moshiVersion = "1.13.0"
 
         // Moshi
-        moshiKotlinVersion = "1.9.3"
+        moshiKotlinVersion = "1.11.0"
 
         // Moshi
         moshiKotlinCodegenVersion = "1.13.0"
