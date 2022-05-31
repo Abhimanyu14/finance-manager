@@ -15,6 +15,9 @@ interface TransactionDao {
     @Query(value = "SELECT * from transaction_table ORDER BY transaction_timestamp DESC")
     fun getTransactions(): Flow<List<Transaction>>
 
+    @Query(value = "SELECT * from transaction_table ORDER BY transaction_timestamp DESC")
+    fun getCurrentMonthTransactions(): Flow<List<Transaction>>
+
     @Query(value = "SELECT * from transaction_table ORDER BY transaction_timestamp DESC LIMIT :numberOfTransactions")
     fun getRecentTransactions(
         numberOfTransactions: Int,

@@ -5,7 +5,9 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.OnTertiaryContainer
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Red
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -46,10 +48,10 @@ val Transaction.amountTextColor: Color
             OnTertiaryContainer
         }
         TransactionType.EXPENSE -> {
-            Color.Red
+            Red
         }
         TransactionType.TRANSFER -> {
-            Color.DarkGray
+            DarkGray
         }
         TransactionType.ADJUSTMENT -> {
             when {
@@ -57,10 +59,10 @@ val Transaction.amountTextColor: Color
                     OnTertiaryContainer
                 }
                 this.amount.value < 0 -> {
-                    Color.Red
+                    Red
                 }
                 else -> {
-                    Color.DarkGray
+                    DarkGray
                 }
             }
         }

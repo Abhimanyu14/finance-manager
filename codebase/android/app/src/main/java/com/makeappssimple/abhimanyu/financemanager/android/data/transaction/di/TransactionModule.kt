@@ -12,6 +12,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usec
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.DeleteAllTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.DeleteTransactionUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetCurrentMonthTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetCurrentMonthTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetRecentTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetRecentTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTitleSuggestionsUseCase
@@ -101,6 +103,15 @@ class TransactionModule {
         transactionRepository: TransactionRepository,
     ): GetTitleSuggestionsUseCase {
         return GetTitleSuggestionsUseCaseImpl(
+            transactionRepository = transactionRepository,
+        )
+    }
+
+    @Provides
+    fun providesGetCurrentMonthTransactionsUseCase(
+        transactionRepository: TransactionRepository,
+    ): GetCurrentMonthTransactionsUseCase {
+        return GetCurrentMonthTransactionsUseCaseImpl(
             transactionRepository = transactionRepository,
         )
     }

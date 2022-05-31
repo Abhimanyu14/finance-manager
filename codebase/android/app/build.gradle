@@ -236,6 +236,7 @@ dependencies {
 
     // Jetpack compose
     implementation "androidx.compose.ui:ui:$rootProject.jetpackComposeVersion"
+    implementation "androidx.compose.ui:ui-util:$rootProject.jetpackComposeVersion"
 
     // Jetpack compose tooling support (Previews, etc.)
     debugImplementation "androidx.compose.ui:ui-tooling:$rootProject.jetpackComposeVersion"

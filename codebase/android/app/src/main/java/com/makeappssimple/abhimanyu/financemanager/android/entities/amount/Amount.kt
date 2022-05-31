@@ -14,6 +14,13 @@ data class Amount(
     val currency: Currency = Currency.getInstance(CURRENCY_CODE_INR),
     val value: Long = 0,
 ) {
+    fun toNonSignedString(): String {
+        val formattedValue = formattedCurrencyValue(
+            value = abs(value),
+        )
+        return "${currency.symbol}$formattedValue"
+    }
+
     fun toSignedString(): String {
         val formattedValue = formattedCurrencyValue(
             value = abs(value),

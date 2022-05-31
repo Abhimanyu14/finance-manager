@@ -32,7 +32,7 @@ data class SearchBarData(
 
 @Composable
 fun SearchBarContainer(
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     Box(
         modifier = Modifier

@@ -51,7 +51,7 @@ fun CategoriesTabRow(
 @Composable
 private fun CategoriesTabText(
     title: String,
-    isSelected: Boolean
+    isSelected: Boolean,
 ) {
     MyText(
         text = title,

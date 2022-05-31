@@ -81,7 +81,7 @@ class DeleteTransactionAndRevertOtherDataUseCaseImpl(
 
     private suspend fun handleTransferTransactionsSourceFrom(
         sourceFromId: Int,
-        transaction: Transaction
+        transaction: Transaction,
     ) {
         val source = getSourceUseCase(
             id = sourceFromId,
@@ -97,7 +97,7 @@ class DeleteTransactionAndRevertOtherDataUseCaseImpl(
 
     private suspend fun handleTransferTransactionsSourceTo(
         sourceToId: Int,
-        transaction: Transaction
+        transaction: Transaction,
     ) {
         // TODO-Abhi: Amount sign change
         val source = getSourceUseCase(
@@ -114,7 +114,7 @@ class DeleteTransactionAndRevertOtherDataUseCaseImpl(
 
     private suspend fun handleNonTransferTransactionsSourceFrom(
         sourceFromId: Int?,
-        transaction: Transaction
+        transaction: Transaction,
     ) {
         // TODO-Abhi: Amount sign change
         sourceFromId ?: return
@@ -132,7 +132,7 @@ class DeleteTransactionAndRevertOtherDataUseCaseImpl(
 
     private suspend fun handleNonTransferTransactionsSourceTo(
         sourceToId: Int?,
-        transaction: Transaction
+        transaction: Transaction,
     ) {
         // TODO-Abhi: Amount sign change
         sourceToId ?: return

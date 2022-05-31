@@ -12,6 +12,7 @@ class TransactionRepositoryImpl(
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
     override val transactions: Flow<List<Transaction>> = transactionDao.getTransactions()
+    override val currentMonthTransactions: Flow<List<Transaction>> = transactionDao.getTransactions()
 
     override fun getRecentTransactions(
         numberOfTransactions: Int,

@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface TransactionRepository {
     val transactions: Flow<List<Transaction>>
+    val currentMonthTransactions: Flow<List<Transaction>>
 
     fun getRecentTransactions(
         numberOfTransactions: Int,

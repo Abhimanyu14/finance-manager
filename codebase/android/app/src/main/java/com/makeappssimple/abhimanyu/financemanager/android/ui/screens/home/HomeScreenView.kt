@@ -52,6 +52,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyFloatingActionButton
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.overview_card.OverviewCard
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBarBackground
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBarIconTint
@@ -246,6 +247,9 @@ fun HomeScreenView(
                                 )
                             },
                         )
+                    }
+                    item {
+                        OverviewCard()
                     }
                     item {
                         RecentTransactionsView {

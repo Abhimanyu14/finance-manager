@@ -35,7 +35,7 @@ data class TransactionsFilterBottomSheetSelectionData(
     val selectedExpenseCategoryIndices: List<Int>,
     val selectedIncomeCategoryIndices: List<Int>,
     val selectedSourceIndices: List<Int>,
-    val selectedTransactionTypeIndices: List<Int>
+    val selectedTransactionTypeIndices: List<Int>,
 )
 
 data class TransactionsFilterBottomSheetData(
