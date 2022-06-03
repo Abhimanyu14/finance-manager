@@ -3,9 +3,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.utils.extensions
 import org.junit.Assert
 import org.junit.Test
 import java.util.Calendar
+import java.util.Locale
 
 class CalendarExtensionsTest {
-    private val calendar: Calendar = Calendar.getInstance().apply {
+    private val calendar: Calendar = Calendar.getInstance(Locale.getDefault()).apply {
         timeInMillis = 1649354842327
     }
 

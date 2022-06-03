@@ -20,8 +20,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usec
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTitleSuggestionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionsUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetAllTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetAllTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.InsertTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.InsertTransactionUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.InsertTransactionsUseCase
@@ -119,8 +119,8 @@ class TransactionModule {
     @Provides
     fun providesGetTransactionsUseCase(
         transactionRepository: TransactionRepository,
-    ): GetTransactionsUseCase {
-        return GetTransactionsUseCaseImpl(
+    ): GetAllTransactionsUseCase {
+        return GetAllTransactionsUseCaseImpl(
             transactionRepository = transactionRepository,
         )
     }

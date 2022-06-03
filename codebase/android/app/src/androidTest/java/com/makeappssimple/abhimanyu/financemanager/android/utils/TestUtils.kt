@@ -22,7 +22,7 @@ const val THIRTY_DAYS = ONE_DAY * 30
 
 // Reusable JUnit4 TestRule to override the Main dispatcher
 class MainDispatcherRule(
-    val testDispatcher: TestDispatcher = UnconfinedTestDispatcher(),
+    private val testDispatcher: TestDispatcher = UnconfinedTestDispatcher(),
 ) : TestWatcher() {
     override fun starting(description: Description) {
         Dispatchers.setMain(testDispatcher)
@@ -34,8 +34,9 @@ class MainDispatcherRule(
 }
 
 fun getTestAmount(): Amount {
+    val value = (1..100).random()
     return Amount(
-        value = 45,
+        value = value.toLong(),
     )
 }
 
@@ -114,19 +115,18 @@ fun getTestTransaction(): Transaction {
     )
 }
 
-fun getTestTransactions(): Array<Transaction> {
-    return arrayOf(
+fun getTestTransactions(
+    size: Int = 2,
+    frequency: Long,
+): Array<Transaction> {
+    val result = Array(size) { index ->
         Transaction(
+            id = index + 1,
             amount = getTestAmount(),
-            title = "title",
+            title = "title $index",
             creationTimestamp = timeInMillis_01_JUN_2022,
-            transactionTimestamp = timeInMillis_01_JUN_2022,
-        ),
-        Transaction(
-            amount = getTestAmount(),
-            title = "title 1",
-            creationTimestamp = timeInMillis_01_JUN_2022,
-            transactionTimestamp = timeInMillis_01_JUN_2022,
-        ),
-    )
+            transactionTimestamp = timeInMillis_01_JUN_2022 - (index * frequency),
+        )
+    }
+    return result
 }

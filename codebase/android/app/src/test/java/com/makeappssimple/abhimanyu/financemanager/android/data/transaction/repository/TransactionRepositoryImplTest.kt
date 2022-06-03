@@ -25,12 +25,12 @@ class TransactionRepositoryImplTest {
     }
 
     @Test
-    fun getTransactions() {
-        transactionRepository.transactions
+    fun getAllTransactions() {
+        transactionRepository.allTransactions
 
         verify(
             mock = transactionDao,
-        ).getTransactions()
+        ).getAllTransactions()
     }
 
     @Test

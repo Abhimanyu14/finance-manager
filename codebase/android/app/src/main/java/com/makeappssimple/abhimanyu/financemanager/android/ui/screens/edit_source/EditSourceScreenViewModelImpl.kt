@@ -25,7 +25,6 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import java.util.Calendar
 
 @HiltViewModel
 class EditSourceScreenViewModelImpl @Inject constructor(
@@ -120,8 +119,8 @@ class EditSourceScreenViewModelImpl @Inject constructor(
                         sourceToId = updatedSource.id,
                         description = "",
                         title = TransactionType.ADJUSTMENT.title,
-                        creationTimestamp = Calendar.getInstance().timeInMillis,
-                        transactionTimestamp = Calendar.getInstance().timeInMillis,
+                        creationTimestamp = System.currentTimeMillis(),
+                        transactionTimestamp = System.currentTimeMillis(),
                         transactionFor = TransactionFor.SELF,
                         transactionType = TransactionType.ADJUSTMENT,
                     ),

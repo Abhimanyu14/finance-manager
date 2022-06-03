@@ -14,7 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.U
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.DeleteAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.InsertTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.usecase.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.usecase.BackupDataUseCaseImpl
@@ -39,14 +39,14 @@ class UseCaseModule {
         getCategoriesUseCase: GetCategoriesUseCase,
         getEmojisUseCase: GetEmojisUseCase,
         getSourcesUseCase: GetSourcesUseCase,
-        getTransactionsUseCase: GetTransactionsUseCase,
+        getAllTransactionsUseCase: GetAllTransactionsUseCase,
         jsonUtil: JsonUtil,
     ): BackupDataUseCase {
         return BackupDataUseCaseImpl(
             getCategoriesUseCase = getCategoriesUseCase,
             getEmojisUseCase = getEmojisUseCase,
             getSourcesUseCase = getSourcesUseCase,
-            getTransactionsUseCase = getTransactionsUseCase,
+            getAllTransactionsUseCase = getAllTransactionsUseCase,
             jsonUtil = jsonUtil,
         )
     }
@@ -69,13 +69,13 @@ class UseCaseModule {
     @Provides
     fun providesRecalculateTotalUseCase(
         getSourcesUseCase: GetSourcesUseCase,
-        getTransactionsUseCase: GetTransactionsUseCase,
+        getAllTransactionsUseCase: GetAllTransactionsUseCase,
         getSourceUseCase: GetSourceUseCase,
         updateSourcesUseCase: UpdateSourcesUseCase,
     ): RecalculateTotalUseCase {
         return RecalculateTotalUseCaseImpl(
             getSourcesUseCase = getSourcesUseCase,
-            getTransactionsUseCase = getTransactionsUseCase,
+            getAllTransactionsUseCase = getAllTransactionsUseCase,
             getSourceUseCase = getSourceUseCase,
             updateSourcesUseCase = updateSourcesUseCase,
         )

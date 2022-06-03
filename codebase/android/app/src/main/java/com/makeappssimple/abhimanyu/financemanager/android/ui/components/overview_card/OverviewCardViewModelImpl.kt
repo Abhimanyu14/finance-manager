@@ -23,8 +23,8 @@ import kotlinx.coroutines.flow.stateIn
 
 @HiltViewModel
 class OverviewCardViewModelImpl @Inject constructor(
+    dispatcherProvider: DispatcherProvider,
     getCurrentMonthTransactionsUseCase: GetCurrentMonthTransactionsUseCase,
-    private val dispatcherProvider: DispatcherProvider,
 ) : OverviewCardViewModel, ViewModel() {
     private val currentMonthTransactions: StateFlow<List<Transaction>> =
         getCurrentMonthTransactionsUseCase()
@@ -74,7 +74,6 @@ class OverviewCardViewModelImpl @Inject constructor(
     }.flowOn(
         context = dispatcherProvider.io,
     ).defaultObjectStateIn()
-
 
     private fun <T> Flow<List<T>>.defaultListStateIn(): StateFlow<List<T>> {
         return this.stateIn(

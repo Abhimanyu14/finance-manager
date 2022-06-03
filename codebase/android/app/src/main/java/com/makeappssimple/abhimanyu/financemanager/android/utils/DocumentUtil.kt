@@ -3,8 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.utils
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContracts
-import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.formattedDateAndTime
-import java.util.Calendar
 
 const val JSON_MIMETYPE = "application/json"
 
@@ -21,7 +19,7 @@ class CreateJsonDocument : ActivityResultContracts.CreateDocument(
         ).apply {
             putExtra(
                 Intent.EXTRA_TITLE,
-                Calendar.getInstance().formattedDateAndTime(),
+                getDateAndTimeString(System.currentTimeMillis()),
             )
         }
     }

@@ -10,7 +10,7 @@ class CategoryConverterTest {
     private lateinit var categoryConverter: CategoryConverter
     private val testCategory = getTestCategory()
     private val testCategoryString =
-        """{"id":0,"description":"","emoji":"emoji","title":"title","transaction_type":"EXPENSE"}"""
+        """{"id":0,"description":"","emoji":"emoji","title":"title","transactionType":"EXPENSE"}"""
 
     @Before
     fun setUp() {

@@ -34,7 +34,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.EmojiCi
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.ExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.ExpandableItemViewWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateAndTimeString
+import com.makeappssimple.abhimanyu.financemanager.android.utils.getReadableDateAndTimeString
 
 data class TransactionsListItemViewData(
     val transaction: Transaction,
@@ -165,7 +165,7 @@ fun TransactionsListItem(
                         .fillMaxWidth(),
                 ) {
                     MyText(
-                        text = getDateAndTimeString(
+                        text = getReadableDateAndTimeString(
                             timestamp = data.transaction.transactionTimestamp,
                         ),
                         style = TextStyle(

@@ -43,6 +43,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.launch
 import java.util.Calendar
+import java.util.Locale
 
 @HiltViewModel
 class EditTransactionScreenViewModelImpl @Inject constructor(
@@ -106,7 +107,7 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
             ),
             sourceFrom = null,
             sourceTo = null,
-            transactionCalendar = Calendar.getInstance(),
+            transactionCalendar = Calendar.getInstance(Locale.getDefault()),
         ),
     )
     override val uiState: StateFlow<EditTransactionScreenUiState> = _uiState
@@ -437,7 +438,7 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
                             sourceToId = sourceToId,
                             description = uiStateValue.description,
                             title = title,
-                            creationTimestamp = Calendar.getInstance().timeInMillis,
+                            creationTimestamp = System.currentTimeMillis(),
                             transactionTimestamp = uiStateValue.transactionCalendar.timeInMillis,
                             transactionFor = transactionFor,
                             transactionType = selectedTransactionTypeValue,
@@ -635,7 +636,7 @@ class EditTransactionScreenViewModelImpl @Inject constructor(
             ),
             sourceFrom = transactionSourceFrom,
             sourceTo = transactionSourceTo,
-            transactionCalendar = Calendar.getInstance().apply {
+            transactionCalendar = Calendar.getInstance(Locale.getDefault()).apply {
                 timeInMillis = transaction.transactionTimestamp
             },
         )

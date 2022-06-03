@@ -33,6 +33,18 @@ var Calendar.minute: Int
         this[Calendar.MINUTE] = value
     }
 
+var Calendar.second: Int
+    get() = this[Calendar.SECOND]
+    set(value) {
+        this[Calendar.SECOND] = value
+    }
+
+var Calendar.milliSecond: Int
+    get() = this[Calendar.MILLISECOND]
+    set(value) {
+        this[Calendar.MILLISECOND] = value
+    }
+
 fun Calendar.setDate(
     dayOfMonth: Int,
     month: Int,
@@ -47,14 +59,24 @@ fun Calendar.setDate(
 fun Calendar.setTime(
     hour: Int,
     minute: Int,
+    second: Int = 0,
+    milliSecond: Int = 0,
 ): Calendar {
     this.hour = hour
     this.minute = minute
+    this.second = second
+    this.milliSecond = milliSecond
     return this
 }
 
 fun Calendar.formattedDate(): String {
     return DateFormat.format("dd MMM, yyyy", this).toString()
+}
+
+fun Calendar.formattedTime(): String {
+    return DateFormat.format("hh:mm a", this).toString()
+        .replace("am", "AM")
+        .replace("pm", "PM")
 }
 
 fun Calendar.formattedDateAndTime(): String {
@@ -63,8 +85,6 @@ fun Calendar.formattedDateAndTime(): String {
         .replace("pm", "PM")
 }
 
-fun Calendar.formattedTime(): String {
-    return DateFormat.format("hh:mm a", this).toString()
-        .replace("am", "AM")
-        .replace("pm", "PM")
+fun Calendar.formattedReadableDateAndTime(): String {
+    return "${formattedDate()} at ${formattedTime()}"
 }

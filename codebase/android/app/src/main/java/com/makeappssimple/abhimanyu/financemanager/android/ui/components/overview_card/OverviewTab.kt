@@ -23,22 +23,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Black
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.MyAppTheme
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Transparent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.White
 
-data class OverviewSelectionData(
+data class OverviewTabData(
     val items: List<String>,
     val selectedItemIndex: Int,
     val onClick: (index: Int) -> Unit,
 )
 
 @Composable
-fun OverviewSelection(
-    data: OverviewSelectionData,
+fun OverviewTab(
+    data: OverviewTabData,
 ) {
     Row(
         horizontalArrangement = Arrangement.Center,
@@ -50,7 +50,7 @@ fun OverviewSelection(
                 shape = CircleShape,
             )
             .background(
-                color = White,
+                color = Surface,
             ),
     ) {
         data.items.forEachIndexed { index, text ->
@@ -66,7 +66,7 @@ fun OverviewSelection(
                 textAlign = TextAlign.Center,
                 modifier = Modifier
                     .defaultMinSize(
-                        minWidth = 80.dp,
+                        minWidth = 64.dp,
                     )
                     .clip(
                         shape = CircleShape,
@@ -76,7 +76,7 @@ fun OverviewSelection(
                     }
                     .background(
                         if (isSelected) {
-                            Black
+                            Primary
                         } else {
                             Transparent
                         }
@@ -106,8 +106,8 @@ private fun OverviewSelectionPreview() {
                 )
                 .fillMaxSize(),
         ) {
-            OverviewSelection(
-                data = OverviewSelectionData(
+            OverviewTab(
+                data = OverviewTabData(
                     items = listOf(
                         "Day",
                         "Week",

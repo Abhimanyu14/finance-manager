@@ -4,14 +4,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.repo
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
 import kotlinx.coroutines.flow.Flow
 
-interface GetTransactionsUseCase {
+interface GetAllTransactionsUseCase {
     operator fun invoke(): Flow<List<Transaction>>
 }
 
-class GetTransactionsUseCaseImpl(
+class GetAllTransactionsUseCaseImpl(
     private val transactionRepository: TransactionRepository,
-) : GetTransactionsUseCase {
+) : GetAllTransactionsUseCase {
     override operator fun invoke(): Flow<List<Transaction>> {
-        return transactionRepository.transactions
+        return transactionRepository.allTransactions
     }
 }

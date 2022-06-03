@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase
 import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.usecase.DeleteTransactionAndRevertOtherDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 class TransactionsScreenViewModelImpl @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
     getSourcesUseCase: GetSourcesUseCase,
-    getTransactionsUseCase: GetTransactionsUseCase,
+    getAllTransactionsUseCase: GetAllTransactionsUseCase,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
     private val deleteTransactionAndRevertOtherDataUseCase: DeleteTransactionAndRevertOtherDataUseCase,
@@ -32,7 +32,7 @@ class TransactionsScreenViewModelImpl @Inject constructor(
     override val categories: Flow<List<Category>> = getCategoriesUseCase()
     override val sources: Flow<List<Source>> = getSourcesUseCase()
     override val transactionsListItemViewData: Flow<List<TransactionsListItemViewData>> =
-        getTransactionsUseCase()
+        getAllTransactionsUseCase()
             .map { transactions ->
                 transactions
                     .map { transaction ->

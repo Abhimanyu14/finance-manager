@@ -13,10 +13,13 @@ import kotlinx.coroutines.flow.Flow
 interface TransactionDao {
 
     @Query(value = "SELECT * from transaction_table ORDER BY transaction_timestamp DESC")
-    fun getTransactions(): Flow<List<Transaction>>
+    fun getAllTransactions(): Flow<List<Transaction>>
 
-    @Query(value = "SELECT * from transaction_table ORDER BY transaction_timestamp DESC")
-    fun getCurrentMonthTransactions(): Flow<List<Transaction>>
+    @Query(value = "SELECT * from transaction_table WHERE transaction_timestamp BETWEEN :startingTimestamp AND :endingTimestamp ORDER BY transaction_timestamp DESC")
+    fun getTransactionsBetweenTimestamps(
+        startingTimestamp: Long,
+        endingTimestamp: Long,
+    ): Flow<List<Transaction>>
 
     @Query(value = "SELECT * from transaction_table ORDER BY transaction_timestamp DESC LIMIT :numberOfTransactions")
     fun getRecentTransactions(

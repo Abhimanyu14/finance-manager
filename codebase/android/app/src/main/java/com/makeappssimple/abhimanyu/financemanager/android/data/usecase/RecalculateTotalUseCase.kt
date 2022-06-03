@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.data.usecase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.UpdateSourcesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
@@ -16,12 +16,12 @@ interface RecalculateTotalUseCase {
 
 class RecalculateTotalUseCaseImpl(
     getSourcesUseCase: GetSourcesUseCase,
-    getTransactionsUseCase: GetTransactionsUseCase,
+    getAllTransactionsUseCase: GetAllTransactionsUseCase,
     private val getSourceUseCase: GetSourceUseCase,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
 ) : RecalculateTotalUseCase {
     private val sources: Flow<List<Source>> = getSourcesUseCase()
-    private val transactionsListItemViewData: Flow<List<Transaction>> = getTransactionsUseCase()
+    private val transactionsListItemViewData: Flow<List<Transaction>> = getAllTransactionsUseCase()
 
     override suspend operator fun invoke() {
         val collectedSources = sources.first()

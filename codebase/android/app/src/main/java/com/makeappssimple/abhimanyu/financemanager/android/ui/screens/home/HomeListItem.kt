@@ -27,7 +27,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.ExpandableItemViewWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateAndTimeString
+import com.makeappssimple.abhimanyu.financemanager.android.utils.getReadableDateAndTimeString
 
 data class HomeListItemViewData(
     val transaction: Transaction,
@@ -135,7 +135,7 @@ fun HomeListItem(
                         .fillMaxWidth(),
                 ) {
                     MyText(
-                        text = getDateAndTimeString(
+                        text = getReadableDateAndTimeString(
                             timestamp = data.transaction.transactionTimestamp,
                         ),
                         style = TextStyle(

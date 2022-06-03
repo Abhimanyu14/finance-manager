@@ -4,12 +4,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.
 import kotlinx.coroutines.flow.Flow
 
 interface TransactionRepository {
-    val transactions: Flow<List<Transaction>>
-    val currentMonthTransactions: Flow<List<Transaction>>
+    val allTransactions: Flow<List<Transaction>>
 
     fun getRecentTransactions(
         numberOfTransactions: Int,
     ): Flow<List<Transaction>>
+
+    fun getCurrentMonthTransactions(): Flow<List<Transaction>>
 
     suspend fun getTransactionsCount(): Int
 

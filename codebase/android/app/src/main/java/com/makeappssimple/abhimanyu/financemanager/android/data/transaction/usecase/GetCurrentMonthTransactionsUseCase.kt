@@ -12,6 +12,6 @@ class GetCurrentMonthTransactionsUseCaseImpl(
     private val transactionRepository: TransactionRepository,
 ) : GetCurrentMonthTransactionsUseCase {
     override operator fun invoke(): Flow<List<Transaction>> {
-        return transactionRepository.currentMonthTransactions
+        return transactionRepository.getCurrentMonthTransactions()
     }
 }
