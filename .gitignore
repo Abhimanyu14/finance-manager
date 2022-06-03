@@ -137,6 +137,9 @@ proguard/
 # path to your modules .iml file
 **/.idea/inspectionProfiles/Project_Default.xml
 
+# android test user preferences
+**/.idea/androidTestResultsUserPreferences.xml
+
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
 .cxx/
