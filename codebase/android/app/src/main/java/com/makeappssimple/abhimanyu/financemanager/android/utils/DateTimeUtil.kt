@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.utils
 
+import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.dayOfMonth
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.formattedDate
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.formattedDateAndTime
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.formattedReadableDateAndTime
@@ -37,11 +38,39 @@ fun getReadableDateAndTimeString(
     return calendar.formattedReadableDateAndTime()
 }
 
+fun getCurrentDayStartingTimestamp(): Long {
+    val calendar = Calendar.getInstance(Locale.getDefault())
+    calendar.setDate(
+        dayOfMonth = calendar.dayOfMonth,
+        month = calendar.month,
+        year = calendar.year,
+    )
+    calendar.setTime(
+        hour = 0,
+        minute = 0,
+    )
+    return calendar.timeInMillis
+}
+
 fun getCurrentMonthStartingTimestamp(): Long {
     val calendar = Calendar.getInstance(Locale.getDefault())
     calendar.setDate(
         dayOfMonth = 1,
         month = calendar.month,
+        year = calendar.year,
+    )
+    calendar.setTime(
+        hour = 0,
+        minute = 0,
+    )
+    return calendar.timeInMillis
+}
+
+fun getCurrentYearStartingTimestamp(): Long {
+    val calendar = Calendar.getInstance(Locale.getDefault())
+    calendar.setDate(
+        dayOfMonth = 1,
+        month = 1,
         year = calendar.year,
     )
     calendar.setTime(

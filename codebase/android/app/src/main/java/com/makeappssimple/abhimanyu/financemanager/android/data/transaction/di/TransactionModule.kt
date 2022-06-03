@@ -12,16 +12,20 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usec
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.DeleteAllTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.DeleteTransactionUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetAllTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetAllTransactionsUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetCurrentDayTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetCurrentDayTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetCurrentMonthTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetCurrentMonthTransactionsUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetCurrentYearTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetCurrentYearTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetRecentTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetRecentTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTitleSuggestionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTitleSuggestionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetTransactionUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetAllTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetAllTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.InsertTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.InsertTransactionUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.InsertTransactionsUseCase
@@ -108,10 +112,28 @@ class TransactionModule {
     }
 
     @Provides
+    fun providesGetCurrentDayTransactionsUseCase(
+        transactionRepository: TransactionRepository,
+    ): GetCurrentDayTransactionsUseCase {
+        return GetCurrentDayTransactionsUseCaseImpl(
+            transactionRepository = transactionRepository,
+        )
+    }
+
+    @Provides
     fun providesGetCurrentMonthTransactionsUseCase(
         transactionRepository: TransactionRepository,
     ): GetCurrentMonthTransactionsUseCase {
         return GetCurrentMonthTransactionsUseCaseImpl(
+            transactionRepository = transactionRepository,
+        )
+    }
+
+    @Provides
+    fun providesGetCurrentYearTransactionsUseCase(
+        transactionRepository: TransactionRepository,
+    ): GetCurrentYearTransactionsUseCase {
+        return GetCurrentYearTransactionsUseCaseImpl(
             transactionRepository = transactionRepository,
         )
     }

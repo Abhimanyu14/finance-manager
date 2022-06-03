@@ -5,5 +5,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseViewModel
 import kotlinx.coroutines.flow.StateFlow
 
 interface OverviewCardViewModel : BaseViewModel {
+    val overviewTabSelectionIndex: StateFlow<Int>
     val pieChartData: StateFlow<PieChartData?>
+    fun setOverviewTabSelectionIndex(
+        updatedOverviewTabSelectionIndex: Int,
+    )
 }

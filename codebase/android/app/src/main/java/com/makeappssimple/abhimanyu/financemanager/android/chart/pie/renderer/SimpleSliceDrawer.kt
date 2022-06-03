@@ -6,7 +6,7 @@ import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.PaintingStyle
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import com.makeappssimple.abhimanyu.financemanager.android.chart.pie.PieChartData.Slice
+import com.makeappssimple.abhimanyu.financemanager.android.chart.pie.PieChartItemData
 
 class SimpleSliceDrawer(private val sliceThickness: Float = 25f) : SliceDrawer {
     init {
@@ -26,7 +26,7 @@ class SimpleSliceDrawer(private val sliceThickness: Float = 25f) : SliceDrawer {
         area: Size,
         startAngle: Float,
         sweepAngle: Float,
-        slice: Slice,
+        slice: PieChartItemData,
     ) {
         val sliceThickness = calculateSectorThickness(area = area)
         val drawableArea = calculateDrawableArea(area = area)

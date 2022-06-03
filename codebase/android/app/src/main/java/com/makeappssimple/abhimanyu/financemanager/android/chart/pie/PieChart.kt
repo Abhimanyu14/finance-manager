@@ -25,10 +25,10 @@ fun PieChart(
     animation: AnimationSpec<Float> = simpleChartAnimation(),
     sliceDrawer: SliceDrawer = SimpleSliceDrawer(),
 ) {
-    val transitionProgress = remember(pieChartData.slices) { Animatable(initialValue = 0f) }
+    val transitionProgress = remember(pieChartData.items) { Animatable(initialValue = 0f) }
 
     // When slices value changes we want to re-animated the chart.
-    LaunchedEffect(pieChartData.slices) {
+    LaunchedEffect(pieChartData.items) {
         transitionProgress.animateTo(1f, animationSpec = animation)
     }
 
@@ -47,7 +47,7 @@ private fun DrawChart(
     progress: Float,
     sliceDrawer: SliceDrawer,
 ) {
-    val slices = pieChartData.slices
+    val slices = pieChartData.items
 
     Canvas(modifier = modifier) {
         drawIntoCanvas {
@@ -79,10 +79,10 @@ private fun DrawChart(
 @Composable
 fun PieChartPreview() = PieChart(
     pieChartData = PieChartData(
-        slices = listOf(
-            PieChartData.Slice(25f, Color.Red),
-            PieChartData.Slice(42f, Color.Blue),
-            PieChartData.Slice(23f, Color.Green)
+        items = listOf(
+            PieChartItemData(25f, Color.Red),
+            PieChartItemData(42f, Color.Blue),
+            PieChartItemData(23f, Color.Green)
         )
     )
 )

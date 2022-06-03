@@ -2,6 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.data.transaction.rep
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.datasource.local.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.utils.getCurrentDayStartingTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.utils.getCurrentMonthStartingTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.utils.getCurrentYearStartingTimestamp
 import kotlinx.coroutines.flow.Flow
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO
@@ -21,10 +24,21 @@ class TransactionRepositoryImpl(
         )
     }
 
-    override fun getCurrentMonthTransactions(): Flow<List<Transaction>> {
-
+    override fun getCurrentDayTransactions(): Flow<List<Transaction>> {
         return transactionDao.getTransactionsBetweenTimestamps(
-            startingTimestamp = System.currentTimeMillis(),
+            startingTimestamp = getCurrentDayStartingTimestamp(),
+            endingTimestamp = System.currentTimeMillis(),
+        )
+    }
+    override fun getCurrentMonthTransactions(): Flow<List<Transaction>> {
+        return transactionDao.getTransactionsBetweenTimestamps(
+            startingTimestamp = getCurrentMonthStartingTimestamp(),
+            endingTimestamp = System.currentTimeMillis(),
+        )
+    }
+    override fun getCurrentYearTransactions(): Flow<List<Transaction>> {
+        return transactionDao.getTransactionsBetweenTimestamps(
+            startingTimestamp = getCurrentYearStartingTimestamp(),
             endingTimestamp = System.currentTimeMillis(),
         )
     }

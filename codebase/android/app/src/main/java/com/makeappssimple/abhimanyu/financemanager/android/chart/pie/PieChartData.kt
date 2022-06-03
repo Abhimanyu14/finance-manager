@@ -2,18 +2,18 @@ package com.makeappssimple.abhimanyu.financemanager.android.chart.pie
 
 import androidx.compose.ui.graphics.Color
 
+data class PieChartItemData(
+    val value: Float,
+    val color: Color,
+)
+
 data class PieChartData(
-    val slices: List<Slice>,
+    val items: List<PieChartItemData>,
 ) {
     internal val totalSize: Float
         get() {
-            var total = 0f
-            slices.forEach { total += it.value }
-            return total
+            return items.sumOf {
+                it.value.toDouble()
+            }.toFloat()
         }
-
-    data class Slice(
-        val value: Float,
-        val color: Color,
-    )
 }
