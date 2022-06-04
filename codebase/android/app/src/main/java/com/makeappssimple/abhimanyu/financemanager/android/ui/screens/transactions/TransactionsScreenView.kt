@@ -396,7 +396,7 @@ fun TransactionsScreenView(
                         .fillMaxSize(),
                 ) {
                     AnimatedVisibility(
-                        visible = groupedTransactions.isNotEmpty(),
+                        visible = groupedTransactions.isNotEmpty() || searchText.isNotEmpty(),
                     ) {
                         Row(
                             horizontalArrangement = Arrangement.End,
@@ -425,7 +425,10 @@ fun TransactionsScreenView(
                                         placeholderText = stringResource(
                                             id = R.string.screen_transactions_searchbar_placeholder,
                                         ),
-                                        updateSearchText = updateSearchText,
+                                        onValueChange = updateSearchText,
+                                        onSearch = {
+                                            state.focusManager.clearFocus()
+                                        },
                                     ),
                                 )
                             }
@@ -459,6 +462,9 @@ fun TransactionsScreenView(
                             ) {
                                 ElevatedCard(
                                     onClick = {
+                                        if (isSearchbarVisible) {
+                                            keyboardController?.hide()
+                                        }
                                         setIsSearchbarVisible(!isSearchbarVisible)
                                         updateSearchText("")
                                     },

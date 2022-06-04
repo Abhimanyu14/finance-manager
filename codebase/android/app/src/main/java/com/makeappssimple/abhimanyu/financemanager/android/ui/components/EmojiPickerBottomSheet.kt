@@ -64,7 +64,7 @@ fun EmojiPickerBottomSheet(
                     placeholderText = stringResource(
                         id = R.string.emoji_picker_bottom_sheet_placeholder_text,
                     ),
-                    updateSearchText = data.updateSearchText,
+                    onValueChange = data.updateSearchText,
                 ),
             )
         }
