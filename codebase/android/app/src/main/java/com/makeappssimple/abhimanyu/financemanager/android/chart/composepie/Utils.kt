@@ -22,44 +22,15 @@ internal fun PieChartData.createLegendEntries(): List<PieChartLegendItemData> {
     }
 }
 
-internal fun PieChartData.calculateFractions(
-    minAngle: Float = 16F,
-    maxAngle: Float = 360F,
-): List<Float> {
+internal fun PieChartData.calculateFractions(): List<Float> {
     val total = items
         .sumOf {
             it.value.toDouble()
         }.toFloat()
-    val entryCount = items.size
-    val hasMinAngle = minAngle != 0F && entryCount * minAngle <= maxAngle
-    val minAngles = MutableList(entryCount) {
-        0F
-    }
     val fractions = items
         .map {
-            it.value / total
-        }.map {
-            it * 360F
+            (it.value / total) * 360F
         }
-    var offset = 0F
-    var diff = 0F
-
-    if (hasMinAngle) {
-        fractions.forEachIndexed { index, angle ->
-            val temp = angle - minAngle
-            if (temp <= 0) {
-                offset += -temp
-                minAngles[index] = minAngle
-            } else {
-                minAngles[index] = angle
-                diff += temp
-            }
-        }
-        fractions.forEachIndexed { index, _ ->
-            minAngles[index] -= (minAngles[index] - minAngle) / diff * offset
-        }
-        return minAngles
-    }
     return fractions
 }
 

@@ -10,11 +10,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData
+import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.legend.PieChartLegend
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.CenterBox
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.MyAppTheme
 
 /**
  * Source - https://github.com/humawork/compose-charts
@@ -23,18 +28,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.lege
 fun ComposePieChart(
     data: PieChartData,
 ) {
-    val useMinimumSliceAngle = true
     val fractions = remember(
         key1 = data,
-        key2 = useMinimumSliceAngle,
     ) {
-        data.calculateFractions(
-            minAngle = if (useMinimumSliceAngle) {
-                16F
-            } else {
-                0F
-            },
-        )
+        data.calculateFractions()
     }
     val legendEntries = remember(
         key1 = data,
@@ -86,5 +83,40 @@ fun ComposePieChart(
                     start = 16.dp,
                 ),
         )
+    }
+}
+
+@Preview(showSystemUi = false, showBackground = true)
+@Composable
+fun ComposePieChartPreview() {
+    MyAppTheme {
+        CenterBox {
+            ComposePieChart(
+                data = PieChartData(
+                    items = listOf(
+                        PieChartItemData(
+                            text = "Red",
+                            value = 1F,
+                            color = Color.Red,
+                        ),
+                        PieChartItemData(
+                            text = "Blue",
+                            value = 2F,
+                            color = Color.Blue,
+                        ),
+                        PieChartItemData(
+                            text = "Green",
+                            value = 3F,
+                            color = Color.Green,
+                        ),
+                        PieChartItemData(
+                            text = "Black",
+                            value = 4F,
+                            color = Color.Black,
+                        ),
+                    )
+                )
+            )
+        }
     }
 }
