@@ -33,25 +33,42 @@ internal fun PieChartRenderer(
     animate: Boolean,
 ) {
     var animationRan by rememberSaveable(fractions, animate) {
-        mutableStateOf(false)
+        mutableStateOf(
+            value = false,
+        )
     }
     val animation = remember {
         Animatable(
-            when {
-                animate -> if (animationRan) {
-                    1F
-                } else {
-                    0F
+            initialValue = when {
+                animate -> {
+                    if (animationRan) {
+                        1F
+                    } else {
+                        0F
+                    }
                 }
                 else -> {
                     1F
                 }
-            }
+            },
         )
     }
     val phase by animation.asState()
+    val pathBuffer by remember {
+        mutableStateOf(
+            value = Path(),
+        )
+    }
+    val holeRadius = remember(
+        key1 = chartSizePx,
+        key2 = sliceWidthPx,
+    ) {
+        (chartSizePx - (sliceWidthPx * 2F)) / 2F
+    }
 
-    LaunchedEffect(Unit) {
+    LaunchedEffect(
+        key1 = Unit,
+    ) {
         if (!animationRan) {
             animation.animateTo(
                 targetValue = 1F,
@@ -64,43 +81,34 @@ internal fun PieChartRenderer(
         }
     }
 
-    val pathBuffer by remember {
-        mutableStateOf(Path())
-    }
-
-    val holeRadius = remember(chartSizePx, sliceWidthPx) {
-        (chartSizePx - (sliceWidthPx * 2F)) / 2F
-    }
-
-    Canvas(modifier = modifier) {
+    Canvas(
+        modifier = modifier,
+    ) {
         val circleBox = Rect(
             left = 0F,
             top = 0F,
             right = size.width,
             bottom = size.height,
         )
-
         var angle = 0F
-
-        val radius = chartSizePx / 2F
+        val outerRadius = chartSizePx / 2F
         val drawInnerArc = sliceWidthPx > FLOAT_EPSILON && sliceWidthPx < chartSizePx / 2F
-        val userInnerRadius = if (drawInnerArc) holeRadius else 0F
+        val userInnerRadius = if (drawInnerArc) {
+            holeRadius
+        } else {
+            0F
+        }
 
         fractions.fastForEachIndexed { index, sliceAngle ->
             var innerRadius = userInnerRadius
-
             val accountForSliceSpacing = sliceSpacingPx > 0F && sliceAngle <= 180F
-
-            val sliceSpaceAngleOuter = sliceSpacingPx / (FDEG2RAD * radius)
+            val sliceSpaceAngleOuter = sliceSpacingPx / (FDEG2RAD * outerRadius)
             val startAngleOuter = StartDegree + (angle + sliceSpaceAngleOuter / 2F) * phase
-            val sweepAngleOuter = ((sliceAngle - sliceSpaceAngleOuter) * phase).coerceAtLeast(
-                minimumValue = 0F,
-            )
-
+            val sweepAngleOuter = (sliceAngle - sliceSpaceAngleOuter) * phase
             pathBuffer.reset()
 
-            val arcStartPointX = center.x + radius * cos(startAngleOuter * FDEG2RAD)
-            val arcStartPointY = center.y + radius * sin(startAngleOuter * FDEG2RAD)
+            val arcStartPointX = center.x + outerRadius * cos(startAngleOuter * FDEG2RAD)
+            val arcStartPointY = center.y + outerRadius * sin(startAngleOuter * FDEG2RAD)
 
             if (sweepAngleOuter >= 360F && sweepAngleOuter % 360F <= FLOAT_EPSILON) {
                 // Android is doing "mod 360"
@@ -125,7 +133,7 @@ internal fun PieChartRenderer(
                 if (accountForSliceSpacing) {
                     val minSpacedRadius = calculateMinimumRadiusForSpacedSlice(
                         center = center,
-                        radius = radius,
+                        radius = outerRadius,
                         angle = sliceAngle * phase,
                         arcStartPointX = arcStartPointX,
                         arcStartPointY = arcStartPointY,
@@ -146,7 +154,11 @@ internal fun PieChartRenderer(
                 val endAngleInner = startAngleInner + sweepAngleInner
                 if (sweepAngleOuter >= 360F && sweepAngleOuter % 360F <= FLOAT_EPSILON) {
                     // Android is doing "mod 360"
-                    pathBuffer.addArc(innerRectBuffer, StartDegree, sweepAngleOuter)
+                    pathBuffer.addArc(
+                        oval = innerRectBuffer,
+                        startAngleDegrees = StartDegree,
+                        sweepAngleDegrees = sweepAngleOuter,
+                    )
                 } else {
                     pathBuffer.lineTo(
                         x = center.x + innerRadius * cos(endAngleInner * FDEG2RAD),
@@ -166,7 +178,7 @@ internal fun PieChartRenderer(
                         val angleMiddle = startAngleOuter + sweepAngleOuter / 2F
                         val sliceSpaceOffset = calculateMinimumRadiusForSpacedSlice(
                             center = center,
-                            radius = radius,
+                            radius = outerRadius,
                             angle = sliceAngle * phase,
                             arcStartPointX = arcStartPointX,
                             arcStartPointY = arcStartPointY,
