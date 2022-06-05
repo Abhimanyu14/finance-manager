@@ -79,7 +79,7 @@ private fun DrawChart(
 
 @Preview
 @Composable
-fun PieChartPreview() = PieChart(
+private fun PieChartPreview() = PieChart(
     pieChartData = PieChartData(
         items = listOf(
             PieChartItemData(

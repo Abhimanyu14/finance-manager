@@ -91,7 +91,7 @@ fun ComposePieChart(
 
 @Preview(showSystemUi = false, showBackground = true)
 @Composable
-fun ComposePieChartPreview() {
+private fun ComposePieChartPreview() {
     MyAppTheme {
         CenterBox {
             ComposePieChart(
