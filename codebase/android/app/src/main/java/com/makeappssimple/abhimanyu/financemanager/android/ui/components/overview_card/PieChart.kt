@@ -9,12 +9,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.chart.pie.PieChart
 import com.makeappssimple.abhimanyu.financemanager.android.chart.pie.PieChartData
-import com.makeappssimple.abhimanyu.financemanager.android.chart.pie.PieChartItemData
 import com.makeappssimple.abhimanyu.financemanager.android.chart.pie.renderer.SimpleSliceDrawer
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Green700
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Red
 
 const val sliceThickness = 30F
+/*
 val pieChartData = PieChartData(
     items = listOf(
         PieChartItemData(
@@ -27,6 +25,7 @@ val pieChartData = PieChartData(
         ),
     )
 )
+*/
 
 @Composable
 fun PieChart(
