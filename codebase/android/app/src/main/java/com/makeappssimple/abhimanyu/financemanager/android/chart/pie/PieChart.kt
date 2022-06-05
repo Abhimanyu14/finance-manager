@@ -30,13 +30,19 @@ fun PieChart(
     val transitionProgress = remember(pieChartData.items) { Animatable(initialValue = 0f) }
 
     // When slices value changes we want to re-animated the chart.
-    LaunchedEffect(pieChartData.items) {
-        transitionProgress.animateTo(1f, animationSpec = animation)
+    LaunchedEffect(
+        key1 = pieChartData.items,
+    ) {
+        transitionProgress.animateTo(
+            targetValue = 1F,
+            animationSpec = animation,
+        )
     }
 
     DrawChart(
         pieChartData = pieChartData,
-        modifier = modifier.fillMaxSize(),
+        modifier = modifier
+            .fillMaxSize(),
         progress = transitionProgress.value,
         sliceDrawer = sliceDrawer
     )
@@ -45,7 +51,7 @@ fun PieChart(
 @Composable
 private fun DrawChart(
     pieChartData: PieChartData,
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     progress: Float,
     sliceDrawer: SliceDrawer,
 ) {
@@ -79,21 +85,23 @@ private fun DrawChart(
 
 @Preview
 @Composable
-private fun PieChartPreview() = PieChart(
-    pieChartData = PieChartData(
-        items = listOf(
-            PieChartItemData(
-                value = 25f,
-                color = Red,
-            ),
-            PieChartItemData(
-                value = 42f,
-                color = Blue,
-            ),
-            PieChartItemData(
-                value = 23f,
-                color = Green,
+private fun PieChartPreview() {
+    PieChart(
+        pieChartData = PieChartData(
+            items = listOf(
+                PieChartItemData(
+                    value = 25f,
+                    color = Red,
+                ),
+                PieChartItemData(
+                    value = 42f,
+                    color = Blue,
+                ),
+                PieChartItemData(
+                    value = 23f,
+                    color = Green,
+                )
             )
         )
     )
-)
+}
