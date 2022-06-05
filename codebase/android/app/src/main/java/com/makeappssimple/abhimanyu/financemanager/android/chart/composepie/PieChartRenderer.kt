@@ -15,6 +15,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.util.fastForEachIndexed
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Gray50
 import kotlin.math.absoluteValue
 import kotlin.math.cos
 import kotlin.math.max
@@ -99,20 +100,30 @@ internal fun PieChartRenderer(
             0F
         }
 
-        fractions.fastForEachIndexed { index, sliceAngle ->
+        val total = fractions.sum()
+        val isTotalZero = total == 0F
+        val finalFractions = if (isTotalZero) {
+            listOf(360F)
+        } else {
+            fractions
+        }
+
+        finalFractions.fastForEachIndexed { index, sliceAngle ->
             var innerRadius = userInnerRadius
             val accountForSliceSpacing = sliceSpacingPx > 0F && sliceAngle <= 180F
             val sliceSpaceAngleOuter = sliceSpacingPx / (FDEG2RAD * outerRadius)
             val startAngleOuter = StartDegree + (angle + sliceSpaceAngleOuter / 2F) * phase
             val sweepAngleOuter = (sliceAngle - sliceSpaceAngleOuter) * phase
             pathBuffer.reset()
-
             val arcStartPointX = center.x + outerRadius * cos(startAngleOuter * FDEG2RAD)
             val arcStartPointY = center.y + outerRadius * sin(startAngleOuter * FDEG2RAD)
-
             if (sweepAngleOuter >= 360F && sweepAngleOuter % 360F <= FLOAT_EPSILON) {
                 // Android is doing "mod 360"
-                pathBuffer.addArc(circleBox, StartDegree, sweepAngleOuter)
+                pathBuffer.addArc(
+                    oval = circleBox,
+                    startAngleDegrees = StartDegree,
+                    sweepAngleDegrees = sweepAngleOuter,
+                )
             } else {
                 pathBuffer.arcTo(
                     rect = circleBox,
@@ -121,14 +132,12 @@ internal fun PieChartRenderer(
                     forceMoveTo = false,
                 )
             }
-
             val innerRectBuffer = Rect(
                 left = center.x - innerRadius,
                 top = center.y - innerRadius,
                 right = center.x + innerRadius,
                 bottom = center.y + innerRadius,
             )
-
             if (drawInnerArc && (innerRadius > 0F || accountForSliceSpacing)) {
                 if (accountForSliceSpacing) {
                     val minSpacedRadius = calculateMinimumRadiusForSpacedSlice(
@@ -199,14 +208,15 @@ internal fun PieChartRenderer(
                     }
                 }
             }
-
             pathBuffer.close()
-
             drawPath(
                 path = pathBuffer,
-                color = composeColors[index],
+                color = if (isTotalZero) {
+                    Gray50
+                } else {
+                    composeColors[index]
+                },
             )
-
             angle += sliceAngle * phase
         }
     }

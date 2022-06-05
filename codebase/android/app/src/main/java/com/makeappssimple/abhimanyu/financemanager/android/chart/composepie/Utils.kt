@@ -27,6 +27,12 @@ internal fun PieChartData.calculateFractions(): List<Float> {
         .sumOf {
             it.value.toDouble()
         }.toFloat()
+    if (total == 0F) {
+        return items
+            .map {
+                0F
+            }
+    }
     val fractions = items
         .map {
             (it.value / total) * 360F

@@ -97,6 +97,9 @@ val Green100 = Color(0xFFDAF5D7)
 val Green50 = Color(0xFFEAFFE7)
 val Green10 = Color(0xFFF4FFF2)
 
+val Gray50 = Color(0xFFDDDDDD)
+val Gray10 = Color(0xFFEEEEEE)
+
 
 // Theme colors
 
@@ -146,4 +149,3 @@ val FloatingActionButtonBackground = Blue900
 val FloatingActionButtonIconTint = White
 val BottomAppBarBackground = Blue900
 val BottomAppBarIconTint = White
-
