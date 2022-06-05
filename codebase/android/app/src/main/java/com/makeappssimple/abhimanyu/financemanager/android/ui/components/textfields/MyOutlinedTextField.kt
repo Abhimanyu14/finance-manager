@@ -13,11 +13,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyIconButton
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNullOrBlank
 
 @Composable
@@ -57,7 +57,7 @@ fun MyOutlinedTextField(
                 ) {
                     Icon(
                         imageVector = Icons.Rounded.Clear,
-                        tint = Color.DarkGray,
+                        tint = DarkGray,
                         contentDescription = stringResource(
                             id = trailingIconContentDescriptionTextStringResourceId,
                         ),

@@ -16,12 +16,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Unspecified
 
 @Composable
 fun MyText(
     modifier: Modifier = Modifier,
     @StringRes textStringResourceId: Int,
-    color: Color = Color.Unspecified,
+    color: Color = Unspecified,
     fontSize: TextUnit = TextUnit.Unspecified,
     fontStyle: FontStyle? = null,
     fontWeight: FontWeight? = null,
@@ -62,7 +63,7 @@ fun MyText(
 fun MyText(
     modifier: Modifier = Modifier,
     text: String,
-    color: Color = Color.Unspecified,
+    color: Color = Unspecified,
     fontSize: TextUnit = TextUnit.Unspecified,
     fontStyle: FontStyle? = null,
     fontWeight: FontWeight? = null,

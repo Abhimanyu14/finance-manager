@@ -8,8 +8,8 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
 
 @Composable
 fun MyReadOnlyTextField(
@@ -27,7 +27,7 @@ fun MyReadOnlyTextField(
             modifier = Modifier
                 .fillMaxWidth(),
             textStyle = TextStyle(
-                color = Color.DarkGray,
+                color = DarkGray,
             ),
             label = {
                 OutlinedTextFieldLabelText(

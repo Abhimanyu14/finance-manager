@@ -23,10 +23,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Blue10
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Gray50
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.MyAppTheme
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Transparent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.White
 
@@ -50,7 +51,7 @@ fun OverviewTab(
                 shape = CircleShape,
             )
             .background(
-                color = Surface,
+                color = Blue10,
             ),
     ) {
         data.items.forEachIndexed { index, text ->
@@ -102,7 +103,7 @@ private fun OverviewSelectionPreview() {
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .background(
-                    color = Surface,
+                    color = Gray50,
                 )
                 .fillMaxSize(),
         ) {

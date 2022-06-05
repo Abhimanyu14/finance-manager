@@ -9,10 +9,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Black
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.LightGray
 
 @Composable
 fun EmojiCircle(
@@ -24,7 +25,7 @@ fun EmojiCircle(
                 shape = CircleShape,
             )
             .background(
-                color = Color.LightGray,
+                color = LightGray,
             )
             .padding(
                 all = 2.dp,
@@ -33,7 +34,7 @@ fun EmojiCircle(
         AndroidView(
             factory = { context ->
                 AppCompatTextView(context).apply {
-                    setTextColor(Color.Black.toArgb())
+                    setTextColor(Black.toArgb())
                     text = emoji ?: "😟"
                     textSize = 20F
                     textAlignment = View.TEXT_ALIGNMENT_CENTER

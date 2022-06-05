@@ -22,14 +22,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Blue100
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Transparent
 
 data class SearchBarData(
     val searchText: String,
@@ -92,8 +93,8 @@ fun SearchBar(
         colors = TextFieldDefaults
             .textFieldColors(
                 containerColor = Blue100,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
+                focusedIndicatorColor = Transparent,
+                unfocusedIndicatorColor = Transparent,
             ),
         leadingIcon = {
             Icon(
@@ -125,7 +126,7 @@ fun SearchBar(
             MyText(
                 text = data.placeholderText,
                 style = TextStyle(
-                    color = Color.DarkGray,
+                    color = DarkGray,
                     fontWeight = FontWeight.Bold,
                 ),
             )

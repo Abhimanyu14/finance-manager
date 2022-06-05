@@ -15,8 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color.Companion.DarkGray
-import androidx.compose.ui.graphics.Color.Companion.LightGray
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -28,6 +26,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.Default
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.ExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.ExpandableItemViewWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.LightGray
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getIcon
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isCashSource

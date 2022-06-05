@@ -35,7 +35,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -317,7 +316,7 @@ private fun RecentTransactionsView(
         )
         Icon(
             imageVector = Icons.Rounded.ChevronRight,
-            tint = Color.DarkGray,
+            tint = DarkGray,
             contentDescription = stringResource(
                 id = R.string.screen_home_view_all_transactions,
             ),

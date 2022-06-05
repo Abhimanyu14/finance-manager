@@ -15,7 +15,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -23,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getIcon
@@ -52,7 +52,7 @@ fun EditTransactionSelectSourceBottomSheet(
             MyText(
                 textStringResourceId = R.string.bottom_sheet_add_transaction_select_source_title,
                 style = TextStyle(
-                    color = Color.DarkGray,
+                    color = DarkGray,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                 ),
@@ -106,7 +106,7 @@ private fun EditTransactionSelectSourceBottomSheetItem(
         )
         MyText(
             text = data.text,
-            color = Color.DarkGray,
+            color = DarkGray,
             fontSize = 14.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier,

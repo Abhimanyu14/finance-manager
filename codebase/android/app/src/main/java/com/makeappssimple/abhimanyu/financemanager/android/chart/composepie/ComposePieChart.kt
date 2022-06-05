@@ -10,7 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -19,7 +18,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.legend.PieChartLegend
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.CenterBox
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Black
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Blue
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Green
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.MyAppTheme
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Red
 
 /**
  * Source - https://github.com/humawork/compose-charts
@@ -97,22 +100,22 @@ fun ComposePieChartPreview() {
                         PieChartItemData(
                             text = "Red",
                             value = 1F,
-                            color = Color.Red,
+                            color = Red,
                         ),
                         PieChartItemData(
                             text = "Blue",
                             value = 2F,
-                            color = Color.Blue,
+                            color = Blue,
                         ),
                         PieChartItemData(
                             text = "Green",
                             value = 3F,
-                            color = Color.Green,
+                            color = Green,
                         ),
                         PieChartItemData(
                             text = "Black",
                             value = 4F,
-                            color = Color.Black,
+                            color = Black,
                         ),
                     )
                 )

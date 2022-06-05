@@ -14,6 +14,7 @@ val Transparent = Color.Transparent
 val LightGray = Color.LightGray
 val Gray = Color.Gray
 val DarkGray = Color.DarkGray
+val Unspecified = Color.Unspecified
 
 val Cyan = Color.Cyan
 val Magenta = Color.Magenta

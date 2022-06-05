@@ -16,7 +16,6 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -30,6 +29,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadio
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MySelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
 
 data class TransactionsFilterBottomSheetSelectionData(
     val selectedExpenseCategoryIndices: List<Int>,
@@ -104,7 +104,7 @@ fun TransactionsFiltersBottomSheet(
                 MyText(
                     textStringResourceId = R.string.bottom_sheet_transactions_filter_select_expense_categories,
                     style = TextStyle(
-                        color = Color.DarkGray,
+                        color = DarkGray,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                     ),
@@ -160,7 +160,7 @@ fun TransactionsFiltersBottomSheet(
                 MyText(
                     textStringResourceId = R.string.bottom_sheet_transactions_filter_select_income_categories,
                     style = TextStyle(
-                        color = Color.DarkGray,
+                        color = DarkGray,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                     ),
@@ -216,7 +216,7 @@ fun TransactionsFiltersBottomSheet(
                 MyText(
                     textStringResourceId = R.string.bottom_sheet_transactions_filter_select_sources,
                     style = TextStyle(
-                        color = Color.DarkGray,
+                        color = DarkGray,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                     ),
@@ -272,7 +272,7 @@ fun TransactionsFiltersBottomSheet(
                 MyText(
                     textStringResourceId = R.string.bottom_sheet_transactions_filter_select_transaction_types,
                     style = TextStyle(
-                        color = Color.DarkGray,
+                        color = DarkGray,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                     ),

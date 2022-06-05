@@ -36,7 +36,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
@@ -54,6 +53,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.MyOutlinedTextField
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Black
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.utils.constants.loadingCompletedEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.utils.constants.loadingEmoji
@@ -245,7 +245,7 @@ fun EditCategoryScreenView(
                             AndroidView(
                                 factory = { context ->
                                     AppCompatTextView(context).apply {
-                                        setTextColor(Color.Black.toArgb())
+                                        setTextColor(Black.toArgb())
                                         text = emoji
                                         textSize = 28F
                                         textAlignment = View.TEXT_ALIGNMENT_CENTER

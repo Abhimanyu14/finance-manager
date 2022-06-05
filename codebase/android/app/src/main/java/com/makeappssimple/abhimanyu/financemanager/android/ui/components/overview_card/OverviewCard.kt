@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.components.overview_card
 
 import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,6 +19,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.ComposePieChart
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Blue50
 
 enum class OverviewTabOption(
     val title: String,
@@ -59,6 +61,9 @@ fun OverviewCard(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxWidth()
+                .background(
+                    color = Blue50,
+                )
                 .padding(
                     all = 12.dp,
                 )

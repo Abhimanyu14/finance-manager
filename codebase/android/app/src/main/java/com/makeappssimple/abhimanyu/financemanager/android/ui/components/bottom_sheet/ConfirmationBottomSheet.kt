@@ -10,13 +10,13 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
 
 data class ConfirmationBottomSheetData(
     val title: String,
@@ -44,7 +44,7 @@ fun ConfirmationBottomSheet(
         MyText(
             text = data.title,
             style = TextStyle(
-                color = Color.DarkGray,
+                color = DarkGray,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
             ),
@@ -58,7 +58,7 @@ fun ConfirmationBottomSheet(
         MyText(
             text = data.message,
             style = TextStyle(
-                color = Color.DarkGray,
+                color = DarkGray,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Normal,
             ),

@@ -36,7 +36,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -61,6 +60,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.SearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.SearchBarData
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Blue50
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
@@ -481,6 +481,9 @@ fun TransactionsScreenView(
                                         ),
                                         tint = DarkGray,
                                         modifier = Modifier
+                                            .background(
+                                                color = Blue50,
+                                            )
                                             .padding(
                                                 all = 8.dp,
                                             ),
@@ -507,6 +510,9 @@ fun TransactionsScreenView(
                                         ),
                                         tint = DarkGray,
                                         modifier = Modifier
+                                            .background(
+                                                color = Blue50,
+                                            )
                                             .padding(
                                                 all = 8.dp,
                                             ),
@@ -534,6 +540,9 @@ fun TransactionsScreenView(
                                         ),
                                         tint = DarkGray,
                                         modifier = Modifier
+                                            .background(
+                                                color = Blue50,
+                                            )
                                             .padding(
                                                 all = 8.dp,
                                             ),
@@ -549,7 +558,7 @@ fun TransactionsScreenView(
                                     MyText(
                                         text = date,
                                         style = TextStyle(
-                                            color = Color.DarkGray,
+                                            color = DarkGray,
                                             fontSize = 12.sp,
                                             fontWeight = FontWeight.Bold,
                                         ),

@@ -9,12 +9,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.tooling.preview.Preview
 import com.makeappssimple.abhimanyu.financemanager.android.chart.pie.PieChartUtils.calculateAngle
 import com.makeappssimple.abhimanyu.financemanager.android.chart.pie.renderer.SimpleSliceDrawer
 import com.makeappssimple.abhimanyu.financemanager.android.chart.pie.renderer.SliceDrawer
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Blue
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Green
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Red
 
 fun simpleChartAnimation() = TweenSpec<Float>(durationMillis = 500)
 
@@ -80,9 +82,18 @@ private fun DrawChart(
 fun PieChartPreview() = PieChart(
     pieChartData = PieChartData(
         items = listOf(
-            PieChartItemData(25f, Color.Red),
-            PieChartItemData(42f, Color.Blue),
-            PieChartItemData(23f, Color.Green)
+            PieChartItemData(
+                value = 25f,
+                color = Red,
+            ),
+            PieChartItemData(
+                value = 42f,
+                color = Blue,
+            ),
+            PieChartItemData(
+                value = 23f,
+                color = Green,
+            )
         )
     )
 )

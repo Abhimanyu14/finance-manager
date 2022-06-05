@@ -16,16 +16,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.DarkGray
-import androidx.compose.ui.graphics.Color.Companion.LightGray
-import androidx.compose.ui.graphics.Color.Companion.Transparent
-import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.flowlayout.FlowRow
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.LightGray
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Transparent
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.White
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getIcon
 

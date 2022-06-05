@@ -16,7 +16,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -29,6 +28,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.SearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.SearchBarContainer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.SearchBarData
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Black
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.capitalizeWords
 
@@ -126,7 +127,7 @@ private fun EmojiPickerBottomSheetItem(
         AndroidView(
             factory = { context ->
                 AppCompatTextView(context).apply {
-                    setTextColor(Color.Black.toArgb())
+                    setTextColor(Black.toArgb())
                     text = data.emoji.character
                     textSize = 28F
                     textAlignment = View.TEXT_ALIGNMENT_CENTER
@@ -148,7 +149,7 @@ private fun EmojiGroupName(
             )
             .capitalizeWords(),
         style = TextStyle(
-            color = Color.DarkGray,
+            color = DarkGray,
             fontWeight = FontWeight.Bold,
         ),
         modifier = Modifier

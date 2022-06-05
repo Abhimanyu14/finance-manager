@@ -12,7 +12,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -24,6 +23,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amoun
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Green700
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.White
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -64,7 +64,7 @@ fun TotalBalanceCard(
                 textStringResourceId = R.string.total_balance_card_title,
                 textAlign = TextAlign.Center,
                 style = TextStyle(
-                    color = Color.White,
+                    color = White,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                 ),
@@ -77,7 +77,7 @@ fun TotalBalanceCard(
                 ).toString(),
                 textAlign = TextAlign.Center,
                 style = TextStyle(
-                    color = Color.White,
+                    color = White,
                     fontSize = 32.sp,
                     fontWeight = FontWeight.Bold,
                 ),

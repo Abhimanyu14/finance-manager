@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -26,6 +25,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.EmojiCi
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.ExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.ExpandableItemViewWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.LightGray
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isDefaultCategory
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isSalaryCategory
 
@@ -88,7 +89,7 @@ fun CategoriesListItem(
             MyText(
                 text = category.title,
                 style = TextStyle(
-                    color = Color.DarkGray,
+                    color = DarkGray,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                 ),
@@ -104,7 +105,7 @@ fun CategoriesListItem(
         }
         if (expanded) {
             Divider(
-                color = Color.LightGray,
+                color = LightGray,
                 thickness = 0.5.dp,
             )
             Row(

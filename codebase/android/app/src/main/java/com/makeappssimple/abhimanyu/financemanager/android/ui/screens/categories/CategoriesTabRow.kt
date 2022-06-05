@@ -3,9 +3,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categorie
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 
@@ -58,7 +58,7 @@ private fun CategoriesTabText(
         color = if (isSelected) {
             Primary
         } else {
-            Color.DarkGray
+            DarkGray
         },
         fontWeight = FontWeight.Bold,
     )

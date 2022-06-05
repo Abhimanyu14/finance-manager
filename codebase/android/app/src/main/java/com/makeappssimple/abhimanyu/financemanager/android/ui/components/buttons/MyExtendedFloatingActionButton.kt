@@ -29,7 +29,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color.Companion.Red
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.semantics
@@ -38,6 +37,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.MyAppTheme
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Red
 
 enum class MyExtendedLoadingFloatingActionButtonState {
     DEFAULT,
@@ -102,7 +102,9 @@ fun MyExtendedLoadingFloatingActionButton(
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
-            .background(Red),
+            .background(
+                color = Red,
+            ),
     ) {
         Button(
             onClick = onClick,
