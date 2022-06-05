@@ -30,12 +30,14 @@ class TransactionRepositoryImpl(
             endingTimestamp = System.currentTimeMillis(),
         )
     }
+
     override fun getCurrentMonthTransactions(): Flow<List<Transaction>> {
         return transactionDao.getTransactionsBetweenTimestamps(
             startingTimestamp = getCurrentMonthStartingTimestamp(),
             endingTimestamp = System.currentTimeMillis(),
         )
     }
+
     override fun getCurrentYearTransactions(): Flow<List<Transaction>> {
         return transactionDao.getTransactionsBetweenTimestamps(
             startingTimestamp = getCurrentYearStartingTimestamp(),
