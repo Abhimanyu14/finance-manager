@@ -7,7 +7,7 @@ plugins {
     id "jacoco"
     id "org.jetbrains.kotlinx.kover" version "0.5.1"
     id "io.gitlab.arturbosch.detekt"
-    // id "com.google.devtools.ksp" version "1.6.10-1.0.4"
+    id "com.google.devtools.ksp" version "1.6.21-1.0.6"
 }
 
 // Kover
@@ -225,6 +225,10 @@ android {
     }
 }
 
+ksp {
+    arg('room.schemaLocation', "$projectDir/schemas")
+}
+
 dependencies {
 
     // Androidx core
@@ -287,17 +291,19 @@ dependencies {
     // Hilt
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
     kapt "com.google.dagger:hilt-compiler:$rootProject.hiltVersion"
+    // ksp "com.google.dagger:hilt-compiler:$rootProject.hiltVersion"
     implementation "androidx.hilt:hilt-lifecycle-viewmodel:$rootProject.hiltLifecycleViewModelVersion"
     kapt "androidx.hilt:hilt-compiler:$rootProject.hiltCompilerVersion"
+    // ksp "androidx.hilt:hilt-compiler:$rootProject.hiltCompilerVersion"
 
     // KSP
-    // implementation "com.google.devtools.ksp:symbol-processing-api:1.6.10-1.0.4"
+    implementation "com.google.devtools.ksp:symbol-processing-api:1.6.21-1.0.6"
 
     // Moshi
     implementation "com.squareup.moshi:moshi:$rootProject.moshiVersion"
     implementation "com.squareup.moshi:moshi-kotlin:$rootProject.moshiKotlinVersion"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$rootProject.moshiKotlinCodegenVersion"
-    // ksp "com.squareup.moshi:moshi-kotlin-codegen:1.13.0"
+    // kapt "com.squareup.moshi:moshi-kotlin-codegen:$rootProject.moshiKotlinCodegenVersion"
+    ksp "com.squareup.moshi:moshi-kotlin-codegen:$rootProject.moshiVersion"
 
     // Retrofit with Moshi Converter
     implementation "com.squareup.retrofit2:converter-moshi:$rootProject.retrofitMoshiConverterVersion"
@@ -315,7 +321,8 @@ dependencies {
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
     implementation "androidx.room:room-ktx:$rootProject.roomVersion"
     annotationProcessor "androidx.room:room-compiler:$rootProject.roomVersion"
-    kapt "androidx.room:room-compiler:$rootProject.roomVersion"
+    // kapt "androidx.room:room-compiler:$rootProject.roomVersion"
+    ksp "androidx.room:room-compiler:$rootProject.roomVersion"
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
 
     // Firebase BoM
