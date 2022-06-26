@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.settings.screen
 
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
+import android.net.Uri
+import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,16 +30,15 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.settings.viewmodel.SettingsScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
-import com.makeappssimple.abhimanyu.financemanager.android.utils.CreateJsonDocument
 import com.makeappssimple.abhimanyu.financemanager.android.utils.JSON_MIMETYPE
 
 enum class SettingsBottomSheetType : BottomSheetType {
@@ -47,7 +46,10 @@ enum class SettingsBottomSheetType : BottomSheetType {
 }
 
 data class SettingsScreenViewData(
-    val screenViewModel: SettingsScreenViewModel,
+    val createDocument: ManagedActivityResultLauncher<String, Uri?>,
+    val openDocument: ManagedActivityResultLauncher<Array<String>, Uri?>,
+    val navigationManager: NavigationManager,
+    val recalculateTotal: () -> Unit,
 )
 
 @OptIn(
@@ -60,24 +62,6 @@ fun SettingsScreenView(
     data: SettingsScreenViewData,
     state: SettingsScreenViewState,
 ) {
-    val createDocument = rememberLauncherForActivityResult(
-        contract = CreateJsonDocument(),
-    ) { uri ->
-        uri?.let {
-            data.screenViewModel.backupDataToDocument(
-                uri = it,
-            )
-        }
-    }
-    val openDocument = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.OpenDocument(),
-    ) { uri ->
-        uri?.let {
-            data.screenViewModel.restoreDataFromDocument(
-                uri = it,
-            )
-        }
-    }
     var settingsBottomSheetType by remember {
         mutableStateOf(
             value = SettingsBottomSheetType.NONE,
@@ -115,7 +99,7 @@ fun SettingsScreenView(
         Scaffold(
             topBar = {
                 MyTopAppBar(
-                    navigationManager = data.screenViewModel.navigationManager,
+                    navigationManager = data.navigationManager,
                     titleTextStringResourceId = R.string.screen_settings_appbar_title,
                     isNavigationIconVisible = true,
                 )
@@ -156,7 +140,7 @@ fun SettingsScreenView(
                         },
                         modifier = Modifier
                             .clickable {
-                                createDocument.launch(JSON_MIMETYPE)
+                                data.createDocument.launch(JSON_MIMETYPE)
                             },
                     )
                     ListItem(
@@ -181,7 +165,7 @@ fun SettingsScreenView(
                         },
                         modifier = Modifier
                             .clickable {
-                                openDocument.launch(arrayOf(JSON_MIMETYPE))
+                                data.openDocument.launch(arrayOf(JSON_MIMETYPE))
                             },
                     )
                     ListItem(
@@ -206,7 +190,7 @@ fun SettingsScreenView(
                         },
                         modifier = Modifier
                             .clickable {
-                                data.screenViewModel.recalculateTotal()
+                                data.recalculateTotal()
                             },
                     )
                 }
