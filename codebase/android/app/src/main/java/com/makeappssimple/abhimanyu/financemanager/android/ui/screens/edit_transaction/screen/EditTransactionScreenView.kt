@@ -47,12 +47,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.Vertica
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.MyReadOnlyTextField
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.components.EditTransactionSelectCategoryBottomSheet
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.components.EditTransactionSelectCategoryBottomSheetData
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.components.EditTransactionSelectCategoryBottomSheetItemData
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.components.EditTransactionSelectSourceBottomSheet
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.components.EditTransactionSelectSourceBottomSheetData
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.components.EditTransactionSelectSourceBottomSheetItemData
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.components.EditTransactionSelectCategoryBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.components.EditTransactionSelectSourceBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.viewmodel.EditTransactionScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
@@ -192,86 +188,52 @@ fun EditTransactionScreenView(
                     VerticalSpacer()
                 }
                 EditTransactionBottomSheetType.SELECT_CATEGORY -> {
-                    EditTransactionSelectCategoryBottomSheet(
-                        data = EditTransactionSelectCategoryBottomSheetData(
-                            items = categories
-                                .filter { category ->
-                                    category.transactionType == selectedTransactionType
-                                }
-                                .map { category ->
-                                    EditTransactionSelectCategoryBottomSheetItemData(
-                                        category = category,
-                                        isSelected = category.id == uiState.category?.id,
-                                        onClick = {
-                                            toggleModalBottomSheetState(
-                                                coroutineScope = state.coroutineScope,
-                                                modalBottomSheetState = state.modalBottomSheetState,
-                                            ) {
-                                                data.screenViewModel.updateCategory(
-                                                    updatedCategory = category,
-                                                )
-                                                editTransactionBottomSheetType =
-                                                    EditTransactionBottomSheetType.NONE
-                                            }
-                                        },
-                                    )
-                                }
-                                .toList(),
-                        ),
+                    EditTransactionSelectCategoryBottomSheetContent(
+                        coroutineScope = state.coroutineScope,
+                        modalBottomSheetState = state.modalBottomSheetState,
+                        categories = categories,
+                        selectedTransactionType = selectedTransactionType,
+                        selectedCategoryId = uiState.category?.id,
+                        resetBottomSheetType = {
+                            editTransactionBottomSheetType = EditTransactionBottomSheetType.NONE
+                        },
+                        updateCategory = { category ->
+                            data.screenViewModel.updateCategory(
+                                updatedCategory = category,
+                            )
+                        },
                     )
                 }
                 EditTransactionBottomSheetType.SELECT_SOURCE_FROM -> {
-                    EditTransactionSelectSourceBottomSheet(
-                        data = EditTransactionSelectSourceBottomSheetData(
-                            items = sources
-                                .map { source ->
-                                    EditTransactionSelectSourceBottomSheetItemData(
-                                        text = source.name,
-                                        iconKey = source.type.title,
-                                        isSelected = source.id == uiState.sourceFrom?.id,
-                                        onClick = {
-                                            toggleModalBottomSheetState(
-                                                coroutineScope = state.coroutineScope,
-                                                modalBottomSheetState = state.modalBottomSheetState,
-                                            ) {
-                                                data.screenViewModel.updateSourceFrom(
-                                                    updatedSourceFrom = source,
-                                                )
-                                                editTransactionBottomSheetType =
-                                                    EditTransactionBottomSheetType.NONE
-                                            }
-                                        },
-                                    )
-                                }
-                                .toList(),
-                        ),
+                    EditTransactionSelectSourceBottomSheetContent(
+                        coroutineScope = state.coroutineScope,
+                        modalBottomSheetState = state.modalBottomSheetState,
+                        sources = sources,
+                        selectedSourceId = uiState.sourceFrom?.id,
+                        resetBottomSheetType = {
+                            editTransactionBottomSheetType = EditTransactionBottomSheetType.NONE
+                        },
+                        updateSource = { updatedSource ->
+                            data.screenViewModel.updateSourceFrom(
+                                updatedSourceFrom = updatedSource,
+                            )
+                        }
                     )
                 }
                 EditTransactionBottomSheetType.SELECT_SOURCE_TO -> {
-                    EditTransactionSelectSourceBottomSheet(
-                        data = EditTransactionSelectSourceBottomSheetData(
-                            items = sources
-                                .map { source ->
-                                    EditTransactionSelectSourceBottomSheetItemData(
-                                        text = source.name,
-                                        iconKey = source.type.title,
-                                        isSelected = source.id == uiState.sourceTo?.id,
-                                        onClick = {
-                                            toggleModalBottomSheetState(
-                                                coroutineScope = state.coroutineScope,
-                                                modalBottomSheetState = state.modalBottomSheetState,
-                                            ) {
-                                                data.screenViewModel.updateSourceTo(
-                                                    updatedSourceTo = source,
-                                                )
-                                                editTransactionBottomSheetType =
-                                                    EditTransactionBottomSheetType.NONE
-                                            }
-                                        },
-                                    )
-                                }
-                                .toList(),
-                        ),
+                    EditTransactionSelectSourceBottomSheetContent(
+                        coroutineScope = state.coroutineScope,
+                        modalBottomSheetState = state.modalBottomSheetState,
+                        sources = sources,
+                        selectedSourceId = uiState.sourceTo?.id,
+                        resetBottomSheetType = {
+                            editTransactionBottomSheetType = EditTransactionBottomSheetType.NONE
+                        },
+                        updateSource = { updatedSource ->
+                            data.screenViewModel.updateSourceTo(
+                                updatedSourceTo = updatedSource,
+                            )
+                        }
                     )
                 }
             }

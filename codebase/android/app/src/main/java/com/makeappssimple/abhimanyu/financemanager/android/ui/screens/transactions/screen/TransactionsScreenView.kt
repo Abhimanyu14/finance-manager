@@ -55,13 +55,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyScrol
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.ConfirmationBottomSheet
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.ConfirmationBottomSheetData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.SearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.SearchBarData
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.TransactionsFilterBottomSheetData
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.TransactionsFiltersBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.TransactionsDeleteConfirmationBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.TransactionsFiltersBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.TransactionsListItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.TransactionsListItemViewData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.viewmodel.TransactionsScreenViewModel
@@ -288,78 +286,43 @@ fun TransactionsScreenView(
                     VerticalSpacer()
                 }
                 TransactionsBottomSheetType.FILTERS -> {
-                    TransactionsFiltersBottomSheet(
-                        data = TransactionsFilterBottomSheetData(
-                            expenseCategories = expenseCategories,
-                            incomeCategories = incomeCategories,
-                            sources = sources,
-                            transactionTypes = transactionTypes,
-                            selectedExpenseCategoryIndices = selectedExpenseCategoryIndices,
-                            selectedIncomeCategoryIndices = selectedIncomeCategoryIndices,
-                            selectedSourceIndices = selectedSourceIndices,
-                            selectedTransactionTypesIndices = selectedTransactionTypesIndices,
-                            onPositiveButtonClick = {
-                                selectedExpenseCategoryIndices.clear()
-                                selectedIncomeCategoryIndices.clear()
-                                selectedSourceIndices.clear()
-                                selectedTransactionTypesIndices.clear()
-
-                                selectedExpenseCategoryIndices.addAll(it.selectedExpenseCategoryIndices)
-                                selectedIncomeCategoryIndices.addAll(it.selectedIncomeCategoryIndices)
-                                selectedSourceIndices.addAll(it.selectedSourceIndices)
-                                selectedTransactionTypesIndices.addAll(it.selectedTransactionTypeIndices)
-
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                ) {
-                                    transactionsBottomSheetType = TransactionsBottomSheetType.NONE
-                                }
-                            },
-                            onNegativeButtonClick = {},
-                        ),
+                    TransactionsFiltersBottomSheetContent(
+                        coroutineScope = state.coroutineScope,
+                        modalBottomSheetState = state.modalBottomSheetState,
+                        expenseCategories = expenseCategories,
+                        incomeCategories = incomeCategories,
+                        sources = sources,
+                        transactionTypes = transactionTypes,
+                        selectedExpenseCategoryIndices = selectedExpenseCategoryIndices,
+                        selectedIncomeCategoryIndices = selectedIncomeCategoryIndices,
+                        selectedSourceIndices = selectedSourceIndices,
+                        selectedTransactionTypesIndices = selectedTransactionTypesIndices,
+                        resetBottomSheetType = {
+                            transactionsBottomSheetType = TransactionsBottomSheetType.NONE
+                        },
                     )
                 }
                 TransactionsBottomSheetType.DELETE_CONFIRMATION -> {
-                    ConfirmationBottomSheet(
-                        data = ConfirmationBottomSheetData(
-                            title = stringResource(
-                                id = R.string.screen_transactions_bottom_sheet_delete_title,
-                            ),
-                            message = stringResource(
-                                id = R.string.screen_transactions_bottom_sheet_delete_message,
-                            ),
-                            positiveButtonText = stringResource(
-                                id = R.string.screen_transactions_bottom_sheet_delete_positive_button_text,
-                            ),
-                            negativeButtonText = stringResource(
-                                id = R.string.screen_transactions_bottom_sheet_delete_negative_button_text,
-                            ),
-                            onPositiveButtonClick = {
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                ) {
-                                    transactionIdToDelete?.let { transactionIdToDeleteValue ->
-                                        data.screenViewModel.deleteTransaction(
-                                            id = transactionIdToDeleteValue,
-                                        )
-                                        transactionIdToDelete = null
-                                        expandedItemKey = ""
-                                    }
-                                    transactionsBottomSheetType = TransactionsBottomSheetType.NONE
-                                }
-                            },
-                            onNegativeButtonClick = {
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                ) {
-                                    transactionsBottomSheetType = TransactionsBottomSheetType.NONE
-                                    transactionIdToDelete = null
-                                }
-                            },
-                        ),
+                    TransactionsDeleteConfirmationBottomSheetContent(
+                        coroutineScope = state.coroutineScope,
+                        modalBottomSheetState = state.modalBottomSheetState,
+                        transactionIdToDelete = transactionIdToDelete,
+                        resetBottomSheetType = {
+                            transactionsBottomSheetType = TransactionsBottomSheetType.NONE
+                        },
+                        resetTransactionIdToDelete = {
+                            transactionIdToDelete = null
+                        },
+                        resetExpandedItemKey = {
+                            expandedItemKey = ""
+                        },
+                        deleteTransaction = {
+                            transactionIdToDelete?.let { transactionIdToDeleteValue ->
+                                data.screenViewModel.deleteTransaction(
+                                    id = transactionIdToDeleteValue,
+                                )
+                            }
+                        },
                     )
                 }
             }

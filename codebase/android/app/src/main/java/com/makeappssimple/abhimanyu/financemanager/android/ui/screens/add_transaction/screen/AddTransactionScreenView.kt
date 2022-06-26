@@ -46,12 +46,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.Vertica
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.MyReadOnlyTextField
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.components.AddTransactionSelectCategoryBottomSheet
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.components.AddTransactionSelectCategoryBottomSheetData
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.components.AddTransactionSelectCategoryBottomSheetItemData
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.components.AddTransactionSelectSourceBottomSheet
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.components.AddTransactionSelectSourceBottomSheetData
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.components.AddTransactionSelectSourceBottomSheetItemData
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.components.AddTransactionSelectCategoryBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.components.AddTransactionSelectSourceBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.viewmodel.AddTransactionScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
@@ -190,86 +186,52 @@ fun AddTransactionScreenView(
                     VerticalSpacer()
                 }
                 AddTransactionBottomSheetType.SELECT_CATEGORY -> {
-                    AddTransactionSelectCategoryBottomSheet(
-                        data = AddTransactionSelectCategoryBottomSheetData(
-                            items = categories
-                                .filter { category ->
-                                    category.transactionType == selectedTransactionType
-                                }
-                                .map { category ->
-                                    AddTransactionSelectCategoryBottomSheetItemData(
-                                        category = category,
-                                        isSelected = category.id == uiState.category?.id,
-                                        onClick = {
-                                            toggleModalBottomSheetState(
-                                                coroutineScope = state.coroutineScope,
-                                                modalBottomSheetState = state.modalBottomSheetState,
-                                            ) {
-                                                data.screenViewModel.updateCategory(
-                                                    updatedCategory = category,
-                                                )
-                                                addTransactionBottomSheetType =
-                                                    AddTransactionBottomSheetType.NONE
-                                            }
-                                        },
-                                    )
-                                }
-                                .toList(),
-                        ),
+                    AddTransactionSelectCategoryBottomSheetContent(
+                        coroutineScope = state.coroutineScope,
+                        modalBottomSheetState = state.modalBottomSheetState,
+                        categories = categories,
+                        selectedTransactionType = selectedTransactionType,
+                        selectedCategoryId = uiState.category?.id,
+                        resetBottomSheetType = {
+                            addTransactionBottomSheetType = AddTransactionBottomSheetType.NONE
+                        },
+                        updateCategory = { updatedCategory ->
+                            data.screenViewModel.updateCategory(
+                                updatedCategory = updatedCategory,
+                            )
+                        },
                     )
                 }
                 AddTransactionBottomSheetType.SELECT_SOURCE_FROM -> {
-                    AddTransactionSelectSourceBottomSheet(
-                        data = AddTransactionSelectSourceBottomSheetData(
-                            items = sources
-                                .map { source ->
-                                    AddTransactionSelectSourceBottomSheetItemData(
-                                        text = source.name,
-                                        iconKey = source.type.title,
-                                        isSelected = source.id == uiState.sourceFrom?.id,
-                                        onClick = {
-                                            toggleModalBottomSheetState(
-                                                coroutineScope = state.coroutineScope,
-                                                modalBottomSheetState = state.modalBottomSheetState,
-                                            ) {
-                                                data.screenViewModel.updateSourceFrom(
-                                                    updatedSourceFrom = source,
-                                                )
-                                                addTransactionBottomSheetType =
-                                                    AddTransactionBottomSheetType.NONE
-                                            }
-                                        },
-                                    )
-                                }
-                                .toList(),
-                        ),
+                    AddTransactionSelectSourceBottomSheetContent(
+                        coroutineScope = state.coroutineScope,
+                        modalBottomSheetState = state.modalBottomSheetState,
+                        sources = sources,
+                        selectedSourceId = uiState.sourceFrom?.id,
+                        resetBottomSheetType = {
+                            addTransactionBottomSheetType = AddTransactionBottomSheetType.NONE
+                        },
+                        updateSource = { updatedSource ->
+                            data.screenViewModel.updateSourceFrom(
+                                updatedSourceFrom = updatedSource,
+                            )
+                        }
                     )
                 }
                 AddTransactionBottomSheetType.SELECT_SOURCE_TO -> {
-                    AddTransactionSelectSourceBottomSheet(
-                        data = AddTransactionSelectSourceBottomSheetData(
-                            items = sources
-                                .map { source ->
-                                    AddTransactionSelectSourceBottomSheetItemData(
-                                        text = source.name,
-                                        iconKey = source.type.title,
-                                        isSelected = source.id == uiState.sourceTo?.id,
-                                        onClick = {
-                                            toggleModalBottomSheetState(
-                                                coroutineScope = state.coroutineScope,
-                                                modalBottomSheetState = state.modalBottomSheetState,
-                                            ) {
-                                                data.screenViewModel.updateSourceTo(
-                                                    updatedSourceTo = source,
-                                                )
-                                                addTransactionBottomSheetType =
-                                                    AddTransactionBottomSheetType.NONE
-                                            }
-                                        },
-                                    )
-                                }
-                                .toList(),
-                        ),
+                    AddTransactionSelectSourceBottomSheetContent(
+                        coroutineScope = state.coroutineScope,
+                        modalBottomSheetState = state.modalBottomSheetState,
+                        sources = sources,
+                        selectedSourceId = uiState.sourceTo?.id,
+                        resetBottomSheetType = {
+                            addTransactionBottomSheetType = AddTransactionBottomSheetType.NONE
+                        },
+                        updateSource = { updatedSource ->
+                            data.screenViewModel.updateSourceTo(
+                                updatedSourceTo = updatedSource,
+                            )
+                        }
                     )
                 }
             }

@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_category.screen
 
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -45,20 +44,18 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetTy
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.EmojiPickerBottomSheet
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.EmojiPickerBottomSheetData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.MyOutlinedTextField
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_category.components.EditCategorySelectEmojiBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_category.viewmodel.EditCategoryScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Black
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.utils.constants.loadingCompletedEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.utils.constants.loadingEmoji
-import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.capitalizeWords
 
 enum class EditCategoryBottomSheetType : BottomSheetType {
     NONE,
@@ -136,32 +133,23 @@ fun EditCategoryScreenView(
                     VerticalSpacer()
                 }
                 EditCategoryBottomSheetType.SELECT_EMOJI -> {
-                    EmojiPickerBottomSheet(
-                        data = EmojiPickerBottomSheetData(
-                            emojis = emojis,
-                            searchText = searchText,
-                            onEmojiClick = { emoji ->
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                ) {
-                                    editCategoryBottomSheetType = EditCategoryBottomSheetType.NONE
-                                    data.screenViewModel.updateEmoji(
-                                        updatedEmoji = emoji.character,
-                                    )
-                                }
-                            },
-                            onEmojiLongClick = { emoji ->
-                                Toast.makeText(
-                                    state.context,
-                                    emoji.unicodeName.capitalizeWords(),
-                                    Toast.LENGTH_SHORT,
-                                ).show()
-                            },
-                            updateSearchText = { updatedSearchText ->
-                                data.screenViewModel.updateSearchText(updatedSearchText)
-                            }
-                        ),
+                    EditCategorySelectEmojiBottomSheetContent(
+                        context = state.context,
+                        coroutineScope = state.coroutineScope,
+                        modalBottomSheetState = state.modalBottomSheetState,
+                        emojis = emojis,
+                        searchText = searchText,
+                        resetBottomSheetType = {
+                            editCategoryBottomSheetType = EditCategoryBottomSheetType.NONE
+                        },
+                        updateEmoji = { updatedEmoji ->
+                            data.screenViewModel.updateEmoji(
+                                updatedEmoji = updatedEmoji,
+                            )
+                        },
+                        updateSearchText = { updatedSearchText ->
+                            data.screenViewModel.updateSearchText(updatedSearchText)
+                        },
                     )
                 }
             }

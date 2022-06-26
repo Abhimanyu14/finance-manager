@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source.screen
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -10,6 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 
 @OptIn(
     ExperimentalComposeUiApi::class,
+    ExperimentalMaterialApi::class,
 )
 @Composable
 fun AddSourceScreen(

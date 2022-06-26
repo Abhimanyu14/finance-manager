@@ -37,10 +37,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldCon
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.ConfirmationBottomSheet
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.ConfirmationBottomSheetData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyFloatingActionButton
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.CategoriesDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.CategoriesListItem
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.CategoriesSetAsDefaultConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.CategoriesTabData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.CategoriesTabRow
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.CategoriesTabRowData
@@ -166,90 +166,51 @@ fun CategoriesScreenView(
                     VerticalSpacer()
                 }
                 CategoriesBottomSheetType.SET_AS_DEFAULT_CONFIRMATION -> {
-                    val transactionType: TransactionType = transactionTypes[selectedTabIndex]
-                    ConfirmationBottomSheet(
-                        data = ConfirmationBottomSheetData(
-                            title = stringResource(
-                                id = R.string.screen_categories_bottom_sheet_set_as_default_title,
-                            ),
-                            message = stringResource(
-                                id = R.string.screen_categories_bottom_sheet_set_as_default_message,
-                                transactionType.title.lowercase(),
-                            ),
-                            positiveButtonText = stringResource(
-                                id = R.string.screen_categories_bottom_sheet_set_as_default_positive_button_text,
-                            ),
-                            negativeButtonText = stringResource(
-                                id = R.string.screen_categories_bottom_sheet_set_as_default_negative_button_text,
-                            ),
-                            onPositiveButtonClick = {
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                ) {
-                                    clickedItemId?.let { clickedItemIdValue ->
-                                        data.screenViewModel.setDefaultCategoryIdInDataStore(
-                                            defaultCategoryId = clickedItemIdValue,
-                                            transactionType = transactionType,
-                                        )
-                                        clickedItemId = null
-                                    }
-                                    categoriesBottomSheetType = CategoriesBottomSheetType.NONE
-                                }
-                            },
-                            onNegativeButtonClick = {
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                ) {
-                                    categoriesBottomSheetType = CategoriesBottomSheetType.NONE
-                                    clickedItemId = null
-                                }
-                            },
-                        ),
+                    CategoriesSetAsDefaultConfirmationBottomSheetContent(
+                        coroutineScope = state.coroutineScope,
+                        modalBottomSheetState = state.modalBottomSheetState,
+                        transactionType = transactionTypes[selectedTabIndex],
+                        clickedItemId = clickedItemId,
+                        resetBottomSheetType = {
+                            categoriesBottomSheetType = CategoriesBottomSheetType.NONE
+                        },
+                        resetClickedItemId = {
+                            clickedItemId = null
+                        },
+                        setDefaultCategoryIdInDataStore = {
+                            clickedItemId?.let { clickedItemIdValue ->
+                                data.screenViewModel.setDefaultCategoryIdInDataStore(
+                                    defaultCategoryId = clickedItemIdValue,
+                                    transactionType = transactionTypes[selectedTabIndex],
+                                )
+                            }
+                        },
                     )
                 }
                 CategoriesBottomSheetType.DELETE_CONFIRMATION -> {
-                    ConfirmationBottomSheet(
-                        data = ConfirmationBottomSheetData(
-                            title = stringResource(
-                                id = R.string.screen_sources_bottom_sheet_delete_title,
-                            ),
-                            message = stringResource(
-                                id = R.string.screen_sources_bottom_sheet_delete_message,
-                            ),
-                            positiveButtonText = stringResource(
-                                id = R.string.screen_sources_bottom_sheet_delete_positive_button_text,
-                            ),
-                            negativeButtonText = stringResource(
-                                id = R.string.screen_sources_bottom_sheet_delete_negative_button_text,
-                            ),
-                            onPositiveButtonClick = {
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                ) {
-                                    categoryIdToDelete?.let { categoryIdToDeleteValue ->
-                                        data.screenViewModel.deleteCategory(
-                                            id = categoryIdToDeleteValue,
-                                        )
-                                        categoryIdToDelete = null
-                                        expenseExpandedItemIndex = null
-                                        incomeExpandedItemIndex = null
-                                    }
-                                    categoriesBottomSheetType = CategoriesBottomSheetType.NONE
-                                }
-                            },
-                            onNegativeButtonClick = {
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                ) {
-                                    categoriesBottomSheetType = CategoriesBottomSheetType.NONE
-                                    categoryIdToDelete = null
-                                }
-                            },
-                        ),
+                    CategoriesDeleteConfirmationBottomSheetContent(
+                        coroutineScope = state.coroutineScope,
+                        modalBottomSheetState = state.modalBottomSheetState,
+                        categoryIdToDelete = categoryIdToDelete,
+                        resetBottomSheetType = {
+                            categoriesBottomSheetType = CategoriesBottomSheetType.NONE
+                        },
+                        resetCategoryIdToDelete = {
+                            categoryIdToDelete = null
+                        },
+                        resetExpenseExpandedItemIndex = {
+                            expenseExpandedItemIndex = null
+                        },
+                        resetIncomeExpandedItemIndex = {
+                            incomeExpandedItemIndex = null
+                        },
+                        deleteCategory = {
+                            categoryIdToDelete?.let { categoryIdToDeleteValue ->
+                                data.screenViewModel.deleteCategory(
+                                    id = categoryIdToDeleteValue,
+                                )
+                            }
+                        },
                     )
                 }
             }
