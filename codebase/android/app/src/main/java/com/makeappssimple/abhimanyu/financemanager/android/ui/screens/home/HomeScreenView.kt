@@ -21,7 +21,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.Menu
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -71,9 +70,10 @@ data class HomeScreenViewData(
     val screenViewModel: HomeScreenViewModel,
 )
 
-@OptIn(ExperimentalComposeUiApi::class)
-@ExperimentalMaterialApi
-@ExperimentalMaterial3Api
+@OptIn(
+    ExperimentalComposeUiApi::class,
+    ExperimentalMaterialApi::class,
+)
 @Composable
 fun HomeScreenView(
     data: HomeScreenViewData,
@@ -204,7 +204,9 @@ fun HomeScreenView(
     }
 }
 
-@ExperimentalMaterialApi
+@OptIn(
+    ExperimentalMaterialApi::class,
+)
 @Composable
 private fun HomeMenuBottomSheetContent(
     coroutineScope: CoroutineScope,
@@ -268,7 +270,9 @@ private fun HomeMenuBottomSheetContent(
     )
 }
 
-@ExperimentalMaterialApi
+@OptIn(
+    ExperimentalMaterialApi::class,
+)
 @Composable
 private fun HomeBottomAppBar(
     coroutineScope: CoroutineScope,

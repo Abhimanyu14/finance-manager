@@ -7,7 +7,9 @@ import androidx.compose.runtime.Composable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@ExperimentalMaterialApi
+@OptIn(
+    ExperimentalMaterialApi::class,
+)
 fun toggleModalBottomSheetState(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
@@ -25,7 +27,9 @@ fun toggleModalBottomSheetState(
     }
 }
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(
+    ExperimentalMaterialApi::class,
+)
 @Composable
 fun BottomSheetBackHandler(
     enabled: Boolean,

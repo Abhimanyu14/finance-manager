@@ -29,7 +29,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -73,16 +72,16 @@ data class EditTransactionScreenViewData(
     val transactionId: Int?,
 )
 
-@OptIn(ExperimentalComposeUiApi::class)
-@ExperimentalMaterialApi
-@ExperimentalMaterial3Api
+@OptIn(
+    ExperimentalComposeUiApi::class,
+    ExperimentalMaterial3Api::class,
+    ExperimentalMaterialApi::class,
+)
 @Composable
 fun EditTransactionScreenView(
     data: EditTransactionScreenViewData,
     state: EditTransactionScreenViewState,
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
-
     val categories by data.screenViewModel.categories.collectAsState(
         initial = emptyList(),
     )
@@ -152,7 +151,7 @@ fun EditTransactionScreenView(
         key1 = state.modalBottomSheetState,
     ) {
         if (state.modalBottomSheetState.isVisible) {
-            keyboardController?.hide()
+            state.keyboardController?.hide()
         }
     }
 
@@ -160,7 +159,7 @@ fun EditTransactionScreenView(
         DisposableEffect(Unit) {
             onDispose {
                 editTransactionBottomSheetType = EditTransactionBottomSheetType.NONE
-                keyboardController?.hide()
+                state.keyboardController?.hide()
             }
         }
     }

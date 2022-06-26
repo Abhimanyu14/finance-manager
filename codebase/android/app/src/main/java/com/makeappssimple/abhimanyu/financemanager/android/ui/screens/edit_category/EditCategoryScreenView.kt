@@ -36,14 +36,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.makeappssimple.abhimanyu.financemanager.android.R
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.EmojiPickerBottomSheet
@@ -70,14 +69,16 @@ data class EditCategoryScreenViewData(
     val categoryId: Int?,
 )
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
-@ExperimentalMaterialApi
+@OptIn(
+    ExperimentalComposeUiApi::class,
+    ExperimentalMaterial3Api::class,
+    ExperimentalMaterialApi::class,
+)
 @Composable
 fun EditCategoryScreenView(
     data: EditCategoryScreenViewData,
     state: EditCategoryScreenViewState,
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
     val title by data.screenViewModel.title.collectAsState()
     val selectedTransactionTypeIndex by data.screenViewModel.selectedTransactionTypeIndex.collectAsState()
     val emoji by data.screenViewModel.emoji.collectAsState()
@@ -112,7 +113,7 @@ fun EditCategoryScreenView(
         DisposableEffect(Unit) {
             onDispose {
                 editCategoryBottomSheetType = EditCategoryBottomSheetType.NONE
-                keyboardController?.hide()
+                state.keyboardController?.hide()
             }
         }
     }
@@ -229,7 +230,7 @@ fun EditCategoryScreenView(
                                     shape = CircleShape,
                                 )
                                 .clickable {
-                                    keyboardController?.hide()
+                                    state.keyboardController?.hide()
                                     editCategoryBottomSheetType =
                                         EditCategoryBottomSheetType.SELECT_EMOJI
                                     toggleModalBottomSheetState(

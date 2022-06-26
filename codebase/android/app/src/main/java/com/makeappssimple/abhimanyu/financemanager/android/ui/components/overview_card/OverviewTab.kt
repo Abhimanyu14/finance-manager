@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -91,7 +90,6 @@ fun OverviewTab(
     }
 }
 
-@ExperimentalMaterialApi
 @Preview
 @Composable
 private fun OverviewSelectionPreview() {

@@ -33,8 +33,10 @@ data class SettingsScreenViewData(
     val screenViewModel: SettingsScreenViewModel,
 )
 
-@ExperimentalMaterialApi
-@ExperimentalMaterial3Api
+@OptIn(
+    ExperimentalMaterial3Api::class,
+    ExperimentalMaterialApi::class,
+)
 @Composable
 fun SettingsScreenView(
     data: SettingsScreenViewData,

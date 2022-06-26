@@ -32,7 +32,9 @@ enum class OverviewTabOption(
     YEAR("Year"),
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(
+    ExperimentalMaterial3Api::class,
+)
 @Composable
 fun OverviewCard(
     viewModel: OverviewCardViewModel = hiltViewModel<OverviewCardViewModelImpl>(),

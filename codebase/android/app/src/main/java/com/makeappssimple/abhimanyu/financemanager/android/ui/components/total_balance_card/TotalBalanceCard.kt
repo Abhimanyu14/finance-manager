@@ -25,7 +25,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Green700
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.White
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(
+    ExperimentalMaterial3Api::class,
+)
 @Composable
 fun TotalBalanceCard(
     viewModel: TotalBalanceCardViewModel = hiltViewModel<TotalBalanceCardViewModelImpl>(),

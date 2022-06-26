@@ -19,7 +19,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
@@ -49,14 +48,16 @@ data class SourcesScreenViewData(
     val screenViewModel: SourcesScreenViewModel,
 )
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
-@ExperimentalMaterialApi
+@OptIn(
+    ExperimentalComposeUiApi::class,
+    ExperimentalMaterial3Api::class,
+    ExperimentalMaterialApi::class,
+)
 @Composable
 fun SourcesScreenView(
     data: SourcesScreenViewData,
     state: SourcesScreenViewState,
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
     val sources by data.screenViewModel.sources.collectAsState(
         initial = emptyList(),
     )
@@ -91,7 +92,7 @@ fun SourcesScreenView(
         DisposableEffect(Unit) {
             onDispose {
                 sourcesBottomSheetType = SourcesBottomSheetType.NONE
-                keyboardController?.hide()
+                state.keyboardController?.hide()
             }
         }
     }

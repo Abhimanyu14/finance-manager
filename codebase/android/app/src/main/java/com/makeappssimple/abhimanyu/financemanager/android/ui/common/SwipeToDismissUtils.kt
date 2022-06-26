@@ -6,7 +6,9 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.rememberDismissState
 import androidx.compose.runtime.Composable
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(
+    ExperimentalMaterialApi::class,
+)
 @Composable
 fun getDismissState(
     dismissedToEndAction: (() -> Unit)? = null,

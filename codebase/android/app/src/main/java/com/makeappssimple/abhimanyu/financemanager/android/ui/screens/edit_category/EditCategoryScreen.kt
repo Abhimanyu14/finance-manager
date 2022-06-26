@@ -3,10 +3,14 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_cate
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 
-@ExperimentalMaterialApi
+@OptIn(
+    ExperimentalComposeUiApi::class,
+    ExperimentalMaterialApi::class,
+)
 @Composable
 fun EditCategoryScreen(
     screenViewModel: EditCategoryScreenViewModel = hiltViewModel<EditCategoryScreenViewModelImpl>(),

@@ -28,7 +28,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -60,7 +59,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.setT
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.year
 import java.util.Calendar
 
-enum class AddTransactionBottomSheetType: BottomSheetType {
+enum class AddTransactionBottomSheetType : BottomSheetType {
     NONE,
     SELECT_CATEGORY,
     SELECT_SOURCE_FROM,
@@ -71,16 +70,16 @@ data class AddTransactionScreenViewData(
     val screenViewModel: AddTransactionScreenViewModel,
 )
 
-@OptIn(ExperimentalComposeUiApi::class)
-@ExperimentalMaterialApi
-@ExperimentalMaterial3Api
+@OptIn(
+    ExperimentalComposeUiApi::class,
+    ExperimentalMaterial3Api::class,
+    ExperimentalMaterialApi::class,
+)
 @Composable
 fun AddTransactionScreenView(
     data: AddTransactionScreenViewData,
     state: AddTransactionScreenViewState,
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
-
     val categories by data.screenViewModel.categories.collectAsState(
         initial = emptyList(),
     )
@@ -150,7 +149,7 @@ fun AddTransactionScreenView(
         key1 = state.modalBottomSheetState,
     ) {
         if (state.modalBottomSheetState.isVisible) {
-            keyboardController?.hide()
+            state.keyboardController?.hide()
         }
     }
 
@@ -158,7 +157,7 @@ fun AddTransactionScreenView(
         DisposableEffect(Unit) {
             onDispose {
                 addTransactionBottomSheetType = AddTransactionBottomSheetType.NONE
-                keyboardController?.hide()
+                state.keyboardController?.hide()
             }
         }
     }

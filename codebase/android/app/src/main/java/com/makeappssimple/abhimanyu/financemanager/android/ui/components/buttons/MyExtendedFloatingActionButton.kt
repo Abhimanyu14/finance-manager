@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.LinearOutSlowInEasing
 import androidx.compose.animation.core.animateDp
 import androidx.compose.animation.core.tween
@@ -16,7 +15,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
@@ -46,7 +44,6 @@ enum class MyExtendedLoadingFloatingActionButtonState {
     FAILURE,
 }
 
-@ExperimentalAnimationApi
 @Composable
 fun MyExtendedLoadingFloatingActionButton(
     modifier: Modifier = Modifier,
@@ -232,8 +229,6 @@ fun MyExtendedFloatingActionButton(
 }
 
 
-@ExperimentalAnimationApi
-@ExperimentalMaterialApi
 @Preview
 @Composable
 private fun MyExtendedLoadingFloatingActionButtonLoadingPreview() {
@@ -249,7 +244,6 @@ private fun MyExtendedLoadingFloatingActionButtonLoadingPreview() {
     }
 }
 
-@ExperimentalMaterialApi
 @Preview
 @Composable
 private fun MyExtendedFloatingActionButtonPreview() {

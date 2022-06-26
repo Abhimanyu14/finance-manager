@@ -7,28 +7,40 @@ import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import kotlinx.coroutines.CoroutineScope
 
-class CategoriesScreenViewState @OptIn(ExperimentalMaterialApi::class) constructor(
-    val focusManager: FocusManager,
+class CategoriesScreenViewState @OptIn(
+    ExperimentalComposeUiApi::class,
+    ExperimentalMaterialApi::class,
+) constructor(
     val coroutineScope: CoroutineScope,
+    val focusManager: FocusManager,
+    val keyboardController: SoftwareKeyboardController?,
     val modalBottomSheetState: ModalBottomSheetState,
 )
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(
+    ExperimentalComposeUiApi::class,
+    ExperimentalMaterialApi::class,
+)
 @Composable
 fun rememberCategoriesScreenViewState(
-    focusManager: FocusManager = LocalFocusManager.current,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    focusManager: FocusManager = LocalFocusManager.current,
+    keyboardController: SoftwareKeyboardController? = LocalSoftwareKeyboardController.current,
     modalBottomSheetState: ModalBottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
     ),
 ) = remember {
     CategoriesScreenViewState(
-        focusManager = focusManager,
         coroutineScope = coroutineScope,
+        focusManager = focusManager,
+        keyboardController = keyboardController,
         modalBottomSheetState = modalBottomSheetState,
     )
 }

@@ -7,34 +7,46 @@ import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import kotlinx.coroutines.CoroutineScope
 
-class TransactionsScreenViewState @OptIn(ExperimentalMaterialApi::class) constructor(
+class TransactionsScreenViewState @OptIn(
+    ExperimentalComposeUiApi::class,
+    ExperimentalMaterialApi::class,
+) constructor(
+    val coroutineScope: CoroutineScope,
     val focusManager: FocusManager,
     val focusRequester: FocusRequester,
-    val coroutineScope: CoroutineScope,
+    val keyboardController: SoftwareKeyboardController?,
     val modalBottomSheetState: ModalBottomSheetState,
 )
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(
+    ExperimentalComposeUiApi::class,
+    ExperimentalMaterialApi::class,
+)
 @Composable
 fun rememberTransactionsScreenViewState(
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
     focusManager: FocusManager = LocalFocusManager.current,
     focusRequester: FocusRequester = remember {
         FocusRequester()
     },
-    coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    keyboardController: SoftwareKeyboardController? = LocalSoftwareKeyboardController.current,
     modalBottomSheetState: ModalBottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
     ),
 ) = remember {
     TransactionsScreenViewState(
+        coroutineScope = coroutineScope,
         focusManager = focusManager,
         focusRequester = focusRequester,
-        coroutineScope = coroutineScope,
+        keyboardController = keyboardController,
         modalBottomSheetState = modalBottomSheetState,
     )
 }

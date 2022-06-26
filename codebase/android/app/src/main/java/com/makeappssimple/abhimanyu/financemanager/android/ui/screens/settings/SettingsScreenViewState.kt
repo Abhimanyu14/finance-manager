@@ -11,24 +11,28 @@ import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.platform.LocalFocusManager
 import kotlinx.coroutines.CoroutineScope
 
-class SettingsScreenViewState @OptIn(ExperimentalMaterialApi::class) constructor(
-    val focusManager: FocusManager,
+class SettingsScreenViewState @OptIn(
+    ExperimentalMaterialApi::class,
+) constructor(
     val coroutineScope: CoroutineScope,
+    val focusManager: FocusManager,
     val modalBottomSheetState: ModalBottomSheetState,
 )
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(
+    ExperimentalMaterialApi::class,
+)
 @Composable
 fun rememberSettingsScreenViewState(
-    focusManager: FocusManager = LocalFocusManager.current,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    focusManager: FocusManager = LocalFocusManager.current,
     modalBottomSheetState: ModalBottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
     ),
 ) = remember {
     SettingsScreenViewState(
-        focusManager = focusManager,
         coroutineScope = coroutineScope,
+        focusManager = focusManager,
         modalBottomSheetState = modalBottomSheetState,
     )
 }

@@ -1,14 +1,16 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
 
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 
-@ExperimentalMaterialApi
-@ExperimentalMaterial3Api
+@OptIn(
+    ExperimentalComposeUiApi::class,
+    ExperimentalMaterialApi::class,
+)
 @Composable
 fun HomeScreen(
     screenViewModel: HomeScreenViewModel = hiltViewModel<HomeScreenViewModelImpl>(),

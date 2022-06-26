@@ -25,15 +25,14 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.SourceType
+import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.AmountCommaVisualTransformation
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
-import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadioGroupItem
@@ -52,14 +51,16 @@ data class EditSourceScreenViewData(
     val sourceId: Int?,
 )
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
-@ExperimentalMaterialApi
+@OptIn(
+    ExperimentalComposeUiApi::class,
+    ExperimentalMaterial3Api::class,
+    ExperimentalMaterialApi::class,
+)
 @Composable
 fun EditSourceScreenView(
     data: EditSourceScreenViewData,
     state: EditSourceScreenViewState,
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
     val selectedSourceTypeIndex by data.screenViewModel.selectedSourceTypeIndex.collectAsState()
     val source by data.screenViewModel.source.collectAsState(
         initial = null,
@@ -76,7 +77,7 @@ fun EditSourceScreenView(
         DisposableEffect(Unit) {
             onDispose {
                 sourcesBottomSheetType = EditSourceBottomSheetType.NONE
-                keyboardController?.hide()
+                state.keyboardController?.hide()
             }
         }
     }

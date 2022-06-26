@@ -1,7 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.navigation
 
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -29,9 +27,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.So
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.TransactionsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 
-@OptIn(ExperimentalComposeUiApi::class)
-@ExperimentalMaterialApi
-@ExperimentalMaterial3Api
+@OptIn(
+    ExperimentalComposeUiApi::class,
+)
 @Composable
 fun MyNavGraph(
     activityViewModel: MainActivityViewModel,

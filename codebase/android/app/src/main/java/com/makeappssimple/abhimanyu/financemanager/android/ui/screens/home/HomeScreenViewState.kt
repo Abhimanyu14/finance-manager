@@ -15,8 +15,8 @@ import androidx.compose.ui.platform.SoftwareKeyboardController
 import kotlinx.coroutines.CoroutineScope
 
 class HomeScreenViewState @OptIn(
-    ExperimentalMaterialApi::class,
     ExperimentalComposeUiApi::class,
+    ExperimentalMaterialApi::class,
 ) constructor(
     val coroutineScope: CoroutineScope,
     val focusManager: FocusManager,
@@ -25,8 +25,8 @@ class HomeScreenViewState @OptIn(
 )
 
 @OptIn(
-    ExperimentalMaterialApi::class,
     ExperimentalComposeUiApi::class,
+    ExperimentalMaterialApi::class,
 )
 @Composable
 fun rememberHomeScreenViewState(

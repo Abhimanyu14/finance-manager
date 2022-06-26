@@ -22,7 +22,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -32,8 +31,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToEditCategoryScreen
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
@@ -60,15 +59,14 @@ data class CategoriesScreenViewData(
 @OptIn(
     ExperimentalComposeUiApi::class,
     ExperimentalMaterial3Api::class,
+    ExperimentalMaterialApi::class,
     ExperimentalPagerApi::class,
 )
-@ExperimentalMaterialApi
 @Composable
 fun CategoriesScreenView(
     data: CategoriesScreenViewData,
     state: CategoriesScreenViewState,
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
     val coroutineScope = rememberCoroutineScope()
     val selectedTabIndex by data.screenViewModel.selectedTabIndex.collectAsState()
     val expenseCategories by data.screenViewModel.expenseCategories.collectAsState(
@@ -141,7 +139,7 @@ fun CategoriesScreenView(
         DisposableEffect(Unit) {
             onDispose {
                 categoriesBottomSheetType = CategoriesBottomSheetType.NONE
-                keyboardController?.hide()
+                state.keyboardController?.hide()
             }
         }
     }

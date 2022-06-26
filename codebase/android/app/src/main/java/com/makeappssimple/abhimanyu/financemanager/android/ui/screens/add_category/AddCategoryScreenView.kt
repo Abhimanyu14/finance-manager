@@ -36,7 +36,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -58,7 +57,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Black
 import com.makeappssimple.abhimanyu.financemanager.android.utils.constants.loadingCompletedEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.capitalizeWords
 
-enum class AddCategoryBottomSheetType: BottomSheetType {
+enum class AddCategoryBottomSheetType : BottomSheetType {
     NONE,
     SELECT_EMOJI,
 }
@@ -67,14 +66,16 @@ data class AddCategoryScreenViewData(
     val screenViewModel: AddCategoryScreenViewModel,
 )
 
-@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
-@ExperimentalMaterialApi
+@OptIn(
+    ExperimentalComposeUiApi::class,
+    ExperimentalMaterial3Api::class,
+    ExperimentalMaterialApi::class,
+)
 @Composable
 fun AddCategoryScreenView(
     data: AddCategoryScreenViewData,
     state: AddCategoryScreenViewState,
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
     val title by data.screenViewModel.title.collectAsState()
     val selectedTransactionTypeIndex by data.screenViewModel.selectedTransactionTypeIndex.collectAsState()
     val emoji by data.screenViewModel.emoji.collectAsState()
@@ -107,7 +108,7 @@ fun AddCategoryScreenView(
         DisposableEffect(Unit) {
             onDispose {
                 addCategoryBottomSheetType = AddCategoryBottomSheetType.NONE
-                keyboardController?.hide()
+                state.keyboardController?.hide()
             }
         }
     }
@@ -223,7 +224,7 @@ fun AddCategoryScreenView(
                                     shape = CircleShape,
                                 )
                                 .clickable {
-                                    keyboardController?.hide()
+                                    state.keyboardController?.hide()
                                     addCategoryBottomSheetType =
                                         AddCategoryBottomSheetType.SELECT_EMOJI
                                     toggleModalBottomSheetState(

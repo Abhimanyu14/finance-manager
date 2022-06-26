@@ -35,7 +35,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -47,8 +46,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Sourc
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToEditTransactionScreen
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadioGroupItem
@@ -96,15 +95,16 @@ data class TransactionsScreenViewData(
     val screenViewModel: TransactionsScreenViewModel,
 )
 
-@OptIn(ExperimentalComposeUiApi::class)
-@ExperimentalMaterialApi
-@ExperimentalMaterial3Api
+@OptIn(
+    ExperimentalComposeUiApi::class,
+    ExperimentalMaterial3Api::class,
+    ExperimentalMaterialApi::class,
+)
 @Composable
 fun TransactionsScreenView(
     data: TransactionsScreenViewData,
     state: TransactionsScreenViewState,
 ) {
-    val keyboardController = LocalSoftwareKeyboardController.current
     val categories: List<Category> by data.screenViewModel.categories.collectAsState(
         initial = emptyList(),
     )
@@ -257,7 +257,7 @@ fun TransactionsScreenView(
         DisposableEffect(Unit) {
             onDispose {
                 transactionsBottomSheetType = TransactionsBottomSheetType.NONE
-                keyboardController?.hide()
+                state.keyboardController?.hide()
             }
         }
     }
@@ -462,7 +462,7 @@ fun TransactionsScreenView(
                                 ElevatedCard(
                                     onClick = {
                                         if (isSearchbarVisible) {
-                                            keyboardController?.hide()
+                                            state.keyboardController?.hide()
                                         }
                                         setIsSearchbarVisible(!isSearchbarVisible)
                                         updateSearchText("")

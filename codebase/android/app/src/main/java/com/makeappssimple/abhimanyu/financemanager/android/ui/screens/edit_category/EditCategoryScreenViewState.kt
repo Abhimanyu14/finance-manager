@@ -8,38 +8,50 @@ import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import kotlinx.coroutines.CoroutineScope
 
-class EditCategoryScreenViewState @OptIn(ExperimentalMaterialApi::class) constructor(
+class EditCategoryScreenViewState @OptIn(
+    ExperimentalComposeUiApi::class,
+    ExperimentalMaterialApi::class,
+) constructor(
     val context: Context,
-    val focusManager: FocusManager,
     val coroutineScope: CoroutineScope,
-    val modalBottomSheetState: ModalBottomSheetState,
+    val focusManager: FocusManager,
     val focusRequester: FocusRequester,
+    val keyboardController: SoftwareKeyboardController?,
+    val modalBottomSheetState: ModalBottomSheetState,
 )
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(
+    ExperimentalComposeUiApi::class,
+    ExperimentalMaterialApi::class,
+)
 @Composable
 fun rememberEditCategoryScreenViewState(
     context: Context = LocalContext.current,
-    focusManager: FocusManager = LocalFocusManager.current,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    modalBottomSheetState: ModalBottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-    ),
+    focusManager: FocusManager = LocalFocusManager.current,
     focusRequester: FocusRequester = remember {
         FocusRequester()
     },
+    keyboardController: SoftwareKeyboardController? = LocalSoftwareKeyboardController.current,
+    modalBottomSheetState: ModalBottomSheetState = rememberModalBottomSheetState(
+        initialValue = ModalBottomSheetValue.Hidden,
+    ),
 ) = remember {
     EditCategoryScreenViewState(
         context = context,
-        focusManager = focusManager,
         coroutineScope = coroutineScope,
-        modalBottomSheetState = modalBottomSheetState,
+        focusManager = focusManager,
         focusRequester = focusRequester,
+        keyboardController = keyboardController,
+        modalBottomSheetState = modalBottomSheetState,
     )
 }
