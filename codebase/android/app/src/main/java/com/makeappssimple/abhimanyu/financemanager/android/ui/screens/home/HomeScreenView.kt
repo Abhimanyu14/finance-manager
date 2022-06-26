@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -45,6 +44,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navi
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSettingsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSourcesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToTransactionsScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
+import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
@@ -58,7 +59,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
 
-enum class HomeBottomSheetType {
+enum class HomeBottomSheetType : BottomSheetType {
     NONE,
     MENU,
 }
@@ -93,15 +94,13 @@ fun HomeScreenView(
             }
         }
     }
-    BackHandler(
+
+    BottomSheetBackHandler(
         enabled = homeBottomSheetType != HomeBottomSheetType.NONE,
+        coroutineScope = state.coroutineScope,
+        modalBottomSheetState = state.modalBottomSheetState,
     ) {
-        toggleModalBottomSheetState(
-            coroutineScope = state.coroutineScope,
-            modalBottomSheetState = state.modalBottomSheetState,
-        ) {
-            homeBottomSheetType = HomeBottomSheetType.NONE
-        }
+        homeBottomSheetType = HomeBottomSheetType.NONE
     }
 
     ModalBottomSheetLayout(

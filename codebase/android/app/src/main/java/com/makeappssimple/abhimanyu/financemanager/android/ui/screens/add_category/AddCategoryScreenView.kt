@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_categ
 
 import android.view.View
 import android.widget.Toast
-import androidx.activity.compose.BackHandler
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -43,6 +42,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
+import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.EmojiPickerBottomSheet
@@ -57,7 +58,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Black
 import com.makeappssimple.abhimanyu.financemanager.android.utils.constants.loadingCompletedEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.capitalizeWords
 
-enum class AddCategoryBottomSheetType {
+enum class AddCategoryBottomSheetType: BottomSheetType {
     NONE,
     SELECT_EMOJI,
 }
@@ -110,15 +111,13 @@ fun AddCategoryScreenView(
             }
         }
     }
-    BackHandler(
+
+    BottomSheetBackHandler(
         enabled = addCategoryBottomSheetType != AddCategoryBottomSheetType.NONE,
+        coroutineScope = state.coroutineScope,
+        modalBottomSheetState = state.modalBottomSheetState,
     ) {
-        toggleModalBottomSheetState(
-            coroutineScope = state.coroutineScope,
-            modalBottomSheetState = state.modalBottomSheetState,
-        ) {
-            addCategoryBottomSheetType = AddCategoryBottomSheetType.NONE
-        }
+        addCategoryBottomSheetType = AddCategoryBottomSheetType.NONE
     }
 
     ModalBottomSheetLayout(

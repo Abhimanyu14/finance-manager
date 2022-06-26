@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -26,6 +25,8 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToEditSourceScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
+import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
@@ -38,7 +39,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetS
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isCashSource
 
-enum class SourcesBottomSheetType {
+enum class SourcesBottomSheetType : BottomSheetType {
     NONE,
     SET_AS_DEFAULT_CONFIRMATION,
     DELETE_CONFIRMATION,
@@ -94,15 +95,13 @@ fun SourcesScreenView(
             }
         }
     }
-    BackHandler(
+
+    BottomSheetBackHandler(
         enabled = sourcesBottomSheetType != SourcesBottomSheetType.NONE,
+        coroutineScope = state.coroutineScope,
+        modalBottomSheetState = state.modalBottomSheetState,
     ) {
-        toggleModalBottomSheetState(
-            coroutineScope = state.coroutineScope,
-            modalBottomSheetState = state.modalBottomSheetState,
-        ) {
-            sourcesBottomSheetType = SourcesBottomSheetType.NONE
-        }
+        sourcesBottomSheetType = SourcesBottomSheetType.NONE
     }
 
     ModalBottomSheetLayout(

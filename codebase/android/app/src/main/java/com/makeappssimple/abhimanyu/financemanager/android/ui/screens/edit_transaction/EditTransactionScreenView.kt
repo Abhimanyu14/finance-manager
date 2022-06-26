@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_tran
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -37,6 +36,8 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.AmountCommaVisualTransformation
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
+import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadioGroup
@@ -60,7 +61,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.setT
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.year
 import java.util.Calendar
 
-enum class EditTransactionBottomSheetType {
+enum class EditTransactionBottomSheetType : BottomSheetType {
     NONE,
     SELECT_CATEGORY,
     SELECT_SOURCE_FROM,
@@ -163,15 +164,13 @@ fun EditTransactionScreenView(
             }
         }
     }
-    BackHandler(
+
+    BottomSheetBackHandler(
         enabled = editTransactionBottomSheetType != EditTransactionBottomSheetType.NONE,
+        coroutineScope = state.coroutineScope,
+        modalBottomSheetState = state.modalBottomSheetState,
     ) {
-        toggleModalBottomSheetState(
-            coroutineScope = state.coroutineScope,
-            modalBottomSheetState = state.modalBottomSheetState,
-        ) {
-            editTransactionBottomSheetType = EditTransactionBottomSheetType.NONE
-        }
+        editTransactionBottomSheetType = EditTransactionBottomSheetType.NONE
     }
 
     ModalBottomSheetLayout(

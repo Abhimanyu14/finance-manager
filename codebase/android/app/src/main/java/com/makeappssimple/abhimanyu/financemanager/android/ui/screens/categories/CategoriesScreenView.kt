@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -33,6 +32,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToEditCategoryScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
+import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
@@ -46,7 +47,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.utils.isDefaultCatego
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isSalaryCategory
 import kotlinx.coroutines.launch
 
-enum class CategoriesBottomSheetType {
+enum class CategoriesBottomSheetType : BottomSheetType {
     NONE,
     SET_AS_DEFAULT_CONFIRMATION,
     DELETE_CONFIRMATION,
@@ -144,15 +145,13 @@ fun CategoriesScreenView(
             }
         }
     }
-    BackHandler(
+
+    BottomSheetBackHandler(
         enabled = categoriesBottomSheetType != CategoriesBottomSheetType.NONE,
+        coroutineScope = state.coroutineScope,
+        modalBottomSheetState = state.modalBottomSheetState,
     ) {
-        toggleModalBottomSheetState(
-            coroutineScope = state.coroutineScope,
-            modalBottomSheetState = state.modalBottomSheetState,
-        ) {
-            categoriesBottomSheetType = CategoriesBottomSheetType.NONE
-        }
+        categoriesBottomSheetType = CategoriesBottomSheetType.NONE
     }
 
     ModalBottomSheetLayout(

@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_source
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -33,8 +32,9 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.SourceType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.AmountCommaVisualTransformation
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
+import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
@@ -43,7 +43,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 
-enum class EditSourceBottomSheetType {
+enum class EditSourceBottomSheetType : BottomSheetType {
     NONE,
 }
 
@@ -80,15 +80,13 @@ fun EditSourceScreenView(
             }
         }
     }
-    BackHandler(
+
+    BottomSheetBackHandler(
         enabled = sourcesBottomSheetType != EditSourceBottomSheetType.NONE,
+        coroutineScope = state.coroutineScope,
+        modalBottomSheetState = state.modalBottomSheetState,
     ) {
-        toggleModalBottomSheetState(
-            coroutineScope = state.coroutineScope,
-            modalBottomSheetState = state.modalBottomSheetState,
-        ) {
-            sourcesBottomSheetType = EditSourceBottomSheetType.NONE
-        }
+        sourcesBottomSheetType = EditSourceBottomSheetType.NONE
     }
 
     ModalBottomSheetLayout(
