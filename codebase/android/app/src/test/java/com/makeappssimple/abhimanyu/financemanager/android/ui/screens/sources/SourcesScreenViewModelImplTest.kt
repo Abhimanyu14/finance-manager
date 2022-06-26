@@ -8,6 +8,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.G
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.CheckIfSourceIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.viewmodel.SourcesScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.viewmodel.SourcesScreenViewModelImpl
 import com.makeappssimple.abhimanyu.financemanager.android.utils.MainDispatcherRule
 import kotlinx.coroutines.flow.flow
 import org.junit.Before

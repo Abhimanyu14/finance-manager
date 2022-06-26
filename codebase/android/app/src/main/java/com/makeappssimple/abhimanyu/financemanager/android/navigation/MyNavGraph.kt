@@ -14,17 +14,17 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavArgs.CA
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavArgs.SOURCE_ID
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavArgs.TRANSACTION_ID
 import com.makeappssimple.abhimanyu.financemanager.android.ui.activity.MainActivityViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_category.AddCategoryScreen
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source.AddSourceScreen
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.AddTransactionScreen
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.CategoriesScreen
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_category.EditCategoryScreen
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_source.EditSourceScreen
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.EditTransactionScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_category.screen.AddCategoryScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source.screen.AddSourceScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.screen.AddTransactionScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.screen.CategoriesScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_category.screen.EditCategoryScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_source.screen.EditSourceScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.screen.EditTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.screen.HomeScreen
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.settings.SettingsScreen
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.SourcesScreen
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.TransactionsScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.settings.screen.SettingsScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.screen.SourcesScreen
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.screen.TransactionsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 
 @OptIn(
