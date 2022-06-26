@@ -11,7 +11,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSourcesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToTransactionsScreen
@@ -34,9 +34,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.overvie
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.components.HomeBottomAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.components.HomeListItem
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.components.HomeListItemViewData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.components.HomeRecentTransactionsView
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.components.bottomsheet.HomeMenuBottomSheetContent
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.viewmodel.HomeScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 
 enum class HomeBottomSheetType : BottomSheetType {
@@ -45,7 +45,8 @@ enum class HomeBottomSheetType : BottomSheetType {
 }
 
 data class HomeScreenViewData(
-    val screenViewModel: HomeScreenViewModel,
+    val homeListItemViewData: List<HomeListItemViewData>,
+    val navigationManager: NavigationManager,
 )
 
 @OptIn(
@@ -57,9 +58,6 @@ fun HomeScreenView(
     data: HomeScreenViewData,
     state: HomeScreenViewState,
 ) {
-    val homeListItemViewData by data.screenViewModel.homeListItemViewData.collectAsState(
-        initial = emptyList(),
-    )
     var homeBottomSheetType by remember {
         mutableStateOf(
             value = HomeBottomSheetType.NONE,
@@ -95,7 +93,7 @@ fun HomeScreenView(
                     HomeMenuBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
-                        navigationManager = data.screenViewModel.navigationManager,
+                        navigationManager = data.navigationManager,
                         resetBottomSheetType = {
                             homeBottomSheetType = HomeBottomSheetType.NONE
                         },
@@ -107,7 +105,7 @@ fun HomeScreenView(
         Scaffold(
             topBar = {
                 MyTopAppBar(
-                    navigationManager = data.screenViewModel.navigationManager,
+                    navigationManager = data.navigationManager,
                     titleTextStringResourceId = R.string.screen_home_appbar_title,
                     isNavigationIconVisible = false,
                 )
@@ -129,7 +127,7 @@ fun HomeScreenView(
                     ),
                     onClick = {
                         navigateToAddTransactionScreen(
-                            navigationManager = data.screenViewModel.navigationManager,
+                            navigationManager = data.navigationManager,
                         )
                     },
                 )
@@ -149,7 +147,7 @@ fun HomeScreenView(
                         TotalBalanceCard(
                             onClick = {
                                 navigateToSourcesScreen(
-                                    navigationManager = data.screenViewModel.navigationManager,
+                                    navigationManager = data.navigationManager,
                                 )
                             },
                         )
@@ -161,12 +159,12 @@ fun HomeScreenView(
                         HomeRecentTransactionsView(
                             onClick = {
                                 navigateToTransactionsScreen(
-                                    navigationManager = data.screenViewModel.navigationManager,
+                                    navigationManager = data.navigationManager,
                                 )
                             },
                         )
                     }
-                    items(homeListItemViewData) { listItem ->
+                    items(data.homeListItemViewData) { listItem ->
                         HomeListItem(
                             data = listItem,
                         )

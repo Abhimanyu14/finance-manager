@@ -3,8 +3,11 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.scre
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.components.HomeListItemViewData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.viewmodel.HomeScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.viewmodel.HomeScreenViewModelImpl
 import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
@@ -20,6 +23,10 @@ fun HomeScreen(
     logError(
         message = "Inside HomeScreen",
     )
+    val homeListItemViewData: List<HomeListItemViewData> by screenViewModel.homeListItemViewData
+        .collectAsState(
+            initial = emptyList(),
+        )
 
     LaunchedEffect(
         key1 = Unit,
@@ -29,7 +36,8 @@ fun HomeScreen(
 
     HomeScreenView(
         data = HomeScreenViewData(
-            screenViewModel = screenViewModel,
+            homeListItemViewData = homeListItemViewData,
+            navigationManager = screenViewModel.navigationManager,
         ),
         state = rememberHomeScreenViewState(),
     )
