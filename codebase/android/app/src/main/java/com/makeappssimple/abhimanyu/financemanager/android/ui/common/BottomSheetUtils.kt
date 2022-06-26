@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 fun toggleModalBottomSheetState(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
-    action: () -> Unit,
+    action: (() -> Unit)? = null,
 ) {
     coroutineScope.launch {
         if (!modalBottomSheetState.isAnimationRunning) {
@@ -21,7 +21,7 @@ fun toggleModalBottomSheetState(
                 modalBottomSheetState.show()
             }
         }
-        action()
+        action?.invoke()
     }
 }
 

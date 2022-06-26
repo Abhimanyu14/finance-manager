@@ -42,8 +42,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.makeappssimple.abhimanyu.financemanager.android.R
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.EmojiPickerBottomSheet
@@ -229,7 +229,7 @@ fun AddCategoryScreenView(
                                     toggleModalBottomSheetState(
                                         coroutineScope = state.coroutineScope,
                                         modalBottomSheetState = state.modalBottomSheetState,
-                                    ) {}
+                                    )
                                 }
                                 .padding(
                                     all = 4.dp,

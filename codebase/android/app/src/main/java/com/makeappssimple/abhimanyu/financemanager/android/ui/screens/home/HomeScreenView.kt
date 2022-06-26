@@ -193,7 +193,7 @@ fun HomeScreenView(
                                 toggleModalBottomSheetState(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,
-                                ) {}
+                                )
                             },
                         ) {
                             Icon(
