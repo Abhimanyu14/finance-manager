@@ -14,11 +14,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
@@ -28,7 +26,9 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToEditCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
@@ -44,7 +44,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.CategoriesTabData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.CategoriesTabRow
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.CategoriesTabRowData
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.viewmodel.CategoriesScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isDefaultCategory
@@ -58,7 +57,20 @@ enum class CategoriesBottomSheetType : BottomSheetType {
 }
 
 data class CategoriesScreenViewData(
-    val screenViewModel: CategoriesScreenViewModel,
+    val defaultExpenseCategoryId: Int?,
+    val defaultIncomeCategoryId: Int?,
+    val selectedTabIndex: Int,
+    val expenseCategoryIsUsedInTransactions: List<Boolean>,
+    val incomeCategoryIsUsedInTransactions: List<Boolean>,
+    val expenseCategories: List<Category>,
+    val incomeCategories: List<Category>,
+    val navigationManager: NavigationManager,
+    val deleteCategory: (categoryId: Int) -> Unit,
+    val setDefaultCategoryIdInDataStore: (
+        defaultCategoryId: Int,
+        transactionType: TransactionType,
+    ) -> Unit,
+    val updateSelectedTabIndex: (updatedSelectedTabIndex: Int) -> Unit,
 )
 
 @OptIn(
@@ -72,26 +84,6 @@ fun CategoriesScreenView(
     data: CategoriesScreenViewData,
     state: CategoriesScreenViewState,
 ) {
-    val coroutineScope = rememberCoroutineScope()
-    val selectedTabIndex by data.screenViewModel.selectedTabIndex.collectAsState()
-    val expenseCategories by data.screenViewModel.expenseCategories.collectAsState(
-        initial = emptyList(),
-    )
-    val incomeCategories by data.screenViewModel.incomeCategories.collectAsState(
-        initial = emptyList(),
-    )
-    val expenseCategoryIsUsedInTransactions by data.screenViewModel.expenseCategoryIsUsedInTransactions.collectAsState(
-        initial = emptyList(),
-    )
-    val incomeCategoryIsUsedInTransactions by data.screenViewModel.incomeCategoryIsUsedInTransactions.collectAsState(
-        initial = emptyList(),
-    )
-    val defaultExpenseCategoryId by data.screenViewModel.defaultExpenseCategoryId.collectAsState(
-        initial = null,
-    )
-    val defaultIncomeCategoryId by data.screenViewModel.defaultIncomeCategoryId.collectAsState(
-        initial = null,
-    )
     val pagerState = rememberPagerState(
         initialPage = 0,
     )
@@ -128,15 +120,13 @@ fun CategoriesScreenView(
     LaunchedEffect(
         key1 = pagerState.currentPage,
     ) {
-        data.screenViewModel.updateSelectedTabIndex(
-            updatedSelectedTabIndex = pagerState.currentPage,
-        )
+        data.updateSelectedTabIndex(pagerState.currentPage)
     }
     LaunchedEffect(
-        key1 = selectedTabIndex,
+        key1 = data.selectedTabIndex,
     ) {
-        coroutineScope.launch {
-            pagerState.animateScrollToPage(selectedTabIndex)
+        state.coroutineScope.launch {
+            pagerState.animateScrollToPage(data.selectedTabIndex)
         }
     }
 
@@ -169,7 +159,7 @@ fun CategoriesScreenView(
                     CategoriesSetAsDefaultConfirmationBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
-                        transactionType = transactionTypes[selectedTabIndex],
+                        transactionType = transactionTypes[data.selectedTabIndex],
                         clickedItemId = clickedItemId,
                         resetBottomSheetType = {
                             categoriesBottomSheetType = CategoriesBottomSheetType.NONE
@@ -179,9 +169,9 @@ fun CategoriesScreenView(
                         },
                         setDefaultCategoryIdInDataStore = {
                             clickedItemId?.let { clickedItemIdValue ->
-                                data.screenViewModel.setDefaultCategoryIdInDataStore(
-                                    defaultCategoryId = clickedItemIdValue,
-                                    transactionType = transactionTypes[selectedTabIndex],
+                                data.setDefaultCategoryIdInDataStore(
+                                    clickedItemIdValue,
+                                    transactionTypes[data.selectedTabIndex],
                                 )
                             }
                         },
@@ -206,9 +196,7 @@ fun CategoriesScreenView(
                         },
                         deleteCategory = {
                             categoryIdToDelete?.let { categoryIdToDeleteValue ->
-                                data.screenViewModel.deleteCategory(
-                                    id = categoryIdToDeleteValue,
-                                )
+                                data.deleteCategory(categoryIdToDeleteValue)
                             }
                         },
                     )
@@ -219,7 +207,7 @@ fun CategoriesScreenView(
         Scaffold(
             topBar = {
                 MyTopAppBar(
-                    navigationManager = data.screenViewModel.navigationManager,
+                    navigationManager = data.navigationManager,
                     titleTextStringResourceId = R.string.screen_categories_appbar_title,
                     isNavigationIconVisible = true,
                 )
@@ -232,7 +220,7 @@ fun CategoriesScreenView(
                     ),
                     onClick = {
                         navigateToAddCategoryScreen(
-                            navigationManager = data.screenViewModel.navigationManager,
+                            navigationManager = data.navigationManager,
                         )
                     },
                 )
@@ -252,11 +240,9 @@ fun CategoriesScreenView(
                 ) {
                     CategoriesTabRow(
                         data = CategoriesTabRowData(
-                            selectedTabIndex = selectedTabIndex,
+                            selectedTabIndex = data.selectedTabIndex,
                             updateSelectedTabIndex = {
-                                data.screenViewModel.updateSelectedTabIndex(
-                                    updatedSelectedTabIndex = it,
-                                )
+                                data.updateSelectedTabIndex(it)
                             },
                             tabData = transactionTypes
                                 .map {
@@ -286,9 +272,9 @@ fun CategoriesScreenView(
                             }
                             itemsIndexed(
                                 items = if (transactionType == TransactionType.EXPENSE) {
-                                    expenseCategories
+                                    data.expenseCategories
                                 } else {
-                                    incomeCategories
+                                    data.incomeCategories
                                 },
                                 key = { _, listItem ->
                                     listItem.hashCode()
@@ -296,29 +282,29 @@ fun CategoriesScreenView(
                             ) { index, listItem ->
                                 val deleteEnabled: Boolean? =
                                     if (transactionType == TransactionType.EXPENSE) {
-                                        expenseCategoryIsUsedInTransactions.getOrNull(
+                                        data.expenseCategoryIsUsedInTransactions.getOrNull(
                                             index = index,
                                         )?.not()
                                     } else {
-                                        incomeCategoryIsUsedInTransactions.getOrNull(
+                                        data.incomeCategoryIsUsedInTransactions.getOrNull(
                                             index = index,
                                         )?.not()
                                     }
                                 val isDefault = if (transactionType == TransactionType.EXPENSE) {
-                                    if (defaultExpenseCategoryId.isNull()) {
+                                    if (data.defaultExpenseCategoryId.isNull()) {
                                         isDefaultCategory(
                                             category = listItem.title,
                                         )
                                     } else {
-                                        defaultExpenseCategoryId == listItem.id
+                                        data.defaultExpenseCategoryId == listItem.id
                                     }
                                 } else {
-                                    if (defaultIncomeCategoryId.isNull()) {
+                                    if (data.defaultIncomeCategoryId.isNull()) {
                                         isSalaryCategory(
                                             category = listItem.title,
                                         )
                                     } else {
-                                        defaultIncomeCategoryId == listItem.id
+                                        data.defaultIncomeCategoryId == listItem.id
                                     }
                                 }
                                 CategoriesListItem(
@@ -360,7 +346,7 @@ fun CategoriesScreenView(
                                     },
                                     onEditClick = {
                                         navigateToEditCategoryScreen(
-                                            navigationManager = data.screenViewModel.navigationManager,
+                                            navigationManager = data.navigationManager,
                                             categoryId = listItem.id,
                                         )
                                         expenseExpandedItemIndex = null
@@ -373,7 +359,7 @@ fun CategoriesScreenView(
                                         toggleModalBottomSheetState(
                                             coroutineScope = state.coroutineScope,
                                             modalBottomSheetState = state.modalBottomSheetState,
-                                        ) {}
+                                        )
                                     },
                                 )
                             }
