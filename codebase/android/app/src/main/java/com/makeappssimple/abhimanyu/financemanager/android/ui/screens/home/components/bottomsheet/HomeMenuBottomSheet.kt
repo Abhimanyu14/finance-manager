@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
+package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.components.bottomsheet
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -25,13 +25,13 @@ data class HomeBottomSheetItemData(
     val onClick: () -> Unit,
 )
 
-data class HomeBottomSheetData(
+data class HomeMenuBottomSheetData(
     val items: List<HomeBottomSheetItemData>,
 )
 
 @Composable
-fun HomeBottomSheet(
-    data: HomeBottomSheetData,
+fun HomeMenuBottomSheet(
+    data: HomeMenuBottomSheetData,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -82,8 +82,8 @@ private fun HomeBottomSheetItem(
 @Composable
 private fun MyBottomSheetContentPreview() {
     MyAppTheme {
-        HomeBottomSheet(
-            data = HomeBottomSheetData(
+        HomeMenuBottomSheet(
+            data = HomeMenuBottomSheetData(
                 items = listOf(
                     HomeBottomSheetItemData(
                         text = stringResource(

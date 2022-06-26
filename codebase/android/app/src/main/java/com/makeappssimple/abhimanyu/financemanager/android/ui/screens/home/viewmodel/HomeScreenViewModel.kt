@@ -1,7 +1,8 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home
+package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.viewmodel
 
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.ScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.components.HomeListItemViewData
 import kotlinx.coroutines.flow.Flow
 
 interface HomeScreenViewModel : ScreenViewModel {
