@@ -26,7 +26,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -44,6 +43,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToEditTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
@@ -62,7 +62,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactio
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.TransactionsFiltersBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.TransactionsListItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.TransactionsListItemViewData
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.viewmodel.TransactionsScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Blue50
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
@@ -95,7 +94,11 @@ enum class SortOption(
 }
 
 data class TransactionsScreenViewData(
-    val screenViewModel: TransactionsScreenViewModel,
+    val categories: List<Category>,
+    val sources: List<Source>,
+    val transactionsListItemViewData: List<TransactionsListItemViewData>,
+    val navigationManager: NavigationManager,
+    val deleteTransaction: (transactionId: Int) -> Unit,
 )
 
 @OptIn(
@@ -108,21 +111,12 @@ fun TransactionsScreenView(
     data: TransactionsScreenViewData,
     state: TransactionsScreenViewState,
 ) {
-    val categories: List<Category> by data.screenViewModel.categories.collectAsState(
-        initial = emptyList(),
-    )
-    val expenseCategories = categories.filter {
+    val expenseCategories = data.categories.filter {
         it.transactionType == TransactionType.EXPENSE
     }
-    val incomeCategories = categories.filter {
+    val incomeCategories = data.categories.filter {
         it.transactionType == TransactionType.INCOME
     }
-    val sources: List<Source> by data.screenViewModel.sources.collectAsState(
-        initial = emptyList(),
-    )
-    val transactionsListItemViewData by data.screenViewModel.transactionsListItemViewData.collectAsState(
-        initial = emptyList(),
-    )
     var transactionsBottomSheetType by remember {
         mutableStateOf(
             value = TransactionsBottomSheetType.NONE,
@@ -181,7 +175,7 @@ fun TransactionsScreenView(
 
     // Transactions search, filter and sort
     val searchedTransactions = if (searchText.isNotBlank()) {
-        transactionsListItemViewData
+        data.transactionsListItemViewData
             .filter {
                 it.transaction.title.contains(
                     other = searchText,
@@ -189,7 +183,7 @@ fun TransactionsScreenView(
                 )
             }
     } else {
-        transactionsListItemViewData
+        data.transactionsListItemViewData
     }
     val transactionTypeFilteredTransactions =
         if (selectedTransactionTypesIndices.isNotEmpty()) {
@@ -203,8 +197,8 @@ fun TransactionsScreenView(
         }
     val sourceFilteredTransactions = if (selectedSourceIndices.isNotEmpty()) {
         transactionTypeFilteredTransactions.filter {
-            selectedSourceIndices.contains(sources.indexOf(it.sourceFrom)) ||
-                    selectedSourceIndices.contains(sources.indexOf(it.sourceTo))
+            selectedSourceIndices.contains(data.sources.indexOf(it.sourceFrom)) ||
+                    selectedSourceIndices.contains(data.sources.indexOf(it.sourceTo))
         }
     } else {
         transactionTypeFilteredTransactions
@@ -291,7 +285,7 @@ fun TransactionsScreenView(
                         modalBottomSheetState = state.modalBottomSheetState,
                         expenseCategories = expenseCategories,
                         incomeCategories = incomeCategories,
-                        sources = sources,
+                        sources = data.sources,
                         transactionTypes = transactionTypes,
                         selectedExpenseCategoryIndices = selectedExpenseCategoryIndices,
                         selectedIncomeCategoryIndices = selectedIncomeCategoryIndices,
@@ -318,9 +312,7 @@ fun TransactionsScreenView(
                         },
                         deleteTransaction = {
                             transactionIdToDelete?.let { transactionIdToDeleteValue ->
-                                data.screenViewModel.deleteTransaction(
-                                    id = transactionIdToDeleteValue,
-                                )
+                                data.deleteTransaction(transactionIdToDeleteValue)
                             }
                         },
                     )
@@ -331,7 +323,7 @@ fun TransactionsScreenView(
         Scaffold(
             topBar = {
                 MyTopAppBar(
-                    navigationManager = data.screenViewModel.navigationManager,
+                    navigationManager = data.navigationManager,
                     titleTextStringResourceId = R.string.screen_transactions_appbar_title,
                     isNavigationIconVisible = true,
                 )
@@ -344,7 +336,7 @@ fun TransactionsScreenView(
                     ),
                     onClick = {
                         navigateToAddTransactionScreen(
-                            navigationManager = data.screenViewModel.navigationManager,
+                            navigationManager = data.navigationManager,
                         )
                     },
                 )
@@ -562,7 +554,7 @@ fun TransactionsScreenView(
                                     },
                                     onEditClick = {
                                         navigateToEditTransactionScreen(
-                                            navigationManager = data.screenViewModel.navigationManager,
+                                            navigationManager = data.navigationManager,
                                             transactionId = listItem.transaction.id,
                                         )
                                         expandedItemKey = ""

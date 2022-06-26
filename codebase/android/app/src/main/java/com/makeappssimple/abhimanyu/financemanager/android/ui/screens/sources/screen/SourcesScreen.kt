@@ -3,8 +3,11 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.s
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.viewmodel.SourcesScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.viewmodel.SourcesScreenViewModelImpl
 import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
@@ -20,6 +23,16 @@ fun SourcesScreen(
     logError(
         message = "Inside SourcesScreen",
     )
+    val defaultSourceId: Int? by screenViewModel.defaultSourceId.collectAsState(
+        initial = null,
+    )
+    val sources: List<Source> by screenViewModel.sources.collectAsState(
+        initial = emptyList(),
+    )
+    val sourcesIsUsedInTransactions: List<Boolean> by screenViewModel.sourcesIsUsedInTransactions
+        .collectAsState(
+            initial = emptyList(),
+        )
 
     LaunchedEffect(
         key1 = Unit,
@@ -29,7 +42,20 @@ fun SourcesScreen(
 
     SourcesScreenView(
         data = SourcesScreenViewData(
-            screenViewModel = screenViewModel,
+            defaultSourceId = defaultSourceId,
+            sourcesIsUsedInTransactions = sourcesIsUsedInTransactions,
+            sources = sources,
+            navigationManager = screenViewModel.navigationManager,
+            deleteSource = { sourceId ->
+                screenViewModel.deleteSource(
+                    id = sourceId,
+                )
+            },
+            setDefaultSourceIdInDataStore = { clickedItemIdValue ->
+                screenViewModel.setDefaultSourceIdInDataStore(
+                    defaultSourceId = clickedItemIdValue,
+                )
+            },
         ),
         state = rememberSourcesScreenViewState(),
     )

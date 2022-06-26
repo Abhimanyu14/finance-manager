@@ -12,7 +12,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,6 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToEditSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
@@ -35,7 +36,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.total_b
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.components.SourcesDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.components.SourcesListItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.components.SourcesSetAsDefaultConfirmationBottomSheetContent
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.viewmodel.SourcesScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isCashSource
@@ -47,7 +47,12 @@ enum class SourcesBottomSheetType : BottomSheetType {
 }
 
 data class SourcesScreenViewData(
-    val screenViewModel: SourcesScreenViewModel,
+    val defaultSourceId: Int?,
+    val sourcesIsUsedInTransactions: List<Boolean>,
+    val sources: List<Source>,
+    val navigationManager: NavigationManager,
+    val deleteSource: (sourceId: Int) -> Unit,
+    val setDefaultSourceIdInDataStore: (defaultSourceId: Int) -> Unit,
 )
 
 @OptIn(
@@ -60,15 +65,6 @@ fun SourcesScreenView(
     data: SourcesScreenViewData,
     state: SourcesScreenViewState,
 ) {
-    val sources by data.screenViewModel.sources.collectAsState(
-        initial = emptyList(),
-    )
-    val sourcesIsUsedInTransactions by data.screenViewModel.sourcesIsUsedInTransactions.collectAsState(
-        initial = emptyList(),
-    )
-    val defaultSourceId by data.screenViewModel.defaultSourceId.collectAsState(
-        initial = null,
-    )
     var sourcesBottomSheetType by remember {
         mutableStateOf(
             value = SourcesBottomSheetType.NONE,
@@ -128,9 +124,7 @@ fun SourcesScreenView(
                         },
                         setDefaultSourceIdInDataStore = {
                             clickedItemId?.let { clickedItemIdValue ->
-                                data.screenViewModel.setDefaultSourceIdInDataStore(
-                                    defaultSourceId = clickedItemIdValue,
-                                )
+                                data.setDefaultSourceIdInDataStore(clickedItemIdValue)
                             }
                         },
                     )
@@ -150,10 +144,8 @@ fun SourcesScreenView(
                             expandedItemIndex = null
                         },
                         deleteSource = {
-                            sourceIdToDelete?.let { transactionIdToDeleteValue ->
-                                data.screenViewModel.deleteSource(
-                                    id = transactionIdToDeleteValue,
-                                )
+                            sourceIdToDelete?.let { sourceIdToDeleteValue ->
+                                data.deleteSource(sourceIdToDeleteValue)
                             }
                         },
                     )
@@ -164,7 +156,7 @@ fun SourcesScreenView(
         Scaffold(
             topBar = {
                 MyTopAppBar(
-                    navigationManager = data.screenViewModel.navigationManager,
+                    navigationManager = data.navigationManager,
                     titleTextStringResourceId = R.string.screen_sources_appbar_title,
                     isNavigationIconVisible = true,
                 )
@@ -177,7 +169,7 @@ fun SourcesScreenView(
                     ),
                     onClick = {
                         navigateToAddSourceScreen(
-                            navigationManager = data.screenViewModel.navigationManager,
+                            navigationManager = data.navigationManager,
                         )
                     },
                 )
@@ -196,20 +188,20 @@ fun SourcesScreenView(
                         TotalBalanceCard()
                     }
                     itemsIndexed(
-                        items = sources,
+                        items = data.sources,
                         key = { _, listItem ->
                             listItem.hashCode()
                         },
                     ) { index, listItem ->
-                        val deleteEnabled: Boolean? = sourcesIsUsedInTransactions.getOrNull(
+                        val deleteEnabled: Boolean? = data.sourcesIsUsedInTransactions.getOrNull(
                             index = index,
                         )?.not()
-                        val isDefault = if (defaultSourceId.isNull()) {
+                        val isDefault = if (data.defaultSourceId.isNull()) {
                             isCashSource(
                                 source = listItem.name,
                             )
                         } else {
-                            defaultSourceId == listItem.id
+                            data.defaultSourceId == listItem.id
                         }
                         SourcesListItem(
                             source = listItem,
@@ -236,7 +228,7 @@ fun SourcesScreenView(
                             },
                             onEditClick = {
                                 navigateToEditSourceScreen(
-                                    navigationManager = data.screenViewModel.navigationManager,
+                                    navigationManager = data.navigationManager,
                                     sourceId = listItem.id,
                                 )
                                 expandedItemIndex = null
