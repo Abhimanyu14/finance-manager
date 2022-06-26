@@ -3,11 +3,11 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categorie
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.ui.base.ScreenViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
-interface CategoriesScreenViewModel : BaseScreenViewModel {
+interface CategoriesScreenViewModel : ScreenViewModel {
     val navigationManager: NavigationManager
     val selectedTabIndex: StateFlow<Int>
     val expenseCategories: Flow<List<Category>>

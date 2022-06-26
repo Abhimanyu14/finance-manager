@@ -2,9 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.settings
 
 import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.ui.base.ScreenViewModel
 
-interface SettingsScreenViewModel : BaseScreenViewModel {
+interface SettingsScreenViewModel : ScreenViewModel {
     val navigationManager: NavigationManager
 
     fun backupDataToDocument(

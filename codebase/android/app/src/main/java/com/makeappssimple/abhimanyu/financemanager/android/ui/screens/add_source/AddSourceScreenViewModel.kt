@@ -2,10 +2,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_sourc
 
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.SourceType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.ui.base.ScreenViewModel
 import kotlinx.coroutines.flow.StateFlow
 
-interface AddSourceScreenViewModel : BaseScreenViewModel {
+interface AddSourceScreenViewModel : ScreenViewModel {
     val navigationManager: NavigationManager
     val sourceTypes: List<SourceType>
     val selectedSourceTypeIndex: StateFlow<Int>

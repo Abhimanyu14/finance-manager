@@ -3,11 +3,11 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_categ
 import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.ui.base.ScreenViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
-interface AddCategoryScreenViewModel : BaseScreenViewModel {
+interface AddCategoryScreenViewModel : ScreenViewModel {
     val navigationManager: NavigationManager
     val transactionTypes: List<TransactionType>
     val title: StateFlow<String>

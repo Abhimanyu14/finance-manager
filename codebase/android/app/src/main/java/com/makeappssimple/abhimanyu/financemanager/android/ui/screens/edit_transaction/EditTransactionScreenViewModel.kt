@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Sourc
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BaseScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.ui.base.ScreenViewModel
 import kotlinx.coroutines.flow.StateFlow
 import java.util.Calendar
 
@@ -31,7 +31,7 @@ data class EditTransactionScreenUiVisibilityState(
     val isTitleSuggestionsVisible: Boolean = false,
 )
 
-interface EditTransactionScreenViewModel : BaseScreenViewModel {
+interface EditTransactionScreenViewModel : ScreenViewModel {
     val navigationManager: NavigationManager
     val transactionTypesForNewTransaction: StateFlow<List<TransactionType>>
     val transactionForValues: Array<TransactionFor>
