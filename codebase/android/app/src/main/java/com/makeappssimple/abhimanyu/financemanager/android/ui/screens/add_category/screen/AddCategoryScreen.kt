@@ -3,8 +3,11 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_categ
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_category.viewmodel.AddCategoryScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_category.viewmodel.AddCategoryScreenViewModelImpl
 import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
@@ -20,6 +23,13 @@ fun AddCategoryScreen(
     logError(
         message = "Inside AddCategoryScreen",
     )
+    val title: String by screenViewModel.title.collectAsState()
+    val selectedTransactionTypeIndex: Int by screenViewModel.selectedTransactionTypeIndex.collectAsState()
+    val emoji: String by screenViewModel.emoji.collectAsState()
+    val searchText: String by screenViewModel.searchText.collectAsState()
+    val emojis: List<Emoji> by screenViewModel.filteredEmojis.collectAsState(
+        initial = emptyList(),
+    )
 
     LaunchedEffect(
         key1 = Unit,
@@ -29,7 +39,42 @@ fun AddCategoryScreen(
 
     AddCategoryScreenView(
         data = AddCategoryScreenViewData(
-            screenViewModel = screenViewModel,
+            selectedTransactionTypeIndex = selectedTransactionTypeIndex,
+            emojis = emojis,
+            transactionTypes = screenViewModel.transactionTypes,
+            navigationManager = screenViewModel.navigationManager,
+            emoji = emoji,
+            searchText = searchText,
+            title = title,
+            clearTitle = {
+                screenViewModel.clearTitle()
+            },
+            insertCategory = {
+                screenViewModel.insertCategory()
+            },
+            isValidCategoryData = {
+                screenViewModel.isValidCategoryData()
+            },
+            updateEmoji = { updatedEmoji ->
+                screenViewModel.updateEmoji(
+                    updatedEmoji = updatedEmoji,
+                )
+            },
+            updateSearchText = { updatedSearchText ->
+                screenViewModel.updateSearchText(
+                    updatedSearchText = updatedSearchText,
+                )
+            },
+            updateSelectedTransactionTypeIndex = { updatedIndex ->
+                screenViewModel.updateSelectedTransactionTypeIndex(
+                    updatedIndex = updatedIndex,
+                )
+            },
+            updateTitle = { updatedTitle ->
+                screenViewModel.updateTitle(
+                    updatedTitle = updatedTitle,
+                )
+            },
         ),
         state = rememberAddCategoryScreenViewState(),
     )

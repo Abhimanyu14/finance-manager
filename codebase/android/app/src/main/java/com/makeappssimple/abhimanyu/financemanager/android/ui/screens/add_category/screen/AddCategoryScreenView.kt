@@ -23,7 +23,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,6 +39,9 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.Emoji
+import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
@@ -51,7 +53,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.Vertica
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_category.components.AddCategorySelectEmojiBottomSheetContent
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_category.viewmodel.AddCategoryScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Black
 import com.makeappssimple.abhimanyu.financemanager.android.utils.constants.loadingCompletedEmoji
 
@@ -61,7 +62,20 @@ enum class AddCategoryBottomSheetType : BottomSheetType {
 }
 
 data class AddCategoryScreenViewData(
-    val screenViewModel: AddCategoryScreenViewModel,
+    val selectedTransactionTypeIndex: Int,
+    val emojis: List<Emoji>,
+    val transactionTypes: List<TransactionType>,
+    val navigationManager: NavigationManager,
+    val emoji: String,
+    val searchText: String,
+    val title: String,
+    val clearTitle: () -> Unit,
+    val insertCategory: () -> Unit,
+    val isValidCategoryData: () -> Boolean,
+    val updateEmoji: (updatedEmoji: String) -> Unit,
+    val updateSearchText: (updatedSearchText: String) -> Unit,
+    val updateSelectedTransactionTypeIndex: (updatedIndex: Int) -> Unit,
+    val updateTitle: (updatedTitle: String) -> Unit,
 )
 
 @OptIn(
@@ -74,13 +88,6 @@ fun AddCategoryScreenView(
     data: AddCategoryScreenViewData,
     state: AddCategoryScreenViewState,
 ) {
-    val title by data.screenViewModel.title.collectAsState()
-    val selectedTransactionTypeIndex by data.screenViewModel.selectedTransactionTypeIndex.collectAsState()
-    val emoji by data.screenViewModel.emoji.collectAsState()
-    val searchText by data.screenViewModel.searchText.collectAsState()
-    val emojis by data.screenViewModel.filteredEmojis.collectAsState(
-        initial = emptyList(),
-    )
     var addCategoryBottomSheetType by remember {
         mutableStateOf(
             value = AddCategoryBottomSheetType.NONE,
@@ -93,12 +100,10 @@ fun AddCategoryScreenView(
         state.focusRequester.requestFocus()
     }
     LaunchedEffect(
-        key1 = emojis,
+        key1 = data.emojis,
     ) {
-        if (emojis.isNotEmpty()) {
-            data.screenViewModel.updateEmoji(
-                updatedEmoji = loadingCompletedEmoji,
-            )
+        if (data.emojis.isNotEmpty()) {
+            data.updateEmoji(loadingCompletedEmoji)
         }
     }
 
@@ -131,18 +136,16 @@ fun AddCategoryScreenView(
                         context = state.context,
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
-                        emojis = emojis,
-                        searchText = searchText,
+                        emojis = data.emojis,
+                        searchText = data.searchText,
                         resetBottomSheetType = {
                             addCategoryBottomSheetType = AddCategoryBottomSheetType.NONE
                         },
                         updateEmoji = { updatedEmoji ->
-                            data.screenViewModel.updateEmoji(
-                                updatedEmoji = updatedEmoji,
-                            )
+                            data.updateEmoji(updatedEmoji)
                         },
                         updateSearchText = { updatedSearchText ->
-                            data.screenViewModel.updateSearchText(updatedSearchText)
+                            data.updateSearchText(updatedSearchText)
                         },
                     )
                 }
@@ -152,7 +155,7 @@ fun AddCategoryScreenView(
         Scaffold(
             topBar = {
                 MyTopAppBar(
-                    navigationManager = data.screenViewModel.navigationManager,
+                    navigationManager = data.navigationManager,
                     titleTextStringResourceId = R.string.screen_add_category_appbar_title,
                     isNavigationIconVisible = true,
                 )
@@ -181,17 +184,15 @@ fun AddCategoryScreenView(
                             .fillMaxWidth(),
                     ) {
                         MyRadioGroup(
-                            items = data.screenViewModel.transactionTypes
+                            items = data.transactionTypes
                                 .map { transactionType ->
                                     MyRadioGroupItem(
                                         text = transactionType.title,
                                     )
                                 },
-                            selectedItemIndex = selectedTransactionTypeIndex,
-                            onSelectionChange = { index ->
-                                data.screenViewModel.updateSelectedTransactionTypeIndex(
-                                    updatedIndex = index,
-                                )
+                            selectedItemIndex = data.selectedTransactionTypeIndex,
+                            onSelectionChange = { updatedIndex ->
+                                data.updateSelectedTransactionTypeIndex(updatedIndex)
                             },
                             modifier = Modifier
                                 .padding(
@@ -229,29 +230,27 @@ fun AddCategoryScreenView(
                                 factory = { context ->
                                     AppCompatTextView(context).apply {
                                         setTextColor(Black.toArgb())
-                                        text = emoji
+                                        text = data.emoji
                                         textSize = 28F
                                         textAlignment = View.TEXT_ALIGNMENT_CENTER
                                     }
                                 },
                                 update = {
                                     it.apply {
-                                        text = emoji
+                                        text = data.emoji
                                     }
                                 },
                             )
                         }
                         MyOutlinedTextField(
-                            value = title,
+                            value = data.title,
                             labelTextStringResourceId = R.string.screen_add_category_title,
                             trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_category_clear_title,
                             onClickTrailingIcon = {
-                                data.screenViewModel.clearTitle()
+                                data.clearTitle()
                             },
-                            onValueChange = {
-                                data.screenViewModel.updateTitle(
-                                    updatedTitle = it,
-                                )
+                            onValueChange = { updatedTitle ->
+                                data.updateTitle(updatedTitle)
                             },
                             keyboardActions = KeyboardActions(
                                 onNext = {
@@ -281,9 +280,9 @@ fun AddCategoryScreenView(
                     }
                     SaveButton(
                         textStringResourceId = R.string.screen_add_category_floating_action_button_content_description,
-                        isEnabled = data.screenViewModel.isValidCategoryData(),
+                        isEnabled = data.isValidCategoryData(),
                         onClick = {
-                            data.screenViewModel.insertCategory()
+                            data.insertCategory()
                         },
                     )
                 }

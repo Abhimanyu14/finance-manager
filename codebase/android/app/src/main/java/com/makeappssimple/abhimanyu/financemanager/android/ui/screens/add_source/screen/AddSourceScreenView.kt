@@ -16,7 +16,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,6 +29,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.entities.source.SourceType
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
@@ -39,7 +40,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.MyOutlinedTextField
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source.viewmodel.AddSourceScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 
 enum class AddSourceBottomSheetType : BottomSheetType {
@@ -47,7 +47,15 @@ enum class AddSourceBottomSheetType : BottomSheetType {
 }
 
 data class AddSourceScreenViewData(
-    val screenViewModel: AddSourceScreenViewModel,
+    val selectedSourceTypeIndex: Int,
+    val sourceTypes: List<SourceType>,
+    val navigationManager: NavigationManager,
+    val name: String,
+    val clearName: () -> Unit,
+    val insertSource: () -> Unit,
+    val isValidSourceData: () -> Boolean,
+    val updateName: (updatedName: String) -> Unit,
+    val updateSelectedSourceTypeIndex: (updatedIndex: Int) -> Unit,
 )
 
 @OptIn(
@@ -60,8 +68,7 @@ fun AddSourceScreenView(
     data: AddSourceScreenViewData,
     state: AddSourceScreenViewState,
 ) {
-    val selectedSourceTypeIndex by data.screenViewModel.selectedSourceTypeIndex.collectAsState()
-    val name by data.screenViewModel.name.collectAsState()
+
     var addSourceBottomSheetType by remember {
         mutableStateOf(
             value = AddSourceBottomSheetType.NONE,
@@ -105,7 +112,7 @@ fun AddSourceScreenView(
         Scaffold(
             topBar = {
                 MyTopAppBar(
-                    navigationManager = data.screenViewModel.navigationManager,
+                    navigationManager = data.navigationManager,
                     titleTextStringResourceId = R.string.screen_add_source_appbar_title,
                     isNavigationIconVisible = true,
                 )
@@ -128,18 +135,16 @@ fun AddSourceScreenView(
                         ),
                 ) {
                     MyRadioGroup(
-                        items = data.screenViewModel.sourceTypes
+                        items = data.sourceTypes
                             .map { sourceType ->
                                 MyRadioGroupItem(
                                     text = sourceType.title,
                                     iconKey = sourceType.title,
                                 )
                             },
-                        selectedItemIndex = selectedSourceTypeIndex,
-                        onSelectionChange = { index ->
-                            data.screenViewModel.updateSelectedSourceTypeIndex(
-                                updatedIndex = index,
-                            )
+                        selectedItemIndex = data.selectedSourceTypeIndex,
+                        onSelectionChange = { updatedIndex ->
+                            data.updateSelectedSourceTypeIndex(updatedIndex)
                         },
                         modifier = Modifier
                             .padding(
@@ -148,16 +153,14 @@ fun AddSourceScreenView(
                             ),
                     )
                     MyOutlinedTextField(
-                        value = name,
+                        value = data.name,
                         labelTextStringResourceId = R.string.screen_add_source_name,
                         trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_source_clear_name,
                         onClickTrailingIcon = {
-                            data.screenViewModel.clearName()
+                            data.clearName()
                         },
-                        onValueChange = {
-                            data.screenViewModel.updateName(
-                                updatedName = it,
-                            )
+                        onValueChange = { updatedName ->
+                            data.updateName(updatedName)
                         },
                         keyboardActions = KeyboardActions(
                             onNext = {
@@ -182,9 +185,9 @@ fun AddSourceScreenView(
                     )
                     SaveButton(
                         textStringResourceId = R.string.screen_add_source_floating_action_button_content_description,
-                        isEnabled = data.screenViewModel.isValidSourceData(),
+                        isEnabled = data.isValidSourceData(),
                         onClick = {
-                            data.screenViewModel.insertSource()
+                            data.insertSource()
                         },
                     )
                 }
