@@ -1,11 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.screen
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
@@ -13,10 +11,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.viewmodel.CategoriesScreenViewModelImpl
 import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 
-@OptIn(
-    ExperimentalComposeUiApi::class,
-    ExperimentalMaterialApi::class,
-)
 @Composable
 fun CategoriesScreen(
     screenViewModel: CategoriesScreenViewModel = hiltViewModel<CategoriesScreenViewModelImpl>(),

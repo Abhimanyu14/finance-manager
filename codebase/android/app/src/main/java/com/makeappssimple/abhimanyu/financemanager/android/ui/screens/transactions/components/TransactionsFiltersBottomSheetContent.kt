@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -10,9 +9,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import kotlinx.coroutines.CoroutineScope
 
-@OptIn(
-    ExperimentalMaterialApi::class,
-)
 @Composable
 fun TransactionsFiltersBottomSheetContent(
     coroutineScope: CoroutineScope,

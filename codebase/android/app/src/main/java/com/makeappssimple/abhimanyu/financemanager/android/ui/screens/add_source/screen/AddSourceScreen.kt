@@ -1,20 +1,14 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source.screen
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source.viewmodel.AddSourceScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source.viewmodel.AddSourceScreenViewModelImpl
 import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 
-@OptIn(
-    ExperimentalComposeUiApi::class,
-    ExperimentalMaterialApi::class,
-)
 @Composable
 fun AddSourceScreen(
     screenViewModel: AddSourceScreenViewModel = hiltViewModel<AddSourceScreenViewModelImpl>(),

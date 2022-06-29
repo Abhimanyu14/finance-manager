@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_cate
 
 import android.content.Context
 import android.widget.Toast
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
 import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.Emoji
@@ -12,9 +11,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.EmojiPi
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.capitalizeWords
 import kotlinx.coroutines.CoroutineScope
 
-@OptIn(
-    ExperimentalMaterialApi::class,
-)
 @Composable
 fun EditCategorySelectEmojiBottomSheetContent(
     context: Context,

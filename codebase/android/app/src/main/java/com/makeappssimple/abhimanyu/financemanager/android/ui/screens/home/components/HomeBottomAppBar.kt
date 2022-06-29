@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.ContentAlpha
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.LocalContentAlpha
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.icons.Icons
@@ -21,9 +20,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomAppBarIconTint
 import kotlinx.coroutines.CoroutineScope
 
-@OptIn(
-    ExperimentalMaterialApi::class,
-)
 @Composable
 fun HomeBottomAppBar(
     coroutineScope: CoroutineScope,

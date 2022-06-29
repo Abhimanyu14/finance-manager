@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavType
@@ -27,9 +26,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.sc
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.screen.TransactionsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 
-@OptIn(
-    ExperimentalComposeUiApi::class,
-)
 @Composable
 fun MyNavGraph(
     activityViewModel: MainActivityViewModel,

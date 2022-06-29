@@ -2,13 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.common
 
 import androidx.compose.material.DismissState
 import androidx.compose.material.DismissValue
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.rememberDismissState
 import androidx.compose.runtime.Composable
 
-@OptIn(
-    ExperimentalMaterialApi::class,
-)
 @Composable
 fun getDismissState(
     dismissedToEndAction: (() -> Unit)? = null,

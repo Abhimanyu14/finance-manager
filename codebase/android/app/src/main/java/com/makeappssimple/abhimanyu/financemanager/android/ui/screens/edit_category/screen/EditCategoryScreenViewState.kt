@@ -1,14 +1,12 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_category.screen
 
 import android.content.Context
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalContext
@@ -17,10 +15,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import kotlinx.coroutines.CoroutineScope
 
-class EditCategoryScreenViewState @OptIn(
-    ExperimentalComposeUiApi::class,
-    ExperimentalMaterialApi::class,
-) constructor(
+class EditCategoryScreenViewState constructor(
     val context: Context,
     val coroutineScope: CoroutineScope,
     val focusManager: FocusManager,
@@ -29,10 +24,7 @@ class EditCategoryScreenViewState @OptIn(
     val modalBottomSheetState: ModalBottomSheetState,
 )
 
-@OptIn(
-    ExperimentalComposeUiApi::class,
-    ExperimentalMaterialApi::class,
-)
+
 @Composable
 fun rememberEditCategoryScreenViewState(
     context: Context = LocalContext.current,

@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.scre
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Scaffold
@@ -15,7 +14,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -49,10 +47,6 @@ data class HomeScreenViewData(
     val navigationManager: NavigationManager,
 )
 
-@OptIn(
-    ExperimentalComposeUiApi::class,
-    ExperimentalMaterialApi::class,
-)
 @Composable
 fun HomeScreenView(
     data: HomeScreenViewData,

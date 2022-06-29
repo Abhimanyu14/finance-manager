@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.components.bottomsheet
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
@@ -12,9 +11,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navi
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import kotlinx.coroutines.CoroutineScope
 
-@OptIn(
-    ExperimentalMaterialApi::class,
-)
 @Composable
 fun HomeMenuBottomSheetContent(
     coroutineScope: CoroutineScope,

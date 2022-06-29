@@ -1,15 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.common
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(
-    ExperimentalMaterialApi::class,
-)
 fun toggleModalBottomSheetState(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
@@ -27,9 +23,6 @@ fun toggleModalBottomSheetState(
     }
 }
 
-@OptIn(
-    ExperimentalMaterialApi::class,
-)
 @Composable
 fun BottomSheetBackHandler(
     enabled: Boolean,

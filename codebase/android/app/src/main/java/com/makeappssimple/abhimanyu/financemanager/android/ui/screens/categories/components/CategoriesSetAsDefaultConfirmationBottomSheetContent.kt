@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components
 
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
@@ -11,9 +10,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.ConfirmationBottomSheetData
 import kotlinx.coroutines.CoroutineScope
 
-@OptIn(
-    ExperimentalMaterialApi::class,
-)
 @Composable
 fun CategoriesSetAsDefaultConfirmationBottomSheetContent(
     coroutineScope: CoroutineScope,
