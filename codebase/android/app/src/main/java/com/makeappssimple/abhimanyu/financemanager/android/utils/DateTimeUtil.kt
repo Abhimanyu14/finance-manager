@@ -1,13 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.utils
 
-import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.dayOfMonth
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.formattedDate
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.formattedDateAndTime
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.formattedReadableDateAndTime
-import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.month
-import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.setDate
-import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.setTime
-import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.year
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.YearMonth
+import java.time.ZoneId
 import java.util.Calendar
 import java.util.Locale
 
@@ -38,44 +38,77 @@ fun getReadableDateAndTimeString(
     return calendar.formattedReadableDateAndTime()
 }
 
-fun getCurrentDayStartingTimestamp(): Long {
-    val calendar = Calendar.getInstance(Locale.getDefault())
-    calendar.setDate(
-        dayOfMonth = calendar.dayOfMonth,
-        month = calendar.month,
-        year = calendar.year,
-    )
-    calendar.setTime(
-        hour = 0,
-        minute = 0,
-    )
-    return calendar.timeInMillis
+fun getStartOfDayTimestamp(
+    timestamp: Long = System.currentTimeMillis(),
+): Long {
+    return LocalDateTime
+        .ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault())
+        .toLocalDate()
+        .atStartOfDay()
+        .atZone(ZoneId.systemDefault()).toInstant()
+        .toEpochMilli()
 }
 
-fun getCurrentMonthStartingTimestamp(): Long {
-    val calendar = Calendar.getInstance(Locale.getDefault())
-    calendar.setDate(
-        dayOfMonth = 1,
-        month = calendar.month,
-        year = calendar.year,
-    )
-    calendar.setTime(
-        hour = 0,
-        minute = 0,
-    )
-    return calendar.timeInMillis
+fun getEndOfDayTimestamp(
+    timestamp: Long = System.currentTimeMillis(),
+): Long {
+    return LocalDateTime
+        .ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault())
+        .toLocalDate()
+        .atTime(23, 59, 59)
+        .atZone(ZoneId.systemDefault()).toInstant()
+        .toEpochMilli()
 }
 
-fun getCurrentYearStartingTimestamp(): Long {
-    val calendar = Calendar.getInstance(Locale.getDefault())
-    calendar.setDate(
-        dayOfMonth = 1,
-        month = 1,
-        year = calendar.year,
-    )
-    calendar.setTime(
-        hour = 0,
-        minute = 0,
-    )
-    return calendar.timeInMillis
+fun getStartOfMonthTimestamp(
+    timestamp: Long = System.currentTimeMillis(),
+): Long {
+    return LocalDateTime
+        .ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault())
+        .withDayOfMonth(1)
+        .withHour(0)
+        .withMinute(0)
+        .withSecond(0)
+        .atZone(ZoneId.systemDefault()).toInstant()
+        .toEpochMilli()
+}
+
+fun getEndOfMonthTimestamp(
+    timestamp: Long = System.currentTimeMillis(),
+): Long {
+    val localDateTime: LocalDateTime = LocalDateTime
+        .ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault())
+    val yearMonth: LocalDate = YearMonth.from(localDateTime).atEndOfMonth()
+    return yearMonth
+        .atTime(23, 59, 59)
+        .atZone(ZoneId.systemDefault()).toInstant()
+        .toEpochMilli()
+}
+
+fun getStartOfYearTimestamp(
+    timestamp: Long = System.currentTimeMillis(),
+): Long {
+    return LocalDateTime
+        .ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault())
+        .withMonth(1)
+        .withDayOfMonth(1)
+        .withHour(0)
+        .withMinute(0)
+        .withSecond(0)
+        .atZone(ZoneId.systemDefault()).toInstant()
+        .toEpochMilli()
+}
+
+fun getEndOfYearTimestamp(
+    timestamp: Long = System.currentTimeMillis(),
+): Long {
+    return LocalDateTime
+        .ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault())
+        .withMonth(12)
+        .withDayOfMonth(31)
+        .withHour(23)
+        .withMinute(59)
+        .withSecond(59)
+        .atZone(ZoneId.systemDefault()).toInstant()
+        .toEpochMilli()
 }

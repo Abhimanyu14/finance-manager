@@ -187,6 +187,9 @@ android {
     */
 
     compileOptions {
+        // Flag to enable support for the new language APIs
+        coreLibraryDesugaringEnabled = true
+
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -309,7 +312,10 @@ dependencies {
     // ksp "androidx.hilt:hilt-compiler:$rootProject.hiltCompilerVersion"
 
     // KSP
-    implementation "com.google.devtools.ksp:symbol-processing-api:1.6.21-1.0.6"
+    implementation "com.google.devtools.ksp:symbol-processing-api:$rootProject.kspVersion"
+
+    // JDK desugaring
+    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:$rootProject.jdkDesugaringVersion")
 
     // Moshi
     implementation "com.squareup.moshi:moshi:$rootProject.moshiVersion"

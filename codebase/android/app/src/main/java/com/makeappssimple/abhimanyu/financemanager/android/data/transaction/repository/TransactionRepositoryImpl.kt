@@ -2,9 +2,12 @@ package com.makeappssimple.abhimanyu.financemanager.android.data.transaction.rep
 
 import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.datasource.local.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.utils.getCurrentDayStartingTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.utils.getCurrentMonthStartingTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.utils.getCurrentYearStartingTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.utils.getEndOfDayTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.utils.getStartOfDayTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.utils.getEndOfMonthTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.utils.getStartOfMonthTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.utils.getEndOfYearTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.utils.getStartOfYearTimestamp
 import kotlinx.coroutines.flow.Flow
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO
@@ -26,22 +29,22 @@ class TransactionRepositoryImpl(
 
     override fun getCurrentDayTransactions(): Flow<List<Transaction>> {
         return transactionDao.getTransactionsBetweenTimestamps(
-            startingTimestamp = getCurrentDayStartingTimestamp(),
-            endingTimestamp = System.currentTimeMillis(),
+            startingTimestamp = getStartOfDayTimestamp(),
+            endingTimestamp = getEndOfDayTimestamp(),
         )
     }
 
     override fun getCurrentMonthTransactions(): Flow<List<Transaction>> {
         return transactionDao.getTransactionsBetweenTimestamps(
-            startingTimestamp = getCurrentMonthStartingTimestamp(),
-            endingTimestamp = System.currentTimeMillis(),
+            startingTimestamp = getStartOfMonthTimestamp(),
+            endingTimestamp = getEndOfMonthTimestamp(),
         )
     }
 
     override fun getCurrentYearTransactions(): Flow<List<Transaction>> {
         return transactionDao.getTransactionsBetweenTimestamps(
-            startingTimestamp = getCurrentYearStartingTimestamp(),
-            endingTimestamp = System.currentTimeMillis(),
+            startingTimestamp = getStartOfYearTimestamp(),
+            endingTimestamp = getEndOfYearTimestamp(),
         )
     }
 
