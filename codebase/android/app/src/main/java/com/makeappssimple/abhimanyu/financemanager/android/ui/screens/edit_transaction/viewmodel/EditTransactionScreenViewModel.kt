@@ -9,28 +9,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.base.ScreenViewMod
 import kotlinx.coroutines.flow.StateFlow
 import java.util.Calendar
 
-data class EditTransactionScreenUiState(
-    val selectedTransactionTypeIndex: Int?,
-    val amount: String,
-    val title: String,
-    val description: String,
-    val category: Category?,
-    val selectedTransactionForIndex: Int,
-    val sourceFrom: Source?,
-    val sourceTo: Source?,
-    val transactionCalendar: Calendar,
-)
-
-data class EditTransactionScreenUiVisibilityState(
-    val isTitleTextFieldVisible: Boolean = false,
-    val isDescriptionTextFieldVisible: Boolean = false,
-    val isCategoryTextFieldVisible: Boolean = false,
-    val isTransactionForRadioGroupVisible: Boolean = false,
-    val isSourceFromTextFieldVisible: Boolean = false,
-    val isSourceToTextFieldVisible: Boolean = false,
-    val isTitleSuggestionsVisible: Boolean = false,
-)
-
 interface EditTransactionScreenViewModel : ScreenViewModel {
     val navigationManager: NavigationManager
     val transactionTypesForNewTransaction: StateFlow<List<TransactionType>>
