@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transacti
 
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
@@ -17,10 +16,14 @@ fun TransactionsFiltersBottomSheetContent(
     incomeCategories: List<Category>,
     sources: List<Source>,
     transactionTypes: List<TransactionType>,
-    selectedExpenseCategoryIndices: SnapshotStateList<Int>,
-    selectedIncomeCategoryIndices: SnapshotStateList<Int>,
-    selectedSourceIndices: SnapshotStateList<Int>,
-    selectedTransactionTypesIndices: SnapshotStateList<Int>,
+    selectedExpenseCategoryIndices: List<Int>,
+    selectedIncomeCategoryIndices: List<Int>,
+    selectedSourceIndices: List<Int>,
+    selectedTransactionTypesIndices: List<Int>,
+    updateSelectedExpenseCategoryIndices: (updatedSelectedExpenseCategoryIndices: List<Int>) -> Unit,
+    updateSelectedIncomeCategoryIndices: (updatedSelectedIncomeCategoryIndices: List<Int>) -> Unit,
+    updateSelectedSourceIndices: (updatedSelectedSourceIndices: List<Int>) -> Unit,
+    updateSelectedTransactionTypesIndices: (updatedSelectedTransactionTypesIndices: List<Int>) -> Unit,
     resetBottomSheetType: () -> Unit,
 ) {
     TransactionsFiltersBottomSheet(
@@ -34,16 +37,10 @@ fun TransactionsFiltersBottomSheetContent(
             selectedSourceIndices = selectedSourceIndices,
             selectedTransactionTypesIndices = selectedTransactionTypesIndices,
             onPositiveButtonClick = {
-                selectedExpenseCategoryIndices.clear()
-                selectedIncomeCategoryIndices.clear()
-                selectedSourceIndices.clear()
-                selectedTransactionTypesIndices.clear()
-
-                selectedExpenseCategoryIndices.addAll(it.selectedExpenseCategoryIndices)
-                selectedIncomeCategoryIndices.addAll(it.selectedIncomeCategoryIndices)
-                selectedSourceIndices.addAll(it.selectedSourceIndices)
-                selectedTransactionTypesIndices.addAll(it.selectedTransactionTypeIndices)
-
+                updateSelectedExpenseCategoryIndices(it.selectedExpenseCategoryIndices)
+                updateSelectedIncomeCategoryIndices(it.selectedIncomeCategoryIndices)
+                updateSelectedSourceIndices(it.selectedSourceIndices)
+                updateSelectedTransactionTypesIndices(it.selectedTransactionTypeIndices)
                 toggleModalBottomSheetState(
                     coroutineScope = coroutineScope,
                     modalBottomSheetState = modalBottomSheetState,

@@ -25,7 +25,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -59,13 +58,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactio
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.TransactionsFiltersBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.TransactionsListItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.TransactionsListItemViewData
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.viewmodel.SortOption
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Blue50
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
-import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateString
-import kotlin.math.abs
 
 enum class TransactionsBottomSheetType : BottomSheetType {
     NONE,
@@ -73,29 +71,25 @@ enum class TransactionsBottomSheetType : BottomSheetType {
     DELETE_CONFIRMATION,
 }
 
-enum class SortOption(
-    val title: String,
-) {
-    AMOUNT_ASC(
-        title = "Amount Asc",
-    ),
-    AMOUNT_DESC(
-        title = "Amount Desc",
-    ),
-    LATEST_FIRST(
-        title = "Latest First",
-    ),
-    OLDEST_FIRST(
-        title = "Oldest First",
-    ),
-}
-
 data class TransactionsScreenViewData(
-    val categories: List<Category>,
+    val expenseCategories: List<Category>,
+    val incomeCategories: List<Category>,
+    val selectedExpenseCategoryIndices: List<Int>,
+    val selectedIncomeCategoryIndices: List<Int>,
+    val selectedSourceIndices: List<Int>,
+    val selectedTransactionTypesIndices: List<Int>,
     val sources: List<Source>,
-    val transactionsListItemViewData: List<TransactionsListItemViewData>,
+    val transactionsListItemViewData: Map<String, List<TransactionsListItemViewData>>,
     val navigationManager: NavigationManager,
+    val searchText: String,
+    val selectedSortOption: SortOption,
     val deleteTransaction: (transactionId: Int) -> Unit,
+    val updateSelectedExpenseCategoryIndices: (updatedSelectedExpenseCategoryIndices: List<Int>) -> Unit,
+    val updateSelectedIncomeCategoryIndices: (updatedSelectedIncomeCategoryIndices: List<Int>) -> Unit,
+    val updateSelectedSourceIndices: (updatedSelectedSourceIndices: List<Int>) -> Unit,
+    val updateSelectedTransactionTypesIndices: (updatedSelectedTransactionTypesIndices: List<Int>) -> Unit,
+    val updateSearchText: (updatedSearchText: String) -> Unit,
+    val updateSelectedSortOption: (updatedSelectedSortOption: SortOption) -> Unit,
 )
 
 @Composable
@@ -103,12 +97,6 @@ fun TransactionsScreenView(
     data: TransactionsScreenViewData,
     state: TransactionsScreenViewState,
 ) {
-    val expenseCategories = data.categories.filter {
-        it.transactionType == TransactionType.EXPENSE
-    }
-    val incomeCategories = data.categories.filter {
-        it.transactionType == TransactionType.INCOME
-    }
     var transactionsBottomSheetType by remember {
         mutableStateOf(
             value = TransactionsBottomSheetType.NONE,
@@ -131,116 +119,17 @@ fun TransactionsScreenView(
             value = false,
         )
     }
-    val (searchText, updateSearchText) = remember {
-        mutableStateOf(
-            value = "",
-        )
-    }
+
+    // Filter
+    val transactionTypes: List<TransactionType> = TransactionType.values().toList()
 
     // Sorting
+    val sortOptions = SortOption.values()
     val (isSortOptionsVisible, setIsSortOptionsVisible) = remember {
         mutableStateOf(
             value = false,
         )
     }
-    val sortOptions = SortOption.values()
-    val (selectedSortOption, updateSelectedSortOption) = remember {
-        mutableStateOf(
-            value = SortOption.LATEST_FIRST,
-        )
-    }
-
-    // Filter
-    val selectedExpenseCategoryIndices = remember {
-        mutableStateListOf<Int>()
-    }
-    val selectedIncomeCategoryIndices = remember {
-        mutableStateListOf<Int>()
-    }
-    val selectedSourceIndices = remember {
-        mutableStateListOf<Int>()
-    }
-    val transactionTypes: List<TransactionType> = TransactionType.values().toList()
-    val selectedTransactionTypesIndices = remember {
-        mutableStateListOf<Int>()
-    }
-
-    // Transactions search, filter and sort
-    val searchedTransactions = if (searchText.isNotBlank()) {
-        data.transactionsListItemViewData
-            .filter {
-                it.transaction.title.contains(
-                    other = searchText,
-                    ignoreCase = true,
-                )
-            }
-    } else {
-        data.transactionsListItemViewData
-    }
-    val transactionTypeFilteredTransactions =
-        if (selectedTransactionTypesIndices.isNotEmpty()) {
-            searchedTransactions.filter {
-                selectedTransactionTypesIndices.contains(
-                    transactionTypes.indexOf(it.transaction.transactionType)
-                )
-            }
-        } else {
-            searchedTransactions
-        }
-    val sourceFilteredTransactions = if (selectedSourceIndices.isNotEmpty()) {
-        transactionTypeFilteredTransactions.filter {
-            selectedSourceIndices.contains(data.sources.indexOf(it.sourceFrom)) ||
-                    selectedSourceIndices.contains(data.sources.indexOf(it.sourceTo))
-        }
-    } else {
-        transactionTypeFilteredTransactions
-    }
-    val categoryFilteredTransactions =
-        if (selectedExpenseCategoryIndices.isNotEmpty() || selectedIncomeCategoryIndices.isNotEmpty()) {
-            sourceFilteredTransactions.filter {
-                selectedExpenseCategoryIndices.contains(expenseCategories.indexOf(it.category)) ||
-                        selectedIncomeCategoryIndices.contains(incomeCategories.indexOf(it.category))
-            }
-        } else {
-            sourceFilteredTransactions
-        }
-    val filteredTransactions = categoryFilteredTransactions
-    val sortedTransactions = when (selectedSortOption) {
-        SortOption.AMOUNT_ASC -> {
-            filteredTransactions.sortedBy {
-                abs(it.transaction.amount.value)
-            }
-        }
-        SortOption.AMOUNT_DESC -> {
-            filteredTransactions.sortedByDescending {
-                abs(it.transaction.amount.value)
-            }
-        }
-        SortOption.LATEST_FIRST -> {
-            filteredTransactions.sortedByDescending {
-                it.transaction.transactionTimestamp
-            }
-        }
-        SortOption.OLDEST_FIRST -> {
-            filteredTransactions.sortedBy {
-                it.transaction.transactionTimestamp
-            }
-        }
-    }
-    val groupedTransactions: Map<String, List<TransactionsListItemViewData>> =
-        if (selectedSortOption == SortOption.LATEST_FIRST || selectedSortOption == SortOption.OLDEST_FIRST) {
-            sortedTransactions
-                .groupBy {
-                    getDateString(
-                        it.transaction.transactionTimestamp
-                    )
-                }
-        } else {
-            sortedTransactions.groupBy {
-                ""
-            }
-        }
-
 
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
         DisposableEffect(Unit) {
@@ -275,14 +164,34 @@ fun TransactionsScreenView(
                     TransactionsFiltersBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
-                        expenseCategories = expenseCategories,
-                        incomeCategories = incomeCategories,
+                        expenseCategories = data.expenseCategories,
+                        incomeCategories = data.incomeCategories,
                         sources = data.sources,
                         transactionTypes = transactionTypes,
-                        selectedExpenseCategoryIndices = selectedExpenseCategoryIndices,
-                        selectedIncomeCategoryIndices = selectedIncomeCategoryIndices,
-                        selectedSourceIndices = selectedSourceIndices,
-                        selectedTransactionTypesIndices = selectedTransactionTypesIndices,
+                        selectedExpenseCategoryIndices = data.selectedExpenseCategoryIndices,
+                        selectedIncomeCategoryIndices = data.selectedIncomeCategoryIndices,
+                        selectedSourceIndices = data.selectedSourceIndices,
+                        selectedTransactionTypesIndices = data.selectedTransactionTypesIndices,
+                        updateSelectedExpenseCategoryIndices = { updatedSelectedExpenseCategoryIndices ->
+                            data.updateSelectedExpenseCategoryIndices(
+                                updatedSelectedExpenseCategoryIndices
+                            )
+                        },
+                        updateSelectedIncomeCategoryIndices = { updatedSelectedIncomeCategoryIndices ->
+                            data.updateSelectedIncomeCategoryIndices(
+                                updatedSelectedIncomeCategoryIndices
+                            )
+                        },
+                        updateSelectedSourceIndices = { updatedSelectedSourceIndices ->
+                            data.updateSelectedSourceIndices(
+                                updatedSelectedSourceIndices
+                            )
+                        },
+                        updateSelectedTransactionTypesIndices = { updatedSelectedTransactionTypesIndices ->
+                            data.updateSelectedTransactionTypesIndices(
+                                updatedSelectedTransactionTypesIndices
+                            )
+                        },
                         resetBottomSheetType = {
                             transactionsBottomSheetType = TransactionsBottomSheetType.NONE
                         },
@@ -347,7 +256,12 @@ fun TransactionsScreenView(
                         .fillMaxSize(),
                 ) {
                     AnimatedVisibility(
-                        visible = groupedTransactions.isNotEmpty() || searchText.isNotEmpty(),
+                        visible = data.transactionsListItemViewData.isNotEmpty() ||
+                                data.searchText.isNotEmpty() ||
+                                data.selectedExpenseCategoryIndices.isNotEmpty() ||
+                                data.selectedIncomeCategoryIndices.isNotEmpty() ||
+                                data.selectedSourceIndices.isNotEmpty() ||
+                                data.selectedTransactionTypesIndices.isNotEmpty()
                     ) {
                         Row(
                             horizontalArrangement = Arrangement.End,
@@ -372,11 +286,11 @@ fun TransactionsScreenView(
                             ) {
                                 SearchBar(
                                     data = SearchBarData(
-                                        searchText = searchText,
+                                        searchText = data.searchText,
                                         placeholderText = stringResource(
                                             id = R.string.screen_transactions_searchbar_placeholder,
                                         ),
-                                        onValueChange = updateSearchText,
+                                        onValueChange = data.updateSearchText,
                                         onSearch = {
                                             state.focusManager.clearFocus()
                                         },
@@ -397,9 +311,9 @@ fun TransactionsScreenView(
                                                 text = sortOption.title,
                                             )
                                         },
-                                    selectedItemIndex = sortOptions.indexOf(selectedSortOption),
+                                    selectedItemIndex = sortOptions.indexOf(data.selectedSortOption),
                                     onSelectionChange = { index ->
-                                        updateSelectedSortOption(sortOptions[index])
+                                        data.updateSelectedSortOption(sortOptions[index])
                                         setIsSortOptionsVisible(!isSortOptionsVisible)
                                     },
                                     modifier = Modifier
@@ -417,7 +331,7 @@ fun TransactionsScreenView(
                                             state.keyboardController?.hide()
                                         }
                                         setIsSearchbarVisible(!isSearchbarVisible)
-                                        updateSearchText("")
+                                        data.updateSearchText("")
                                     },
                                     modifier = Modifier,
                                 ) {
@@ -503,7 +417,7 @@ fun TransactionsScreenView(
                         }
                     }
                     LazyColumn {
-                        groupedTransactions.forEach { (date, listItemData) ->
+                        data.transactionsListItemViewData.forEach { (date, listItemData) ->
                             if (date.isNotBlank()) {
                                 stickyHeader {
                                     MyText(
