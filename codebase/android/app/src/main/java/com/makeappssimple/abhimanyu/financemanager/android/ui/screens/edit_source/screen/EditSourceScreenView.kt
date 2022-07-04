@@ -68,7 +68,7 @@ fun EditSourceScreenView(
     data: EditSourceScreenViewData,
     state: EditSourceScreenViewState,
 ) {
-    var sourcesBottomSheetType by remember {
+    var editSourceBottomSheetType by remember {
         mutableStateOf(
             value = EditSourceBottomSheetType.NONE,
         )
@@ -77,25 +77,25 @@ fun EditSourceScreenView(
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
         DisposableEffect(Unit) {
             onDispose {
-                sourcesBottomSheetType = EditSourceBottomSheetType.NONE
+                editSourceBottomSheetType = EditSourceBottomSheetType.NONE
                 state.keyboardController?.hide()
             }
         }
     }
 
     BottomSheetBackHandler(
-        enabled = sourcesBottomSheetType != EditSourceBottomSheetType.NONE,
+        enabled = editSourceBottomSheetType != EditSourceBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
         modalBottomSheetState = state.modalBottomSheetState,
     ) {
-        sourcesBottomSheetType = EditSourceBottomSheetType.NONE
+        editSourceBottomSheetType = EditSourceBottomSheetType.NONE
     }
 
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
         sheetShape = BottomSheetShape,
         sheetContent = {
-            when (sourcesBottomSheetType) {
+            when (editSourceBottomSheetType) {
                 EditSourceBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
@@ -137,8 +137,8 @@ fun EditSourceScreenView(
                                     )
                                 },
                             selectedItemIndex = data.selectedSourceTypeIndex,
-                            onSelectionChange = { index ->
-                                data.updateSelectedSourceTypeIndex(index)
+                            onSelectionChange = { updatedIndex ->
+                                data.updateSelectedSourceTypeIndex(updatedIndex)
                             },
                             modifier = Modifier
                                 .padding(
@@ -153,8 +153,8 @@ fun EditSourceScreenView(
                             onClickTrailingIcon = {
                                 data.clearName()
                             },
-                            onValueChange = {
-                                data.updateName(it)
+                            onValueChange = { updatedName ->
+                                data.updateName(updatedName)
                             },
                             keyboardActions = KeyboardActions(
                                 onNext = {
@@ -185,8 +185,8 @@ fun EditSourceScreenView(
                         onClickTrailingIcon = {
                             data.clearBalanceAmountValue()
                         },
-                        onValueChange = {
-                            data.updateBalanceAmountValue(it)
+                        onValueChange = { updatedBalanceAmountValue ->
+                            data.updateBalanceAmountValue(updatedBalanceAmountValue)
                         },
                         visualTransformation = AmountCommaVisualTransformation(),
                         keyboardActions = KeyboardActions(
