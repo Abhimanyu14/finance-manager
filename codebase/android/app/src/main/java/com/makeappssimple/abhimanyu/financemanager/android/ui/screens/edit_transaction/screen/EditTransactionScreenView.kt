@@ -17,7 +17,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,7 +29,11 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
+import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
+import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.AmountCommaVisualTransformation
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
@@ -46,7 +49,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfie
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.components.EditTransactionSelectCategoryBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.components.EditTransactionSelectSourceBottomSheetContent
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.viewmodel.EditTransactionScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.viewmodel.EditTransactionScreenUiState
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.viewmodel.EditTransactionScreenUiVisibilityState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.dayOfMonth
@@ -68,8 +72,30 @@ enum class EditTransactionBottomSheetType : BottomSheetType {
 }
 
 data class EditTransactionScreenViewData(
-    val screenViewModel: EditTransactionScreenViewModel,
+    val isValidTransactionData: Boolean,
+    val uiState: EditTransactionScreenUiState,
+    val uiVisibilityState: EditTransactionScreenUiVisibilityState,
     val transactionId: Int?,
+    val categories: List<Category>,
+    val sources: List<Source>,
+    val titleSuggestions: List<String>,
+    val transactionForValues: List<TransactionFor>,
+    val transactionTypesForNewTransaction: List<TransactionType>,
+    val navigationManager: NavigationManager,
+    val selectedTransactionType: TransactionType?,
+    val clearAmount: () -> Unit,
+    val clearDescription: () -> Unit,
+    val clearTitle: () -> Unit,
+    val updateAmount: (updatedAmount: String) -> Unit,
+    val updateCategory: (updatedCategory: Category?) -> Unit,
+    val updateDescription: (updatedDescription: String) -> Unit,
+    val updateSelectedTransactionForIndex: (updatedSelectedTransactionForIndex: Int) -> Unit,
+    val updateSelectedTransactionTypeIndex: (updatedSelectedTransactionTypeIndex: Int) -> Unit,
+    val updateSourceFrom: (updatedSourceFrom: Source?) -> Unit,
+    val updateSourceTo: (updatedSourceTo: Source?) -> Unit,
+    val updateTitle: (updatedTitle: String) -> Unit,
+    val updateTransaction: () -> Unit,
+    val updateTransactionCalendar: (updatedTransactionCalendar: Calendar) -> Unit,
 )
 
 @Composable
@@ -77,24 +103,9 @@ fun EditTransactionScreenView(
     data: EditTransactionScreenViewData,
     state: EditTransactionScreenViewState,
 ) {
-    val categories by data.screenViewModel.categories.collectAsState(
-        initial = emptyList(),
-    )
-    val sources by data.screenViewModel.sources.collectAsState(
-        initial = emptyList(),
-    )
-    val transactionTypesForNewTransaction by data.screenViewModel.transactionTypesForNewTransaction.collectAsState(
-        initial = emptyList(),
-    )
-    val uiState by data.screenViewModel.uiState.collectAsState()
-    val uiVisibilityState by data.screenViewModel.uiVisibilityState.collectAsState()
-    val selectedTransactionType by data.screenViewModel.selectedTransactionType.collectAsState()
-    val isValidTransactionData by data.screenViewModel.isValidTransactionData.collectAsState()
-    val titleSuggestions by data.screenViewModel.titleSuggestions.collectAsState()
-
     val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-        data.screenViewModel.updateTransactionCalendar(
-            updatedTransactionCalendar = (uiState.transactionCalendar.clone() as Calendar)
+        data.updateTransactionCalendar(
+            (data.uiState.transactionCalendar.clone() as Calendar)
                 .setDate(
                     dayOfMonth = dayOfMonth,
                     month = month,
@@ -104,8 +115,8 @@ fun EditTransactionScreenView(
 
     }
     val onTimeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
-        data.screenViewModel.updateTransactionCalendar(
-            updatedTransactionCalendar = (uiState.transactionCalendar.clone() as Calendar)
+        data.updateTransactionCalendar(
+            (data.uiState.transactionCalendar.clone() as Calendar)
                 .setTime(
                     hour = hour,
                     minute = minute,
@@ -115,15 +126,15 @@ fun EditTransactionScreenView(
     val transactionDatePickerDialog = DatePickerDialog(
         state.context,
         onDateSetListener,
-        uiState.transactionCalendar.year,
-        uiState.transactionCalendar.month,
-        uiState.transactionCalendar.dayOfMonth,
+        data.uiState.transactionCalendar.year,
+        data.uiState.transactionCalendar.month,
+        data.uiState.transactionCalendar.dayOfMonth,
     )
     val transactionTimePickerDialog = TimePickerDialog(
         state.context,
         onTimeSetListener,
-        uiState.transactionCalendar.hour,
-        uiState.transactionCalendar.minute,
+        data.uiState.transactionCalendar.hour,
+        data.uiState.transactionCalendar.minute,
         false,
     )
     var editTransactionBottomSheetType by remember {
@@ -183,16 +194,14 @@ fun EditTransactionScreenView(
                     EditTransactionSelectCategoryBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
-                        categories = categories,
-                        selectedTransactionType = selectedTransactionType,
-                        selectedCategoryId = uiState.category?.id,
+                        categories = data.categories,
+                        selectedTransactionType = data.selectedTransactionType,
+                        selectedCategoryId = data.uiState.category?.id,
                         resetBottomSheetType = {
                             editTransactionBottomSheetType = EditTransactionBottomSheetType.NONE
                         },
                         updateCategory = { category ->
-                            data.screenViewModel.updateCategory(
-                                updatedCategory = category,
-                            )
+                            data.updateCategory(category)
                         },
                     )
                 }
@@ -200,15 +209,13 @@ fun EditTransactionScreenView(
                     EditTransactionSelectSourceBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
-                        sources = sources,
-                        selectedSourceId = uiState.sourceFrom?.id,
+                        sources = data.sources,
+                        selectedSourceId = data.uiState.sourceFrom?.id,
                         resetBottomSheetType = {
                             editTransactionBottomSheetType = EditTransactionBottomSheetType.NONE
                         },
                         updateSource = { updatedSource ->
-                            data.screenViewModel.updateSourceFrom(
-                                updatedSourceFrom = updatedSource,
-                            )
+                            data.updateSourceFrom(updatedSource)
                         }
                     )
                 }
@@ -216,15 +223,13 @@ fun EditTransactionScreenView(
                     EditTransactionSelectSourceBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
-                        sources = sources,
-                        selectedSourceId = uiState.sourceTo?.id,
+                        sources = data.sources,
+                        selectedSourceId = data.uiState.sourceTo?.id,
                         resetBottomSheetType = {
                             editTransactionBottomSheetType = EditTransactionBottomSheetType.NONE
                         },
                         updateSource = { updatedSource ->
-                            data.screenViewModel.updateSourceTo(
-                                updatedSourceTo = updatedSource,
-                            )
+                            data.updateSourceTo(updatedSource)
                         }
                     )
                 }
@@ -234,7 +239,7 @@ fun EditTransactionScreenView(
         Scaffold(
             topBar = {
                 MyTopAppBar(
-                    navigationManager = data.screenViewModel.navigationManager,
+                    navigationManager = data.navigationManager,
                     titleTextStringResourceId = R.string.screen_edit_transaction_appbar_title,
                     isNavigationIconVisible = true,
                 )
@@ -257,17 +262,15 @@ fun EditTransactionScreenView(
                         ),
                 ) {
                     MyRadioGroup(
-                        items = transactionTypesForNewTransaction
+                        items = data.transactionTypesForNewTransaction
                             .map { transactionType ->
                                 MyRadioGroupItem(
                                     text = transactionType.title,
                                 )
                             },
-                        selectedItemIndex = uiState.selectedTransactionTypeIndex,
+                        selectedItemIndex = data.uiState.selectedTransactionTypeIndex,
                         onSelectionChange = { index ->
-                            data.screenViewModel.updateSelectedTransactionTypeIndex(
-                                updatedSelectedTransactionTypeIndex = index
-                            )
+                            data.updateSelectedTransactionTypeIndex(index)
                         },
                         modifier = Modifier
                             .padding(
@@ -276,16 +279,14 @@ fun EditTransactionScreenView(
                             ),
                     )
                     MyOutlinedTextField(
-                        value = uiState.amount,
+                        value = data.uiState.amount,
                         labelTextStringResourceId = R.string.screen_edit_transaction_amount,
                         trailingIconContentDescriptionTextStringResourceId = R.string.screen_edit_transaction_clear_amount,
                         onClickTrailingIcon = {
-                            data.screenViewModel.clearAmount()
+                            data.clearAmount()
                         },
                         onValueChange = {
-                            data.screenViewModel.updateAmount(
-                                updatedAmount = it
-                            )
+                            data.updateAmount(it)
                         },
                         visualTransformation = AmountCommaVisualTransformation(),
                         keyboardActions = KeyboardActions(
@@ -313,10 +314,10 @@ fun EditTransactionScreenView(
                             ),
                     )
                     AnimatedVisibility(
-                        visible = uiVisibilityState.isCategoryTextFieldVisible,
+                        visible = data.uiVisibilityState.isCategoryTextFieldVisible,
                     ) {
                         MyReadOnlyTextField(
-                            value = uiState.category?.title.orEmpty(),
+                            value = data.uiState.category?.title.orEmpty(),
                             labelTextStringResourceId = R.string.screen_edit_transaction_category,
                             onClick = {
                                 editTransactionBottomSheetType =
@@ -336,19 +337,17 @@ fun EditTransactionScreenView(
                         )
                     }
                     AnimatedVisibility(
-                        visible = uiVisibilityState.isTitleTextFieldVisible,
+                        visible = data.uiVisibilityState.isTitleTextFieldVisible,
                     ) {
                         MyOutlinedTextField(
-                            value = uiState.title,
+                            value = data.uiState.title,
                             labelTextStringResourceId = R.string.screen_edit_transaction_title,
                             trailingIconContentDescriptionTextStringResourceId = R.string.screen_edit_transaction_clear_title,
                             onClickTrailingIcon = {
-                                data.screenViewModel.clearTitle()
+                                data.clearTitle()
                             },
                             onValueChange = {
-                                data.screenViewModel.updateTitle(
-                                    updatedTitle = it
-                                )
+                                data.updateTitle(it)
                             },
                             keyboardActions = KeyboardActions(
                                 onDone = {
@@ -368,10 +367,10 @@ fun EditTransactionScreenView(
                         )
                     }
                     AnimatedVisibility(
-                        visible = uiVisibilityState.isTitleSuggestionsVisible,
+                        visible = data.uiVisibilityState.isTitleSuggestionsVisible,
                     ) {
                         MyScrollableRadioGroup(
-                            items = titleSuggestions
+                            items = data.titleSuggestions
                                 .map { title ->
                                     MyRadioGroupItem(
                                         text = title,
@@ -379,9 +378,7 @@ fun EditTransactionScreenView(
                                 },
                             selectedItemIndex = null,
                             onSelectionChange = { index ->
-                                data.screenViewModel.updateTitle(
-                                    updatedTitle = titleSuggestions[index]
-                                )
+                                data.updateTitle(data.titleSuggestions[index])
                                 clearFocus()
                             },
                             modifier = Modifier
@@ -392,20 +389,18 @@ fun EditTransactionScreenView(
                         )
                     }
                     AnimatedVisibility(
-                        visible = uiVisibilityState.isTransactionForRadioGroupVisible,
+                        visible = data.uiVisibilityState.isTransactionForRadioGroupVisible,
                     ) {
                         MyRadioGroup(
-                            items = data.screenViewModel.transactionForValues
+                            items = data.transactionForValues
                                 .map { transactionFor ->
                                     MyRadioGroupItem(
                                         text = transactionFor.title,
                                     )
                                 },
-                            selectedItemIndex = uiState.selectedTransactionForIndex,
+                            selectedItemIndex = data.uiState.selectedTransactionForIndex,
                             onSelectionChange = { index ->
-                                data.screenViewModel.updateSelectedTransactionForIndex(
-                                    updatedSelectedTransactionForIndex = index
-                                )
+                                data.updateSelectedTransactionForIndex(index)
                             },
                             modifier = Modifier
                                 .padding(
@@ -415,19 +410,17 @@ fun EditTransactionScreenView(
                         )
                     }
                     AnimatedVisibility(
-                        visible = uiVisibilityState.isDescriptionTextFieldVisible,
+                        visible = data.uiVisibilityState.isDescriptionTextFieldVisible,
                     ) {
                         MyOutlinedTextField(
-                            value = uiState.description,
+                            value = data.uiState.description,
                             labelTextStringResourceId = R.string.screen_edit_transaction_description,
                             trailingIconContentDescriptionTextStringResourceId = R.string.screen_edit_transaction_clear_description,
                             onClickTrailingIcon = {
-                                data.screenViewModel.clearDescription()
+                                data.clearDescription()
                             },
                             onValueChange = {
-                                data.screenViewModel.updateDescription(
-                                    updatedDescription = it,
-                                )
+                                data.updateDescription(it)
                             },
                             keyboardActions = KeyboardActions(
                                 onDone = {
@@ -447,11 +440,11 @@ fun EditTransactionScreenView(
                         )
                     }
                     AnimatedVisibility(
-                        visible = uiVisibilityState.isSourceFromTextFieldVisible,
+                        visible = data.uiVisibilityState.isSourceFromTextFieldVisible,
                     ) {
                         MyReadOnlyTextField(
-                            value = uiState.sourceFrom?.name.orEmpty(),
-                            labelTextStringResourceId = if (selectedTransactionType == TransactionType.TRANSFER) {
+                            value = data.uiState.sourceFrom?.name.orEmpty(),
+                            labelTextStringResourceId = if (data.selectedTransactionType == TransactionType.TRANSFER) {
                                 R.string.screen_edit_transaction_source_from
                             } else {
                                 R.string.screen_edit_transaction_source
@@ -474,11 +467,11 @@ fun EditTransactionScreenView(
                         )
                     }
                     AnimatedVisibility(
-                        visible = uiVisibilityState.isSourceToTextFieldVisible,
+                        visible = data.uiVisibilityState.isSourceToTextFieldVisible,
                     ) {
                         MyReadOnlyTextField(
-                            value = uiState.sourceTo?.name.orEmpty(),
-                            labelTextStringResourceId = if (selectedTransactionType == TransactionType.TRANSFER) {
+                            value = data.uiState.sourceTo?.name.orEmpty(),
+                            labelTextStringResourceId = if (data.selectedTransactionType == TransactionType.TRANSFER) {
                                 R.string.screen_edit_transaction_source_to
                             } else {
                                 R.string.screen_edit_transaction_source
@@ -501,7 +494,7 @@ fun EditTransactionScreenView(
                         )
                     }
                     MyReadOnlyTextField(
-                        value = uiState.transactionCalendar.formattedDate(),
+                        value = data.uiState.transactionCalendar.formattedDate(),
                         labelTextStringResourceId = R.string.screen_edit_transaction_transaction_date,
                         onClick = {
                             transactionDatePickerDialog.show()
@@ -514,7 +507,7 @@ fun EditTransactionScreenView(
                             ),
                     )
                     MyReadOnlyTextField(
-                        value = uiState.transactionCalendar.formattedTime(),
+                        value = data.uiState.transactionCalendar.formattedTime(),
                         labelTextStringResourceId = R.string.screen_edit_transaction_transaction_time,
                         onClick = {
                             transactionTimePickerDialog.show()
@@ -528,9 +521,9 @@ fun EditTransactionScreenView(
                     )
                     SaveButton(
                         textStringResourceId = R.string.screen_edit_transaction_floating_action_button_content_description,
-                        isEnabled = isValidTransactionData,
+                        isEnabled = data.isValidTransactionData,
                         onClick = {
-                            data.screenViewModel.updateTransaction()
+                            data.updateTransaction()
                         },
                     )
                 }

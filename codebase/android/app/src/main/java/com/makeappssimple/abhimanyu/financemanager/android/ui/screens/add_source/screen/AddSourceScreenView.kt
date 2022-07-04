@@ -60,7 +60,6 @@ fun AddSourceScreenView(
     data: AddSourceScreenViewData,
     state: AddSourceScreenViewState,
 ) {
-
     var addSourceBottomSheetType by remember {
         mutableStateOf(
             value = AddSourceBottomSheetType.NONE,

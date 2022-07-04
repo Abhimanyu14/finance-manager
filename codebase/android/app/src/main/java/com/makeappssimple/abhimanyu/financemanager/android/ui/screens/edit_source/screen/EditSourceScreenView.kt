@@ -13,7 +13,6 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -26,7 +25,9 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.SourceType
+import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.AmountCommaVisualTransformation
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
@@ -37,7 +38,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.MyOutlinedTextField
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_source.viewmodel.EditSourceScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 
 enum class EditSourceBottomSheetType : BottomSheetType {
@@ -45,8 +45,22 @@ enum class EditSourceBottomSheetType : BottomSheetType {
 }
 
 data class EditSourceScreenViewData(
-    val screenViewModel: EditSourceScreenViewModel,
+    val selectedSourceTypeIndex: Int,
     val sourceId: Int?,
+    val sourceTypes: List<SourceType>,
+    val navigationManager: NavigationManager,
+    val source: Source?,
+    val balanceAmountValue: String,
+    val name: String,
+    val clearBalanceAmountValue: () -> Unit,
+    val clearName: () -> Unit,
+    val deleteSource: (id: Int) -> Unit,
+    val insertSource: () -> Unit,
+    val isValidSourceData: () -> Boolean,
+    val updateBalanceAmountValue: (updatedBalanceAmountValue: String) -> Unit,
+    val updateName: (updatedName: String) -> Unit,
+    val updateSelectedSourceTypeIndex: (updatedIndex: Int) -> Unit,
+    val updateSource: () -> Unit,
 )
 
 @Composable
@@ -54,12 +68,6 @@ fun EditSourceScreenView(
     data: EditSourceScreenViewData,
     state: EditSourceScreenViewState,
 ) {
-    val selectedSourceTypeIndex by data.screenViewModel.selectedSourceTypeIndex.collectAsState()
-    val source by data.screenViewModel.source.collectAsState(
-        initial = null,
-    )
-    val name by data.screenViewModel.name.collectAsState()
-    val balanceAmountValue by data.screenViewModel.balanceAmountValue.collectAsState()
     var sourcesBottomSheetType by remember {
         mutableStateOf(
             value = EditSourceBottomSheetType.NONE,
@@ -97,7 +105,7 @@ fun EditSourceScreenView(
         Scaffold(
             topBar = {
                 MyTopAppBar(
-                    navigationManager = data.screenViewModel.navigationManager,
+                    navigationManager = data.navigationManager,
                     titleTextStringResourceId = R.string.screen_edit_source_appbar_title,
                     isNavigationIconVisible = true,
                 )
@@ -119,20 +127,18 @@ fun EditSourceScreenView(
                             state = rememberScrollState(),
                         ),
                 ) {
-                    if (source?.type != SourceType.CASH) {
+                    if (data.source?.type != SourceType.CASH) {
                         MyRadioGroup(
-                            items = data.screenViewModel.sourceTypes
+                            items = data.sourceTypes
                                 .map { sourceType ->
                                     MyRadioGroupItem(
                                         text = sourceType.title,
                                         iconKey = sourceType.title,
                                     )
                                 },
-                            selectedItemIndex = selectedSourceTypeIndex,
+                            selectedItemIndex = data.selectedSourceTypeIndex,
                             onSelectionChange = { index ->
-                                data.screenViewModel.updateSelectedSourceTypeIndex(
-                                    updatedIndex = index,
-                                )
+                                data.updateSelectedSourceTypeIndex(index)
                             },
                             modifier = Modifier
                                 .padding(
@@ -141,16 +147,14 @@ fun EditSourceScreenView(
                                 ),
                         )
                         MyOutlinedTextField(
-                            value = name,
+                            value = data.name,
                             labelTextStringResourceId = R.string.screen_edit_source_name,
                             trailingIconContentDescriptionTextStringResourceId = R.string.screen_edit_source_clear_name,
                             onClickTrailingIcon = {
-                                data.screenViewModel.clearName()
+                                data.clearName()
                             },
                             onValueChange = {
-                                data.screenViewModel.updateName(
-                                    updatedName = it,
-                                )
+                                data.updateName(it)
                             },
                             keyboardActions = KeyboardActions(
                                 onNext = {
@@ -175,16 +179,14 @@ fun EditSourceScreenView(
                         )
                     }
                     MyOutlinedTextField(
-                        value = balanceAmountValue,
+                        value = data.balanceAmountValue,
                         labelTextStringResourceId = R.string.screen_edit_source_balance_amount_value,
                         trailingIconContentDescriptionTextStringResourceId = R.string.screen_edit_source_clear_balance_amount_value,
                         onClickTrailingIcon = {
-                            data.screenViewModel.clearBalanceAmountValue()
+                            data.clearBalanceAmountValue()
                         },
                         onValueChange = {
-                            data.screenViewModel.updateBalanceAmountValue(
-                                updatedBalanceAmountValue = it,
-                            )
+                            data.updateBalanceAmountValue(it)
                         },
                         visualTransformation = AmountCommaVisualTransformation(),
                         keyboardActions = KeyboardActions(
@@ -213,9 +215,9 @@ fun EditSourceScreenView(
                     )
                     SaveButton(
                         textStringResourceId = R.string.screen_edit_source_floating_action_button_content_description,
-                        isEnabled = data.screenViewModel.isValidSourceData(),
+                        isEnabled = data.isValidSourceData(),
                         onClick = {
-                            data.screenViewModel.updateSource()
+                            data.updateSource()
                         },
                     )
                 }
