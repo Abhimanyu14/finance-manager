@@ -225,7 +225,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion jetpackComposeVersion
+        kotlinCompilerExtensionVersion jetpackComposeCompilerVersion
     }
 
     packagingOptions {
