@@ -370,4 +370,7 @@ dependencies {
 
     // Jetpack compose UI tests
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$rootProject.jetpackComposeVersion"
+
+    // Jetpack compose UI tests manifest - Needed for createComposeRule, but not createAndroidComposeRule
+    debugImplementation("androidx.compose.ui:ui-test-manifest:$rootProject.jetpackComposeVersion")
 }
