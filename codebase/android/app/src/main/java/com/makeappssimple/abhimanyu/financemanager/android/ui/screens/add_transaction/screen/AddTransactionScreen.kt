@@ -22,20 +22,20 @@ fun AddTransactionScreen(
     logError(
         message = "Inside AddTransactionScreen",
     )
+    val uiVisibilityState: AddTransactionScreenUiVisibilityState by screenViewModel.uiVisibilityState.collectAsState()
+    val uiState: AddTransactionScreenUiState by screenViewModel.uiState.collectAsState()
+    val isValidTransactionData: Boolean by screenViewModel.isValidTransactionData.collectAsState()
     val categories: List<Category> by screenViewModel.categories.collectAsState(
         initial = emptyList(),
     )
     val sources: List<Source> by screenViewModel.sources.collectAsState(
         initial = emptyList(),
     )
+    val titleSuggestions: List<String> by screenViewModel.titleSuggestions.collectAsState()
     val transactionTypesForNewTransaction: List<TransactionType> by screenViewModel.transactionTypesForNewTransaction.collectAsState(
         initial = emptyList(),
     )
-    val uiState: AddTransactionScreenUiState by screenViewModel.uiState.collectAsState()
-    val uiVisibilityState: AddTransactionScreenUiVisibilityState by screenViewModel.uiVisibilityState.collectAsState()
     val selectedTransactionType: TransactionType? by screenViewModel.selectedTransactionType.collectAsState()
-    val isValidTransactionData: Boolean by screenViewModel.isValidTransactionData.collectAsState()
-    val titleSuggestions: List<String> by screenViewModel.titleSuggestions.collectAsState()
 
     LaunchedEffect(
         key1 = Unit,

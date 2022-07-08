@@ -18,13 +18,13 @@ fun AddCategoryScreen(
     logError(
         message = "Inside AddCategoryScreen",
     )
-    val title: String by screenViewModel.title.collectAsState()
     val selectedTransactionTypeIndex: Int by screenViewModel.selectedTransactionTypeIndex.collectAsState()
-    val emoji: String by screenViewModel.emoji.collectAsState()
-    val searchText: String by screenViewModel.searchText.collectAsState()
     val emojis: List<Emoji> by screenViewModel.filteredEmojis.collectAsState(
         initial = emptyList(),
     )
+    val emoji: String by screenViewModel.emoji.collectAsState()
+    val searchText: String by screenViewModel.searchText.collectAsState()
+    val title: String by screenViewModel.title.collectAsState()
 
     LaunchedEffect(
         key1 = Unit,
