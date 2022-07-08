@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.viewmodel.CategoriesScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.viewmodel.CategoriesScreenViewModelImpl
 import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
@@ -73,6 +74,6 @@ fun CategoriesScreen(
                 )
             },
         ),
-        state = rememberCategoriesScreenViewState(),
+        state = rememberCommonScreenViewState(),
     )
 }

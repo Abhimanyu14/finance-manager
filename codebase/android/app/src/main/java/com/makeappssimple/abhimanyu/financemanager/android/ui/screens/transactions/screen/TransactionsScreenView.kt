@@ -55,8 +55,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.Vertica
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.SearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.SearchBarData
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.TransactionsDeleteConfirmationBottomSheetContent
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.TransactionsFiltersBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.bottomsheet.TransactionsDeleteConfirmationBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.bottomsheet.TransactionsFiltersBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.TransactionsListItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.TransactionsListItemViewData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.viewmodel.SortOption

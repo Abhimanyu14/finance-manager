@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components
+package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.bottomsheet
 
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable

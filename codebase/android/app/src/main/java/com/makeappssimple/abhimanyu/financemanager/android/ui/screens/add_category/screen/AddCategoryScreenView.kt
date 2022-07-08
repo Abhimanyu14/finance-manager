@@ -92,6 +92,7 @@ fun AddCategoryScreenView(
     ) {
         state.focusRequester.requestFocus()
     }
+
     LaunchedEffect(
         key1 = data.emojis,
     ) {

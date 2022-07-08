@@ -31,9 +31,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.total_balance_card.TotalBalanceCard
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.components.SourcesDeleteConfirmationBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.components.bottomsheet.SourcesDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.components.SourcesListItem
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.components.SourcesSetAsDefaultConfirmationBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.components.bottomsheet.SourcesSetAsDefaultConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isCashSource

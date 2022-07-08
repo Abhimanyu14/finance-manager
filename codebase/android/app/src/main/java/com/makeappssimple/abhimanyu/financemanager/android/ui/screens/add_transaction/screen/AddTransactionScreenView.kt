@@ -113,6 +113,14 @@ fun AddTransactionScreenView(
         )
 
     }
+    val transactionDatePickerDialog = DatePickerDialog(
+        state.context,
+        onDateSetListener,
+        data.uiState.transactionCalendar.year,
+        data.uiState.transactionCalendar.month,
+        data.uiState.transactionCalendar.dayOfMonth,
+    )
+
     val onTimeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
         data.updateTransactionCalendar(
             (data.uiState.transactionCalendar.clone() as Calendar)
@@ -122,13 +130,6 @@ fun AddTransactionScreenView(
                 )
         )
     }
-    val transactionDatePickerDialog = DatePickerDialog(
-        state.context,
-        onDateSetListener,
-        data.uiState.transactionCalendar.year,
-        data.uiState.transactionCalendar.month,
-        data.uiState.transactionCalendar.dayOfMonth,
-    )
     val transactionTimePickerDialog = TimePickerDialog(
         state.context,
         onTimeSetListener,
@@ -136,6 +137,7 @@ fun AddTransactionScreenView(
         data.uiState.transactionCalendar.minute,
         false,
     )
+
     var addTransactionBottomSheetType by remember {
         mutableStateOf(
             value = AddTransactionBottomSheetType.NONE,

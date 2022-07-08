@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components
+package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.components.bottomsheet
 
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -10,38 +10,36 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun TransactionsDeleteConfirmationBottomSheetContent(
+fun SourcesSetAsDefaultConfirmationBottomSheetContent(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
-    transactionIdToDelete: Int?,
+    clickedItemId: Int?,
     resetBottomSheetType: () -> Unit,
-    resetTransactionIdToDelete: () -> Unit,
-    resetExpandedItemKey: () -> Unit,
-    deleteTransaction: () -> Unit,
+    resetClickedItemId: () -> Unit,
+    setDefaultSourceIdInDataStore: () -> Unit,
 ) {
     ConfirmationBottomSheet(
         data = ConfirmationBottomSheetData(
             title = stringResource(
-                id = R.string.screen_transactions_bottom_sheet_delete_title,
+                id = R.string.screen_sources_bottom_sheet_set_as_default_title,
             ),
             message = stringResource(
-                id = R.string.screen_transactions_bottom_sheet_delete_message,
+                id = R.string.screen_sources_bottom_sheet_set_as_default_message,
             ),
             positiveButtonText = stringResource(
-                id = R.string.screen_transactions_bottom_sheet_delete_positive_button_text,
+                id = R.string.screen_sources_bottom_sheet_set_as_default_positive_button_text,
             ),
             negativeButtonText = stringResource(
-                id = R.string.screen_transactions_bottom_sheet_delete_negative_button_text,
+                id = R.string.screen_sources_bottom_sheet_set_as_default_negative_button_text,
             ),
             onPositiveButtonClick = {
                 toggleModalBottomSheetState(
                     coroutineScope = coroutineScope,
                     modalBottomSheetState = modalBottomSheetState,
                 ) {
-                    transactionIdToDelete?.let {
-                        deleteTransaction()
-                        resetTransactionIdToDelete()
-                        resetExpandedItemKey()
+                    clickedItemId?.let {
+                        setDefaultSourceIdInDataStore()
+                        resetClickedItemId()
                     }
                     resetBottomSheetType()
                 }
@@ -52,7 +50,7 @@ fun TransactionsDeleteConfirmationBottomSheetContent(
                     modalBottomSheetState = modalBottomSheetState,
                 ) {
                     resetBottomSheetType()
-                    resetTransactionIdToDelete()
+                    resetClickedItemId()
                 }
             },
         ),

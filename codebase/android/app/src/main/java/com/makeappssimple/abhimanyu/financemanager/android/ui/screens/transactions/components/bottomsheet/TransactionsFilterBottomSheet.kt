@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components
+package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.bottomsheet
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
