@@ -24,6 +24,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navi
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToTransactionsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
@@ -50,7 +51,7 @@ data class HomeScreenViewData(
 @Composable
 fun HomeScreenView(
     data: HomeScreenViewData,
-    state: HomeScreenViewState,
+    state: CommonScreenViewState,
 ) {
     var homeBottomSheetType by remember {
         mutableStateOf(

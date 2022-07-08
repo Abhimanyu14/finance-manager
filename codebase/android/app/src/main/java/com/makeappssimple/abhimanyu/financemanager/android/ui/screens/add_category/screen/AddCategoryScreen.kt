@@ -6,6 +6,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.Emoji
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_category.viewmodel.AddCategoryScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_category.viewmodel.AddCategoryScreenViewModelImpl
 import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
@@ -70,6 +71,6 @@ fun AddCategoryScreen(
                 )
             },
         ),
-        state = rememberAddCategoryScreenViewState(),
+        state = rememberCommonScreenViewState(),
     )
 }

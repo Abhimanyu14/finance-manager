@@ -90,126 +90,133 @@ class TransactionsScreenViewModelImpl @Inject constructor(
     override val sources: Flow<List<Source>> = getSourcesUseCase()
 
     val transactionTypes: List<TransactionType> = TransactionType.values().toList()
-    override val transactionsListItemViewData: Flow<Map<String, List<TransactionsListItemViewData>>> = combine(
-        allTransactions,
-        searchText,
-        selectedExpenseCategoryIndices,
-        selectedIncomeCategoryIndices,
-        selectedSourceIndices,
-        selectedTransactionTypesIndices,
-        expenseCategories,
-        incomeCategories,
-        sources,
-        selectedSortOption,
-    ) { flows ->
-        val allTransactionsValue: List<Transaction> = flows[0] as? List<Transaction> ?: emptyList()
-        val searchTextValue: String = flows[1] as String
-        val selectedExpenseCategoryIndicesValue: List<Int> = flows[2] as? List<Int> ?: emptyList()
-        val selectedIncomeCategoryIndicesValue: List<Int> = flows[3] as? List<Int> ?: emptyList()
-        val selectedSourceIndicesValue: List<Int> = flows[4] as? List<Int> ?: emptyList()
-        val selectedTransactionTypesIndicesValue: List<Int> = flows[5] as? List<Int> ?: emptyList()
-        val expenseCategoriesValue: List<Category> = flows[6] as? List<Category> ?: emptyList()
-        val incomeCategoriesValue: List<Category> = flows[7] as? List<Category> ?: emptyList()
-        val sourcesValue: List<Source> = flows[8] as? List<Source> ?: emptyList()
-        val selectedSortOptionValue: SortOption = flows[9] as? SortOption ?: SortOption.LATEST_FIRST
+    override val transactionsListItemViewData: Flow<Map<String, List<TransactionsListItemViewData>>> =
+        combine(
+            allTransactions,
+            searchText,
+            selectedExpenseCategoryIndices,
+            selectedIncomeCategoryIndices,
+            selectedSourceIndices,
+            selectedTransactionTypesIndices,
+            expenseCategories,
+            incomeCategories,
+            sources,
+            selectedSortOption,
+        ) { flows ->
+            val allTransactionsValue: List<Transaction> =
+                flows[0] as? List<Transaction> ?: emptyList()
+            val searchTextValue: String = flows[1] as String
+            val selectedExpenseCategoryIndicesValue: List<Int> =
+                flows[2] as? List<Int> ?: emptyList()
+            val selectedIncomeCategoryIndicesValue: List<Int> =
+                flows[3] as? List<Int> ?: emptyList()
+            val selectedSourceIndicesValue: List<Int> = flows[4] as? List<Int> ?: emptyList()
+            val selectedTransactionTypesIndicesValue: List<Int> =
+                flows[5] as? List<Int> ?: emptyList()
+            val expenseCategoriesValue: List<Category> = flows[6] as? List<Category> ?: emptyList()
+            val incomeCategoriesValue: List<Category> = flows[7] as? List<Category> ?: emptyList()
+            val sourcesValue: List<Source> = flows[8] as? List<Source> ?: emptyList()
+            val selectedSortOptionValue: SortOption =
+                flows[9] as? SortOption ?: SortOption.LATEST_FIRST
 
-        allTransactionsValue
-            .asSequence()
-            // Search
-            .filter {
-                if (searchTextValue.isNotBlank()) {
-                    it.title.contains(
-                        other = searchTextValue,
-                        ignoreCase = true,
-                    )
-                } else {
-                    true
-                }
-            }
-            .filter {
-                if (selectedTransactionTypesIndicesValue.isNotEmpty()) {
-                    selectedTransactionTypesIndicesValue.contains(
-                        transactionTypes.indexOf(it.transactionType)
-                    )
-                } else {
-                    true
-                }
-            }
-            .toList()
-            .map { transaction ->
-                val category = if (transaction.categoryId != null) {
-                    getCategoryUseCase(
-                        id = transaction.categoryId,
-                    )
-                } else {
-                    null
-                }
-                val sourceFrom = if (transaction.sourceFromId != null) {
-                    getSourceUseCase(
-                        id = transaction.sourceFromId,
-                    )
-                } else {
-                    null
-                }
-                val sourceTo = if (transaction.sourceToId != null) {
-                    getSourceUseCase(
-                        id = transaction.sourceToId,
-                    )
-                } else {
-                    null
-                }
-                TransactionsListItemViewData(
-                    category = category,
-                    transaction = transaction,
-                    sourceFrom = sourceFrom,
-                    sourceTo = sourceTo,
-                )
-            }
-            .filter {
-                if (selectedSourceIndicesValue.isNotEmpty()) {
-                    selectedSourceIndicesValue.contains(sourcesValue.indexOf(it.sourceFrom)) ||
-                            selectedSourceIndicesValue.contains(sourcesValue.indexOf(it.sourceTo))
-                } else {
-                    true
-                }
-            }
-            .filter {
-                if (selectedExpenseCategoryIndicesValue.isNotEmpty() || selectedIncomeCategoryIndicesValue.isNotEmpty()) {
-                    selectedExpenseCategoryIndicesValue.contains(expenseCategoriesValue.indexOf(it.category)) ||
-                            selectedIncomeCategoryIndicesValue.contains(incomeCategoriesValue.indexOf(
-                                it.category))
-                } else {
-                    true
-                }
-            }
-            .sortedWith(compareBy {
-                when (selectedSortOptionValue) {
-                    SortOption.AMOUNT_ASC -> {
-                        abs(it.transaction.amount.value)
-                    }
-                    SortOption.AMOUNT_DESC -> {
-                        -abs(it.transaction.amount.value)
-                    }
-                    SortOption.LATEST_FIRST -> {
-                        -it.transaction.transactionTimestamp
-                    }
-                    SortOption.OLDEST_FIRST -> {
-                        it.transaction.transactionTimestamp
+            allTransactionsValue
+                .asSequence()
+                // Search
+                .filter {
+                    if (searchTextValue.isNotBlank()) {
+                        it.title.contains(
+                            other = searchTextValue,
+                            ignoreCase = true,
+                        )
+                    } else {
+                        true
                     }
                 }
-            })
-            .groupBy {
-                if (selectedSortOptionValue == SortOption.LATEST_FIRST || selectedSortOptionValue == SortOption.OLDEST_FIRST) {
-                    getDateString(
-                        it.transaction.transactionTimestamp
-                    )
-                } else {
-                    ""
+                .filter {
+                    if (selectedTransactionTypesIndicesValue.isNotEmpty()) {
+                        selectedTransactionTypesIndicesValue.contains(
+                            transactionTypes.indexOf(it.transactionType)
+                        )
+                    } else {
+                        true
+                    }
                 }
-            }
-    }.flowOn(
-        context = dispatcherProvider.io,
-    )
+                .toList()
+                .map { transaction ->
+                    val category = if (transaction.categoryId != null) {
+                        getCategoryUseCase(
+                            id = transaction.categoryId,
+                        )
+                    } else {
+                        null
+                    }
+                    val sourceFrom = if (transaction.sourceFromId != null) {
+                        getSourceUseCase(
+                            id = transaction.sourceFromId,
+                        )
+                    } else {
+                        null
+                    }
+                    val sourceTo = if (transaction.sourceToId != null) {
+                        getSourceUseCase(
+                            id = transaction.sourceToId,
+                        )
+                    } else {
+                        null
+                    }
+                    TransactionsListItemViewData(
+                        category = category,
+                        transaction = transaction,
+                        sourceFrom = sourceFrom,
+                        sourceTo = sourceTo,
+                    )
+                }
+                .filter {
+                    if (selectedSourceIndicesValue.isNotEmpty()) {
+                        selectedSourceIndicesValue.contains(sourcesValue.indexOf(it.sourceFrom)) ||
+                                selectedSourceIndicesValue.contains(sourcesValue.indexOf(it.sourceTo))
+                    } else {
+                        true
+                    }
+                }
+                .filter {
+                    if (selectedExpenseCategoryIndicesValue.isNotEmpty() || selectedIncomeCategoryIndicesValue.isNotEmpty()) {
+                        selectedExpenseCategoryIndicesValue.contains(expenseCategoriesValue.indexOf(
+                            it.category)) ||
+                                selectedIncomeCategoryIndicesValue.contains(incomeCategoriesValue.indexOf(
+                                    it.category))
+                    } else {
+                        true
+                    }
+                }
+                .sortedWith(compareBy {
+                    when (selectedSortOptionValue) {
+                        SortOption.AMOUNT_ASC -> {
+                            abs(it.transaction.amount.value)
+                        }
+                        SortOption.AMOUNT_DESC -> {
+                            -abs(it.transaction.amount.value)
+                        }
+                        SortOption.LATEST_FIRST -> {
+                            -it.transaction.transactionTimestamp
+                        }
+                        SortOption.OLDEST_FIRST -> {
+                            it.transaction.transactionTimestamp
+                        }
+                    }
+                })
+                .groupBy {
+                    if (selectedSortOptionValue == SortOption.LATEST_FIRST || selectedSortOptionValue == SortOption.OLDEST_FIRST) {
+                        getDateString(
+                            it.transaction.transactionTimestamp
+                        )
+                    } else {
+                        ""
+                    }
+                }
+        }.flowOn(
+            context = dispatcherProvider.io,
+        )
 
 
     override fun trackScreen() {

@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.screen
+package com.makeappssimple.abhimanyu.financemanager.android.ui.common
 
 import android.content.Context
 import androidx.compose.material.ModalBottomSheetState
@@ -15,34 +15,34 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import kotlinx.coroutines.CoroutineScope
 
-class AddTransactionScreenViewState constructor(
+data class CommonScreenViewState constructor(
     val context: Context,
     val coroutineScope: CoroutineScope,
     val focusManager: FocusManager,
     val focusRequester: FocusRequester,
-    val keyboardController: SoftwareKeyboardController?,
     val modalBottomSheetState: ModalBottomSheetState,
+    val keyboardController: SoftwareKeyboardController?,
 )
 
 @Composable
-fun rememberAddTransactionScreenViewState(
+fun rememberCommonScreenViewState(
     context: Context = LocalContext.current,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     focusManager: FocusManager = LocalFocusManager.current,
     focusRequester: FocusRequester = remember {
         FocusRequester()
     },
-    keyboardController: SoftwareKeyboardController? = LocalSoftwareKeyboardController.current,
     modalBottomSheetState: ModalBottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
     ),
+    keyboardController: SoftwareKeyboardController? = LocalSoftwareKeyboardController.current,
 ) = remember {
-    AddTransactionScreenViewState(
+    CommonScreenViewState(
         context = context,
         coroutineScope = coroutineScope,
         focusManager = focusManager,
         focusRequester = focusRequester,
-        keyboardController = keyboardController,
         modalBottomSheetState = modalBottomSheetState,
+        keyboardController = keyboardController,
     )
 }

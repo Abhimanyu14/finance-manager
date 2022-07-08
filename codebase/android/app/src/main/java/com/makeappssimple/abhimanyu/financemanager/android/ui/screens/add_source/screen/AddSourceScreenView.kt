@@ -30,6 +30,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Sourc
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadioGroupItem
@@ -58,7 +59,7 @@ data class AddSourceScreenViewData(
 @Composable
 fun AddSourceScreenView(
     data: AddSourceScreenViewData,
-    state: AddSourceScreenViewState,
+    state: CommonScreenViewState,
 ) {
     var addSourceBottomSheetType by remember {
         mutableStateOf(

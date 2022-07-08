@@ -44,6 +44,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navi
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToEditTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadioGroupItem
@@ -95,7 +96,7 @@ data class TransactionsScreenViewData(
 @Composable
 fun TransactionsScreenView(
     data: TransactionsScreenViewData,
-    state: TransactionsScreenViewState,
+    state: CommonScreenViewState,
 ) {
     var transactionsBottomSheetType by remember {
         mutableStateOf(

@@ -8,6 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.viewmodel.AddTransactionScreenUiState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.viewmodel.AddTransactionScreenUiVisibilityState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.viewmodel.AddTransactionScreenViewModel
@@ -95,6 +96,6 @@ fun AddTransactionScreen(
                 screenViewModel.updateTransactionCalendar(updatedTransactionCalendar)
             },
         ),
-        state = rememberAddTransactionScreenViewState(),
+        state = rememberCommonScreenViewState(),
     )
 }

@@ -24,6 +24,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navi
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToEditSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
@@ -55,7 +56,7 @@ data class SourcesScreenViewData(
 @Composable
 fun SourcesScreenView(
     data: SourcesScreenViewData,
-    state: SourcesScreenViewState,
+    state: CommonScreenViewState,
 ) {
     var sourcesBottomSheetType by remember {
         mutableStateOf(

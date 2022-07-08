@@ -36,6 +36,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.navigation.Navigation
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.AmountCommaVisualTransformation
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadioGroup
@@ -99,7 +100,7 @@ data class AddTransactionScreenViewData(
 @Composable
 fun AddTransactionScreenView(
     data: AddTransactionScreenViewData,
-    state: AddTransactionScreenViewState,
+    state: CommonScreenViewState,
 ) {
     val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
         data.updateTransactionCalendar(

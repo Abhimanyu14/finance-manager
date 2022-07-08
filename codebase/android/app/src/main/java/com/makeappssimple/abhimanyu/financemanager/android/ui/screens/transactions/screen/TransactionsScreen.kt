@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.TransactionsListItemViewData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.viewmodel.SortOption
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.viewmodel.TransactionsScreenViewModel
@@ -94,6 +95,6 @@ fun TransactionsScreen(
                 )
             },
         ),
-        state = rememberTransactionsScreenViewState(),
+        state = rememberCommonScreenViewState(),
     )
 }

@@ -6,6 +6,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_source.viewmodel.EditSourceScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_source.viewmodel.EditSourceScreenViewModelImpl
 import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
@@ -76,6 +77,6 @@ fun EditSourceScreen(
                 screenViewModel.updateSource()
             },
         ),
-        state = rememberEditSourceScreenViewState(),
+        state = rememberCommonScreenViewState(),
     )
 }

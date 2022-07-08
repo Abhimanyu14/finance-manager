@@ -41,6 +41,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
+import com.makeappssimple.abhimanyu.financemanager.android.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadioGroup
@@ -78,7 +79,7 @@ data class AddCategoryScreenViewData(
 @Composable
 fun AddCategoryScreenView(
     data: AddCategoryScreenViewData,
-    state: AddCategoryScreenViewState,
+    state: CommonScreenViewState,
 ) {
     var addCategoryBottomSheetType by remember {
         mutableStateOf(
