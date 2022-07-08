@@ -52,7 +52,6 @@ fun CategoriesSetAsDefaultConfirmationBottomSheetContent(
                     coroutineScope = coroutineScope,
                     modalBottomSheetState = modalBottomSheetState,
                 ) {
-
                     resetBottomSheetType()
                     resetClickedItemId()
                 }

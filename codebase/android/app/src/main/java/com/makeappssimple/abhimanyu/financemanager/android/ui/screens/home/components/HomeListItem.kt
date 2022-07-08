@@ -27,6 +27,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.EmojiCi
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.ExpandableItemViewWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.LightGray
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getReadableDateAndTimeString
 
 data class HomeListItemViewData(
@@ -61,6 +62,7 @@ fun HomeListItem(
         ) {
             EmojiCircle(
                 emoji = data.category?.emoji,
+                backgroundColor = LightGray,
             )
             Column(
                 modifier = Modifier

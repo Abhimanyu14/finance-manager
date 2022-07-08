@@ -35,7 +35,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.ScaffoldCon
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.utils.JSON_MIMETYPE
 
@@ -80,7 +79,6 @@ fun SettingsScreenView(
 
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
-        sheetShape = BottomSheetShape,
         sheetContent = {
             when (settingsBottomSheetType) {
                 SettingsBottomSheetType.NONE -> {

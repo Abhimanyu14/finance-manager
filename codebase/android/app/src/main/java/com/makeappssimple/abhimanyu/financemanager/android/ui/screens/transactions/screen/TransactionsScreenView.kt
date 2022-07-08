@@ -55,10 +55,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.Vertica
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.SearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.SearchBarData
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.bottomsheet.TransactionsDeleteConfirmationBottomSheetContent
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.bottomsheet.TransactionsFiltersBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.TransactionsListItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.TransactionsListItemViewData
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.bottomsheet.TransactionsDeleteConfirmationBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.bottomsheet.TransactionsFiltersBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.viewmodel.SortOption
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Blue50
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetExpandedShape
@@ -395,7 +395,7 @@ fun TransactionsScreenView(
                                         toggleModalBottomSheetState(
                                             coroutineScope = state.coroutineScope,
                                             modalBottomSheetState = state.modalBottomSheetState,
-                                        ) {}
+                                        )
                                     },
                                     modifier = Modifier,
                                 ) {
@@ -473,7 +473,7 @@ fun TransactionsScreenView(
                                         toggleModalBottomSheetState(
                                             coroutineScope = state.coroutineScope,
                                             modalBottomSheetState = state.modalBottomSheetState,
-                                        ) {}
+                                        )
                                     },
                                 )
                             }

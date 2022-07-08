@@ -9,6 +9,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_category.viewmodel.EditCategoryScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_category.viewmodel.EditCategoryScreenViewModelImpl
+import com.makeappssimple.abhimanyu.financemanager.android.utils.constants.loadingCompletedEmoji
+import com.makeappssimple.abhimanyu.financemanager.android.utils.constants.loadingEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 
 @Composable
@@ -19,19 +21,30 @@ fun EditCategoryScreen(
     logError(
         message = "Inside EditCategoryScreen",
     )
-    val title: String by screenViewModel.title.collectAsState()
     val selectedTransactionTypeIndex: Int by screenViewModel.selectedTransactionTypeIndex.collectAsState()
-    val emoji: String by screenViewModel.emoji.collectAsState()
-    val searchText: String by screenViewModel.searchText.collectAsState()
     val emojis: List<Emoji> by screenViewModel.filteredEmojis.collectAsState(
         initial = emptyList(),
     )
+    val emoji: String by screenViewModel.emoji.collectAsState()
+    val searchText: String by screenViewModel.searchText.collectAsState()
+    val title: String by screenViewModel.title.collectAsState()
 
     LaunchedEffect(
         key1 = Unit,
     ) {
         screenViewModel.trackScreen()
     }
+
+    LaunchedEffect(
+        key1 = emojis,
+    ) {
+        if (emojis.isNotEmpty() && emoji == loadingEmoji) {
+            screenViewModel.updateEmoji(
+                updatedEmoji = loadingCompletedEmoji,
+            )
+        }
+    }
+
 
     EditCategoryScreenView(
         data = EditCategoryScreenViewData(

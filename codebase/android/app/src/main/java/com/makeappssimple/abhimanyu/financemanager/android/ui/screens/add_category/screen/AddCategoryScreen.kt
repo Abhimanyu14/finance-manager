@@ -9,6 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_category.viewmodel.AddCategoryScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_category.viewmodel.AddCategoryScreenViewModelImpl
+import com.makeappssimple.abhimanyu.financemanager.android.utils.constants.loadingCompletedEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 
 @Composable
@@ -30,6 +31,16 @@ fun AddCategoryScreen(
         key1 = Unit,
     ) {
         screenViewModel.trackScreen()
+    }
+
+    LaunchedEffect(
+        key1 = emojis,
+    ) {
+        if (emojis.isNotEmpty()) {
+            screenViewModel.updateEmoji(
+                updatedEmoji = loadingCompletedEmoji,
+            )
+        }
     }
 
     AddCategoryScreenView(

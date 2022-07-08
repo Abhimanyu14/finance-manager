@@ -25,6 +25,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Cat
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
+import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.LightGray
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 
 data class AddTransactionSelectCategoryBottomSheetItemData(
@@ -95,6 +96,7 @@ private fun AddTransactionSelectCategoryBottomSheetItem(
     ) {
         EmojiCircle(
             emoji = data.category.emoji,
+            backgroundColor = LightGray,
         )
         MyText(
             text = data.category.title,

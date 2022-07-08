@@ -35,12 +35,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModal
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyFloatingActionButton
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.bottomsheet.CategoriesDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.CategoriesListItem
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.bottomsheet.CategoriesSetAsDefaultConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.CategoriesTabData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.CategoriesTabRow
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.CategoriesTabRowData
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.bottomsheet.CategoriesDeleteConfirmationBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.bottomsheet.CategoriesSetAsDefaultConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isDefaultCategory
@@ -333,7 +333,7 @@ fun CategoriesScreenView(
                                             toggleModalBottomSheetState(
                                                 coroutineScope = state.coroutineScope,
                                                 modalBottomSheetState = state.modalBottomSheetState,
-                                            ) {}
+                                            )
                                         }
                                     },
                                     onEditClick = {

@@ -91,6 +91,7 @@ fun TransactionsListItem(
         ) {
             EmojiCircle(
                 emoji = data.category?.emoji,
+                backgroundColor = LightGray,
             )
             Column(
                 modifier = Modifier

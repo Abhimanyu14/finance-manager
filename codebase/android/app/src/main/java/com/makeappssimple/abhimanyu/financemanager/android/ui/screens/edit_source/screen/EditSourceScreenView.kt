@@ -39,7 +39,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.MyOutlinedTextField
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 
 enum class EditSourceBottomSheetType : BottomSheetType {
     NONE,
@@ -94,7 +93,6 @@ fun EditSourceScreenView(
 
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
-        sheetShape = BottomSheetShape,
         sheetContent = {
             when (editSourceBottomSheetType) {
                 EditSourceBottomSheetType.NONE -> {

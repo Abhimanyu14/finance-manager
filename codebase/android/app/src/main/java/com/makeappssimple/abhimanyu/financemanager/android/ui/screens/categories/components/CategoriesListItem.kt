@@ -85,6 +85,7 @@ fun CategoriesListItem(
         ) {
             EmojiCircle(
                 emoji = category.emoji,
+                backgroundColor = LightGray,
             )
             MyText(
                 text = category.title,

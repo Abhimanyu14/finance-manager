@@ -31,8 +31,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAp
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.total_balance_card.TotalBalanceCard
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.components.bottomsheet.SourcesDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.components.SourcesListItem
+import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.components.bottomsheet.SourcesDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.components.bottomsheet.SourcesSetAsDefaultConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNull
@@ -216,7 +216,7 @@ fun SourcesScreenView(
                                     toggleModalBottomSheetState(
                                         coroutineScope = state.coroutineScope,
                                         modalBottomSheetState = state.modalBottomSheetState,
-                                    ) {}
+                                    )
                                 }
                             },
                             onEditClick = {
