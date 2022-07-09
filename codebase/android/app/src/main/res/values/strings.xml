@@ -4,35 +4,50 @@
     <string name="app_name">Finance Manager</string>
 
 
-    <!-- Common -->
+    <!-- region Common -->
 
-    <!-- total balance card -->
+    <!-- region bottom sheet emoji picker -->
     <string name="emoji_picker_bottom_sheet_placeholder_text">Search emoji</string>
+    <!-- endregion -->
 
-    <!-- navigation back button -->
+    <!-- region bottom sheet select category -->
+    <string name="bottom_sheet_select_category_title">Select Category</string>
+    <!-- endregion -->
+
+    <!-- region bottom sheet select source -->
+    <string name="bottom_sheet_select_source_title">Select Source</string>
+    <!-- endregion -->
+
+    <!-- region navigation back button -->
     <string name="navigation_back_button_navigation_icon_content_description">Navigate Back</string>
+    <!-- endregion -->
 
-    <!-- total balance card -->
+    <!-- region total balance card -->
     <string name="total_balance_card_title">Total Balance</string>
+    <!-- endregion -->
+
+    <!-- endregion -->
 
 
-    <!-- Screens -->
+    <!-- region Screens -->
 
-    <!-- add category screen -->
+    <!-- region add category screen -->
     <string name="screen_add_category_appbar_title">Enter Category Details</string>
     <string name="screen_add_category_title">Title</string>
     <string name="screen_add_category_clear_title">Clear Title</string>
     <string name="screen_add_category_description">Description</string>
     <string name="screen_add_category_clear_description">Clear Description</string>
     <string name="screen_add_category_floating_action_button_content_description">SAVE</string>
+    <!-- endregion -->
 
-    <!-- add source screen -->
+    <!-- region add source screen -->
     <string name="screen_add_source_appbar_title">Enter Source Details</string>
     <string name="screen_add_source_name">Name</string>
     <string name="screen_add_source_clear_name">Clear Name</string>
     <string name="screen_add_source_floating_action_button_content_description">SAVE</string>
+    <!-- endregion -->
 
-    <!-- add transaction screen -->
+    <!-- region add transaction screen -->
     <string name="screen_add_transaction_appbar_title">Enter Transaction Details</string>
     <string name="screen_add_transaction_amount">Amount</string>
     <string name="screen_add_transaction_clear_amount">Clear Amount</string>
@@ -47,18 +62,14 @@
     <string name="screen_add_transaction_source_from">Source From</string>
     <string name="screen_add_transaction_source_to">Source To</string>
     <string name="screen_add_transaction_floating_action_button_content_description">Save</string>
+    <!-- endregion -->
 
-    <!-- add transaction select category bottom sheet -->
-    <string name="bottom_sheet_add_transaction_select_category_title">Select Category</string>
-
-    <!-- add transaction select source bottom sheet -->
-    <string name="bottom_sheet_add_transaction_select_source_title">Select Source</string>
-
-    <!-- categories list item -->
+    <!-- region categories list item -->
     <string name="list_item_categories_edit">Edit</string>
     <string name="list_item_categories_delete">Delete</string>
+    <!-- endregion -->
 
-    <!-- categories screen -->
+    <!-- region categories screen -->
     <string name="screen_categories_appbar_title">Categories</string>
     <string name="screen_categories_bottom_sheet_set_as_default_title">Set as default Category</string>
     <string name="screen_categories_bottom_sheet_set_as_default_message">
@@ -72,22 +83,25 @@
     </string>
     <string name="screen_categories_bottom_sheet_delete_positive_button_text">Yes</string>
     <string name="screen_categories_bottom_sheet_delete_negative_button_text">Cancel</string>
+    <!-- endregion -->
 
-    <!-- edit category screen -->
+    <!-- region edit category screen -->
     <string name="screen_edit_category_appbar_title">Edit Category</string>
     <string name="screen_edit_category_title">Title</string>
     <string name="screen_edit_category_clear_title">Clear Title</string>
     <string name="screen_edit_category_floating_action_button_content_description">UPDATE</string>
+    <!-- endregion -->
 
-    <!-- edit source screen -->
+    <!-- region edit source screen -->
     <string name="screen_edit_source_appbar_title">Edit Source</string>
     <string name="screen_edit_source_name">Name</string>
     <string name="screen_edit_source_clear_name">Clear Name</string>
     <string name="screen_edit_source_balance_amount_value">Balance Amount Value</string>
     <string name="screen_edit_source_clear_balance_amount_value">Clear Balance Amount Value</string>
     <string name="screen_edit_source_floating_action_button_content_description">UPDATE</string>
+    <!-- endregion -->
 
-    <!-- edit transaction screen -->
+    <!-- region edit transaction screen -->
     <string name="screen_edit_transaction_appbar_title">Edit Transaction Details</string>
     <string name="screen_edit_transaction_amount">Amount</string>
     <string name="screen_edit_transaction_clear_amount">Clear Amount</string>
@@ -104,11 +118,13 @@
     <string name="screen_edit_transaction_floating_action_button_content_description">
         UPDATE
     </string>
+    <!-- endregion -->
 
-    <!-- home list item -->
+    <!-- region home list item -->
     <string name="list_item_home_source">%1$s -> %2$s</string>
+    <!-- endregion -->
 
-    <!-- home screen -->
+    <!-- region home screen -->
     <string name="screen_home_appbar_title">Finance Manager</string>
     <string name="screen_home_recent_transactions">Recent Transactions</string>
     <string name="screen_home_view_all_transactions">View All Transactions</string>
@@ -117,33 +133,39 @@
     <string name="screen_home_bottom_sheet_categories">Categories</string>
     <string name="screen_home_bottom_sheet_settings">Settings</string>
     <string name="screen_home_bottom_sheet_sources">Sources</string>
+    <!-- endregion -->
 
-    <!-- home menu bottom sheet -->
+    <!-- region home menu bottom sheet -->
     <string name="bottom_sheet_home_menu_sources">Sources</string>
     <string name="bottom_sheet_home_menu_categories">Categories</string>
+    <!-- endregion -->
 
-    <!-- settings screen -->
+    <!-- region settings screen -->
     <string name="screen_settings_appbar_title">Settings</string>
     <string name="screen_settings_backup">Backup data</string>
     <string name="screen_settings_restore">Restore data</string>
     <string name="screen_settings_recalculate_total">Recalculate Total</string>
+    <!-- endregion -->
 
-    <!-- source details screen -->
+    <!-- region source details screen -->
     <string name="screen_source_details_appbar_title">Source Details</string>
     <string name="screen_source_details_floating_action_button_content_description">
         Edit Source Details
     </string>
+    <!-- endregion -->
 
-    <!-- sources edit balance amount bottom sheet -->
+    <!-- region sources edit balance amount bottom sheet -->
     <string name="bottom_sheet_sources_edit_balance_amount_title">Edit Balance Amount</string>
     <string name="bottom_sheet_sources_edit_balance_amount_save">Save</string>
+    <!-- endregion -->
 
-    <!-- sources list item -->
+    <!-- region sources list item -->
     <string name="list_item_sources">%1$s -> %2$s</string>
     <string name="list_item_sources_edit">Edit</string>
     <string name="list_item_sources_delete">Delete</string>
+    <!-- endregion -->
 
-    <!-- sources screen -->
+    <!-- region sources screen -->
     <string name="screen_sources_appbar_title">Sources</string>
     <string name="screen_sources_floating_action_button_content_description">Add Source</string>
     <string name="screen_sources_bottom_sheet_set_as_default_title">Set as default Source</string>
@@ -158,13 +180,15 @@
     </string>
     <string name="screen_sources_bottom_sheet_delete_positive_button_text">Yes</string>
     <string name="screen_sources_bottom_sheet_delete_negative_button_text">Cancel</string>
+    <!-- endregion -->
 
-    <!-- transactions list item -->
+    <!-- region transactions list item -->
     <string name="list_item_transactions_source">%1$s -> %2$s</string>
     <string name="list_item_transactions_edit">Edit</string>
     <string name="list_item_transactions_delete">Delete</string>
+    <!-- endregion -->
 
-    <!-- transactions screen -->
+    <!-- region transactions screen -->
     <string name="screen_transactions_appbar_title">Transactions</string>
     <string name="screen_transactions_searchbar_placeholder">Search transactions</string>
     <string name="screen_transactions_floating_action_button_content_description">
@@ -176,8 +200,9 @@
     </string>
     <string name="screen_transactions_bottom_sheet_delete_positive_button_text">Yes</string>
     <string name="screen_transactions_bottom_sheet_delete_negative_button_text">Cancel</string>
+    <!-- endregion -->
 
-    <!-- transactions filter bottom sheet -->
+    <!-- region transactions filter bottom sheet -->
     <string name="bottom_sheet_transactions_filter_clear">Clear</string>
     <string name="bottom_sheet_transactions_filter_reset">Reset</string>
     <string name="bottom_sheet_transactions_filter_apply">Apply</string>
@@ -185,5 +210,8 @@
     <string name="bottom_sheet_transactions_filter_select_income_categories">Select Income Categories</string>
     <string name="bottom_sheet_transactions_filter_select_sources">Select Sources</string>
     <string name="bottom_sheet_transactions_filter_select_transaction_types">Select Transaction Types</string>
+    <!-- endregion -->
+
+    <!-- endregion -->
 
 </resources>

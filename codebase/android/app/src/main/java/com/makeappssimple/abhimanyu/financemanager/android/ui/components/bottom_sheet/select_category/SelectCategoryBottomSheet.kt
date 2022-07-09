@@ -1,6 +1,5 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.components
+package com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.select_category
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -16,7 +15,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -24,23 +22,23 @@ import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.BottomSheetTitle
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.LightGray
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 
-data class EditTransactionSelectCategoryBottomSheetItemData(
+data class SelectCategoryBottomSheetItemData(
     val category: Category,
     val isSelected: Boolean,
     val onClick: () -> Unit,
 )
 
-data class EditTransactionSelectCategoryBottomSheetData(
-    val items: List<EditTransactionSelectCategoryBottomSheetItemData>,
+data class SelectCategoryBottomSheetData(
+    val items: List<SelectCategoryBottomSheetItemData>,
 )
 
 @Composable
-fun EditTransactionSelectCategoryBottomSheet(
-    data: EditTransactionSelectCategoryBottomSheetData,
+fun SelectCategoryBottomSheet(
+    data: SelectCategoryBottomSheetData,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -49,21 +47,8 @@ fun EditTransactionSelectCategoryBottomSheet(
             ),
     ) {
         stickyHeader {
-            MyText(
-                textStringResourceId = R.string.bottom_sheet_add_transaction_select_category_title,
-                style = TextStyle(
-                    color = DarkGray,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Bold,
-                ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .background(
-                        color = Surface,
-                    )
-                    .padding(
-                        all = 16.dp,
-                    ),
+            BottomSheetTitle(
+                textStringResourceId = R.string.bottom_sheet_select_category_title,
             )
         }
         items(
@@ -72,7 +57,7 @@ fun EditTransactionSelectCategoryBottomSheet(
                 listItem.hashCode()
             },
         ) { listItem ->
-            EditTransactionSelectCategoryBottomSheetItem(
+            SelectCategoryBottomSheetItem(
                 data = listItem,
             )
         }
@@ -80,8 +65,8 @@ fun EditTransactionSelectCategoryBottomSheet(
 }
 
 @Composable
-private fun EditTransactionSelectCategoryBottomSheetItem(
-    data: EditTransactionSelectCategoryBottomSheetItemData,
+private fun SelectCategoryBottomSheetItem(
+    data: SelectCategoryBottomSheetItemData,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,

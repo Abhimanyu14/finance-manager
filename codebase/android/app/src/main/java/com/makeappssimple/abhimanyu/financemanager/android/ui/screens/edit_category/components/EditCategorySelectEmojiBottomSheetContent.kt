@@ -6,8 +6,8 @@ import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
 import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.EmojiPickerBottomSheet
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.EmojiPickerBottomSheetData
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.EmojiPickerBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.EmojiPickerBottomSheetData
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.capitalizeWords
 import kotlinx.coroutines.CoroutineScope
 

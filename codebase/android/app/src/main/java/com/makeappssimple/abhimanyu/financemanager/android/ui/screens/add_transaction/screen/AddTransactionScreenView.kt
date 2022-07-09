@@ -44,11 +44,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadio
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyScrollableRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.select_category.SelectCategoryBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.select_source.SelectSourceBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.MyReadOnlyTextField
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.components.AddTransactionSelectCategoryBottomSheetContent
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.components.AddTransactionSelectSourceBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.viewmodel.AddTransactionScreenUiState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.viewmodel.AddTransactionScreenUiVisibilityState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetExpandedShape
@@ -192,7 +192,7 @@ fun AddTransactionScreenView(
                     VerticalSpacer()
                 }
                 AddTransactionBottomSheetType.SELECT_CATEGORY -> {
-                    AddTransactionSelectCategoryBottomSheetContent(
+                    SelectCategoryBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
                         categories = data.categories,
@@ -207,7 +207,7 @@ fun AddTransactionScreenView(
                     )
                 }
                 AddTransactionBottomSheetType.SELECT_SOURCE_FROM -> {
-                    AddTransactionSelectSourceBottomSheetContent(
+                    SelectSourceBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
                         sources = data.sources,
@@ -221,7 +221,7 @@ fun AddTransactionScreenView(
                     )
                 }
                 AddTransactionBottomSheetType.SELECT_SOURCE_TO -> {
-                    AddTransactionSelectSourceBottomSheetContent(
+                    SelectSourceBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
                         sources = data.sources,

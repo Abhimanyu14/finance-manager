@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_transaction.components
+package com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.select_source
 
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModal
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun AddTransactionSelectSourceBottomSheetContent(
+fun SelectSourceBottomSheetContent(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
     sources: List<Source>,
@@ -15,11 +15,11 @@ fun AddTransactionSelectSourceBottomSheetContent(
     resetBottomSheetType: () -> Unit,
     updateSource: (updatedSource: Source?) -> Unit,
 ) {
-    AddTransactionSelectSourceBottomSheet(
-        data = AddTransactionSelectSourceBottomSheetData(
+    SelectSourceBottomSheet(
+        data = SelectSourceBottomSheetData(
             items = sources
                 .map { source ->
-                    AddTransactionSelectSourceBottomSheetItemData(
+                    SelectSourceBottomSheetItemData(
                         text = source.name,
                         iconKey = source.type.title,
                         isSelected = source.id == selectedSourceId,

@@ -6,7 +6,11 @@ import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
 import com.makeappssimple.abhimanyu.financemanager.android.utils.formattedCurrencyValue
 
-// format long to 123,456,789,9
+/**
+ * Format long to comma separated string.
+ *
+ * Example: 1234567899 => 123,456,789,9
+ * */
 class AmountCommaVisualTransformation : VisualTransformation {
     override fun filter(
         text: AnnotatedString,

@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.components
+package com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.select_category
 
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -8,7 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModal
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun EditTransactionSelectCategoryBottomSheetContent(
+fun SelectCategoryBottomSheetContent(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
     categories: List<Category>,
@@ -17,14 +17,14 @@ fun EditTransactionSelectCategoryBottomSheetContent(
     resetBottomSheetType: () -> Unit,
     updateCategory: (updatedCategory: Category?) -> Unit,
 ) {
-    EditTransactionSelectCategoryBottomSheet(
-        data = EditTransactionSelectCategoryBottomSheetData(
+    SelectCategoryBottomSheet(
+        data = SelectCategoryBottomSheetData(
             items = categories
                 .filter { category ->
                     category.transactionType == selectedTransactionType
                 }
                 .map { category ->
-                    EditTransactionSelectCategoryBottomSheetItemData(
+                    SelectCategoryBottomSheetItemData(
                         category = category,
                         isSelected = category.id == selectedCategoryId,
                         onClick = {

@@ -45,11 +45,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyRadio
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyScrollableRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.select_category.SelectCategoryBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.select_source.SelectSourceBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.MyReadOnlyTextField
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.components.EditTransactionSelectCategoryBottomSheetContent
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.components.EditTransactionSelectSourceBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.viewmodel.EditTransactionScreenUiState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_transaction.viewmodel.EditTransactionScreenUiVisibilityState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.BottomSheetExpandedShape
@@ -192,7 +192,7 @@ fun EditTransactionScreenView(
                     VerticalSpacer()
                 }
                 EditTransactionBottomSheetType.SELECT_CATEGORY -> {
-                    EditTransactionSelectCategoryBottomSheetContent(
+                    SelectCategoryBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
                         categories = data.categories,
@@ -207,7 +207,7 @@ fun EditTransactionScreenView(
                     )
                 }
                 EditTransactionBottomSheetType.SELECT_SOURCE_FROM -> {
-                    EditTransactionSelectSourceBottomSheetContent(
+                    SelectSourceBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
                         sources = data.sources,
@@ -221,7 +221,7 @@ fun EditTransactionScreenView(
                     )
                 }
                 EditTransactionBottomSheetType.SELECT_SOURCE_TO -> {
-                    EditTransactionSelectSourceBottomSheetContent(
+                    SelectSourceBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
                         sources = data.sources,
