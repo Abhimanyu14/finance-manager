@@ -143,8 +143,9 @@ android {
             shrinkResources false
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
 
+            // This should be true for Jacoco but false for compose testing
             // Jacoco
-            testCoverageEnabled true
+            testCoverageEnabled false
         }
     }
 

@@ -1,15 +1,25 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.components.total_balance_card
 
+import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.MyAppTheme
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
 class TotalBalanceCardTest {
     @get:Rule
     val composeTestRule = createComposeRule()
+    private lateinit var balanceAmount: SemanticsNodeInteraction
+    private lateinit var title: SemanticsNodeInteraction
+
+    @Before
+    fun setup() {
+
+    }
 
     @Test
     fun defaultTest() {
@@ -22,9 +32,28 @@ class TotalBalanceCardTest {
                 )
             }
         }
+        balanceAmount = composeTestRule.onNodeWithText("₹1,23,456")
+        title = composeTestRule.onNodeWithText("Total Balance")
 
-        composeTestRule
-            .onNodeWithText("123456")
-            .assertIsDisplayed()
+        title.assertIsDisplayed()
+        balanceAmount.assertIsDisplayed()
+
+        composeTestRule.onNode(hasClickAction()).assertDoesNotExist()
+    }
+
+    @Test
+    fun hasClick() {
+        composeTestRule.setContent {
+            MyAppTheme {
+                TotalBalanceCardView(
+                    data = TotalBalanceCardViewData(
+                        totalBalanceAmount = 123456L,
+                        onClick = {},
+                    ),
+                )
+            }
+        }
+
+        composeTestRule.onNode(hasClickAction()).assertExists()
     }
 }
