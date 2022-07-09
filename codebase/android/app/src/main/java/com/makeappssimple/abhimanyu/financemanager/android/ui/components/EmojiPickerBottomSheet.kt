@@ -59,26 +59,26 @@ fun EmojiPickerBottomSheet(
             data.emojis.groupBy { emoji ->
                 emoji.group
             }.forEach { (group, emojis) ->
-                item {
-                    if (emojis.isNotEmpty()) {
+                if (emojis.isNotEmpty()) {
+                    item {
                         EmojiGroupName(
                             name = "$group (${emojis.size})"
                         )
                     }
-                }
-                item {
-                    FlowRow {
-                        emojis.map { emoji ->
-                            EmojiCircle(
-                                emoji = emoji.character,
-                                emojiCircleSize = EmojiCircleSize.Normal,
-                                onClick = {
-                                    data.onEmojiClick(emoji)
-                                },
-                                onLongClick = {
-                                    data.onEmojiLongClick(emoji)
-                                },
-                            )
+                    item {
+                        FlowRow {
+                            emojis.map { emoji ->
+                                EmojiCircle(
+                                    emoji = emoji.character,
+                                    emojiCircleSize = EmojiCircleSize.Normal,
+                                    onClick = {
+                                        data.onEmojiClick(emoji)
+                                    },
+                                    onLongClick = {
+                                        data.onEmojiLongClick(emoji)
+                                    },
+                                )
+                            }
                         }
                     }
                 }
