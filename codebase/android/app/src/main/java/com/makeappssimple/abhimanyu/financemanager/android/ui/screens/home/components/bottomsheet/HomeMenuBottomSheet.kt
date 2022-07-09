@@ -44,9 +44,12 @@ fun HomeMenuBottomSheet(
     ) {
         items(
             items = data.items,
-        ) { homeBottomSheetItemData ->
+            key = { listItem ->
+                listItem.hashCode()
+            },
+        ) { listItem ->
             HomeBottomSheetItem(
-                data = homeBottomSheetItemData,
+                data = listItem,
             )
         }
     }

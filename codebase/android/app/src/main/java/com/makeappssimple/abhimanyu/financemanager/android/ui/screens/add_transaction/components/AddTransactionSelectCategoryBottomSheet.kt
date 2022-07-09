@@ -68,9 +68,12 @@ fun AddTransactionSelectCategoryBottomSheet(
         }
         items(
             items = data.items,
-        ) { addTransactionSelectCategoryBottomSheetItemData ->
+            key = { listItem ->
+                listItem.hashCode()
+            },
+        ) { listItem ->
             AddTransactionSelectCategoryBottomSheetItem(
-                data = addTransactionSelectCategoryBottomSheetItemData,
+                data = listItem,
             )
         }
     }

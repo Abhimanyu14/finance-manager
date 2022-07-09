@@ -159,7 +159,12 @@ fun HomeScreenView(
                             },
                         )
                     }
-                    items(data.homeListItemViewData) { listItem ->
+                    items(
+                        items = data.homeListItemViewData,
+                        key = { listItem ->
+                            listItem.hashCode()
+                        },
+                    ) { listItem ->
                         HomeListItem(
                             data = listItem,
                         )

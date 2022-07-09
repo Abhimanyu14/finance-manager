@@ -93,9 +93,14 @@ fun MyScrollableRadioGroup(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = modifier,
     ) {
-        itemsIndexed(items) { index, item ->
+        itemsIndexed(
+            items = items,
+            key = { _, listItem ->
+                listItem.hashCode()
+            },
+        ) { index, listItem ->
             MyRadioGroupItemView(
-                item = item,
+                item = listItem,
                 isSelected = index == selectedItemIndex,
                 onSelectionChange = {
                     onSelectionChange(index)
