@@ -35,8 +35,6 @@
     <string name="screen_add_category_appbar_title">Enter Category Details</string>
     <string name="screen_add_category_title">Title</string>
     <string name="screen_add_category_clear_title">Clear Title</string>
-    <string name="screen_add_category_description">Description</string>
-    <string name="screen_add_category_clear_description">Clear Description</string>
     <string name="screen_add_category_floating_action_button_content_description">SAVE</string>
     <!-- endregion -->
 
@@ -77,12 +75,6 @@
     </string>
     <string name="screen_categories_bottom_sheet_set_as_default_positive_button_text">Yes</string>
     <string name="screen_categories_bottom_sheet_set_as_default_negative_button_text">Cancel</string>
-    <string name="screen_categories_bottom_sheet_delete_title">Delete Category</string>
-    <string name="screen_categories_bottom_sheet_delete_message">
-        Are you sure you want to delete?
-    </string>
-    <string name="screen_categories_bottom_sheet_delete_positive_button_text">Yes</string>
-    <string name="screen_categories_bottom_sheet_delete_negative_button_text">Cancel</string>
     <!-- endregion -->
 
     <!-- region edit category screen -->
@@ -147,20 +139,7 @@
     <string name="screen_settings_recalculate_total">Recalculate Total</string>
     <!-- endregion -->
 
-    <!-- region source details screen -->
-    <string name="screen_source_details_appbar_title">Source Details</string>
-    <string name="screen_source_details_floating_action_button_content_description">
-        Edit Source Details
-    </string>
-    <!-- endregion -->
-
-    <!-- region sources edit balance amount bottom sheet -->
-    <string name="bottom_sheet_sources_edit_balance_amount_title">Edit Balance Amount</string>
-    <string name="bottom_sheet_sources_edit_balance_amount_save">Save</string>
-    <!-- endregion -->
-
     <!-- region sources list item -->
-    <string name="list_item_sources">%1$s -> %2$s</string>
     <string name="list_item_sources_edit">Edit</string>
     <string name="list_item_sources_delete">Delete</string>
     <!-- endregion -->
