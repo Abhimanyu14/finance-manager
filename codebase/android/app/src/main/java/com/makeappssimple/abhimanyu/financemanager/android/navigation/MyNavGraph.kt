@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import androidx.navigation.navDeepLink
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavArgs.CATEGORY_ID
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavArgs.SOURCE_ID
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavArgs.TRANSACTION_ID
@@ -95,24 +96,44 @@ fun MyNavGraph(
     ) {
         composable(
             route = Screen.AddCategory.route,
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$DEEPLINK_BASE_URL/${Screen.AddCategory.route}"
+                },
+            ),
         ) {
             AddCategoryScreen()
         }
 
         composable(
             route = Screen.AddSource.route,
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$DEEPLINK_BASE_URL/${Screen.AddSource.route}"
+                },
+            ),
         ) {
             AddSourceScreen()
         }
 
         composable(
             route = Screen.AddTransaction.route,
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$DEEPLINK_BASE_URL/${Screen.AddTransaction.route}"
+                },
+            ),
         ) {
             AddTransactionScreen()
         }
 
         composable(
             route = Screen.Categories.route,
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$DEEPLINK_BASE_URL/${Screen.Categories.route}"
+                },
+            ),
         ) {
             CategoriesScreen()
         }
@@ -158,24 +179,44 @@ fun MyNavGraph(
 
         composable(
             route = Screen.Home.route,
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$DEEPLINK_BASE_URL/${Screen.Home.route}"
+                },
+            ),
         ) {
             HomeScreen()
         }
 
         composable(
             route = Screen.Settings.route,
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$DEEPLINK_BASE_URL/${Screen.Settings.route}"
+                },
+            ),
         ) {
             SettingsScreen()
         }
 
         composable(
             route = Screen.Sources.route,
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$DEEPLINK_BASE_URL/${Screen.Sources.route}"
+                },
+            ),
         ) {
             SourcesScreen()
         }
 
         composable(
             route = Screen.Transactions.route,
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$DEEPLINK_BASE_URL/${Screen.Transactions.route}"
+                },
+            ),
         ) {
             TransactionsScreen()
         }
