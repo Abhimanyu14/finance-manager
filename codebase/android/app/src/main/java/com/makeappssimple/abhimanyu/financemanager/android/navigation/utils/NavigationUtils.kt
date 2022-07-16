@@ -52,27 +52,11 @@ fun navigateToAddTransactionScreen(
     )
 }
 
-fun navigateToBalanceDetailsScreen(
-    navigationManager: NavigationManager,
-) {
-    navigationManager.navigate(
-        navigationCommand = MyNavigationDirections.balanceDetails()
-    )
-}
-
 fun navigateToCategoriesScreen(
     navigationManager: NavigationManager,
 ) {
     navigationManager.navigate(
         navigationCommand = MyNavigationDirections.categories()
-    )
-}
-
-fun navigateToCategoryDetailsScreen(
-    navigationManager: NavigationManager,
-) {
-    navigationManager.navigate(
-        navigationCommand = MyNavigationDirections.categoryDetails()
     )
 }
 
@@ -106,14 +90,6 @@ fun navigateToEditTransactionScreen(
         navigationCommand = MyNavigationDirections.editTransaction(
             transactionId = transactionId,
         )
-    )
-}
-
-fun navigateToHomeScreen(
-    navigationManager: NavigationManager,
-) {
-    navigationManager.navigate(
-        navigationCommand = MyNavigationDirections.home()
     )
 }
 

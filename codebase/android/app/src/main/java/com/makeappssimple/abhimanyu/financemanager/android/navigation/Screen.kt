@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.navigation
 
-const val DEEPLINK_BASE_URL = "https://www.makeappssimple.financemanager.com"
+const val DEEPLINK_BROWSER_BASE_URL = "https://www.makeappssimple.financemanager.com"
+const val DEEPLINK_BASE_URL = "makeappssimple://financemanager"
 
 sealed class Screen(
     val route: String,

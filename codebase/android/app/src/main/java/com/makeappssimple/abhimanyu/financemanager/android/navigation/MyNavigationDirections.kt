@@ -70,27 +70,11 @@ object MyNavigationDirections {
         }
     }
 
-    fun balanceDetails(): NavigationCommand {
-        return object : NavigationCommand {
-            override val command = Command.NAVIGATE
-            override val destination = Screen.BalanceDetails.route
-            override val screen = Screen.BalanceDetails.route
-        }
-    }
-
     fun categories(): NavigationCommand {
         return object : NavigationCommand {
             override val command = Command.NAVIGATE
             override val destination = Screen.Categories.route
             override val screen = Screen.Categories.route
-        }
-    }
-
-    fun categoryDetails(): NavigationCommand {
-        return object : NavigationCommand {
-            override val command = Command.NAVIGATE
-            override val destination = Screen.CategoryDetails.route
-            override val screen = Screen.CategoryDetails.route
         }
     }
 

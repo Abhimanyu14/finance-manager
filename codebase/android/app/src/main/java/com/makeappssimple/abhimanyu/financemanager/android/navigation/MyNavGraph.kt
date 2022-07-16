@@ -85,8 +85,7 @@ fun MyNavGraph(
                     navigationCommand = MyNavigationDirections.default()
                 )
             }
-            Command.NOOP -> {
-            }
+            Command.NOOP -> {}
         }
     }
 
@@ -97,6 +96,9 @@ fun MyNavGraph(
         composable(
             route = Screen.AddCategory.route,
             deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$DEEPLINK_BROWSER_BASE_URL/${Screen.AddCategory.route}"
+                },
                 navDeepLink {
                     uriPattern = "$DEEPLINK_BASE_URL/${Screen.AddCategory.route}"
                 },
@@ -109,6 +111,9 @@ fun MyNavGraph(
             route = Screen.AddSource.route,
             deepLinks = listOf(
                 navDeepLink {
+                    uriPattern = "$DEEPLINK_BROWSER_BASE_URL/${Screen.AddSource.route}"
+                },
+                navDeepLink {
                     uriPattern = "$DEEPLINK_BASE_URL/${Screen.AddSource.route}"
                 },
             ),
@@ -120,6 +125,9 @@ fun MyNavGraph(
             route = Screen.AddTransaction.route,
             deepLinks = listOf(
                 navDeepLink {
+                    uriPattern = "$DEEPLINK_BROWSER_BASE_URL/${Screen.AddTransaction.route}"
+                },
+                navDeepLink {
                     uriPattern = "$DEEPLINK_BASE_URL/${Screen.AddTransaction.route}"
                 },
             ),
@@ -130,6 +138,9 @@ fun MyNavGraph(
         composable(
             route = Screen.Categories.route,
             deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$DEEPLINK_BROWSER_BASE_URL/${Screen.Categories.route}"
+                },
                 navDeepLink {
                     uriPattern = "$DEEPLINK_BASE_URL/${Screen.Categories.route}"
                 },
@@ -181,6 +192,9 @@ fun MyNavGraph(
             route = Screen.Home.route,
             deepLinks = listOf(
                 navDeepLink {
+                    uriPattern = "$DEEPLINK_BROWSER_BASE_URL/${Screen.Home.route}"
+                },
+                navDeepLink {
                     uriPattern = "$DEEPLINK_BASE_URL/${Screen.Home.route}"
                 },
             ),
@@ -191,6 +205,9 @@ fun MyNavGraph(
         composable(
             route = Screen.Settings.route,
             deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$DEEPLINK_BROWSER_BASE_URL/${Screen.Settings.route}"
+                },
                 navDeepLink {
                     uriPattern = "$DEEPLINK_BASE_URL/${Screen.Settings.route}"
                 },
@@ -203,6 +220,9 @@ fun MyNavGraph(
             route = Screen.Sources.route,
             deepLinks = listOf(
                 navDeepLink {
+                    uriPattern = "$DEEPLINK_BROWSER_BASE_URL/${Screen.Sources.route}"
+                },
+                navDeepLink {
                     uriPattern = "$DEEPLINK_BASE_URL/${Screen.Sources.route}"
                 },
             ),
@@ -213,6 +233,9 @@ fun MyNavGraph(
         composable(
             route = Screen.Transactions.route,
             deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$DEEPLINK_BROWSER_BASE_URL/${Screen.Transactions.route}"
+                },
                 navDeepLink {
                     uriPattern = "$DEEPLINK_BASE_URL/${Screen.Transactions.route}"
                 },

@@ -73,3 +73,36 @@ fun HomeMenuBottomSheetContent(
         ),
     )
 }
+
+/*
+// TODO-Abhi: Deeplink based navigation
+private fun navigateToCategoriesScreen(
+    context: Context,
+) {
+    val intent = Intent(
+        Intent.ACTION_VIEW,
+        Uri.parse("$DEEPLINK_BASE_URL/${Screen.Categories.route}"),
+    )
+    context.startActivity(intent)
+}
+
+private fun navigateToSettingsScreen(
+    context: Context,
+) {
+    val intent = Intent(
+        Intent.ACTION_VIEW,
+        Uri.parse("$DEEPLINK_BASE_URL/${Screen.Settings.route}"),
+    )
+    context.startActivity(intent)
+}
+
+private fun navigateToSourcesScreen(
+    context: Context,
+) {
+    val intent = Intent(
+        Intent.ACTION_VIEW,
+        Uri.parse("$DEEPLINK_BASE_URL/${Screen.Sources.route}"),
+    )
+    context.startActivity(intent)
+}
+*/
