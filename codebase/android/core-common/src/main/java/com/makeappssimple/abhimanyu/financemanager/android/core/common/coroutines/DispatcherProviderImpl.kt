@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.coroutines
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines
 
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers

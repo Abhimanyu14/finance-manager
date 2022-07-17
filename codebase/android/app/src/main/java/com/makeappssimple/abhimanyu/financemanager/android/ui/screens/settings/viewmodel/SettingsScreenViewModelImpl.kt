@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.settings.
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.data.usecase.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.usecase.RecalculateTotalUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.data.usecase.RestoreDataUseCase

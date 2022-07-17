@@ -1,11 +1,13 @@
 plugins {
     id "com.android.library"
     id "org.jetbrains.kotlin.android"
+    id "kotlin-kapt"
+    id "dagger.hilt.android.plugin"
 }
 
 android {
-    namespace "com.makeappssimple.abhimanyu.financemanager.android.core.designsystem"
-    
+    namespace "com.makeappssimple.abhimanyu.financemanager.android.core.common"
+
     compileSdk rootProject.compileSdkVersion
 
     defaultConfig {
@@ -29,14 +31,10 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
-    }
 
-    buildFeatures {
-        compose true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion jetpackComposeCompilerVersion
+        freeCompilerArgs += [
+                "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+        ]
     }
 }
 
@@ -48,22 +46,20 @@ dependencies {
     // Appcompat
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
 
-    // Jetpack compose material design
-    implementation "androidx.compose.material:material:$rootProject.jetpackComposeVersion"
-    implementation "androidx.compose.material3:material3:$rootProject.jetpackComposeMaterial3Version"
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion")
 
-    // Jetpack compose material icons
-    implementation "androidx.compose.material:material-icons-extended:$rootProject.jetpackComposeVersion"
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$rootProject.hiltVersion"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$rootProject.hiltLifecycleViewModelVersion"
+    kapt "androidx.hilt:hilt-compiler:$rootProject.hiltCompilerVersion"
 
-    // Jetpack compose material design adapter
-    implementation "com.google.android.material:compose-theme-adapter:$rootProject.jetpackComposeMaterialDesignAdapterVersion"
-    
     // Testing
 
     // Junit
     testImplementation "junit:junit:$rootProject.junitVersion"
-    androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXJUnitExtensionVersion"
 
-    // Espresso
-    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
+    // Coroutines test
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
 }

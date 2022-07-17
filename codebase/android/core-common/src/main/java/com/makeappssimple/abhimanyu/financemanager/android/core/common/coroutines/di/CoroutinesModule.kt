@@ -1,7 +1,7 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.di
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.DispatcherProvider
-import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.DispatcherProviderImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProviderImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

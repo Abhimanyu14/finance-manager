@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.TestDispatcherProviderImpl
 import com.makeappssimple.abhimanyu.financemanager.android.data.local.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.DeleteSourceUseCase

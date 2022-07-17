@@ -259,6 +259,9 @@ buildscript {
         // Mockito kotlin
         mockitoKotlinVersion = "4.0.0"
 
+        // Coroutines
+        coroutinesVersion = "1.6.4"
+
         // Coroutines test
         coroutinesTestVersion = "1.6.1"
 

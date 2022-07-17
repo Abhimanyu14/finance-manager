@@ -7,5 +7,6 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Finance Manager"
 include ':app'
+include ':core-common'
 include ':core-designsystem'
 include ':lint'
