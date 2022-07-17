@@ -125,7 +125,7 @@ buildscript {
         jetpackComposeNavigationHiltVersion = "1.0.0"
 
         // Accompanist
-        accompanistVersion = "0.24.1-alpha"
+        accompanistVersion = "0.24.8-beta"
 
         // Detekt formatting
         detektFormattingVersion = "1.20.0"
@@ -191,10 +191,10 @@ buildscript {
         retrofitMoshiConverterVersion = "2.9.0"
 
         // Coil
-        coilVersion = "1.2.2"
+        coilVersion = "2.1.0"
 
         // Room
-        roomVersion = "2.5.0-alpha01"
+        roomVersion = "2.5.0-alpha02"
 
         // Glide
         glideVersion = "4.11.0"
