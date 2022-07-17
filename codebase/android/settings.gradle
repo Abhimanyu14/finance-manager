@@ -6,7 +6,8 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "Finance Manager"
-include ':app'
-include ':core-common'
-include ':core-designsystem'
-include ':lint'
+include ":app"
+include ":core-common"
+include ":core-model"
+include ":core-designsystem"
+include ":lint"
