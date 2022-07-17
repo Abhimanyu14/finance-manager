@@ -22,6 +22,9 @@ buildscript {
         // Detekt
         detektVersion = "1.20.0"
 
+        // Lint
+        lintVersion = "30.2.1"
+
         // Navigation
         navigationVersion = "2.4.0-beta01"
 
