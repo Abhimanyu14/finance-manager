@@ -23,6 +23,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.LightGray
 import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
 import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
@@ -32,8 +34,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.EmojiCi
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.ExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.ExpandableItemViewWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.LightGray
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getReadableDateAndTimeString
 
 data class TransactionsListItemViewData(

@@ -4,10 +4,10 @@ import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.font.FontWeight
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Primary
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 
 data class CategoriesTabData(
     val title: String,

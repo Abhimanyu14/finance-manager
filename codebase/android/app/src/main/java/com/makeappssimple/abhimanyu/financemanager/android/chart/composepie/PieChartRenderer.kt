@@ -15,7 +15,7 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.util.fastForEachIndexed
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Gray50
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Gray50
 import kotlin.math.absoluteValue
 import kotlin.math.cos
 import kotlin.math.max

@@ -4,10 +4,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.OnTertiaryContainer
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Red
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.OnTertiaryContainer
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Red
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

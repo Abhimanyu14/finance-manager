@@ -16,8 +16,8 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Black
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Transparent
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Black
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Transparent
 
 sealed class EmojiCircleSize(
     val padding: Dp,

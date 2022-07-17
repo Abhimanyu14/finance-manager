@@ -16,7 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Unspecified
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Unspecified
 
 @Composable
 fun MyText(

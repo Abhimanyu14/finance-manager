@@ -33,9 +33,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Red
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.MyAppTheme
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Red
 
 enum class MyExtendedLoadingFloatingActionButtonState {
     DEFAULT,

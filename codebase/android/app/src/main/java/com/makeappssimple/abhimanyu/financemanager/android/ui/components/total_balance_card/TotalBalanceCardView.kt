@@ -15,11 +15,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Green700
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.White
 import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Green700
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.White
 
 data class TotalBalanceCardViewData(
     val totalBalanceAmount: Long,

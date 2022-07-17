@@ -246,6 +246,7 @@ ksp {
 }
 
 dependencies {
+    implementation project(":core-designsystem")
 
     // Androidx core
     implementation "androidx.core:core-ktx:$rootProject.androidXCoreVersion"

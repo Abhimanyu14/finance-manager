@@ -7,9 +7,9 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.TopBarNavigationIconTint
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.TopBarNavigationIconTint
 
 @Composable
 fun NavigationBackButton(

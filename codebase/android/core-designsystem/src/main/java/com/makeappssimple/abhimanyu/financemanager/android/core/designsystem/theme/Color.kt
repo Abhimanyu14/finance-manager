@@ -1,6 +1,6 @@
 @file:Suppress("unused")
 
-package com.makeappssimple.abhimanyu.financemanager.android.ui.theme
+package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 

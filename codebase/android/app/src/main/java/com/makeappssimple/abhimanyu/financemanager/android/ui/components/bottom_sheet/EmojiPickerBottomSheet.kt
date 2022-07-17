@@ -14,6 +14,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.EmojiCircleSize
@@ -21,8 +23,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.SearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.SearchBarContainer
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.textfields.SearchBarData
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.DarkGray
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.capitalizeWords
 
 data class EmojiPickerBottomSheetData(

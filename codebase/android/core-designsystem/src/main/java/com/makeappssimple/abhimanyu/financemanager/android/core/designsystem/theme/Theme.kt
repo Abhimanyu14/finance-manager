@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.theme
+package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.darkColors
@@ -97,7 +97,7 @@ private val DarkColorPalette = darkColorScheme(
 )
 
 @Composable
-fun Material2AppTheme(
+internal fun Material2AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
@@ -116,7 +116,7 @@ fun Material2AppTheme(
 }
 
 @Composable
-fun Material3AppTheme(
+internal fun Material3AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
 ) {
@@ -140,6 +140,10 @@ fun MyAppTheme(
 ) {
     Material3AppTheme(
         darkTheme = darkTheme,
-        content = content,
+        content = {
+            Material2AppTheme {
+                content()
+            }
+        },
     )
 }

@@ -2,9 +2,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.activity
 
 import androidx.compose.runtime.Composable
 import com.google.accompanist.insets.ProvideWindowInsets
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.MyNavGraph
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Material2AppTheme
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.MyAppTheme
 
 @Composable
 fun MyAppView(
@@ -12,11 +11,9 @@ fun MyAppView(
 ) {
     ProvideWindowInsets {
         MyAppTheme {
-            Material2AppTheme {
-                MyNavGraph(
-                    activityViewModel = activityViewModel,
-                )
-            }
+            MyNavGraph(
+                activityViewModel = activityViewModel,
+            )
         }
     }
 }

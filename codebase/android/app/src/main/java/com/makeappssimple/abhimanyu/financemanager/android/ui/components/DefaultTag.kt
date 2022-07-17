@@ -10,8 +10,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Primary
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.White
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Primary
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.White
 
 @Composable
 fun DefaultTag() {

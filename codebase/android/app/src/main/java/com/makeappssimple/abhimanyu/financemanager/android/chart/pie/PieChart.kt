@@ -14,9 +14,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.makeappssimple.abhimanyu.financemanager.android.chart.pie.PieChartUtils.calculateAngle
 import com.makeappssimple.abhimanyu.financemanager.android.chart.pie.renderer.SimpleSliceDrawer
 import com.makeappssimple.abhimanyu.financemanager.android.chart.pie.renderer.SliceDrawer
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Blue
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Green
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.Red
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Blue
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Green
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Red
 
 fun simpleChartAnimation() = TweenSpec<Float>(durationMillis = 500)
 

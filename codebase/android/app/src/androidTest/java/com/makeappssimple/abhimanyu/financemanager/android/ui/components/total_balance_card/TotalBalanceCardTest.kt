@@ -5,7 +5,7 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
-import com.makeappssimple.abhimanyu.financemanager.android.ui.theme.MyAppTheme
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
