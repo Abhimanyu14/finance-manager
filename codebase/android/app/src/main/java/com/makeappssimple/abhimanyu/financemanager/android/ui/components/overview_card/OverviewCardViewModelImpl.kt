@@ -96,7 +96,7 @@ class OverviewCardViewModelImpl @Inject constructor(
         context = dispatcherProvider.io,
     )
 
-    override val pieChartData: StateFlow<PieChartData?> = combine(
+    override val pieChartData: StateFlow<com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData?> = combine(
         flow = incomeAmount,
         flow2 = expenseAmount,
     ) { incomeAmount, expenseAmount ->
@@ -106,14 +106,14 @@ class OverviewCardViewModelImpl @Inject constructor(
         val totalExpenseAmount = Amount(
             value = expenseAmount?.toLong() ?: 0L,
         )
-        PieChartData(
+        com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData(
             items = listOf(
-                PieChartItemData(
+                com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData(
                     value = incomeAmount ?: 10F,
                     text = "Income : $totalIncomeAmount",
                     color = Green700,
                 ),
-                PieChartItemData(
+                com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData(
                     value = expenseAmount ?: 10F,
                     text = "Expense : ${totalExpenseAmount.toNonSignedString()}",
                     color = Red,

@@ -17,12 +17,12 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.legend.PieChartLegend
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.CenterBox
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Black
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Blue
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Green
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Red
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.CenterBox
 
 /**
  * Source - https://github.com/humawork/compose-charts

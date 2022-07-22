@@ -15,10 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.ComposePieChart
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Blue50
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.conditionalClickable
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.VerticalSpacer
 
 enum class OverviewTabOption(
     val title: String,
@@ -85,7 +84,7 @@ fun OverviewCard(
                 height = 8.dp,
             )
             pieChartData?.let { pieChartDataValue ->
-                ComposePieChart(
+                com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.ComposePieChart(
                     data = pieChartDataValue,
                 )
             }

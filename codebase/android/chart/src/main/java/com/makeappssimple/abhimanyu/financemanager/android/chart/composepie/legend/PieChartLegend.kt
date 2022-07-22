@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEachIndexed
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartLegendItemData
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.HorizontalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.NonFillingVerticalSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.HorizontalSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NonFillingVerticalSpacer
 
 @Composable
 fun PieChartLegend(

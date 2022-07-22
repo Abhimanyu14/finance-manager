@@ -4,8 +4,8 @@ plugins {
 }
 
 android {
-    namespace "com.makeappssimple.abhimanyu.financemanager.android.core.designsystem"
-    
+    namespace "com.makeappssimple.abhimanyu.financemanager.android.core.ui"
+
     compileSdk rootProject.compileSdkVersion
 
     defaultConfig {
@@ -41,6 +41,7 @@ android {
 }
 
 dependencies {
+    implementation project(":core-designsystem")
 
     // Androidx core
     implementation "androidx.core:core-ktx:$rootProject.androidXCoreVersion"
@@ -48,25 +49,27 @@ dependencies {
     // Appcompat
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
 
-    // Jetpack compose material design
-    implementation "androidx.compose.material:material:$rootProject.jetpackComposeVersion"
-    implementation "androidx.compose.material3:material3:$rootProject.jetpackComposeMaterial3Version"
+    // Jetpack compose
+    implementation "androidx.compose.ui:ui:$rootProject.jetpackComposeVersion"
+    implementation "androidx.compose.ui:ui-util:$rootProject.jetpackComposeVersion"
+
+    // Jetpack compose tooling support (Previews, etc.)
+    debugImplementation "androidx.compose.ui:ui-tooling:$rootProject.jetpackComposeVersion"
+    implementation "androidx.compose.ui:ui-tooling-preview:$rootProject.jetpackComposeVersion"
 
     // Jetpack compose material icons
     implementation "androidx.compose.material:material-icons-extended:$rootProject.jetpackComposeVersion"
 
+    // Jetpack compose material design
+    implementation "androidx.compose.material:material:$rootProject.jetpackComposeVersion"
+    implementation "androidx.compose.material3:material3:$rootProject.jetpackComposeMaterial3Version"
+
     // Jetpack compose material design adapter
     implementation "com.google.android.material:compose-theme-adapter:$rootProject.jetpackComposeMaterialDesignAdapterVersion"
 
-    // Accompanist flow layout
-    implementation "com.google.accompanist:accompanist-flowlayout:$rootProject.accompanistVersion"
-    
     // Testing
 
     // Junit
     testImplementation "junit:junit:$rootProject.junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXJUnitExtensionVersion"
-
-    // Espresso
-    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
 }

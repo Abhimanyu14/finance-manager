@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface OverviewCardViewModel : MyViewModel {
     val overviewTabSelectionIndex: StateFlow<Int>
-    val pieChartData: StateFlow<PieChartData?>
+    val pieChartData: StateFlow<com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData?>
     fun setOverviewTabSelectionIndex(
         updatedOverviewTabSelectionIndex: Int,
     )

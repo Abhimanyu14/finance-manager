@@ -29,7 +29,7 @@ val pieChartData = PieChartData(
 
 @Composable
 fun PieChart(
-    pieChartData: PieChartData,
+    pieChartData: com.makeappssimple.abhimanyu.financemanager.android.chart.pie.PieChartData,
 ) {
     Row(
         modifier = Modifier
@@ -39,9 +39,9 @@ fun PieChart(
                 vertical = 8.dp,
             )
     ) {
-        PieChart(
+        com.makeappssimple.abhimanyu.financemanager.android.chart.pie.PieChart(
             pieChartData = pieChartData,
-            sliceDrawer = SimpleSliceDrawer(
+            sliceDrawer = com.makeappssimple.abhimanyu.financemanager.android.chart.pie.renderer.SimpleSliceDrawer(
                 sliceThickness = sliceThickness
             ),
         )
