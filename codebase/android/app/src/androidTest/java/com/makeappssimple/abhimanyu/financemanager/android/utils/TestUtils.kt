@@ -1,11 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.utils
 
-import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
-import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
-import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.EmojiLocalEntity
-import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
-import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.EmojiLocalEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.TestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher

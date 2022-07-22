@@ -3,19 +3,19 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transacti
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
-import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoriesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoryUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourceUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetAllTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.usecase.DeleteTransactionAndRevertOtherDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.entities.category.Category
-import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
-import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.entities.transaction.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoriesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoryUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourceUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.DeleteTransactionAndRevertOtherDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getDateString
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.TransactionsListItemViewData
-import com.makeappssimple.abhimanyu.financemanager.android.utils.getDateString
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.math.abs
@@ -143,26 +143,20 @@ class TransactionsScreenViewModelImpl @Inject constructor(
                 }
                 .toList()
                 .map { transaction ->
-                    val category = if (transaction.categoryId != null) {
+                    val category = transaction.categoryId?.let { categoryId ->
                         getCategoryUseCase(
-                            id = transaction.categoryId,
+                            id = categoryId,
                         )
-                    } else {
-                        null
                     }
-                    val sourceFrom = if (transaction.sourceFromId != null) {
+                    val sourceFrom = transaction.sourceFromId?.let { sourceFromId ->
                         getSourceUseCase(
-                            id = transaction.sourceFromId,
+                            id = sourceFromId,
                         )
-                    } else {
-                        null
                     }
-                    val sourceTo = if (transaction.sourceToId != null) {
+                    val sourceTo = transaction.sourceToId?.let { sourceToId ->
                         getSourceUseCase(
-                            id = transaction.sourceToId,
+                            id = sourceToId,
                         )
-                    } else {
-                        null
                     }
                     TransactionsListItemViewData(
                         category = category,
@@ -181,10 +175,16 @@ class TransactionsScreenViewModelImpl @Inject constructor(
                 }
                 .filter {
                     if (selectedExpenseCategoryIndicesValue.isNotEmpty() || selectedIncomeCategoryIndicesValue.isNotEmpty()) {
-                        selectedExpenseCategoryIndicesValue.contains(expenseCategoriesValue.indexOf(
-                            it.category)) ||
-                                selectedIncomeCategoryIndicesValue.contains(incomeCategoriesValue.indexOf(
-                                    it.category))
+                        selectedExpenseCategoryIndicesValue.contains(
+                            expenseCategoriesValue.indexOf(
+                                it.category
+                            )
+                        ) ||
+                                selectedIncomeCategoryIndicesValue.contains(
+                                    incomeCategoriesValue.indexOf(
+                                        it.category
+                                    )
+                                )
                     } else {
                         true
                     }

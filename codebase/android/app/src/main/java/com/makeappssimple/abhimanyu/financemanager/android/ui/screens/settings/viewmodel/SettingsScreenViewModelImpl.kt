@@ -4,9 +4,9 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
-import com.makeappssimple.abhimanyu.financemanager.android.data.usecase.BackupDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.usecase.RecalculateTotalUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.usecase.RestoreDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.BackupDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.RecalculateTotalUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.RestoreDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
 import dagger.hilt.android.lifecycle.HiltViewModel

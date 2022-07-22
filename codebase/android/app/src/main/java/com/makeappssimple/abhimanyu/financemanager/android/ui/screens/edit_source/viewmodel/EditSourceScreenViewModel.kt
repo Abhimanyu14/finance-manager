@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_source.viewmodel
 
-import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
-import com.makeappssimple.abhimanyu.financemanager.android.entities.source.SourceType
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.SourceType
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.ScreenViewModel
 import kotlinx.coroutines.flow.Flow

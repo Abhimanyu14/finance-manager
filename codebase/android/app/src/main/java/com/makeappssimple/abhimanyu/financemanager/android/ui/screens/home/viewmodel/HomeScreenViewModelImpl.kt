@@ -3,10 +3,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.view
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
-import com.makeappssimple.abhimanyu.financemanager.android.data.category.usecase.GetCategoryUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourceUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.GetRecentTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.usecase.DeleteTransactionAndRevertOtherDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoryUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourceUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetRecentTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.DeleteTransactionAndRevertOtherDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.components.HomeListItemViewData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,26 +29,20 @@ class HomeScreenViewModelImpl @Inject constructor(
             .map { transactions ->
                 transactions
                     .map { transaction ->
-                        val category = if (transaction.categoryId != null) {
+                        val category = transaction.categoryId?.let { categoryId ->
                             getCategoryUseCase(
-                                id = transaction.categoryId,
+                                id = categoryId,
                             )
-                        } else {
-                            null
                         }
-                        val sourceFrom = if (transaction.sourceFromId != null) {
+                        val sourceFrom = transaction.sourceFromId?.let { sourceFromId ->
                             getSourceUseCase(
-                                id = transaction.sourceFromId,
+                                id = sourceFromId,
                             )
-                        } else {
-                            null
                         }
-                        val sourceTo = if (transaction.sourceToId != null) {
+                        val sourceTo = transaction.sourceToId?.let { sourceToId ->
                             getSourceUseCase(
-                                id = transaction.sourceToId,
+                                id = sourceToId,
                             )
-                        } else {
-                            null
                         }
                         HomeListItemViewData(
                             category = category,

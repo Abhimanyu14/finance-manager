@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.common.rememberCom
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.components.HomeListItemViewData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.viewmodel.HomeScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.viewmodel.HomeScreenViewModelImpl
-import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.logError
 
 @Composable
 fun HomeScreen(

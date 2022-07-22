@@ -6,7 +6,7 @@ import androidx.compose.material.icons.rounded.AccountBalanceWallet
 import androidx.compose.material.icons.rounded.AttachMoney
 import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.makeappssimple.abhimanyu.financemanager.android.entities.source.SourceType
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.SourceType
 
 fun getIcon(
     name: String,

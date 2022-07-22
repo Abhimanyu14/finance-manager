@@ -5,13 +5,13 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.entities.emoji.Emoji
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_category.viewmodel.EditCategoryScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_category.viewmodel.EditCategoryScreenViewModelImpl
-import com.makeappssimple.abhimanyu.financemanager.android.utils.constants.loadingCompletedEmoji
-import com.makeappssimple.abhimanyu.financemanager.android.utils.constants.loadingEmoji
-import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.constants.loadingCompletedEmoji
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.constants.loadingEmoji
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.logError
 
 @Composable
 fun EditCategoryScreen(

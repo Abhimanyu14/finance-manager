@@ -5,12 +5,13 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
-import com.makeappssimple.abhimanyu.financemanager.android.data.local.database.MyRoomDatabase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.datasource.local.TransactionDao
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getReadableDateAndTimeString
 import com.makeappssimple.abhimanyu.financemanager.android.utils.MainDispatcherRule
 import com.makeappssimple.abhimanyu.financemanager.android.utils.ONE_DAY
 import com.makeappssimple.abhimanyu.financemanager.android.utils.ONE_HOUR
 import com.makeappssimple.abhimanyu.financemanager.android.utils.THIRTY_DAYS
-import com.makeappssimple.abhimanyu.financemanager.android.utils.getReadableDateAndTimeString
 import com.makeappssimple.abhimanyu.financemanager.android.utils.getTestTransactions
 import com.makeappssimple.abhimanyu.financemanager.android.utils.timeInMillis_01_JUN_2022
 import kotlinx.coroutines.flow.first

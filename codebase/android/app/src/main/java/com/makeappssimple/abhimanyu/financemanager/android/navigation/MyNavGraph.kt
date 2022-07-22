@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.logError
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavArgs.CATEGORY_ID
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavArgs.SOURCE_ID
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavArgs.TRANSACTION_ID
@@ -25,7 +26,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.scree
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.settings.screen.SettingsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.screen.SourcesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.screen.TransactionsScreen
-import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
 
 @Composable
 fun MyNavGraph(

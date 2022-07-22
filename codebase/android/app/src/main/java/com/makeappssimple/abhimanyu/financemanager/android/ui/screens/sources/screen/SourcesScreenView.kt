@@ -18,8 +18,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.R
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
-import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToEditSourceScreen
@@ -35,7 +35,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.ui.components.total_b
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.components.SourcesListItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.components.bottomsheet.SourcesDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.components.bottomsheet.SourcesSetAsDefaultConfirmationBottomSheetContent
-import com.makeappssimple.abhimanyu.financemanager.android.utils.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.utils.isCashSource
 
 enum class SourcesBottomSheetType : BottomSheetType {

@@ -8,7 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source.viewmodel.AddSourceScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source.viewmodel.AddSourceScreenViewModelImpl
-import com.makeappssimple.abhimanyu.financemanager.android.utils.logError
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.logError
 
 @Composable
 fun AddSourceScreen(
