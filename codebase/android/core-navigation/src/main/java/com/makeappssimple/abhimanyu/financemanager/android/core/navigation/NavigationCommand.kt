@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.navigation
+package com.makeappssimple.abhimanyu.financemanager.android.core.navigation
 
 enum class Command {
     CLEAR_BACKSTACK_AND_NAVIGATE,

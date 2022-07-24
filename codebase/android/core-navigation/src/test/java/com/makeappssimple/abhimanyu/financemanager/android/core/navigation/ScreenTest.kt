@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.navigation
+package com.makeappssimple.abhimanyu.financemanager.android.core.navigation
 
 import org.junit.Assert
 import org.junit.Test
@@ -34,28 +34,10 @@ class ScreenTest {
     }
 
     @Test
-    fun balanceDetails() {
-        screen = Screen.BalanceDetails
-        Assert.assertEquals(
-            "balance_details",
-            screen.route,
-        )
-    }
-
-    @Test
     fun categories() {
         screen = Screen.Categories
         Assert.assertEquals(
             "categories",
-            screen.route,
-        )
-    }
-
-    @Test
-    fun categoryDetails() {
-        screen = Screen.CategoryDetails
-        Assert.assertEquals(
-            "category_details",
             screen.route,
         )
     }

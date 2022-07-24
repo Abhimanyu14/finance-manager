@@ -7,8 +7,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.RecalculateTotalUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.RestoreDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateUp
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateUp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch

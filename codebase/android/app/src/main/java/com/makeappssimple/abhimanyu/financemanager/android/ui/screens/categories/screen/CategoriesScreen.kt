@@ -7,10 +7,10 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.logError
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.viewmodel.CategoriesScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.viewmodel.CategoriesScreenViewModelImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.logError
 
 @Composable
 fun CategoriesScreen(

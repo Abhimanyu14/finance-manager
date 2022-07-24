@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.navigation
+package com.makeappssimple.abhimanyu.financemanager.android.core.navigation
 
 const val DEEPLINK_BROWSER_BASE_URL = "https://www.makeappssimple.financemanager.com"
 const val DEEPLINK_BASE_URL = "makeappssimple://financemanager"
@@ -19,16 +19,8 @@ sealed class Screen(
         route = "add_transaction",
     )
 
-    object BalanceDetails : Screen(
-        route = "balance_details",
-    )
-
     object Categories : Screen(
         route = "categories",
-    )
-
-    object CategoryDetails : Screen(
-        route = "category_details",
     )
 
     object EditCategory : Screen(

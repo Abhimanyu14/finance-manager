@@ -1,12 +1,12 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source
 
+import com.makeappssimple.abhimanyu.financemanager.android.TestDispatcherProviderImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
-import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.TestDispatcherProviderImpl
-import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.InsertSourceUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.entities.amount.Amount
-import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
-import com.makeappssimple.abhimanyu.financemanager.android.entities.source.SourceType
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.SourceType
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.InsertSourceUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source.viewmodel.AddSourceScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source.viewmodel.AddSourceScreenViewModelImpl
 import com.makeappssimple.abhimanyu.financemanager.android.utils.MainDispatcherRule

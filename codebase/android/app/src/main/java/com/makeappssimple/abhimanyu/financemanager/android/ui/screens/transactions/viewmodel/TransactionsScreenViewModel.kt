@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transacti
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.transactions.components.TransactionsListItemViewData
 import kotlinx.coroutines.flow.Flow

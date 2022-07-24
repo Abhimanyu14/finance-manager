@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetRecentTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.DeleteTransactionAndRevertOtherDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.components.HomeListItemViewData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

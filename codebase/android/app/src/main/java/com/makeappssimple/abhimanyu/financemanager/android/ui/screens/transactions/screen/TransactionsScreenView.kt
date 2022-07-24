@@ -46,9 +46,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Surface
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddTransactionScreen
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToEditTransactionScreen
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateToAddTransactionScreen
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateToEditTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.CommonScreenViewState

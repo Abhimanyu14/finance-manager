@@ -1,13 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources
 
+import com.makeappssimple.abhimanyu.financemanager.android.TestDispatcherProviderImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
-import com.makeappssimple.abhimanyu.financemanager.android.core.coroutines.TestDispatcherProviderImpl
-import com.makeappssimple.abhimanyu.financemanager.android.data.local.datastore.MyDataStore
-import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.DeleteSourceUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.source.usecase.GetSourcesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.data.transaction.usecase.CheckIfSourceIsUsedInTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.entities.source.Source
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.MyDataStore
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.DeleteSourceUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.CheckIfSourceIsUsedInTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.viewmodel.SourcesScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.viewmodel.SourcesScreenViewModelImpl
 import com.makeappssimple.abhimanyu.financemanager.android.utils.MainDispatcherRule

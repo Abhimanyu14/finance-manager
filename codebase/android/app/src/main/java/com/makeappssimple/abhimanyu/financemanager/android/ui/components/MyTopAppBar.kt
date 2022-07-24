@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Surface
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 
 @Composable
 fun MyTopAppBar(

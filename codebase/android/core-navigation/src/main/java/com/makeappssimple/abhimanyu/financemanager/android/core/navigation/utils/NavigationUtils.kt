@@ -1,7 +1,7 @@
-package com.makeappssimple.abhimanyu.financemanager.android.navigation.utils
+package com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils
 
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 
 fun navigateUp(
     navigationManager: NavigationManager,

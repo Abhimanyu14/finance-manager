@@ -21,10 +21,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToAddTransactionScreen
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToSourcesScreen
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.utils.navigateToTransactionsScreen
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateToAddTransactionScreen
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateToSourcesScreen
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateToTransactionsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.ui.common.CommonScreenViewState

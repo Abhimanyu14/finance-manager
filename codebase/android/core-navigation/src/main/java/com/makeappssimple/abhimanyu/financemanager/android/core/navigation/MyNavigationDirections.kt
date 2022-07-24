@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.navigation
+package com.makeappssimple.abhimanyu.financemanager.android.core.navigation
 
 object NavArgs {
     const val WEBPAGE_URL = "webpageUrl"

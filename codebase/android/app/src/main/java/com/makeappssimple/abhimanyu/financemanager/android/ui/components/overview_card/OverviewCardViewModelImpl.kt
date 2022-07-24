@@ -2,8 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.components.overvi
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData
-import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
@@ -96,33 +94,34 @@ class OverviewCardViewModelImpl @Inject constructor(
         context = dispatcherProvider.io,
     )
 
-    override val pieChartData: StateFlow<com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData?> = combine(
-        flow = incomeAmount,
-        flow2 = expenseAmount,
-    ) { incomeAmount, expenseAmount ->
-        val totalIncomeAmount = Amount(
-            value = incomeAmount?.toLong() ?: 0L,
-        )
-        val totalExpenseAmount = Amount(
-            value = expenseAmount?.toLong() ?: 0L,
-        )
-        com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData(
-            items = listOf(
-                com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData(
-                    value = incomeAmount ?: 10F,
-                    text = "Income : $totalIncomeAmount",
-                    color = Green700,
+    override val pieChartData: StateFlow<com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData?> =
+        combine(
+            flow = incomeAmount,
+            flow2 = expenseAmount,
+        ) { incomeAmount, expenseAmount ->
+            val totalIncomeAmount = Amount(
+                value = incomeAmount?.toLong() ?: 0L,
+            )
+            val totalExpenseAmount = Amount(
+                value = expenseAmount?.toLong() ?: 0L,
+            )
+            com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData(
+                items = listOf(
+                    com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData(
+                        value = incomeAmount ?: 10F,
+                        text = "Income : $totalIncomeAmount",
+                        color = Green700,
+                    ),
+                    com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData(
+                        value = expenseAmount ?: 10F,
+                        text = "Expense : ${totalExpenseAmount.toNonSignedString()}",
+                        color = Red,
+                    ),
                 ),
-                com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData(
-                    value = expenseAmount ?: 10F,
-                    text = "Expense : ${totalExpenseAmount.toNonSignedString()}",
-                    color = Red,
-                ),
-            ),
-        )
-    }.flowOn(
-        context = dispatcherProvider.io,
-    ).defaultObjectStateIn()
+            )
+        }.flowOn(
+            context = dispatcherProvider.io,
+        ).defaultObjectStateIn()
 
     override fun setOverviewTabSelectionIndex(
         updatedOverviewTabSelectionIndex: Int,

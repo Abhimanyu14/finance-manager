@@ -11,9 +11,14 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.logError
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavArgs.CATEGORY_ID
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavArgs.SOURCE_ID
-import com.makeappssimple.abhimanyu.financemanager.android.navigation.NavArgs.TRANSACTION_ID
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Command
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.DEEPLINK_BASE_URL
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.DEEPLINK_BROWSER_BASE_URL
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs.CATEGORY_ID
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs.SOURCE_ID
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs.TRANSACTION_ID
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Screen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.activity.MainActivityViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_category.screen.AddCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source.screen.AddSourceScreen
