@@ -6,32 +6,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.m
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.test.TestDispatcher
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
-import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.setMain
-import org.junit.rules.TestWatcher
-import org.junit.runner.Description
 
 const val timeInMillis_01_JUN_2022 = 1654021800000
 const val ONE_HOUR = 60L * 60 * 1000
 const val ONE_DAY = ONE_HOUR * 24
 const val SEVEN_DAYS = ONE_HOUR * 24
 const val THIRTY_DAYS = ONE_DAY * 30
-
-// Reusable JUnit4 TestRule to override the Main dispatcher
-class MainDispatcherRule(
-    private val testDispatcher: TestDispatcher = UnconfinedTestDispatcher(),
-) : TestWatcher() {
-    override fun starting(description: Description) {
-        Dispatchers.setMain(testDispatcher)
-    }
-
-    override fun finished(description: Description) {
-        Dispatchers.resetMain()
-    }
-}
 
 fun getTestAmount(): Amount {
     val value = (1..100).random()

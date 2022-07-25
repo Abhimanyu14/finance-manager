@@ -8,7 +8,7 @@ import androidx.test.filters.SmallTest
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.datasource.local.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getReadableDateAndTimeString
-import com.makeappssimple.abhimanyu.financemanager.android.utils.MainDispatcherRule
+import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import com.makeappssimple.abhimanyu.financemanager.android.utils.ONE_DAY
 import com.makeappssimple.abhimanyu.financemanager.android.utils.ONE_HOUR
 import com.makeappssimple.abhimanyu.financemanager.android.utils.THIRTY_DAYS
