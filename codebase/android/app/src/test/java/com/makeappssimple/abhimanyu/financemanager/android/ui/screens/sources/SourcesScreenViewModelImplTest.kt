@@ -9,8 +9,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.TestDispatcherProviderImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.viewmodel.SourcesScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.viewmodel.SourcesScreenViewModelImpl
 import kotlinx.coroutines.flow.flow
 import org.junit.Before
 import org.junit.Rule
@@ -33,18 +31,19 @@ class SourcesScreenViewModelImplTest {
         testDispatcher = mainDispatcherRule.testDispatcher,
     )
 
-    private lateinit var sourcesScreenViewModel: SourcesScreenViewModel
+    private lateinit var sourcesScreenViewModel: com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.viewmodel.SourcesScreenViewModel
 
     @Before
     fun setUp() {
-        sourcesScreenViewModel = SourcesScreenViewModelImpl(
-            getSourcesUseCase = getSourcesUseCase,
-            navigationManager = navigationManager,
-            checkIfSourceIsUsedInTransactionsUseCase = checkIfSourceIsUsedInTransactionsUseCase,
-            dataStore = dataStore,
-            deleteSourceUseCase = deleteSourceUseCase,
-            dispatcherProvider = dispatcherProvider,
-        )
+        sourcesScreenViewModel =
+            com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.viewmodel.SourcesScreenViewModelImpl(
+                getSourcesUseCase = getSourcesUseCase,
+                navigationManager = navigationManager,
+                checkIfSourceIsUsedInTransactionsUseCase = checkIfSourceIsUsedInTransactionsUseCase,
+                dataStore = dataStore,
+                deleteSourceUseCase = deleteSourceUseCase,
+                dispatcherProvider = dispatcherProvider,
+            )
     }
 
     @Test

@@ -8,8 +8,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.TestDispatcherProviderImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source.viewmodel.AddSourceScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_source.viewmodel.AddSourceScreenViewModelImpl
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_source.viewmodel.AddSourceScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_source.viewmodel.AddSourceScreenViewModelImpl
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
@@ -29,15 +29,16 @@ class AddSourceScreenViewModelImplTest {
     )
     private val insertSourceUseCase: InsertSourceUseCase = mock()
 
-    private lateinit var addSourcesScreenViewModel: AddSourceScreenViewModel
+    private lateinit var addSourcesScreenViewModel: com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_source.viewmodel.AddSourceScreenViewModel
 
     @Before
     fun setUp() {
-        addSourcesScreenViewModel = AddSourceScreenViewModelImpl(
-            navigationManager = navigationManager,
-            dispatcherProvider = dispatcherProvider,
-            insertSourceUseCase = insertSourceUseCase,
-        )
+        addSourcesScreenViewModel =
+            com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_source.viewmodel.AddSourceScreenViewModelImpl(
+                navigationManager = navigationManager,
+                dispatcherProvider = dispatcherProvider,
+                insertSourceUseCase = insertSourceUseCase,
+            )
     }
 
     @Test

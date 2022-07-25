@@ -5,7 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 
 @Composable
-fun MyApp() {
+internal fun MyApp() {
     val viewModelStoreOwner = checkNotNull(
         value = LocalViewModelStoreOwner.current,
     ) {

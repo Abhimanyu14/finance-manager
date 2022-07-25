@@ -6,6 +6,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class MainActivityViewModel @Inject constructor(
+internal class MainActivityViewModel @Inject constructor(
     val navigationManager: NavigationManager,
 ) : ViewModel()
