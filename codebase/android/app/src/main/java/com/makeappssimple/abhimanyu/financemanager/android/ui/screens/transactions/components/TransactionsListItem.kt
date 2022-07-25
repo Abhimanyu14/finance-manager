@@ -30,11 +30,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getReadableDateAndTimeString
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.LightGray
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.EmojiCircle
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.ExpandableItemIconButton
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.ExpandableItemViewWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemIconButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemViewWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.amountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.utils.amountTextColor
 
 data class TransactionsListItemViewData(
     val transaction: Transaction,

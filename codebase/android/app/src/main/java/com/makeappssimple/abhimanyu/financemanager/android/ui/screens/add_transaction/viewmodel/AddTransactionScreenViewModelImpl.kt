@@ -22,9 +22,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.e
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.isNotZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateUp
-import com.makeappssimple.abhimanyu.financemanager.android.utils.isCashSource
-import com.makeappssimple.abhimanyu.financemanager.android.utils.isDefaultCategory
-import com.makeappssimple.abhimanyu.financemanager.android.utils.isSalaryCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isCashSource
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isDefaultCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isSalaryCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow

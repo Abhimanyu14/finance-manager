@@ -31,12 +31,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Bottom
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyFloatingActionButton
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.total_balance_card.TotalBalanceCard
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.buttons.MyFloatingActionButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.components.SourcesListItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.components.bottomsheet.SourcesDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.components.bottomsheet.SourcesSetAsDefaultConfirmationBottomSheetContent
-import com.makeappssimple.abhimanyu.financemanager.android.utils.isCashSource
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isCashSource
 
 enum class SourcesBottomSheetType : BottomSheetType {
     NONE,

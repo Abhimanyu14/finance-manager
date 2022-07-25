@@ -36,15 +36,15 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Bottom
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.buttons.MyFloatingActionButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.buttons.MyFloatingActionButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isDefaultCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isSalaryCategory
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.CategoriesListItem
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.CategoriesTabData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.CategoriesTabRow
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.CategoriesTabRowData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.bottomsheet.CategoriesDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.categories.components.bottomsheet.CategoriesSetAsDefaultConfirmationBottomSheetContent
-import com.makeappssimple.abhimanyu.financemanager.android.utils.isDefaultCategory
-import com.makeappssimple.abhimanyu.financemanager.android.utils.isSalaryCategory
 import kotlinx.coroutines.launch
 
 enum class CategoriesBottomSheetType : BottomSheetType {

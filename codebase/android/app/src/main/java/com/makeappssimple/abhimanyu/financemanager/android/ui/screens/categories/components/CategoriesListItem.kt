@@ -22,13 +22,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.LightGray
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.DefaultTag
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.EmojiCircle
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.ExpandableItemIconButton
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.ExpandableItemViewWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.DefaultTag
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemIconButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemViewWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isDefaultCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isSalaryCategory
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.utils.isDefaultCategory
-import com.makeappssimple.abhimanyu.financemanager.android.utils.isSalaryCategory
 
 @Composable
 fun CategoriesListItem(

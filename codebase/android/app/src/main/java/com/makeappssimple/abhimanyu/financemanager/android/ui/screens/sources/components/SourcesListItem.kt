@@ -25,12 +25,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.LightGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Primary
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.DefaultTag
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.ExpandableItemIconButton
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.ExpandableItemViewWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.DefaultTag
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemIconButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemViewWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.getIcon
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isCashSource
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.utils.getIcon
-import com.makeappssimple.abhimanyu.financemanager.android.utils.isCashSource
 
 @Composable
 fun SourcesListItem(

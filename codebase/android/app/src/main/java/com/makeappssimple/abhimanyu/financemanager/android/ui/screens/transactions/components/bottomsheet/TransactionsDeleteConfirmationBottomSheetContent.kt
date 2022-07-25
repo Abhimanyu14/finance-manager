@@ -5,8 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.ConfirmationBottomSheet
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.bottom_sheet.ConfirmationBottomSheetData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.ConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.ConfirmationBottomSheetData
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
