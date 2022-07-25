@@ -8,7 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateToCategoriesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateToSettingsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateToSourcesScreen
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import kotlinx.coroutines.CoroutineScope
 
 @Composable

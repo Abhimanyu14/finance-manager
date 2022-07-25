@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.settings.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.screen
 
 import android.net.Uri
 import androidx.activity.compose.ManagedActivityResultLauncher
@@ -8,10 +8,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.logError
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.rememberCommonScreenViewState
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.settings.viewmodel.SettingsScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.settings.viewmodel.SettingsScreenViewModelImpl
-import com.makeappssimple.abhimanyu.financemanager.android.utils.CreateJsonDocument
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.util.CreateJsonDocument
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.viewmodel.SettingsScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.viewmodel.SettingsScreenViewModelImpl
 
 @Composable
 fun SettingsScreen(

@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.common
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.common
 
 import android.content.Context
 import androidx.compose.material.ModalBottomSheetState

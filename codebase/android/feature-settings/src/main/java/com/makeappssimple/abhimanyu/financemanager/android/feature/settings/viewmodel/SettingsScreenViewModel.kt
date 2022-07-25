@@ -1,8 +1,8 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.settings.viewmodel
+package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.viewmodel
 
 import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.ui.base.ScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 
 interface SettingsScreenViewModel : ScreenViewModel {
     val navigationManager: NavigationManager

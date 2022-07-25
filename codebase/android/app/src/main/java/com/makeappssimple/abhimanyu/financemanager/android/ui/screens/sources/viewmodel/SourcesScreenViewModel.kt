@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.sources.v
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.ui.base.ScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import kotlinx.coroutines.flow.Flow
 
 interface SourcesScreenViewModel : ScreenViewModel {

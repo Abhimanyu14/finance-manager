@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.m
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.constants.loadingCompletedEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.constants.loadingEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.logError
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.rememberCommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_category.viewmodel.EditCategoryScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.edit_category.viewmodel.EditCategoryScreenViewModelImpl
 

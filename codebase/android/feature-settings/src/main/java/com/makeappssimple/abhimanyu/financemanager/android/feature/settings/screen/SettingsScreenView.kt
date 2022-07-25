@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.settings.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.screen
 
 import android.net.Uri
 import androidx.activity.compose.ManagedActivityResultLauncher
@@ -26,23 +26,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.ui.base.BottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.BottomSheetBackHandler
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.CommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.util.JSON_MIMETYPE
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyTopAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.utils.JSON_MIMETYPE
 
-enum class SettingsBottomSheetType : BottomSheetType {
+internal enum class SettingsBottomSheetType : BottomSheetType {
     NONE,
 }
 
-data class SettingsScreenViewData(
+internal data class SettingsScreenViewData(
     val createDocument: ManagedActivityResultLauncher<String, Uri?>,
     val openDocument: ManagedActivityResultLauncher<Array<String>, Uri?>,
     val navigationManager: NavigationManager,
@@ -50,7 +50,7 @@ data class SettingsScreenViewData(
 )
 
 @Composable
-fun SettingsScreenView(
+internal fun SettingsScreenView(
     data: SettingsScreenViewData,
     state: CommonScreenViewState,
 ) {

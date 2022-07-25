@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.ui.components.overview_card
 
-import com.makeappssimple.abhimanyu.financemanager.android.ui.base.MyViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.MyViewModel
 import kotlinx.coroutines.flow.StateFlow
 
 interface OverviewCardViewModel : MyViewModel {

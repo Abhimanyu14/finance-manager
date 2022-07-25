@@ -17,7 +17,7 @@ import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomAppBarBackground
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomAppBarIconTint
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.toggleModalBottomSheetState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import kotlinx.coroutines.CoroutineScope
 
 @Composable

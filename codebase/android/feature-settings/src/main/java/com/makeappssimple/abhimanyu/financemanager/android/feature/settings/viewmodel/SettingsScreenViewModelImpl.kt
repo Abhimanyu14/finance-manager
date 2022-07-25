@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.settings.viewmodel
+package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.viewmodel
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
@@ -14,7 +14,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class SettingsScreenViewModelImpl @Inject constructor(
+internal class SettingsScreenViewModelImpl @Inject constructor(
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
     private val backupDataUseCase: BackupDataUseCase,

@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.common
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.common
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.material.ModalBottomSheetState

@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.ui.screens.add_categ
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.ui.base.ScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 

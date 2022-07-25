@@ -6,7 +6,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.logError
-import com.makeappssimple.abhimanyu.financemanager.android.ui.common.rememberCommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.components.HomeListItemViewData
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.viewmodel.HomeScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.ui.screens.home.viewmodel.HomeScreenViewModelImpl
