@@ -1,6 +1,7 @@
 plugins {
     id "com.android.library"
     id "org.jetbrains.kotlin.android"
+    id "kotlin-kapt"
 }
 
 android {
@@ -42,6 +43,12 @@ dependencies {
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion")
 
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$rootProject.hiltVersion"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$rootProject.hiltLifecycleViewModelVersion"
+    kapt "androidx.hilt:hilt-compiler:$rootProject.hiltCompilerVersion"
+
     // Testing
 
     // Junit
@@ -49,4 +56,19 @@ dependencies {
 
     // Coroutines test
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
+
+    // For Robolectric tests.
+    implementation "com.google.dagger:hilt-android-testing:2.42"
+    // ...with Kotlin.
+    kapt "com.google.dagger:hilt-android-compiler:2.42"
+
+    // For Robolectric tests.
+    testImplementation "com.google.dagger:hilt-android-testing:2.42"
+    // ...with Kotlin.
+    kaptTest "com.google.dagger:hilt-android-compiler:2.42"
+
+    // For instrumented tests.
+    androidTestImplementation "com.google.dagger:hilt-android-testing:2.42"
+    // ...with Kotlin.
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.42"
 }
