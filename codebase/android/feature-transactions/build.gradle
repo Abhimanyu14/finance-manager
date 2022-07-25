@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace "com.makeappssimple.abhimanyu.financemanager.android.core.ui"
+    namespace "com.makeappssimple.abhimanyu.financemanager.android.feature.transactions"
     compileSdk rootProject.compileSdkVersion
 
     defaultConfig {
@@ -31,24 +31,10 @@ android {
         jvmTarget = "1.8"
 
         freeCompilerArgs += [
-                "-Xopt-in=androidx.compose.animation.core.InternalAnimationApi",
-                "-Xopt-in=androidx.compose.animation.ExperimentalAnimationApi",
-                "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi",
                 "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi",
                 "-Xopt-in=androidx.compose.material3.ExperimentalMaterial3Api",
                 "-Xopt-in=androidx.compose.runtime.ExperimentalComposeApi",
-                "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi",
-                "-Xopt-in=com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi",
-                "-Xopt-in=com.google.accompanist.pager.ExperimentalPagerApi",
-                "-Xopt-in=com.google.accompanist.permissions.ExperimentalPermissionsApi",
-                "-Xopt-in=kotlin.contracts.ExperimentalContracts",
-                "-Xopt-in=kotlin.ExperimentalUnsignedTypes",
-                "-Xopt-in=kotlin.RequiresOptIn",
-                "-Xopt-in=kotlin.time.ExperimentalTime",
-                "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-                "-Xopt-in=kotlinx.coroutines.FlowPreview",
-                "-Xopt-in=kotlinx.coroutines.InternalCoroutinesApi",
-                "-Xopt-in=kotlinx.coroutines.ObsoleteCoroutinesApi"
+                "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi"
         ]
     }
 
@@ -67,13 +53,27 @@ dependencies {
     implementation project(":core-model")
     implementation project(":core-database")
     implementation project(":core-designsystem")
+    implementation project(":core-ui")
     implementation project(":chart")
+
+    testImplementation project(":core-testing")
+
+    androidTestImplementation project(":core-testing")
 
     // Androidx core
     implementation "androidx.core:core-ktx:$rootProject.androidXCoreVersion"
 
     // Appcompat
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
+
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion")
+
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$rootProject.hiltVersion"
+    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$rootProject.hiltLifecycleViewModelVersion"
+    kapt "androidx.hilt:hilt-compiler:$rootProject.hiltCompilerVersion"
 
     // Jetpack compose
     implementation "androidx.compose.ui:ui:$rootProject.jetpackComposeVersion"
@@ -93,9 +93,6 @@ dependencies {
     // Jetpack compose material design adapter
     implementation "com.google.android.material:compose-theme-adapter:$rootProject.jetpackComposeMaterialDesignAdapterVersion"
 
-    // Jetpack compose integration with activities
-    implementation "androidx.activity:activity-compose:$rootProject.jetpackComposeActivityIntegrationVersion"
-
     // Jetpack compose integration with view models
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$rootProject.jetpackComposeViewModelIntegrationVersion"
 
@@ -104,24 +101,6 @@ dependencies {
 
     // Jetpack compose navigation with hilt
     implementation "androidx.hilt:hilt-navigation-compose:$rootProject.jetpackComposeNavigationHiltVersion"
-
-    // Accompanist
-    implementation "com.google.accompanist:accompanist-insets:$rootProject.accompanistVersion"
-
-    // Accompanist flow layout
-    implementation "com.google.accompanist:accompanist-flowlayout:$rootProject.accompanistVersion"
-
-    // Accompanist pager
-    implementation "com.google.accompanist:accompanist-pager:$rootProject.accompanistVersion"
-
-    // Accompanist pager indicators
-    implementation "com.google.accompanist:accompanist-pager-indicators:$rootProject.accompanistVersion"
-
-    // Hilt
-    implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
-    kapt "com.google.dagger:hilt-compiler:$rootProject.hiltVersion"
-    implementation "androidx.hilt:hilt-lifecycle-viewmodel:$rootProject.hiltLifecycleViewModelVersion"
-    kapt "androidx.hilt:hilt-compiler:$rootProject.hiltCompilerVersion"
 
     // Testing
 

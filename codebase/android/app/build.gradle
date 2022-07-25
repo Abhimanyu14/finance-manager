@@ -103,7 +103,6 @@ apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
 
 android {
     namespace "com.makeappssimple.abhimanyu.financemanager.android"
-
     compileSdk rootProject.compileSdkVersion
 
     defaultConfig {

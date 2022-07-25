@@ -7,7 +7,6 @@ plugins {
 
 android {
     namespace "com.makeappssimple.abhimanyu.financemanager.android.core.common"
-
     compileSdk rootProject.compileSdkVersion
 
     defaultConfig {
