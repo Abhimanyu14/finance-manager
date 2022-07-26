@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bo
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun EditCategorySelectEmojiBottomSheetContent(
+internal fun EditCategorySelectEmojiBottomSheetContent(
     context: Context,
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,

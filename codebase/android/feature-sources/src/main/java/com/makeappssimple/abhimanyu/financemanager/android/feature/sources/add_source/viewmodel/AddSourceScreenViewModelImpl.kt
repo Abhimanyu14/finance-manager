@@ -18,7 +18,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class AddSourceScreenViewModelImpl @Inject constructor(
+internal class AddSourceScreenViewModelImpl @Inject constructor(
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
     private val insertSourceUseCase: InsertSourceUseCase,

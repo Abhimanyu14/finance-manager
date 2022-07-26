@@ -10,7 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun CategoriesDeleteConfirmationBottomSheetContent(
+internal fun CategoriesDeleteConfirmationBottomSheetContent(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
     categoryIdToDelete: Int?,

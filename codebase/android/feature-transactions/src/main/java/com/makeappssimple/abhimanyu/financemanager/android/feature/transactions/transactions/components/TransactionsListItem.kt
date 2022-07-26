@@ -44,7 +44,7 @@ data class TransactionsListItemViewData(
 )
 
 @Composable
-fun TransactionsListItem(
+internal fun TransactionsListItem(
     data: TransactionsListItemViewData,
     expanded: Boolean,
     deleteEnabled: Boolean,

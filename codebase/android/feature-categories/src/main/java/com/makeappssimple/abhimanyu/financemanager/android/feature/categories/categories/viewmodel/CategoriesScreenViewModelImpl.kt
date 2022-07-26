@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class CategoriesScreenViewModelImpl @Inject constructor(
+internal class CategoriesScreenViewModelImpl @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
     override val navigationManager: NavigationManager,
     private val checkIdCategoryIsUsedInTransactionsUseCase: CheckIfCategoryIsUsedInTransactionsUseCase,

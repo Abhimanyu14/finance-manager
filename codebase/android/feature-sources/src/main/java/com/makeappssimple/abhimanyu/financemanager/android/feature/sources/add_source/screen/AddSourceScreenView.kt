@@ -39,11 +39,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bu
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 
-enum class AddSourceBottomSheetType : BottomSheetType {
+internal enum class AddSourceBottomSheetType : BottomSheetType {
     NONE,
 }
 
-data class AddSourceScreenViewData(
+internal data class AddSourceScreenViewData(
     val selectedSourceTypeIndex: Int,
     val sourceTypes: List<SourceType>,
     val navigationManager: NavigationManager,
@@ -56,7 +56,7 @@ data class AddSourceScreenViewData(
 )
 
 @Composable
-fun AddSourceScreenView(
+internal fun AddSourceScreenView(
     data: AddSourceScreenViewData,
     state: CommonScreenViewState,
 ) {

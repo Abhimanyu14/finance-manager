@@ -10,7 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun SourcesSetAsDefaultConfirmationBottomSheetContent(
+internal fun SourcesSetAsDefaultConfirmationBottomSheetContent(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
     clickedItemId: Int?,

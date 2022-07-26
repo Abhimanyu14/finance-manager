@@ -31,14 +31,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.My
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 
-data class TransactionsFilterBottomSheetSelectionData(
+internal data class TransactionsFilterBottomSheetSelectionData(
     val selectedExpenseCategoryIndices: List<Int>,
     val selectedIncomeCategoryIndices: List<Int>,
     val selectedSourceIndices: List<Int>,
     val selectedTransactionTypeIndices: List<Int>,
 )
 
-data class TransactionsFilterBottomSheetData(
+internal data class TransactionsFilterBottomSheetData(
     val expenseCategories: List<Category>,
     val incomeCategories: List<Category>,
     val sources: List<Source>,
@@ -52,7 +52,7 @@ data class TransactionsFilterBottomSheetData(
 )
 
 @Composable
-fun TransactionsFiltersBottomSheet(
+internal fun TransactionsFiltersBottomSheet(
     data: TransactionsFilterBottomSheetData,
 ) {
     val selectedExpenseCategoryIndices = remember {

@@ -64,14 +64,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenUiVisibilityState
 import java.util.Calendar
 
-enum class AddTransactionBottomSheetType : BottomSheetType {
+internal enum class AddTransactionBottomSheetType : BottomSheetType {
     NONE,
     SELECT_CATEGORY,
     SELECT_SOURCE_FROM,
     SELECT_SOURCE_TO,
 }
 
-data class AddTransactionScreenViewData(
+internal data class AddTransactionScreenViewData(
     val transactionForValues: List<TransactionFor>,
     val uiState: AddTransactionScreenUiState,
     val uiVisibilityState: AddTransactionScreenUiVisibilityState,
@@ -98,7 +98,7 @@ data class AddTransactionScreenViewData(
 )
 
 @Composable
-fun AddTransactionScreenView(
+internal fun AddTransactionScreenView(
     data: AddTransactionScreenViewData,
     state: CommonScreenViewState,
 ) {

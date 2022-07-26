@@ -47,13 +47,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ca
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.components.bottomsheet.CategoriesSetAsDefaultConfirmationBottomSheetContent
 import kotlinx.coroutines.launch
 
-enum class CategoriesBottomSheetType : BottomSheetType {
+internal enum class CategoriesBottomSheetType : BottomSheetType {
     NONE,
     SET_AS_DEFAULT_CONFIRMATION,
     DELETE_CONFIRMATION,
 }
 
-data class CategoriesScreenViewData(
+internal data class CategoriesScreenViewData(
     val defaultExpenseCategoryId: Int?,
     val defaultIncomeCategoryId: Int?,
     val selectedTabIndex: Int,
@@ -71,7 +71,7 @@ data class CategoriesScreenViewData(
 )
 
 @Composable
-fun CategoriesScreenView(
+internal fun CategoriesScreenView(
     data: CategoriesScreenViewData,
     state: CommonScreenViewState,
 ) {

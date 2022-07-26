@@ -28,7 +28,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class TransactionsScreenViewModelImpl @Inject constructor(
+internal class TransactionsScreenViewModelImpl @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
     getSourcesUseCase: GetSourcesUseCase,
     getAllTransactionsUseCase: GetAllTransactionsUseCase,

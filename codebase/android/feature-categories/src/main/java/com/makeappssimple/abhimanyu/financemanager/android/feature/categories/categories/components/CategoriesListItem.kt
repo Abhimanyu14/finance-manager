@@ -31,7 +31,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 
 @Composable
-fun CategoriesListItem(
+internal fun CategoriesListItem(
     category: Category,
     expanded: Boolean,
     deleteEnabled: Boolean,

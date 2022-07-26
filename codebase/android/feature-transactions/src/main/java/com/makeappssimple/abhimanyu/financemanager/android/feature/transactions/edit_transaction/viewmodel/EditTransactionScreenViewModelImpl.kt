@@ -46,7 +46,7 @@ import java.util.Calendar
 import java.util.Locale
 
 @HiltViewModel
-class EditTransactionScreenViewModelImpl @Inject constructor(
+internal class EditTransactionScreenViewModelImpl @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
     getSourcesUseCase: GetSourcesUseCase,
     getTitleSuggestionsUseCase: GetTitleSuggestionsUseCase,

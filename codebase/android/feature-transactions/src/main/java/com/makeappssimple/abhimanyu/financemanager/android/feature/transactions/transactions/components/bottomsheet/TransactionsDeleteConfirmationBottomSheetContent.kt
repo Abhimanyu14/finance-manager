@@ -10,7 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun TransactionsDeleteConfirmationBottomSheetContent(
+internal fun TransactionsDeleteConfirmationBottomSheetContent(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
     transactionIdToDelete: Int?,

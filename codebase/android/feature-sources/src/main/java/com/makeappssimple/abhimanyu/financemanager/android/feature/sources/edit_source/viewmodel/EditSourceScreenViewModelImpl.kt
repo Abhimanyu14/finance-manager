@@ -27,7 +27,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class EditSourceScreenViewModelImpl @Inject constructor(
+internal class EditSourceScreenViewModelImpl @Inject constructor(
     savedStateHandle: SavedStateHandle,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,

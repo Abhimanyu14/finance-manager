@@ -65,14 +65,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel.EditTransactionScreenUiVisibilityState
 import java.util.Calendar
 
-enum class EditTransactionBottomSheetType : BottomSheetType {
+internal enum class EditTransactionBottomSheetType : BottomSheetType {
     NONE,
     SELECT_CATEGORY,
     SELECT_SOURCE_FROM,
     SELECT_SOURCE_TO,
 }
 
-data class EditTransactionScreenViewData(
+internal data class EditTransactionScreenViewData(
     val isValidTransactionData: Boolean,
     val uiState: EditTransactionScreenUiState,
     val uiVisibilityState: EditTransactionScreenUiVisibilityState,
@@ -100,7 +100,7 @@ data class EditTransactionScreenViewData(
 )
 
 @Composable
-fun EditTransactionScreenView(
+internal fun EditTransactionScreenView(
     data: EditTransactionScreenViewData,
     state: CommonScreenViewState,
 ) {

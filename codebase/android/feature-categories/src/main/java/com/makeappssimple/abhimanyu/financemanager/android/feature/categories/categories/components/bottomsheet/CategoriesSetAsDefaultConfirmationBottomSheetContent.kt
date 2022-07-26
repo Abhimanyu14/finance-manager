@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun CategoriesSetAsDefaultConfirmationBottomSheetContent(
+internal fun CategoriesSetAsDefaultConfirmationBottomSheetContent(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
     transactionType: TransactionType,

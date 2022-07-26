@@ -66,13 +66,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.SortOption
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 
-enum class TransactionsBottomSheetType : BottomSheetType {
+internal enum class TransactionsBottomSheetType : BottomSheetType {
     NONE,
     FILTERS,
     DELETE_CONFIRMATION,
 }
 
-data class TransactionsScreenViewData(
+internal data class TransactionsScreenViewData(
     val expenseCategories: List<Category>,
     val incomeCategories: List<Category>,
     val selectedExpenseCategoryIndices: List<Int>,
@@ -94,7 +94,7 @@ data class TransactionsScreenViewData(
 )
 
 @Composable
-fun TransactionsScreenView(
+internal fun TransactionsScreenView(
     data: TransactionsScreenViewData,
     state: CommonScreenViewState,
 ) {

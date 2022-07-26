@@ -42,7 +42,7 @@ import java.util.Calendar
 import java.util.Locale
 
 @HiltViewModel
-class AddTransactionScreenViewModelImpl @Inject constructor(
+internal class AddTransactionScreenViewModelImpl @Inject constructor(
     dataStore: MyDataStore,
     getCategoriesUseCase: GetCategoriesUseCase,
     getSourcesUseCase: GetSourcesUseCase,

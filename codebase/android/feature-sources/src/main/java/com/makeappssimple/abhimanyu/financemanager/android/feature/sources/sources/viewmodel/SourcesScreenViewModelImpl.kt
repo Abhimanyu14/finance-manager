@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class SourcesScreenViewModelImpl @Inject constructor(
+internal class SourcesScreenViewModelImpl @Inject constructor(
     getSourcesUseCase: GetSourcesUseCase,
     override val navigationManager: NavigationManager,
     private val checkIfSourceIsUsedInTransactionsUseCase: CheckIfSourceIsUsedInTransactionsUseCase,

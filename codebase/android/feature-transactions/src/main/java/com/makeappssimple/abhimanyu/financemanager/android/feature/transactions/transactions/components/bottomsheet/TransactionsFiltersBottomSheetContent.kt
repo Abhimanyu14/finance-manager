@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggle
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun TransactionsFiltersBottomSheetContent(
+internal fun TransactionsFiltersBottomSheetContent(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
     expenseCategories: List<Category>,

@@ -32,19 +32,19 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.total_balance_card.TotalBalanceCard
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isCashSource
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.components.SourcesListItem
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.components.bottomsheet.SourcesDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.components.bottomsheet.SourcesSetAsDefaultConfirmationBottomSheetContent
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isCashSource
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 
-enum class SourcesBottomSheetType : BottomSheetType {
+internal enum class SourcesBottomSheetType : BottomSheetType {
     NONE,
     SET_AS_DEFAULT_CONFIRMATION,
     DELETE_CONFIRMATION,
 }
 
-data class SourcesScreenViewData(
+internal data class SourcesScreenViewData(
     val defaultSourceId: Int?,
     val sourcesIsUsedInTransactions: List<Boolean>,
     val sources: List<Source>,
@@ -54,7 +54,7 @@ data class SourcesScreenViewData(
 )
 
 @Composable
-fun SourcesScreenView(
+internal fun SourcesScreenView(
     data: SourcesScreenViewData,
     state: CommonScreenViewState,
 ) {

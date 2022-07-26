@@ -45,12 +45,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.te
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.components.EditCategorySelectEmojiBottomSheetContent
 
-enum class EditCategoryBottomSheetType : BottomSheetType {
+internal enum class EditCategoryBottomSheetType : BottomSheetType {
     NONE,
     SELECT_EMOJI,
 }
 
-data class EditCategoryScreenViewData(
+internal data class EditCategoryScreenViewData(
     val categoryId: Int?,
     val selectedTransactionTypeIndex: Int,
     val emojis: List<Emoji>,
@@ -69,7 +69,7 @@ data class EditCategoryScreenViewData(
 )
 
 @Composable
-fun EditCategoryScreenView(
+internal fun EditCategoryScreenView(
     data: EditCategoryScreenViewData,
     state: CommonScreenViewState,
 ) {

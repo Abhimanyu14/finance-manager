@@ -29,7 +29,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class EditCategoryScreenViewModelImpl @Inject constructor(
+internal class EditCategoryScreenViewModelImpl @Inject constructor(
     savedStateHandle: SavedStateHandle,
     getEmojisUseCase: GetEmojisUseCase,
     override val navigationManager: NavigationManager,

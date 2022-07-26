@@ -33,7 +33,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 
 @Composable
-fun SourcesListItem(
+internal fun SourcesListItem(
     source: Source,
     expanded: Boolean,
     deleteEnabled: Boolean,

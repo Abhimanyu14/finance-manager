@@ -10,7 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun SourcesDeleteConfirmationBottomSheetContent(
+internal fun SourcesDeleteConfirmationBottomSheetContent(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
     sourceIdToDelete: Int?,

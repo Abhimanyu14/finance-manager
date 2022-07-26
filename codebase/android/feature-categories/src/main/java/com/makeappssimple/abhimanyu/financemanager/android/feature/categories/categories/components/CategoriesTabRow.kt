@@ -9,18 +9,18 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
 
-data class CategoriesTabData(
+internal data class CategoriesTabData(
     val title: String,
 )
 
-data class CategoriesTabRowData(
+internal data class CategoriesTabRowData(
     val selectedTabIndex: Int,
     val updateSelectedTabIndex: (updatedSelectedTabIndex: Int) -> Unit,
     val tabData: List<CategoriesTabData>,
 )
 
 @Composable
-fun CategoriesTabRow(
+internal fun CategoriesTabRow(
     data: CategoriesTabRowData,
 ) {
     TabRow(

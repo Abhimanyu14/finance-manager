@@ -63,6 +63,12 @@ ksp {
 }
 
 dependencies {
+    implementation project(":core-common")
+    implementation project(":core-model")
+
+    testImplementation project(":core-testing")
+
+    androidTestImplementation project(":core-testing")
 
     // Androidx core
     implementation "androidx.core:core-ktx:$rootProject.androidXCoreVersion"
@@ -107,10 +113,16 @@ dependencies {
 
     // Junit
     testImplementation "junit:junit:$rootProject.junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXJUnitExtensionVersion"
 
     // Mockito kotlin
     testImplementation "org.mockito.kotlin:mockito-kotlin:$rootProject.mockitoKotlinVersion"
 
     // Coroutines test
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
+
+    // Jacoco
+    androidTestImplementation "androidx.test:runner:$rootProject.testRunnerVersion"
+    androidTestImplementation "androidx.test:rules:$rootProject.testRulesVersion"
 }
