@@ -208,7 +208,7 @@ internal fun CategoriesScreenView(
                 MyFloatingActionButton(
                     iconImageVector = Icons.Rounded.Add,
                     contentDescription = stringResource(
-                        id = R.string.screen_sources_floating_action_button_content_description,
+                         id = R.string.screen_categories_floating_action_button_content_description,
                     ),
                     onClick = {
                         navigateToAddCategoryScreen(

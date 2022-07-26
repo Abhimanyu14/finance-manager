@@ -1,36 +1,5 @@
 <resources>
 
-    <!-- App name -->
-    <string name="app_name">Finance Manager</string>
-
-
-    <!-- region Common -->
-
-    <!-- region bottom sheet emoji picker -->
-    <string name="emoji_picker_bottom_sheet_placeholder_text">Search emoji</string>
-    <!-- endregion -->
-
-    <!-- region bottom sheet select category -->
-    <string name="bottom_sheet_select_category_title">Select Category</string>
-    <!-- endregion -->
-
-    <!-- region bottom sheet select source -->
-    <string name="bottom_sheet_select_source_title">Select Source</string>
-    <!-- endregion -->
-
-    <!-- region navigation back button -->
-    <string name="navigation_back_button_navigation_icon_content_description">Navigate Back</string>
-    <!-- endregion -->
-
-    <!-- region total balance card -->
-    <string name="total_balance_card_title">Total Balance</string>
-    <!-- endregion -->
-
-    <!-- endregion -->
-
-
-    <!-- region Screens -->
-
     <!-- region home list item -->
     <string name="list_item_home_source">%1$s -> %2$s</string>
     <!-- endregion -->
@@ -49,8 +18,6 @@
     <!-- region home menu bottom sheet -->
     <string name="bottom_sheet_home_menu_sources">Sources</string>
     <string name="bottom_sheet_home_menu_categories">Categories</string>
-    <!-- endregion -->
-
     <!-- endregion -->
 
 </resources>

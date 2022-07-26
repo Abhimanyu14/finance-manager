@@ -343,7 +343,7 @@ internal fun TransactionsScreenView(
                                             Icons.Rounded.Search
                                         },
                                         contentDescription = stringResource(
-                                            id = R.string.screen_add_category_clear_title,
+                                            id = R.string.screen_transactions_search_button_content_description,
                                         ),
                                         tint = DarkGray,
                                         modifier = Modifier
@@ -372,7 +372,7 @@ internal fun TransactionsScreenView(
                                             Icons.Rounded.SwapVert
                                         },
                                         contentDescription = stringResource(
-                                            id = R.string.screen_add_category_clear_title,
+                                            id = R.string.screen_transactions_sort_button_content_description,
                                         ),
                                         tint = DarkGray,
                                         modifier = Modifier
@@ -402,7 +402,7 @@ internal fun TransactionsScreenView(
                                     Icon(
                                         imageVector = Icons.Rounded.FilterAlt,
                                         contentDescription = stringResource(
-                                            id = R.string.screen_add_category_clear_title,
+                                            id = R.string.screen_transactions_filter_button_content_description,
                                         ),
                                         tint = DarkGray,
                                         modifier = Modifier

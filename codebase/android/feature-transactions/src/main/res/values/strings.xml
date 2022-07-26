@@ -1,36 +1,5 @@
 <resources>
 
-    <!-- App name -->
-    <string name="app_name">Finance Manager</string>
-
-
-    <!-- region Common -->
-
-    <!-- region bottom sheet emoji picker -->
-    <string name="emoji_picker_bottom_sheet_placeholder_text">Search emoji</string>
-    <!-- endregion -->
-
-    <!-- region bottom sheet select category -->
-    <string name="bottom_sheet_select_category_title">Select Category</string>
-    <!-- endregion -->
-
-    <!-- region bottom sheet select source -->
-    <string name="bottom_sheet_select_source_title">Select Source</string>
-    <!-- endregion -->
-
-    <!-- region navigation back button -->
-    <string name="navigation_back_button_navigation_icon_content_description">Navigate Back</string>
-    <!-- endregion -->
-
-    <!-- region total balance card -->
-    <string name="total_balance_card_title">Total Balance</string>
-    <!-- endregion -->
-
-    <!-- endregion -->
-
-
-    <!-- region Screens -->
-
     <!-- region add transaction screen -->
     <string name="screen_add_transaction_appbar_title">Enter Transaction Details</string>
     <string name="screen_add_transaction_amount">Amount</string>
@@ -79,6 +48,9 @@
     <string name="screen_transactions_floating_action_button_content_description">
         Add Transaction
     </string>
+    <string name="screen_transactions_search_button_content_description">Search</string>
+    <string name="screen_transactions_sort_button_content_description">Sort</string>
+    <string name="screen_transactions_filter_button_content_description">Filter</string>
     <string name="screen_transactions_bottom_sheet_delete_title">Delete Transaction</string>
     <string name="screen_transactions_bottom_sheet_delete_message">
         Are you sure you want to delete?
@@ -95,8 +67,6 @@
     <string name="bottom_sheet_transactions_filter_select_income_categories">Select Income Categories</string>
     <string name="bottom_sheet_transactions_filter_select_sources">Select Sources</string>
     <string name="bottom_sheet_transactions_filter_select_transaction_types">Select Transaction Types</string>
-    <!-- endregion -->
-
     <!-- endregion -->
 
 </resources>

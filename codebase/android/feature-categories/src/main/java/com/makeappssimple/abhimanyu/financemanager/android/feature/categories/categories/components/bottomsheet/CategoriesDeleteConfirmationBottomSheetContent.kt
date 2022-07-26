@@ -23,16 +23,16 @@ internal fun CategoriesDeleteConfirmationBottomSheetContent(
     ConfirmationBottomSheet(
         data = ConfirmationBottomSheetData(
             title = stringResource(
-                id = R.string.screen_sources_bottom_sheet_delete_title,
+                id = R.string.screen_categories_bottom_sheet_delete_title,
             ),
             message = stringResource(
-                id = R.string.screen_sources_bottom_sheet_delete_message,
+                id = R.string.screen_categories_bottom_sheet_delete_message,
             ),
             positiveButtonText = stringResource(
-                id = R.string.screen_sources_bottom_sheet_delete_positive_button_text,
+                id = R.string.screen_categories_bottom_sheet_delete_positive_button_text,
             ),
             negativeButtonText = stringResource(
-                id = R.string.screen_sources_bottom_sheet_delete_negative_button_text,
+                id = R.string.screen_categories_bottom_sheet_delete_negative_button_text,
             ),
             onPositiveButtonClick = {
                 toggleModalBottomSheetState(

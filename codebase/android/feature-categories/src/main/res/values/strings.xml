@@ -1,36 +1,5 @@
 <resources>
 
-    <!-- App name -->
-    <string name="app_name">Finance Manager</string>
-
-
-    <!-- region Common -->
-
-    <!-- region bottom sheet emoji picker -->
-    <string name="emoji_picker_bottom_sheet_placeholder_text">Search emoji</string>
-    <!-- endregion -->
-
-    <!-- region bottom sheet select category -->
-    <string name="bottom_sheet_select_category_title">Select Category</string>
-    <!-- endregion -->
-
-    <!-- region bottom sheet select source -->
-    <string name="bottom_sheet_select_source_title">Select Source</string>
-    <!-- endregion -->
-
-    <!-- region navigation back button -->
-    <string name="navigation_back_button_navigation_icon_content_description">Navigate Back</string>
-    <!-- endregion -->
-
-    <!-- region total balance card -->
-    <string name="total_balance_card_title">Total Balance</string>
-    <!-- endregion -->
-
-    <!-- endregion -->
-
-
-    <!-- region Screens -->
-
     <!-- region add category screen -->
     <string name="screen_add_category_appbar_title">Enter Category Details</string>
     <string name="screen_add_category_title">Title</string>
@@ -45,12 +14,19 @@
 
     <!-- region categories screen -->
     <string name="screen_categories_appbar_title">Categories</string>
+    <string name="screen_categories_floating_action_button_content_description">Add Category</string>
     <string name="screen_categories_bottom_sheet_set_as_default_title">Set as default Category</string>
     <string name="screen_categories_bottom_sheet_set_as_default_message">
         Are you sure you want to set this as default %1s category?
     </string>
     <string name="screen_categories_bottom_sheet_set_as_default_positive_button_text">Yes</string>
     <string name="screen_categories_bottom_sheet_set_as_default_negative_button_text">Cancel</string>
+    <string name="screen_categories_bottom_sheet_delete_title">Delete Category</string>
+    <string name="screen_categories_bottom_sheet_delete_message">
+        Are you sure you want to delete?
+    </string>
+    <string name="screen_categories_bottom_sheet_delete_positive_button_text">Yes</string>
+    <string name="screen_categories_bottom_sheet_delete_negative_button_text">Cancel</string>
     <!-- endregion -->
 
     <!-- region edit category screen -->
@@ -58,8 +34,6 @@
     <string name="screen_edit_category_title">Title</string>
     <string name="screen_edit_category_clear_title">Clear Title</string>
     <string name="screen_edit_category_floating_action_button_content_description">UPDATE</string>
-    <!-- endregion -->
-
     <!-- endregion -->
 
 </resources>
