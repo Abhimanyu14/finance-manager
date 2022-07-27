@@ -23,7 +23,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.Em
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBarContainer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBarData
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 data class EmojiPickerBottomSheetData(
     val emojis: List<Emoji>,

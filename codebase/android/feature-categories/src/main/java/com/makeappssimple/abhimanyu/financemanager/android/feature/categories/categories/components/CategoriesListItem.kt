@@ -28,7 +28,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.Ex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isDefaultCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isSalaryCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 @Composable
 internal fun CategoriesListItem(

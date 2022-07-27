@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.ui.components
+package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component
 
 import androidx.annotation.StringRes
 import androidx.compose.material3.LocalTextStyle

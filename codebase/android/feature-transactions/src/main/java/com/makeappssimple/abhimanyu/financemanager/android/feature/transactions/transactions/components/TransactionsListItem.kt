@@ -34,7 +34,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.Ex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemViewWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.amountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 data class TransactionsListItemViewData(
     val transaction: Transaction,

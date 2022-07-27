@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.t
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 @Composable
 fun OutlinedTextFieldLabelText(

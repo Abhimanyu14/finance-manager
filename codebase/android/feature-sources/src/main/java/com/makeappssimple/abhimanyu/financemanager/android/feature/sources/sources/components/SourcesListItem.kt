@@ -30,7 +30,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.Ex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.getIcon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isCashSource
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 @Composable
 internal fun SourcesListItem(

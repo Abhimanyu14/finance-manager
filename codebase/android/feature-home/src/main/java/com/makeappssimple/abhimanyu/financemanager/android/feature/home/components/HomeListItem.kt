@@ -28,7 +28,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.Em
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemViewWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.amountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
-import com.makeappssimple.abhimanyu.financemanager.android.ui.components.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 data class HomeListItemViewData(
     val transaction: Transaction,
