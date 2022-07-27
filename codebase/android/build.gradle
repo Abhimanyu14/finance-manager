@@ -291,6 +291,7 @@ buildscript {
 
         // Dex maker
         dexMakerVersion = "2.12.1"
+        compose_version = '1.2.0-beta01'
     }
 
     repositories {
