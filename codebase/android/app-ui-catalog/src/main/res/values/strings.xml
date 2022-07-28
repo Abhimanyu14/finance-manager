@@ -1,3 +1,9 @@
 <resources>
+
+    <!-- App name -->
     <string name="app_name">UI Catalog</string>
+
+    <!-- Save button -->
+    <string name="save_button">SAVE</string>
+
 </resources>
