@@ -175,16 +175,6 @@ private fun MyRadioGroupItemView(
             )
         }
         MyText(
-            text = item.text,
-            style = TextStyle(
-                color = if (isSelected) {
-                    item.selectedTextColor
-                } else {
-                    item.defaultTextColor
-                },
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Normal,
-            ),
             modifier = Modifier
                 .padding(
                     top = 6.dp,
@@ -196,6 +186,16 @@ private fun MyRadioGroupItemView(
                         16.dp
                     },
                 ),
+            text = item.text,
+            style = TextStyle(
+                color = if (isSelected) {
+                    item.selectedTextColor
+                } else {
+                    item.defaultTextColor
+                },
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Normal,
+            ),
         )
     }
 }

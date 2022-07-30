@@ -2,8 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.t
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
+import androidx.compose.ui.text.TextStyle
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 
 @Composable
 fun OutlinedTextFieldLabelText(
@@ -11,6 +12,8 @@ fun OutlinedTextFieldLabelText(
 ) {
     MyText(
         textStringResourceId = textStringResourceId,
-        color = DarkGray,
+        style = TextStyle(
+            color = DarkGray,
+        ),
     )
 }

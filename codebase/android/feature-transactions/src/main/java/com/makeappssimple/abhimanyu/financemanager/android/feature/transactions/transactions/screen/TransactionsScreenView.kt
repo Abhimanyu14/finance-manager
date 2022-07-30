@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Blue50
@@ -64,7 +65,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsFiltersBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.SortOption
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 internal enum class TransactionsBottomSheetType : BottomSheetType {
     NONE,
@@ -422,12 +422,6 @@ internal fun TransactionsScreenView(
                             if (date.isNotBlank()) {
                                 stickyHeader {
                                     MyText(
-                                        text = date,
-                                        style = TextStyle(
-                                            color = DarkGray,
-                                            fontSize = 12.sp,
-                                            fontWeight = FontWeight.Bold,
-                                        ),
                                         modifier = Modifier
                                             .background(
                                                 color = Surface,
@@ -439,6 +433,12 @@ internal fun TransactionsScreenView(
                                                 bottom = 4.dp,
                                                 end = 16.dp,
                                             ),
+                                        text = date,
+                                        style = TextStyle(
+                                            color = DarkGray,
+                                            fontSize = 12.sp,
+                                            fontWeight = FontWeight.Bold,
+                                        ),
                                     )
                                 }
                             }

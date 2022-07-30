@@ -3,11 +3,12 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Surface
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 internal data class CategoriesTabData(
     val title: String,
@@ -55,11 +56,13 @@ private fun CategoriesTabText(
 ) {
     MyText(
         text = title,
-        color = if (isSelected) {
-            Primary
-        } else {
-            DarkGray
-        },
-        fontWeight = FontWeight.Bold,
+        style = TextStyle(
+            color = if (isSelected) {
+                Primary
+            } else {
+                DarkGray
+            },
+            fontWeight = FontWeight.Bold,
+        ),
     )
 }

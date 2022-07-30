@@ -15,16 +15,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.LightGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.BottomSheetTitle
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 data class SelectCategoryBottomSheetItemData(
     val category: Category,
@@ -87,14 +88,16 @@ private fun SelectCategoryBottomSheetItem(
             backgroundColor = LightGray,
         )
         MyText(
-            text = data.category.title,
-            color = DarkGray,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .padding(
                     start = 8.dp,
                 ),
+            text = data.category.title,
+            style = TextStyle(
+                color = DarkGray,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+            ),
         )
         Spacer(
             modifier = Modifier

@@ -13,11 +13,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 @Composable
 internal fun HomeRecentTransactionsView(
@@ -50,13 +51,15 @@ internal fun HomeRecentTransactionsView(
             ),
     ) {
         MyText(
-            textStringResourceId = R.string.screen_home_recent_transactions,
-            fontWeight = FontWeight.Bold,
-            color = DarkGray,
             modifier = Modifier
                 .weight(
                     weight = 1F,
                 ),
+            textStringResourceId = R.string.screen_home_recent_transactions,
+            style = TextStyle(
+                color = DarkGray,
+                fontWeight = FontWeight.Bold,
+            ),
         )
         Icon(
             imageVector = Icons.Rounded.ChevronRight,

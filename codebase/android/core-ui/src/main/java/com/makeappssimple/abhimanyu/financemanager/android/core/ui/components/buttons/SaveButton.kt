@@ -7,12 +7,13 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.FloatingActionButtonBackground
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.White
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 @Composable
 fun SaveButton(
@@ -37,9 +38,6 @@ fun SaveButton(
             ),
     ) {
         MyText(
-            textStringResourceId = textStringResourceId,
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .padding(
                     all = 6.dp,
@@ -47,6 +45,11 @@ fun SaveButton(
                 .defaultMinSize(
                     minWidth = 80.dp,
                 ),
+            textStringResourceId = textStringResourceId,
+            style = TextStyle(
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+            ),
         )
     }
 }

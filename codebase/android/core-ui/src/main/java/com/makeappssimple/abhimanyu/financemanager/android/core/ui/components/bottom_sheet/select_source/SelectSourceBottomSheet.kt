@@ -15,13 +15,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.BottomSheetTitle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.getIcon
 
@@ -94,11 +95,13 @@ private fun SelectSourceBottomSheetItem(
                 ),
         )
         MyText(
-            text = data.text,
-            color = DarkGray,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Bold,
             modifier = Modifier,
+            text = data.text,
+            style = TextStyle(
+                color = DarkGray,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Bold,
+            ),
         )
         Spacer(
             modifier = Modifier

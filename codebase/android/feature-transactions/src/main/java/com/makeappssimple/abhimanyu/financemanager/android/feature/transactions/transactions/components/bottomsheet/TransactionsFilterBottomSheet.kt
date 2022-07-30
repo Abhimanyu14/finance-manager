@@ -24,12 +24,12 @@ import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MySelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 internal data class TransactionsFilterBottomSheetSelectionData(
     val selectedExpenseCategoryIndices: List<Int>,
@@ -102,13 +102,6 @@ internal fun TransactionsFiltersBottomSheet(
                     .fillMaxWidth(),
             ) {
                 MyText(
-                    textStringResourceId = R.string.bottom_sheet_transactions_filter_select_expense_categories,
-                    style = TextStyle(
-                        color = DarkGray,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                    ),
-                    textAlign = TextAlign.Start,
                     modifier = Modifier
                         .weight(
                             weight = 1F,
@@ -116,6 +109,13 @@ internal fun TransactionsFiltersBottomSheet(
                         .padding(
                             all = 16.dp,
                         ),
+                    textStringResourceId = R.string.bottom_sheet_transactions_filter_select_expense_categories,
+                    style = TextStyle(
+                        color = DarkGray,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Start,
+                    ),
                 )
                 TextButton(
                     onClick = {
@@ -158,13 +158,6 @@ internal fun TransactionsFiltersBottomSheet(
                     .fillMaxWidth(),
             ) {
                 MyText(
-                    textStringResourceId = R.string.bottom_sheet_transactions_filter_select_income_categories,
-                    style = TextStyle(
-                        color = DarkGray,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                    ),
-                    textAlign = TextAlign.Start,
                     modifier = Modifier
                         .weight(
                             weight = 1F,
@@ -172,6 +165,13 @@ internal fun TransactionsFiltersBottomSheet(
                         .padding(
                             all = 16.dp,
                         ),
+                    textStringResourceId = R.string.bottom_sheet_transactions_filter_select_income_categories,
+                    style = TextStyle(
+                        color = DarkGray,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Start,
+                    ),
                 )
                 TextButton(
                     onClick = {
@@ -214,13 +214,6 @@ internal fun TransactionsFiltersBottomSheet(
                     .fillMaxWidth(),
             ) {
                 MyText(
-                    textStringResourceId = R.string.bottom_sheet_transactions_filter_select_sources,
-                    style = TextStyle(
-                        color = DarkGray,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                    ),
-                    textAlign = TextAlign.Start,
                     modifier = Modifier
                         .weight(
                             weight = 1F,
@@ -228,6 +221,13 @@ internal fun TransactionsFiltersBottomSheet(
                         .padding(
                             all = 16.dp,
                         ),
+                    textStringResourceId = R.string.bottom_sheet_transactions_filter_select_sources,
+                    style = TextStyle(
+                        color = DarkGray,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Start,
+                    ),
                 )
                 TextButton(
                     onClick = {
@@ -270,13 +270,6 @@ internal fun TransactionsFiltersBottomSheet(
                     .fillMaxWidth(),
             ) {
                 MyText(
-                    textStringResourceId = R.string.bottom_sheet_transactions_filter_select_transaction_types,
-                    style = TextStyle(
-                        color = DarkGray,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                    ),
-                    textAlign = TextAlign.Start,
                     modifier = Modifier
                         .weight(
                             weight = 1F,
@@ -284,6 +277,13 @@ internal fun TransactionsFiltersBottomSheet(
                         .padding(
                             all = 16.dp,
                         ),
+                    textStringResourceId = R.string.bottom_sheet_transactions_filter_select_transaction_types,
+                    style = TextStyle(
+                        color = DarkGray,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Start,
+                    ),
                 )
                 TextButton(
                     onClick = {

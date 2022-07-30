@@ -52,10 +52,10 @@ fun MyAppCatalog() {
                 }
                 item {
                     MyText(
-                        text = "Emoji Circle",
                         modifier = Modifier.padding(
                             top = 16.dp,
                         ),
+                        text = "Emoji Circle",
                     )
                 }
                 item {
@@ -83,10 +83,10 @@ fun MyAppCatalog() {
                 }
                 item {
                     MyText(
-                        text = "Save Button",
                         modifier = Modifier.padding(
                             top = 16.dp,
                         ),
+                        text = "Save Button",
                     )
                 }
                 item {

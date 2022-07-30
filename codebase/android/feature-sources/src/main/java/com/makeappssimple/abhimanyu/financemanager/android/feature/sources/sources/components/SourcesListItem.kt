@@ -97,16 +97,16 @@ internal fun SourcesListItem(
                     ),
             )
             MyText(
+                modifier = Modifier
+                    .padding(
+                        end = 16.dp,
+                    ),
                 text = source.name,
                 style = TextStyle(
                     color = DarkGray,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                 ),
-                modifier = Modifier
-                    .padding(
-                        end = 16.dp,
-                    ),
             )
             if (isDefault) {
                 DefaultTag()

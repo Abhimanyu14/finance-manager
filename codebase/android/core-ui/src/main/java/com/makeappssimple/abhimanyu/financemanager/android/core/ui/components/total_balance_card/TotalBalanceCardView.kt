@@ -15,11 +15,11 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Green700
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.White
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.conditionalClickable
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 data class TotalBalanceCardViewData(
     val totalBalanceAmount: Long,
@@ -56,28 +56,28 @@ fun TotalBalanceCardView(
                 ),
         ) {
             MyText(
+                modifier = Modifier
+                    .fillMaxWidth(),
                 textStringResourceId = R.string.total_balance_card_title,
-                textAlign = TextAlign.Center,
                 style = TextStyle(
                     color = White,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
                 ),
-                modifier = Modifier
-                    .fillMaxWidth(),
             )
             MyText(
+                modifier = Modifier
+                    .fillMaxWidth(),
                 text = Amount(
                     value = data.totalBalanceAmount,
                 ).toString(),
-                textAlign = TextAlign.Center,
                 style = TextStyle(
                     color = White,
                     fontSize = 32.sp,
                     fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center,
                 ),
-                modifier = Modifier
-                    .fillMaxWidth(),
             )
         }
     }

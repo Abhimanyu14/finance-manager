@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.capitalizeWords
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
@@ -23,7 +24,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.Em
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBarContainer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBarData
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 data class EmojiPickerBottomSheetData(
     val emojis: List<Emoji>,
@@ -95,6 +95,14 @@ private fun EmojiGroupName(
     name: String,
 ) {
     MyText(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(
+                color = Surface,
+            )
+            .padding(
+                all = 8.dp,
+            ),
         text = name
             .replace(
                 oldChar = '-',
@@ -105,13 +113,5 @@ private fun EmojiGroupName(
             color = DarkGray,
             fontWeight = FontWeight.Bold,
         ),
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(
-                color = Surface,
-            )
-            .padding(
-                all = 8.dp,
-            ),
     )
 }

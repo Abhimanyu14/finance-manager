@@ -17,10 +17,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Blue10
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Gray50
@@ -28,7 +30,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Transparent
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.White
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 data class OverviewTabData(
     val items: List<String>,
@@ -56,14 +57,6 @@ fun OverviewTab(
         data.items.forEachIndexed { index, text ->
             val isSelected = index == data.selectedItemIndex
             MyText(
-                text = text,
-                fontSize = 16.sp,
-                color = if (isSelected) {
-                    White
-                } else {
-                    DarkGray
-                },
-                textAlign = TextAlign.Center,
                 modifier = Modifier
                     .defaultMinSize(
                         minWidth = 64.dp,
@@ -85,6 +78,16 @@ fun OverviewTab(
                         vertical = 8.dp,
                         horizontal = 12.dp,
                     ),
+                text = text,
+                style = TextStyle(
+                    color = if (isSelected) {
+                        White
+                    } else {
+                        DarkGray
+                    },
+                    fontSize = 16.sp,
+                    textAlign = TextAlign.Center,
+                ),
             )
         }
     }

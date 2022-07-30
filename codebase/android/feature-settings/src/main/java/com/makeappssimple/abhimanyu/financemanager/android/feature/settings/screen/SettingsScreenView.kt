@@ -119,14 +119,14 @@ internal fun SettingsScreenView(
                         },
                         text = {
                             MyText(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
                                 textStringResourceId = R.string.screen_settings_backup,
                                 style = TextStyle(
                                     color = DarkGray,
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Normal,
                                 ),
-                                modifier = Modifier
-                                    .fillMaxWidth(),
                             )
                         },
                         modifier = Modifier
@@ -144,14 +144,14 @@ internal fun SettingsScreenView(
                         },
                         text = {
                             MyText(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
                                 textStringResourceId = R.string.screen_settings_restore,
                                 style = TextStyle(
                                     color = DarkGray,
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Normal,
                                 ),
-                                modifier = Modifier
-                                    .fillMaxWidth(),
                             )
                         },
                         modifier = Modifier
@@ -169,14 +169,14 @@ internal fun SettingsScreenView(
                         },
                         text = {
                             MyText(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
                                 textStringResourceId = R.string.screen_settings_recalculate_total,
                                 style = TextStyle(
                                     color = DarkGray,
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Normal,
                                 ),
-                                modifier = Modifier
-                                    .fillMaxWidth(),
                             )
                         },
                         modifier = Modifier

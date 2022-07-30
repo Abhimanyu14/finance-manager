@@ -22,13 +22,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getReadableDateAndTimeString
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.LightGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemViewWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.amountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 data class HomeListItemViewData(
     val transaction: Transaction,
@@ -76,19 +76,24 @@ internal fun HomeListItem(
                         .fillMaxWidth(),
                 ) {
                     MyText(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(
+                                weight = 1F,
+                            ),
                         text = data.transaction.title,
                         style = TextStyle(
                             color = DarkGray,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold,
                         ),
+                    )
+                    MyText(
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(
                                 weight = 1F,
                             ),
-                    )
-                    MyText(
                         text = if (data.transaction.transactionType == TransactionType.INCOME ||
                             (data.transaction.transactionType == TransactionType.ADJUSTMENT
                                     && data.transaction.amount.value > 0)
@@ -97,17 +102,12 @@ internal fun HomeListItem(
                         } else {
                             data.transaction.amount.toString()
                         },
-                        textAlign = TextAlign.End,
                         style = TextStyle(
                             color = data.transaction.amountTextColor,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.End,
                         ),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(
-                                weight = 1F,
-                            ),
                     )
                 }
                 Spacer(
@@ -117,14 +117,14 @@ internal fun HomeListItem(
                         ),
                 )
                 MyText(
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     text = data.transaction.transactionFor.title,
                     style = TextStyle(
                         color = DarkGray,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Normal,
                     ),
-                    modifier = Modifier
-                        .fillMaxWidth(),
                 )
                 Spacer(
                     modifier = Modifier
@@ -137,6 +137,11 @@ internal fun HomeListItem(
                         .fillMaxWidth(),
                 ) {
                     MyText(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(
+                                weight = 1F,
+                            ),
                         text = getReadableDateAndTimeString(
                             timestamp = data.transaction.transactionTimestamp,
                         ),
@@ -145,13 +150,13 @@ internal fun HomeListItem(
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Normal,
                         ),
+                    )
+                    MyText(
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(
                                 weight = 1F,
                             ),
-                    )
-                    MyText(
                         text = if (data.sourceFrom != null && data.sourceTo != null) {
                             stringResource(
                                 id = R.string.list_item_home_source,
@@ -161,17 +166,12 @@ internal fun HomeListItem(
                         } else {
                             data.sourceFrom?.name ?: data.sourceTo?.name.orEmpty()
                         },
-                        textAlign = TextAlign.End,
                         style = TextStyle(
                             color = DarkGray,
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Normal,
+                            textAlign = TextAlign.End,
                         ),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(
-                                weight = 1F,
-                            ),
                     )
                 }
             }

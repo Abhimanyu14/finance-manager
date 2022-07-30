@@ -15,8 +15,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 
 data class ConfirmationBottomSheetData(
     val title: String,
@@ -42,31 +42,31 @@ fun ConfirmationBottomSheet(
             ),
     ) {
         MyText(
-            text = data.title,
-            style = TextStyle(
-                color = DarkGray,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-            ),
-            textAlign = TextAlign.Center,
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(
                     all = 16.dp,
                 ),
+            text = data.title,
+            style = TextStyle(
+                color = DarkGray,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+            ),
         )
         MyText(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    all = 16.dp,
+                ),
             text = data.message,
             style = TextStyle(
                 color = DarkGray,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Normal,
             ),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    all = 16.dp,
-                ),
         )
         Row(
             modifier = Modifier

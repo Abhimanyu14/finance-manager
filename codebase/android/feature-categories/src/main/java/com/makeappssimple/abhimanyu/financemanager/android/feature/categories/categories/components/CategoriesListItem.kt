@@ -19,6 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.LightGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.DefaultTag
@@ -28,7 +29,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.Ex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isDefaultCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isSalaryCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 @Composable
 internal fun CategoriesListItem(
@@ -88,17 +88,17 @@ internal fun CategoriesListItem(
                 backgroundColor = LightGray,
             )
             MyText(
+                modifier = Modifier
+                    .padding(
+                        start = 8.dp,
+                        end = 16.dp,
+                    ),
                 text = category.title,
                 style = TextStyle(
                     color = DarkGray,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                 ),
-                modifier = Modifier
-                    .padding(
-                        start = 8.dp,
-                        end = 16.dp,
-                    ),
             )
             if (isDefault) {
                 DefaultTag()

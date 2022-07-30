@@ -10,19 +10,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.White
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 @Composable
 fun DefaultTag() {
     MyText(
-        text = "Default",
-        style = TextStyle(
-            color = White,
-            fontSize = 10.sp,
-            fontWeight = FontWeight.Normal,
-        ),
         modifier = Modifier
             .clip(
                 shape = RoundedCornerShape(
@@ -36,5 +30,11 @@ fun DefaultTag() {
                 vertical = 2.dp,
                 horizontal = 8.dp,
             ),
+        text = "Default",
+        style = TextStyle(
+            color = White,
+            fontSize = 10.sp,
+            fontWeight = FontWeight.Normal,
+        ),
     )
 }
