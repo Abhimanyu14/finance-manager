@@ -2,10 +2,13 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.scr
 
 import android.net.Uri
 import androidx.activity.compose.ManagedActivityResultLauncher
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material.ListItem
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
@@ -25,7 +28,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
@@ -36,13 +41,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Common
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.util.JSON_MIMETYPE
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 internal enum class SettingsBottomSheetType : BottomSheetType {
     NONE,
 }
 
 internal data class SettingsScreenViewData(
+    val isLoading: Boolean,
     val createDocument: ManagedActivityResultLauncher<String, Uri?>,
     val openDocument: ManagedActivityResultLauncher<Array<String>, Uri?>,
     val navigationManager: NavigationManager,
@@ -109,6 +114,17 @@ internal fun SettingsScreenView(
                     modifier = Modifier
                         .fillMaxWidth(),
                 ) {
+                    AnimatedVisibility(
+                        visible = data.isLoading,
+                    ) {
+                        LinearProgressIndicator(
+                            modifier = Modifier
+                                .height(
+                                    height = 2.dp,
+                                )
+                                .fillMaxWidth(),
+                        )
+                    }
                     ListItem(
                         icon = {
                             Icon(
@@ -130,9 +146,12 @@ internal fun SettingsScreenView(
                             )
                         },
                         modifier = Modifier
-                            .clickable {
-                                data.createDocument.launch(JSON_MIMETYPE)
-                            },
+                            .clickable(
+                                enabled = !data.isLoading,
+                                onClick = {
+                                    data.createDocument.launch(JSON_MIMETYPE)
+                                },
+                            ),
                     )
                     ListItem(
                         icon = {
@@ -155,9 +174,12 @@ internal fun SettingsScreenView(
                             )
                         },
                         modifier = Modifier
-                            .clickable {
-                                data.openDocument.launch(arrayOf(JSON_MIMETYPE))
-                            },
+                            .clickable(
+                                enabled = !data.isLoading,
+                                onClick = {
+                                    data.openDocument.launch(arrayOf(JSON_MIMETYPE))
+                                },
+                            ),
                     )
                     ListItem(
                         icon = {
@@ -180,9 +202,12 @@ internal fun SettingsScreenView(
                             )
                         },
                         modifier = Modifier
-                            .clickable {
-                                data.recalculateTotal()
-                            },
+                            .clickable(
+                                enabled = !data.isLoading,
+                                onClick = {
+                                    data.recalculateTotal()
+                                },
+                            ),
                     )
                 }
             }
