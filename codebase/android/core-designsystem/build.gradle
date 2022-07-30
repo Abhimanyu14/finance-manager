@@ -47,6 +47,14 @@ dependencies {
     // Appcompat
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
 
+    // Jetpack compose
+    implementation "androidx.compose.ui:ui:$rootProject.jetpackComposeVersion"
+    implementation "androidx.compose.ui:ui-util:$rootProject.jetpackComposeVersion"
+
+    // Jetpack compose tooling support (Previews, etc.)
+    debugImplementation "androidx.compose.ui:ui-tooling:$rootProject.jetpackComposeVersion"
+    implementation "androidx.compose.ui:ui-tooling-preview:$rootProject.jetpackComposeVersion"
+
     // Jetpack compose material design
     implementation "androidx.compose.material:material:$rootProject.jetpackComposeVersion"
     implementation "androidx.compose.material3:material3:$rootProject.jetpackComposeMaterial3Version"

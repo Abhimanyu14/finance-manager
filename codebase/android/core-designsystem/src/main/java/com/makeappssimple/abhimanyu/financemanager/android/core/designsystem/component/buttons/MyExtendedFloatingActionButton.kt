@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.buttons
+package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.LinearOutSlowInEasing
@@ -33,9 +33,9 @@ import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Red
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 enum class MyExtendedLoadingFloatingActionButtonState {
     DEFAULT,
@@ -227,7 +227,6 @@ fun MyExtendedFloatingActionButton(
         content = content,
     )
 }
-
 
 @Preview
 @Composable

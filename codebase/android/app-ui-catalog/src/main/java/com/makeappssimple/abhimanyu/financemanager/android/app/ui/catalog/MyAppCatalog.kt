@@ -26,6 +26,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.DefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircleSize
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBarView
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.NavigationBackButtonView
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.overview_card.OverviewCardView
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.overview_card.OverviewCardViewData
@@ -190,11 +192,64 @@ private fun CatalogList(
                 SaveButton(
                     textStringResourceId = R.string.save_button,
                     isEnabled = false,
-                ) {}
+                    onClick = {},
+                )
                 SaveButton(
                     textStringResourceId = R.string.save_button,
                     isEnabled = true,
-                ) {}
+                    onClick = {},
+                )
+            }
+        }
+        item {
+            MyText(
+                modifier = Modifier.padding(
+                    top = 16.dp,
+                ),
+                text = "My Top App Bar",
+            )
+        }
+        item {
+            FlowRow(
+                mainAxisSpacing = 16.dp,
+                crossAxisAlignment = FlowCrossAxisAlignment.Center,
+            ) {
+                MyTopAppBarView(
+                    titleText = "Title",
+                    isNavigationIconVisible = true,
+                    navigationBackButton = {
+                        NavigationBackButtonView(
+                            onClick = {},
+                        )
+                    },
+                )
+                MyTopAppBarView(
+                    titleText = "Title",
+                    isNavigationIconVisible = false,
+                    navigationBackButton = {
+                        NavigationBackButtonView(
+                            onClick = {},
+                        )
+                    },
+                )
+            }
+        }
+        item {
+            MyText(
+                modifier = Modifier.padding(
+                    top = 16.dp,
+                ),
+                text = "Navigation Back Button",
+            )
+        }
+        item {
+            FlowRow(
+                mainAxisSpacing = 16.dp,
+                crossAxisAlignment = FlowCrossAxisAlignment.Center,
+            ) {
+                NavigationBackButtonView(
+                    onClick = {},
+                )
             }
         }
     }

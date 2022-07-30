@@ -19,19 +19,22 @@ fun MyTopAppBar(
     isNavigationIconVisible: Boolean,
 ) {
     MyTopAppBarView(
-        navigationManager = navigationManager,
         titleText = stringResource(
             id = titleTextStringResourceId,
         ),
         isNavigationIconVisible = isNavigationIconVisible,
-    )
+    ) {
+        NavigationBackButton(
+            navigationManager = navigationManager,
+        )
+    }
 }
 
 @Composable
-private fun MyTopAppBarView(
-    navigationManager: NavigationManager,
+fun MyTopAppBarView(
     titleText: String,
     isNavigationIconVisible: Boolean,
+    navigationBackButton: @Composable () -> Unit,
 ) {
     CenterAlignedTopAppBar(
         title = {
@@ -44,9 +47,7 @@ private fun MyTopAppBarView(
         },
         navigationIcon = {
             if (isNavigationIconVisible) {
-                NavigationBackButton(
-                    navigationManager = navigationManager,
-                )
+                navigationBackButton()
             }
         },
         modifier = Modifier

@@ -15,12 +15,19 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 fun NavigationBackButton(
     navigationManager: NavigationManager,
 ) {
+    NavigationBackButtonView {
+        navigateUp(
+            navigationManager = navigationManager,
+        )
+    }
+}
+
+@Composable
+fun NavigationBackButtonView(
+    onClick: () -> Unit,
+) {
     IconButton(
-        onClick = {
-            navigateUp(
-                navigationManager = navigationManager,
-            )
-        },
+        onClick = onClick,
     ) {
         NavigationArrowBackIcon()
     }
