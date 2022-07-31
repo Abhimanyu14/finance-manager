@@ -114,7 +114,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
 
     private val _uiVisibilityState: MutableStateFlow<EditTransactionScreenUiVisibilityState> =
         MutableStateFlow(
-            value = EditTransactionScreenUiVisibilityState(),
+            value = EditTransactionScreenUiVisibilityState.Expense,
         )
     override val uiVisibilityState: StateFlow<EditTransactionScreenUiVisibilityState> =
         _uiVisibilityState
@@ -220,37 +220,13 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                     it ?: return@collectLatest
                     val uiVisibilityState: EditTransactionScreenUiVisibilityState? = when (it) {
                         TransactionType.INCOME -> {
-                            EditTransactionScreenUiVisibilityState(
-                                isTitleTextFieldVisible = true,
-                                isDescriptionTextFieldVisible = false,
-                                isCategoryTextFieldVisible = true,
-                                isTransactionForRadioGroupVisible = false,
-                                isSourceFromTextFieldVisible = false,
-                                isSourceToTextFieldVisible = true,
-                                isTitleSuggestionsVisible = true,
-                            )
+                            EditTransactionScreenUiVisibilityState.Income
                         }
                         TransactionType.EXPENSE -> {
-                            EditTransactionScreenUiVisibilityState(
-                                isTitleTextFieldVisible = true,
-                                isDescriptionTextFieldVisible = false,
-                                isCategoryTextFieldVisible = true,
-                                isTransactionForRadioGroupVisible = true,
-                                isSourceFromTextFieldVisible = true,
-                                isSourceToTextFieldVisible = false,
-                                isTitleSuggestionsVisible = true,
-                            )
+                            EditTransactionScreenUiVisibilityState.Expense
                         }
                         TransactionType.TRANSFER -> {
-                            EditTransactionScreenUiVisibilityState(
-                                isTitleTextFieldVisible = false,
-                                isDescriptionTextFieldVisible = false,
-                                isCategoryTextFieldVisible = false,
-                                isTransactionForRadioGroupVisible = false,
-                                isSourceFromTextFieldVisible = true,
-                                isSourceToTextFieldVisible = true,
-                                isTitleSuggestionsVisible = false,
-                            )
+                            EditTransactionScreenUiVisibilityState.Transfer
                         }
                         TransactionType.ADJUSTMENT -> {
                             null
