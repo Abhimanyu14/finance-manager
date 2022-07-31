@@ -23,6 +23,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.LightGray
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.BottomSheetTitle
@@ -94,7 +95,11 @@ private fun SelectCategoryBottomSheetItem(
                 ),
             text = data.category.title,
             style = TextStyle(
-                color = DarkGray,
+                color = if (data.isSelected) {
+                    Primary
+                } else {
+                    DarkGray
+                },
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
             ),
@@ -109,6 +114,7 @@ private fun SelectCategoryBottomSheetItem(
             Icon(
                 imageVector = Icons.Rounded.Done,
                 contentDescription = null,
+                tint = Primary,
             )
         }
     }

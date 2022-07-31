@@ -98,7 +98,11 @@ private fun SelectSourceBottomSheetItem(
             modifier = Modifier,
             text = data.text,
             style = TextStyle(
-                color = DarkGray,
+                color = if (data.isSelected) {
+                    Primary
+                } else {
+                    DarkGray
+                },
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
             ),
@@ -113,6 +117,7 @@ private fun SelectSourceBottomSheetItem(
             Icon(
                 imageVector = Icons.Rounded.Done,
                 contentDescription = null,
+                tint = Primary,
             )
         }
     }
