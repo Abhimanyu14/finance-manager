@@ -24,6 +24,9 @@ import com.google.accompanist.pager.rememberPagerState
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabData
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabRow
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabRowData
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
@@ -40,9 +43,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isDefau
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isSalaryCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.components.CategoriesListItem
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.components.CategoriesTabData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.components.CategoriesTabRow
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.components.CategoriesTabRowData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.components.bottomsheet.CategoriesDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.components.bottomsheet.CategoriesSetAsDefaultConfirmationBottomSheetContent
 import kotlinx.coroutines.launch
@@ -208,7 +208,7 @@ internal fun CategoriesScreenView(
                 MyFloatingActionButton(
                     iconImageVector = Icons.Rounded.Add,
                     contentDescription = stringResource(
-                         id = R.string.screen_categories_floating_action_button_content_description,
+                        id = R.string.screen_categories_floating_action_button_content_description,
                     ),
                     onClick = {
                         navigateToAddCategoryScreen(
@@ -230,16 +230,14 @@ internal fun CategoriesScreenView(
                     modifier = Modifier
                         .fillMaxSize(),
                 ) {
-                    CategoriesTabRow(
-                        data = CategoriesTabRowData(
+                    MyTabRow(
+                        data = MyTabRowData(
                             selectedTabIndex = data.selectedTabIndex,
-                            updateSelectedTabIndex = {
-                                data.updateSelectedTabIndex(it)
-                            },
+                            updateSelectedTabIndex = data.updateSelectedTabIndex,
                             tabData = transactionTypes
                                 .map {
-                                    CategoriesTabData(
-                                        title = it.title
+                                    MyTabData(
+                                        title = it.title,
                                     )
                                 },
                         ),
