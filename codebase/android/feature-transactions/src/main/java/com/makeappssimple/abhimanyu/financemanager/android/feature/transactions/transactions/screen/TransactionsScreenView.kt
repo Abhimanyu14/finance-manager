@@ -38,6 +38,7 @@ import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
@@ -256,6 +257,11 @@ internal fun TransactionsScreenView(
                     modifier = Modifier
                         .fillMaxSize(),
                 ) {
+                    AnimatedVisibility(
+                        visible = data.transactionsListItemViewData.isEmpty(),
+                    ) {
+                        MyLinearProgressIndicator()
+                    }
                     AnimatedVisibility(
                         visible = data.transactionsListItemViewData.isNotEmpty() ||
                                 data.searchText.isNotEmpty() ||
