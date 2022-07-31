@@ -5,6 +5,7 @@ import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Primary
@@ -62,6 +63,7 @@ private fun CategoriesTabText(
             } else {
                 DarkGray
             },
+            fontSize = 16.sp,
             fontWeight = FontWeight.Bold,
         ),
     )
