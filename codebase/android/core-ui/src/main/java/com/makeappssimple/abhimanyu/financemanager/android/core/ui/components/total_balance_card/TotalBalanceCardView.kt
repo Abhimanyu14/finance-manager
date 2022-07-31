@@ -61,7 +61,7 @@ fun TotalBalanceCardView(
                 textStringResourceId = R.string.total_balance_card_title,
                 style = TextStyle(
                     color = White,
-                    fontSize = 14.sp,
+                    fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
                 ),
