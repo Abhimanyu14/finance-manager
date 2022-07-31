@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.LightGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Primary
@@ -30,7 +31,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.Ex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.getIcon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isCashSource
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 @Composable
 internal fun SourcesListItem(

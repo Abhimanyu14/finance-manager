@@ -67,7 +67,7 @@ dependencies {
 
     // Accompanist flow layout
     implementation "com.google.accompanist:accompanist-flowlayout:$rootProject.accompanistVersion"
-    
+
     // Testing
 
     // Junit
