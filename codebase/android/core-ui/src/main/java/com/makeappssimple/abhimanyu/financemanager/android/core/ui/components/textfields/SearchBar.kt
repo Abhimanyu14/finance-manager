@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -29,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Blue100
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Transparent
 
 data class SearchBarData(
@@ -46,7 +46,7 @@ fun SearchBarContainer(
     Box(
         modifier = Modifier
             .background(
-                color = Surface,
+                color = MaterialTheme.colorScheme.surface,
             )
             .fillMaxWidth()
             .padding(

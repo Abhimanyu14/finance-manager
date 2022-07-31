@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,9 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Blue10
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Gray50
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Transparent
@@ -51,7 +50,7 @@ fun OverviewTab(
                 shape = CircleShape,
             )
             .background(
-                color = Blue10,
+                color = MaterialTheme.colorScheme.surface,
             ),
     ) {
         data.items.forEachIndexed { index, text ->
@@ -104,7 +103,7 @@ private fun OverviewSelectionPreview() {
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .background(
-                    color = Gray50,
+                    color = DarkGray,
                 )
                 .fillMaxSize(),
         ) {

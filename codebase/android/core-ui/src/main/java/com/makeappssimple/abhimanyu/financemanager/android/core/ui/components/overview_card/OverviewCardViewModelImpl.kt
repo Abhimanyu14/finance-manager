@@ -2,6 +2,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.o
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData
+import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
@@ -9,8 +11,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetCurrentDayTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetCurrentMonthTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetCurrentYearTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Error
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Green700
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Red
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.math.abs
@@ -94,7 +96,7 @@ class OverviewCardViewModelImpl @Inject constructor(
         context = dispatcherProvider.io,
     )
 
-    override val pieChartData: StateFlow<com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData?> =
+    override val pieChartData: StateFlow<PieChartData?> =
         combine(
             flow = incomeAmount,
             flow2 = expenseAmount,
@@ -105,17 +107,17 @@ class OverviewCardViewModelImpl @Inject constructor(
             val totalExpenseAmount = Amount(
                 value = expenseAmount?.toLong() ?: 0L,
             )
-            com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData(
+            PieChartData(
                 items = listOf(
-                    com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData(
+                    PieChartItemData(
                         value = incomeAmount ?: 10F,
                         text = "Income : $totalIncomeAmount",
                         color = Green700,
                     ),
-                    com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData(
+                    PieChartItemData(
                         value = expenseAmount ?: 10F,
                         text = "Expense : ${totalExpenseAmount.toNonSignedString()}",
-                        color = Red,
+                        color = Error,
                     ),
                 ),
             )

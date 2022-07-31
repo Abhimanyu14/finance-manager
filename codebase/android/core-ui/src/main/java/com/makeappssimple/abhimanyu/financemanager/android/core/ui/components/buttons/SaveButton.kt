@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
@@ -12,7 +13,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.FloatingActionButtonBackground
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.White
 
 @Composable
@@ -29,7 +29,7 @@ fun SaveButton(
             pressedElevation = 12.dp,
         ),
         colors = ButtonDefaults.buttonColors(
-            containerColor = FloatingActionButtonBackground,
+            containerColor = MaterialTheme.colorScheme.primary,
             contentColor = White,
         ),
         modifier = Modifier

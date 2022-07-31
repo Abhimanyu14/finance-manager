@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -17,7 +18,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.m
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircleSize
@@ -98,7 +98,7 @@ private fun EmojiGroupName(
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                color = Surface,
+                color = MaterialTheme.colorScheme.surface,
             )
             .padding(
                 all = 8.dp,

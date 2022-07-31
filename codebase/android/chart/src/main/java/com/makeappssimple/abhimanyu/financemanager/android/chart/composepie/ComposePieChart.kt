@@ -19,10 +19,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.legend.PieChartLegend
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.CenterBox
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Black
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Blue
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Green
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Error
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Green700
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Red
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Primary
 
 /**
  * Source - https://github.com/humawork/compose-charts
@@ -100,17 +100,17 @@ private fun ComposePieChartPreview() {
                         PieChartItemData(
                             text = "Red",
                             value = 1F,
-                            color = Red,
+                            color = Error,
                         ),
                         PieChartItemData(
                             text = "Blue",
                             value = 2F,
-                            color = Blue,
+                            color = Primary,
                         ),
                         PieChartItemData(
                             text = "Green",
                             value = 3F,
-                            color = Green,
+                            color = Green700,
                         ),
                         PieChartItemData(
                             text = "Black",

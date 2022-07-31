@@ -15,12 +15,12 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,7 +35,6 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Red
 
 enum class MyExtendedLoadingFloatingActionButtonState {
     DEFAULT,
@@ -100,7 +99,7 @@ fun MyExtendedLoadingFloatingActionButton(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .background(
-                color = Red,
+                color = MaterialTheme.colorScheme.error,
             ),
     ) {
         Button(
@@ -193,7 +192,7 @@ fun MyExtendedFloatingActionButton(
             defaultElevation = 6.dp,
             pressedElevation = 12.dp,
         ),
-    shape: Shape = MaterialTheme.shapes.small
+    shape: Shape = shapes.small
         .copy(
             all = CornerSize(
                 percent = 50,

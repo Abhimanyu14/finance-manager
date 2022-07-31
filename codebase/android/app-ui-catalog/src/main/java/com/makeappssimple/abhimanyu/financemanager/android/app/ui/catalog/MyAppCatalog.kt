@@ -13,16 +13,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowCrossAxisAlignment
 import com.google.accompanist.flowlayout.FlowRow
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Error
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Green700
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.LightGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Red
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.DefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircleSize
@@ -121,7 +121,7 @@ private fun CatalogList(
                                 PieChartItemData(
                                     value = 600F,
                                     text = "Expense : ₹600",
-                                    color = Red,
+                                    color = Error,
                                 ),
                             ),
                         ),
@@ -167,11 +167,11 @@ private fun CatalogList(
                 )
                 EmojiCircle(
                     emoji = "😀",
-                    backgroundColor = Color.LightGray,
+                    backgroundColor = LightGray,
                 )
                 EmojiCircle(
                     emoji = "😀",
-                    backgroundColor = Color.LightGray,
+                    backgroundColor = LightGray,
                     emojiCircleSize = EmojiCircleSize.Normal,
                 )
             }

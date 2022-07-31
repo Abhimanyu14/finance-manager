@@ -21,6 +21,7 @@ import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.SwapVert
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -47,7 +48,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Surface
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateToAddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateToEditTransactionScreen
@@ -430,7 +430,7 @@ internal fun TransactionsScreenView(
                                     MyText(
                                         modifier = Modifier
                                             .background(
-                                                color = Surface,
+                                                color = MaterialTheme.colorScheme.surface,
                                             )
                                             .fillMaxWidth()
                                             .padding(

@@ -4,8 +4,8 @@ import androidx.compose.ui.graphics.Color
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Error
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.OnTertiaryContainer
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Red
 
 val Transaction.amountTextColor: Color
     get() = when (this.transactionType) {
@@ -13,7 +13,7 @@ val Transaction.amountTextColor: Color
             OnTertiaryContainer
         }
         TransactionType.EXPENSE -> {
-            Red
+            Error
         }
         TransactionType.TRANSFER -> {
             DarkGray
@@ -24,7 +24,7 @@ val Transaction.amountTextColor: Color
                     OnTertiaryContainer
                 }
                 this.amount.value < 0 -> {
-                    Red
+                    Error
                 }
                 else -> {
                     DarkGray
