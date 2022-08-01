@@ -63,7 +63,7 @@ fun EmojiPickerBottomSheet(
                 emoji.group
             }.forEach { (group, emojis) ->
                 if (emojis.isNotEmpty()) {
-                    item {
+                    stickyHeader {
                         EmojiGroupName(
                             name = "$group (${emojis.size})"
                         )
