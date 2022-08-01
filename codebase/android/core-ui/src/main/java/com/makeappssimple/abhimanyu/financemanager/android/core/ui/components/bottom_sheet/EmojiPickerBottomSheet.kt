@@ -21,7 +21,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircleSize
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MySearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBarContainer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBarData
 
@@ -45,7 +45,7 @@ fun EmojiPickerBottomSheet(
             ),
     ) {
         SearchBarContainer {
-            SearchBar(
+            MySearchBar(
                 data = SearchBarData(
                     searchText = data.searchText,
                     placeholderText = stringResource(

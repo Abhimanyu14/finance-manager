@@ -58,7 +58,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyScrollableRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MySearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBarData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.TransactionsListItem
@@ -276,7 +276,7 @@ internal fun TransactionsScreenView(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .defaultMinSize(
-                                    minHeight = 84.dp,
+                                    minHeight = 48.dp,
                                 )
                                 .padding(
                                     start = 16.dp,
@@ -291,7 +291,7 @@ internal fun TransactionsScreenView(
                                         weight = 1F,
                                     ),
                             ) {
-                                SearchBar(
+                                MySearchBar(
                                     data = SearchBarData(
                                         searchText = data.searchText,
                                         placeholderText = stringResource(

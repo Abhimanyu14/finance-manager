@@ -2,11 +2,15 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.t
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -23,13 +27,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Blue100
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Transparent
 
 data class SearchBarData(
@@ -136,5 +144,122 @@ fun SearchBar(
                 focusRequester = focusRequester,
             )
             .fillMaxWidth(),
+    )
+}
+
+@Composable
+fun MySearchBar(
+    data: SearchBarData,
+    modifier: Modifier = Modifier,
+) {
+    val focusRequester: FocusRequester = remember {
+        FocusRequester()
+    }
+
+    LaunchedEffect(
+        key1 = Unit,
+    ) {
+        focusRequester.requestFocus()
+    }
+
+    BasicTextField(
+        value = data.searchText,
+        onValueChange = {
+            data.onValueChange(it)
+        },
+        modifier = modifier
+            .fillMaxWidth()
+            .background(
+                color = Blue100,
+                shape = CircleShape,
+            )
+            .padding(
+                horizontal = 0.dp,
+                vertical = 4.dp,
+            )
+            .height(
+                height = 40.dp,
+            )
+            .focusRequester(
+                focusRequester = focusRequester,
+            ),
+        textStyle = TextStyle(
+            color = DarkGray,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Normal,
+        ),
+        keyboardOptions = KeyboardOptions(
+            imeAction = ImeAction.Search,
+        ),
+        keyboardActions = KeyboardActions(
+            onSearch = {
+                data.onSearch?.invoke()
+            },
+        ),
+        singleLine = true,
+        cursorBrush = SolidColor(Primary),
+        decorationBox = {
+            TextFieldDefaults.TextFieldDecorationBox(
+                value = data.searchText,
+                innerTextField = it,
+                enabled = true,
+                singleLine = true,
+                visualTransformation = VisualTransformation.None,
+                interactionSource = remember {
+                    MutableInteractionSource()
+                },
+                placeholder = {
+                    MyText(
+                        text = data.placeholderText,
+                        style = TextStyle(
+                            color = DarkGray,
+                            fontSize = 16.sp,
+                            fontWeight = FontWeight.Bold,
+                        ),
+                    )
+                },
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Rounded.Search,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .padding(
+                                all = 6.dp,
+                            )
+                            .size(
+                                size = 20.dp,
+                            ),
+                    )
+                },
+                trailingIcon = if (data.searchText.isNotBlank()) {
+                    {
+                        Icon(
+                            imageVector = Icons.Rounded.Close,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .clip(
+                                    shape = CircleShape,
+                                )
+                                .clickable {
+                                    data.onValueChange("")
+                                }
+                                .padding(
+                                    all = 6.dp,
+                                )
+                                .size(
+                                    size = 20.dp,
+                                ),
+                        )
+                    }
+                } else {
+                    null
+                },
+                contentPadding = TextFieldDefaults
+                    .textFieldWithoutLabelPadding(
+                        top = 0.dp,
+                        bottom = 0.dp,
+                    ),
+            )
+        },
     )
 }

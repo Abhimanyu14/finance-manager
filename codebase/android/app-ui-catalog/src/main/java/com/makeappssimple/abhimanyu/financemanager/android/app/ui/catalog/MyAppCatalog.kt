@@ -12,6 +12,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowCrossAxisAlignment
@@ -31,6 +33,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.Na
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.overview_card.OverviewCardView
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.overview_card.OverviewCardViewData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MySearchBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBarContainer
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBarData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.total_balance_card.TotalBalanceCardView
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.total_balance_card.TotalBalanceCardViewData
 
@@ -72,6 +78,60 @@ private fun CatalogList(
                 text = "UI Catalog",
                 style = MaterialTheme.typography.headlineSmall,
             )
+        }
+        item {
+            MyText(
+                modifier = Modifier.padding(
+                    top = 16.dp,
+                ),
+                text = "Search Bar",
+            )
+        }
+        item {
+            FlowRow(
+                mainAxisSpacing = 16.dp,
+                crossAxisAlignment = FlowCrossAxisAlignment.Center,
+            ) {
+                val (searchText, setSearchText) = remember {
+                    mutableStateOf("")
+                }
+                SearchBarContainer {
+                    SearchBar(
+                        data = SearchBarData(
+                            searchText = searchText,
+                            placeholderText = "Placeholder",
+                            onValueChange = setSearchText,
+                        ),
+                    )
+                }
+            }
+        }
+        item {
+            MyText(
+                modifier = Modifier.padding(
+                    top = 16.dp,
+                ),
+                text = "My Search Bar",
+            )
+        }
+        item {
+            FlowRow(
+                mainAxisSpacing = 16.dp,
+                crossAxisAlignment = FlowCrossAxisAlignment.Center,
+            ) {
+                val (searchText, setSearchText) = remember {
+                    mutableStateOf("")
+                }
+                SearchBarContainer {
+                    MySearchBar(
+                        data = SearchBarData(
+                            searchText = searchText,
+                            placeholderText = "Placeholder",
+                            onValueChange = setSearchText,
+                        ),
+                    )
+                }
+            }
         }
         item {
             MyText(
