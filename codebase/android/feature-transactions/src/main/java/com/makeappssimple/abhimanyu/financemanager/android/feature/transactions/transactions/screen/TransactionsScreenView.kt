@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -149,6 +150,13 @@ internal fun TransactionsScreenView(
         modalBottomSheetState = state.modalBottomSheetState,
     ) {
         transactionsBottomSheetType = TransactionsBottomSheetType.NONE
+    }
+
+    BackHandler(
+        enabled = isSearchbarVisible || isSortOptionsVisible,
+    ) {
+        setIsSearchbarVisible(false)
+        setIsSortOptionsVisible(false)
     }
 
     ModalBottomSheetLayout(
