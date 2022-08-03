@@ -33,6 +33,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
@@ -93,9 +94,12 @@ internal fun SettingsScreenView(
         Scaffold(
             topBar = {
                 MyTopAppBar(
-                    navigationManager = data.navigationManager,
                     titleTextStringResourceId = R.string.screen_settings_appbar_title,
-                    isNavigationIconVisible = true,
+                    navigationAction = {
+                        navigateUp(
+                            navigationManager = data.navigationManager,
+                        )
+                    },
                 )
             },
             modifier = Modifier

@@ -29,11 +29,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ChipItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyRadioGroup
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MyOutlinedTextField
@@ -102,9 +103,12 @@ internal fun AddSourceScreenView(
         Scaffold(
             topBar = {
                 MyTopAppBar(
-                    navigationManager = data.navigationManager,
                     titleTextStringResourceId = R.string.screen_add_source_appbar_title,
-                    isNavigationIconVisible = true,
+                    navigationAction = {
+                        navigateUp(
+                            navigationManager = data.navigationManager,
+                        )
+                    },
                 )
             },
             modifier = Modifier
@@ -127,7 +131,7 @@ internal fun AddSourceScreenView(
                     MyRadioGroup(
                         items = data.sourceTypes
                             .map { sourceType ->
-                                MyRadioGroupItem(
+                                ChipItem(
                                     text = sourceType.title,
                                     iconKey = sourceType.title,
                                 )

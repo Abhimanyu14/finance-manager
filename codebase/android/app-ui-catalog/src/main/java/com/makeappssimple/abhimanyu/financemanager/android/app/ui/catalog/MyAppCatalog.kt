@@ -1,6 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.add
@@ -12,9 +14,13 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowCrossAxisAlignment
 import com.google.accompanist.flowlayout.FlowRow
@@ -25,11 +31,16 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Green700
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.LightGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ChipItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.DefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircleSize
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyHorizontalScrollingRadioGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyHorizontalScrollingSuggestionGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyRadioGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MySelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBarView
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.NavigationBackButtonView
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.NavigationBackButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.overview_card.OverviewCardView
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.overview_card.OverviewCardViewData
@@ -66,6 +77,8 @@ fun MyAppCatalog() {
 private fun CatalogList(
     contentPadding: PaddingValues,
 ) {
+    val context = LocalContext.current
+
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = contentPadding,
@@ -79,60 +92,304 @@ private fun CatalogList(
                 style = MaterialTheme.typography.headlineSmall,
             )
         }
+
         item {
             MyText(
                 modifier = Modifier.padding(
                     top = 16.dp,
                 ),
-                text = "Search Bar",
+                text = "Text",
             )
         }
         item {
-            FlowRow(
-                mainAxisSpacing = 16.dp,
-                crossAxisAlignment = FlowCrossAxisAlignment.Center,
-            ) {
-                val (searchText, setSearchText) = remember {
-                    mutableStateOf("")
-                }
-                SearchBarContainer {
-                    SearchBar(
-                        data = SearchBarData(
-                            searchText = searchText,
-                            placeholderText = "Placeholder",
-                            onValueChange = setSearchText,
+            Column {
+                MyText(
+                    modifier = Modifier
+                        .padding(
+                            top = 16.dp,
                         ),
-                    )
-                }
+                    text = "Display Large",
+                    style = MaterialTheme.typography.displayLarge,
+                )
+                MyText(
+                    modifier = Modifier
+                        .padding(
+                            top = 16.dp,
+                        ),
+                    text = "Display Medium",
+                    style = MaterialTheme.typography.displayMedium,
+                )
+                MyText(
+                    modifier = Modifier
+                        .padding(
+                            top = 16.dp,
+                        ),
+                    text = "Display Small",
+                    style = MaterialTheme.typography.displaySmall,
+                )
+                MyText(
+                    modifier = Modifier
+                        .padding(
+                            top = 16.dp,
+                        ),
+                    text = "Headline Large",
+                    style = MaterialTheme.typography.headlineLarge,
+                )
+                MyText(
+                    modifier = Modifier
+                        .padding(
+                            top = 16.dp,
+                        ),
+                    text = "Headline Medium",
+                    style = MaterialTheme.typography.headlineMedium,
+                )
+                MyText(
+                    modifier = Modifier
+                        .padding(
+                            top = 16.dp,
+                        ),
+                    text = "Headline Small",
+                    style = MaterialTheme.typography.headlineSmall,
+                )
+                MyText(
+                    modifier = Modifier
+                        .padding(
+                            top = 16.dp,
+                        ),
+                    text = "Title Large",
+                    style = MaterialTheme.typography.titleLarge,
+                )
+                MyText(
+                    modifier = Modifier
+                        .padding(
+                            top = 16.dp,
+                        ),
+                    text = "Title Medium",
+                    style = MaterialTheme.typography.titleMedium,
+                )
+                MyText(
+                    modifier = Modifier
+                        .padding(
+                            top = 16.dp,
+                        ),
+                    text = "Title Small",
+                    style = MaterialTheme.typography.titleSmall,
+                )
+                MyText(
+                    modifier = Modifier
+                        .padding(
+                            top = 16.dp,
+                        ),
+                    text = "Body Large",
+                    style = MaterialTheme.typography.bodyLarge,
+                )
+                MyText(
+                    modifier = Modifier
+                        .padding(
+                            top = 16.dp,
+                        ),
+                    text = "Body Medium",
+                    style = MaterialTheme.typography.bodyMedium,
+                )
+                MyText(
+                    modifier = Modifier
+                        .padding(
+                            top = 16.dp,
+                        ),
+                    text = "Body Small",
+                    style = MaterialTheme.typography.bodySmall,
+                )
+                MyText(
+                    modifier = Modifier
+                        .padding(
+                            top = 16.dp,
+                        ),
+                    text = "Label Large",
+                    style = MaterialTheme.typography.labelLarge,
+                )
+                MyText(
+                    modifier = Modifier
+                        .padding(
+                            top = 16.dp,
+                        ),
+                    text = "Label Medium",
+                    style = MaterialTheme.typography.labelMedium,
+                )
+                MyText(
+                    modifier = Modifier
+                        .padding(
+                            top = 16.dp,
+                        ),
+                    text = "Label Small",
+                    style = MaterialTheme.typography.labelSmall,
+                )
             }
         }
+
         item {
             MyText(
                 modifier = Modifier.padding(
                     top = 16.dp,
                 ),
-                text = "My Search Bar",
+                text = "Selection Group",
             )
         }
         item {
-            FlowRow(
-                mainAxisSpacing = 16.dp,
-                crossAxisAlignment = FlowCrossAxisAlignment.Center,
-            ) {
-                val (searchText, setSearchText) = remember {
-                    mutableStateOf("")
-                }
-                SearchBarContainer {
-                    MySearchBar(
-                        data = SearchBarData(
-                            searchText = searchText,
-                            placeholderText = "Placeholder",
-                            onValueChange = setSearchText,
-                        ),
-                    )
-                }
+            val items = listOf(
+                ChipItem(
+                    text = "Item 1",
+                ),
+                ChipItem(
+                    text = "Item 2",
+                ),
+                ChipItem(
+                    text = "Item 3",
+                ),
+                ChipItem(
+                    text = "Item 4",
+                ),
+                ChipItem(
+                    text = "Item 5",
+                ),
+                ChipItem(
+                    text = "Item 6",
+                ),
+            )
+            val selectedItemsIndices = remember {
+                mutableStateListOf<Int>()
             }
+            MySelectionGroup(
+                items = items,
+                selectedItemsIndices = selectedItemsIndices,
+                onSelectionChange = {
+                    if (selectedItemsIndices.contains(it)) {
+                        selectedItemsIndices.remove(it)
+                    } else {
+                        selectedItemsIndices.add(it)
+                    }
+                },
+            )
         }
+
+        item {
+            MyText(
+                modifier = Modifier.padding(
+                    top = 16.dp,
+                ),
+                text = "Radio Group",
+            )
+        }
+        item {
+            val items = listOf(
+                ChipItem(
+                    text = "Item 1",
+                ),
+                ChipItem(
+                    text = "Item 2",
+                ),
+                ChipItem(
+                    text = "Item 3",
+                ),
+                ChipItem(
+                    text = "Item 4",
+                ),
+                ChipItem(
+                    text = "Item 5",
+                ),
+                ChipItem(
+                    text = "Item 6",
+                ),
+            )
+            var selectedItemIndex by remember {
+                mutableStateOf(0)
+            }
+            MyRadioGroup(
+                items = items,
+                selectedItemIndex = selectedItemIndex,
+                onSelectionChange = {
+                    selectedItemIndex = it
+                },
+            )
+        }
+
+        item {
+            MyText(
+                modifier = Modifier.padding(
+                    top = 16.dp,
+                ),
+                text = "Horizontal Scrolling Radio Group",
+            )
+        }
+        item {
+            val items = listOf(
+                ChipItem(
+                    text = "Item 1",
+                ),
+                ChipItem(
+                    text = "Item 2",
+                ),
+                ChipItem(
+                    text = "Item 3",
+                ),
+                ChipItem(
+                    text = "Item 4",
+                ),
+                ChipItem(
+                    text = "Item 5",
+                ),
+                ChipItem(
+                    text = "Item 6",
+                ),
+            )
+            var selectedItemIndex by remember {
+                mutableStateOf(0)
+            }
+            MyHorizontalScrollingRadioGroup(
+                items = items,
+                selectedItemIndex = selectedItemIndex,
+                onSelectionChange = {
+                    selectedItemIndex = it
+                },
+            )
+        }
+
+        item {
+            MyText(
+                modifier = Modifier.padding(
+                    top = 16.dp,
+                ),
+                text = "Horizontal Scrolling Suggestion Group",
+            )
+        }
+        item {
+            val items = listOf(
+                ChipItem(
+                    text = "Item 1",
+                ),
+                ChipItem(
+                    text = "Item 2",
+                ),
+                ChipItem(
+                    text = "Item 3",
+                ),
+                ChipItem(
+                    text = "Item 4",
+                ),
+                ChipItem(
+                    text = "Item 5",
+                ),
+                ChipItem(
+                    text = "Item 6",
+                ),
+            )
+            MyHorizontalScrollingSuggestionGroup(
+                items = items,
+                onSelectionChange = {
+                    Toast.makeText(context, "Selected ${items[it].text}", Toast.LENGTH_SHORT).show()
+                },
+            )
+        }
+
         item {
             MyText(
                 modifier = Modifier.padding(
@@ -153,6 +410,7 @@ private fun CatalogList(
                 )
             }
         }
+
         item {
             MyText(
                 modifier = Modifier.padding(
@@ -189,6 +447,7 @@ private fun CatalogList(
                 )
             }
         }
+
         item {
             MyText(
                 modifier = Modifier.padding(
@@ -205,6 +464,7 @@ private fun CatalogList(
                 DefaultTag()
             }
         }
+
         item {
             MyText(
                 modifier = Modifier.padding(
@@ -236,6 +496,7 @@ private fun CatalogList(
                 )
             }
         }
+
         item {
             MyText(
                 modifier = Modifier.padding(
@@ -261,6 +522,65 @@ private fun CatalogList(
                 )
             }
         }
+
+        item {
+            MyText(
+                modifier = Modifier.padding(
+                    top = 16.dp,
+                ),
+                text = "Search Bar",
+            )
+        }
+        item {
+            FlowRow(
+                mainAxisSpacing = 16.dp,
+                crossAxisAlignment = FlowCrossAxisAlignment.Center,
+            ) {
+                val (searchText, setSearchText) = remember {
+                    mutableStateOf("")
+                }
+                SearchBarContainer {
+                    SearchBar(
+                        data = SearchBarData(
+                            autoFocus = false,
+                            searchText = searchText,
+                            placeholderText = "Placeholder",
+                            onValueChange = setSearchText,
+                        ),
+                    )
+                }
+            }
+        }
+
+        item {
+            MyText(
+                modifier = Modifier.padding(
+                    top = 16.dp,
+                ),
+                text = "My Search Bar",
+            )
+        }
+        item {
+            FlowRow(
+                mainAxisSpacing = 16.dp,
+                crossAxisAlignment = FlowCrossAxisAlignment.Center,
+            ) {
+                val (searchText, setSearchText) = remember {
+                    mutableStateOf("")
+                }
+                SearchBarContainer {
+                    MySearchBar(
+                        data = SearchBarData(
+                            autoFocus = false,
+                            searchText = searchText,
+                            placeholderText = "Placeholder",
+                            onValueChange = setSearchText,
+                        ),
+                    )
+                }
+            }
+        }
+
         item {
             MyText(
                 modifier = Modifier.padding(
@@ -278,7 +598,7 @@ private fun CatalogList(
                     titleText = "Title",
                     isNavigationIconVisible = true,
                     navigationBackButton = {
-                        NavigationBackButtonView(
+                        NavigationBackButton(
                             onClick = {},
                         )
                     },
@@ -287,13 +607,14 @@ private fun CatalogList(
                     titleText = "Title",
                     isNavigationIconVisible = false,
                     navigationBackButton = {
-                        NavigationBackButtonView(
+                        NavigationBackButton(
                             onClick = {},
                         )
                     },
                 )
             }
         }
+
         item {
             MyText(
                 modifier = Modifier.padding(
@@ -307,7 +628,7 @@ private fun CatalogList(
                 mainAxisSpacing = 16.dp,
                 crossAxisAlignment = FlowCrossAxisAlignment.Center,
             ) {
-                NavigationBackButtonView(
+                NavigationBackButton(
                     onClick = {},
                 )
             }

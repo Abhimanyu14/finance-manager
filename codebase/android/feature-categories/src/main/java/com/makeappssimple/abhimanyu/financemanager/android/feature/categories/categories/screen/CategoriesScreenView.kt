@@ -34,6 +34,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateToAddCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateToEditCategoryScreen
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
@@ -199,9 +200,12 @@ internal fun CategoriesScreenView(
         Scaffold(
             topBar = {
                 MyTopAppBar(
-                    navigationManager = data.navigationManager,
                     titleTextStringResourceId = R.string.screen_categories_appbar_title,
-                    isNavigationIconVisible = true,
+                    navigationAction = {
+                        navigateUp(
+                            navigationManager = data.navigationManager,
+                        )
+                    },
                 )
             },
             floatingActionButton = {

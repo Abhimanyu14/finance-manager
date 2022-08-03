@@ -9,22 +9,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 
 @Composable
 fun MyTopAppBar(
-    navigationManager: NavigationManager,
     @StringRes titleTextStringResourceId: Int,
-    isNavigationIconVisible: Boolean,
+    navigationAction: (() -> Unit)? = null,
 ) {
     MyTopAppBarView(
         titleText = stringResource(
             id = titleTextStringResourceId,
         ),
-        isNavigationIconVisible = isNavigationIconVisible,
+        isNavigationIconVisible = navigationAction != null,
     ) {
         NavigationBackButton(
-            navigationManager = navigationManager,
+            onClick = {
+                navigationAction?.invoke()
+            },
         )
     }
 }

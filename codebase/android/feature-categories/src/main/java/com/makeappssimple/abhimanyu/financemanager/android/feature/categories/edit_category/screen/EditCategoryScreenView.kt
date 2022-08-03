@@ -31,14 +31,15 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ChipItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircleSize
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyRadioGroup
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyRadioGroupItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MyOutlinedTextField
@@ -133,9 +134,12 @@ internal fun EditCategoryScreenView(
         Scaffold(
             topBar = {
                 MyTopAppBar(
-                    navigationManager = data.navigationManager,
                     titleTextStringResourceId = R.string.screen_edit_category_appbar_title,
-                    isNavigationIconVisible = true,
+                    navigationAction = {
+                        navigateUp(
+                            navigationManager = data.navigationManager,
+                        )
+                    },
                 )
             },
             modifier = Modifier
@@ -158,7 +162,7 @@ internal fun EditCategoryScreenView(
                     MyRadioGroup(
                         items = data.transactionTypes
                             .map { transactionType ->
-                                MyRadioGroupItem(
+                                ChipItem(
                                     text = transactionType.title,
                                 )
                             },

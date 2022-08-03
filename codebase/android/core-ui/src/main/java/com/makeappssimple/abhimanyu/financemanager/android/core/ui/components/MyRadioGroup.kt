@@ -30,7 +30,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.White
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.getIcon
 
-data class MyRadioGroupItem(
+data class ChipItem(
     val text: String,
     val iconKey: String? = null,
     val defaultTextColor: Color = DarkGray,
@@ -42,15 +42,15 @@ data class MyRadioGroupItem(
 @Composable
 fun MySelectionGroup(
     modifier: Modifier = Modifier,
-    items: List<MyRadioGroupItem>,
+    items: List<ChipItem>,
     selectedItemsIndices: List<Int>,
     onSelectionChange: (index: Int) -> Unit,
 ) {
     FlowRow(
         modifier = modifier,
     ) {
-        items.forEachIndexed { index, item ->
-            MyRadioGroupItemView(
+        items.mapIndexed { index, item ->
+            ChipView(
                 item = item,
                 isSelected = selectedItemsIndices.contains(index),
                 onSelectionChange = {
@@ -64,15 +64,15 @@ fun MySelectionGroup(
 @Composable
 fun MyRadioGroup(
     modifier: Modifier = Modifier,
-    items: List<MyRadioGroupItem>,
+    items: List<ChipItem>,
     selectedItemIndex: Int?,
     onSelectionChange: (index: Int) -> Unit,
 ) {
     FlowRow(
         modifier = modifier,
     ) {
-        items.forEachIndexed { index, item ->
-            MyRadioGroupItemView(
+        items.mapIndexed { index, item ->
+            ChipView(
                 item = item,
                 isSelected = index == selectedItemIndex,
                 onSelectionChange = {
@@ -84,9 +84,9 @@ fun MyRadioGroup(
 }
 
 @Composable
-fun MyScrollableRadioGroup(
+fun MyHorizontalScrollingRadioGroup(
     modifier: Modifier = Modifier,
-    items: List<MyRadioGroupItem>,
+    items: List<ChipItem>,
     selectedItemIndex: Int?,
     onSelectionChange: (index: Int) -> Unit,
 ) {
@@ -100,7 +100,7 @@ fun MyScrollableRadioGroup(
                 listItem.hashCode()
             },
         ) { index, listItem ->
-            MyRadioGroupItemView(
+            ChipView(
                 item = listItem,
                 isSelected = index == selectedItemIndex,
                 onSelectionChange = {
@@ -112,8 +112,35 @@ fun MyScrollableRadioGroup(
 }
 
 @Composable
-private fun MyRadioGroupItemView(
-    item: MyRadioGroupItem,
+fun MyHorizontalScrollingSuggestionGroup(
+    modifier: Modifier = Modifier,
+    items: List<ChipItem>,
+    onSelectionChange: (index: Int) -> Unit,
+) {
+    LazyRow(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = modifier,
+    ) {
+        itemsIndexed(
+            items = items,
+            key = { _, listItem ->
+                listItem.hashCode()
+            },
+        ) { index, listItem ->
+            ChipView(
+                item = listItem,
+                isSelected = false,
+                onSelectionChange = {
+                    onSelectionChange(index)
+                },
+            )
+        }
+    }
+}
+
+@Composable
+private fun ChipView(
+    item: ChipItem,
     isSelected: Boolean,
     onSelectionChange: () -> Unit,
 ) {

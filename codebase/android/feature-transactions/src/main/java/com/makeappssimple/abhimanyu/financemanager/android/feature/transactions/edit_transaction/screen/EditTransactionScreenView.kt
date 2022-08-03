@@ -46,14 +46,15 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.AmountCommaVisualTransformation
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ChipItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyHorizontalScrollingSuggestionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyRadioGroup
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyRadioGroupItem
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyScrollableRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.select_category.SelectCategoryBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.select_source.SelectSourceBottomSheetContent
@@ -240,9 +241,12 @@ internal fun EditTransactionScreenView(
         Scaffold(
             topBar = {
                 MyTopAppBar(
-                    navigationManager = data.navigationManager,
                     titleTextStringResourceId = R.string.screen_edit_transaction_appbar_title,
-                    isNavigationIconVisible = true,
+                    navigationAction = {
+                        navigateUp(
+                            navigationManager = data.navigationManager,
+                        )
+                    },
                 )
             },
             modifier = Modifier
@@ -265,7 +269,7 @@ internal fun EditTransactionScreenView(
                     MyRadioGroup(
                         items = data.transactionTypesForNewTransaction
                             .map { transactionType ->
-                                MyRadioGroupItem(
+                                ChipItem(
                                     text = transactionType.title,
                                 )
                             },
@@ -370,14 +374,13 @@ internal fun EditTransactionScreenView(
                     AnimatedVisibility(
                         visible = data.uiVisibilityState.isTitleSuggestionsVisible,
                     ) {
-                        MyScrollableRadioGroup(
+                        MyHorizontalScrollingSuggestionGroup(
                             items = data.titleSuggestions
                                 .map { title ->
-                                    MyRadioGroupItem(
+                                    ChipItem(
                                         text = title,
                                     )
                                 },
-                            selectedItemIndex = null,
                             onSelectionChange = { index ->
                                 data.updateTitle(data.titleSuggestions[index])
                                 clearFocus()
@@ -395,7 +398,7 @@ internal fun EditTransactionScreenView(
                         MyRadioGroup(
                             items = data.transactionForValues
                                 .map { transactionFor ->
-                                    MyRadioGroupItem(
+                                    ChipItem(
                                         text = transactionFor.title,
                                     )
                                 },

@@ -28,7 +28,7 @@ fun MyTabRow(
         containerColor = MaterialTheme.colorScheme.surface,
         contentColor = MaterialTheme.colorScheme.primary,
     ) {
-        data.tabData.forEachIndexed { index, categoriesTabData ->
+        data.tabData.mapIndexed { index, categoriesTabData ->
             val isSelected = data.selectedTabIndex == index
             Tab(
                 text = {

@@ -53,7 +53,7 @@ fun OverviewTab(
                 color = MaterialTheme.colorScheme.surface,
             ),
     ) {
-        data.items.forEachIndexed { index, text ->
+        data.items.mapIndexed { index, text ->
             val isSelected = index == data.selectedItemIndex
             MyText(
                 modifier = Modifier

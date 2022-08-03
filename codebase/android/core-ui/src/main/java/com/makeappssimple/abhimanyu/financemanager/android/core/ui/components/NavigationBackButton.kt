@@ -7,23 +7,10 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 
 @Composable
 fun NavigationBackButton(
-    navigationManager: NavigationManager,
-) {
-    NavigationBackButtonView {
-        navigateUp(
-            navigationManager = navigationManager,
-        )
-    }
-}
-
-@Composable
-fun NavigationBackButtonView(
     onClick: () -> Unit,
 ) {
     IconButton(

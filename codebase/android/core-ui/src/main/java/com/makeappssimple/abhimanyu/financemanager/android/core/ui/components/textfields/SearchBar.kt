@@ -41,6 +41,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Transparent
 
 data class SearchBarData(
+    val autoFocus: Boolean = true,
     val searchText: String,
     val placeholderText: String,
     val onValueChange: (updatedSearchText: String) -> Unit,
@@ -75,10 +76,12 @@ fun SearchBar(
         FocusRequester()
     }
 
-    LaunchedEffect(
-        key1 = Unit,
-    ) {
-        focusRequester.requestFocus()
+    if (data.autoFocus) {
+        LaunchedEffect(
+            key1 = Unit,
+        ) {
+            focusRequester.requestFocus()
+        }
     }
 
     TextField(
@@ -156,10 +159,12 @@ fun MySearchBar(
         FocusRequester()
     }
 
-    LaunchedEffect(
-        key1 = Unit,
-    ) {
-        focusRequester.requestFocus()
+    if (data.autoFocus) {
+        LaunchedEffect(
+            key1 = Unit,
+        ) {
+            focusRequester.requestFocus()
+        }
     }
 
     BasicTextField(

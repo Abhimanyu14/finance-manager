@@ -27,7 +27,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyRadioGroupItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ChipItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MySelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 
@@ -134,7 +134,7 @@ internal fun TransactionsFiltersBottomSheet(
             MySelectionGroup(
                 items = data.expenseCategories
                     .map { category ->
-                        MyRadioGroupItem(
+                        ChipItem(
                             text = category.title,
                         )
                     },
@@ -190,7 +190,7 @@ internal fun TransactionsFiltersBottomSheet(
             MySelectionGroup(
                 items = data.incomeCategories
                     .map { category ->
-                        MyRadioGroupItem(
+                        ChipItem(
                             text = category.title,
                         )
                     },
@@ -246,7 +246,7 @@ internal fun TransactionsFiltersBottomSheet(
             MySelectionGroup(
                 items = data.sources
                     .map { source ->
-                        MyRadioGroupItem(
+                        ChipItem(
                             text = source.name,
                         )
                     },
@@ -302,7 +302,7 @@ internal fun TransactionsFiltersBottomSheet(
             MySelectionGroup(
                 items = data.transactionTypes
                     .map { transactionType ->
-                        MyRadioGroupItem(
+                        ChipItem(
                             text = transactionType.title,
                         )
                     },

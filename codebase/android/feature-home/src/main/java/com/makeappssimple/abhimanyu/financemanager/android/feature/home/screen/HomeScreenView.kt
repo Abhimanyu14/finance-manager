@@ -100,9 +100,7 @@ internal fun HomeScreenView(
         Scaffold(
             topBar = {
                 MyTopAppBar(
-                    navigationManager = data.navigationManager,
                     titleTextStringResourceId = R.string.screen_home_appbar_title,
-                    isNavigationIconVisible = false,
                 )
             },
             bottomBar = {

@@ -51,12 +51,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateToAddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateToEditTransactionScreen
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyRadioGroupItem
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyScrollableRadioGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ChipItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyHorizontalScrollingRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MySearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBarData
@@ -226,9 +227,12 @@ internal fun TransactionsScreenView(
         Scaffold(
             topBar = {
                 MyTopAppBar(
-                    navigationManager = data.navigationManager,
                     titleTextStringResourceId = R.string.screen_transactions_appbar_title,
-                    isNavigationIconVisible = true,
+                    navigationAction = {
+                        navigateUp(
+                            navigationManager = data.navigationManager,
+                        )
+                    },
                 )
             },
             floatingActionButton = {
@@ -311,10 +315,10 @@ internal fun TransactionsScreenView(
                                         weight = 1F,
                                     ),
                             ) {
-                                MyScrollableRadioGroup(
+                                MyHorizontalScrollingRadioGroup(
                                     items = sortOptions
                                         .map { sortOption ->
-                                            MyRadioGroupItem(
+                                            ChipItem(
                                                 text = sortOption.title,
                                             )
                                         },
