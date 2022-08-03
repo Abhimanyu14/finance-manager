@@ -57,8 +57,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSh
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ChipItem
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyHorizontalScrollingRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MySearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBarData
@@ -67,11 +65,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.TransactionsListItemViewData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsFiltersBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsSortBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.SortOption
 
 internal enum class TransactionsBottomSheetType : BottomSheetType {
     NONE,
     FILTERS,
+    SORT,
     DELETE_CONFIRMATION,
 }
 
@@ -129,11 +129,6 @@ internal fun TransactionsScreenView(
 
     // Sorting
     val sortOptions = SortOption.values()
-    val (isSortOptionsVisible, setIsSortOptionsVisible) = remember {
-        mutableStateOf(
-            value = false,
-        )
-    }
 
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
         DisposableEffect(Unit) {
@@ -153,10 +148,9 @@ internal fun TransactionsScreenView(
     }
 
     BackHandler(
-        enabled = isSearchbarVisible || isSortOptionsVisible,
+        enabled = isSearchbarVisible,
     ) {
         setIsSearchbarVisible(false)
-        setIsSortOptionsVisible(false)
     }
 
     ModalBottomSheetLayout(
@@ -202,6 +196,20 @@ internal fun TransactionsScreenView(
                             data.updateSelectedTransactionTypesIndices(
                                 updatedSelectedTransactionTypesIndices
                             )
+                        },
+                        resetBottomSheetType = {
+                            transactionsBottomSheetType = TransactionsBottomSheetType.NONE
+                        },
+                    )
+                }
+                TransactionsBottomSheetType.SORT -> {
+                    TransactionsSortBottomSheetContent(
+                        coroutineScope = state.coroutineScope,
+                        modalBottomSheetState = state.modalBottomSheetState,
+                        sortOptions = sortOptions.toList(),
+                        selectedSortOptionIndex = sortOptions.indexOf(data.selectedSortOption),
+                        updateSelectedSortOption = { index ->
+                            data.updateSelectedSortOption(sortOptions[index])
                         },
                         resetBottomSheetType = {
                             transactionsBottomSheetType = TransactionsBottomSheetType.NONE
@@ -316,79 +324,51 @@ internal fun TransactionsScreenView(
                                     ),
                                 )
                             }
-                            AnimatedVisibility(
-                                visible = isSortOptionsVisible,
-                                modifier = Modifier
-                                    .weight(
-                                        weight = 1F,
-                                    ),
+                            ElevatedCard(
+                                onClick = {
+                                    if (isSearchbarVisible) {
+                                        state.keyboardController?.hide()
+                                    }
+                                    setIsSearchbarVisible(!isSearchbarVisible)
+                                    data.updateSearchText("")
+                                },
+                                modifier = Modifier,
                             ) {
-                                MyHorizontalScrollingRadioGroup(
-                                    items = sortOptions
-                                        .map { sortOption ->
-                                            ChipItem(
-                                                text = sortOption.title,
-                                            )
-                                        },
-                                    selectedItemIndex = sortOptions.indexOf(data.selectedSortOption),
-                                    onSelectionChange = { index ->
-                                        data.updateSelectedSortOption(sortOptions[index])
-                                        setIsSortOptionsVisible(!isSortOptionsVisible)
+                                Icon(
+                                    imageVector = if (isSearchbarVisible) {
+                                        Icons.Rounded.Clear
+                                    } else {
+                                        Icons.Rounded.Search
                                     },
+                                    contentDescription = stringResource(
+                                        id = R.string.screen_transactions_search_button_content_description,
+                                    ),
+                                    tint = DarkGray,
                                     modifier = Modifier
+                                        .background(
+                                            color = Blue50,
+                                        )
                                         .padding(
-                                            all = 12.dp,
+                                            all = 8.dp,
                                         ),
                                 )
-                            }
-                            AnimatedVisibility(
-                                visible = !isSortOptionsVisible,
-                            ) {
-                                ElevatedCard(
-                                    onClick = {
-                                        if (isSearchbarVisible) {
-                                            state.keyboardController?.hide()
-                                        }
-                                        setIsSearchbarVisible(!isSearchbarVisible)
-                                        data.updateSearchText("")
-                                    },
-                                    modifier = Modifier,
-                                ) {
-                                    Icon(
-                                        imageVector = if (isSearchbarVisible) {
-                                            Icons.Rounded.Clear
-                                        } else {
-                                            Icons.Rounded.Search
-                                        },
-                                        contentDescription = stringResource(
-                                            id = R.string.screen_transactions_search_button_content_description,
-                                        ),
-                                        tint = DarkGray,
-                                        modifier = Modifier
-                                            .background(
-                                                color = Blue50,
-                                            )
-                                            .padding(
-                                                all = 8.dp,
-                                            ),
-                                    )
-                                }
                             }
                             AnimatedVisibility(
                                 visible = !isSearchbarVisible,
                             ) {
                                 ElevatedCard(
                                     onClick = {
-                                        setIsSortOptionsVisible(!isSortOptionsVisible)
+                                        transactionsBottomSheetType =
+                                            TransactionsBottomSheetType.SORT
+                                        toggleModalBottomSheetState(
+                                            coroutineScope = state.coroutineScope,
+                                            modalBottomSheetState = state.modalBottomSheetState,
+                                        )
                                     },
                                     modifier = Modifier,
                                 ) {
                                     Icon(
-                                        imageVector = if (isSortOptionsVisible) {
-                                            Icons.Rounded.Clear
-                                        } else {
-                                            Icons.Rounded.SwapVert
-                                        },
+                                        imageVector = Icons.Rounded.SwapVert,
                                         contentDescription = stringResource(
                                             id = R.string.screen_transactions_sort_button_content_description,
                                         ),
@@ -404,7 +384,7 @@ internal fun TransactionsScreenView(
                                 }
                             }
                             AnimatedVisibility(
-                                visible = !isSearchbarVisible && !isSortOptionsVisible,
+                                visible = !isSearchbarVisible,
                             ) {
                                 ElevatedCard(
                                     onClick = {

@@ -69,4 +69,8 @@
     <string name="bottom_sheet_transactions_filter_select_transaction_types">Select Transaction Types</string>
     <!-- endregion -->
 
+    <!-- region transactions sort bottom sheet -->
+    <string name="bottom_sheet_transactions_sort_title">Sort</string>
+    <!-- endregion -->
+
 </resources>
