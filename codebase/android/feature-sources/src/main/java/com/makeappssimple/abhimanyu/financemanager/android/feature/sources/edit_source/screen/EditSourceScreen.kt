@@ -2,9 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.edit
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.logError
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
@@ -19,12 +19,12 @@ fun EditSourceScreen(
     logError(
         message = "Inside EditSourceScreen",
     )
-    val selectedSourceTypeIndex: Int by screenViewModel.selectedSourceTypeIndex.collectAsState()
-    val source: Source? by screenViewModel.source.collectAsState(
-        initial = null,
+    val selectedSourceTypeIndex: Int by screenViewModel.selectedSourceTypeIndex.collectAsStateWithLifecycle()
+    val source: Source? by screenViewModel.source.collectAsStateWithLifecycle(
+        initialValue = null,
     )
-    val balanceAmountValue: String by screenViewModel.balanceAmountValue.collectAsState()
-    val name: String by screenViewModel.name.collectAsState()
+    val balanceAmountValue: String by screenViewModel.balanceAmountValue.collectAsStateWithLifecycle()
+    val name: String by screenViewModel.name.collectAsStateWithLifecycle()
 
     LaunchedEffect(
         key1 = Unit,

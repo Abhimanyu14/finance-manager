@@ -2,9 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.logError
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_source.viewmodel.AddSourceScreenViewModel
@@ -17,8 +17,8 @@ fun AddSourceScreen(
     logError(
         message = "Inside AddSourceScreen",
     )
-    val selectedSourceTypeIndex: Int by screenViewModel.selectedSourceTypeIndex.collectAsState()
-    val name: String by screenViewModel.name.collectAsState()
+    val selectedSourceTypeIndex: Int by screenViewModel.selectedSourceTypeIndex.collectAsStateWithLifecycle()
+    val name: String by screenViewModel.name.collectAsStateWithLifecycle()
 
     LaunchedEffect(
         key1 = Unit,

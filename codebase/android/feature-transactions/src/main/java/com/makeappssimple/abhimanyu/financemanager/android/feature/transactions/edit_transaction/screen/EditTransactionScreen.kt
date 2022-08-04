@@ -2,9 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
@@ -23,20 +23,20 @@ fun EditTransactionScreen(
     logError(
         message = "Inside EditTransactionScreen",
     )
-    val categories: List<Category> by screenViewModel.categories.collectAsState(
-        initial = emptyList(),
+    val categories: List<Category> by screenViewModel.categories.collectAsStateWithLifecycle(
+        initialValue = emptyList(),
     )
-    val sources: List<Source> by screenViewModel.sources.collectAsState(
-        initial = emptyList(),
+    val sources: List<Source> by screenViewModel.sources.collectAsStateWithLifecycle(
+        initialValue = emptyList(),
     )
-    val transactionTypesForNewTransaction: List<TransactionType> by screenViewModel.transactionTypesForNewTransaction.collectAsState(
-        initial = emptyList(),
+    val transactionTypesForNewTransaction: List<TransactionType> by screenViewModel.transactionTypesForNewTransaction.collectAsStateWithLifecycle(
+        initialValue = emptyList(),
     )
-    val uiState: EditTransactionScreenUiState by screenViewModel.uiState.collectAsState()
-    val uiVisibilityState: EditTransactionScreenUiVisibilityState by screenViewModel.uiVisibilityState.collectAsState()
-    val selectedTransactionType: TransactionType? by screenViewModel.selectedTransactionType.collectAsState()
-    val isValidTransactionData: Boolean by screenViewModel.isValidTransactionData.collectAsState()
-    val titleSuggestions: List<String> by screenViewModel.titleSuggestions.collectAsState()
+    val uiState: EditTransactionScreenUiState by screenViewModel.uiState.collectAsStateWithLifecycle()
+    val uiVisibilityState: EditTransactionScreenUiVisibilityState by screenViewModel.uiVisibilityState.collectAsStateWithLifecycle()
+    val selectedTransactionType: TransactionType? by screenViewModel.selectedTransactionType.collectAsStateWithLifecycle()
+    val isValidTransactionData: Boolean by screenViewModel.isValidTransactionData.collectAsStateWithLifecycle()
+    val titleSuggestions: List<String> by screenViewModel.titleSuggestions.collectAsStateWithLifecycle()
 
     LaunchedEffect(
         key1 = Unit,

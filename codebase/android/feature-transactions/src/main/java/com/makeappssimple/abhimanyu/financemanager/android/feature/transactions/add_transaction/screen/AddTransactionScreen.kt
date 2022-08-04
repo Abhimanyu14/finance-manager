@@ -2,9 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
@@ -22,20 +22,20 @@ fun AddTransactionScreen(
     logError(
         message = "Inside AddTransactionScreen",
     )
-    val uiVisibilityState: AddTransactionScreenUiVisibilityState by screenViewModel.uiVisibilityState.collectAsState()
-    val uiState: AddTransactionScreenUiState by screenViewModel.uiState.collectAsState()
-    val isValidTransactionData: Boolean by screenViewModel.isValidTransactionData.collectAsState()
-    val categories: List<Category> by screenViewModel.categories.collectAsState(
-        initial = emptyList(),
+    val uiVisibilityState: AddTransactionScreenUiVisibilityState by screenViewModel.uiVisibilityState.collectAsStateWithLifecycle()
+    val uiState: AddTransactionScreenUiState by screenViewModel.uiState.collectAsStateWithLifecycle()
+    val isValidTransactionData: Boolean by screenViewModel.isValidTransactionData.collectAsStateWithLifecycle()
+    val categories: List<Category> by screenViewModel.categories.collectAsStateWithLifecycle(
+        initialValue = emptyList(),
     )
-    val sources: List<Source> by screenViewModel.sources.collectAsState(
-        initial = emptyList(),
+    val sources: List<Source> by screenViewModel.sources.collectAsStateWithLifecycle(
+        initialValue = emptyList(),
     )
-    val titleSuggestions: List<String> by screenViewModel.titleSuggestions.collectAsState()
-    val transactionTypesForNewTransaction: List<TransactionType> by screenViewModel.transactionTypesForNewTransaction.collectAsState(
-        initial = emptyList(),
+    val titleSuggestions: List<String> by screenViewModel.titleSuggestions.collectAsStateWithLifecycle()
+    val transactionTypesForNewTransaction: List<TransactionType> by screenViewModel.transactionTypesForNewTransaction.collectAsStateWithLifecycle(
+        initialValue = emptyList(),
     )
-    val selectedTransactionType: TransactionType? by screenViewModel.selectedTransactionType.collectAsState()
+    val selectedTransactionType: TransactionType? by screenViewModel.selectedTransactionType.collectAsStateWithLifecycle()
 
     LaunchedEffect(
         key1 = Unit,

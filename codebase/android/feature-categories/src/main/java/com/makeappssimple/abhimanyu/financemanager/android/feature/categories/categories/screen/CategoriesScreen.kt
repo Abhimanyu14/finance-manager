@@ -2,9 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.logError
@@ -19,26 +19,26 @@ fun CategoriesScreen(
     logError(
         message = "Inside CategoriesScreen",
     )
-    val defaultExpenseCategoryId: Int? by screenViewModel.defaultExpenseCategoryId.collectAsState(
-        initial = null,
+    val defaultExpenseCategoryId: Int? by screenViewModel.defaultExpenseCategoryId.collectAsStateWithLifecycle(
+        initialValue = null,
     )
-    val defaultIncomeCategoryId: Int? by screenViewModel.defaultIncomeCategoryId.collectAsState(
-        initial = null,
+    val defaultIncomeCategoryId: Int? by screenViewModel.defaultIncomeCategoryId.collectAsStateWithLifecycle(
+        initialValue = null,
     )
-    val selectedTabIndex: Int by screenViewModel.selectedTabIndex.collectAsState()
+    val selectedTabIndex: Int by screenViewModel.selectedTabIndex.collectAsStateWithLifecycle()
     val expenseCategoryIsUsedInTransactions: List<Boolean> by screenViewModel
-        .expenseCategoryIsUsedInTransactions.collectAsState(
-            initial = emptyList(),
+        .expenseCategoryIsUsedInTransactions.collectAsStateWithLifecycle(
+            initialValue = emptyList(),
         )
     val incomeCategoryIsUsedInTransactions: List<Boolean> by screenViewModel
-        .incomeCategoryIsUsedInTransactions.collectAsState(
-            initial = emptyList(),
+        .incomeCategoryIsUsedInTransactions.collectAsStateWithLifecycle(
+            initialValue = emptyList(),
         )
-    val expenseCategories: List<Category> by screenViewModel.expenseCategories.collectAsState(
-        initial = emptyList(),
+    val expenseCategories: List<Category> by screenViewModel.expenseCategories.collectAsStateWithLifecycle(
+        initialValue = emptyList(),
     )
-    val incomeCategories: List<Category> by screenViewModel.incomeCategories.collectAsState(
-        initial = emptyList(),
+    val incomeCategories: List<Category> by screenViewModel.incomeCategories.collectAsStateWithLifecycle(
+        initialValue = emptyList(),
     )
 
     LaunchedEffect(

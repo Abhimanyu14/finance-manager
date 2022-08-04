@@ -92,7 +92,7 @@ buildscript {
         kotlinCoroutinesPlayServicesVersion = "1.1.1"
 
         // Appcompat
-        appCompatVersion = "1.4.2"
+        appCompatVersion = "1.6.0-alpha05"
 
         // Constraint layout
         constraintLayoutVersion = "2.1.1"
@@ -120,6 +120,9 @@ buildscript {
 
         // Jetpack compose integration with view models
         jetpackComposeViewModelIntegrationVersion = "2.6.0-alpha01"
+
+        // Jetpack compose lifecycle runtime
+        jetpackComposeLifecycleRuntimeVersion = "2.6.0-alpha01"
 
         // Jetpack compose navigation
         jetpackComposeNavigationVersion = "2.5.1"

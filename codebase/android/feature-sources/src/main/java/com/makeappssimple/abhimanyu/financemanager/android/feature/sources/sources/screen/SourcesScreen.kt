@@ -2,9 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sour
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.logError
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
@@ -18,15 +18,15 @@ fun SourcesScreen(
     logError(
         message = "Inside SourcesScreen",
     )
-    val defaultSourceId: Int? by screenViewModel.defaultSourceId.collectAsState(
-        initial = null,
+    val defaultSourceId: Int? by screenViewModel.defaultSourceId.collectAsStateWithLifecycle(
+        initialValue = null,
     )
-    val sources: List<Source> by screenViewModel.sources.collectAsState(
-        initial = emptyList(),
+    val sources: List<Source> by screenViewModel.sources.collectAsStateWithLifecycle(
+        initialValue = emptyList(),
     )
     val sourcesIsUsedInTransactions: List<Boolean> by screenViewModel.sourcesIsUsedInTransactions
-        .collectAsState(
-            initial = emptyList(),
+        .collectAsStateWithLifecycle(
+            initialValue = emptyList(),
         )
 
     LaunchedEffect(

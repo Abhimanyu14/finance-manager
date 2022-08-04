@@ -1,9 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.overview_card
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 enum class OverviewTabOption(
     val title: String,
@@ -21,8 +21,8 @@ fun OverviewCard(
     viewModel: OverviewCardViewModel = hiltViewModel<OverviewCardViewModelImpl>(),
     onClick: (() -> Unit)? = null,
 ) {
-    val overviewTabSelectionIndex by viewModel.overviewTabSelectionIndex.collectAsState()
-    val pieChartData by viewModel.pieChartData.collectAsState()
+    val overviewTabSelectionIndex by viewModel.overviewTabSelectionIndex.collectAsStateWithLifecycle()
+    val pieChartData by viewModel.pieChartData.collectAsStateWithLifecycle()
 
     OverviewCardView(
         data = OverviewCardViewData(

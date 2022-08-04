@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -41,7 +41,7 @@ internal fun MyNavGraph(
     val navHostController = rememberNavController()
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    activityViewModel.navigationManager.command.collectAsState().value.also { command ->
+    activityViewModel.navigationManager.command.collectAsStateWithLifecycle().value.also { command ->
         keyboardController?.hide()
         when (command.command) {
             Command.NAVIGATE -> {

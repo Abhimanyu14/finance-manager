@@ -32,7 +32,33 @@ android {
         jvmTarget = "1.8"
 
         freeCompilerArgs += [
-                "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi"
+                "-Xopt-in=kotlin.RequiresOptIn",
+
+                "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                "-Xopt-in=kotlinx.coroutines.FlowPreview",
+                "-Xopt-in=kotlinx.coroutines.InternalCoroutinesApi",
+                "-Xopt-in=kotlinx.coroutines.ObsoleteCoroutinesApi",
+
+                "-Xopt-in=androidx.lifecycle.compose.ExperimentalLifecycleComposeApi",
+
+                "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+
+                "-Xopt-in=androidx.compose.animation.ExperimentalAnimationApi",
+                "-Xopt-in=androidx.compose.runtime.ExperimentalComposeApi",
+                "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+                "-Xopt-in=androidx.compose.animation.core.InternalAnimationApi",
+                "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi",
+                "-Xopt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+
+                "-Xopt-in=com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi",
+                "-Xopt-in=com.google.accompanist.pager.ExperimentalPagerApi",
+                "-Xopt-in=com.google.accompanist.permissions.ExperimentalPermissionsApi",
+
+                "-Xopt-in=kotlin.contracts.ExperimentalContracts",
+
+                "-Xopt-in=kotlin.ExperimentalUnsignedTypes",
+
+                "-Xopt-in=kotlin.time.ExperimentalTime"
         ]
     }
 }

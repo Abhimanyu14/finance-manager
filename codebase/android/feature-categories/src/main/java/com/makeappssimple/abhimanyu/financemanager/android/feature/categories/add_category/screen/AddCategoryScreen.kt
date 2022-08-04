@@ -2,9 +2,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.a
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.constants.loadingCompletedEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.logError
@@ -12,6 +13,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememb
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.viewmodel.AddCategoryScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.viewmodel.AddCategoryScreenViewModelImpl
 
+@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun AddCategoryScreen(
     screenViewModel: AddCategoryScreenViewModel = hiltViewModel<AddCategoryScreenViewModelImpl>(),
@@ -19,13 +21,13 @@ fun AddCategoryScreen(
     logError(
         message = "Inside AddCategoryScreen",
     )
-    val selectedTransactionTypeIndex: Int by screenViewModel.selectedTransactionTypeIndex.collectAsState()
-    val emojis: List<Emoji> by screenViewModel.filteredEmojis.collectAsState(
-        initial = emptyList(),
+    val selectedTransactionTypeIndex: Int by screenViewModel.selectedTransactionTypeIndex.collectAsStateWithLifecycle()
+    val emojis: List<Emoji> by screenViewModel.filteredEmojis.collectAsStateWithLifecycle(
+        initialValue = emptyList(),
     )
-    val emoji: String by screenViewModel.emoji.collectAsState()
-    val searchText: String by screenViewModel.searchText.collectAsState()
-    val title: String by screenViewModel.title.collectAsState()
+    val emoji: String by screenViewModel.emoji.collectAsStateWithLifecycle()
+    val searchText: String by screenViewModel.searchText.collectAsStateWithLifecycle()
+    val title: String by screenViewModel.title.collectAsStateWithLifecycle()
 
     LaunchedEffect(
         key1 = Unit,

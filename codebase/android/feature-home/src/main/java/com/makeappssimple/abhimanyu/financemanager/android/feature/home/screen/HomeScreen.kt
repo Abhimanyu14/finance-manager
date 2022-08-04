@@ -2,9 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.logError
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.HomeListItemViewData
@@ -19,8 +19,8 @@ fun HomeScreen(
         message = "Inside HomeScreen",
     )
     val homeListItemViewData: List<HomeListItemViewData> by screenViewModel.homeListItemViewData
-        .collectAsState(
-            initial = emptyList(),
+        .collectAsStateWithLifecycle(
+            initialValue = emptyList(),
         )
 
     LaunchedEffect(
