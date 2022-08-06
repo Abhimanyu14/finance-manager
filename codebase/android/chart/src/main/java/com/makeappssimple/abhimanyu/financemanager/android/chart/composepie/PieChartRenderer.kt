@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.chart.composepie
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -15,7 +16,6 @@ import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.util.fastForEachIndexed
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.LightGray
 import kotlin.math.absoluteValue
 import kotlin.math.cos
 import kotlin.math.max
@@ -33,6 +33,7 @@ internal fun PieChartRenderer(
     composeColors: List<Color>,
     animate: Boolean,
 ) {
+    val emptyChartColor = MaterialTheme.colorScheme.surfaceVariant
     var animationRan by rememberSaveable(fractions, animate) {
         mutableStateOf(
             value = false,
@@ -212,7 +213,7 @@ internal fun PieChartRenderer(
             drawPath(
                 path = pathBuffer,
                 color = if (isTotalZero) {
-                    LightGray
+                    emptyChartColor
                 } else {
                     composeColors[index]
                 },

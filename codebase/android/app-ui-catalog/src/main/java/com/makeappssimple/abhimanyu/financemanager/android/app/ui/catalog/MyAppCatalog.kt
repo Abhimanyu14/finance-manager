@@ -33,9 +33,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabRow
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabRowData
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Error
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Green700
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.LightGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ChipItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.DefaultTag
@@ -372,12 +369,12 @@ private fun LazyListScope.componentsTabContent(
                             PieChartItemData(
                                 value = 500F,
                                 text = "Income : ₹500",
-                                color = Green700,
+                                color = MaterialTheme.colorScheme.tertiary,
                             ),
                             PieChartItemData(
                                 value = 600F,
                                 text = "Expense : ₹600",
-                                color = Error,
+                                color = MaterialTheme.colorScheme.error,
                             ),
                         ),
                     ),
@@ -435,11 +432,11 @@ private fun LazyListScope.componentsTabContent(
             )
             EmojiCircle(
                 emoji = "😀",
-                backgroundColor = LightGray,
+                backgroundColor = MaterialTheme.colorScheme.outline,
             )
             EmojiCircle(
                 emoji = "😀",
-                backgroundColor = LightGray,
+                backgroundColor = MaterialTheme.colorScheme.outline,
                 emojiCircleSize = EmojiCircleSize.Normal,
             )
         }
@@ -811,6 +808,30 @@ private fun LazyListScope.colorTabContent() {
             )
 
             /**
+             * Error
+             */
+            ColorSwatch(
+                surfaceColor = MaterialTheme.colorScheme.error,
+                textColor = MaterialTheme.colorScheme.onError,
+                text = "Surface",
+            )
+            ColorSwatch(
+                surfaceColor = MaterialTheme.colorScheme.onError,
+                textColor = MaterialTheme.colorScheme.error,
+                text = "On Surface",
+            )
+            ColorSwatch(
+                surfaceColor = MaterialTheme.colorScheme.errorContainer,
+                textColor = MaterialTheme.colorScheme.onErrorContainer,
+                text = "Surface Variant",
+            )
+            ColorSwatch(
+                surfaceColor = MaterialTheme.colorScheme.onErrorContainer,
+                textColor = MaterialTheme.colorScheme.errorContainer,
+                text = "On Surface Variant",
+            )
+
+            /**
              * Background
              */
             ColorSwatch(
@@ -853,7 +874,7 @@ private fun LazyListScope.colorTabContent() {
              */
             ColorSwatch(
                 surfaceColor = MaterialTheme.colorScheme.outline,
-                textColor = MaterialTheme.colorScheme.surface,
+                textColor = MaterialTheme.colorScheme.onSurfaceVariant,
                 text = "Outline",
             )
         }

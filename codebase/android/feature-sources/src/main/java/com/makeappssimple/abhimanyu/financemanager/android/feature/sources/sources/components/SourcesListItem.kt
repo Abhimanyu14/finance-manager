@@ -11,6 +11,7 @@ import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,9 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.LightGray
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.DefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemViewWrapper
@@ -90,7 +88,7 @@ internal fun SourcesListItem(
                     name = source.type.title,
                 ),
                 contentDescription = null,
-                tint = Primary,
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .padding(
                         end = 8.dp,
@@ -103,7 +101,7 @@ internal fun SourcesListItem(
                     ),
                 text = source.name,
                 style = TextStyle(
-                    color = DarkGray,
+                    color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                 ),
@@ -120,7 +118,7 @@ internal fun SourcesListItem(
             MyText(
                 text = source.balanceAmount.toString(),
                 style = TextStyle(
-                    color = DarkGray,
+                    color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                 ),
@@ -128,7 +126,7 @@ internal fun SourcesListItem(
         }
         if (expanded) {
             Divider(
-                color = LightGray,
+                color = MaterialTheme.colorScheme.outline,
                 thickness = 0.5.dp,
             )
             Row(

@@ -24,11 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Primary
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Transparent
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.White
 
 data class OverviewTabData(
     val items: List<String>,
@@ -50,7 +46,7 @@ fun OverviewTab(
                 shape = CircleShape,
             )
             .background(
-                color = MaterialTheme.colorScheme.surface,
+                color = MaterialTheme.colorScheme.background,
             ),
     ) {
         data.items.mapIndexed { index, text ->
@@ -68,9 +64,9 @@ fun OverviewTab(
                     }
                     .background(
                         if (isSelected) {
-                            Primary
+                            MaterialTheme.colorScheme.primary
                         } else {
-                            Transparent
+                            MaterialTheme.colorScheme.background
                         }
                     )
                     .padding(
@@ -80,9 +76,9 @@ fun OverviewTab(
                 text = text,
                 style = TextStyle(
                     color = if (isSelected) {
-                        White
+                        MaterialTheme.colorScheme.onPrimary
                     } else {
-                        DarkGray
+                        MaterialTheme.colorScheme.onBackground
                     },
                     fontSize = 16.sp,
                     textAlign = TextAlign.Center,
@@ -103,7 +99,7 @@ private fun OverviewSelectionPreview() {
             contentAlignment = Alignment.Center,
             modifier = Modifier
                 .background(
-                    color = DarkGray,
+                    color = MaterialTheme.colorScheme.onBackground,
                 )
                 .fillMaxSize(),
         ) {

@@ -2,17 +2,12 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.o
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData
-import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetCurrentDayTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetCurrentMonthTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetCurrentYearTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Error
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Green700
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.math.abs
@@ -96,30 +91,14 @@ class OverviewCardViewModelImpl @Inject constructor(
         context = dispatcherProvider.io,
     )
 
-    override val pieChartData: StateFlow<PieChartData?> =
+    override val amountData: StateFlow<List<Float>?> =
         combine(
             flow = incomeAmount,
             flow2 = expenseAmount,
         ) { incomeAmount, expenseAmount ->
-            val totalIncomeAmount = Amount(
-                value = incomeAmount?.toLong() ?: 0L,
-            )
-            val totalExpenseAmount = Amount(
-                value = expenseAmount?.toLong() ?: 0L,
-            )
-            PieChartData(
-                items = listOf(
-                    PieChartItemData(
-                        value = incomeAmount ?: 10F,
-                        text = "Income : $totalIncomeAmount",
-                        color = Green700,
-                    ),
-                    PieChartItemData(
-                        value = expenseAmount ?: 10F,
-                        text = "Expense : ${totalExpenseAmount.toNonSignedString()}",
-                        color = Error,
-                    ),
-                ),
+            listOf(
+                incomeAmount ?: 0F,
+                expenseAmount ?: 0F,
             )
         }.flowOn(
             context = dispatcherProvider.io,

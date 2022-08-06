@@ -45,10 +45,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Blue50
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateToAddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateToEditTransactionScreen
@@ -278,7 +276,7 @@ internal fun TransactionsScreenView(
                         .fillMaxSize(),
                 ) {
                     AnimatedVisibility(
-                        visible = data.transactionsListItemViewData.isEmpty(),
+                        visible = data.transactionsListItemViewData.isEmpty() && data.searchText.isEmpty(),
                     ) {
                         MyLinearProgressIndicator()
                     }
@@ -301,6 +299,7 @@ internal fun TransactionsScreenView(
                                 .padding(
                                     start = 16.dp,
                                     end = 16.dp,
+                                    top = 6.dp,
                                     bottom = 2.dp,
                                 ),
                         ) {
@@ -343,10 +342,10 @@ internal fun TransactionsScreenView(
                                     contentDescription = stringResource(
                                         id = R.string.screen_transactions_search_button_content_description,
                                     ),
-                                    tint = DarkGray,
+                                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
                                     modifier = Modifier
                                         .background(
-                                            color = Blue50,
+                                            color = MaterialTheme.colorScheme.primaryContainer,
                                         )
                                         .padding(
                                             all = 8.dp,
@@ -372,10 +371,10 @@ internal fun TransactionsScreenView(
                                         contentDescription = stringResource(
                                             id = R.string.screen_transactions_sort_button_content_description,
                                         ),
-                                        tint = DarkGray,
+                                        tint = MaterialTheme.colorScheme.onPrimaryContainer,
                                         modifier = Modifier
                                             .background(
-                                                color = Blue50,
+                                                color = MaterialTheme.colorScheme.primaryContainer,
                                             )
                                             .padding(
                                                 all = 8.dp,
@@ -402,10 +401,10 @@ internal fun TransactionsScreenView(
                                         contentDescription = stringResource(
                                             id = R.string.screen_transactions_filter_button_content_description,
                                         ),
-                                        tint = DarkGray,
+                                        tint = MaterialTheme.colorScheme.onPrimaryContainer,
                                         modifier = Modifier
                                             .background(
-                                                color = Blue50,
+                                                color = MaterialTheme.colorScheme.primaryContainer,
                                             )
                                             .padding(
                                                 all = 8.dp,
@@ -422,7 +421,7 @@ internal fun TransactionsScreenView(
                                     MyText(
                                         modifier = Modifier
                                             .background(
-                                                color = MaterialTheme.colorScheme.surface,
+                                                color = MaterialTheme.colorScheme.background,
                                             )
                                             .fillMaxWidth()
                                             .padding(
@@ -433,7 +432,7 @@ internal fun TransactionsScreenView(
                                             ),
                                         text = date,
                                         style = TextStyle(
-                                            color = DarkGray,
+                                            color = MaterialTheme.colorScheme.onBackground,
                                             fontSize = 12.sp,
                                             fontWeight = FontWeight.Bold,
                                         ),

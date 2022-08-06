@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,8 +21,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.BottomSheetTitle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.getIcon
@@ -88,7 +87,7 @@ private fun SelectSourceBottomSheetItem(
                 name = data.iconKey,
             ),
             contentDescription = null,
-            tint = Primary,
+            tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier
                 .padding(
                     end = 8.dp,
@@ -99,9 +98,9 @@ private fun SelectSourceBottomSheetItem(
             text = data.text,
             style = TextStyle(
                 color = if (data.isSelected) {
-                    Primary
+                    MaterialTheme.colorScheme.primary
                 } else {
-                    DarkGray
+                    MaterialTheme.colorScheme.onBackground
                 },
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
@@ -117,7 +116,7 @@ private fun SelectSourceBottomSheetItem(
             Icon(
                 imageVector = Icons.Rounded.Done,
                 contentDescription = null,
-                tint = Primary,
+                tint = MaterialTheme.colorScheme.primary,
             )
         }
     }

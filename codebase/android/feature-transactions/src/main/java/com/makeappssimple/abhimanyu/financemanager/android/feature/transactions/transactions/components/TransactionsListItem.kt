@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -28,12 +29,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getReadableDateAndTimeString
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.LightGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemViewWrapper
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.amountTextColor
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 
 data class TransactionsListItemViewData(
@@ -91,7 +90,7 @@ internal fun TransactionsListItem(
         ) {
             EmojiCircle(
                 emoji = data.category?.emoji,
-                backgroundColor = LightGray,
+                backgroundColor = MaterialTheme.colorScheme.outline,
             )
             Column(
                 modifier = Modifier
@@ -112,7 +111,7 @@ internal fun TransactionsListItem(
                             ),
                         text = data.transaction.title,
                         style = TextStyle(
-                            color = DarkGray,
+                            color = MaterialTheme.colorScheme.onBackground,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold,
                         ),
@@ -132,7 +131,7 @@ internal fun TransactionsListItem(
                             data.transaction.amount.toString()
                         },
                         style = TextStyle(
-                            color = data.transaction.amountTextColor,
+                            color = data.transaction.getAmountTextColor(),
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.End,
@@ -150,7 +149,7 @@ internal fun TransactionsListItem(
                         .fillMaxWidth(),
                     text = data.transaction.transactionFor.title,
                     style = TextStyle(
-                        color = DarkGray,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Normal,
                     ),
@@ -175,7 +174,7 @@ internal fun TransactionsListItem(
                             timestamp = data.transaction.transactionTimestamp,
                         ),
                         style = TextStyle(
-                            color = DarkGray,
+                            color = MaterialTheme.colorScheme.onBackground,
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Normal,
                         ),
@@ -196,7 +195,7 @@ internal fun TransactionsListItem(
                             data.sourceFrom?.name ?: data.sourceTo?.name.orEmpty()
                         },
                         style = TextStyle(
-                            color = DarkGray,
+                            color = MaterialTheme.colorScheme.onBackground,
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Normal,
                             textAlign = TextAlign.End,
@@ -207,7 +206,7 @@ internal fun TransactionsListItem(
         }
         if (expanded) {
             Divider(
-                color = LightGray,
+                color = MaterialTheme.colorScheme.outline,
                 thickness = 0.5.dp,
             )
             Row(

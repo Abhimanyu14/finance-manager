@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -35,10 +36,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Blue100
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Primary
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Transparent
 
 data class SearchBarData(
     val autoFocus: Boolean = true,
@@ -55,7 +52,7 @@ fun SearchBarContainer(
     Box(
         modifier = Modifier
             .background(
-                color = MaterialTheme.colorScheme.surface,
+                color = MaterialTheme.colorScheme.background,
             )
             .fillMaxWidth()
             .padding(
@@ -103,7 +100,7 @@ fun SearchBar(
         singleLine = true,
         colors = TextFieldDefaults
             .textFieldColors(
-                containerColor = Blue100,
+                containerColor = MaterialTheme.colorScheme.primaryContainer,
                 focusedIndicatorColor = Transparent,
                 unfocusedIndicatorColor = Transparent,
             ),
@@ -137,7 +134,7 @@ fun SearchBar(
             MyText(
                 text = data.placeholderText,
                 style = TextStyle(
-                    color = DarkGray,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
                     fontWeight = FontWeight.Bold,
                 ),
             )
@@ -175,7 +172,7 @@ fun MySearchBar(
         modifier = modifier
             .fillMaxWidth()
             .background(
-                color = Blue100,
+                color = MaterialTheme.colorScheme.primaryContainer,
                 shape = CircleShape,
             )
             .padding(
@@ -189,7 +186,7 @@ fun MySearchBar(
                 focusRequester = focusRequester,
             ),
         textStyle = TextStyle(
-            color = DarkGray,
+            color = MaterialTheme.colorScheme.onPrimaryContainer,
             fontSize = 16.sp,
             fontWeight = FontWeight.Normal,
         ),
@@ -202,7 +199,7 @@ fun MySearchBar(
             },
         ),
         singleLine = true,
-        cursorBrush = SolidColor(Primary),
+        cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
         decorationBox = {
             TextFieldDefaults.TextFieldDecorationBox(
                 value = data.searchText,
@@ -217,7 +214,7 @@ fun MySearchBar(
                     MyText(
                         text = data.placeholderText,
                         style = TextStyle(
-                            color = DarkGray,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
                             fontSize = 16.sp,
                             fontWeight = FontWeight.Bold,
                         ),

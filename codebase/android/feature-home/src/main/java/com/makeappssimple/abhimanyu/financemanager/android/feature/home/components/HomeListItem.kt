@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,11 +24,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getReadableDateAndTimeString
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.LightGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemViewWrapper
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.amountTextColor
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 
 data class HomeListItemViewData(
@@ -62,7 +61,7 @@ internal fun HomeListItem(
         ) {
             EmojiCircle(
                 emoji = data.category?.emoji,
-                backgroundColor = LightGray,
+                backgroundColor = MaterialTheme.colorScheme.outline,
             )
             Column(
                 modifier = Modifier
@@ -83,7 +82,7 @@ internal fun HomeListItem(
                             ),
                         text = data.transaction.title,
                         style = TextStyle(
-                            color = DarkGray,
+                            color = MaterialTheme.colorScheme.onBackground,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold,
                         ),
@@ -103,7 +102,7 @@ internal fun HomeListItem(
                             data.transaction.amount.toString()
                         },
                         style = TextStyle(
-                            color = data.transaction.amountTextColor,
+                            color = data.transaction.getAmountTextColor(),
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.End,
@@ -121,7 +120,7 @@ internal fun HomeListItem(
                         .fillMaxWidth(),
                     text = data.transaction.transactionFor.title,
                     style = TextStyle(
-                        color = DarkGray,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Normal,
                     ),
@@ -146,7 +145,7 @@ internal fun HomeListItem(
                             timestamp = data.transaction.transactionTimestamp,
                         ),
                         style = TextStyle(
-                            color = DarkGray,
+                            color = MaterialTheme.colorScheme.onBackground,
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Normal,
                         ),
@@ -167,7 +166,7 @@ internal fun HomeListItem(
                             data.sourceFrom?.name ?: data.sourceTo?.name.orEmpty()
                         },
                         style = TextStyle(
-                            color = DarkGray,
+                            color = MaterialTheme.colorScheme.onBackground,
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Normal,
                             textAlign = TextAlign.End,

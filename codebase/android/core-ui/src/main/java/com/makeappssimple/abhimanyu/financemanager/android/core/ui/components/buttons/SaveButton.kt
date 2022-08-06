@@ -13,7 +13,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.White
 
 @Composable
 fun SaveButton(
@@ -30,7 +29,7 @@ fun SaveButton(
         ),
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = White,
+            contentColor = MaterialTheme.colorScheme.onPrimary,
         ),
         modifier = Modifier
             .padding(

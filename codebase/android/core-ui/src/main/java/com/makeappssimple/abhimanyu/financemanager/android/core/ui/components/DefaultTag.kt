@@ -12,7 +12,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.White
 
 @Composable
 fun DefaultTag() {
@@ -32,7 +31,7 @@ fun DefaultTag() {
             ),
         text = "Default",
         style = TextStyle(
-            color = White,
+            color = MaterialTheme.colorScheme.onPrimary,
             fontSize = 10.sp,
             fontWeight = FontWeight.Normal,
         ),

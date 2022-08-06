@@ -10,6 +10,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -18,7 +19,6 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyIconButton
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 
 @Composable
 fun MyOutlinedTextField(
@@ -57,7 +57,7 @@ fun MyOutlinedTextField(
                 ) {
                     Icon(
                         imageVector = Icons.Rounded.Clear,
-                        tint = DarkGray,
+                        tint = MaterialTheme.colorScheme.onBackground,
                         contentDescription = stringResource(
                             id = trailingIconContentDescriptionTextStringResourceId,
                         ),

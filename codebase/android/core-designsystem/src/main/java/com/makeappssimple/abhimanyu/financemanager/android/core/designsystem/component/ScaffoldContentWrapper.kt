@@ -21,7 +21,7 @@ fun ScaffoldContentWrapper(
     Box(
         modifier = Modifier
             .background(
-                color = MaterialTheme.colorScheme.surface,
+                color = MaterialTheme.colorScheme.background,
             )
             .fillMaxSize()
             .clickable(

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -16,8 +17,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Green700
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.White
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.conditionalClickable
 
@@ -49,7 +48,7 @@ fun TotalBalanceCardView(
         Column(
             modifier = Modifier
                 .background(
-                    color = Green700,
+                    color = MaterialTheme.colorScheme.tertiary,
                 )
                 .padding(
                     all = 16.dp,
@@ -60,7 +59,7 @@ fun TotalBalanceCardView(
                     .fillMaxWidth(),
                 textStringResourceId = R.string.total_balance_card_title,
                 style = TextStyle(
-                    color = White,
+                    color = MaterialTheme.colorScheme.onTertiary,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
@@ -73,7 +72,7 @@ fun TotalBalanceCardView(
                     value = data.totalBalanceAmount,
                 ).toString(),
                 style = TextStyle(
-                    color = White,
+                    color = MaterialTheme.colorScheme.onTertiary,
                     fontSize = 32.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,

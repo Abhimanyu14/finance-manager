@@ -22,7 +22,7 @@ fun MyFloatingActionButton(
         Icon(
             imageVector = iconImageVector,
             contentDescription = contentDescription,
-            tint = MaterialTheme.colorScheme.surface,
+            tint = MaterialTheme.colorScheme.onPrimary,
         )
     }
 }

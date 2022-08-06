@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -26,7 +27,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ChipItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MySelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
@@ -111,7 +111,7 @@ internal fun TransactionsFiltersBottomSheet(
                         ),
                     textStringResourceId = R.string.bottom_sheet_transactions_filter_select_expense_categories,
                     style = TextStyle(
-                        color = DarkGray,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Start,
@@ -167,7 +167,7 @@ internal fun TransactionsFiltersBottomSheet(
                         ),
                     textStringResourceId = R.string.bottom_sheet_transactions_filter_select_income_categories,
                     style = TextStyle(
-                        color = DarkGray,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Start,
@@ -223,7 +223,7 @@ internal fun TransactionsFiltersBottomSheet(
                         ),
                     textStringResourceId = R.string.bottom_sheet_transactions_filter_select_sources,
                     style = TextStyle(
-                        color = DarkGray,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Start,
@@ -279,7 +279,7 @@ internal fun TransactionsFiltersBottomSheet(
                         ),
                     textStringResourceId = R.string.bottom_sheet_transactions_filter_select_transaction_types,
                     style = TextStyle(
-                        color = DarkGray,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Start,

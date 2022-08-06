@@ -39,7 +39,7 @@ internal fun HomeBottomAppBar(
                 contentDescription = stringResource(
                     id = R.string.screen_home_bottom_app_bar_button_content_description,
                 ),
-                tint = MaterialTheme.colorScheme.surface,
+                tint = MaterialTheme.colorScheme.onPrimary,
             )
         }
         Spacer(

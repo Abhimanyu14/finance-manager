@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.leg
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.key
 import androidx.compose.ui.Alignment
@@ -16,7 +17,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.HorizontalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NonFillingVerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 
 @Composable
 fun PieChartLegend(
@@ -41,7 +41,7 @@ fun PieChartLegend(
                     MyText(
                         text = item.text,
                         style = TextStyle(
-                            color = DarkGray,
+                            color = MaterialTheme.colorScheme.onBackground,
                             fontWeight = FontWeight.Bold,
                             textAlign = TextAlign.Center,
                         ),

@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 
 data class MyTabData(
     val title: String,
@@ -25,7 +24,7 @@ fun MyTabRow(
 ) {
     TabRow(
         selectedTabIndex = data.selectedTabIndex,
-        containerColor = MaterialTheme.colorScheme.surface,
+        containerColor = MaterialTheme.colorScheme.background,
         contentColor = MaterialTheme.colorScheme.primary,
     ) {
         data.tabData.mapIndexed { index, categoriesTabData ->
@@ -59,7 +58,7 @@ private fun MyTabText(
             color = if (isSelected) {
                 MaterialTheme.colorScheme.primary
             } else {
-                DarkGray
+                MaterialTheme.colorScheme.onBackground
             },
             fontSize = 16.sp,
             fontWeight = FontWeight.Bold,

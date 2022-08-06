@@ -9,6 +9,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.Divider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,8 +21,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.LightGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.DefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemIconButton
@@ -85,7 +84,7 @@ internal fun CategoriesListItem(
         ) {
             EmojiCircle(
                 emoji = category.emoji,
-                backgroundColor = LightGray,
+                backgroundColor = MaterialTheme.colorScheme.outline,
             )
             MyText(
                 modifier = Modifier
@@ -95,7 +94,7 @@ internal fun CategoriesListItem(
                     ),
                 text = category.title,
                 style = TextStyle(
-                    color = DarkGray,
+                    color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                 ),
@@ -106,7 +105,7 @@ internal fun CategoriesListItem(
         }
         if (expanded) {
             Divider(
-                color = LightGray,
+                color = MaterialTheme.colorScheme.outline,
                 thickness = 0.5.dp,
             )
             Row(

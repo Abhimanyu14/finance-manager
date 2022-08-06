@@ -1,34 +1,35 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils
 
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Error
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.OnTertiaryContainer
 
-val Transaction.amountTextColor: Color
-    get() = when (this.transactionType) {
+@Composable
+fun Transaction.getAmountTextColor(): Color {
+    return when (this.transactionType) {
         TransactionType.INCOME -> {
-            OnTertiaryContainer
+            MaterialTheme.colorScheme.onTertiaryContainer
         }
         TransactionType.EXPENSE -> {
-            Error
+            MaterialTheme.colorScheme.error
         }
         TransactionType.TRANSFER -> {
-            DarkGray
+            MaterialTheme.colorScheme.onBackground
         }
         TransactionType.ADJUSTMENT -> {
             when {
                 this.amount.value > 0 -> {
-                    OnTertiaryContainer
+                    MaterialTheme.colorScheme.onTertiaryContainer
                 }
                 this.amount.value < 0 -> {
-                    Error
+                    MaterialTheme.colorScheme.error
                 }
                 else -> {
-                    DarkGray
+                    MaterialTheme.colorScheme.onBackground
                 }
             }
         }
     }
+}

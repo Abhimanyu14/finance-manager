@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,9 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.LightGray
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Primary
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.BottomSheetTitle
@@ -86,7 +84,7 @@ private fun SelectCategoryBottomSheetItem(
     ) {
         EmojiCircle(
             emoji = data.category.emoji,
-            backgroundColor = LightGray,
+            backgroundColor = MaterialTheme.colorScheme.outline,
         )
         MyText(
             modifier = Modifier
@@ -96,9 +94,9 @@ private fun SelectCategoryBottomSheetItem(
             text = data.category.title,
             style = TextStyle(
                 color = if (data.isSelected) {
-                    Primary
+                    MaterialTheme.colorScheme.primary
                 } else {
-                    DarkGray
+                    MaterialTheme.colorScheme.onBackground
                 },
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
@@ -114,7 +112,7 @@ private fun SelectCategoryBottomSheetItem(
             Icon(
                 imageVector = Icons.Rounded.Done,
                 contentDescription = null,
-                tint = Primary,
+                tint = MaterialTheme.colorScheme.primary,
             )
         }
     }

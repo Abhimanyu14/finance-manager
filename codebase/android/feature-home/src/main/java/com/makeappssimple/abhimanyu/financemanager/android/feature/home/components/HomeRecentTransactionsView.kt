@@ -8,6 +8,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,7 +18,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 
 @Composable
@@ -57,13 +57,13 @@ internal fun HomeRecentTransactionsView(
                 ),
             textStringResourceId = R.string.screen_home_recent_transactions,
             style = TextStyle(
-                color = DarkGray,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontWeight = FontWeight.Bold,
             ),
         )
         Icon(
             imageVector = Icons.Rounded.ChevronRight,
-            tint = DarkGray,
+            tint = MaterialTheme.colorScheme.onBackground,
             contentDescription = stringResource(
                 id = R.string.screen_home_view_all_transactions,
             ),

@@ -20,9 +20,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Blue50
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.LightGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.conditionalClickable
 
 @Composable
@@ -51,18 +48,18 @@ fun ExpandableItemIconButton(
             imageVector = iconImageVector,
             contentDescription = null,
             tint = if (enabled) {
-                DarkGray
+                MaterialTheme.colorScheme.onSurfaceVariant
             } else {
-                LightGray
+                MaterialTheme.colorScheme.surfaceVariant
             },
         )
         MyText(
             text = labelText,
             style = TextStyle(
                 color = if (enabled) {
-                    DarkGray
+                    MaterialTheme.colorScheme.onSurfaceVariant
                 } else {
-                    LightGray
+                    MaterialTheme.colorScheme.surfaceVariant
                 },
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Normal,
@@ -90,9 +87,9 @@ fun ExpandableItemViewWrapper(
             )
             .background(
                 color = if (expanded) {
-                    Blue50
+                    MaterialTheme.colorScheme.primaryContainer
                 } else {
-                    MaterialTheme.colorScheme.surface
+                    MaterialTheme.colorScheme.background
                 },
             )
             .animateContentSize(),

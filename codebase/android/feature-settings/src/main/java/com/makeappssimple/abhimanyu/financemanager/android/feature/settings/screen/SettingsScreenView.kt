@@ -15,6 +15,7 @@ import androidx.compose.material.icons.rounded.Backup
 import androidx.compose.material.icons.rounded.Calculate
 import androidx.compose.material.icons.rounded.Restore
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -31,7 +32,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
@@ -126,7 +126,7 @@ internal fun SettingsScreenView(
                             Icon(
                                 imageVector = Icons.Rounded.Backup,
                                 contentDescription = null,
-                                tint = DarkGray,
+                                tint = MaterialTheme.colorScheme.onBackground,
                             )
                         },
                         text = {
@@ -135,7 +135,7 @@ internal fun SettingsScreenView(
                                     .fillMaxWidth(),
                                 textStringResourceId = R.string.screen_settings_backup,
                                 style = TextStyle(
-                                    color = DarkGray,
+                                    color = MaterialTheme.colorScheme.onBackground,
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Normal,
                                 ),
@@ -154,7 +154,7 @@ internal fun SettingsScreenView(
                             Icon(
                                 imageVector = Icons.Rounded.Restore,
                                 contentDescription = null,
-                                tint = DarkGray,
+                                tint = MaterialTheme.colorScheme.onBackground,
                             )
                         },
                         text = {
@@ -163,7 +163,7 @@ internal fun SettingsScreenView(
                                     .fillMaxWidth(),
                                 textStringResourceId = R.string.screen_settings_restore,
                                 style = TextStyle(
-                                    color = DarkGray,
+                                    color = MaterialTheme.colorScheme.onBackground,
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Normal,
                                 ),
@@ -182,7 +182,7 @@ internal fun SettingsScreenView(
                             Icon(
                                 imageVector = Icons.Rounded.Calculate,
                                 contentDescription = null,
-                                tint = DarkGray,
+                                tint = MaterialTheme.colorScheme.onBackground,
                             )
                         },
                         text = {
@@ -191,7 +191,7 @@ internal fun SettingsScreenView(
                                     .fillMaxWidth(),
                                 textStringResourceId = R.string.screen_settings_recalculate_total,
                                 style = TextStyle(
-                                    color = DarkGray,
+                                    color = MaterialTheme.colorScheme.onBackground,
                                     fontSize = 16.sp,
                                     fontWeight = FontWeight.Normal,
                                 ),

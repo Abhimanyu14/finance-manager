@@ -11,18 +11,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData
-import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.legend.PieChartLegend
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.CenterBox
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Black
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Error
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Green700
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Primary
 
 /**
  * Source - https://github.com/humawork/compose-charts
@@ -86,40 +78,5 @@ fun ComposePieChart(
                     start = 16.dp,
                 ),
         )
-    }
-}
-
-@Preview(showSystemUi = false, showBackground = true)
-@Composable
-private fun ComposePieChartPreview() {
-    MyAppTheme {
-        CenterBox {
-            ComposePieChart(
-                data = PieChartData(
-                    items = listOf(
-                        PieChartItemData(
-                            text = "Red",
-                            value = 1F,
-                            color = Error,
-                        ),
-                        PieChartItemData(
-                            text = "Blue",
-                            value = 2F,
-                            color = Primary,
-                        ),
-                        PieChartItemData(
-                            text = "Green",
-                            value = 3F,
-                            color = Green700,
-                        ),
-                        PieChartItemData(
-                            text = "Black",
-                            value = 4F,
-                            color = Black,
-                        ),
-                    )
-                )
-            )
-        }
     }
 }

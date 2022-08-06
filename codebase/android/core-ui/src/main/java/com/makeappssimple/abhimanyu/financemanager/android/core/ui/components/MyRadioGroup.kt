@@ -10,12 +10,12 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -23,20 +23,11 @@ import androidx.compose.ui.unit.sp
 import com.google.accompanist.flowlayout.FlowRow
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.DarkGray
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.LightGray
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Primary
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.Transparent
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.White
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.getIcon
 
 data class ChipItem(
     val text: String,
     val iconKey: String? = null,
-    val defaultTextColor: Color = DarkGray,
-    val selectedTextColor: Color = White,
-    val defaultBackgroundColor: Color = LightGray,
-    val selectedBackgroundColor: Color = Primary,
 )
 
 @Composable
@@ -161,9 +152,9 @@ private fun ChipView(
             .border(
                 width = 1.dp,
                 color = if (isSelected) {
-                    Transparent
+                    MaterialTheme.colorScheme.primary
                 } else {
-                    item.defaultBackgroundColor
+                    MaterialTheme.colorScheme.outline
                 },
                 shape = shape,
             )
@@ -172,9 +163,9 @@ private fun ChipView(
             }
             .background(
                 if (isSelected) {
-                    item.selectedBackgroundColor
+                    MaterialTheme.colorScheme.primary
                 } else {
-                    Transparent
+                    MaterialTheme.colorScheme.background
                 }
             ),
     ) {
@@ -185,9 +176,9 @@ private fun ChipView(
                 ),
                 contentDescription = null,
                 tint = if (isSelected) {
-                    item.selectedTextColor
+                    MaterialTheme.colorScheme.onPrimary
                 } else {
-                    Primary
+                    MaterialTheme.colorScheme.primary
                 },
                 modifier = Modifier
                     .scale(
@@ -216,9 +207,9 @@ private fun ChipView(
             text = item.text,
             style = TextStyle(
                 color = if (isSelected) {
-                    item.selectedTextColor
+                    MaterialTheme.colorScheme.onPrimary
                 } else {
-                    item.defaultTextColor
+                    MaterialTheme.colorScheme.onBackground
                 },
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Normal,
