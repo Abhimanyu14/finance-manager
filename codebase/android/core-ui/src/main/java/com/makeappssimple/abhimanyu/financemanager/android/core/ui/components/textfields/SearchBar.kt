@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -29,12 +28,9 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 data class SearchBarData(
@@ -94,9 +90,7 @@ fun SearchBar(
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Search,
         ),
-        shape = RoundedCornerShape(
-            percent = 50,
-        ),
+        shape = CircleShape,
         singleLine = true,
         colors = TextFieldDefaults
             .textFieldColors(
@@ -133,10 +127,10 @@ fun SearchBar(
         placeholder = {
             MyText(
                 text = data.placeholderText,
-                style = TextStyle(
-                    color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    fontWeight = FontWeight.Bold,
-                ),
+                style = MaterialTheme.typography.headlineLarge
+                    .copy(
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                    ),
             )
         },
         modifier = modifier
@@ -185,11 +179,10 @@ fun MySearchBar(
             .focusRequester(
                 focusRequester = focusRequester,
             ),
-        textStyle = TextStyle(
-            color = MaterialTheme.colorScheme.onPrimaryContainer,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Normal,
-        ),
+        textStyle = MaterialTheme.typography.bodyLarge
+            .copy(
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
+            ),
         keyboardOptions = KeyboardOptions(
             imeAction = ImeAction.Search,
         ),
@@ -213,11 +206,10 @@ fun MySearchBar(
                 placeholder = {
                     MyText(
                         text = data.placeholderText,
-                        style = TextStyle(
-                            color = MaterialTheme.colorScheme.onPrimaryContainer,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold,
-                        ),
+                        style = MaterialTheme.typography.headlineLarge
+                            .copy(
+                                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                            ),
                     )
                 },
                 leadingIcon = {

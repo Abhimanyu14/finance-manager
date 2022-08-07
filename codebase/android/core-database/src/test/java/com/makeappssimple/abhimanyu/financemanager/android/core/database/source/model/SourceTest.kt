@@ -27,9 +27,10 @@ class SourceTest {
 
     @Test
     fun getSortOrder_bank() {
-        source = source.copy(
-            type = SourceType.BANK,
-        )
+        source = source
+            .copy(
+                type = SourceType.BANK,
+            )
         Assert.assertEquals(
             2,
             source.type.sortOrder,
@@ -38,9 +39,10 @@ class SourceTest {
 
     @Test
     fun getSortOrder_e_wallet() {
-        source = source.copy(
-            type = SourceType.E_WALLET,
-        )
+        source = source
+            .copy(
+                type = SourceType.E_WALLET,
+            )
         Assert.assertEquals(
             3,
             source.type.sortOrder,

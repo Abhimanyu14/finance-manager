@@ -407,39 +407,44 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
 
                 transaction.value?.let { transaction ->
                     updateTransactionsUseCase(
-                        transaction.copy(
-                            amount = amount,
-                            categoryId = categoryId,
-                            sourceFromId = sourceFromId,
-                            sourceToId = sourceToId,
-                            description = uiStateValue.description,
-                            title = title,
-                            creationTimestamp = System.currentTimeMillis(),
-                            transactionTimestamp = uiStateValue.transactionCalendar.timeInMillis,
-                            transactionFor = transactionFor,
-                            transactionType = selectedTransactionTypeValue,
-                        ),
+                        transaction
+                            .copy(
+                                amount = amount,
+                                categoryId = categoryId,
+                                sourceFromId = sourceFromId,
+                                sourceToId = sourceToId,
+                                description = uiStateValue.description,
+                                title = title,
+                                creationTimestamp = System.currentTimeMillis(),
+                                transactionTimestamp = uiStateValue.transactionCalendar.timeInMillis,
+                                transactionFor = transactionFor,
+                                transactionType = selectedTransactionTypeValue,
+                            ),
                     )
                     uiStateValue.sourceFrom?.let { sourceFrom ->
                         transactionSourceFrom?.let { transactionSourceFrom ->
                             val revertOriginalTransactionAmount = transactionSourceFrom
                                 .balanceAmount.value + (-1 * transaction.amount.value)
                             updateSourcesUseCase(
-                                transactionSourceFrom.copy(
-                                    balanceAmount = transactionSourceFrom.balanceAmount.copy(
-                                        value = revertOriginalTransactionAmount,
-                                    )
-                                ),
+                                transactionSourceFrom
+                                    .copy(
+                                        balanceAmount = transactionSourceFrom.balanceAmount
+                                            .copy(
+                                                value = revertOriginalTransactionAmount,
+                                            )
+                                    ),
                             )
                         }
                         val updatedSourceFromBalanceAmount = sourceFrom.balanceAmount.value -
                                 uiState.value.amount.toLong()
                         updateSourcesUseCase(
-                            sourceFrom.copy(
-                                balanceAmount = sourceFrom.balanceAmount.copy(
-                                    value = updatedSourceFromBalanceAmount,
-                                )
-                            ),
+                            sourceFrom
+                                .copy(
+                                    balanceAmount = sourceFrom.balanceAmount
+                                        .copy(
+                                            value = updatedSourceFromBalanceAmount,
+                                        )
+                                ),
                         )
                     }
                     uiStateValue.sourceTo?.let { sourceTo ->
@@ -447,21 +452,25 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                             val revertOriginalTransactionAmount = transactionSourceTo
                                 .balanceAmount.value - transaction.amount.value
                             updateSourcesUseCase(
-                                transactionSourceTo.copy(
-                                    balanceAmount = transactionSourceTo.balanceAmount.copy(
-                                        value = revertOriginalTransactionAmount,
-                                    )
-                                ),
+                                transactionSourceTo
+                                    .copy(
+                                        balanceAmount = transactionSourceTo.balanceAmount
+                                            .copy(
+                                                value = revertOriginalTransactionAmount,
+                                            )
+                                    ),
                             )
                         }
                         val updatedSourceToBalanceAmount = sourceTo.balanceAmount.value +
                                 uiState.value.amount.toLong()
                         updateSourcesUseCase(
-                            sourceTo.copy(
-                                balanceAmount = sourceTo.balanceAmount.copy(
-                                    value = updatedSourceToBalanceAmount,
-                                )
-                            ),
+                            sourceTo
+                                .copy(
+                                    balanceAmount = sourceTo.balanceAmount
+                                        .copy(
+                                            value = updatedSourceToBalanceAmount,
+                                        )
+                                ),
                         )
                     }
                 }
@@ -477,9 +486,10 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
         updatedSelectedTransactionTypeIndex: Int,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiState = _uiState.value.copy(
-                selectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex,
-            ),
+            updatedEditTransactionScreenUiState = _uiState.value
+                .copy(
+                    selectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex,
+                ),
         )
     }
 
@@ -487,9 +497,10 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
         updatedAmount: String,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiState = _uiState.value.copy(
-                amount = updatedAmount,
-            ),
+            updatedEditTransactionScreenUiState = _uiState.value
+                .copy(
+                    amount = updatedAmount,
+                ),
         )
     }
 
@@ -503,9 +514,10 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
         updatedTitle: String,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiState = _uiState.value.copy(
-                title = updatedTitle,
-            ),
+            updatedEditTransactionScreenUiState = _uiState.value
+                .copy(
+                    title = updatedTitle,
+                ),
         )
     }
 
@@ -519,9 +531,10 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
         updatedDescription: String,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiState = _uiState.value.copy(
-                description = updatedDescription,
-            ),
+            updatedEditTransactionScreenUiState = _uiState.value
+                .copy(
+                    description = updatedDescription,
+                ),
         )
     }
 
@@ -535,9 +548,10 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
         updatedCategory: Category?,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiState = _uiState.value.copy(
-                category = updatedCategory,
-            ),
+            updatedEditTransactionScreenUiState = _uiState.value
+                .copy(
+                    category = updatedCategory,
+                ),
         )
     }
 
@@ -545,9 +559,10 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
         updatedSelectedTransactionForIndex: Int,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiState = _uiState.value.copy(
-                selectedTransactionForIndex = updatedSelectedTransactionForIndex,
-            ),
+            updatedEditTransactionScreenUiState = _uiState.value
+                .copy(
+                    selectedTransactionForIndex = updatedSelectedTransactionForIndex,
+                ),
         )
     }
 
@@ -555,9 +570,10 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
         updatedSourceFrom: Source?,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiState = _uiState.value.copy(
-                sourceFrom = updatedSourceFrom,
-            ),
+            updatedEditTransactionScreenUiState = _uiState.value
+                .copy(
+                    sourceFrom = updatedSourceFrom,
+                ),
         )
     }
 
@@ -565,9 +581,10 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
         updatedSourceTo: Source?,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiState = _uiState.value.copy(
-                sourceTo = updatedSourceTo,
-            ),
+            updatedEditTransactionScreenUiState = _uiState.value
+                .copy(
+                    sourceTo = updatedSourceTo,
+                ),
         )
     }
 
@@ -575,9 +592,10 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
         updatedTransactionCalendar: Calendar,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiState = _uiState.value.copy(
-                transactionCalendar = updatedTransactionCalendar,
-            ),
+            updatedEditTransactionScreenUiState = _uiState.value
+                .copy(
+                    transactionCalendar = updatedTransactionCalendar,
+                ),
         )
     }
     // endregion

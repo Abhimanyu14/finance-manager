@@ -4,17 +4,13 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
@@ -37,9 +33,7 @@ fun TotalBalanceCardView(
                 horizontal = 32.dp,
             )
             .clip(
-                shape = RoundedCornerShape(
-                    size = 16.dp,
-                ),
+                MaterialTheme.shapes.medium,
             )
             .conditionalClickable(
                 onClick = data.onClick,
@@ -58,12 +52,11 @@ fun TotalBalanceCardView(
                 modifier = Modifier
                     .fillMaxWidth(),
                 textStringResourceId = R.string.total_balance_card_title,
-                style = TextStyle(
-                    color = MaterialTheme.colorScheme.onTertiary,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center,
-                ),
+                style = MaterialTheme.typography.displaySmall
+                    .copy(
+                        color = MaterialTheme.colorScheme.onTertiary,
+                        textAlign = TextAlign.Center,
+                    ),
             )
             MyText(
                 modifier = Modifier
@@ -71,12 +64,11 @@ fun TotalBalanceCardView(
                 text = Amount(
                     value = data.totalBalanceAmount,
                 ).toString(),
-                style = TextStyle(
-                    color = MaterialTheme.colorScheme.onTertiary,
-                    fontSize = 32.sp,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center,
-                ),
+                style = MaterialTheme.typography.displayLarge
+                    .copy(
+                        color = MaterialTheme.colorScheme.onTertiary,
+                        textAlign = TextAlign.Center,
+                    ),
             )
         }
     }

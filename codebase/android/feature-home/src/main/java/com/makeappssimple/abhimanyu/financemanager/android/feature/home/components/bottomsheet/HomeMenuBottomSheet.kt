@@ -12,11 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
@@ -75,11 +72,10 @@ private fun HomeBottomSheetItem(
         MyText(
             modifier = Modifier,
             text = data.text,
-            style = TextStyle(
-                color = MaterialTheme.colorScheme.onBackground,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Bold,
-            ),
+            style = MaterialTheme.typography.headlineMedium
+                .copy(
+                    color = MaterialTheme.colorScheme.onBackground,
+                ),
         )
     }
 }

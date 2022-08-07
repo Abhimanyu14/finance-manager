@@ -91,19 +91,21 @@ internal class EditSourceScreenViewModelImpl @Inject constructor(
     override fun updateSource() {
         val source = source.value ?: return
         val amountValue = balanceAmountValue.value.toInt() - source.balanceAmount.value
-        val updatedSource = source.copy(
-            balanceAmount = source.balanceAmount.copy(
-                value = balanceAmountValue.value.toLong(),
-            ),
-            type = if (source.type != SourceType.CASH) {
-                sourceTypes[selectedSourceTypeIndex.value]
-            } else {
-                source.type
-            },
-            name = name.value.ifBlank {
-                source.name
-            },
-        )
+        val updatedSource = source
+            .copy(
+                balanceAmount = source.balanceAmount
+                    .copy(
+                        value = balanceAmountValue.value.toLong(),
+                    ),
+                type = if (source.type != SourceType.CASH) {
+                    sourceTypes[selectedSourceTypeIndex.value]
+                } else {
+                    source.type
+                },
+                name = name.value.ifBlank {
+                    source.name
+                },
+            )
 
         viewModelScope.launch(
             context = dispatcherProvider.io,

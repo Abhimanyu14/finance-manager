@@ -30,6 +30,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.m
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
@@ -105,6 +107,11 @@ internal fun EditCategoryScreenView(
 
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
+        sheetShape = if (state.modalBottomSheetState.currentValue == ModalBottomSheetValue.Expanded) {
+            BottomSheetExpandedShape
+        } else {
+            BottomSheetShape
+        },
         sheetContent = {
             when (editCategoryBottomSheetType) {
                 EditCategoryBottomSheetType.NONE -> {

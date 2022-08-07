@@ -1,19 +1,16 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields
 
 import androidx.annotation.StringRes
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.text.TextStyle
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 @Composable
 fun OutlinedTextFieldLabelText(
     @StringRes textStringResourceId: Int,
 ) {
+    // Not providing style as the default style has font size change based on floating or not
     MyText(
         textStringResourceId = textStringResourceId,
-        style = TextStyle(
-            color = MaterialTheme.colorScheme.onBackground,
-        ),
+        // style = MaterialTheme.typography.labelSmall,
     )
 }

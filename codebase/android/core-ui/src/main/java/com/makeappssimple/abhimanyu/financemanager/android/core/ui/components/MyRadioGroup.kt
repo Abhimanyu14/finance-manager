@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -16,10 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.google.accompanist.flowlayout.FlowRow
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
@@ -135,9 +132,7 @@ private fun ChipView(
     isSelected: Boolean,
     onSelectionChange: () -> Unit,
 ) {
-    val shape = RoundedCornerShape(
-        percent = 50,
-    )
+    val shape = CircleShape
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -205,15 +200,14 @@ private fun ChipView(
                     },
                 ),
             text = item.text,
-            style = TextStyle(
-                color = if (isSelected) {
-                    MaterialTheme.colorScheme.onPrimary
-                } else {
-                    MaterialTheme.colorScheme.onBackground
-                },
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Normal,
-            ),
+            style = MaterialTheme.typography.labelMedium
+                .copy(
+                    color = if (isSelected) {
+                        MaterialTheme.colorScheme.onPrimary
+                    } else {
+                        MaterialTheme.colorScheme.onBackground
+                    },
+                ),
         )
     }
 }

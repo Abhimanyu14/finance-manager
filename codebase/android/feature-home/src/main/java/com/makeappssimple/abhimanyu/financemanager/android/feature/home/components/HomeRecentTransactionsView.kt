@@ -14,8 +14,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
@@ -56,10 +54,10 @@ internal fun HomeRecentTransactionsView(
                     weight = 1F,
                 ),
             textStringResourceId = R.string.screen_home_recent_transactions,
-            style = TextStyle(
-                color = MaterialTheme.colorScheme.onBackground,
-                fontWeight = FontWeight.Bold,
-            ),
+            style = MaterialTheme.typography.headlineLarge
+                .copy(
+                    color = MaterialTheme.colorScheme.onBackground,
+                ),
         )
         Icon(
             imageVector = Icons.Rounded.ChevronRight,

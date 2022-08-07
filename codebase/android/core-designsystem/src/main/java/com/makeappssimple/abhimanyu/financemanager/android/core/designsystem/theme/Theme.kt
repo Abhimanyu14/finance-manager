@@ -110,7 +110,7 @@ internal fun Material2AppTheme(
     androidx.compose.material.MaterialTheme(
         colors = colors,
         typography = Material2Typography,
-        shapes = Shapes,
+        shapes = Material2Shapes,
         content = content,
     )
 }
@@ -128,6 +128,7 @@ internal fun Material3AppTheme(
 
     MaterialTheme(
         colorScheme = colors,
+        shapes = Shapes,
         typography = Typography,
         content = content,
     )

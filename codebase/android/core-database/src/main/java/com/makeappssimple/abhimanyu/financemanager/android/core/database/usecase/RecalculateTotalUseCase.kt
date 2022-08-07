@@ -78,11 +78,13 @@ class RecalculateTotalUseCaseImpl(
         balanceAmountValue: Long,
     ) {
         updateSourcesUseCase(
-            source.copy(
-                balanceAmount = source.balanceAmount.copy(
-                    value = balanceAmountValue,
-                )
-            ),
+            source
+                .copy(
+                    balanceAmount = source.balanceAmount
+                        .copy(
+                            value = balanceAmountValue,
+                        )
+                ),
         )
     }
 

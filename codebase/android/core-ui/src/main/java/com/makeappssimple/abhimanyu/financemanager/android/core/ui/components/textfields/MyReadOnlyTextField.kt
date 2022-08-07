@@ -4,12 +4,10 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.text.TextStyle
 
 @Composable
 fun MyReadOnlyTextField(
@@ -26,9 +24,6 @@ fun MyReadOnlyTextField(
             onValueChange = {},
             modifier = Modifier
                 .fillMaxWidth(),
-            textStyle = TextStyle(
-                color = MaterialTheme.colorScheme.onBackground,
-            ),
             label = {
                 OutlinedTextFieldLabelText(
                     textStringResourceId = labelTextStringResourceId,

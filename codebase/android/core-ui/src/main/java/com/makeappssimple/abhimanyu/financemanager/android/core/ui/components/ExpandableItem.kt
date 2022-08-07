@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -15,10 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.conditionalClickable
 
@@ -55,15 +51,14 @@ fun ExpandableItemIconButton(
         )
         MyText(
             text = labelText,
-            style = TextStyle(
-                color = if (enabled) {
-                    MaterialTheme.colorScheme.onSurfaceVariant
-                } else {
-                    MaterialTheme.colorScheme.surfaceVariant
-                },
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Normal,
-            ),
+            style = MaterialTheme.typography.labelMedium
+                .copy(
+                    color = if (enabled) {
+                        MaterialTheme.colorScheme.onSurfaceVariant
+                    } else {
+                        MaterialTheme.colorScheme.surfaceVariant
+                    },
+                ),
         )
     }
 }
@@ -78,12 +73,9 @@ fun ExpandableItemViewWrapper(
             .fillMaxWidth()
             .padding(
                 horizontal = 8.dp,
-                vertical = 0.dp,
             )
             .clip(
-                shape = RoundedCornerShape(
-                    size = 24.dp,
-                ),
+                shape = MaterialTheme.shapes.large,
             )
             .background(
                 color = if (expanded) {

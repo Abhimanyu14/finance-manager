@@ -2,38 +2,36 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 
 @Composable
 fun DefaultTag() {
     MyText(
         modifier = Modifier
             .clip(
-                shape = RoundedCornerShape(
-                    size = 8.dp,
-                )
+                shape = CircleShape,
             )
             .background(
                 color = MaterialTheme.colorScheme.primary,
             )
             .padding(
-                vertical = 2.dp,
+                vertical = 1.dp,
                 horizontal = 8.dp,
             ),
-        text = "Default",
-        style = TextStyle(
-            color = MaterialTheme.colorScheme.onPrimary,
-            fontSize = 10.sp,
-            fontWeight = FontWeight.Normal,
+        text = stringResource(
+            id = R.string.default_tag,
         ),
+        style = MaterialTheme.typography.labelSmall
+            .copy(
+                color = MaterialTheme.colorScheme.onPrimary,
+            ),
     )
 }

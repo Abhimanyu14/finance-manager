@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -897,9 +896,7 @@ private fun ColorSwatch(
                 all = 16.dp,
             ),
         color = surfaceColor,
-        shape = RoundedCornerShape(
-            size = 32.dp,
-        ),
+        shape = MaterialTheme.shapes.extraLarge,
     ) {
         MyText(
             modifier = Modifier

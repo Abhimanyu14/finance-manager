@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
@@ -17,12 +16,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.ExpandedListItemShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.DefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemViewWrapper
@@ -50,14 +47,9 @@ internal fun SourcesListItem(
                 .fillMaxWidth()
                 .clip(
                     shape = if (expanded) {
-                        RoundedCornerShape(
-                            topStart = 24.dp,
-                            topEnd = 24.dp,
-                        )
+                        ExpandedListItemShape
                     } else {
-                        RoundedCornerShape(
-                            size = 24.dp,
-                        )
+                        MaterialTheme.shapes.large
                     },
                 )
                 .combinedClickable(
@@ -100,11 +92,10 @@ internal fun SourcesListItem(
                         end = 16.dp,
                     ),
                 text = source.name,
-                style = TextStyle(
-                    color = MaterialTheme.colorScheme.onBackground,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                ),
+                style = MaterialTheme.typography.headlineLarge
+                    .copy(
+                        color = MaterialTheme.colorScheme.onBackground,
+                    ),
             )
             if (isDefault) {
                 DefaultTag()
@@ -117,11 +108,10 @@ internal fun SourcesListItem(
             )
             MyText(
                 text = source.balanceAmount.toString(),
-                style = TextStyle(
-                    color = MaterialTheme.colorScheme.onBackground,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                ),
+                style = MaterialTheme.typography.headlineLarge
+                    .copy(
+                        color = MaterialTheme.colorScheme.onBackground,
+                    ),
             )
         }
         if (expanded) {

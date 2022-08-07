@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -37,9 +36,7 @@ fun OverviewCardView(
                 horizontal = 32.dp,
             )
             .clip(
-                shape = RoundedCornerShape(
-                    size = 16.dp,
-                ),
+                shape = MaterialTheme.shapes.medium,
             )
             .conditionalClickable(
                 onClick = data.onClick,

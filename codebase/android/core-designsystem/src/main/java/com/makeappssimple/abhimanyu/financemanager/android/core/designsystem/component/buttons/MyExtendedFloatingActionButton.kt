@@ -14,14 +14,13 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ButtonElevation
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.MaterialTheme.shapes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -55,12 +54,7 @@ fun MyExtendedLoadingFloatingActionButton(
             defaultElevation = 6.dp,
             pressedElevation = 12.dp,
         ),
-    shape: Shape = shapes.small
-        .copy(
-            all = CornerSize(
-                percent = 50,
-            ),
-        ),
+    shape: Shape = CircleShape,
     border: BorderStroke? = null,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     contentPadding: PaddingValues = PaddingValues(
@@ -192,12 +186,7 @@ fun MyExtendedFloatingActionButton(
             defaultElevation = 6.dp,
             pressedElevation = 12.dp,
         ),
-    shape: Shape = shapes.small
-        .copy(
-            all = CornerSize(
-                percent = 50,
-            ),
-        ),
+    shape: Shape = CircleShape,
     border: BorderStroke? = null,
     colors: ButtonColors = ButtonDefaults.buttonColors(),
     contentPadding: PaddingValues = PaddingValues(

@@ -7,7 +7,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 @Composable
@@ -39,9 +38,10 @@ fun MyTopAppBarView(
         title = {
             MyText(
                 text = titleText,
-                style = TextStyle(
-                    color = MaterialTheme.colorScheme.primary,
-                ),
+                style = MaterialTheme.typography.titleLarge
+                    .copy(
+                        color = MaterialTheme.colorScheme.primary,
+                    ),
             )
         },
         navigationIcon = {

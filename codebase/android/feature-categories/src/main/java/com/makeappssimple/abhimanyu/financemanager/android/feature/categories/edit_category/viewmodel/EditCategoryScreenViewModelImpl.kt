@@ -102,11 +102,12 @@ internal class EditCategoryScreenViewModelImpl @Inject constructor(
 
     override fun updateCategory() {
         val category = category.value ?: return
-        val updatedCategory = category.copy(
-            emoji = emoji.value,
-            title = title.value,
-            transactionType = transactionTypes[selectedTransactionTypeIndex.value],
-        )
+        val updatedCategory = category
+            .copy(
+                emoji = emoji.value,
+                title = title.value,
+                transactionType = transactionTypes[selectedTransactionTypeIndex.value],
+            )
 
         viewModelScope.launch(
             context = dispatcherProvider.io,

@@ -25,9 +25,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.ScaffoldContentWrapper
@@ -134,11 +131,10 @@ internal fun SettingsScreenView(
                                 modifier = Modifier
                                     .fillMaxWidth(),
                                 textStringResourceId = R.string.screen_settings_backup,
-                                style = TextStyle(
-                                    color = MaterialTheme.colorScheme.onBackground,
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.Normal,
-                                ),
+                                style = MaterialTheme.typography.bodyLarge
+                                    .copy(
+                                        color = MaterialTheme.colorScheme.onBackground,
+                                    ),
                             )
                         },
                         modifier = Modifier
@@ -162,11 +158,10 @@ internal fun SettingsScreenView(
                                 modifier = Modifier
                                     .fillMaxWidth(),
                                 textStringResourceId = R.string.screen_settings_restore,
-                                style = TextStyle(
-                                    color = MaterialTheme.colorScheme.onBackground,
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.Normal,
-                                ),
+                                style = MaterialTheme.typography.bodyLarge
+                                    .copy(
+                                        color = MaterialTheme.colorScheme.onBackground,
+                                    ),
                             )
                         },
                         modifier = Modifier
@@ -190,11 +185,10 @@ internal fun SettingsScreenView(
                                 modifier = Modifier
                                     .fillMaxWidth(),
                                 textStringResourceId = R.string.screen_settings_recalculate_total,
-                                style = TextStyle(
-                                    color = MaterialTheme.colorScheme.onBackground,
-                                    fontSize = 16.sp,
-                                    fontWeight = FontWeight.Normal,
-                                ),
+                                style = MaterialTheme.typography.bodyLarge
+                                    .copy(
+                                        color = MaterialTheme.colorScheme.onBackground,
+                                    ),
                             )
                         },
                         modifier = Modifier

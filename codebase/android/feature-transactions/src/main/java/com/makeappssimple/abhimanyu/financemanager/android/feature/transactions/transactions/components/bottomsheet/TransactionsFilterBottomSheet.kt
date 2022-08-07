@@ -17,11 +17,8 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
@@ -110,12 +107,11 @@ internal fun TransactionsFiltersBottomSheet(
                             all = 16.dp,
                         ),
                     textStringResourceId = R.string.bottom_sheet_transactions_filter_select_expense_categories,
-                    style = TextStyle(
-                        color = MaterialTheme.colorScheme.onBackground,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Start,
-                    ),
+                    style = MaterialTheme.typography.headlineLarge
+                        .copy(
+                            color = MaterialTheme.colorScheme.onBackground,
+                            textAlign = TextAlign.Start,
+                        ),
                 )
                 TextButton(
                     onClick = {
@@ -128,6 +124,7 @@ internal fun TransactionsFiltersBottomSheet(
                 ) {
                     MyText(
                         textStringResourceId = R.string.bottom_sheet_transactions_filter_clear,
+                        style = MaterialTheme.typography.labelLarge,
                     )
                 }
             }
@@ -166,12 +163,11 @@ internal fun TransactionsFiltersBottomSheet(
                             all = 16.dp,
                         ),
                     textStringResourceId = R.string.bottom_sheet_transactions_filter_select_income_categories,
-                    style = TextStyle(
-                        color = MaterialTheme.colorScheme.onBackground,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Start,
-                    ),
+                    style = MaterialTheme.typography.headlineLarge
+                        .copy(
+                            color = MaterialTheme.colorScheme.onBackground,
+                            textAlign = TextAlign.Start,
+                        ),
                 )
                 TextButton(
                     onClick = {
@@ -184,6 +180,7 @@ internal fun TransactionsFiltersBottomSheet(
                 ) {
                     MyText(
                         textStringResourceId = R.string.bottom_sheet_transactions_filter_clear,
+                        style = MaterialTheme.typography.labelLarge,
                     )
                 }
             }
@@ -222,12 +219,11 @@ internal fun TransactionsFiltersBottomSheet(
                             all = 16.dp,
                         ),
                     textStringResourceId = R.string.bottom_sheet_transactions_filter_select_sources,
-                    style = TextStyle(
-                        color = MaterialTheme.colorScheme.onBackground,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Start,
-                    ),
+                    style = MaterialTheme.typography.headlineLarge
+                        .copy(
+                            color = MaterialTheme.colorScheme.onBackground,
+                            textAlign = TextAlign.Start,
+                        ),
                 )
                 TextButton(
                     onClick = {
@@ -240,6 +236,7 @@ internal fun TransactionsFiltersBottomSheet(
                 ) {
                     MyText(
                         textStringResourceId = R.string.bottom_sheet_transactions_filter_clear,
+                        style = MaterialTheme.typography.labelLarge,
                     )
                 }
             }
@@ -278,12 +275,11 @@ internal fun TransactionsFiltersBottomSheet(
                             all = 16.dp,
                         ),
                     textStringResourceId = R.string.bottom_sheet_transactions_filter_select_transaction_types,
-                    style = TextStyle(
-                        color = MaterialTheme.colorScheme.onBackground,
-                        fontSize = 16.sp,
-                        fontWeight = FontWeight.Bold,
-                        textAlign = TextAlign.Start,
-                    ),
+                    style = MaterialTheme.typography.headlineLarge
+                        .copy(
+                            color = MaterialTheme.colorScheme.onBackground,
+                            textAlign = TextAlign.Start,
+                        ),
                 )
                 TextButton(
                     onClick = {
@@ -296,6 +292,7 @@ internal fun TransactionsFiltersBottomSheet(
                 ) {
                     MyText(
                         textStringResourceId = R.string.bottom_sheet_transactions_filter_clear,
+                        style = MaterialTheme.typography.labelLarge,
                     )
                 }
             }
@@ -344,6 +341,7 @@ internal fun TransactionsFiltersBottomSheet(
             ) {
                 MyText(
                     textStringResourceId = R.string.bottom_sheet_transactions_filter_reset,
+                    style = MaterialTheme.typography.labelLarge,
                 )
             }
             Button(
@@ -367,6 +365,7 @@ internal fun TransactionsFiltersBottomSheet(
             ) {
                 MyText(
                     textStringResourceId = R.string.bottom_sheet_transactions_filter_apply,
+                    style = MaterialTheme.typography.labelLarge,
                 )
             }
         }

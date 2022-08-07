@@ -4,9 +4,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.sp
 
 data class MyTabData(
     val title: String,
@@ -54,14 +51,13 @@ private fun MyTabText(
 ) {
     MyText(
         text = title,
-        style = TextStyle(
-            color = if (isSelected) {
-                MaterialTheme.colorScheme.primary
-            } else {
-                MaterialTheme.colorScheme.onBackground
-            },
-            fontSize = 16.sp,
-            fontWeight = FontWeight.Bold,
-        ),
+        style = MaterialTheme.typography.headlineLarge
+            .copy(
+                color = if (isSelected) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.onBackground
+                },
+            ),
     )
 }

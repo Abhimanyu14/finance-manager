@@ -64,22 +64,25 @@ class RestoreDataUseCaseImpl(
         return transactions.map {
             when (it.transactionType) {
                 TransactionType.INCOME -> {
-                    it.copy(
-                        sourceFromId = null,
-                    )
+                    it
+                        .copy(
+                            sourceFromId = null,
+                        )
                 }
                 TransactionType.EXPENSE -> {
-                    it.copy(
-                        sourceToId = null,
-                    )
+                    it
+                        .copy(
+                            sourceToId = null,
+                        )
                 }
                 TransactionType.TRANSFER -> {
                     it
                 }
                 TransactionType.ADJUSTMENT -> {
-                    it.copy(
-                        sourceFromId = null,
-                    )
+                    it
+                        .copy(
+                            sourceFromId = null,
+                        )
                 }
             }
         }

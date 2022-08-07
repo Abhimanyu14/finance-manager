@@ -11,11 +11,8 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 data class ConfirmationBottomSheetData(
@@ -48,12 +45,11 @@ fun ConfirmationBottomSheet(
                     all = 16.dp,
                 ),
             text = data.title,
-            style = TextStyle(
-                color = MaterialTheme.colorScheme.onBackground,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Center,
-            ),
+            style = MaterialTheme.typography.headlineLarge
+                .copy(
+                    color = MaterialTheme.colorScheme.onBackground,
+                    textAlign = TextAlign.Center,
+                ),
         )
         MyText(
             modifier = Modifier
@@ -62,11 +58,10 @@ fun ConfirmationBottomSheet(
                     all = 16.dp,
                 ),
             text = data.message,
-            style = TextStyle(
-                color = MaterialTheme.colorScheme.onBackground,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Normal,
-            ),
+            style = MaterialTheme.typography.bodyMedium
+                .copy(
+                    color = MaterialTheme.colorScheme.onBackground,
+                ),
         )
         Row(
             modifier = Modifier
@@ -87,6 +82,7 @@ fun ConfirmationBottomSheet(
             ) {
                 MyText(
                     text = data.negativeButtonText,
+                    style = MaterialTheme.typography.labelLarge,
                 )
             }
             Button(
@@ -103,6 +99,7 @@ fun ConfirmationBottomSheet(
             ) {
                 MyText(
                     text = data.positiveButtonText,
+                    style = MaterialTheme.typography.labelLarge,
                 )
             }
         }

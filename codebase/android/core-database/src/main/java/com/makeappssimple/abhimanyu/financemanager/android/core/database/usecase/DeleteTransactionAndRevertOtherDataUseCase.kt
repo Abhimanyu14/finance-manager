@@ -87,11 +87,13 @@ class DeleteTransactionAndRevertOtherDataUseCaseImpl(
             id = sourceFromId,
         ) ?: return
         updateSourcesUseCase(
-            source.copy(
-                balanceAmount = source.balanceAmount.copy(
-                    value = source.balanceAmount.value + transaction.amount.value,
-                )
-            ),
+            source
+                .copy(
+                    balanceAmount = source.balanceAmount
+                        .copy(
+                            value = source.balanceAmount.value + transaction.amount.value,
+                        )
+                ),
         )
     }
 
@@ -104,11 +106,13 @@ class DeleteTransactionAndRevertOtherDataUseCaseImpl(
             id = sourceToId,
         ) ?: return
         updateSourcesUseCase(
-            source.copy(
-                balanceAmount = source.balanceAmount.copy(
-                    value = source.balanceAmount.value - transaction.amount.value,
+            source
+                .copy(
+                    balanceAmount = source.balanceAmount
+                        .copy(
+                            value = source.balanceAmount.value - transaction.amount.value,
+                        ),
                 ),
-            ),
         )
     }
 
@@ -122,11 +126,13 @@ class DeleteTransactionAndRevertOtherDataUseCaseImpl(
             id = sourceFromId,
         ) ?: return
         updateSourcesUseCase(
-            source.copy(
-                balanceAmount = source.balanceAmount.copy(
-                    value = source.balanceAmount.value - transaction.amount.value,
-                )
-            ),
+            source
+                .copy(
+                    balanceAmount = source.balanceAmount
+                        .copy(
+                            value = source.balanceAmount.value - transaction.amount.value,
+                        )
+                ),
         )
     }
 
@@ -140,11 +146,13 @@ class DeleteTransactionAndRevertOtherDataUseCaseImpl(
             id = sourceToId,
         ) ?: return
         updateSourcesUseCase(
-            source.copy(
-                balanceAmount = source.balanceAmount.copy(
-                    value = source.balanceAmount.value - transaction.amount.value,
-                )
-            ),
+            source
+                .copy(
+                    balanceAmount = source.balanceAmount
+                        .copy(
+                            value = source.balanceAmount.value - transaction.amount.value,
+                        )
+                ),
         )
     }
 }
