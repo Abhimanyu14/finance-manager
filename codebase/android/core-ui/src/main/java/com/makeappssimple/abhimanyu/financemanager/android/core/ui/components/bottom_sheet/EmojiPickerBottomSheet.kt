@@ -106,7 +106,7 @@ private fun EmojiGroupName(
                 newChar = ' ',
             )
             .capitalizeWords(),
-        style = MaterialTheme.typography.headlineLarge
+        style = MaterialTheme.typography.headlineMedium
             .copy(
                 color = MaterialTheme.colorScheme.onBackground,
             ),

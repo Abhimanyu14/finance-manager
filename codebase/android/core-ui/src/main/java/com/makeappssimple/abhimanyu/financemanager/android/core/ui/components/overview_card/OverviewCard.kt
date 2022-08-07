@@ -12,12 +12,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.
 enum class OverviewTabOption(
     val title: String,
 ) {
-    DAY("Day"),
+    DAY("DAY"),
 
     // TODO-Abhi: Enable week later
     // WEEK("Week"),
-    MONTH("Month"),
-    YEAR("Year"),
+    MONTH("MONTH"),
+    YEAR("YEAR"),
 }
 
 @Composable

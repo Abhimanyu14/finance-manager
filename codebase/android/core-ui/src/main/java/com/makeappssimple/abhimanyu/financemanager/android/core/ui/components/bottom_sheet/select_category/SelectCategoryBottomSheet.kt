@@ -87,6 +87,7 @@ private fun SelectCategoryBottomSheetItem(
             modifier = Modifier
                 .padding(
                     start = 8.dp,
+                    end = 8.dp,
                 ),
             text = data.category.title,
             style = MaterialTheme.typography.headlineMedium

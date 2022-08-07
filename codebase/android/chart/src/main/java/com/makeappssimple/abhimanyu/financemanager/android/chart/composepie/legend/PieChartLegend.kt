@@ -38,7 +38,7 @@ fun PieChartLegend(
                     )
                     MyText(
                         text = item.text,
-                        style = MaterialTheme.typography.labelLarge
+                        style = MaterialTheme.typography.headlineLarge
                             .copy(
                                 color = MaterialTheme.colorScheme.onBackground,
                                 textAlign = TextAlign.Center,
