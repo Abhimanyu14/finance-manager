@@ -8,7 +8,7 @@ buildscript {
         appVersionName = "1.0.0.35"
 
         // Gradle build tools
-        gradleBuildToolsVersion = "7.2.1"
+        gradleBuildToolsVersion = "7.2.2"
 
         // Kotlin version
         kotlinVersion = "1.6.21"
@@ -294,7 +294,6 @@ buildscript {
 
         // Dex maker
         dexMakerVersion = "2.12.1"
-        compose_version = '1.2.0-beta01'
     }
 
     repositories {
