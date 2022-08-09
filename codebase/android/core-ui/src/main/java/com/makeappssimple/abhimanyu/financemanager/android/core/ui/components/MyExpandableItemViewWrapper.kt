@@ -14,11 +14,12 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun MyExpandableItemViewWrapper(
+    modifier: Modifier = Modifier,
     expanded: Boolean,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Column(
-        Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(
                 horizontal = 8.dp,

@@ -75,8 +75,8 @@ internal fun CategoriesListItem(
                 ),
         ) {
             MyEmojiCircle(
-                emoji = category.emoji,
                 backgroundColor = MaterialTheme.colorScheme.outline,
+                emoji = category.emoji,
             )
             MyText(
                 modifier = Modifier

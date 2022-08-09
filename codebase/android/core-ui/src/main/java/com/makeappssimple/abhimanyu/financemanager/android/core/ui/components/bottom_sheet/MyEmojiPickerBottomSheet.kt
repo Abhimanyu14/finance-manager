@@ -63,8 +63,8 @@ fun MyEmojiPickerBottomSheet(
                         FlowRow {
                             emojis.map { emoji ->
                                 MyEmojiCircle(
-                                    emoji = emoji.character,
                                     emojiCircleSize = EmojiCircleSize.Normal,
+                                    emoji = emoji.character,
                                     onClick = {
                                         onEmojiClick(emoji)
                                     },

@@ -11,6 +11,7 @@ import androidx.compose.ui.semantics.semantics
 
 @Composable
 fun MyFloatingActionButton(
+    modifier: Modifier = Modifier,
     iconImageVector: ImageVector,
     contentDescription: String,
     onClick: () -> Unit,
@@ -18,6 +19,7 @@ fun MyFloatingActionButton(
     FloatingActionButton(
         backgroundColor = MaterialTheme.colorScheme.primary,
         onClick = onClick,
+        modifier = modifier,
     ) {
         Icon(
             imageVector = iconImageVector,

@@ -128,6 +128,7 @@ fun MyHorizontalScrollingSuggestionGroup(
 
 @Composable
 private fun ChipView(
+    modifier: Modifier = Modifier,
     item: ChipItem,
     isSelected: Boolean,
     onSelectionChange: () -> Unit,
@@ -136,7 +137,7 @@ private fun ChipView(
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
+        modifier = modifier
             .padding(
                 horizontal = 4.dp,
                 vertical = 4.dp,

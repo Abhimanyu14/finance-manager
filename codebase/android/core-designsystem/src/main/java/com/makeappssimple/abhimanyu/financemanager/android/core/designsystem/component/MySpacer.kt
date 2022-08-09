@@ -11,10 +11,11 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun NonFillingVerticalSpacer(
+    modifier: Modifier = Modifier,
     height: Dp = 100.dp,
 ) {
     Spacer(
-        modifier = Modifier
+        modifier = modifier
             .height(
                 height = height,
             ),
@@ -23,10 +24,11 @@ fun NonFillingVerticalSpacer(
 
 @Composable
 fun VerticalSpacer(
+    modifier: Modifier = Modifier,
     height: Dp = 100.dp,
 ) {
     Spacer(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(
                 height = height,
@@ -36,10 +38,11 @@ fun VerticalSpacer(
 
 @Composable
 fun HorizontalSpacer(
+    modifier: Modifier = Modifier,
     width: Dp = 100.dp,
 ) {
     Spacer(
-        modifier = Modifier
+        modifier = modifier
             .width(
                 width = width,
             ),

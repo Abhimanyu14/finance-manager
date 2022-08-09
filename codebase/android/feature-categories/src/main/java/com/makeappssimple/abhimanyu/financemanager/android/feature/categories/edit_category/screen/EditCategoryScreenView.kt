@@ -191,8 +191,8 @@ internal fun EditCategoryScreenView(
                             .fillMaxWidth(),
                     ) {
                         MyEmojiCircle(
-                            emoji = data.emoji,
                             emojiCircleSize = EmojiCircleSize.Normal,
+                            emoji = data.emoji,
                             onClick = {
                                 state.keyboardController?.hide()
                                 editCategoryBottomSheetType =

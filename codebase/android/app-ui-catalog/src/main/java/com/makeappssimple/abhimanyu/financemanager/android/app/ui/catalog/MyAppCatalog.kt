@@ -416,17 +416,17 @@ private fun LazyListScope.componentsTabContent(
                 emoji = "😀",
             )
             MyEmojiCircle(
-                emoji = "😀",
                 emojiCircleSize = EmojiCircleSize.Normal,
+                emoji = "😀",
             )
             MyEmojiCircle(
-                emoji = "😀",
                 backgroundColor = MaterialTheme.colorScheme.outline,
+                emoji = "😀",
             )
             MyEmojiCircle(
-                emoji = "😀",
                 backgroundColor = MaterialTheme.colorScheme.outline,
                 emojiCircleSize = EmojiCircleSize.Normal,
+                emoji = "😀",
             )
         }
     }
@@ -545,8 +545,8 @@ private fun LazyListScope.componentsTabContent(
             crossAxisAlignment = FlowCrossAxisAlignment.Center,
         ) {
             MyTopAppBarView(
-                titleText = "Title",
                 isNavigationIconVisible = true,
+                titleText = "Title",
                 navigationBackButton = {
                     MyNavigationBackButton(
                         onClick = {},
@@ -554,8 +554,8 @@ private fun LazyListScope.componentsTabContent(
                 },
             )
             MyTopAppBarView(
-                titleText = "Title",
                 isNavigationIconVisible = false,
+                titleText = "Title",
                 navigationBackButton = {
                     MyNavigationBackButton(
                         onClick = {},

@@ -81,8 +81,8 @@ internal fun TransactionsListItem(
                 ),
         ) {
             MyEmojiCircle(
-                emoji = data.category?.emoji,
                 backgroundColor = MaterialTheme.colorScheme.outline,
+                emoji = data.category?.emoji,
             )
             Column(
                 modifier = Modifier

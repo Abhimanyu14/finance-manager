@@ -36,15 +36,16 @@ sealed class EmojiCircleSize(
 
 @Composable
 fun MyEmojiCircle(
-    emoji: String?,
+    modifier: Modifier = Modifier,
     backgroundColor: Color = Transparent,
     emojiCircleSize: EmojiCircleSize = EmojiCircleSize.Small,
+    emoji: String?,
     onClick: (() -> Unit)? = null,
     onLongClick: (() -> Unit)? = null,
 ) {
     Box(
         contentAlignment = Alignment.Center,
-        modifier = Modifier
+        modifier = modifier
             .clip(
                 shape = CircleShape,
             )

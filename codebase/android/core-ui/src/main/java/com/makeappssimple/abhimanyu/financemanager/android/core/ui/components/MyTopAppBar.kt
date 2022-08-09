@@ -11,14 +11,16 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 
 @Composable
 fun MyTopAppBar(
+    modifier: Modifier = Modifier,
     @StringRes titleTextStringResourceId: Int,
     navigationAction: (() -> Unit)? = null,
 ) {
     MyTopAppBarView(
+        isNavigationIconVisible = navigationAction != null,
         titleText = stringResource(
             id = titleTextStringResourceId,
         ),
-        isNavigationIconVisible = navigationAction != null,
+        modifier = modifier,
     ) {
         MyNavigationBackButton(
             onClick = {
@@ -30,8 +32,9 @@ fun MyTopAppBar(
 
 @Composable
 fun MyTopAppBarView(
-    titleText: String,
+    modifier: Modifier = Modifier,
     isNavigationIconVisible: Boolean,
+    titleText: String,
     navigationBackButton: @Composable () -> Unit,
 ) {
     CenterAlignedTopAppBar(
@@ -49,7 +52,7 @@ fun MyTopAppBarView(
                 navigationBackButton()
             }
         },
-        modifier = Modifier
+        modifier = modifier
             .background(
                 color = MaterialTheme.colorScheme.background,
             ),

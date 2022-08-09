@@ -13,6 +13,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 
 @Composable
 fun SaveButton(
+    modifier: Modifier = Modifier,
     @StringRes textStringResourceId: Int,
     isEnabled: Boolean,
     onClick: () -> Unit,
@@ -26,7 +27,7 @@ fun SaveButton(
         ),
     ) {
         MyText(
-            modifier = Modifier
+            modifier = modifier
                 .defaultMinSize(
                     minWidth = 80.dp,
                 ),

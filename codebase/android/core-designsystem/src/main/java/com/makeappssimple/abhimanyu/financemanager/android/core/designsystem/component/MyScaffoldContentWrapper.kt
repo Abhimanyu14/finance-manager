@@ -14,12 +14,13 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun MyScaffoldContentWrapper(
+    modifier: Modifier = Modifier,
     innerPadding: PaddingValues,
     onClick: () -> Unit,
     content: @Composable () -> Unit,
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .background(
                 color = MaterialTheme.colorScheme.background,
             )
