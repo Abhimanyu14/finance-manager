@@ -23,12 +23,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getReadableDateAndTimeString
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getReadableDateAndTimeString
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.ExpandedListItemShape
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircle
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemIconButton
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemViewWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyEmojiCircle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemIconButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemViewWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 
@@ -48,7 +48,7 @@ internal fun TransactionsListItem(
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
 ) {
-    ExpandableItemViewWrapper(
+    MyExpandableItemViewWrapper(
         expanded = expanded,
     ) {
         Row(
@@ -80,7 +80,7 @@ internal fun TransactionsListItem(
                     },
                 ),
         ) {
-            EmojiCircle(
+            MyEmojiCircle(
                 emoji = data.category?.emoji,
                 backgroundColor = MaterialTheme.colorScheme.outline,
             )
@@ -207,29 +207,29 @@ internal fun TransactionsListItem(
                         bottom = 8.dp,
                     ),
             ) {
-                ExpandableItemIconButton(
+                MyExpandableItemIconButton(
                     iconImageVector = Icons.Rounded.Edit,
+                    modifier = Modifier
+                        .weight(
+                            weight = 1F,
+                        ),
                     labelText = stringResource(
                         id = R.string.list_item_transactions_edit,
                     ),
                     enabled = true,
                     onClick = onEditClick,
+                )
+                MyExpandableItemIconButton(
                     modifier = Modifier
                         .weight(
                             weight = 1F,
                         ),
-                )
-                ExpandableItemIconButton(
                     iconImageVector = Icons.Rounded.Delete,
                     labelText = stringResource(
                         id = R.string.list_item_transactions_delete,
                     ),
                     enabled = deleteEnabled,
                     onClick = onDeleteClick,
-                    modifier = Modifier
-                        .weight(
-                            weight = 1F,
-                        ),
                 )
             }
         }

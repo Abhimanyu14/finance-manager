@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.t
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -33,43 +32,20 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
-data class SearchBarData(
-    val autoFocus: Boolean = true,
-    val searchText: String,
-    val placeholderText: String,
-    val onValueChange: (updatedSearchText: String) -> Unit,
-    val onSearch: (() -> Unit)? = null,
-)
-
-@Composable
-fun SearchBarContainer(
-    content: @Composable () -> Unit,
-) {
-    Box(
-        modifier = Modifier
-            .background(
-                color = MaterialTheme.colorScheme.background,
-            )
-            .fillMaxWidth()
-            .padding(
-                vertical = 8.dp,
-                horizontal = 16.dp,
-            ),
-    ) {
-        content()
-    }
-}
-
 @Composable
 fun SearchBar(
-    data: SearchBarData,
     modifier: Modifier = Modifier,
+    autoFocus: Boolean = true,
+    searchText: String,
+    placeholderText: String,
+    onValueChange: (updatedSearchText: String) -> Unit,
+    onSearch: (() -> Unit)? = null,
 ) {
     val focusRequester: FocusRequester = remember {
         FocusRequester()
     }
 
-    if (data.autoFocus) {
+    if (autoFocus) {
         LaunchedEffect(
             key1 = Unit,
         ) {
@@ -78,13 +54,13 @@ fun SearchBar(
     }
 
     TextField(
-        value = data.searchText,
+        value = searchText,
         onValueChange = {
-            data.onValueChange(it)
+            onValueChange(it)
         },
         keyboardActions = KeyboardActions(
             onSearch = {
-                data.onSearch?.invoke()
+                onSearch?.invoke()
             },
         ),
         keyboardOptions = KeyboardOptions(
@@ -104,7 +80,7 @@ fun SearchBar(
                 contentDescription = null,
             )
         },
-        trailingIcon = if (data.searchText.isNotBlank()) {
+        trailingIcon = if (searchText.isNotBlank()) {
             {
                 Icon(
                     imageVector = Icons.Rounded.Close,
@@ -114,7 +90,7 @@ fun SearchBar(
                             shape = CircleShape,
                         )
                         .clickable {
-                            data.onValueChange("")
+                            onValueChange("")
                         }
                         .padding(
                             all = 8.dp,
@@ -126,7 +102,7 @@ fun SearchBar(
         },
         placeholder = {
             MyText(
-                text = data.placeholderText,
+                text = placeholderText,
                 style = MaterialTheme.typography.headlineLarge
                     .copy(
                         color = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -143,14 +119,18 @@ fun SearchBar(
 
 @Composable
 fun MySearchBar(
-    data: SearchBarData,
     modifier: Modifier = Modifier,
+    autoFocus: Boolean = true,
+    searchText: String,
+    placeholderText: String,
+    onValueChange: (updatedSearchText: String) -> Unit,
+    onSearch: (() -> Unit)? = null,
 ) {
     val focusRequester: FocusRequester = remember {
         FocusRequester()
     }
 
-    if (data.autoFocus) {
+    if (autoFocus) {
         LaunchedEffect(
             key1 = Unit,
         ) {
@@ -159,9 +139,9 @@ fun MySearchBar(
     }
 
     BasicTextField(
-        value = data.searchText,
+        value = searchText,
         onValueChange = {
-            data.onValueChange(it)
+            onValueChange(it)
         },
         modifier = modifier
             .fillMaxWidth()
@@ -188,14 +168,14 @@ fun MySearchBar(
         ),
         keyboardActions = KeyboardActions(
             onSearch = {
-                data.onSearch?.invoke()
+                onSearch?.invoke()
             },
         ),
         singleLine = true,
         cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
         decorationBox = {
             TextFieldDefaults.TextFieldDecorationBox(
-                value = data.searchText,
+                value = searchText,
                 innerTextField = it,
                 enabled = true,
                 singleLine = true,
@@ -205,7 +185,7 @@ fun MySearchBar(
                 },
                 placeholder = {
                     MyText(
-                        text = data.placeholderText,
+                        text = placeholderText,
                         style = MaterialTheme.typography.headlineLarge
                             .copy(
                                 color = MaterialTheme.colorScheme.onPrimaryContainer,
@@ -225,7 +205,7 @@ fun MySearchBar(
                             ),
                     )
                 },
-                trailingIcon = if (data.searchText.isNotBlank()) {
+                trailingIcon = if (searchText.isNotBlank()) {
                     {
                         Icon(
                             imageVector = Icons.Rounded.Close,
@@ -235,7 +215,7 @@ fun MySearchBar(
                                     shape = CircleShape,
                                 )
                                 .clickable {
-                                    data.onValueChange("")
+                                    onValueChange("")
                                 }
                                 .padding(
                                     all = 6.dp,

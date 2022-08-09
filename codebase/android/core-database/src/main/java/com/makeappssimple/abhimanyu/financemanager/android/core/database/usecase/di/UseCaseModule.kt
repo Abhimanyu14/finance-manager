@@ -24,7 +24,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.RecalculateTotalUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.RestoreDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.RestoreDataUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.JsonUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.JsonUtil
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

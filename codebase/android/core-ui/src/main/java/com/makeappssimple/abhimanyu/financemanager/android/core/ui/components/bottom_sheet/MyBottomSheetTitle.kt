@@ -11,11 +11,12 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 @Composable
-fun BottomSheetTitle(
+fun MyBottomSheetTitle(
+    modifier: Modifier = Modifier,
     @StringRes textStringResourceId: Int,
 ) {
     MyText(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .background(
                 color = MaterialTheme.colorScheme.background,

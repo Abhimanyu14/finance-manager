@@ -35,7 +35,7 @@ sealed class EmojiCircleSize(
 }
 
 @Composable
-fun EmojiCircle(
+fun MyEmojiCircle(
     emoji: String?,
     backgroundColor: Color = Transparent,
     emojiCircleSize: EmojiCircleSize = EmojiCircleSize.Small,

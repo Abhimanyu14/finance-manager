@@ -49,15 +49,13 @@ fun OverviewCard(
     )
 
     OverviewCardView(
-        data = OverviewCardViewData(
-            onClick = onClick,
-            overviewTabSelectionIndex = overviewTabSelectionIndex,
-            onOverviewTabClick = {
-                viewModel.setOverviewTabSelectionIndex(
-                    updatedOverviewTabSelectionIndex = it,
-                )
-            },
-            pieChartData = pieChartData,
-        ),
+        onClick = onClick,
+        overviewTabSelectionIndex = overviewTabSelectionIndex,
+        onOverviewTabClick = {
+            viewModel.setOverviewTabSelectionIndex(
+                updatedOverviewTabSelectionIndex = it,
+            )
+        },
+        pieChartData = pieChartData,
     )
 }

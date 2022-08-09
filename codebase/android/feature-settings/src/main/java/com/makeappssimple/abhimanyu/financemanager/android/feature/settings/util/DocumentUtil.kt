@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.uti
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContracts
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getDateAndTimeString
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getDateAndTimeString
 
 internal const val JSON_MIMETYPE = "application/json"
 

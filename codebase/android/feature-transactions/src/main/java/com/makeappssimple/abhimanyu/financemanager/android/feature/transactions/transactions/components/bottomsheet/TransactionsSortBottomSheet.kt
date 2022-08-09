@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.BottomSheetTitle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.MyBottomSheetTitle
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.SortOption
 
@@ -28,27 +28,24 @@ data class TransactionsSortBottomSheetItemData(
     val onClick: () -> Unit,
 )
 
-data class TransactionsSortBottomSheetData(
-    val items: List<TransactionsSortBottomSheetItemData>,
-)
-
 @Composable
 fun TransactionsSortBottomSheet(
-    data: TransactionsSortBottomSheetData,
+    modifier: Modifier = Modifier,
+    items: List<TransactionsSortBottomSheetItemData>,
 ) {
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .defaultMinSize(
                 minHeight = 24.dp,
             ),
     ) {
         stickyHeader {
-            BottomSheetTitle(
+            MyBottomSheetTitle(
                 textStringResourceId = R.string.bottom_sheet_transactions_sort_title,
             )
         }
         items(
-            items = data.items,
+            items = items,
             key = { listItem ->
                 listItem.hashCode()
             },

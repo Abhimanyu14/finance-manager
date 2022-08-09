@@ -5,10 +5,10 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.constants.APP_NAME
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.constants.DEFAULT_EXPENSE_CATEGORY_ID
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.constants.DEFAULT_INCOME_CATEGORY_ID
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.constants.DEFAULT_SOURCE_ID
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.APP_NAME
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.DEFAULT_EXPENSE_CATEGORY_ID
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.DEFAULT_INCOME_CATEGORY_ID
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.DEFAULT_SOURCE_ID
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

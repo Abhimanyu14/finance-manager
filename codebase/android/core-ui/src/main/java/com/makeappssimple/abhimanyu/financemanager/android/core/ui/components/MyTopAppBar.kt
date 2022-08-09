@@ -20,7 +20,7 @@ fun MyTopAppBar(
         ),
         isNavigationIconVisible = navigationAction != null,
     ) {
-        NavigationBackButton(
+        MyNavigationBackButton(
             onClick = {
                 navigationAction?.invoke()
             },

@@ -15,9 +15,7 @@ fun TotalBalanceCard(
     )
 
     TotalBalanceCardView(
-        data = TotalBalanceCardViewData(
-            totalBalanceAmount = totalBalanceAmount,
-            onClick = onClick,
-        ),
+        totalBalanceAmount = totalBalanceAmount,
+        onClick = onClick,
     )
 }

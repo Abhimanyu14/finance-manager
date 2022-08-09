@@ -4,28 +4,27 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 
 data class MyTabData(
     val title: String,
 )
 
-data class MyTabRowData(
-    val selectedTabIndex: Int,
-    val updateSelectedTabIndex: (updatedSelectedTabIndex: Int) -> Unit,
-    val tabData: List<MyTabData>,
-)
-
 @Composable
 fun MyTabRow(
-    data: MyTabRowData,
+    modifier: Modifier = Modifier,
+    selectedTabIndex: Int,
+    tabData: List<MyTabData>,
+    updateSelectedTabIndex: (updatedSelectedTabIndex: Int) -> Unit,
 ) {
     TabRow(
-        selectedTabIndex = data.selectedTabIndex,
+        selectedTabIndex = selectedTabIndex,
+        modifier = modifier,
         containerColor = MaterialTheme.colorScheme.background,
         contentColor = MaterialTheme.colorScheme.primary,
     ) {
-        data.tabData.mapIndexed { index, categoriesTabData ->
-            val isSelected = data.selectedTabIndex == index
+        tabData.mapIndexed { index, categoriesTabData ->
+            val isSelected = selectedTabIndex == index
             Tab(
                 text = {
                     MyTabText(
@@ -35,7 +34,7 @@ fun MyTabRow(
                 },
                 selected = isSelected,
                 onClick = {
-                    data.updateSelectedTabIndex(index)
+                    updateSelectedTabIndex(index)
                 },
                 selectedContentColor = MaterialTheme.colorScheme.primary,
                 unselectedContentColor = MaterialTheme.colorScheme.primary,

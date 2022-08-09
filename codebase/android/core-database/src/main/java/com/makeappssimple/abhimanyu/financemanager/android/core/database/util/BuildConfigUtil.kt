@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.utils
+package com.makeappssimple.abhimanyu.financemanager.android.core.database.util
 
 import android.os.Build
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.BuildConfig

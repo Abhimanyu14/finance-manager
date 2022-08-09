@@ -1,4 +1,4 @@
-﻿package com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions
+﻿package com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions
 
 fun String?.isNotNullOrBlank(): Boolean {
     return this != null && this.isNotBlank()

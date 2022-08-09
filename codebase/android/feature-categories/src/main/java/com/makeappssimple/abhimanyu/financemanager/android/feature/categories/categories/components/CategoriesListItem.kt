@@ -18,10 +18,10 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.ExpandedListItemShape
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.DefaultTag
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircle
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemIconButton
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemViewWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyDefaultTag
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyEmojiCircle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemIconButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemViewWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isDefaultCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isSalaryCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
@@ -37,7 +37,7 @@ internal fun CategoriesListItem(
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
 ) {
-    ExpandableItemViewWrapper(
+    MyExpandableItemViewWrapper(
         expanded = expanded,
     ) {
         Row(
@@ -74,7 +74,7 @@ internal fun CategoriesListItem(
                     },
                 ),
         ) {
-            EmojiCircle(
+            MyEmojiCircle(
                 emoji = category.emoji,
                 backgroundColor = MaterialTheme.colorScheme.outline,
             )
@@ -91,7 +91,7 @@ internal fun CategoriesListItem(
                     ),
             )
             if (isDefault) {
-                DefaultTag()
+                MyDefaultTag()
             }
         }
         if (expanded) {
@@ -110,7 +110,7 @@ internal fun CategoriesListItem(
                         bottom = 8.dp,
                     ),
             ) {
-                ExpandableItemIconButton(
+                MyExpandableItemIconButton(
                     iconImageVector = Icons.Rounded.Edit,
                     labelText = stringResource(
                         id = R.string.list_item_categories_edit,
@@ -122,7 +122,7 @@ internal fun CategoriesListItem(
                             weight = 1F,
                         ),
                 )
-                ExpandableItemIconButton(
+                MyExpandableItemIconButton(
                     iconImageVector = Icons.Rounded.Delete,
                     labelText = stringResource(
                         id = R.string.list_item_categories_delete,

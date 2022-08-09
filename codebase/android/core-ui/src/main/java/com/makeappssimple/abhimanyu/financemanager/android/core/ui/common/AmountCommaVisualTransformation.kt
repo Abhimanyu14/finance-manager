@@ -4,7 +4,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.formattedCurrencyValue
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.formattedCurrencyValue
 
 /**
  * Format long to comma separated string.

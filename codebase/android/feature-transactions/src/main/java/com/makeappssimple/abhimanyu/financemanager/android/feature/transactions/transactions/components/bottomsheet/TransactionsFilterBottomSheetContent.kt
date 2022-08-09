@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggle
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-internal fun TransactionsFiltersBottomSheetContent(
+internal fun TransactionsFilterBottomSheetContent(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
     expenseCategories: List<Category>,
@@ -27,28 +27,25 @@ internal fun TransactionsFiltersBottomSheetContent(
     resetBottomSheetType: () -> Unit,
 ) {
     TransactionsFiltersBottomSheet(
-        data = TransactionsFilterBottomSheetData(
-            expenseCategories = expenseCategories,
-            incomeCategories = incomeCategories,
-            sources = sources,
-            transactionTypes = transactionTypes,
-            selectedExpenseCategoryIndices = selectedExpenseCategoryIndices,
-            selectedIncomeCategoryIndices = selectedIncomeCategoryIndices,
-            selectedSourceIndices = selectedSourceIndices,
-            selectedTransactionTypesIndices = selectedTransactionTypesIndices,
-            onPositiveButtonClick = {
-                updateSelectedExpenseCategoryIndices(it.selectedExpenseCategoryIndices)
-                updateSelectedIncomeCategoryIndices(it.selectedIncomeCategoryIndices)
-                updateSelectedSourceIndices(it.selectedSourceIndices)
-                updateSelectedTransactionTypesIndices(it.selectedTransactionTypeIndices)
-                toggleModalBottomSheetState(
-                    coroutineScope = coroutineScope,
-                    modalBottomSheetState = modalBottomSheetState,
-                ) {
-                    resetBottomSheetType()
-                }
-            },
-            onNegativeButtonClick = {},
-        ),
-    )
+        expenseCategories = expenseCategories,
+        incomeCategories = incomeCategories,
+        sources = sources,
+        transactionTypes = transactionTypes,
+        selectedExpenseCategoryIndices = selectedExpenseCategoryIndices,
+        selectedIncomeCategoryIndices = selectedIncomeCategoryIndices,
+        selectedSourceIndices = selectedSourceIndices,
+        selectedTransactionTypesIndices = selectedTransactionTypesIndices,
+        onPositiveButtonClick = {
+            updateSelectedExpenseCategoryIndices(it.selectedExpenseCategoryIndices)
+            updateSelectedIncomeCategoryIndices(it.selectedIncomeCategoryIndices)
+            updateSelectedSourceIndices(it.selectedSourceIndices)
+            updateSelectedTransactionTypesIndices(it.selectedTransactionTypeIndices)
+            toggleModalBottomSheetState(
+                coroutineScope = coroutineScope,
+                modalBottomSheetState = modalBottomSheetState,
+            ) {
+                resetBottomSheetType()
+            }
+        },
+    ) {}
 }

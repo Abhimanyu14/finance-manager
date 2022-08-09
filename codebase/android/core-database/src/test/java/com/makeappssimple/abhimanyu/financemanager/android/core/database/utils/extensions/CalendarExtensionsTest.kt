@@ -1,5 +1,12 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.dayOfMonth
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.hour
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.minute
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.month
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.setDate
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.setTime
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.year
 import org.junit.Assert
 import org.junit.Test
 import java.util.Calendar

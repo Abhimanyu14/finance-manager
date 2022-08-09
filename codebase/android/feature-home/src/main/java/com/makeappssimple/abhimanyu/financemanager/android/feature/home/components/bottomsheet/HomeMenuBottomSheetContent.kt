@@ -19,56 +19,54 @@ internal fun HomeMenuBottomSheetContent(
     resetBottomSheetType: () -> Unit,
 ) {
     HomeMenuBottomSheet(
-        data = HomeMenuBottomSheetData(
-            items = listOf(
-                HomeBottomSheetItemData(
-                    text = stringResource(
-                        id = R.string.screen_home_bottom_sheet_sources,
-                    ),
-                    onClick = {
-                        toggleModalBottomSheetState(
-                            coroutineScope = coroutineScope,
-                            modalBottomSheetState = modalBottomSheetState,
-                        ) {
-                            resetBottomSheetType()
-                            navigateToSourcesScreen(
-                                navigationManager = navigationManager,
-                            )
-                        }
-                    },
+        items = listOf(
+            HomeBottomSheetItemData(
+                text = stringResource(
+                    id = R.string.screen_home_bottom_sheet_sources,
                 ),
-                HomeBottomSheetItemData(
-                    text = stringResource(
-                        id = R.string.screen_home_bottom_sheet_categories,
-                    ),
-                    onClick = {
-                        toggleModalBottomSheetState(
-                            coroutineScope = coroutineScope,
-                            modalBottomSheetState = modalBottomSheetState,
-                        ) {
-                            resetBottomSheetType()
-                            navigateToCategoriesScreen(
-                                navigationManager = navigationManager,
-                            )
-                        }
-                    },
+                onClick = {
+                    toggleModalBottomSheetState(
+                        coroutineScope = coroutineScope,
+                        modalBottomSheetState = modalBottomSheetState,
+                    ) {
+                        resetBottomSheetType()
+                        navigateToSourcesScreen(
+                            navigationManager = navigationManager,
+                        )
+                    }
+                },
+            ),
+            HomeBottomSheetItemData(
+                text = stringResource(
+                    id = R.string.screen_home_bottom_sheet_categories,
                 ),
-                HomeBottomSheetItemData(
-                    text = stringResource(
-                        id = R.string.screen_home_bottom_sheet_settings,
-                    ),
-                    onClick = {
-                        toggleModalBottomSheetState(
-                            coroutineScope = coroutineScope,
-                            modalBottomSheetState = modalBottomSheetState,
-                        ) {
-                            resetBottomSheetType()
-                            navigateToSettingsScreen(
-                                navigationManager = navigationManager,
-                            )
-                        }
-                    },
+                onClick = {
+                    toggleModalBottomSheetState(
+                        coroutineScope = coroutineScope,
+                        modalBottomSheetState = modalBottomSheetState,
+                    ) {
+                        resetBottomSheetType()
+                        navigateToCategoriesScreen(
+                            navigationManager = navigationManager,
+                        )
+                    }
+                },
+            ),
+            HomeBottomSheetItemData(
+                text = stringResource(
+                    id = R.string.screen_home_bottom_sheet_settings,
                 ),
+                onClick = {
+                    toggleModalBottomSheetState(
+                        coroutineScope = coroutineScope,
+                        modalBottomSheetState = modalBottomSheetState,
+                    ) {
+                        resetBottomSheetType()
+                        navigateToSettingsScreen(
+                            navigationManager = navigationManager,
+                        )
+                    }
+                },
             ),
         ),
     )

@@ -19,7 +19,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.BottomSheetTitle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.MyBottomSheetTitle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.getIcon
 
 data class SelectSourceBottomSheetItemData(
@@ -29,27 +29,24 @@ data class SelectSourceBottomSheetItemData(
     val onClick: () -> Unit,
 )
 
-data class SelectSourceBottomSheetData(
-    val items: List<SelectSourceBottomSheetItemData>,
-)
-
 @Composable
 fun SelectSourceBottomSheet(
-    data: SelectSourceBottomSheetData,
+    modifier: Modifier = Modifier,
+    items: List<SelectSourceBottomSheetItemData>,
 ) {
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .defaultMinSize(
                 minHeight = 24.dp,
             ),
     ) {
         stickyHeader {
-            BottomSheetTitle(
+            MyBottomSheetTitle(
                 textStringResourceId = R.string.bottom_sheet_select_source_title,
             )
         }
         items(
-            items = data.items,
+            items = items,
             key = { listItem ->
                 listItem.hashCode()
             },

@@ -13,7 +13,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 
 @Composable
-fun DefaultTag() {
+fun MyDefaultTag() {
     MyText(
         modifier = Modifier
             .clip(

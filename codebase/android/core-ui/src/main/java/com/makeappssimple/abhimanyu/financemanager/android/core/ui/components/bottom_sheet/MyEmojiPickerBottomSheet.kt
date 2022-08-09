@@ -13,50 +13,44 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.capitalizeWords
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircleSize
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MySearchBar
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBarContainer
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBarData
-
-data class EmojiPickerBottomSheetData(
-    val emojis: List<Emoji>,
-    val searchText: String,
-    val onEmojiClick: (emoji: Emoji) -> Unit,
-    val onEmojiLongClick: (emoji: Emoji) -> Unit,
-    val updateSearchText: (updatedSearchText: String) -> Unit,
-)
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MySearchBarContainer
 
 @Composable
-fun EmojiPickerBottomSheet(
-    data: EmojiPickerBottomSheetData,
+fun MyEmojiPickerBottomSheet(
+    modifier: Modifier = Modifier,
+    emojis: List<Emoji>,
+    searchText: String,
+    onEmojiClick: (emoji: Emoji) -> Unit,
+    onEmojiLongClick: (emoji: Emoji) -> Unit,
+    updateSearchText: (updatedSearchText: String) -> Unit,
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .defaultMinSize(
                 minHeight = 24.dp,
             ),
     ) {
-        SearchBarContainer {
+        MySearchBarContainer {
             MySearchBar(
-                data = SearchBarData(
-                    searchText = data.searchText,
-                    placeholderText = stringResource(
-                        id = R.string.emoji_picker_bottom_sheet_placeholder_text,
-                    ),
-                    onValueChange = data.updateSearchText,
+                searchText = searchText,
+                placeholderText = stringResource(
+                    id = R.string.emoji_picker_bottom_sheet_placeholder_text,
                 ),
+                onValueChange = updateSearchText,
             )
         }
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth(),
         ) {
-            data.emojis.groupBy { emoji ->
+            emojis.groupBy { emoji ->
                 emoji.group
             }.forEach { (group, emojis) ->
                 if (emojis.isNotEmpty()) {
@@ -68,14 +62,14 @@ fun EmojiPickerBottomSheet(
                     item {
                         FlowRow {
                             emojis.map { emoji ->
-                                EmojiCircle(
+                                MyEmojiCircle(
                                     emoji = emoji.character,
                                     emojiCircleSize = EmojiCircleSize.Normal,
                                     onClick = {
-                                        data.onEmojiClick(emoji)
+                                        onEmojiClick(emoji)
                                     },
                                     onLongClick = {
-                                        data.onEmojiLongClick(emoji)
+                                        onEmojiLongClick(emoji)
                                     },
                                 )
                             }

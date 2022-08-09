@@ -35,46 +35,43 @@ internal data class TransactionsFilterBottomSheetSelectionData(
     val selectedTransactionTypeIndices: List<Int>,
 )
 
-internal data class TransactionsFilterBottomSheetData(
-    val expenseCategories: List<Category>,
-    val incomeCategories: List<Category>,
-    val sources: List<Source>,
-    val transactionTypes: List<TransactionType>,
-    val selectedExpenseCategoryIndices: List<Int>,
-    val selectedIncomeCategoryIndices: List<Int>,
-    val selectedSourceIndices: List<Int>,
-    val selectedTransactionTypesIndices: List<Int>,
-    val onPositiveButtonClick: (data: TransactionsFilterBottomSheetSelectionData) -> Unit,
-    val onNegativeButtonClick: () -> Unit,
-)
-
 @Composable
 internal fun TransactionsFiltersBottomSheet(
-    data: TransactionsFilterBottomSheetData,
+    modifier: Modifier = Modifier,
+    expenseCategories: List<Category>,
+    incomeCategories: List<Category>,
+    sources: List<Source>,
+    transactionTypes: List<TransactionType>,
+    selectedExpenseCategoryIndices: List<Int>,
+    selectedIncomeCategoryIndices: List<Int>,
+    selectedSourceIndices: List<Int>,
+    selectedTransactionTypesIndices: List<Int>,
+    onPositiveButtonClick: (data: TransactionsFilterBottomSheetSelectionData) -> Unit,
+    onNegativeButtonClick: () -> Unit,
 ) {
-    val selectedExpenseCategoryIndices = remember {
+    val selectedExpenseCategoryIndicesValue = remember {
         mutableStateListOf(
-            *data.selectedExpenseCategoryIndices.toTypedArray(),
+            *selectedExpenseCategoryIndices.toTypedArray(),
         )
     }
-    val selectedIncomeCategoryIndices = remember {
+    val selectedIncomeCategoryIndicesValue = remember {
         mutableStateListOf(
-            *data.selectedIncomeCategoryIndices.toTypedArray(),
+            *selectedIncomeCategoryIndices.toTypedArray(),
         )
     }
-    val selectedSourceIndices = remember {
+    val selectedSourceIndicesValue = remember {
         mutableStateListOf(
-            *data.selectedSourceIndices.toTypedArray(),
+            *selectedSourceIndices.toTypedArray(),
         )
     }
-    val selectedTransactionTypesIndices = remember {
+    val selectedTransactionTypesIndicesValue = remember {
         mutableStateListOf(
-            *data.selectedTransactionTypesIndices.toTypedArray(),
+            *selectedTransactionTypesIndices.toTypedArray(),
         )
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .defaultMinSize(
                 minHeight = 24.dp,
@@ -115,7 +112,7 @@ internal fun TransactionsFiltersBottomSheet(
                 )
                 TextButton(
                     onClick = {
-                        selectedExpenseCategoryIndices.clear()
+                        selectedExpenseCategoryIndicesValue.clear()
                     },
                     modifier = Modifier
                         .padding(
@@ -129,18 +126,18 @@ internal fun TransactionsFiltersBottomSheet(
                 }
             }
             MySelectionGroup(
-                items = data.expenseCategories
+                items = expenseCategories
                     .map { category ->
                         ChipItem(
                             text = category.title,
                         )
                     },
-                selectedItemsIndices = selectedExpenseCategoryIndices,
+                selectedItemsIndices = selectedExpenseCategoryIndicesValue,
                 onSelectionChange = { index ->
-                    if (selectedExpenseCategoryIndices.contains(index)) {
-                        selectedExpenseCategoryIndices.remove(index)
+                    if (selectedExpenseCategoryIndicesValue.contains(index)) {
+                        selectedExpenseCategoryIndicesValue.remove(index)
                     } else {
-                        selectedExpenseCategoryIndices.add(index)
+                        selectedExpenseCategoryIndicesValue.add(index)
                     }
                 },
                 modifier = Modifier
@@ -171,7 +168,7 @@ internal fun TransactionsFiltersBottomSheet(
                 )
                 TextButton(
                     onClick = {
-                        selectedIncomeCategoryIndices.clear()
+                        selectedIncomeCategoryIndicesValue.clear()
                     },
                     modifier = Modifier
                         .padding(
@@ -185,18 +182,18 @@ internal fun TransactionsFiltersBottomSheet(
                 }
             }
             MySelectionGroup(
-                items = data.incomeCategories
+                items = incomeCategories
                     .map { category ->
                         ChipItem(
                             text = category.title,
                         )
                     },
-                selectedItemsIndices = selectedIncomeCategoryIndices,
+                selectedItemsIndices = selectedIncomeCategoryIndicesValue,
                 onSelectionChange = { index ->
-                    if (selectedIncomeCategoryIndices.contains(index)) {
-                        selectedIncomeCategoryIndices.remove(index)
+                    if (selectedIncomeCategoryIndicesValue.contains(index)) {
+                        selectedIncomeCategoryIndicesValue.remove(index)
                     } else {
-                        selectedIncomeCategoryIndices.add(index)
+                        selectedIncomeCategoryIndicesValue.add(index)
                     }
                 },
                 modifier = Modifier
@@ -227,7 +224,7 @@ internal fun TransactionsFiltersBottomSheet(
                 )
                 TextButton(
                     onClick = {
-                        selectedSourceIndices.clear()
+                        selectedSourceIndicesValue.clear()
                     },
                     modifier = Modifier
                         .padding(
@@ -241,18 +238,18 @@ internal fun TransactionsFiltersBottomSheet(
                 }
             }
             MySelectionGroup(
-                items = data.sources
+                items = sources
                     .map { source ->
                         ChipItem(
                             text = source.name,
                         )
                     },
-                selectedItemsIndices = selectedSourceIndices,
+                selectedItemsIndices = selectedSourceIndicesValue,
                 onSelectionChange = { index ->
-                    if (selectedSourceIndices.contains(index)) {
-                        selectedSourceIndices.remove(index)
+                    if (selectedSourceIndicesValue.contains(index)) {
+                        selectedSourceIndicesValue.remove(index)
                     } else {
-                        selectedSourceIndices.add(index)
+                        selectedSourceIndicesValue.add(index)
                     }
                 },
                 modifier = Modifier
@@ -283,7 +280,7 @@ internal fun TransactionsFiltersBottomSheet(
                 )
                 TextButton(
                     onClick = {
-                        selectedTransactionTypesIndices.clear()
+                        selectedTransactionTypesIndicesValue.clear()
                     },
                     modifier = Modifier
                         .padding(
@@ -297,18 +294,18 @@ internal fun TransactionsFiltersBottomSheet(
                 }
             }
             MySelectionGroup(
-                items = data.transactionTypes
+                items = transactionTypes
                     .map { transactionType ->
                         ChipItem(
                             text = transactionType.title,
                         )
                     },
-                selectedItemsIndices = selectedTransactionTypesIndices,
+                selectedItemsIndices = selectedTransactionTypesIndicesValue,
                 onSelectionChange = { index ->
-                    if (selectedTransactionTypesIndices.contains(index)) {
-                        selectedTransactionTypesIndices.remove(index)
+                    if (selectedTransactionTypesIndicesValue.contains(index)) {
+                        selectedTransactionTypesIndicesValue.remove(index)
                     } else {
-                        selectedTransactionTypesIndices.add(index)
+                        selectedTransactionTypesIndicesValue.add(index)
                     }
                 },
                 modifier = Modifier
@@ -325,11 +322,11 @@ internal fun TransactionsFiltersBottomSheet(
         ) {
             OutlinedButton(
                 onClick = {
-                    selectedExpenseCategoryIndices.clear()
-                    selectedIncomeCategoryIndices.clear()
-                    selectedSourceIndices.clear()
-                    selectedTransactionTypesIndices.clear()
-                    data.onNegativeButtonClick()
+                    selectedExpenseCategoryIndicesValue.clear()
+                    selectedIncomeCategoryIndicesValue.clear()
+                    selectedSourceIndicesValue.clear()
+                    selectedTransactionTypesIndicesValue.clear()
+                    onNegativeButtonClick()
                 },
                 modifier = Modifier
                     .padding(
@@ -346,12 +343,12 @@ internal fun TransactionsFiltersBottomSheet(
             }
             Button(
                 onClick = {
-                    data.onPositiveButtonClick(
+                    onPositiveButtonClick(
                         TransactionsFilterBottomSheetSelectionData(
-                            selectedExpenseCategoryIndices = selectedExpenseCategoryIndices,
-                            selectedIncomeCategoryIndices = selectedIncomeCategoryIndices,
-                            selectedSourceIndices = selectedSourceIndices,
-                            selectedTransactionTypeIndices = selectedTransactionTypesIndices,
+                            selectedExpenseCategoryIndices = selectedExpenseCategoryIndicesValue,
+                            selectedIncomeCategoryIndices = selectedIncomeCategoryIndicesValue,
+                            selectedSourceIndices = selectedSourceIndicesValue,
+                            selectedTransactionTypeIndices = selectedTransactionTypesIndicesValue,
                         )
                     )
                 },

@@ -16,17 +16,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.conditionalClickable
 
-data class TotalBalanceCardViewData(
-    val totalBalanceAmount: Long,
-    val onClick: (() -> Unit)? = null,
-)
-
 @Composable
 fun TotalBalanceCardView(
-    data: TotalBalanceCardViewData,
+    modifier: Modifier = Modifier,
+    totalBalanceAmount: Long,
+    onClick: (() -> Unit)? = null,
 ) {
     Card(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(
                 vertical = 16.dp,
@@ -36,7 +33,7 @@ fun TotalBalanceCardView(
                 MaterialTheme.shapes.medium,
             )
             .conditionalClickable(
-                onClick = data.onClick,
+                onClick = onClick,
             ),
     ) {
         Column(
@@ -62,7 +59,7 @@ fun TotalBalanceCardView(
                 modifier = Modifier
                     .fillMaxWidth(),
                 text = Amount(
-                    value = data.totalBalanceAmount,
+                    value = totalBalanceAmount,
                 ).toString(),
                 style = MaterialTheme.typography.displayLarge
                     .copy(

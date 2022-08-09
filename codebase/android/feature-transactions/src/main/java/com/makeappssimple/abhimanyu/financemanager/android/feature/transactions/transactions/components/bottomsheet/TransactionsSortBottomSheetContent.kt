@@ -16,24 +16,22 @@ fun TransactionsSortBottomSheetContent(
     updateSelectedSortOption: (updatedSortOptionIndex: Int) -> Unit,
 ) {
     TransactionsSortBottomSheet(
-        data = TransactionsSortBottomSheetData(
-            items = sortOptions
-                .mapIndexed { index, sortOption ->
-                    TransactionsSortBottomSheetItemData(
-                        sortOption = sortOption,
-                        isSelected = index == selectedSortOptionIndex,
-                        onClick = {
-                            toggleModalBottomSheetState(
-                                coroutineScope = coroutineScope,
-                                modalBottomSheetState = modalBottomSheetState,
-                            ) {
-                                updateSelectedSortOption(index)
-                                resetBottomSheetType()
-                            }
-                        },
-                    )
-                }
-                .toList(),
-        ),
+        items = sortOptions
+            .mapIndexed { index, sortOption ->
+                TransactionsSortBottomSheetItemData(
+                    sortOption = sortOption,
+                    isSelected = index == selectedSortOptionIndex,
+                    onClick = {
+                        toggleModalBottomSheetState(
+                            coroutineScope = coroutineScope,
+                            modalBottomSheetState = modalBottomSheetState,
+                        ) {
+                            updateSelectedSortOption(index)
+                            resetBottomSheetType()
+                        }
+                    },
+                )
+            }
+            .toList(),
     )
 }

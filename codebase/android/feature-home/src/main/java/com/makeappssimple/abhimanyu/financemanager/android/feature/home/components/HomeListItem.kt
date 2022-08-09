@@ -18,10 +18,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getReadableDateAndTimeString
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getReadableDateAndTimeString
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircle
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemViewWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 
@@ -36,132 +35,128 @@ data class HomeListItemViewData(
 internal fun HomeListItem(
     data: HomeListItemViewData,
 ) {
-    ExpandableItemViewWrapper(
-        expanded = false,
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(
+                shape = MaterialTheme.shapes.large,
+            )
+            .padding(
+                start = 16.dp,
+                end = 16.dp,
+                top = 8.dp,
+                bottom = 8.dp,
+            ),
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
+        MyEmojiCircle(
+            emoji = data.category?.emoji,
+            backgroundColor = MaterialTheme.colorScheme.outline,
+        )
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(
-                    shape = MaterialTheme.shapes.large,
-                )
                 .padding(
-                    start = 16.dp,
-                    end = 16.dp,
-                    top = 8.dp,
-                    bottom = 8.dp,
+                    start = 8.dp,
                 ),
         ) {
-            EmojiCircle(
-                emoji = data.category?.emoji,
-                backgroundColor = MaterialTheme.colorScheme.outline,
-            )
-            Column(
+            Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        start = 8.dp,
-                    ),
+                    .fillMaxWidth(),
             ) {
-                Row(
+                MyText(
                     modifier = Modifier
-                        .fillMaxWidth(),
-                ) {
-                    MyText(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(
-                                weight = 1F,
-                            ),
-                        text = data.transaction.title,
-                        style = MaterialTheme.typography.headlineMedium
-                            .copy(
-                                color = MaterialTheme.colorScheme.onBackground,
-                            ),
-                    )
-                    MyText(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(
-                                weight = 1F,
-                            ),
-                        text = if (data.transaction.transactionType == TransactionType.INCOME ||
-                            (data.transaction.transactionType == TransactionType.ADJUSTMENT
-                                    && data.transaction.amount.value > 0)
-                        ) {
-                            data.transaction.amount.toSignedString()
-                        } else {
-                            data.transaction.amount.toString()
-                        },
-                        style = MaterialTheme.typography.headlineMedium
-                            .copy(
-                                color = data.transaction.getAmountTextColor(),
-                                textAlign = TextAlign.End,
-                            ),
-                    )
-                }
-                Spacer(
-                    modifier = Modifier
-                        .height(
-                            height = 4.dp,
+                        .fillMaxWidth()
+                        .weight(
+                            weight = 1F,
+                        ),
+                    text = data.transaction.title,
+                    style = MaterialTheme.typography.headlineMedium
+                        .copy(
+                            color = MaterialTheme.colorScheme.onBackground,
                         ),
                 )
                 MyText(
                     modifier = Modifier
-                        .fillMaxWidth(),
-                    text = data.transaction.transactionFor.title,
+                        .fillMaxWidth()
+                        .weight(
+                            weight = 1F,
+                        ),
+                    text = if (data.transaction.transactionType == TransactionType.INCOME ||
+                        (data.transaction.transactionType == TransactionType.ADJUSTMENT
+                                && data.transaction.amount.value > 0)
+                    ) {
+                        data.transaction.amount.toSignedString()
+                    } else {
+                        data.transaction.amount.toString()
+                    },
+                    style = MaterialTheme.typography.headlineMedium
+                        .copy(
+                            color = data.transaction.getAmountTextColor(),
+                            textAlign = TextAlign.End,
+                        ),
+                )
+            }
+            Spacer(
+                modifier = Modifier
+                    .height(
+                        height = 4.dp,
+                    ),
+            )
+            MyText(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                text = data.transaction.transactionFor.title,
+                style = MaterialTheme.typography.bodySmall
+                    .copy(
+                        color = MaterialTheme.colorScheme.onBackground,
+                    ),
+            )
+            Spacer(
+                modifier = Modifier
+                    .height(
+                        height = 4.dp,
+                    ),
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+            ) {
+                MyText(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(
+                            weight = 1F,
+                        ),
+                    text = getReadableDateAndTimeString(
+                        timestamp = data.transaction.transactionTimestamp,
+                    ),
                     style = MaterialTheme.typography.bodySmall
                         .copy(
                             color = MaterialTheme.colorScheme.onBackground,
                         ),
                 )
-                Spacer(
+                MyText(
                     modifier = Modifier
-                        .height(
-                            height = 4.dp,
+                        .fillMaxWidth()
+                        .weight(
+                            weight = 1F,
+                        ),
+                    text = if (data.sourceFrom != null && data.sourceTo != null) {
+                        stringResource(
+                            id = R.string.list_item_home_source,
+                            data.sourceFrom.name,
+                            data.sourceTo.name,
+                        )
+                    } else {
+                        data.sourceFrom?.name ?: data.sourceTo?.name.orEmpty()
+                    },
+                    style = MaterialTheme.typography.bodySmall
+                        .copy(
+                            color = MaterialTheme.colorScheme.onBackground,
+                            textAlign = TextAlign.End,
                         ),
                 )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                ) {
-                    MyText(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(
-                                weight = 1F,
-                            ),
-                        text = getReadableDateAndTimeString(
-                            timestamp = data.transaction.transactionTimestamp,
-                        ),
-                        style = MaterialTheme.typography.bodySmall
-                            .copy(
-                                color = MaterialTheme.colorScheme.onBackground,
-                            ),
-                    )
-                    MyText(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .weight(
-                                weight = 1F,
-                            ),
-                        text = if (data.sourceFrom != null && data.sourceTo != null) {
-                            stringResource(
-                                id = R.string.list_item_home_source,
-                                data.sourceFrom.name,
-                                data.sourceTo.name,
-                            )
-                        } else {
-                            data.sourceFrom?.name ?: data.sourceTo?.name.orEmpty()
-                        },
-                        style = MaterialTheme.typography.bodySmall
-                            .copy(
-                                color = MaterialTheme.colorScheme.onBackground,
-                                textAlign = TextAlign.End,
-                            ),
-                    )
-                }
             }
         }
     }

@@ -18,9 +18,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTitleSuggestionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.UpdateTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.capitalizeWords
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.isNotNullOrBlank
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.isNotZero
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.capitalizeWords
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.isNotNullOrBlank
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.isNotZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateUp

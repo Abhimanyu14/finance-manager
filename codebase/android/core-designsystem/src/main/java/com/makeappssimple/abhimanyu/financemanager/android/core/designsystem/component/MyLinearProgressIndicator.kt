@@ -8,9 +8,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun MyLinearProgressIndicator() {
+fun MyLinearProgressIndicator(
+    modifier: Modifier = Modifier,
+) {
     LinearProgressIndicator(
-        modifier = Modifier
+        modifier = modifier
             .height(
                 height = 2.dp,
             )

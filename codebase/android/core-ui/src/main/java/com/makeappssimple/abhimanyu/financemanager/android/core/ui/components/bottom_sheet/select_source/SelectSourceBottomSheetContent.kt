@@ -16,25 +16,23 @@ fun SelectSourceBottomSheetContent(
     updateSource: (updatedSource: Source?) -> Unit,
 ) {
     SelectSourceBottomSheet(
-        data = SelectSourceBottomSheetData(
-            items = sources
-                .map { source ->
-                    SelectSourceBottomSheetItemData(
-                        text = source.name,
-                        iconKey = source.type.title,
-                        isSelected = source.id == selectedSourceId,
-                        onClick = {
-                            toggleModalBottomSheetState(
-                                coroutineScope = coroutineScope,
-                                modalBottomSheetState = modalBottomSheetState,
-                            ) {
-                                updateSource(source)
-                                resetBottomSheetType()
-                            }
-                        },
-                    )
-                }
-                .toList(),
-        ),
+        items = sources
+            .map { source ->
+                SelectSourceBottomSheetItemData(
+                    text = source.name,
+                    iconKey = source.type.title,
+                    isSelected = source.id == selectedSourceId,
+                    onClick = {
+                        toggleModalBottomSheetState(
+                            coroutineScope = coroutineScope,
+                            modalBottomSheetState = modalBottomSheetState,
+                        ) {
+                            updateSource(source)
+                            resetBottomSheetType()
+                        }
+                    },
+                )
+            }
+            .toList(),
     )
 }

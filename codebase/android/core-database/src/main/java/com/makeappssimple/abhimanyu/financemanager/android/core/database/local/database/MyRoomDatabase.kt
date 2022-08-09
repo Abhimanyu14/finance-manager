@@ -23,8 +23,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.datasource.local.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.constants.EMOJI_DATA_VERSION_NUMBER
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.readInitialDataFromAssets
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.EMOJI_DATA_VERSION_NUMBER
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.readInitialDataFromAssets
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest

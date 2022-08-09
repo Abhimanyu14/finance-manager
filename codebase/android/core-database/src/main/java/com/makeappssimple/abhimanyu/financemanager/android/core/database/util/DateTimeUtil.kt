@@ -1,8 +1,8 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.utils
+package com.makeappssimple.abhimanyu.financemanager.android.core.database.util
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.formattedDate
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.formattedDateAndTime
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.formattedReadableDateAndTime
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.formattedDate
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.formattedDateAndTime
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.formattedReadableDateAndTime
 import java.time.Instant
 import java.time.LocalDate
 import java.time.LocalDateTime

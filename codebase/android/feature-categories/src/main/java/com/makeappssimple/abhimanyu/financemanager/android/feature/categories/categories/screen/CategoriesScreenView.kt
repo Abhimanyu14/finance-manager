@@ -23,11 +23,10 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabData
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabRow
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabRowData
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
@@ -224,7 +223,7 @@ internal fun CategoriesScreenView(
             modifier = Modifier
                 .fillMaxSize(),
         ) { innerPadding ->
-            ScaffoldContentWrapper(
+            MyScaffoldContentWrapper(
                 innerPadding = innerPadding,
                 onClick = {
                     state.focusManager.clearFocus()
@@ -235,16 +234,14 @@ internal fun CategoriesScreenView(
                         .fillMaxSize(),
                 ) {
                     MyTabRow(
-                        data = MyTabRowData(
-                            selectedTabIndex = data.selectedTabIndex,
-                            updateSelectedTabIndex = data.updateSelectedTabIndex,
-                            tabData = transactionTypes
-                                .map {
-                                    MyTabData(
-                                        title = it.title,
-                                    )
-                                },
-                        ),
+                        selectedTabIndex = data.selectedTabIndex,
+                        updateSelectedTabIndex = data.updateSelectedTabIndex,
+                        tabData = transactionTypes
+                            .map {
+                                MyTabData(
+                                    title = it.title,
+                                )
+                            },
                     )
                     HorizontalPager(
                         count = 2,

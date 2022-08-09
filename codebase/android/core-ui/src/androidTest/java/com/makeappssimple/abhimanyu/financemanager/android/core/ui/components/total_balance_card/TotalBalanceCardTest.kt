@@ -26,9 +26,7 @@ class TotalBalanceCardTest {
         composeTestRule.setContent {
             MyAppTheme {
                 TotalBalanceCardView(
-                    data = TotalBalanceCardViewData(
-                        totalBalanceAmount = 123456L,
-                    ),
+                    totalBalanceAmount = 123456L,
                 )
             }
         }
@@ -46,10 +44,8 @@ class TotalBalanceCardTest {
         composeTestRule.setContent {
             MyAppTheme {
                 TotalBalanceCardView(
-                    data = TotalBalanceCardViewData(
-                        totalBalanceAmount = 123456L,
-                        onClick = {},
-                    ),
+                    totalBalanceAmount = 123456L,
+                    onClick = {},
                 )
             }
         }

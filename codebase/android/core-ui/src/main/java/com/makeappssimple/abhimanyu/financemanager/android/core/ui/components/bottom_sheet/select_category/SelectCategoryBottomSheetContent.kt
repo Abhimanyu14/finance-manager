@@ -18,27 +18,25 @@ fun SelectCategoryBottomSheetContent(
     updateCategory: (updatedCategory: Category?) -> Unit,
 ) {
     SelectCategoryBottomSheet(
-        data = SelectCategoryBottomSheetData(
-            items = categories
-                .filter { category ->
-                    category.transactionType == selectedTransactionType
-                }
-                .map { category ->
-                    SelectCategoryBottomSheetItemData(
-                        category = category,
-                        isSelected = category.id == selectedCategoryId,
-                        onClick = {
-                            toggleModalBottomSheetState(
-                                coroutineScope = coroutineScope,
-                                modalBottomSheetState = modalBottomSheetState,
-                            ) {
-                                updateCategory(category)
-                                resetBottomSheetType()
-                            }
-                        },
-                    )
-                }
-                .toList(),
-        ),
+        items = categories
+            .filter { category ->
+                category.transactionType == selectedTransactionType
+            }
+            .map { category ->
+                SelectCategoryBottomSheetItemData(
+                    category = category,
+                    isSelected = category.id == selectedCategoryId,
+                    onClick = {
+                        toggleModalBottomSheetState(
+                            coroutineScope = coroutineScope,
+                            modalBottomSheetState = modalBottomSheetState,
+                        ) {
+                            updateCategory(category)
+                            resetBottomSheetType()
+                        }
+                    },
+                )
+            }
+            .toList(),
     )
 }

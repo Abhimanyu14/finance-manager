@@ -24,19 +24,16 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
 
-data class OverviewTabData(
-    val items: List<String>,
-    val selectedItemIndex: Int,
-    val onClick: (index: Int) -> Unit,
-)
-
 @Composable
 fun OverviewTab(
-    data: OverviewTabData,
+    modifier: Modifier = Modifier,
+    items: List<String>,
+    selectedItemIndex: Int,
+    onClick: (index: Int) -> Unit,
 ) {
     Row(
         horizontalArrangement = Arrangement.Center,
-        modifier = Modifier
+        modifier = modifier
             .padding(
                 all = 8.dp,
             )
@@ -47,8 +44,8 @@ fun OverviewTab(
                 color = MaterialTheme.colorScheme.background,
             ),
     ) {
-        data.items.mapIndexed { index, text ->
-            val isSelected = index == data.selectedItemIndex
+        items.mapIndexed { index, text ->
+            val isSelected = index == selectedItemIndex
             MyText(
                 modifier = Modifier
                     .defaultMinSize(
@@ -58,7 +55,7 @@ fun OverviewTab(
                         shape = CircleShape,
                     )
                     .clickable {
-                        data.onClick(index)
+                        onClick(index)
                     }
                     .background(
                         if (isSelected) {
@@ -102,18 +99,16 @@ private fun OverviewSelectionPreview() {
                 .fillMaxSize(),
         ) {
             OverviewTab(
-                data = OverviewTabData(
-                    items = listOf(
-                        "Day",
-                        "Week",
-                        "Month",
-                        "Year",
-                    ),
-                    selectedItemIndex = selectedIndex,
-                    onClick = {
-                        selectedIndex = it
-                    }
+                items = listOf(
+                    "Day",
+                    "Week",
+                    "Month",
+                    "Year",
                 ),
+                selectedItemIndex = selectedIndex,
+                onClick = {
+                    selectedIndex = it
+                }
             )
         }
     }

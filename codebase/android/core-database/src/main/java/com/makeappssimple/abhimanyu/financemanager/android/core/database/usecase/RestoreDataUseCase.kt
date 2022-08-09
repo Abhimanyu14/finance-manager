@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.DeleteAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.JsonUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.JsonUtil
 
 interface RestoreDataUseCase {
     suspend operator fun invoke(

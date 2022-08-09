@@ -23,16 +23,13 @@ internal data class HomeBottomSheetItemData(
     val onClick: () -> Unit,
 )
 
-internal data class HomeMenuBottomSheetData(
-    val items: List<HomeBottomSheetItemData>,
-)
-
 @Composable
 internal fun HomeMenuBottomSheet(
-    data: HomeMenuBottomSheetData,
+    modifier: Modifier = Modifier,
+    items: List<HomeBottomSheetItemData>,
 ) {
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .padding(
                 top = 16.dp,
             )
@@ -41,7 +38,7 @@ internal fun HomeMenuBottomSheet(
             ),
     ) {
         items(
-            items = data.items,
+            items = items,
             key = { listItem ->
                 listItem.hashCode()
             },
@@ -85,20 +82,18 @@ private fun HomeBottomSheetItem(
 private fun MyBottomSheetContentPreview() {
     MyAppTheme {
         HomeMenuBottomSheet(
-            data = HomeMenuBottomSheetData(
-                items = listOf(
-                    HomeBottomSheetItemData(
-                        text = stringResource(
-                            id = R.string.bottom_sheet_home_menu_sources,
-                        ),
-                        onClick = {},
+            items = listOf(
+                HomeBottomSheetItemData(
+                    text = stringResource(
+                        id = R.string.bottom_sheet_home_menu_sources,
                     ),
-                    HomeBottomSheetItemData(
-                        text = stringResource(
-                            id = R.string.bottom_sheet_home_menu_categories,
-                        ),
-                        onClick = {},
+                    onClick = {},
+                ),
+                HomeBottomSheetItemData(
+                    text = stringResource(
+                        id = R.string.bottom_sheet_home_menu_categories,
                     ),
+                    onClick = {},
                 ),
             ),
         )

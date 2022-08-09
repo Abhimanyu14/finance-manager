@@ -17,19 +17,16 @@ import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.conditionalClickable
 
-data class OverviewCardViewData(
-    val pieChartData: PieChartData?,
-    val overviewTabSelectionIndex: Int,
-    val onClick: (() -> Unit)? = null,
-    val onOverviewTabClick: (index: Int) -> Unit,
-)
-
 @Composable
 fun OverviewCardView(
-    data: OverviewCardViewData,
+    modifier: Modifier = Modifier,
+    pieChartData: PieChartData?,
+    overviewTabSelectionIndex: Int,
+    onClick: (() -> Unit)? = null,
+    onOverviewTabClick: (index: Int) -> Unit,
 ) {
     ElevatedCard(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(
                 vertical = 16.dp,
@@ -39,7 +36,7 @@ fun OverviewCardView(
                 shape = MaterialTheme.shapes.medium,
             )
             .conditionalClickable(
-                onClick = data.onClick,
+                onClick = onClick,
             ),
     ) {
         Column(
@@ -55,21 +52,19 @@ fun OverviewCardView(
                 .animateContentSize(),
         ) {
             OverviewTab(
-                data = OverviewTabData(
-                    items = OverviewTabOption.values()
-                        .map {
-                            it.title
-                        },
-                    selectedItemIndex = data.overviewTabSelectionIndex,
-                    onClick = {
-                        data.onOverviewTabClick(it)
+                items = OverviewTabOption.values()
+                    .map {
+                        it.title
                     },
-                ),
+                selectedItemIndex = overviewTabSelectionIndex,
+                onClick = {
+                    onOverviewTabClick(it)
+                },
             )
             VerticalSpacer(
                 height = 8.dp,
             )
-            data.pieChartData?.let { pieChartDataValue ->
+            pieChartData?.let { pieChartDataValue ->
                 ComposePieChart(
                     data = pieChartDataValue,
                 )

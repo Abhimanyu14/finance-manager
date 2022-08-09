@@ -20,9 +20,9 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.ExpandedListItemShape
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.DefaultTag
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemIconButton
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ExpandableItemViewWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyDefaultTag
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemIconButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemViewWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.getIcon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isCashSource
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
@@ -38,7 +38,7 @@ internal fun SourcesListItem(
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
 ) {
-    ExpandableItemViewWrapper(
+    MyExpandableItemViewWrapper(
         expanded = expanded,
     ) {
         Row(
@@ -98,7 +98,7 @@ internal fun SourcesListItem(
                     ),
             )
             if (isDefault) {
-                DefaultTag()
+                MyDefaultTag()
             }
             Spacer(
                 modifier = Modifier
@@ -130,7 +130,7 @@ internal fun SourcesListItem(
                         bottom = 8.dp,
                     ),
             ) {
-                ExpandableItemIconButton(
+                MyExpandableItemIconButton(
                     iconImageVector = Icons.Rounded.Edit,
                     labelText = stringResource(
                         id = R.string.list_item_sources_edit,
@@ -142,7 +142,7 @@ internal fun SourcesListItem(
                             weight = 1F,
                         ),
                 )
-                ExpandableItemIconButton(
+                MyExpandableItemIconButton(
                     iconImageVector = Icons.Rounded.Delete,
                     labelText = stringResource(
                         id = R.string.list_item_sources_delete,

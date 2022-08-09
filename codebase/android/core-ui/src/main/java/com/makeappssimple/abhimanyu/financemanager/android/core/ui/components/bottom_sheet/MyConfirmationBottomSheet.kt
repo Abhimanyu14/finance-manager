@@ -15,21 +15,18 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
-data class ConfirmationBottomSheetData(
-    val title: String,
-    val message: String,
-    val positiveButtonText: String,
-    val negativeButtonText: String,
-    val onPositiveButtonClick: () -> Unit,
-    val onNegativeButtonClick: () -> Unit,
-)
-
 @Composable
-fun ConfirmationBottomSheet(
-    data: ConfirmationBottomSheetData,
+fun MyConfirmationBottomSheet(
+    modifier: Modifier = Modifier,
+    title: String,
+    message: String,
+    positiveButtonText: String,
+    negativeButtonText: String,
+    onPositiveButtonClick: () -> Unit,
+    onNegativeButtonClick: () -> Unit,
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(
                 top = 16.dp,
@@ -44,7 +41,7 @@ fun ConfirmationBottomSheet(
                 .padding(
                     all = 16.dp,
                 ),
-            text = data.title,
+            text = title,
             style = MaterialTheme.typography.headlineLarge
                 .copy(
                     color = MaterialTheme.colorScheme.onBackground,
@@ -57,7 +54,7 @@ fun ConfirmationBottomSheet(
                 .padding(
                     all = 16.dp,
                 ),
-            text = data.message,
+            text = message,
             style = MaterialTheme.typography.bodyMedium
                 .copy(
                     color = MaterialTheme.colorScheme.onBackground,
@@ -70,7 +67,7 @@ fun ConfirmationBottomSheet(
         ) {
             OutlinedButton(
                 onClick = {
-                    data.onNegativeButtonClick()
+                    onNegativeButtonClick()
                 },
                 modifier = Modifier
                     .padding(
@@ -81,13 +78,13 @@ fun ConfirmationBottomSheet(
                     ),
             ) {
                 MyText(
-                    text = data.negativeButtonText,
+                    text = negativeButtonText,
                     style = MaterialTheme.typography.labelLarge,
                 )
             }
             Button(
                 onClick = {
-                    data.onPositiveButtonClick()
+                    onPositiveButtonClick()
                 },
                 modifier = Modifier
                     .padding(
@@ -98,7 +95,7 @@ fun ConfirmationBottomSheet(
                     ),
             ) {
                 MyText(
-                    text = data.positiveButtonText,
+                    text = positiveButtonText,
                     style = MaterialTheme.typography.labelLarge,
                 )
             }

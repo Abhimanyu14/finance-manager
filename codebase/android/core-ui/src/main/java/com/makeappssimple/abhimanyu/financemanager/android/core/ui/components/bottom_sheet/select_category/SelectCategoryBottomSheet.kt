@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircle
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.BottomSheetTitle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyEmojiCircle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.MyBottomSheetTitle
 
 data class SelectCategoryBottomSheetItemData(
     val category: Category,
@@ -29,27 +29,24 @@ data class SelectCategoryBottomSheetItemData(
     val onClick: () -> Unit,
 )
 
-data class SelectCategoryBottomSheetData(
-    val items: List<SelectCategoryBottomSheetItemData>,
-)
-
 @Composable
 fun SelectCategoryBottomSheet(
-    data: SelectCategoryBottomSheetData,
+    modifier: Modifier = Modifier,
+    items: List<SelectCategoryBottomSheetItemData>,
 ) {
     LazyColumn(
-        modifier = Modifier
+        modifier = modifier
             .defaultMinSize(
                 minHeight = 24.dp,
             ),
     ) {
         stickyHeader {
-            BottomSheetTitle(
+            MyBottomSheetTitle(
                 textStringResourceId = R.string.bottom_sheet_select_category_title,
             )
         }
         items(
-            items = data.items,
+            items = items,
             key = { listItem ->
                 listItem.hashCode()
             },
@@ -79,7 +76,7 @@ private fun SelectCategoryBottomSheetItem(
                 vertical = 8.dp,
             ),
     ) {
-        EmojiCircle(
+        MyEmojiCircle(
             emoji = data.category.emoji,
             backgroundColor = MaterialTheme.colorScheme.outline,
         )

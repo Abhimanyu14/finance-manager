@@ -2,12 +2,12 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.transa
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.datasource.local.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getEndOfDayTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getEndOfMonthTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getEndOfYearTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getStartOfDayTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getStartOfMonthTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getStartOfYearTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getEndOfDayTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getEndOfMonthTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getEndOfYearTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getStartOfDayTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getStartOfMonthTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getStartOfYearTimestamp
 import kotlinx.coroutines.flow.Flow
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO

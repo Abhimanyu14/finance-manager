@@ -10,7 +10,7 @@ import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 
 @Composable
-fun NavigationBackButton(
+fun MyNavigationBackButton(
     onClick: () -> Unit,
 ) {
     IconButton(

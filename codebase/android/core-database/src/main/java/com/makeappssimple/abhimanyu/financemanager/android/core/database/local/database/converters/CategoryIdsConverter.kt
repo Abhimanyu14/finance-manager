@@ -4,7 +4,7 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.isNull
 
 class CategoryIdsConverter {
 

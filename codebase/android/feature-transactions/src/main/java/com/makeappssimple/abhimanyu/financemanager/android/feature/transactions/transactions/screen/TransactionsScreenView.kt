@@ -38,8 +38,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.ScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
@@ -54,12 +54,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Common
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MySearchBar
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBarData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.TransactionsListItem
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.TransactionsListItemViewData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsDeleteConfirmationBottomSheetContent
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsFiltersBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsFilterBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsSortBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.SortOption
 
@@ -161,7 +160,7 @@ internal fun TransactionsScreenView(
                     VerticalSpacer()
                 }
                 TransactionsBottomSheetType.FILTERS -> {
-                    TransactionsFiltersBottomSheetContent(
+                    TransactionsFilterBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
                         expenseCategories = data.expenseCategories,
@@ -262,7 +261,7 @@ internal fun TransactionsScreenView(
             modifier = Modifier
                 .fillMaxSize(),
         ) { innerPadding ->
-            ScaffoldContentWrapper(
+            MyScaffoldContentWrapper(
                 innerPadding = innerPadding,
                 onClick = {
                     state.focusManager.clearFocus()
@@ -308,16 +307,14 @@ internal fun TransactionsScreenView(
                                     ),
                             ) {
                                 MySearchBar(
-                                    data = SearchBarData(
-                                        searchText = data.searchText,
-                                        placeholderText = stringResource(
-                                            id = R.string.screen_transactions_searchbar_placeholder,
-                                        ),
-                                        onValueChange = data.updateSearchText,
-                                        onSearch = {
-                                            state.focusManager.clearFocus()
-                                        },
+                                    searchText = data.searchText,
+                                    placeholderText = stringResource(
+                                        id = R.string.screen_transactions_searchbar_placeholder,
                                     ),
+                                    onValueChange = data.updateSearchText,
+                                    onSearch = {
+                                        state.focusManager.clearFocus()
+                                    },
                                 )
                             }
                             ElevatedCard(

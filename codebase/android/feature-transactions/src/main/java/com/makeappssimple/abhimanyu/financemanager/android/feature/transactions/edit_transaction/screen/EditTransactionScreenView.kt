@@ -32,16 +32,16 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.dayOfMonth
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.formattedDate
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.formattedTime
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.hour
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.minute
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.month
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.setDate
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.setTime
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions.year
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.ScaffoldContentWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.dayOfMonth
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.formattedDate
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.formattedTime
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.hour
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.minute
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.month
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.setDate
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.setTime
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.year
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
@@ -252,7 +252,7 @@ internal fun EditTransactionScreenView(
             modifier = Modifier
                 .fillMaxSize(),
         ) { innerPadding ->
-            ScaffoldContentWrapper(
+            MyScaffoldContentWrapper(
                 innerPadding = innerPadding,
                 onClick = {
                     clearFocus()

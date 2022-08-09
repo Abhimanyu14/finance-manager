@@ -1,8 +1,8 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.di
+package com.makeappssimple.abhimanyu.financemanager.android.core.database.util.di
 
 import android.content.Context
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.JsonUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.JsonUtilImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.JsonUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.JsonUtilImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

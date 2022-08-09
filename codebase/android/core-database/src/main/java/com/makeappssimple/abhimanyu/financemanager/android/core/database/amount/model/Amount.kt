@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model
 
 import androidx.annotation.VisibleForTesting
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.formattedCurrencyValue
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.formattedCurrencyValue
 import com.squareup.moshi.JsonClass
 import kotlin.math.abs
 import java.util.Currency

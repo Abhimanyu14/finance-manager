@@ -25,7 +25,7 @@ fun MyReadOnlyTextField(
             modifier = Modifier
                 .fillMaxWidth(),
             label = {
-                OutlinedTextFieldLabelText(
+                MyOutlinedTextFieldLabelText(
                     textStringResourceId = labelTextStringResourceId,
                 )
             },

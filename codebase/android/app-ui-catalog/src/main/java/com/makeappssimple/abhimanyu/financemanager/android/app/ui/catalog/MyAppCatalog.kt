@@ -30,28 +30,24 @@ import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabData
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabRow
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabRowData
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ChipItem
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.DefaultTag
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircleSize
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyDefaultTag
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyHorizontalScrollingRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyHorizontalScrollingSuggestionGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyNavigationBackButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MySelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBarView
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.NavigationBackButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.overview_card.OverviewCardView
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.overview_card.OverviewCardViewData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MySearchBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MySearchBarContainer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBar
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBarContainer
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBarData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.total_balance_card.TotalBalanceCardView
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.total_balance_card.TotalBalanceCardViewData
 
 @Composable
 fun MyAppCatalog() {
@@ -94,11 +90,9 @@ private fun CatalogContent() {
                 ),
         )
         MyTabRow(
-            data = MyTabRowData(
-                selectedTabIndex = selectedTabIndex,
-                updateSelectedTabIndex = setSelectedTabIndex,
-                tabData = tabData,
-            ),
+            selectedTabIndex = selectedTabIndex,
+            updateSelectedTabIndex = setSelectedTabIndex,
+            tabData = tabData,
         )
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
@@ -333,9 +327,7 @@ private fun LazyListScope.componentsTabContent(
             crossAxisAlignment = FlowCrossAxisAlignment.Center,
         ) {
             TotalBalanceCardView(
-                data = TotalBalanceCardViewData(
-                    totalBalanceAmount = 1234567890,
-                ),
+                totalBalanceAmount = 1234567890,
             )
         }
     }
@@ -359,22 +351,20 @@ private fun LazyListScope.componentsTabContent(
             crossAxisAlignment = FlowCrossAxisAlignment.Center,
         ) {
             OverviewCardView(
-                data = OverviewCardViewData(
-                    onClick = {},
-                    overviewTabSelectionIndex = 1,
-                    onOverviewTabClick = {},
-                    pieChartData = PieChartData(
-                        items = listOf(
-                            PieChartItemData(
-                                value = 500F,
-                                text = "Income : ₹500",
-                                color = MaterialTheme.colorScheme.tertiary,
-                            ),
-                            PieChartItemData(
-                                value = 600F,
-                                text = "Expense : ₹600",
-                                color = MaterialTheme.colorScheme.error,
-                            ),
+                onClick = {},
+                overviewTabSelectionIndex = 1,
+                onOverviewTabClick = {},
+                pieChartData = PieChartData(
+                    items = listOf(
+                        PieChartItemData(
+                            value = 500F,
+                            text = "Income : ₹500",
+                            color = MaterialTheme.colorScheme.tertiary,
+                        ),
+                        PieChartItemData(
+                            value = 600F,
+                            text = "Expense : ₹600",
+                            color = MaterialTheme.colorScheme.error,
                         ),
                     ),
                 ),
@@ -400,7 +390,7 @@ private fun LazyListScope.componentsTabContent(
             mainAxisSpacing = 16.dp,
             crossAxisAlignment = FlowCrossAxisAlignment.Center,
         ) {
-            DefaultTag()
+            MyDefaultTag()
         }
     }
 
@@ -422,18 +412,18 @@ private fun LazyListScope.componentsTabContent(
             mainAxisSpacing = 16.dp,
             crossAxisAlignment = FlowCrossAxisAlignment.Center,
         ) {
-            EmojiCircle(
+            MyEmojiCircle(
                 emoji = "😀",
             )
-            EmojiCircle(
+            MyEmojiCircle(
                 emoji = "😀",
                 emojiCircleSize = EmojiCircleSize.Normal,
             )
-            EmojiCircle(
+            MyEmojiCircle(
                 emoji = "😀",
                 backgroundColor = MaterialTheme.colorScheme.outline,
             )
-            EmojiCircle(
+            MyEmojiCircle(
                 emoji = "😀",
                 backgroundColor = MaterialTheme.colorScheme.outline,
                 emojiCircleSize = EmojiCircleSize.Normal,
@@ -493,14 +483,12 @@ private fun LazyListScope.componentsTabContent(
             val (searchText, setSearchText) = remember {
                 mutableStateOf("")
             }
-            SearchBarContainer {
+            MySearchBarContainer {
                 SearchBar(
-                    data = SearchBarData(
-                        autoFocus = false,
-                        searchText = searchText,
-                        placeholderText = "Placeholder",
-                        onValueChange = setSearchText,
-                    ),
+                    autoFocus = false,
+                    searchText = searchText,
+                    placeholderText = "Placeholder",
+                    onValueChange = setSearchText,
                 )
             }
         }
@@ -527,14 +515,12 @@ private fun LazyListScope.componentsTabContent(
             val (searchText, setSearchText) = remember {
                 mutableStateOf("")
             }
-            SearchBarContainer {
+            MySearchBarContainer {
                 MySearchBar(
-                    data = SearchBarData(
-                        autoFocus = false,
-                        searchText = searchText,
-                        placeholderText = "Placeholder",
-                        onValueChange = setSearchText,
-                    ),
+                    autoFocus = false,
+                    searchText = searchText,
+                    placeholderText = "Placeholder",
+                    onValueChange = setSearchText,
                 )
             }
         }
@@ -562,7 +548,7 @@ private fun LazyListScope.componentsTabContent(
                 titleText = "Title",
                 isNavigationIconVisible = true,
                 navigationBackButton = {
-                    NavigationBackButton(
+                    MyNavigationBackButton(
                         onClick = {},
                     )
                 },
@@ -571,7 +557,7 @@ private fun LazyListScope.componentsTabContent(
                 titleText = "Title",
                 isNavigationIconVisible = false,
                 navigationBackButton = {
-                    NavigationBackButton(
+                    MyNavigationBackButton(
                         onClick = {},
                     )
                 },
@@ -597,7 +583,7 @@ private fun LazyListScope.componentsTabContent(
             mainAxisSpacing = 16.dp,
             crossAxisAlignment = FlowCrossAxisAlignment.Center,
         ) {
-            NavigationBackButton(
+            MyNavigationBackButton(
                 onClick = {},
             )
         }
