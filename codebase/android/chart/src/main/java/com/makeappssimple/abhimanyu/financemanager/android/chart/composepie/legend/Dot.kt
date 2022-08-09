@@ -11,10 +11,11 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun Dot(
+    modifier: Modifier = Modifier,
     color: Color,
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .requiredSize(
                 size = 8.dp,
             )

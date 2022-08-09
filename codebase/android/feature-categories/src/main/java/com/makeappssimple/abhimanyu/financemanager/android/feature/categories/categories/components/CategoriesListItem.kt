@@ -28,6 +28,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 
 @Composable
 internal fun CategoriesListItem(
+    modifier: Modifier = Modifier,
     category: Category,
     expanded: Boolean,
     deleteEnabled: Boolean,
@@ -39,6 +40,7 @@ internal fun CategoriesListItem(
 ) {
     MyExpandableItemViewWrapper(
         expanded = expanded,
+        modifier = modifier,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

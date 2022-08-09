@@ -41,6 +41,7 @@ data class TransactionsListItemViewData(
 
 @Composable
 internal fun TransactionsListItem(
+    modifier: Modifier = Modifier,
     data: TransactionsListItemViewData,
     expanded: Boolean,
     deleteEnabled: Boolean,
@@ -50,6 +51,7 @@ internal fun TransactionsListItem(
 ) {
     MyExpandableItemViewWrapper(
         expanded = expanded,
+        modifier = modifier,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

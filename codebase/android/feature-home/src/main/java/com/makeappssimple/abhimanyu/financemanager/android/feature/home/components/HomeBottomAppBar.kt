@@ -18,11 +18,13 @@ import kotlinx.coroutines.CoroutineScope
 
 @Composable
 internal fun HomeBottomAppBar(
+    modifier: Modifier = Modifier,
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
     updateHomeBottomSheetType: () -> Unit,
 ) {
     BottomAppBar(
+        modifier = modifier,
         cutoutShape = CircleShape,
     ) {
         IconButton(

@@ -29,6 +29,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 
 @Composable
 internal fun SourcesListItem(
+    modifier: Modifier = Modifier,
     source: Source,
     expanded: Boolean,
     deleteEnabled: Boolean,
@@ -40,6 +41,7 @@ internal fun SourcesListItem(
 ) {
     MyExpandableItemViewWrapper(
         expanded = expanded,
+        modifier = modifier,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,

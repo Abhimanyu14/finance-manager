@@ -18,8 +18,8 @@ fun simpleChartAnimation() = TweenSpec<Float>(durationMillis = 500)
 
 @Composable
 fun PieChart(
-    pieChartData: PieChartData,
     modifier: Modifier = Modifier,
+    pieChartData: PieChartData,
     animation: AnimationSpec<Float> = simpleChartAnimation(),
     sliceDrawer: SliceDrawer = SimpleSliceDrawer(),
 ) {
