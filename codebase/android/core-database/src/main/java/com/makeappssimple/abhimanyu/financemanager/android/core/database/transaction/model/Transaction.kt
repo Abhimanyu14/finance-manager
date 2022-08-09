@@ -37,31 +37,3 @@ data class Transaction(
     @Json(name = "transaction_type")
     val transactionType: TransactionType = TransactionType.EXPENSE,
 )
-
-// TODO-Abhi: To fix after modularization
-//
-// val Transaction.amountTextColor: Color
-//    get() = when (this.transactionType) {
-//        TransactionType.INCOME -> {
-//            OnTertiaryContainer
-//        }
-//        TransactionType.EXPENSE -> {
-//            Red
-//        }
-//        TransactionType.TRANSFER -> {
-//            DarkGray
-//        }
-//        TransactionType.ADJUSTMENT -> {
-//            when {
-//                this.amount.value > 0 -> {
-//                    OnTertiaryContainer
-//                }
-//                this.amount.value < 0 -> {
-//                    Red
-//                }
-//                else -> {
-//                    DarkGray
-//                }
-//            }
-//        }
-//    }
