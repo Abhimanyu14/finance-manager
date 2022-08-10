@@ -3,6 +3,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.o
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.defaultListStateIn
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetCurrentDayTransactionsUseCase
@@ -13,11 +15,9 @@ import javax.inject.Inject
 import kotlin.math.abs
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.stateIn
 
 @HiltViewModel
 class OverviewCardViewModelImpl @Inject constructor(
@@ -33,13 +33,13 @@ class OverviewCardViewModelImpl @Inject constructor(
         get() = _overviewTabSelectionIndex
     private val currentDayTransactions: StateFlow<List<Transaction>> =
         getCurrentDayTransactionsUseCase()
-            .defaultListStateIn()
+            .defaultListStateIn(viewModelScope)
     private val currentMonthTransactions: StateFlow<List<Transaction>> =
         getCurrentMonthTransactionsUseCase()
-            .defaultListStateIn()
+            .defaultListStateIn(viewModelScope)
     private val currentYearTransactions: StateFlow<List<Transaction>> =
         getCurrentYearTransactionsUseCase()
-            .defaultListStateIn()
+            .defaultListStateIn(viewModelScope)
 
     private val incomeAmount: Flow<Float?> = combine(
         flow = overviewTabSelectionIndex,
@@ -102,27 +102,13 @@ class OverviewCardViewModelImpl @Inject constructor(
             )
         }.flowOn(
             context = dispatcherProvider.io,
-        ).defaultObjectStateIn()
+        ).defaultObjectStateIn(
+            scope = viewModelScope,
+        )
 
     override fun setOverviewTabSelectionIndex(
         updatedOverviewTabSelectionIndex: Int,
     ) {
         _overviewTabSelectionIndex.value = updatedOverviewTabSelectionIndex
-    }
-
-    private fun <T> Flow<List<T>>.defaultListStateIn(): StateFlow<List<T>> {
-        return this.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Eagerly,
-            initialValue = emptyList(),
-        )
-    }
-
-    private fun <T> Flow<T>.defaultObjectStateIn(): StateFlow<T?> {
-        return this.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Eagerly,
-            initialValue = null,
-        )
     }
 }

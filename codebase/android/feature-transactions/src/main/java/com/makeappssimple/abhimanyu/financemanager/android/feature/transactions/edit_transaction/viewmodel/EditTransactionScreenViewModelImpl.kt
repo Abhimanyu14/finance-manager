@@ -4,6 +4,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.defaultBooleanStateIn
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.defaultListStateIn
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoriesUseCase
@@ -30,16 +33,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isSalar
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.math.abs
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.launch
 import java.util.Calendar
@@ -83,9 +83,13 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
         emit(
             value = transactionTypesForNewTransaction,
         )
-    }.defaultListStateIn()
+    }.defaultListStateIn(
+        scope = viewModelScope,
+    )
     override val transactionForValues: Array<TransactionFor> = TransactionFor.values()
-    override val categories: StateFlow<List<Category>> = getCategoriesUseCase().defaultListStateIn()
+    override val categories: StateFlow<List<Category>> = getCategoriesUseCase().defaultListStateIn(
+        scope = viewModelScope,
+    )
     override val sources: StateFlow<List<Source>> = getSourcesUseCase()
         .transformLatest {
             emit(
@@ -93,7 +97,9 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                     source.type.sortOrder
                 },
             )
-        }.defaultListStateIn()
+        }.defaultListStateIn(
+            scope = viewModelScope,
+        )
 
     private val _uiState: MutableStateFlow<EditTransactionScreenUiState> = MutableStateFlow(
         value = EditTransactionScreenUiState(
@@ -128,7 +134,9 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                 index = uiState.selectedTransactionTypeIndex,
             )
         }
-    }.defaultObjectStateIn()
+    }.defaultObjectStateIn(
+        scope = viewModelScope,
+    )
 
     override val isValidTransactionData: StateFlow<Boolean> = combine(
         flow = uiState,
@@ -157,11 +165,15 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                 false
             }
         }
-    }.defaultBooleanStateIn()
+    }.defaultBooleanStateIn(
+        scope = viewModelScope,
+    )
 
     private val selectedCategoryId: StateFlow<Int?> = uiState.map {
         it.category?.id
-    }.defaultObjectStateIn()
+    }.defaultObjectStateIn(
+        scope = viewModelScope,
+    )
     private val _titleSuggestions: MutableStateFlow<List<String>> = MutableStateFlow(
         value = emptyList(),
     )
@@ -665,29 +677,5 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
         return sources.value.find { source ->
             source.id == sourceId
         }
-    }
-
-    private fun Flow<Boolean>.defaultBooleanStateIn(): StateFlow<Boolean> {
-        return this.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Eagerly,
-            initialValue = false,
-        )
-    }
-
-    private fun <T> Flow<List<T>>.defaultListStateIn(): StateFlow<List<T>> {
-        return this.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Eagerly,
-            initialValue = emptyList(),
-        )
-    }
-
-    private fun <T> Flow<T>.defaultObjectStateIn(): StateFlow<T?> {
-        return this.stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Eagerly,
-            initialValue = null,
-        )
     }
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.UpdateCategoriesUseCase
@@ -21,11 +22,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -68,10 +67,8 @@ internal class EditCategoryScreenViewModelImpl @Inject constructor(
     )
     override val searchText: StateFlow<String> = _searchText
 
-    private val emojis: StateFlow<List<EmojiLocalEntity>> = getEmojisUseCase().stateIn(
+    private val emojis: StateFlow<List<EmojiLocalEntity>> = getEmojisUseCase().defaultListStateIn(
         scope = viewModelScope,
-        started = SharingStarted.Eagerly,
-        initialValue = emptyList(),
     )
     override val filteredEmojis: Flow<List<EmojiLocalEntity>> = combine(
         flow = emojis,

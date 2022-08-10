@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sour
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.sortOrder
@@ -13,10 +14,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -35,10 +34,8 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
                     source.type.sortOrder
                 }
             )
-        }.stateIn(
+        }.defaultListStateIn(
             scope = viewModelScope,
-            started = SharingStarted.Eagerly,
-            initialValue = emptyList(),
         )
     override val sourcesIsUsedInTransactions: Flow<List<Boolean>> = sources
         .map {
