@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.converters
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getTestAmount
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestAmount
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test

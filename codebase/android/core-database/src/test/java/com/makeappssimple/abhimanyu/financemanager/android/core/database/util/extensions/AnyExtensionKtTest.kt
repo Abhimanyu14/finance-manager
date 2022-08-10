@@ -1,7 +1,5 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions
+package com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.isNull
 import org.junit.Assert
 import org.junit.Test
 

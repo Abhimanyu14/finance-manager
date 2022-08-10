@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils
+package com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager

@@ -1,8 +1,5 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.extensions
+package com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.capitalizeWords
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.isNotNullOrBlank
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.padStartWithZero
 import org.junit.Assert
 import org.junit.Test
 

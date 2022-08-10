@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils
+package com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util
 
 import org.junit.Assert
 import org.junit.Before

@@ -1,11 +1,5 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.utils
+package com.makeappssimple.abhimanyu.financemanager.android.core.database.util
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getEndOfDayTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getEndOfMonthTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getEndOfYearTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getStartOfDayTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getStartOfMonthTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getStartOfYearTimestamp
 import org.junit.Assert
 import org.junit.Test
 

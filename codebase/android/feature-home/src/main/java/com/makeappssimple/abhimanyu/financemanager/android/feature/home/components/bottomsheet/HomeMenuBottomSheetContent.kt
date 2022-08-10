@@ -4,9 +4,9 @@ import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateToCategoriesScreen
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateToSettingsScreen
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateToSourcesScreen
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToCategoriesScreen
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToSettingsScreen
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToSourcesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 import kotlinx.coroutines.CoroutineScope

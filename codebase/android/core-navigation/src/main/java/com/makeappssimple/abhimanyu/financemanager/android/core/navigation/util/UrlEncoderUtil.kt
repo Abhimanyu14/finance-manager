@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils
+package com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util
 
 import java.net.URLDecoder
 import java.net.URLEncoder

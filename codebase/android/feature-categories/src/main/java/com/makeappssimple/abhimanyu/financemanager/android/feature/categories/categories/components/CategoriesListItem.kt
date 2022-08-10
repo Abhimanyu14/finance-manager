@@ -22,8 +22,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemViewWrapper
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isDefaultCategory
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isSalaryCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isSalaryCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 
 @Composable

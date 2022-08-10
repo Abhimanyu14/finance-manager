@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.repository.EmojiRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getTestEmojis
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestEmojis
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test

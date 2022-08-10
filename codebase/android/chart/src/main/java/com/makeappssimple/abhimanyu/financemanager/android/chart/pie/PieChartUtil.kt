@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.chart.pie
 
-internal object PieChartUtils {
+internal object PieChartUtil {
     fun calculateAngle(
         sliceLength: Float,
         totalLength: Float,

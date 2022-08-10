@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.getIcon
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getIcon
 
 data class ChipItem(
     val text: String,

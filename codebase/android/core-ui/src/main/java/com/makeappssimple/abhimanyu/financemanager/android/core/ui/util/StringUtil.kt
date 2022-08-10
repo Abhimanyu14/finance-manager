@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.util
 
 fun isDefaultCategory(
     category: String,

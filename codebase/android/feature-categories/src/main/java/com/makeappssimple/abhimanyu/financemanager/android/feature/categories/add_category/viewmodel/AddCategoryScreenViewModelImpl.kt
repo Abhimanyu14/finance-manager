@@ -12,9 +12,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.loadingEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.utils.navigateUp
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isDefaultCategory
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.utils.isSalaryCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isSalaryCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow

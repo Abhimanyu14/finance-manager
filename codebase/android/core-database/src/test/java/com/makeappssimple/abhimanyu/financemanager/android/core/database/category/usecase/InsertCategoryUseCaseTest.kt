@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.repository.CategoryRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getTestCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestCategory
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test

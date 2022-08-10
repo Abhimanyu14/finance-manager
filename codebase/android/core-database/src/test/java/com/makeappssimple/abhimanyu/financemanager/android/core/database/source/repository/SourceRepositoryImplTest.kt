@@ -2,8 +2,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.source
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.datasource.local.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getTestSource
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getTestSources
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestSource
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestSources
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test

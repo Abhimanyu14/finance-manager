@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.repository.TransactionRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getTestTransactions
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestTransactions
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test

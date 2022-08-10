@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.repository.SourceRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getTestSource
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestSource
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test

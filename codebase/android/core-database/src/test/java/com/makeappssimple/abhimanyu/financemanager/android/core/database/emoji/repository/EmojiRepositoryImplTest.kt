@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.repository
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.datasource.local.EmojiDao
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getTestEmoji
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.utils.getTestEmojis
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestEmoji
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestEmojis
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
