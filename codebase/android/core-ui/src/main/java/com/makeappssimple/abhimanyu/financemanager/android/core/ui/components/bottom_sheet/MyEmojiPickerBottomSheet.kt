@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -30,6 +31,13 @@ fun MyEmojiPickerBottomSheet(
     onEmojiLongClick: (emoji: Emoji) -> Unit,
     updateSearchText: (updatedSearchText: String) -> Unit,
 ) {
+    val emojiGroups = remember {
+        emojis.groupBy { emoji ->
+            emoji.group
+        }.filter { (_, emojis) ->
+            emojis.isNotEmpty()
+        }
+    }
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -50,29 +58,25 @@ fun MyEmojiPickerBottomSheet(
             modifier = Modifier
                 .fillMaxWidth(),
         ) {
-            emojis.groupBy { emoji ->
-                emoji.group
-            }.forEach { (group, emojis) ->
-                if (emojis.isNotEmpty()) {
-                    stickyHeader {
-                        EmojiGroupName(
-                            name = "$group (${emojis.size})"
-                        )
-                    }
-                    item {
-                        FlowRow {
-                            emojis.map { emoji ->
-                                MyEmojiCircle(
-                                    emojiCircleSize = EmojiCircleSize.Normal,
-                                    emoji = emoji.character,
-                                    onClick = {
-                                        onEmojiClick(emoji)
-                                    },
-                                    onLongClick = {
-                                        onEmojiLongClick(emoji)
-                                    },
-                                )
-                            }
+            emojiGroups.map { (group, emojis) ->
+                stickyHeader {
+                    EmojiGroupName(
+                        name = "$group (${emojis.size})"
+                    )
+                }
+                item {
+                    FlowRow {
+                        emojis.map { emoji ->
+                            MyEmojiCircle(
+                                emojiCircleSize = EmojiCircleSize.Normal,
+                                emoji = emoji.character,
+                                onClick = {
+                                    onEmojiClick(emoji)
+                                },
+                                onLongClick = {
+                                    onEmojiLongClick(emoji)
+                                },
+                            )
                         }
                     }
                 }
