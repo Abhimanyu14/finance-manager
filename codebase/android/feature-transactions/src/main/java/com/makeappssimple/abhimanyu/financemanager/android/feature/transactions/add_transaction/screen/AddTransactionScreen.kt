@@ -8,6 +8,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.logError
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenUiState
@@ -31,6 +32,9 @@ fun AddTransactionScreen(
     val sources: List<Source> by screenViewModel.sources.collectAsStateWithLifecycle(
         initialValue = emptyList(),
     )
+    val transactionForValues: List<TransactionFor> by screenViewModel.transactionForValues.collectAsStateWithLifecycle(
+        initialValue = emptyList(),
+    )
     val titleSuggestions: List<String> by screenViewModel.titleSuggestions.collectAsStateWithLifecycle()
     val transactionTypesForNewTransaction: List<TransactionType> by screenViewModel.transactionTypesForNewTransaction.collectAsStateWithLifecycle(
         initialValue = emptyList(),
@@ -45,7 +49,6 @@ fun AddTransactionScreen(
 
     AddTransactionScreenView(
         data = AddTransactionScreenViewData(
-            transactionForValues = screenViewModel.transactionForValues.toList(),
             uiState = uiState,
             uiVisibilityState = uiVisibilityState,
             isValidTransactionData = isValidTransactionData,
@@ -53,6 +56,7 @@ fun AddTransactionScreen(
             sources = sources,
             titleSuggestions = titleSuggestions,
             transactionTypesForNewTransaction = transactionTypesForNewTransaction,
+            transactionForValues = transactionForValues,
             navigationManager = screenViewModel.navigationManager,
             selectedTransactionType = selectedTransactionType,
             clearAmount = {

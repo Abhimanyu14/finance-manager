@@ -30,9 +30,9 @@ data class Transaction(
     @ColumnInfo(name = "transaction_timestamp")
     @Json(name = "transaction_timestamp")
     val transactionTimestamp: Long,
-    @ColumnInfo(name = "transaction_for")
-    @Json(name = "transaction_for")
-    val transactionFor: TransactionFor = TransactionFor.SELF,
+    @ColumnInfo(name = "transaction_for_id")
+    @Json(name = "transaction_for_id")
+    val transactionForId: Int = 1,
     @ColumnInfo(name = "transaction_type")
     @Json(name = "transaction_type")
     val transactionType: TransactionType = TransactionType.EXPENSE,

@@ -82,6 +82,12 @@
       "name": "Cash"
     }
   ],
+  "defaultTransactionForValues": [
+    {
+      "id": 1,
+      "title": "SELF"
+    }
+  ],
   "emojis": {
     "versionNumber": 2,
     "emojisData": [

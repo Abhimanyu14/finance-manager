@@ -3,12 +3,14 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.initia
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class InitialDatabaseData(
     val defaultCategories: List<Category>,
     val defaultSources: List<Source>,
+    val defaultTransactionForValues: List<TransactionFor>,
     val emojis: Emojis,
 )
 

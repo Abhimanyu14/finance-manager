@@ -5,6 +5,7 @@
     <string name="screen_settings_backup">Backup data</string>
     <string name="screen_settings_restore">Restore data</string>
     <string name="screen_settings_recalculate_total">Recalculate Total</string>
+    <string name="screen_settings_transaction_for">Transaction For</string>
     <!-- endregion -->
 
 </resources>

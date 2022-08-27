@@ -6,6 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetRecentTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.DeleteTransactionAndRevertOtherDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.HomeListItemViewData
@@ -23,6 +24,7 @@ internal class HomeScreenViewModelImpl @Inject constructor(
     private val deleteTransactionAndRevertOtherDataUseCase: DeleteTransactionAndRevertOtherDataUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val getSourceUseCase: GetSourceUseCase,
+    private val getTransactionForUseCase: GetTransactionForUseCase,
 ) : HomeScreenViewModel, ViewModel() {
     override val homeListItemViewData: Flow<List<HomeListItemViewData>> =
         getRecentTransactionsUseCase()
@@ -44,11 +46,15 @@ internal class HomeScreenViewModelImpl @Inject constructor(
                                 id = sourceToId,
                             )
                         }
+                        val transactionFor = getTransactionForUseCase(
+                            id = transaction.transactionForId,
+                        )
                         HomeListItemViewData(
                             category = category,
-                            transaction = transaction,
                             sourceFrom = sourceFrom,
                             sourceTo = sourceTo,
+                            transaction = transaction,
+                            transactionFor = transactionFor,
                         )
                     }
             }

@@ -8,6 +8,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.logError
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel.EditTransactionScreenUiState
@@ -27,6 +28,9 @@ fun EditTransactionScreen(
         initialValue = emptyList(),
     )
     val sources: List<Source> by screenViewModel.sources.collectAsStateWithLifecycle(
+        initialValue = emptyList(),
+    )
+    val transactionForValues: List<TransactionFor> by screenViewModel.transactionForValues.collectAsStateWithLifecycle(
         initialValue = emptyList(),
     )
     val transactionTypesForNewTransaction: List<TransactionType> by screenViewModel.transactionTypesForNewTransaction.collectAsStateWithLifecycle(
@@ -53,8 +57,8 @@ fun EditTransactionScreen(
             categories = categories,
             sources = sources,
             titleSuggestions = titleSuggestions,
-            transactionForValues = screenViewModel.transactionForValues.toList(),
             transactionTypesForNewTransaction = transactionTypesForNewTransaction,
+            transactionForValues = transactionForValues,
             navigationManager = screenViewModel.navigationManager,
             selectedTransactionType = selectedTransactionType,
             clearAmount = {

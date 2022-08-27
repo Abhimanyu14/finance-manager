@@ -29,8 +29,8 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.dayOfMonth
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.formattedDate
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.formattedTime
@@ -73,7 +73,6 @@ internal enum class AddTransactionBottomSheetType : BottomSheetType {
 }
 
 internal data class AddTransactionScreenViewData(
-    val transactionForValues: List<TransactionFor>,
     val uiState: AddTransactionScreenUiState,
     val uiVisibilityState: AddTransactionScreenUiVisibilityState,
     val isValidTransactionData: Boolean,
@@ -81,6 +80,7 @@ internal data class AddTransactionScreenViewData(
     val sources: List<Source>,
     val titleSuggestions: List<String>,
     val transactionTypesForNewTransaction: List<TransactionType>,
+    val transactionForValues: List<TransactionFor>,
     val navigationManager: NavigationManager,
     val selectedTransactionType: TransactionType?,
     val clearAmount: () -> Unit,
@@ -396,7 +396,7 @@ internal fun AddTransactionScreenView(
                             items = data.transactionForValues
                                 .map { transactionFor ->
                                     ChipItem(
-                                        text = transactionFor.title,
+                                        text = transactionFor.titleToDisplay,
                                     )
                                 },
                             selectedItemIndex = data.uiState.selectedTransactionForIndex,

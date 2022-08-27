@@ -6,6 +6,44 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 /**
  * Column data type changes
  *
+ * 1. transactionForId from transactionFor in Transaction table
+ * 2. New table for transaction for
+ */
+val MIGRATION_16_17 = object : Migration(16, 17) {
+    override fun migrate(
+        database: SupportSQLiteDatabase,
+    ) {
+        // Create the new table
+        database.execSQL("CREATE TABLE IF NOT EXISTS `transaction_for_table` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `title` TEXT NOT NULL)")
+
+        // Insert values
+        database.execSQL("INSERT INTO transaction_for_table (id, title) VALUES (1, 'SELF'), (2, 'COMMON'), (3, 'OTHERS')")
+
+
+        // Add column with a default value
+        database.execSQL("ALTER TABLE transaction_table ADD COLUMN `transaction_for_id` INTEGER  DEFAULT -1 NOT NULL")
+
+        // Update data
+        database.execSQL("UPDATE transaction_table SET `transaction_for_id` = CASE transaction_for WHEN 'SELF' THEN 1 WHEN 'COMMON' THEN 2 WHEN 'OTHERS' THEN 3 END")
+
+
+        // Create the new table
+        database.execSQL("CREATE TABLE IF NOT EXISTS `transaction_table_new` (`amount` TEXT NOT NULL, `category_id` INTEGER, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `source_from_id` INTEGER, `source_to_id` INTEGER, `description` TEXT NOT NULL, `title` TEXT NOT NULL, `creation_timestamp` INTEGER NOT NULL, `transaction_timestamp` INTEGER NOT NULL, `transaction_for_id` INTEGER NOT NULL, `transaction_type` TEXT NOT NULL)")
+
+        // Copy the data
+        database.execSQL("INSERT INTO transaction_table_new (amount, category_id, id, source_from_id, source_to_id, description, title, creation_timestamp, transaction_timestamp, transaction_for_id, transaction_type) SELECT amount, category_id, id, source_from_id, source_to_id, description, title, creation_timestamp, transaction_timestamp, transaction_for_id, transaction_type FROM transaction_table")
+
+        // Remove the old table
+        database.execSQL("DROP TABLE transaction_table")
+
+        // Change the table name to the correct one
+        database.execSQL("ALTER TABLE transaction_table_new RENAME TO transaction_table")
+    }
+}
+
+/**
+ * Column data type changes
+ *
  * 1. sourceToFrom: Int -> sourceToFrom: Int?
  * 2. sourceToId: Int -> sourceToId: Int?
  * 2. categoryId: Int -> categoryId: Int?

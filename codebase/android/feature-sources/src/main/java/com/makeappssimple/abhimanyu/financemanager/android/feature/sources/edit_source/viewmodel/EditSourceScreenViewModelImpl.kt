@@ -12,7 +12,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.InsertSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.isNotNullOrBlank
@@ -123,7 +122,6 @@ internal class EditSourceScreenViewModelImpl @Inject constructor(
                         title = TransactionType.ADJUSTMENT.title,
                         creationTimestamp = System.currentTimeMillis(),
                         transactionTimestamp = System.currentTimeMillis(),
-                        transactionFor = TransactionFor.SELF,
                         transactionType = TransactionType.ADJUSTMENT,
                     ),
                 )

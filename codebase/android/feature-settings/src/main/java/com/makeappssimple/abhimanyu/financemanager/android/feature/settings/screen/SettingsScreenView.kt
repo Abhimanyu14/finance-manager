@@ -13,6 +13,7 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Backup
 import androidx.compose.material.icons.rounded.Calculate
+import androidx.compose.material.icons.rounded.Groups
 import androidx.compose.material.icons.rounded.Restore
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -196,6 +197,33 @@ internal fun SettingsScreenView(
                                 enabled = !data.isLoading,
                                 onClick = {
                                     data.recalculateTotal()
+                                },
+                            ),
+                    )
+                    ListItem(
+                        icon = {
+                            Icon(
+                                imageVector = Icons.Rounded.Groups,
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.onBackground,
+                            )
+                        },
+                        text = {
+                            MyText(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                textStringResourceId = R.string.screen_settings_transaction_for,
+                                style = MaterialTheme.typography.bodyLarge
+                                    .copy(
+                                        color = MaterialTheme.colorScheme.onBackground,
+                                    ),
+                            )
+                        },
+                        modifier = Modifier
+                            .clickable(
+                                enabled = !data.isLoading,
+                                onClick = {
+                                    // TODO-Abhi: Add Navigation to transaction for screens
                                 },
                             ),
                     )

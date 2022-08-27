@@ -12,6 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.DeleteTransactionAndRevertOtherDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getDateString
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -37,6 +38,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     private val deleteTransactionAndRevertOtherDataUseCase: DeleteTransactionAndRevertOtherDataUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val getSourceUseCase: GetSourceUseCase,
+    private val getTransactionForUseCase: GetTransactionForUseCase,
 ) : TransactionsScreenViewModel, ViewModel() {
     private val categories: Flow<List<Category>> = getCategoriesUseCase()
     private val allTransactions: Flow<List<Transaction>> = getAllTransactionsUseCase()
@@ -158,11 +160,15 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                             id = sourceToId,
                         )
                     }
+                    val transactionFor = getTransactionForUseCase(
+                        id = transaction.transactionForId,
+                    )
                     TransactionsListItemViewData(
                         category = category,
-                        transaction = transaction,
                         sourceFrom = sourceFrom,
                         sourceTo = sourceTo,
+                        transaction = transaction,
+                        transactionFor = transactionFor,
                     )
                 }
                 .filter {

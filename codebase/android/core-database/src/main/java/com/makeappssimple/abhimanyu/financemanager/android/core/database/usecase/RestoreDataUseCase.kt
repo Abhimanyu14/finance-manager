@@ -11,6 +11,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.DeleteAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.DeleteAllTransactionForValuesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.InsertTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.JsonUtil
 
 interface RestoreDataUseCase {
@@ -24,10 +26,12 @@ class RestoreDataUseCaseImpl(
     private val insertEmojisUseCase: InsertEmojisUseCase,
     private val insertSourcesUseCase: InsertSourcesUseCase,
     private val insertTransactionsUseCase: InsertTransactionsUseCase,
+    private val insertTransactionForValuesUseCase: InsertTransactionForValuesUseCase,
     private val deleteAllCategoriesUseCase: DeleteAllCategoriesUseCase,
     private val deleteAllEmojisUseCase: DeleteAllEmojisUseCase,
     private val deleteAllSourcesUseCase: DeleteAllSourcesUseCase,
     private val deleteAllTransactionsUseCase: DeleteAllTransactionsUseCase,
+    private val deleteAllTransactionForValuesUseCase: DeleteAllTransactionForValuesUseCase,
     private val jsonUtil: JsonUtil,
 ) : RestoreDataUseCase {
     override suspend operator fun invoke(
@@ -40,21 +44,25 @@ class RestoreDataUseCaseImpl(
         deleteAllEmojisUseCase()
         deleteAllSourcesUseCase()
         deleteAllTransactionsUseCase()
+        deleteAllTransactionForValuesUseCase()
 
         insertCategoriesUseCase(
-            *databaseBackupData.categories.toTypedArray(),
+            categories = databaseBackupData.categories.toTypedArray(),
         )
         insertEmojisUseCase(
-            *databaseBackupData.emojis.toTypedArray(),
+            emojis = databaseBackupData.emojis.toTypedArray(),
         )
         insertSourcesUseCase(
-            *databaseBackupData.sources.toTypedArray(),
+            sources = databaseBackupData.sources.toTypedArray(),
         )
         val transactions = transactionsCleanUp(
             transactions = databaseBackupData.transactions,
         )
         insertTransactionsUseCase(
-            *transactions.toTypedArray(),
+            transactions = transactions.toTypedArray(),
+        )
+        insertTransactionForValuesUseCase(
+            transactionForValues = databaseBackupData.transactionForValues.toTypedArray(),
         )
     }
 

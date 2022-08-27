@@ -51,22 +51,22 @@ internal fun TransactionsFiltersBottomSheet(
 ) {
     val selectedExpenseCategoryIndicesValue = remember {
         mutableStateListOf(
-            *selectedExpenseCategoryIndices.toTypedArray(),
+            elements = selectedExpenseCategoryIndices.toTypedArray(),
         )
     }
     val selectedIncomeCategoryIndicesValue = remember {
         mutableStateListOf(
-            *selectedIncomeCategoryIndices.toTypedArray(),
+            elements = selectedIncomeCategoryIndices.toTypedArray(),
         )
     }
     val selectedSourceIndicesValue = remember {
         mutableStateListOf(
-            *selectedSourceIndices.toTypedArray(),
+            elements = selectedSourceIndices.toTypedArray(),
         )
     }
     val selectedTransactionTypesIndicesValue = remember {
         mutableStateListOf(
-            *selectedTransactionTypesIndices.toTypedArray(),
+            elements = selectedTransactionTypesIndices.toTypedArray(),
         )
     }
 

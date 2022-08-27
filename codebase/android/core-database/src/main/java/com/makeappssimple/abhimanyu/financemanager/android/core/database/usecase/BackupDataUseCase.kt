@@ -10,6 +10,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.JsonUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getReadableDateAndTimeString
 import kotlinx.coroutines.flow.Flow
@@ -27,12 +29,14 @@ class BackupDataUseCaseImpl(
     getEmojisUseCase: GetEmojisUseCase,
     getSourcesUseCase: GetSourcesUseCase,
     getAllTransactionsUseCase: GetAllTransactionsUseCase,
+    getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val jsonUtil: JsonUtil,
 ) : BackupDataUseCase {
     val categories: Flow<List<Category>> = getCategoriesUseCase()
     val emojis: Flow<List<EmojiLocalEntity>> = getEmojisUseCase()
     val sources: Flow<List<Source>> = getSourcesUseCase()
     val transactions: Flow<List<Transaction>> = getAllTransactionsUseCase()
+    val transactionForValues: Flow<List<TransactionFor>> = getAllTransactionForValuesUseCase()
 
     override suspend operator fun invoke(
         uri: Uri,
@@ -41,6 +45,7 @@ class BackupDataUseCaseImpl(
         var emojisUpdated = false
         var sourcesUpdated = false
         var transactionsUpdated = false
+        var transactionForValuesUpdated = false
         val databaseBackupData = DatabaseBackupData(
             lastBackupTime = getReadableDateAndTimeString(),
             lastBackupTimestamp = System.currentTimeMillis().toString(),
@@ -50,7 +55,8 @@ class BackupDataUseCaseImpl(
             flow2 = emojis,
             flow3 = sources,
             flow4 = transactions,
-        ) { categories, emojis, sources, transactions ->
+            flow5 = transactionForValues,
+        ) { categories, emojis, sources, transactions, transactionForValues ->
             if (!categoriesUpdated && categories.isNotEmpty()) {
                 databaseBackupData.categories = categories
                 categoriesUpdated = true
@@ -67,13 +73,18 @@ class BackupDataUseCaseImpl(
                 databaseBackupData.transactions = transactions
                 transactionsUpdated = true
             }
+            if (!transactionForValuesUpdated && transactionForValues.isNotEmpty()) {
+                databaseBackupData.transactionForValues = transactionForValues
+                transactionForValuesUpdated = true
+            }
             databaseBackupData
         }.collectLatest {
             if (
                 categoriesUpdated &&
                 emojisUpdated &&
                 sourcesUpdated &&
-                transactionsUpdated
+                transactionsUpdated &&
+                transactionForValuesUpdated
             ) {
                 jsonUtil.writeDatabaseBackupDataToFile(
                     uri = uri,
@@ -83,6 +94,7 @@ class BackupDataUseCaseImpl(
                 emojisUpdated = false
                 sourcesUpdated = false
                 transactionsUpdated = false
+                transactionForValuesUpdated = false
             }
         }
     }

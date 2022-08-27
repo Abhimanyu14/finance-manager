@@ -23,6 +23,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.datasource.local.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.datasource.local.TransactionForDao
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.EMOJI_DATA_VERSION_NUMBER
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.readInitialDataFromAssets
 import kotlinx.coroutines.CoroutineScope
@@ -33,12 +35,13 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 
 @Database(
-    version = 16,
+    version = 17,
     entities = [
         Category::class,
         EmojiLocalEntity::class,
         Source::class,
         Transaction::class,
+        TransactionFor::class,
     ],
     autoMigrations = [
         AutoMigration(
@@ -74,6 +77,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
     abstract fun emojiDao(): EmojiDao
     abstract fun sourceDao(): SourceDao
     abstract fun transactionDao(): TransactionDao
+    abstract fun transactionForDao(): TransactionForDao
 
     /**
      * Room auto-migration
@@ -150,6 +154,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                         "finance_manager_database",
                     )
                     .addMigrations(
+                        MIGRATION_16_17,
                         MIGRATION_15_16,
                         MIGRATION_14_15,
                         MIGRATION_13_14,
@@ -195,6 +200,10 @@ abstract class MyRoomDatabase : RoomDatabase() {
                         myRoomDatabase = myRoomDatabase,
                         initialDatabaseData = initialDatabaseData,
                     )
+                    populateTransactionForData(
+                        myRoomDatabase = myRoomDatabase,
+                        initialDatabaseData = initialDatabaseData,
+                    )
                 }
             }
         }
@@ -206,7 +215,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
             val categoryDao = myRoomDatabase.categoryDao()
             if (categoryDao.getCategoriesCount() == 0) {
                 categoryDao.insertCategories(
-                    *initialDatabaseData.defaultCategories.toTypedArray(),
+                    categories = initialDatabaseData.defaultCategories.toTypedArray(),
                 )
             }
         }
@@ -219,7 +228,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
             val emojiDao = myRoomDatabase.emojiDao()
             if (emojiDao.getEmojisCount() == 0) {
                 emojiDao.insertEmojis(
-                    *initialDatabaseData.emojis.emojisData.toTypedArray(),
+                    emojis = initialDatabaseData.emojis.emojisData.toTypedArray(),
                 )
             } else {
                 context.dataStore.data
@@ -230,7 +239,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                         if (emojiDataVersion != initialDatabaseData.emojis.versionNumber) {
                             emojiDao.deleteAllEmojis()
                             emojiDao.insertEmojis(
-                                *initialDatabaseData.emojis.emojisData.toTypedArray(),
+                                emojis = initialDatabaseData.emojis.emojisData.toTypedArray(),
                             )
                             context.dataStore.edit { preferences ->
                                 preferences[EMOJI_DATA_VERSION_NUMBER] =
@@ -248,7 +257,19 @@ abstract class MyRoomDatabase : RoomDatabase() {
             val sourceDao = myRoomDatabase.sourceDao()
             if (sourceDao.getSourcesCount() == 0) {
                 sourceDao.insertSources(
-                    *initialDatabaseData.defaultSources.toTypedArray(),
+                    sources = initialDatabaseData.defaultSources.toTypedArray(),
+                )
+            }
+        }
+
+        private suspend fun populateTransactionForData(
+            myRoomDatabase: MyRoomDatabase,
+            initialDatabaseData: InitialDatabaseData,
+        ) {
+            val transactionForDao = myRoomDatabase.transactionForDao()
+            if (transactionForDao.getTransactionForValuesCount() == 0) {
+                transactionForDao.insertTransactionForValues(
+                    transactionForValues = initialDatabaseData.defaultTransactionForValues.toTypedArray(),
                 )
             }
         }

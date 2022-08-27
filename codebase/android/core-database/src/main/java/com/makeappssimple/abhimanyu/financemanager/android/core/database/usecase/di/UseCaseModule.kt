@@ -16,6 +16,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.DeleteAllTransactionForValuesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.InsertTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.BackupDataUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.DeleteTransactionAndRevertOtherDataUseCase
@@ -40,6 +43,7 @@ class UseCaseModule {
         getEmojisUseCase: GetEmojisUseCase,
         getSourcesUseCase: GetSourcesUseCase,
         getAllTransactionsUseCase: GetAllTransactionsUseCase,
+        getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
         jsonUtil: JsonUtil,
     ): BackupDataUseCase {
         return BackupDataUseCaseImpl(
@@ -47,6 +51,7 @@ class UseCaseModule {
             getEmojisUseCase = getEmojisUseCase,
             getSourcesUseCase = getSourcesUseCase,
             getAllTransactionsUseCase = getAllTransactionsUseCase,
+            getAllTransactionForValuesUseCase = getAllTransactionForValuesUseCase,
             jsonUtil = jsonUtil,
         )
     }
@@ -87,10 +92,12 @@ class UseCaseModule {
         insertEmojisUseCase: InsertEmojisUseCase,
         insertSourcesUseCase: InsertSourcesUseCase,
         insertTransactionsUseCase: InsertTransactionsUseCase,
+        insertTransactionForValuesUseCase: InsertTransactionForValuesUseCase,
         deleteAllCategoriesUseCase: DeleteAllCategoriesUseCase,
         deleteAllEmojisUseCase: DeleteAllEmojisUseCase,
         deleteAllSourcesUseCase: DeleteAllSourcesUseCase,
         deleteAllTransactionsUseCase: DeleteAllTransactionsUseCase,
+        deleteAllTransactionForValuesUseCase: DeleteAllTransactionForValuesUseCase,
         jsonUtil: JsonUtil,
     ): RestoreDataUseCase {
         return RestoreDataUseCaseImpl(
@@ -98,10 +105,12 @@ class UseCaseModule {
             insertEmojisUseCase = insertEmojisUseCase,
             insertSourcesUseCase = insertSourcesUseCase,
             insertTransactionsUseCase = insertTransactionsUseCase,
+            insertTransactionForValuesUseCase = insertTransactionForValuesUseCase,
             deleteAllCategoriesUseCase = deleteAllCategoriesUseCase,
             deleteAllEmojisUseCase = deleteAllEmojisUseCase,
             deleteAllSourcesUseCase = deleteAllSourcesUseCase,
             deleteAllTransactionsUseCase = deleteAllTransactionsUseCase,
+            deleteAllTransactionForValuesUseCase = deleteAllTransactionForValuesUseCase,
             jsonUtil = jsonUtil,
         )
     }

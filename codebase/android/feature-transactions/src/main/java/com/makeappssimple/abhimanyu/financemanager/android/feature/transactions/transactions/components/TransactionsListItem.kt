@@ -23,6 +23,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getReadableDateAndTimeString
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.ExpandedListItemShape
@@ -33,10 +34,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmoun
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 
 data class TransactionsListItemViewData(
-    val transaction: Transaction,
     val category: Category? = null,
     val sourceFrom: Source? = null,
     val sourceTo: Source? = null,
+    val transaction: Transaction,
+    val transactionFor: TransactionFor? = null,
 )
 
 @Composable
@@ -139,7 +141,7 @@ internal fun TransactionsListItem(
                 MyText(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    text = data.transaction.transactionFor.title,
+                    text = data.transactionFor?.titleToDisplay.orEmpty(),
                     style = MaterialTheme.typography.bodySmall
                         .copy(
                             color = MaterialTheme.colorScheme.onBackground,

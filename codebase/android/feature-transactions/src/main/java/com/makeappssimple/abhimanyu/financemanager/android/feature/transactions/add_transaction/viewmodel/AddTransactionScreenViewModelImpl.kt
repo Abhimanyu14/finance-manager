@@ -16,10 +16,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTitleSuggestionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.isNotZero
@@ -47,6 +48,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
     getSourcesUseCase: GetSourcesUseCase,
     getTitleSuggestionsUseCase: GetTitleSuggestionsUseCase,
+    getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
     private val getSourcesCountUseCase: GetSourcesCountUseCase,
@@ -72,7 +74,6 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
     }.defaultListStateIn(
         scope = viewModelScope,
     )
-    override val transactionForValues: Array<TransactionFor> = TransactionFor.values()
     override val categories: StateFlow<List<Category>> = getCategoriesUseCase().defaultListStateIn(
         scope = viewModelScope,
     )
@@ -86,6 +87,10 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
         }.defaultListStateIn(
             scope = viewModelScope,
         )
+    override val transactionForValues: StateFlow<List<TransactionFor>> =
+        getAllTransactionForValuesUseCase().defaultListStateIn(
+            scope = viewModelScope,
+        )
 
     private val _uiState: MutableStateFlow<AddTransactionScreenUiState> = MutableStateFlow(
         value = AddTransactionScreenUiState(
@@ -94,9 +99,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
             title = "",
             description = "",
             category = null,
-            selectedTransactionForIndex = transactionForValues.indexOf(
-                element = TransactionFor.SELF,
-            ),
+            selectedTransactionForIndex = 0,
             sourceFrom = null,
             sourceTo = null,
             transactionCalendar = Calendar.getInstance(Locale.getDefault()),
@@ -372,18 +375,18 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                 } else {
                     uiStateValue.title.capitalizeWords()
                 }
-                val transactionFor: TransactionFor = when (selectedTransactionTypeValue) {
+                val transactionForId: Int = when (selectedTransactionTypeValue) {
                     TransactionType.INCOME -> {
-                        TransactionFor.SELF
+                        1
                     }
                     TransactionType.EXPENSE -> {
-                        transactionForValues[uiStateValue.selectedTransactionForIndex]
+                        transactionForValues.value[uiStateValue.selectedTransactionForIndex].id
                     }
                     TransactionType.TRANSFER -> {
-                        TransactionFor.SELF
+                        1
                     }
                     TransactionType.ADJUSTMENT -> {
-                        TransactionFor.SELF
+                        1
                     }
                 }
 
@@ -397,7 +400,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                         title = title,
                         creationTimestamp = System.currentTimeMillis(),
                         transactionTimestamp = uiStateValue.transactionCalendar.timeInMillis,
-                        transactionFor = transactionFor,
+                        transactionForId = transactionForId,
                         transactionType = selectedTransactionTypeValue,
                     ),
                 )
