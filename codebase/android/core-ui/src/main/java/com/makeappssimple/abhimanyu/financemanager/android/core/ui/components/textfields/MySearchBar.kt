@@ -27,6 +27,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -126,6 +127,7 @@ fun MySearchBar(
     onValueChange: (updatedSearchText: String) -> Unit,
     onSearch: (() -> Unit)? = null,
 ) {
+    val focusManager = LocalFocusManager.current
     val focusRequester: FocusRequester = remember {
         FocusRequester()
     }
@@ -151,7 +153,7 @@ fun MySearchBar(
             )
             .padding(
                 horizontal = 0.dp,
-                vertical = 4.dp,
+                vertical = 0.dp,
             )
             .height(
                 height = 40.dp,
@@ -198,7 +200,7 @@ fun MySearchBar(
                         contentDescription = null,
                         modifier = Modifier
                             .padding(
-                                all = 6.dp,
+                                all = 0.dp,
                             )
                             .size(
                                 size = 20.dp,
@@ -215,6 +217,7 @@ fun MySearchBar(
                                     shape = CircleShape,
                                 )
                                 .clickable {
+                                    focusManager.clearFocus()
                                     onValueChange("")
                                 }
                                 .padding(
@@ -232,6 +235,8 @@ fun MySearchBar(
                     .textFieldWithoutLabelPadding(
                         top = 0.dp,
                         bottom = 0.dp,
+                        start = 0.dp,
+                        end = 0.dp,
                     ),
             )
         },
