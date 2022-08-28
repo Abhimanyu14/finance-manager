@@ -13,7 +13,6 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Backup
 import androidx.compose.material.icons.rounded.Calculate
-import androidx.compose.material.icons.rounded.Groups
 import androidx.compose.material.icons.rounded.Restore
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -200,6 +199,8 @@ internal fun SettingsScreenView(
                                 },
                             ),
                     )
+                    /*
+                    // TODO-Abhi: Enable after completing transaction for screens
                     ListItem(
                         icon = {
                             Icon(
@@ -227,6 +228,7 @@ internal fun SettingsScreenView(
                                 },
                             ),
                     )
+                    */
                 }
             }
         }
