@@ -83,17 +83,17 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
 
     // For Robolectric tests.
-    implementation "com.google.dagger:hilt-android-testing:2.42"
+    implementation "com.google.dagger:hilt-android-testing:2.43.2"
     // ...with Kotlin.
-    kapt "com.google.dagger:hilt-android-compiler:2.42"
+    kapt "com.google.dagger:hilt-android-compiler:2.43.2"
 
     // For Robolectric tests.
-    testImplementation "com.google.dagger:hilt-android-testing:2.42"
+    testImplementation "com.google.dagger:hilt-android-testing:2.43.2"
     // ...with Kotlin.
-    kaptTest "com.google.dagger:hilt-android-compiler:2.42"
+    kaptTest "com.google.dagger:hilt-android-compiler:2.43.2"
 
     // For instrumented tests.
-    androidTestImplementation "com.google.dagger:hilt-android-testing:2.42"
+    androidTestImplementation "com.google.dagger:hilt-android-testing:2.43.2"
     // ...with Kotlin.
-    kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.42"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.43.2"
 }
