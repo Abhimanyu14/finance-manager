@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -16,9 +15,7 @@ import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material.icons.rounded.FilterAlt
-import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.SwapVert
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
@@ -111,13 +108,6 @@ internal fun TransactionsScreenView(
         )
     }
 
-    // Search
-    val (isSearchbarVisible, setIsSearchbarVisible) = remember {
-        mutableStateOf(
-            value = false,
-        )
-    }
-
     // Filter
     val transactionTypes: List<TransactionType> = TransactionType.values().toList()
 
@@ -139,12 +129,6 @@ internal fun TransactionsScreenView(
         modalBottomSheetState = state.modalBottomSheetState,
     ) {
         transactionsBottomSheetType = TransactionsBottomSheetType.NONE
-    }
-
-    BackHandler(
-        enabled = isSearchbarVisible,
-    ) {
-        setIsSearchbarVisible(false)
     }
 
     ModalBottomSheetLayout(
@@ -300,13 +284,14 @@ internal fun TransactionsScreenView(
                                 ),
                         ) {
                             AnimatedVisibility(
-                                visible = isSearchbarVisible,
+                                visible = true,
                                 modifier = Modifier
                                     .weight(
                                         weight = 1F,
                                     ),
                             ) {
                                 MySearchBar(
+                                    autoFocus = false,
                                     searchText = data.searchText,
                                     placeholderText = stringResource(
                                         id = R.string.screen_transactions_searchbar_placeholder,
@@ -319,22 +304,19 @@ internal fun TransactionsScreenView(
                             }
                             ElevatedCard(
                                 onClick = {
-                                    if (isSearchbarVisible) {
-                                        state.keyboardController?.hide()
-                                    }
-                                    setIsSearchbarVisible(!isSearchbarVisible)
-                                    data.updateSearchText("")
+                                    transactionsBottomSheetType =
+                                        TransactionsBottomSheetType.SORT
+                                    toggleModalBottomSheetState(
+                                        coroutineScope = state.coroutineScope,
+                                        modalBottomSheetState = state.modalBottomSheetState,
+                                    )
                                 },
                                 modifier = Modifier,
                             ) {
                                 Icon(
-                                    imageVector = if (isSearchbarVisible) {
-                                        Icons.Rounded.Clear
-                                    } else {
-                                        Icons.Rounded.Search
-                                    },
+                                    imageVector = Icons.Rounded.SwapVert,
                                     contentDescription = stringResource(
-                                        id = R.string.screen_transactions_search_button_content_description,
+                                        id = R.string.screen_transactions_sort_button_content_description,
                                     ),
                                     tint = MaterialTheme.colorScheme.onPrimaryContainer,
                                     modifier = Modifier
@@ -346,65 +328,31 @@ internal fun TransactionsScreenView(
                                         ),
                                 )
                             }
-                            AnimatedVisibility(
-                                visible = !isSearchbarVisible,
-                            ) {
-                                ElevatedCard(
-                                    onClick = {
-                                        transactionsBottomSheetType =
-                                            TransactionsBottomSheetType.SORT
-                                        toggleModalBottomSheetState(
-                                            coroutineScope = state.coroutineScope,
-                                            modalBottomSheetState = state.modalBottomSheetState,
-                                        )
-                                    },
-                                    modifier = Modifier,
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Rounded.SwapVert,
-                                        contentDescription = stringResource(
-                                            id = R.string.screen_transactions_sort_button_content_description,
-                                        ),
-                                        tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                                        modifier = Modifier
-                                            .background(
-                                                color = MaterialTheme.colorScheme.primaryContainer,
-                                            )
-                                            .padding(
-                                                all = 8.dp,
-                                            ),
+                            ElevatedCard(
+                                onClick = {
+                                    transactionsBottomSheetType =
+                                        TransactionsBottomSheetType.FILTERS
+                                    toggleModalBottomSheetState(
+                                        coroutineScope = state.coroutineScope,
+                                        modalBottomSheetState = state.modalBottomSheetState,
                                     )
-                                }
-                            }
-                            AnimatedVisibility(
-                                visible = !isSearchbarVisible,
+                                },
+                                modifier = Modifier,
                             ) {
-                                ElevatedCard(
-                                    onClick = {
-                                        transactionsBottomSheetType =
-                                            TransactionsBottomSheetType.FILTERS
-                                        toggleModalBottomSheetState(
-                                            coroutineScope = state.coroutineScope,
-                                            modalBottomSheetState = state.modalBottomSheetState,
+                                Icon(
+                                    imageVector = Icons.Rounded.FilterAlt,
+                                    contentDescription = stringResource(
+                                        id = R.string.screen_transactions_filter_button_content_description,
+                                    ),
+                                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    modifier = Modifier
+                                        .background(
+                                            color = MaterialTheme.colorScheme.primaryContainer,
                                         )
-                                    },
-                                    modifier = Modifier,
-                                ) {
-                                    Icon(
-                                        imageVector = Icons.Rounded.FilterAlt,
-                                        contentDescription = stringResource(
-                                            id = R.string.screen_transactions_filter_button_content_description,
+                                        .padding(
+                                            all = 8.dp,
                                         ),
-                                        tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                                        modifier = Modifier
-                                            .background(
-                                                color = MaterialTheme.colorScheme.primaryContainer,
-                                            )
-                                            .padding(
-                                                all = 8.dp,
-                                            ),
-                                    )
-                                }
+                                )
                             }
                         }
                     }
