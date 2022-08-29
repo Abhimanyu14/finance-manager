@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components
 import android.view.View
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.compose.foundation.background
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
@@ -18,6 +17,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.conditionalClickable
 
 sealed class EmojiCircleSize(
     val padding: Dp,
@@ -31,6 +31,11 @@ sealed class EmojiCircleSize(
     object Normal : EmojiCircleSize(
         padding = 4.dp,
         textSize = 28F,
+    )
+
+    object Large : EmojiCircleSize(
+        padding = 8.dp,
+        textSize = 32F,
     )
 }
 
@@ -49,13 +54,9 @@ fun MyEmojiCircle(
             .clip(
                 shape = CircleShape,
             )
-            .combinedClickable(
-                onClick = {
-                    onClick?.invoke()
-                },
-                onLongClick = {
-                    onLongClick?.invoke()
-                },
+            .conditionalClickable(
+                onClick = onClick,
+                onLongClick = onLongClick,
             )
             .background(
                 color = backgroundColor,

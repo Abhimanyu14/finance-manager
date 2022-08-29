@@ -15,8 +15,6 @@ internal fun CategoriesDeleteConfirmationBottomSheetContent(
     categoryIdToDelete: Int?,
     resetBottomSheetType: () -> Unit,
     resetCategoryIdToDelete: () -> Unit,
-    resetExpenseExpandedItemIndex: () -> Unit,
-    resetIncomeExpandedItemIndex: () -> Unit,
     deleteCategory: () -> Unit,
 ) {
     MyConfirmationBottomSheet(
@@ -40,8 +38,6 @@ internal fun CategoriesDeleteConfirmationBottomSheetContent(
                 categoryIdToDelete?.let {
                     deleteCategory()
                     resetCategoryIdToDelete()
-                    resetExpenseExpandedItemIndex()
-                    resetIncomeExpandedItemIndex()
                 }
                 resetBottomSheetType()
             }

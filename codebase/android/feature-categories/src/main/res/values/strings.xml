@@ -7,11 +7,6 @@
     <string name="screen_add_category_floating_action_button_content_description">SAVE</string>
     <!-- endregion -->
 
-    <!-- region categories list item -->
-    <string name="list_item_categories_edit">Edit</string>
-    <string name="list_item_categories_delete">Delete</string>
-    <!-- endregion -->
-
     <!-- region categories screen -->
     <string name="screen_categories_appbar_title">Categories</string>
     <string name="screen_categories_floating_action_button_content_description">Add Category</string>
@@ -27,6 +22,12 @@
     </string>
     <string name="screen_categories_bottom_sheet_delete_positive_button_text">Yes</string>
     <string name="screen_categories_bottom_sheet_delete_negative_button_text">Cancel</string>
+    <!-- endregion -->
+
+    <!-- region bottom sheet category menu -->
+    <string name="bottom_sheet_category_menu_edit">Edit</string>
+    <string name="bottom_sheet_category_menu_set_as_default_category">Set as default Category</string>
+    <string name="bottom_sheet_category_menu_delete">Delete</string>
     <!-- endregion -->
 
     <!-- region edit category screen -->
