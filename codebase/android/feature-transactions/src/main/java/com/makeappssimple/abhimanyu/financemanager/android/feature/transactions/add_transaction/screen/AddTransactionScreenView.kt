@@ -52,6 +52,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Bottom
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ChipItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyHorizontalScrollingRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyHorizontalScrollingSuggestionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
@@ -266,7 +267,7 @@ internal fun AddTransactionScreenView(
                             state = rememberScrollState(),
                         ),
                 ) {
-                    MyRadioGroup(
+                    MyHorizontalScrollingRadioGroup(
                         items = data.transactionTypesForNewTransaction
                             .map { transactionType ->
                                 ChipItem(
