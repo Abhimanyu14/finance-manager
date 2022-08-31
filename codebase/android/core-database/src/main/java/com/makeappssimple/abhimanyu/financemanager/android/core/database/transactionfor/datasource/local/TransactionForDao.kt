@@ -21,7 +21,7 @@ interface TransactionForDao {
         id: Int,
     ): TransactionFor?
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTransactionForValues(
         vararg transactionForValues: TransactionFor,
     )

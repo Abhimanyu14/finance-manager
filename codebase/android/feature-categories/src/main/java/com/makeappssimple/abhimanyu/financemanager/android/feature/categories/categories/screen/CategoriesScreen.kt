@@ -25,6 +25,9 @@ fun CategoriesScreen(
     val defaultIncomeCategoryId: Int? by screenViewModel.defaultIncomeCategoryId.collectAsStateWithLifecycle(
         initialValue = null,
     )
+    val defaultInvestmentCategoryId: Int? by screenViewModel.defaultInvestmentCategoryId.collectAsStateWithLifecycle(
+        initialValue = null,
+    )
     val selectedTabIndex: Int by screenViewModel.selectedTabIndex.collectAsStateWithLifecycle()
     val expenseCategoryIsUsedInTransactions: List<Boolean> by screenViewModel
         .expenseCategoryIsUsedInTransactions.collectAsStateWithLifecycle(
@@ -34,10 +37,17 @@ fun CategoriesScreen(
         .incomeCategoryIsUsedInTransactions.collectAsStateWithLifecycle(
             initialValue = emptyList(),
         )
+    val investmentCategoryIsUsedInTransactions: List<Boolean> by screenViewModel
+        .investmentCategoryIsUsedInTransactions.collectAsStateWithLifecycle(
+            initialValue = emptyList(),
+        )
     val expenseCategories: List<Category> by screenViewModel.expenseCategories.collectAsStateWithLifecycle(
         initialValue = emptyList(),
     )
     val incomeCategories: List<Category> by screenViewModel.incomeCategories.collectAsStateWithLifecycle(
+        initialValue = emptyList(),
+    )
+    val investmentCategories: List<Category> by screenViewModel.investmentCategories.collectAsStateWithLifecycle(
         initialValue = emptyList(),
     )
 
@@ -51,11 +61,14 @@ fun CategoriesScreen(
         data = CategoriesScreenViewData(
             defaultExpenseCategoryId = defaultExpenseCategoryId,
             defaultIncomeCategoryId = defaultIncomeCategoryId,
+            defaultInvestmentCategoryId = defaultInvestmentCategoryId,
             selectedTabIndex = selectedTabIndex,
             expenseCategoryIsUsedInTransactions = expenseCategoryIsUsedInTransactions,
             incomeCategoryIsUsedInTransactions = incomeCategoryIsUsedInTransactions,
+            investmentCategoryIsUsedInTransactions = investmentCategoryIsUsedInTransactions,
             expenseCategories = expenseCategories,
             incomeCategories = incomeCategories,
+            investmentCategories = investmentCategories,
             navigationManager = screenViewModel.navigationManager,
             deleteCategory = { categoryId ->
                 screenViewModel.deleteCategory(

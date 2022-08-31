@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.initialdatabasedata
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.initialdatabasedata.model.Categories
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.initialdatabasedata.model.Emojis
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.initialdatabasedata.model.InitialDatabaseData
 import org.junit.Assert
@@ -15,8 +16,12 @@ class InitialDatabaseDataTest {
             versionNumber = versionNumber,
             emojisData = emptyList(),
         )
+        val categories = Categories(
+            versionNumber = versionNumber,
+            categoriesData = emptyList(),
+        )
         initialDatabaseData = InitialDatabaseData(
-            defaultCategories = emptyList(),
+            defaultCategories = categories,
             defaultSources = emptyList(),
             defaultTransactionForValues = emptyList(),
             emojis = emojis,
@@ -24,7 +29,7 @@ class InitialDatabaseDataTest {
 
         Assert.assertEquals(
             0,
-            initialDatabaseData.defaultCategories.size,
+            initialDatabaseData.defaultCategories.categoriesData.size,
         )
         Assert.assertEquals(
             0,

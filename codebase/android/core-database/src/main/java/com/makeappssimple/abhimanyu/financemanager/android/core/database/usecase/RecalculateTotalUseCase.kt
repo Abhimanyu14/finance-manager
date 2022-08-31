@@ -49,6 +49,11 @@ class RecalculateTotalUseCaseImpl(
                         transaction = transaction,
                     )
                 }
+                TransactionType.INVESTMENT -> {
+                    processInvestmentTransaction(
+                        transaction = transaction,
+                    )
+                }
             }
         }
     }
@@ -95,6 +100,20 @@ class RecalculateTotalUseCaseImpl(
         val source = getSourceUseCase(
             id = sourceId,
         ) ?: return
+        updateSourceBalanceAmount(
+            source = source,
+            balanceAmountValue = source.balanceAmount.value + transaction.amount.value,
+        )
+    }
+
+    private suspend fun processInvestmentTransaction(
+        transaction: Transaction,
+    ) {
+        val sourceId = transaction.sourceFromId ?: return
+        val source = getSourceUseCase(
+            id = sourceId,
+        ) ?: return
+        // TODO-Abhi: Amount sign change
         updateSourceBalanceAmount(
             source = source,
             balanceAmountValue = source.balanceAmount.value + transaction.amount.value,

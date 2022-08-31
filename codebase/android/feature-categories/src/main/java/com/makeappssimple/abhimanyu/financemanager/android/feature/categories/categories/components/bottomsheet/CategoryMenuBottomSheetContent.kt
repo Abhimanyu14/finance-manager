@@ -6,8 +6,8 @@ import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToEditCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultCategory
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isSalaryCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import kotlinx.coroutines.CoroutineScope
 
@@ -65,9 +65,9 @@ internal fun CategoryMenuBottomSheetContent(
         items.add(setAsDefaultItem)
     }
     if (
-        !isDefaultCategory(
+        !isDefaultExpenseCategory(
             category = categoryTitle,
-        ) && !isSalaryCategory(
+        ) && !isDefaultIncomeCategory(
             category = categoryTitle,
         ) && deleteEnabled
     ) {

@@ -31,7 +31,7 @@ class TotalBalanceCardTest {
             }
         }
         balanceAmount = composeTestRule.onNodeWithText("₹1,23,456")
-        title = composeTestRule.onNodeWithText("Total Balance")
+        title = composeTestRule.onNodeWithText("TOTAL BALANCE")
 
         title.assertIsDisplayed()
         balanceAmount.assertIsDisplayed()

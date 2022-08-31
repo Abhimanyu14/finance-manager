@@ -11,6 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTitleSuggestionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.TestDispatcherProviderImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
@@ -34,6 +35,7 @@ class AddTransactionScreenViewModelImplTest {
     private val getCategoriesUseCase: GetCategoriesUseCase = mock()
     private val getSourcesUseCase: GetSourcesUseCase = mock()
     private val getTitleSuggestionsUseCase: GetTitleSuggestionsUseCase = mock()
+    private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase = mock()
     private val navigationManager: NavigationManager = mock()
     private val dispatcherProvider: DispatcherProvider = TestDispatcherProviderImpl(
         testDispatcher = mainDispatcherRule.testDispatcher,
@@ -51,6 +53,7 @@ class AddTransactionScreenViewModelImplTest {
             getCategoriesUseCase = getCategoriesUseCase,
             getSourcesUseCase = getSourcesUseCase,
             getTitleSuggestionsUseCase = getTitleSuggestionsUseCase,
+            getAllTransactionForValuesUseCase = getAllTransactionForValuesUseCase,
             navigationManager = navigationManager,
             dispatcherProvider = dispatcherProvider,
             getSourcesCountUseCase = getSourcesCountUseCase,

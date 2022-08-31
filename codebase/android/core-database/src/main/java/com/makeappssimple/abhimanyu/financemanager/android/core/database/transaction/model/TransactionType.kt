@@ -18,6 +18,9 @@ enum class TransactionType(
     ADJUSTMENT(
         title = "Adjustment",
     ),
+    INVESTMENT(
+        title = "Investment",
+    ),
     /*
     // TODO-Abhi: Add Loans later
     LOAN(

@@ -61,6 +61,12 @@ class DeleteTransactionAndRevertOtherDataUseCaseImpl(
                     transaction = transaction,
                 )
             }
+            TransactionType.INVESTMENT -> {
+                handleNonTransferTransactionsSourceFrom(
+                    sourceFromId = sourceFromId,
+                    transaction = transaction
+                )
+            }
         }
     }
 

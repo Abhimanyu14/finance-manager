@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.util
 
-fun isDefaultCategory(
+fun isDefaultExpenseCategory(
     category: String,
 ): Boolean {
     return category.contains(
@@ -9,11 +9,20 @@ fun isDefaultCategory(
     )
 }
 
-fun isSalaryCategory(
+fun isDefaultIncomeCategory(
     category: String,
 ): Boolean {
     return category.contains(
         other = "Salary",
+        ignoreCase = true,
+    )
+}
+
+fun isDefaultInvestmentCategory(
+    category: String,
+): Boolean {
+    return category.contains(
+        other = "Provident Fund",
         ignoreCase = true,
     )
 }

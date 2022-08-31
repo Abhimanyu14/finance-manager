@@ -31,5 +31,8 @@ fun Transaction.getAmountTextColor(): Color {
                 }
             }
         }
+        TransactionType.INVESTMENT -> {
+            MaterialTheme.colorScheme.primary
+        }
     }
 }

@@ -29,8 +29,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavAr
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isCashSource
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultCategory
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isSalaryCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.math.abs
@@ -65,6 +66,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
     private var defaultSource: Source? = null
     private var expenseDefaultCategory: Category? = null
     private var incomeDefaultCategory: Category? = null
+    private var investmentDefaultCategory: Category? = null
 
     private val transaction: MutableStateFlow<Transaction?> = MutableStateFlow(
         value = null,
@@ -164,6 +166,11 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
             TransactionType.ADJUSTMENT -> {
                 false
             }
+            TransactionType.INVESTMENT -> {
+                uiState.amount.isNotNullOrBlank() &&
+                        uiState.title.isNotNullOrBlank() &&
+                        uiState.amount.toInt().isNotZero()
+            }
             null -> {
                 false
             }
@@ -207,12 +214,17 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                 categories.collectLatest {
                     if (it.isNotEmpty()) {
                         expenseDefaultCategory = it.firstOrNull { category ->
-                            isDefaultCategory(
+                            isDefaultExpenseCategory(
                                 category = category.title,
                             )
                         }
                         incomeDefaultCategory = it.firstOrNull { category ->
-                            isSalaryCategory(
+                            isDefaultIncomeCategory(
+                                category = category.title,
+                            )
+                        }
+                        investmentDefaultCategory = it.firstOrNull { category ->
+                            isDefaultInvestmentCategory(
                                 category = category.title,
                             )
                         }
@@ -246,6 +258,9 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                         TransactionType.ADJUSTMENT -> {
                             null
                         }
+                        TransactionType.INVESTMENT -> {
+                            EditTransactionScreenUiVisibilityState.Investment
+                        }
                     }
                     uiVisibilityState?.let {
                         updateEditTransactionScreenUiVisibilityState(
@@ -276,7 +291,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                                 if (selectedTransactionType.value == transaction.value?.transactionType) {
                                     transactionCategory ?: expenseDefaultCategory
                                 } else {
-                                    incomeDefaultCategory
+                                    expenseDefaultCategory
                                 }
                             updateCategory(
                                 updatedCategory = updatedCategory,
@@ -298,6 +313,24 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                             )
                         }
                         TransactionType.ADJUSTMENT -> {}
+                        TransactionType.INVESTMENT -> {
+                            val updatedCategory =
+                                if (selectedTransactionType.value == transaction.value?.transactionType) {
+                                    transactionCategory ?: investmentDefaultCategory
+                                } else {
+                                    investmentDefaultCategory
+                                }
+                            updateCategory(
+                                updatedCategory = updatedCategory,
+                            )
+
+                            updateSourceFrom(
+                                updatedSourceFrom = transactionSourceFrom ?: defaultSource,
+                            )
+                            updateSourceTo(
+                                updatedSourceTo = null,
+                            )
+                        }
                     }
                 }
             }
@@ -371,6 +404,9 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                     TransactionType.ADJUSTMENT -> {
                         null
                     }
+                    TransactionType.INVESTMENT -> {
+                        uiStateValue.category?.id
+                    }
                 }
                 val sourceFromId = when (selectedTransactionTypeValue) {
                     TransactionType.INCOME -> {
@@ -385,6 +421,9 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                     TransactionType.ADJUSTMENT -> {
                         null
                     }
+                    TransactionType.INVESTMENT -> {
+                        uiStateValue.sourceFrom?.id
+                    }
                 }
                 val sourceToId = when (selectedTransactionTypeValue) {
                     TransactionType.INCOME -> {
@@ -397,6 +436,9 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                         uiStateValue.sourceTo?.id
                     }
                     TransactionType.ADJUSTMENT -> {
+                        null
+                    }
+                    TransactionType.INVESTMENT -> {
                         null
                     }
                 }
@@ -416,6 +458,9 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                         1
                     }
                     TransactionType.ADJUSTMENT -> {
+                        1
+                    }
+                    TransactionType.INVESTMENT -> {
                         1
                     }
                 }

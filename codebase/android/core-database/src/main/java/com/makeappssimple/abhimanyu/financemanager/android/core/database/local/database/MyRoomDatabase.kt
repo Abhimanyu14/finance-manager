@@ -25,6 +25,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.datasource.local.TransactionForDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.CATEGORY_DATA_VERSION_NUMBER
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.EMOJI_DATA_VERSION_NUMBER
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.readInitialDataFromAssets
 import kotlinx.coroutines.CoroutineScope
@@ -187,36 +188,73 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     val initialDatabaseData = readInitialDataFromAssets(
                         context = context,
                     ) ?: return@launch
-                    populateCategoryData(
-                        myRoomDatabase = myRoomDatabase,
-                        initialDatabaseData = initialDatabaseData,
-                    )
-                    populateEmojiData(
-                        context = context,
-                        myRoomDatabase = myRoomDatabase,
-                        initialDatabaseData = initialDatabaseData,
-                    )
-                    populateSourceData(
-                        myRoomDatabase = myRoomDatabase,
-                        initialDatabaseData = initialDatabaseData,
-                    )
-                    populateTransactionForData(
-                        myRoomDatabase = myRoomDatabase,
-                        initialDatabaseData = initialDatabaseData,
-                    )
+                    launch {
+                        populateCategoryData(
+                            context = context,
+                            myRoomDatabase = myRoomDatabase,
+                            initialDatabaseData = initialDatabaseData,
+                        )
+                    }
+                    launch {
+                        populateEmojiData(
+                            context = context,
+                            myRoomDatabase = myRoomDatabase,
+                            initialDatabaseData = initialDatabaseData,
+                        )
+                    }
+                    launch {
+                        populateSourceData(
+                            myRoomDatabase = myRoomDatabase,
+                            initialDatabaseData = initialDatabaseData,
+                        )
+                    }
+                    launch {
+                        populateTransactionForData(
+                            myRoomDatabase = myRoomDatabase,
+                            initialDatabaseData = initialDatabaseData,
+                        )
+                    }
                 }
             }
         }
 
         private suspend fun populateCategoryData(
+            context: Context,
             myRoomDatabase: MyRoomDatabase,
             initialDatabaseData: InitialDatabaseData,
         ) {
             val categoryDao = myRoomDatabase.categoryDao()
             if (categoryDao.getCategoriesCount() == 0) {
-                categoryDao.insertCategories(
-                    categories = initialDatabaseData.defaultCategories.toTypedArray(),
-                )
+                val categoriesData = initialDatabaseData.defaultCategories.categoriesData
+                categoriesData.forEach {
+                    categoryDao.insertCategories(
+                        categories = it.categories.toTypedArray(),
+                    )
+                }
+            } else {
+                context.dataStore.data
+                    .map { preferences ->
+                        preferences[CATEGORY_DATA_VERSION_NUMBER] ?: 2
+                    }
+                    .collectLatest { categoryDataVersion ->
+                        if (categoryDataVersion < initialDatabaseData.defaultCategories.versionNumber) {
+                            val categoriesData =
+                                initialDatabaseData.defaultCategories.categoriesData
+                            categoriesData
+                                .filter {
+                                    it.versionNumber > categoryDataVersion
+                                }
+                                .forEach {
+                                    categoryDao.insertCategories(
+                                        categories = it.categories.toTypedArray(),
+                                    )
+                                }
+                            context.dataStore.edit { preferences ->
+                                preferences[CATEGORY_DATA_VERSION_NUMBER] =
+                                    initialDatabaseData.defaultCategories.versionNumber
+                            }
+                        }
+                    }
             }
         }
 
@@ -236,11 +274,13 @@ abstract class MyRoomDatabase : RoomDatabase() {
                         preferences[EMOJI_DATA_VERSION_NUMBER] ?: 0
                     }
                     .collectLatest { emojiDataVersion ->
-                        if (emojiDataVersion != initialDatabaseData.emojis.versionNumber) {
+                        if (emojiDataVersion < initialDatabaseData.emojis.versionNumber) {
                             emojiDao.deleteAllEmojis()
-                            emojiDao.insertEmojis(
-                                emojis = initialDatabaseData.emojis.emojisData.toTypedArray(),
-                            )
+                            initialDatabaseData.emojis.emojisData.forEach {
+                                emojiDao.insertEmoji(
+                                    emoji = it,
+                                )
+                            }
                             context.dataStore.edit { preferences ->
                                 preferences[EMOJI_DATA_VERSION_NUMBER] =
                                     initialDatabaseData.emojis.versionNumber

@@ -12,10 +12,13 @@ interface CategoriesScreenViewModel : ScreenViewModel {
     val selectedTabIndex: StateFlow<Int>
     val expenseCategories: Flow<List<Category>>
     val incomeCategories: Flow<List<Category>>
+    val investmentCategories: Flow<List<Category>>
     val expenseCategoryIsUsedInTransactions: Flow<List<Boolean>>
     val incomeCategoryIsUsedInTransactions: Flow<List<Boolean>>
+    val investmentCategoryIsUsedInTransactions: Flow<List<Boolean>>
     val defaultExpenseCategoryId: Flow<Int?>
     val defaultIncomeCategoryId: Flow<Int?>
+    val defaultInvestmentCategoryId: Flow<Int?>
 
     fun deleteCategory(
         id: Int,

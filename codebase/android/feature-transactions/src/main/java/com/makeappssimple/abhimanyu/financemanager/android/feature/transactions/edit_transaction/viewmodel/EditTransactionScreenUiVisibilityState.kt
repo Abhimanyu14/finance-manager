@@ -9,6 +9,17 @@ sealed class EditTransactionScreenUiVisibilityState(
     val isSourceToTextFieldVisible: Boolean = false,
     val isTitleSuggestionsVisible: Boolean = false,
 ) {
+
+    object Expense : EditTransactionScreenUiVisibilityState(
+        isTitleTextFieldVisible = true,
+        isDescriptionTextFieldVisible = false,
+        isCategoryTextFieldVisible = true,
+        isTransactionForRadioGroupVisible = true,
+        isSourceFromTextFieldVisible = true,
+        isSourceToTextFieldVisible = false,
+        isTitleSuggestionsVisible = true,
+    )
+
     object Income : EditTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = true,
         isDescriptionTextFieldVisible = false,
@@ -19,11 +30,11 @@ sealed class EditTransactionScreenUiVisibilityState(
         isTitleSuggestionsVisible = true,
     )
 
-    object Expense : EditTransactionScreenUiVisibilityState(
+    object Investment : EditTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = true,
         isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = true,
-        isTransactionForRadioGroupVisible = true,
+        isTransactionForRadioGroupVisible = false,
         isSourceFromTextFieldVisible = true,
         isSourceToTextFieldVisible = false,
         isTitleSuggestionsVisible = true,

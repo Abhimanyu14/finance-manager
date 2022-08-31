@@ -1,76 +1,107 @@
 {
-  "defaultCategories": [
-    {
-      "id": 1,
-      "description": "",
-      "emoji": "🙁",
-      "title": "Default",
-      "transaction_type": "EXPENSE"
-    },
-    {
-      "id": 2,
-      "description": "",
-      "emoji": "💸",
-      "title": "Salary",
-      "transaction_type": "INCOME"
-    },
-    {
-      "id": 3,
-      "description": "",
-      "emoji": "🍜",
-      "title": "Food",
-      "transaction_type": "EXPENSE"
-    },
-    {
-      "id": 4,
-      "description": "",
-      "emoji": "👔",
-      "title": "Clothes",
-      "transaction_type": "EXPENSE"
-    },
-    {
-      "id": 5,
-      "description": "",
-      "emoji": "💻",
-      "title": "Electronics",
-      "transaction_type": "EXPENSE"
-    },
-    {
-      "id": 6,
-      "description": "",
-      "emoji": "🏠",
-      "title": "Household",
-      "transaction_type": "EXPENSE"
-    },
-    {
-      "id": 7,
-      "description": "",
-      "emoji": "🚎",
-      "title": "Travel",
-      "transaction_type": "EXPENSE"
-    },
-    {
-      "id": 8,
-      "description": "",
-      "emoji": "💊",
-      "title": "Medical",
-      "transaction_type": "EXPENSE"
-    },
-    {
-      "id": 9,
-      "description": "",
-      "emoji": "💰",
-      "title": "Refund",
-      "transaction_type": "INCOME"
-    },
-    {
-      "id": 10,
-      "description": "",
-      "emoji": "💎",
-      "title": "Rewards",
-      "transaction_type": "INCOME"
-    }
-  ],
+  "defaultCategories": {
+    "versionNumber": 3,
+    "categoriesData": [
+      {
+        "versionNumber": 2,
+        "categories": [
+          {
+            "id": 1,
+            "description": "",
+            "emoji": "🙁",
+            "title": "Default",
+            "transaction_type": "EXPENSE"
+          },
+          {
+            "id": 2,
+            "description": "",
+            "emoji": "💸",
+            "title": "Salary",
+            "transaction_type": "INCOME"
+          },
+          {
+            "id": 3,
+            "description": "",
+            "emoji": "🍜",
+            "title": "Food",
+            "transaction_type": "EXPENSE"
+          },
+          {
+            "id": 4,
+            "description": "",
+            "emoji": "👔",
+            "title": "Clothes",
+            "transaction_type": "EXPENSE"
+          },
+          {
+            "id": 5,
+            "description": "",
+            "emoji": "💻",
+            "title": "Electronics",
+            "transaction_type": "EXPENSE"
+          },
+          {
+            "id": 6,
+            "description": "",
+            "emoji": "🏠",
+            "title": "Household",
+            "transaction_type": "EXPENSE"
+          },
+          {
+            "id": 7,
+            "description": "",
+            "emoji": "🚎",
+            "title": "Travel",
+            "transaction_type": "EXPENSE"
+          },
+          {
+            "id": 8,
+            "description": "",
+            "emoji": "💊",
+            "title": "Medical",
+            "transaction_type": "EXPENSE"
+          },
+          {
+            "id": 9,
+            "description": "",
+            "emoji": "💰",
+            "title": "Refund",
+            "transaction_type": "INCOME"
+          },
+          {
+            "id": 10,
+            "description": "",
+            "emoji": "💎",
+            "title": "Rewards",
+            "transaction_type": "INCOME"
+          }
+        ]
+      },
+      {
+        "versionNumber": 3,
+        "categories": [
+          {
+            "description": "",
+            "emoji": "💵",
+            "title": "Provident Fund",
+            "transaction_type": "INVESTMENT"
+          },
+          {
+            "description": "",
+            "emoji": "⌛️",
+            "title": "Fixed Deposit",
+            "transaction_type": "INVESTMENT"
+          },
+          {
+            "description": "",
+            "emoji": "🚀",
+            "title": "Stock Market",
+            "transaction_type": "INVESTMENT"
+          }
+        ]
+      }
+    ]
+  },
   "defaultSources": [
     {
       "balance_amount": {
@@ -89,7 +120,7 @@
     }
   ],
   "emojis": {
-    "versionNumber": 2,
+    "versionNumber": 3,
     "emojisData": [
       {
         "character": "😀",

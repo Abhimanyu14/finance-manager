@@ -43,6 +43,11 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
             category.transactionType == TransactionType.INCOME
         }
     }
+    override val investmentCategories: Flow<List<Category>> = categories.map { categories ->
+        categories.filter { category ->
+            category.transactionType == TransactionType.INVESTMENT
+        }
+    }
     override val expenseCategoryIsUsedInTransactions: Flow<List<Boolean>> = expenseCategories
         .map {
             it.map { category ->
@@ -59,10 +64,20 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
                 )
             }
         }
+    override val investmentCategoryIsUsedInTransactions: Flow<List<Boolean>> = incomeCategories
+        .map {
+            it.map { category ->
+                checkIdCategoryIsUsedInTransactionsUseCase(
+                    categoryId = category.id,
+                )
+            }
+        }
     override val defaultExpenseCategoryId: Flow<Int?> = dataStore
         .getDefaultExpenseCategoryIdFromDataStore()
     override val defaultIncomeCategoryId: Flow<Int?> = dataStore
         .getDefaultIncomeCategoryIdFromDataStore()
+    override val defaultInvestmentCategoryId: Flow<Int?> = dataStore
+        .getDefaultInvestmentCategoryIdFromDataStore()
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code
@@ -93,14 +108,24 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            if (transactionType == TransactionType.EXPENSE) {
-                dataStore.setDefaultExpenseCategoryIdInDataStore(
-                    defaultExpenseCategoryId = defaultCategoryId,
-                )
-            } else if (transactionType == TransactionType.INCOME) {
-                dataStore.setDefaultIncomeCategoryIdInDataStore(
-                    defaultIncomeCategoryId = defaultCategoryId,
-                )
+            when (transactionType) {
+                TransactionType.EXPENSE -> {
+                    dataStore.setDefaultExpenseCategoryIdInDataStore(
+                        defaultExpenseCategoryId = defaultCategoryId,
+                    )
+                }
+                TransactionType.INCOME -> {
+                    dataStore.setDefaultIncomeCategoryIdInDataStore(
+                        defaultIncomeCategoryId = defaultCategoryId,
+                    )
+                }
+                TransactionType.INVESTMENT -> {
+                    dataStore.setDefaultInvestmentCategoryIdInDataStore(
+                        defaultInvestmentCategoryId = defaultCategoryId,
+                    )
+                }
+                TransactionType.TRANSFER -> {}
+                TransactionType.ADJUSTMENT -> {}
             }
         }
     }

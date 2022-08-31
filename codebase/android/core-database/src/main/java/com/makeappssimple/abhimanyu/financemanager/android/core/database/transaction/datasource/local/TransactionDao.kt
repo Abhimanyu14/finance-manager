@@ -50,12 +50,12 @@ interface TransactionDao {
         id: Int,
     ): Transaction?
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTransaction(
         transaction: Transaction,
     )
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTransactions(
         vararg transactions: Transaction,
     )

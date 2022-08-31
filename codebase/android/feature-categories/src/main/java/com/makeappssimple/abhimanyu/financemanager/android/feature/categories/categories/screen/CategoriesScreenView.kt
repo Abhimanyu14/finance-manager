@@ -42,8 +42,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Bottom
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultCategory
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isSalaryCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.components.CategoriesListItem
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.components.bottomsheet.CategoriesDeleteConfirmationBottomSheetContent
@@ -69,11 +70,14 @@ internal sealed class CategoriesBottomSheetType : BottomSheetType {
 internal data class CategoriesScreenViewData(
     val defaultExpenseCategoryId: Int?,
     val defaultIncomeCategoryId: Int?,
+    val defaultInvestmentCategoryId: Int?,
     val selectedTabIndex: Int,
     val expenseCategoryIsUsedInTransactions: List<Boolean>,
     val incomeCategoryIsUsedInTransactions: List<Boolean>,
+    val investmentCategoryIsUsedInTransactions: List<Boolean>,
     val expenseCategories: List<Category>,
     val incomeCategories: List<Category>,
+    val investmentCategories: List<Category>,
     val navigationManager: NavigationManager,
     val deleteCategory: (categoryId: Int) -> Unit,
     val setDefaultCategoryIdInDataStore: (
@@ -112,6 +116,7 @@ internal fun CategoriesScreenView(
     val transactionTypes = listOf(
         TransactionType.EXPENSE,
         TransactionType.INCOME,
+        TransactionType.INVESTMENT,
     )
 
     LaunchedEffect(
@@ -264,7 +269,7 @@ internal fun CategoriesScreenView(
                             },
                     )
                     HorizontalPager(
-                        count = 2,
+                        count = 3,
                         state = pagerState,
                         modifier = Modifier
                             .weight(
@@ -285,43 +290,70 @@ internal fun CategoriesScreenView(
                             ) {
                                 val transactionType = transactionTypes[page]
                                 itemsIndexed(
-                                    items = if (transactionType == TransactionType.EXPENSE) {
-                                        data.expenseCategories
-                                    } else {
-                                        data.incomeCategories
+                                    items = when (transactionType) {
+                                        TransactionType.EXPENSE -> {
+                                            data.expenseCategories
+                                        }
+                                        TransactionType.INCOME -> {
+                                            data.incomeCategories
+                                        }
+                                        else -> {
+                                            // Only for investment
+                                            data.investmentCategories
+                                        }
                                     },
                                     key = { _, listItem ->
                                         listItem.hashCode()
                                     },
                                 ) { index, listItem ->
-                                    val isDefault =
-                                        if (transactionType == TransactionType.EXPENSE) {
+                                    val isDefault = when (transactionType) {
+                                        TransactionType.EXPENSE -> {
                                             if (data.defaultExpenseCategoryId.isNull()) {
-                                                isDefaultCategory(
+                                                isDefaultExpenseCategory(
                                                     category = listItem.title,
                                                 )
                                             } else {
                                                 data.defaultExpenseCategoryId == listItem.id
                                             }
-                                        } else {
+                                        }
+                                        TransactionType.INCOME -> {
                                             if (data.defaultIncomeCategoryId.isNull()) {
-                                                isSalaryCategory(
+                                                isDefaultIncomeCategory(
                                                     category = listItem.title,
                                                 )
                                             } else {
                                                 data.defaultIncomeCategoryId == listItem.id
                                             }
                                         }
-                                    val deleteEnabled: Boolean =
-                                        if (transactionType == TransactionType.EXPENSE) {
+                                        else -> {
+                                            // Only for investment
+                                            if (data.defaultInvestmentCategoryId.isNull()) {
+                                                isDefaultInvestmentCategory(
+                                                    category = listItem.title,
+                                                )
+                                            } else {
+                                                data.defaultInvestmentCategoryId == listItem.id
+                                            }
+                                        }
+                                    }
+                                    val deleteEnabled: Boolean = when (transactionType) {
+                                        TransactionType.EXPENSE -> {
                                             !isDefault && data.expenseCategoryIsUsedInTransactions.getOrNull(
                                                 index = index,
                                             )?.not() ?: false
-                                        } else {
+                                        }
+                                        TransactionType.INCOME -> {
                                             !isDefault && data.incomeCategoryIsUsedInTransactions.getOrNull(
                                                 index = index,
                                             )?.not() ?: false
                                         }
+                                        else -> {
+                                            // Only for investment
+                                            !isDefault && data.investmentCategoryIsUsedInTransactions.getOrNull(
+                                                index = index,
+                                            )?.not() ?: false
+                                        }
+                                    }
 
                                     CategoriesListItem(
                                         isDefault = isDefault,

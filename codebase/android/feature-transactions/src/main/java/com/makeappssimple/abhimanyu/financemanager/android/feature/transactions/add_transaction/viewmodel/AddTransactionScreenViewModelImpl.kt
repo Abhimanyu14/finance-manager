@@ -27,8 +27,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.ex
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isCashSource
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultCategory
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isSalaryCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -58,6 +59,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
     private var defaultSource: Source? = null
     private var expenseDefaultCategory: Category? = null
     private var incomeDefaultCategory: Category? = null
+    private var investmentDefaultCategory: Category? = null
 
     override val transactionTypesForNewTransaction: StateFlow<List<TransactionType>> = flow {
         val sourceCount = getSourcesCountUseCase()
@@ -150,6 +152,11 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
             TransactionType.ADJUSTMENT -> {
                 false
             }
+            TransactionType.INVESTMENT -> {
+                uiState.amount.isNotNullOrBlank() &&
+                        uiState.title.isNotNullOrBlank() &&
+                        uiState.amount.toInt().isNotZero()
+            }
             null -> {
                 false
             }
@@ -173,13 +180,18 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
         .defaultObjectStateIn(
             scope = viewModelScope,
         )
+    private val defaultExpenseCategoryIdFromDataStore: StateFlow<Int?> = dataStore
+        .getDefaultExpenseCategoryIdFromDataStore()
+        .defaultObjectStateIn(
+            scope = viewModelScope,
+        )
     private val defaultIncomeCategoryIdFromDataStore: StateFlow<Int?> = dataStore
         .getDefaultIncomeCategoryIdFromDataStore()
         .defaultObjectStateIn(
             scope = viewModelScope,
         )
-    private val defaultExpenseCategoryIdFromDataStore: StateFlow<Int?> = dataStore
-        .getDefaultExpenseCategoryIdFromDataStore()
+    private val defaultInvestmentCategoryIdFromDataStore: StateFlow<Int?> = dataStore
+        .getDefaultInvestmentCategoryIdFromDataStore()
         .defaultObjectStateIn(
             scope = viewModelScope,
         )
@@ -198,35 +210,60 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                 }
             }
             launch {
-                categories.collectLatest {
+                combine(
+                    flow = categories,
+                    flow2 = defaultExpenseCategoryIdFromDataStore,
+                    flow3 = defaultIncomeCategoryIdFromDataStore,
+                    flow4 = defaultInvestmentCategoryIdFromDataStore,
+                ) {
+                        categories,
+                        defaultExpenseCategoryIdFromDataStore,
+                        defaultIncomeCategoryIdFromDataStore,
+                        defaultInvestmentCategoryIdFromDataStore,
+                    ->
+
                     expenseDefaultCategory = getCategory(
-                        categoryId = defaultExpenseCategoryIdFromDataStore.value,
-                    ) ?: it.firstOrNull { category ->
-                        isDefaultCategory(
+                        categoryId = defaultExpenseCategoryIdFromDataStore,
+                    ) ?: categories.firstOrNull { category ->
+                        isDefaultExpenseCategory(
                             category = category.title,
                         )
                     }
                     incomeDefaultCategory = getCategory(
-                        categoryId = defaultIncomeCategoryIdFromDataStore.value,
-                    ) ?: it.firstOrNull { category ->
-                        isSalaryCategory(
+                        categoryId = defaultIncomeCategoryIdFromDataStore,
+                    ) ?: categories.firstOrNull { category ->
+                        isDefaultIncomeCategory(
                             category = category.title,
                         )
                     }
+                    investmentDefaultCategory = getCategory(
+                        categoryId = defaultInvestmentCategoryIdFromDataStore,
+                    ) ?: categories.firstOrNull { category ->
+                        isDefaultInvestmentCategory(
+                            category = category.title,
+                        )
+                    }
+                    expenseDefaultCategory
+                }.collectLatest {
                     updateCategory(
-                        updatedCategory = expenseDefaultCategory,
+                        updatedCategory = it,
                     )
                 }
             }
             launch {
-                sources.collectLatest {
+                combine(
+                    flow = sources,
+                    flow2 = defaultSourceIdFromDataStore,
+                ) { sources, defaultSourceIdFromDataStore ->
                     defaultSource = getSource(
-                        sourceId = defaultSourceIdFromDataStore.value,
-                    ) ?: it.firstOrNull { source ->
+                        sourceId = defaultSourceIdFromDataStore,
+                    ) ?: sources.firstOrNull { source ->
                         isCashSource(
                             source = source.name,
                         )
                     }
+                    defaultSource
+                }.collectLatest {
                     updateSourceFrom(
                         updatedSourceFrom = defaultSource,
                     )
@@ -249,6 +286,9 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                         }
                         TransactionType.ADJUSTMENT -> {
                             null
+                        }
+                        TransactionType.INVESTMENT -> {
+                            AddTransactionScreenUiVisibilityState.Investment
                         }
                         null -> {
                             null
@@ -294,6 +334,18 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                             )
                         }
                         TransactionType.ADJUSTMENT -> {}
+                        TransactionType.INVESTMENT -> {
+                            updateCategory(
+                                updatedCategory = investmentDefaultCategory,
+                            )
+
+                            updateSourceFrom(
+                                updatedSourceFrom = defaultSource,
+                            )
+                            updateSourceTo(
+                                updatedSourceTo = null,
+                            )
+                        }
                         null -> {}
                     }
                 }
@@ -341,6 +393,9 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                     TransactionType.ADJUSTMENT -> {
                         null
                     }
+                    TransactionType.INVESTMENT -> {
+                        uiStateValue.category?.id
+                    }
                 }
                 val sourceFromId = when (selectedTransactionTypeValue) {
                     TransactionType.INCOME -> {
@@ -355,6 +410,9 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                     TransactionType.ADJUSTMENT -> {
                         null
                     }
+                    TransactionType.INVESTMENT -> {
+                        uiStateValue.sourceFrom?.id
+                    }
                 }
                 val sourceToId = when (selectedTransactionTypeValue) {
                     TransactionType.INCOME -> {
@@ -367,6 +425,9 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                         uiStateValue.sourceTo?.id
                     }
                     TransactionType.ADJUSTMENT -> {
+                        null
+                    }
+                    TransactionType.INVESTMENT -> {
                         null
                     }
                 }
@@ -386,6 +447,9 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                         1
                     }
                     TransactionType.ADJUSTMENT -> {
+                        1
+                    }
+                    TransactionType.INVESTMENT -> {
                         1
                     }
                 }
