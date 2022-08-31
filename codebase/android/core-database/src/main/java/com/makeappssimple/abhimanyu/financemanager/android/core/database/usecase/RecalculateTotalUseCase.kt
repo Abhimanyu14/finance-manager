@@ -28,31 +28,56 @@ class RecalculateTotalUseCaseImpl(
 
         val collectedTransactions = transactionsListItemViewData.first()
         collectedTransactions.forEach { transaction ->
+            val sourceTo = transaction.sourceToId?.let {
+                getSourceUseCase(
+                    id = it,
+                )
+            }
+            val sourceFrom = transaction.sourceFromId?.let {
+                getSourceUseCase(
+                    id = it,
+                )
+            }
+
             when (transaction.transactionType) {
                 TransactionType.INCOME -> {
-                    processIncomeTransaction(
-                        transaction = transaction,
-                    )
+                    sourceTo?.let {
+                        processIncomeTransaction(
+                            sourceTo = it,
+                            transaction = transaction,
+                        )
+                    }
                 }
                 TransactionType.EXPENSE -> {
-                    processExpenseTransaction(
-                        transaction = transaction,
-                    )
+                    sourceFrom?.let {
+                        processExpenseTransaction(
+                            sourceFrom = it,
+                            transaction = transaction,
+                        )
+                    }
                 }
                 TransactionType.TRANSFER -> {
                     processTransferTransaction(
+                        sourceFrom = sourceFrom,
+                        sourceTo = sourceTo,
                         transaction = transaction,
                     )
                 }
                 TransactionType.ADJUSTMENT -> {
-                    processAdjustmentTransaction(
-                        transaction = transaction,
-                    )
+                    sourceTo?.let {
+                        processAdjustmentTransaction(
+                            sourceTo = it,
+                            transaction = transaction,
+                        )
+                    }
                 }
                 TransactionType.INVESTMENT -> {
-                    processInvestmentTransaction(
-                        transaction = transaction,
-                    )
+                    sourceFrom?.let {
+                        processInvestmentTransaction(
+                            sourceFrom = it,
+                            transaction = transaction,
+                        )
+                    }
                 }
             }
         }
@@ -83,92 +108,70 @@ class RecalculateTotalUseCaseImpl(
         balanceAmountValue: Long,
     ) {
         updateSourcesUseCase(
-            source
-                .copy(
-                    balanceAmount = source.balanceAmount
-                        .copy(
-                            value = balanceAmountValue,
-                        )
-                ),
+            source.copy(
+                balanceAmount = source.balanceAmount.copy(
+                    value = balanceAmountValue,
+                )
+            ),
         )
     }
 
     private suspend fun processIncomeTransaction(
+        sourceTo: Source,
         transaction: Transaction,
     ) {
-        val sourceId = transaction.sourceToId ?: return
-        val source = getSourceUseCase(
-            id = sourceId,
-        ) ?: return
         updateSourceBalanceAmount(
-            source = source,
-            balanceAmountValue = source.balanceAmount.value + transaction.amount.value,
+            source = sourceTo,
+            balanceAmountValue = sourceTo.balanceAmount.value + transaction.amount.value,
         )
     }
 
     private suspend fun processInvestmentTransaction(
+        sourceFrom: Source,
         transaction: Transaction,
     ) {
-        val sourceId = transaction.sourceFromId ?: return
-        val source = getSourceUseCase(
-            id = sourceId,
-        ) ?: return
-        // TODO-Abhi: Amount sign change
         updateSourceBalanceAmount(
-            source = source,
-            balanceAmountValue = source.balanceAmount.value + transaction.amount.value,
+            source = sourceFrom,
+            balanceAmountValue = sourceFrom.balanceAmount.value - transaction.amount.value,
         )
     }
 
     private suspend fun processExpenseTransaction(
+        sourceFrom: Source,
         transaction: Transaction,
     ) {
-        val sourceId = transaction.sourceFromId ?: return
-        val source = getSourceUseCase(
-            id = sourceId,
-        ) ?: return
-        // TODO-Abhi: Amount sign change
         updateSourceBalanceAmount(
-            source = source,
-            balanceAmountValue = source.balanceAmount.value + transaction.amount.value,
+            source = sourceFrom,
+            balanceAmountValue = sourceFrom.balanceAmount.value + transaction.amount.value,
         )
     }
 
     private suspend fun processTransferTransaction(
+        sourceFrom: Source?,
+        sourceTo: Source?,
         transaction: Transaction,
     ) {
-        transaction.sourceFromId?.let { sourceId ->
-            getSourceUseCase(
-                id = sourceId,
-            )?.let { source ->
-                updateSourceBalanceAmount(
-                    source = source,
-                    balanceAmountValue = source.balanceAmount.value - transaction.amount.value,
-                )
-            }
+        sourceFrom?.let {
+            updateSourceBalanceAmount(
+                source = it,
+                balanceAmountValue = it.balanceAmount.value - transaction.amount.value,
+            )
         }
-        transaction.sourceToId?.let { sourceId ->
-            getSourceUseCase(
-                id = sourceId,
-            )?.let { source ->
-                updateSourceBalanceAmount(
-                    source = source,
-                    balanceAmountValue = source.balanceAmount.value + transaction.amount.value,
-                )
-            }
+        sourceTo?.let {
+            updateSourceBalanceAmount(
+                source = it,
+                balanceAmountValue = it.balanceAmount.value + transaction.amount.value,
+            )
         }
     }
 
     private suspend fun processAdjustmentTransaction(
+        sourceTo: Source,
         transaction: Transaction,
     ) {
-        val sourceId = transaction.sourceToId ?: return
-        val source = getSourceUseCase(
-            id = sourceId,
-        ) ?: return
         updateSourceBalanceAmount(
-            source = source,
-            balanceAmountValue = source.balanceAmount.value + transaction.amount.value,
+            source = sourceTo,
+            balanceAmountValue = sourceTo.balanceAmount.value + transaction.amount.value,
         )
     }
 }
