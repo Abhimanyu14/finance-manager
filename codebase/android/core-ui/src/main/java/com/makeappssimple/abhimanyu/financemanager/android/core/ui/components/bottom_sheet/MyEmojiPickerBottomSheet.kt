@@ -31,7 +31,9 @@ fun MyEmojiPickerBottomSheet(
     onEmojiLongClick: (emoji: Emoji) -> Unit,
     updateSearchText: (updatedSearchText: String) -> Unit,
 ) {
-    val emojiGroups = remember {
+    val emojiGroups = remember(
+        key1 = emojis,
+    ) {
         emojis.groupBy { emoji ->
             emoji.group
         }.filter { (_, emojis) ->
