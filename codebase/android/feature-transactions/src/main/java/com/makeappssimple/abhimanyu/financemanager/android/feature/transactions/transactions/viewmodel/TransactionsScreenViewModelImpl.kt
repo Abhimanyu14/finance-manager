@@ -61,6 +61,11 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     )
     override val selectedIncomeCategoryIndices: StateFlow<List<Int>> =
         _selectedIncomeCategoryIndices
+    private val _selectedInvestmentCategoryIndices = MutableStateFlow(
+        value = emptyList<Int>(),
+    )
+    override val selectedInvestmentCategoryIndices: StateFlow<List<Int>> =
+        _selectedInvestmentCategoryIndices
     private val _selectedSourceIndices = MutableStateFlow(
         value = emptyList<Int>(),
     )
@@ -89,6 +94,11 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             category.transactionType == TransactionType.INCOME
         }
     }
+    override val investmentCategories: Flow<List<Category>> = categories.map {
+        it.filter { category ->
+            category.transactionType == TransactionType.INVESTMENT
+        }
+    }
     override val sources: Flow<List<Source>> = getSourcesUseCase()
 
     val transactionTypes: List<TransactionType> = TransactionType.values().toList()
@@ -98,10 +108,12 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             searchText,
             selectedExpenseCategoryIndices,
             selectedIncomeCategoryIndices,
+            selectedInvestmentCategoryIndices,
             selectedSourceIndices,
             selectedTransactionTypesIndices,
             expenseCategories,
             incomeCategories,
+            investmentCategories,
             sources,
             selectedSortOption,
         ) { flows ->
@@ -112,14 +124,18 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 flows[2] as? List<Int> ?: emptyList()
             val selectedIncomeCategoryIndicesValue: List<Int> =
                 flows[3] as? List<Int> ?: emptyList()
-            val selectedSourceIndicesValue: List<Int> = flows[4] as? List<Int> ?: emptyList()
+            val selectedInvestmentCategoryIndicesValue: List<Int> =
+                flows[4] as? List<Int> ?: emptyList()
+            val selectedSourceIndicesValue: List<Int> = flows[5] as? List<Int> ?: emptyList()
             val selectedTransactionTypesIndicesValue: List<Int> =
-                flows[5] as? List<Int> ?: emptyList()
-            val expenseCategoriesValue: List<Category> = flows[6] as? List<Category> ?: emptyList()
-            val incomeCategoriesValue: List<Category> = flows[7] as? List<Category> ?: emptyList()
-            val sourcesValue: List<Source> = flows[8] as? List<Source> ?: emptyList()
+                flows[6] as? List<Int> ?: emptyList()
+            val expenseCategoriesValue: List<Category> = flows[7] as? List<Category> ?: emptyList()
+            val incomeCategoriesValue: List<Category> = flows[8] as? List<Category> ?: emptyList()
+            val investmentCategoriesValue: List<Category> =
+                flows[9] as? List<Category> ?: emptyList()
+            val sourcesValue: List<Source> = flows[10] as? List<Source> ?: emptyList()
             val selectedSortOptionValue: SortOption =
-                flows[9] as? SortOption ?: SortOption.LATEST_FIRST
+                flows[11] as? SortOption ?: SortOption.LATEST_FIRST
 
             allTransactionsValue
                 .asSequence()
@@ -180,17 +196,24 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                     }
                 }
                 .filter {
-                    if (selectedExpenseCategoryIndicesValue.isNotEmpty() || selectedIncomeCategoryIndicesValue.isNotEmpty()) {
+                    if (
+                        selectedExpenseCategoryIndicesValue.isNotEmpty() ||
+                        selectedIncomeCategoryIndicesValue.isNotEmpty() ||
+                        selectedInvestmentCategoryIndicesValue.isNotEmpty()
+                    ) {
                         selectedExpenseCategoryIndicesValue.contains(
                             expenseCategoriesValue.indexOf(
                                 it.category
                             )
-                        ) ||
-                                selectedIncomeCategoryIndicesValue.contains(
-                                    incomeCategoriesValue.indexOf(
-                                        it.category
-                                    )
-                                )
+                        ) || selectedIncomeCategoryIndicesValue.contains(
+                            incomeCategoriesValue.indexOf(
+                                it.category
+                            )
+                        ) || selectedInvestmentCategoryIndicesValue.contains(
+                            investmentCategoriesValue.indexOf(
+                                it.category
+                            )
+                        )
                     } else {
                         true
                     }
@@ -248,6 +271,12 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         updatedSelectedIncomeCategoryIndices: List<Int>,
     ) {
         _selectedIncomeCategoryIndices.value = updatedSelectedIncomeCategoryIndices
+    }
+
+    override fun updateSelectedInvestmentCategoryIndices(
+        updatedSelectedInvestmentCategoryIndices: List<Int>,
+    ) {
+        _selectedInvestmentCategoryIndices.value = updatedSelectedInvestmentCategoryIndices
     }
 
     override fun updateSelectedSourceIndices(

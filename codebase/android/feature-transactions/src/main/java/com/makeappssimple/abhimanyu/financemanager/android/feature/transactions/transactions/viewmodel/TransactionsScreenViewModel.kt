@@ -12,10 +12,12 @@ interface TransactionsScreenViewModel : ScreenViewModel {
     val navigationManager: NavigationManager
     val expenseCategories: Flow<List<Category>>
     val incomeCategories: Flow<List<Category>>
+    val investmentCategories: Flow<List<Category>>
     val sources: Flow<List<Source>>
     val transactionsListItemViewData: Flow<Map<String, List<TransactionsListItemViewData>>>
     val selectedExpenseCategoryIndices: StateFlow<List<Int>>
     val selectedIncomeCategoryIndices: StateFlow<List<Int>>
+    val selectedInvestmentCategoryIndices: StateFlow<List<Int>>
     val selectedSourceIndices: StateFlow<List<Int>>
     val selectedTransactionTypesIndices: StateFlow<List<Int>>
     val selectedSortOption: StateFlow<SortOption>
@@ -27,6 +29,10 @@ interface TransactionsScreenViewModel : ScreenViewModel {
 
     fun updateSelectedIncomeCategoryIndices(
         updatedSelectedIncomeCategoryIndices: List<Int>,
+    )
+
+    fun updateSelectedInvestmentCategoryIndices(
+        updatedSelectedInvestmentCategoryIndices: List<Int>,
     )
 
     fun updateSelectedSourceIndices(

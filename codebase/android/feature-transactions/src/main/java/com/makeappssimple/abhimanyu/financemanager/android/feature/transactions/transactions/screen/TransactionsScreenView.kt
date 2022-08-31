@@ -69,8 +69,10 @@ internal enum class TransactionsBottomSheetType : BottomSheetType {
 internal data class TransactionsScreenViewData(
     val expenseCategories: List<Category>,
     val incomeCategories: List<Category>,
+    val investmentCategories: List<Category>,
     val selectedExpenseCategoryIndices: List<Int>,
     val selectedIncomeCategoryIndices: List<Int>,
+    val selectedInvestmentCategoryIndices: List<Int>,
     val selectedSourceIndices: List<Int>,
     val selectedTransactionTypesIndices: List<Int>,
     val sources: List<Source>,
@@ -81,6 +83,7 @@ internal data class TransactionsScreenViewData(
     val deleteTransaction: (transactionId: Int) -> Unit,
     val updateSelectedExpenseCategoryIndices: (updatedSelectedExpenseCategoryIndices: List<Int>) -> Unit,
     val updateSelectedIncomeCategoryIndices: (updatedSelectedIncomeCategoryIndices: List<Int>) -> Unit,
+    val updateSelectedInvestmentCategoryIndices: (updatedSelectedInvestmentCategoryIndices: List<Int>) -> Unit,
     val updateSelectedSourceIndices: (updatedSelectedSourceIndices: List<Int>) -> Unit,
     val updateSelectedTransactionTypesIndices: (updatedSelectedTransactionTypesIndices: List<Int>) -> Unit,
     val updateSearchText: (updatedSearchText: String) -> Unit,
@@ -149,10 +152,12 @@ internal fun TransactionsScreenView(
                         modalBottomSheetState = state.modalBottomSheetState,
                         expenseCategories = data.expenseCategories,
                         incomeCategories = data.incomeCategories,
+                        investmentCategories = data.investmentCategories,
                         sources = data.sources,
                         transactionTypes = transactionTypes,
                         selectedExpenseCategoryIndices = data.selectedExpenseCategoryIndices,
                         selectedIncomeCategoryIndices = data.selectedIncomeCategoryIndices,
+                        selectedInvestmentCategoryIndices = data.selectedInvestmentCategoryIndices,
                         selectedSourceIndices = data.selectedSourceIndices,
                         selectedTransactionTypesIndices = data.selectedTransactionTypesIndices,
                         updateSelectedExpenseCategoryIndices = { updatedSelectedExpenseCategoryIndices ->
@@ -163,6 +168,11 @@ internal fun TransactionsScreenView(
                         updateSelectedIncomeCategoryIndices = { updatedSelectedIncomeCategoryIndices ->
                             data.updateSelectedIncomeCategoryIndices(
                                 updatedSelectedIncomeCategoryIndices
+                            )
+                        },
+                        updateSelectedInvestmentCategoryIndices = { updatedSelectedInvestmentCategoryIndices ->
+                            data.updateSelectedInvestmentCategoryIndices(
+                                updatedSelectedInvestmentCategoryIndices
                             )
                         },
                         updateSelectedSourceIndices = { updatedSelectedSourceIndices ->

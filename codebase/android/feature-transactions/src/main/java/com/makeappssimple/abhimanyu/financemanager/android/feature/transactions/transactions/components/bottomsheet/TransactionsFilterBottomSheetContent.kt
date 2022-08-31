@@ -14,14 +14,17 @@ internal fun TransactionsFilterBottomSheetContent(
     modalBottomSheetState: ModalBottomSheetState,
     expenseCategories: List<Category>,
     incomeCategories: List<Category>,
+    investmentCategories: List<Category>,
     sources: List<Source>,
     transactionTypes: List<TransactionType>,
     selectedExpenseCategoryIndices: List<Int>,
     selectedIncomeCategoryIndices: List<Int>,
+    selectedInvestmentCategoryIndices: List<Int>,
     selectedSourceIndices: List<Int>,
     selectedTransactionTypesIndices: List<Int>,
     updateSelectedExpenseCategoryIndices: (updatedSelectedExpenseCategoryIndices: List<Int>) -> Unit,
     updateSelectedIncomeCategoryIndices: (updatedSelectedIncomeCategoryIndices: List<Int>) -> Unit,
+    updateSelectedInvestmentCategoryIndices: (updatedSelectedInvestmentCategoryIndices: List<Int>) -> Unit,
     updateSelectedSourceIndices: (updatedSelectedSourceIndices: List<Int>) -> Unit,
     updateSelectedTransactionTypesIndices: (updatedSelectedTransactionTypesIndices: List<Int>) -> Unit,
     resetBottomSheetType: () -> Unit,
@@ -29,15 +32,18 @@ internal fun TransactionsFilterBottomSheetContent(
     TransactionsFiltersBottomSheet(
         expenseCategories = expenseCategories,
         incomeCategories = incomeCategories,
+        investmentCategories = investmentCategories,
         sources = sources,
         transactionTypes = transactionTypes,
         selectedExpenseCategoryIndices = selectedExpenseCategoryIndices,
         selectedIncomeCategoryIndices = selectedIncomeCategoryIndices,
+        selectedInvestmentCategoryIndices = selectedInvestmentCategoryIndices,
         selectedSourceIndices = selectedSourceIndices,
         selectedTransactionTypesIndices = selectedTransactionTypesIndices,
         onPositiveButtonClick = {
             updateSelectedExpenseCategoryIndices(it.selectedExpenseCategoryIndices)
             updateSelectedIncomeCategoryIndices(it.selectedIncomeCategoryIndices)
+            updateSelectedInvestmentCategoryIndices(it.selectedInvestmentCategoryIndices)
             updateSelectedSourceIndices(it.selectedSourceIndices)
             updateSelectedTransactionTypesIndices(it.selectedTransactionTypeIndices)
             toggleModalBottomSheetState(

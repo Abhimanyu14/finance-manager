@@ -65,6 +65,7 @@
     <string name="bottom_sheet_transactions_filter_apply">Apply</string>
     <string name="bottom_sheet_transactions_filter_select_expense_categories">Select Expense Categories</string>
     <string name="bottom_sheet_transactions_filter_select_income_categories">Select Income Categories</string>
+    <string name="bottom_sheet_transactions_filter_select_investment_categories">Select Investment Categories</string>
     <string name="bottom_sheet_transactions_filter_select_sources">Select Sources</string>
     <string name="bottom_sheet_transactions_filter_select_transaction_types">Select Transaction Types</string>
     <!-- endregion -->

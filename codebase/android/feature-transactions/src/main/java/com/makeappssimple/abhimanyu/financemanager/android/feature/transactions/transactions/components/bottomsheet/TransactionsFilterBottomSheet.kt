@@ -31,6 +31,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 internal data class TransactionsFilterBottomSheetSelectionData(
     val selectedExpenseCategoryIndices: List<Int>,
     val selectedIncomeCategoryIndices: List<Int>,
+    val selectedInvestmentCategoryIndices: List<Int>,
     val selectedSourceIndices: List<Int>,
     val selectedTransactionTypeIndices: List<Int>,
 )
@@ -40,10 +41,12 @@ internal fun TransactionsFiltersBottomSheet(
     modifier: Modifier = Modifier,
     expenseCategories: List<Category>,
     incomeCategories: List<Category>,
+    investmentCategories: List<Category>,
     sources: List<Source>,
     transactionTypes: List<TransactionType>,
     selectedExpenseCategoryIndices: List<Int>,
     selectedIncomeCategoryIndices: List<Int>,
+    selectedInvestmentCategoryIndices: List<Int>,
     selectedSourceIndices: List<Int>,
     selectedTransactionTypesIndices: List<Int>,
     onPositiveButtonClick: (data: TransactionsFilterBottomSheetSelectionData) -> Unit,
@@ -57,6 +60,11 @@ internal fun TransactionsFiltersBottomSheet(
     val selectedIncomeCategoryIndicesValue = remember {
         mutableStateListOf(
             elements = selectedIncomeCategoryIndices.toTypedArray(),
+        )
+    }
+    val selectedInvestmentCategoryIndicesValue = remember {
+        mutableStateListOf(
+            elements = selectedInvestmentCategoryIndices.toTypedArray(),
         )
     }
     val selectedSourceIndicesValue = remember {
@@ -215,6 +223,62 @@ internal fun TransactionsFiltersBottomSheet(
                         .padding(
                             all = 16.dp,
                         ),
+                    textStringResourceId = R.string.bottom_sheet_transactions_filter_select_investment_categories,
+                    style = MaterialTheme.typography.headlineLarge
+                        .copy(
+                            color = MaterialTheme.colorScheme.onBackground,
+                            textAlign = TextAlign.Start,
+                        ),
+                )
+                TextButton(
+                    onClick = {
+                        selectedInvestmentCategoryIndicesValue.clear()
+                    },
+                    modifier = Modifier
+                        .padding(
+                            horizontal = 16.dp,
+                        ),
+                ) {
+                    MyText(
+                        textStringResourceId = R.string.bottom_sheet_transactions_filter_clear,
+                        style = MaterialTheme.typography.labelLarge,
+                    )
+                }
+            }
+            MySelectionGroup(
+                items = investmentCategories
+                    .map { category ->
+                        ChipItem(
+                            text = category.title,
+                        )
+                    },
+                selectedItemsIndices = selectedInvestmentCategoryIndicesValue,
+                onSelectionChange = { index ->
+                    if (selectedInvestmentCategoryIndicesValue.contains(index)) {
+                        selectedInvestmentCategoryIndicesValue.remove(index)
+                    } else {
+                        selectedInvestmentCategoryIndicesValue.add(index)
+                    }
+                },
+                modifier = Modifier
+                    .padding(
+                        horizontal = 16.dp,
+                        vertical = 4.dp,
+                    ),
+            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .fillMaxWidth(),
+            ) {
+                MyText(
+                    modifier = Modifier
+                        .weight(
+                            weight = 1F,
+                        )
+                        .padding(
+                            all = 16.dp,
+                        ),
                     textStringResourceId = R.string.bottom_sheet_transactions_filter_select_sources,
                     style = MaterialTheme.typography.headlineLarge
                         .copy(
@@ -347,6 +411,7 @@ internal fun TransactionsFiltersBottomSheet(
                         TransactionsFilterBottomSheetSelectionData(
                             selectedExpenseCategoryIndices = selectedExpenseCategoryIndicesValue,
                             selectedIncomeCategoryIndices = selectedIncomeCategoryIndicesValue,
+                            selectedInvestmentCategoryIndices = selectedInvestmentCategoryIndicesValue,
                             selectedSourceIndices = selectedSourceIndicesValue,
                             selectedTransactionTypeIndices = selectedTransactionTypesIndicesValue,
                         )

@@ -27,6 +27,9 @@ fun TransactionsScreen(
     val incomeCategories: List<Category> by screenViewModel.incomeCategories.collectAsStateWithLifecycle(
         initialValue = emptyList(),
     )
+    val investmentCategories: List<Category> by screenViewModel.investmentCategories.collectAsStateWithLifecycle(
+        initialValue = emptyList(),
+    )
     val sources: List<Source> by screenViewModel.sources.collectAsStateWithLifecycle(
         initialValue = emptyList(),
     )
@@ -35,6 +38,7 @@ fun TransactionsScreen(
     )
     val selectedExpenseCategoryIndices: List<Int> by screenViewModel.selectedExpenseCategoryIndices.collectAsStateWithLifecycle()
     val selectedIncomeCategoryIndices: List<Int> by screenViewModel.selectedIncomeCategoryIndices.collectAsStateWithLifecycle()
+    val selectedInvestmentCategoryIndices: List<Int> by screenViewModel.selectedInvestmentCategoryIndices.collectAsStateWithLifecycle()
     val selectedSourceIndices: List<Int> by screenViewModel.selectedSourceIndices.collectAsStateWithLifecycle()
     val selectedTransactionTypesIndices: List<Int> by screenViewModel.selectedTransactionTypesIndices.collectAsStateWithLifecycle()
     val selectedSortOption: SortOption by screenViewModel.selectedSortOption.collectAsStateWithLifecycle()
@@ -50,8 +54,10 @@ fun TransactionsScreen(
         data = TransactionsScreenViewData(
             expenseCategories = expenseCategories,
             incomeCategories = incomeCategories,
+            investmentCategories = investmentCategories,
             selectedExpenseCategoryIndices = selectedExpenseCategoryIndices,
             selectedIncomeCategoryIndices = selectedIncomeCategoryIndices,
+            selectedInvestmentCategoryIndices = selectedInvestmentCategoryIndices,
             selectedSourceIndices = selectedSourceIndices,
             selectedTransactionTypesIndices = selectedTransactionTypesIndices,
             sources = sources,
@@ -72,6 +78,11 @@ fun TransactionsScreen(
             updateSelectedIncomeCategoryIndices = { updatedSelectedIncomeCategoryIndices ->
                 screenViewModel.updateSelectedIncomeCategoryIndices(
                     updatedSelectedIncomeCategoryIndices = updatedSelectedIncomeCategoryIndices,
+                )
+            },
+            updateSelectedInvestmentCategoryIndices = { updatedSelectedInvestmentCategoryIndices ->
+                screenViewModel.updateSelectedInvestmentCategoryIndices(
+                    updatedSelectedInvestmentCategoryIndices = updatedSelectedInvestmentCategoryIndices,
                 )
             },
             updateSelectedSourceIndices = { updatedSelectedSourceIndices ->
