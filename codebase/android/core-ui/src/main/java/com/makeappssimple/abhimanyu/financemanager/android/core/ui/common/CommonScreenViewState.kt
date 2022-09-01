@@ -15,7 +15,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.SoftwareKeyboardController
 import kotlinx.coroutines.CoroutineScope
 
-data class CommonScreenViewState constructor(
+data class CommonScreenViewState(
     val context: Context,
     val coroutineScope: CoroutineScope,
     val focusManager: FocusManager,
