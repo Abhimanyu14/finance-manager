@@ -10,6 +10,7 @@ import com.squareup.moshi.JsonClass
 data class TransactionFor(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
+
     val title: String,
 ) {
     val titleToDisplay: String

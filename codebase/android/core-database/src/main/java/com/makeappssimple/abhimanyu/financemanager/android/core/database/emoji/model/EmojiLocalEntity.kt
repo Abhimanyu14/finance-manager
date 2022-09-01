@@ -11,10 +11,13 @@ import com.squareup.moshi.JsonClass
 data class EmojiLocalEntity(
     @PrimaryKey
     override val character: String,
+
     @ColumnInfo(name = "code_point")
     @Json(name = "code_point")
     override val codePoint: String,
+
     override val group: String,
+
     @ColumnInfo(name = "unicode_name")
     @Json(name = "unicode_name")
     override val unicodeName: String,

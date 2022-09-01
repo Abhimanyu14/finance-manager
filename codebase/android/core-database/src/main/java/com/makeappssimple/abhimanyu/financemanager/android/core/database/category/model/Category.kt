@@ -14,16 +14,22 @@ import com.squareup.moshi.JsonClass
 data class Category(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
+
     @ColumnInfo(name = "parent_category")
     @Json(name = "parent_category")
     val parentCategoryId: Int? = null,
+
     @ColumnInfo(name = "sub_categories")
     @Json(name = "sub_categories")
     @TypeConverters(CategoryIdsConverter::class)
     val subCategoryIds: List<Int>? = null,
+
     val description: String = "",
+
     val emoji: String,
+
     val title: String,
+
     @ColumnInfo(name = "transaction_type")
     @Json(name = "transaction_type")
     val transactionType: TransactionType,

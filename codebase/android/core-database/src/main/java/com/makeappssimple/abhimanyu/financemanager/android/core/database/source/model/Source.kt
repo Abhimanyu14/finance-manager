@@ -30,9 +30,12 @@ data class Source(
     val balanceAmount: Amount = Amount(
         value = 0,
     ),
+
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
+
     val type: SourceType = SourceType.CASH,
+
     val name: String,
 )
 
