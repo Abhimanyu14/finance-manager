@@ -1,17 +1,26 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.repository
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionDetail
 import kotlinx.coroutines.flow.Flow
 
 interface TransactionRepository {
     val allTransactions: Flow<List<Transaction>>
 
+    fun getAllTransactionDetails(): Flow<List<TransactionDetail>>
+
     fun getRecentTransactions(
         numberOfTransactions: Int,
     ): Flow<List<Transaction>>
 
+    fun getRecentTransactionDetails(
+        numberOfTransactions: Int,
+    ): Flow<List<TransactionDetail>>
+
     fun getCurrentDayTransactions(): Flow<List<Transaction>>
+
     fun getCurrentMonthTransactions(): Flow<List<Transaction>>
+
     fun getCurrentYearTransactions(): Flow<List<Transaction>>
 
     suspend fun getTransactionsCount(): Int

@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionDetail
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
@@ -34,7 +35,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.to
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.HomeBottomAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.HomeListItem
-import com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.HomeListItemViewData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.HomeRecentTransactionsView
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.bottomsheet.HomeMenuBottomSheetContent
 
@@ -44,7 +44,7 @@ internal enum class HomeBottomSheetType : BottomSheetType {
 }
 
 internal data class HomeScreenViewData(
-    val homeListItemViewData: List<HomeListItemViewData>,
+    val transactionDetails: List<TransactionDetail>,
     val navigationManager: NavigationManager,
 )
 
@@ -158,13 +158,13 @@ internal fun HomeScreenView(
                         )
                     }
                     items(
-                        items = data.homeListItemViewData,
+                        items = data.transactionDetails,
                         key = { listItem ->
                             listItem.hashCode()
                         },
                     ) { listItem ->
                         HomeListItem(
-                            data = listItem,
+                            transactionDetail = listItem,
                         )
                     }
                     item {

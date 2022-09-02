@@ -7,9 +7,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionDetail
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.logError
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.TransactionsListItemViewData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.SortOption
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.TransactionsScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.TransactionsScreenViewModelImpl
@@ -33,7 +33,7 @@ fun TransactionsScreen(
     val sources: List<Source> by screenViewModel.sources.collectAsStateWithLifecycle(
         initialValue = emptyList(),
     )
-    val transactionsListItemViewData: Map<String, List<TransactionsListItemViewData>> by screenViewModel.transactionsListItemViewData.collectAsStateWithLifecycle(
+    val transactionDetailsListItemViewData: Map<String, List<TransactionDetail>> by screenViewModel.transactionDetailsListItemViewData.collectAsStateWithLifecycle(
         initialValue = emptyMap(),
     )
     val selectedExpenseCategoryIndices: List<Int> by screenViewModel.selectedExpenseCategoryIndices.collectAsStateWithLifecycle()
@@ -61,7 +61,7 @@ fun TransactionsScreen(
             selectedSourceIndices = selectedSourceIndices,
             selectedTransactionTypesIndices = selectedTransactionTypesIndices,
             sources = sources,
-            transactionsListItemViewData = transactionsListItemViewData,
+            transactionDetailsListItemViewData = transactionDetailsListItemViewData,
             navigationManager = screenViewModel.navigationManager,
             searchText = searchText,
             selectedSortOption = selectedSortOption,

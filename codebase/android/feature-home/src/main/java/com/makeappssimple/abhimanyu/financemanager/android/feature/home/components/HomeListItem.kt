@@ -14,29 +14,21 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionDetail
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getReadableDateAndTimeString
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 
-data class HomeListItemViewData(
-    val category: Category? = null,
-    val sourceFrom: Source? = null,
-    val sourceTo: Source? = null,
-    val transaction: Transaction,
-    val transactionFor: TransactionFor? = null,
-)
-
 @Composable
 internal fun HomeListItem(
-    data: HomeListItemViewData,
+    transactionDetail: TransactionDetail,
 ) {
+    val sourceFrom = transactionDetail.sourceFrom
+    val sourceTo = transactionDetail.sourceTo
+
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
@@ -53,7 +45,7 @@ internal fun HomeListItem(
     ) {
         MyEmojiCircle(
             backgroundColor = MaterialTheme.colorScheme.outline,
-            emoji = data.category?.emoji,
+            emoji = transactionDetail.category.emoji,
         )
         Column(
             modifier = Modifier
@@ -72,7 +64,7 @@ internal fun HomeListItem(
                         .weight(
                             weight = 1F,
                         ),
-                    text = data.transaction.title,
+                    text = transactionDetail.title,
                     style = MaterialTheme.typography.headlineMedium
                         .copy(
                             color = MaterialTheme.colorScheme.onBackground,
@@ -84,17 +76,17 @@ internal fun HomeListItem(
                         .weight(
                             weight = 1F,
                         ),
-                    text = if (data.transaction.transactionType == TransactionType.INCOME ||
-                        (data.transaction.transactionType == TransactionType.ADJUSTMENT
-                                && data.transaction.amount.value > 0)
+                    text = if (transactionDetail.transactionType == TransactionType.INCOME ||
+                        (transactionDetail.transactionType == TransactionType.ADJUSTMENT
+                                && transactionDetail.amount.value > 0)
                     ) {
-                        data.transaction.amount.toSignedString()
+                        transactionDetail.amount.toSignedString()
                     } else {
-                        data.transaction.amount.toString()
+                        transactionDetail.amount.toString()
                     },
                     style = MaterialTheme.typography.headlineMedium
                         .copy(
-                            color = data.transaction.getAmountTextColor(),
+                            color = transactionDetail.getAmountTextColor(),
                             textAlign = TextAlign.End,
                         ),
                 )
@@ -108,7 +100,7 @@ internal fun HomeListItem(
             MyText(
                 modifier = Modifier
                     .fillMaxWidth(),
-                text = data.transactionFor?.titleToDisplay.orEmpty(),
+                text = transactionDetail.transactionFor.titleToDisplay.orEmpty(),
                 style = MaterialTheme.typography.bodySmall
                     .copy(
                         color = MaterialTheme.colorScheme.onBackground,
@@ -131,7 +123,7 @@ internal fun HomeListItem(
                             weight = 1F,
                         ),
                     text = getReadableDateAndTimeString(
-                        timestamp = data.transaction.transactionTimestamp,
+                        timestamp = transactionDetail.transactionTimestamp,
                     ),
                     style = MaterialTheme.typography.bodySmall
                         .copy(
@@ -144,14 +136,14 @@ internal fun HomeListItem(
                         .weight(
                             weight = 1F,
                         ),
-                    text = if (data.sourceFrom != null && data.sourceTo != null) {
+                    text = if (sourceFrom != null && sourceTo != null) {
                         stringResource(
                             id = R.string.list_item_home_source,
-                            data.sourceFrom.name,
-                            data.sourceTo.name,
+                            sourceFrom.name,
+                            sourceTo.name,
                         )
                     } else {
-                        data.sourceFrom?.name ?: data.sourceTo?.name.orEmpty()
+                        sourceFrom?.name ?: sourceTo?.name.orEmpty()
                     },
                     style = MaterialTheme.typography.bodySmall
                         .copy(

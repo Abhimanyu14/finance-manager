@@ -5,18 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoriesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionDetail
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetTransactionForUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionDetailsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.DeleteTransactionAndRevertOtherDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getDateString
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.TransactionsListItemViewData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.math.abs
@@ -32,16 +28,14 @@ import kotlinx.coroutines.launch
 internal class TransactionsScreenViewModelImpl @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
     getSourcesUseCase: GetSourcesUseCase,
-    getAllTransactionsUseCase: GetAllTransactionsUseCase,
+    getAllTransactionDetailsUseCase: GetAllTransactionDetailsUseCase,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
     private val deleteTransactionAndRevertOtherDataUseCase: DeleteTransactionAndRevertOtherDataUseCase,
-    private val getCategoryUseCase: GetCategoryUseCase,
-    private val getSourceUseCase: GetSourceUseCase,
-    private val getTransactionForUseCase: GetTransactionForUseCase,
 ) : TransactionsScreenViewModel, ViewModel() {
     private val categories: Flow<List<Category>> = getCategoriesUseCase()
-    private val allTransactions: Flow<List<Transaction>> = getAllTransactionsUseCase()
+    private val allTransactionDetails: Flow<List<TransactionDetail>> =
+        getAllTransactionDetailsUseCase()
 
     // region Search
     private val _searchText = MutableStateFlow(
@@ -102,9 +96,9 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     override val sources: Flow<List<Source>> = getSourcesUseCase()
 
     val transactionTypes: List<TransactionType> = TransactionType.values().toList()
-    override val transactionsListItemViewData: Flow<Map<String, List<TransactionsListItemViewData>>> =
+    override val transactionDetailsListItemViewData: Flow<Map<String, List<TransactionDetail>>> =
         combine(
-            allTransactions,
+            allTransactionDetails,
             searchText,
             selectedExpenseCategoryIndices,
             selectedIncomeCategoryIndices,
@@ -117,8 +111,8 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             sources,
             selectedSortOption,
         ) { flows ->
-            val allTransactionsValue: List<Transaction> =
-                flows[0] as? List<Transaction> ?: emptyList()
+            val allTransactionDetailsValue: List<TransactionDetail> =
+                flows[0] as? List<TransactionDetail> ?: emptyList()
             val searchTextValue: String = flows[1] as String
             val selectedExpenseCategoryIndicesValue: List<Int> =
                 flows[2] as? List<Int> ?: emptyList()
@@ -137,7 +131,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             val selectedSortOptionValue: SortOption =
                 flows[11] as? SortOption ?: SortOption.LATEST_FIRST
 
-            allTransactionsValue
+            allTransactionDetailsValue
                 .asSequence()
                 // Search
                 .filter {
@@ -160,33 +154,11 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                     }
                 }
                 .toList()
-                .map { transaction ->
-                    val category = transaction.categoryId?.let { categoryId ->
-                        getCategoryUseCase(
-                            id = categoryId,
-                        )
-                    }
-                    val sourceFrom = transaction.sourceFromId?.let { sourceFromId ->
-                        getSourceUseCase(
-                            id = sourceFromId,
-                        )
-                    }
-                    val sourceTo = transaction.sourceToId?.let { sourceToId ->
-                        getSourceUseCase(
-                            id = sourceToId,
-                        )
-                    }
-                    val transactionFor = getTransactionForUseCase(
-                        id = transaction.transactionForId,
-                    )
-                    TransactionsListItemViewData(
-                        category = category,
-                        sourceFrom = sourceFrom,
-                        sourceTo = sourceTo,
-                        transaction = transaction,
-                        transactionFor = transactionFor,
-                    )
-                }
+//                .map { transactionDetail ->
+//                    TransactionsListItemViewData(
+//                        transactionDetail = transactionDetail,
+//                    )
+//                }
                 .filter {
                     if (selectedSourceIndicesValue.isNotEmpty()) {
                         selectedSourceIndicesValue.contains(sourcesValue.indexOf(it.sourceFrom)) ||
@@ -221,23 +193,23 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 .sortedWith(compareBy {
                     when (selectedSortOptionValue) {
                         SortOption.AMOUNT_ASC -> {
-                            abs(it.transaction.amount.value)
+                            abs(it.amount.value)
                         }
                         SortOption.AMOUNT_DESC -> {
-                            -abs(it.transaction.amount.value)
+                            -abs(it.amount.value)
                         }
                         SortOption.LATEST_FIRST -> {
-                            -it.transaction.transactionTimestamp
+                            -it.transactionTimestamp
                         }
                         SortOption.OLDEST_FIRST -> {
-                            it.transaction.transactionTimestamp
+                            it.transactionTimestamp
                         }
                     }
                 })
                 .groupBy {
                     if (selectedSortOptionValue == SortOption.LATEST_FIRST || selectedSortOptionValue == SortOption.OLDEST_FIRST) {
                         getDateString(
-                            it.transaction.transactionTimestamp
+                            it.transactionTimestamp
                         )
                     } else {
                         ""

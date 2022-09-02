@@ -33,6 +33,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionDetail
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
@@ -53,7 +54,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MySearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.TransactionsListItem
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.TransactionsListItemViewData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsFilterBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsSortBottomSheetContent
@@ -76,7 +76,7 @@ internal data class TransactionsScreenViewData(
     val selectedSourceIndices: List<Int>,
     val selectedTransactionTypesIndices: List<Int>,
     val sources: List<Source>,
-    val transactionsListItemViewData: Map<String, List<TransactionsListItemViewData>>,
+    val transactionDetailsListItemViewData: Map<String, List<TransactionDetail>>,
     val navigationManager: NavigationManager,
     val searchText: String,
     val selectedSortOption: SortOption,
@@ -266,12 +266,12 @@ internal fun TransactionsScreenView(
                         .fillMaxSize(),
                 ) {
                     AnimatedVisibility(
-                        visible = data.transactionsListItemViewData.isEmpty() && data.searchText.isEmpty(),
+                        visible = data.transactionDetailsListItemViewData.isEmpty() && data.searchText.isEmpty(),
                     ) {
                         MyLinearProgressIndicator()
                     }
                     AnimatedVisibility(
-                        visible = data.transactionsListItemViewData.isNotEmpty() ||
+                        visible = data.transactionDetailsListItemViewData.isNotEmpty() ||
                                 data.searchText.isNotEmpty() ||
                                 data.selectedExpenseCategoryIndices.isNotEmpty() ||
                                 data.selectedIncomeCategoryIndices.isNotEmpty() ||
@@ -367,7 +367,7 @@ internal fun TransactionsScreenView(
                         }
                     }
                     LazyColumn {
-                        data.transactionsListItemViewData.forEach { (date, listItemData) ->
+                        data.transactionDetailsListItemViewData.forEach { (date, listItemData) ->
                             if (date.isNotBlank()) {
                                 stickyHeader {
                                     MyText(
@@ -397,7 +397,7 @@ internal fun TransactionsScreenView(
                                 },
                             ) { index, listItem ->
                                 TransactionsListItem(
-                                    data = listItem,
+                                    transactionDetail = listItem,
                                     expanded = "$date $index" == expandedItemKey,
                                     deleteEnabled = true,
                                     onClick = {
@@ -410,12 +410,12 @@ internal fun TransactionsScreenView(
                                     onEditClick = {
                                         navigateToEditTransactionScreen(
                                             navigationManager = data.navigationManager,
-                                            transactionId = listItem.transaction.id,
+                                            transactionId = listItem.id,
                                         )
                                         expandedItemKey = ""
                                     },
                                     onDeleteClick = {
-                                        transactionIdToDelete = listItem.transaction.id
+                                        transactionIdToDelete = listItem.id
                                         transactionsBottomSheetType =
                                             TransactionsBottomSheetType.DELETE_CONFIRMATION
                                         toggleModalBottomSheetState(
