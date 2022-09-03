@@ -53,7 +53,7 @@ buildscript {
         minSdkVersion = 21
 
         // Target SDK version
-        targetSdkVersion = 32
+        targetSdkVersion = 33
 
         // Kotlin data binding compiler
         kotlinCompilerVersion = "3.1.4"

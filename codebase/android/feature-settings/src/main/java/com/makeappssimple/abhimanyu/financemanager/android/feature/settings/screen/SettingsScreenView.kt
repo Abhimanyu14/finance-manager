@@ -7,6 +7,9 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ListItem
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
@@ -25,6 +28,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
@@ -37,6 +42,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Common
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.util.JSON_MIMETYPE
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.util.getAppVersion
 
 internal enum class SettingsBottomSheetType : BottomSheetType {
     NONE,
@@ -60,6 +66,9 @@ internal fun SettingsScreenView(
             value = SettingsBottomSheetType.NONE,
         )
     }
+    val appVersionName = getAppVersion(
+        context = state.context,
+    )?.versionName
 
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
         DisposableEffect(Unit) {
@@ -111,124 +120,151 @@ internal fun SettingsScreenView(
                 Column(
                     horizontalAlignment = Alignment.Start,
                     modifier = Modifier
-                        .fillMaxWidth(),
+                        .fillMaxSize(),
                 ) {
-                    AnimatedVisibility(
-                        visible = data.isLoading,
+                    Column(
+                        horizontalAlignment = Alignment.Start,
+                        modifier = Modifier
+                            .verticalScroll(
+                                state = rememberScrollState(),
+                            )
+                            .fillMaxWidth()
+                            .weight(
+                                weight = 1F,
+                            ),
                     ) {
-                        MyLinearProgressIndicator()
+                        AnimatedVisibility(
+                            visible = data.isLoading,
+                        ) {
+                            MyLinearProgressIndicator()
+                        }
+                        ListItem(
+                            icon = {
+                                Icon(
+                                    imageVector = Icons.Rounded.Backup,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.onBackground,
+                                )
+                            },
+                            text = {
+                                MyText(
+                                    modifier = Modifier
+                                        .fillMaxWidth(),
+                                    textStringResourceId = R.string.screen_settings_backup,
+                                    style = MaterialTheme.typography.bodyLarge
+                                        .copy(
+                                            color = MaterialTheme.colorScheme.onBackground,
+                                        ),
+                                )
+                            },
+                            modifier = Modifier
+                                .clickable(
+                                    enabled = !data.isLoading,
+                                    onClick = {
+                                        data.createDocument.launch(JSON_MIMETYPE)
+                                    },
+                                ),
+                        )
+                        ListItem(
+                            icon = {
+                                Icon(
+                                    imageVector = Icons.Rounded.Restore,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.onBackground,
+                                )
+                            },
+                            text = {
+                                MyText(
+                                    modifier = Modifier
+                                        .fillMaxWidth(),
+                                    textStringResourceId = R.string.screen_settings_restore,
+                                    style = MaterialTheme.typography.bodyLarge
+                                        .copy(
+                                            color = MaterialTheme.colorScheme.onBackground,
+                                        ),
+                                )
+                            },
+                            modifier = Modifier
+                                .clickable(
+                                    enabled = !data.isLoading,
+                                    onClick = {
+                                        data.openDocument.launch(arrayOf(JSON_MIMETYPE))
+                                    },
+                                ),
+                        )
+                        ListItem(
+                            icon = {
+                                Icon(
+                                    imageVector = Icons.Rounded.Calculate,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.onBackground,
+                                )
+                            },
+                            text = {
+                                MyText(
+                                    modifier = Modifier
+                                        .fillMaxWidth(),
+                                    textStringResourceId = R.string.screen_settings_recalculate_total,
+                                    style = MaterialTheme.typography.bodyLarge
+                                        .copy(
+                                            color = MaterialTheme.colorScheme.onBackground,
+                                        ),
+                                )
+                            },
+                            modifier = Modifier
+                                .clickable(
+                                    enabled = !data.isLoading,
+                                    onClick = {
+                                        data.recalculateTotal()
+                                    },
+                                ),
+                        )
+                        /*
+                        // TODO-Abhi: Enable after completing transaction for screens
+                        ListItem(
+                            icon = {
+                                Icon(
+                                    imageVector = Icons.Rounded.Groups,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.onBackground,
+                                )
+                            },
+                            text = {
+                                MyText(
+                                    modifier = Modifier
+                                        .fillMaxWidth(),
+                                    textStringResourceId = R.string.screen_settings_transaction_for,
+                                    style = MaterialTheme.typography.bodyLarge
+                                        .copy(
+                                            color = MaterialTheme.colorScheme.onBackground,
+                                        ),
+                                )
+                            },
+                            modifier = Modifier
+                                .clickable(
+                                    enabled = !data.isLoading,
+                                    onClick = {
+                                        // TODO-Abhi: Add Navigation to transaction for screens
+                                    },
+                                ),
+                        )
+                        */
                     }
-                    ListItem(
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Rounded.Backup,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onBackground,
-                            )
-                        },
-                        text = {
-                            MyText(
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                                textStringResourceId = R.string.screen_settings_backup,
-                                style = MaterialTheme.typography.bodyLarge
-                                    .copy(
-                                        color = MaterialTheme.colorScheme.onBackground,
-                                    ),
-                            )
-                        },
-                        modifier = Modifier
-                            .clickable(
-                                enabled = !data.isLoading,
-                                onClick = {
-                                    data.createDocument.launch(JSON_MIMETYPE)
-                                },
-                            ),
-                    )
-                    ListItem(
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Rounded.Restore,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onBackground,
-                            )
-                        },
-                        text = {
-                            MyText(
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                                textStringResourceId = R.string.screen_settings_restore,
-                                style = MaterialTheme.typography.bodyLarge
-                                    .copy(
-                                        color = MaterialTheme.colorScheme.onBackground,
-                                    ),
-                            )
-                        },
-                        modifier = Modifier
-                            .clickable(
-                                enabled = !data.isLoading,
-                                onClick = {
-                                    data.openDocument.launch(arrayOf(JSON_MIMETYPE))
-                                },
-                            ),
-                    )
-                    ListItem(
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Rounded.Calculate,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onBackground,
-                            )
-                        },
-                        text = {
-                            MyText(
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                                textStringResourceId = R.string.screen_settings_recalculate_total,
-                                style = MaterialTheme.typography.bodyLarge
-                                    .copy(
-                                        color = MaterialTheme.colorScheme.onBackground,
-                                    ),
-                            )
-                        },
-                        modifier = Modifier
-                            .clickable(
-                                enabled = !data.isLoading,
-                                onClick = {
-                                    data.recalculateTotal()
-                                },
-                            ),
-                    )
-                    /*
-                    // TODO-Abhi: Enable after completing transaction for screens
-                    ListItem(
-                        icon = {
-                            Icon(
-                                imageVector = Icons.Rounded.Groups,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.onBackground,
-                            )
-                        },
-                        text = {
-                            MyText(
-                                modifier = Modifier
-                                    .fillMaxWidth(),
-                                textStringResourceId = R.string.screen_settings_transaction_for,
-                                style = MaterialTheme.typography.bodyLarge
-                                    .copy(
-                                        color = MaterialTheme.colorScheme.onBackground,
-                                    ),
-                            )
-                        },
-                        modifier = Modifier
-                            .clickable(
-                                enabled = !data.isLoading,
-                                onClick = {
-                                    // TODO-Abhi: Add Navigation to transaction for screens
-                                },
-                            ),
-                    )
-                    */
+                    appVersionName?.let {
+                        MyText(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    all = 16.dp,
+                                ),
+                            text = "Version - $it",
+                            style = MaterialTheme.typography.headlineLarge
+                                .copy(
+                                    color = MaterialTheme.colorScheme.primary,
+                                    textAlign = TextAlign.Center,
+                                ),
+                        )
+                    }
                 }
             }
         }
