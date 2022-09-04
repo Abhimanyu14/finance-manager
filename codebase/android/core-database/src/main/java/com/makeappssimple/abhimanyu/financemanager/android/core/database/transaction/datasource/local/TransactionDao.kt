@@ -85,6 +85,7 @@ interface TransactionDao {
 
     // Methods common to multiple DAO are defined here - may also have duplicates
 
+    // region Restore data
     @Query(value = "DELETE FROM category_table")
     suspend fun deleteAllCategories()
 
@@ -127,4 +128,5 @@ interface TransactionDao {
             transactionForValues = transactionForValues,
         )
     }
+    // endregion
 }

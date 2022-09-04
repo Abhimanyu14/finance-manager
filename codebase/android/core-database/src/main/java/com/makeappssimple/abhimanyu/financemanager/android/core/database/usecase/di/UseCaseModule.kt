@@ -7,6 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.DeleteTransactionUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
@@ -65,14 +66,12 @@ class UseCaseModule {
     @Provides
     fun providesRecalculateTotalUseCase(
         getSourcesUseCase: GetSourcesUseCase,
-        getAllTransactionsUseCase: GetAllTransactionsUseCase,
-        getSourceUseCase: GetSourceUseCase,
+        getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
         updateSourcesUseCase: UpdateSourcesUseCase,
     ): RecalculateTotalUseCase {
         return RecalculateTotalUseCaseImpl(
             getSourcesUseCase = getSourcesUseCase,
-            getAllTransactionsUseCase = getAllTransactionsUseCase,
-            getSourceUseCase = getSourceUseCase,
+            getAllTransactionDataUseCase = getAllTransactionDataUseCase,
             updateSourcesUseCase = updateSourcesUseCase,
         )
     }

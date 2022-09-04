@@ -1,11 +1,10 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionDataUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 
@@ -14,86 +13,36 @@ interface RecalculateTotalUseCase {
 }
 
 class RecalculateTotalUseCaseImpl(
+    getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
     getSourcesUseCase: GetSourcesUseCase,
-    getAllTransactionsUseCase: GetAllTransactionsUseCase,
-    private val getSourceUseCase: GetSourceUseCase,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
 ) : RecalculateTotalUseCase {
     private val sources: Flow<List<Source>> = getSourcesUseCase()
-    private val transactionsListItemViewData: Flow<List<Transaction>> = getAllTransactionsUseCase()
+    private val allTransactionData: Flow<List<TransactionData>> = getAllTransactionDataUseCase()
 
     override suspend operator fun invoke() {
-        resetBalanceAmountOfAllSources()
-
-        val collectedTransactions = transactionsListItemViewData.first()
-        collectedTransactions.forEach { transaction ->
-            val sourceTo = transaction.sourceToId?.let {
-                getSourceUseCase(
-                    id = it,
-                )
+        val sourceBalances = hashMapOf<Int, Long>()
+        val sourcesValue = sources.first()
+        val allTransactionDataValue = allTransactionData.first()
+        allTransactionDataValue.forEach { transactionData ->
+            transactionData.sourceFrom?.let {
+                sourceBalances[it.id] =
+                    (sourceBalances[it.id] ?: 0L) - transactionData.transaction.amount.value
             }
-            val sourceFrom = transaction.sourceFromId?.let {
-                getSourceUseCase(
-                    id = it,
-                )
+            transactionData.sourceTo?.let {
+                sourceBalances[it.id] =
+                    (sourceBalances[it.id] ?: 0L) + transactionData.transaction.amount.value
             }
-            processTransaction(
-                sourceFrom = sourceFrom,
-                sourceTo = sourceTo,
-                transaction = transaction,
+        }
+        val updatesSources = sourcesValue.map {
+            it.copy(
+                balanceAmount = it.balanceAmount.copy(
+                    value = sourceBalances[it.id] ?: 0L,
+                )
             )
         }
-    }
-
-    private suspend fun resetBalanceAmountOfAllSources() {
-        val collectedSources = sources.first()
-
-        // Reset all source balance amount
-        collectedSources.forEach { source ->
-            resetSourceBalanceAmount(
-                source = source,
-            )
-        }
-    }
-
-    private suspend fun resetSourceBalanceAmount(
-        source: Source,
-    ) {
-        updateSourceBalanceAmount(
-            source = source,
-            balanceAmountValue = 0,
-        )
-    }
-
-    private suspend fun updateSourceBalanceAmount(
-        source: Source,
-        balanceAmountValue: Long,
-    ) {
         updateSourcesUseCase(
-            source.copy(
-                balanceAmount = source.balanceAmount.copy(
-                    value = balanceAmountValue,
-                )
-            ),
+            sources = updatesSources.toTypedArray(),
         )
-    }
-
-    private suspend fun processTransaction(
-        sourceFrom: Source?,
-        sourceTo: Source?,
-        transaction: Transaction,
-    ) {
-        sourceFrom?.let {
-            updateSourceBalanceAmount(
-                source = it,
-                balanceAmountValue = it.balanceAmount.value - transaction.amount.value,
-            )
-        }
-        sourceTo?.let {
-            updateSourceBalanceAmount(
-                source = it,
-                balanceAmountValue = it.balanceAmount.value + transaction.amount.value,
-            )
-        }
     }
 }
