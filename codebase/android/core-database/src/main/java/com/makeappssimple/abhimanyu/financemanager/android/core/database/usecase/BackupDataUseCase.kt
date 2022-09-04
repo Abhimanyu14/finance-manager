@@ -15,8 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.JsonUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getReadableDateAndTimeString
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.zip
 
 interface BackupDataUseCase {
     suspend operator fun invoke(
@@ -41,61 +40,28 @@ class BackupDataUseCaseImpl(
     override suspend operator fun invoke(
         uri: Uri,
     ) {
-        var categoriesUpdated = false
-        var emojisUpdated = false
-        var sourcesUpdated = false
-        var transactionsUpdated = false
-        var transactionForValuesUpdated = false
         val databaseBackupData = DatabaseBackupData(
             lastBackupTime = getReadableDateAndTimeString(),
             lastBackupTimestamp = System.currentTimeMillis().toString(),
         )
-        combine(
-            flow = categories,
-            flow2 = emojis,
-            flow3 = sources,
-            flow4 = transactions,
-            flow5 = transactionForValues,
-        ) { categories, emojis, sources, transactions, transactionForValues ->
-            if (!categoriesUpdated && categories.isNotEmpty()) {
-                databaseBackupData.categories = categories
-                categoriesUpdated = true
-            }
-            if (!emojisUpdated && emojis.isNotEmpty()) {
-                databaseBackupData.emojis = emojis
-                emojisUpdated = true
-            }
-            if (!sourcesUpdated && sources.isNotEmpty()) {
-                databaseBackupData.sources = sources
-                sourcesUpdated = true
-            }
-            if (!transactionsUpdated && transactions.isNotEmpty()) {
-                databaseBackupData.transactions = transactions
-                transactionsUpdated = true
-            }
-            if (!transactionForValuesUpdated && transactionForValues.isNotEmpty()) {
-                databaseBackupData.transactionForValues = transactionForValues
-                transactionForValuesUpdated = true
-            }
+        categories.zip(emojis) { categoriesValue, emojisValue ->
+            databaseBackupData.categories = categoriesValue
+            databaseBackupData.emojis = emojisValue
             databaseBackupData
-        }.collectLatest {
-            if (
-                categoriesUpdated &&
-                emojisUpdated &&
-                sourcesUpdated &&
-                transactionsUpdated &&
-                transactionForValuesUpdated
-            ) {
-                jsonUtil.writeDatabaseBackupDataToFile(
-                    uri = uri,
-                    databaseBackupData = it,
-                )
-                categoriesUpdated = false
-                emojisUpdated = false
-                sourcesUpdated = false
-                transactionsUpdated = false
-                transactionForValuesUpdated = false
-            }
+        }.zip(sources) { databaseBackupDataValue, sourcesValue ->
+            databaseBackupDataValue.sources = sourcesValue
+            databaseBackupDataValue
+        }.zip(transactions) { databaseBackupDataValue, transactionsValue ->
+            databaseBackupDataValue.transactions = transactionsValue
+            databaseBackupDataValue
+        }.zip(transactionForValues) { databaseBackupDataValue, transactionForValuesValue ->
+            databaseBackupDataValue.transactionForValues = transactionForValuesValue
+            databaseBackupDataValue
+        }.collect { databaseBackupDataValue ->
+            jsonUtil.writeDatabaseBackupDataToFile(
+                uri = uri,
+                databaseBackupData = databaseBackupDataValue,
+            )
         }
     }
 }
