@@ -19,6 +19,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.conditionalClickable
 
+const val defaultEmoji = "😟"
+const val adjustmentEmoji = "😑️"
+const val transferEmoji = "↔️"
+
 sealed class EmojiCircleSize(
     val padding: Dp,
     val textSize: Float,
@@ -69,14 +73,14 @@ fun MyEmojiCircle(
             factory = { context ->
                 AppCompatTextView(context).apply {
                     setTextColor(Black.toArgb())
-                    text = emoji ?: "😟"
+                    text = emoji ?: defaultEmoji
                     textSize = emojiCircleSize.textSize
                     textAlignment = View.TEXT_ALIGNMENT_CENTER
                 }
             },
             update = {
                 it.apply {
-                    text = emoji ?: "😟"
+                    text = emoji ?: defaultEmoji
                 }
             },
         )

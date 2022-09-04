@@ -9,6 +9,9 @@ val CATEGORY_DATA_VERSION_NUMBER: Preferences.Key<Int> = intPreferencesKey(
 val EMOJI_DATA_VERSION_NUMBER: Preferences.Key<Int> = intPreferencesKey(
     name = "emoji_data_version_number",
 )
+val TRANSACTIONS_DATA_VERSION_NUMBER: Preferences.Key<Int> = intPreferencesKey(
+    name = "transactions_data_version_number",
+)
 val DEFAULT_EXPENSE_CATEGORY_ID: Preferences.Key<Int> = intPreferencesKey(
     name = "default_expense_category_id",
 )

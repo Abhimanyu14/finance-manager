@@ -27,6 +27,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemViewWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.adjustmentEmoji
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transferEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 
@@ -76,9 +78,20 @@ internal fun TransactionsListItem(
                     },
                 ),
         ) {
+            val emoji = when (transactionDetail.transactionType) {
+                TransactionType.TRANSFER -> {
+                    transferEmoji
+                }
+                TransactionType.ADJUSTMENT -> {
+                    adjustmentEmoji
+                }
+                else -> {
+                    transactionDetail.category?.emoji
+                }
+            }
             MyEmojiCircle(
                 backgroundColor = MaterialTheme.colorScheme.outline,
-                emoji = transactionDetail.category.emoji,
+                emoji = emoji,
             )
             Column(
                 modifier = Modifier
@@ -110,10 +123,13 @@ internal fun TransactionsListItem(
                                 weight = 1F,
                             ),
                         text = if (transactionDetail.transactionType == TransactionType.INCOME ||
-                            (transactionDetail.transactionType == TransactionType.ADJUSTMENT
-                                    && transactionDetail.amount.value > 0)
+                            transactionDetail.transactionType == TransactionType.EXPENSE ||
+                            transactionDetail.transactionType == TransactionType.ADJUSTMENT
                         ) {
-                            transactionDetail.amount.toSignedString()
+                            transactionDetail.amount.toSignedString(
+                                isPositive = transactionDetail.sourceTo != null,
+                                isNegative = transactionDetail.sourceFrom != null,
+                            )
                         } else {
                             transactionDetail.amount.toString()
                         },

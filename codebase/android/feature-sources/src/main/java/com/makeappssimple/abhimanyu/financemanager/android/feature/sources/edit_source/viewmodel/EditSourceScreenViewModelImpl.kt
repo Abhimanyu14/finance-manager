@@ -18,9 +18,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.ex
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isCashSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlin.math.abs
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -109,15 +109,26 @@ internal class EditSourceScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
+            val sourceFromId = if (amountValue < 0L) {
+                updatedSource.id
+            } else {
+                null
+            }
+            val sourceToId = if (amountValue < 0L) {
+                null
+            } else {
+                updatedSource.id
+            }
+
             if (amountValue != 0L) {
                 insertTransactionUseCase(
                     transaction = Transaction(
                         amount = Amount(
-                            value = amountValue,
+                            value = abs(amountValue),
                         ),
-                        categoryId = 0,
-                        sourceFromId = 0,
-                        sourceToId = updatedSource.id,
+                        categoryId = null,
+                        sourceFromId = sourceFromId,
+                        sourceToId = sourceToId,
                         description = "",
                         title = TransactionType.ADJUSTMENT.title,
                         creationTimestamp = System.currentTimeMillis(),
@@ -155,10 +166,7 @@ internal class EditSourceScreenViewModelImpl @Inject constructor(
     }
 
     override fun isValidSourceData(): Boolean {
-        return name.value.isNotNullOrBlank() &&
-                !isCashSource(
-                    source = name.value,
-                )
+        return name.value.isNotNullOrBlank()
     }
 
     override fun clearName() {

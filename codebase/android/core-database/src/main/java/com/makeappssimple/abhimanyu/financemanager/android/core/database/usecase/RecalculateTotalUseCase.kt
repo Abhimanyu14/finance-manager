@@ -5,7 +5,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionsUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -38,48 +37,11 @@ class RecalculateTotalUseCaseImpl(
                     id = it,
                 )
             }
-
-            when (transaction.transactionType) {
-                TransactionType.INCOME -> {
-                    sourceTo?.let {
-                        processIncomeTransaction(
-                            sourceTo = it,
-                            transaction = transaction,
-                        )
-                    }
-                }
-                TransactionType.EXPENSE -> {
-                    sourceFrom?.let {
-                        processExpenseTransaction(
-                            sourceFrom = it,
-                            transaction = transaction,
-                        )
-                    }
-                }
-                TransactionType.TRANSFER -> {
-                    processTransferTransaction(
-                        sourceFrom = sourceFrom,
-                        sourceTo = sourceTo,
-                        transaction = transaction,
-                    )
-                }
-                TransactionType.ADJUSTMENT -> {
-                    sourceTo?.let {
-                        processAdjustmentTransaction(
-                            sourceTo = it,
-                            transaction = transaction,
-                        )
-                    }
-                }
-                TransactionType.INVESTMENT -> {
-                    sourceFrom?.let {
-                        processInvestmentTransaction(
-                            sourceFrom = it,
-                            transaction = transaction,
-                        )
-                    }
-                }
-            }
+            processTransaction(
+                sourceFrom = sourceFrom,
+                sourceTo = sourceTo,
+                transaction = transaction,
+            )
         }
     }
 
@@ -116,37 +78,7 @@ class RecalculateTotalUseCaseImpl(
         )
     }
 
-    private suspend fun processIncomeTransaction(
-        sourceTo: Source,
-        transaction: Transaction,
-    ) {
-        updateSourceBalanceAmount(
-            source = sourceTo,
-            balanceAmountValue = sourceTo.balanceAmount.value + transaction.amount.value,
-        )
-    }
-
-    private suspend fun processInvestmentTransaction(
-        sourceFrom: Source,
-        transaction: Transaction,
-    ) {
-        updateSourceBalanceAmount(
-            source = sourceFrom,
-            balanceAmountValue = sourceFrom.balanceAmount.value - transaction.amount.value,
-        )
-    }
-
-    private suspend fun processExpenseTransaction(
-        sourceFrom: Source,
-        transaction: Transaction,
-    ) {
-        updateSourceBalanceAmount(
-            source = sourceFrom,
-            balanceAmountValue = sourceFrom.balanceAmount.value + transaction.amount.value,
-        )
-    }
-
-    private suspend fun processTransferTransaction(
+    private suspend fun processTransaction(
         sourceFrom: Source?,
         sourceTo: Source?,
         transaction: Transaction,
@@ -163,15 +95,5 @@ class RecalculateTotalUseCaseImpl(
                 balanceAmountValue = it.balanceAmount.value + transaction.amount.value,
             )
         }
-    }
-
-    private suspend fun processAdjustmentTransaction(
-        sourceTo: Source,
-        transaction: Transaction,
-    ) {
-        updateSourceBalanceAmount(
-            source = sourceTo,
-            balanceAmountValue = sourceTo.balanceAmount.value + transaction.amount.value,
-        )
     }
 }

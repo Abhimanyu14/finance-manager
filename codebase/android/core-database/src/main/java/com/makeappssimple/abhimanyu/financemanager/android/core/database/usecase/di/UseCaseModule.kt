@@ -11,6 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.InsertSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.DeleteAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionsUseCase
@@ -27,6 +28,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.RecalculateTotalUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.RestoreDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.RestoreDataUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.UpdateTransactionUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.UpdateTransactionUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.JsonUtil
 import dagger.Module
 import dagger.Provides
@@ -112,6 +115,15 @@ class UseCaseModule {
             deleteAllTransactionsUseCase = deleteAllTransactionsUseCase,
             deleteAllTransactionForValuesUseCase = deleteAllTransactionForValuesUseCase,
             jsonUtil = jsonUtil,
+        )
+    }
+
+    @Provides
+    fun providesUpdateTransactionUseCase(
+        transactionRepository: TransactionRepository,
+    ): UpdateTransactionUseCase {
+        return UpdateTransactionUseCaseImpl(
+            transactionRepository = transactionRepository,
         )
     }
 }

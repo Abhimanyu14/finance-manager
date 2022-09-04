@@ -7,13 +7,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.u
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.InsertEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.DeleteAllSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.InsertSourcesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.DeleteAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.DeleteAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.InsertTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.JsonUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.transactionsCleanUp
 
 interface RestoreDataUseCase {
     suspend operator fun invoke(
@@ -64,37 +63,5 @@ class RestoreDataUseCaseImpl(
         insertTransactionForValuesUseCase(
             transactionForValues = databaseBackupData.transactionForValues.toTypedArray(),
         )
-    }
-
-    private fun transactionsCleanUp(
-        transactions: List<Transaction>,
-    ): List<Transaction> {
-        return transactions.map {
-            when (it.transactionType) {
-                TransactionType.INCOME -> {
-                    it.copy(
-                        sourceFromId = null,
-                    )
-                }
-                TransactionType.EXPENSE -> {
-                    it.copy(
-                        sourceToId = null,
-                    )
-                }
-                TransactionType.TRANSFER -> {
-                    it
-                }
-                TransactionType.ADJUSTMENT -> {
-                    it.copy(
-                        sourceFromId = null,
-                    )
-                }
-                TransactionType.INVESTMENT -> {
-                    it.copy(
-                        sourceToId = null,
-                    )
-                }
-            }
-        }
     }
 }

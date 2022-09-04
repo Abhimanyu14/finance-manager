@@ -1,9 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionUseCase
 
@@ -28,137 +28,53 @@ class DeleteTransactionAndRevertOtherDataUseCaseImpl(
         deleteTransactionUseCase(
             id = id,
         )
-        val sourceFromId = transaction.sourceFromId
-        val sourceToId = transaction.sourceToId
-        when (transaction.transactionType) {
-            TransactionType.INCOME -> {
-                handleNonTransferTransactionsSourceTo(
-                    sourceToId = sourceToId,
-                    transaction = transaction,
-                )
-            }
-            TransactionType.EXPENSE -> {
-                handleNonTransferTransactionsSourceFrom(
-                    sourceFromId = sourceFromId,
-                    transaction = transaction
-                )
-            }
-            TransactionType.TRANSFER -> {
-                if (
-                    sourceFromId != null &&
-                    sourceToId != null
-                ) {
-                    handleTransferTransactions(
-                        sourceFromId = sourceFromId,
-                        sourceToId = sourceToId,
-                        transaction = transaction,
-                    )
-                }
-            }
-            TransactionType.ADJUSTMENT -> {
-                handleNonTransferTransactionsSourceTo(
-                    sourceToId = sourceToId,
-                    transaction = transaction,
-                )
-            }
-            TransactionType.INVESTMENT -> {
-                handleNonTransferTransactionsSourceFrom(
-                    sourceFromId = sourceFromId,
-                    transaction = transaction
-                )
-            }
+        val sourceTo = transaction.sourceToId?.let {
+            getSourceUseCase(
+                id = it,
+            )
+        }
+        val sourceFrom = transaction.sourceFromId?.let {
+            getSourceUseCase(
+                id = it,
+            )
+        }
+
+        processTransaction(
+            sourceTo = sourceTo,
+            sourceFrom = sourceFrom,
+            transaction = transaction,
+        )
+    }
+
+    private suspend fun processTransaction(
+        sourceFrom: Source?,
+        sourceTo: Source?,
+        transaction: Transaction,
+    ) {
+        sourceFrom?.let {
+            updateSourceBalanceAmount(
+                source = it,
+                balanceAmountValue = it.balanceAmount.value + transaction.amount.value,
+            )
+        }
+        sourceTo?.let {
+            updateSourceBalanceAmount(
+                source = it,
+                balanceAmountValue = it.balanceAmount.value - transaction.amount.value,
+            )
         }
     }
 
-    private suspend fun handleTransferTransactions(
-        sourceFromId: Int,
-        sourceToId: Int,
-        transaction: Transaction,
+    private suspend fun updateSourceBalanceAmount(
+        source: Source,
+        balanceAmountValue: Long,
     ) {
-        handleTransferTransactionsSourceFrom(
-            sourceFromId = sourceFromId,
-            transaction = transaction,
-        )
-        handleTransferTransactionsSourceTo(
-            sourceToId = sourceToId,
-            transaction = transaction,
-        )
-    }
-
-    private suspend fun handleTransferTransactionsSourceFrom(
-        sourceFromId: Int,
-        transaction: Transaction,
-    ) {
-        val source = getSourceUseCase(
-            id = sourceFromId,
-        ) ?: return
         updateSourcesUseCase(
-            source
-                .copy(
-                    balanceAmount = source.balanceAmount
-                        .copy(
-                            value = source.balanceAmount.value + transaction.amount.value,
-                        )
-                ),
-        )
-    }
-
-    private suspend fun handleTransferTransactionsSourceTo(
-        sourceToId: Int,
-        transaction: Transaction,
-    ) {
-        // TODO-Abhi: Amount sign change
-        val source = getSourceUseCase(
-            id = sourceToId,
-        ) ?: return
-        updateSourcesUseCase(
-            source
-                .copy(
-                    balanceAmount = source.balanceAmount
-                        .copy(
-                            value = source.balanceAmount.value - transaction.amount.value,
-                        ),
-                ),
-        )
-    }
-
-    private suspend fun handleNonTransferTransactionsSourceFrom(
-        sourceFromId: Int?,
-        transaction: Transaction,
-    ) {
-        // TODO-Abhi: Amount sign change
-        sourceFromId ?: return
-        val source = getSourceUseCase(
-            id = sourceFromId,
-        ) ?: return
-        updateSourcesUseCase(
-            source
-                .copy(
-                    balanceAmount = source.balanceAmount
-                        .copy(
-                            value = source.balanceAmount.value - transaction.amount.value,
-                        )
-                ),
-        )
-    }
-
-    private suspend fun handleNonTransferTransactionsSourceTo(
-        sourceToId: Int?,
-        transaction: Transaction,
-    ) {
-        // TODO-Abhi: Amount sign change
-        sourceToId ?: return
-        val source = getSourceUseCase(
-            id = sourceToId,
-        ) ?: return
-        updateSourcesUseCase(
-            source
-                .copy(
-                    balanceAmount = source.balanceAmount
-                        .copy(
-                            value = source.balanceAmount.value - transaction.amount.value,
-                        )
-                ),
+            source.copy(
+                balanceAmount = source.balanceAmount.copy(
+                    value = balanceAmountValue,
+                )
+            ),
         )
     }
 }

@@ -15,7 +15,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.ge
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
-import kotlin.math.abs
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -132,74 +131,37 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 flows[11] as? SortOption ?: SortOption.LATEST_FIRST
 
             allTransactionDetailsValue
-                .asSequence()
-                // Search
-                .filter {
-                    if (searchTextValue.isNotBlank()) {
-                        it.title.contains(
-                            other = searchTextValue,
-                            ignoreCase = true,
-                        )
-                    } else {
-                        true
-                    }
-                }
-                .filter {
-                    if (selectedTransactionTypesIndicesValue.isNotEmpty()) {
-                        selectedTransactionTypesIndicesValue.contains(
-                            transactionTypes.indexOf(it.transactionType)
-                        )
-                    } else {
-                        true
-                    }
-                }
-                .toList()
-//                .map { transactionDetail ->
-//                    TransactionsListItemViewData(
-//                        transactionDetail = transactionDetail,
-//                    )
-//                }
-                .filter {
-                    if (selectedSourceIndicesValue.isNotEmpty()) {
-                        selectedSourceIndicesValue.contains(sourcesValue.indexOf(it.sourceFrom)) ||
-                                selectedSourceIndicesValue.contains(sourcesValue.indexOf(it.sourceTo))
-                    } else {
-                        true
-                    }
-                }
-                .filter {
-                    if (
-                        selectedExpenseCategoryIndicesValue.isNotEmpty() ||
-                        selectedIncomeCategoryIndicesValue.isNotEmpty() ||
-                        selectedInvestmentCategoryIndicesValue.isNotEmpty()
-                    ) {
-                        selectedExpenseCategoryIndicesValue.contains(
-                            expenseCategoriesValue.indexOf(
-                                it.category
-                            )
-                        ) || selectedIncomeCategoryIndicesValue.contains(
-                            incomeCategoriesValue.indexOf(
-                                it.category
-                            )
-                        ) || selectedInvestmentCategoryIndicesValue.contains(
-                            investmentCategoriesValue.indexOf(
-                                it.category
-                            )
-                        )
-                    } else {
-                        true
-                    }
+                .filter { transactionDetail ->
+                    isAvailableAfterSearch(
+                        searchTextValue = searchTextValue,
+                        transactionDetail = transactionDetail,
+                    ) && isAvailableAfterTransactionTypeFilter(
+                        selectedTransactionTypesIndicesValue = selectedTransactionTypesIndicesValue,
+                        transactionDetail = transactionDetail
+                    ) && isAvailableAfterSourceFilter(
+                        selectedSourceIndicesValue = selectedSourceIndicesValue,
+                        sourcesValue = sourcesValue,
+                        transactionDetail = transactionDetail,
+                    ) && isAvailableAfterCategoryFilter(
+                        selectedExpenseCategoryIndicesValue = selectedExpenseCategoryIndicesValue,
+                        selectedIncomeCategoryIndicesValue = selectedIncomeCategoryIndicesValue,
+                        selectedInvestmentCategoryIndicesValue = selectedInvestmentCategoryIndicesValue,
+                        expenseCategoriesValue = expenseCategoriesValue,
+                        transactionDetail = transactionDetail,
+                        incomeCategoriesValue = incomeCategoriesValue,
+                        investmentCategoriesValue = investmentCategoriesValue,
+                    )
                 }
                 .sortedWith(compareBy {
                     when (selectedSortOptionValue) {
                         SortOption.AMOUNT_ASC -> {
-                            abs(it.amount.value)
+                            it.amount.value
                         }
                         SortOption.AMOUNT_DESC -> {
-                            -abs(it.amount.value)
+                            -1 * it.amount.value
                         }
                         SortOption.LATEST_FIRST -> {
-                            -it.transactionTimestamp
+                            -1 * it.transactionTimestamp
                         }
                         SortOption.OLDEST_FIRST -> {
                             it.transactionTimestamp
@@ -218,7 +180,6 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         }.flowOn(
             context = dispatcherProvider.io,
         )
-
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code
@@ -282,5 +243,75 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 id = id,
             )
         }
+    }
+
+    private fun isAvailableAfterSearch(
+        searchTextValue: String,
+        transactionDetail: TransactionDetail,
+    ): Boolean {
+        return searchTextValue.isBlank() ||
+                transactionDetail.title.contains(
+                    other = searchTextValue,
+                    ignoreCase = true,
+                )
+    }
+
+    private fun isAvailableAfterTransactionTypeFilter(
+        selectedTransactionTypesIndicesValue: List<Int>,
+        transactionDetail: TransactionDetail,
+    ): Boolean {
+        return selectedTransactionTypesIndicesValue.isEmpty() ||
+                selectedTransactionTypesIndicesValue.contains(
+                    element = transactionTypes.indexOf(
+                        element = transactionDetail.transactionType,
+                    ),
+                )
+    }
+
+    private fun isAvailableAfterSourceFilter(
+        selectedSourceIndicesValue: List<Int>,
+        sourcesValue: List<Source>,
+        transactionDetail: TransactionDetail,
+    ): Boolean {
+        return selectedSourceIndicesValue.isEmpty() ||
+                selectedSourceIndicesValue.contains(
+                    element = sourcesValue.indexOf(
+                        element = transactionDetail.sourceFrom,
+                    ),
+                ) ||
+                selectedSourceIndicesValue.contains(
+                    element = sourcesValue.indexOf(
+                        element = transactionDetail.sourceTo,
+                    ),
+                )
+    }
+
+    private fun isAvailableAfterCategoryFilter(
+        expenseCategoriesValue: List<Category>,
+        incomeCategoriesValue: List<Category>,
+        investmentCategoriesValue: List<Category>,
+        selectedExpenseCategoryIndicesValue: List<Int>,
+        selectedIncomeCategoryIndicesValue: List<Int>,
+        selectedInvestmentCategoryIndicesValue: List<Int>,
+        transactionDetail: TransactionDetail,
+    ): Boolean {
+        return (selectedExpenseCategoryIndicesValue.isEmpty() &&
+                selectedIncomeCategoryIndicesValue.isEmpty() &&
+                selectedInvestmentCategoryIndicesValue.isEmpty()) ||
+                selectedExpenseCategoryIndicesValue.contains(
+                    element = expenseCategoriesValue.indexOf(
+                        element = transactionDetail.category,
+                    ),
+                ) ||
+                selectedIncomeCategoryIndicesValue.contains(
+                    element = incomeCategoriesValue.indexOf(
+                        element = transactionDetail.category,
+                    ),
+                ) ||
+                selectedInvestmentCategoryIndicesValue.contains(
+                    element = investmentCategoriesValue.indexOf(
+                        element = transactionDetail.category,
+                    ),
+                )
     }
 }

@@ -134,6 +134,14 @@ class TransactionRepositoryImpl(
         )
     }
 
+    override suspend fun updateTransaction(
+        transaction: Transaction,
+    ) {
+        transactionDao.updateTransaction(
+            transaction = transaction,
+        )
+    }
+
     override suspend fun updateTransactions(
         vararg transactions: Transaction,
     ) {
@@ -183,7 +191,7 @@ class TransactionRepositoryImpl(
         val transactionFor = transactionForDao.getTransactionFor(
             id = transaction.transactionForId,
         )
-        return if (category != null && transactionFor != null) {
+        return if (transactionFor != null) {
             TransactionDetail(
                 category = category,
                 sourceFrom = sourceFrom,

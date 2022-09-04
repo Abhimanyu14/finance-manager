@@ -27,10 +27,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.CATEGORY_DATA_VERSION_NUMBER
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.EMOJI_DATA_VERSION_NUMBER
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.TRANSACTIONS_DATA_VERSION_NUMBER
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.readInitialDataFromAssets
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.transactionsCleanUp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
@@ -214,6 +217,12 @@ abstract class MyRoomDatabase : RoomDatabase() {
                             initialDatabaseData = initialDatabaseData,
                         )
                     }
+                    launch {
+                        transactionsCleanUpIfRequired(
+                            context = context,
+                            myRoomDatabase = myRoomDatabase,
+                        )
+                    }
                 }
             }
         }
@@ -312,6 +321,31 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     transactionForValues = initialDatabaseData.defaultTransactionForValues.toTypedArray(),
                 )
             }
+        }
+
+        private suspend fun transactionsCleanUpIfRequired(
+            context: Context,
+            myRoomDatabase: MyRoomDatabase,
+        ) {
+            context.dataStore.data
+                .map { preferences ->
+                    preferences[TRANSACTIONS_DATA_VERSION_NUMBER] ?: 0
+                }
+                .collectLatest { transactionsDataVersion ->
+                    val currentTransactionsDataVersion = 1
+                    if (transactionsDataVersion < currentTransactionsDataVersion) {
+                        val transactionDao = myRoomDatabase.transactionDao()
+                        val transactions = transactionDao.getAllTransactions().first()
+                        transactionDao.deleteAllTransactions()
+                        transactionDao.insertTransactions(
+                            *transactionsCleanUp(transactions).toTypedArray()
+                        )
+                        context.dataStore.edit { preferences ->
+                            preferences[TRANSACTIONS_DATA_VERSION_NUMBER] =
+                                currentTransactionsDataVersion
+                        }
+                    }
+                }
         }
     }
 }

@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 
 data class TransactionDetail(
     val amount: Amount,
-    val category: Category,
+    val category: Category?,
     val id: Int = 0,
     val creationTimestamp: Long,
     val transactionTimestamp: Long,
@@ -20,7 +20,7 @@ data class TransactionDetail(
 ) {
 
     constructor(
-        category: Category,
+        category: Category?,
         sourceFrom: Source?,
         sourceTo: Source?,
         transaction: Transaction,

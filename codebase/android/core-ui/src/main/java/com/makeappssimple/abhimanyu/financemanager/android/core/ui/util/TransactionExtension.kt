@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.util
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionDetail
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
@@ -11,7 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 @Composable
 fun Transaction.getAmountTextColor(): Color {
     return calculateAmountTextColor(
-        amount = this.amount,
+        sourceFromId = this.sourceFromId,
         transactionType = this.transactionType,
     )
 }
@@ -19,14 +18,14 @@ fun Transaction.getAmountTextColor(): Color {
 @Composable
 fun TransactionDetail.getAmountTextColor(): Color {
     return calculateAmountTextColor(
-        amount = this.amount,
+        sourceFromId = this.sourceFrom?.id,
         transactionType = this.transactionType,
     )
 }
 
 @Composable
 private fun calculateAmountTextColor(
-    amount: Amount,
+    sourceFromId: Int?,
     transactionType: TransactionType,
 ): Color {
     return when (transactionType) {
@@ -40,16 +39,10 @@ private fun calculateAmountTextColor(
             MaterialTheme.colorScheme.onBackground
         }
         TransactionType.ADJUSTMENT -> {
-            when {
-                amount.value > 0 -> {
-                    MaterialTheme.colorScheme.onTertiaryContainer
-                }
-                amount.value < 0 -> {
-                    MaterialTheme.colorScheme.error
-                }
-                else -> {
-                    MaterialTheme.colorScheme.onBackground
-                }
+            if (sourceFromId != null) {
+                MaterialTheme.colorScheme.error
+            } else {
+                MaterialTheme.colorScheme.onTertiaryContainer
             }
         }
         TransactionType.INVESTMENT -> {

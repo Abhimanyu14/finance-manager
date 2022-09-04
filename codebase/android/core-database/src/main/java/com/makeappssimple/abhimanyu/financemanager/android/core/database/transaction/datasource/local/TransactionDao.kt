@@ -61,6 +61,11 @@ interface TransactionDao {
     )
 
     @Update
+    suspend fun updateTransaction(
+        transaction: Transaction,
+    )
+
+    @Update
     suspend fun updateTransactions(
         vararg transactions: Transaction,
     )

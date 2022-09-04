@@ -45,7 +45,6 @@ fun EditCategoryScreen(
         }
     }
 
-
     EditCategoryScreenView(
         data = EditCategoryScreenViewData(
             categoryId = categoryId,

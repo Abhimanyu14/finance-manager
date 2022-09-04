@@ -21,21 +21,20 @@ data class Amount(
         return "${currency.symbol}$formattedValue"
     }
 
-    fun toSignedString(): String {
+    fun toSignedString(
+        isPositive: Boolean = false,
+        isNegative: Boolean = false,
+    ): String {
         val formattedValue = formattedCurrencyValue(
             value = abs(value),
         )
-        return when {
-            value > 0 -> {
-                "+ ${currency.symbol}$formattedValue"
-            }
-            value < 0 -> {
-                "- ${currency.symbol}$formattedValue"
-            }
-            else -> {
-                "${currency.symbol}$formattedValue"
-            }
+        if (isPositive) {
+            return "+ ${currency.symbol}$formattedValue"
         }
+        if (isNegative) {
+            return "- ${currency.symbol}$formattedValue"
+        }
+        return "${currency.symbol}$formattedValue"
     }
 
     override fun toString(): String {
