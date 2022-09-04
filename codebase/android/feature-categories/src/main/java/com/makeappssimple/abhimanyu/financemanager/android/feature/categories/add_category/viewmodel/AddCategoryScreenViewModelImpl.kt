@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.InsertCategoryUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.InsertCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
@@ -29,7 +29,7 @@ internal class AddCategoryScreenViewModelImpl @Inject constructor(
     getEmojisUseCase: GetEmojisUseCase,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
-    private val insertCategoryUseCase: InsertCategoryUseCase,
+    private val insertCategoriesUseCase: InsertCategoriesUseCase,
 ) : AddCategoryScreenViewModel, ViewModel() {
     override val transactionTypes: List<TransactionType> = TransactionType.values()
         .filter {
@@ -84,8 +84,8 @@ internal class AddCategoryScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            insertCategoryUseCase(
-                category = Category(
+            insertCategoriesUseCase(
+                Category(
                     emoji = emoji.value,
                     title = title.value,
                     transactionType = transactionTypes[selectedTransactionTypeIndex.value],

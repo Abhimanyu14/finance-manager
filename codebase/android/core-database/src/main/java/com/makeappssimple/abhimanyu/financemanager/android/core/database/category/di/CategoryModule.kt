@@ -13,8 +13,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoryUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.InsertCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.InsertCategoriesUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.InsertCategoryUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.InsertCategoryUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.UpdateCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.UpdateCategoriesUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
@@ -84,15 +82,6 @@ class CategoryModule {
         categoryRepository: CategoryRepository,
     ): InsertCategoriesUseCase {
         return InsertCategoriesUseCaseImpl(
-            categoryRepository = categoryRepository,
-        )
-    }
-
-    @Provides
-    fun providesInsertCategoryUseCase(
-        categoryRepository: CategoryRepository,
-    ): InsertCategoryUseCase {
-        return InsertCategoryUseCaseImpl(
             categoryRepository = categoryRepository,
         )
     }

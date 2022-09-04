@@ -43,7 +43,7 @@ fun SourcesScreen(
             navigationManager = screenViewModel.navigationManager,
             deleteSource = { sourceId ->
                 screenViewModel.deleteSource(
-                    id = sourceId,
+                    sourceId,
                 )
             },
             setDefaultSourceIdInDataStore = { clickedItemIdValue ->

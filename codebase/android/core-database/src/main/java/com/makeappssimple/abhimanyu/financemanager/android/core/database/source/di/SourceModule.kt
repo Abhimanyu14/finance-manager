@@ -6,8 +6,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.repository.SourceRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.DeleteAllSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.DeleteAllSourcesUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.DeleteSourceUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.DeleteSourceUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.DeleteSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.DeleteSourcesUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourceUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesCountUseCase
@@ -16,8 +16,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesTotalBalanceAmountValueUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.InsertSourceUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.InsertSourceUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.InsertSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.InsertSourcesUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCase
@@ -57,10 +55,10 @@ class SourceModule {
     }
 
     @Provides
-    fun providesDeleteSourceUseCase(
+    fun providesDeleteSourcesUseCase(
         sourceRepository: SourceRepository,
-    ): DeleteSourceUseCase {
-        return DeleteSourceUseCaseImpl(
+    ): DeleteSourcesUseCase {
+        return DeleteSourcesUseCaseImpl(
             sourceRepository = sourceRepository,
         )
     }
@@ -106,15 +104,6 @@ class SourceModule {
         sourceRepository: SourceRepository,
     ): InsertSourcesUseCase {
         return InsertSourcesUseCaseImpl(
-            sourceRepository = sourceRepository,
-        )
-    }
-
-    @Provides
-    fun providesInsertSourceUseCase(
-        sourceRepository: SourceRepository,
-    ): InsertSourceUseCase {
-        return InsertSourceUseCaseImpl(
             sourceRepository = sourceRepository,
         )
     }

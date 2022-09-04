@@ -56,19 +56,6 @@ class SourceRepositoryImplTest {
     }
 
     @Test
-    fun insertSource() = runTest {
-        sourceRepository.insertSource(
-            source = source,
-        )
-
-        verify(
-            mock = sourceDao,
-        ).insertSource(
-            source = source,
-        )
-    }
-
-    @Test
     fun insertSources() = runTest {
         sourceRepository.insertSources(
             *sources,

@@ -30,13 +30,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTitleSuggestionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionsUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.UpdateTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.UpdateTransactionsUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.RestoreDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.RestoreDataUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.datasource.local.TransactionForDao
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.JsonUtil
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -61,10 +60,7 @@ class TransactionModule {
         transactionForDao: TransactionForDao,
     ): TransactionRepository {
         return TransactionRepositoryImpl(
-            categoryDao = categoryDao,
-            sourceDao = sourceDao,
             transactionDao = transactionDao,
-            transactionForDao = transactionForDao,
         )
     }
 
@@ -186,20 +182,13 @@ class TransactionModule {
     }
 
     @Provides
-    fun providesInsertTransactionUseCase(
+    fun providesRestoreDataUseCase(
         transactionRepository: TransactionRepository,
-    ): InsertTransactionUseCase {
-        return InsertTransactionUseCaseImpl(
+        jsonUtil: JsonUtil,
+    ): RestoreDataUseCase {
+        return RestoreDataUseCaseImpl(
             transactionRepository = transactionRepository,
-        )
-    }
-
-    @Provides
-    fun providesUpdateTransactionsUseCase(
-        transactionRepository: TransactionRepository,
-    ): UpdateTransactionsUseCase {
-        return UpdateTransactionsUseCaseImpl(
-            transactionRepository = transactionRepository,
+            jsonUtil = jsonUtil,
         )
     }
 }

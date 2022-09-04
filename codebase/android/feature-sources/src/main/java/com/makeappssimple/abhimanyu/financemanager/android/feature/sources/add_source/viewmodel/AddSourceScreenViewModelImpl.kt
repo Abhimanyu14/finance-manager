@@ -6,7 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.SourceType
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.InsertSourceUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.InsertSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 internal class AddSourceScreenViewModelImpl @Inject constructor(
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
-    private val insertSourceUseCase: InsertSourceUseCase,
+    private val insertSourcesUseCase: InsertSourcesUseCase,
 ) : AddSourceScreenViewModel, ViewModel() {
     override val sourceTypes: List<SourceType> = SourceType.values()
         .filter {
@@ -48,8 +48,8 @@ internal class AddSourceScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            insertSourceUseCase(
-                source = Source(
+            insertSourcesUseCase(
+                Source(
                     balanceAmount = Amount(
                         value = 0L,
                     ),

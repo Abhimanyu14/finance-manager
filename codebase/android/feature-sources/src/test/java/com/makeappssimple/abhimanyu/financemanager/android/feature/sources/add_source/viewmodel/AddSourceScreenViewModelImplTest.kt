@@ -4,7 +4,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.SourceType
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.InsertSourceUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.InsertSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.TestDispatcherProviderImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
@@ -25,7 +25,7 @@ class AddSourceScreenViewModelImplTest {
     private val dispatcherProvider: DispatcherProvider = TestDispatcherProviderImpl(
         testDispatcher = mainDispatcherRule.testDispatcher,
     )
-    private val insertSourceUseCase: InsertSourceUseCase = mock()
+    private val insertSourcesUseCase: InsertSourcesUseCase = mock()
 
     private lateinit var addSourcesScreenViewModel: AddSourceScreenViewModel
 
@@ -35,7 +35,7 @@ class AddSourceScreenViewModelImplTest {
             AddSourceScreenViewModelImpl(
                 navigationManager = navigationManager,
                 dispatcherProvider = dispatcherProvider,
-                insertSourceUseCase = insertSourceUseCase,
+                insertSourcesUseCase = insertSourcesUseCase,
             )
     }
 
@@ -80,9 +80,9 @@ class AddSourceScreenViewModelImplTest {
         addSourcesScreenViewModel.insertSource()
 
         verify(
-            mock = insertSourceUseCase,
+            mock = insertSourcesUseCase,
         ).invoke(
-            source = source,
+            source,
         )
     }
 

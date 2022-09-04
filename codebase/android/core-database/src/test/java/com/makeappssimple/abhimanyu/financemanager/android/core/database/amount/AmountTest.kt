@@ -30,7 +30,9 @@ class AmountTest {
 
     @Test
     fun toSignedString_valueIsPositive() {
-        val result = amount.toSignedString()
+        val result = amount.toSignedString(
+            isPositive = true,
+        )
 
         Assert.assertEquals(
             "+ ₹23",
@@ -40,7 +42,9 @@ class AmountTest {
 
     @Test
     fun toSignedString_valueIsNegative() {
-        val result = amount2.toSignedString()
+        val result = amount2.toSignedString(
+            isNegative = true,
+        )
 
         Assert.assertEquals(
             "- ₹31",

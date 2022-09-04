@@ -35,9 +35,5 @@ interface EditSourceScreenViewModel : ScreenViewModel {
         updatedIndex: Int,
     )
 
-    fun deleteSource(
-        id: Int,
-    )
-
     fun updateSource()
 }

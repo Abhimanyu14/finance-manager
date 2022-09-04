@@ -47,11 +47,6 @@ fun EditSourceScreen(
             clearName = {
                 screenViewModel.clearName()
             },
-            deleteSource = { id ->
-                screenViewModel.deleteSource(
-                    id = id,
-                )
-            },
             insertSource = {
                 screenViewModel.insertSource()
             },

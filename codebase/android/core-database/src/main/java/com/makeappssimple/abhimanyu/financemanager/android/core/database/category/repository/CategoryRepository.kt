@@ -12,10 +12,6 @@ interface CategoryRepository {
         id: Int,
     ): Category?
 
-    suspend fun insertCategory(
-        category: Category,
-    )
-
     suspend fun insertCategories(
         vararg categories: Category,
     )

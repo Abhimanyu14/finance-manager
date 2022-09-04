@@ -18,7 +18,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTitleSuggestionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.capitalizeWords
@@ -53,7 +53,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
     private val getSourcesCountUseCase: GetSourcesCountUseCase,
-    private val insertTransactionUseCase: InsertTransactionUseCase,
+    private val insertTransactionsUseCase: InsertTransactionsUseCase,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
 ) : AddTransactionScreenViewModel, ViewModel() {
     private var defaultSource: Source? = null
@@ -449,8 +449,8 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                     }
                 }
 
-                insertTransactionUseCase(
-                    transaction = Transaction(
+                insertTransactionsUseCase(
+                    Transaction(
                         amount = amount,
                         categoryId = categoryId,
                         sourceFromId = sourceFromId,

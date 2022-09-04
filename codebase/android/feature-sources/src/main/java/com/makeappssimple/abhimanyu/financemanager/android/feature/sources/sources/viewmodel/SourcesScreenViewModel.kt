@@ -12,7 +12,7 @@ interface SourcesScreenViewModel : ScreenViewModel {
     val defaultSourceId: Flow<Int?>
 
     fun deleteSource(
-        id: Int,
+        source: Source,
     )
 
     fun setDefaultSourceIdInDataStore(

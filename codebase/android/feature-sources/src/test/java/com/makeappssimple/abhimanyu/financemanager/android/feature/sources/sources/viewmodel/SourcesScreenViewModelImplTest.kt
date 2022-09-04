@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sour
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.DeleteSourceUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.DeleteSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.CheckIfSourceIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -26,7 +26,7 @@ class SourcesScreenViewModelImplTest {
     private val checkIfSourceIsUsedInTransactionsUseCase: CheckIfSourceIsUsedInTransactionsUseCase =
         mock()
     private val dataStore: MyDataStore = mock()
-    private val deleteSourceUseCase: DeleteSourceUseCase = mock()
+    private val deleteSourcesUseCase: DeleteSourcesUseCase = mock()
     private val dispatcherProvider: DispatcherProvider = TestDispatcherProviderImpl(
         testDispatcher = mainDispatcherRule.testDispatcher,
     )
@@ -41,7 +41,7 @@ class SourcesScreenViewModelImplTest {
                 navigationManager = navigationManager,
                 checkIfSourceIsUsedInTransactionsUseCase = checkIfSourceIsUsedInTransactionsUseCase,
                 dataStore = dataStore,
-                deleteSourceUseCase = deleteSourceUseCase,
+                deleteSourceUseCase = deleteSourcesUseCase,
                 dispatcherProvider = dispatcherProvider,
             )
     }

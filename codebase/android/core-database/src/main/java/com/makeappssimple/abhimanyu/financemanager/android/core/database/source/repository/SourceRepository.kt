@@ -12,10 +12,6 @@ interface SourceRepository {
         id: Int,
     ): Source?
 
-    suspend fun insertSource(
-        source: Source,
-    )
-
     suspend fun insertSources(
         vararg sources: Source,
     )

@@ -7,13 +7,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.SourceType
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.DeleteSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourceUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.InsertSourceUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.InsertSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -30,10 +29,9 @@ internal class EditSourceScreenViewModelImpl @Inject constructor(
     savedStateHandle: SavedStateHandle,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
-    private val deleteSourceUseCase: DeleteSourceUseCase,
     private val getSourceUseCase: GetSourceUseCase,
-    private val insertSourceUseCase: InsertSourceUseCase,
-    private val insertTransactionUseCase: InsertTransactionUseCase,
+    private val insertSourcesUseCase: InsertSourcesUseCase,
+    private val insertTransactionsUseCase: InsertTransactionsUseCase,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
 ) : EditSourceScreenViewModel, ViewModel() {
     private val _source: MutableStateFlow<Source?> = MutableStateFlow(
@@ -75,18 +73,6 @@ internal class EditSourceScreenViewModelImpl @Inject constructor(
         // TODO-Abhi: Add screen tracking code
     }
 
-    override fun deleteSource(
-        id: Int,
-    ) {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            deleteSourceUseCase(
-                id = id,
-            )
-        }
-    }
-
     override fun updateSource() {
         val source = source.value ?: return
         val amountValue = balanceAmountValue.value.toInt() - source.balanceAmount.value
@@ -121,8 +107,8 @@ internal class EditSourceScreenViewModelImpl @Inject constructor(
             }
 
             if (amountValue != 0L) {
-                insertTransactionUseCase(
-                    transaction = Transaction(
+                insertTransactionsUseCase(
+                    Transaction(
                         amount = Amount(
                             value = abs(amountValue),
                         ),
@@ -150,8 +136,8 @@ internal class EditSourceScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            insertSourceUseCase(
-                source = Source(
+            insertSourcesUseCase(
+                Source(
                     balanceAmount = Amount(
                         value = 0L,
                     ),

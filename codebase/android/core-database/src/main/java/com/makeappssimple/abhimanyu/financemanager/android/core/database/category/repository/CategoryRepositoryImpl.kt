@@ -4,13 +4,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import kotlinx.coroutines.flow.Flow
 
-// Declares the DAO as a private property in the constructor. Pass in the DAO
-// instead of the whole database, because you only need access to the DAO
 class CategoryRepositoryImpl(
     private val categoryDao: CategoryDao,
 ) : CategoryRepository {
-    // Room executes all queries on a separate thread.
-    // Observed Flow will notify the observer when the data has changed.
     override val categories: Flow<List<Category>> = categoryDao.getCategories()
 
     override suspend fun getCategoriesCount(): Int {
@@ -22,14 +18,6 @@ class CategoryRepositoryImpl(
     ): Category? {
         return categoryDao.getCategory(
             id = id,
-        )
-    }
-
-    override suspend fun insertCategory(
-        category: Category,
-    ) {
-        categoryDao.insertCategory(
-            category = category,
         )
     }
 

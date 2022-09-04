@@ -56,19 +56,6 @@ class CategoryRepositoryImplTest {
     }
 
     @Test
-    fun insertCategory() = runTest {
-        categoryRepository.insertCategory(
-            category = category,
-        )
-
-        verify(
-            mock = categoryDao,
-        ).insertCategory(
-            category = category,
-        )
-    }
-
-    @Test
     fun insertCategories() = runTest {
         categoryRepository.insertCategories(
             *categories,

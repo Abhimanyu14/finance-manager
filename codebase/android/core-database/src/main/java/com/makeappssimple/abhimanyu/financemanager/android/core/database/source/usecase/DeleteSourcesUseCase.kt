@@ -3,20 +3,20 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.repository.SourceRepository
 
-interface InsertSourceUseCase {
+interface DeleteSourcesUseCase {
     suspend operator fun invoke(
-        source: Source,
+        vararg sources: Source,
     )
 }
 
-class InsertSourceUseCaseImpl(
+class DeleteSourcesUseCaseImpl(
     private val sourceRepository: SourceRepository,
-) : InsertSourceUseCase {
+) : DeleteSourcesUseCase {
     override suspend operator fun invoke(
-        source: Source,
+        vararg sources: Source,
     ) {
-        return sourceRepository.insertSource(
-            source = source,
+        return sourceRepository.deleteSources(
+            sources = sources,
         )
     }
 }

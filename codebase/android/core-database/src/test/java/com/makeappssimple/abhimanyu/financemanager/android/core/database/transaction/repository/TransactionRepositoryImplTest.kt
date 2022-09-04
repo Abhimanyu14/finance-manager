@@ -56,19 +56,6 @@ class TransactionRepositoryImplTest {
     }
 
     @Test
-    fun insertTransaction() = runTest {
-        transactionRepository.insertTransaction(
-            transaction = transaction,
-        )
-
-        verify(
-            mock = transactionDao,
-        ).insertTransaction(
-            transaction = transaction,
-        )
-    }
-
-    @Test
     fun insertTransactions() = runTest {
         transactionRepository.insertTransactions(
             *transactions,

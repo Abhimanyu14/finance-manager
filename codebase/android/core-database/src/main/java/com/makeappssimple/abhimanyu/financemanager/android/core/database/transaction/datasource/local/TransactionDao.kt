@@ -6,8 +6,12 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.EmojiLocalEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -57,11 +61,6 @@ interface TransactionDao {
     ): Transaction?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertTransaction(
-        transaction: Transaction,
-    )
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTransactions(
         vararg transactions: Transaction,
     )
@@ -69,11 +68,6 @@ interface TransactionDao {
     @Update
     suspend fun updateTransaction(
         transaction: Transaction,
-    )
-
-    @Update
-    suspend fun updateTransactions(
-        vararg transactions: Transaction,
     )
 
     @Query(value = "DELETE FROM transaction_table WHERE id = :id")
@@ -88,4 +82,49 @@ interface TransactionDao {
 
     @Query(value = "DELETE FROM transaction_table")
     suspend fun deleteAllTransactions()
+
+    // Methods common to multiple DAO are defined here - may also have duplicates
+
+    @Query(value = "DELETE FROM category_table")
+    suspend fun deleteAllCategories()
+
+    @Query(value = "DELETE FROM emoji_table")
+    suspend fun deleteAllEmojis()
+
+    @Query(value = "DELETE FROM source_table")
+    suspend fun deleteAllSources()
+
+    @Query(value = "DELETE FROM transaction_for_table")
+    suspend fun deleteAllTransactionForValues()
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertData(
+        categories: List<Category>,
+        emojis: List<EmojiLocalEntity>,
+        sources: List<Source>,
+        transactions: List<Transaction>,
+        transactionForValues: List<TransactionFor>,
+    )
+
+    @androidx.room.Transaction
+    suspend fun restoreData(
+        categories: List<Category>,
+        emojis: List<EmojiLocalEntity>,
+        sources: List<Source>,
+        transactions: List<Transaction>,
+        transactionForValues: List<TransactionFor>,
+    ) {
+        deleteAllCategories()
+        deleteAllEmojis()
+        deleteAllSources()
+        deleteAllTransactions()
+        deleteAllTransactionForValues()
+        insertData(
+            categories = categories,
+            emojis = emojis,
+            sources = sources,
+            transactions = transactions,
+            transactionForValues = transactionForValues,
+        )
+    }
 }

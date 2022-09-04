@@ -10,7 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTitleSuggestionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.TestDispatcherProviderImpl
@@ -41,7 +41,7 @@ class AddTransactionScreenViewModelImplTest {
         testDispatcher = mainDispatcherRule.testDispatcher,
     )
     private val getSourcesCountUseCase: GetSourcesCountUseCase = mock()
-    private val insertTransactionUseCase: InsertTransactionUseCase = mock()
+    private val insertTransactionsUseCase: InsertTransactionsUseCase = mock()
     private val updateSourcesUseCase: UpdateSourcesUseCase = mock()
 
     private lateinit var addTransactionScreenViewModel: AddTransactionScreenViewModel
@@ -57,7 +57,7 @@ class AddTransactionScreenViewModelImplTest {
             navigationManager = navigationManager,
             dispatcherProvider = dispatcherProvider,
             getSourcesCountUseCase = getSourcesCountUseCase,
-            insertTransactionUseCase = insertTransactionUseCase,
+            insertTransactionsUseCase = insertTransactionsUseCase,
             updateSourcesUseCase = updateSourcesUseCase,
         )
     }

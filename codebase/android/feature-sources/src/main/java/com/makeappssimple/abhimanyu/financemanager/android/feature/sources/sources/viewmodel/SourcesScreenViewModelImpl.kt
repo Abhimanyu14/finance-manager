@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.sortOrder
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.DeleteSourceUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.DeleteSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.CheckIfSourceIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -24,7 +24,7 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
     override val navigationManager: NavigationManager,
     private val checkIfSourceIsUsedInTransactionsUseCase: CheckIfSourceIsUsedInTransactionsUseCase,
     private val dataStore: MyDataStore,
-    private val deleteSourceUseCase: DeleteSourceUseCase,
+    private val deleteSourcesUseCase: DeleteSourcesUseCase,
     private val dispatcherProvider: DispatcherProvider,
 ) : SourcesScreenViewModel, ViewModel() {
     override val sources: StateFlow<List<Source>> = getSourcesUseCase()
@@ -52,13 +52,13 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
     }
 
     override fun deleteSource(
-        id: Int,
+        source: Source,
     ) {
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            deleteSourceUseCase(
-                id = id,
+            deleteSourcesUseCase(
+                source,
             )
         }
     }

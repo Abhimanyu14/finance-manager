@@ -55,7 +55,6 @@ internal data class EditSourceScreenViewData(
     val name: String,
     val clearBalanceAmountValue: () -> Unit,
     val clearName: () -> Unit,
-    val deleteSource: (id: Int) -> Unit,
     val insertSource: () -> Unit,
     val isValidSourceData: () -> Boolean,
     val updateBalanceAmountValue: (updatedBalanceAmountValue: String) -> Unit,

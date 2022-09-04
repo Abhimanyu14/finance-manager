@@ -50,7 +50,7 @@ internal data class SourcesScreenViewData(
     val sourcesIsUsedInTransactions: List<Boolean>,
     val sources: List<Source>,
     val navigationManager: NavigationManager,
-    val deleteSource: (sourceId: Int) -> Unit,
+    val deleteSource: (source: Source) -> Unit,
     val setDefaultSourceIdInDataStore: (defaultSourceId: Int) -> Unit,
 )
 
@@ -74,7 +74,7 @@ internal fun SourcesScreenView(
             value = null,
         )
     }
-    var sourceIdToDelete: Int? by remember {
+    var sourceToDelete: Source? by remember {
         mutableStateOf(
             value = null,
         )
@@ -127,19 +127,19 @@ internal fun SourcesScreenView(
                     SourcesDeleteConfirmationBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
-                        sourceIdToDelete = sourceIdToDelete,
+                        sourceToDelete = sourceToDelete,
                         resetBottomSheetType = {
                             sourcesBottomSheetType = SourcesBottomSheetType.NONE
                         },
                         resetSourceIdToDelete = {
-                            sourceIdToDelete = null
+                            sourceToDelete = null
                         },
                         resetExpandedItemIndex = {
                             expandedItemIndex = null
                         },
                         deleteSource = {
-                            sourceIdToDelete?.let { sourceIdToDeleteValue ->
-                                data.deleteSource(sourceIdToDeleteValue)
+                            sourceToDelete?.let { sourceToDeleteValue ->
+                                data.deleteSource(sourceToDeleteValue)
                             }
                         },
                     )
@@ -231,7 +231,7 @@ internal fun SourcesScreenView(
                                 expandedItemIndex = null
                             },
                             onDeleteClick = {
-                                sourceIdToDelete = listItem.id
+                                sourceToDelete = listItem
                                 sourcesBottomSheetType =
                                     SourcesBottomSheetType.DELETE_CONFIRMATION
                                 toggleModalBottomSheetState(

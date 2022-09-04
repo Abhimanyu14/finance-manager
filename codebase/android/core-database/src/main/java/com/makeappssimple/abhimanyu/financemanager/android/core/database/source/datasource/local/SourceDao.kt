@@ -24,11 +24,6 @@ interface SourceDao {
     ): Source?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertSource(
-        source: Source,
-    )
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertSources(
         vararg sources: Source,
     )

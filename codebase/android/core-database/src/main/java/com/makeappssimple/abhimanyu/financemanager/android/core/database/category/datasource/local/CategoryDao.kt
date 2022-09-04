@@ -24,11 +24,6 @@ interface CategoryDao {
     ): Category?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertCategory(
-        category: Category,
-    )
-
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCategories(
         vararg categories: Category,
     )
