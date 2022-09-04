@@ -19,7 +19,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionDetail
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getReadableDateAndTimeString
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
@@ -35,15 +35,15 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 @Composable
 internal fun TransactionsListItem(
     modifier: Modifier = Modifier,
-    transactionDetail: TransactionDetail,
+    transactionData: TransactionData,
     expanded: Boolean,
     deleteEnabled: Boolean,
     onClick: () -> Unit,
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
 ) {
-    val sourceFrom = transactionDetail.sourceFrom
-    val sourceTo = transactionDetail.sourceTo
+    val sourceFrom = transactionData.sourceFrom
+    val sourceTo = transactionData.sourceTo
 
     MyExpandableItemViewWrapper(
         expanded = expanded,
@@ -78,7 +78,7 @@ internal fun TransactionsListItem(
                     },
                 ),
         ) {
-            val emoji = when (transactionDetail.transactionType) {
+            val emoji = when (transactionData.transaction.transactionType) {
                 TransactionType.TRANSFER -> {
                     transferEmoji
                 }
@@ -86,7 +86,7 @@ internal fun TransactionsListItem(
                     adjustmentEmoji
                 }
                 else -> {
-                    transactionDetail.category?.emoji
+                    transactionData.category?.emoji
                 }
             }
             MyEmojiCircle(
@@ -110,7 +110,7 @@ internal fun TransactionsListItem(
                             .weight(
                                 weight = 1F,
                             ),
-                        text = transactionDetail.title,
+                        text = transactionData.transaction.title,
                         style = MaterialTheme.typography.headlineMedium
                             .copy(
                                 color = MaterialTheme.colorScheme.onBackground,
@@ -122,20 +122,20 @@ internal fun TransactionsListItem(
                             .weight(
                                 weight = 1F,
                             ),
-                        text = if (transactionDetail.transactionType == TransactionType.INCOME ||
-                            transactionDetail.transactionType == TransactionType.EXPENSE ||
-                            transactionDetail.transactionType == TransactionType.ADJUSTMENT
+                        text = if (transactionData.transaction.transactionType == TransactionType.INCOME ||
+                            transactionData.transaction.transactionType == TransactionType.EXPENSE ||
+                            transactionData.transaction.transactionType == TransactionType.ADJUSTMENT
                         ) {
-                            transactionDetail.amount.toSignedString(
-                                isPositive = transactionDetail.sourceTo != null,
-                                isNegative = transactionDetail.sourceFrom != null,
+                            transactionData.transaction.amount.toSignedString(
+                                isPositive = transactionData.sourceTo != null,
+                                isNegative = transactionData.sourceFrom != null,
                             )
                         } else {
-                            transactionDetail.amount.toString()
+                            transactionData.transaction.amount.toString()
                         },
                         style = MaterialTheme.typography.headlineMedium
                             .copy(
-                                color = transactionDetail.getAmountTextColor(),
+                                color = transactionData.transaction.getAmountTextColor(),
                                 textAlign = TextAlign.End,
                             ),
                     )
@@ -149,7 +149,7 @@ internal fun TransactionsListItem(
                 MyText(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    text = transactionDetail.transactionFor.titleToDisplay,
+                    text = transactionData.transactionFor.titleToDisplay,
                     style = MaterialTheme.typography.bodySmall
                         .copy(
                             color = MaterialTheme.colorScheme.onBackground,
@@ -172,7 +172,7 @@ internal fun TransactionsListItem(
                                 weight = 1F,
                             ),
                         text = getReadableDateAndTimeString(
-                            timestamp = transactionDetail.transactionTimestamp,
+                            timestamp = transactionData.transaction.transactionTimestamp,
                         ),
                         style = MaterialTheme.typography.bodySmall
                             .copy(
@@ -192,8 +192,8 @@ internal fun TransactionsListItem(
                                 sourceTo.name,
                             )
                         } else {
-                            transactionDetail.sourceFrom?.name
-                                ?: transactionDetail.sourceTo?.name.orEmpty()
+                            transactionData.sourceFrom?.name
+                                ?: transactionData.sourceTo?.name.orEmpty()
                         },
                         style = MaterialTheme.typography.bodySmall
                             .copy(

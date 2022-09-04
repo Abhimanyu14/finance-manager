@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -15,16 +16,21 @@ interface TransactionDao {
     @Query(value = "SELECT * from transaction_table ORDER BY transaction_timestamp DESC")
     fun getAllTransactions(): Flow<List<Transaction>>
 
+    @androidx.room.Transaction
+    @Query("SELECT * FROM transaction_table ORDER BY transaction_timestamp DESC")
+    fun getAllTransactionData(): Flow<List<TransactionData>>
+
     @Query(value = "SELECT * from transaction_table WHERE transaction_timestamp BETWEEN :startingTimestamp AND :endingTimestamp ORDER BY transaction_timestamp DESC")
     fun getTransactionsBetweenTimestamps(
         startingTimestamp: Long,
         endingTimestamp: Long,
     ): Flow<List<Transaction>>
 
-    @Query(value = "SELECT * from transaction_table ORDER BY transaction_timestamp DESC LIMIT :numberOfTransactions")
-    fun getRecentTransactions(
+    @androidx.room.Transaction
+    @Query("SELECT * FROM transaction_table ORDER BY transaction_timestamp DESC LIMIT :numberOfTransactions")
+    fun getRecentTransactionData(
         numberOfTransactions: Int,
-    ): Flow<List<Transaction>>
+    ): Flow<List<TransactionData>>
 
     @Query(value = "SELECT COUNT(*) FROM transaction_table")
     suspend fun getTransactionsCount(): Int

@@ -33,7 +33,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionDetail
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
@@ -76,7 +76,7 @@ internal data class TransactionsScreenViewData(
     val selectedSourceIndices: List<Int>,
     val selectedTransactionTypesIndices: List<Int>,
     val sources: List<Source>,
-    val transactionDetailsListItemViewData: Map<String, List<TransactionDetail>>,
+    val transactionDetailsListItemViewData: Map<String, List<TransactionData>>,
     val navigationManager: NavigationManager,
     val searchText: String,
     val selectedSortOption: SortOption,
@@ -397,7 +397,7 @@ internal fun TransactionsScreenView(
                                 },
                             ) { index, listItem ->
                                 TransactionsListItem(
-                                    transactionDetail = listItem,
+                                    transactionData = listItem,
                                     expanded = "$date $index" == expandedItemKey,
                                     deleteEnabled = true,
                                     onClick = {
@@ -410,12 +410,12 @@ internal fun TransactionsScreenView(
                                     onEditClick = {
                                         navigateToEditTransactionScreen(
                                             navigationManager = data.navigationManager,
-                                            transactionId = listItem.id,
+                                            transactionId = listItem.transaction.id,
                                         )
                                         expandedItemKey = ""
                                     },
                                     onDeleteClick = {
-                                        transactionIdToDelete = listItem.id
+                                        transactionIdToDelete = listItem.transaction.id
                                         transactionsBottomSheetType =
                                             TransactionsBottomSheetType.DELETE_CONFIRMATION
                                         toggleModalBottomSheetState(

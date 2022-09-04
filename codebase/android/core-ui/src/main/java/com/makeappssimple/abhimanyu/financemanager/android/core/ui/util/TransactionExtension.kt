@@ -4,21 +4,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionDetail
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 
 @Composable
 fun Transaction.getAmountTextColor(): Color {
     return calculateAmountTextColor(
         sourceFromId = this.sourceFromId,
-        transactionType = this.transactionType,
-    )
-}
-
-@Composable
-fun TransactionDetail.getAmountTextColor(): Color {
-    return calculateAmountTextColor(
-        sourceFromId = this.sourceFrom?.id,
         transactionType = this.transactionType,
     )
 }

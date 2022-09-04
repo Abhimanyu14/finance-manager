@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionDetail
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import kotlinx.coroutines.flow.Flow
@@ -14,7 +14,7 @@ interface TransactionsScreenViewModel : ScreenViewModel {
     val incomeCategories: Flow<List<Category>>
     val investmentCategories: Flow<List<Category>>
     val sources: Flow<List<Source>>
-    val transactionDetailsListItemViewData: Flow<Map<String, List<TransactionDetail>>>
+    val transactionDetailsListItemViewData: Flow<Map<String, List<TransactionData>>>
     val selectedExpenseCategoryIndices: StateFlow<List<Int>>
     val selectedIncomeCategoryIndices: StateFlow<List<Int>>
     val selectedInvestmentCategoryIndices: StateFlow<List<Int>>

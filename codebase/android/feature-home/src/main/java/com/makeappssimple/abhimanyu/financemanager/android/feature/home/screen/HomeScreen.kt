@@ -5,7 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionDetail
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.logError
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmodel.HomeScreenViewModel
@@ -18,7 +18,7 @@ fun HomeScreen(
     logError(
         message = "Inside HomeScreen",
     )
-    val homeListItemViewData: List<TransactionDetail> by screenViewModel.homeListItemViewData
+    val homeListItemViewData: List<TransactionData> by screenViewModel.homeListItemViewData
         .collectAsStateWithLifecycle(
             initialValue = emptyList(),
         )
@@ -31,7 +31,7 @@ fun HomeScreen(
 
     HomeScreenView(
         data = HomeScreenViewData(
-            transactionDetails = homeListItemViewData,
+            transactionData = homeListItemViewData,
             navigationManager = screenViewModel.navigationManager,
         ),
         state = rememberCommonScreenViewState(),

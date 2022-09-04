@@ -7,9 +7,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionDetail
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionDetailsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.DeleteTransactionAndRevertOtherDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getDateString
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -27,14 +27,14 @@ import kotlinx.coroutines.launch
 internal class TransactionsScreenViewModelImpl @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
     getSourcesUseCase: GetSourcesUseCase,
-    getAllTransactionDetailsUseCase: GetAllTransactionDetailsUseCase,
+    getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
     private val deleteTransactionAndRevertOtherDataUseCase: DeleteTransactionAndRevertOtherDataUseCase,
 ) : TransactionsScreenViewModel, ViewModel() {
     private val categories: Flow<List<Category>> = getCategoriesUseCase()
-    private val allTransactionDetails: Flow<List<TransactionDetail>> =
-        getAllTransactionDetailsUseCase()
+    private val allTransactionData: Flow<List<TransactionData>> =
+        getAllTransactionDataUseCase()
 
     // region Search
     private val _searchText = MutableStateFlow(
@@ -95,9 +95,9 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     override val sources: Flow<List<Source>> = getSourcesUseCase()
 
     val transactionTypes: List<TransactionType> = TransactionType.values().toList()
-    override val transactionDetailsListItemViewData: Flow<Map<String, List<TransactionDetail>>> =
+    override val transactionDetailsListItemViewData: Flow<Map<String, List<TransactionData>>> =
         combine(
-            allTransactionDetails,
+            allTransactionData,
             searchText,
             selectedExpenseCategoryIndices,
             selectedIncomeCategoryIndices,
@@ -110,8 +110,8 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             sources,
             selectedSortOption,
         ) { flows ->
-            val allTransactionDetailsValue: List<TransactionDetail> =
-                flows[0] as? List<TransactionDetail> ?: emptyList()
+            val allTransactionDataValue: List<TransactionData> =
+                flows[0] as? List<TransactionData> ?: emptyList()
             val searchTextValue: String = flows[1] as String
             val selectedExpenseCategoryIndicesValue: List<Int> =
                 flows[2] as? List<Int> ?: emptyList()
@@ -130,24 +130,24 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             val selectedSortOptionValue: SortOption =
                 flows[11] as? SortOption ?: SortOption.LATEST_FIRST
 
-            allTransactionDetailsValue
+            allTransactionDataValue
                 .filter { transactionDetail ->
                     isAvailableAfterSearch(
                         searchTextValue = searchTextValue,
-                        transactionDetail = transactionDetail,
+                        transactionData = transactionDetail,
                     ) && isAvailableAfterTransactionTypeFilter(
                         selectedTransactionTypesIndicesValue = selectedTransactionTypesIndicesValue,
-                        transactionDetail = transactionDetail
+                        transactionData = transactionDetail
                     ) && isAvailableAfterSourceFilter(
                         selectedSourceIndicesValue = selectedSourceIndicesValue,
                         sourcesValue = sourcesValue,
-                        transactionDetail = transactionDetail,
+                        transactionData = transactionDetail,
                     ) && isAvailableAfterCategoryFilter(
                         selectedExpenseCategoryIndicesValue = selectedExpenseCategoryIndicesValue,
                         selectedIncomeCategoryIndicesValue = selectedIncomeCategoryIndicesValue,
                         selectedInvestmentCategoryIndicesValue = selectedInvestmentCategoryIndicesValue,
                         expenseCategoriesValue = expenseCategoriesValue,
-                        transactionDetail = transactionDetail,
+                        transactionData = transactionDetail,
                         incomeCategoriesValue = incomeCategoriesValue,
                         investmentCategoriesValue = investmentCategoriesValue,
                     )
@@ -155,23 +155,23 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 .sortedWith(compareBy {
                     when (selectedSortOptionValue) {
                         SortOption.AMOUNT_ASC -> {
-                            it.amount.value
+                            it.transaction.amount.value
                         }
                         SortOption.AMOUNT_DESC -> {
-                            -1 * it.amount.value
+                            -1 * it.transaction.amount.value
                         }
                         SortOption.LATEST_FIRST -> {
-                            -1 * it.transactionTimestamp
+                            -1 * it.transaction.transactionTimestamp
                         }
                         SortOption.OLDEST_FIRST -> {
-                            it.transactionTimestamp
+                            it.transaction.transactionTimestamp
                         }
                     }
                 })
                 .groupBy {
                     if (selectedSortOptionValue == SortOption.LATEST_FIRST || selectedSortOptionValue == SortOption.OLDEST_FIRST) {
                         getDateString(
-                            it.transactionTimestamp
+                            it.transaction.transactionTimestamp
                         )
                     } else {
                         ""
@@ -247,10 +247,10 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
 
     private fun isAvailableAfterSearch(
         searchTextValue: String,
-        transactionDetail: TransactionDetail,
+        transactionData: TransactionData,
     ): Boolean {
         return searchTextValue.isBlank() ||
-                transactionDetail.title.contains(
+                transactionData.transaction.title.contains(
                     other = searchTextValue,
                     ignoreCase = true,
                 )
@@ -258,12 +258,12 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
 
     private fun isAvailableAfterTransactionTypeFilter(
         selectedTransactionTypesIndicesValue: List<Int>,
-        transactionDetail: TransactionDetail,
+        transactionData: TransactionData,
     ): Boolean {
         return selectedTransactionTypesIndicesValue.isEmpty() ||
                 selectedTransactionTypesIndicesValue.contains(
                     element = transactionTypes.indexOf(
-                        element = transactionDetail.transactionType,
+                        element = transactionData.transaction.transactionType,
                     ),
                 )
     }
@@ -271,17 +271,17 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     private fun isAvailableAfterSourceFilter(
         selectedSourceIndicesValue: List<Int>,
         sourcesValue: List<Source>,
-        transactionDetail: TransactionDetail,
+        transactionData: TransactionData,
     ): Boolean {
         return selectedSourceIndicesValue.isEmpty() ||
                 selectedSourceIndicesValue.contains(
                     element = sourcesValue.indexOf(
-                        element = transactionDetail.sourceFrom,
+                        element = transactionData.sourceFrom,
                     ),
                 ) ||
                 selectedSourceIndicesValue.contains(
                     element = sourcesValue.indexOf(
-                        element = transactionDetail.sourceTo,
+                        element = transactionData.sourceTo,
                     ),
                 )
     }
@@ -293,24 +293,24 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         selectedExpenseCategoryIndicesValue: List<Int>,
         selectedIncomeCategoryIndicesValue: List<Int>,
         selectedInvestmentCategoryIndicesValue: List<Int>,
-        transactionDetail: TransactionDetail,
+        transactionData: TransactionData,
     ): Boolean {
         return (selectedExpenseCategoryIndicesValue.isEmpty() &&
                 selectedIncomeCategoryIndicesValue.isEmpty() &&
                 selectedInvestmentCategoryIndicesValue.isEmpty()) ||
                 selectedExpenseCategoryIndicesValue.contains(
                     element = expenseCategoriesValue.indexOf(
-                        element = transactionDetail.category,
+                        element = transactionData.category,
                     ),
                 ) ||
                 selectedIncomeCategoryIndicesValue.contains(
                     element = incomeCategoriesValue.indexOf(
-                        element = transactionDetail.category,
+                        element = transactionData.category,
                     ),
                 ) ||
                 selectedInvestmentCategoryIndicesValue.contains(
                     element = investmentCategoriesValue.indexOf(
-                        element = transactionDetail.category,
+                        element = transactionData.category,
                     ),
                 )
     }

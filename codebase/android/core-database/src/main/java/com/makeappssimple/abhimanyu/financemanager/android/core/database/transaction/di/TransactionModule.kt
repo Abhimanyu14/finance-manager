@@ -14,8 +14,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.DeleteAllTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.DeleteTransactionUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionDetailsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionDetailsUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionDataUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetCurrentDayTransactionsUseCase
@@ -24,10 +24,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetCurrentMonthTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetCurrentYearTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetCurrentYearTransactionsUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetRecentTransactionDetailsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetRecentTransactionDetailsUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetRecentTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetRecentTransactionsUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetRecentTransactionDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetRecentTransactionDataUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTitleSuggestionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTitleSuggestionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionUseCase
@@ -107,19 +105,10 @@ class TransactionModule {
     }
 
     @Provides
-    fun providesGetRecentTransactionDetailsUseCase(
+    fun providesGetRecentTransactionDataUseCase(
         transactionRepository: TransactionRepository,
-    ): GetRecentTransactionDetailsUseCase {
-        return GetRecentTransactionDetailsUseCaseImpl(
-            transactionRepository = transactionRepository,
-        )
-    }
-
-    @Provides
-    fun providesGetRecentTransactionsUseCase(
-        transactionRepository: TransactionRepository,
-    ): GetRecentTransactionsUseCase {
-        return GetRecentTransactionsUseCaseImpl(
+    ): GetRecentTransactionDataUseCase {
+        return GetRecentTransactionDataUseCaseImpl(
             transactionRepository = transactionRepository,
         )
     }
@@ -161,10 +150,10 @@ class TransactionModule {
     }
 
     @Provides
-    fun providesGetAllTransactionDetailsUseCase(
+    fun providesGetAllTransactionDataUseCase(
         transactionRepository: TransactionRepository,
-    ): GetAllTransactionDetailsUseCase {
-        return GetAllTransactionDetailsUseCaseImpl(
+    ): GetAllTransactionDataUseCase {
+        return GetAllTransactionDataUseCaseImpl(
             transactionRepository = transactionRepository,
         )
     }

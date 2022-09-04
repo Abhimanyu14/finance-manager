@@ -1,22 +1,22 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionDetail
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.repository.TransactionRepository
 import kotlinx.coroutines.flow.Flow
 
-interface GetRecentTransactionDetailsUseCase {
+interface GetRecentTransactionDataUseCase {
     operator fun invoke(
         numberOfTransactions: Int = 10,
-    ): Flow<List<TransactionDetail>>
+    ): Flow<List<TransactionData>>
 }
 
-class GetRecentTransactionDetailsUseCaseImpl(
+class GetRecentTransactionDataUseCaseImpl(
     private val transactionRepository: TransactionRepository,
-) : GetRecentTransactionDetailsUseCase {
+) : GetRecentTransactionDataUseCase {
     override operator fun invoke(
         numberOfTransactions: Int,
-    ): Flow<List<TransactionDetail>> {
-        return transactionRepository.getRecentTransactionDetails(
+    ): Flow<List<TransactionData>> {
+        return transactionRepository.getRecentTransactionData(
             numberOfTransactions = numberOfTransactions,
         )
     }

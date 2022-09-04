@@ -4,7 +4,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.datasource.local.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.datasource.local.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionDetail
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.datasource.local.TransactionForDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getEndOfDayTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getEndOfMonthTimestamp
@@ -13,7 +13,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.ge
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getStartOfMonthTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getStartOfYearTimestamp
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 
 // Declares the DAO as a private property in the constructor. Pass in the DAO
 // instead of the whole database, because you only need access to the DAO
@@ -27,36 +26,16 @@ class TransactionRepositoryImpl(
     // Observed Flow will notify the observer when the data has changed.
     override val allTransactions: Flow<List<Transaction>> = transactionDao.getAllTransactions()
 
-    override fun getAllTransactionDetails(): Flow<List<TransactionDetail>> {
-        return allTransactions.map {
-            it.mapNotNull { transaction ->
-                getTransactionDetail(
-                    transaction = transaction,
-                )
-            }
-        }
+    override fun getAllTransactionData(): Flow<List<TransactionData>> {
+        return transactionDao.getAllTransactionData()
     }
 
-    override fun getRecentTransactions(
+    override fun getRecentTransactionData(
         numberOfTransactions: Int,
-    ): Flow<List<Transaction>> {
-        return transactionDao.getRecentTransactions(
+    ): Flow<List<TransactionData>> {
+        return transactionDao.getRecentTransactionData(
             numberOfTransactions = numberOfTransactions,
         )
-    }
-
-    override fun getRecentTransactionDetails(
-        numberOfTransactions: Int,
-    ): Flow<List<TransactionDetail>> {
-        return transactionDao.getRecentTransactions(
-            numberOfTransactions = numberOfTransactions,
-        ).map {
-            it.mapNotNull { transaction ->
-                getTransactionDetail(
-                    transaction = transaction,
-                )
-            }
-        }
     }
 
     override fun getCurrentDayTransactions(): Flow<List<Transaction>> {
@@ -168,37 +147,5 @@ class TransactionRepositoryImpl(
 
     override suspend fun deleteAllTransactions() {
         transactionDao.deleteAllTransactions()
-    }
-
-    private suspend fun getTransactionDetail(
-        transaction: Transaction,
-    ): TransactionDetail? {
-        val category = transaction.categoryId?.let { id ->
-            categoryDao.getCategory(
-                id = id,
-            )
-        }
-        val sourceFrom = transaction.sourceFromId?.let { id ->
-            sourceDao.getSource(
-                id = id,
-            )
-        }
-        val sourceTo = transaction.sourceToId?.let { id ->
-            sourceDao.getSource(
-                id = id,
-            )
-        }
-        val transactionFor = transactionForDao.getTransactionFor(
-            id = transaction.transactionForId,
-        )
-        return transactionFor?.let {
-            TransactionDetail(
-                category = category,
-                sourceFrom = sourceFrom,
-                sourceTo = sourceTo,
-                transaction = transaction,
-                transactionFor = transactionFor,
-            )
-        }
     }
 }
