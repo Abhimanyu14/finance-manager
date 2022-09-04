@@ -191,7 +191,7 @@ class TransactionRepositoryImpl(
         val transactionFor = transactionForDao.getTransactionFor(
             id = transaction.transactionForId,
         )
-        return if (transactionFor != null) {
+        return transactionFor?.let {
             TransactionDetail(
                 category = category,
                 sourceFrom = sourceFrom,
@@ -199,8 +199,6 @@ class TransactionRepositoryImpl(
                 transaction = transaction,
                 transactionFor = transactionFor,
             )
-        } else {
-            null
         }
     }
 }
