@@ -28,10 +28,12 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
 ) : SourcesScreenViewModel, ViewModel() {
     override val sources: StateFlow<List<Source>> = getSourcesUseCase()
-        .map {
+        .map { it ->
             it.sortedWith(
-                comparator = compareBy { source ->
+                comparator = compareBy<Source> { source ->
                     source.type.sortOrder
+                }.thenByDescending { source ->
+                    source.balanceAmount.value
                 }
             )
         }.defaultListStateIn(
