@@ -12,8 +12,16 @@ interface SourceRepository {
         id: Int,
     ): Source?
 
+    suspend fun getSources(
+        ids: List<Int>,
+    ): List<Source>?
+
     suspend fun insertSources(
         vararg sources: Source,
+    )
+
+    suspend fun updateSourceBalanceAmount(
+        sourcesBalanceAmountChange: List<Pair<Int, Long>>,
     )
 
     suspend fun updateSources(

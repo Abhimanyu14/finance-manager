@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.source
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.datasource.local.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.updateBalanceAmount
 import kotlinx.coroutines.flow.Flow
 
 class SourceRepositoryImpl(
@@ -21,11 +22,39 @@ class SourceRepositoryImpl(
         )
     }
 
+    override suspend fun getSources(
+        ids: List<Int>,
+    ): List<Source> {
+        return sourceDao.getSources(
+            ids = ids,
+        )
+    }
+
     override suspend fun insertSources(
         vararg sources: Source,
     ) {
         sourceDao.insertSources(
             sources = sources,
+        )
+    }
+
+    @androidx.room.Transaction
+    override suspend fun updateSourceBalanceAmount(
+        sourcesBalanceAmountChange: List<Pair<Int, Long>>,
+    ) {
+        val sourceIds = sourcesBalanceAmountChange.map {
+            it.first
+        }
+        val sources = getSources(
+            ids = sourceIds,
+        )
+        val updatedSources = sources.mapIndexed { index, source ->
+            source.updateBalanceAmount(
+                updatedBalanceAmount = source.balanceAmount.value + sourcesBalanceAmountChange[index].second,
+            )
+        }
+        updateSources(
+            sources = updatedSources.toTypedArray(),
         )
     }
 

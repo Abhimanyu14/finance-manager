@@ -23,6 +23,11 @@ interface SourceDao {
         id: Int,
     ): Source?
 
+    @Query(value = "SELECT * from source_table WHERE id IN (:ids)")
+    suspend fun getSources(
+        ids: List<Int>,
+    ): List<Source>
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertSources(
         vararg sources: Source,

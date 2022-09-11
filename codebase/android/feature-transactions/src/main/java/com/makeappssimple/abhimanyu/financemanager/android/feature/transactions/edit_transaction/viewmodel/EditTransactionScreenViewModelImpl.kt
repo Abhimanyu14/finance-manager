@@ -12,10 +12,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.sortOrder
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.updateBalanceAmount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesCountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesBalanceAmountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTitleSuggestionsUseCase
@@ -59,22 +58,22 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val getSourcesCountUseCase: GetSourcesCountUseCase,
     private val getTransactionUseCase: GetTransactionUseCase,
-    private val updateSourcesUseCase: UpdateSourcesUseCase,
+    private val updateSourcesBalanceAmountUseCase: UpdateSourcesBalanceAmountUseCase,
     private val updateTransactionUseCase: UpdateTransactionUseCase,
 ) : EditTransactionScreenViewModel, ViewModel() {
-    private var transactionId: Int? = null
+    private var originalTransactionId: Int? = null
 
     private var defaultSource: Source? = null
     private var expenseDefaultCategory: Category? = null
     private var incomeDefaultCategory: Category? = null
     private var investmentDefaultCategory: Category? = null
 
-    private val transaction: MutableStateFlow<Transaction?> = MutableStateFlow(
+    private val originalTransaction: MutableStateFlow<Transaction?> = MutableStateFlow(
         value = null,
     )
-    private var transactionCategory: Category? = null
-    private var transactionSourceFrom: Source? = null
-    private var transactionSourceTo: Source? = null
+    private var originalTransactionCategory: Category? = null
+    private var originalTransactionSourceFrom: Source? = null
+    private var originalTransactionSourceTo: Source? = null
 
     override val transactionTypesForNewTransaction: StateFlow<List<TransactionType>> = flow {
         val sourceCount = getSourcesCountUseCase()
@@ -192,7 +191,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
 
     init {
         savedStateHandle.get<Int>(NavArgs.TRANSACTION_ID)?.let { id ->
-            transactionId = id
+            originalTransactionId = id
             getTransaction(
                 id = id,
             )
@@ -271,8 +270,8 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                     when (it) {
                         TransactionType.INCOME -> {
                             val updatedCategory =
-                                if (selectedTransactionType.value == transaction.value?.transactionType) {
-                                    transactionCategory ?: incomeDefaultCategory
+                                if (selectedTransactionType.value == originalTransaction.value?.transactionType) {
+                                    originalTransactionCategory ?: incomeDefaultCategory
                                 } else {
                                     incomeDefaultCategory
                                 }
@@ -284,13 +283,13 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                                 updatedSourceFrom = null,
                             )
                             updateSourceTo(
-                                updatedSourceTo = transactionSourceTo ?: defaultSource,
+                                updatedSourceTo = originalTransactionSourceTo ?: defaultSource,
                             )
                         }
                         TransactionType.EXPENSE -> {
                             val updatedCategory =
-                                if (selectedTransactionType.value == transaction.value?.transactionType) {
-                                    transactionCategory ?: expenseDefaultCategory
+                                if (selectedTransactionType.value == originalTransaction.value?.transactionType) {
+                                    originalTransactionCategory ?: expenseDefaultCategory
                                 } else {
                                     expenseDefaultCategory
                                 }
@@ -299,7 +298,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                             )
 
                             updateSourceFrom(
-                                updatedSourceFrom = transactionSourceFrom ?: defaultSource,
+                                updatedSourceFrom = originalTransactionSourceFrom ?: defaultSource,
                             )
                             updateSourceTo(
                                 updatedSourceTo = null,
@@ -307,17 +306,17 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                         }
                         TransactionType.TRANSFER -> {
                             updateSourceFrom(
-                                updatedSourceFrom = transactionSourceFrom ?: defaultSource,
+                                updatedSourceFrom = originalTransactionSourceFrom ?: defaultSource,
                             )
                             updateSourceTo(
-                                updatedSourceTo = transactionSourceTo ?: defaultSource,
+                                updatedSourceTo = originalTransactionSourceTo ?: defaultSource,
                             )
                         }
                         TransactionType.ADJUSTMENT -> {}
                         TransactionType.INVESTMENT -> {
                             val updatedCategory =
-                                if (selectedTransactionType.value == transaction.value?.transactionType) {
-                                    transactionCategory ?: investmentDefaultCategory
+                                if (selectedTransactionType.value == originalTransaction.value?.transactionType) {
+                                    originalTransactionCategory ?: investmentDefaultCategory
                                 } else {
                                     investmentDefaultCategory
                                 }
@@ -326,7 +325,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                             )
 
                             updateSourceFrom(
-                                updatedSourceFrom = transactionSourceFrom ?: defaultSource,
+                                updatedSourceFrom = originalTransactionSourceFrom ?: defaultSource,
                             )
                             updateSourceTo(
                                 updatedSourceTo = null,
@@ -340,23 +339,23 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                     flow = transactionTypesForNewTransaction,
                     flow2 = sources,
                     flow3 = categories,
-                    flow4 = transaction,
+                    flow4 = originalTransaction,
                 ) { transactionTypesForNewTransaction, sources, categories, transaction ->
                     if (transactionTypesForNewTransaction.isNotEmpty() &&
                         sources.isNotEmpty() &&
                         categories.isNotEmpty() &&
                         transaction != null
                     ) {
-                        transactionCategory = getCategory(
+                        originalTransactionCategory = getCategory(
                             categoryId = transaction.categoryId,
                         )
-                        transactionSourceFrom = getSource(
+                        originalTransactionSourceFrom = getSource(
                             sourceId = transaction.sourceFromId,
                         )
-                        transactionSourceTo = getSource(
+                        originalTransactionSourceTo = getSource(
                             sourceId = transaction.sourceToId,
                         )
-                        updateInitialTransactionValue(
+                        updateOriginalTransactionValue(
                             transaction = transaction,
                         )
                     }
@@ -461,7 +460,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                     }
                 }
 
-                transaction.value?.let { transaction ->
+                originalTransaction.value?.let { transaction ->
                     updateTransactionUseCase(
                         originalTransaction = transaction,
                         updatedTransaction = transaction.copy(
@@ -479,42 +478,30 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                     )
 
                     // region transaction source updates
-                    transactionSourceFrom?.let { transactionSourceFrom ->
-                        val revertOriginalTransactionAmount = transactionSourceFrom
-                            .balanceAmount.value + transaction.amount.value
-                        updateSourcesUseCase(
-                            transactionSourceFrom.updateBalanceAmount(
-                                updatedBalanceAmount = revertOriginalTransactionAmount,
-                            ),
-                        )
+                    val sourceBalanceAmountChangeMap = hashMapOf<Int, Long>()
+                    originalTransactionSourceFrom?.let { transactionSourceFrom ->
+                        sourceBalanceAmountChangeMap[transactionSourceFrom.id] =
+                            (sourceBalanceAmountChangeMap[transactionSourceFrom.id]
+                                ?: 0) + transaction.amount.value
                     }
                     uiStateValue.sourceFrom?.let { sourceFrom ->
-                        val updatedSourceFromBalanceAmount = sourceFrom.balanceAmount.value -
-                                uiState.value.amount.toLong()
-                        updateSourcesUseCase(
-                            sourceFrom.updateBalanceAmount(
-                                updatedBalanceAmount = updatedSourceFromBalanceAmount,
-                            ),
-                        )
+                        sourceBalanceAmountChangeMap[sourceFrom.id] =
+                            (sourceBalanceAmountChangeMap[sourceFrom.id]
+                                ?: 0) - uiState.value.amount.toLong()
                     }
-                    transactionSourceTo?.let { transactionSourceTo ->
-                        val revertOriginalTransactionAmount = transactionSourceTo
-                            .balanceAmount.value - transaction.amount.value
-                        updateSourcesUseCase(
-                            transactionSourceTo.updateBalanceAmount(
-                                updatedBalanceAmount = revertOriginalTransactionAmount,
-                            ),
-                        )
+                    originalTransactionSourceTo?.let { transactionSourceTo ->
+                        sourceBalanceAmountChangeMap[transactionSourceTo.id] =
+                            (sourceBalanceAmountChangeMap[transactionSourceTo.id]
+                                ?: 0) - transaction.amount.value
                     }
                     uiStateValue.sourceTo?.let { sourceTo ->
-                        val updatedSourceToBalanceAmount = sourceTo.balanceAmount.value +
-                                uiState.value.amount.toLong()
-                        updateSourcesUseCase(
-                            sourceTo.updateBalanceAmount(
-                                updatedBalanceAmount = updatedSourceToBalanceAmount,
-                            ),
-                        )
+                        sourceBalanceAmountChangeMap[sourceTo.id] =
+                            (sourceBalanceAmountChangeMap[sourceTo.id]
+                                ?: 0) + uiState.value.amount.toLong()
                     }
+                    updateSourcesBalanceAmountUseCase(
+                        sourcesBalanceAmountChange = sourceBalanceAmountChangeMap.toList(),
+                    )
                     // endregion
 
                 }
@@ -644,12 +631,12 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
             getTransactionUseCase(
                 id = id,
             )?.let {
-                transaction.value = it
+                originalTransaction.value = it
             }
         }
     }
 
-    private fun updateInitialTransactionValue(
+    private fun updateOriginalTransactionValue(
         transaction: Transaction,
     ) {
         val initialEditTransactionScreenUiState = EditTransactionScreenUiState(
@@ -659,14 +646,14 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
             amount = abs(transaction.amount.value).toString(),
             title = transaction.title,
             description = transaction.description,
-            category = transactionCategory,
+            category = originalTransactionCategory,
             selectedTransactionForIndex = transactionForValues.value.indexOf(
                 element = transactionForValues.value.firstOrNull {
                     it.id == transaction.transactionForId
                 },
             ),
-            sourceFrom = transactionSourceFrom,
-            sourceTo = transactionSourceTo,
+            sourceFrom = originalTransactionSourceFrom,
+            sourceTo = originalTransactionSourceTo,
             transactionCalendar = Calendar.getInstance(Locale.getDefault()).apply {
                 timeInMillis = transaction.transactionTimestamp
             },

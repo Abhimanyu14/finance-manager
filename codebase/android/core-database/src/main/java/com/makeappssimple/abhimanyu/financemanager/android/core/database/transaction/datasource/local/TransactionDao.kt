@@ -70,15 +70,48 @@ interface TransactionDao {
         vararg transactions: Transaction,
     )
 
-    @Update
-    suspend fun updateTransaction(
-        transaction: Transaction,
-    )
-
     @Query(value = "DELETE FROM transaction_table")
     suspend fun deleteAllTransactions()
 
     // Methods common to multiple DAO are defined here - may also have duplicates
+
+    // region Update transaction
+    @Update
+    suspend fun updateTransaction(
+        transaction: Transaction,
+    )
+    // endregion
+
+    // region Delete transaction
+    /**
+     * Don't use this method outside DAO
+     */
+    @Query(value = "DELETE FROM transaction_table WHERE id = :id")
+    suspend fun deleteTransaction(
+        id: Int,
+    )
+
+    /**
+     * Don't use this method outside DAO
+     */
+    @Update
+    suspend fun updateSources(
+        vararg sources: Source,
+    )
+
+    @androidx.room.Transaction
+    suspend fun deleteTransaction(
+        id: Int,
+        vararg sources: Source,
+    ) {
+        deleteTransaction(
+            id = id,
+        )
+        updateSources(
+            sources = sources,
+        )
+    }
+    // endregion
 
     // region Restore data
     @Query(value = "DELETE FROM category_table")
@@ -121,37 +154,6 @@ interface TransactionDao {
             sources = sources,
             transactions = transactions,
             transactionForValues = transactionForValues,
-        )
-    }
-    // endregion
-
-    // region Delete transaction
-    /**
-     * Don't use this method outside DAO
-     */
-    @Query(value = "DELETE FROM transaction_table WHERE id = :id")
-    suspend fun deleteTransaction(
-        id: Int,
-    )
-
-    /**
-     * Don't use this method outside DAO
-     */
-    @Update
-    suspend fun updateSources(
-        vararg sources: Source,
-    )
-
-    @androidx.room.Transaction
-    suspend fun deleteTransaction(
-        id: Int,
-        vararg sources: Source,
-    ) {
-        deleteTransaction(
-            id = id,
-        )
-        updateSources(
-            sources = sources,
         )
     }
     // endregion

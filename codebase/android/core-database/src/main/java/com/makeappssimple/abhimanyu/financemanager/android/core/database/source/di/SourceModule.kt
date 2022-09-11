@@ -18,6 +18,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.InsertSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.InsertSourcesUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesBalanceAmountUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesBalanceAmountUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCaseImpl
 import dagger.Module
@@ -104,6 +106,15 @@ class SourceModule {
         sourceRepository: SourceRepository,
     ): InsertSourcesUseCase {
         return InsertSourcesUseCaseImpl(
+            sourceRepository = sourceRepository,
+        )
+    }
+
+    @Provides
+    fun providesUpdateSourcesBalanceAmountUseCase(
+        sourceRepository: SourceRepository,
+    ): UpdateSourcesBalanceAmountUseCase {
+        return UpdateSourcesBalanceAmountUseCaseImpl(
             sourceRepository = sourceRepository,
         )
     }
