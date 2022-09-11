@@ -1,25 +1,22 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.repository.TransactionRepository
 
-interface DeleteTransactionUseCase {
+interface GetTransactionDataUseCase {
     suspend operator fun invoke(
         id: Int,
-        vararg sources: Source,
-    )
+    ): TransactionData?
 }
 
-class DeleteTransactionUseCaseImpl(
+class GetTransactionDataUseCaseImpl(
     private val transactionRepository: TransactionRepository,
-) : DeleteTransactionUseCase {
+) : GetTransactionDataUseCase {
     override suspend operator fun invoke(
         id: Int,
-        vararg sources: Source,
-    ) {
-        return transactionRepository.deleteTransaction(
+    ): TransactionData? {
+        return transactionRepository.getTransactionData(
             id = id,
-            sources = sources,
         )
     }
 }

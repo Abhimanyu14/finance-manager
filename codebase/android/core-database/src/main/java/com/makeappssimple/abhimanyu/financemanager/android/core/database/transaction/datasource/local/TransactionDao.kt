@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.datasource.local
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -60,6 +59,12 @@ interface TransactionDao {
         id: Int,
     ): Transaction?
 
+    @androidx.room.Transaction
+    @Query("SELECT * FROM transaction_table WHERE id = :id")
+    suspend fun getTransactionData(
+        id: Int,
+    ): TransactionData?
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTransactions(
         vararg transactions: Transaction,
@@ -68,16 +73,6 @@ interface TransactionDao {
     @Update
     suspend fun updateTransaction(
         transaction: Transaction,
-    )
-
-    @Query(value = "DELETE FROM transaction_table WHERE id = :id")
-    suspend fun deleteTransaction(
-        id: Int,
-    )
-
-    @Delete
-    suspend fun deleteTransactions(
-        vararg transactions: Transaction,
     )
 
     @Query(value = "DELETE FROM transaction_table")
@@ -126,6 +121,37 @@ interface TransactionDao {
             sources = sources,
             transactions = transactions,
             transactionForValues = transactionForValues,
+        )
+    }
+    // endregion
+
+    // region Delete transaction
+    /**
+     * Don't use this method outside DAO
+     */
+    @Query(value = "DELETE FROM transaction_table WHERE id = :id")
+    suspend fun deleteTransaction(
+        id: Int,
+    )
+
+    /**
+     * Don't use this method outside DAO
+     */
+    @Update
+    suspend fun updateSources(
+        vararg sources: Source,
+    )
+
+    @androidx.room.Transaction
+    suspend fun deleteTransaction(
+        id: Int,
+        vararg sources: Source,
+    ) {
+        deleteTransaction(
+            id = id,
+        )
+        updateSources(
+            sources = sources,
         )
     }
     // endregion

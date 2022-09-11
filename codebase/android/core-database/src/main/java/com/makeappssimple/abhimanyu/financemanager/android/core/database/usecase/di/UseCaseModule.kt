@@ -2,14 +2,13 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.usecas
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetEmojisUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.BackupDataUseCaseImpl
@@ -51,15 +50,11 @@ class UseCaseModule {
     @Provides
     fun providesDeleteTransactionAndRevertOtherDataUseCase(
         deleteTransactionUseCase: DeleteTransactionUseCase,
-        getSourceUseCase: GetSourceUseCase,
-        getTransactionUseCase: GetTransactionUseCase,
-        updateSourcesUseCase: UpdateSourcesUseCase,
+        getTransactionDataUseCase: GetTransactionDataUseCase,
     ): DeleteTransactionAndRevertOtherDataUseCase {
         return DeleteTransactionAndRevertOtherDataUseCaseImpl(
             deleteTransactionUseCase = deleteTransactionUseCase,
-            getSourceUseCase = getSourceUseCase,
-            getTransactionUseCase = getTransactionUseCase,
-            updateSourcesUseCase = updateSourcesUseCase,
+            getTransactionDataUseCase = getTransactionDataUseCase,
         )
     }
 

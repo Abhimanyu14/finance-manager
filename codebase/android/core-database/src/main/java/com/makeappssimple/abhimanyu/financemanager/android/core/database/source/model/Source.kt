@@ -39,6 +39,16 @@ data class Source(
     val name: String,
 )
 
+fun Source.updateBalanceAmount(
+    updatedBalanceAmount: Long,
+): Source {
+    return this.copy(
+        balanceAmount = this.balanceAmount.copy(
+            value = updatedBalanceAmount,
+        )
+    )
+}
+
 val SourceType.sortOrder: Int
     get() = when (this) {
         SourceType.CASH -> {

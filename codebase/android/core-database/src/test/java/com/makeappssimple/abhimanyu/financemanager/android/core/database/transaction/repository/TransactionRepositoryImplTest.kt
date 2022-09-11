@@ -1,8 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.repository
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.datasource.local.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestTransaction
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestSources
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestTransactions
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -13,8 +14,8 @@ import org.mockito.kotlin.verify
 class TransactionRepositoryImplTest {
     private val transactionDao: TransactionDao = mock()
     private val id: Int = 1
-    private val transaction: Transaction = getTestTransaction()
     private val transactions: Array<Transaction> = getTestTransactions()
+    private val sources: Array<Source> = getTestSources()
     private lateinit var transactionRepository: TransactionRepository
 
     @Before
@@ -72,25 +73,14 @@ class TransactionRepositoryImplTest {
     fun deleteTransaction() = runTest {
         transactionRepository.deleteTransaction(
             id = id,
+            sources = sources,
         )
 
         verify(
             mock = transactionDao,
         ).deleteTransaction(
             id = id,
-        )
-    }
-
-    @Test
-    fun deleteTransactions() = runTest {
-        transactionRepository.deleteTransactions(
-            *transactions,
-        )
-
-        verify(
-            mock = transactionDao,
-        ).deleteTransactions(
-            *transactions,
+            sources = sources,
         )
     }
 

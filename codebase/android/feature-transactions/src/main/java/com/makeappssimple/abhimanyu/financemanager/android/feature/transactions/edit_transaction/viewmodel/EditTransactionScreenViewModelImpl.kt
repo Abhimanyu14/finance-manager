@@ -12,6 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.sortOrder
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.updateBalanceAmount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesCountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCase
@@ -482,10 +483,8 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                         val revertOriginalTransactionAmount = transactionSourceFrom
                             .balanceAmount.value + transaction.amount.value
                         updateSourcesUseCase(
-                            transactionSourceFrom.copy(
-                                balanceAmount = transactionSourceFrom.balanceAmount.copy(
-                                    value = revertOriginalTransactionAmount,
-                                )
+                            transactionSourceFrom.updateBalanceAmount(
+                                updatedBalanceAmount = revertOriginalTransactionAmount,
                             ),
                         )
                     }
@@ -493,10 +492,8 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                         val updatedSourceFromBalanceAmount = sourceFrom.balanceAmount.value -
                                 uiState.value.amount.toLong()
                         updateSourcesUseCase(
-                            sourceFrom.copy(
-                                balanceAmount = sourceFrom.balanceAmount.copy(
-                                    value = updatedSourceFromBalanceAmount,
-                                )
+                            sourceFrom.updateBalanceAmount(
+                                updatedBalanceAmount = updatedSourceFromBalanceAmount,
                             ),
                         )
                     }
@@ -504,10 +501,8 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                         val revertOriginalTransactionAmount = transactionSourceTo
                             .balanceAmount.value - transaction.amount.value
                         updateSourcesUseCase(
-                            transactionSourceTo.copy(
-                                balanceAmount = transactionSourceTo.balanceAmount.copy(
-                                    value = revertOriginalTransactionAmount,
-                                )
+                            transactionSourceTo.updateBalanceAmount(
+                                updatedBalanceAmount = revertOriginalTransactionAmount,
                             ),
                         )
                     }
@@ -515,10 +510,8 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                         val updatedSourceToBalanceAmount = sourceTo.balanceAmount.value +
                                 uiState.value.amount.toLong()
                         updateSourcesUseCase(
-                            sourceTo.copy(
-                                balanceAmount = sourceTo.balanceAmount.copy(
-                                    value = updatedSourceToBalanceAmount,
-                                )
+                            sourceTo.updateBalanceAmount(
+                                updatedBalanceAmount = updatedSourceToBalanceAmount,
                             ),
                         )
                     }

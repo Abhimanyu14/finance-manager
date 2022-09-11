@@ -12,6 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.sortOrder
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.updateBalanceAmount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesCountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCase
@@ -465,20 +466,16 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                 )
                 uiStateValue.sourceFrom?.let { sourceFrom ->
                     updateSourcesUseCase(
-                        sourceFrom.copy(
-                            balanceAmount = sourceFrom.balanceAmount.copy(
-                                value = sourceFrom.balanceAmount.value - uiStateValue.amount.toLong(),
-                            )
+                        sourceFrom.updateBalanceAmount(
+                            updatedBalanceAmount = sourceFrom.balanceAmount.value - uiStateValue.amount.toLong(),
                         ),
                     )
                 }
                 uiStateValue.sourceTo?.let { sourceTo ->
                     updateSourcesUseCase(
-                        sourceTo.copy(
-                            balanceAmount = sourceTo.balanceAmount.copy(
-                                value = sourceTo.balanceAmount.value + uiStateValue.amount.toLong(),
-                            )
-                        ),
+                        sourceTo.updateBalanceAmount(
+                            updatedBalanceAmount = sourceTo.balanceAmount.value + uiStateValue.amount.toLong(),
+                        )
                     )
                 }
                 navigateUp(

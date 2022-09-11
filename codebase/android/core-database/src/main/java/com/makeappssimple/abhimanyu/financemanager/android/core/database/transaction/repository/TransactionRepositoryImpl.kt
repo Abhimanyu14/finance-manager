@@ -91,6 +91,14 @@ class TransactionRepositoryImpl(
         )
     }
 
+    override suspend fun getTransactionData(
+        id: Int,
+    ): TransactionData? {
+        return transactionDao.getTransactionData(
+            id = id,
+        )
+    }
+
     override suspend fun insertTransactions(
         vararg transactions: Transaction,
     ) {
@@ -109,17 +117,12 @@ class TransactionRepositoryImpl(
 
     override suspend fun deleteTransaction(
         id: Int,
+        vararg sources: Source,
     ) {
+
         transactionDao.deleteTransaction(
             id = id,
-        )
-    }
-
-    override suspend fun deleteTransactions(
-        vararg transactions: Transaction,
-    ) {
-        transactionDao.deleteTransactions(
-            transactions = transactions,
+            sources = sources,
         )
     }
 

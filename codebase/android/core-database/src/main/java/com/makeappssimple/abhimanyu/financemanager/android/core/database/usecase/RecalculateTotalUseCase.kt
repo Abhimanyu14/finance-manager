@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.updateBalanceAmount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
@@ -35,10 +36,8 @@ class RecalculateTotalUseCaseImpl(
             }
         }
         val updatesSources = sourcesValue.map {
-            it.copy(
-                balanceAmount = it.balanceAmount.copy(
-                    value = sourceBalances[it.id] ?: 0L,
-                )
+            it.updateBalanceAmount(
+                updatedBalanceAmount = sourceBalances[it.id] ?: 0L,
             )
         }
         updateSourcesUseCase(

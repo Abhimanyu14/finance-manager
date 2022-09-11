@@ -42,6 +42,10 @@ interface TransactionRepository {
         id: Int,
     ): Transaction?
 
+    suspend fun getTransactionData(
+        id: Int,
+    ): TransactionData?
+
     suspend fun insertTransactions(
         vararg transactions: Transaction,
     )
@@ -52,10 +56,7 @@ interface TransactionRepository {
 
     suspend fun deleteTransaction(
         id: Int,
-    )
-
-    suspend fun deleteTransactions(
-        vararg transactions: Transaction,
+        vararg sources: Source,
     )
 
     suspend fun deleteAllTransactions()
