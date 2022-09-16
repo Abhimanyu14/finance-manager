@@ -36,6 +36,7 @@ fun TransactionsScreen(
     val transactionDetailsListItemViewData: Map<String, List<TransactionData>> by screenViewModel.transactionDetailsListItemViewData.collectAsStateWithLifecycle(
         initialValue = emptyMap(),
     )
+    val isLoading: Boolean by screenViewModel.isLoading.collectAsStateWithLifecycle()
     val selectedExpenseCategoryIndices: List<Int> by screenViewModel.selectedExpenseCategoryIndices.collectAsStateWithLifecycle()
     val selectedIncomeCategoryIndices: List<Int> by screenViewModel.selectedIncomeCategoryIndices.collectAsStateWithLifecycle()
     val selectedInvestmentCategoryIndices: List<Int> by screenViewModel.selectedInvestmentCategoryIndices.collectAsStateWithLifecycle()
@@ -52,6 +53,7 @@ fun TransactionsScreen(
 
     TransactionsScreenView(
         data = TransactionsScreenViewData(
+            isLoading = isLoading,
             expenseCategories = expenseCategories,
             incomeCategories = incomeCategories,
             investmentCategories = investmentCategories,

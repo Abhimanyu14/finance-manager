@@ -44,6 +44,10 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     // endregion
 
     // region Filter
+    private val _isLoading = MutableStateFlow(
+        value = false,
+    )
+    override val isLoading: StateFlow<Boolean> = _isLoading
     private val _selectedExpenseCategoryIndices = MutableStateFlow(
         value = emptyList<Int>(),
     )
@@ -110,6 +114,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             sources,
             selectedSortOption,
         ) { flows ->
+            _isLoading.value = true
             val allTransactionDataValue: List<TransactionData> =
                 flows[0] as? List<TransactionData> ?: emptyList()
             val searchTextValue: String = flows[1] as String
@@ -152,6 +157,11 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                         investmentCategoriesValue = investmentCategoriesValue,
                     )
                 }
+                .also {
+                    if (it.isEmpty()) {
+                        _isLoading.value = false
+                    }
+                }
                 .sortedWith(compareBy {
                     when (selectedSortOptionValue) {
                         SortOption.AMOUNT_ASC -> {
@@ -168,6 +178,11 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                         }
                     }
                 })
+                .also {
+                    if (it.isEmpty()) {
+                        _isLoading.value = false
+                    }
+                }
                 .groupBy {
                     if (selectedSortOptionValue == SortOption.LATEST_FIRST || selectedSortOptionValue == SortOption.OLDEST_FIRST) {
                         getDateString(
@@ -176,6 +191,9 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                     } else {
                         ""
                     }
+                }
+                .also {
+                    _isLoading.value = false
                 }
         }.flowOn(
             context = dispatcherProvider.io,

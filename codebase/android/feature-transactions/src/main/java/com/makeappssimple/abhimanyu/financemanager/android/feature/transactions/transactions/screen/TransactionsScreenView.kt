@@ -67,6 +67,7 @@ internal enum class TransactionsBottomSheetType : BottomSheetType {
 }
 
 internal data class TransactionsScreenViewData(
+    val isLoading: Boolean,
     val expenseCategories: List<Category>,
     val incomeCategories: List<Category>,
     val investmentCategories: List<Category>,
@@ -266,7 +267,7 @@ internal fun TransactionsScreenView(
                         .fillMaxSize(),
                 ) {
                     AnimatedVisibility(
-                        visible = data.transactionDetailsListItemViewData.isEmpty() && data.searchText.isEmpty(),
+                        visible = data.isLoading,
                     ) {
                         MyLinearProgressIndicator()
                     }

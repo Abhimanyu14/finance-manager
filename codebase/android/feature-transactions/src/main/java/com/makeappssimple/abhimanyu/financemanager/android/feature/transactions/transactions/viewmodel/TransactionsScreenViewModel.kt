@@ -15,6 +15,7 @@ interface TransactionsScreenViewModel : ScreenViewModel {
     val investmentCategories: Flow<List<Category>>
     val sources: Flow<List<Source>>
     val transactionDetailsListItemViewData: Flow<Map<String, List<TransactionData>>>
+    val isLoading: StateFlow<Boolean>
     val selectedExpenseCategoryIndices: StateFlow<List<Int>>
     val selectedIncomeCategoryIndices: StateFlow<List<Int>>
     val selectedInvestmentCategoryIndices: StateFlow<List<Int>>
