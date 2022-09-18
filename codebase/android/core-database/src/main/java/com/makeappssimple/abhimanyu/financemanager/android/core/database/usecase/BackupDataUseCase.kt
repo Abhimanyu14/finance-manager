@@ -45,18 +45,22 @@ class BackupDataUseCaseImpl(
             lastBackupTimestamp = System.currentTimeMillis().toString(),
         )
         categories.zip(emojis) { categoriesValue, emojisValue ->
-            databaseBackupData.categories = categoriesValue
-            databaseBackupData.emojis = emojisValue
-            databaseBackupData
+            databaseBackupData.copy(
+                categories = categoriesValue,
+                emojis = emojisValue,
+            )
         }.zip(sources) { databaseBackupDataValue, sourcesValue ->
-            databaseBackupDataValue.sources = sourcesValue
-            databaseBackupDataValue
+            databaseBackupDataValue.copy(
+                sources = sourcesValue,
+            )
         }.zip(transactions) { databaseBackupDataValue, transactionsValue ->
-            databaseBackupDataValue.transactions = transactionsValue
-            databaseBackupDataValue
+            databaseBackupDataValue.copy(
+                transactions = transactionsValue,
+            )
         }.zip(transactionForValues) { databaseBackupDataValue, transactionForValuesValue ->
-            databaseBackupDataValue.transactionForValues = transactionForValuesValue
-            databaseBackupDataValue
+            databaseBackupDataValue.copy(
+                transactionForValues = transactionForValuesValue,
+            )
         }.collect { databaseBackupDataValue ->
             jsonUtil.writeDatabaseBackupDataToFile(
                 uri = uri,

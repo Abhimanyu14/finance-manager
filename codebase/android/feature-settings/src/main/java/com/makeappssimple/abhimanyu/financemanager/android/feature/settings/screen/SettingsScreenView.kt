@@ -22,6 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,6 +49,7 @@ internal enum class SettingsBottomSheetType : BottomSheetType {
     NONE,
 }
 
+@Immutable
 internal data class SettingsScreenViewData(
     val isLoading: Boolean,
     val createDocument: ManagedActivityResultLauncher<String, Uri?>,

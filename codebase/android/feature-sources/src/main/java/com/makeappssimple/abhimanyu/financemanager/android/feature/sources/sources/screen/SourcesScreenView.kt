@@ -10,6 +10,7 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,6 +46,7 @@ internal enum class SourcesBottomSheetType : BottomSheetType {
     DELETE_CONFIRMATION,
 }
 
+@Immutable
 internal data class SourcesScreenViewData(
     val defaultSourceId: Int?,
     val sourcesIsUsedInTransactions: List<Boolean>,

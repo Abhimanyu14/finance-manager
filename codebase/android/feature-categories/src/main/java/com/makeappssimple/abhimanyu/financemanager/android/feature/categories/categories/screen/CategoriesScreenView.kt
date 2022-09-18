@@ -15,6 +15,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -52,6 +53,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ca
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.components.bottomsheet.CategoryMenuBottomSheetContent
 import kotlinx.coroutines.launch
 
+@Immutable
 internal sealed class CategoriesBottomSheetType : BottomSheetType {
     data class CategoryMenu(
         val deleteEnabled: Boolean,
@@ -67,6 +69,7 @@ internal sealed class CategoriesBottomSheetType : BottomSheetType {
     object SetAsDefaultConfirmation : CategoriesBottomSheetType()
 }
 
+@Immutable
 internal data class CategoriesScreenViewData(
     val defaultExpenseCategoryId: Int?,
     val defaultIncomeCategoryId: Int?,

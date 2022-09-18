@@ -1,5 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 sealed class EditTransactionScreenUiVisibilityState(
     val isTitleTextFieldVisible: Boolean = false,
     val isDescriptionTextFieldVisible: Boolean = false,

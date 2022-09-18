@@ -13,6 +13,7 @@ import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
@@ -22,7 +23,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.MyBottomSheetTitle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getIcon
 
-data class SelectSourceBottomSheetItemData(
+@Immutable
+internal data class SelectSourceBottomSheetItemData(
     val text: String,
     val iconKey: String,
     val isSelected: Boolean,
@@ -30,7 +32,7 @@ data class SelectSourceBottomSheetItemData(
 )
 
 @Composable
-fun SelectSourceBottomSheet(
+internal fun SelectSourceBottomSheet(
     modifier: Modifier = Modifier,
     items: List<SelectSourceBottomSheetItemData>,
 ) {

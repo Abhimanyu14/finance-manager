@@ -13,6 +13,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -28,6 +29,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.Ch
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MySelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 
+@Immutable
 internal data class TransactionsFilterBottomSheetSelectionData(
     val selectedExpenseCategoryIndices: List<Int>,
     val selectedIncomeCategoryIndices: List<Int>,

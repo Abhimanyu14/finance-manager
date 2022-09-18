@@ -13,6 +13,7 @@ import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
@@ -22,14 +23,15 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bo
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.SortOption
 
-data class TransactionsSortBottomSheetItemData(
+@Immutable
+internal data class TransactionsSortBottomSheetItemData(
     val sortOption: SortOption,
     val isSelected: Boolean,
     val onClick: () -> Unit,
 )
 
 @Composable
-fun TransactionsSortBottomSheet(
+internal fun TransactionsSortBottomSheet(
     modifier: Modifier = Modifier,
     items: List<TransactionsSortBottomSheetItemData>,
 ) {

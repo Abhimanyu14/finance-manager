@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,6 +44,7 @@ internal enum class HomeBottomSheetType : BottomSheetType {
     MENU,
 }
 
+@Immutable
 internal data class HomeScreenViewData(
     val transactionData: List<TransactionData>,
     val navigationManager: NavigationManager,

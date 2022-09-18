@@ -1,5 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.chart.pie
 
+import androidx.compose.runtime.Immutable
+
+@Immutable
 data class PieChartData(
     val items: List<PieChartItemData>,
 ) {

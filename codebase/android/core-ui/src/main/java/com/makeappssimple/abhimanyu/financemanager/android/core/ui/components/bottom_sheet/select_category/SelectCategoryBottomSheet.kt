@@ -13,6 +13,7 @@ import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
@@ -23,14 +24,15 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.MyBottomSheetTitle
 
-data class SelectCategoryBottomSheetItemData(
+@Immutable
+internal data class SelectCategoryBottomSheetItemData(
     val category: Category,
     val isSelected: Boolean,
     val onClick: () -> Unit,
 )
 
 @Composable
-fun SelectCategoryBottomSheet(
+internal fun SelectCategoryBottomSheet(
     modifier: Modifier = Modifier,
     items: List<SelectCategoryBottomSheetItemData>,
 ) {

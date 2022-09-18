@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-fun TransactionsSortBottomSheetContent(
+internal fun TransactionsSortBottomSheetContent(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
     selectedSortOptionIndex: Int,

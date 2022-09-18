@@ -7,7 +7,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
 @HiltViewModel
-class TotalBalanceCardViewModelImpl @Inject constructor(
+internal class TotalBalanceCardViewModelImpl @Inject constructor(
     getSourcesTotalBalanceAmountValueUseCase: GetSourcesTotalBalanceAmountValueUseCase,
 ) : TotalBalanceCardViewModel, ViewModel() {
     override val sourcesTotalBalanceAmountValue: Flow<Long> =

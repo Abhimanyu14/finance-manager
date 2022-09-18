@@ -13,6 +13,7 @@ import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,6 +45,7 @@ internal enum class AddSourceBottomSheetType : BottomSheetType {
     NONE,
 }
 
+@Immutable
 internal data class AddSourceScreenViewData(
     val selectedSourceTypeIndex: Int,
     val sourceTypes: List<SourceType>,

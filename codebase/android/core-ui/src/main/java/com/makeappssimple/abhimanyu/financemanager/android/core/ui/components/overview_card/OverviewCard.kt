@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
 
-enum class OverviewTabOption(
+internal enum class OverviewTabOption(
     val title: String,
 ) {
     DAY("DAY"),

@@ -20,7 +20,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 
 @HiltViewModel
-class OverviewCardViewModelImpl @Inject constructor(
+internal class OverviewCardViewModelImpl @Inject constructor(
     dispatcherProvider: DispatcherProvider,
     getCurrentDayTransactionsUseCase: GetCurrentDayTransactionsUseCase,
     getCurrentMonthTransactionsUseCase: GetCurrentMonthTransactionsUseCase,

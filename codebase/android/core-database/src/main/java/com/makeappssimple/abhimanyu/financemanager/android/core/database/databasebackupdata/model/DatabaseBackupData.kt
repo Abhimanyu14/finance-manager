@@ -9,11 +9,11 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class DatabaseBackupData(
-    var lastBackupTime: String = "",
-    var lastBackupTimestamp: String = "",
-    var categories: List<Category> = emptyList(),
-    var emojis: List<EmojiLocalEntity> = emptyList(),
-    var sources: List<Source> = emptyList(),
-    var transactions: List<Transaction> = emptyList(),
-    var transactionForValues: List<TransactionFor> = emptyList(),
+    val lastBackupTime: String = "",
+    val lastBackupTimestamp: String = "",
+    val categories: List<Category> = emptyList(),
+    val emojis: List<EmojiLocalEntity> = emptyList(),
+    val sources: List<Source> = emptyList(),
+    val transactions: List<Transaction> = emptyList(),
+    val transactionForValues: List<TransactionFor> = emptyList(),
 )
