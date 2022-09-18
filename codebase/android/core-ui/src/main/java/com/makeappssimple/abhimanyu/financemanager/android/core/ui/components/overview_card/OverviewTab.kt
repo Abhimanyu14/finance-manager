@@ -34,6 +34,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
@@ -112,7 +113,9 @@ fun OverviewTab(
                 MyText(
                     modifier = Modifier
                         .onGloballyPositioned {
-                            tabWidths.add(index, density.run { it.size.width.toDp() })
+                            if (tabWidths.size < items.size) {
+                                tabWidths.add(index, density.run { it.size.width.toDp() })
+                            }
                         }
                         .widthIn(
                             min = 64.dp,
@@ -150,9 +153,12 @@ private fun OverviewTabIndicator(
             .width(
                 width = indicatorWidth,
             )
-            .offset(
-                x = indicatorOffset,
-            )
+            .offset {
+                IntOffset(
+                    x = indicatorOffset.roundToPx(),
+                    y = 0,
+                )
+            }
             .clip(
                 shape = CircleShape,
             )
@@ -187,7 +193,7 @@ private fun OverviewSelectionPreview() {
                 selectedItemIndex = selectedIndex,
                 onClick = {
                     selectedIndex = it
-                }
+                },
             )
         }
     }
