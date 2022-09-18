@@ -1,13 +1,19 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions
 
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Test
 import java.util.Calendar
 import java.util.Locale
 
 class CalendarExtensionsTest {
-    private val calendar: Calendar = Calendar.getInstance(Locale.getDefault()).apply {
-        timeInMillis = 1649354842327
+    private lateinit var calendar: Calendar
+
+    @Before
+    fun setUp() {
+        calendar = Calendar.getInstance(Locale.getDefault()).apply {
+            timeInMillis = 1649354842327
+        }
     }
 
     @Test

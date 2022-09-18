@@ -22,9 +22,9 @@ var Calendar.year: Int
     }
 
 var Calendar.hour: Int
-    get() = this[Calendar.HOUR]
+    get() = this[Calendar.HOUR_OF_DAY]
     set(value) {
-        this[Calendar.HOUR] = value
+        this[Calendar.HOUR_OF_DAY] = value
     }
 
 var Calendar.minute: Int
