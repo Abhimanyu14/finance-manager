@@ -22,6 +22,7 @@ import javax.inject.Inject
 import kotlin.math.abs
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -187,19 +188,25 @@ internal class EditSourceScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            _source.value = getSourceUseCase(
-                id = id,
-            )
+            _source.update {
+                getSourceUseCase(
+                    id = id,
+                )
+            }
             updateInitialSourceValue()
         }
     }
 
     private fun updateInitialSourceValue() {
         val source = source.value ?: return
-        _selectedSourceTypeIndex.value = sourceTypes.indexOf(
-            element = source.type,
-        )
+        _selectedSourceTypeIndex.update {
+            sourceTypes.indexOf(
+                element = source.type,
+            )
+        }
         _name.value = source.name
-        _balanceAmountValue.value = source.balanceAmount.value.toString()
+        _balanceAmountValue.update {
+            source.balanceAmount.value.toString()
+        }
     }
 }

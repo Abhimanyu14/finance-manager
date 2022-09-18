@@ -25,6 +25,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -162,18 +163,22 @@ internal class EditCategoryScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            category.value = getCategoryUseCase(
-                id = id,
-            )
+            category.update {
+                getCategoryUseCase(
+                    id = id,
+                )
+            }
             updateInitialCategoryValue()
         }
     }
 
     private fun updateInitialCategoryValue() {
         val category = category.value ?: return
-        _selectedTransactionTypeIndex.value = transactionTypes.indexOf(
-            element = category.transactionType,
-        )
+        _selectedTransactionTypeIndex.update {
+            transactionTypes.indexOf(
+                element = category.transactionType,
+            )
+        }
         _title.value = category.title
         _emoji.value = category.emoji
     }

@@ -43,6 +43,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.transformLatest
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import java.util.Locale
@@ -364,9 +365,11 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
             launch {
                 selectedCategoryId.collectLatest {
                     val selectedCategoryIdValue = it ?: return@collectLatest
-                    _titleSuggestions.value = getTitleSuggestionsUseCase(
-                        categoryId = selectedCategoryIdValue,
-                    )
+                    _titleSuggestions.update {
+                        getTitleSuggestionsUseCase(
+                            categoryId = selectedCategoryIdValue,
+                        )
+                    }
                 }
             }
         }
