@@ -271,6 +271,10 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 transactionData.transaction.title.contains(
                     other = searchTextValue,
                     ignoreCase = true,
+                ) ||
+                transactionData.transaction.amount.value.toString().contains(
+                    other = searchTextValue,
+                    ignoreCase = true,
                 )
     }
 
