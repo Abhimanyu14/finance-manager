@@ -1,7 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.screen
 
-import android.app.DatePickerDialog
-import android.app.TimePickerDialog
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,15 +30,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.dayOfMonth
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.formattedDate
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.formattedTime
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.hour
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.minute
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.month
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.setDate
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.setTime
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.year
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
@@ -51,6 +44,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSh
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.AmountCommaVisualTransformation
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.getMyDatePickerDialog
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.getMyTimePickerDialog
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ChipItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyHorizontalScrollingRadioGroup
@@ -106,40 +101,32 @@ internal fun AddTransactionScreenView(
     data: AddTransactionScreenViewData,
     state: CommonScreenViewState,
 ) {
-    val onDateSetListener = DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
-        data.updateTransactionCalendar(
-            (data.uiState.transactionCalendar.clone() as Calendar)
-                .setDate(
-                    dayOfMonth = dayOfMonth,
-                    month = month,
-                    year = year,
-                ),
-        )
-
-    }
-    val transactionDatePickerDialog = DatePickerDialog(
-        state.context,
-        onDateSetListener,
-        data.uiState.transactionCalendar.year,
-        data.uiState.transactionCalendar.month,
-        data.uiState.transactionCalendar.dayOfMonth,
+    val transactionDatePickerDialog = getMyDatePickerDialog(
+        context = state.context,
+        calendar = data.uiState.transactionCalendar,
+        onDateSetListener = { year, month, dayOfMonth ->
+            data.updateTransactionCalendar(
+                (data.uiState.transactionCalendar.clone() as Calendar)
+                    .setDate(
+                        dayOfMonth = dayOfMonth,
+                        month = month,
+                        year = year,
+                    ),
+            )
+        },
     )
-
-    val onTimeSetListener = TimePickerDialog.OnTimeSetListener { _, hour, minute ->
-        data.updateTransactionCalendar(
-            (data.uiState.transactionCalendar.clone() as Calendar)
-                .setTime(
-                    hour = hour,
-                    minute = minute,
-                )
-        )
-    }
-    val transactionTimePickerDialog = TimePickerDialog(
-        state.context,
-        onTimeSetListener,
-        data.uiState.transactionCalendar.hour,
-        data.uiState.transactionCalendar.minute,
-        false,
+    val transactionTimePickerDialog = getMyTimePickerDialog(
+        context = state.context,
+        calendar = data.uiState.transactionCalendar,
+        onTimeSetListener = { hour, minute ->
+            data.updateTransactionCalendar(
+                (data.uiState.transactionCalendar.clone() as Calendar)
+                    .setTime(
+                        hour = hour,
+                        minute = minute,
+                    )
+            )
+        },
     )
 
     var addTransactionBottomSheetType by remember {
