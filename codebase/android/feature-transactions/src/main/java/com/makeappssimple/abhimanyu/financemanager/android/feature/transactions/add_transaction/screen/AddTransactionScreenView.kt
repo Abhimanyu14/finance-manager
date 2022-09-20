@@ -312,9 +312,9 @@ internal fun AddTransactionScreenView(
                             value = data.uiState.category?.title.orEmpty(),
                             labelTextStringResourceId = R.string.screen_add_transaction_category,
                             onClick = {
+                                clearFocus()
                                 addTransactionBottomSheetType =
                                     AddTransactionBottomSheetType.SELECT_CATEGORY
-                                clearFocus()
                                 toggleModalBottomSheetState(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,
@@ -369,8 +369,8 @@ internal fun AddTransactionScreenView(
                                     )
                                 },
                             onSelectionChange = { index ->
-                                data.updateTitle(data.titleSuggestions[index])
                                 clearFocus()
+                                data.updateTitle(data.titleSuggestions[index])
                             },
                             modifier = Modifier
                                 .padding(
@@ -391,6 +391,7 @@ internal fun AddTransactionScreenView(
                                 },
                             selectedItemIndex = data.uiState.selectedTransactionForIndex,
                             onSelectionChange = { updatedSelectedTransactionForIndex ->
+                                clearFocus()
                                 data.updateSelectedTransactionForIndex(
                                     updatedSelectedTransactionForIndex
                                 )
@@ -443,9 +444,9 @@ internal fun AddTransactionScreenView(
                                 R.string.screen_add_transaction_source
                             },
                             onClick = {
+                                clearFocus()
                                 addTransactionBottomSheetType =
                                     AddTransactionBottomSheetType.SELECT_SOURCE_FROM
-                                clearFocus()
                                 toggleModalBottomSheetState(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,
@@ -470,9 +471,9 @@ internal fun AddTransactionScreenView(
                                 R.string.screen_add_transaction_source
                             },
                             onClick = {
+                                clearFocus()
                                 addTransactionBottomSheetType =
                                     AddTransactionBottomSheetType.SELECT_SOURCE_TO
-                                clearFocus()
                                 toggleModalBottomSheetState(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,
@@ -490,6 +491,7 @@ internal fun AddTransactionScreenView(
                         value = data.uiState.transactionCalendar.formattedDate(),
                         labelTextStringResourceId = R.string.screen_add_transaction_transaction_date,
                         onClick = {
+                            clearFocus()
                             transactionDatePickerDialog.show()
                         },
                         modifier = Modifier
@@ -503,6 +505,7 @@ internal fun AddTransactionScreenView(
                         value = data.uiState.transactionCalendar.formattedTime(),
                         labelTextStringResourceId = R.string.screen_add_transaction_transaction_time,
                         onClick = {
+                            clearFocus()
                             transactionTimePickerDialog.show()
                         },
                         modifier = Modifier
@@ -516,6 +519,7 @@ internal fun AddTransactionScreenView(
                         textStringResourceId = R.string.screen_add_transaction_floating_action_button_content_description,
                         isEnabled = data.isValidTransactionData,
                         onClick = {
+                            clearFocus()
                             data.insertTransaction()
                         },
                     )
