@@ -91,20 +91,19 @@ internal class OverviewCardViewModelImpl @Inject constructor(
         context = dispatcherProvider.io,
     )
 
-    override val amountData: StateFlow<List<Float>?> =
-        combine(
-            flow = incomeAmount,
-            flow2 = expenseAmount,
-        ) { incomeAmount, expenseAmount ->
-            listOf(
-                incomeAmount ?: 0F,
-                expenseAmount ?: 0F,
-            )
-        }.flowOn(
-            context = dispatcherProvider.io,
-        ).defaultObjectStateIn(
-            scope = viewModelScope,
+    override val amountData: StateFlow<List<Float>?> = combine(
+        flow = incomeAmount,
+        flow2 = expenseAmount,
+    ) { incomeAmount, expenseAmount ->
+        listOf(
+            incomeAmount ?: 0F,
+            expenseAmount ?: 0F,
         )
+    }.flowOn(
+        context = dispatcherProvider.io,
+    ).defaultObjectStateIn(
+        scope = viewModelScope,
+    )
 
     override fun setOverviewTabSelectionIndex(
         updatedOverviewTabSelectionIndex: Int,
