@@ -15,14 +15,14 @@ internal fun AddCategorySelectEmojiBottomSheetContent(
     context: Context,
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
-    emojis: List<Emoji>,
+    emojiGroups: Map<String, List<Emoji>>,
     searchText: String,
     resetBottomSheetType: () -> Unit,
     updateEmoji: (updatedEmoji: String) -> Unit,
     updateSearchText: (updatedSearchText: String) -> Unit,
 ) {
     MyEmojiPickerBottomSheet(
-        emojis = emojis,
+        emojiGroups = emojiGroups,
         searchText = searchText,
         onEmojiClick = { emoji ->
             toggleModalBottomSheetState(

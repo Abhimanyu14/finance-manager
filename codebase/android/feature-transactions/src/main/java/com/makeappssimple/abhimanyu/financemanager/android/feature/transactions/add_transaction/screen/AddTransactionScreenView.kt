@@ -74,7 +74,7 @@ internal data class AddTransactionScreenViewData(
     val uiState: AddTransactionScreenUiState,
     val uiVisibilityState: AddTransactionScreenUiVisibilityState,
     val isValidTransactionData: Boolean,
-    val categories: List<Category>,
+    val filteredCategories: List<Category>,
     val sources: List<Source>,
     val titleSuggestions: List<String>,
     val transactionTypesForNewTransaction: List<TransactionType>,
@@ -186,8 +186,7 @@ internal fun AddTransactionScreenView(
                     SelectCategoryBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
-                        categories = data.categories,
-                        selectedTransactionType = data.selectedTransactionType,
+                        filteredCategories = data.filteredCategories,
                         selectedCategoryId = data.uiState.category?.id,
                         resetBottomSheetType = {
                             addTransactionBottomSheetType = AddTransactionBottomSheetType.NONE

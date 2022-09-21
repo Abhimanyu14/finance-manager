@@ -14,7 +14,7 @@ interface AddCategoryScreenViewModel : ScreenViewModel {
     val selectedTransactionTypeIndex: StateFlow<Int>
     val emoji: StateFlow<String>
     val searchText: StateFlow<String>
-    val filteredEmojis: Flow<List<Emoji>>
+    val emojiGroups: Flow<Map<String, List<Emoji>>>
 
     fun insertCategory()
 

@@ -26,7 +26,7 @@ fun AddTransactionScreen(
     val uiVisibilityState: AddTransactionScreenUiVisibilityState by screenViewModel.uiVisibilityState.collectAsStateWithLifecycle()
     val uiState: AddTransactionScreenUiState by screenViewModel.uiState.collectAsStateWithLifecycle()
     val isValidTransactionData: Boolean by screenViewModel.isValidTransactionData.collectAsStateWithLifecycle()
-    val categories: List<Category> by screenViewModel.categories.collectAsStateWithLifecycle(
+    val filteredCategories: List<Category> by screenViewModel.filteredCategories.collectAsStateWithLifecycle(
         initialValue = emptyList(),
     )
     val sources: List<Source> by screenViewModel.sources.collectAsStateWithLifecycle(
@@ -52,7 +52,7 @@ fun AddTransactionScreen(
             uiState = uiState,
             uiVisibilityState = uiVisibilityState,
             isValidTransactionData = isValidTransactionData,
-            categories = categories,
+            filteredCategories = filteredCategories,
             sources = sources,
             titleSuggestions = titleSuggestions,
             transactionTypesForNewTransaction = transactionTypesForNewTransaction,

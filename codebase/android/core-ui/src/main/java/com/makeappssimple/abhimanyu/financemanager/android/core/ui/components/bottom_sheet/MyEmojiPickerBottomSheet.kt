@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -25,21 +24,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.te
 @Composable
 fun MyEmojiPickerBottomSheet(
     modifier: Modifier = Modifier,
-    emojis: List<Emoji>,
+    emojiGroups: Map<String, List<Emoji>>,
     searchText: String,
     onEmojiClick: (emoji: Emoji) -> Unit,
     onEmojiLongClick: (emoji: Emoji) -> Unit,
     updateSearchText: (updatedSearchText: String) -> Unit,
 ) {
-    val emojiGroups = remember(
-        key1 = emojis,
-    ) {
-        emojis.groupBy { emoji ->
-            emoji.group
-        }.filter { (_, emojis) ->
-            emojis.isNotEmpty()
-        }
-    }
     Column(
         modifier = modifier
             .fillMaxWidth()

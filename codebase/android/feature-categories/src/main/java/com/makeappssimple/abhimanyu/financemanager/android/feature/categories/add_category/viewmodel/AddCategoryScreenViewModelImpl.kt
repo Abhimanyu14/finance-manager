@@ -6,6 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.InsertCategoriesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
@@ -61,7 +62,7 @@ internal class AddCategoryScreenViewModelImpl @Inject constructor(
     private val emojis: StateFlow<List<EmojiLocalEntity>> = getEmojisUseCase().defaultListStateIn(
         scope = viewModelScope,
     )
-    override val filteredEmojis: Flow<List<EmojiLocalEntity>> = combine(
+    override val emojiGroups: Flow<Map<String, List<Emoji>>> = combine(
         flow = emojis,
         flow2 = searchText,
     ) { emojis, searchText ->
@@ -71,6 +72,10 @@ internal class AddCategoryScreenViewModelImpl @Inject constructor(
             } else {
                 emoji.unicodeName.contains(searchText)
             }
+        }.groupBy { emoji ->
+            emoji.group
+        }.filter { (_, emojis) ->
+            emojis.isNotEmpty()
         }
     }.flowOn(
         context = dispatcherProvider.io,

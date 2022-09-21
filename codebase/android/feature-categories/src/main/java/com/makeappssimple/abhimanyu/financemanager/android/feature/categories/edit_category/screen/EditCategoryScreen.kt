@@ -22,8 +22,8 @@ fun EditCategoryScreen(
         message = "Inside EditCategoryScreen",
     )
     val selectedTransactionTypeIndex: Int by screenViewModel.selectedTransactionTypeIndex.collectAsStateWithLifecycle()
-    val emojis: List<Emoji> by screenViewModel.filteredEmojis.collectAsStateWithLifecycle(
-        initialValue = emptyList(),
+    val emojiGroups: Map<String, List<Emoji>> by screenViewModel.emojiGroups.collectAsStateWithLifecycle(
+        initialValue = emptyMap(),
     )
     val emoji: String by screenViewModel.emoji.collectAsStateWithLifecycle()
     val searchText: String by screenViewModel.searchText.collectAsStateWithLifecycle()
@@ -36,9 +36,9 @@ fun EditCategoryScreen(
     }
 
     LaunchedEffect(
-        key1 = emojis,
+        key1 = emojiGroups,
     ) {
-        if (emojis.isNotEmpty() && emoji == loadingEmoji) {
+        if (emojiGroups.isNotEmpty() && emoji == loadingEmoji) {
             screenViewModel.updateEmoji(
                 updatedEmoji = loadingCompletedEmoji,
             )
@@ -49,7 +49,7 @@ fun EditCategoryScreen(
         data = EditCategoryScreenViewData(
             categoryId = categoryId,
             selectedTransactionTypeIndex = selectedTransactionTypeIndex,
-            emojis = emojis,
+            emojiGroups = emojiGroups,
             transactionTypes = screenViewModel.transactionTypes,
             navigationManager = screenViewModel.navigationManager,
             emoji = emoji,

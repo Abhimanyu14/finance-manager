@@ -58,7 +58,7 @@ internal enum class EditCategoryBottomSheetType : BottomSheetType {
 internal data class EditCategoryScreenViewData(
     val categoryId: Int?,
     val selectedTransactionTypeIndex: Int,
-    val emojis: List<Emoji>,
+    val emojiGroups: Map<String, List<Emoji>>,
     val transactionTypes: List<TransactionType>,
     val navigationManager: NavigationManager,
     val emoji: String,
@@ -124,7 +124,7 @@ internal fun EditCategoryScreenView(
                         context = state.context,
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
-                        emojis = data.emojis,
+                        emojiGroups = data.emojiGroups,
                         searchText = data.searchText,
                         resetBottomSheetType = {
                             editCategoryBottomSheetType = EditCategoryBottomSheetType.NONE

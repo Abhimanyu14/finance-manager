@@ -12,7 +12,7 @@ import java.util.Calendar
 interface EditTransactionScreenViewModel : ScreenViewModel {
     val navigationManager: NavigationManager
     val transactionTypesForNewTransaction: StateFlow<List<TransactionType>>
-    val categories: StateFlow<List<Category>>
+    val filteredCategories: StateFlow<List<Category>>
     val sources: StateFlow<List<Source>>
     val transactionForValues: StateFlow<List<TransactionFor>>
     val uiState: StateFlow<EditTransactionScreenUiState>

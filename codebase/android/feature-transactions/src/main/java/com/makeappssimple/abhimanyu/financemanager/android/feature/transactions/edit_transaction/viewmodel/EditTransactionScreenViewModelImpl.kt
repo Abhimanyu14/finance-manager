@@ -75,6 +75,9 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
     private var originalTransactionCategory: Category? = null
     private var originalTransactionSourceFrom: Source? = null
     private var originalTransactionSourceTo: Source? = null
+    private val categories: StateFlow<List<Category>> = getCategoriesUseCase().defaultListStateIn(
+        scope = viewModelScope,
+    )
 
     override val transactionTypesForNewTransaction: StateFlow<List<TransactionType>> = flow {
         val sourceCount = getSourcesCountUseCase()
@@ -89,9 +92,6 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
             value = transactionTypesForNewTransaction,
         )
     }.defaultListStateIn(
-        scope = viewModelScope,
-    )
-    override val categories: StateFlow<List<Category>> = getCategoriesUseCase().defaultListStateIn(
         scope = viewModelScope,
     )
     override val sources: StateFlow<List<Source>> = getSourcesUseCase()
@@ -141,6 +141,17 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
             )
         }
     }.defaultObjectStateIn(
+        scope = viewModelScope,
+    )
+
+    override val filteredCategories: StateFlow<List<Category>> = combine(
+        flow = categories,
+        flow2 = selectedTransactionType,
+    ) { categories, selectedTransactionType ->
+        categories.filter { category ->
+            category.transactionType == selectedTransactionType
+        }
+    }.defaultListStateIn(
         scope = viewModelScope,
     )
 
@@ -669,7 +680,9 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
     private fun updateEditTransactionScreenUiState(
         updatedEditTransactionScreenUiState: EditTransactionScreenUiState,
     ) {
-        _uiState.value = updatedEditTransactionScreenUiState
+        _uiState.update {
+            updatedEditTransactionScreenUiState
+        }
     }
 
     private fun updateEditTransactionScreenUiVisibilityState(

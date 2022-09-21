@@ -24,7 +24,7 @@ fun EditTransactionScreen(
     logError(
         message = "Inside EditTransactionScreen",
     )
-    val categories: List<Category> by screenViewModel.categories.collectAsStateWithLifecycle(
+    val filteredCategories: List<Category> by screenViewModel.filteredCategories.collectAsStateWithLifecycle(
         initialValue = emptyList(),
     )
     val sources: List<Source> by screenViewModel.sources.collectAsStateWithLifecycle(
@@ -54,7 +54,7 @@ fun EditTransactionScreen(
             uiState = uiState,
             uiVisibilityState = uiVisibilityState,
             transactionId = transactionId,
-            categories = categories,
+            filteredCategories = filteredCategories,
             sources = sources,
             titleSuggestions = titleSuggestions,
             transactionTypesForNewTransaction = transactionTypesForNewTransaction,

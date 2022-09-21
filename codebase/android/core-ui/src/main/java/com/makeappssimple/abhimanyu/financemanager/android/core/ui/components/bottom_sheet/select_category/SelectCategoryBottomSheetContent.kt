@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.b
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import kotlinx.coroutines.CoroutineScope
 
@@ -11,17 +10,13 @@ import kotlinx.coroutines.CoroutineScope
 fun SelectCategoryBottomSheetContent(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
-    categories: List<Category>,
-    selectedTransactionType: TransactionType?,
+    filteredCategories: List<Category>,
     selectedCategoryId: Int?,
     resetBottomSheetType: () -> Unit,
     updateCategory: (updatedCategory: Category?) -> Unit,
 ) {
     SelectCategoryBottomSheet(
-        items = categories
-            .filter { category ->
-                category.transactionType == selectedTransactionType
-            }
+        items = filteredCategories
             .map { category ->
                 SelectCategoryBottomSheetItemData(
                     category = category,
@@ -36,7 +31,6 @@ fun SelectCategoryBottomSheetContent(
                         }
                     },
                 )
-            }
-            .toList(),
+            },
     )
 }
