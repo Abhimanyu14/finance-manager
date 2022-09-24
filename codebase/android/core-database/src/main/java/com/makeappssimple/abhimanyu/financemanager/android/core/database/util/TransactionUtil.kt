@@ -14,6 +14,7 @@ fun transactionsCleanUp(
                     sourceFromId = null,
                 )
             }
+
             TransactionType.EXPENSE -> {
                 it.copy(
                     sourceToId = null,
@@ -22,11 +23,13 @@ fun transactionsCleanUp(
                     ),
                 )
             }
+
             TransactionType.TRANSFER -> {
                 it.copy(
                     categoryId = null,
                 )
             }
+
             TransactionType.ADJUSTMENT -> {
                 val sourceId = it.sourceToId
                 it.copy(
@@ -46,10 +49,10 @@ fun transactionsCleanUp(
                     ),
                 )
             }
+
             TransactionType.INVESTMENT -> {
                 it.copy(
                     sourceToId = null,
-                    categoryId = null,
                 )
             }
         }
