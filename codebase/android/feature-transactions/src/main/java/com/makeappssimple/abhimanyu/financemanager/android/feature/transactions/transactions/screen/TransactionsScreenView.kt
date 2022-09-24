@@ -149,6 +149,7 @@ internal fun TransactionsScreenView(
                 TransactionsBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
+
                 TransactionsBottomSheetType.FILTERS -> {
                     TransactionsFilterBottomSheetContent(
                         coroutineScope = state.coroutineScope,
@@ -193,6 +194,7 @@ internal fun TransactionsScreenView(
                         },
                     )
                 }
+
                 TransactionsBottomSheetType.SORT -> {
                     TransactionsSortBottomSheetContent(
                         coroutineScope = state.coroutineScope,
@@ -207,6 +209,7 @@ internal fun TransactionsScreenView(
                         },
                     )
                 }
+
                 TransactionsBottomSheetType.DELETE_CONFIRMATION -> {
                     TransactionsDeleteConfirmationBottomSheetContent(
                         coroutineScope = state.coroutineScope,
@@ -278,6 +281,7 @@ internal fun TransactionsScreenView(
                                 data.searchText.isNotEmpty() ||
                                 data.selectedExpenseCategoryIndices.isNotEmpty() ||
                                 data.selectedIncomeCategoryIndices.isNotEmpty() ||
+                                data.selectedInvestmentCategoryIndices.isNotEmpty() ||
                                 data.selectedSourceIndices.isNotEmpty() ||
                                 data.selectedTransactionTypesIndices.isNotEmpty()
                     ) {
