@@ -63,11 +63,11 @@
     <string name="bottom_sheet_transactions_filter_clear">Clear</string>
     <string name="bottom_sheet_transactions_filter_reset">Reset</string>
     <string name="bottom_sheet_transactions_filter_apply">Apply</string>
-    <string name="bottom_sheet_transactions_filter_select_expense_categories">Select Expense Categories</string>
-    <string name="bottom_sheet_transactions_filter_select_income_categories">Select Income Categories</string>
-    <string name="bottom_sheet_transactions_filter_select_investment_categories">Select Investment Categories</string>
-    <string name="bottom_sheet_transactions_filter_select_sources">Select Sources</string>
-    <string name="bottom_sheet_transactions_filter_select_transaction_types">Select Transaction Types</string>
+    <string name="bottom_sheet_transactions_filter_expense_categories">Expense Categories</string>
+    <string name="bottom_sheet_transactions_filter_income_categories">Income Categories</string>
+    <string name="bottom_sheet_transactions_filter_investment_categories">Investment Categories</string>
+    <string name="bottom_sheet_transactions_filter_sources">Sources</string>
+    <string name="bottom_sheet_transactions_filter_transaction_types">Transaction Types</string>
     <!-- endregion -->
 
     <!-- region transactions sort bottom sheet -->
