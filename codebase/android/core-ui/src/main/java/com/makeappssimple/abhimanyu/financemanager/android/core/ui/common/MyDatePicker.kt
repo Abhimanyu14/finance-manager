@@ -2,9 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.common
 
 import android.app.DatePickerDialog
 import android.content.Context
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.dayOfMonth
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.month
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.year
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.dayOfMonth
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.month
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.year
 import java.util.Calendar
 
 fun getMyDatePickerDialog(

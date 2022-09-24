@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions
 
 import android.text.format.DateFormat
 import java.util.Calendar

@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.transa
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.capitalizeWords
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)

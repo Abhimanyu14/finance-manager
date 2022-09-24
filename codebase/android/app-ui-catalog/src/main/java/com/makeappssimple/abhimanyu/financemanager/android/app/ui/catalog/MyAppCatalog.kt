@@ -28,6 +28,7 @@ import com.google.accompanist.flowlayout.FlowCrossAxisAlignment
 import com.google.accompanist.flowlayout.FlowRow
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.addIfDoesNotContainItemElseRemove
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabData
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabRow
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
@@ -164,11 +165,7 @@ private fun LazyListScope.componentsTabContent(
             items = items,
             selectedItemsIndices = selectedItemsIndices,
             onSelectionChange = {
-                if (selectedItemsIndices.contains(it)) {
-                    selectedItemsIndices.remove(it)
-                } else {
-                    selectedItemsIndices.add(it)
-                }
+                selectedItemsIndices.addIfDoesNotContainItemElseRemove(it)
             },
         )
     }

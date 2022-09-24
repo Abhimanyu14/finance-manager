@@ -17,7 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.extensions.isNotNullOrBlank
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyIconButton
 
 @Composable
