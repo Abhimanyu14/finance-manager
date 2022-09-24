@@ -77,7 +77,7 @@ internal data class TransactionsScreenViewData(
     val selectedIncomeCategoryIndices: List<Int>,
     val selectedInvestmentCategoryIndices: List<Int>,
     val selectedSourceIndices: List<Int>,
-    val selectedTransactionTypesIndices: List<Int>,
+    val selectedTransactionTypeIndices: List<Int>,
     val sources: List<Source>,
     val transactionDetailsListItemViewData: Map<String, List<TransactionData>>,
     val navigationManager: NavigationManager,
@@ -163,7 +163,7 @@ internal fun TransactionsScreenView(
                         selectedIncomeCategoryIndices = data.selectedIncomeCategoryIndices,
                         selectedInvestmentCategoryIndices = data.selectedInvestmentCategoryIndices,
                         selectedSourceIndices = data.selectedSourceIndices,
-                        selectedTransactionTypesIndices = data.selectedTransactionTypesIndices,
+                        selectedTransactionTypeIndices = data.selectedTransactionTypeIndices,
                         updateSelectedExpenseCategoryIndices = { updatedSelectedExpenseCategoryIndices ->
                             data.updateSelectedExpenseCategoryIndices(
                                 updatedSelectedExpenseCategoryIndices
@@ -283,7 +283,7 @@ internal fun TransactionsScreenView(
                                 data.selectedIncomeCategoryIndices.isNotEmpty() ||
                                 data.selectedInvestmentCategoryIndices.isNotEmpty() ||
                                 data.selectedSourceIndices.isNotEmpty() ||
-                                data.selectedTransactionTypesIndices.isNotEmpty()
+                                data.selectedTransactionTypeIndices.isNotEmpty()
                     ) {
                         Row(
                             horizontalArrangement = Arrangement.End,

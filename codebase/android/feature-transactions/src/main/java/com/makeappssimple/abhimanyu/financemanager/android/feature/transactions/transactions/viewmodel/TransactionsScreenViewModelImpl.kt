@@ -70,7 +70,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     private val _selectedTransactionTypesIndices = MutableStateFlow(
         value = emptyList<Int>(),
     )
-    override val selectedTransactionTypesIndices: StateFlow<List<Int>> =
+    override val selectedTransactionTypeIndices: StateFlow<List<Int>> =
         _selectedTransactionTypesIndices
     // endregion
 
@@ -107,7 +107,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             selectedIncomeCategoryIndices,
             selectedInvestmentCategoryIndices,
             selectedSourceIndices,
-            selectedTransactionTypesIndices,
+            selectedTransactionTypeIndices,
             expenseCategories,
             incomeCategories,
             investmentCategories,

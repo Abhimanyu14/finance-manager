@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ChevronRight
@@ -33,6 +33,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.addIfDoesNotContainItemElseRemove
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
@@ -51,6 +52,14 @@ internal data class TransactionsFilterBottomSheetSelectionData(
     val selectedTransactionTypeIndices: List<Int>,
 )
 
+@Immutable
+internal data class TransactionFilterBottomSheetFilterGroupData(
+    @StringRes val headingTextStringResourceId: Int,
+    val items: List<ChipItem>,
+    val selectedItemsIndices: SnapshotStateList<Int>,
+    val onClearButtonClick: () -> Unit,
+)
+
 @Composable
 internal fun TransactionsFiltersBottomSheet(
     modifier: Modifier = Modifier,
@@ -59,47 +68,48 @@ internal fun TransactionsFiltersBottomSheet(
     investmentCategories: List<Category>,
     sources: List<Source>,
     transactionTypes: List<TransactionType>,
-    selectedExpenseCategoryIndices: List<Int>,
-    selectedIncomeCategoryIndices: List<Int>,
-    selectedInvestmentCategoryIndices: List<Int>,
-    selectedSourceIndices: List<Int>,
-    selectedTransactionTypesIndices: List<Int>,
+    transactionsFilterBottomSheetSelectionData: TransactionsFilterBottomSheetSelectionData,
     onPositiveButtonClick: (data: TransactionsFilterBottomSheetSelectionData) -> Unit,
     onNegativeButtonClick: () -> Unit,
 ) {
+    val expandedItemsIndices = remember {
+        mutableStateListOf(
+            transactionsFilterBottomSheetSelectionData.selectedExpenseCategoryIndices.isNotEmpty(),
+            transactionsFilterBottomSheetSelectionData.selectedIncomeCategoryIndices.isNotEmpty(),
+            transactionsFilterBottomSheetSelectionData.selectedInvestmentCategoryIndices.isNotEmpty(),
+            transactionsFilterBottomSheetSelectionData.selectedSourceIndices.isNotEmpty(),
+            transactionsFilterBottomSheetSelectionData.selectedTransactionTypeIndices.isNotEmpty(),
+        )
+    }
+
     val selectedExpenseCategoryIndicesValue = remember {
         mutableStateListOf(
-            elements = selectedExpenseCategoryIndices.toTypedArray(),
+            elements = transactionsFilterBottomSheetSelectionData.selectedExpenseCategoryIndices.toTypedArray(),
         )
     }
     val selectedIncomeCategoryIndicesValue = remember {
         mutableStateListOf(
-            elements = selectedIncomeCategoryIndices.toTypedArray(),
+            elements = transactionsFilterBottomSheetSelectionData.selectedIncomeCategoryIndices.toTypedArray(),
         )
     }
     val selectedInvestmentCategoryIndicesValue = remember {
         mutableStateListOf(
-            elements = selectedInvestmentCategoryIndices.toTypedArray(),
+            elements = transactionsFilterBottomSheetSelectionData.selectedInvestmentCategoryIndices.toTypedArray(),
         )
     }
     val selectedSourceIndicesValue = remember {
         mutableStateListOf(
-            elements = selectedSourceIndices.toTypedArray(),
+            elements = transactionsFilterBottomSheetSelectionData.selectedSourceIndices.toTypedArray(),
         )
     }
-    val selectedTransactionTypesIndicesValue = remember {
+    val selectedTransactionTypeIndicesValue = remember {
         mutableStateListOf(
-            elements = selectedTransactionTypesIndices.toTypedArray(),
+            elements = transactionsFilterBottomSheetSelectionData.selectedTransactionTypeIndices.toTypedArray(),
         )
     }
-    val expandedItemsIndices = remember {
-        mutableStateListOf(
-            elements = List(5) { false }.toTypedArray(),
-        )
-    }
+
     val filters = listOf(
         TransactionFilterBottomSheetFilterGroupData(
-            expanded = expandedItemsIndices[0],
             headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_expense_categories,
             items = expenseCategories.map { category ->
                 ChipItem(
@@ -110,12 +120,8 @@ internal fun TransactionsFiltersBottomSheet(
             onClearButtonClick = {
                 selectedExpenseCategoryIndicesValue.clear()
             },
-            onExpandButtonClick = {
-                expandedItemsIndices[0] = !expandedItemsIndices[0]
-            },
         ),
         TransactionFilterBottomSheetFilterGroupData(
-            expanded = expandedItemsIndices[1],
             headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_income_categories,
             items = incomeCategories.map { category ->
                 ChipItem(
@@ -126,12 +132,8 @@ internal fun TransactionsFiltersBottomSheet(
             onClearButtonClick = {
                 selectedIncomeCategoryIndicesValue.clear()
             },
-            onExpandButtonClick = {
-                expandedItemsIndices[1] = !expandedItemsIndices[1]
-            },
         ),
         TransactionFilterBottomSheetFilterGroupData(
-            expanded = expandedItemsIndices[2],
             headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_investment_categories,
             items = investmentCategories.map { category ->
                 ChipItem(
@@ -142,12 +144,8 @@ internal fun TransactionsFiltersBottomSheet(
             onClearButtonClick = {
                 selectedInvestmentCategoryIndicesValue.clear()
             },
-            onExpandButtonClick = {
-                expandedItemsIndices[2] = !expandedItemsIndices[2]
-            },
         ),
         TransactionFilterBottomSheetFilterGroupData(
-            expanded = expandedItemsIndices[3],
             headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_sources,
             items = sources.map { source ->
                 ChipItem(
@@ -158,24 +156,17 @@ internal fun TransactionsFiltersBottomSheet(
             onClearButtonClick = {
                 selectedSourceIndicesValue.clear()
             },
-            onExpandButtonClick = {
-                expandedItemsIndices[3] = !expandedItemsIndices[3]
-            },
         ),
         TransactionFilterBottomSheetFilterGroupData(
-            expanded = expandedItemsIndices[4],
             headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_transaction_types,
             items = transactionTypes.map { transactionType ->
                 ChipItem(
                     text = transactionType.title,
                 )
             },
-            selectedItemsIndices = selectedTransactionTypesIndicesValue,
+            selectedItemsIndices = selectedTransactionTypeIndicesValue,
             onClearButtonClick = {
-                selectedTransactionTypesIndicesValue.clear()
-            },
-            onExpandButtonClick = {
-                expandedItemsIndices[4] = !expandedItemsIndices[4]
+                selectedTransactionTypeIndicesValue.clear()
             },
         ),
     )
@@ -199,19 +190,26 @@ internal fun TransactionsFiltersBottomSheet(
                     height = 16.dp,
                 )
             }
-            items(
+            itemsIndexed(
                 items = filters,
-                key = { listItem ->
+                key = { _, listItem ->
                     listItem.headingTextStringResourceId.hashCode()
                 },
-            ) { listItem ->
+            ) { index, listItem ->
                 TransactionFilterBottomSheetFilterGroup(
-                    expanded = listItem.expanded,
+                    expanded = expandedItemsIndices[index],
                     headingTextStringResourceId = listItem.headingTextStringResourceId,
                     items = listItem.items,
                     selectedItemsIndices = listItem.selectedItemsIndices,
                     onClearButtonClick = listItem.onClearButtonClick,
-                    onExpandButtonClick = listItem.onExpandButtonClick,
+                    onExpandButtonClick = {
+                        expandedItemsIndices[index] = !expandedItemsIndices[index]
+                    },
+                    onItemClick = { clickedItemIndex ->
+                        listItem.selectedItemsIndices.addIfDoesNotContainItemElseRemove(
+                            item = clickedItemIndex,
+                        )
+                    },
                 )
             }
         }
@@ -231,8 +229,9 @@ internal fun TransactionsFiltersBottomSheet(
                 onClick = {
                     selectedExpenseCategoryIndicesValue.clear()
                     selectedIncomeCategoryIndicesValue.clear()
+                    selectedInvestmentCategoryIndicesValue.clear()
                     selectedSourceIndicesValue.clear()
-                    selectedTransactionTypesIndicesValue.clear()
+                    selectedTransactionTypeIndicesValue.clear()
                     onNegativeButtonClick()
                 },
             ) {
@@ -256,7 +255,7 @@ internal fun TransactionsFiltersBottomSheet(
                             selectedIncomeCategoryIndices = selectedIncomeCategoryIndicesValue,
                             selectedInvestmentCategoryIndices = selectedInvestmentCategoryIndicesValue,
                             selectedSourceIndices = selectedSourceIndicesValue,
-                            selectedTransactionTypeIndices = selectedTransactionTypesIndicesValue,
+                            selectedTransactionTypeIndices = selectedTransactionTypeIndicesValue,
                         )
                     )
                 },
@@ -270,24 +269,15 @@ internal fun TransactionsFiltersBottomSheet(
     }
 }
 
-@Immutable
-internal data class TransactionFilterBottomSheetFilterGroupData(
-    val expanded: Boolean,
-    @StringRes val headingTextStringResourceId: Int,
-    val items: List<ChipItem>,
-    val selectedItemsIndices: SnapshotStateList<Int>,
-    val onClearButtonClick: () -> Unit,
-    val onExpandButtonClick: () -> Unit,
-)
-
 @Composable
 private fun TransactionFilterBottomSheetFilterGroup(
     expanded: Boolean,
     @StringRes headingTextStringResourceId: Int,
     items: List<ChipItem>,
-    selectedItemsIndices: SnapshotStateList<Int>,
+    selectedItemsIndices: List<Int>,
     onClearButtonClick: () -> Unit,
     onExpandButtonClick: () -> Unit,
+    onItemClick: (index: Int) -> Unit,
 ) {
     val chevronDegrees: Float by animateFloatAsState(
         targetValue = if (expanded) {
@@ -369,11 +359,7 @@ private fun TransactionFilterBottomSheetFilterGroup(
                 items = items,
                 selectedItemsIndices = selectedItemsIndices,
                 onSelectionChange = { index ->
-                    if (selectedItemsIndices.contains(index)) {
-                        selectedItemsIndices.remove(index)
-                    } else {
-                        selectedItemsIndices.add(index)
-                    }
+                    onItemClick(index)
                 },
                 modifier = Modifier
                     .padding(

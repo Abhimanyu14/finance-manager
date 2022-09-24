@@ -20,7 +20,7 @@ interface TransactionsScreenViewModel : ScreenViewModel {
     val selectedIncomeCategoryIndices: StateFlow<List<Int>>
     val selectedInvestmentCategoryIndices: StateFlow<List<Int>>
     val selectedSourceIndices: StateFlow<List<Int>>
-    val selectedTransactionTypesIndices: StateFlow<List<Int>>
+    val selectedTransactionTypeIndices: StateFlow<List<Int>>
     val selectedSortOption: StateFlow<SortOption>
     val searchText: StateFlow<String>
 

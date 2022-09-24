@@ -41,7 +41,7 @@ fun TransactionsScreen(
     val selectedIncomeCategoryIndices: List<Int> by screenViewModel.selectedIncomeCategoryIndices.collectAsStateWithLifecycle()
     val selectedInvestmentCategoryIndices: List<Int> by screenViewModel.selectedInvestmentCategoryIndices.collectAsStateWithLifecycle()
     val selectedSourceIndices: List<Int> by screenViewModel.selectedSourceIndices.collectAsStateWithLifecycle()
-    val selectedTransactionTypesIndices: List<Int> by screenViewModel.selectedTransactionTypesIndices.collectAsStateWithLifecycle()
+    val selectedTransactionTypeIndices: List<Int> by screenViewModel.selectedTransactionTypeIndices.collectAsStateWithLifecycle()
     val selectedSortOption: SortOption by screenViewModel.selectedSortOption.collectAsStateWithLifecycle()
     val searchText: String by screenViewModel.searchText.collectAsStateWithLifecycle()
 
@@ -61,7 +61,7 @@ fun TransactionsScreen(
             selectedIncomeCategoryIndices = selectedIncomeCategoryIndices,
             selectedInvestmentCategoryIndices = selectedInvestmentCategoryIndices,
             selectedSourceIndices = selectedSourceIndices,
-            selectedTransactionTypesIndices = selectedTransactionTypesIndices,
+            selectedTransactionTypeIndices = selectedTransactionTypeIndices,
             sources = sources,
             transactionDetailsListItemViewData = transactionDetailsListItemViewData,
             navigationManager = screenViewModel.navigationManager,

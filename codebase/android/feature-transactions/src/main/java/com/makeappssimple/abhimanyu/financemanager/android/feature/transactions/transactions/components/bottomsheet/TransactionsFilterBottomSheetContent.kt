@@ -21,7 +21,7 @@ internal fun TransactionsFilterBottomSheetContent(
     selectedIncomeCategoryIndices: List<Int>,
     selectedInvestmentCategoryIndices: List<Int>,
     selectedSourceIndices: List<Int>,
-    selectedTransactionTypesIndices: List<Int>,
+    selectedTransactionTypeIndices: List<Int>,
     updateSelectedExpenseCategoryIndices: (updatedSelectedExpenseCategoryIndices: List<Int>) -> Unit,
     updateSelectedIncomeCategoryIndices: (updatedSelectedIncomeCategoryIndices: List<Int>) -> Unit,
     updateSelectedInvestmentCategoryIndices: (updatedSelectedInvestmentCategoryIndices: List<Int>) -> Unit,
@@ -35,11 +35,13 @@ internal fun TransactionsFilterBottomSheetContent(
         investmentCategories = investmentCategories,
         sources = sources,
         transactionTypes = transactionTypes,
-        selectedExpenseCategoryIndices = selectedExpenseCategoryIndices,
-        selectedIncomeCategoryIndices = selectedIncomeCategoryIndices,
-        selectedInvestmentCategoryIndices = selectedInvestmentCategoryIndices,
-        selectedSourceIndices = selectedSourceIndices,
-        selectedTransactionTypesIndices = selectedTransactionTypesIndices,
+        transactionsFilterBottomSheetSelectionData = TransactionsFilterBottomSheetSelectionData(
+            selectedExpenseCategoryIndices = selectedExpenseCategoryIndices,
+            selectedIncomeCategoryIndices = selectedIncomeCategoryIndices,
+            selectedInvestmentCategoryIndices = selectedInvestmentCategoryIndices,
+            selectedSourceIndices = selectedSourceIndices,
+            selectedTransactionTypeIndices = selectedTransactionTypeIndices,
+        ),
         onPositiveButtonClick = {
             updateSelectedExpenseCategoryIndices(it.selectedExpenseCategoryIndices)
             updateSelectedIncomeCategoryIndices(it.selectedIncomeCategoryIndices)
@@ -53,5 +55,6 @@ internal fun TransactionsFilterBottomSheetContent(
                 resetBottomSheetType()
             }
         },
-    ) {}
+        onNegativeButtonClick = {},
+    )
 }
