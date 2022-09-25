@@ -5,6 +5,7 @@ import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
@@ -38,7 +39,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ChipItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MySelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
@@ -184,12 +184,10 @@ internal fun TransactionsFiltersBottomSheet(
                 .weight(
                     weight = 1F,
                 ),
+            contentPadding = PaddingValues(
+                top = 16.dp,
+            ),
         ) {
-            item {
-                VerticalSpacer(
-                    height = 16.dp,
-                )
-            }
             itemsIndexed(
                 items = filters,
                 key = { _, listItem ->

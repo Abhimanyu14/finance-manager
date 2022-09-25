@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
@@ -373,7 +374,11 @@ internal fun TransactionsScreenView(
                             }
                         }
                     }
-                    LazyColumn {
+                    LazyColumn(
+                        contentPadding = PaddingValues(
+                            bottom = 72.dp,
+                        ),
+                    ) {
                         data.transactionDetailsListItemViewData.forEach { (date, listItemData) ->
                             if (date.isNotBlank()) {
                                 stickyHeader {
@@ -432,11 +437,6 @@ internal fun TransactionsScreenView(
                                     },
                                 )
                             }
-                        }
-                        item {
-                            VerticalSpacer(
-                                height = 72.dp,
-                            )
                         }
                     }
                 }

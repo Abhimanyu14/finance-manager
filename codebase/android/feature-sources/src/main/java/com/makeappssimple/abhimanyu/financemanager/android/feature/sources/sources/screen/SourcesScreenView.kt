@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.screen
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -18,8 +19,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
@@ -107,6 +108,7 @@ internal fun SourcesScreenView(
                 SourcesBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
+
                 SourcesBottomSheetType.SET_AS_DEFAULT_CONFIRMATION -> {
                     SourcesSetAsDefaultConfirmationBottomSheetContent(
                         coroutineScope = state.coroutineScope,
@@ -125,6 +127,7 @@ internal fun SourcesScreenView(
                         },
                     )
                 }
+
                 SourcesBottomSheetType.DELETE_CONFIRMATION -> {
                     SourcesDeleteConfirmationBottomSheetContent(
                         coroutineScope = state.coroutineScope,
@@ -182,7 +185,11 @@ internal fun SourcesScreenView(
                     state.focusManager.clearFocus()
                 },
             ) {
-                LazyColumn {
+                LazyColumn(
+                    contentPadding = PaddingValues(
+                        bottom = 80.dp,
+                    ),
+                ) {
                     item {
                         TotalBalanceCard()
                     }
@@ -241,11 +248,6 @@ internal fun SourcesScreenView(
                                     modalBottomSheetState = state.modalBottomSheetState,
                                 )
                             },
-                        )
-                    }
-                    item {
-                        VerticalSpacer(
-                            height = 80.dp,
                         )
                     }
                 }

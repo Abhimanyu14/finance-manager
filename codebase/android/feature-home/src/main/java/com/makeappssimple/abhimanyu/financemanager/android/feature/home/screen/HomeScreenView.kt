@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -137,7 +138,11 @@ internal fun HomeScreenView(
                     state.focusManager.clearFocus()
                 },
             ) {
-                LazyColumn {
+                LazyColumn(
+                    contentPadding = PaddingValues(
+                        bottom = 48.dp,
+                    ),
+                ) {
                     item {
                         TotalBalanceCard(
                             onClick = {
@@ -167,11 +172,6 @@ internal fun HomeScreenView(
                     ) { listItem ->
                         HomeListItem(
                             transactionData = listItem,
-                        )
-                    }
-                    item {
-                        VerticalSpacer(
-                            height = 48.dp,
                         )
                     }
                 }

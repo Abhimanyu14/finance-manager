@@ -2,9 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.ModalBottomSheetLayout
@@ -26,9 +26,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabData
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabRow
@@ -182,6 +182,7 @@ internal fun CategoriesScreenView(
                         resetBottomSheetType = resetBottomSheetType,
                     )
                 }
+
                 is CategoriesBottomSheetType.DeleteConfirmation -> {
                     CategoriesDeleteConfirmationBottomSheetContent(
                         coroutineScope = state.coroutineScope,
@@ -198,9 +199,11 @@ internal fun CategoriesScreenView(
                         },
                     )
                 }
+
                 is CategoriesBottomSheetType.None -> {
                     VerticalSpacer()
                 }
+
                 is CategoriesBottomSheetType.SetAsDefaultConfirmation -> {
                     CategoriesSetAsDefaultConfirmationBottomSheetContent(
                         coroutineScope = state.coroutineScope,
@@ -288,6 +291,9 @@ internal fun CategoriesScreenView(
                                 columns = GridCells.Adaptive(
                                     minSize = 100.dp,
                                 ),
+                                contentPadding = PaddingValues(
+                                    bottom = 80.dp,
+                                ),
                                 modifier = Modifier
                                     .fillMaxSize(),
                             ) {
@@ -297,9 +303,11 @@ internal fun CategoriesScreenView(
                                         TransactionType.EXPENSE -> {
                                             data.expenseCategories
                                         }
+
                                         TransactionType.INCOME -> {
                                             data.incomeCategories
                                         }
+
                                         else -> {
                                             // Only for investment
                                             data.investmentCategories
@@ -319,6 +327,7 @@ internal fun CategoriesScreenView(
                                                 data.defaultExpenseCategoryId == listItem.id
                                             }
                                         }
+
                                         TransactionType.INCOME -> {
                                             if (data.defaultIncomeCategoryId.isNull()) {
                                                 isDefaultIncomeCategory(
@@ -328,6 +337,7 @@ internal fun CategoriesScreenView(
                                                 data.defaultIncomeCategoryId == listItem.id
                                             }
                                         }
+
                                         else -> {
                                             // Only for investment
                                             if (data.defaultInvestmentCategoryId.isNull()) {
@@ -345,11 +355,13 @@ internal fun CategoriesScreenView(
                                                 index = index,
                                             )?.not() ?: false
                                         }
+
                                         TransactionType.INCOME -> {
                                             !isDefault && data.incomeCategoryIsUsedInTransactions.getOrNull(
                                                 index = index,
                                             )?.not() ?: false
                                         }
+
                                         else -> {
                                             // Only for investment
                                             !isDefault && data.investmentCategoryIsUsedInTransactions.getOrNull(
@@ -375,15 +387,6 @@ internal fun CategoriesScreenView(
                                                 modalBottomSheetState = state.modalBottomSheetState,
                                             )
                                         },
-                                    )
-                                }
-                                item(
-                                    span = {
-                                        GridItemSpan(maxLineSpan)
-                                    }
-                                ) {
-                                    VerticalSpacer(
-                                        height = 80.dp,
                                     )
                                 }
                             }
