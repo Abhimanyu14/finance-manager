@@ -5,9 +5,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ChevronRight
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -59,12 +56,13 @@ internal fun HomeRecentTransactionsView(
                     color = MaterialTheme.colorScheme.onBackground,
                 ),
         )
-        Icon(
-            imageVector = Icons.Rounded.ChevronRight,
-            tint = MaterialTheme.colorScheme.onBackground,
-            contentDescription = stringResource(
-                id = R.string.screen_home_view_all_transactions,
-            ),
+        MyText(
+            modifier = Modifier,
+            textStringResourceId = R.string.screen_home_view_all_transactions,
+            style = MaterialTheme.typography.headlineMedium
+                .copy(
+                    color = MaterialTheme.colorScheme.primary,
+                ),
         )
     }
 }
