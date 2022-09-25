@@ -62,7 +62,7 @@ buildscript {
         kotlinReflectionVersion = "1.5.31"
 
         // Kotlin androidx core
-        androidXCoreVersion = "1.9.0-rc01"
+        androidXCoreVersion = "1.9.0"
 
         // Androidx legacy support
         androidxLegacySupportVersion = "1.0.0"
@@ -83,7 +83,7 @@ buildscript {
         lifecycleExtensionsVersion = "2.2.0"
 
         // Lifecycle runtime
-        lifecycleRuntimeVersion = "2.4.0"
+        lifecycleRuntimeVersion = "2.6.0-alpha02"
 
         // Kotlin coroutines
         kotlinCoroutinesVersion = "1.5.1"
@@ -92,7 +92,7 @@ buildscript {
         kotlinCoroutinesPlayServicesVersion = "1.1.1"
 
         // Appcompat
-        appCompatVersion = "1.6.0-beta01"
+        appCompatVersion = "1.6.0-rc01"
 
         // Constraint layout
         constraintLayoutVersion = "2.1.1"
@@ -101,37 +101,37 @@ buildscript {
         recyclerViewVersion = "1.2.1"
 
         // Jetpack compose
-        jetpackComposeVersion = "1.3.0-beta01"
+        jetpackComposeVersion = "1.3.0-beta03"
 
         // Jetpack compose compiler
         jetpackComposeCompilerVersion = "1.2.0-rc02"
 
         // Jetpack compose material 3
-        jetpackComposeMaterial3Version = "1.0.0-beta01"
+        jetpackComposeMaterial3Version = "1.0.0-beta03"
 
         // Jetpack compose material design adapter
-        jetpackComposeMaterialDesignAdapterVersion = "1.1.17"
+        jetpackComposeMaterialDesignAdapterVersion = "1.1.19"
 
         // Jetpack compose constraint layout
         jetpackComposeConstraintLayoutVersion = "1.0.0-rc01"
 
         // Jetpack compose integration with activities
-        jetpackComposeActivityIntegrationVersion = "1.6.0-beta01"
+        jetpackComposeActivityIntegrationVersion = "1.6.0"
 
         // Jetpack compose integration with view models
-        jetpackComposeViewModelIntegrationVersion = "2.6.0-alpha01"
+        jetpackComposeViewModelIntegrationVersion = "2.6.0-alpha02"
 
         // Jetpack compose lifecycle runtime
-        jetpackComposeLifecycleRuntimeVersion = "2.6.0-alpha01"
+        jetpackComposeLifecycleRuntimeVersion = "2.6.0-alpha02"
 
         // Jetpack compose navigation
-        jetpackComposeNavigationVersion = "2.5.1"
+        jetpackComposeNavigationVersion = "2.5.2"
 
         // Jetpack compose navigation with hilt
         jetpackComposeNavigationHiltVersion = "1.0.0"
 
         // Accompanist
-        accompanistVersion = "0.24.8-beta"
+        accompanistVersion = "0.25.1"
 
         // Detekt formatting
         detektFormattingVersion = "1.20.0"
