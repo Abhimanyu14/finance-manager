@@ -196,7 +196,10 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
-        useIR = true
+
+        // Removed in Kotlin 1.7
+        // Reference - https://stackoverflow.com/a/72864142/9636037
+        // useIR = true
 
         freeCompilerArgs += [
                 "-Xopt-in=kotlin.RequiresOptIn",
