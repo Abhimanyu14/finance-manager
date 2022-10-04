@@ -1,7 +1,14 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.bottomsheet
 
+import androidx.annotation.StringRes
 import androidx.compose.material.ModalBottomSheetState
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.AccountBalance
+import androidx.compose.material.icons.rounded.Category
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToCategoriesScreen
@@ -11,6 +18,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggle
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 import kotlinx.coroutines.CoroutineScope
 
+@Immutable
+internal data class HomeMenuBottomSheetContentItemData(
+    val iconImageVector: ImageVector,
+    @StringRes val textStringResourceId: Int,
+    val onClick: () -> Unit,
+)
+
 @Composable
 internal fun HomeMenuBottomSheetContent(
     coroutineScope: CoroutineScope,
@@ -18,57 +32,54 @@ internal fun HomeMenuBottomSheetContent(
     navigationManager: NavigationManager,
     resetBottomSheetType: () -> Unit,
 ) {
-    HomeMenuBottomSheet(
-        items = listOf(
-            HomeBottomSheetItemData(
-                text = stringResource(
-                    id = R.string.screen_home_bottom_sheet_sources,
-                ),
-                onClick = {
-                    toggleModalBottomSheetState(
-                        coroutineScope = coroutineScope,
-                        modalBottomSheetState = modalBottomSheetState,
-                    ) {
-                        resetBottomSheetType()
-                        navigateToSourcesScreen(
-                            navigationManager = navigationManager,
-                        )
-                    }
-                },
-            ),
-            HomeBottomSheetItemData(
-                text = stringResource(
-                    id = R.string.screen_home_bottom_sheet_categories,
-                ),
-                onClick = {
-                    toggleModalBottomSheetState(
-                        coroutineScope = coroutineScope,
-                        modalBottomSheetState = modalBottomSheetState,
-                    ) {
-                        resetBottomSheetType()
-                        navigateToCategoriesScreen(
-                            navigationManager = navigationManager,
-                        )
-                    }
-                },
-            ),
-            HomeBottomSheetItemData(
-                text = stringResource(
-                    id = R.string.screen_home_bottom_sheet_settings,
-                ),
-                onClick = {
-                    toggleModalBottomSheetState(
-                        coroutineScope = coroutineScope,
-                        modalBottomSheetState = modalBottomSheetState,
-                    ) {
-                        resetBottomSheetType()
-                        navigateToSettingsScreen(
-                            navigationManager = navigationManager,
-                        )
-                    }
-                },
-            ),
+    val homeMenuBottomSheetContentItemDataList = listOf(
+        HomeMenuBottomSheetContentItemData(
+            iconImageVector = Icons.Rounded.AccountBalance,
+            textStringResourceId = R.string.screen_home_bottom_sheet_sources,
+            onClick = {
+                navigateToSourcesScreen(
+                    navigationManager = navigationManager,
+                )
+            },
         ),
+        HomeMenuBottomSheetContentItemData(
+            iconImageVector = Icons.Rounded.Category,
+            textStringResourceId = R.string.screen_home_bottom_sheet_categories,
+            onClick = {
+                navigateToCategoriesScreen(
+                    navigationManager = navigationManager,
+                )
+            },
+        ),
+        HomeMenuBottomSheetContentItemData(
+            iconImageVector = Icons.Rounded.Settings,
+            textStringResourceId = R.string.screen_home_bottom_sheet_settings,
+            onClick = {
+                navigateToSettingsScreen(
+                    navigationManager = navigationManager,
+                )
+            },
+        ),
+    )
+
+    HomeMenuBottomSheet(
+        items = homeMenuBottomSheetContentItemDataList.map { homeMenuBottomSheetContentItemData ->
+            HomeMenuBottomSheetItemData(
+                iconImageVector = homeMenuBottomSheetContentItemData.iconImageVector,
+                text = stringResource(
+                    id = homeMenuBottomSheetContentItemData.textStringResourceId,
+                ),
+                onClick = {
+                    toggleModalBottomSheetState(
+                        coroutineScope = coroutineScope,
+                        modalBottomSheetState = modalBottomSheetState,
+                    ) {
+                        resetBottomSheetType()
+                        homeMenuBottomSheetContentItemData.onClick()
+                    }
+                },
+            )
+        }
     )
 }
 

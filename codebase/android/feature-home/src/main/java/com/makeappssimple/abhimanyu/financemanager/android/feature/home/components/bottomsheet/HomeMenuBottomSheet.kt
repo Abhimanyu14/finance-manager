@@ -7,20 +7,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
-import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 
 @Immutable
-internal data class HomeBottomSheetItemData(
+internal data class HomeMenuBottomSheetItemData(
+    val iconImageVector: ImageVector,
     val text: String,
     val onClick: () -> Unit,
 )
@@ -28,7 +28,7 @@ internal data class HomeBottomSheetItemData(
 @Composable
 internal fun HomeMenuBottomSheet(
     modifier: Modifier = Modifier,
-    items: List<HomeBottomSheetItemData>,
+    items: List<HomeMenuBottomSheetItemData>,
 ) {
     LazyColumn(
         modifier = modifier
@@ -45,7 +45,7 @@ internal fun HomeMenuBottomSheet(
                 listItem.hashCode()
             },
         ) { listItem ->
-            HomeBottomSheetItem(
+            HomeMenuBottomSheetItem(
                 data = listItem,
             )
         }
@@ -53,10 +53,11 @@ internal fun HomeMenuBottomSheet(
 }
 
 @Composable
-private fun HomeBottomSheetItem(
-    data: HomeBottomSheetItemData,
+private fun HomeMenuBottomSheetItem(
+    data: HomeMenuBottomSheetItemData,
 ) {
     Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
             .clickable(
@@ -68,6 +69,15 @@ private fun HomeBottomSheetItem(
                 all = 16.dp,
             ),
     ) {
+        Icon(
+            modifier = Modifier
+                .padding(
+                    end = 8.dp,
+                ),
+            imageVector = data.iconImageVector,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.onSurface,
+        )
         MyText(
             modifier = Modifier,
             text = data.text,
@@ -79,19 +89,20 @@ private fun HomeBottomSheetItem(
     }
 }
 
+/*
 @Preview
 @Composable
 private fun MyBottomSheetContentPreview() {
     MyAppTheme {
         HomeMenuBottomSheet(
             items = listOf(
-                HomeBottomSheetItemData(
+                HomeMenuBottomSheetItemData(
                     text = stringResource(
                         id = R.string.bottom_sheet_home_menu_sources,
                     ),
                     onClick = {},
                 ),
-                HomeBottomSheetItemData(
+                HomeMenuBottomSheetItemData(
                     text = stringResource(
                         id = R.string.bottom_sheet_home_menu_categories,
                     ),
@@ -101,3 +112,4 @@ private fun MyBottomSheetContentPreview() {
         )
     }
 }
+*/
