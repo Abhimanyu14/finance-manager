@@ -8,34 +8,36 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 
 @Composable
 fun Transaction.getAmountTextColor(): Color {
-    return calculateAmountTextColor(
-        sourceFromId = this.sourceFromId,
-        transactionType = this.transactionType,
+    return this.transactionType.calculateAmountTextColor(
+        isBalanceReduced = this.sourceFromId != null,
     )
 }
 
 @Composable
-private fun calculateAmountTextColor(
-    sourceFromId: Int?,
-    transactionType: TransactionType,
+private fun TransactionType.calculateAmountTextColor(
+    isBalanceReduced: Boolean,
 ): Color {
-    return when (transactionType) {
+    return when (this) {
         TransactionType.INCOME -> {
             MaterialTheme.colorScheme.onTertiaryContainer
         }
+
         TransactionType.EXPENSE -> {
             MaterialTheme.colorScheme.error
         }
+
         TransactionType.TRANSFER -> {
             MaterialTheme.colorScheme.onBackground
         }
+
         TransactionType.ADJUSTMENT -> {
-            if (sourceFromId != null) {
+            if (isBalanceReduced) {
                 MaterialTheme.colorScheme.error
             } else {
                 MaterialTheme.colorScheme.onTertiaryContainer
             }
         }
+
         TransactionType.INVESTMENT -> {
             MaterialTheme.colorScheme.primary
         }
