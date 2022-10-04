@@ -23,7 +23,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyDefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemViewWrapper
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getIcon
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isCashSource
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 
@@ -78,9 +78,7 @@ internal fun SourcesListItem(
                 ),
         ) {
             Icon(
-                imageVector = getIcon(
-                    name = source.type.title,
-                ),
+                imageVector = source.type.icon,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier

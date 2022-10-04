@@ -16,18 +16,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.MyBottomSheetTitle
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getIcon
 
 @Immutable
 internal data class SelectSourceBottomSheetItemData(
-    val text: String,
-    val iconKey: String,
     val isSelected: Boolean,
+    val icon: ImageVector,
+    val text: String,
     val onClick: () -> Unit,
 )
 
@@ -79,9 +79,7 @@ private fun SelectSourceBottomSheetItem(
             ),
     ) {
         Icon(
-            imageVector = getIcon(
-                name = data.iconKey,
-            ),
+            imageVector = data.icon,
             contentDescription = null,
             tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier

@@ -17,16 +17,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getIcon
 
 @Immutable
 data class ChipItem(
     val text: String,
-    val iconKey: String? = null,
+    val icon: ImageVector? = null,
 )
 
 @Composable
@@ -167,11 +167,9 @@ private fun ChipView(
                 }
             ),
     ) {
-        item.iconKey?.let {
+        item.icon?.let {
             Icon(
-                imageVector = getIcon(
-                    name = it,
-                ),
+                imageVector = it,
                 contentDescription = null,
                 tint = if (isSelected) {
                     MaterialTheme.colorScheme.onPrimary
@@ -196,7 +194,7 @@ private fun ChipView(
                     top = 6.dp,
                     bottom = 6.dp,
                     end = 16.dp,
-                    start = if (item.iconKey.isNotNull()) {
+                    start = if (item.icon.isNotNull()) {
                         0.dp
                     } else {
                         16.dp

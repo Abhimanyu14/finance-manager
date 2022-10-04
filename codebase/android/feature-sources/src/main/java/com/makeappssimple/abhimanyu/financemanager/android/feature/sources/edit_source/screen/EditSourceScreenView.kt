@@ -40,6 +40,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MyOutlinedTextField
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.icon
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 
 internal enum class EditSourceBottomSheetType : BottomSheetType {
@@ -137,7 +138,7 @@ internal fun EditSourceScreenView(
                                 .map { sourceType ->
                                     ChipItem(
                                         text = sourceType.title,
-                                        iconKey = sourceType.title,
+                                        icon = sourceType.icon,
                                     )
                                 },
                             selectedItemIndex = data.selectedSourceTypeIndex,

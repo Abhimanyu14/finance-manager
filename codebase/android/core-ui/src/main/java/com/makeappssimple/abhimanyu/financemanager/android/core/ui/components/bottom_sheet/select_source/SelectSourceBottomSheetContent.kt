@@ -4,6 +4,7 @@ import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.icon
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
@@ -19,9 +20,9 @@ fun SelectSourceBottomSheetContent(
         items = sources
             .map { source ->
                 SelectSourceBottomSheetItemData(
-                    text = source.name,
-                    iconKey = source.type.title,
                     isSelected = source.id == selectedSourceId,
+                    icon = source.type.icon,
+                    text = source.name,
                     onClick = {
                         toggleModalBottomSheetState(
                             coroutineScope = coroutineScope,
