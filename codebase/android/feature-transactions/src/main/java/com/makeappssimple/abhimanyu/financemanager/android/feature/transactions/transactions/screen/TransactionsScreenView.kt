@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -125,6 +126,17 @@ internal fun TransactionsScreenView(
                 state.keyboardController?.hide()
             }
         }
+    }
+
+    BackHandler(
+        enabled = data.searchText.isNotEmpty() || data.selectedFilter.areFiltersSelected(),
+    ) {
+        data.updateSearchText("")
+        data.updateSelectedExpenseCategoryIndices(emptyList())
+        data.updateSelectedIncomeCategoryIndices(emptyList())
+        data.updateSelectedInvestmentCategoryIndices(emptyList())
+        data.updateSelectedSourceIndices(emptyList())
+        data.updateSelectedTransactionTypesIndices(emptyList())
     }
 
     BottomSheetBackHandler(
