@@ -4,6 +4,7 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -34,6 +35,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.legend.Dot
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
@@ -358,20 +360,34 @@ internal fun TransactionsScreenView(
                                 },
                                 modifier = Modifier,
                             ) {
-                                Icon(
-                                    imageVector = Icons.Rounded.FilterAlt,
-                                    contentDescription = stringResource(
-                                        id = R.string.screen_transactions_filter_button_content_description,
-                                    ),
-                                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                                    modifier = Modifier
-                                        .background(
-                                            color = MaterialTheme.colorScheme.primaryContainer,
-                                        )
-                                        .padding(
-                                            all = 8.dp,
+                                Box {
+                                    Icon(
+                                        imageVector = Icons.Rounded.FilterAlt,
+                                        contentDescription = stringResource(
+                                            id = R.string.screen_transactions_filter_button_content_description,
                                         ),
-                                )
+                                        tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                                        modifier = Modifier
+                                            .background(
+                                                color = MaterialTheme.colorScheme.primaryContainer,
+                                            )
+                                            .padding(
+                                                all = 8.dp,
+                                            ),
+                                    )
+                                    if (data.selectedFilter.areFiltersSelected()) {
+                                        Dot(
+                                            modifier = Modifier
+                                                .align(
+                                                    alignment = Alignment.TopEnd,
+                                                )
+                                                .padding(
+                                                    all = 8.dp,
+                                                ),
+                                            color = MaterialTheme.colorScheme.error,
+                                        )
+                                    }
+                                }
                             }
                         }
                     }
