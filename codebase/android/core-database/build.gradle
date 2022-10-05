@@ -125,6 +125,9 @@ dependencies {
     // Gson
     implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
 
+    // Paging
+    implementation "androidx.paging:paging-runtime-ktx:$rootProject.pagingVersion"
+
     // Data store
     implementation "androidx.datastore:datastore-preferences:$rootProject.datastorePreferencesVersion"
 

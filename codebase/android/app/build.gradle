@@ -316,6 +316,9 @@ dependencies {
     // Jetpack compose navigation with hilt
     implementation "androidx.hilt:hilt-navigation-compose:$rootProject.jetpackComposeNavigationHiltVersion"
 
+    // Jetpack compose paging
+    implementation "androidx.paging:paging-compose:$rootProject.jetpackComposePagingVersion"
+
     // Accompanist
     implementation "com.google.accompanist:accompanist-insets:$rootProject.accompanistVersion"
 
@@ -362,6 +365,9 @@ dependencies {
 
     // Gson
     implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
+
+    // Paging
+    implementation "androidx.paging:paging-runtime-ktx:$rootProject.pagingVersion"
 
     // Data store
     implementation "androidx.datastore:datastore-preferences:$rootProject.datastorePreferencesVersion"
