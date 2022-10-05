@@ -10,6 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetSearchedTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.DeleteTransactionAndRevertOtherDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getDateString
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -18,9 +19,11 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -28,6 +31,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
     getSourcesUseCase: GetSourcesUseCase,
     getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
+    getSearchedTransactionDataUseCase: GetSearchedTransactionDataUseCase,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
     private val deleteTransactionAndRevertOtherDataUseCase: DeleteTransactionAndRevertOtherDataUseCase,
@@ -42,6 +46,12 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     )
     override val searchText: StateFlow<String> = _searchText
     // endregion
+
+    private var _searchedTransactionData: MutableStateFlow<List<TransactionData>> =
+        MutableStateFlow(
+            value = emptyList(),
+        )
+    private val searchedTransactionData: StateFlow<List<TransactionData>> = _searchedTransactionData
 
     // region Filter
     private val _isLoading = MutableStateFlow(
@@ -167,12 +177,15 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                         SortOption.AMOUNT_ASC -> {
                             it.transaction.amount.value
                         }
+
                         SortOption.AMOUNT_DESC -> {
                             -1 * it.transaction.amount.value
                         }
+
                         SortOption.LATEST_FIRST -> {
                             -1 * it.transaction.transactionTimestamp
                         }
+
                         SortOption.OLDEST_FIRST -> {
                             it.transaction.transactionTimestamp
                         }
@@ -198,6 +211,22 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         }.flowOn(
             context = dispatcherProvider.io,
         )
+
+    init {
+        viewModelScope.launch(
+            context = dispatcherProvider.io,
+        ) {
+            launch {
+                searchText.collectLatest { updatedSearchText ->
+                    _searchedTransactionData.update {
+                        getSearchedTransactionDataUseCase(
+                            searchText = updatedSearchText,
+                        )
+                    }
+                }
+            }
+        }
+    }
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code

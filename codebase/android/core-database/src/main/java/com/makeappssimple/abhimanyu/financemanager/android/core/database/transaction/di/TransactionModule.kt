@@ -26,6 +26,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetCurrentYearTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetRecentTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetRecentTransactionDataUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetSearchedTransactionDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetSearchedTransactionDataUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTitleSuggestionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTitleSuggestionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionDataUseCase
@@ -152,6 +154,15 @@ class TransactionModule {
         transactionRepository: TransactionRepository,
     ): GetAllTransactionDataUseCase {
         return GetAllTransactionDataUseCaseImpl(
+            transactionRepository = transactionRepository,
+        )
+    }
+
+    @Provides
+    fun providesGetSearchedTransactionDataUseCase(
+        transactionRepository: TransactionRepository,
+    ): GetSearchedTransactionDataUseCase {
+        return GetSearchedTransactionDataUseCaseImpl(
             transactionRepository = transactionRepository,
         )
     }

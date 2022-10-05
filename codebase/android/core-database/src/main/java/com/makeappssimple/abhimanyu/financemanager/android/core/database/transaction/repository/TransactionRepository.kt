@@ -13,6 +13,10 @@ interface TransactionRepository {
 
     fun getAllTransactionData(): Flow<List<TransactionData>>
 
+    suspend fun getSearchedTransactionData(
+        searchText: String,
+    ): List<TransactionData>
+
     fun getRecentTransactionData(
         numberOfTransactions: Int,
     ): Flow<List<TransactionData>>

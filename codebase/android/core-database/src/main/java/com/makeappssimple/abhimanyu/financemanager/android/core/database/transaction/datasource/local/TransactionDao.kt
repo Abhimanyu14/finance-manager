@@ -16,21 +16,51 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface TransactionDao {
 
-    @Query(value = "SELECT * from transaction_table ORDER BY transaction_timestamp DESC")
+    @Query(
+        value = "SELECT * from transaction_table " +
+                "ORDER BY transaction_timestamp DESC"
+    )
     fun getAllTransactions(): Flow<List<Transaction>>
 
     @androidx.room.Transaction
-    @Query("SELECT * FROM transaction_table ORDER BY transaction_timestamp DESC")
+    @Query(
+        value = "SELECT * FROM transaction_table " +
+                "ORDER BY transaction_timestamp DESC"
+    )
     fun getAllTransactionData(): Flow<List<TransactionData>>
 
-    @Query(value = "SELECT * from transaction_table WHERE transaction_timestamp BETWEEN :startingTimestamp AND :endingTimestamp ORDER BY transaction_timestamp DESC")
+    /**
+     * TODO-Abhi: To search amount properly, JSON1 extension is required which is not available in Android.
+     * For more info - https://stackoverflow.com/a/65104396/9636037
+     *
+     * The current code is a hacky solution, which does a simple text search of the JSON string.
+     */
+    @androidx.room.Transaction
+    @Query(
+        value = "SELECT * FROM transaction_table " +
+                "WHERE instr(lower(title), lower(:searchText)) > 0 OR instr(lower(amount), lower(:searchText)) > 0 " +
+                "ORDER BY transaction_timestamp DESC"
+    )
+    suspend fun getSearchedTransactionData(
+        searchText: String,
+    ): List<TransactionData>
+
+    @Query(
+        value = "SELECT * from transaction_table " +
+                "WHERE transaction_timestamp BETWEEN :startingTimestamp AND :endingTimestamp " +
+                "ORDER BY transaction_timestamp DESC"
+    )
     fun getTransactionsBetweenTimestamps(
         startingTimestamp: Long,
         endingTimestamp: Long,
     ): Flow<List<Transaction>>
 
     @androidx.room.Transaction
-    @Query("SELECT * FROM transaction_table ORDER BY transaction_timestamp DESC LIMIT :numberOfTransactions")
+    @Query(
+        value = "SELECT * FROM transaction_table " +
+                "ORDER BY transaction_timestamp DESC " +
+                "LIMIT :numberOfTransactions"
+    )
     fun getRecentTransactionData(
         numberOfTransactions: Int,
     ): Flow<List<TransactionData>>
@@ -38,29 +68,47 @@ interface TransactionDao {
     @Query(value = "SELECT COUNT(*) FROM transaction_table")
     suspend fun getTransactionsCount(): Int
 
-    @Query(value = "SELECT title from transaction_table WHERE category_id = :categoryId GROUP BY title ORDER BY COUNT(title) DESC LIMIT :numberOfSuggestions")
+    @Query(
+        value = "SELECT title from transaction_table " +
+                "WHERE category_id = :categoryId " +
+                "GROUP BY title " +
+                "ORDER BY COUNT(title) DESC " +
+                "LIMIT :numberOfSuggestions"
+    )
     suspend fun getTitleSuggestions(
         categoryId: Int,
         numberOfSuggestions: Int,
     ): List<String>
 
-    @Query(value = "SELECT EXISTS(SELECT * from transaction_table WHERE category_id = :categoryId)")
+    @Query(
+        value = "SELECT EXISTS(SELECT * FROM transaction_table " +
+                "WHERE category_id = :categoryId)"
+    )
     suspend fun checkIfCategoryIsUsedInTransactions(
         categoryId: Int,
     ): Boolean
 
-    @Query(value = "SELECT EXISTS(SELECT * from transaction_table WHERE source_from_id = :sourceId OR source_to_id = :sourceId)")
+    @Query(
+        value = "SELECT EXISTS(SELECT * FROM transaction_table " +
+                "WHERE source_from_id = :sourceId OR source_to_id = :sourceId)"
+    )
     suspend fun checkIfSourceIsUsedInTransactions(
         sourceId: Int,
     ): Boolean
 
-    @Query(value = "SELECT * from transaction_table WHERE id = :id")
+    @Query(
+        value = "SELECT * FROM transaction_table " +
+                "WHERE id = :id"
+    )
     suspend fun getTransaction(
         id: Int,
     ): Transaction?
 
     @androidx.room.Transaction
-    @Query("SELECT * FROM transaction_table WHERE id = :id")
+    @Query(
+        value = "SELECT * FROM transaction_table " +
+                "WHERE id = :id"
+    )
     suspend fun getTransactionData(
         id: Int,
     ): TransactionData?
@@ -86,7 +134,10 @@ interface TransactionDao {
     /**
      * Don't use this method outside DAO
      */
-    @Query(value = "DELETE FROM transaction_table WHERE id = :id")
+    @Query(
+        value = "DELETE FROM transaction_table " +
+                "WHERE id = :id"
+    )
     suspend fun deleteTransaction(
         id: Int,
     )

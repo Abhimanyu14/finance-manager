@@ -24,6 +24,14 @@ class TransactionRepositoryImpl(
         return transactionDao.getAllTransactionData()
     }
 
+    override suspend fun getSearchedTransactionData(
+        searchText: String,
+    ): List<TransactionData> {
+        return transactionDao.getSearchedTransactionData(
+            searchText = searchText,
+        )
+    }
+
     override fun getRecentTransactionData(
         numberOfTransactions: Int,
     ): Flow<List<TransactionData>> {
