@@ -85,12 +85,8 @@ internal data class TransactionsScreenViewData(
     val searchText: String,
     val selectedSortOption: SortOption,
     val deleteTransaction: (transactionId: Int) -> Unit,
-    val updateSelectedExpenseCategoryIndices: (updatedSelectedExpenseCategoryIndices: List<Int>) -> Unit,
-    val updateSelectedIncomeCategoryIndices: (updatedSelectedIncomeCategoryIndices: List<Int>) -> Unit,
-    val updateSelectedInvestmentCategoryIndices: (updatedSelectedInvestmentCategoryIndices: List<Int>) -> Unit,
-    val updateSelectedSourceIndices: (updatedSelectedSourceIndices: List<Int>) -> Unit,
-    val updateSelectedTransactionTypesIndices: (updatedSelectedTransactionTypesIndices: List<Int>) -> Unit,
     val updateSearchText: (updatedSearchText: String) -> Unit,
+    val updateSelectedFilter: (updatedSelectedFilter: Filter) -> Unit,
     val updateSelectedSortOption: (updatedSelectedSortOption: SortOption) -> Unit,
 )
 
@@ -134,11 +130,7 @@ internal fun TransactionsScreenView(
         enabled = data.searchText.isNotEmpty() || data.selectedFilter.areFiltersSelected(),
     ) {
         data.updateSearchText("")
-        data.updateSelectedExpenseCategoryIndices(emptyList())
-        data.updateSelectedIncomeCategoryIndices(emptyList())
-        data.updateSelectedInvestmentCategoryIndices(emptyList())
-        data.updateSelectedSourceIndices(emptyList())
-        data.updateSelectedTransactionTypesIndices(emptyList())
+        data.updateSelectedFilter(Filter())
     }
 
     BottomSheetBackHandler(
@@ -172,30 +164,8 @@ internal fun TransactionsScreenView(
                         sources = data.sources,
                         transactionTypes = transactionTypes,
                         selectedFilter = data.selectedFilter,
-                        updateSelectedExpenseCategoryIndices = { updatedSelectedExpenseCategoryIndices ->
-                            data.updateSelectedExpenseCategoryIndices(
-                                updatedSelectedExpenseCategoryIndices
-                            )
-                        },
-                        updateSelectedIncomeCategoryIndices = { updatedSelectedIncomeCategoryIndices ->
-                            data.updateSelectedIncomeCategoryIndices(
-                                updatedSelectedIncomeCategoryIndices
-                            )
-                        },
-                        updateSelectedInvestmentCategoryIndices = { updatedSelectedInvestmentCategoryIndices ->
-                            data.updateSelectedInvestmentCategoryIndices(
-                                updatedSelectedInvestmentCategoryIndices
-                            )
-                        },
-                        updateSelectedSourceIndices = { updatedSelectedSourceIndices ->
-                            data.updateSelectedSourceIndices(
-                                updatedSelectedSourceIndices
-                            )
-                        },
-                        updateSelectedTransactionTypesIndices = { updatedSelectedTransactionTypesIndices ->
-                            data.updateSelectedTransactionTypesIndices(
-                                updatedSelectedTransactionTypesIndices
-                            )
+                        updateSelectedFilter = { updatedSelectedFilter ->
+                            data.updateSelectedFilter(updatedSelectedFilter)
                         },
                         resetBottomSheetType = {
                             transactionsBottomSheetType = TransactionsBottomSheetType.NONE

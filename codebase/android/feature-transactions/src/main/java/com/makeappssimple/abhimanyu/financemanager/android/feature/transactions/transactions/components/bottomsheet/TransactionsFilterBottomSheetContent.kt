@@ -19,11 +19,7 @@ internal fun TransactionsFilterBottomSheetContent(
     sources: List<Source>,
     transactionTypes: List<TransactionType>,
     selectedFilter: Filter,
-    updateSelectedExpenseCategoryIndices: (updatedSelectedExpenseCategoryIndices: List<Int>) -> Unit,
-    updateSelectedIncomeCategoryIndices: (updatedSelectedIncomeCategoryIndices: List<Int>) -> Unit,
-    updateSelectedInvestmentCategoryIndices: (updatedSelectedInvestmentCategoryIndices: List<Int>) -> Unit,
-    updateSelectedSourceIndices: (updatedSelectedSourceIndices: List<Int>) -> Unit,
-    updateSelectedTransactionTypesIndices: (updatedSelectedTransactionTypesIndices: List<Int>) -> Unit,
+    updateSelectedFilter: (updatedSelectedFilter: Filter) -> Unit,
     resetBottomSheetType: () -> Unit,
 ) {
     TransactionsFiltersBottomSheet(
@@ -34,11 +30,7 @@ internal fun TransactionsFilterBottomSheetContent(
         transactionTypes = transactionTypes,
         selectedFilter = selectedFilter,
         onPositiveButtonClick = {
-            updateSelectedExpenseCategoryIndices(it.selectedExpenseCategoryIndices)
-            updateSelectedIncomeCategoryIndices(it.selectedIncomeCategoryIndices)
-            updateSelectedInvestmentCategoryIndices(it.selectedInvestmentCategoryIndices)
-            updateSelectedSourceIndices(it.selectedSourceIndices)
-            updateSelectedTransactionTypesIndices(it.selectedTransactionTypeIndices)
+            updateSelectedFilter(it)
             toggleModalBottomSheetState(
                 coroutineScope = coroutineScope,
                 modalBottomSheetState = modalBottomSheetState,

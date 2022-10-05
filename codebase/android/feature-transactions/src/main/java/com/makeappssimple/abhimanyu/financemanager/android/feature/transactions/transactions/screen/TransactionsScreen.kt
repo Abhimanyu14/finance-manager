@@ -65,34 +65,14 @@ fun TransactionsScreen(
                     id = transactionId,
                 )
             },
-            updateSelectedExpenseCategoryIndices = { updatedSelectedExpenseCategoryIndices ->
-                screenViewModel.updateSelectedExpenseCategoryIndices(
-                    updatedSelectedExpenseCategoryIndices = updatedSelectedExpenseCategoryIndices,
-                )
-            },
-            updateSelectedIncomeCategoryIndices = { updatedSelectedIncomeCategoryIndices ->
-                screenViewModel.updateSelectedIncomeCategoryIndices(
-                    updatedSelectedIncomeCategoryIndices = updatedSelectedIncomeCategoryIndices,
-                )
-            },
-            updateSelectedInvestmentCategoryIndices = { updatedSelectedInvestmentCategoryIndices ->
-                screenViewModel.updateSelectedInvestmentCategoryIndices(
-                    updatedSelectedInvestmentCategoryIndices = updatedSelectedInvestmentCategoryIndices,
-                )
-            },
-            updateSelectedSourceIndices = { updatedSelectedSourceIndices ->
-                screenViewModel.updateSelectedSourceIndices(
-                    updatedSelectedSourceIndices = updatedSelectedSourceIndices,
-                )
-            },
-            updateSelectedTransactionTypesIndices = { updatedSelectedTransactionTypesIndices ->
-                screenViewModel.updateSelectedTransactionTypesIndices(
-                    updatedSelectedTransactionTypesIndices = updatedSelectedTransactionTypesIndices,
-                )
-            },
             updateSearchText = { updatedSearchText ->
                 screenViewModel.updateSearchText(
                     updatedSearchText = updatedSearchText,
+                )
+            },
+            updateSelectedFilter = { updatedSelectedFilter ->
+                screenViewModel.updateSelectedFilter(
+                    updatedSelectedFilter = updatedSelectedFilter,
                 )
             },
             updateSelectedSortOption = { updatedSelectedSortOption ->

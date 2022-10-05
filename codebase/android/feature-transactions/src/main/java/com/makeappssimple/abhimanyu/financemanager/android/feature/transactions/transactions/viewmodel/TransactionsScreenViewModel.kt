@@ -20,24 +20,8 @@ interface TransactionsScreenViewModel : ScreenViewModel {
     val selectedSortOption: StateFlow<SortOption>
     val searchText: StateFlow<String>
 
-    fun updateSelectedExpenseCategoryIndices(
-        updatedSelectedExpenseCategoryIndices: List<Int>,
-    )
-
-    fun updateSelectedIncomeCategoryIndices(
-        updatedSelectedIncomeCategoryIndices: List<Int>,
-    )
-
-    fun updateSelectedInvestmentCategoryIndices(
-        updatedSelectedInvestmentCategoryIndices: List<Int>,
-    )
-
-    fun updateSelectedSourceIndices(
-        updatedSelectedSourceIndices: List<Int>,
-    )
-
-    fun updateSelectedTransactionTypesIndices(
-        updatedSelectedTransactionTypesIndices: List<Int>,
+    fun updateSelectedFilter(
+        updatedSelectedFilter: Filter,
     )
 
     fun updateSearchText(

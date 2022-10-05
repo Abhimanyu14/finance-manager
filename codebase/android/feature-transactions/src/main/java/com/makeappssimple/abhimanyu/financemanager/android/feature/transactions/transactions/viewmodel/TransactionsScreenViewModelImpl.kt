@@ -215,53 +215,11 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     // endregion
 
     // region Filter
-    override fun updateSelectedExpenseCategoryIndices(
-        updatedSelectedExpenseCategoryIndices: List<Int>,
+    override fun updateSelectedFilter(
+        updatedSelectedFilter: Filter,
     ) {
         _selectedFilter.update {
-            it.copy(
-                selectedExpenseCategoryIndices = updatedSelectedExpenseCategoryIndices,
-            )
-        }
-    }
-
-    override fun updateSelectedIncomeCategoryIndices(
-        updatedSelectedIncomeCategoryIndices: List<Int>,
-    ) {
-        _selectedFilter.update {
-            it.copy(
-                selectedIncomeCategoryIndices = updatedSelectedIncomeCategoryIndices,
-            )
-        }
-    }
-
-    override fun updateSelectedInvestmentCategoryIndices(
-        updatedSelectedInvestmentCategoryIndices: List<Int>,
-    ) {
-        _selectedFilter.update {
-            it.copy(
-                selectedInvestmentCategoryIndices = updatedSelectedInvestmentCategoryIndices,
-            )
-        }
-    }
-
-    override fun updateSelectedSourceIndices(
-        updatedSelectedSourceIndices: List<Int>,
-    ) {
-        _selectedFilter.update {
-            it.copy(
-                selectedSourceIndices = updatedSelectedSourceIndices,
-            )
-        }
-    }
-
-    override fun updateSelectedTransactionTypesIndices(
-        updatedSelectedTransactionTypesIndices: List<Int>,
-    ) {
-        _selectedFilter.update {
-            it.copy(
-                selectedTransactionTypeIndices = updatedSelectedTransactionTypesIndices,
-            )
+            updatedSelectedFilter
         }
     }
     // endregion
