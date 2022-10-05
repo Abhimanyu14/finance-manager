@@ -121,6 +121,9 @@ proguard/
 **/.idea/.name
 **/.idea/misc.xml
 
+# Kotlin plugin settings
+**/.idea/kotlinc.xml
+
 # Stores the run configurations you may add by clicking Edit Configurations.
 .idea/runConfigurations.xml
 **/.idea/runConfigurations
