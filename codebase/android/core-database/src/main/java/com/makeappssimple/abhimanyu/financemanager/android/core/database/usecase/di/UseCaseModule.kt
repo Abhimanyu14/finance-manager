@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.usecas
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetEmojisUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.repository.TransactionRepository
@@ -30,6 +31,7 @@ class UseCaseModule {
 
     @Provides
     fun providesBackupDataUseCase(
+        dataStore: MyDataStore,
         getCategoriesUseCase: GetCategoriesUseCase,
         getEmojisUseCase: GetEmojisUseCase,
         getSourcesUseCase: GetSourcesUseCase,
@@ -38,6 +40,7 @@ class UseCaseModule {
         jsonUtil: JsonUtil,
     ): BackupDataUseCase {
         return BackupDataUseCaseImpl(
+            dataStore = dataStore,
             getCategoriesUseCase = getCategoriesUseCase,
             getEmojisUseCase = getEmojisUseCase,
             getSourcesUseCase = getSourcesUseCase,
@@ -49,10 +52,12 @@ class UseCaseModule {
 
     @Provides
     fun providesDeleteTransactionAndRevertOtherDataUseCase(
+        dataStore: MyDataStore,
         deleteTransactionUseCase: DeleteTransactionUseCase,
         getTransactionDataUseCase: GetTransactionDataUseCase,
     ): DeleteTransactionAndRevertOtherDataUseCase {
         return DeleteTransactionAndRevertOtherDataUseCaseImpl(
+            dataStore = dataStore,
             deleteTransactionUseCase = deleteTransactionUseCase,
             getTransactionDataUseCase = getTransactionDataUseCase,
         )
@@ -60,11 +65,13 @@ class UseCaseModule {
 
     @Provides
     fun providesRecalculateTotalUseCase(
+        dataStore: MyDataStore,
         getSourcesUseCase: GetSourcesUseCase,
         getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
         updateSourcesUseCase: UpdateSourcesUseCase,
     ): RecalculateTotalUseCase {
         return RecalculateTotalUseCaseImpl(
+            dataStore = dataStore,
             getSourcesUseCase = getSourcesUseCase,
             getAllTransactionDataUseCase = getAllTransactionDataUseCase,
             updateSourcesUseCase = updateSourcesUseCase,
@@ -73,9 +80,11 @@ class UseCaseModule {
 
     @Provides
     fun providesUpdateTransactionUseCase(
+        dataStore: MyDataStore,
         transactionRepository: TransactionRepository,
     ): UpdateTransactionUseCase {
         return UpdateTransactionUseCaseImpl(
+            dataStore = dataStore,
             transactionRepository = transactionRepository,
         )
     }

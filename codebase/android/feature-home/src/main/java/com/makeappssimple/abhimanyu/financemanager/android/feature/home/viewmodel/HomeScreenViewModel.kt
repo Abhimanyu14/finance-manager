@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface HomeScreenViewModel : ScreenViewModel {
     val navigationManager: NavigationManager
     val homeListItemViewData: Flow<List<TransactionData>>
+    val showBackupCard: Flow<Boolean>
 
     fun backupDataToDocument(
         uri: Uri,

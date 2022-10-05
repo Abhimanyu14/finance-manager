@@ -37,6 +37,9 @@ fun HomeScreen(
         .collectAsStateWithLifecycle(
             initialValue = emptyList(),
         )
+    val showBackupCard: Boolean by screenViewModel.showBackupCard.collectAsStateWithLifecycle(
+        initialValue = false,
+    )
 
     LaunchedEffect(
         key1 = Unit,
@@ -46,6 +49,7 @@ fun HomeScreen(
 
     HomeScreenView(
         data = HomeScreenViewData(
+            showBackupCard = showBackupCard,
             transactionData = homeListItemViewData,
             createDocument = createDocument,
             navigationManager = screenViewModel.navigationManager,

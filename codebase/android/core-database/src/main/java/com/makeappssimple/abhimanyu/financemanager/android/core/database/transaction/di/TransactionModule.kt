@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.transa
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.datasource.local.CategoryDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.datasource.local.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.datasource.local.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.repository.TransactionRepository
@@ -88,18 +89,22 @@ class TransactionModule {
 
     @Provides
     fun providesDeleteAllTransactionsUseCase(
+        dataStore: MyDataStore,
         transactionRepository: TransactionRepository,
     ): DeleteAllTransactionsUseCase {
         return DeleteAllTransactionsUseCaseImpl(
+            dataStore = dataStore,
             transactionRepository = transactionRepository,
         )
     }
 
     @Provides
     fun providesDeleteTransactionUseCase(
+        dataStore: MyDataStore,
         transactionRepository: TransactionRepository,
     ): DeleteTransactionUseCase {
         return DeleteTransactionUseCaseImpl(
+            dataStore = dataStore,
             transactionRepository = transactionRepository,
         )
     }
@@ -196,9 +201,11 @@ class TransactionModule {
 
     @Provides
     fun providesInsertTransactionsUseCase(
+        dataStore: MyDataStore,
         transactionRepository: TransactionRepository,
     ): InsertTransactionsUseCase {
         return InsertTransactionsUseCaseImpl(
+            dataStore = dataStore,
             transactionRepository = transactionRepository,
         )
     }

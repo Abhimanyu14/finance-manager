@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.util.c
 
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.intPreferencesKey
+import androidx.datastore.preferences.core.longPreferencesKey
 
 val CATEGORY_DATA_VERSION_NUMBER: Preferences.Key<Int> = intPreferencesKey(
     name = "category_data_version_number",
@@ -23,4 +24,10 @@ val DEFAULT_INVESTMENT_CATEGORY_ID: Preferences.Key<Int> = intPreferencesKey(
 )
 val DEFAULT_SOURCE_ID: Preferences.Key<Int> = intPreferencesKey(
     name = "default_source_id",
+)
+val LAST_DATA_CHANGE_TIMESTAMP: Preferences.Key<Long> = longPreferencesKey(
+    name = "last_data_change_timestamp",
+)
+val LAST_DATA_BACKUP_TIMESTAMP: Preferences.Key<Long> = longPreferencesKey(
+    name = "last_data_backup_timestamp",
 )

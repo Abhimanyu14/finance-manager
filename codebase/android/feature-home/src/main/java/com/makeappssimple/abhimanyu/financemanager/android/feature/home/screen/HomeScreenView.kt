@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen
 
 import android.net.Uri
 import androidx.activity.compose.ManagedActivityResultLauncher
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -51,6 +52,7 @@ internal enum class HomeBottomSheetType : BottomSheetType {
 
 @Immutable
 internal data class HomeScreenViewData(
+    val showBackupCard: Boolean,
     val transactionData: List<TransactionData>,
     val createDocument: ManagedActivityResultLauncher<String, Uri?>,
     val navigationManager: NavigationManager,
@@ -159,11 +161,15 @@ internal fun HomeScreenView(
                         )
                     }
                     item {
-                        BackupCard(
-                            onClick = {
-                                data.createDocument.launch(JSON_MIMETYPE)
-                            }
-                        )
+                        AnimatedVisibility(
+                            visible = data.showBackupCard,
+                        ) {
+                            BackupCard(
+                                onClick = {
+                                    data.createDocument.launch(JSON_MIMETYPE)
+                                }
+                            )
+                        }
                     }
                     item {
                         OverviewCard()

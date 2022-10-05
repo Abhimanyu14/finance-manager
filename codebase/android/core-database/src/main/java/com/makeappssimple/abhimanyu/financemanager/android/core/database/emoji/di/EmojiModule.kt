@@ -10,6 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.u
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.InsertEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.InsertEmojisUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.MyDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,9 +38,11 @@ class EmojiModule {
 
     @Provides
     fun providesDeleteAllEmojisUseCase(
+        dataStore: MyDataStore,
         emojiRepository: EmojiRepository,
     ): DeleteAllEmojisUseCase {
         return DeleteAllEmojisUseCaseImpl(
+            dataStore = dataStore,
             emojiRepository = emojiRepository,
         )
     }
@@ -55,9 +58,11 @@ class EmojiModule {
 
     @Provides
     fun providesInsertEmojisUseCase(
+        dataStore: MyDataStore,
         emojiRepository: EmojiRepository,
     ): InsertEmojisUseCase {
         return InsertEmojisUseCaseImpl(
+            dataStore = dataStore,
             emojiRepository = emojiRepository,
         )
     }

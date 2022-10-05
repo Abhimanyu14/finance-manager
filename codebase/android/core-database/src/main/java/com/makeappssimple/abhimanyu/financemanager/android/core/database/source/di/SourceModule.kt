@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.source.di
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.datasource.local.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.repository.SourceRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.repository.SourceRepositoryImpl
@@ -49,18 +50,22 @@ class SourceModule {
 
     @Provides
     fun providesDeleteAllSourcesUseCase(
+        dataStore: MyDataStore,
         sourceRepository: SourceRepository,
     ): DeleteAllSourcesUseCase {
         return DeleteAllSourcesUseCaseImpl(
+            dataStore = dataStore,
             sourceRepository = sourceRepository,
         )
     }
 
     @Provides
     fun providesDeleteSourcesUseCase(
+        dataStore: MyDataStore,
         sourceRepository: SourceRepository,
     ): DeleteSourcesUseCase {
         return DeleteSourcesUseCaseImpl(
+            dataStore = dataStore,
             sourceRepository = sourceRepository,
         )
     }
@@ -103,27 +108,33 @@ class SourceModule {
 
     @Provides
     fun providesInsertSourcesUseCase(
+        dataStore: MyDataStore,
         sourceRepository: SourceRepository,
     ): InsertSourcesUseCase {
         return InsertSourcesUseCaseImpl(
+            dataStore = dataStore,
             sourceRepository = sourceRepository,
         )
     }
 
     @Provides
     fun providesUpdateSourcesBalanceAmountUseCase(
+        dataStore: MyDataStore,
         sourceRepository: SourceRepository,
     ): UpdateSourcesBalanceAmountUseCase {
         return UpdateSourcesBalanceAmountUseCaseImpl(
+            dataStore = dataStore,
             sourceRepository = sourceRepository,
         )
     }
 
     @Provides
     fun providesUpdateSourcesUseCase(
+        dataStore: MyDataStore,
         sourceRepository: SourceRepository,
     ): UpdateSourcesUseCase {
         return UpdateSourcesUseCaseImpl(
+            dataStore = dataStore,
             sourceRepository = sourceRepository,
         )
     }

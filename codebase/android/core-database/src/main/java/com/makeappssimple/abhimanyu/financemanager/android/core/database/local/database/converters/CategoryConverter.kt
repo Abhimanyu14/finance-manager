@@ -3,8 +3,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.local.
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 
 class CategoryConverter {
 

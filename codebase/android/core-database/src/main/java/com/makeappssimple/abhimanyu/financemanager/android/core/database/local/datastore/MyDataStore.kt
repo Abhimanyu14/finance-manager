@@ -10,6 +10,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.co
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.DEFAULT_INCOME_CATEGORY_ID
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.DEFAULT_INVESTMENT_CATEGORY_ID
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.DEFAULT_SOURCE_ID
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.LAST_DATA_BACKUP_TIMESTAMP
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.LAST_DATA_CHANGE_TIMESTAMP
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -40,6 +42,18 @@ interface MyDataStore {
 
     suspend fun setDefaultSourceIdInDataStore(
         defaultSourceId: Int,
+    )
+
+    fun getLastDataBackupTimestamp(): Flow<Long?>
+
+    suspend fun setLastDataBackupTimestamp(
+        lastChangeTimestamp: Long,
+    )
+
+    fun getLastDataChangeTimestamp(): Flow<Long?>
+
+    suspend fun setLastDataChangeTimestamp(
+        lastChangeTimestamp: Long,
     )
 }
 
@@ -101,4 +115,48 @@ class MyDataStoreImpl(
             it[DEFAULT_SOURCE_ID] = defaultSourceId
         }
     }
+
+    override fun getLastDataBackupTimestamp(): Flow<Long?> {
+        return context.dataStore.data.map {
+            it[LAST_DATA_BACKUP_TIMESTAMP]
+        }
+    }
+
+    override suspend fun setLastDataBackupTimestamp(
+        lastChangeTimestamp: Long,
+    ) {
+        context.dataStore.edit {
+            it[LAST_DATA_BACKUP_TIMESTAMP] = lastChangeTimestamp
+        }
+    }
+
+    override fun getLastDataChangeTimestamp(): Flow<Long?> {
+        return context.dataStore.data.map {
+            it[LAST_DATA_CHANGE_TIMESTAMP]
+        }
+    }
+
+    override suspend fun setLastDataChangeTimestamp(
+        lastChangeTimestamp: Long,
+    ) {
+        context.dataStore.edit {
+            it[LAST_DATA_CHANGE_TIMESTAMP] = lastChangeTimestamp
+        }
+    }
+}
+
+suspend fun updateLastDataBackupTimestamp(
+    dataStore: MyDataStore,
+) {
+    dataStore.setLastDataBackupTimestamp(
+        System.currentTimeMillis(),
+    )
+}
+
+suspend fun updateLastDataChangeTimestamp(
+    dataStore: MyDataStore,
+) {
+    dataStore.setLastDataChangeTimestamp(
+        System.currentTimeMillis(),
+    )
 }

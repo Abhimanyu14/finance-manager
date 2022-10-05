@@ -16,6 +16,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.UpdateCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.UpdateCategoriesUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.MyDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,18 +44,22 @@ class CategoryModule {
 
     @Provides
     fun providesDeleteAllCategoriesUseCase(
+        dataStore: MyDataStore,
         categoryRepository: CategoryRepository,
     ): DeleteAllCategoriesUseCase {
         return DeleteAllCategoriesUseCaseImpl(
+            dataStore = dataStore,
             categoryRepository = categoryRepository,
         )
     }
 
     @Provides
     fun providesDeleteCategoryUseCase(
+        dataStore: MyDataStore,
         categoryRepository: CategoryRepository,
     ): DeleteCategoryUseCase {
         return DeleteCategoryUseCaseImpl(
+            dataStore = dataStore,
             categoryRepository = categoryRepository,
         )
     }
@@ -79,18 +84,22 @@ class CategoryModule {
 
     @Provides
     fun providesInsertCategoriesUseCase(
+        dataStore: MyDataStore,
         categoryRepository: CategoryRepository,
     ): InsertCategoriesUseCase {
         return InsertCategoriesUseCaseImpl(
+            dataStore = dataStore,
             categoryRepository = categoryRepository,
         )
     }
 
     @Provides
     fun providesUpdateCategoriesUseCase(
+        dataStore: MyDataStore,
         categoryRepository: CategoryRepository,
     ): UpdateCategoriesUseCase {
         return UpdateCategoriesUseCaseImpl(
+            dataStore = dataStore,
             categoryRepository = categoryRepository,
         )
     }

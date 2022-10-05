@@ -1,5 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.MyDataStore
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.updateLastDataChangeTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.updateBalanceAmount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
@@ -16,12 +18,16 @@ interface RecalculateTotalUseCase {
 class RecalculateTotalUseCaseImpl(
     getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
     getSourcesUseCase: GetSourcesUseCase,
+    private val dataStore: MyDataStore,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
 ) : RecalculateTotalUseCase {
     private val sources: Flow<List<Source>> = getSourcesUseCase()
     private val allTransactionData: Flow<List<TransactionData>> = getAllTransactionDataUseCase()
 
     override suspend operator fun invoke() {
+        updateLastDataChangeTimestamp(
+            dataStore = dataStore,
+        )
         val sourceBalances = hashMapOf<Int, Long>()
         val sourcesValue = sources.first()
         val allTransactionDataValue = allTransactionData.first()
