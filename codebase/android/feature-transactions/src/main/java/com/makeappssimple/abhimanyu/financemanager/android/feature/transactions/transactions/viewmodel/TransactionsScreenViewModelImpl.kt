@@ -58,30 +58,10 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         value = false,
     )
     override val isLoading: StateFlow<Boolean> = _isLoading
-    private val _selectedExpenseCategoryIndices = MutableStateFlow(
-        value = emptyList<Int>(),
+    private val _selectedFilter: MutableStateFlow<Filter> = MutableStateFlow(
+        value = Filter(),
     )
-    override val selectedExpenseCategoryIndices: StateFlow<List<Int>> =
-        _selectedExpenseCategoryIndices
-    private val _selectedIncomeCategoryIndices = MutableStateFlow(
-        value = emptyList<Int>(),
-    )
-    override val selectedIncomeCategoryIndices: StateFlow<List<Int>> =
-        _selectedIncomeCategoryIndices
-    private val _selectedInvestmentCategoryIndices = MutableStateFlow(
-        value = emptyList<Int>(),
-    )
-    override val selectedInvestmentCategoryIndices: StateFlow<List<Int>> =
-        _selectedInvestmentCategoryIndices
-    private val _selectedSourceIndices = MutableStateFlow(
-        value = emptyList<Int>(),
-    )
-    override val selectedSourceIndices: StateFlow<List<Int>> = _selectedSourceIndices
-    private val _selectedTransactionTypesIndices = MutableStateFlow(
-        value = emptyList<Int>(),
-    )
-    override val selectedTransactionTypeIndices: StateFlow<List<Int>> =
-        _selectedTransactionTypesIndices
+    override val selectedFilter: StateFlow<Filter> = _selectedFilter
     // endregion
 
     // region Sort
@@ -113,37 +93,31 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         combine(
             allTransactionData,
             searchText,
-            selectedExpenseCategoryIndices,
-            selectedIncomeCategoryIndices,
-            selectedInvestmentCategoryIndices,
-            selectedSourceIndices,
-            selectedTransactionTypeIndices,
-            expenseCategories,
-            incomeCategories,
-            investmentCategories,
+            selectedFilter,
+            categories,
             sources,
             selectedSortOption,
         ) { flows ->
             _isLoading.value = true
+
             val allTransactionDataValue: List<TransactionData> =
                 flows[0] as? List<TransactionData> ?: emptyList()
             val searchTextValue: String = flows[1] as String
-            val selectedExpenseCategoryIndicesValue: List<Int> =
-                flows[2] as? List<Int> ?: emptyList()
-            val selectedIncomeCategoryIndicesValue: List<Int> =
-                flows[3] as? List<Int> ?: emptyList()
-            val selectedInvestmentCategoryIndicesValue: List<Int> =
-                flows[4] as? List<Int> ?: emptyList()
-            val selectedSourceIndicesValue: List<Int> = flows[5] as? List<Int> ?: emptyList()
-            val selectedTransactionTypesIndicesValue: List<Int> =
-                flows[6] as? List<Int> ?: emptyList()
-            val expenseCategoriesValue: List<Category> = flows[7] as? List<Category> ?: emptyList()
-            val incomeCategoriesValue: List<Category> = flows[8] as? List<Category> ?: emptyList()
-            val investmentCategoriesValue: List<Category> =
-                flows[9] as? List<Category> ?: emptyList()
-            val sourcesValue: List<Source> = flows[10] as? List<Source> ?: emptyList()
+            val selectedFilterValue: Filter = flows[2] as? Filter ?: Filter()
+            val categoriesValue: List<Category> = flows[3] as? List<Category> ?: emptyList()
+            val sourcesValue: List<Source> = flows[4] as? List<Source> ?: emptyList()
             val selectedSortOptionValue: SortOption =
-                flows[11] as? SortOption ?: SortOption.LATEST_FIRST
+                flows[5] as? SortOption ?: SortOption.LATEST_FIRST
+
+            val expenseCategoriesValue = categoriesValue.filter { category ->
+                category.transactionType == TransactionType.EXPENSE
+            }
+            val incomeCategoriesValue = categoriesValue.filter { category ->
+                category.transactionType == TransactionType.INCOME
+            }
+            val investmentCategoriesValue = categoriesValue.filter { category ->
+                category.transactionType == TransactionType.INVESTMENT
+            }
 
             allTransactionDataValue
                 .filter { transactionDetail ->
@@ -151,16 +125,16 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                         searchTextValue = searchTextValue,
                         transactionData = transactionDetail,
                     ) && isAvailableAfterTransactionTypeFilter(
-                        selectedTransactionTypesIndicesValue = selectedTransactionTypesIndicesValue,
+                        selectedTransactionTypesIndicesValue = selectedFilterValue.selectedTransactionTypeIndices,
                         transactionData = transactionDetail
                     ) && isAvailableAfterSourceFilter(
-                        selectedSourceIndicesValue = selectedSourceIndicesValue,
+                        selectedSourceIndicesValue = selectedFilterValue.selectedSourceIndices,
                         sourcesValue = sourcesValue,
                         transactionData = transactionDetail,
                     ) && isAvailableAfterCategoryFilter(
-                        selectedExpenseCategoryIndicesValue = selectedExpenseCategoryIndicesValue,
-                        selectedIncomeCategoryIndicesValue = selectedIncomeCategoryIndicesValue,
-                        selectedInvestmentCategoryIndicesValue = selectedInvestmentCategoryIndicesValue,
+                        selectedExpenseCategoryIndicesValue = selectedFilterValue.selectedExpenseCategoryIndices,
+                        selectedIncomeCategoryIndicesValue = selectedFilterValue.selectedIncomeCategoryIndices,
+                        selectedInvestmentCategoryIndicesValue = selectedFilterValue.selectedInvestmentCategoryIndices,
                         expenseCategoriesValue = expenseCategoriesValue,
                         transactionData = transactionDetail,
                         incomeCategoriesValue = incomeCategoriesValue,
@@ -244,31 +218,51 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     override fun updateSelectedExpenseCategoryIndices(
         updatedSelectedExpenseCategoryIndices: List<Int>,
     ) {
-        _selectedExpenseCategoryIndices.value = updatedSelectedExpenseCategoryIndices
+        _selectedFilter.update {
+            it.copy(
+                selectedExpenseCategoryIndices = updatedSelectedExpenseCategoryIndices,
+            )
+        }
     }
 
     override fun updateSelectedIncomeCategoryIndices(
         updatedSelectedIncomeCategoryIndices: List<Int>,
     ) {
-        _selectedIncomeCategoryIndices.value = updatedSelectedIncomeCategoryIndices
+        _selectedFilter.update {
+            it.copy(
+                selectedIncomeCategoryIndices = updatedSelectedIncomeCategoryIndices,
+            )
+        }
     }
 
     override fun updateSelectedInvestmentCategoryIndices(
         updatedSelectedInvestmentCategoryIndices: List<Int>,
     ) {
-        _selectedInvestmentCategoryIndices.value = updatedSelectedInvestmentCategoryIndices
+        _selectedFilter.update {
+            it.copy(
+                selectedInvestmentCategoryIndices = updatedSelectedInvestmentCategoryIndices,
+            )
+        }
     }
 
     override fun updateSelectedSourceIndices(
         updatedSelectedSourceIndices: List<Int>,
     ) {
-        _selectedSourceIndices.value = updatedSelectedSourceIndices
+        _selectedFilter.update {
+            it.copy(
+                selectedSourceIndices = updatedSelectedSourceIndices,
+            )
+        }
     }
 
     override fun updateSelectedTransactionTypesIndices(
         updatedSelectedTransactionTypesIndices: List<Int>,
     ) {
-        _selectedTransactionTypesIndices.value = updatedSelectedTransactionTypesIndices
+        _selectedFilter.update {
+            it.copy(
+                selectedTransactionTypeIndices = updatedSelectedTransactionTypesIndices,
+            )
+        }
     }
     // endregion
 

@@ -59,6 +59,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsFilterBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsSortBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.SortOption
 
 internal enum class TransactionsBottomSheetType : BottomSheetType {
@@ -74,11 +75,7 @@ internal data class TransactionsScreenViewData(
     val expenseCategories: List<Category>,
     val incomeCategories: List<Category>,
     val investmentCategories: List<Category>,
-    val selectedExpenseCategoryIndices: List<Int>,
-    val selectedIncomeCategoryIndices: List<Int>,
-    val selectedInvestmentCategoryIndices: List<Int>,
-    val selectedSourceIndices: List<Int>,
-    val selectedTransactionTypeIndices: List<Int>,
+    val selectedFilter: Filter,
     val sources: List<Source>,
     val transactionDetailsListItemViewData: Map<String, List<TransactionData>>,
     val navigationManager: NavigationManager,
@@ -160,11 +157,7 @@ internal fun TransactionsScreenView(
                         investmentCategories = data.investmentCategories,
                         sources = data.sources,
                         transactionTypes = transactionTypes,
-                        selectedExpenseCategoryIndices = data.selectedExpenseCategoryIndices,
-                        selectedIncomeCategoryIndices = data.selectedIncomeCategoryIndices,
-                        selectedInvestmentCategoryIndices = data.selectedInvestmentCategoryIndices,
-                        selectedSourceIndices = data.selectedSourceIndices,
-                        selectedTransactionTypeIndices = data.selectedTransactionTypeIndices,
+                        selectedFilter = data.selectedFilter,
                         updateSelectedExpenseCategoryIndices = { updatedSelectedExpenseCategoryIndices ->
                             data.updateSelectedExpenseCategoryIndices(
                                 updatedSelectedExpenseCategoryIndices
@@ -280,11 +273,7 @@ internal fun TransactionsScreenView(
                     AnimatedVisibility(
                         visible = data.transactionDetailsListItemViewData.isNotEmpty() ||
                                 data.searchText.isNotEmpty() ||
-                                data.selectedExpenseCategoryIndices.isNotEmpty() ||
-                                data.selectedIncomeCategoryIndices.isNotEmpty() ||
-                                data.selectedInvestmentCategoryIndices.isNotEmpty() ||
-                                data.selectedSourceIndices.isNotEmpty() ||
-                                data.selectedTransactionTypeIndices.isNotEmpty()
+                                data.selectedFilter.areFiltersSelected()
                     ) {
                         Row(
                             horizontalArrangement = Arrangement.End,

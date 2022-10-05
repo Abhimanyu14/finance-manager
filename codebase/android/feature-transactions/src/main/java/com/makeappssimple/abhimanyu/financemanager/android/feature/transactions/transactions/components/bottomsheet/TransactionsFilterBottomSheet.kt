@@ -42,15 +42,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ChipItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MySelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
-
-@Immutable
-internal data class TransactionsFilterBottomSheetSelectionData(
-    val selectedExpenseCategoryIndices: List<Int>,
-    val selectedIncomeCategoryIndices: List<Int>,
-    val selectedInvestmentCategoryIndices: List<Int>,
-    val selectedSourceIndices: List<Int>,
-    val selectedTransactionTypeIndices: List<Int>,
-)
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.Filter
 
 @Immutable
 internal data class TransactionFilterBottomSheetFilterGroupData(
@@ -68,43 +60,43 @@ internal fun TransactionsFiltersBottomSheet(
     investmentCategories: List<Category>,
     sources: List<Source>,
     transactionTypes: List<TransactionType>,
-    transactionsFilterBottomSheetSelectionData: TransactionsFilterBottomSheetSelectionData,
-    onPositiveButtonClick: (data: TransactionsFilterBottomSheetSelectionData) -> Unit,
+    selectedFilter: Filter,
+    onPositiveButtonClick: (filter: Filter) -> Unit,
     onNegativeButtonClick: () -> Unit,
 ) {
     val expandedItemsIndices = remember {
         mutableStateListOf(
-            transactionsFilterBottomSheetSelectionData.selectedExpenseCategoryIndices.isNotEmpty(),
-            transactionsFilterBottomSheetSelectionData.selectedIncomeCategoryIndices.isNotEmpty(),
-            transactionsFilterBottomSheetSelectionData.selectedInvestmentCategoryIndices.isNotEmpty(),
-            transactionsFilterBottomSheetSelectionData.selectedSourceIndices.isNotEmpty(),
-            transactionsFilterBottomSheetSelectionData.selectedTransactionTypeIndices.isNotEmpty(),
+            selectedFilter.selectedExpenseCategoryIndices.isNotEmpty(),
+            selectedFilter.selectedIncomeCategoryIndices.isNotEmpty(),
+            selectedFilter.selectedInvestmentCategoryIndices.isNotEmpty(),
+            selectedFilter.selectedSourceIndices.isNotEmpty(),
+            selectedFilter.selectedTransactionTypeIndices.isNotEmpty(),
         )
     }
 
     val selectedExpenseCategoryIndicesValue = remember {
         mutableStateListOf(
-            elements = transactionsFilterBottomSheetSelectionData.selectedExpenseCategoryIndices.toTypedArray(),
+            elements = selectedFilter.selectedExpenseCategoryIndices.toTypedArray(),
         )
     }
     val selectedIncomeCategoryIndicesValue = remember {
         mutableStateListOf(
-            elements = transactionsFilterBottomSheetSelectionData.selectedIncomeCategoryIndices.toTypedArray(),
+            elements = selectedFilter.selectedIncomeCategoryIndices.toTypedArray(),
         )
     }
     val selectedInvestmentCategoryIndicesValue = remember {
         mutableStateListOf(
-            elements = transactionsFilterBottomSheetSelectionData.selectedInvestmentCategoryIndices.toTypedArray(),
+            elements = selectedFilter.selectedInvestmentCategoryIndices.toTypedArray(),
         )
     }
     val selectedSourceIndicesValue = remember {
         mutableStateListOf(
-            elements = transactionsFilterBottomSheetSelectionData.selectedSourceIndices.toTypedArray(),
+            elements = selectedFilter.selectedSourceIndices.toTypedArray(),
         )
     }
     val selectedTransactionTypeIndicesValue = remember {
         mutableStateListOf(
-            elements = transactionsFilterBottomSheetSelectionData.selectedTransactionTypeIndices.toTypedArray(),
+            elements = selectedFilter.selectedTransactionTypeIndices.toTypedArray(),
         )
     }
 
@@ -248,7 +240,7 @@ internal fun TransactionsFiltersBottomSheet(
                     ),
                 onClick = {
                     onPositiveButtonClick(
-                        TransactionsFilterBottomSheetSelectionData(
+                        Filter(
                             selectedExpenseCategoryIndices = selectedExpenseCategoryIndicesValue,
                             selectedIncomeCategoryIndices = selectedIncomeCategoryIndicesValue,
                             selectedInvestmentCategoryIndices = selectedInvestmentCategoryIndicesValue,

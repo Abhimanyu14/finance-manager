@@ -10,6 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.logError
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.SortOption
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.TransactionsScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.TransactionsScreenViewModelImpl
@@ -37,11 +38,7 @@ fun TransactionsScreen(
         initialValue = emptyMap(),
     )
     val isLoading: Boolean by screenViewModel.isLoading.collectAsStateWithLifecycle()
-    val selectedExpenseCategoryIndices: List<Int> by screenViewModel.selectedExpenseCategoryIndices.collectAsStateWithLifecycle()
-    val selectedIncomeCategoryIndices: List<Int> by screenViewModel.selectedIncomeCategoryIndices.collectAsStateWithLifecycle()
-    val selectedInvestmentCategoryIndices: List<Int> by screenViewModel.selectedInvestmentCategoryIndices.collectAsStateWithLifecycle()
-    val selectedSourceIndices: List<Int> by screenViewModel.selectedSourceIndices.collectAsStateWithLifecycle()
-    val selectedTransactionTypeIndices: List<Int> by screenViewModel.selectedTransactionTypeIndices.collectAsStateWithLifecycle()
+    val selectedFilter: Filter by screenViewModel.selectedFilter.collectAsStateWithLifecycle()
     val selectedSortOption: SortOption by screenViewModel.selectedSortOption.collectAsStateWithLifecycle()
     val searchText: String by screenViewModel.searchText.collectAsStateWithLifecycle()
 
@@ -57,11 +54,7 @@ fun TransactionsScreen(
             expenseCategories = expenseCategories,
             incomeCategories = incomeCategories,
             investmentCategories = investmentCategories,
-            selectedExpenseCategoryIndices = selectedExpenseCategoryIndices,
-            selectedIncomeCategoryIndices = selectedIncomeCategoryIndices,
-            selectedInvestmentCategoryIndices = selectedInvestmentCategoryIndices,
-            selectedSourceIndices = selectedSourceIndices,
-            selectedTransactionTypeIndices = selectedTransactionTypeIndices,
+            selectedFilter = selectedFilter,
             sources = sources,
             transactionDetailsListItemViewData = transactionDetailsListItemViewData,
             navigationManager = screenViewModel.navigationManager,

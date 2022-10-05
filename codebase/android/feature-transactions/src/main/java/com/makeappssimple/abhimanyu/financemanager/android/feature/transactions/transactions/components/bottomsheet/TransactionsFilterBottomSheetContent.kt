@@ -6,6 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.Filter
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
@@ -17,11 +18,7 @@ internal fun TransactionsFilterBottomSheetContent(
     investmentCategories: List<Category>,
     sources: List<Source>,
     transactionTypes: List<TransactionType>,
-    selectedExpenseCategoryIndices: List<Int>,
-    selectedIncomeCategoryIndices: List<Int>,
-    selectedInvestmentCategoryIndices: List<Int>,
-    selectedSourceIndices: List<Int>,
-    selectedTransactionTypeIndices: List<Int>,
+    selectedFilter: Filter,
     updateSelectedExpenseCategoryIndices: (updatedSelectedExpenseCategoryIndices: List<Int>) -> Unit,
     updateSelectedIncomeCategoryIndices: (updatedSelectedIncomeCategoryIndices: List<Int>) -> Unit,
     updateSelectedInvestmentCategoryIndices: (updatedSelectedInvestmentCategoryIndices: List<Int>) -> Unit,
@@ -35,13 +32,7 @@ internal fun TransactionsFilterBottomSheetContent(
         investmentCategories = investmentCategories,
         sources = sources,
         transactionTypes = transactionTypes,
-        transactionsFilterBottomSheetSelectionData = TransactionsFilterBottomSheetSelectionData(
-            selectedExpenseCategoryIndices = selectedExpenseCategoryIndices,
-            selectedIncomeCategoryIndices = selectedIncomeCategoryIndices,
-            selectedInvestmentCategoryIndices = selectedInvestmentCategoryIndices,
-            selectedSourceIndices = selectedSourceIndices,
-            selectedTransactionTypeIndices = selectedTransactionTypeIndices,
-        ),
+        selectedFilter = selectedFilter,
         onPositiveButtonClick = {
             updateSelectedExpenseCategoryIndices(it.selectedExpenseCategoryIndices)
             updateSelectedIncomeCategoryIndices(it.selectedIncomeCategoryIndices)
