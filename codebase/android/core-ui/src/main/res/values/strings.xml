@@ -12,6 +12,10 @@
     <string name="bottom_sheet_select_source_title">Select Source</string>
     <!-- endregion -->
 
+    <!-- region backup card -->
+    <string name="backup_card">Backup data</string>
+    <!-- endregion -->
+
     <!-- region total balance card -->
     <string name="total_balance_card_title">TOTAL BALANCE</string>
     <!-- endregion -->

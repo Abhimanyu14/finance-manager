@@ -1,5 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen
 
+import android.net.Uri
+import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -19,6 +21,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.JSON_MIMETYPE
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
@@ -32,6 +35,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSh
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.backup_card.BackupCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.overview_card.OverviewCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
@@ -48,6 +52,7 @@ internal enum class HomeBottomSheetType : BottomSheetType {
 @Immutable
 internal data class HomeScreenViewData(
     val transactionData: List<TransactionData>,
+    val createDocument: ManagedActivityResultLauncher<String, Uri?>,
     val navigationManager: NavigationManager,
 )
 
@@ -87,6 +92,7 @@ internal fun HomeScreenView(
                 HomeBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
+
                 HomeBottomSheetType.MENU -> {
                     HomeMenuBottomSheetContent(
                         coroutineScope = state.coroutineScope,
@@ -150,6 +156,13 @@ internal fun HomeScreenView(
                                     navigationManager = data.navigationManager,
                                 )
                             },
+                        )
+                    }
+                    item {
+                        BackupCard(
+                            onClick = {
+                                data.createDocument.launch(JSON_MIMETYPE)
+                            }
                         )
                     }
                     item {

@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetSearchedTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.DeleteTransactionAndRevertOtherDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getDateString
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getDateString
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject

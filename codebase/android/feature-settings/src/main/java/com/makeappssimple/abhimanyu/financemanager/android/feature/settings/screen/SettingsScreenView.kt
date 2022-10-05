@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.JSON_MIMETYPE
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
@@ -42,7 +43,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Bottom
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.util.JSON_MIMETYPE
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.util.getAppVersion
 
 internal enum class SettingsBottomSheetType : BottomSheetType {
