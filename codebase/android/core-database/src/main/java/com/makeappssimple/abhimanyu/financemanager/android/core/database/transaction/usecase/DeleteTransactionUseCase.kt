@@ -1,9 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.MyDataStore
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.updateLastDataChangeTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.repository.TransactionRepository
+import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 
 interface DeleteTransactionUseCase {
     suspend operator fun invoke(
@@ -20,9 +19,7 @@ class DeleteTransactionUseCaseImpl(
         id: Int,
         vararg sources: Source,
     ) {
-        updateLastDataChangeTimestamp(
-            dataStore = dataStore,
-        )
+        dataStore.updateLastDataChangeTimestamp()
         return transactionRepository.deleteTransaction(
             id = id,
             sources = sources,

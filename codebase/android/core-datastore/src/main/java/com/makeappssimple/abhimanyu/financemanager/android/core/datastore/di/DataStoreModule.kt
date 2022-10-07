@@ -1,8 +1,8 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.di
+package com.makeappssimple.abhimanyu.financemanager.android.core.datastore.di
 
 import android.content.Context
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.MyDataStore
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.MyDataStoreImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
+import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStoreImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

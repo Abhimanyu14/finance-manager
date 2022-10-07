@@ -1,63 +1,11 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore
+package com.makeappssimple.abhimanyu.financemanager.android.core.datastore
 
 import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.preferencesDataStore
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.APP_NAME
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.DEFAULT_EXPENSE_CATEGORY_ID
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.DEFAULT_INCOME_CATEGORY_ID
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.DEFAULT_INVESTMENT_CATEGORY_ID
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.DEFAULT_SOURCE_ID
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.LAST_DATA_BACKUP_TIMESTAMP
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.LAST_DATA_CHANGE_TIMESTAMP
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
-    name = APP_NAME,
-)
-
-interface MyDataStore {
-    fun getDefaultExpenseCategoryIdFromDataStore(): Flow<Int?>
-
-    suspend fun setDefaultExpenseCategoryIdInDataStore(
-        defaultExpenseCategoryId: Int,
-    )
-
-    fun getDefaultIncomeCategoryIdFromDataStore(): Flow<Int?>
-
-    suspend fun setDefaultIncomeCategoryIdInDataStore(
-        defaultIncomeCategoryId: Int,
-    )
-
-    fun getDefaultInvestmentCategoryIdFromDataStore(): Flow<Int?>
-
-    suspend fun setDefaultInvestmentCategoryIdInDataStore(
-        defaultInvestmentCategoryId: Int,
-    )
-
-    fun getDefaultSourceIdFromDataStore(): Flow<Int?>
-
-    suspend fun setDefaultSourceIdInDataStore(
-        defaultSourceId: Int,
-    )
-
-    fun getLastDataBackupTimestamp(): Flow<Long?>
-
-    suspend fun setLastDataBackupTimestamp(
-        lastChangeTimestamp: Long,
-    )
-
-    fun getLastDataChangeTimestamp(): Flow<Long?>
-
-    suspend fun setLastDataChangeTimestamp(
-        lastChangeTimestamp: Long,
-    )
-}
-
-class MyDataStoreImpl(
+internal class MyDataStoreImpl(
     private val context: Context,
 ) : MyDataStore {
     override fun getDefaultExpenseCategoryIdFromDataStore(): Flow<Int?> {
@@ -143,20 +91,20 @@ class MyDataStoreImpl(
             it[LAST_DATA_CHANGE_TIMESTAMP] = lastChangeTimestamp
         }
     }
-}
 
-suspend fun updateLastDataBackupTimestamp(
-    dataStore: MyDataStore,
-) {
-    dataStore.setLastDataBackupTimestamp(
-        System.currentTimeMillis(),
-    )
-}
+    override suspend fun updateLastDataBackupTimestamp(
+        timestamp: Long,
+    ) {
+        setLastDataBackupTimestamp(
+            lastChangeTimestamp = timestamp,
+        )
+    }
 
-suspend fun updateLastDataChangeTimestamp(
-    dataStore: MyDataStore,
-) {
-    dataStore.setLastDataChangeTimestamp(
-        System.currentTimeMillis(),
-    )
+    override suspend fun updateLastDataChangeTimestamp(
+        timestamp: Long,
+    ) {
+        setLastDataChangeTimestamp(
+            lastChangeTimestamp = timestamp,
+        )
+    }
 }

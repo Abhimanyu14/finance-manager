@@ -91,6 +91,7 @@ ksp {
 dependencies {
     implementation project(":core-common")
     implementation project(":core-model")
+    implementation project(":core-datastore")
 
     testImplementation project(":core-testing")
 

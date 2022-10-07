@@ -10,7 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.u
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.InsertEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.InsertEmojisUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.MyDataStore
+import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

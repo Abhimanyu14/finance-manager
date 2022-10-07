@@ -1,11 +1,10 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.MyDataStore
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.updateLastDataChangeTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.updateBalanceAmount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 
 interface DeleteTransactionAndRevertOtherDataUseCase {
     suspend operator fun invoke(
@@ -21,9 +20,7 @@ class DeleteTransactionAndRevertOtherDataUseCaseImpl(
     override suspend operator fun invoke(
         id: Int,
     ) {
-        updateLastDataChangeTimestamp(
-            dataStore = dataStore,
-        )
+        dataStore.updateLastDataChangeTimestamp()
         val transactionData = getTransactionDataUseCase(
             id = id,
         ) ?: return

@@ -1,8 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.MyDataStore
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.updateLastDataChangeTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.repository.SourceRepository
+import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 
 interface UpdateSourcesBalanceAmountUseCase {
     suspend operator fun invoke(
@@ -17,9 +16,7 @@ class UpdateSourcesBalanceAmountUseCaseImpl(
     override suspend operator fun invoke(
         sourcesBalanceAmountChange: List<Pair<Int, Long>>,
     ) {
-        updateLastDataChangeTimestamp(
-            dataStore = dataStore,
-        )
+        dataStore.updateLastDataChangeTimestamp()
         return sourceRepository.updateSourceBalanceAmount(
             sourcesBalanceAmountChange = sourcesBalanceAmountChange,
         )

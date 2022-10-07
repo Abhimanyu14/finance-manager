@@ -1,8 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.repository.CategoryRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.MyDataStore
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.updateLastDataChangeTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 
 interface DeleteCategoryUseCase {
     suspend operator fun invoke(
@@ -17,9 +16,7 @@ class DeleteCategoryUseCaseImpl(
     override suspend operator fun invoke(
         id: Int,
     ) {
-        updateLastDataChangeTimestamp(
-            dataStore = dataStore,
-        )
+        dataStore.updateLastDataChangeTimestamp()
         return categoryRepository.deleteCategory(
             id = id,
         )

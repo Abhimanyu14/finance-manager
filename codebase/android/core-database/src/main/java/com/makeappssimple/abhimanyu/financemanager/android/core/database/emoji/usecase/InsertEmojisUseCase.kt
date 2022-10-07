@@ -2,8 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.repository.EmojiRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.MyDataStore
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.updateLastDataChangeTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 
 interface InsertEmojisUseCase {
     suspend operator fun invoke(
@@ -18,9 +17,7 @@ class InsertEmojisUseCaseImpl(
     override suspend operator fun invoke(
         vararg emojis: EmojiLocalEntity,
     ) {
-        updateLastDataChangeTimestamp(
-            dataStore = dataStore,
-        )
+        dataStore.updateLastDataChangeTimestamp()
         return emojiRepository.insertEmojis(
             emojis = emojis,
         )
