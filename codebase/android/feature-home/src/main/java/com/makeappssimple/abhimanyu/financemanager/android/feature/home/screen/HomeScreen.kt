@@ -10,7 +10,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.CreateJsonDocument
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.logError
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.logError
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmodel.HomeScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmodel.HomeScreenViewModelImpl

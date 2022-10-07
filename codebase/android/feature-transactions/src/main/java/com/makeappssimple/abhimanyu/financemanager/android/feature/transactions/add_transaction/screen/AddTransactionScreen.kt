@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.logError
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.logError
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenUiState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenUiVisibilityState

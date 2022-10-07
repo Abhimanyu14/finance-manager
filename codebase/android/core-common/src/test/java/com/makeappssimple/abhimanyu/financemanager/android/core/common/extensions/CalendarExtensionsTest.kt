@@ -1,12 +1,5 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.common.util.extensions
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.dayOfMonth
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.hour
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.minute
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.month
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.setDate
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.setTime
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.year
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test

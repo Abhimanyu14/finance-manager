@@ -1,22 +1,19 @@
 ﻿package com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions
 
 fun String?.isNotNullOrBlank(): Boolean {
-    return this != null && this.isNotBlank()
+    return !this.isNullOrBlank()
 }
 
 fun Any.padStartWithZero(
     length: Int,
 ): String {
-    if (length < 0) {
+    if (length > 0) {
         return this.toString().padStart(
-            length = 0,
+            length = length,
             padChar = '0',
         )
     }
-    return this.toString().padStart(
-        length = length,
-        padChar = '0',
-    )
+    return this.toString()
 }
 
 fun String.capitalizeWords(): String {

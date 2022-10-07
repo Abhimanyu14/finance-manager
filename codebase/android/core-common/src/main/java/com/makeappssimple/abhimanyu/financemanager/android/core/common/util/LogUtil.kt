@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.util
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.util
 
 import android.util.Log
 

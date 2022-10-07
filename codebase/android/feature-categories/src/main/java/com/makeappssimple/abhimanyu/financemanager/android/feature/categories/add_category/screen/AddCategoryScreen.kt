@@ -7,8 +7,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.constants.loadingCompletedEmoji
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.logError
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.loadingCompletedEmoji
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.logError
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.viewmodel.AddCategoryScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.viewmodel.AddCategoryScreenViewModelImpl

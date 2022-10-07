@@ -1,8 +1,5 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.common.util.extensions
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.padStartWithZero
 import org.junit.Assert
 import org.junit.Test
 
@@ -97,6 +94,33 @@ class StringExtensionTest {
         val input = "test"
         Assert.assertEquals(
             "Test",
+            input.capitalizeWords(),
+        )
+    }
+
+    @Test
+    fun capitalizeWords_singleWordAllCapitalLetters() {
+        val input = "TEST"
+        Assert.assertEquals(
+            "Test",
+            input.capitalizeWords(),
+        )
+    }
+
+    @Test
+    fun capitalizeWords_singleWordRandomCaseLetters() {
+        val input = "tEsT"
+        Assert.assertEquals(
+            "Test",
+            input.capitalizeWords(),
+        )
+    }
+
+    @Test
+    fun capitalizeWords_multipleWordsAllSmallLetters() {
+        val input = "test words"
+        Assert.assertEquals(
+            "Test Words",
             input.capitalizeWords(),
         )
     }

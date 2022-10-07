@@ -1,7 +1,7 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.util
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.util
 
 import android.os.Build
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.BuildConfig
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.BuildConfig
 
 fun isDebugBuild() = BuildConfig.DEBUG
 
