@@ -6,10 +6,10 @@ import com.google.gson.JsonSyntaxException
 import com.google.gson.reflect.TypeToken
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 
-class CategoryIdsConverter {
+class IntListConverter {
 
     @TypeConverter
-    fun stringToCategoryIds(
+    fun stringToIntList(
         value: String?,
     ): List<Int>? {
         if (value.isNullOrBlank()) {
@@ -30,15 +30,15 @@ class CategoryIdsConverter {
     }
 
     @TypeConverter
-    fun categoryIdsToString(
-        categoryIds: List<Int>?,
+    fun intListToString(
+        intList: List<Int>?,
     ): String {
-        if (categoryIds.isNull()) {
+        if (intList.isNull()) {
             return ""
         }
         val gson = Gson()
         return gson.toJson(
-            categoryIds,
+            intList,
         )
     }
 }

@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoriesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesCountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
@@ -12,6 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTitleSuggestionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.TestDispatcherProviderImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule

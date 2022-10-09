@@ -4,6 +4,30 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 /**
+ * New Columns added
+ *
+ * 1. originalTransactionId: Int? = null
+ * 2. refundTransactionIds: List<Int>? = null
+ */
+val MIGRATION_17_18 = object : Migration(17, 18) {
+    override fun migrate(
+        database: SupportSQLiteDatabase,
+    ) {
+        // Create the new table
+        database.execSQL("CREATE TABLE IF NOT EXISTS `transaction_table_new` (`amount` TEXT NOT NULL, `category_id` INTEGER, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `original_transaction_id` INTEGER, `source_from_id` INTEGER, `source_to_id` INTEGER, `transaction_for_id` INTEGER NOT NULL, `refund_transaction_ids` TEXT, `creation_timestamp` INTEGER NOT NULL, `transaction_timestamp` INTEGER NOT NULL, `description` TEXT NOT NULL, `title` TEXT NOT NULL, `transaction_type` TEXT NOT NULL)")
+
+        // Copy the data
+        database.execSQL("INSERT INTO transaction_table_new (amount, category_id, id, source_from_id, source_to_id, transaction_for_id, creation_timestamp, transaction_timestamp, description, title, transaction_type) SELECT amount, category_id, id, source_from_id, source_to_id, transaction_for_id, creation_timestamp, transaction_timestamp, description, title, transaction_type FROM transaction_table")
+
+        // Remove the old table
+        database.execSQL("DROP TABLE transaction_table")
+
+        // Change the table name to the correct one
+        database.execSQL("ALTER TABLE transaction_table_new RENAME TO transaction_table")
+    }
+}
+
+/**
  * Column data type changes
  *
  * 1. transactionForId from transactionFor in Transaction table

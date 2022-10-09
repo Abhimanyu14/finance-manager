@@ -17,7 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.m
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.initialdatabasedata.model.InitialDatabaseData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.converters.AmountConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.converters.CategoryConverter
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.converters.CategoryIdsConverter
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.converters.IntListConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.datasource.local.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.datasource.local.TransactionDao
@@ -39,7 +39,7 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.Executors
 
 @Database(
-    version = 17,
+    version = 18,
     entities = [
         Category::class,
         EmojiLocalEntity::class,
@@ -73,7 +73,7 @@ import java.util.concurrent.Executors
 )
 @TypeConverters(
     AmountConverter::class,
-    CategoryIdsConverter::class,
+    IntListConverter::class,
     CategoryConverter::class,
 )
 abstract class MyRoomDatabase : RoomDatabase() {
@@ -158,6 +158,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                         "finance_manager_database",
                     )
                     .addMigrations(
+                        MIGRATION_17_18,
                         MIGRATION_16_17,
                         MIGRATION_15_16,
                         MIGRATION_14_15,

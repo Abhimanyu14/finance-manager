@@ -4,7 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.converters.CategoryIdsConverter
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.converters.IntListConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
@@ -21,7 +21,7 @@ data class Category(
 
     @ColumnInfo(name = "sub_categories")
     @Json(name = "sub_categories")
-    @TypeConverters(CategoryIdsConverter::class)
+    @TypeConverters(IntListConverter::class)
     val subCategoryIds: List<Int>? = null,
 
     val description: String = "",
