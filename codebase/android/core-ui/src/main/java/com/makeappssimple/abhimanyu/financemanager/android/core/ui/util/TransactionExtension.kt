@@ -41,5 +41,9 @@ private fun TransactionType.calculateAmountTextColor(
         TransactionType.INVESTMENT -> {
             MaterialTheme.colorScheme.primary
         }
+
+        TransactionType.REFUND -> {
+            MaterialTheme.colorScheme.onTertiaryContainer
+        }
     }
 }

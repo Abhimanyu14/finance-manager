@@ -21,6 +21,9 @@ enum class TransactionType(
     INVESTMENT(
         title = "Investment",
     ),
+    REFUND(
+        title = "Refund",
+    ),
     /*
     // TODO-Abhi: Add Loans later
     LOAN(

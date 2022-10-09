@@ -70,9 +70,9 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
         val sourceCount = getSourcesCountUseCase()
         val transactionTypesForNewTransaction = TransactionType.values().filter {
             if (sourceCount > 1) {
-                it != TransactionType.ADJUSTMENT
+                it != TransactionType.ADJUSTMENT && it != TransactionType.REFUND
             } else {
-                it != TransactionType.ADJUSTMENT && it != TransactionType.TRANSFER
+                it != TransactionType.ADJUSTMENT && it != TransactionType.REFUND && it != TransactionType.TRANSFER
             }
         }
         emit(
@@ -152,24 +152,35 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                         uiState.title.isNotNullOrBlank() &&
                         uiState.amount.toInt().isNotZero()
             }
+
             TransactionType.EXPENSE -> {
                 uiState.amount.isNotNullOrBlank() &&
                         uiState.title.isNotNullOrBlank() &&
                         uiState.amount.toInt().isNotZero()
             }
+
             TransactionType.TRANSFER -> {
                 uiState.amount.isNotNullOrBlank() &&
                         uiState.sourceFrom?.id != uiState.sourceTo?.id &&
                         uiState.amount.toInt().isNotZero()
             }
+
             TransactionType.ADJUSTMENT -> {
                 false
             }
+
             TransactionType.INVESTMENT -> {
                 uiState.amount.isNotNullOrBlank() &&
                         uiState.title.isNotNullOrBlank() &&
                         uiState.amount.toInt().isNotZero()
             }
+
+            TransactionType.REFUND -> {
+                uiState.amount.isNotNullOrBlank() &&
+                        uiState.title.isNotNullOrBlank() &&
+                        uiState.amount.toInt().isNotZero()
+            }
+
             null -> {
                 false
             }
@@ -291,18 +302,27 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                         TransactionType.INCOME -> {
                             AddTransactionScreenUiVisibilityState.Income
                         }
+
                         TransactionType.EXPENSE -> {
                             AddTransactionScreenUiVisibilityState.Expense
                         }
+
                         TransactionType.TRANSFER -> {
                             AddTransactionScreenUiVisibilityState.Transfer
                         }
+
                         TransactionType.ADJUSTMENT -> {
                             null
                         }
+
                         TransactionType.INVESTMENT -> {
                             AddTransactionScreenUiVisibilityState.Investment
                         }
+
+                        TransactionType.REFUND -> {
+                            AddTransactionScreenUiVisibilityState.Refund
+                        }
+
                         null -> {
                             null
                         }
@@ -326,6 +346,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                                 updatedSourceTo = defaultSource,
                             )
                         }
+
                         TransactionType.EXPENSE -> {
                             updateCategory(
                                 updatedCategory = expenseDefaultCategory,
@@ -338,6 +359,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                                 updatedSourceTo = null,
                             )
                         }
+
                         TransactionType.TRANSFER -> {
                             updateSourceFrom(
                                 updatedSourceFrom = defaultSource,
@@ -346,7 +368,9 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                                 updatedSourceTo = defaultSource,
                             )
                         }
+
                         TransactionType.ADJUSTMENT -> {}
+
                         TransactionType.INVESTMENT -> {
                             updateCategory(
                                 updatedCategory = investmentDefaultCategory,
@@ -359,6 +383,11 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                                 updatedSourceTo = null,
                             )
                         }
+
+                        TransactionType.REFUND -> {
+                            TODO()
+                        }
+
                         null -> {}
                     }
                 }
@@ -394,51 +423,75 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                     TransactionType.INCOME -> {
                         uiStateValue.category?.id
                     }
+
                     TransactionType.EXPENSE -> {
                         uiStateValue.category?.id
                     }
+
                     TransactionType.TRANSFER -> {
                         null
                     }
+
                     TransactionType.ADJUSTMENT -> {
                         null
                     }
+
                     TransactionType.INVESTMENT -> {
                         uiStateValue.category?.id
+                    }
+
+                    TransactionType.REFUND -> {
+                        TODO()
                     }
                 }
                 val sourceFromId = when (selectedTransactionTypeValue) {
                     TransactionType.INCOME -> {
                         null
                     }
+
                     TransactionType.EXPENSE -> {
                         uiStateValue.sourceFrom?.id
                     }
+
                     TransactionType.TRANSFER -> {
                         uiStateValue.sourceFrom?.id
                     }
+
                     TransactionType.ADJUSTMENT -> {
                         null
                     }
+
                     TransactionType.INVESTMENT -> {
                         uiStateValue.sourceFrom?.id
+                    }
+
+                    TransactionType.REFUND -> {
+                        null
                     }
                 }
                 val sourceToId = when (selectedTransactionTypeValue) {
                     TransactionType.INCOME -> {
                         uiStateValue.sourceTo?.id
                     }
+
                     TransactionType.EXPENSE -> {
                         null
                     }
+
                     TransactionType.TRANSFER -> {
                         uiStateValue.sourceTo?.id
                     }
+
                     TransactionType.ADJUSTMENT -> {
                         null
                     }
+
                     TransactionType.INVESTMENT -> {
                         null
+                    }
+
+                    TransactionType.REFUND -> {
+                        TODO()
                     }
                 }
                 val title = if (selectedTransactionTypeValue == TransactionType.TRANSFER) {
@@ -450,16 +503,24 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                     TransactionType.INCOME -> {
                         1
                     }
+
                     TransactionType.EXPENSE -> {
                         transactionForValues.value[uiStateValue.selectedTransactionForIndex].id
                     }
+
                     TransactionType.TRANSFER -> {
                         1
                     }
+
                     TransactionType.ADJUSTMENT -> {
                         1
                     }
+
                     TransactionType.INVESTMENT -> {
+                        1
+                    }
+
+                    TransactionType.REFUND -> {
                         1
                     }
                 }

@@ -55,6 +55,12 @@ fun transactionsCleanUp(
                     sourceToId = null,
                 )
             }
+
+            TransactionType.REFUND -> {
+                it.copy(
+                    sourceFromId = null,
+                )
+            }
         }
     }
 }

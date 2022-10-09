@@ -43,6 +43,16 @@ sealed class AddTransactionScreenUiVisibilityState(
         isTitleSuggestionsVisible = true,
     )
 
+    object Refund : AddTransactionScreenUiVisibilityState(
+        isTitleTextFieldVisible = true,
+        isDescriptionTextFieldVisible = false,
+        isCategoryTextFieldVisible = false,
+        isTransactionForRadioGroupVisible = false,
+        isSourceFromTextFieldVisible = false,
+        isSourceToTextFieldVisible = true,
+        isTitleSuggestionsVisible = true,
+    )
+
     object Transfer : AddTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = false,
         isDescriptionTextFieldVisible = false,
