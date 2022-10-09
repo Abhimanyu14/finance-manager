@@ -299,8 +299,11 @@ private fun LazyListScope.componentsTabContent(
         MyHorizontalScrollingSuggestionGroup(
             items = items,
             onSelectionChange = {
-                Toast.makeText(context, "Selected ${items[it].text}", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(
+                    context,
+                    "Selected ${items[it].text}",
+                    Toast.LENGTH_SHORT,
+                ).show()
             },
         )
     }

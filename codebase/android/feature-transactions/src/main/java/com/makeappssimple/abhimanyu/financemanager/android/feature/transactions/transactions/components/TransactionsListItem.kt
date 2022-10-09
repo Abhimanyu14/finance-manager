@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.CurrencyExchange
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.Divider
@@ -19,9 +20,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getReadableDateAndTimeString
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getReadableDateAndTimeString
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.ExpandedListItemShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyEmojiCircle
@@ -41,6 +42,7 @@ internal fun TransactionsListItem(
     onClick: () -> Unit,
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
+    onRefundClick: () -> Unit,
 ) {
     val sourceFrom = transactionData.sourceFrom
     val sourceTo = transactionData.sourceTo
@@ -82,9 +84,11 @@ internal fun TransactionsListItem(
                 TransactionType.TRANSFER -> {
                     transferEmoji
                 }
+
                 TransactionType.ADJUSTMENT -> {
                     adjustmentEmoji
                 }
+
                 else -> {
                     transactionData.category?.emoji
                 }
@@ -232,6 +236,20 @@ internal fun TransactionsListItem(
                     enabled = true,
                     onClick = onEditClick,
                 )
+                if (transactionData.transaction.transactionType == TransactionType.EXPENSE) {
+                    MyExpandableItemIconButton(
+                        iconImageVector = Icons.Rounded.CurrencyExchange,
+                        modifier = Modifier
+                            .weight(
+                                weight = 1F,
+                            ),
+                        labelText = stringResource(
+                            id = R.string.list_item_transactions_refund,
+                        ),
+                        enabled = true,
+                        onClick = onRefundClick,
+                    )
+                }
                 MyExpandableItemIconButton(
                     modifier = Modifier
                         .weight(

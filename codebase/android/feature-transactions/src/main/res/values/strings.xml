@@ -39,6 +39,7 @@
     <!-- region transactions list item -->
     <string name="list_item_transactions_source">%1$s -> %2$s</string>
     <string name="list_item_transactions_edit">Edit</string>
+    <string name="list_item_transactions_refund">Refund</string>
     <string name="list_item_transactions_delete">Delete</string>
     <!-- endregion -->
 
