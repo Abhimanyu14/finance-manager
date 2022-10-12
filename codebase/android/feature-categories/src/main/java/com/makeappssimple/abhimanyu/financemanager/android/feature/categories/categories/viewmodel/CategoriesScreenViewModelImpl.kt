@@ -114,18 +114,26 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
                         defaultExpenseCategoryId = defaultCategoryId,
                     )
                 }
+
                 TransactionType.INCOME -> {
                     dataStore.setDefaultIncomeCategoryIdInDataStore(
                         defaultIncomeCategoryId = defaultCategoryId,
                     )
                 }
+
                 TransactionType.INVESTMENT -> {
                     dataStore.setDefaultInvestmentCategoryIdInDataStore(
                         defaultInvestmentCategoryId = defaultCategoryId,
                     )
                 }
+
                 TransactionType.TRANSFER -> {}
+
                 TransactionType.ADJUSTMENT -> {}
+
+                TransactionType.REFUND -> {
+                    TODO()
+                }
             }
         }
     }
