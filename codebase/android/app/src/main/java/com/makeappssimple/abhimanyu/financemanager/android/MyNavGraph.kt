@@ -54,6 +54,7 @@ internal fun MyNavGraph(
                     navigationCommand = MyNavigationDirections.default()
                 )
             }
+
             Command.NAVIGATE_UP -> {
                 navHostController.navigateUp()
 
@@ -62,6 +63,7 @@ internal fun MyNavGraph(
                     navigationCommand = MyNavigationDirections.default()
                 )
             }
+
             Command.CLEAR_BACKSTACK_AND_NAVIGATE -> {
                 navHostController.navigate(
                     route = command.destination,
@@ -78,6 +80,7 @@ internal fun MyNavGraph(
                     navigationCommand = MyNavigationDirections.default()
                 )
             }
+
             Command.CLEAR_TILL_ROOT -> {
                 navHostController.popBackStack(
                     destinationId = navHostController.graph.findStartDestination().id,
@@ -89,6 +92,7 @@ internal fun MyNavGraph(
                     navigationCommand = MyNavigationDirections.default()
                 )
             }
+
             Command.NOOP -> {}
         }
     }

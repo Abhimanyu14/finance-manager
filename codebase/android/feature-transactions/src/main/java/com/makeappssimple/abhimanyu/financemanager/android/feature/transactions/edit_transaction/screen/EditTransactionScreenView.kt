@@ -27,14 +27,14 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDate
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.setDate
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.setTime
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
@@ -184,6 +184,7 @@ internal fun EditTransactionScreenView(
                 EditTransactionBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
+
                 EditTransactionBottomSheetType.SELECT_CATEGORY -> {
                     SelectCategoryBottomSheetContent(
                         coroutineScope = state.coroutineScope,
@@ -198,6 +199,7 @@ internal fun EditTransactionScreenView(
                         },
                     )
                 }
+
                 EditTransactionBottomSheetType.SELECT_SOURCE_FROM -> {
                     SelectSourceBottomSheetContent(
                         coroutineScope = state.coroutineScope,
@@ -212,6 +214,7 @@ internal fun EditTransactionScreenView(
                         }
                     )
                 }
+
                 EditTransactionBottomSheetType.SELECT_SOURCE_TO -> {
                     SelectSourceBottomSheetContent(
                         coroutineScope = state.coroutineScope,

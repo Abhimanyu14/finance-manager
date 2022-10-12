@@ -5,11 +5,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.logError
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.logError
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel.EditTransactionScreenUiState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel.EditTransactionScreenUiVisibilityState
@@ -61,15 +61,9 @@ fun EditTransactionScreen(
             transactionForValues = transactionForValues,
             navigationManager = screenViewModel.navigationManager,
             selectedTransactionType = selectedTransactionType,
-            clearAmount = {
-                screenViewModel.clearAmount()
-            },
-            clearDescription = {
-                screenViewModel.clearDescription()
-            },
-            clearTitle = {
-                screenViewModel.clearTitle()
-            },
+            clearAmount = screenViewModel::clearAmount,
+            clearDescription = screenViewModel::clearDescription,
+            clearTitle = screenViewModel::clearTitle,
             updateAmount = { updatedAmount ->
                 screenViewModel.updateAmount(
                     updatedAmount = updatedAmount,
@@ -110,9 +104,7 @@ fun EditTransactionScreen(
                     updatedTitle = updatedTitle,
                 )
             },
-            updateTransaction = {
-                screenViewModel.updateTransaction()
-            },
+            updateTransaction = screenViewModel::updateTransaction,
             updateTransactionCalendar = { updatedTransactionCalendar ->
                 screenViewModel.updateTransactionCalendar(
                     updatedTransactionCalendar = updatedTransactionCalendar,

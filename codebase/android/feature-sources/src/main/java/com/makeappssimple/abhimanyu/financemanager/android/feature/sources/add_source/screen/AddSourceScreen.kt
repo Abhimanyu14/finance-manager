@@ -32,15 +32,9 @@ fun AddSourceScreen(
             sourceTypes = screenViewModel.sourceTypes,
             navigationManager = screenViewModel.navigationManager,
             name = name,
-            clearName = {
-                screenViewModel.clearName()
-            },
-            insertSource = {
-                screenViewModel.insertSource()
-            },
-            isValidSourceData = {
-                screenViewModel.isValidSourceData()
-            },
+            clearName = screenViewModel::clearName,
+            insertSource = screenViewModel::insertSource,
+            isValidSourceData = screenViewModel::isValidSourceData,
             updateName = { updatedName ->
                 screenViewModel.updateName(
                     updatedName = updatedName,

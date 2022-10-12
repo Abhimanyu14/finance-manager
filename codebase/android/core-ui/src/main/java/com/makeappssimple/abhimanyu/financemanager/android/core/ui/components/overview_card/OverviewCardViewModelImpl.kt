@@ -51,9 +51,11 @@ internal class OverviewCardViewModelImpl @Inject constructor(
             OverviewTabOption.DAY -> {
                 currentDayTransactions
             }
+
             OverviewTabOption.MONTH -> {
                 currentMonthTransactions
             }
+
             OverviewTabOption.YEAR -> {
                 currentYearTransactions
             }
@@ -76,9 +78,11 @@ internal class OverviewCardViewModelImpl @Inject constructor(
             OverviewTabOption.DAY -> {
                 currentDayTransactions
             }
+
             OverviewTabOption.MONTH -> {
                 currentMonthTransactions
             }
+
             OverviewTabOption.YEAR -> {
                 currentYearTransactions
             }

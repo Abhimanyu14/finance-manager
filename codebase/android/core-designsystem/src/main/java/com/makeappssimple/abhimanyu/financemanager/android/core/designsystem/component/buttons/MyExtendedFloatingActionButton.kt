@@ -141,6 +141,7 @@ fun MyExtendedLoadingFloatingActionButton(
                         content()
                     }
                 }
+
                 MyExtendedLoadingFloatingActionButtonState.LOADING -> {
                     AnimatedVisibility(
                         visible = true,
@@ -162,9 +163,11 @@ fun MyExtendedLoadingFloatingActionButton(
                     }
 
                 }
+
                 MyExtendedLoadingFloatingActionButtonState.SUCCESS -> {
                     content()
                 }
+
                 MyExtendedLoadingFloatingActionButtonState.FAILURE -> {
                     content()
                 }

@@ -22,6 +22,7 @@ fun getDismissState(
                         false
                     }
                 }
+
                 DismissValue.DismissedToStart -> {
                     if (dismissedToStart != null) {
                         dismissedToStart()
@@ -30,6 +31,7 @@ fun getDismissState(
                         false
                     }
                 }
+
                 DismissValue.Default -> {
                     if (defaultAction != null) {
                         defaultAction()

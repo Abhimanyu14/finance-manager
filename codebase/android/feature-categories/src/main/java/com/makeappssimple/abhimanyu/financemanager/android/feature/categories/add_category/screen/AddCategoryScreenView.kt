@@ -118,6 +118,7 @@ internal fun AddCategoryScreenView(
                 AddCategoryBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
+
                 AddCategoryBottomSheetType.SELECT_EMOJI -> {
                     AddCategorySelectEmojiBottomSheetContent(
                         context = state.context,

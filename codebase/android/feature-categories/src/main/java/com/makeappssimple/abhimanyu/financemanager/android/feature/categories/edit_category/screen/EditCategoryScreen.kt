@@ -5,10 +5,10 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.loadingCompletedEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.loadingEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.logError
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.viewmodel.EditCategoryScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.viewmodel.EditCategoryScreenViewModelImpl
@@ -55,15 +55,9 @@ fun EditCategoryScreen(
             emoji = emoji,
             searchText = searchText,
             title = title,
-            clearTitle = {
-                screenViewModel.clearTitle()
-            },
-            isValidCategoryData = {
-                screenViewModel.isValidCategoryData()
-            },
-            updateCategory = {
-                screenViewModel.updateCategory()
-            },
+            clearTitle = screenViewModel::clearTitle,
+            isValidCategoryData = screenViewModel::isValidCategoryData,
+            updateCategory = screenViewModel::updateCategory,
             updateEmoji = { updatedEmoji ->
                 screenViewModel.updateEmoji(
                     updatedEmoji = updatedEmoji,

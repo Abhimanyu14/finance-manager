@@ -5,8 +5,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.logError
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.edit_source.viewmodel.EditSourceScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.edit_source.viewmodel.EditSourceScreenViewModelImpl
@@ -41,18 +41,10 @@ fun EditSourceScreen(
             source = source,
             balanceAmountValue = balanceAmountValue,
             name = name,
-            clearBalanceAmountValue = {
-                screenViewModel.clearBalanceAmountValue()
-            },
-            clearName = {
-                screenViewModel.clearName()
-            },
-            insertSource = {
-                screenViewModel.insertSource()
-            },
-            isValidSourceData = {
-                screenViewModel.isValidSourceData()
-            },
+            clearBalanceAmountValue = screenViewModel::clearBalanceAmountValue,
+            clearName = screenViewModel::clearName,
+            insertSource = screenViewModel::insertSource,
+            isValidSourceData = screenViewModel::isValidSourceData,
             updateBalanceAmountValue = { updatedBalanceAmountValue ->
                 screenViewModel.updateBalanceAmountValue(
                     updatedBalanceAmountValue = updatedBalanceAmountValue,
@@ -68,9 +60,7 @@ fun EditSourceScreen(
                     updatedIndex = updatedIndex,
                 )
             },
-            updateSource = {
-                screenViewModel.updateSource()
-            },
+            updateSource = screenViewModel::updateSource,
         ),
         state = rememberCommonScreenViewState(),
     )
