@@ -6,6 +6,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiVisibilityState
 import kotlinx.coroutines.flow.StateFlow
 import java.util.Calendar
 
@@ -15,8 +17,8 @@ interface AddTransactionScreenViewModel : ScreenViewModel {
     val filteredCategories: StateFlow<List<Category>>
     val sources: StateFlow<List<Source>>
     val transactionForValues: StateFlow<List<TransactionFor>>
-    val uiState: StateFlow<AddTransactionScreenUiState>
-    val uiVisibilityState: StateFlow<AddTransactionScreenUiVisibilityState>
+    val uiState: StateFlow<AddOrEditTransactionScreenUiState>
+    val uiVisibilityState: StateFlow<AddOrEditTransactionScreenUiVisibilityState>
     val selectedTransactionType: StateFlow<TransactionType?>
     val isValidTransactionData: StateFlow<Boolean>
     val titleSuggestions: StateFlow<List<String>>

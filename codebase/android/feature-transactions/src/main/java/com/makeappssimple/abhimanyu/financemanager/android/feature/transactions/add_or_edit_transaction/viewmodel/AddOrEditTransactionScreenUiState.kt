@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel
+package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel
 
 import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
@@ -6,7 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import java.util.Calendar
 
 @Immutable
-data class AddTransactionScreenUiState(
+data class AddOrEditTransactionScreenUiState(
     val selectedTransactionTypeIndex: Int?,
     val amount: String,
     val title: String,

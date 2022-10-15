@@ -11,8 +11,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel.EditTransactionScreenUiState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel.EditTransactionScreenUiVisibilityState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenView
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenViewData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiVisibilityState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel.EditTransactionScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel.EditTransactionScreenViewModelImpl
 
@@ -36,8 +39,8 @@ fun EditTransactionScreen(
     val transactionTypesForNewTransaction: List<TransactionType> by screenViewModel.transactionTypesForNewTransaction.collectAsStateWithLifecycle(
         initialValue = emptyList(),
     )
-    val uiState: EditTransactionScreenUiState by screenViewModel.uiState.collectAsStateWithLifecycle()
-    val uiVisibilityState: EditTransactionScreenUiVisibilityState by screenViewModel.uiVisibilityState.collectAsStateWithLifecycle()
+    val uiState: AddOrEditTransactionScreenUiState by screenViewModel.uiState.collectAsStateWithLifecycle()
+    val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState by screenViewModel.uiVisibilityState.collectAsStateWithLifecycle()
     val selectedTransactionType: TransactionType? by screenViewModel.selectedTransactionType.collectAsStateWithLifecycle()
     val isValidTransactionData: Boolean by screenViewModel.isValidTransactionData.collectAsStateWithLifecycle()
     val titleSuggestions: List<String> by screenViewModel.titleSuggestions.collectAsStateWithLifecycle()
@@ -48,12 +51,13 @@ fun EditTransactionScreen(
         screenViewModel.trackScreen()
     }
 
-    EditTransactionScreenView(
-        data = EditTransactionScreenViewData(
-            isValidTransactionData = isValidTransactionData,
+    AddOrEditTransactionScreenView(
+        data = AddOrEditTransactionScreenViewData(
             uiState = uiState,
             uiVisibilityState = uiVisibilityState,
-            transactionId = transactionId,
+            isValidTransactionData = isValidTransactionData,
+            appBarTitleTextStringResourceId = R.string.screen_edit_transaction_appbar_title,
+            saveButtonLabelTextStringResourceId = R.string.screen_edit_transaction_floating_action_button_content_description,
             filteredCategories = filteredCategories,
             sources = sources,
             titleSuggestions = titleSuggestions,
@@ -64,6 +68,7 @@ fun EditTransactionScreen(
             clearAmount = screenViewModel::clearAmount,
             clearDescription = screenViewModel::clearDescription,
             clearTitle = screenViewModel::clearTitle,
+            onSaveButtonClick = screenViewModel::updateTransaction,
             updateAmount = { updatedAmount ->
                 screenViewModel.updateAmount(
                     updatedAmount = updatedAmount,
@@ -104,7 +109,6 @@ fun EditTransactionScreen(
                     updatedTitle = updatedTitle,
                 )
             },
-            updateTransaction = screenViewModel::updateTransaction,
             updateTransactionCalendar = { updatedTransactionCalendar ->
                 screenViewModel.updateTransactionCalendar(
                     updatedTransactionCalendar = updatedTransactionCalendar,

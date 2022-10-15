@@ -31,6 +31,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isCashSo
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiVisibilityState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -96,8 +98,8 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
             scope = viewModelScope,
         )
 
-    private val _uiState: MutableStateFlow<AddTransactionScreenUiState> = MutableStateFlow(
-        value = AddTransactionScreenUiState(
+    private val _uiState: MutableStateFlow<AddOrEditTransactionScreenUiState> = MutableStateFlow(
+        value = AddOrEditTransactionScreenUiState(
             selectedTransactionTypeIndex = null,
             amount = "",
             title = "",
@@ -109,13 +111,13 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
             transactionCalendar = Calendar.getInstance(Locale.getDefault()),
         ),
     )
-    override val uiState: StateFlow<AddTransactionScreenUiState> = _uiState
+    override val uiState: StateFlow<AddOrEditTransactionScreenUiState> = _uiState
 
-    private val _uiVisibilityState: MutableStateFlow<AddTransactionScreenUiVisibilityState> =
+    private val _uiVisibilityState: MutableStateFlow<AddOrEditTransactionScreenUiVisibilityState> =
         MutableStateFlow(
-            value = AddTransactionScreenUiVisibilityState.Expense,
+            value = AddOrEditTransactionScreenUiVisibilityState.Expense,
         )
-    override val uiVisibilityState: StateFlow<AddTransactionScreenUiVisibilityState> =
+    override val uiVisibilityState: StateFlow<AddOrEditTransactionScreenUiVisibilityState> =
         _uiVisibilityState
 
     override val selectedTransactionType: StateFlow<TransactionType?> = combine(
@@ -298,17 +300,17 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
             }
             launch {
                 selectedTransactionType.collectLatest {
-                    val uiVisibilityState: AddTransactionScreenUiVisibilityState? = when (it) {
+                    val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState? = when (it) {
                         TransactionType.INCOME -> {
-                            AddTransactionScreenUiVisibilityState.Income
+                            AddOrEditTransactionScreenUiVisibilityState.Income
                         }
 
                         TransactionType.EXPENSE -> {
-                            AddTransactionScreenUiVisibilityState.Expense
+                            AddOrEditTransactionScreenUiVisibilityState.Expense
                         }
 
                         TransactionType.TRANSFER -> {
-                            AddTransactionScreenUiVisibilityState.Transfer
+                            AddOrEditTransactionScreenUiVisibilityState.Transfer
                         }
 
                         TransactionType.ADJUSTMENT -> {
@@ -316,11 +318,11 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                         }
 
                         TransactionType.INVESTMENT -> {
-                            AddTransactionScreenUiVisibilityState.Investment
+                            AddOrEditTransactionScreenUiVisibilityState.Investment
                         }
 
                         TransactionType.REFUND -> {
-                            AddTransactionScreenUiVisibilityState.Refund
+                            AddOrEditTransactionScreenUiVisibilityState.Refund
                         }
 
                         null -> {
@@ -329,7 +331,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                     }
                     uiVisibilityState?.let {
                         updateAddTransactionScreenUiVisibilityState(
-                            updatedAddTransactionScreenUiVisibilityState = uiVisibilityState,
+                            updatedAddOrEditTransactionScreenUiVisibilityState = uiVisibilityState,
                         )
                     }
 
@@ -565,7 +567,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
         updatedSelectedTransactionTypeIndex: Int,
     ) {
         updateAddTransactionScreenUiState(
-            updatedAddTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 selectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex,
             ),
         )
@@ -575,7 +577,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
         updatedAmount: String,
     ) {
         updateAddTransactionScreenUiState(
-            updatedAddTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 amount = updatedAmount,
             ),
         )
@@ -591,7 +593,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
         updatedTitle: String,
     ) {
         updateAddTransactionScreenUiState(
-            updatedAddTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 title = updatedTitle,
             ),
         )
@@ -607,7 +609,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
         updatedDescription: String,
     ) {
         updateAddTransactionScreenUiState(
-            updatedAddTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 description = updatedDescription,
             ),
         )
@@ -623,7 +625,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
         updatedCategory: Category?,
     ) {
         updateAddTransactionScreenUiState(
-            updatedAddTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 category = updatedCategory,
             ),
         )
@@ -633,7 +635,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
         updatedSelectedTransactionForIndex: Int,
     ) {
         updateAddTransactionScreenUiState(
-            updatedAddTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 selectedTransactionForIndex = updatedSelectedTransactionForIndex,
             ),
         )
@@ -643,7 +645,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
         updatedSourceFrom: Source?,
     ) {
         updateAddTransactionScreenUiState(
-            updatedAddTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 sourceFrom = updatedSourceFrom,
             ),
         )
@@ -653,7 +655,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
         updatedSourceTo: Source?,
     ) {
         updateAddTransactionScreenUiState(
-            updatedAddTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 sourceTo = updatedSourceTo,
             ),
         )
@@ -663,7 +665,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
         updatedTransactionCalendar: Calendar,
     ) {
         updateAddTransactionScreenUiState(
-            updatedAddTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 transactionCalendar = updatedTransactionCalendar,
             ),
         )
@@ -671,17 +673,17 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
     // endregion
 
     private fun updateAddTransactionScreenUiState(
-        updatedAddTransactionScreenUiState: AddTransactionScreenUiState,
+        updatedAddOrEditTransactionScreenUiState: AddOrEditTransactionScreenUiState,
     ) {
         _uiState.update {
-            updatedAddTransactionScreenUiState
+            updatedAddOrEditTransactionScreenUiState
         }
     }
 
     private fun updateAddTransactionScreenUiVisibilityState(
-        updatedAddTransactionScreenUiVisibilityState: AddTransactionScreenUiVisibilityState,
+        updatedAddOrEditTransactionScreenUiVisibilityState: AddOrEditTransactionScreenUiVisibilityState,
     ) {
-        _uiVisibilityState.value = updatedAddTransactionScreenUiVisibilityState
+        _uiVisibilityState.value = updatedAddOrEditTransactionScreenUiVisibilityState
     }
 
     private fun getCategory(

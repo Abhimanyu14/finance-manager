@@ -1,9 +1,9 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel
+package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel
 
 import androidx.compose.runtime.Immutable
 
 @Immutable
-sealed class EditTransactionScreenUiVisibilityState(
+sealed class AddOrEditTransactionScreenUiVisibilityState(
     val isTitleTextFieldVisible: Boolean = false,
     val isDescriptionTextFieldVisible: Boolean = false,
     val isCategoryTextFieldVisible: Boolean = false,
@@ -13,7 +13,7 @@ sealed class EditTransactionScreenUiVisibilityState(
     val isTitleSuggestionsVisible: Boolean = false,
 ) {
 
-    object Expense : EditTransactionScreenUiVisibilityState(
+    object Expense : AddOrEditTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = true,
         isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = true,
@@ -23,7 +23,7 @@ sealed class EditTransactionScreenUiVisibilityState(
         isTitleSuggestionsVisible = true,
     )
 
-    object Income : EditTransactionScreenUiVisibilityState(
+    object Income : AddOrEditTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = true,
         isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = true,
@@ -33,7 +33,7 @@ sealed class EditTransactionScreenUiVisibilityState(
         isTitleSuggestionsVisible = true,
     )
 
-    object Investment : EditTransactionScreenUiVisibilityState(
+    object Investment : AddOrEditTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = true,
         isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = true,
@@ -43,7 +43,7 @@ sealed class EditTransactionScreenUiVisibilityState(
         isTitleSuggestionsVisible = true,
     )
 
-    object Refund : EditTransactionScreenUiVisibilityState(
+    object Refund : AddOrEditTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = true,
         isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = false,
@@ -53,7 +53,7 @@ sealed class EditTransactionScreenUiVisibilityState(
         isTitleSuggestionsVisible = true,
     )
 
-    object Transfer : EditTransactionScreenUiVisibilityState(
+    object Transfer : AddOrEditTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = false,
         isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = false,

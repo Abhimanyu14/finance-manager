@@ -1,5 +1,6 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen
 
+import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -58,11 +59,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bu
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenUiState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenUiVisibilityState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiVisibilityState
 import java.util.Calendar
 
-internal enum class AddTransactionBottomSheetType : BottomSheetType {
+internal enum class AddOrEditTransactionBottomSheetType : BottomSheetType {
     NONE,
     SELECT_CATEGORY,
     SELECT_SOURCE_FROM,
@@ -70,10 +71,12 @@ internal enum class AddTransactionBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class AddTransactionScreenViewData(
-    val uiState: AddTransactionScreenUiState,
-    val uiVisibilityState: AddTransactionScreenUiVisibilityState,
+internal data class AddOrEditTransactionScreenViewData(
+    val uiState: AddOrEditTransactionScreenUiState,
+    val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState,
     val isValidTransactionData: Boolean,
+    @StringRes val appBarTitleTextStringResourceId: Int,
+    @StringRes val saveButtonLabelTextStringResourceId: Int,
     val filteredCategories: List<Category>,
     val sources: List<Source>,
     val titleSuggestions: List<String>,
@@ -84,7 +87,7 @@ internal data class AddTransactionScreenViewData(
     val clearAmount: () -> Unit,
     val clearDescription: () -> Unit,
     val clearTitle: () -> Unit,
-    val insertTransaction: () -> Unit,
+    val onSaveButtonClick: () -> Unit,
     val updateAmount: (updatedAmount: String) -> Unit,
     val updateCategory: (updatedCategory: Category?) -> Unit,
     val updateDescription: (updatedDescription: String) -> Unit,
@@ -97,8 +100,8 @@ internal data class AddTransactionScreenViewData(
 )
 
 @Composable
-internal fun AddTransactionScreenView(
-    data: AddTransactionScreenViewData,
+internal fun AddOrEditTransactionScreenView(
+    data: AddOrEditTransactionScreenViewData,
     state: CommonScreenViewState,
 ) {
     val transactionDatePickerDialog = getMyDatePickerDialog(
@@ -129,9 +132,9 @@ internal fun AddTransactionScreenView(
         },
     )
 
-    var addTransactionBottomSheetType by remember {
+    var addOrEditTransactionBottomSheetType by remember {
         mutableStateOf(
-            value = AddTransactionBottomSheetType.NONE,
+            value = AddOrEditTransactionBottomSheetType.NONE,
         )
     }
 
@@ -156,18 +159,18 @@ internal fun AddTransactionScreenView(
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
         DisposableEffect(Unit) {
             onDispose {
-                addTransactionBottomSheetType = AddTransactionBottomSheetType.NONE
+                addOrEditTransactionBottomSheetType = AddOrEditTransactionBottomSheetType.NONE
                 state.keyboardController?.hide()
             }
         }
     }
 
     BottomSheetBackHandler(
-        enabled = addTransactionBottomSheetType != AddTransactionBottomSheetType.NONE,
+        enabled = addOrEditTransactionBottomSheetType != AddOrEditTransactionBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
         modalBottomSheetState = state.modalBottomSheetState,
     ) {
-        addTransactionBottomSheetType = AddTransactionBottomSheetType.NONE
+        addOrEditTransactionBottomSheetType = AddOrEditTransactionBottomSheetType.NONE
     }
 
     ModalBottomSheetLayout(
@@ -178,19 +181,20 @@ internal fun AddTransactionScreenView(
             BottomSheetShape
         },
         sheetContent = {
-            when (addTransactionBottomSheetType) {
-                AddTransactionBottomSheetType.NONE -> {
+            when (addOrEditTransactionBottomSheetType) {
+                AddOrEditTransactionBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
 
-                AddTransactionBottomSheetType.SELECT_CATEGORY -> {
+                AddOrEditTransactionBottomSheetType.SELECT_CATEGORY -> {
                     SelectCategoryBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
                         filteredCategories = data.filteredCategories,
                         selectedCategoryId = data.uiState.category?.id,
                         resetBottomSheetType = {
-                            addTransactionBottomSheetType = AddTransactionBottomSheetType.NONE
+                            addOrEditTransactionBottomSheetType =
+                                AddOrEditTransactionBottomSheetType.NONE
                         },
                         updateCategory = { updatedCategory ->
                             data.updateCategory(updatedCategory)
@@ -198,14 +202,15 @@ internal fun AddTransactionScreenView(
                     )
                 }
 
-                AddTransactionBottomSheetType.SELECT_SOURCE_FROM -> {
+                AddOrEditTransactionBottomSheetType.SELECT_SOURCE_FROM -> {
                     SelectSourceBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
                         sources = data.sources,
                         selectedSourceId = data.uiState.sourceFrom?.id,
                         resetBottomSheetType = {
-                            addTransactionBottomSheetType = AddTransactionBottomSheetType.NONE
+                            addOrEditTransactionBottomSheetType =
+                                AddOrEditTransactionBottomSheetType.NONE
                         },
                         updateSource = { updatedSource ->
                             data.updateSourceFrom(updatedSource)
@@ -213,14 +218,15 @@ internal fun AddTransactionScreenView(
                     )
                 }
 
-                AddTransactionBottomSheetType.SELECT_SOURCE_TO -> {
+                AddOrEditTransactionBottomSheetType.SELECT_SOURCE_TO -> {
                     SelectSourceBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
                         sources = data.sources,
                         selectedSourceId = data.uiState.sourceTo?.id,
                         resetBottomSheetType = {
-                            addTransactionBottomSheetType = AddTransactionBottomSheetType.NONE
+                            addOrEditTransactionBottomSheetType =
+                                AddOrEditTransactionBottomSheetType.NONE
                         },
                         updateSource = { updatedSource ->
                             data.updateSourceTo(updatedSource)
@@ -233,7 +239,7 @@ internal fun AddTransactionScreenView(
         Scaffold(
             topBar = {
                 MyTopAppBar(
-                    titleTextStringResourceId = R.string.screen_add_transaction_appbar_title,
+                    titleTextStringResourceId = data.appBarTitleTextStringResourceId,
                     navigationAction = {
                         navigateUp(
                             navigationManager = data.navigationManager,
@@ -279,8 +285,8 @@ internal fun AddTransactionScreenView(
                     )
                     MyOutlinedTextField(
                         value = data.uiState.amount,
-                        labelTextStringResourceId = R.string.screen_add_transaction_amount,
-                        trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_transaction_clear_amount,
+                        labelTextStringResourceId = R.string.screen_add_or_edit_transaction_amount,
+                        trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_amount,
                         onClickTrailingIcon = {
                             data.clearAmount()
                         },
@@ -312,11 +318,11 @@ internal fun AddTransactionScreenView(
                     ) {
                         MyReadOnlyTextField(
                             value = data.uiState.category?.title.orEmpty(),
-                            labelTextStringResourceId = R.string.screen_add_transaction_category,
+                            labelTextStringResourceId = R.string.screen_add_or_edit_transaction_category,
                             onClick = {
                                 clearFocus()
-                                addTransactionBottomSheetType =
-                                    AddTransactionBottomSheetType.SELECT_CATEGORY
+                                addOrEditTransactionBottomSheetType =
+                                    AddOrEditTransactionBottomSheetType.SELECT_CATEGORY
                                 toggleModalBottomSheetState(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,
@@ -335,8 +341,8 @@ internal fun AddTransactionScreenView(
                     ) {
                         MyOutlinedTextField(
                             value = data.uiState.title,
-                            labelTextStringResourceId = R.string.screen_add_transaction_title,
-                            trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_transaction_clear_title,
+                            labelTextStringResourceId = R.string.screen_add_or_edit_transaction_title,
+                            trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_title,
                             onClickTrailingIcon = {
                                 data.clearTitle()
                             },
@@ -410,8 +416,8 @@ internal fun AddTransactionScreenView(
                     ) {
                         MyOutlinedTextField(
                             value = data.uiState.description,
-                            labelTextStringResourceId = R.string.screen_add_transaction_description,
-                            trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_transaction_clear_description,
+                            labelTextStringResourceId = R.string.screen_add_or_edit_transaction_description,
+                            trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_description,
                             onClickTrailingIcon = {
                                 data.clearDescription()
                             },
@@ -441,14 +447,14 @@ internal fun AddTransactionScreenView(
                         MyReadOnlyTextField(
                             value = data.uiState.sourceFrom?.name.orEmpty(),
                             labelTextStringResourceId = if (data.selectedTransactionType == TransactionType.TRANSFER) {
-                                R.string.screen_add_transaction_source_from
+                                R.string.screen_add_or_edit_transaction_source_from
                             } else {
-                                R.string.screen_add_transaction_source
+                                R.string.screen_add_or_edit_transaction_source
                             },
                             onClick = {
                                 clearFocus()
-                                addTransactionBottomSheetType =
-                                    AddTransactionBottomSheetType.SELECT_SOURCE_FROM
+                                addOrEditTransactionBottomSheetType =
+                                    AddOrEditTransactionBottomSheetType.SELECT_SOURCE_FROM
                                 toggleModalBottomSheetState(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,
@@ -468,14 +474,14 @@ internal fun AddTransactionScreenView(
                         MyReadOnlyTextField(
                             value = data.uiState.sourceTo?.name.orEmpty(),
                             labelTextStringResourceId = if (data.selectedTransactionType == TransactionType.TRANSFER) {
-                                R.string.screen_add_transaction_source_to
+                                R.string.screen_add_or_edit_transaction_source_to
                             } else {
-                                R.string.screen_add_transaction_source
+                                R.string.screen_add_or_edit_transaction_source
                             },
                             onClick = {
                                 clearFocus()
-                                addTransactionBottomSheetType =
-                                    AddTransactionBottomSheetType.SELECT_SOURCE_TO
+                                addOrEditTransactionBottomSheetType =
+                                    AddOrEditTransactionBottomSheetType.SELECT_SOURCE_TO
                                 toggleModalBottomSheetState(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,
@@ -491,7 +497,7 @@ internal fun AddTransactionScreenView(
                     }
                     MyReadOnlyTextField(
                         value = data.uiState.transactionCalendar.formattedDate(),
-                        labelTextStringResourceId = R.string.screen_add_transaction_transaction_date,
+                        labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_date,
                         onClick = {
                             clearFocus()
                             transactionDatePickerDialog.show()
@@ -505,7 +511,7 @@ internal fun AddTransactionScreenView(
                     )
                     MyReadOnlyTextField(
                         value = data.uiState.transactionCalendar.formattedTime(),
-                        labelTextStringResourceId = R.string.screen_add_transaction_transaction_time,
+                        labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_time,
                         onClick = {
                             clearFocus()
                             transactionTimePickerDialog.show()
@@ -518,11 +524,11 @@ internal fun AddTransactionScreenView(
                             ),
                     )
                     SaveButton(
-                        textStringResourceId = R.string.screen_add_transaction_floating_action_button_content_description,
+                        textStringResourceId = data.saveButtonLabelTextStringResourceId,
                         isEnabled = data.isValidTransactionData,
                         onClick = {
                             clearFocus()
-                            data.insertTransaction()
+                            data.onSaveButtonClick()
                         },
                     )
                 }

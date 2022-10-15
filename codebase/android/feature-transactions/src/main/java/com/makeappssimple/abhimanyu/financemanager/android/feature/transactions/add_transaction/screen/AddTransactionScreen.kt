@@ -11,8 +11,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenUiState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenUiVisibilityState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenView
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenViewData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiVisibilityState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenViewModelImpl
 
@@ -23,8 +26,8 @@ fun AddTransactionScreen(
     logError(
         message = "Inside AddTransactionScreen",
     )
-    val uiVisibilityState: AddTransactionScreenUiVisibilityState by screenViewModel.uiVisibilityState.collectAsStateWithLifecycle()
-    val uiState: AddTransactionScreenUiState by screenViewModel.uiState.collectAsStateWithLifecycle()
+    val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState by screenViewModel.uiVisibilityState.collectAsStateWithLifecycle()
+    val uiState: AddOrEditTransactionScreenUiState by screenViewModel.uiState.collectAsStateWithLifecycle()
     val isValidTransactionData: Boolean by screenViewModel.isValidTransactionData.collectAsStateWithLifecycle()
     val filteredCategories: List<Category> by screenViewModel.filteredCategories.collectAsStateWithLifecycle(
         initialValue = emptyList(),
@@ -47,11 +50,13 @@ fun AddTransactionScreen(
         screenViewModel.trackScreen()
     }
 
-    AddTransactionScreenView(
-        data = AddTransactionScreenViewData(
+    AddOrEditTransactionScreenView(
+        data = AddOrEditTransactionScreenViewData(
             uiState = uiState,
             uiVisibilityState = uiVisibilityState,
             isValidTransactionData = isValidTransactionData,
+            appBarTitleTextStringResourceId = R.string.screen_add_transaction_appbar_title,
+            saveButtonLabelTextStringResourceId = R.string.screen_add_transaction_floating_action_button_content_description,
             filteredCategories = filteredCategories,
             sources = sources,
             titleSuggestions = titleSuggestions,
@@ -62,7 +67,7 @@ fun AddTransactionScreen(
             clearAmount = screenViewModel::clearAmount,
             clearDescription = screenViewModel::clearDescription,
             clearTitle = screenViewModel::clearTitle,
-            insertTransaction = screenViewModel::insertTransaction,
+            onSaveButtonClick = screenViewModel::insertTransaction,
             updateAmount = { updatedAmount ->
                 screenViewModel.updateAmount(
                     updatedAmount = updatedAmount,

@@ -32,6 +32,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isCashSo
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiVisibilityState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.math.abs
@@ -109,8 +111,8 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
             scope = viewModelScope,
         )
 
-    private val _uiState: MutableStateFlow<EditTransactionScreenUiState> = MutableStateFlow(
-        value = EditTransactionScreenUiState(
+    private val _uiState: MutableStateFlow<AddOrEditTransactionScreenUiState> = MutableStateFlow(
+        value = AddOrEditTransactionScreenUiState(
             selectedTransactionTypeIndex = null,
             amount = "",
             title = "",
@@ -122,13 +124,13 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
             transactionCalendar = Calendar.getInstance(Locale.getDefault()),
         ),
     )
-    override val uiState: StateFlow<EditTransactionScreenUiState> = _uiState
+    override val uiState: StateFlow<AddOrEditTransactionScreenUiState> = _uiState
 
-    private val _uiVisibilityState: MutableStateFlow<EditTransactionScreenUiVisibilityState> =
+    private val _uiVisibilityState: MutableStateFlow<AddOrEditTransactionScreenUiVisibilityState> =
         MutableStateFlow(
-            value = EditTransactionScreenUiVisibilityState.Expense,
+            value = AddOrEditTransactionScreenUiVisibilityState.Expense,
         )
-    override val uiVisibilityState: StateFlow<EditTransactionScreenUiVisibilityState> =
+    override val uiVisibilityState: StateFlow<AddOrEditTransactionScreenUiVisibilityState> =
         _uiVisibilityState
 
     override val selectedTransactionType: StateFlow<TransactionType?> = combine(
@@ -268,17 +270,17 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
             launch {
                 selectedTransactionType.collectLatest {
                     it ?: return@collectLatest
-                    val uiVisibilityState: EditTransactionScreenUiVisibilityState? = when (it) {
+                    val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState? = when (it) {
                         TransactionType.INCOME -> {
-                            EditTransactionScreenUiVisibilityState.Income
+                            AddOrEditTransactionScreenUiVisibilityState.Income
                         }
 
                         TransactionType.EXPENSE -> {
-                            EditTransactionScreenUiVisibilityState.Expense
+                            AddOrEditTransactionScreenUiVisibilityState.Expense
                         }
 
                         TransactionType.TRANSFER -> {
-                            EditTransactionScreenUiVisibilityState.Transfer
+                            AddOrEditTransactionScreenUiVisibilityState.Transfer
                         }
 
                         TransactionType.ADJUSTMENT -> {
@@ -286,16 +288,16 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                         }
 
                         TransactionType.INVESTMENT -> {
-                            EditTransactionScreenUiVisibilityState.Investment
+                            AddOrEditTransactionScreenUiVisibilityState.Investment
                         }
 
                         TransactionType.REFUND -> {
-                            EditTransactionScreenUiVisibilityState.Refund
+                            AddOrEditTransactionScreenUiVisibilityState.Refund
                         }
                     }
                     uiVisibilityState?.let {
                         updateEditTransactionScreenUiVisibilityState(
-                            updatedEditTransactionScreenUiVisibilityState = uiVisibilityState,
+                            updatedAddOrEditTransactionScreenUiVisibilityState = uiVisibilityState,
                         )
                     }
                     when (it) {
@@ -590,7 +592,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
         updatedSelectedTransactionTypeIndex: Int,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 selectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex,
             ),
         )
@@ -600,7 +602,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
         updatedAmount: String,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 amount = updatedAmount,
             ),
         )
@@ -616,7 +618,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
         updatedTitle: String,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 title = updatedTitle,
             ),
         )
@@ -632,7 +634,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
         updatedDescription: String,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 description = updatedDescription,
             ),
         )
@@ -648,7 +650,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
         updatedCategory: Category?,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 category = updatedCategory,
             ),
         )
@@ -658,7 +660,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
         updatedSelectedTransactionForIndex: Int,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 selectedTransactionForIndex = updatedSelectedTransactionForIndex,
             ),
         )
@@ -668,7 +670,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
         updatedSourceFrom: Source?,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 sourceFrom = updatedSourceFrom,
             ),
         )
@@ -678,7 +680,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
         updatedSourceTo: Source?,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 sourceTo = updatedSourceTo,
             ),
         )
@@ -688,7 +690,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
         updatedTransactionCalendar: Calendar,
     ) {
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 transactionCalendar = updatedTransactionCalendar,
             ),
         )
@@ -712,7 +714,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
     private fun updateOriginalTransactionValue(
         transaction: Transaction,
     ) {
-        val initialEditTransactionScreenUiState = EditTransactionScreenUiState(
+        val initialAddOrEditTransactionScreenUiState = AddOrEditTransactionScreenUiState(
             selectedTransactionTypeIndex = transactionTypesForNewTransaction.value.indexOf(
                 element = transaction.transactionType,
             ),
@@ -732,22 +734,22 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
             },
         )
         updateEditTransactionScreenUiState(
-            updatedEditTransactionScreenUiState = initialEditTransactionScreenUiState,
+            updatedAddOrEditTransactionScreenUiState = initialAddOrEditTransactionScreenUiState,
         )
     }
 
     private fun updateEditTransactionScreenUiState(
-        updatedEditTransactionScreenUiState: EditTransactionScreenUiState,
+        updatedAddOrEditTransactionScreenUiState: AddOrEditTransactionScreenUiState,
     ) {
         _uiState.update {
-            updatedEditTransactionScreenUiState
+            updatedAddOrEditTransactionScreenUiState
         }
     }
 
     private fun updateEditTransactionScreenUiVisibilityState(
-        updatedEditTransactionScreenUiVisibilityState: EditTransactionScreenUiVisibilityState,
+        updatedAddOrEditTransactionScreenUiVisibilityState: AddOrEditTransactionScreenUiVisibilityState,
     ) {
-        _uiVisibilityState.value = updatedEditTransactionScreenUiVisibilityState
+        _uiVisibilityState.value = updatedAddOrEditTransactionScreenUiVisibilityState
     }
 
     private fun getCategory(
