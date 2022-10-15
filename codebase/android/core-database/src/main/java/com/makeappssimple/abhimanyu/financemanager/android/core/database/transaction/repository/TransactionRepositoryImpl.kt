@@ -107,6 +107,20 @@ class TransactionRepositoryImpl(
         )
     }
 
+    override suspend fun insertTransaction(
+        amountValue: Long,
+        sourceFrom: Source?,
+        sourceTo: Source?,
+        transaction: Transaction,
+    ) {
+        transactionDao.insertTransaction(
+            amountValue = amountValue,
+            sourceFrom = sourceFrom,
+            sourceTo = sourceTo,
+            transaction = transaction,
+        )
+    }
+
     override suspend fun insertTransactions(
         vararg transactions: Transaction,
     ) {

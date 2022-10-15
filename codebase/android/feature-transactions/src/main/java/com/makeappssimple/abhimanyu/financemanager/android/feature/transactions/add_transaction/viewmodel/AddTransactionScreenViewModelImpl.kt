@@ -14,14 +14,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.sortOrder
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.updateBalanceAmount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesCountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTitleSuggestionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
@@ -57,8 +55,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
     private val getSourcesCountUseCase: GetSourcesCountUseCase,
-    private val insertTransactionsUseCase: InsertTransactionsUseCase,
-    private val updateSourcesUseCase: UpdateSourcesUseCase,
+    private val insertTransactionUseCase: InsertTransactionUseCase,
 ) : AddTransactionScreenViewModel, ViewModel() {
     private var defaultSource: Source? = null
     private var expenseDefaultCategory: Category? = null
@@ -300,35 +297,36 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
             }
             launch {
                 selectedTransactionType.collectLatest {
-                    val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState? = when (it) {
-                        TransactionType.INCOME -> {
-                            AddOrEditTransactionScreenUiVisibilityState.Income
-                        }
+                    val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState? =
+                        when (it) {
+                            TransactionType.INCOME -> {
+                                AddOrEditTransactionScreenUiVisibilityState.Income
+                            }
 
-                        TransactionType.EXPENSE -> {
-                            AddOrEditTransactionScreenUiVisibilityState.Expense
-                        }
+                            TransactionType.EXPENSE -> {
+                                AddOrEditTransactionScreenUiVisibilityState.Expense
+                            }
 
-                        TransactionType.TRANSFER -> {
-                            AddOrEditTransactionScreenUiVisibilityState.Transfer
-                        }
+                            TransactionType.TRANSFER -> {
+                                AddOrEditTransactionScreenUiVisibilityState.Transfer
+                            }
 
-                        TransactionType.ADJUSTMENT -> {
-                            null
-                        }
+                            TransactionType.ADJUSTMENT -> {
+                                null
+                            }
 
-                        TransactionType.INVESTMENT -> {
-                            AddOrEditTransactionScreenUiVisibilityState.Investment
-                        }
+                            TransactionType.INVESTMENT -> {
+                                AddOrEditTransactionScreenUiVisibilityState.Investment
+                            }
 
-                        TransactionType.REFUND -> {
-                            AddOrEditTransactionScreenUiVisibilityState.Refund
-                        }
+                            TransactionType.REFUND -> {
+                                AddOrEditTransactionScreenUiVisibilityState.Refund
+                            }
 
-                        null -> {
-                            null
+                            null -> {
+                                null
+                            }
                         }
-                    }
                     uiVisibilityState?.let {
                         updateAddTransactionScreenUiVisibilityState(
                             updatedAddOrEditTransactionScreenUiVisibilityState = uiVisibilityState,
@@ -418,8 +416,9 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
             val selectedTransactionTypeValue = selectedTransactionType.value
             val uiStateValue = uiState.value
             selectedTransactionTypeValue?.let {
+                val amountValue = uiStateValue.amount.toLong()
                 val amount = Amount(
-                    value = uiStateValue.amount.toLong(),
+                    value = amountValue,
                 )
                 val categoryId = when (selectedTransactionTypeValue) {
                     TransactionType.INCOME -> {
@@ -527,8 +526,11 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                     }
                 }
 
-                insertTransactionsUseCase(
-                    Transaction(
+                insertTransactionUseCase(
+                    amountValue = amountValue,
+                    sourceFrom = uiStateValue.sourceFrom,
+                    sourceTo = uiStateValue.sourceTo,
+                    transaction = Transaction(
                         amount = amount,
                         categoryId = categoryId,
                         sourceFromId = sourceFromId,
@@ -541,20 +543,6 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                         transactionType = selectedTransactionTypeValue,
                     ),
                 )
-                uiStateValue.sourceFrom?.let { sourceFrom ->
-                    updateSourcesUseCase(
-                        sourceFrom.updateBalanceAmount(
-                            updatedBalanceAmount = sourceFrom.balanceAmount.value - uiStateValue.amount.toLong(),
-                        ),
-                    )
-                }
-                uiStateValue.sourceTo?.let { sourceTo ->
-                    updateSourcesUseCase(
-                        sourceTo.updateBalanceAmount(
-                            updatedBalanceAmount = sourceTo.balanceAmount.value + uiStateValue.amount.toLong(),
-                        )
-                    )
-                }
                 navigateUp(
                     navigationManager = navigationManager,
                 )

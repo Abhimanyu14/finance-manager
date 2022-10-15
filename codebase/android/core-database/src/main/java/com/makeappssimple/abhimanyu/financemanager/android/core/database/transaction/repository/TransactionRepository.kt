@@ -50,6 +50,13 @@ interface TransactionRepository {
         id: Int,
     ): TransactionData?
 
+    suspend fun insertTransaction(
+        amountValue: Long,
+        sourceFrom: Source?,
+        sourceTo: Source?,
+        transaction: Transaction,
+    )
+
     suspend fun insertTransactions(
         vararg transactions: Transaction,
     )

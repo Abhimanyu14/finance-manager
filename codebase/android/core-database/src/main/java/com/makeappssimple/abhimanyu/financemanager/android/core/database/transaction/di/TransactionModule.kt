@@ -34,6 +34,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionDataUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.RestoreDataUseCase
@@ -195,6 +197,17 @@ class TransactionModule {
         transactionRepository: TransactionRepository,
     ): GetTransactionDataUseCase {
         return GetTransactionDataUseCaseImpl(
+            transactionRepository = transactionRepository,
+        )
+    }
+
+    @Provides
+    fun providesInsertTransactionUseCase(
+        dataStore: MyDataStore,
+        transactionRepository: TransactionRepository,
+    ): InsertTransactionUseCase {
+        return InsertTransactionUseCaseImpl(
+            dataStore = dataStore,
             transactionRepository = transactionRepository,
         )
     }

@@ -8,6 +8,7 @@ import androidx.room.Update
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.updateBalanceAmount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
@@ -123,6 +124,42 @@ interface TransactionDao {
 
     // Methods common to multiple DAO are defined here - may also have duplicates
 
+    // region Delete transaction
+    @androidx.room.Transaction
+    suspend fun insertTransaction(
+        amountValue: Long,
+        sourceFrom: Source?,
+        sourceTo: Source?,
+        transaction: Transaction,
+    ) {
+        insertTransaction(
+            transaction = transaction,
+        )
+        sourceFrom?.let { sourceFromValue ->
+            updateSources(
+                sourceFromValue.updateBalanceAmount(
+                    updatedBalanceAmount = sourceFromValue.balanceAmount.value - amountValue,
+                ),
+            )
+        }
+        sourceTo?.let { sourceToValue ->
+            updateSources(
+                sourceToValue.updateBalanceAmount(
+                    updatedBalanceAmount = sourceToValue.balanceAmount.value + amountValue,
+                )
+            )
+        }
+    }
+
+    /**
+     * Don't use this method outside DAO
+     */
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    suspend fun insertTransaction(
+        transaction: Transaction,
+    )
+    // endregion
+
     // region Update transaction
     @Update
     suspend fun updateTransaction(
@@ -165,18 +202,33 @@ interface TransactionDao {
     // endregion
 
     // region Restore data
+    /**
+     * Don't use this method outside DAO
+     */
     @Query(value = "DELETE FROM category_table")
     suspend fun deleteAllCategories()
 
+    /**
+     * Don't use this method outside DAO
+     */
     @Query(value = "DELETE FROM emoji_table")
     suspend fun deleteAllEmojis()
 
+    /**
+     * Don't use this method outside DAO
+     */
     @Query(value = "DELETE FROM source_table")
     suspend fun deleteAllSources()
 
+    /**
+     * Don't use this method outside DAO
+     */
     @Query(value = "DELETE FROM transaction_for_table")
     suspend fun deleteAllTransactionForValues()
 
+    /**
+     * Don't use this method outside DAO
+     */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertData(
         categories: List<Category>,
