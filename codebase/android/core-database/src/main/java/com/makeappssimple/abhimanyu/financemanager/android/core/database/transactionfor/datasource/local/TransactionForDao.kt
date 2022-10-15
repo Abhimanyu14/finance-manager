@@ -16,16 +16,8 @@ interface TransactionForDao {
     @Query(value = "SELECT COUNT(*) FROM transaction_for_table")
     suspend fun getTransactionForValuesCount(): Int
 
-    @Query(value = "SELECT * from transaction_for_table WHERE id = :id")
-    suspend fun getTransactionFor(
-        id: Int,
-    ): TransactionFor?
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTransactionForValues(
         vararg transactionForValues: TransactionFor,
     )
-
-    @Query(value = "DELETE FROM transaction_for_table")
-    suspend fun deleteAllTransactionForValues()
 }

@@ -47,7 +47,4 @@ interface SourceDao {
     suspend fun deleteSources(
         vararg sources: Source,
     )
-
-    @Query(value = "DELETE FROM source_table")
-    suspend fun deleteAllSources()
 }

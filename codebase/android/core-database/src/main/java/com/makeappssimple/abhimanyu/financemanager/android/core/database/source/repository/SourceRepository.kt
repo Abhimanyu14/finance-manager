@@ -35,6 +35,4 @@ interface SourceRepository {
     suspend fun deleteSources(
         vararg sources: Source,
     )
-
-    suspend fun deleteAllSources()
 }

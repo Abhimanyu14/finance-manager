@@ -3,8 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.catego
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.datasource.local.CategoryDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.repository.CategoryRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.repository.CategoryRepositoryImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.DeleteAllCategoriesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.DeleteAllCategoriesUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.DeleteCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.DeleteCategoryUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoriesUseCase
@@ -39,17 +37,6 @@ class CategoryModule {
     ): CategoryRepository {
         return CategoryRepositoryImpl(
             categoryDao = categoryDao,
-        )
-    }
-
-    @Provides
-    fun providesDeleteAllCategoriesUseCase(
-        dataStore: MyDataStore,
-        categoryRepository: CategoryRepository,
-    ): DeleteAllCategoriesUseCase {
-        return DeleteAllCategoriesUseCaseImpl(
-            dataStore = dataStore,
-            categoryRepository = categoryRepository,
         )
     }
 

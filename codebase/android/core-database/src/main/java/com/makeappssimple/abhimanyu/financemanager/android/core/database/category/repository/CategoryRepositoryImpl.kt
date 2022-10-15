@@ -52,8 +52,4 @@ class CategoryRepositoryImpl(
             categories = categories,
         )
     }
-
-    override suspend fun deleteAllCategories() {
-        categoryDao.deleteAllCategories()
-    }
 }

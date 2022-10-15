@@ -81,8 +81,4 @@ class SourceRepositoryImpl(
             sources = sources,
         )
     }
-
-    override suspend fun deleteAllSources() {
-        sourceDao.deleteAllSources()
-    }
 }

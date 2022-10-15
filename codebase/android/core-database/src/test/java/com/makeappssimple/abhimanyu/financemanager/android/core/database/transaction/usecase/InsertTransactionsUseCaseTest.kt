@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.transa
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestTransactions
+import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -9,12 +10,14 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
 class InsertTransactionsUseCaseTest {
+    private val dataStore: MyDataStore = mock()
     private val transactionRepository: TransactionRepository = mock()
     private lateinit var insertTransactionsUseCase: InsertTransactionsUseCase
 
     @Before
     fun setUp() {
         insertTransactionsUseCase = InsertTransactionsUseCaseImpl(
+            dataStore = dataStore,
             transactionRepository = transactionRepository,
         )
     }

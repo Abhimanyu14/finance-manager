@@ -23,6 +23,8 @@ interface EditTransactionScreenViewModel : ScreenViewModel {
     val isValidTransactionData: StateFlow<Boolean>
     val titleSuggestions: StateFlow<List<String>>
 
+    fun insertTransaction()
+
     fun updateTransaction()
 
     fun updateSelectedTransactionTypeIndex(

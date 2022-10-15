@@ -106,13 +106,4 @@ class SourceRepositoryImplTest {
             *sources,
         )
     }
-
-    @Test
-    fun deleteAllSources() = runTest {
-        sourceRepository.deleteAllSources()
-
-        verify(
-            mock = sourceDao,
-        ).deleteAllSources()
-    }
 }

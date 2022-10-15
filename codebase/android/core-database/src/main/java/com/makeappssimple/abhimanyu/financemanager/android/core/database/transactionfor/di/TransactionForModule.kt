@@ -4,15 +4,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.d
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.datasource.local.TransactionForDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.repository.TransactionForRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.repository.TransactionForRepositoryImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.DeleteAllTransactionForValuesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.DeleteAllTransactionForValuesUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetTransactionForUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetTransactionForUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.InsertTransactionForValuesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.InsertTransactionForValuesUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,37 +28,6 @@ class TransactionForModule {
     ): TransactionForRepository {
         return TransactionForRepositoryImpl(
             transactionForDao = transactionForDao,
-        )
-    }
-
-    @Provides
-    fun providesDeleteAllTransactionForValuesUseCase(
-        dataStore: MyDataStore,
-        transactionForRepository: TransactionForRepository,
-    ): DeleteAllTransactionForValuesUseCase {
-        return DeleteAllTransactionForValuesUseCaseImpl(
-            dataStore = dataStore,
-            transactionForRepository = transactionForRepository,
-        )
-    }
-
-    @Provides
-    fun providesGetTransactionForUseCase(
-        transactionForRepository: TransactionForRepository,
-    ): GetTransactionForUseCase {
-        return GetTransactionForUseCaseImpl(
-            transactionForRepository = transactionForRepository,
-        )
-    }
-
-    @Provides
-    fun providesInsertTransactionForValuesUseCase(
-        dataStore: MyDataStore,
-        transactionForRepository: TransactionForRepository,
-    ): InsertTransactionForValuesUseCase {
-        return InsertTransactionForValuesUseCaseImpl(
-            dataStore = dataStore,
-            transactionForRepository = transactionForRepository,
         )
     }
 

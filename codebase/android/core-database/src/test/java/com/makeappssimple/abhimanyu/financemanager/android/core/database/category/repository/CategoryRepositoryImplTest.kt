@@ -106,13 +106,4 @@ class CategoryRepositoryImplTest {
             *categories,
         )
     }
-
-    @Test
-    fun deleteAllCategories() = runTest {
-        categoryRepository.deleteAllCategories()
-
-        verify(
-            mock = categoryDao,
-        ).deleteAllCategories()
-    }
 }

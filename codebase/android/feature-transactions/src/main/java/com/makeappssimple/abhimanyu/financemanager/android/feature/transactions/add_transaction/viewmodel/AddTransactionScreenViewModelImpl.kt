@@ -328,7 +328,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
                             }
                         }
                     uiVisibilityState?.let {
-                        updateAddTransactionScreenUiVisibilityState(
+                        updateAddOrEditTransactionScreenUiVisibilityState(
                             updatedAddOrEditTransactionScreenUiVisibilityState = uiVisibilityState,
                         )
                     }
@@ -554,7 +554,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
     override fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
     ) {
-        updateAddTransactionScreenUiState(
+        updateAddOrEditTransactionScreenUiState(
             updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 selectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex,
             ),
@@ -564,7 +564,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
     override fun updateAmount(
         updatedAmount: String,
     ) {
-        updateAddTransactionScreenUiState(
+        updateAddOrEditTransactionScreenUiState(
             updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 amount = updatedAmount,
             ),
@@ -580,7 +580,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
     override fun updateTitle(
         updatedTitle: String,
     ) {
-        updateAddTransactionScreenUiState(
+        updateAddOrEditTransactionScreenUiState(
             updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 title = updatedTitle,
             ),
@@ -596,7 +596,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
     override fun updateDescription(
         updatedDescription: String,
     ) {
-        updateAddTransactionScreenUiState(
+        updateAddOrEditTransactionScreenUiState(
             updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 description = updatedDescription,
             ),
@@ -612,7 +612,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
     override fun updateCategory(
         updatedCategory: Category?,
     ) {
-        updateAddTransactionScreenUiState(
+        updateAddOrEditTransactionScreenUiState(
             updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 category = updatedCategory,
             ),
@@ -622,7 +622,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
     override fun updateSelectedTransactionForIndex(
         updatedSelectedTransactionForIndex: Int,
     ) {
-        updateAddTransactionScreenUiState(
+        updateAddOrEditTransactionScreenUiState(
             updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 selectedTransactionForIndex = updatedSelectedTransactionForIndex,
             ),
@@ -632,7 +632,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
     override fun updateSourceFrom(
         updatedSourceFrom: Source?,
     ) {
-        updateAddTransactionScreenUiState(
+        updateAddOrEditTransactionScreenUiState(
             updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 sourceFrom = updatedSourceFrom,
             ),
@@ -642,7 +642,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
     override fun updateSourceTo(
         updatedSourceTo: Source?,
     ) {
-        updateAddTransactionScreenUiState(
+        updateAddOrEditTransactionScreenUiState(
             updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 sourceTo = updatedSourceTo,
             ),
@@ -652,7 +652,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
     override fun updateTransactionCalendar(
         updatedTransactionCalendar: Calendar,
     ) {
-        updateAddTransactionScreenUiState(
+        updateAddOrEditTransactionScreenUiState(
             updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 transactionCalendar = updatedTransactionCalendar,
             ),
@@ -660,7 +660,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
     }
     // endregion
 
-    private fun updateAddTransactionScreenUiState(
+    private fun updateAddOrEditTransactionScreenUiState(
         updatedAddOrEditTransactionScreenUiState: AddOrEditTransactionScreenUiState,
     ) {
         _uiState.update {
@@ -668,7 +668,7 @@ internal class AddTransactionScreenViewModelImpl @Inject constructor(
         }
     }
 
-    private fun updateAddTransactionScreenUiVisibilityState(
+    private fun updateAddOrEditTransactionScreenUiVisibilityState(
         updatedAddOrEditTransactionScreenUiVisibilityState: AddOrEditTransactionScreenUiVisibilityState,
     ) {
         _uiVisibilityState.value = updatedAddOrEditTransactionScreenUiVisibilityState

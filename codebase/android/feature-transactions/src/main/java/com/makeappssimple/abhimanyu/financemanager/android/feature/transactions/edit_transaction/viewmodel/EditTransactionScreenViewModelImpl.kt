@@ -22,9 +22,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTitleSuggestionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.UpdateTransactionUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
@@ -52,6 +54,7 @@ import java.util.Locale
 
 @HiltViewModel
 internal class EditTransactionScreenViewModelImpl @Inject constructor(
+    dataStore: MyDataStore,
     getCategoriesUseCase: GetCategoriesUseCase,
     getSourcesUseCase: GetSourcesUseCase,
     getTitleSuggestionsUseCase: GetTitleSuggestionsUseCase,
@@ -61,6 +64,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val getSourcesCountUseCase: GetSourcesCountUseCase,
     private val getTransactionUseCase: GetTransactionUseCase,
+    private val insertTransactionUseCase: InsertTransactionUseCase,
     private val updateSourcesBalanceAmountUseCase: UpdateSourcesBalanceAmountUseCase,
     private val updateTransactionUseCase: UpdateTransactionUseCase,
 ) : EditTransactionScreenViewModel, ViewModel() {
@@ -214,6 +218,27 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
     )
     override val titleSuggestions: StateFlow<List<String>> = _titleSuggestions
 
+    private val defaultSourceIdFromDataStore: StateFlow<Int?> = dataStore
+        .getDefaultSourceIdFromDataStore()
+        .defaultObjectStateIn(
+            scope = viewModelScope,
+        )
+    private val defaultExpenseCategoryIdFromDataStore: StateFlow<Int?> = dataStore
+        .getDefaultExpenseCategoryIdFromDataStore()
+        .defaultObjectStateIn(
+            scope = viewModelScope,
+        )
+    private val defaultIncomeCategoryIdFromDataStore: StateFlow<Int?> = dataStore
+        .getDefaultIncomeCategoryIdFromDataStore()
+        .defaultObjectStateIn(
+            scope = viewModelScope,
+        )
+    private val defaultInvestmentCategoryIdFromDataStore: StateFlow<Int?> = dataStore
+        .getDefaultInvestmentCategoryIdFromDataStore()
+        .defaultObjectStateIn(
+            scope = viewModelScope,
+        )
+
     init {
         savedStateHandle.get<Int>(NavArgs.TRANSACTION_ID)?.let { id ->
             originalTransactionId = id
@@ -296,10 +321,11 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                         }
                     }
                     uiVisibilityState?.let {
-                        updateEditTransactionScreenUiVisibilityState(
+                        updateAddOrEditTransactionScreenUiVisibilityState(
                             updatedAddOrEditTransactionScreenUiVisibilityState = uiVisibilityState,
                         )
                     }
+
                     when (it) {
                         TransactionType.INCOME -> {
                             val updatedCategory =
@@ -417,6 +443,147 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code
+    }
+
+    override fun insertTransaction() {
+        viewModelScope.launch(
+            context = dispatcherProvider.io,
+        ) {
+            val selectedTransactionTypeValue = selectedTransactionType.value
+            val uiStateValue = uiState.value
+            selectedTransactionTypeValue?.let {
+                val amountValue = uiStateValue.amount.toLong()
+                val amount = Amount(
+                    value = amountValue,
+                )
+                val categoryId = when (selectedTransactionTypeValue) {
+                    TransactionType.INCOME -> {
+                        uiStateValue.category?.id
+                    }
+
+                    TransactionType.EXPENSE -> {
+                        uiStateValue.category?.id
+                    }
+
+                    TransactionType.TRANSFER -> {
+                        null
+                    }
+
+                    TransactionType.ADJUSTMENT -> {
+                        null
+                    }
+
+                    TransactionType.INVESTMENT -> {
+                        uiStateValue.category?.id
+                    }
+
+                    TransactionType.REFUND -> {
+                        TODO()
+                    }
+                }
+                val sourceFromId = when (selectedTransactionTypeValue) {
+                    TransactionType.INCOME -> {
+                        null
+                    }
+
+                    TransactionType.EXPENSE -> {
+                        uiStateValue.sourceFrom?.id
+                    }
+
+                    TransactionType.TRANSFER -> {
+                        uiStateValue.sourceFrom?.id
+                    }
+
+                    TransactionType.ADJUSTMENT -> {
+                        null
+                    }
+
+                    TransactionType.INVESTMENT -> {
+                        uiStateValue.sourceFrom?.id
+                    }
+
+                    TransactionType.REFUND -> {
+                        null
+                    }
+                }
+                val sourceToId = when (selectedTransactionTypeValue) {
+                    TransactionType.INCOME -> {
+                        uiStateValue.sourceTo?.id
+                    }
+
+                    TransactionType.EXPENSE -> {
+                        null
+                    }
+
+                    TransactionType.TRANSFER -> {
+                        uiStateValue.sourceTo?.id
+                    }
+
+                    TransactionType.ADJUSTMENT -> {
+                        null
+                    }
+
+                    TransactionType.INVESTMENT -> {
+                        null
+                    }
+
+                    TransactionType.REFUND -> {
+                        TODO()
+                    }
+                }
+                val title = if (selectedTransactionTypeValue == TransactionType.TRANSFER) {
+                    TransactionType.TRANSFER.title
+                } else {
+                    uiStateValue.title.capitalizeWords()
+                }
+                val transactionForId: Int = when (selectedTransactionTypeValue) {
+                    TransactionType.INCOME -> {
+                        1
+                    }
+
+                    TransactionType.EXPENSE -> {
+                        transactionForValues.value[uiStateValue.selectedTransactionForIndex].id
+                    }
+
+                    TransactionType.TRANSFER -> {
+                        1
+                    }
+
+                    TransactionType.ADJUSTMENT -> {
+                        1
+                    }
+
+                    TransactionType.INVESTMENT -> {
+                        1
+                    }
+
+                    TransactionType.REFUND -> {
+                        1
+                    }
+                }
+
+                insertTransactionUseCase(
+                    amountValue = amountValue,
+                    sourceFrom = uiStateValue.sourceFrom,
+                    sourceTo = uiStateValue.sourceTo,
+                    transaction = Transaction(
+                        amount = amount,
+                        categoryId = categoryId,
+                        sourceFromId = sourceFromId,
+                        sourceToId = sourceToId,
+                        description = uiStateValue.description,
+                        title = title,
+                        creationTimestamp = System.currentTimeMillis(),
+                        transactionTimestamp = uiStateValue.transactionCalendar.timeInMillis,
+                        transactionForId = transactionForId,
+                        transactionType = selectedTransactionTypeValue,
+                    ),
+                )
+                navigateUp(
+                    navigationManager = navigationManager,
+                )
+            }
+        }
     }
 
     override fun updateTransaction() {
@@ -591,7 +758,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
     override fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
     ) {
-        updateEditTransactionScreenUiState(
+        updateAddOrEditTransactionScreenUiState(
             updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 selectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex,
             ),
@@ -601,7 +768,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
     override fun updateAmount(
         updatedAmount: String,
     ) {
-        updateEditTransactionScreenUiState(
+        updateAddOrEditTransactionScreenUiState(
             updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 amount = updatedAmount,
             ),
@@ -617,7 +784,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
     override fun updateTitle(
         updatedTitle: String,
     ) {
-        updateEditTransactionScreenUiState(
+        updateAddOrEditTransactionScreenUiState(
             updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 title = updatedTitle,
             ),
@@ -633,7 +800,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
     override fun updateDescription(
         updatedDescription: String,
     ) {
-        updateEditTransactionScreenUiState(
+        updateAddOrEditTransactionScreenUiState(
             updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 description = updatedDescription,
             ),
@@ -649,7 +816,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
     override fun updateCategory(
         updatedCategory: Category?,
     ) {
-        updateEditTransactionScreenUiState(
+        updateAddOrEditTransactionScreenUiState(
             updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 category = updatedCategory,
             ),
@@ -659,7 +826,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
     override fun updateSelectedTransactionForIndex(
         updatedSelectedTransactionForIndex: Int,
     ) {
-        updateEditTransactionScreenUiState(
+        updateAddOrEditTransactionScreenUiState(
             updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 selectedTransactionForIndex = updatedSelectedTransactionForIndex,
             ),
@@ -669,7 +836,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
     override fun updateSourceFrom(
         updatedSourceFrom: Source?,
     ) {
-        updateEditTransactionScreenUiState(
+        updateAddOrEditTransactionScreenUiState(
             updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 sourceFrom = updatedSourceFrom,
             ),
@@ -679,7 +846,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
     override fun updateSourceTo(
         updatedSourceTo: Source?,
     ) {
-        updateEditTransactionScreenUiState(
+        updateAddOrEditTransactionScreenUiState(
             updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 sourceTo = updatedSourceTo,
             ),
@@ -689,7 +856,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
     override fun updateTransactionCalendar(
         updatedTransactionCalendar: Calendar,
     ) {
-        updateEditTransactionScreenUiState(
+        updateAddOrEditTransactionScreenUiState(
             updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
                 transactionCalendar = updatedTransactionCalendar,
             ),
@@ -733,12 +900,12 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
                 timeInMillis = transaction.transactionTimestamp
             },
         )
-        updateEditTransactionScreenUiState(
+        updateAddOrEditTransactionScreenUiState(
             updatedAddOrEditTransactionScreenUiState = initialAddOrEditTransactionScreenUiState,
         )
     }
 
-    private fun updateEditTransactionScreenUiState(
+    private fun updateAddOrEditTransactionScreenUiState(
         updatedAddOrEditTransactionScreenUiState: AddOrEditTransactionScreenUiState,
     ) {
         _uiState.update {
@@ -746,7 +913,7 @@ internal class EditTransactionScreenViewModelImpl @Inject constructor(
         }
     }
 
-    private fun updateEditTransactionScreenUiVisibilityState(
+    private fun updateAddOrEditTransactionScreenUiVisibilityState(
         updatedAddOrEditTransactionScreenUiVisibilityState: AddOrEditTransactionScreenUiVisibilityState,
     ) {
         _uiVisibilityState.value = updatedAddOrEditTransactionScreenUiVisibilityState
