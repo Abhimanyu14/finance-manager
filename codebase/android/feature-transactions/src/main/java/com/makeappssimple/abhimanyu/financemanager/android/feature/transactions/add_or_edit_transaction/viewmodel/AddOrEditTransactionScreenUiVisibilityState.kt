@@ -8,6 +8,7 @@ sealed class AddOrEditTransactionScreenUiVisibilityState(
     val isDescriptionTextFieldVisible: Boolean = false,
     val isCategoryTextFieldVisible: Boolean = false,
     val isTransactionForRadioGroupVisible: Boolean = false,
+    val isTransactionTypesRadioGroupVisible: Boolean = false,
     val isSourceFromTextFieldVisible: Boolean = false,
     val isSourceToTextFieldVisible: Boolean = false,
     val isTitleSuggestionsVisible: Boolean = false,
@@ -18,6 +19,7 @@ sealed class AddOrEditTransactionScreenUiVisibilityState(
         isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = true,
         isTransactionForRadioGroupVisible = true,
+        isTransactionTypesRadioGroupVisible = true,
         isSourceFromTextFieldVisible = true,
         isSourceToTextFieldVisible = false,
         isTitleSuggestionsVisible = true,
@@ -28,6 +30,7 @@ sealed class AddOrEditTransactionScreenUiVisibilityState(
         isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = true,
         isTransactionForRadioGroupVisible = false,
+        isTransactionTypesRadioGroupVisible = true,
         isSourceFromTextFieldVisible = false,
         isSourceToTextFieldVisible = true,
         isTitleSuggestionsVisible = true,
@@ -38,19 +41,21 @@ sealed class AddOrEditTransactionScreenUiVisibilityState(
         isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = true,
         isTransactionForRadioGroupVisible = false,
+        isTransactionTypesRadioGroupVisible = true,
         isSourceFromTextFieldVisible = true,
         isSourceToTextFieldVisible = false,
         isTitleSuggestionsVisible = true,
     )
 
     object Refund : AddOrEditTransactionScreenUiVisibilityState(
-        isTitleTextFieldVisible = true,
+        isTitleTextFieldVisible = false,
         isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = false,
         isTransactionForRadioGroupVisible = false,
+        isTransactionTypesRadioGroupVisible = false,
         isSourceFromTextFieldVisible = false,
         isSourceToTextFieldVisible = true,
-        isTitleSuggestionsVisible = true,
+        isTitleSuggestionsVisible = false,
     )
 
     object Transfer : AddOrEditTransactionScreenUiVisibilityState(
@@ -58,6 +63,7 @@ sealed class AddOrEditTransactionScreenUiVisibilityState(
         isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = false,
         isTransactionForRadioGroupVisible = false,
+        isTransactionTypesRadioGroupVisible = true,
         isSourceFromTextFieldVisible = true,
         isSourceToTextFieldVisible = true,
         isTitleSuggestionsVisible = false,

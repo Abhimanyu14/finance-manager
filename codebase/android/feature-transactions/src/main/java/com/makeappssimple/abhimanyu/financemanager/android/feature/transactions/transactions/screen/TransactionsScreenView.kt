@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen
 
-import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
@@ -424,11 +423,10 @@ internal fun TransactionsScreenView(
                                         )
                                     },
                                     onRefundClick = {
-                                        Toast.makeText(
-                                            state.context,
-                                            "Not Yet Implemented",
-                                            Toast.LENGTH_SHORT,
-                                        ).show()
+                                        navigateToAddTransactionScreen(
+                                            navigationManager = data.navigationManager,
+                                            transactionId = listItem.transaction.id,
+                                        )
                                         expandedItemKey = ""
                                     },
                                 )

@@ -236,7 +236,8 @@ internal fun TransactionsListItem(
                     enabled = true,
                     onClick = onEditClick,
                 )
-                if (transactionData.transaction.transactionType == TransactionType.EXPENSE) {
+                // (transactionData.transaction.transactionType == TransactionType.EXPENSE)
+                if (false) {
                     MyExpandableItemIconButton(
                         iconImageVector = Icons.Rounded.CurrencyExchange,
                         modifier = Modifier

@@ -264,25 +264,29 @@ internal fun AddOrEditTransactionScreenView(
                             state = rememberScrollState(),
                         ),
                 ) {
-                    MyHorizontalScrollingRadioGroup(
-                        items = data.transactionTypesForNewTransaction
-                            .map { transactionType ->
-                                ChipItem(
-                                    text = transactionType.title,
+                    AnimatedVisibility(
+                        visible = data.uiVisibilityState.isTransactionTypesRadioGroupVisible,
+                    ) {
+                        MyHorizontalScrollingRadioGroup(
+                            items = data.transactionTypesForNewTransaction
+                                .map { transactionType ->
+                                    ChipItem(
+                                        text = transactionType.title,
+                                    )
+                                },
+                            selectedItemIndex = data.uiState.selectedTransactionTypeIndex,
+                            onSelectionChange = { updatedSelectedTransactionTypeIndex ->
+                                data.updateSelectedTransactionTypeIndex(
+                                    updatedSelectedTransactionTypeIndex
                                 )
                             },
-                        selectedItemIndex = data.uiState.selectedTransactionTypeIndex,
-                        onSelectionChange = { updatedSelectedTransactionTypeIndex ->
-                            data.updateSelectedTransactionTypeIndex(
-                                updatedSelectedTransactionTypeIndex
-                            )
-                        },
-                        modifier = Modifier
-                            .padding(
-                                horizontal = 16.dp,
-                                vertical = 4.dp,
-                            ),
-                    )
+                            modifier = Modifier
+                                .padding(
+                                    horizontal = 16.dp,
+                                    vertical = 4.dp,
+                                ),
+                        )
+                    }
                     MyOutlinedTextField(
                         value = data.uiState.amount,
                         labelTextStringResourceId = R.string.screen_add_or_edit_transaction_amount,
