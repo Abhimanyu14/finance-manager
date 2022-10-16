@@ -5,6 +5,7 @@ object NavArgs {
     const val CATEGORY_ID = "categoryId"
     const val SOURCE_ID = "sourceId"
     const val TRANSACTION_ID = "transactionId"
+    const val EDIT = "edit"
 }
 
 object MyNavigationDirections {
@@ -62,10 +63,12 @@ object MyNavigationDirections {
         }
     }
 
-    fun addTransaction(): NavigationCommand {
+    fun addTransaction(
+        transactionId: Int?,
+    ): NavigationCommand {
         return object : NavigationCommand {
             override val command = Command.NAVIGATE
-            override val destination = Screen.AddTransaction.route
+            override val destination = "${Screen.AddTransaction.route}/${transactionId}"
             override val screen = Screen.AddTransaction.route
         }
     }

@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -16,18 +16,18 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenViewData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiVisibilityState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.viewmodel.AddTransactionScreenViewModelImpl
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenViewModelImpl
 
 @Composable
-fun AddTransactionScreen(
-    screenViewModel: AddTransactionScreenViewModel = hiltViewModel<AddTransactionScreenViewModelImpl>(),
+fun EditTransactionScreen(
+    screenViewModel: AddOrEditTransactionScreenViewModel = hiltViewModel<AddOrEditTransactionScreenViewModelImpl>(),
 ) {
     logError(
-        message = "Inside AddTransactionScreen",
+        message = "Inside EditTransactionScreen",
     )
-    val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState by screenViewModel.uiVisibilityState.collectAsStateWithLifecycle()
     val uiState: AddOrEditTransactionScreenUiState by screenViewModel.uiState.collectAsStateWithLifecycle()
+    val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState by screenViewModel.uiVisibilityState.collectAsStateWithLifecycle()
     val isValidTransactionData: Boolean by screenViewModel.isValidTransactionData.collectAsStateWithLifecycle()
     val filteredCategories: List<Category> by screenViewModel.filteredCategories.collectAsStateWithLifecycle(
         initialValue = emptyList(),
@@ -35,10 +35,10 @@ fun AddTransactionScreen(
     val sources: List<Source> by screenViewModel.sources.collectAsStateWithLifecycle(
         initialValue = emptyList(),
     )
+    val titleSuggestions: List<String> by screenViewModel.titleSuggestions.collectAsStateWithLifecycle()
     val transactionForValues: List<TransactionFor> by screenViewModel.transactionForValues.collectAsStateWithLifecycle(
         initialValue = emptyList(),
     )
-    val titleSuggestions: List<String> by screenViewModel.titleSuggestions.collectAsStateWithLifecycle()
     val transactionTypesForNewTransaction: List<TransactionType> by screenViewModel.transactionTypesForNewTransaction.collectAsStateWithLifecycle(
         initialValue = emptyList(),
     )
@@ -55,8 +55,8 @@ fun AddTransactionScreen(
             uiState = uiState,
             uiVisibilityState = uiVisibilityState,
             isValidTransactionData = isValidTransactionData,
-            appBarTitleTextStringResourceId = R.string.screen_add_transaction_appbar_title,
-            saveButtonLabelTextStringResourceId = R.string.screen_add_transaction_floating_action_button_content_description,
+            appBarTitleTextStringResourceId = R.string.screen_edit_transaction_appbar_title,
+            saveButtonLabelTextStringResourceId = R.string.screen_edit_transaction_floating_action_button_content_description,
             filteredCategories = filteredCategories,
             sources = sources,
             titleSuggestions = titleSuggestions,
@@ -67,7 +67,7 @@ fun AddTransactionScreen(
             clearAmount = screenViewModel::clearAmount,
             clearDescription = screenViewModel::clearDescription,
             clearTitle = screenViewModel::clearTitle,
-            onSaveButtonClick = screenViewModel::insertTransaction,
+            onSaveButtonClick = screenViewModel::updateTransaction,
             updateAmount = { updatedAmount ->
                 screenViewModel.updateAmount(
                     updatedAmount = updatedAmount,

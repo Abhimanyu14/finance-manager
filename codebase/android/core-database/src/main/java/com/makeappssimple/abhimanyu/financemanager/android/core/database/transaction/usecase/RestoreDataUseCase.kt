@@ -4,6 +4,7 @@ import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.JsonUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.transactionsCleanUp
+import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 
 interface RestoreDataUseCase {
     suspend operator fun invoke(
@@ -12,12 +13,15 @@ interface RestoreDataUseCase {
 }
 
 class RestoreDataUseCaseImpl(
+    private val dataStore: MyDataStore,
     private val transactionRepository: TransactionRepository,
     private val jsonUtil: JsonUtil,
 ) : RestoreDataUseCase {
     override suspend operator fun invoke(
         uri: Uri,
     ) {
+        dataStore.updateLastDataChangeTimestamp()
+        dataStore.updateLastDataBackupTimestamp()
         val databaseBackupData = jsonUtil.readDatabaseBackupDataFromFile(
             uri = uri,
         ) ?: return

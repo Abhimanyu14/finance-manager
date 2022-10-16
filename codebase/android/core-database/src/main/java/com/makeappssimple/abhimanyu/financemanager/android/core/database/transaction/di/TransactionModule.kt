@@ -225,10 +225,12 @@ class TransactionModule {
 
     @Provides
     fun providesRestoreDataUseCase(
+        dataStore: MyDataStore,
         transactionRepository: TransactionRepository,
         jsonUtil: JsonUtil,
     ): RestoreDataUseCase {
         return RestoreDataUseCaseImpl(
+            dataStore = dataStore,
             transactionRepository = transactionRepository,
             jsonUtil = jsonUtil,
         )

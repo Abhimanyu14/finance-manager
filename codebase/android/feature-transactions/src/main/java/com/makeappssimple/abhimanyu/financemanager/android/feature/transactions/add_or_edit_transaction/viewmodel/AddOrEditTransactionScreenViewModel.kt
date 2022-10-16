@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.viewmodel
+package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
@@ -6,22 +6,20 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiVisibilityState
 import kotlinx.coroutines.flow.StateFlow
 import java.util.Calendar
 
-interface EditTransactionScreenViewModel : ScreenViewModel {
+interface AddOrEditTransactionScreenViewModel : ScreenViewModel {
     val navigationManager: NavigationManager
-    val transactionTypesForNewTransaction: StateFlow<List<TransactionType>>
-    val filteredCategories: StateFlow<List<Category>>
-    val sources: StateFlow<List<Source>>
-    val transactionForValues: StateFlow<List<TransactionFor>>
     val uiState: StateFlow<AddOrEditTransactionScreenUiState>
     val uiVisibilityState: StateFlow<AddOrEditTransactionScreenUiVisibilityState>
-    val selectedTransactionType: StateFlow<TransactionType?>
     val isValidTransactionData: StateFlow<Boolean>
+    val filteredCategories: StateFlow<List<Category>>
+    val sources: StateFlow<List<Source>>
     val titleSuggestions: StateFlow<List<String>>
+    val transactionForValues: StateFlow<List<TransactionFor>>
+    val transactionTypesForNewTransaction: StateFlow<List<TransactionType>>
+    val selectedTransactionType: StateFlow<TransactionType?>
 
     fun insertTransaction()
 
