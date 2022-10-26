@@ -1,5 +1,6 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -47,16 +48,18 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.components.EditCategorySelectEmojiBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.components.AddOrEditCategorySelectEmojiBottomSheetContent
 
-internal enum class EditCategoryBottomSheetType : BottomSheetType {
+internal enum class AddOrEditCategoryBottomSheetType : BottomSheetType {
     NONE,
     SELECT_EMOJI,
 }
 
 @Immutable
-internal data class EditCategoryScreenViewData(
+internal data class AddOrEditCategoryScreenViewData(
+    @StringRes val appBarTitleTextStringResourceId: Int,
     val categoryId: Int?,
+    @StringRes val ctaButtonLabelTextStringResourceId: Int,
     val selectedTransactionTypeIndex: Int,
     val emojiGroups: Map<String, List<Emoji>>,
     val transactionTypes: List<TransactionType>,
@@ -66,7 +69,7 @@ internal data class EditCategoryScreenViewData(
     val title: String,
     val clearTitle: () -> Unit,
     val isValidCategoryData: () -> Boolean,
-    val updateCategory: () -> Unit,
+    val onCtaButtonClick: () -> Unit,
     val updateEmoji: (updatedEmoji: String) -> Unit,
     val updateSearchText: (updatedSearchText: String) -> Unit,
     val updateSelectedTransactionTypeIndex: (updatedIndex: Int) -> Unit,
@@ -74,13 +77,13 @@ internal data class EditCategoryScreenViewData(
 )
 
 @Composable
-internal fun EditCategoryScreenView(
-    data: EditCategoryScreenViewData,
+internal fun AddOrEditCategoryScreenView(
+    data: AddOrEditCategoryScreenViewData,
     state: CommonScreenViewState,
 ) {
-    var editCategoryBottomSheetType by remember {
+    var addOrEditCategoryBottomSheetType by remember {
         mutableStateOf(
-            value = EditCategoryBottomSheetType.NONE,
+            value = AddOrEditCategoryBottomSheetType.NONE,
         )
     }
 
@@ -93,18 +96,18 @@ internal fun EditCategoryScreenView(
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
         DisposableEffect(Unit) {
             onDispose {
-                editCategoryBottomSheetType = EditCategoryBottomSheetType.NONE
+                addOrEditCategoryBottomSheetType = AddOrEditCategoryBottomSheetType.NONE
                 state.keyboardController?.hide()
             }
         }
     }
 
     BottomSheetBackHandler(
-        enabled = editCategoryBottomSheetType != EditCategoryBottomSheetType.NONE,
+        enabled = addOrEditCategoryBottomSheetType != AddOrEditCategoryBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
         modalBottomSheetState = state.modalBottomSheetState,
     ) {
-        editCategoryBottomSheetType = EditCategoryBottomSheetType.NONE
+        addOrEditCategoryBottomSheetType = AddOrEditCategoryBottomSheetType.NONE
     }
 
     ModalBottomSheetLayout(
@@ -115,20 +118,20 @@ internal fun EditCategoryScreenView(
             BottomSheetShape
         },
         sheetContent = {
-            when (editCategoryBottomSheetType) {
-                EditCategoryBottomSheetType.NONE -> {
+            when (addOrEditCategoryBottomSheetType) {
+                AddOrEditCategoryBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
 
-                EditCategoryBottomSheetType.SELECT_EMOJI -> {
-                    EditCategorySelectEmojiBottomSheetContent(
+                AddOrEditCategoryBottomSheetType.SELECT_EMOJI -> {
+                    AddOrEditCategorySelectEmojiBottomSheetContent(
                         context = state.context,
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
                         emojiGroups = data.emojiGroups,
                         searchText = data.searchText,
                         resetBottomSheetType = {
-                            editCategoryBottomSheetType = EditCategoryBottomSheetType.NONE
+                            addOrEditCategoryBottomSheetType = AddOrEditCategoryBottomSheetType.NONE
                         },
                         updateEmoji = { updatedEmoji ->
                             data.updateEmoji(updatedEmoji)
@@ -144,7 +147,7 @@ internal fun EditCategoryScreenView(
         Scaffold(
             topBar = {
                 MyTopAppBar(
-                    titleTextStringResourceId = R.string.screen_edit_category_appbar_title,
+                    titleTextStringResourceId = data.appBarTitleTextStringResourceId,
                     navigationAction = {
                         navigateUp(
                             navigationManager = data.navigationManager,
@@ -177,8 +180,8 @@ internal fun EditCategoryScreenView(
                                 )
                             },
                         selectedItemIndex = data.selectedTransactionTypeIndex,
-                        onSelectionChange = { index ->
-                            data.updateSelectedTransactionTypeIndex(index)
+                        onSelectionChange = { updatedIndex ->
+                            data.updateSelectedTransactionTypeIndex(updatedIndex)
                         },
                         modifier = Modifier
                             .padding(
@@ -198,8 +201,8 @@ internal fun EditCategoryScreenView(
                             emoji = data.emoji,
                             onClick = {
                                 state.keyboardController?.hide()
-                                editCategoryBottomSheetType =
-                                    EditCategoryBottomSheetType.SELECT_EMOJI
+                                addOrEditCategoryBottomSheetType =
+                                    AddOrEditCategoryBottomSheetType.SELECT_EMOJI
                                 toggleModalBottomSheetState(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,
@@ -208,13 +211,13 @@ internal fun EditCategoryScreenView(
                         )
                         MyOutlinedTextField(
                             value = data.title,
-                            labelTextStringResourceId = R.string.screen_edit_category_title,
-                            trailingIconContentDescriptionTextStringResourceId = R.string.screen_edit_category_clear_title,
+                            labelTextStringResourceId = R.string.screen_add_or_edit_category_title,
+                            trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_category_clear_title,
                             onClickTrailingIcon = {
                                 data.clearTitle()
                             },
-                            onValueChange = {
-                                data.updateTitle(it)
+                            onValueChange = { updatedTitle ->
+                                data.updateTitle(updatedTitle)
                             },
                             keyboardActions = KeyboardActions(
                                 onNext = {
@@ -243,10 +246,10 @@ internal fun EditCategoryScreenView(
                         )
                     }
                     SaveButton(
-                        textStringResourceId = R.string.screen_edit_category_floating_action_button_content_description,
+                        textStringResourceId = data.ctaButtonLabelTextStringResourceId,
                         isEnabled = data.isValidCategoryData(),
                         onClick = {
-                            data.updateCategory()
+                            data.onCtaButtonClick()
                         },
                     )
                 }

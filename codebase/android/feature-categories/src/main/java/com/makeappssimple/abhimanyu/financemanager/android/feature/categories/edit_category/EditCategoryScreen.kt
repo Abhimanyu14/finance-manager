@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -10,12 +10,15 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.logError
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.viewmodel.EditCategoryScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.viewmodel.EditCategoryScreenViewModelImpl
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenView
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenViewData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.viewmodel.AddOrEditCategoryScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.viewmodel.AddOrEditCategoryScreenViewModelImpl
 
 @Composable
 fun EditCategoryScreen(
-    screenViewModel: EditCategoryScreenViewModel = hiltViewModel<EditCategoryScreenViewModelImpl>(),
+    screenViewModel: AddOrEditCategoryScreenViewModel = hiltViewModel<AddOrEditCategoryScreenViewModelImpl>(),
     categoryId: Int?,
 ) {
     logError(
@@ -45,9 +48,11 @@ fun EditCategoryScreen(
         }
     }
 
-    EditCategoryScreenView(
-        data = EditCategoryScreenViewData(
+    AddOrEditCategoryScreenView(
+        data = AddOrEditCategoryScreenViewData(
+            appBarTitleTextStringResourceId = R.string.screen_edit_category_appbar_title,
             categoryId = categoryId,
+            ctaButtonLabelTextStringResourceId = R.string.screen_edit_category_floating_action_button_content_description,
             selectedTransactionTypeIndex = selectedTransactionTypeIndex,
             emojiGroups = emojiGroups,
             transactionTypes = screenViewModel.transactionTypes,
@@ -57,7 +62,7 @@ fun EditCategoryScreen(
             title = title,
             clearTitle = screenViewModel::clearTitle,
             isValidCategoryData = screenViewModel::isValidCategoryData,
-            updateCategory = screenViewModel::updateCategory,
+            onCtaButtonClick = screenViewModel::updateCategory,
             updateEmoji = { updatedEmoji ->
                 screenViewModel.updateEmoji(
                     updatedEmoji = updatedEmoji,

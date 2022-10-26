@@ -20,9 +20,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavAr
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs.SOURCE_ID
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs.TRANSACTION_ID
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Screen
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.screen.AddCategoryScreen
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.AddCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.screen.CategoriesScreen
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.screen.EditCategoryScreen
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.EditCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen.HomeScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.screen.SettingsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_source.AddSourceScreen

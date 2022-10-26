@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.viewmodel
+package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.viewmodel
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenVi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
-interface AddCategoryScreenViewModel : ScreenViewModel {
+interface AddOrEditCategoryScreenViewModel : ScreenViewModel {
     val navigationManager: NavigationManager
     val transactionTypes: List<TransactionType>
     val title: StateFlow<String>
@@ -17,6 +17,8 @@ interface AddCategoryScreenViewModel : ScreenViewModel {
     val emojiGroups: Flow<Map<String, List<Emoji>>>
 
     fun insertCategory()
+
+    fun updateCategory()
 
     fun isValidCategoryData(): Boolean
 

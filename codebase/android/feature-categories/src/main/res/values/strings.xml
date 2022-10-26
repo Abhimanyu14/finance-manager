@@ -1,9 +1,12 @@
 <resources>
 
+    <!-- region add or edit category screen -->
+    <string name="screen_add_or_edit_category_title">Title</string>
+    <string name="screen_add_or_edit_category_clear_title">Clear Title</string>
+    <!-- endregion -->
+
     <!-- region add category screen -->
     <string name="screen_add_category_appbar_title">Enter Category Details</string>
-    <string name="screen_add_category_title">Title</string>
-    <string name="screen_add_category_clear_title">Clear Title</string>
     <string name="screen_add_category_floating_action_button_content_description">SAVE</string>
     <!-- endregion -->
 
@@ -32,8 +35,6 @@
 
     <!-- region edit category screen -->
     <string name="screen_edit_category_appbar_title">Edit Category</string>
-    <string name="screen_edit_category_title">Title</string>
-    <string name="screen_edit_category_clear_title">Clear Title</string>
     <string name="screen_edit_category_floating_action_button_content_description">UPDATE</string>
     <!-- endregion -->
 

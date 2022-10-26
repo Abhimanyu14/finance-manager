@@ -1,17 +1,17 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.components
+package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.components
 
 import android.content.Context
 import android.widget.Toast
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.MyEmojiPickerBottomSheet
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-internal fun AddCategorySelectEmojiBottomSheetContent(
+internal fun AddOrEditCategorySelectEmojiBottomSheetContent(
     context: Context,
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,

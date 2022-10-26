@@ -1,19 +1,20 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.viewmodel
+package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.loadingEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.defaultListStateIn
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoryUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.InsertCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.UpdateCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.loadingEmoji
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
@@ -30,21 +31,22 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-internal class EditCategoryScreenViewModelImpl @Inject constructor(
+internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     savedStateHandle: SavedStateHandle,
     getEmojisUseCase: GetEmojisUseCase,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
+    private val insertCategoriesUseCase: InsertCategoriesUseCase,
     private val updateCategoriesUseCase: UpdateCategoriesUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
-) : EditCategoryScreenViewModel, ViewModel() {
+) : AddOrEditCategoryScreenViewModel, ViewModel() {
     private val category: MutableStateFlow<Category?> = MutableStateFlow(
         value = null,
     )
 
     override val transactionTypes: List<TransactionType> = TransactionType.values()
         .filter {
-            it != TransactionType.TRANSFER && it != TransactionType.ADJUSTMENT
+            it != TransactionType.TRANSFER && it != TransactionType.ADJUSTMENT && it != TransactionType.REFUND
         }
 
     private val _title = MutableStateFlow(
@@ -101,6 +103,23 @@ internal class EditCategoryScreenViewModelImpl @Inject constructor(
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code
+    }
+
+    override fun insertCategory() {
+        viewModelScope.launch(
+            context = dispatcherProvider.io,
+        ) {
+            insertCategoriesUseCase(
+                Category(
+                    emoji = emoji.value,
+                    title = title.value,
+                    transactionType = transactionTypes[selectedTransactionTypeIndex.value],
+                ),
+            )
+            navigateUp(
+                navigationManager = navigationManager,
+            )
+        }
     }
 
     override fun updateCategory() {
