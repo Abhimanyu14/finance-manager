@@ -7,6 +7,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.logError
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenView
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenViewData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_source.viewmodel.AddSourceScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_source.viewmodel.AddSourceScreenViewModelImpl
 
@@ -26,15 +29,26 @@ fun AddSourceScreen(
         screenViewModel.trackScreen()
     }
 
-    AddSourceScreenView(
-        data = AddSourceScreenViewData(
+    AddOrEditSourceScreenView(
+        data = AddOrEditSourceScreenViewData(
+            autoFocus = true,
+            isBalanceAmountTextFieldVisible = false,
+            isNameTextFieldVisible = true,
+            isSourceTypesRadioGroupVisible = true,
+            appBarTitleTextStringResourceId = R.string.screen_add_source_appbar_title,
+            ctaButtonLabelTextStringResourceId = R.string.screen_add_source_floating_action_button_content_description,
             selectedSourceTypeIndex = selectedSourceTypeIndex,
+            sourceId = null,
             sourceTypes = screenViewModel.sourceTypes,
             navigationManager = screenViewModel.navigationManager,
+            source = null,
+            balanceAmountValue = "",
             name = name,
+            clearBalanceAmountValue = {},
             clearName = screenViewModel::clearName,
-            insertSource = screenViewModel::insertSource,
             isValidSourceData = screenViewModel::isValidSourceData,
+            onCtaButtonClick = screenViewModel::insertSource,
+            updateBalanceAmountValue = {},
             updateName = { updatedName ->
                 screenViewModel.updateName(
                     updatedName = updatedName,

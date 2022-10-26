@@ -1,5 +1,7 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.edit_source.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen
 
+import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,6 +16,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,12 +46,18 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.te
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.icon
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 
-internal enum class EditSourceBottomSheetType : BottomSheetType {
+internal enum class AddOrEditSourceBottomSheetType : BottomSheetType {
     NONE,
 }
 
 @Immutable
-internal data class EditSourceScreenViewData(
+internal data class AddOrEditSourceScreenViewData(
+    val autoFocus: Boolean,
+    val isBalanceAmountTextFieldVisible: Boolean,
+    val isNameTextFieldVisible: Boolean,
+    val isSourceTypesRadioGroupVisible: Boolean,
+    @StringRes val appBarTitleTextStringResourceId: Int,
+    @StringRes val ctaButtonLabelTextStringResourceId: Int,
     val selectedSourceTypeIndex: Int,
     val sourceId: Int?,
     val sourceTypes: List<SourceType>,
@@ -58,47 +67,54 @@ internal data class EditSourceScreenViewData(
     val name: String,
     val clearBalanceAmountValue: () -> Unit,
     val clearName: () -> Unit,
-    val insertSource: () -> Unit,
     val isValidSourceData: () -> Boolean,
+    val onCtaButtonClick: () -> Unit,
     val updateBalanceAmountValue: (updatedBalanceAmountValue: String) -> Unit,
     val updateName: (updatedName: String) -> Unit,
     val updateSelectedSourceTypeIndex: (updatedIndex: Int) -> Unit,
-    val updateSource: () -> Unit,
 )
 
 @Composable
-internal fun EditSourceScreenView(
-    data: EditSourceScreenViewData,
+internal fun AddOrEditSourceScreenView(
+    data: AddOrEditSourceScreenViewData,
     state: CommonScreenViewState,
 ) {
-    var editSourceBottomSheetType by remember {
+    var addOrEditSourceBottomSheetType by remember {
         mutableStateOf(
-            value = EditSourceBottomSheetType.NONE,
+            value = AddOrEditSourceBottomSheetType.NONE,
         )
+    }
+
+    if (data.autoFocus) {
+        LaunchedEffect(
+            key1 = Unit,
+        ) {
+            state.focusRequester.requestFocus()
+        }
     }
 
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
         DisposableEffect(Unit) {
             onDispose {
-                editSourceBottomSheetType = EditSourceBottomSheetType.NONE
+                addOrEditSourceBottomSheetType = AddOrEditSourceBottomSheetType.NONE
                 state.keyboardController?.hide()
             }
         }
     }
 
     BottomSheetBackHandler(
-        enabled = editSourceBottomSheetType != EditSourceBottomSheetType.NONE,
+        enabled = addOrEditSourceBottomSheetType != AddOrEditSourceBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
         modalBottomSheetState = state.modalBottomSheetState,
     ) {
-        editSourceBottomSheetType = EditSourceBottomSheetType.NONE
+        addOrEditSourceBottomSheetType = AddOrEditSourceBottomSheetType.NONE
     }
 
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
         sheetContent = {
-            when (editSourceBottomSheetType) {
-                EditSourceBottomSheetType.NONE -> {
+            when (addOrEditSourceBottomSheetType) {
+                AddOrEditSourceBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
             }
@@ -107,7 +123,7 @@ internal fun EditSourceScreenView(
         Scaffold(
             topBar = {
                 MyTopAppBar(
-                    titleTextStringResourceId = R.string.screen_edit_source_appbar_title,
+                    titleTextStringResourceId = data.appBarTitleTextStringResourceId,
                     navigationAction = {
                         navigateUp(
                             navigationManager = data.navigationManager,
@@ -132,7 +148,9 @@ internal fun EditSourceScreenView(
                             state = rememberScrollState(),
                         ),
                 ) {
-                    if (data.source?.type != SourceType.CASH) {
+                    AnimatedVisibility(
+                        visible = data.isSourceTypesRadioGroupVisible,
+                    ) {
                         MyRadioGroup(
                             items = data.sourceTypes
                                 .map { sourceType ->
@@ -151,10 +169,14 @@ internal fun EditSourceScreenView(
                                     vertical = 8.dp,
                                 ),
                         )
+                    }
+                    AnimatedVisibility(
+                        visible = data.isNameTextFieldVisible,
+                    ) {
                         MyOutlinedTextField(
                             value = data.name,
-                            labelTextStringResourceId = R.string.screen_edit_source_name,
-                            trailingIconContentDescriptionTextStringResourceId = R.string.screen_edit_source_clear_name,
+                            labelTextStringResourceId = R.string.screen_add_or_edit_source_name,
+                            trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_source_clear_name,
                             onClickTrailingIcon = {
                                 data.clearName()
                             },
@@ -183,46 +205,50 @@ internal fun EditSourceScreenView(
                                 ),
                         )
                     }
-                    MyOutlinedTextField(
-                        value = data.balanceAmountValue,
-                        labelTextStringResourceId = R.string.screen_edit_source_balance_amount_value,
-                        trailingIconContentDescriptionTextStringResourceId = R.string.screen_edit_source_clear_balance_amount_value,
-                        onClickTrailingIcon = {
-                            data.clearBalanceAmountValue()
-                        },
-                        onValueChange = { updatedBalanceAmountValue ->
-                            data.updateBalanceAmountValue(updatedBalanceAmountValue)
-                        },
-                        visualTransformation = AmountCommaVisualTransformation(),
-                        keyboardActions = KeyboardActions(
-                            onNext = {
-                                state.focusManager.moveFocus(
-                                    focusDirection = FocusDirection.Down,
-                                )
+                    AnimatedVisibility(
+                        visible = data.isBalanceAmountTextFieldVisible,
+                    ) {
+                        MyOutlinedTextField(
+                            value = data.balanceAmountValue,
+                            labelTextStringResourceId = R.string.screen_edit_source_balance_amount_value,
+                            trailingIconContentDescriptionTextStringResourceId = R.string.screen_edit_source_clear_balance_amount_value,
+                            onClickTrailingIcon = {
+                                data.clearBalanceAmountValue()
                             },
-                            onDone = {
-                                state.focusManager.clearFocus()
+                            onValueChange = { updatedBalanceAmountValue ->
+                                data.updateBalanceAmountValue(updatedBalanceAmountValue)
                             },
-                        ),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.NumberPassword,
-                            imeAction = ImeAction.Done,
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .focusRequester(
-                                focusRequester = state.focusRequester,
-                            )
-                            .padding(
-                                horizontal = 16.dp,
-                                vertical = 8.dp,
+                            visualTransformation = AmountCommaVisualTransformation(),
+                            keyboardActions = KeyboardActions(
+                                onNext = {
+                                    state.focusManager.moveFocus(
+                                        focusDirection = FocusDirection.Down,
+                                    )
+                                },
+                                onDone = {
+                                    state.focusManager.clearFocus()
+                                },
                             ),
-                    )
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.NumberPassword,
+                                imeAction = ImeAction.Done,
+                            ),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .focusRequester(
+                                    focusRequester = state.focusRequester,
+                                )
+                                .padding(
+                                    horizontal = 16.dp,
+                                    vertical = 8.dp,
+                                ),
+                        )
+                    }
                     SaveButton(
-                        textStringResourceId = R.string.screen_edit_source_floating_action_button_content_description,
+                        textStringResourceId = data.ctaButtonLabelTextStringResourceId,
                         isEnabled = data.isValidSourceData(),
                         onClick = {
-                            data.updateSource()
+                            data.onCtaButtonClick()
                         },
                     )
                 }
