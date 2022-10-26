@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.edit_source.viewmodel
+package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.viewmodel
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.SourceType
@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenVi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
-interface EditSourceScreenViewModel : ScreenViewModel {
+interface AddOrEditSourceScreenViewModel : ScreenViewModel {
     val navigationManager: NavigationManager
     val source: Flow<Source?>
     val sourceTypes: List<SourceType>

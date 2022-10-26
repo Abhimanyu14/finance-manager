@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.edit_source.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.edit_source
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -12,12 +12,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememb
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenView
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenViewData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.edit_source.viewmodel.EditSourceScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.edit_source.viewmodel.EditSourceScreenViewModelImpl
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.viewmodel.AddOrEditSourceScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.viewmodel.AddOrEditSourceScreenViewModelImpl
 
 @Composable
 fun EditSourceScreen(
-    screenViewModel: EditSourceScreenViewModel = hiltViewModel<EditSourceScreenViewModelImpl>(),
+    screenViewModel: AddOrEditSourceScreenViewModel = hiltViewModel<AddOrEditSourceScreenViewModelImpl>(),
     sourceId: Int?,
 ) {
     logError(

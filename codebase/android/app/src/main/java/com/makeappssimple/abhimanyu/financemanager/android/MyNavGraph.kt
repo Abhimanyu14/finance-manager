@@ -25,8 +25,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ca
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.screen.EditCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen.HomeScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.screen.SettingsScreen
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_source.screen.AddSourceScreen
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.edit_source.screen.EditSourceScreen
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_source.AddSourceScreen
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.edit_source.EditSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.screen.SourcesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.AddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.EditTransactionScreen

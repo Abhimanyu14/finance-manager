@@ -1,9 +1,10 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.edit_source.viewmodel
+package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.viewmodel
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.SourceType
@@ -13,10 +14,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isCashSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.math.abs
@@ -26,7 +27,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-internal class EditSourceScreenViewModelImpl @Inject constructor(
+internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     savedStateHandle: SavedStateHandle,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
@@ -34,7 +35,7 @@ internal class EditSourceScreenViewModelImpl @Inject constructor(
     private val insertSourcesUseCase: InsertSourcesUseCase,
     private val insertTransactionsUseCase: InsertTransactionsUseCase,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
-) : EditSourceScreenViewModel, ViewModel() {
+) : AddOrEditSourceScreenViewModel, ViewModel() {
     private val _source: MutableStateFlow<Source?> = MutableStateFlow(
         value = null,
     )
@@ -45,7 +46,7 @@ internal class EditSourceScreenViewModelImpl @Inject constructor(
             it != SourceType.CASH
         }
 
-    private val _selectedSourceTypeIndex = MutableStateFlow(
+    private val _selectedSourceTypeIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = sourceTypes.indexOf(
             element = SourceType.BANK,
         ),
@@ -53,12 +54,12 @@ internal class EditSourceScreenViewModelImpl @Inject constructor(
     override val selectedSourceTypeIndex: StateFlow<Int> = _selectedSourceTypeIndex
 
     private val _name: MutableStateFlow<String> = MutableStateFlow(
-        value = source.value?.name.orEmpty(),
+        value = "",
     )
     override val name: StateFlow<String> = _name
 
     private val _balanceAmountValue: MutableStateFlow<String> = MutableStateFlow(
-        value = source.value?.balanceAmount?.value.toString(),
+        value = "",
     )
     override val balanceAmountValue: StateFlow<String> = _balanceAmountValue
 
@@ -153,33 +154,46 @@ internal class EditSourceScreenViewModelImpl @Inject constructor(
     }
 
     override fun isValidSourceData(): Boolean {
-        return name.value.isNotNullOrBlank()
+        return name.value.isNotNullOrBlank() &&
+                !isCashSource(
+                    source = name.value,
+                )
     }
 
     override fun clearName() {
-        _name.value = ""
+        updateName(
+            updatedName = "",
+        )
     }
 
     override fun updateName(
         updatedName: String,
     ) {
-        _name.value = updatedName
+        _name.update {
+            updatedName
+        }
     }
 
     override fun clearBalanceAmountValue() {
-        _balanceAmountValue.value = ""
+        updateBalanceAmountValue(
+            updatedBalanceAmountValue = "",
+        )
     }
 
     override fun updateBalanceAmountValue(
         updatedBalanceAmountValue: String,
     ) {
-        _balanceAmountValue.value = updatedBalanceAmountValue
+        _balanceAmountValue.update {
+            updatedBalanceAmountValue
+        }
     }
 
     override fun updateSelectedSourceTypeIndex(
         updatedIndex: Int,
     ) {
-        _selectedSourceTypeIndex.value = updatedIndex
+        _selectedSourceTypeIndex.update {
+            updatedIndex
+        }
     }
 
     private fun getSource(
@@ -199,14 +213,16 @@ internal class EditSourceScreenViewModelImpl @Inject constructor(
 
     private fun updateInitialSourceValue() {
         val source = source.value ?: return
-        _selectedSourceTypeIndex.update {
-            sourceTypes.indexOf(
+        updateSelectedSourceTypeIndex(
+            updatedIndex = sourceTypes.indexOf(
                 element = source.type,
-            )
-        }
-        _name.value = source.name
-        _balanceAmountValue.update {
-            source.balanceAmount.value.toString()
-        }
+            ),
+        )
+        updateName(
+            updatedName = source.name,
+        )
+        updateBalanceAmountValue(
+            updatedBalanceAmountValue = source.balanceAmount.value.toString(),
+        )
     }
 }
