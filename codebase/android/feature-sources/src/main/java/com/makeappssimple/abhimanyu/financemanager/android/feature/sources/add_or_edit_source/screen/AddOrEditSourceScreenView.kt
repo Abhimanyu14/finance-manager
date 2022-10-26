@@ -28,7 +28,6 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.SourceType
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
@@ -59,10 +58,8 @@ internal data class AddOrEditSourceScreenViewData(
     @StringRes val appBarTitleTextStringResourceId: Int,
     @StringRes val ctaButtonLabelTextStringResourceId: Int,
     val selectedSourceTypeIndex: Int,
-    val sourceId: Int?,
     val sourceTypes: List<SourceType>,
     val navigationManager: NavigationManager,
-    val source: Source?,
     val balanceAmountValue: String,
     val name: String,
     val clearBalanceAmountValue: () -> Unit,

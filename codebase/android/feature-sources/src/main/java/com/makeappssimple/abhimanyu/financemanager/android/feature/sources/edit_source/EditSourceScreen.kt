@@ -18,7 +18,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_o
 @Composable
 fun EditSourceScreen(
     screenViewModel: AddOrEditSourceScreenViewModel = hiltViewModel<AddOrEditSourceScreenViewModelImpl>(),
-    sourceId: Int?,
 ) {
     logError(
         message = "Inside EditSourceScreen",
@@ -45,10 +44,8 @@ fun EditSourceScreen(
             appBarTitleTextStringResourceId = R.string.screen_edit_source_appbar_title,
             ctaButtonLabelTextStringResourceId = R.string.screen_edit_source_floating_action_button_content_description,
             selectedSourceTypeIndex = selectedSourceTypeIndex,
-            sourceId = sourceId,
             sourceTypes = screenViewModel.sourceTypes,
             navigationManager = screenViewModel.navigationManager,
-            source = source,
             balanceAmountValue = balanceAmountValue,
             name = name,
             clearBalanceAmountValue = screenViewModel::clearBalanceAmountValue,

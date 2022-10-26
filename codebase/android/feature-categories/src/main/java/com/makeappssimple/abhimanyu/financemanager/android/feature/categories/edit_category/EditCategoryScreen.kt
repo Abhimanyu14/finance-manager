@@ -19,7 +19,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ad
 @Composable
 fun EditCategoryScreen(
     screenViewModel: AddOrEditCategoryScreenViewModel = hiltViewModel<AddOrEditCategoryScreenViewModelImpl>(),
-    categoryId: Int?,
 ) {
     logError(
         message = "Inside EditCategoryScreen",
@@ -51,7 +50,6 @@ fun EditCategoryScreen(
     AddOrEditCategoryScreenView(
         data = AddOrEditCategoryScreenViewData(
             appBarTitleTextStringResourceId = R.string.screen_edit_category_appbar_title,
-            categoryId = categoryId,
             ctaButtonLabelTextStringResourceId = R.string.screen_edit_category_floating_action_button_content_description,
             selectedTransactionTypeIndex = selectedTransactionTypeIndex,
             emojiGroups = emojiGroups,

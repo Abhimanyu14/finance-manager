@@ -58,7 +58,6 @@ internal enum class AddOrEditCategoryBottomSheetType : BottomSheetType {
 @Immutable
 internal data class AddOrEditCategoryScreenViewData(
     @StringRes val appBarTitleTextStringResourceId: Int,
-    val categoryId: Int?,
     @StringRes val ctaButtonLabelTextStringResourceId: Int,
     val selectedTransactionTypeIndex: Int,
     val emojiGroups: Map<String, List<Emoji>>,

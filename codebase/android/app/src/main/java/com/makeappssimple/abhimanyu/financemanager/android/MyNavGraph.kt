@@ -176,10 +176,8 @@ internal fun MyNavGraph(
                     type = NavType.IntType
                 },
             ),
-        ) { navBackStackEntry ->
-            EditCategoryScreen(
-                categoryId = navBackStackEntry.arguments?.getInt(CATEGORY_ID),
-            )
+        ) {
+            EditCategoryScreen()
         }
 
         composable(
@@ -189,10 +187,8 @@ internal fun MyNavGraph(
                     type = NavType.IntType
                 },
             ),
-        ) { navBackStackEntry ->
-            EditSourceScreen(
-                sourceId = navBackStackEntry.arguments?.getInt(SOURCE_ID),
-            )
+        ) {
+            EditSourceScreen()
         }
 
         composable(

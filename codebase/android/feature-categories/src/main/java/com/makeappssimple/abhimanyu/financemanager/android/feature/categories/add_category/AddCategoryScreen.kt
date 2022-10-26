@@ -51,7 +51,6 @@ fun AddCategoryScreen(
     AddOrEditCategoryScreenView(
         data = AddOrEditCategoryScreenViewData(
             appBarTitleTextStringResourceId = R.string.screen_add_category_appbar_title,
-            categoryId = null,
             ctaButtonLabelTextStringResourceId = R.string.screen_add_category_floating_action_button_content_description,
             selectedTransactionTypeIndex = selectedTransactionTypeIndex,
             emojiGroups = emojiGroups,
@@ -61,9 +60,7 @@ fun AddCategoryScreen(
             searchText = searchText,
             title = title,
             clearTitle = screenViewModel::clearTitle,
-            isValidCategoryData = {
-                screenViewModel.isValidCategoryData()
-            },
+            isValidCategoryData = screenViewModel::isValidCategoryData,
             onCtaButtonClick = screenViewModel::insertCategory,
             updateEmoji = { updatedEmoji ->
                 screenViewModel.updateEmoji(
