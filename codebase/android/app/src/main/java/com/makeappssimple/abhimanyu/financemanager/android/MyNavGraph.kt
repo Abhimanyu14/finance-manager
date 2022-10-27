@@ -133,12 +133,12 @@ internal fun MyNavGraph(
         composable(
             route = "${Screen.AddTransaction.route}/{${TRANSACTION_ID}}?${EDIT}={${EDIT}}",
             arguments = listOf(
+                navArgument(TRANSACTION_ID) {
+                    nullable = true
+                },
                 navArgument(EDIT) {
                     type = NavType.BoolType
                     defaultValue = false
-                },
-                navArgument(TRANSACTION_ID) {
-                    nullable = true
                 },
             ),
             deepLinks = listOf(
@@ -194,12 +194,12 @@ internal fun MyNavGraph(
         composable(
             route = "${Screen.EditTransaction.route}/{${TRANSACTION_ID}}?${EDIT}={${EDIT}}",
             arguments = listOf(
+                navArgument(TRANSACTION_ID) {
+                    nullable = true
+                },
                 navArgument(EDIT) {
                     type = NavType.BoolType
                     defaultValue = true
-                },
-                navArgument(TRANSACTION_ID) {
-                    nullable = true
                 },
             ),
         ) {

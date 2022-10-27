@@ -131,9 +131,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
 
                 TransactionType.ADJUSTMENT -> {}
 
-                TransactionType.REFUND -> {
-                    TODO()
-                }
+                TransactionType.REFUND -> {}
             }
         }
     }

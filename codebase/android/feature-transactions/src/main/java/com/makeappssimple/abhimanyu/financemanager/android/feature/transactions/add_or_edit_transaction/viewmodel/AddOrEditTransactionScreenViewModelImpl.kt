@@ -509,9 +509,8 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            val selectedTransactionTypeValue = selectedTransactionType.value
             val uiStateValue = uiState.value
-            selectedTransactionTypeValue?.let {
+            selectedTransactionType.value?.let { selectedTransactionTypeValue ->
                 val amountValue = uiStateValue.amount.toLong()
                 val amount = Amount(
                     value = amountValue,
@@ -538,7 +537,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     }
 
                     TransactionType.REFUND -> {
-                        TODO()
+                        originalTransactionCategory?.id
                     }
                 }
                 val sourceFromId = when (selectedTransactionTypeValue) {
@@ -588,13 +587,21 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     }
 
                     TransactionType.REFUND -> {
-                        TODO()
+                        uiStateValue.sourceTo?.id
                     }
                 }
-                val title = if (selectedTransactionTypeValue == TransactionType.TRANSFER) {
-                    TransactionType.TRANSFER.title
-                } else {
-                    uiStateValue.title.capitalizeWords()
+                val title = when (selectedTransactionTypeValue) {
+                    TransactionType.TRANSFER -> {
+                        TransactionType.TRANSFER.title
+                    }
+
+                    TransactionType.REFUND -> {
+                        TransactionType.REFUND.title
+                    }
+
+                    else -> {
+                        uiStateValue.title.capitalizeWords()
+                    }
                 }
                 val transactionForId: Int = when (selectedTransactionTypeValue) {
                     TransactionType.INCOME -> {
@@ -678,7 +685,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     }
 
                     TransactionType.REFUND -> {
-                        TODO()
+                        originalTransactionCategory?.id
                     }
                 }
                 val sourceFromId = when (selectedTransactionTypeValue) {
@@ -728,13 +735,21 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     }
 
                     TransactionType.REFUND -> {
-                        TODO()
+                        uiStateValue.sourceTo?.id
                     }
                 }
-                val title = if (selectedTransactionTypeValue == TransactionType.TRANSFER) {
-                    TransactionType.TRANSFER.title
-                } else {
-                    uiStateValue.title.capitalizeWords()
+                val title = when (selectedTransactionTypeValue) {
+                    TransactionType.TRANSFER -> {
+                        TransactionType.TRANSFER.title
+                    }
+
+                    TransactionType.REFUND -> {
+                        TransactionType.REFUND.title
+                    }
+
+                    else -> {
+                        uiStateValue.title.capitalizeWords()
+                    }
                 }
                 val transactionForId: Int = when (selectedTransactionTypeValue) {
                     TransactionType.INCOME -> {
@@ -927,11 +942,11 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     private fun getNavigationArguments(
         savedStateHandle: SavedStateHandle,
     ) {
+        savedStateHandle.get<String>(NavArgs.TRANSACTION_ID)?.let {
+            originalTransactionId = it.toIntOrNull()
+        }
         savedStateHandle.get<Boolean>(NavArgs.EDIT)?.let {
             edit = it
-        }
-        savedStateHandle.get<String>(NavArgs.TRANSACTION_ID)?.let { idString ->
-            originalTransactionId = idString.toIntOrNull()
         }
     }
 
@@ -950,7 +965,6 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                         originalTransactionSourceTo = it.sourceTo
                     }
                 }
-
                 launch {
                     combine(
                         flow = originalTransaction,
