@@ -93,7 +93,8 @@ internal fun HomeListItem(
                         ),
                     text = if (transactionData.transaction.transactionType == TransactionType.INCOME ||
                         transactionData.transaction.transactionType == TransactionType.EXPENSE ||
-                        transactionData.transaction.transactionType == TransactionType.ADJUSTMENT
+                        transactionData.transaction.transactionType == TransactionType.ADJUSTMENT ||
+                        transactionData.transaction.transactionType == TransactionType.REFUND
                     ) {
                         transactionData.transaction.amount.toSignedString(
                             isPositive = transactionData.sourceTo != null,

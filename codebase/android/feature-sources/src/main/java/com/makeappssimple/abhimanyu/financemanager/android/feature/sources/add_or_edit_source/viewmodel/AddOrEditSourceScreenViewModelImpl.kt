@@ -155,9 +155,9 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
 
     override fun isValidSourceData(): Boolean {
         return name.value.isNotNullOrBlank() &&
-                !isCashSource(
+                (selectedSourceTypeIndex.value == -1 || !isCashSource(
                     source = name.value,
-                )
+                ))
     }
 
     override fun clearName() {

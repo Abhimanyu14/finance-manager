@@ -128,7 +128,8 @@ internal fun TransactionsListItem(
                             ),
                         text = if (transactionData.transaction.transactionType == TransactionType.INCOME ||
                             transactionData.transaction.transactionType == TransactionType.EXPENSE ||
-                            transactionData.transaction.transactionType == TransactionType.ADJUSTMENT
+                            transactionData.transaction.transactionType == TransactionType.ADJUSTMENT ||
+                            transactionData.transaction.transactionType == TransactionType.REFUND
                         ) {
                             transactionData.transaction.amount.toSignedString(
                                 isPositive = transactionData.sourceTo != null,
@@ -224,18 +225,20 @@ internal fun TransactionsListItem(
                         bottom = 8.dp,
                     ),
             ) {
-                MyExpandableItemIconButton(
-                    iconImageVector = Icons.Rounded.Edit,
-                    modifier = Modifier
-                        .weight(
-                            weight = 1F,
+                if (transactionData.transaction.transactionType != TransactionType.ADJUSTMENT) {
+                    MyExpandableItemIconButton(
+                        iconImageVector = Icons.Rounded.Edit,
+                        modifier = Modifier
+                            .weight(
+                                weight = 1F,
+                            ),
+                        labelText = stringResource(
+                            id = R.string.list_item_transactions_edit,
                         ),
-                    labelText = stringResource(
-                        id = R.string.list_item_transactions_edit,
-                    ),
-                    enabled = true,
-                    onClick = onEditClick,
-                )
+                        enabled = true,
+                        onClick = onEditClick,
+                    )
+                }
                 if (transactionData.transaction.transactionType == TransactionType.EXPENSE) {
                     MyExpandableItemIconButton(
                         iconImageVector = Icons.Rounded.CurrencyExchange,
