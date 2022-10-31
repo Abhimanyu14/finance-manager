@@ -107,7 +107,7 @@ buildscript {
         jetpackComposeCompilerVersion = "1.2.0-rc02"
 
         // Jetpack compose material 3
-        jetpackComposeMaterial3Version = "1.0.0-rc01"
+        jetpackComposeMaterial3Version = "1.1.0-alpha01"
 
         // Jetpack compose material design adapter
         jetpackComposeMaterialDesignAdapterVersion = "1.1.21"

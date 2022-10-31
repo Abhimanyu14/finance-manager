@@ -1,10 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.requiredHeight
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
@@ -146,10 +149,6 @@ fun MySearchBar(
         },
         modifier = modifier
             .fillMaxWidth()
-            .padding(
-                horizontal = 0.dp,
-                vertical = 0.dp,
-            )
             .height(
                 height = 40.dp,
             )
@@ -239,6 +238,20 @@ fun MySearchBar(
                         start = 0.dp,
                         end = 0.dp,
                     ),
+                container = {
+                    Box(
+                        modifier = Modifier
+                            .requiredHeight(
+                                height = 40.dp,
+                            )
+                            .clip(
+                                shape = CircleShape,
+                            )
+                            .background(
+                                color = MaterialTheme.colorScheme.primaryContainer,
+                            )
+                    )
+                },
             )
         },
     )
