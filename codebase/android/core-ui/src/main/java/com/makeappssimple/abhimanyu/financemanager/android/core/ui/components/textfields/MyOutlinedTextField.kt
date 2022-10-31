@@ -23,14 +23,16 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 @Composable
 fun MyOutlinedTextField(
     modifier: Modifier = Modifier,
+    isError: Boolean = false,
     value: String,
     @StringRes labelTextStringResourceId: Int,
     @StringRes trailingIconContentDescriptionTextStringResourceId: Int,
-    visualTransformation: VisualTransformation = VisualTransformation.None,
     keyboardActions: KeyboardActions,
     keyboardOptions: KeyboardOptions,
-    onValueChange: (updatedValue: String) -> Unit,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
     onClickTrailingIcon: () -> Unit,
+    onValueChange: (updatedValue: String) -> Unit,
+    supportingText: @Composable (() -> Unit)? = null,
 ) {
     OutlinedTextField(
         value = value,
@@ -66,6 +68,8 @@ fun MyOutlinedTextField(
             }
         },
         onValueChange = onValueChange,
+        supportingText = supportingText,
+        isError = isError,
         visualTransformation = visualTransformation,
         keyboardActions = keyboardActions,
         keyboardOptions = keyboardOptions,

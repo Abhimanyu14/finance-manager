@@ -11,6 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.updateBalanceAmount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import kotlinx.coroutines.flow.Flow
 
@@ -131,8 +132,8 @@ interface TransactionDao {
         sourceFrom: Source?,
         sourceTo: Source?,
         transaction: Transaction,
-    ) {
-        insertTransaction(
+    ): Long {
+        val id = insertTransaction(
             transaction = transaction,
         )
         sourceFrom?.let { sourceFromValue ->
@@ -149,6 +150,7 @@ interface TransactionDao {
                 )
             )
         }
+        return id
     }
 
     /**
@@ -157,7 +159,7 @@ interface TransactionDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTransaction(
         transaction: Transaction,
-    )
+    ): Long
     // endregion
 
     // region Update transaction
@@ -192,12 +194,50 @@ interface TransactionDao {
         id: Int,
         vararg sources: Source,
     ) {
+        removeTransactionIdFromOriginalTransactionRefundTransactionIds(
+            id = id,
+        )
         deleteTransaction(
             id = id,
         )
         updateSources(
             sources = sources,
         )
+
+    }
+
+    private suspend fun removeTransactionIdFromOriginalTransactionRefundTransactionIds(
+        id: Int,
+    ) {
+        val transaction = getTransaction(
+            id = id,
+        )
+        if (transaction?.transactionType == TransactionType.REFUND) {
+            transaction.originalTransactionId?.let { originalTransactionId ->
+                getTransaction(
+                    id = originalTransactionId,
+                )?.let { originalTransaction ->
+                    val originalTransactionRefundTransactionIds =
+                        originalTransaction.refundTransactionIds?.run {
+                            this.toMutableList()
+                        } ?: mutableListOf()
+                    originalTransactionRefundTransactionIds.remove(
+                        element = id,
+                    )
+                    val refundTransactionIds =
+                        if (originalTransactionRefundTransactionIds.isEmpty()) {
+                            null
+                        } else {
+                            originalTransactionRefundTransactionIds
+                        }
+                    updateTransaction(
+                        transaction = originalTransaction.copy(
+                            refundTransactionIds = refundTransactionIds,
+                        ),
+                    )
+                }
+            }
+        }
     }
     // endregion
 

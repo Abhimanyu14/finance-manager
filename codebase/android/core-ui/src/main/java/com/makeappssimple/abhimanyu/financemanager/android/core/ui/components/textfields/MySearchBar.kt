@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -147,10 +146,6 @@ fun MySearchBar(
         },
         modifier = modifier
             .fillMaxWidth()
-            .background(
-                color = MaterialTheme.colorScheme.primaryContainer,
-                shape = CircleShape,
-            )
             .padding(
                 horizontal = 0.dp,
                 vertical = 0.dp,
@@ -231,6 +226,12 @@ fun MySearchBar(
                 } else {
                     null
                 },
+                shape = CircleShape,
+                colors = TextFieldDefaults.textFieldColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                    focusedIndicatorColor = Transparent,
+                    unfocusedIndicatorColor = Transparent,
+                ),
                 contentPadding = TextFieldDefaults
                     .textFieldWithoutLabelPadding(
                         top = 0.dp,

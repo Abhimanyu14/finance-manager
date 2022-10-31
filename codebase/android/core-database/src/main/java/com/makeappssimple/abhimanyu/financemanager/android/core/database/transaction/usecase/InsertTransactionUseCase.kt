@@ -11,7 +11,7 @@ interface InsertTransactionUseCase {
         sourceFrom: Source?,
         sourceTo: Source?,
         transaction: Transaction,
-    )
+    ): Long
 }
 
 class InsertTransactionUseCaseImpl(
@@ -23,7 +23,7 @@ class InsertTransactionUseCaseImpl(
         sourceFrom: Source?,
         sourceTo: Source?,
         transaction: Transaction,
-    ) {
+    ): Long {
         dataStore.updateLastDataChangeTimestamp()
         return transactionRepository.insertTransaction(
             amountValue = amountValue,

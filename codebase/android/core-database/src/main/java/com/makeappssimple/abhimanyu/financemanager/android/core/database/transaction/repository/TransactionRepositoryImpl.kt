@@ -112,8 +112,8 @@ class TransactionRepositoryImpl(
         sourceFrom: Source?,
         sourceTo: Source?,
         transaction: Transaction,
-    ) {
-        transactionDao.insertTransaction(
+    ): Long {
+        return transactionDao.insertTransaction(
             amountValue = amountValue,
             sourceFrom = sourceFrom,
             sourceTo = sourceTo,

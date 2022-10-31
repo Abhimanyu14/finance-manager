@@ -2,6 +2,7 @@
 
     <!-- region add or edit transaction screen -->
     <string name="screen_add_or_edit_transaction_amount">Amount</string>
+    <string name="screen_add_or_edit_transaction_amount_error_text">Refund amount cannot be more than %1$s</string>
     <string name="screen_add_or_edit_transaction_clear_amount">Clear Amount</string>
     <string name="screen_add_or_edit_transaction_title">Title</string>
     <string name="screen_add_or_edit_transaction_clear_title">Clear Title</string>

@@ -16,4 +16,5 @@ data class AddOrEditTransactionScreenUiState(
     val sourceFrom: Source?,
     val sourceTo: Source?,
     val transactionCalendar: Calendar,
+    val amountErrorText: String? = null,
 )

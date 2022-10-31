@@ -55,7 +55,7 @@ interface TransactionRepository {
         sourceFrom: Source?,
         sourceTo: Source?,
         transaction: Transaction,
-    )
+    ): Long
 
     suspend fun insertTransactions(
         vararg transactions: Transaction,

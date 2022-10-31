@@ -10,6 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotZero
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoriesUseCase
@@ -79,9 +80,6 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     private var originalTransactionData: MutableStateFlow<TransactionData?> = MutableStateFlow(
         value = null,
     )
-    private var originalTransactionCategory: Category? = null
-    private var originalTransactionSourceFrom: Source? = null
-    private var originalTransactionSourceTo: Source? = null
 
     // Default data from data source
     private var defaultSourceIdFromDataStore: MutableStateFlow<Int?> = MutableStateFlow(
@@ -169,19 +167,22 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             TransactionType.INCOME -> {
                 uiState.amount.isNotNullOrBlank() &&
                         uiState.title.isNotNullOrBlank() &&
-                        uiState.amount.toInt().isNotZero()
+                        uiState.amount.toInt().isNotZero() &&
+                        uiState.amountErrorText.isNull()
             }
 
             TransactionType.EXPENSE -> {
                 uiState.amount.isNotNullOrBlank() &&
                         uiState.title.isNotNullOrBlank() &&
-                        uiState.amount.toInt().isNotZero()
+                        uiState.amount.toInt().isNotZero() &&
+                        uiState.amountErrorText.isNull()
             }
 
             TransactionType.TRANSFER -> {
                 uiState.amount.isNotNullOrBlank() &&
                         uiState.sourceFrom?.id != uiState.sourceTo?.id &&
-                        uiState.amount.toInt().isNotZero()
+                        uiState.amount.toInt().isNotZero() &&
+                        uiState.amountErrorText.isNull()
             }
 
             TransactionType.ADJUSTMENT -> {
@@ -191,13 +192,40 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             TransactionType.INVESTMENT -> {
                 uiState.amount.isNotNullOrBlank() &&
                         uiState.title.isNotNullOrBlank() &&
-                        uiState.amount.toInt().isNotZero()
+                        uiState.amount.toInt().isNotZero() &&
+                        uiState.amountErrorText.isNull()
             }
 
             TransactionType.REFUND -> {
-                uiState.amount.isNotNullOrBlank() &&
-                        uiState.title.isNotNullOrBlank() &&
-                        uiState.amount.toInt().isNotZero()
+                // TODO-Abhi: Replace max refund amount with amount from other transactions as well
+                val maxRefundAmount = originalTransactionData.value?.transaction?.amount
+                val maxRefundAmountValue = maxRefundAmount?.value ?: 0L
+                if (uiState.amountErrorText == null &&
+                    ((uiState.amount.toLongOrNull() ?: 0L) > maxRefundAmountValue)
+                ) {
+                    updateAddOrEditTransactionScreenUiState(
+                        updatedAddOrEditTransactionScreenUiState = uiState.copy(
+                            amountErrorText = maxRefundAmount?.run {
+                                this.toString()
+                            },
+                        )
+                    )
+                    false
+                } else if (uiState.amountErrorText != null &&
+                    ((uiState.amount.toLongOrNull() ?: 0L) <= maxRefundAmountValue)
+                ) {
+                    updateAddOrEditTransactionScreenUiState(
+                        updatedAddOrEditTransactionScreenUiState = uiState.copy(
+                            amountErrorText = null,
+                        )
+                    )
+                    false
+                } else {
+                    uiState.amount.isNotNullOrBlank() &&
+                            uiState.title.isNotNullOrBlank() &&
+                            uiState.amount.toInt().isNotZero() &&
+                            uiState.amountErrorText.isNull()
+                }
             }
 
             null -> {
@@ -273,7 +301,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     }
 
                     TransactionType.REFUND -> {
-                        originalTransactionCategory?.id
+                        originalTransactionData.value?.category?.id
                     }
                 }
                 val sourceFromId = when (selectedTransactionTypeValue) {
@@ -364,14 +392,22 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                         1
                     }
                 }
+                val originalTransactionId = if (edit == false && originalTransactionId != null ||
+                    edit == true && originalTransactionData.value?.transaction?.transactionType == TransactionType.REFUND
+                ) {
+                    originalTransactionId
+                } else {
+                    null
+                }
 
-                insertTransactionUseCase(
+                val id = insertTransactionUseCase(
                     amountValue = amountValue,
                     sourceFrom = uiStateValue.sourceFrom,
                     sourceTo = uiStateValue.sourceTo,
                     transaction = Transaction(
                         amount = amount,
                         categoryId = categoryId,
+                        originalTransactionId = originalTransactionId,
                         sourceFromId = sourceFromId,
                         sourceToId = sourceToId,
                         description = uiStateValue.description,
@@ -382,6 +418,20 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                         transactionType = selectedTransactionTypeValue,
                     ),
                 )
+
+                // Only for refund transaction
+                originalTransactionData.value?.transaction?.let { originalTransaction ->
+                    val refundTransactionIds = originalTransaction.refundTransactionIds?.run {
+                        originalTransaction.refundTransactionIds?.toMutableList()
+                    } ?: mutableListOf()
+                    refundTransactionIds.add(id.toInt())
+                    updateTransactionUseCase(
+                        originalTransaction = originalTransaction,
+                        updatedTransaction = originalTransaction.copy(
+                            refundTransactionIds = refundTransactionIds,
+                        ),
+                    )
+                }
                 navigateUp(
                     navigationManager = navigationManager,
                 )
@@ -421,7 +471,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     }
 
                     TransactionType.REFUND -> {
-                        originalTransactionCategory?.id
+                        originalTransactionData.value?.category?.id
                     }
                 }
                 val sourceFromId = when (selectedTransactionTypeValue) {
@@ -532,7 +582,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
 
                     // region transaction source updates
                     val sourceBalanceAmountChangeMap = hashMapOf<Int, Long>()
-                    originalTransactionSourceFrom?.let { transactionSourceFrom ->
+                    originalTransactionData.value?.sourceFrom?.let { transactionSourceFrom ->
                         sourceBalanceAmountChangeMap[transactionSourceFrom.id] =
                             (sourceBalanceAmountChangeMap[transactionSourceFrom.id]
                                 ?: 0) + transaction.amount.value
@@ -542,7 +592,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                             (sourceBalanceAmountChangeMap[sourceFrom.id]
                                 ?: 0) - uiState.value.amount.toLong()
                     }
-                    originalTransactionSourceTo?.let { transactionSourceTo ->
+                    originalTransactionData.value?.sourceTo?.let { transactionSourceTo ->
                         sourceBalanceAmountChangeMap[transactionSourceTo.id] =
                             (sourceBalanceAmountChangeMap[transactionSourceTo.id]
                                 ?: 0) - transaction.amount.value
@@ -747,9 +797,6 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                         id = id,
                     )?.let {
                         originalTransactionData.value = it
-                        originalTransactionCategory = it.category
-                        originalTransactionSourceFrom = it.sourceFrom
-                        originalTransactionSourceTo = it.sourceTo
                     }
                 }
                 launch {
@@ -801,14 +848,14 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                 amount = abs(originalTransaction.amount.value).toString(),
                 title = TransactionType.REFUND.title,
                 description = originalTransaction.description,
-                category = originalTransactionCategory,
+                category = originalTransactionData.value?.category,
                 selectedTransactionForIndex = transactionForValues.indexOf(
                     element = transactionForValues.firstOrNull {
                         it.id == originalTransaction.transactionForId
                     },
                 ),
-                sourceFrom = originalTransactionSourceTo,
-                sourceTo = originalTransactionSourceFrom,
+                sourceFrom = originalTransactionData.value?.sourceTo,
+                sourceTo = originalTransactionData.value?.sourceFrom,
                 transactionCalendar = Calendar.getInstance(Locale.getDefault()),
             )
         } else {
@@ -819,14 +866,14 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                 amount = abs(originalTransaction.amount.value).toString(),
                 title = originalTransaction.title,
                 description = originalTransaction.description,
-                category = originalTransactionCategory,
+                category = originalTransactionData.value?.category,
                 selectedTransactionForIndex = transactionForValues.indexOf(
                     element = transactionForValues.firstOrNull {
                         it.id == originalTransaction.transactionForId
                     },
                 ),
-                sourceFrom = originalTransactionSourceFrom,
-                sourceTo = originalTransactionSourceTo,
+                sourceFrom = originalTransactionData.value?.sourceFrom,
+                sourceTo = originalTransactionData.value?.sourceTo,
                 transactionCalendar = Calendar.getInstance(Locale.getDefault()).apply {
                     timeInMillis = originalTransaction.transactionTimestamp
                 },
@@ -1021,7 +1068,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     TransactionType.INCOME -> {
                         val updatedCategory =
                             if (it == originalTransactionData.value?.transaction?.transactionType) {
-                                originalTransactionCategory ?: incomeDefaultCategory
+                                originalTransactionData.value?.category ?: incomeDefaultCategory
                             } else {
                                 incomeDefaultCategory
                             }
@@ -1033,14 +1080,15 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                             updatedSourceFrom = null,
                         )
                         updateSourceTo(
-                            updatedSourceTo = originalTransactionSourceTo ?: defaultSource,
+                            updatedSourceTo = originalTransactionData.value?.sourceTo
+                                ?: defaultSource,
                         )
                     }
 
                     TransactionType.EXPENSE -> {
                         val updatedCategory =
                             if (it == originalTransactionData.value?.transaction?.transactionType) {
-                                originalTransactionCategory ?: expenseDefaultCategory
+                                originalTransactionData.value?.category ?: expenseDefaultCategory
                             } else {
                                 expenseDefaultCategory
                             }
@@ -1049,7 +1097,8 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                         )
 
                         updateSourceFrom(
-                            updatedSourceFrom = originalTransactionSourceFrom ?: defaultSource,
+                            updatedSourceFrom = originalTransactionData.value?.sourceFrom
+                                ?: defaultSource,
                         )
                         updateSourceTo(
                             updatedSourceTo = null,
@@ -1058,10 +1107,12 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
 
                     TransactionType.TRANSFER -> {
                         updateSourceFrom(
-                            updatedSourceFrom = originalTransactionSourceFrom ?: defaultSource,
+                            updatedSourceFrom = originalTransactionData.value?.sourceFrom
+                                ?: defaultSource,
                         )
                         updateSourceTo(
-                            updatedSourceTo = originalTransactionSourceTo ?: defaultSource,
+                            updatedSourceTo = originalTransactionData.value?.sourceTo
+                                ?: defaultSource,
                         )
                     }
 
@@ -1070,7 +1121,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     TransactionType.INVESTMENT -> {
                         val updatedCategory =
                             if (it == originalTransactionData.value?.transaction?.transactionType) {
-                                originalTransactionCategory ?: investmentDefaultCategory
+                                originalTransactionData.value?.category ?: investmentDefaultCategory
                             } else {
                                 investmentDefaultCategory
                             }
@@ -1079,7 +1130,8 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                         )
 
                         updateSourceFrom(
-                            updatedSourceFrom = originalTransactionSourceFrom ?: defaultSource,
+                            updatedSourceFrom = originalTransactionData.value?.sourceFrom
+                                ?: defaultSource,
                         )
                         updateSourceTo(
                             updatedSourceTo = null,
