@@ -11,6 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Quadruple
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoriesUseCase
@@ -78,6 +79,9 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
 
     // Original transaction data
     private var originalTransactionData: MutableStateFlow<TransactionData?> = MutableStateFlow(
+        value = null,
+    )
+    private var maxRefundAmount: MutableStateFlow<Amount?> = MutableStateFlow(
         value = null,
     )
 
@@ -197,15 +201,13 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             }
 
             TransactionType.REFUND -> {
-                // TODO-Abhi: Replace max refund amount with amount from other transactions as well
-                val maxRefundAmount = originalTransactionData.value?.transaction?.amount
-                val maxRefundAmountValue = maxRefundAmount?.value ?: 0L
+                val maxRefundAmountValue = maxRefundAmount.value?.value ?: 0L
                 if (uiState.amountErrorText == null &&
                     ((uiState.amount.toLongOrNull() ?: 0L) > maxRefundAmountValue)
                 ) {
                     updateAddOrEditTransactionScreenUiState(
                         updatedAddOrEditTransactionScreenUiState = uiState.copy(
-                            amountErrorText = maxRefundAmount?.run {
+                            amountErrorText = maxRefundAmount.value?.run {
                                 this.toString()
                             },
                         )
@@ -260,7 +262,6 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             observeSources()
         }
         observeTransactionTypesForNewTransactionAndUiState()
-        observeOriginalTransaction()
         observeSelectedTransactionType()
         observeSelectedCategory()
     }
@@ -797,39 +798,54 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                         id = id,
                     )?.let {
                         originalTransactionData.value = it
+                        calculateMaxRefundAmount()
                     }
                 }
-                launch {
-                    combine(
-                        flow = originalTransactionData,
-                        flow2 = transactionTypesForNewTransaction,
-                        flow3 = transactionForValues,
-                    ) {
-                            originalTransactionData,
-                            transactionTypesForNewTransaction,
-                            transactionForValues,
-                        ->
-                        Triple(
-                            originalTransactionData,
-                            transactionTypesForNewTransaction,
-                            transactionForValues,
-                        )
-                    }.collectLatest {
-                            (
-                                originalTransactionData,
-                                transactionTypesForNewTransaction,
-                                transactionForValues,
-                            ),
-                        ->
-                        originalTransactionData?.let {
-                            updateAddOrEditTransactionScreenUiStateWithOriginalTransactionData(
-                                originalTransaction = originalTransactionData.transaction,
-                                transactionTypesForNewTransaction = transactionTypesForNewTransaction,
-                                transactionForValues = transactionForValues,
-                            )
-                        }
-                    }
+                observeOriginalTransaction()
+            }
+        }
+    }
+
+    private suspend fun calculateMaxRefundAmount() {
+        val transactionId = originalTransactionId ?: return
+        val transactionData = getTransactionDataUseCase(
+            id = transactionId,
+        )
+        if (!((edit == true && transactionData?.transaction?.transactionType == TransactionType.REFUND) || edit == false)) {
+            return
+        }
+
+        var transactionDataToRefund: TransactionData? = null
+        if (edit == true) {
+            transactionData?.transaction?.originalTransactionId?.let {
+                transactionDataToRefund = getTransactionDataUseCase(
+                    id = it,
+                )
+            }
+        } else {
+            transactionDataToRefund = transactionData
+        }
+        if (transactionDataToRefund == null) {
+            return
+        }
+
+        var refundedAmountCalculated: Amount? = null
+        transactionDataToRefund?.transaction?.refundTransactionIds?.forEach {
+            if (it != originalTransactionId) {
+                getTransactionDataUseCase(
+                    id = it,
+                )?.transaction?.amount?.let { prevRefundedTransactionAmount ->
+                    refundedAmountCalculated = refundedAmountCalculated?.run {
+                        this + prevRefundedTransactionAmount
+                    } ?: prevRefundedTransactionAmount
                 }
+            }
+        }
+        transactionDataToRefund?.transaction?.amount?.let { originalTransactionAmount ->
+            maxRefundAmount.value = if (refundedAmountCalculated != null) {
+                originalTransactionAmount - (refundedAmountCalculated ?: Amount())
+            } else {
+                originalTransactionAmount
             }
         }
     }
@@ -838,14 +854,15 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         originalTransaction: Transaction,
         transactionTypesForNewTransaction: List<TransactionType>,
         transactionForValues: List<TransactionFor>,
+        maxRefundAmount: Amount?,
     ) {
-        val isRefund = edit == false && originalTransactionId != null
-        val initialAddOrEditTransactionScreenUiState = if (isRefund) {
+        val isAddingRefund = edit == false && originalTransactionId != null
+        val initialAddOrEditTransactionScreenUiState = if (isAddingRefund) {
             AddOrEditTransactionScreenUiState(
                 selectedTransactionTypeIndex = transactionTypesForNewTransaction.indexOf(
                     element = TransactionType.REFUND,
                 ),
-                amount = abs(originalTransaction.amount.value).toString(),
+                amount = (maxRefundAmount?.value ?: 0L).toString(),
                 title = TransactionType.REFUND.title,
                 description = originalTransaction.description,
                 category = originalTransactionData.value?.category,
@@ -889,10 +906,10 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             context = dispatcherProvider.io,
         ) {
             combine(
-                categories,
-                defaultExpenseCategoryIdFromDataStore,
-                defaultIncomeCategoryIdFromDataStore,
-                defaultInvestmentCategoryIdFromDataStore,
+                flow = categories,
+                flow2 = defaultExpenseCategoryIdFromDataStore,
+                flow3 = defaultIncomeCategoryIdFromDataStore,
+                flow4 = defaultInvestmentCategoryIdFromDataStore,
             ) {
                     categories,
                     defaultExpenseCategoryIdFromDataStore,
@@ -936,8 +953,8 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             context = dispatcherProvider.io,
         ) {
             combine(
-                sources,
-                defaultSourceIdFromDataStore,
+                flow = sources,
+                flow2 = defaultSourceIdFromDataStore,
             ) { sources, defaultSourceIdFromDataStore ->
                 defaultSource = getSource(
                     sourceId = defaultSourceIdFromDataStore,
@@ -998,21 +1015,25 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                 flow = originalTransactionData,
                 flow2 = transactionTypesForNewTransaction,
                 flow3 = transactionForValues,
+                flow4 = maxRefundAmount,
             ) {
                     originalTransactionData,
                     transactionTypesForNewTransaction,
                     transactionForValues,
+                    maxRefundAmount,
                 ->
-                Triple(
-                    originalTransactionData,
-                    transactionTypesForNewTransaction,
-                    transactionForValues,
+                Quadruple(
+                    first = originalTransactionData,
+                    second = transactionTypesForNewTransaction,
+                    third = transactionForValues,
+                    fourth = maxRefundAmount,
                 )
             }.collectLatest {
                     (
                         originalTransactionData,
                         transactionTypesForNewTransaction,
                         transactionForValues,
+                        maxRefundAmount,
                     ),
                 ->
                 originalTransactionData?.transaction?.let { originalTransaction ->
@@ -1020,6 +1041,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                         originalTransaction = originalTransaction,
                         transactionTypesForNewTransaction = transactionTypesForNewTransaction,
                         transactionForValues = transactionForValues,
+                        maxRefundAmount = maxRefundAmount,
                     )
                 }
             }

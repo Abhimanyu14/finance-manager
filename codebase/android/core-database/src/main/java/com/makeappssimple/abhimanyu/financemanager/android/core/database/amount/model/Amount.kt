@@ -56,4 +56,13 @@ data class Amount(
             value = value + amount.value,
         )
     }
+
+    operator fun minus(
+        amount: Amount,
+    ): Amount {
+        return Amount(
+            currency = currency,
+            value = value - amount.value,
+        )
+    }
 }
