@@ -44,7 +44,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -252,18 +251,263 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         getNavigationArguments(
             savedStateHandle = savedStateHandle,
         )
-        getDefaultDataFromDataStore()
-        getTransactionTypesForNewTransaction()
-        getOriginalTransactionData()
+        viewModelScope.launch(
+            context = dispatcherProvider.io,
+        ) {
+            // Default data
+            launch {
+                dataStore.getDefaultSourceIdFromDataStore().collectLatest {
+                    defaultSourceIdFromDataStore.value = it
+                }
+            }
+            launch {
+                dataStore.getDefaultExpenseCategoryIdFromDataStore().collectLatest {
+                    defaultExpenseCategoryIdFromDataStore.value = it
+                }
+            }
+            launch {
+                dataStore.getDefaultIncomeCategoryIdFromDataStore().collectLatest {
+                    defaultIncomeCategoryIdFromDataStore.value = it
+                }
+            }
+            launch {
+                dataStore.getDefaultInvestmentCategoryIdFromDataStore().collectLatest {
+                    defaultInvestmentCategoryIdFromDataStore.value = it
+                }
+            }
 
-        // Add transaction except refund type
-        if (edit == false && originalTransactionId == null) {
-            observeCategories()
-            observeSources()
+            getTransactionTypesForNewTransaction()
+            getOriginalTransactionData()
+
+            // Add transaction except refund type
+            // Categories
+            launch {
+                combine(
+                    flow = categories,
+                    flow2 = defaultExpenseCategoryIdFromDataStore,
+                    flow3 = defaultIncomeCategoryIdFromDataStore,
+                    flow4 = defaultInvestmentCategoryIdFromDataStore,
+                ) {
+                        categories,
+                        defaultExpenseCategoryIdFromDataStore,
+                        defaultIncomeCategoryIdFromDataStore,
+                        defaultInvestmentCategoryIdFromDataStore,
+                    ->
+
+                    expenseDefaultCategory = getCategory(
+                        categoryId = defaultExpenseCategoryIdFromDataStore,
+                    ) ?: categories.firstOrNull { category ->
+                        isDefaultExpenseCategory(
+                            category = category.title,
+                        )
+                    }
+                    incomeDefaultCategory = getCategory(
+                        categoryId = defaultIncomeCategoryIdFromDataStore,
+                    ) ?: categories.firstOrNull { category ->
+                        isDefaultIncomeCategory(
+                            category = category.title,
+                        )
+                    }
+                    investmentDefaultCategory = getCategory(
+                        categoryId = defaultInvestmentCategoryIdFromDataStore,
+                    ) ?: categories.firstOrNull { category ->
+                        isDefaultInvestmentCategory(
+                            category = category.title,
+                        )
+                    }
+
+                    expenseDefaultCategory
+                }.collectLatest {
+                    updateCategory(
+                        updatedCategory = it,
+                    )
+                }
+            }
+
+            // Sources
+            launch {
+                combine(
+                    flow = sources,
+                    flow2 = defaultSourceIdFromDataStore,
+                ) { sources, defaultSourceIdFromDataStore ->
+                    defaultSource = getSource(
+                        sourceId = defaultSourceIdFromDataStore,
+                    ) ?: sources.firstOrNull { source ->
+                        isCashSource(
+                            source = source.name,
+                        )
+                    }
+                    defaultSource
+                }.collectLatest {
+                    updateSourceFrom(
+                        updatedSourceFrom = it,
+                    )
+                    updateSourceTo(
+                        updatedSourceTo = it,
+                    )
+                }
+            }
+
+            // Transaction types for new transaction
+            launch {
+                combine(
+                    flow = transactionTypesForNewTransaction,
+                    flow2 = uiState,
+                ) {
+                        transactionTypesForNewTransaction,
+                        uiState,
+                    ->
+                    if (edit == true) {
+                        uiState.selectedTransactionTypeIndex?.let {
+                            transactionTypesForNewTransaction.getOrNull(
+                                index = uiState.selectedTransactionTypeIndex,
+                            )
+                        }
+                    } else {
+                        if (originalTransactionId != null) {
+                            TransactionType.REFUND
+                        } else {
+                            uiState.selectedTransactionTypeIndex?.let {
+                                transactionTypesForNewTransaction.getOrNull(
+                                    index = uiState.selectedTransactionTypeIndex,
+                                )
+                            }
+                        }
+                    }
+                }.collectLatest {
+                    _selectedTransactionType.value = it
+                }
+            }
+
+            // Selected transaction types
+            launch {
+                selectedTransactionType.collectLatest {
+                    it ?: return@collectLatest
+                    val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState? =
+                        when (it) {
+                            TransactionType.INCOME -> {
+                                AddOrEditTransactionScreenUiVisibilityState.Income
+                            }
+
+                            TransactionType.EXPENSE -> {
+                                AddOrEditTransactionScreenUiVisibilityState.Expense
+                            }
+
+                            TransactionType.TRANSFER -> {
+                                AddOrEditTransactionScreenUiVisibilityState.Transfer
+                            }
+
+                            TransactionType.ADJUSTMENT -> {
+                                null
+                            }
+
+                            TransactionType.INVESTMENT -> {
+                                AddOrEditTransactionScreenUiVisibilityState.Investment
+                            }
+
+                            TransactionType.REFUND -> {
+                                AddOrEditTransactionScreenUiVisibilityState.Refund
+                            }
+                        }
+                    uiVisibilityState?.let {
+                        updateAddOrEditTransactionScreenUiVisibilityState(
+                            updatedAddOrEditTransactionScreenUiVisibilityState = uiVisibilityState,
+                        )
+                    }
+
+                    when (it) {
+                        TransactionType.INCOME -> {
+                            val updatedCategory =
+                                if (it == originalTransactionData.value?.transaction?.transactionType) {
+                                    originalTransactionData.value?.category ?: incomeDefaultCategory
+                                } else {
+                                    incomeDefaultCategory
+                                }
+                            updateCategory(
+                                updatedCategory = updatedCategory,
+                            )
+
+                            updateSourceFrom(
+                                updatedSourceFrom = null,
+                            )
+                            updateSourceTo(
+                                updatedSourceTo = originalTransactionData.value?.sourceTo
+                                    ?: defaultSource,
+                            )
+                        }
+
+                        TransactionType.EXPENSE -> {
+                            val updatedCategory =
+                                if (it == originalTransactionData.value?.transaction?.transactionType) {
+                                    originalTransactionData.value?.category
+                                        ?: expenseDefaultCategory
+                                } else {
+                                    expenseDefaultCategory
+                                }
+                            updateCategory(
+                                updatedCategory = updatedCategory,
+                            )
+
+                            updateSourceFrom(
+                                updatedSourceFrom = originalTransactionData.value?.sourceFrom
+                                    ?: defaultSource,
+                            )
+                            updateSourceTo(
+                                updatedSourceTo = null,
+                            )
+                        }
+
+                        TransactionType.TRANSFER -> {
+                            updateSourceFrom(
+                                updatedSourceFrom = originalTransactionData.value?.sourceFrom
+                                    ?: defaultSource,
+                            )
+                            updateSourceTo(
+                                updatedSourceTo = originalTransactionData.value?.sourceTo
+                                    ?: defaultSource,
+                            )
+                        }
+
+                        TransactionType.ADJUSTMENT -> {}
+
+                        TransactionType.INVESTMENT -> {
+                            val updatedCategory =
+                                if (it == originalTransactionData.value?.transaction?.transactionType) {
+                                    originalTransactionData.value?.category
+                                        ?: investmentDefaultCategory
+                                } else {
+                                    investmentDefaultCategory
+                                }
+                            updateCategory(
+                                updatedCategory = updatedCategory,
+                            )
+
+                            updateSourceFrom(
+                                updatedSourceFrom = originalTransactionData.value?.sourceFrom
+                                    ?: defaultSource,
+                            )
+                            updateSourceTo(
+                                updatedSourceTo = null,
+                            )
+                        }
+
+                        TransactionType.REFUND -> {}
+                    }
+                }
+            }
+
+            // Selected category
+            launch {
+                selectedCategoryId.collectLatest {
+                    val selectedCategoryIdValue = it ?: return@collectLatest
+                    _titleSuggestions.update {
+                        getTitleSuggestionsUseCase(
+                            categoryId = selectedCategoryIdValue,
+                        )
+                    }
+                }
+            }
         }
-        observeTransactionTypesForNewTransactionAndUiState()
-        observeSelectedTransactionType()
-        observeSelectedCategory()
     }
 
     override fun trackScreen() {
@@ -403,8 +647,16 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
 
                 val id = insertTransactionUseCase(
                     amountValue = amountValue,
-                    sourceFrom = uiStateValue.sourceFrom,
-                    sourceTo = uiStateValue.sourceTo,
+                    sourceFrom = if (sourceFromId != null) {
+                        uiStateValue.sourceFrom
+                    } else {
+                        null
+                    },
+                    sourceTo = if (sourceToId != null) {
+                        uiStateValue.sourceTo
+                    } else {
+                        null
+                    },
                     transaction = Transaction(
                         amount = amount,
                         categoryId = categoryId,
@@ -737,58 +989,31 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         }
     }
 
-    private fun getDefaultDataFromDataStore() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            launch {
-                defaultSourceIdFromDataStore.value =
-                    dataStore.getDefaultSourceIdFromDataStore().firstOrNull()
-            }
-            launch {
-                defaultExpenseCategoryIdFromDataStore.value =
-                    dataStore.getDefaultExpenseCategoryIdFromDataStore().firstOrNull()
-            }
-            launch {
-                defaultIncomeCategoryIdFromDataStore.value =
-                    dataStore.getDefaultIncomeCategoryIdFromDataStore().firstOrNull()
-            }
-            launch {
-                defaultInvestmentCategoryIdFromDataStore.value =
-                    dataStore.getDefaultInvestmentCategoryIdFromDataStore().firstOrNull()
-            }
-        }
-    }
+    private suspend fun getTransactionTypesForNewTransaction() {
+        val sourceCount = getSourcesCountUseCase()
+        val excludedTransactionTypes = mutableSetOf(
+            TransactionType.ADJUSTMENT,
+            TransactionType.REFUND
+        )
 
-    private fun getTransactionTypesForNewTransaction() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            val sourceCount = getSourcesCountUseCase()
-            val excludedTransactionTypes = mutableSetOf(
-                TransactionType.ADJUSTMENT,
-                TransactionType.REFUND
+        // Cannot create transfer with single source
+        if (sourceCount <= 1) {
+            excludedTransactionTypes.add(TransactionType.TRANSFER)
+        }
+        val transactionTypesForNewTransaction =
+            (TransactionType.values().toSet() - excludedTransactionTypes).toList()
+        _transactionTypesForNewTransaction.value = transactionTypesForNewTransaction
+
+        if (edit == false && originalTransactionId == null) {
+            updateSelectedTransactionTypeIndex(
+                updatedSelectedTransactionTypeIndex = transactionTypesForNewTransaction.indexOf(
+                    element = TransactionType.EXPENSE,
+                ),
             )
-
-            // Cannot create transfer with single source
-            if (sourceCount <= 1) {
-                excludedTransactionTypes.add(TransactionType.TRANSFER)
-            }
-            val transactionTypesForNewTransaction =
-                (TransactionType.values().toSet() - excludedTransactionTypes).toList()
-            _transactionTypesForNewTransaction.value = transactionTypesForNewTransaction
-
-            if (edit == false && originalTransactionId == null) {
-                updateSelectedTransactionTypeIndex(
-                    updatedSelectedTransactionTypeIndex = transactionTypesForNewTransaction.indexOf(
-                        element = TransactionType.EXPENSE,
-                    ),
-                )
-            }
         }
     }
 
-    private fun getOriginalTransactionData() {
+    private suspend fun getOriginalTransactionData() {
         originalTransactionId?.let { id ->
             viewModelScope.launch(
                 context = dispatcherProvider.io,
@@ -901,282 +1126,39 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         )
     }
 
-    private fun observeCategories() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
+    private suspend fun observeOriginalTransaction() {
+        combine(
+            flow = originalTransactionData,
+            flow2 = transactionTypesForNewTransaction,
+            flow3 = transactionForValues,
+            flow4 = maxRefundAmount,
         ) {
-            combine(
-                flow = categories,
-                flow2 = defaultExpenseCategoryIdFromDataStore,
-                flow3 = defaultIncomeCategoryIdFromDataStore,
-                flow4 = defaultInvestmentCategoryIdFromDataStore,
-            ) {
-                    categories,
-                    defaultExpenseCategoryIdFromDataStore,
-                    defaultIncomeCategoryIdFromDataStore,
-                    defaultInvestmentCategoryIdFromDataStore,
-                ->
-
-                expenseDefaultCategory = getCategory(
-                    categoryId = defaultExpenseCategoryIdFromDataStore,
-                ) ?: categories.firstOrNull { category ->
-                    isDefaultExpenseCategory(
-                        category = category.title,
-                    )
-                }
-                incomeDefaultCategory = getCategory(
-                    categoryId = defaultIncomeCategoryIdFromDataStore,
-                ) ?: categories.firstOrNull { category ->
-                    isDefaultIncomeCategory(
-                        category = category.title,
-                    )
-                }
-                investmentDefaultCategory = getCategory(
-                    categoryId = defaultInvestmentCategoryIdFromDataStore,
-                ) ?: categories.firstOrNull { category ->
-                    isDefaultInvestmentCategory(
-                        category = category.title,
-                    )
-                }
-
-                expenseDefaultCategory
-            }.collectLatest {
-                updateCategory(
-                    updatedCategory = it,
-                )
-            }
-        }
-    }
-
-    private fun observeSources() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            combine(
-                flow = sources,
-                flow2 = defaultSourceIdFromDataStore,
-            ) { sources, defaultSourceIdFromDataStore ->
-                defaultSource = getSource(
-                    sourceId = defaultSourceIdFromDataStore,
-                ) ?: sources.firstOrNull { source ->
-                    isCashSource(
-                        source = source.name,
-                    )
-                }
-                defaultSource
-            }.collectLatest {
-                updateSourceFrom(
-                    updatedSourceFrom = it,
-                )
-                updateSourceTo(
-                    updatedSourceTo = it,
-                )
-            }
-        }
-    }
-
-    private fun observeTransactionTypesForNewTransactionAndUiState() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            combine(
-                flow = transactionTypesForNewTransaction,
-                flow2 = uiState,
-                flow3 = originalTransactionData,
-            ) {
-                    transactionTypesForNewTransaction,
-                    uiState,
-                    originalTransactionData,
-                ->
-                if (edit == true) {
-                    originalTransactionData?.transaction?.transactionType
-                } else {
-                    if (originalTransactionId != null) {
-                        TransactionType.REFUND
-                    } else {
-                        uiState.selectedTransactionTypeIndex?.let {
-                            transactionTypesForNewTransaction.getOrNull(
-                                index = uiState.selectedTransactionTypeIndex,
-                            )
-                        }
-                    }
-                }
-            }.collectLatest {
-                _selectedTransactionType.value = it
-            }
-        }
-    }
-
-    private fun observeOriginalTransaction() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            combine(
-                flow = originalTransactionData,
-                flow2 = transactionTypesForNewTransaction,
-                flow3 = transactionForValues,
-                flow4 = maxRefundAmount,
-            ) {
+                originalTransactionData,
+                transactionTypesForNewTransaction,
+                transactionForValues,
+                maxRefundAmount,
+            ->
+            Quadruple(
+                first = originalTransactionData,
+                second = transactionTypesForNewTransaction,
+                third = transactionForValues,
+                fourth = maxRefundAmount,
+            )
+        }.collectLatest {
+                (
                     originalTransactionData,
                     transactionTypesForNewTransaction,
                     transactionForValues,
                     maxRefundAmount,
-                ->
-                Quadruple(
-                    first = originalTransactionData,
-                    second = transactionTypesForNewTransaction,
-                    third = transactionForValues,
-                    fourth = maxRefundAmount,
+                ),
+            ->
+            originalTransactionData?.transaction?.let { originalTransaction ->
+                updateAddOrEditTransactionScreenUiStateWithOriginalTransactionData(
+                    originalTransaction = originalTransaction,
+                    transactionTypesForNewTransaction = transactionTypesForNewTransaction,
+                    transactionForValues = transactionForValues,
+                    maxRefundAmount = maxRefundAmount,
                 )
-            }.collectLatest {
-                    (
-                        originalTransactionData,
-                        transactionTypesForNewTransaction,
-                        transactionForValues,
-                        maxRefundAmount,
-                    ),
-                ->
-                originalTransactionData?.transaction?.let { originalTransaction ->
-                    updateAddOrEditTransactionScreenUiStateWithOriginalTransactionData(
-                        originalTransaction = originalTransaction,
-                        transactionTypesForNewTransaction = transactionTypesForNewTransaction,
-                        transactionForValues = transactionForValues,
-                        maxRefundAmount = maxRefundAmount,
-                    )
-                }
-            }
-        }
-    }
-
-    private fun observeSelectedTransactionType() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            selectedTransactionType.collectLatest {
-                it ?: return@collectLatest
-                val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState? =
-                    when (it) {
-                        TransactionType.INCOME -> {
-                            AddOrEditTransactionScreenUiVisibilityState.Income
-                        }
-
-                        TransactionType.EXPENSE -> {
-                            AddOrEditTransactionScreenUiVisibilityState.Expense
-                        }
-
-                        TransactionType.TRANSFER -> {
-                            AddOrEditTransactionScreenUiVisibilityState.Transfer
-                        }
-
-                        TransactionType.ADJUSTMENT -> {
-                            null
-                        }
-
-                        TransactionType.INVESTMENT -> {
-                            AddOrEditTransactionScreenUiVisibilityState.Investment
-                        }
-
-                        TransactionType.REFUND -> {
-                            AddOrEditTransactionScreenUiVisibilityState.Refund
-                        }
-                    }
-                uiVisibilityState?.let {
-                    updateAddOrEditTransactionScreenUiVisibilityState(
-                        updatedAddOrEditTransactionScreenUiVisibilityState = uiVisibilityState,
-                    )
-                }
-
-                when (it) {
-                    TransactionType.INCOME -> {
-                        val updatedCategory =
-                            if (it == originalTransactionData.value?.transaction?.transactionType) {
-                                originalTransactionData.value?.category ?: incomeDefaultCategory
-                            } else {
-                                incomeDefaultCategory
-                            }
-                        updateCategory(
-                            updatedCategory = updatedCategory,
-                        )
-
-                        updateSourceFrom(
-                            updatedSourceFrom = null,
-                        )
-                        updateSourceTo(
-                            updatedSourceTo = originalTransactionData.value?.sourceTo
-                                ?: defaultSource,
-                        )
-                    }
-
-                    TransactionType.EXPENSE -> {
-                        val updatedCategory =
-                            if (it == originalTransactionData.value?.transaction?.transactionType) {
-                                originalTransactionData.value?.category ?: expenseDefaultCategory
-                            } else {
-                                expenseDefaultCategory
-                            }
-                        updateCategory(
-                            updatedCategory = updatedCategory,
-                        )
-
-                        updateSourceFrom(
-                            updatedSourceFrom = originalTransactionData.value?.sourceFrom
-                                ?: defaultSource,
-                        )
-                        updateSourceTo(
-                            updatedSourceTo = null,
-                        )
-                    }
-
-                    TransactionType.TRANSFER -> {
-                        updateSourceFrom(
-                            updatedSourceFrom = originalTransactionData.value?.sourceFrom
-                                ?: defaultSource,
-                        )
-                        updateSourceTo(
-                            updatedSourceTo = originalTransactionData.value?.sourceTo
-                                ?: defaultSource,
-                        )
-                    }
-
-                    TransactionType.ADJUSTMENT -> {}
-
-                    TransactionType.INVESTMENT -> {
-                        val updatedCategory =
-                            if (it == originalTransactionData.value?.transaction?.transactionType) {
-                                originalTransactionData.value?.category ?: investmentDefaultCategory
-                            } else {
-                                investmentDefaultCategory
-                            }
-                        updateCategory(
-                            updatedCategory = updatedCategory,
-                        )
-
-                        updateSourceFrom(
-                            updatedSourceFrom = originalTransactionData.value?.sourceFrom
-                                ?: defaultSource,
-                        )
-                        updateSourceTo(
-                            updatedSourceTo = null,
-                        )
-                    }
-
-                    TransactionType.REFUND -> {}
-                }
-            }
-        }
-    }
-
-    private fun observeSelectedCategory() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            selectedCategoryId.collectLatest {
-                val selectedCategoryIdValue = it ?: return@collectLatest
-                _titleSuggestions.update {
-                    getTitleSuggestionsUseCase(
-                        categoryId = selectedCategoryIdValue,
-                    )
-                }
             }
         }
     }
