@@ -78,9 +78,9 @@ internal enum class AddOrEditTransactionBottomSheetType : BottomSheetType {
 internal data class AddOrEditTransactionScreenViewData(
     val uiState: AddOrEditTransactionScreenUiState,
     val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState,
-    val isValidTransactionData: Boolean,
+    val isCtaButtonEnabled: Boolean,
     @StringRes val appBarTitleTextStringResourceId: Int,
-    @StringRes val saveButtonLabelTextStringResourceId: Int,
+    @StringRes val ctaButtonLabelTextStringResourceId: Int,
     val filteredCategories: List<Category>,
     val sources: List<Source>,
     val titleSuggestions: List<String>,
@@ -91,7 +91,7 @@ internal data class AddOrEditTransactionScreenViewData(
     val clearAmount: () -> Unit,
     val clearDescription: () -> Unit,
     val clearTitle: () -> Unit,
-    val onSaveButtonClick: () -> Unit,
+    val onCtaButtonClick: () -> Unit,
     val updateAmount: (updatedAmount: String) -> Unit,
     val updateCategory: (updatedCategory: Category?) -> Unit,
     val updateDescription: (updatedDescription: String) -> Unit,
@@ -548,11 +548,11 @@ internal fun AddOrEditTransactionScreenView(
                             ),
                     )
                     SaveButton(
-                        textStringResourceId = data.saveButtonLabelTextStringResourceId,
-                        isEnabled = data.isValidTransactionData,
+                        textStringResourceId = data.ctaButtonLabelTextStringResourceId,
+                        isEnabled = data.isCtaButtonEnabled,
                         onClick = {
                             clearFocus()
-                            data.onSaveButtonClick()
+                            data.onCtaButtonClick()
                         },
                     )
                 }

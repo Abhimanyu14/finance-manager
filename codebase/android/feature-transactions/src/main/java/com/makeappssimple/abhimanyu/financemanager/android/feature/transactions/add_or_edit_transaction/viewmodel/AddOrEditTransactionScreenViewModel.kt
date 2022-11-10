@@ -13,7 +13,7 @@ interface AddOrEditTransactionScreenViewModel : ScreenViewModel {
     val navigationManager: NavigationManager
     val uiState: StateFlow<AddOrEditTransactionScreenUiState>
     val uiVisibilityState: StateFlow<AddOrEditTransactionScreenUiVisibilityState>
-    val isValidTransactionData: StateFlow<Boolean>
+    val isCtaButtonEnabled: StateFlow<Boolean>
     val filteredCategories: StateFlow<List<Category>>
     val sources: StateFlow<List<Source>>
     val titleSuggestions: StateFlow<List<String>>

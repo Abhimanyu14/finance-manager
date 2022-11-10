@@ -28,7 +28,7 @@ fun AddTransactionScreen(
     )
     val uiState: AddOrEditTransactionScreenUiState by screenViewModel.uiState.collectAsStateWithLifecycle()
     val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState by screenViewModel.uiVisibilityState.collectAsStateWithLifecycle()
-    val isValidTransactionData: Boolean by screenViewModel.isValidTransactionData.collectAsStateWithLifecycle()
+    val isCtaButtonEnabled: Boolean by screenViewModel.isCtaButtonEnabled.collectAsStateWithLifecycle()
     val filteredCategories: List<Category> by screenViewModel.filteredCategories.collectAsStateWithLifecycle(
         initialValue = emptyList(),
     )
@@ -54,9 +54,9 @@ fun AddTransactionScreen(
         data = AddOrEditTransactionScreenViewData(
             uiState = uiState,
             uiVisibilityState = uiVisibilityState,
-            isValidTransactionData = isValidTransactionData,
+            isCtaButtonEnabled = isCtaButtonEnabled,
             appBarTitleTextStringResourceId = R.string.screen_add_transaction_appbar_title,
-            saveButtonLabelTextStringResourceId = R.string.screen_add_transaction_floating_action_button_content_description,
+            ctaButtonLabelTextStringResourceId = R.string.screen_add_transaction_floating_action_button_content_description,
             filteredCategories = filteredCategories,
             sources = sources,
             titleSuggestions = titleSuggestions,
@@ -67,7 +67,7 @@ fun AddTransactionScreen(
             clearAmount = screenViewModel::clearAmount,
             clearDescription = screenViewModel::clearDescription,
             clearTitle = screenViewModel::clearTitle,
-            onSaveButtonClick = screenViewModel::insertTransaction,
+            onCtaButtonClick = screenViewModel::insertTransaction,
             updateAmount = { updatedAmount ->
                 screenViewModel.updateAmount(
                     updatedAmount = updatedAmount,

@@ -162,7 +162,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         scope = viewModelScope,
     )
 
-    override val isValidTransactionData: StateFlow<Boolean> = combine(
+    override val isCtaButtonEnabled: StateFlow<Boolean> = combine(
         flow = uiState,
         flow2 = selectedTransactionType,
     ) { uiState, selectedTransactionType ->
