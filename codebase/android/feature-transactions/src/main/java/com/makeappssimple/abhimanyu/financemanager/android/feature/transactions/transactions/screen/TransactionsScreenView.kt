@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.legend.Dot
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getReadableDateAndTimeString
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
@@ -56,7 +57,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Bottom
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.adjustmentEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MySearchBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transferEmoji
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.TransactionsListItem
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsDeleteConfirmationBottomSheetContent
@@ -395,10 +399,74 @@ internal fun TransactionsScreenView(
                                     listItem.hashCode()
                                 },
                             ) { index, listItem ->
+                                val isDeleteButtonEnabled =
+                                    listItem.transaction.refundTransactionIds?.run {
+                                        this.isEmpty()
+                                    } ?: true
+                                val isEditButtonVisible =
+                                    listItem.transaction.transactionType != TransactionType.ADJUSTMENT
+                                val isRefundButtonVisible =
+                                    listItem.transaction.transactionType == TransactionType.EXPENSE
+                                val isExpanded = "$date $index" == expandedItemKey
+                                val emoji = when (listItem.transaction.transactionType) {
+                                    TransactionType.TRANSFER -> {
+                                        transferEmoji
+                                    }
+
+                                    TransactionType.ADJUSTMENT -> {
+                                        adjustmentEmoji
+                                    }
+
+                                    else -> {
+                                        listItem.category?.emoji
+                                    }
+                                }.orEmpty()
+                                val title = listItem.transaction.title
+                                val amountText =
+                                    if (listItem.transaction.transactionType == TransactionType.INCOME ||
+                                        listItem.transaction.transactionType == TransactionType.EXPENSE ||
+                                        listItem.transaction.transactionType == TransactionType.ADJUSTMENT ||
+                                        listItem.transaction.transactionType == TransactionType.REFUND
+                                    ) {
+                                        listItem.transaction.amount.toSignedString(
+                                            isPositive = listItem.sourceTo != null,
+                                            isNegative = listItem.sourceFrom != null,
+                                        )
+                                    } else {
+                                        listItem.transaction.amount.toString()
+                                    }
+                                val amountColor = listItem.transaction.getAmountTextColor()
+                                val transactionForText = listItem.transactionFor.titleToDisplay
+                                val dateAndTimeText = getReadableDateAndTimeString(
+                                    timestamp = listItem.transaction.transactionTimestamp,
+                                )
+                                val sourceFrom = listItem.sourceFrom
+                                val sourceTo = listItem.sourceTo
+                                val sourceText =
+                                    if (sourceFrom != null && sourceTo != null) {
+                                        stringResource(
+                                            id = R.string.list_item_transactions_source,
+                                            sourceFrom.name,
+                                            sourceTo.name,
+                                        )
+                                    } else {
+                                        listItem.sourceFrom?.name
+                                            ?: listItem.sourceTo?.name.orEmpty()
+                                    }
+
                                 TransactionsListItem(
-                                    transactionData = listItem,
-                                    expanded = "$date $index" == expandedItemKey,
-                                    deleteEnabled = true,
+                                    isDeleteButtonEnabled = isDeleteButtonEnabled,
+                                    isDeleteButtonVisible = true,
+                                    isEditButtonVisible = isEditButtonVisible,
+                                    isRefundButtonVisible = isRefundButtonVisible,
+                                    isExpanded = isExpanded,
+                                    emoji = emoji,
+                                    title = title,
+                                    amountText = amountText,
+                                    amountColor = amountColor,
+                                    transactionForText = transactionForText,
+                                    dateAndTimeText = dateAndTimeText,
+                                    sourceText = sourceText,
                                     onClick = {
                                         expandedItemKey = if ("$date $index" == expandedItemKey) {
                                             ""
@@ -406,14 +474,7 @@ internal fun TransactionsScreenView(
                                             "$date $index"
                                         }
                                     },
-                                    onEditClick = {
-                                        navigateToEditTransactionScreen(
-                                            navigationManager = data.navigationManager,
-                                            transactionId = listItem.transaction.id,
-                                        )
-                                        expandedItemKey = ""
-                                    },
-                                    onDeleteClick = {
+                                    onDeleteButtonClick = {
                                         transactionIdToDelete = listItem.transaction.id
                                         transactionsBottomSheetType =
                                             TransactionsBottomSheetType.DELETE_CONFIRMATION
@@ -422,14 +483,20 @@ internal fun TransactionsScreenView(
                                             modalBottomSheetState = state.modalBottomSheetState,
                                         )
                                     },
-                                    onRefundClick = {
-                                        navigateToAddTransactionScreen(
+                                    onEditButtonClick = {
+                                        navigateToEditTransactionScreen(
                                             navigationManager = data.navigationManager,
                                             transactionId = listItem.transaction.id,
                                         )
                                         expandedItemKey = ""
                                     },
-                                )
+                                ) {
+                                    navigateToAddTransactionScreen(
+                                        navigationManager = data.navigationManager,
+                                        transactionId = listItem.transaction.id,
+                                    )
+                                    expandedItemKey = ""
+                                }
                             }
                         }
                     }
