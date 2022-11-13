@@ -51,11 +51,13 @@ fun TransactionsScreen(
     TransactionsScreenView(
         data = TransactionsScreenViewData(
             isLoading = isLoading,
+            selectedFilter = selectedFilter,
             expenseCategories = expenseCategories,
             incomeCategories = incomeCategories,
             investmentCategories = investmentCategories,
-            selectedFilter = selectedFilter,
+            sortOptions = screenViewModel.sortOptions,
             sources = sources,
+            transactionTypes = screenViewModel.transactionTypes,
             transactionDetailsListItemViewData = transactionDetailsListItemViewData,
             navigationManager = screenViewModel.navigationManager,
             searchText = searchText,

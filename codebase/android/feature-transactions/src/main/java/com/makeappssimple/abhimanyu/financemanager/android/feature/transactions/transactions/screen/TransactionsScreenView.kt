@@ -79,11 +79,13 @@ internal enum class TransactionsBottomSheetType : BottomSheetType {
 @Immutable
 internal data class TransactionsScreenViewData(
     val isLoading: Boolean,
+    val selectedFilter: Filter,
     val expenseCategories: List<Category>,
     val incomeCategories: List<Category>,
     val investmentCategories: List<Category>,
-    val selectedFilter: Filter,
+    val sortOptions: List<SortOption>,
     val sources: List<Source>,
+    val transactionTypes: List<TransactionType>,
     val transactionDetailsListItemViewData: Map<String, List<TransactionData>>,
     val navigationManager: NavigationManager,
     val searchText: String,
@@ -114,12 +116,6 @@ internal fun TransactionsScreenView(
             value = null,
         )
     }
-
-    // Filter
-    val transactionTypes: List<TransactionType> = TransactionType.values().toList()
-
-    // Sorting
-    val sortOptions = SortOption.values()
 
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
         DisposableEffect(Unit) {
@@ -166,7 +162,7 @@ internal fun TransactionsScreenView(
                         incomeCategories = data.incomeCategories,
                         investmentCategories = data.investmentCategories,
                         sources = data.sources,
-                        transactionTypes = transactionTypes,
+                        transactionTypes = data.transactionTypes,
                         selectedFilter = data.selectedFilter,
                         updateSelectedFilter = { updatedSelectedFilter ->
                             data.updateSelectedFilter(updatedSelectedFilter)
@@ -181,10 +177,10 @@ internal fun TransactionsScreenView(
                     TransactionsSortBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
-                        sortOptions = sortOptions.toList(),
-                        selectedSortOptionIndex = sortOptions.indexOf(data.selectedSortOption),
+                        sortOptions = data.sortOptions.toList(),
+                        selectedSortOptionIndex = data.sortOptions.indexOf(data.selectedSortOption),
                         updateSelectedSortOption = { index ->
-                            data.updateSelectedSortOption(sortOptions[index])
+                            data.updateSelectedSortOption(data.sortOptions[index])
                         },
                         resetBottomSheetType = {
                             transactionsBottomSheetType = TransactionsBottomSheetType.NONE
