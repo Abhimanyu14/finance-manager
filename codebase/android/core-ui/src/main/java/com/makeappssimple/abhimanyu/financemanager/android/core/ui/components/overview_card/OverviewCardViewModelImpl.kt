@@ -10,6 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetCurrentDayTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetCurrentMonthTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetCurrentYearTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.math.abs
@@ -18,6 +19,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 
 @HiltViewModel
 internal class OverviewCardViewModelImpl @Inject constructor(
@@ -25,6 +27,7 @@ internal class OverviewCardViewModelImpl @Inject constructor(
     getCurrentDayTransactionsUseCase: GetCurrentDayTransactionsUseCase,
     getCurrentMonthTransactionsUseCase: GetCurrentMonthTransactionsUseCase,
     getCurrentYearTransactionsUseCase: GetCurrentYearTransactionsUseCase,
+    getTransactionUseCase: GetTransactionUseCase,
 ) : OverviewCardViewModel, ViewModel() {
     private val _overviewTabSelectionIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = 1,
@@ -68,13 +71,13 @@ internal class OverviewCardViewModelImpl @Inject constructor(
         context = dispatcherProvider.io,
     )
 
-    private val expenseAmount: Flow<Float?> = combine(
+    private val expenseTransactionsWithRefund: Flow<List<Transaction>> = combine(
         flow = overviewTabSelectionIndex,
         flow2 = currentDayTransactions,
         flow3 = currentMonthTransactions,
         flow4 = currentYearTransactions,
     ) { overviewTabSelectionIndex, currentDayTransactions, currentMonthTransactions, currentYearTransactions ->
-        when (OverviewTabOption.values()[overviewTabSelectionIndex]) {
+        val expenseTransactions = when (OverviewTabOption.values()[overviewTabSelectionIndex]) {
             OverviewTabOption.DAY -> {
                 currentDayTransactions
             }
@@ -88,8 +91,30 @@ internal class OverviewCardViewModelImpl @Inject constructor(
             }
         }.filter {
             it.transactionType == TransactionType.EXPENSE
-        }.sumOf {
-            abs(it.amount.value)
+        }
+        val expenseTransactionsWithRefund = mutableListOf<Transaction>()
+        expenseTransactions.forEach { expenseTransaction ->
+            expenseTransactionsWithRefund.add(expenseTransaction)
+            expenseTransaction.refundTransactionIds?.let { refundTransactionIds ->
+                refundTransactionIds.forEach { id ->
+                    getTransactionUseCase(id)?.let {
+                        expenseTransactionsWithRefund.add(it)
+                    }
+                }
+            }
+        }
+        expenseTransactionsWithRefund
+    }.flowOn(
+        context = dispatcherProvider.io,
+    )
+
+    private val expenseAmount: Flow<Float?> = expenseTransactionsWithRefund.map {
+        it.sumOf { transaction ->
+            if (transaction.transactionType == TransactionType.EXPENSE) {
+                abs(transaction.amount.value)
+            } else {
+                -abs(transaction.amount.value)
+            }
         }.toFloat()
     }.flowOn(
         context = dispatcherProvider.io,
