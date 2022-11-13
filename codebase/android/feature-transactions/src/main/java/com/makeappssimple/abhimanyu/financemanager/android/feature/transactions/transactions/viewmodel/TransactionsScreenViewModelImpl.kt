@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.Calendar
 
 @HiltViewModel
 internal class TransactionsScreenViewModelImpl @Inject constructor(
@@ -80,6 +81,11 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     override val sources: Flow<List<Source>> = getSourcesUseCase()
     override val transactionTypes: List<TransactionType> = TransactionType.values().toList()
 
+    private var _oldestTransactionTimestamp: MutableStateFlow<Long> = MutableStateFlow(
+        value = 0L,
+    )
+    override val oldestTransactionTimestamp: StateFlow<Long> = _oldestTransactionTimestamp
+
     override val sortOptions: List<SortOption> = SortOption.values().toList()
 
     override val transactionDetailsListItemViewData: Flow<Map<String, List<TransactionData>>> =
@@ -112,10 +118,29 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 category.transactionType == TransactionType.INVESTMENT
             }
 
+            if (selectedFilterValue.fromDate == null) {
+                _oldestTransactionTimestamp.update {
+                    allTransactionDataValue.minOf { transactionData ->
+                        transactionData.transaction.transactionTimestamp
+                    }
+                }
+                updateSelectedFilter(
+                    selectedFilterValue.copy(
+                        fromDate = Calendar.getInstance().apply {
+                            timeInMillis = oldestTransactionTimestamp.value
+                        },
+                    )
+                )
+            }
+
             allTransactionDataValue
                 .filter { transactionDetail ->
                     isAvailableAfterSearch(
                         searchTextValue = searchTextValue,
+                        transactionData = transactionDetail,
+                    ) && isAvailableAfterDateFilter(
+                        fromDate = selectedFilterValue.fromDate,
+                        toDate = selectedFilterValue.toDate,
                         transactionData = transactionDetail,
                     ) && isAvailableAfterTransactionTypeFilter(
                         selectedTransactionTypesIndicesValue = selectedFilterValue.selectedTransactionTypeIndices,
@@ -234,6 +259,18 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                     other = searchTextValue,
                     ignoreCase = true,
                 )
+    }
+
+    private fun isAvailableAfterDateFilter(
+        fromDate: Calendar?,
+        toDate: Calendar?,
+        transactionData: TransactionData,
+    ): Boolean {
+        if (fromDate == null || toDate == null) {
+            return true
+        }
+        return transactionData.transaction.transactionTimestamp > fromDate.timeInMillis &&
+                transactionData.transaction.transactionTimestamp < toDate.timeInMillis
     }
 
     private fun isAvailableAfterTransactionTypeFilter(

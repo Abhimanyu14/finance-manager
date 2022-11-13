@@ -55,7 +55,7 @@ class CalendarExtensionsTest {
     @Test
     fun getHour() {
         Assert.assertEquals(
-            11,
+            23,
             calendar.hour,
         )
     }
@@ -115,6 +115,48 @@ class CalendarExtensionsTest {
         Assert.assertEquals(
             minute,
             calendar.minute,
+        )
+    }
+
+    @Test
+    fun setStartOfDayTime() {
+        calendar.setStartOfDayTime()
+        Assert.assertEquals(
+            0,
+            calendar.hour,
+        )
+        Assert.assertEquals(
+            0,
+            calendar.minute,
+        )
+        Assert.assertEquals(
+            0,
+            calendar.second,
+        )
+        Assert.assertEquals(
+            0,
+            calendar.milliSecond,
+        )
+    }
+
+    @Test
+    fun setEndOfDayTime() {
+        calendar.setEndOfDayTime()
+        Assert.assertEquals(
+            23,
+            calendar.hour,
+        )
+        Assert.assertEquals(
+            59,
+            calendar.minute,
+        )
+        Assert.assertEquals(
+            59,
+            calendar.second,
+        )
+        Assert.assertEquals(
+            999,
+            calendar.milliSecond,
         )
     }
 

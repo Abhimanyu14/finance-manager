@@ -86,6 +86,7 @@ internal data class TransactionsScreenViewData(
     val sortOptions: List<SortOption>,
     val sources: List<Source>,
     val transactionTypes: List<TransactionType>,
+    val oldestTransactionTimestamp: Long,
     val transactionDetailsListItemViewData: Map<String, List<TransactionData>>,
     val navigationManager: NavigationManager,
     val searchText: String,
@@ -156,6 +157,7 @@ internal fun TransactionsScreenView(
 
                 TransactionsBottomSheetType.FILTERS -> {
                     TransactionsFilterBottomSheetContent(
+                        context = state.context,
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
                         expenseCategories = data.expenseCategories,
@@ -163,6 +165,7 @@ internal fun TransactionsScreenView(
                         investmentCategories = data.investmentCategories,
                         sources = data.sources,
                         transactionTypes = data.transactionTypes,
+                        oldestTransactionTimestamp = data.oldestTransactionTimestamp,
                         selectedFilter = data.selectedFilter,
                         updateSelectedFilter = { updatedSelectedFilter ->
                             data.updateSelectedFilter(updatedSelectedFilter)

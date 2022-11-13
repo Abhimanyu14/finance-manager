@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet
 
+import android.content.Context
 import androidx.annotation.StringRes
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState
@@ -26,7 +27,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,14 +38,22 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.addIfDoesNotContainItemElseRemove
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDate
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.setDate
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.setEndOfDayTime
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.setStartOfDayTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.getMyDatePickerDialog
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ChipItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MySelectionGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.Filter
+import java.util.Calendar
 
 @Immutable
 internal data class TransactionFilterBottomSheetFilterGroupData(
@@ -55,11 +66,13 @@ internal data class TransactionFilterBottomSheetFilterGroupData(
 @Composable
 internal fun TransactionsFiltersBottomSheet(
     modifier: Modifier = Modifier,
+    context: Context,
     expenseCategories: List<Category>,
     incomeCategories: List<Category>,
     investmentCategories: List<Category>,
     sources: List<Source>,
     transactionTypes: List<TransactionType>,
+    oldestTransactionTimestamp: Long,
     selectedFilter: Filter,
     onPositiveButtonClick: (filter: Filter) -> Unit,
     onNegativeButtonClick: () -> Unit,
@@ -71,6 +84,7 @@ internal fun TransactionsFiltersBottomSheet(
             selectedFilter.selectedInvestmentCategoryIndices.isNotEmpty(),
             selectedFilter.selectedSourceIndices.isNotEmpty(),
             selectedFilter.selectedTransactionTypeIndices.isNotEmpty(),
+            selectedFilter.toDate.isNotNull(),
         )
     }
 
@@ -99,7 +113,18 @@ internal fun TransactionsFiltersBottomSheet(
             elements = selectedFilter.selectedTransactionTypeIndices.toTypedArray(),
         )
     }
-
+    var fromDate by remember {
+        mutableStateOf(
+            value = selectedFilter.fromDate ?: Calendar.getInstance().apply {
+                timeInMillis = oldestTransactionTimestamp
+            }.setStartOfDayTime(),
+        )
+    }
+    var toDate by remember {
+        mutableStateOf(
+            value = selectedFilter.toDate ?: Calendar.getInstance().setEndOfDayTime(),
+        )
+    }
     val filters = listOf(
         TransactionFilterBottomSheetFilterGroupData(
             headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_expense_categories,
@@ -202,6 +227,31 @@ internal fun TransactionsFiltersBottomSheet(
                     },
                 )
             }
+            item {
+                TransactionFilterBottomSheetDateFilter(
+                    expanded = expandedItemsIndices[filters.lastIndex + 1],
+                    context = context,
+                    headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_transaction_date,
+                    onClearButtonClick = {
+                        fromDate = Calendar.getInstance().apply {
+                            timeInMillis = oldestTransactionTimestamp
+                        }
+                        toDate = Calendar.getInstance().setEndOfDayTime()
+                    },
+                    onExpandButtonClick = {
+                        expandedItemsIndices[filters.lastIndex + 1] =
+                            !expandedItemsIndices[filters.lastIndex + 1]
+                    },
+                    fromDate = fromDate,
+                    toDate = toDate,
+                    updateFromDate = {
+                        fromDate = it
+                    },
+                    updateToDate = {
+                        toDate = it
+                    },
+                )
+            }
         }
         Row(
             modifier = Modifier
@@ -239,6 +289,9 @@ internal fun TransactionsFiltersBottomSheet(
                         weight = 1F,
                     ),
                 onClick = {
+                    val isDateFilterCleared = fromDate.timeInMillis == oldestTransactionTimestamp &&
+                            toDate.timeInMillis == Calendar.getInstance()
+                        .setEndOfDayTime().timeInMillis
                     onPositiveButtonClick(
                         Filter(
                             selectedExpenseCategoryIndices = selectedExpenseCategoryIndicesValue,
@@ -246,6 +299,12 @@ internal fun TransactionsFiltersBottomSheet(
                             selectedInvestmentCategoryIndices = selectedInvestmentCategoryIndicesValue,
                             selectedSourceIndices = selectedSourceIndicesValue,
                             selectedTransactionTypeIndices = selectedTransactionTypeIndicesValue,
+                            fromDate = fromDate,
+                            toDate = if (isDateFilterCleared) {
+                                null
+                            } else {
+                                toDate
+                            },
                         )
                     )
                 },
@@ -357,6 +416,161 @@ private fun TransactionFilterBottomSheetFilterGroup(
                         vertical = 4.dp,
                     ),
             )
+        }
+    }
+}
+
+@Composable
+fun TransactionFilterBottomSheetDateFilter(
+    expanded: Boolean,
+    context: Context,
+    @StringRes headingTextStringResourceId: Int,
+    onClearButtonClick: () -> Unit,
+    onExpandButtonClick: () -> Unit,
+    fromDate: Calendar,
+    toDate: Calendar,
+    updateFromDate: (updatedFromDate: Calendar) -> Unit,
+    updateToDate: (updatedToDate: Calendar) -> Unit,
+) {
+    val chevronDegrees: Float by animateFloatAsState(
+        targetValue = if (expanded) {
+            90F
+        } else {
+            0F
+        },
+    )
+    val fromDatePickerDialog = getMyDatePickerDialog(
+        context = context,
+        calendar = fromDate,
+        onDateSetListener = { year, month, dayOfMonth ->
+            updateFromDate(
+                (fromDate.clone() as Calendar).setDate(
+                    dayOfMonth = dayOfMonth,
+                    month = month,
+                    year = year,
+                ).setStartOfDayTime()
+            )
+        },
+    )
+    val toDatePickerDialog = getMyDatePickerDialog(
+        context = context,
+        calendar = toDate,
+        onDateSetListener = { year, month, dayOfMonth ->
+            updateToDate(
+                (toDate.clone() as Calendar).setDate(
+                    dayOfMonth = dayOfMonth,
+                    month = month,
+                    year = year,
+                ).setEndOfDayTime()
+            )
+        },
+    )
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .animateContentSize(),
+    ) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth(),
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .clip(
+                        shape = CircleShape,
+                    )
+                    .clickable {
+                        onExpandButtonClick()
+                    }
+                    .weight(
+                        weight = 1F,
+                    ),
+            ) {
+                IconButton(
+                    onClick = {
+                        onExpandButtonClick()
+                    },
+                ) {
+                    Icon(
+                        imageVector = Icons.Rounded.ChevronRight,
+                        tint = MaterialTheme.colorScheme.onBackground,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .rotate(
+                                degrees = chevronDegrees,
+                            ),
+                    )
+                }
+                MyText(
+                    modifier = Modifier
+                        .weight(
+                            weight = 1F,
+                        ),
+                    textStringResourceId = headingTextStringResourceId,
+                    style = MaterialTheme.typography.headlineLarge
+                        .copy(
+                            color = MaterialTheme.colorScheme.onBackground,
+                            textAlign = TextAlign.Start,
+                        ),
+                )
+            }
+            TextButton(
+                onClick = {
+                    onClearButtonClick()
+                },
+                modifier = Modifier
+                    .padding(
+                        start = 8.dp,
+                        end = 16.dp,
+                    ),
+            ) {
+                MyText(
+                    textStringResourceId = R.string.bottom_sheet_transactions_filter_clear,
+                    style = MaterialTheme.typography.labelLarge,
+                )
+            }
+        }
+        if (expanded) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = 16.dp,
+                        vertical = 4.dp,
+                    ),
+            ) {
+                MyReadOnlyTextField(
+                    value = fromDate.formattedDate(),
+                    labelTextStringResourceId = R.string.bottom_sheet_transactions_filter_from_date,
+                    onClick = {
+                        fromDatePickerDialog.show()
+                    },
+                    modifier = Modifier
+                        .weight(
+                            weight = 1F,
+                        )
+                        .padding(
+                            horizontal = 8.dp,
+                        ),
+                )
+                MyReadOnlyTextField(
+                    value = toDate.formattedDate(),
+                    labelTextStringResourceId = R.string.bottom_sheet_transactions_filter_to_date,
+                    onClick = {
+                        toDatePickerDialog.show()
+                    },
+                    modifier = Modifier
+                        .weight(
+                            weight = 1F,
+                        )
+                        .padding(
+                            horizontal = 8.dp,
+                        ),
+                )
+            }
         }
     }
 }

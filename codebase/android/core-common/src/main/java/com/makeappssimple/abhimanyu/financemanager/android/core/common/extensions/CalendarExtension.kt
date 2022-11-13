@@ -69,6 +69,22 @@ fun Calendar.setTime(
     return this
 }
 
+fun Calendar.setStartOfDayTime(): Calendar {
+    this.hour = 0
+    this.minute = 0
+    this.second = 0
+    this.milliSecond = 0
+    return this
+}
+
+fun Calendar.setEndOfDayTime(): Calendar {
+    this.hour = 23
+    this.minute = 59
+    this.second = 59
+    this.milliSecond = 999
+    return this
+}
+
 fun Calendar.formattedDate(): String {
     return DateFormat.format("dd MMM, yyyy", this).toString()
 }

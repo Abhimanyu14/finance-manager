@@ -34,6 +34,9 @@ fun TransactionsScreen(
     val sources: List<Source> by screenViewModel.sources.collectAsStateWithLifecycle(
         initialValue = emptyList(),
     )
+    val oldestTransactionTimestamp: Long by screenViewModel.oldestTransactionTimestamp.collectAsStateWithLifecycle(
+        initialValue = 0L,
+    )
     val transactionDetailsListItemViewData: Map<String, List<TransactionData>> by screenViewModel.transactionDetailsListItemViewData.collectAsStateWithLifecycle(
         initialValue = emptyMap(),
     )
@@ -58,6 +61,7 @@ fun TransactionsScreen(
             sortOptions = screenViewModel.sortOptions,
             sources = sources,
             transactionTypes = screenViewModel.transactionTypes,
+            oldestTransactionTimestamp = oldestTransactionTimestamp,
             transactionDetailsListItemViewData = transactionDetailsListItemViewData,
             navigationManager = screenViewModel.navigationManager,
             searchText = searchText,

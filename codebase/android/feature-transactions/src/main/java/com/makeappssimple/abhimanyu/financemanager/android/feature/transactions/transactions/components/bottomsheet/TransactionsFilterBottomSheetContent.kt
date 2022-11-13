@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet
 
+import android.content.Context
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
@@ -11,6 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 
 @Composable
 internal fun TransactionsFilterBottomSheetContent(
+    context: Context,
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
     expenseCategories: List<Category>,
@@ -18,16 +20,19 @@ internal fun TransactionsFilterBottomSheetContent(
     investmentCategories: List<Category>,
     sources: List<Source>,
     transactionTypes: List<TransactionType>,
+    oldestTransactionTimestamp: Long,
     selectedFilter: Filter,
     updateSelectedFilter: (updatedSelectedFilter: Filter) -> Unit,
     resetBottomSheetType: () -> Unit,
 ) {
     TransactionsFiltersBottomSheet(
+        context = context,
         expenseCategories = expenseCategories,
         incomeCategories = incomeCategories,
         investmentCategories = investmentCategories,
         sources = sources,
         transactionTypes = transactionTypes,
+        oldestTransactionTimestamp = oldestTransactionTimestamp,
         selectedFilter = selectedFilter,
         onPositiveButtonClick = {
             updateSelectedFilter(it)

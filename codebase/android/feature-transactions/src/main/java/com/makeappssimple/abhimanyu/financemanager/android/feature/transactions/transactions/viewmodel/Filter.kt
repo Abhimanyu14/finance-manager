@@ -1,6 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel
 
 import androidx.compose.runtime.Immutable
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import java.util.Calendar
 
 @Immutable
 data class Filter(
@@ -9,12 +11,15 @@ data class Filter(
     val selectedInvestmentCategoryIndices: List<Int> = emptyList(),
     val selectedSourceIndices: List<Int> = emptyList(),
     val selectedTransactionTypeIndices: List<Int> = emptyList(),
+    val fromDate: Calendar? = null,
+    val toDate: Calendar? = null,
 ) {
     fun areFiltersSelected(): Boolean {
         return selectedExpenseCategoryIndices.isNotEmpty() ||
                 selectedIncomeCategoryIndices.isNotEmpty() ||
                 selectedInvestmentCategoryIndices.isNotEmpty() ||
                 selectedSourceIndices.isNotEmpty() ||
-                selectedTransactionTypeIndices.isNotEmpty()
+                selectedTransactionTypeIndices.isNotEmpty() ||
+                toDate.isNotNull()
     }
 }

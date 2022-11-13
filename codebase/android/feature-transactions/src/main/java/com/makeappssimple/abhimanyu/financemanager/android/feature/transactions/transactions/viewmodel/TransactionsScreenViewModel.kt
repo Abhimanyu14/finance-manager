@@ -17,6 +17,7 @@ interface TransactionsScreenViewModel : ScreenViewModel {
     val sortOptions: List<SortOption>
     val sources: Flow<List<Source>>
     val transactionTypes: List<TransactionType>
+    val oldestTransactionTimestamp: StateFlow<Long>
     val transactionDetailsListItemViewData: Flow<Map<String, List<TransactionData>>>
     val isLoading: StateFlow<Boolean>
     val selectedFilter: StateFlow<Filter>
