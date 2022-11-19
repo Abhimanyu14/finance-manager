@@ -35,7 +35,7 @@ buildscript {
         crashlyticsPluginVersion = "2.5.2"
 
         // Hilt
-        hiltVersion = "2.43.2"
+        hiltVersion = "2.44"
 
         // Hilt plugin
         hiltPluginVersion = "2.40.1"
@@ -101,16 +101,16 @@ buildscript {
         recyclerViewVersion = "1.2.1"
 
         // Jetpack compose
-        jetpackComposeVersion = "1.4.0-alpha01"
+        jetpackComposeVersion = "1.4.0-alpha02"
 
         // Jetpack compose compiler
         jetpackComposeCompilerVersion = "1.2.0-rc02"
 
         // Jetpack compose material 3
-        jetpackComposeMaterial3Version = "1.1.0-alpha01"
+        jetpackComposeMaterial3Version = "1.1.0-alpha02"
 
         // Jetpack compose material design adapter
-        jetpackComposeMaterialDesignAdapterVersion = "1.1.21"
+        jetpackComposeMaterialDesignAdapterVersion = "1.2.0"
 
         // Jetpack compose constraint layout
         jetpackComposeConstraintLayoutVersion = "1.0.0-rc01"
@@ -134,7 +134,7 @@ buildscript {
         jetpackComposePagingVersion = "1.0.0-alpha17"
 
         // Accompanist
-        accompanistVersion = "0.25.1"
+        accompanistVersion = "0.27.0"
 
         // Detekt formatting
         detektFormattingVersion = "1.20.0"
@@ -200,10 +200,10 @@ buildscript {
         retrofitMoshiConverterVersion = "2.9.0"
 
         // Coil
-        coilVersion = "2.2.0"
+        coilVersion = "2.2.2"
 
         // Room
-        roomVersion = "2.5.0-alpha03"
+        roomVersion = "2.5.0-beta02"
 
         // Glide
         glideVersion = "4.11.0"
@@ -251,7 +251,7 @@ buildscript {
         junitVersion = "4.13.2"
 
         // AndroidX JUnit extension
-        androidXJUnitExtensionVersion = "1.1.3"
+        androidXJUnitExtensionVersion = "1.1.4"
 
         // AndroidX test core
         androidXTestCoreVersion = "1.4.0"
@@ -284,13 +284,13 @@ buildscript {
         androidXCoreTestingVersion = "2.1.0"
 
         // Espresso
-        espressoVersion = "3.4.0"
+        espressoVersion = "3.5.0"
 
         // Test runner
-        testRunnerVersion = "1.4.0"
+        testRunnerVersion = "1.5.1"
 
         // Test rules
-        testRulesVersion = "1.4.0"
+        testRulesVersion = "1.5.0"
 
         // Mockito
         mockitoVersion = "2.8.9"
@@ -326,6 +326,13 @@ buildscript {
     }
 }
 
+plugins {
+    // id "com.android.application" // version "7.2.2" apply false
+    id "org.jetbrains.kotlin.android" version "1.6.21" apply false
+    id "org.jetbrains.kotlinx.kover" version "0.6.1"
+    // id "io.gitlab.arturbosch.detekt"
+}
+
 apply plugin: "io.gitlab.arturbosch.detekt"
 
 // TODO-Abhi: Jacoco
@@ -343,4 +350,21 @@ apply plugin: "io.gitlab.arturbosch.detekt"
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+koverMerged {
+    enable()
+
+    filters {
+        classes {
+            excludes.addAll(
+                    "*Fragment",
+                    "*Fragment\$*",
+                    "*Activity",
+                    "*Activity\$*",
+                    "*.databinding.*", // ViewBinding
+                    "org.jetbrains.kover_android_groovy_example.BuildConfig"
+            )
+        }
+    }
 }

@@ -5,55 +5,56 @@ plugins {
     id "dagger.hilt.android.plugin"
     id "com.google.gms.google-services"
     id "jacoco"
-    id "org.jetbrains.kotlinx.kover" version "0.5.1"
+    id "org.jetbrains.kotlinx.kover" // version "0.6.1"
     id "io.gitlab.arturbosch.detekt"
     id "com.google.devtools.ksp" version "1.6.21-1.0.6"
 }
 
 // Kover
-kover {
-    disabled = false
-    // true to disable instrumentation of all test tasks in all projects
-    coverageEngine.set(kotlinx.kover.api.CoverageEngine.INTELLIJ)
-    // change instrumentation agent and reporter
-    intellijEngineVersion.set("1.0.668")    // change version of IntelliJ agent and reporter
-    jacocoEngineVersion.set("0.8.7")        // change version of JaCoCo agent and reporter
-    generateReportOnCheck = true
-    // false to do not execute `koverMergedReport` task before `check` task
-    disabledProjects = []
-    // ["project-name"] or [":project-name"] to disable coverage for project with path `:project-name` (`:` for the root project)
-    instrumentAndroidPackage = false
-    // true to instrument packages `android.*` and `com.android.*`
-    runAllTestsForProjectTask = false
-    // true to run all tests in all projects if `koverHtmlReport`, `koverXmlReport`, `koverReport`, `koverVerify` or `check` tasks executed on some project
-}
+//kover {
+//    // true to disable instrumentation of all Kover tasks in this project
+//    isDisabled.set(false)
+//
+//    // change instrumentation agent and reporter
+//    coverageEngine.set(kotlinx.kover.api.CoverageEngine.INTELLIJ)
+//
+//    intellijEngineVersion.set("1.0.668")    // change version of IntelliJ agent and reporter
+//    jacocoEngineVersion.set("0.8.7")        // change version of JaCoCo agent and reporter
+//
+//    // false to do not execute `koverMergedReport` task before `check` task
+//    generateReportOnCheck = true
+//
+//    // ["project-name"] or [":project-name"] to disable coverage for project with path `:project-name` (`:` for the root project)
+//    disabledProjects = []
+//
+//    // true to instrument packages `android.*` and `com.android.*`
+//    instrumentAndroidPackage = false
+//
+//    // true to run all tests in all projects if `koverHtmlReport`, `koverXmlReport`, `koverReport`, `koverVerify` or `check` tasks executed on some project
+//}
 
-tasks.koverHtmlReport {
-    excludes = [
-            // Hilt
-            "*.di.*",
-            "dagger.hilt.**",
-            "hilt_aggregated_deps.*",
-            "com.makeappssimple.abhimanyu.financemanager.android.*.*_Factory",
-
-            // Room
-            // MyRoomDatabase_AutoMigration_*_Impl, *Dao_Impl
-            "com.makeappssimple.abhimanyu.financemanager.android.*.*_Impl*",
-
-            // BuildConfig
-            "com.makeappssimple.abhimanyu.financemanager.android.BuildConfig",
-
-            // Moshi - Json Adapter
-            "com.makeappssimple.abhimanyu.financemanager.android.*.*JsonAdapter",
-
-            // UI
-            "com.makeappssimple.abhimanyu.financemanager.android.ui.*"
-    ]
-}
-
-tasks.koverXmlReport {
-    excludes = ["com.makeappssimple.abhimanyu.financemanager.android.navigation.di.NavigationManagerModule"]
-}
+//tasks.koverHtmlReport {
+//    excludes = [
+//            // Hilt
+//            "*.di.*",
+//            "dagger.hilt.**",
+//            "hilt_aggregated_deps.*",
+//            "com.makeappssimple.abhimanyu.financemanager.android.*.*_Factory",
+//
+//            // Room
+//            // MyRoomDatabase_AutoMigration_*_Impl, *Dao_Impl
+//            "com.makeappssimple.abhimanyu.financemanager.android.*.*_Impl*",
+//
+//            // BuildConfig
+//            "com.makeappssimple.abhimanyu.financemanager.android.BuildConfig",
+//
+//            // Moshi - Json Adapter
+//            "com.makeappssimple.abhimanyu.financemanager.android.*.*JsonAdapter",
+//
+//            // UI
+//            "com.makeappssimple.abhimanyu.financemanager.android.ui.*"
+//    ]
+//}
 
 // TODO-Abhi: Jacoco
 // Jacoco
@@ -153,8 +154,8 @@ android {
         unitTests.all {
             if (name == "testDebugUnitTest") {
                 kover {
-                    disabled = false
-                    binaryReportFile.set(file("$buildDir/custom/debug-report.bin"))
+                    // disabled = false
+                    // binaryReportFile.set(file("$buildDir/custom/debug-report.bin"))
                     includes = [
                             "com.makeappssimple.abhimanyu.financemanager.android.*"
                     ]
@@ -202,33 +203,29 @@ android {
         // useIR = true
 
         freeCompilerArgs += [
-                "-Xopt-in=kotlin.RequiresOptIn",
+                "-opt-in=kotlin.RequiresOptIn",
+                "-opt-in=kotlin.contracts.ExperimentalContracts",
+                "-opt-in=kotlin.ExperimentalUnsignedTypes",
+                "-opt-in=kotlin.time.ExperimentalTime",
 
-                "-Xopt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-                "-Xopt-in=kotlinx.coroutines.FlowPreview",
-                "-Xopt-in=kotlinx.coroutines.InternalCoroutinesApi",
-                "-Xopt-in=kotlinx.coroutines.ObsoleteCoroutinesApi",
+                "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                "-opt-in=kotlinx.coroutines.FlowPreview",
+                "-opt-in=kotlinx.coroutines.InternalCoroutinesApi",
+                "-opt-in=kotlinx.coroutines.ObsoleteCoroutinesApi",
 
-                "-Xopt-in=androidx.lifecycle.compose.ExperimentalLifecycleComposeApi",
+                "-opt-in=androidx.lifecycle.compose.ExperimentalLifecycleComposeApi",
 
-                "-Xopt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
+                "-opt-in=androidx.compose.animation.core.InternalAnimationApi",
+                "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
+                "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+                "-opt-in=androidx.compose.runtime.ExperimentalComposeApi",
+                "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
 
-                "-Xopt-in=androidx.compose.animation.ExperimentalAnimationApi",
-                "-Xopt-in=androidx.compose.runtime.ExperimentalComposeApi",
-                "-Xopt-in=androidx.compose.ui.ExperimentalComposeUiApi",
-                "-Xopt-in=androidx.compose.animation.core.InternalAnimationApi",
-                "-Xopt-in=androidx.compose.material.ExperimentalMaterialApi",
-                "-Xopt-in=androidx.compose.material3.ExperimentalMaterial3Api",
-
-                "-Xopt-in=com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi",
-                "-Xopt-in=com.google.accompanist.pager.ExperimentalPagerApi",
-                "-Xopt-in=com.google.accompanist.permissions.ExperimentalPermissionsApi",
-
-                "-Xopt-in=kotlin.contracts.ExperimentalContracts",
-
-                "-Xopt-in=kotlin.ExperimentalUnsignedTypes",
-
-                "-Xopt-in=kotlin.time.ExperimentalTime"
+                "-opt-in=com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi",
+                "-opt-in=com.google.accompanist.pager.ExperimentalPagerApi",
+                "-opt-in=com.google.accompanist.permissions.ExperimentalPermissionsApi",
         ]
     }
 
@@ -411,4 +408,10 @@ dependencies {
 
     // Jetpack compose UI tests manifest - Needed for createComposeRule, but not createAndroidComposeRule
     debugImplementation("androidx.compose.ui:ui-test-manifest:$rootProject.jetpackComposeVersion")
+}
+
+kover {
+    instrumentation {
+        excludeTasks.add "testReleaseUnitTest"
+    }
 }
