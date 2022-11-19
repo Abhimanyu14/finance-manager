@@ -67,7 +67,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     private val updateTransactionUseCase: UpdateTransactionUseCase,
 ) : AddOrEditTransactionScreenViewModel, ViewModel() {
     // Navigation parameters
-    private var edit: Boolean? = null
+    private var isEdit: Boolean? = null
     private var originalTransactionId: Int? = null
 
     // Default data
@@ -108,6 +108,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         )
     override val transactionTypesForNewTransaction: StateFlow<List<TransactionType>> =
         _transactionTypesForNewTransaction
+
     override val sources: StateFlow<List<Source>> = getSourcesUseCase()
         .map {
             it.sortedBy { source ->
@@ -117,6 +118,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         .defaultListStateIn(
             scope = viewModelScope,
         )
+
     override val transactionForValues: StateFlow<List<TransactionFor>> =
         getAllTransactionForValuesUseCase().defaultListStateIn(
             scope = viewModelScope,
@@ -242,6 +244,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )
+
     private val _titleSuggestions: MutableStateFlow<List<String>> = MutableStateFlow(
         value = emptyList(),
     )
@@ -254,7 +257,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            // Default data
+            // Default data from data store
             launch {
                 dataStore.getDefaultSourceIdFromDataStore().collectLatest {
                     defaultSourceIdFromDataStore.value = it
@@ -318,9 +321,11 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
 
                     expenseDefaultCategory
                 }.collectLatest {
-                    updateCategory(
-                        updatedCategory = it,
-                    )
+                    if (isEdit != true) {
+                        updateCategory(
+                            updatedCategory = it,
+                        )
+                    }
                 }
             }
 
@@ -339,12 +344,14 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     }
                     defaultSource
                 }.collectLatest {
-                    updateSourceFrom(
-                        updatedSourceFrom = it,
-                    )
-                    updateSourceTo(
-                        updatedSourceTo = it,
-                    )
+                    if (isEdit != true) {
+                        updateSourceFrom(
+                            updatedSourceFrom = it,
+                        )
+                        updateSourceTo(
+                            updatedSourceTo = it,
+                        )
+                    }
                 }
             }
 
@@ -353,15 +360,22 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                 combine(
                     flow = transactionTypesForNewTransaction,
                     flow2 = uiState,
+                    flow3 = originalTransactionData,
                 ) {
                         transactionTypesForNewTransaction,
                         uiState,
+                        originalTransactionData,
                     ->
-                    if (edit == true) {
-                        uiState.selectedTransactionTypeIndex?.let {
-                            transactionTypesForNewTransaction.getOrNull(
-                                index = uiState.selectedTransactionTypeIndex,
-                            )
+
+                    if (isEdit == true) {
+                        if (originalTransactionData?.transaction?.transactionType == TransactionType.REFUND) {
+                            TransactionType.REFUND
+                        } else {
+                            uiState.selectedTransactionTypeIndex?.let {
+                                transactionTypesForNewTransaction.getOrNull(
+                                    index = uiState.selectedTransactionTypeIndex,
+                                )
+                            }
                         }
                     } else {
                         if (originalTransactionId != null) {
@@ -637,8 +651,8 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                         1
                     }
                 }
-                val originalTransactionId = if (edit == false && originalTransactionId != null ||
-                    edit == true && originalTransactionData.value?.transaction?.transactionType == TransactionType.REFUND
+                val originalTransactionId = if (isEdit == false && originalTransactionId != null ||
+                    isEdit == true && originalTransactionData.value?.transaction?.transactionType == TransactionType.REFUND
                 ) {
                     originalTransactionId
                 } else {
@@ -985,7 +999,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             originalTransactionId = it.toIntOrNull()
         }
         savedStateHandle.get<Boolean>(NavArgs.EDIT)?.let {
-            edit = it
+            isEdit = it
         }
     }
 
@@ -1004,7 +1018,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             (TransactionType.values().toSet() - excludedTransactionTypes).toList()
         _transactionTypesForNewTransaction.value = transactionTypesForNewTransaction
 
-        if (edit == false && originalTransactionId == null) {
+        if (isEdit == false && originalTransactionId == null) {
             updateSelectedTransactionTypeIndex(
                 updatedSelectedTransactionTypeIndex = transactionTypesForNewTransaction.indexOf(
                     element = TransactionType.EXPENSE,
@@ -1036,12 +1050,12 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         val transactionData = getTransactionDataUseCase(
             id = transactionId,
         )
-        if (!((edit == true && transactionData?.transaction?.transactionType == TransactionType.REFUND) || edit == false)) {
+        if (!((isEdit == true && transactionData?.transaction?.transactionType == TransactionType.REFUND) || isEdit == false)) {
             return
         }
 
         var transactionDataToRefund: TransactionData? = null
-        if (edit == true) {
+        if (isEdit == true) {
             transactionData?.transaction?.originalTransactionId?.let {
                 transactionDataToRefund = getTransactionDataUseCase(
                     id = it,
@@ -1081,7 +1095,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         transactionForValues: List<TransactionFor>,
         maxRefundAmount: Amount?,
     ) {
-        val isAddingRefund = edit == false && originalTransactionId != null
+        val isAddingRefund = isEdit == false && originalTransactionId != null
         val initialAddOrEditTransactionScreenUiState = if (isAddingRefund) {
             AddOrEditTransactionScreenUiState(
                 selectedTransactionTypeIndex = transactionTypesForNewTransaction.indexOf(
