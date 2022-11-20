@@ -1,7 +1,6 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -24,31 +23,43 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.ExpandedListItemShape
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemViewWrapper
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 
 @Composable
-internal fun TransactionsListItem(
+fun TransactionListItem(
     modifier: Modifier = Modifier,
-    isDeleteButtonEnabled: Boolean,
-    isDeleteButtonVisible: Boolean,
-    isEditButtonVisible: Boolean,
-    isRefundButtonVisible: Boolean,
-    isExpanded: Boolean,
-    emoji: String,
-    title: String,
-    amountText: String,
+    isDeleteButtonEnabled: Boolean = false,
+    isDeleteButtonVisible: Boolean = false,
+    isEditButtonVisible: Boolean = false,
+    isExpanded: Boolean = false,
+    isRefundButtonVisible: Boolean = false,
     amountColor: Color,
-    transactionForText: String,
+    amountText: String,
     dateAndTimeText: String,
-    sourceText: String,
-    onClick: () -> Unit,
-    onDeleteButtonClick: () -> Unit,
-    onEditButtonClick: () -> Unit,
-    onRefundButtonClick: () -> Unit,
+    emoji: String,
+    sourceFromName: String?,
+    sourceToName: String?,
+    title: String,
+    transactionForText: String,
+    onClick: (() -> Unit)? = null,
+    onDeleteButtonClick: () -> Unit = {},
+    onEditButtonClick: () -> Unit = {},
+    onRefundButtonClick: () -> Unit = {},
 ) {
+    val sourceText: String = if (sourceFromName != null && sourceToName != null) {
+        stringResource(
+            id = R.string.transaction_list_item_source,
+            sourceFromName,
+            sourceToName,
+        )
+    } else {
+        sourceFromName ?: sourceToName.orEmpty()
+    }
+
     MyExpandableItemViewWrapper(
         expanded = isExpanded,
         modifier = modifier,
@@ -64,9 +75,9 @@ internal fun TransactionsListItem(
                         MaterialTheme.shapes.large
                     },
                 )
-                .clickable {
-                    onClick()
-                }
+                .conditionalClickable(
+                    onClick = onClick,
+                )
                 .padding(
                     start = 16.dp,
                     end = 16.dp,
@@ -202,7 +213,7 @@ internal fun TransactionsListItem(
                                 weight = 1F,
                             ),
                         labelText = stringResource(
-                            id = R.string.list_item_transactions_edit,
+                            id = R.string.transaction_list_item_edit,
                         ),
                         enabled = true,
                         onClick = onEditButtonClick,
@@ -216,7 +227,7 @@ internal fun TransactionsListItem(
                                 weight = 1F,
                             ),
                         labelText = stringResource(
-                            id = R.string.list_item_transactions_refund,
+                            id = R.string.transaction_list_item_refund,
                         ),
                         enabled = true,
                         onClick = onRefundButtonClick,
@@ -230,7 +241,7 @@ internal fun TransactionsListItem(
                             ),
                         iconImageVector = Icons.Rounded.Delete,
                         labelText = stringResource(
-                            id = R.string.list_item_transactions_delete,
+                            id = R.string.transaction_list_item_delete,
                         ),
                         enabled = isDeleteButtonEnabled,
                         onClick = onDeleteButtonClick,

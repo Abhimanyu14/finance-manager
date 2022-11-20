@@ -20,6 +20,13 @@
     <string name="total_balance_card_title">TOTAL BALANCE</string>
     <!-- endregion -->
 
+    <!-- region transactions list item -->
+    <string name="transaction_list_item_source">%1$s -> %2$s</string>
+    <string name="transaction_list_item_edit">Edit</string>
+    <string name="transaction_list_item_refund">Refund</string>
+    <string name="transaction_list_item_delete">Delete</string>
+    <!-- endregion -->
+
     <!-- region default tag -->
     <string name="default_tag">DEFAULT</string>
     <!-- endregion -->

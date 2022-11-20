@@ -1,9 +1,5 @@
 <resources>
 
-    <!-- region home list item -->
-    <string name="list_item_home_source">%1$s -> %2$s</string>
-    <!-- endregion -->
-
     <!-- region home screen -->
     <string name="screen_home_appbar_title">Finance Manager</string>
     <string name="screen_home_recent_transactions">Recent Transactions</string>

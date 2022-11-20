@@ -59,10 +59,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.adjustmentEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MySearchBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transferEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.TransactionsListItem
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsFilterBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsSortBottomSheetContent
@@ -404,23 +404,10 @@ internal fun TransactionsScreenView(
                                     } ?: true
                                 val isEditButtonVisible =
                                     listItem.transaction.transactionType != TransactionType.ADJUSTMENT
+                                val isExpanded = "$date $index" == expandedItemKey
                                 val isRefundButtonVisible =
                                     listItem.transaction.transactionType == TransactionType.EXPENSE
-                                val isExpanded = "$date $index" == expandedItemKey
-                                val emoji = when (listItem.transaction.transactionType) {
-                                    TransactionType.TRANSFER -> {
-                                        transferEmoji
-                                    }
-
-                                    TransactionType.ADJUSTMENT -> {
-                                        adjustmentEmoji
-                                    }
-
-                                    else -> {
-                                        listItem.category?.emoji
-                                    }
-                                }.orEmpty()
-                                val title = listItem.transaction.title
+                                val amountColor = listItem.transaction.getAmountTextColor()
                                 val amountText =
                                     if (listItem.transaction.transactionType == TransactionType.INCOME ||
                                         listItem.transaction.transactionType == TransactionType.EXPENSE ||
@@ -434,38 +421,41 @@ internal fun TransactionsScreenView(
                                     } else {
                                         listItem.transaction.amount.toString()
                                     }
-                                val amountColor = listItem.transaction.getAmountTextColor()
-                                val transactionForText = listItem.transactionFor.titleToDisplay
                                 val dateAndTimeText = getReadableDateAndTimeString(
                                     timestamp = listItem.transaction.transactionTimestamp,
                                 )
-                                val sourceFrom = listItem.sourceFrom
-                                val sourceTo = listItem.sourceTo
-                                val sourceText =
-                                    if (sourceFrom != null && sourceTo != null) {
-                                        stringResource(
-                                            id = R.string.list_item_transactions_source,
-                                            sourceFrom.name,
-                                            sourceTo.name,
-                                        )
-                                    } else {
-                                        listItem.sourceFrom?.name
-                                            ?: listItem.sourceTo?.name.orEmpty()
+                                val emoji = when (listItem.transaction.transactionType) {
+                                    TransactionType.TRANSFER -> {
+                                        transferEmoji
                                     }
 
-                                TransactionsListItem(
+                                    TransactionType.ADJUSTMENT -> {
+                                        adjustmentEmoji
+                                    }
+
+                                    else -> {
+                                        listItem.category?.emoji
+                                    }
+                                }.orEmpty()
+                                val sourceFromName = listItem.sourceFrom?.name
+                                val sourceToName = listItem.sourceTo?.name
+                                val title = listItem.transaction.title
+                                val transactionForText = listItem.transactionFor.titleToDisplay
+
+                                TransactionListItem(
                                     isDeleteButtonEnabled = isDeleteButtonEnabled,
                                     isDeleteButtonVisible = true,
                                     isEditButtonVisible = isEditButtonVisible,
-                                    isRefundButtonVisible = isRefundButtonVisible,
                                     isExpanded = isExpanded,
-                                    emoji = emoji,
-                                    title = title,
-                                    amountText = amountText,
+                                    isRefundButtonVisible = isRefundButtonVisible,
                                     amountColor = amountColor,
-                                    transactionForText = transactionForText,
+                                    amountText = amountText,
                                     dateAndTimeText = dateAndTimeText,
-                                    sourceText = sourceText,
+                                    emoji = emoji,
+                                    sourceFromName = sourceFromName,
+                                    sourceToName = sourceToName,
+                                    title = title,
+                                    transactionForText = transactionForText,
                                     onClick = {
                                         expandedItemKey = if ("$date $index" == expandedItemKey) {
                                             ""
@@ -489,13 +479,14 @@ internal fun TransactionsScreenView(
                                         )
                                         expandedItemKey = ""
                                     },
-                                ) {
-                                    navigateToAddTransactionScreen(
-                                        navigationManager = data.navigationManager,
-                                        transactionId = listItem.transaction.id,
-                                    )
-                                    expandedItemKey = ""
-                                }
+                                    onRefundButtonClick = {
+                                        navigateToAddTransactionScreen(
+                                            navigationManager = data.navigationManager,
+                                            transactionId = listItem.transaction.id,
+                                        )
+                                        expandedItemKey = ""
+                                    },
+                                )
                             }
                         }
                     }
