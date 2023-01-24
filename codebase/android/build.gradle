@@ -83,7 +83,7 @@ buildscript {
         lifecycleExtensionsVersion = "2.2.0"
 
         // Lifecycle runtime
-        lifecycleRuntimeVersion = "2.6.0-alpha03"
+        lifecycleRuntimeVersion = "2.6.0-alpha04"
 
         // Kotlin coroutines
         kotlinCoroutinesVersion = "1.5.1"
@@ -101,16 +101,16 @@ buildscript {
         recyclerViewVersion = "1.2.1"
 
         // Jetpack compose
-        jetpackComposeVersion = "1.4.0-alpha02"
+        jetpackComposeVersion = "1.4.0-alpha04"
 
         // Jetpack compose compiler
         jetpackComposeCompilerVersion = "1.2.0-rc02"
 
         // Jetpack compose material 3
-        jetpackComposeMaterial3Version = "1.1.0-alpha02"
+        jetpackComposeMaterial3Version = "1.1.0-alpha04"
 
         // Jetpack compose material design adapter
-        jetpackComposeMaterialDesignAdapterVersion = "1.2.0"
+        jetpackComposeMaterialDesignAdapterVersion = "1.2.1"
 
         // Jetpack compose constraint layout
         jetpackComposeConstraintLayoutVersion = "1.0.0-rc01"
@@ -119,10 +119,10 @@ buildscript {
         jetpackComposeActivityIntegrationVersion = "1.6.1"
 
         // Jetpack compose integration with view models
-        jetpackComposeViewModelIntegrationVersion = "2.6.0-alpha02"
+        jetpackComposeViewModelIntegrationVersion = "2.6.0-alpha04"
 
         // Jetpack compose lifecycle runtime
-        jetpackComposeLifecycleRuntimeVersion = "2.6.0-alpha03"
+        jetpackComposeLifecycleRuntimeVersion = "2.6.0-alpha04"
 
         // Jetpack compose navigation
         jetpackComposeNavigationVersion = "2.5.3"
@@ -146,7 +146,7 @@ buildscript {
         datastorePreferencesVersion = "1.0.0"
 
         // Room
-        roomVersion = "2.5.0-beta01"
+        roomVersion = "2.5.0"
 
         // Camera X
         cameraXVersion = "1.1.0-alpha10"
@@ -251,7 +251,7 @@ buildscript {
         junitVersion = "4.13.2"
 
         // AndroidX JUnit extension
-        androidXJUnitExtensionVersion = "1.1.4"
+        androidXJUnitExtensionVersion = "1.1.5"
 
         // AndroidX test core
         androidXTestCoreVersion = "1.4.0"
@@ -284,10 +284,10 @@ buildscript {
         androidXCoreTestingVersion = "2.1.0"
 
         // Espresso
-        espressoVersion = "3.5.0"
+        espressoVersion = "3.5.1"
 
         // Test runner
-        testRunnerVersion = "1.5.1"
+        testRunnerVersion = "1.5.2"
 
         // Test rules
         testRulesVersion = "1.5.0"

@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.loadingCompletedEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.logError
@@ -16,7 +15,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ad
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.viewmodel.AddOrEditCategoryScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.viewmodel.AddOrEditCategoryScreenViewModelImpl
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun AddCategoryScreen(
     screenViewModel: AddOrEditCategoryScreenViewModel = hiltViewModel<AddOrEditCategoryScreenViewModelImpl>(),
