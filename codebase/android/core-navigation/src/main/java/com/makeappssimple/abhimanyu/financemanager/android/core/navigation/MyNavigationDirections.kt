@@ -142,4 +142,14 @@ object MyNavigationDirections {
             override val screen = Screen.Transactions.route
         }
     }
+
+    fun viewTransaction(
+        transactionId: Int,
+    ): NavigationCommand {
+        return object : NavigationCommand {
+            override val command = Command.NAVIGATE
+            override val destination = "${Screen.ViewTransaction.route}/${transactionId}"
+            override val screen = Screen.ViewTransaction.route
+        }
+    }
 }

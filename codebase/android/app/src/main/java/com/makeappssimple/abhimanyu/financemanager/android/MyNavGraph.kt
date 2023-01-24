@@ -31,6 +31,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sourc
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.AddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.EditTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen.TransactionsScreen
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.screen.ViewTransactionScreen
 
 @Composable
 internal fun MyNavGraph(
@@ -260,6 +261,17 @@ internal fun MyNavGraph(
             ),
         ) {
             TransactionsScreen()
+        }
+
+        composable(
+            route = "${Screen.ViewTransaction.route}/{${TRANSACTION_ID}}",
+            arguments = listOf(
+                navArgument(TRANSACTION_ID) {
+                    nullable = true
+                },
+            ),
+        ) {
+            ViewTransactionScreen()
         }
     }
 }

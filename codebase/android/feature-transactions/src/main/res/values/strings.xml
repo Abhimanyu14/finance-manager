@@ -45,6 +45,10 @@
     <string name="screen_transactions_bottom_sheet_delete_negative_button_text">Cancel</string>
     <!-- endregion -->
 
+    <!-- region view transaction screen -->
+    <string name="screen_view_transaction_appbar_title">Transaction Details</string>
+    <!-- endregion -->
+
     <!-- region transactions filter bottom sheet -->
     <string name="bottom_sheet_transactions_filter_clear">Clear</string>
     <string name="bottom_sheet_transactions_filter_reset">Reset</string>

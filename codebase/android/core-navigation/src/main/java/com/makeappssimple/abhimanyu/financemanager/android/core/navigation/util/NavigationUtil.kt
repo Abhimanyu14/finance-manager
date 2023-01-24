@@ -119,3 +119,14 @@ fun navigateToTransactionsScreen(
         navigationCommand = MyNavigationDirections.transactions()
     )
 }
+
+fun navigateToViewTransactionScreen(
+    navigationManager: NavigationManager,
+    transactionId: Int,
+) {
+    navigationManager.navigate(
+        navigationCommand = MyNavigationDirections.viewTransaction(
+            transactionId = transactionId,
+        )
+    )
+}

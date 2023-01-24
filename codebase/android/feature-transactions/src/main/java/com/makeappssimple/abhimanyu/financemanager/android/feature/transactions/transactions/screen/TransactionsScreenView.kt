@@ -51,6 +51,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToAddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToEditTransactionScreen
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToViewTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
@@ -63,7 +64,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.tr
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transferEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsDeleteConfirmationBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.common.TransactionDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsFilterBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsSortBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.Filter
@@ -105,11 +106,6 @@ internal fun TransactionsScreenView(
     var transactionsBottomSheetType by remember {
         mutableStateOf(
             value = TransactionsBottomSheetType.NONE,
-        )
-    }
-    var expandedItemKey by remember {
-        mutableStateOf(
-            value = "",
         )
     }
     var transactionIdToDelete: Int? by remember {
@@ -192,7 +188,7 @@ internal fun TransactionsScreenView(
                 }
 
                 TransactionsBottomSheetType.DELETE_CONFIRMATION -> {
-                    TransactionsDeleteConfirmationBottomSheetContent(
+                    TransactionDeleteConfirmationBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
                         transactionIdToDelete = transactionIdToDelete,
@@ -201,9 +197,6 @@ internal fun TransactionsScreenView(
                         },
                         resetTransactionIdToDelete = {
                             transactionIdToDelete = null
-                        },
-                        resetExpandedItemKey = {
-                            expandedItemKey = ""
                         },
                         deleteTransaction = {
                             transactionIdToDelete?.let { transactionIdToDeleteValue ->
@@ -397,14 +390,13 @@ internal fun TransactionsScreenView(
                                 key = { _, listItem ->
                                     listItem.hashCode()
                                 },
-                            ) { index, listItem ->
+                            ) { _, listItem ->
                                 val isDeleteButtonEnabled =
                                     listItem.transaction.refundTransactionIds?.run {
                                         this.isEmpty()
                                     } ?: true
                                 val isEditButtonVisible =
                                     listItem.transaction.transactionType != TransactionType.ADJUSTMENT
-                                val isExpanded = "$date $index" == expandedItemKey
                                 val isRefundButtonVisible =
                                     listItem.transaction.transactionType == TransactionType.EXPENSE
                                 val amountColor = listItem.transaction.getAmountTextColor()
@@ -446,7 +438,7 @@ internal fun TransactionsScreenView(
                                     isDeleteButtonEnabled = isDeleteButtonEnabled,
                                     isDeleteButtonVisible = true,
                                     isEditButtonVisible = isEditButtonVisible,
-                                    isExpanded = isExpanded,
+                                    isExpanded = false,
                                     isRefundButtonVisible = isRefundButtonVisible,
                                     amountColor = amountColor,
                                     amountText = amountText,
@@ -457,11 +449,10 @@ internal fun TransactionsScreenView(
                                     title = title,
                                     transactionForText = transactionForText,
                                     onClick = {
-                                        expandedItemKey = if ("$date $index" == expandedItemKey) {
-                                            ""
-                                        } else {
-                                            "$date $index"
-                                        }
+                                        navigateToViewTransactionScreen(
+                                            navigationManager = data.navigationManager,
+                                            transactionId = listItem.transaction.id,
+                                        )
                                     },
                                     onDeleteButtonClick = {
                                         transactionIdToDelete = listItem.transaction.id
@@ -477,14 +468,12 @@ internal fun TransactionsScreenView(
                                             navigationManager = data.navigationManager,
                                             transactionId = listItem.transaction.id,
                                         )
-                                        expandedItemKey = ""
                                     },
                                     onRefundButtonClick = {
                                         navigateToAddTransactionScreen(
                                             navigationManager = data.navigationManager,
                                             transactionId = listItem.transaction.id,
                                         )
-                                        expandedItemKey = ""
                                     },
                                 )
                             }

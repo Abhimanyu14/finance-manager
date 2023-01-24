@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet
+package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.common
 
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -9,13 +9,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import kotlinx.coroutines.CoroutineScope
 
 @Composable
-internal fun TransactionsDeleteConfirmationBottomSheetContent(
+internal fun TransactionDeleteConfirmationBottomSheetContent(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
     transactionIdToDelete: Int?,
     resetBottomSheetType: () -> Unit,
     resetTransactionIdToDelete: () -> Unit,
-    resetExpandedItemKey: () -> Unit,
     deleteTransaction: () -> Unit,
 ) {
     MyConfirmationBottomSheet(
@@ -39,7 +38,6 @@ internal fun TransactionsDeleteConfirmationBottomSheetContent(
                 transactionIdToDelete?.let {
                     deleteTransaction()
                     resetTransactionIdToDelete()
-                    resetExpandedItemKey()
                 }
                 resetBottomSheetType()
             }
