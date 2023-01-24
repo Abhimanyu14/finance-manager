@@ -12,15 +12,14 @@ fun toggleModalBottomSheetState(
     action: (() -> Unit)? = null,
 ) {
     coroutineScope.launch {
-        // TODO-Abhi: Check if this is required anymore
-        // if (!modalBottomSheetState.isAnimationRunning) {
-        if (modalBottomSheetState.isVisible) {
-            modalBottomSheetState.hide()
-        } else {
-            modalBottomSheetState.show()
+        if (modalBottomSheetState.currentValue == modalBottomSheetState.targetValue) {
+            if (modalBottomSheetState.isVisible) {
+                modalBottomSheetState.hide()
+            } else {
+                modalBottomSheetState.show()
+            }
+            action?.invoke()
         }
-        // }
-        action?.invoke()
     }
 }
 
