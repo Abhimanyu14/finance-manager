@@ -272,6 +272,10 @@ internal fun TransactionsFiltersBottomSheet(
                     selectedInvestmentCategoryIndicesValue.clear()
                     selectedSourceIndicesValue.clear()
                     selectedTransactionTypeIndicesValue.clear()
+                    fromDate = Calendar.getInstance().apply {
+                        timeInMillis = oldestTransactionTimestamp
+                    }.setStartOfDayTime()
+                    toDate = Calendar.getInstance().setEndOfDayTime()
                     onNegativeButtonClick()
                 },
             ) {
@@ -289,9 +293,14 @@ internal fun TransactionsFiltersBottomSheet(
                         weight = 1F,
                     ),
                 onClick = {
-                    val isDateFilterCleared = fromDate.timeInMillis == oldestTransactionTimestamp &&
-                            toDate.timeInMillis == Calendar.getInstance()
-                        .setEndOfDayTime().timeInMillis
+                    val isFromDateSameAsOldestTransactionDate = fromDate.timeInMillis == Calendar
+                        .getInstance().apply {
+                            timeInMillis = oldestTransactionTimestamp
+                        }.setStartOfDayTime().timeInMillis
+                    val isToDateSameAsCurrentDayDate = toDate.timeInMillis == Calendar
+                        .getInstance().setEndOfDayTime().timeInMillis
+                    val isDateFilterCleared = isFromDateSameAsOldestTransactionDate &&
+                            isToDateSameAsCurrentDayDate
                     onPositiveButtonClick(
                         Filter(
                             selectedExpenseCategoryIndices = selectedExpenseCategoryIndicesValue,
