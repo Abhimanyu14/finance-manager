@@ -113,16 +113,18 @@ internal fun TransactionsFiltersBottomSheet(
             elements = selectedFilter.selectedTransactionTypeIndices.toTypedArray(),
         )
     }
+    val minDate = Calendar.getInstance().apply {
+        timeInMillis = oldestTransactionTimestamp
+    }.setStartOfDayTime()
+    val maxDate = Calendar.getInstance().setEndOfDayTime()
     var fromDate by remember {
         mutableStateOf(
-            value = selectedFilter.fromDate ?: Calendar.getInstance().apply {
-                timeInMillis = oldestTransactionTimestamp
-            }.setStartOfDayTime(),
+            value = selectedFilter.fromDate ?: minDate,
         )
     }
     var toDate by remember {
         mutableStateOf(
-            value = selectedFilter.toDate ?: Calendar.getInstance().setEndOfDayTime(),
+            value = selectedFilter.toDate ?: maxDate,
         )
     }
     val filters = listOf(
@@ -233,15 +235,15 @@ internal fun TransactionsFiltersBottomSheet(
                     context = context,
                     headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_transaction_date,
                     onClearButtonClick = {
-                        fromDate = Calendar.getInstance().apply {
-                            timeInMillis = oldestTransactionTimestamp
-                        }
-                        toDate = Calendar.getInstance().setEndOfDayTime()
+                        fromDate = minDate
+                        toDate = maxDate
                     },
                     onExpandButtonClick = {
                         expandedItemsIndices[filters.lastIndex + 1] =
                             !expandedItemsIndices[filters.lastIndex + 1]
                     },
+                    minDateTimestamp = minDate.timeInMillis,
+                    maxDateTimestamp = maxDate.timeInMillis,
                     fromDate = fromDate,
                     toDate = toDate,
                     updateFromDate = {
@@ -272,10 +274,8 @@ internal fun TransactionsFiltersBottomSheet(
                     selectedInvestmentCategoryIndicesValue.clear()
                     selectedSourceIndicesValue.clear()
                     selectedTransactionTypeIndicesValue.clear()
-                    fromDate = Calendar.getInstance().apply {
-                        timeInMillis = oldestTransactionTimestamp
-                    }.setStartOfDayTime()
-                    toDate = Calendar.getInstance().setEndOfDayTime()
+                    fromDate = minDate
+                    toDate = maxDate
                     onNegativeButtonClick()
                 },
             ) {
@@ -293,12 +293,9 @@ internal fun TransactionsFiltersBottomSheet(
                         weight = 1F,
                     ),
                 onClick = {
-                    val isFromDateSameAsOldestTransactionDate = fromDate.timeInMillis == Calendar
-                        .getInstance().apply {
-                            timeInMillis = oldestTransactionTimestamp
-                        }.setStartOfDayTime().timeInMillis
-                    val isToDateSameAsCurrentDayDate = toDate.timeInMillis == Calendar
-                        .getInstance().setEndOfDayTime().timeInMillis
+                    val isFromDateSameAsOldestTransactionDate =
+                        fromDate.timeInMillis == minDate.timeInMillis
+                    val isToDateSameAsCurrentDayDate = toDate.timeInMillis == maxDate.timeInMillis
                     val isDateFilterCleared = isFromDateSameAsOldestTransactionDate &&
                             isToDateSameAsCurrentDayDate
                     onPositiveButtonClick(
@@ -436,6 +433,8 @@ fun TransactionFilterBottomSheetDateFilter(
     @StringRes headingTextStringResourceId: Int,
     onClearButtonClick: () -> Unit,
     onExpandButtonClick: () -> Unit,
+    minDateTimestamp: Long,
+    maxDateTimestamp: Long,
     fromDate: Calendar,
     toDate: Calendar,
     updateFromDate: (updatedFromDate: Calendar) -> Unit,
@@ -451,6 +450,8 @@ fun TransactionFilterBottomSheetDateFilter(
     val fromDatePickerDialog = getMyDatePickerDialog(
         context = context,
         calendar = fromDate,
+        minDateTimestamp = minDateTimestamp,
+        maxDateTimestamp = toDate.timeInMillis,
         onDateSetListener = { year, month, dayOfMonth ->
             updateFromDate(
                 (fromDate.clone() as Calendar).setDate(
@@ -464,6 +465,8 @@ fun TransactionFilterBottomSheetDateFilter(
     val toDatePickerDialog = getMyDatePickerDialog(
         context = context,
         calendar = toDate,
+        minDateTimestamp = fromDate.timeInMillis,
+        maxDateTimestamp = maxDateTimestamp,
         onDateSetListener = { year, month, dayOfMonth ->
             updateToDate(
                 (toDate.clone() as Calendar).setDate(
