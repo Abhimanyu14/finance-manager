@@ -182,7 +182,7 @@ buildscript {
         hiltCompilerVersion = "1.0.0"
 
         // KSP
-        kspVersion = "1.7.10-1.0.6"
+        kspVersion = "1.7.20-1.0.6"
 
         // JDK desugaring
         jdkDesugaringVersion = "1.1.5"
