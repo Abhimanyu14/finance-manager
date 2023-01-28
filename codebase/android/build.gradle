@@ -35,10 +35,10 @@ buildscript {
         crashlyticsPluginVersion = "2.5.2"
 
         // Hilt
-        hiltVersion = "2.44"
+        hiltVersion = "2.44.2"
 
         // Hilt plugin
-        hiltPluginVersion = "2.40.1"
+        hiltPluginVersion = "2.44.2"
 
         // Open source software licenses plugin
         ossPluginVersion = "0.10.4"
