@@ -14,8 +14,4 @@ interface HomeScreenViewModel : ScreenViewModel {
     fun backupDataToDocument(
         uri: Uri,
     )
-
-    fun deleteTransaction(
-        id: Int,
-    )
 }
