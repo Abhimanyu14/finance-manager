@@ -102,7 +102,7 @@ fun MyHorizontalScrollingRadioGroup(
 }
 
 @Composable
-fun MyHorizontalScrollingSuggestionGroup(
+fun MyHorizontalScrollingSelectionGroup(
     modifier: Modifier = Modifier,
     items: List<ChipItem>,
     onSelectionChange: (index: Int) -> Unit,

@@ -54,8 +54,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.getMyT
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ChipItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyHorizontalScrollingRadioGroup
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyHorizontalScrollingSuggestionGroup
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyRadioGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyHorizontalScrollingSelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.select_category.SelectCategoryBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.select_source.SelectSourceBottomSheetContent
@@ -393,7 +392,7 @@ internal fun AddOrEditTransactionScreenView(
                     AnimatedVisibility(
                         visible = data.uiVisibilityState.isTitleSuggestionsVisible,
                     ) {
-                        MyHorizontalScrollingSuggestionGroup(
+                        MyHorizontalScrollingSelectionGroup(
                             items = data.titleSuggestions
                                 .map { title ->
                                     ChipItem(
@@ -414,7 +413,7 @@ internal fun AddOrEditTransactionScreenView(
                     AnimatedVisibility(
                         visible = data.uiVisibilityState.isTransactionForRadioGroupVisible,
                     ) {
-                        MyRadioGroup(
+                        MyHorizontalScrollingRadioGroup(
                             items = data.transactionForValues
                                 .map { transactionFor ->
                                     ChipItem(

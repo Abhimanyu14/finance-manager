@@ -38,7 +38,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.Em
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyDefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyHorizontalScrollingRadioGroup
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyHorizontalScrollingSuggestionGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyHorizontalScrollingSelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyNavigationBackButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MySelectionGroup
@@ -296,7 +296,7 @@ private fun LazyListScope.componentsTabContent(
                 text = "Item 6",
             ),
         )
-        MyHorizontalScrollingSuggestionGroup(
+        MyHorizontalScrollingSelectionGroup(
             items = items,
             onSelectionChange = {
                 Toast.makeText(
