@@ -22,4 +22,5 @@ include ":feature-categories"
 include ":feature-home"
 include ":feature-settings"
 include ":feature-sources"
+include ':feature-transactionfor'
 include ":feature-transactions"
