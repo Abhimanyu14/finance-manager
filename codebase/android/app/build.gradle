@@ -266,6 +266,7 @@ dependencies {
     implementation project(":feature-home")
     implementation project(":feature-settings")
     implementation project(":feature-sources")
+    implementation project(":feature-transactionfor")
     implementation project(":feature-transactions")
 
     testImplementation project(":core-testing")

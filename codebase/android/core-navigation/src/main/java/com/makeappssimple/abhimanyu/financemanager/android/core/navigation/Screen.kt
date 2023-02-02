@@ -54,4 +54,8 @@ sealed class Screen(
     object ViewTransaction : Screen(
         route = "view_transaction",
     )
+
+    object ViewTransactionFor : Screen(
+        route = "view_transaction_for",
+    )
 }

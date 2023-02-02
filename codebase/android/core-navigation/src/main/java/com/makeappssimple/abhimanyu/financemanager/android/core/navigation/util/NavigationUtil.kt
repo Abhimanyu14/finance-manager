@@ -130,3 +130,12 @@ fun navigateToViewTransactionScreen(
         )
     )
 }
+
+
+fun navigateToViewTransactionForScreen(
+    navigationManager: NavigationManager,
+) {
+    navigationManager.navigate(
+        navigationCommand = MyNavigationDirections.viewTransactionFor()
+    )
+}

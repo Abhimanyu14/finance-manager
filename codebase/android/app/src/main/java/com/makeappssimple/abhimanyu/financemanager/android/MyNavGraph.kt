@@ -28,6 +28,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.scre
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_source.AddSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.edit_source.EditSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.screen.SourcesScreen
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.view_transaction_for.screen.ViewTransactionForScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.AddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.EditTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen.TransactionsScreen
@@ -272,6 +273,20 @@ internal fun MyNavGraph(
             ),
         ) {
             ViewTransactionScreen()
+        }
+
+        composable(
+            route = Screen.ViewTransactionFor.route,
+            deepLinks = listOf(
+                navDeepLink {
+                    uriPattern = "$DEEPLINK_BROWSER_BASE_URL/${Screen.ViewTransactionFor.route}"
+                },
+                navDeepLink {
+                    uriPattern = "$DEEPLINK_BASE_URL/${Screen.ViewTransactionFor.route}"
+                },
+            ),
+        ) {
+            ViewTransactionForScreen()
         }
     }
 }

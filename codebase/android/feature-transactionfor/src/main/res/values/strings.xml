@@ -1,0 +1,7 @@
+<resources>
+
+    <!-- region view transaction screen -->
+    <string name="screen_view_transaction_for_appbar_title">Transaction For</string>
+    <!-- endregion -->
+
+</resources>

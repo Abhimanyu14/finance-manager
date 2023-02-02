@@ -38,6 +38,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToViewTransactionForScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
@@ -222,7 +223,6 @@ internal fun SettingsScreenView(
                                     },
                                 ),
                         )
-                        // TODO-Abhi: Enable after completing transaction for screens
                         ListItem(
                             icon = {
                                 Icon(
@@ -246,7 +246,9 @@ internal fun SettingsScreenView(
                                 .clickable(
                                     enabled = !data.isLoading,
                                     onClick = {
-                                        // TODO-Abhi: Add Navigation to transaction for screens
+                                        navigateToViewTransactionForScreen(
+                                            navigationManager = data.navigationManager,
+                                        )
                                     },
                                 ),
                         )
