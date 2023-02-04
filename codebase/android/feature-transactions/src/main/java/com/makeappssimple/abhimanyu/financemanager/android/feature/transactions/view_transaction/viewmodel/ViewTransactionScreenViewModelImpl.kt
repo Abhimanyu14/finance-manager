@@ -16,13 +16,13 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-internal class ViewTransactionViewModelImpl @Inject constructor(
+internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     savedStateHandle: SavedStateHandle,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
     private val deleteTransactionAndRevertOtherDataUseCase: DeleteTransactionAndRevertOtherDataUseCase,
     private val getTransactionDataUseCase: GetTransactionDataUseCase,
-) : ViewTransactionViewModel, ViewModel() {
+) : ViewTransactionScreenViewModel, ViewModel() {
     private var transactionId: Int? = null
 
     // Transaction data
@@ -48,6 +48,10 @@ internal class ViewTransactionViewModelImpl @Inject constructor(
             savedStateHandle = savedStateHandle,
         )
         updateTransactionData()
+    }
+
+    override fun trackScreen() {
+        // TODO-Abhi: Add screen tracking code
     }
 
     private fun getNavigationArguments(

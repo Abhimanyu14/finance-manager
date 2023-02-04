@@ -42,6 +42,10 @@ interface TransactionRepository {
         sourceId: Int,
     ): Boolean
 
+    suspend fun checkIfTransactionForIsUsedInTransactions(
+        transactionForId: Int,
+    ): Boolean
+
     suspend fun getTransaction(
         id: Int,
     ): Transaction?

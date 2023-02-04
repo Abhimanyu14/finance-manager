@@ -13,14 +13,18 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 
 @HiltViewModel
-internal class ViewTransactionForViewModelImpl @Inject constructor(
+internal class ViewTransactionForScreenViewModelImpl @Inject constructor(
     getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     savedStateHandle: SavedStateHandle,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
-) : ViewTransactionForViewModel, ViewModel() {
+) : ViewTransactionForScreenViewModel, ViewModel() {
     override val transactionForValues: StateFlow<List<TransactionFor>> =
         getAllTransactionForValuesUseCase().defaultListStateIn(
             scope = viewModelScope,
         )
+
+    override fun trackScreen() {
+        // TODO-Abhi: Add screen tracking code
+    }
 }

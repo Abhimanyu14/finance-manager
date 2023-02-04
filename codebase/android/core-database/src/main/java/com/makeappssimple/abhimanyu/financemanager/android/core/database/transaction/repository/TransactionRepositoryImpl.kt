@@ -91,6 +91,14 @@ class TransactionRepositoryImpl(
         )
     }
 
+    override suspend fun checkIfTransactionForIsUsedInTransactions(
+        transactionForId: Int,
+    ): Boolean {
+        return transactionDao.checkIfTransactionForIsUsedInTransactions(
+            transactionForId = transactionForId,
+        )
+    }
+
     override suspend fun getTransaction(
         id: Int,
     ): Transaction? {

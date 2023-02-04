@@ -2,9 +2,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import kotlinx.coroutines.flow.StateFlow
 
-interface ViewTransactionForViewModel {
+interface ViewTransactionForScreenViewModel : ScreenViewModel {
     val navigationManager: NavigationManager
     val transactionForValues: StateFlow<List<TransactionFor>>
 }

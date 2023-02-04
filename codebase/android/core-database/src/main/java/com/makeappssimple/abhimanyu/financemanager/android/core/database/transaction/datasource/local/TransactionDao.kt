@@ -99,6 +99,14 @@ interface TransactionDao {
     ): Boolean
 
     @Query(
+        value = "SELECT EXISTS(SELECT * FROM transaction_table " +
+                "WHERE transaction_for_id = :transactionForId)"
+    )
+    suspend fun checkIfTransactionForIsUsedInTransactions(
+        transactionForId: Int,
+    ): Boolean
+
+    @Query(
         value = "SELECT * FROM transaction_table " +
                 "WHERE id = :id"
     )

@@ -7,12 +7,12 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.logError
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.view_transaction_for.viewmodel.ViewTransactionForViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.view_transaction_for.viewmodel.ViewTransactionForViewModelImpl
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.view_transaction_for.viewmodel.ViewTransactionForScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.view_transaction_for.viewmodel.ViewTransactionForScreenViewModelImpl
 
 @Composable
 fun ViewTransactionForScreen(
-    screenViewModel: ViewTransactionForViewModel = hiltViewModel<ViewTransactionForViewModelImpl>(),
+    screenViewModel: ViewTransactionForScreenViewModel = hiltViewModel<ViewTransactionForScreenViewModelImpl>(),
 ) {
     logError(
         message = "Inside ViewTransactionForScreen",
