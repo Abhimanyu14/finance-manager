@@ -6,6 +6,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.repository.TransactionForRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.InsertTransactionForValuesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.InsertTransactionForValuesUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,6 +39,17 @@ class TransactionForModule {
         transactionForRepository: TransactionForRepository,
     ): GetAllTransactionForValuesUseCase {
         return GetAllTransactionForValuesUseCaseImpl(
+            transactionForRepository = transactionForRepository,
+        )
+    }
+
+    @Provides
+    fun providesInsertTransactionForValuesUseCase(
+        dataStore: MyDataStore,
+        transactionForRepository: TransactionForRepository,
+    ): InsertTransactionForValuesUseCase {
+        return InsertTransactionForValuesUseCaseImpl(
+            dataStore = dataStore,
             transactionForRepository = transactionForRepository,
         )
     }

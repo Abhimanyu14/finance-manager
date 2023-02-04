@@ -44,6 +44,14 @@ fun navigateToAddSourceScreen(
     )
 }
 
+fun navigateToAddTransactionForScreen(
+    navigationManager: NavigationManager,
+) {
+    navigationManager.navigate(
+        navigationCommand = MyNavigationDirections.addTransactionFor()
+    )
+}
+
 fun navigateToAddTransactionScreen(
     navigationManager: NavigationManager,
     transactionId: Int? = null,

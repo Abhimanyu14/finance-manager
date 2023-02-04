@@ -73,6 +73,14 @@ object MyNavigationDirections {
         }
     }
 
+    fun addTransactionFor(): NavigationCommand {
+        return object : NavigationCommand {
+            override val command = Command.NAVIGATE
+            override val destination = Screen.AddTransactionFor.route
+            override val screen = Screen.AddTransactionFor.route
+        }
+    }
+
     fun categories(): NavigationCommand {
         return object : NavigationCommand {
             override val command = Command.NAVIGATE

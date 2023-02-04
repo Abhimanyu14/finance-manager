@@ -5,8 +5,16 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import kotlinx.coroutines.flow.Flow
 
 class TransactionForRepositoryImpl(
-    transactionForDao: TransactionForDao,
+    private val transactionForDao: TransactionForDao,
 ) : TransactionForRepository {
     override val transactionForValues: Flow<List<TransactionFor>> =
         transactionForDao.getTransactionForValues()
+
+    override suspend fun insertTransactionForValues(
+        vararg transactionForValues: TransactionFor,
+    ) {
+        transactionForDao.insertTransactionForValues(
+            transactionForValues = transactionForValues,
+        )
+    }
 }

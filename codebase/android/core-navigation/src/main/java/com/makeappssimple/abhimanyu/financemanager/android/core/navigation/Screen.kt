@@ -19,6 +19,10 @@ sealed class Screen(
         route = "add_transaction",
     )
 
+    object AddTransactionFor : Screen(
+        route = "add_transaction_for",
+    )
+
     object Categories : Screen(
         route = "categories",
     )

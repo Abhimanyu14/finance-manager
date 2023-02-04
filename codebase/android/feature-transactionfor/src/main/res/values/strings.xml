@@ -1,7 +1,25 @@
 <resources>
 
+    <!-- region add or edit source screen -->
+    <string name="screen_add_or_edit_transaction_for_name">Name</string>
+    <string name="screen_add_or_edit_transaction_for_clear_name">Clear Name</string>
+    <!-- endregion -->
+
+    <!-- region add transaction for screen -->
+    <string name="screen_add_transaction_for_appbar_title">Enter Transaction For Details</string>
+    <string name="screen_add_transaction_for_floating_action_button_content_description">SAVE</string>
+    <!-- endregion -->
+
+    <!-- region edit transaction for screen -->
+    <string name="screen_edit_transaction_for_appbar_title">Edit Transaction For</string>
+    <string name="screen_edit_transaction_for_floating_action_button_content_description">UPDATE</string>
+    <!-- endregion -->
+
     <!-- region view transaction screen -->
     <string name="screen_view_transaction_for_appbar_title">Transaction For</string>
+    <string name="screen_view_transaction_for_floating_action_button_content_description">
+        Add Transaction For
+    </string>
     <!-- endregion -->
 
 </resources>
