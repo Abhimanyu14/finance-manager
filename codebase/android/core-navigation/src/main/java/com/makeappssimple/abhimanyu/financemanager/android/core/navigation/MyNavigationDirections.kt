@@ -143,6 +143,14 @@ object MyNavigationDirections {
         }
     }
 
+    fun transactionForValues(): NavigationCommand {
+        return object : NavigationCommand {
+            override val command = Command.NAVIGATE
+            override val destination = Screen.TransactionForValues.route
+            override val screen = Screen.TransactionForValues.route
+        }
+    }
+
     fun transactions(): NavigationCommand {
         return object : NavigationCommand {
             override val command = Command.NAVIGATE
@@ -158,14 +166,6 @@ object MyNavigationDirections {
             override val command = Command.NAVIGATE
             override val destination = "${Screen.ViewTransaction.route}/${transactionId}"
             override val screen = Screen.ViewTransaction.route
-        }
-    }
-
-    fun viewTransactionFor(): NavigationCommand {
-        return object : NavigationCommand {
-            override val command = Command.NAVIGATE
-            override val destination = Screen.ViewTransactionFor.route
-            override val screen = Screen.ViewTransactionFor.route
         }
     }
 }

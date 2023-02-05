@@ -51,15 +51,15 @@ sealed class Screen(
         route = "sources",
     )
 
+    object TransactionForValues : Screen(
+        route = "transaction_for_values",
+    )
+
     object Transactions : Screen(
         route = "transactions",
     )
 
     object ViewTransaction : Screen(
         route = "view_transaction",
-    )
-
-    object ViewTransactionFor : Screen(
-        route = "view_transaction_for",
     )
 }

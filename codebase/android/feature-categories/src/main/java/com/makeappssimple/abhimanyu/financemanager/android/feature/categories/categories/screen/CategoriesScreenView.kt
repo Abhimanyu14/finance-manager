@@ -55,18 +55,16 @@ import kotlinx.coroutines.launch
 
 @Immutable
 internal sealed class CategoriesBottomSheetType : BottomSheetType {
-    data class CategoryMenu(
+    object DeleteConfirmation : CategoriesBottomSheetType()
+    object None : CategoriesBottomSheetType()
+    object SetAsDefaultConfirmation : CategoriesBottomSheetType()
+
+    data class Menu(
         val deleteEnabled: Boolean,
         val isDefault: Boolean,
         val categoryId: Int,
         val categoryTitle: String,
     ) : CategoriesBottomSheetType()
-
-    object DeleteConfirmation : CategoriesBottomSheetType()
-
-    object None : CategoriesBottomSheetType()
-
-    object SetAsDefaultConfirmation : CategoriesBottomSheetType()
 }
 
 @Immutable
@@ -158,31 +156,6 @@ internal fun CategoriesScreenView(
         sheetShape = BottomSheetShape,
         sheetContent = {
             when (categoriesBottomSheetType) {
-                is CategoriesBottomSheetType.CategoryMenu -> {
-                    val bottomSheetData =
-                        categoriesBottomSheetType as CategoriesBottomSheetType.CategoryMenu
-                    CategoryMenuBottomSheetContent(
-                        deleteEnabled = bottomSheetData.deleteEnabled,
-                        isDefault = bottomSheetData.isDefault,
-                        coroutineScope = state.coroutineScope,
-                        categoryId = bottomSheetData.categoryId,
-                        modalBottomSheetState = state.modalBottomSheetState,
-                        navigationManager = data.navigationManager,
-                        categoryTitle = bottomSheetData.categoryTitle,
-                        onDeleteClick = {
-                            categoryIdToDelete = bottomSheetData.categoryId
-                            categoriesBottomSheetType =
-                                CategoriesBottomSheetType.DeleteConfirmation
-                        },
-                        onSetAsDefaultClick = {
-                            clickedItemId = bottomSheetData.categoryId
-                            categoriesBottomSheetType =
-                                CategoriesBottomSheetType.SetAsDefaultConfirmation
-                        },
-                        resetBottomSheetType = resetBottomSheetType,
-                    )
-                }
-
                 is CategoriesBottomSheetType.DeleteConfirmation -> {
                     CategoriesDeleteConfirmationBottomSheetContent(
                         coroutineScope = state.coroutineScope,
@@ -222,6 +195,31 @@ internal fun CategoriesScreenView(
                                 )
                             }
                         },
+                    )
+                }
+
+                is CategoriesBottomSheetType.Menu -> {
+                    val bottomSheetData =
+                        categoriesBottomSheetType as CategoriesBottomSheetType.Menu
+                    CategoryMenuBottomSheetContent(
+                        deleteEnabled = bottomSheetData.deleteEnabled,
+                        isDefault = bottomSheetData.isDefault,
+                        coroutineScope = state.coroutineScope,
+                        categoryId = bottomSheetData.categoryId,
+                        modalBottomSheetState = state.modalBottomSheetState,
+                        navigationManager = data.navigationManager,
+                        categoryTitle = bottomSheetData.categoryTitle,
+                        onDeleteClick = {
+                            categoryIdToDelete = bottomSheetData.categoryId
+                            categoriesBottomSheetType =
+                                CategoriesBottomSheetType.DeleteConfirmation
+                        },
+                        onSetAsDefaultClick = {
+                            clickedItemId = bottomSheetData.categoryId
+                            categoriesBottomSheetType =
+                                CategoriesBottomSheetType.SetAsDefaultConfirmation
+                        },
+                        resetBottomSheetType = resetBottomSheetType,
                     )
                 }
             }
@@ -375,7 +373,7 @@ internal fun CategoriesScreenView(
                                         category = listItem,
                                         onClick = {
                                             categoriesBottomSheetType =
-                                                CategoriesBottomSheetType.CategoryMenu(
+                                                CategoriesBottomSheetType.Menu(
                                                     deleteEnabled = deleteEnabled,
                                                     isDefault = isDefault,
                                                     categoryId = listItem.id,

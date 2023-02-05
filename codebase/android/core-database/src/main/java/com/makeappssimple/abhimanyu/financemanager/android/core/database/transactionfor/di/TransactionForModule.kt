@@ -4,6 +4,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.d
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.datasource.local.TransactionForDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.repository.TransactionForRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.repository.TransactionForRepositoryImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.DeleteTransactionForUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.DeleteTransactionForUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.InsertTransactionForValuesUseCase
@@ -31,6 +33,17 @@ class TransactionForModule {
     ): TransactionForRepository {
         return TransactionForRepositoryImpl(
             transactionForDao = transactionForDao,
+        )
+    }
+
+    @Provides
+    fun providesDeleteTransactionForUseCase(
+        dataStore: MyDataStore,
+        transactionForRepository: TransactionForRepository,
+    ): DeleteTransactionForUseCase {
+        return DeleteTransactionForUseCaseImpl(
+            dataStore = dataStore,
+            transactionForRepository = transactionForRepository,
         )
     }
 

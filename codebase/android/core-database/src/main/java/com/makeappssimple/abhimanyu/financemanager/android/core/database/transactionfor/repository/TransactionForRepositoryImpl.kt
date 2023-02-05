@@ -17,4 +17,12 @@ class TransactionForRepositoryImpl(
             transactionForValues = transactionForValues,
         )
     }
+
+    override suspend fun deleteTransactionFor(
+        id: Int,
+    ) {
+        transactionForDao.deleteTransactionFor(
+            id = id,
+        )
+    }
 }

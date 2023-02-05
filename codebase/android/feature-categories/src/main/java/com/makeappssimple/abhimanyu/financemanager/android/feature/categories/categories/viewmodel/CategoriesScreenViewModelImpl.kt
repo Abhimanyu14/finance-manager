@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 internal class CategoriesScreenViewModelImpl @Inject constructor(
     getCategoriesUseCase: GetCategoriesUseCase,
     override val navigationManager: NavigationManager,
-    private val checkIdCategoryIsUsedInTransactionsUseCase: CheckIfCategoryIsUsedInTransactionsUseCase,
+    private val checkIfCategoryIsUsedInTransactionsUseCase: CheckIfCategoryIsUsedInTransactionsUseCase,
     private val dataStore: MyDataStore,
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
     private val dispatcherProvider: DispatcherProvider,
@@ -51,7 +51,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
     override val expenseCategoryIsUsedInTransactions: Flow<List<Boolean>> = expenseCategories
         .map {
             it.map { category ->
-                checkIdCategoryIsUsedInTransactionsUseCase(
+                checkIfCategoryIsUsedInTransactionsUseCase(
                     categoryId = category.id,
                 )
             }
@@ -59,7 +59,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
     override val incomeCategoryIsUsedInTransactions: Flow<List<Boolean>> = incomeCategories
         .map {
             it.map { category ->
-                checkIdCategoryIsUsedInTransactionsUseCase(
+                checkIfCategoryIsUsedInTransactionsUseCase(
                     categoryId = category.id,
                 )
             }
@@ -67,7 +67,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
     override val investmentCategoryIsUsedInTransactions: Flow<List<Boolean>> = incomeCategories
         .map {
             it.map { category ->
-                checkIdCategoryIsUsedInTransactionsUseCase(
+                checkIfCategoryIsUsedInTransactionsUseCase(
                     categoryId = category.id,
                 )
             }

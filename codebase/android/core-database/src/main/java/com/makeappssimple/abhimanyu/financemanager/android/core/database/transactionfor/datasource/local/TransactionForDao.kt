@@ -20,4 +20,9 @@ interface TransactionForDao {
     suspend fun insertTransactionForValues(
         vararg transactionForValues: TransactionFor,
     )
+
+    @Query(value = "DELETE FROM transaction_for_table WHERE id = :id")
+    suspend fun deleteTransactionFor(
+        id: Int,
+    )
 }

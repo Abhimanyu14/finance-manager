@@ -29,7 +29,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_s
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.edit_source.EditSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.screen.SourcesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.screen.AddTransactionForScreen
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.view_transaction_for.screen.ViewTransactionForScreen
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.screen.TransactionForValuesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.AddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.EditTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen.TransactionsScreen
@@ -291,17 +291,17 @@ internal fun MyNavGraph(
         }
 
         composable(
-            route = Screen.ViewTransactionFor.route,
+            route = Screen.TransactionForValues.route,
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$DEEPLINK_BROWSER_BASE_URL/${Screen.ViewTransactionFor.route}"
+                    uriPattern = "$DEEPLINK_BROWSER_BASE_URL/${Screen.TransactionForValues.route}"
                 },
                 navDeepLink {
-                    uriPattern = "$DEEPLINK_BASE_URL/${Screen.ViewTransactionFor.route}"
+                    uriPattern = "$DEEPLINK_BASE_URL/${Screen.TransactionForValues.route}"
                 },
             ),
         ) {
-            ViewTransactionForScreen()
+            TransactionForValuesScreen()
         }
     }
 }
