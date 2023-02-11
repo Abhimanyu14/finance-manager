@@ -1,11 +1,12 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.navigation
 
 object NavArgs {
-    const val WEBPAGE_URL = "webpageUrl"
     const val CATEGORY_ID = "categoryId"
+    const val EDIT = "edit"
     const val SOURCE_ID = "sourceId"
     const val TRANSACTION_ID = "transactionId"
-    const val EDIT = "edit"
+    const val TRANSACTION_TYPE = "transactionType"
+    const val WEBPAGE_URL = "webpageUrl"
 }
 
 object MyNavigationDirections {
@@ -47,10 +48,12 @@ object MyNavigationDirections {
     }
 
     // App specific
-    fun addCategory(): NavigationCommand {
+    fun addCategory(
+        transactionType: String,
+    ): NavigationCommand {
         return object : NavigationCommand {
             override val command = Command.NAVIGATE
-            override val destination = Screen.AddCategory.route
+            override val destination = "${Screen.AddCategory.route}/${transactionType}"
             override val screen = Screen.AddCategory.route
         }
     }

@@ -94,6 +94,15 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     )
 
     init {
+        savedStateHandle.get<String>(NavArgs.TRANSACTION_TYPE)?.let { transactionType ->
+            updateSelectedTransactionTypeIndex(
+                updatedIndex = transactionTypes.indexOf(
+                    element = TransactionType.values().find {
+                        it.title == transactionType
+                    },
+                )
+            )
+        }
         savedStateHandle.get<Int>(NavArgs.CATEGORY_ID)?.let { categoryId ->
             getCategory(
                 id = categoryId,
@@ -198,12 +207,16 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
 
     private fun updateInitialCategoryValue() {
         val category = category.value ?: return
-        _selectedTransactionTypeIndex.update {
-            transactionTypes.indexOf(
+        updateSelectedTransactionTypeIndex(
+            updatedIndex = transactionTypes.indexOf(
                 element = category.transactionType,
-            )
-        }
-        _title.value = category.title
-        _emoji.value = category.emoji
+            ),
+        )
+        updateTitle(
+            updatedTitle = category.title,
+        )
+        updateEmoji(
+            updatedEmoji = category.emoji,
+        )
     }
 }

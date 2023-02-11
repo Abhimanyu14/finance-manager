@@ -30,9 +30,12 @@ fun clearTillRoot(
 
 fun navigateToAddCategoryScreen(
     navigationManager: NavigationManager,
+    transactionType: String,
 ) {
     navigationManager.navigate(
-        navigationCommand = MyNavigationDirections.addCategory()
+        navigationCommand = MyNavigationDirections.addCategory(
+            transactionType = transactionType,
+        )
     )
 }
 

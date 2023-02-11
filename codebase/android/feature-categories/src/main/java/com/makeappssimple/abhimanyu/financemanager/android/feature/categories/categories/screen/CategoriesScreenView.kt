@@ -245,6 +245,19 @@ internal fun CategoriesScreenView(
                     onClick = {
                         navigateToAddCategoryScreen(
                             navigationManager = data.navigationManager,
+                            transactionType = when (data.selectedTabIndex) {
+                                0 -> {
+                                    TransactionType.EXPENSE.title
+                                }
+
+                                1 -> {
+                                    TransactionType.INCOME.title
+                                }
+
+                                else -> {
+                                    TransactionType.INVESTMENT.title
+                                }
+                            }
                         )
                     },
                 )

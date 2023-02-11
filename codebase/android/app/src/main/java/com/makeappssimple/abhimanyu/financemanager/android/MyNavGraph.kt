@@ -19,6 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavAr
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs.EDIT
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs.SOURCE_ID
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs.TRANSACTION_ID
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs.TRANSACTION_TYPE
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Screen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.AddCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.screen.CategoriesScreen
@@ -106,13 +107,18 @@ internal fun MyNavGraph(
         startDestination = Screen.Home.route,
     ) {
         composable(
-            route = Screen.AddCategory.route,
+            route = "${Screen.AddCategory.route}/{${TRANSACTION_TYPE}}",
+            arguments = listOf(
+                navArgument(TRANSACTION_TYPE) {
+                    type = NavType.StringType
+                },
+            ),
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$DEEPLINK_BROWSER_BASE_URL/${Screen.AddCategory.route}"
+                    uriPattern = "$DEEPLINK_BROWSER_BASE_URL/${Screen.AddCategory.route}/{${TRANSACTION_TYPE}}"
                 },
                 navDeepLink {
-                    uriPattern = "$DEEPLINK_BASE_URL/${Screen.AddCategory.route}"
+                    uriPattern = "$DEEPLINK_BASE_URL/${Screen.AddCategory.route}/{${TRANSACTION_TYPE}}"
                 },
             ),
         ) {
