@@ -10,10 +10,26 @@ class TransactionForRepositoryImpl(
     override val transactionForValues: Flow<List<TransactionFor>> =
         transactionForDao.getTransactionForValues()
 
+    override suspend fun getTransactionFor(
+        id: Int,
+    ): TransactionFor? {
+        return transactionForDao.getTransactionFor(
+            id = id,
+        )
+    }
+
     override suspend fun insertTransactionForValues(
         vararg transactionForValues: TransactionFor,
     ) {
         transactionForDao.insertTransactionForValues(
+            transactionForValues = transactionForValues,
+        )
+    }
+
+    override suspend fun updateTransactionForValues(
+        vararg transactionForValues: TransactionFor,
+    ) {
+        transactionForDao.updateTransactionForValues(
             transactionForValues = transactionForValues,
         )
     }

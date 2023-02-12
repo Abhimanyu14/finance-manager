@@ -132,14 +132,11 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     }
 
     override fun updateCategory() {
-        val category = category.value ?: return
-        val updatedCategory = category
-            .copy(
-                emoji = emoji.value,
-                title = title.value,
-                transactionType = transactionTypes[selectedTransactionTypeIndex.value],
-            )
-
+        val updatedCategory = category.value?.copy(
+            emoji = emoji.value,
+            title = title.value,
+            transactionType = transactionTypes[selectedTransactionTypeIndex.value],
+        ) ?: return
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {

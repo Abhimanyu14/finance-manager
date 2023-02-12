@@ -51,11 +51,11 @@ internal data class AddOrEditTransactionForScreenViewData(
     @StringRes val appBarTitleTextStringResourceId: Int,
     @StringRes val ctaButtonLabelTextStringResourceId: Int,
     val navigationManager: NavigationManager,
-    val name: String,
-    val clearName: () -> Unit,
-    val isValidName: () -> Boolean,
+    val title: String,
+    val clearTitle: () -> Unit,
+    val isValidTitle: () -> Boolean,
     val onCtaButtonClick: () -> Unit,
-    val updateName: (updatedName: String) -> Unit,
+    val updateTitle: (updatedTitle: String) -> Unit,
 )
 
 @Composable
@@ -144,14 +144,14 @@ internal fun AddOrEditTransactionForScreenView(
                         ),
                 ) {
                     MyOutlinedTextField(
-                        value = data.name,
-                        labelTextStringResourceId = R.string.screen_add_or_edit_transaction_for_name,
-                        trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_for_clear_name,
+                        value = data.title,
+                        labelTextStringResourceId = R.string.screen_add_or_edit_transaction_for_title,
+                        trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_for_clear_title,
                         onClickTrailingIcon = {
-                            data.clearName()
+                            data.clearTitle()
                         },
-                        onValueChange = { updatedName ->
-                            data.updateName(updatedName)
+                        onValueChange = { updatedTitle ->
+                            data.updateTitle(updatedTitle)
                         },
                         keyboardActions = KeyboardActions(
                             onDone = {
@@ -173,7 +173,7 @@ internal fun AddOrEditTransactionForScreenView(
                     )
                     SaveButton(
                         textStringResourceId = data.ctaButtonLabelTextStringResourceId,
-                        isEnabled = data.isValidName(),
+                        isEnabled = data.isValidTitle(),
                         onClick = {
                             data.onCtaButtonClick()
                         },

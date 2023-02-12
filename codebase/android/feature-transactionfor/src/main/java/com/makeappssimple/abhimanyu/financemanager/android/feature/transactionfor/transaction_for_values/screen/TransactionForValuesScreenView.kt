@@ -29,7 +29,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToAddTransactionForScreen
@@ -45,7 +44,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 
 internal sealed class TransactionForValuesBottomSheetType : BottomSheetType {
     object DeleteConfirmation : TransactionForValuesBottomSheetType()
-    object Edit : TransactionForValuesBottomSheetType()
     object None : TransactionForValuesBottomSheetType()
 
     data class Menu(
@@ -100,11 +98,7 @@ internal fun TransactionForValuesScreenView(
 
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
-        sheetShape = if (state.modalBottomSheetState.currentValue == ModalBottomSheetValue.Expanded) {
-            BottomSheetExpandedShape
-        } else {
-            BottomSheetShape
-        },
+        sheetShape = BottomSheetShape,
         sheetContent = {
             when (transactionForValuesBottomSheetType) {
                 is TransactionForValuesBottomSheetType.DeleteConfirmation -> {
@@ -124,17 +118,13 @@ internal fun TransactionForValuesScreenView(
                     )
                 }
 
-                TransactionForValuesBottomSheetType.Edit -> {
-                    // TODO-Abhi: To Implement - Edit Transaction For
-                    VerticalSpacer()
-                }
-
                 is TransactionForValuesBottomSheetType.Menu -> {
                     val bottomSheetData =
                         transactionForValuesBottomSheetType as TransactionForValuesBottomSheetType.Menu
                     TransactionForValuesMenuBottomSheetContent(
                         isDeleteVisible = bottomSheetData.isDeleteVisible,
                         coroutineScope = state.coroutineScope,
+                        transactionForId = bottomSheetData.transactionForId,
                         modalBottomSheetState = state.modalBottomSheetState,
                         navigationManager = data.navigationManager,
                         onDeleteClick = {

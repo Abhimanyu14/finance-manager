@@ -39,6 +39,10 @@ sealed class Screen(
         route = "edit_transaction",
     )
 
+    object EditTransactionFor : Screen(
+        route = "edit_transaction_for",
+    )
+
     object Home : Screen(
         route = "home",
     )

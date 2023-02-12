@@ -18,6 +18,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNav
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs.CATEGORY_ID
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs.EDIT
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs.SOURCE_ID
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs.TRANSACTION_FOR_ID
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs.TRANSACTION_ID
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs.TRANSACTION_TYPE
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Screen
@@ -30,6 +31,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_s
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.edit_source.EditSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.screen.SourcesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.screen.AddTransactionForScreen
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.screen.EditTransactionForScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.screen.TransactionForValuesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.AddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.EditTransactionScreen
@@ -115,10 +117,12 @@ internal fun MyNavGraph(
             ),
             deepLinks = listOf(
                 navDeepLink {
-                    uriPattern = "$DEEPLINK_BROWSER_BASE_URL/${Screen.AddCategory.route}/{${TRANSACTION_TYPE}}"
+                    uriPattern =
+                        "$DEEPLINK_BROWSER_BASE_URL/${Screen.AddCategory.route}/{${TRANSACTION_TYPE}}"
                 },
                 navDeepLink {
-                    uriPattern = "$DEEPLINK_BASE_URL/${Screen.AddCategory.route}/{${TRANSACTION_TYPE}}"
+                    uriPattern =
+                        "$DEEPLINK_BASE_URL/${Screen.AddCategory.route}/{${TRANSACTION_TYPE}}"
                 },
             ),
         ) {
@@ -227,6 +231,17 @@ internal fun MyNavGraph(
             ),
         ) {
             EditTransactionScreen()
+        }
+
+        composable(
+            route = "${Screen.EditTransactionFor.route}/{${TRANSACTION_FOR_ID}}",
+            arguments = listOf(
+                navArgument(TRANSACTION_FOR_ID) {
+                    type = NavType.IntType
+                },
+            ),
+        ) {
+            EditTransactionForScreen()
         }
 
         composable(

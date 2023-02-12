@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.screen
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -14,11 +14,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.viewmodel.AddOrEditTransactionForScreenViewModelImpl
 
 @Composable
-fun AddTransactionForScreen(
+fun EditTransactionForScreen(
     screenViewModel: AddOrEditTransactionForScreenViewModel = hiltViewModel<AddOrEditTransactionForScreenViewModelImpl>(),
 ) {
     logError(
-        message = "Inside AddTransactionForScreen",
+        message = "Inside EditTransactionForScreen",
     )
     val title: String by screenViewModel.title.collectAsStateWithLifecycle()
 
@@ -30,13 +30,13 @@ fun AddTransactionForScreen(
 
     AddOrEditTransactionForScreenView(
         data = AddOrEditTransactionForScreenViewData(
-            appBarTitleTextStringResourceId = R.string.screen_add_transaction_for_appbar_title,
-            ctaButtonLabelTextStringResourceId = R.string.screen_add_transaction_for_floating_action_button_content_description,
+            appBarTitleTextStringResourceId = R.string.screen_edit_transaction_for_appbar_title,
+            ctaButtonLabelTextStringResourceId = R.string.screen_edit_transaction_for_floating_action_button_content_description,
             navigationManager = screenViewModel.navigationManager,
             title = title,
             clearTitle = screenViewModel::clearTitle,
             isValidTitle = screenViewModel::isValidTitle,
-            onCtaButtonClick = screenViewModel::insertTransactionFor,
+            onCtaButtonClick = screenViewModel::updateTransactionFor,
             updateTitle = { updatedTitle ->
                 screenViewModel.updateTitle(
                     updatedTitle = updatedTitle,

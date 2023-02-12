@@ -4,6 +4,7 @@ object NavArgs {
     const val CATEGORY_ID = "categoryId"
     const val EDIT = "edit"
     const val SOURCE_ID = "sourceId"
+    const val TRANSACTION_FOR_ID = "transactionForId"
     const val TRANSACTION_ID = "transactionId"
     const val TRANSACTION_TYPE = "transactionType"
     const val WEBPAGE_URL = "webpageUrl"
@@ -119,6 +120,16 @@ object MyNavigationDirections {
             override val command = Command.NAVIGATE
             override val destination = "${Screen.EditTransaction.route}/${transactionId}"
             override val screen = Screen.EditTransaction.route
+        }
+    }
+
+    fun editTransactionFor(
+        transactionForId: Int,
+    ): NavigationCommand {
+        return object : NavigationCommand {
+            override val command = Command.NAVIGATE
+            override val destination = "${Screen.EditTransactionFor.route}/${transactionForId}"
+            override val screen = Screen.EditTransactionFor.route
         }
     }
 

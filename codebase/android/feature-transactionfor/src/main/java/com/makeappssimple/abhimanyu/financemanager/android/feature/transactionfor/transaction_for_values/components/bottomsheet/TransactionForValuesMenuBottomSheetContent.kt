@@ -1,11 +1,10 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.components.bottomsheet
 
-import android.widget.Toast
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToEditTransactionForScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 import kotlinx.coroutines.CoroutineScope
@@ -14,12 +13,12 @@ import kotlinx.coroutines.CoroutineScope
 internal fun TransactionForValuesMenuBottomSheetContent(
     isDeleteVisible: Boolean,
     coroutineScope: CoroutineScope,
+    transactionForId: Int,
     modalBottomSheetState: ModalBottomSheetState,
     navigationManager: NavigationManager,
     onDeleteClick: () -> Unit,
     resetBottomSheetType: () -> Unit,
 ) {
-    val context = LocalContext.current
     val items = mutableListOf<TransactionForValuesMenuBottomSheetItemData>()
     items.add(
         element = TransactionForValuesMenuBottomSheetItemData(
@@ -32,9 +31,10 @@ internal fun TransactionForValuesMenuBottomSheetContent(
                     modalBottomSheetState = modalBottomSheetState,
                 ) {
                     resetBottomSheetType()
-                    // TODO-Abhi: Add Navigation to Edit Transaction For screen
-                    // TODO-Abhi: To Implement - Edit Transaction For
-                    Toast.makeText(context, "Not Yet Implemented", Toast.LENGTH_SHORT).show()
+                    navigateToEditTransactionForScreen(
+                        navigationManager = navigationManager,
+                        transactionForId = transactionForId,
+                    )
                 }
             },
         ),

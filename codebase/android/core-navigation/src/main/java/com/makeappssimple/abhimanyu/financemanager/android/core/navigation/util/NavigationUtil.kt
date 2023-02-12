@@ -107,6 +107,17 @@ fun navigateToEditTransactionScreen(
     )
 }
 
+fun navigateToEditTransactionForScreen(
+    navigationManager: NavigationManager,
+    transactionForId: Int,
+) {
+    navigationManager.navigate(
+        navigationCommand = MyNavigationDirections.editTransactionFor(
+            transactionForId = transactionForId,
+        )
+    )
+}
+
 fun navigateToSettingsScreen(
     navigationManager: NavigationManager,
 ) {

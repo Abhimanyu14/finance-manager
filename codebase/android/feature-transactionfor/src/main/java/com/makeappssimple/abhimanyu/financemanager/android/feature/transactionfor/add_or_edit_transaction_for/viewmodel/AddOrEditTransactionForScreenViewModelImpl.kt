@@ -1,11 +1,15 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.viewmodel
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.InsertTransactionForValuesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.UpdateTransactionForValuesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,72 +21,45 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
+    private val getTransactionForUseCase: GetTransactionForUseCase,
     private val insertTransactionForUseCase: InsertTransactionForValuesUseCase,
+    private val updateTransactionForValuesUseCase: UpdateTransactionForValuesUseCase,
 ) : AddOrEditTransactionForScreenViewModel, ViewModel() {
-    private val _name: MutableStateFlow<String> = MutableStateFlow(
+    private val _title: MutableStateFlow<String> = MutableStateFlow(
         value = "",
     )
-    override val name: StateFlow<String> = _name
+    override val title: StateFlow<String> = _title
+
+    private val _transactionFor: MutableStateFlow<TransactionFor?> = MutableStateFlow(
+        value = null,
+    )
+    override val transactionFor: StateFlow<TransactionFor?> = _transactionFor
+
+    init {
+        savedStateHandle.get<Int>(NavArgs.TRANSACTION_FOR_ID)?.let { transactionForId ->
+            getTransactionFor(
+                id = transactionForId,
+            )
+        }
+    }
 
     override fun trackScreen() {
         // TODO-Abhi: Add screen tracking code
     }
 
     override fun updateTransactionFor() {
-//        val source = source.value ?: return
-//        val amountValue = balanceAmountValue.value.toInt() - source.balanceAmount.value
-//        val updatedSource = source
-//            .copy(
-//                balanceAmount = source.balanceAmount
-//                    .copy(
-//                        value = balanceAmountValue.value.toLong(),
-//                    ),
-//                type = if (source.type != SourceType.CASH) {
-//                    sourceTypes[selectedSourceTypeIndex.value]
-//                } else {
-//                    source.type
-//                },
-//                name = name.value.ifBlank {
-//                    source.name
-//                },
-//            )
-
+        val updatedTransactionFor = transactionFor.value?.copy(
+            title = title.value,
+        ) ?: return
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-//            val sourceFromId = if (amountValue < 0L) {
-//                updatedSource.id
-//            } else {
-//                null
-//            }
-//            val sourceToId = if (amountValue < 0L) {
-//                null
-//            } else {
-//                updatedSource.id
-//            }
-//
-//            if (amountValue != 0L) {
-//                insertTransactionsUseCase(
-//                    Transaction(
-//                        amount = Amount(
-//                            value = abs(amountValue),
-//                        ),
-//                        categoryId = null,
-//                        sourceFromId = sourceFromId,
-//                        sourceToId = sourceToId,
-//                        description = "",
-//                        title = TransactionType.ADJUSTMENT.title,
-//                        creationTimestamp = System.currentTimeMillis(),
-//                        transactionTimestamp = System.currentTimeMillis(),
-//                        transactionType = TransactionType.ADJUSTMENT,
-//                    ),
-//                )
-//            }
-//            updateSourcesUseCase(
-//                updatedSource,
-//            )
+            updateTransactionForValuesUseCase(
+                updatedTransactionFor,
+            )
             navigateUp(
                 navigationManager = navigationManager,
             )
@@ -95,7 +72,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
         ) {
             insertTransactionForUseCase(
                 TransactionFor(
-                    title = name.value,
+                    title = title.value,
                 )
             )
             navigateUp(
@@ -104,22 +81,44 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun isValidName(): Boolean {
+    override fun isValidTitle(): Boolean {
         // TODO-Abhi: Add check to avoid duplicates
-        return name.value.isNotNullOrBlank()
+        return title.value.isNotNullOrBlank()
     }
 
-    override fun clearName() {
-        updateName(
-            updatedName = "",
+    override fun clearTitle() {
+        updateTitle(
+            updatedTitle = "",
         )
     }
 
-    override fun updateName(
-        updatedName: String,
+    override fun updateTitle(
+        updatedTitle: String,
     ) {
-        _name.update {
-            updatedName
+        _title.update {
+            updatedTitle
         }
+    }
+
+    private fun getTransactionFor(
+        id: Int,
+    ) {
+        viewModelScope.launch(
+            context = dispatcherProvider.io,
+        ) {
+            _transactionFor.update {
+                getTransactionForUseCase(
+                    id = id,
+                )
+            }
+            updateInitialTransactionForValue()
+        }
+    }
+
+    private fun updateInitialTransactionForValue() {
+        val transactionFor = transactionFor.value ?: return
+        updateTitle(
+            updatedTitle = transactionFor.title,
+        )
     }
 }

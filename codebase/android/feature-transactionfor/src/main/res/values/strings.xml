@@ -1,8 +1,8 @@
 <resources>
 
     <!-- region add or edit source screen -->
-    <string name="screen_add_or_edit_transaction_for_name">Name</string>
-    <string name="screen_add_or_edit_transaction_for_clear_name">Clear Name</string>
+    <string name="screen_add_or_edit_transaction_for_title">Title</string>
+    <string name="screen_add_or_edit_transaction_for_clear_title">Clear Title</string>
     <!-- endregion -->
 
     <!-- region add transaction for screen -->

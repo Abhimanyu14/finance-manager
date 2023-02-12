@@ -6,7 +6,15 @@ import kotlinx.coroutines.flow.Flow
 interface TransactionForRepository {
     val transactionForValues: Flow<List<TransactionFor>>
 
+    suspend fun getTransactionFor(
+        id: Int,
+    ): TransactionFor?
+
     suspend fun insertTransactionForValues(
+        vararg transactionForValues: TransactionFor,
+    )
+
+    suspend fun updateTransactionForValues(
         vararg transactionForValues: TransactionFor,
     )
 
