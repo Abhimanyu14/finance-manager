@@ -3,7 +3,7 @@ plugins {
     id "org.jetbrains.kotlin.android"
     id "kotlin-kapt"
     id "dagger.hilt.android.plugin"
-    id "com.google.devtools.ksp" version "1.6.21-1.0.6"
+    id "com.google.devtools.ksp" version "1.8.10-1.0.9"
 }
 
 // API Key
@@ -113,6 +113,7 @@ dependencies {
     // Moshi
     implementation "com.squareup.moshi:moshi:$rootProject.moshiVersion"
     implementation "com.squareup.moshi:moshi-kotlin:$rootProject.moshiKotlinVersion"
+    // kapt "com.squareup.moshi:moshi-kotlin-codegen:$rootProject.moshiVersion"
     ksp "com.squareup.moshi:moshi-kotlin-codegen:$rootProject.moshiVersion"
 
     // Retrofit with Moshi Converter

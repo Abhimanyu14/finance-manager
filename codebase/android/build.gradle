@@ -11,7 +11,7 @@ buildscript {
         gradleBuildToolsVersion = "7.3.1"
 
         // Kotlin version
-        kotlinVersion = "1.6.21"
+        kotlinVersion = "1.8.10"
 
         // Google services gradle plugin
         googleServicesVersion = "4.3.14"
@@ -92,7 +92,7 @@ buildscript {
         kotlinCoroutinesPlayServicesVersion = "1.1.1"
 
         // Appcompat
-        appCompatVersion = "1.7.0-alpha01"
+        appCompatVersion = "1.7.0-alpha02"
 
         // Constraint layout
         constraintLayoutVersion = "2.1.1"
@@ -101,13 +101,13 @@ buildscript {
         recyclerViewVersion = "1.2.1"
 
         // Jetpack compose
-        jetpackComposeVersion = "1.4.0-alpha03"
+        jetpackComposeVersion = "1.4.0-beta02"
 
         // Jetpack compose compiler
-        jetpackComposeCompilerVersion = "1.2.0-rc02"
+        jetpackComposeCompilerVersion = "1.4.3"
 
         // Jetpack compose material 3
-        jetpackComposeMaterial3Version = "1.1.0-alpha04"
+        jetpackComposeMaterial3Version = "1.1.0-alpha07"
 
         // Jetpack compose material design adapter
         jetpackComposeMaterialDesignAdapterVersion = "1.2.1"
@@ -122,7 +122,7 @@ buildscript {
         jetpackComposeViewModelIntegrationVersion = "2.6.0-alpha04"
 
         // Jetpack compose lifecycle runtime
-        jetpackComposeLifecycleRuntimeVersion = "2.6.0-alpha04"
+        jetpackComposeLifecycleRuntimeVersion = "2.6.0-rc01"
 
         // Jetpack compose navigation
         jetpackComposeNavigationVersion = "2.5.3"
@@ -131,7 +131,7 @@ buildscript {
         jetpackComposeNavigationHiltVersion = "1.0.0"
 
         // Jetpack compose paging
-        jetpackComposePagingVersion = "1.0.0-alpha17"
+        jetpackComposePagingVersion = "1.0.0-alpha18"
 
         // Accompanist
         accompanistVersion = "0.27.0"
@@ -182,7 +182,7 @@ buildscript {
         hiltCompilerVersion = "1.0.0"
 
         // KSP
-        kspVersion = "1.7.20-1.0.6"
+        kspVersion = "1.8.10-1.0.9"
 
         // JDK desugaring
         jdkDesugaringVersion = "1.1.5"
@@ -203,7 +203,7 @@ buildscript {
         coilVersion = "2.2.2"
 
         // Room
-        roomVersion = "2.5.0-beta02"
+        roomVersion = "2.5.0"
 
         // Glide
         glideVersion = "4.11.0"
