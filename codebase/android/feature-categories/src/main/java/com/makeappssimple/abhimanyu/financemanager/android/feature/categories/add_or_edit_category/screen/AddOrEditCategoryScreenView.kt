@@ -111,10 +111,15 @@ internal fun AddOrEditCategoryScreenView(
 
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
-        sheetShape = if (state.modalBottomSheetState.currentValue == ModalBottomSheetValue.Expanded) {
-            BottomSheetExpandedShape
-        } else {
-            BottomSheetShape
+        sheetShape = when (addOrEditCategoryBottomSheetType) {
+            AddOrEditCategoryBottomSheetType.NONE,
+            -> {
+                BottomSheetShape
+            }
+
+            AddOrEditCategoryBottomSheetType.SELECT_EMOJI -> {
+                BottomSheetExpandedShape
+            }
         },
         sheetContent = {
             when (addOrEditCategoryBottomSheetType) {

@@ -140,10 +140,17 @@ internal fun TransactionsScreenView(
 
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
-        sheetShape = if (state.modalBottomSheetState.currentValue == ModalBottomSheetValue.Expanded) {
-            BottomSheetExpandedShape
-        } else {
-            BottomSheetShape
+        sheetShape = when (transactionsBottomSheetType) {
+            TransactionsBottomSheetType.NONE,
+            TransactionsBottomSheetType.SORT,
+            TransactionsBottomSheetType.DELETE_CONFIRMATION,
+            -> {
+                BottomSheetShape
+            }
+
+            TransactionsBottomSheetType.FILTERS -> {
+                BottomSheetExpandedShape
+            }
         },
         sheetContent = {
             when (transactionsBottomSheetType) {

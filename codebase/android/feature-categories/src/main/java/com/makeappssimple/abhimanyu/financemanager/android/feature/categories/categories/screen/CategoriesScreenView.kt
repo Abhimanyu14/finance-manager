@@ -1,19 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.screen
 
-import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
@@ -43,11 +37,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Bottom
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.grid.CategoriesGrid
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.grid_item.CategoriesGridItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.components.CategoriesListItem
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.components.bottomsheet.CategoriesDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.components.bottomsheet.CategoriesSetAsDefaultConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.components.bottomsheet.CategoryMenuBottomSheetContent
@@ -119,6 +114,14 @@ internal fun CategoriesScreenView(
         TransactionType.INCOME,
         TransactionType.INVESTMENT,
     )
+    val tabData = remember {
+        transactionTypes
+            .map {
+                MyTabData(
+                    title = it.title,
+                )
+            }
+    }
 
     LaunchedEffect(
         key1 = pagerState.currentPage,
@@ -278,12 +281,7 @@ internal fun CategoriesScreenView(
                     MyTabRow(
                         selectedTabIndex = data.selectedTabIndex,
                         updateSelectedTabIndex = data.updateSelectedTabIndex,
-                        tabData = transactionTypes
-                            .map {
-                                MyTabData(
-                                    title = it.title,
-                                )
-                            },
+                        tabData = tabData,
                     )
                     HorizontalPager(
                         count = 3,
@@ -293,115 +291,107 @@ internal fun CategoriesScreenView(
                                 weight = 1F,
                             ),
                     ) { page ->
-
-                        // To remove overscroll effect
-                        CompositionLocalProvider(
-                            LocalOverscrollConfiguration provides null
-                        ) {
-                            LazyVerticalGrid(
-                                columns = GridCells.Adaptive(
-                                    minSize = 100.dp,
-                                ),
-                                contentPadding = PaddingValues(
-                                    bottom = 80.dp,
-                                ),
-                                modifier = Modifier
-                                    .fillMaxSize(),
-                            ) {
-                                val transactionType = transactionTypes[page]
-                                itemsIndexed(
-                                    items = when (transactionType) {
-                                        TransactionType.EXPENSE -> {
-                                            data.expenseCategories
-                                        }
-
-                                        TransactionType.INCOME -> {
-                                            data.incomeCategories
-                                        }
-
-                                        else -> {
-                                            // Only for investment
-                                            data.investmentCategories
-                                        }
-                                    },
-                                    key = { _, listItem ->
-                                        listItem.hashCode()
-                                    },
-                                ) { index, listItem ->
-                                    val isDefault = when (transactionType) {
-                                        TransactionType.EXPENSE -> {
-                                            if (data.defaultExpenseCategoryId.isNull()) {
+                        val transactionType: TransactionType = transactionTypes[page]
+                        val categoriesGridItemDataList: List<CategoriesGridItemData> =
+                            when (transactionType) {
+                                TransactionType.EXPENSE -> {
+                                    data.expenseCategories.map { category ->
+                                        CategoriesGridItemData(
+                                            isSelected = if (data.defaultExpenseCategoryId.isNull()) {
                                                 isDefaultExpenseCategory(
-                                                    category = listItem.title,
+                                                    category = category.title,
                                                 )
                                             } else {
-                                                data.defaultExpenseCategoryId == listItem.id
-                                            }
-                                        }
+                                                data.defaultExpenseCategoryId == category.id
+                                            },
+                                            category = category,
+                                        )
+                                    }
+                                }
 
-                                        TransactionType.INCOME -> {
-                                            if (data.defaultIncomeCategoryId.isNull()) {
+                                TransactionType.INCOME -> {
+                                    data.incomeCategories.map { category ->
+                                        CategoriesGridItemData(
+                                            isSelected = if (data.defaultIncomeCategoryId.isNull()) {
                                                 isDefaultIncomeCategory(
-                                                    category = listItem.title,
+                                                    category = category.title,
                                                 )
                                             } else {
-                                                data.defaultIncomeCategoryId == listItem.id
-                                            }
-                                        }
+                                                data.defaultIncomeCategoryId == category.id
+                                            },
+                                            category = category,
+                                        )
+                                    }
+                                }
 
-                                        else -> {
-                                            // Only for investment
-                                            if (data.defaultInvestmentCategoryId.isNull()) {
+                                TransactionType.INVESTMENT -> {
+                                    data.investmentCategories.map { category ->
+                                        CategoriesGridItemData(
+                                            isSelected = if (data.defaultInvestmentCategoryId.isNull()) {
                                                 isDefaultInvestmentCategory(
-                                                    category = listItem.title,
+                                                    category = category.title,
                                                 )
                                             } else {
-                                                data.defaultInvestmentCategoryId == listItem.id
-                                            }
-                                        }
+                                                data.defaultInvestmentCategoryId == category.id
+                                            },
+                                            category = category,
+                                        )
                                     }
-                                    val deleteEnabled: Boolean = when (transactionType) {
-                                        TransactionType.EXPENSE -> {
-                                            !isDefault && data.expenseCategoryIsUsedInTransactions.getOrNull(
-                                                index = index,
-                                            )?.not() ?: false
-                                        }
+                                }
 
-                                        TransactionType.INCOME -> {
-                                            !isDefault && data.incomeCategoryIsUsedInTransactions.getOrNull(
-                                                index = index,
-                                            )?.not() ?: false
-                                        }
-
-                                        else -> {
-                                            // Only for investment
-                                            !isDefault && data.investmentCategoryIsUsedInTransactions.getOrNull(
-                                                index = index,
-                                            )?.not() ?: false
-                                        }
+                                else -> {
+                                    data.investmentCategories.map { category ->
+                                        CategoriesGridItemData(
+                                            isSelected = false,
+                                            category = category,
+                                        )
                                     }
-
-                                    CategoriesListItem(
-                                        isDefault = isDefault,
-                                        category = listItem,
-                                        onClick = {
-                                            categoriesBottomSheetType =
-                                                CategoriesBottomSheetType.Menu(
-                                                    deleteEnabled = deleteEnabled,
-                                                    isDefault = isDefault,
-                                                    categoryId = listItem.id,
-                                                    categoryTitle = listItem.title,
-                                                )
-                                            clickedItemId = listItem.id
-                                            toggleModalBottomSheetState(
-                                                coroutineScope = state.coroutineScope,
-                                                modalBottomSheetState = state.modalBottomSheetState,
-                                            )
-                                        },
-                                    )
                                 }
                             }
-                        }
+
+                        CategoriesGrid(
+                            bottomPadding = 80.dp,
+                            topPadding = 8.dp,
+                            categoriesGridItemDataList = categoriesGridItemDataList,
+                            onItemClick = { index ->
+                                val deleteEnabled = when (transactionType) {
+                                    TransactionType.EXPENSE -> {
+                                        !categoriesGridItemDataList[index].isSelected && data.expenseCategoryIsUsedInTransactions.getOrNull(
+                                            index = index,
+                                        )?.not() ?: false
+                                    }
+
+                                    TransactionType.INCOME -> {
+                                        !categoriesGridItemDataList[index].isSelected && data.incomeCategoryIsUsedInTransactions.getOrNull(
+                                            index = index,
+                                        )?.not() ?: false
+                                    }
+
+                                    TransactionType.INVESTMENT -> {
+                                        !categoriesGridItemDataList[index].isSelected && data.investmentCategoryIsUsedInTransactions.getOrNull(
+                                            index = index,
+                                        )?.not() ?: false
+                                    }
+
+                                    else -> {
+                                        false
+                                    }
+                                }
+
+                                categoriesBottomSheetType =
+                                    CategoriesBottomSheetType.Menu(
+                                        deleteEnabled = deleteEnabled,
+                                        isDefault = categoriesGridItemDataList[index].isSelected,
+                                        categoryId = categoriesGridItemDataList[index].category.id,
+                                        categoryTitle = categoriesGridItemDataList[index].category.title,
+                                    )
+                                clickedItemId = categoriesGridItemDataList[index].category.id
+                                toggleModalBottomSheetState(
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
+                                )
+                            },
+                        )
                     }
                 }
             }

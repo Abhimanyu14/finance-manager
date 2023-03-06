@@ -36,6 +36,7 @@ fun rememberCommonScreenViewState(
     },
     modalBottomSheetState: ModalBottomSheetState = rememberModalBottomSheetState(
         initialValue = ModalBottomSheetValue.Hidden,
+        skipHalfExpanded = true,
     ),
     keyboardController: SoftwareKeyboardController? = LocalSoftwareKeyboardController.current,
 ) = remember {

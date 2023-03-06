@@ -28,7 +28,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
@@ -94,11 +93,7 @@ internal fun AddOrEditTransactionForScreenView(
 
     ModalBottomSheetLayout(
         sheetState = state.modalBottomSheetState,
-        sheetShape = if (state.modalBottomSheetState.currentValue == ModalBottomSheetValue.Expanded) {
-            BottomSheetExpandedShape
-        } else {
-            BottomSheetShape
-        },
+        sheetShape = BottomSheetShape,
         sheetContent = {
             when (addOrEditTransactionForBottomSheetType) {
                 AddOrEditTransactionForBottomSheetType.NONE -> {

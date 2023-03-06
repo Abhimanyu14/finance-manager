@@ -1,5 +1,6 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.components
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.grid_item
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -9,17 +10,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircleSize
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyEmojiCircle
 
+data class CategoriesGridItemData(
+    val isSelected: Boolean,
+    val category: Category,
+)
+
 @Composable
-internal fun CategoriesListItem(
+fun CategoriesGridItem(
     modifier: Modifier = Modifier,
-    isDefault: Boolean,
+    isSelected: Boolean,
     category: Category,
     onClick: () -> Unit,
 ) {
@@ -27,12 +35,20 @@ internal fun CategoriesListItem(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
             .padding(
-                all = 8.dp,
+                horizontal = 8.dp,
+                vertical = 4.dp,
             )
             .clip(
                 shape = RoundedCornerShape(
                     size = 16.dp,
                 ),
+            )
+            .background(
+                color = if (isSelected) {
+                    MaterialTheme.colorScheme.primaryContainer
+                } else {
+                    Color.Transparent
+                },
             )
             .clickable {
                 onClick()
@@ -45,12 +61,16 @@ internal fun CategoriesListItem(
         MyText(
             modifier = Modifier
                 .padding(
-                    horizontal = 4.dp,
+                    start = 6.dp,
+                    end = 6.dp,
+                    bottom = 4.dp,
                 ),
             text = category.title,
-            style = MaterialTheme.typography.headlineLarge
+            overflow = TextOverflow.Ellipsis,
+            maxLines = 1,
+            style = MaterialTheme.typography.headlineMedium
                 .copy(
-                    color = if (isDefault) {
+                    color = if (isSelected) {
                         MaterialTheme.colorScheme.primary
                     } else {
                         MaterialTheme.colorScheme.onBackground
