@@ -15,8 +15,6 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextRange
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
@@ -37,12 +35,7 @@ fun MyOutlinedTextField(
     supportingText: @Composable (() -> Unit)? = null,
 ) {
     OutlinedTextField(
-        value = TextFieldValue(
-            text = value,
-            selection = TextRange(
-                index = value.length,
-            ),
-        ),
+        value = value,
         label = {
             MyOutlinedTextFieldLabelText(
                 textStringResourceId = labelTextStringResourceId,
@@ -75,7 +68,7 @@ fun MyOutlinedTextField(
             }
         },
         onValueChange = {
-            onValueChange(it.text)
+            onValueChange(it)
         },
         supportingText = supportingText,
         isError = isError,
