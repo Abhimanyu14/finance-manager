@@ -23,7 +23,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
@@ -31,10 +30,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToAddTransactionForScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.components.bottomsheet.TransactionForValuesDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.components.bottomsheet.TransactionForValuesMenuBottomSheetContent
@@ -83,14 +82,6 @@ internal fun TransactionForValuesScreenView(
                 state.keyboardController?.hide()
             }
         }
-    }
-
-    BottomSheetBackHandler(
-        enabled = transactionForValuesBottomSheetType != TransactionForValuesBottomSheetType.None,
-        coroutineScope = state.coroutineScope,
-        modalBottomSheetState = state.modalBottomSheetState,
-    ) {
-        resetBottomSheetType()
     }
 
     MyScaffold(
@@ -162,6 +153,11 @@ internal fun TransactionForValuesScreenView(
         },
         onClick = {
             state.focusManager.clearFocus()
+        },
+        backHandlerEnabled = transactionForValuesBottomSheetType != TransactionForValuesBottomSheetType.None,
+        coroutineScope = state.coroutineScope,
+        onBackPress = {
+            resetBottomSheetType()
         },
         modifier = Modifier
             .fillMaxSize(),

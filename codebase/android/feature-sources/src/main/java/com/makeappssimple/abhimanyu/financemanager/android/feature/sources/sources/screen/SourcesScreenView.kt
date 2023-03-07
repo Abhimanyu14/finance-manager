@@ -19,7 +19,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -27,10 +26,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToEditSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isCashSource
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
@@ -87,14 +86,6 @@ internal fun SourcesScreenView(
                 state.keyboardController?.hide()
             }
         }
-    }
-
-    BottomSheetBackHandler(
-        enabled = sourcesBottomSheetType != SourcesBottomSheetType.NONE,
-        coroutineScope = state.coroutineScope,
-        modalBottomSheetState = state.modalBottomSheetState,
-    ) {
-        sourcesBottomSheetType = SourcesBottomSheetType.NONE
     }
 
     MyScaffold(
@@ -172,6 +163,11 @@ internal fun SourcesScreenView(
         },
         onClick = {
             state.focusManager.clearFocus()
+        },
+        backHandlerEnabled = sourcesBottomSheetType != SourcesBottomSheetType.NONE,
+        coroutineScope = state.coroutineScope,
+        onBackPress = {
+            sourcesBottomSheetType = SourcesBottomSheetType.NONE
         },
         modifier = Modifier
             .fillMaxSize(),

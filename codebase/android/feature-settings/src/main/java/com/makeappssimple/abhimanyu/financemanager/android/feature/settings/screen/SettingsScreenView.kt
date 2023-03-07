@@ -32,16 +32,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.JSON_MIMETYPE
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToTransactionForValuesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.util.getAppVersion
 
@@ -81,14 +80,6 @@ internal fun SettingsScreenView(
         }
     }
 
-    BottomSheetBackHandler(
-        enabled = settingsBottomSheetType != SettingsBottomSheetType.NONE,
-        coroutineScope = state.coroutineScope,
-        modalBottomSheetState = state.modalBottomSheetState,
-    ) {
-        settingsBottomSheetType = SettingsBottomSheetType.NONE
-    }
-
     MyScaffold(
         sheetState = state.modalBottomSheetState,
         sheetContent = {
@@ -110,6 +101,11 @@ internal fun SettingsScreenView(
         },
         onClick = {
             state.focusManager.clearFocus()
+        },
+        backHandlerEnabled = settingsBottomSheetType != SettingsBottomSheetType.NONE,
+        coroutineScope = state.coroutineScope,
+        onBackPress = {
+            settingsBottomSheetType = SettingsBottomSheetType.NONE
         },
         modifier = Modifier
             .fillMaxSize(),

@@ -28,14 +28,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ChipItem
@@ -44,6 +42,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.buttons.SaveButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.components.AddOrEditCategorySelectEmojiBottomSheetContent
@@ -99,14 +98,6 @@ internal fun AddOrEditCategoryScreenView(
         }
     }
 
-    BottomSheetBackHandler(
-        enabled = addOrEditCategoryBottomSheetType != AddOrEditCategoryBottomSheetType.NONE,
-        coroutineScope = state.coroutineScope,
-        modalBottomSheetState = state.modalBottomSheetState,
-    ) {
-        addOrEditCategoryBottomSheetType = AddOrEditCategoryBottomSheetType.NONE
-    }
-
     MyScaffold(
         sheetState = state.modalBottomSheetState,
         sheetShape = when (addOrEditCategoryBottomSheetType) {
@@ -156,6 +147,11 @@ internal fun AddOrEditCategoryScreenView(
         },
         onClick = {
             state.focusManager.clearFocus()
+        },
+        backHandlerEnabled = addOrEditCategoryBottomSheetType != AddOrEditCategoryBottomSheetType.NONE,
+        coroutineScope = state.coroutineScope,
+        onBackPress = {
+            addOrEditCategoryBottomSheetType = AddOrEditCategoryBottomSheetType.NONE
         },
         modifier = Modifier
             .fillMaxSize(),

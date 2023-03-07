@@ -36,7 +36,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
@@ -45,7 +44,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.AmountCommaVisualTransformation
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.getMyDatePickerDialog
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.getMyTimePickerDialog
@@ -57,6 +55,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.select_category.SelectCategoryBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.select_source.SelectSourceBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.buttons.SaveButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
@@ -166,14 +165,6 @@ internal fun AddOrEditTransactionScreenView(
         }
     }
 
-    BottomSheetBackHandler(
-        enabled = addOrEditTransactionBottomSheetType != AddOrEditTransactionBottomSheetType.NONE,
-        coroutineScope = state.coroutineScope,
-        modalBottomSheetState = state.modalBottomSheetState,
-    ) {
-        addOrEditTransactionBottomSheetType = AddOrEditTransactionBottomSheetType.NONE
-    }
-
     MyScaffold(
         sheetState = state.modalBottomSheetState,
         // TODO-Abhi: To fix sheetShape according to content size
@@ -249,6 +240,11 @@ internal fun AddOrEditTransactionScreenView(
         },
         onClick = {
             clearFocus()
+        },
+        backHandlerEnabled = addOrEditTransactionBottomSheetType != AddOrEditTransactionBottomSheetType.NONE,
+        coroutineScope = state.coroutineScope,
+        onBackPress = {
+            addOrEditTransactionBottomSheetType = AddOrEditTransactionBottomSheetType.NONE
         },
         modifier = Modifier
             .fillMaxSize(),

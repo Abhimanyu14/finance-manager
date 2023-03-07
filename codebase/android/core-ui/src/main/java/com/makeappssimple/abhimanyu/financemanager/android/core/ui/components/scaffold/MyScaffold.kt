@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.material.DrawerDefaults
@@ -21,7 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.Dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
+import kotlinx.coroutines.CoroutineScope
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -58,8 +61,20 @@ fun MyScaffold(
     // MyScaffoldContentWrapper
     onClick: () -> Unit,
 
+    // BottomSheetBackHandler
+    backHandlerEnabled: Boolean,
+    coroutineScope: CoroutineScope,
+    onBackPress: () -> Unit,
+
     content: @Composable () -> Unit,
 ) {
+    BottomSheetBackHandler(
+        enabled = backHandlerEnabled,
+        coroutineScope = coroutineScope,
+        modalBottomSheetState = sheetState,
+        resetBottomSheetType = onBackPress,
+    )
+
     ModalBottomSheetLayout(
         sheetContent = sheetContent,
         sheetState = sheetState,

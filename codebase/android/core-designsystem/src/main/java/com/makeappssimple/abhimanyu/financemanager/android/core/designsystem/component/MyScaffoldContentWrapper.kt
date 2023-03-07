@@ -13,7 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 
 @Composable
-internal fun MyScaffoldContentWrapper(
+fun MyScaffoldContentWrapper(
     modifier: Modifier = Modifier,
     innerPadding: PaddingValues,
     onClick: () -> Unit,

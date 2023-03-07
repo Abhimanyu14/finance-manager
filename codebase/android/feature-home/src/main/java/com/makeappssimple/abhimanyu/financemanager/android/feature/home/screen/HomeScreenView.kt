@@ -25,7 +25,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.JSON
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getReadableDateAndTimeString
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -33,12 +32,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToSourcesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToTransactionsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.adjustmentEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.backup_card.BackupCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.overview_card.OverviewCard
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transferEmoji
@@ -79,14 +78,6 @@ internal fun HomeScreenView(
                 state.keyboardController?.hide()
             }
         }
-    }
-
-    BottomSheetBackHandler(
-        enabled = homeBottomSheetType != HomeBottomSheetType.NONE,
-        coroutineScope = state.coroutineScope,
-        modalBottomSheetState = state.modalBottomSheetState,
-    ) {
-        homeBottomSheetType = HomeBottomSheetType.NONE
     }
 
     MyScaffold(
@@ -139,6 +130,11 @@ internal fun HomeScreenView(
         isFloatingActionButtonDocked = true,
         onClick = {
             state.focusManager.clearFocus()
+        },
+        backHandlerEnabled = homeBottomSheetType != HomeBottomSheetType.NONE,
+        coroutineScope = state.coroutineScope,
+        onBackPress = {
+            homeBottomSheetType = HomeBottomSheetType.NONE
         },
         modifier = Modifier
             .fillMaxSize(),

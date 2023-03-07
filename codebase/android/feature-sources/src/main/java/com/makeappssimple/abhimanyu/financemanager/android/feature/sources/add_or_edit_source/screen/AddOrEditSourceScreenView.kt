@@ -27,18 +27,17 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.SourceType
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.AmountCommaVisualTransformation
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ChipItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.buttons.SaveButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.icon
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
@@ -97,14 +96,6 @@ internal fun AddOrEditSourceScreenView(
         }
     }
 
-    BottomSheetBackHandler(
-        enabled = addOrEditSourceBottomSheetType != AddOrEditSourceBottomSheetType.NONE,
-        coroutineScope = state.coroutineScope,
-        modalBottomSheetState = state.modalBottomSheetState,
-    ) {
-        addOrEditSourceBottomSheetType = AddOrEditSourceBottomSheetType.NONE
-    }
-
     MyScaffold(
         sheetState = state.modalBottomSheetState,
         sheetContent = {
@@ -126,6 +117,11 @@ internal fun AddOrEditSourceScreenView(
         },
         onClick = {
             state.focusManager.clearFocus()
+        },
+        backHandlerEnabled = addOrEditSourceBottomSheetType != AddOrEditSourceBottomSheetType.NONE,
+        coroutineScope = state.coroutineScope,
+        onBackPress = {
+            addOrEditSourceBottomSheetType = AddOrEditSourceBottomSheetType.NONE
         },
         modifier = Modifier
             .fillMaxSize(),

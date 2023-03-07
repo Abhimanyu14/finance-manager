@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircleSize

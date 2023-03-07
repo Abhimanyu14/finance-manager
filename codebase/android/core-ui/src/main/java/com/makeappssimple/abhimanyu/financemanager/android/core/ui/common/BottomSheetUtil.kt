@@ -24,7 +24,7 @@ fun toggleModalBottomSheetState(
 }
 
 @Composable
-fun BottomSheetBackHandler(
+internal fun BottomSheetBackHandler(
     enabled: Boolean,
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,

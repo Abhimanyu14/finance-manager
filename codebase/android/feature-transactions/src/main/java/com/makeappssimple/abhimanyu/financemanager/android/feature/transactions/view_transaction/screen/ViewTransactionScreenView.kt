@@ -16,18 +16,17 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getR
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToAddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToEditTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.adjustmentEmoji
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transferEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
@@ -107,14 +106,6 @@ internal fun ViewTransactionScreenView(
     val transactionForText: String =
         data.transactionData?.transactionFor?.titleToDisplay.orEmpty()
 
-    BottomSheetBackHandler(
-        enabled = viewTransactionBottomSheetType != ViewTransactionBottomSheetType.NONE,
-        coroutineScope = state.coroutineScope,
-        modalBottomSheetState = state.modalBottomSheetState,
-    ) {
-        viewTransactionBottomSheetType = ViewTransactionBottomSheetType.NONE
-    }
-
     MyScaffold(
         sheetState = state.modalBottomSheetState,
         sheetContent = {
@@ -154,6 +145,11 @@ internal fun ViewTransactionScreenView(
         },
         onClick = {
             state.focusManager.clearFocus()
+        },
+        backHandlerEnabled = viewTransactionBottomSheetType != ViewTransactionBottomSheetType.NONE,
+        coroutineScope = state.coroutineScope,
+        onBackPress = {
+            viewTransactionBottomSheetType = ViewTransactionBottomSheetType.NONE
         },
         modifier = Modifier
             .fillMaxSize(),

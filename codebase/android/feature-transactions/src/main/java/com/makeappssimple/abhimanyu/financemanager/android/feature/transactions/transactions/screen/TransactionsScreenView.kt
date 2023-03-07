@@ -40,7 +40,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
@@ -52,11 +51,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToViewTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.adjustmentEmoji
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MySearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transferEmoji
@@ -126,14 +125,6 @@ internal fun TransactionsScreenView(
     ) {
         data.updateSearchText("")
         data.updateSelectedFilter(Filter())
-    }
-
-    BottomSheetBackHandler(
-        enabled = transactionsBottomSheetType != TransactionsBottomSheetType.NONE,
-        coroutineScope = state.coroutineScope,
-        modalBottomSheetState = state.modalBottomSheetState,
-    ) {
-        transactionsBottomSheetType = TransactionsBottomSheetType.NONE
     }
 
     MyScaffold(
@@ -237,6 +228,11 @@ internal fun TransactionsScreenView(
         },
         onClick = {
             state.focusManager.clearFocus()
+        },
+        backHandlerEnabled = transactionsBottomSheetType != TransactionsBottomSheetType.NONE,
+        coroutineScope = state.coroutineScope,
+        onBackPress = {
+            transactionsBottomSheetType = TransactionsBottomSheetType.NONE
         },
         modifier = Modifier
             .fillMaxSize(),
