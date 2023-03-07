@@ -9,9 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
@@ -26,9 +24,8 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
@@ -91,9 +88,8 @@ internal fun AddOrEditTransactionForScreenView(
         addOrEditTransactionForBottomSheetType = AddOrEditTransactionForBottomSheetType.NONE
     }
 
-    ModalBottomSheetLayout(
+    MyScaffold(
         sheetState = state.modalBottomSheetState,
-        sheetShape = BottomSheetShape,
         sheetContent = {
             when (addOrEditTransactionForBottomSheetType) {
                 AddOrEditTransactionForBottomSheetType.NONE -> {
@@ -109,72 +105,65 @@ internal fun AddOrEditTransactionForScreenView(
                 }
             }
         },
-    ) {
-        Scaffold(
-            topBar = {
-                MyTopAppBar(
-                    titleTextStringResourceId = data.appBarTitleTextStringResourceId,
-                    navigationAction = {
-                        navigateUp(
-                            navigationManager = data.navigationManager,
-                        )
-                    },
-                )
-            },
-            modifier = Modifier
-                .fillMaxSize(),
-        ) { innerPadding ->
-            MyScaffoldContentWrapper(
-                innerPadding = innerPadding,
-                onClick = {
-                    state.focusManager.clearFocus()
+        topBar = {
+            MyTopAppBar(
+                titleTextStringResourceId = data.appBarTitleTextStringResourceId,
+                navigationAction = {
+                    navigateUp(
+                        navigationManager = data.navigationManager,
+                    )
                 },
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .verticalScroll(
-                            state = rememberScrollState(),
-                        ),
-                ) {
-                    MyOutlinedTextField(
-                        value = data.title,
-                        labelTextStringResourceId = R.string.screen_add_or_edit_transaction_for_title,
-                        trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_for_clear_title,
-                        onClickTrailingIcon = {
-                            data.clearTitle()
-                        },
-                        onValueChange = { updatedTitle ->
-                            data.updateTitle(updatedTitle)
-                        },
-                        keyboardActions = KeyboardActions(
-                            onDone = {
-                                state.focusManager.clearFocus()
-                            },
-                        ),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.Text,
-                            imeAction = ImeAction.Done,
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .focusRequester(
-                                focusRequester = state.focusRequester,
-                            )
-                            .padding(
-                                all = 16.dp,
-                            ),
+            )
+        },
+        onClick = {
+            state.focusManager.clearFocus()
+        },
+        modifier = Modifier
+            .fillMaxSize(),
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(
+                    state = rememberScrollState(),
+                ),
+        ) {
+            MyOutlinedTextField(
+                value = data.title,
+                labelTextStringResourceId = R.string.screen_add_or_edit_transaction_for_title,
+                trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_for_clear_title,
+                onClickTrailingIcon = {
+                    data.clearTitle()
+                },
+                onValueChange = { updatedTitle ->
+                    data.updateTitle(updatedTitle)
+                },
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        state.focusManager.clearFocus()
+                    },
+                ),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Text,
+                    imeAction = ImeAction.Done,
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(
+                        focusRequester = state.focusRequester,
                     )
-                    SaveButton(
-                        textStringResourceId = data.ctaButtonLabelTextStringResourceId,
-                        isEnabled = data.isValidTitle(),
-                        onClick = {
-                            data.onCtaButtonClick()
-                        },
-                    )
-                }
-            }
+                    .padding(
+                        all = 16.dp,
+                    ),
+            )
+            SaveButton(
+                textStringResourceId = data.ctaButtonLabelTextStringResourceId,
+                isEnabled = data.isValidTitle(),
+                onClick = {
+                    data.onCtaButtonClick()
+                },
+            )
         }
     }
 }

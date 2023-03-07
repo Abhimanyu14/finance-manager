@@ -10,9 +10,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
@@ -30,7 +28,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
@@ -109,11 +107,10 @@ internal fun AddOrEditCategoryScreenView(
         addOrEditCategoryBottomSheetType = AddOrEditCategoryBottomSheetType.NONE
     }
 
-    ModalBottomSheetLayout(
+    MyScaffold(
         sheetState = state.modalBottomSheetState,
         sheetShape = when (addOrEditCategoryBottomSheetType) {
-            AddOrEditCategoryBottomSheetType.NONE,
-            -> {
+            AddOrEditCategoryBottomSheetType.NONE -> {
                 BottomSheetShape
             }
 
@@ -147,117 +144,110 @@ internal fun AddOrEditCategoryScreenView(
                 }
             }
         },
+        topBar = {
+            MyTopAppBar(
+                titleTextStringResourceId = data.appBarTitleTextStringResourceId,
+                navigationAction = {
+                    navigateUp(
+                        navigationManager = data.navigationManager,
+                    )
+                },
+            )
+        },
+        onClick = {
+            state.focusManager.clearFocus()
+        },
+        modifier = Modifier
+            .fillMaxSize(),
     ) {
-        Scaffold(
-            topBar = {
-                MyTopAppBar(
-                    titleTextStringResourceId = data.appBarTitleTextStringResourceId,
-                    navigationAction = {
-                        navigateUp(
-                            navigationManager = data.navigationManager,
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(
+                    state = rememberScrollState(),
+                ),
+        ) {
+            MyRadioGroup(
+                items = data.transactionTypes
+                    .map { transactionType ->
+                        ChipItem(
+                            text = transactionType.title,
+                        )
+                    },
+                selectedItemIndex = data.selectedTransactionTypeIndex,
+                onSelectionChange = { updatedIndex ->
+                    data.updateSelectedTransactionTypeIndex(updatedIndex)
+                },
+                modifier = Modifier
+                    .padding(
+                        all = 12.dp,
+                    ),
+            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(
+                        horizontal = 16.dp,
+                    )
+                    .fillMaxWidth(),
+            ) {
+                MyEmojiCircle(
+                    emojiCircleSize = EmojiCircleSize.Normal,
+                    emoji = data.emoji,
+                    onClick = {
+                        state.keyboardController?.hide()
+                        addOrEditCategoryBottomSheetType =
+                            AddOrEditCategoryBottomSheetType.SELECT_EMOJI
+                        toggleModalBottomSheetState(
+                            coroutineScope = state.coroutineScope,
+                            modalBottomSheetState = state.modalBottomSheetState,
                         )
                     },
                 )
-            },
-            modifier = Modifier
-                .fillMaxSize(),
-        ) { innerPadding ->
-            MyScaffoldContentWrapper(
-                innerPadding = innerPadding,
-                onClick = {
-                    state.focusManager.clearFocus()
-                },
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .verticalScroll(
-                            state = rememberScrollState(),
-                        ),
-                ) {
-                    MyRadioGroup(
-                        items = data.transactionTypes
-                            .map { transactionType ->
-                                ChipItem(
-                                    text = transactionType.title,
-                                )
-                            },
-                        selectedItemIndex = data.selectedTransactionTypeIndex,
-                        onSelectionChange = { updatedIndex ->
-                            data.updateSelectedTransactionTypeIndex(updatedIndex)
-                        },
-                        modifier = Modifier
-                            .padding(
-                                all = 12.dp,
-                            ),
-                    )
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier
-                            .padding(
-                                horizontal = 16.dp,
+                MyOutlinedTextField(
+                    value = data.title,
+                    labelTextStringResourceId = R.string.screen_add_or_edit_category_title,
+                    trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_category_clear_title,
+                    onClickTrailingIcon = {
+                        data.clearTitle()
+                    },
+                    onValueChange = { updatedTitle ->
+                        data.updateTitle(updatedTitle)
+                    },
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            state.focusManager.moveFocus(
+                                focusDirection = FocusDirection.Down,
                             )
-                            .fillMaxWidth(),
-                    ) {
-                        MyEmojiCircle(
-                            emojiCircleSize = EmojiCircleSize.Normal,
-                            emoji = data.emoji,
-                            onClick = {
-                                state.keyboardController?.hide()
-                                addOrEditCategoryBottomSheetType =
-                                    AddOrEditCategoryBottomSheetType.SELECT_EMOJI
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                )
-                            },
-                        )
-                        MyOutlinedTextField(
-                            value = data.title,
-                            labelTextStringResourceId = R.string.screen_add_or_edit_category_title,
-                            trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_category_clear_title,
-                            onClickTrailingIcon = {
-                                data.clearTitle()
-                            },
-                            onValueChange = { updatedTitle ->
-                                data.updateTitle(updatedTitle)
-                            },
-                            keyboardActions = KeyboardActions(
-                                onNext = {
-                                    state.focusManager.moveFocus(
-                                        focusDirection = FocusDirection.Down,
-                                    )
-                                },
-                                onDone = {
-                                    state.focusManager.clearFocus()
-                                },
-                            ),
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Text,
-                                imeAction = ImeAction.Done,
-                            ),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .focusRequester(
-                                    focusRequester = state.focusRequester,
-                                )
-                                .padding(
-                                    start = 4.dp,
-                                    top = 8.dp,
-                                    bottom = 8.dp,
-                                ),
-                        )
-                    }
-                    SaveButton(
-                        textStringResourceId = data.ctaButtonLabelTextStringResourceId,
-                        isEnabled = data.isValidCategoryData(),
-                        onClick = {
-                            data.onCtaButtonClick()
                         },
-                    )
-                }
+                        onDone = {
+                            state.focusManager.clearFocus()
+                        },
+                    ),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Done,
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(
+                            focusRequester = state.focusRequester,
+                        )
+                        .padding(
+                            start = 4.dp,
+                            top = 8.dp,
+                            bottom = 8.dp,
+                        ),
+                )
             }
+            SaveButton(
+                textStringResourceId = data.ctaButtonLabelTextStringResourceId,
+                isEnabled = data.isValidCategoryData(),
+                onClick = {
+                    data.onCtaButtonClick()
+                },
+            )
         }
     }
 }

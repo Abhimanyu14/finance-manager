@@ -6,12 +6,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
@@ -25,11 +23,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToAddTransactionForScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
@@ -96,9 +93,8 @@ internal fun TransactionForValuesScreenView(
         resetBottomSheetType()
     }
 
-    ModalBottomSheetLayout(
+    MyScaffold(
         sheetState = state.modalBottomSheetState,
-        sheetShape = BottomSheetShape,
         sheetContent = {
             when (transactionForValuesBottomSheetType) {
                 is TransactionForValuesBottomSheetType.DeleteConfirmation -> {
@@ -141,85 +137,78 @@ internal fun TransactionForValuesScreenView(
                 }
             }
         },
-    ) {
-        Scaffold(
-            topBar = {
-                MyTopAppBar(
-                    titleTextStringResourceId = R.string.screen_transaction_for_values_appbar_title,
-                    navigationAction = {
-                        navigateUp(
-                            navigationManager = data.navigationManager,
-                        )
-                    },
-                )
-            },
-            floatingActionButton = {
-                MyFloatingActionButton(
-                    iconImageVector = Icons.Rounded.Add,
-                    contentDescription = stringResource(
-                        id = R.string.screen_transaction_for_values_floating_action_button_content_description,
-                    ),
-                    onClick = {
-                        navigateToAddTransactionForScreen(
-                            navigationManager = data.navigationManager,
-                        )
-                    },
-                )
-            },
-            modifier = Modifier
-                .fillMaxSize(),
-        ) { innerPadding ->
-            MyScaffoldContentWrapper(
-                innerPadding = innerPadding,
-                onClick = {
-                    state.focusManager.clearFocus()
+        topBar = {
+            MyTopAppBar(
+                titleTextStringResourceId = R.string.screen_transaction_for_values_appbar_title,
+                navigationAction = {
+                    navigateUp(
+                        navigationManager = data.navigationManager,
+                    )
                 },
-            ) {
-                LazyColumn {
-                    itemsIndexed(
-                        items = data.transactionForValues,
-                        key = { _, listItem ->
-                            listItem.hashCode()
-                        },
-                    ) { index, listItem ->
-                        val isDeleteVisible =
-                            data.transactionForValuesIsUsedInTransactions.getOrNull(
-                                index = index,
-                            )?.not() ?: false
-                        MyText(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    horizontal = 8.dp,
-                                )
-                                .clip(
-                                    shape = MaterialTheme.shapes.large,
-                                )
-                                .combinedClickable(
-                                    onClick = {
-                                        transactionForValuesBottomSheetType =
-                                            TransactionForValuesBottomSheetType.Menu(
-                                                isDeleteVisible = isDeleteVisible,
-                                                transactionForId = listItem.id,
-                                            )
-                                        toggleModalBottomSheetState(
-                                            coroutineScope = state.coroutineScope,
-                                            modalBottomSheetState = state.modalBottomSheetState,
-                                        )
-                                    },
-                                )
-                                .padding(
-                                    horizontal = 16.dp,
-                                    vertical = 12.dp,
-                                ),
-                            text = listItem.title.capitalizeWords(),
-                            style = MaterialTheme.typography.bodyLarge
-                                .copy(
-                                    color = MaterialTheme.colorScheme.onBackground,
-                                ),
+            )
+        },
+        floatingActionButton = {
+            MyFloatingActionButton(
+                iconImageVector = Icons.Rounded.Add,
+                contentDescription = stringResource(
+                    id = R.string.screen_transaction_for_values_floating_action_button_content_description,
+                ),
+                onClick = {
+                    navigateToAddTransactionForScreen(
+                        navigationManager = data.navigationManager,
+                    )
+                },
+            )
+        },
+        onClick = {
+            state.focusManager.clearFocus()
+        },
+        modifier = Modifier
+            .fillMaxSize(),
+    ) {
+        LazyColumn {
+            itemsIndexed(
+                items = data.transactionForValues,
+                key = { _, listItem ->
+                    listItem.hashCode()
+                },
+            ) { index, listItem ->
+                val isDeleteVisible =
+                    data.transactionForValuesIsUsedInTransactions.getOrNull(
+                        index = index,
+                    )?.not() ?: false
+                MyText(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            horizontal = 8.dp,
                         )
-                    }
-                }
+                        .clip(
+                            shape = MaterialTheme.shapes.large,
+                        )
+                        .combinedClickable(
+                            onClick = {
+                                transactionForValuesBottomSheetType =
+                                    TransactionForValuesBottomSheetType.Menu(
+                                        isDeleteVisible = isDeleteVisible,
+                                        transactionForId = listItem.id,
+                                    )
+                                toggleModalBottomSheetState(
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
+                                )
+                            },
+                        )
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 12.dp,
+                        ),
+                    text = listItem.title.capitalizeWords(),
+                    style = MaterialTheme.typography.bodyLarge
+                        .copy(
+                            color = MaterialTheme.colorScheme.onBackground,
+                        ),
+                )
             }
         }
     }

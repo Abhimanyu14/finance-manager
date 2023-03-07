@@ -10,10 +10,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
@@ -38,7 +36,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
@@ -176,8 +174,9 @@ internal fun AddOrEditTransactionScreenView(
         addOrEditTransactionBottomSheetType = AddOrEditTransactionBottomSheetType.NONE
     }
 
-    ModalBottomSheetLayout(
+    MyScaffold(
         sheetState = state.modalBottomSheetState,
+        // TODO-Abhi: To fix sheetShape according to content size
         sheetShape = if (state.modalBottomSheetState.currentValue == ModalBottomSheetValue.Expanded) {
             BottomSheetExpandedShape
         } else {
@@ -238,324 +237,317 @@ internal fun AddOrEditTransactionScreenView(
                 }
             }
         },
+        topBar = {
+            MyTopAppBar(
+                titleTextStringResourceId = data.appBarTitleTextStringResourceId,
+                navigationAction = {
+                    navigateUp(
+                        navigationManager = data.navigationManager,
+                    )
+                },
+            )
+        },
+        onClick = {
+            clearFocus()
+        },
+        modifier = Modifier
+            .fillMaxSize(),
     ) {
-        Scaffold(
-            topBar = {
-                MyTopAppBar(
-                    titleTextStringResourceId = data.appBarTitleTextStringResourceId,
-                    navigationAction = {
-                        navigateUp(
-                            navigationManager = data.navigationManager,
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(
+                    state = rememberScrollState(),
+                ),
+        ) {
+            AnimatedVisibility(
+                visible = data.uiVisibilityState.isTransactionTypesRadioGroupVisible,
+            ) {
+                MyHorizontalScrollingRadioGroup(
+                    items = data.transactionTypesForNewTransaction
+                        .map { transactionType ->
+                            ChipItem(
+                                text = transactionType.title,
+                            )
+                        },
+                    selectedItemIndex = data.uiState.selectedTransactionTypeIndex,
+                    onSelectionChange = { updatedSelectedTransactionTypeIndex ->
+                        data.updateSelectedTransactionTypeIndex(
+                            updatedSelectedTransactionTypeIndex
                         )
                     },
+                    modifier = Modifier
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 4.dp,
+                        ),
                 )
-            },
-            modifier = Modifier
-                .fillMaxSize(),
-        ) { innerPadding ->
-            MyScaffoldContentWrapper(
-                innerPadding = innerPadding,
+            }
+            MyOutlinedTextField(
+                value = data.uiState.amount,
+                labelTextStringResourceId = R.string.screen_add_or_edit_transaction_amount,
+                trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_amount,
+                onClickTrailingIcon = {
+                    data.clearAmount()
+                },
+                onValueChange = { updatedAmount ->
+                    data.updateAmount(updatedAmount)
+                },
+                supportingText = {
+                    AnimatedVisibility(
+                        data.uiState.amountErrorText.isNotNullOrBlank(),
+                    ) {
+                        MyText(
+                            text = stringResource(
+                                id = R.string.screen_add_or_edit_transaction_amount_error_text,
+                                data.uiState.amountErrorText.orEmpty(),
+                            ),
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                color = MaterialTheme.colorScheme.error,
+                            ),
+                        )
+                    }
+                },
+                isError = data.uiState.amountErrorText != null,
+                visualTransformation = AmountCommaVisualTransformation(),
+                keyboardActions = KeyboardActions(
+                    onDone = {
+                        clearFocus()
+                    },
+                ),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.NumberPassword,
+                    imeAction = ImeAction.Done,
+                ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(
+                        focusRequester = state.focusRequester,
+                    )
+                    .padding(
+                        horizontal = 16.dp,
+                        vertical = 4.dp,
+                    ),
+            )
+            AnimatedVisibility(
+                visible = data.uiVisibilityState.isCategoryTextFieldVisible,
+            ) {
+                MyReadOnlyTextField(
+                    value = data.uiState.category?.title.orEmpty(),
+                    labelTextStringResourceId = R.string.screen_add_or_edit_transaction_category,
+                    onClick = {
+                        clearFocus()
+                        addOrEditTransactionBottomSheetType =
+                            AddOrEditTransactionBottomSheetType.SELECT_CATEGORY
+                        toggleModalBottomSheetState(
+                            coroutineScope = state.coroutineScope,
+                            modalBottomSheetState = state.modalBottomSheetState,
+                        )
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 4.dp,
+                        ),
+                )
+            }
+            AnimatedVisibility(
+                visible = data.uiVisibilityState.isTitleTextFieldVisible,
+            ) {
+                MyOutlinedTextField(
+                    value = data.uiState.title,
+                    labelTextStringResourceId = R.string.screen_add_or_edit_transaction_title,
+                    trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_title,
+                    onClickTrailingIcon = {
+                        data.clearTitle()
+                    },
+                    onValueChange = { updatedTitle ->
+                        data.updateTitle(updatedTitle)
+                    },
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            clearFocus()
+                        },
+                    ),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Done,
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 4.dp,
+                        ),
+                )
+            }
+            AnimatedVisibility(
+                visible = data.uiVisibilityState.isTitleSuggestionsVisible,
+            ) {
+                MyHorizontalScrollingSelectionGroup(
+                    items = data.titleSuggestions
+                        .map { title ->
+                            ChipItem(
+                                text = title,
+                            )
+                        },
+                    onSelectionChange = { index ->
+                        clearFocus()
+                        data.updateTitle(data.titleSuggestions[index])
+                    },
+                    modifier = Modifier
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 4.dp,
+                        ),
+                )
+            }
+            AnimatedVisibility(
+                visible = data.uiVisibilityState.isTransactionForRadioGroupVisible,
+            ) {
+                MyHorizontalScrollingRadioGroup(
+                    items = data.transactionForValues
+                        .map { transactionFor ->
+                            ChipItem(
+                                text = transactionFor.titleToDisplay,
+                            )
+                        },
+                    selectedItemIndex = data.uiState.selectedTransactionForIndex,
+                    onSelectionChange = { updatedSelectedTransactionForIndex ->
+                        clearFocus()
+                        data.updateSelectedTransactionForIndex(
+                            updatedSelectedTransactionForIndex
+                        )
+                    },
+                    modifier = Modifier
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 4.dp,
+                        ),
+                )
+            }
+            AnimatedVisibility(
+                visible = data.uiVisibilityState.isDescriptionTextFieldVisible,
+            ) {
+                MyOutlinedTextField(
+                    value = data.uiState.description,
+                    labelTextStringResourceId = R.string.screen_add_or_edit_transaction_description,
+                    trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_description,
+                    onClickTrailingIcon = {
+                        data.clearDescription()
+                    },
+                    onValueChange = { updatedDescription ->
+                        data.updateDescription(updatedDescription)
+                    },
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            clearFocus()
+                        },
+                    ),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Done,
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 4.dp,
+                        ),
+                )
+            }
+            AnimatedVisibility(
+                visible = data.uiVisibilityState.isSourceFromTextFieldVisible,
+            ) {
+                MyReadOnlyTextField(
+                    value = data.uiState.sourceFrom?.name.orEmpty(),
+                    labelTextStringResourceId = if (data.selectedTransactionType == TransactionType.TRANSFER) {
+                        R.string.screen_add_or_edit_transaction_source_from
+                    } else {
+                        R.string.screen_add_or_edit_transaction_source
+                    },
+                    onClick = {
+                        clearFocus()
+                        addOrEditTransactionBottomSheetType =
+                            AddOrEditTransactionBottomSheetType.SELECT_SOURCE_FROM
+                        toggleModalBottomSheetState(
+                            coroutineScope = state.coroutineScope,
+                            modalBottomSheetState = state.modalBottomSheetState,
+                        )
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 4.dp,
+                        ),
+                )
+            }
+            AnimatedVisibility(
+                visible = data.uiVisibilityState.isSourceToTextFieldVisible,
+            ) {
+                MyReadOnlyTextField(
+                    value = data.uiState.sourceTo?.name.orEmpty(),
+                    labelTextStringResourceId = if (data.selectedTransactionType == TransactionType.TRANSFER) {
+                        R.string.screen_add_or_edit_transaction_source_to
+                    } else {
+                        R.string.screen_add_or_edit_transaction_source
+                    },
+                    onClick = {
+                        clearFocus()
+                        addOrEditTransactionBottomSheetType =
+                            AddOrEditTransactionBottomSheetType.SELECT_SOURCE_TO
+                        toggleModalBottomSheetState(
+                            coroutineScope = state.coroutineScope,
+                            modalBottomSheetState = state.modalBottomSheetState,
+                        )
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 4.dp,
+                        ),
+                )
+            }
+            MyReadOnlyTextField(
+                value = data.uiState.transactionCalendar.formattedDate(),
+                labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_date,
                 onClick = {
                     clearFocus()
+                    transactionDatePickerDialog.show()
                 },
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .verticalScroll(
-                            state = rememberScrollState(),
-                        ),
-                ) {
-                    AnimatedVisibility(
-                        visible = data.uiVisibilityState.isTransactionTypesRadioGroupVisible,
-                    ) {
-                        MyHorizontalScrollingRadioGroup(
-                            items = data.transactionTypesForNewTransaction
-                                .map { transactionType ->
-                                    ChipItem(
-                                        text = transactionType.title,
-                                    )
-                                },
-                            selectedItemIndex = data.uiState.selectedTransactionTypeIndex,
-                            onSelectionChange = { updatedSelectedTransactionTypeIndex ->
-                                data.updateSelectedTransactionTypeIndex(
-                                    updatedSelectedTransactionTypeIndex
-                                )
-                            },
-                            modifier = Modifier
-                                .padding(
-                                    horizontal = 16.dp,
-                                    vertical = 4.dp,
-                                ),
-                        )
-                    }
-                    MyOutlinedTextField(
-                        value = data.uiState.amount,
-                        labelTextStringResourceId = R.string.screen_add_or_edit_transaction_amount,
-                        trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_amount,
-                        onClickTrailingIcon = {
-                            data.clearAmount()
-                        },
-                        onValueChange = { updatedAmount ->
-                            data.updateAmount(updatedAmount)
-                        },
-                        supportingText = {
-                            AnimatedVisibility(
-                                data.uiState.amountErrorText.isNotNullOrBlank(),
-                            ) {
-                                MyText(
-                                    text = stringResource(
-                                        id = R.string.screen_add_or_edit_transaction_amount_error_text,
-                                        data.uiState.amountErrorText.orEmpty(),
-                                    ),
-                                    style = MaterialTheme.typography.bodySmall.copy(
-                                        color = MaterialTheme.colorScheme.error,
-                                    ),
-                                )
-                            }
-                        },
-                        isError = data.uiState.amountErrorText != null,
-                        visualTransformation = AmountCommaVisualTransformation(),
-                        keyboardActions = KeyboardActions(
-                            onDone = {
-                                clearFocus()
-                            },
-                        ),
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.NumberPassword,
-                            imeAction = ImeAction.Done,
-                        ),
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .focusRequester(
-                                focusRequester = state.focusRequester,
-                            )
-                            .padding(
-                                horizontal = 16.dp,
-                                vertical = 4.dp,
-                            ),
-                    )
-                    AnimatedVisibility(
-                        visible = data.uiVisibilityState.isCategoryTextFieldVisible,
-                    ) {
-                        MyReadOnlyTextField(
-                            value = data.uiState.category?.title.orEmpty(),
-                            labelTextStringResourceId = R.string.screen_add_or_edit_transaction_category,
-                            onClick = {
-                                clearFocus()
-                                addOrEditTransactionBottomSheetType =
-                                    AddOrEditTransactionBottomSheetType.SELECT_CATEGORY
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                )
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    horizontal = 16.dp,
-                                    vertical = 4.dp,
-                                ),
-                        )
-                    }
-                    AnimatedVisibility(
-                        visible = data.uiVisibilityState.isTitleTextFieldVisible,
-                    ) {
-                        MyOutlinedTextField(
-                            value = data.uiState.title,
-                            labelTextStringResourceId = R.string.screen_add_or_edit_transaction_title,
-                            trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_title,
-                            onClickTrailingIcon = {
-                                data.clearTitle()
-                            },
-                            onValueChange = { updatedTitle ->
-                                data.updateTitle(updatedTitle)
-                            },
-                            keyboardActions = KeyboardActions(
-                                onDone = {
-                                    clearFocus()
-                                },
-                            ),
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Text,
-                                imeAction = ImeAction.Done,
-                            ),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    horizontal = 16.dp,
-                                    vertical = 4.dp,
-                                ),
-                        )
-                    }
-                    AnimatedVisibility(
-                        visible = data.uiVisibilityState.isTitleSuggestionsVisible,
-                    ) {
-                        MyHorizontalScrollingSelectionGroup(
-                            items = data.titleSuggestions
-                                .map { title ->
-                                    ChipItem(
-                                        text = title,
-                                    )
-                                },
-                            onSelectionChange = { index ->
-                                clearFocus()
-                                data.updateTitle(data.titleSuggestions[index])
-                            },
-                            modifier = Modifier
-                                .padding(
-                                    horizontal = 16.dp,
-                                    vertical = 4.dp,
-                                ),
-                        )
-                    }
-                    AnimatedVisibility(
-                        visible = data.uiVisibilityState.isTransactionForRadioGroupVisible,
-                    ) {
-                        MyHorizontalScrollingRadioGroup(
-                            items = data.transactionForValues
-                                .map { transactionFor ->
-                                    ChipItem(
-                                        text = transactionFor.titleToDisplay,
-                                    )
-                                },
-                            selectedItemIndex = data.uiState.selectedTransactionForIndex,
-                            onSelectionChange = { updatedSelectedTransactionForIndex ->
-                                clearFocus()
-                                data.updateSelectedTransactionForIndex(
-                                    updatedSelectedTransactionForIndex
-                                )
-                            },
-                            modifier = Modifier
-                                .padding(
-                                    horizontal = 16.dp,
-                                    vertical = 4.dp,
-                                ),
-                        )
-                    }
-                    AnimatedVisibility(
-                        visible = data.uiVisibilityState.isDescriptionTextFieldVisible,
-                    ) {
-                        MyOutlinedTextField(
-                            value = data.uiState.description,
-                            labelTextStringResourceId = R.string.screen_add_or_edit_transaction_description,
-                            trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_description,
-                            onClickTrailingIcon = {
-                                data.clearDescription()
-                            },
-                            onValueChange = { updatedDescription ->
-                                data.updateDescription(updatedDescription)
-                            },
-                            keyboardActions = KeyboardActions(
-                                onDone = {
-                                    clearFocus()
-                                },
-                            ),
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Text,
-                                imeAction = ImeAction.Done,
-                            ),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    horizontal = 16.dp,
-                                    vertical = 4.dp,
-                                ),
-                        )
-                    }
-                    AnimatedVisibility(
-                        visible = data.uiVisibilityState.isSourceFromTextFieldVisible,
-                    ) {
-                        MyReadOnlyTextField(
-                            value = data.uiState.sourceFrom?.name.orEmpty(),
-                            labelTextStringResourceId = if (data.selectedTransactionType == TransactionType.TRANSFER) {
-                                R.string.screen_add_or_edit_transaction_source_from
-                            } else {
-                                R.string.screen_add_or_edit_transaction_source
-                            },
-                            onClick = {
-                                clearFocus()
-                                addOrEditTransactionBottomSheetType =
-                                    AddOrEditTransactionBottomSheetType.SELECT_SOURCE_FROM
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                )
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    horizontal = 16.dp,
-                                    vertical = 4.dp,
-                                ),
-                        )
-                    }
-                    AnimatedVisibility(
-                        visible = data.uiVisibilityState.isSourceToTextFieldVisible,
-                    ) {
-                        MyReadOnlyTextField(
-                            value = data.uiState.sourceTo?.name.orEmpty(),
-                            labelTextStringResourceId = if (data.selectedTransactionType == TransactionType.TRANSFER) {
-                                R.string.screen_add_or_edit_transaction_source_to
-                            } else {
-                                R.string.screen_add_or_edit_transaction_source
-                            },
-                            onClick = {
-                                clearFocus()
-                                addOrEditTransactionBottomSheetType =
-                                    AddOrEditTransactionBottomSheetType.SELECT_SOURCE_TO
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                )
-                            },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    horizontal = 16.dp,
-                                    vertical = 4.dp,
-                                ),
-                        )
-                    }
-                    MyReadOnlyTextField(
-                        value = data.uiState.transactionCalendar.formattedDate(),
-                        labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_date,
-                        onClick = {
-                            clearFocus()
-                            transactionDatePickerDialog.show()
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                horizontal = 16.dp,
-                                vertical = 4.dp,
-                            ),
-                    )
-                    MyReadOnlyTextField(
-                        value = data.uiState.transactionCalendar.formattedTime(),
-                        labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_time,
-                        onClick = {
-                            clearFocus()
-                            transactionTimePickerDialog.show()
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                horizontal = 16.dp,
-                                vertical = 4.dp,
-                            ),
-                    )
-                    SaveButton(
-                        textStringResourceId = data.ctaButtonLabelTextStringResourceId,
-                        isEnabled = data.isCtaButtonEnabled,
-                        onClick = {
-                            clearFocus()
-                            data.onCtaButtonClick()
-                        },
-                    )
-                }
-            }
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = 16.dp,
+                        vertical = 4.dp,
+                    ),
+            )
+            MyReadOnlyTextField(
+                value = data.uiState.transactionCalendar.formattedTime(),
+                labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_time,
+                onClick = {
+                    clearFocus()
+                    transactionTimePickerDialog.show()
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = 16.dp,
+                        vertical = 4.dp,
+                    ),
+            )
+            SaveButton(
+                textStringResourceId = data.ctaButtonLabelTextStringResourceId,
+                isEnabled = data.isCtaButtonEnabled,
+                onClick = {
+                    clearFocus()
+                    data.onCtaButtonClick()
+                },
+            )
         }
     }
 }

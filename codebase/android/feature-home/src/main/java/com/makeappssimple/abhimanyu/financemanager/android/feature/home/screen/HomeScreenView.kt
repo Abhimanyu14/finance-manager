@@ -7,9 +7,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.Scaffold
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
@@ -27,10 +25,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.JSON
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getReadableDateAndTimeString
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToAddTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToSourcesScreen
@@ -92,9 +89,8 @@ internal fun HomeScreenView(
         homeBottomSheetType = HomeBottomSheetType.NONE
     }
 
-    ModalBottomSheetLayout(
+    MyScaffold(
         sheetState = state.modalBottomSheetState,
-        sheetShape = BottomSheetShape,
         sheetContent = {
             when (homeBottomSheetType) {
                 HomeBottomSheetType.NONE -> {
@@ -113,136 +109,129 @@ internal fun HomeScreenView(
                 }
             }
         },
+        topBar = {
+            MyTopAppBar(
+                titleTextStringResourceId = R.string.screen_home_appbar_title,
+            )
+        },
+        bottomBar = {
+            HomeBottomAppBar(
+                coroutineScope = state.coroutineScope,
+                modalBottomSheetState = state.modalBottomSheetState,
+                updateHomeBottomSheetType = {
+                    homeBottomSheetType = HomeBottomSheetType.MENU
+                },
+            )
+        },
+        floatingActionButton = {
+            MyFloatingActionButton(
+                iconImageVector = Icons.Rounded.Add,
+                contentDescription = stringResource(
+                    id = R.string.screen_home_floating_action_button_content_description,
+                ),
+                onClick = {
+                    navigateToAddTransactionScreen(
+                        navigationManager = data.navigationManager,
+                    )
+                },
+            )
+        },
+        isFloatingActionButtonDocked = true,
+        onClick = {
+            state.focusManager.clearFocus()
+        },
+        modifier = Modifier
+            .fillMaxSize(),
     ) {
-        Scaffold(
-            topBar = {
-                MyTopAppBar(
-                    titleTextStringResourceId = R.string.screen_home_appbar_title,
-                )
-            },
-            bottomBar = {
-                HomeBottomAppBar(
-                    coroutineScope = state.coroutineScope,
-                    modalBottomSheetState = state.modalBottomSheetState,
-                    updateHomeBottomSheetType = {
-                        homeBottomSheetType = HomeBottomSheetType.MENU
-                    },
-                )
-            },
-            floatingActionButton = {
-                MyFloatingActionButton(
-                    iconImageVector = Icons.Rounded.Add,
-                    contentDescription = stringResource(
-                        id = R.string.screen_home_floating_action_button_content_description,
-                    ),
+        LazyColumn(
+            contentPadding = PaddingValues(
+                bottom = 48.dp,
+            ),
+        ) {
+            item {
+                TotalBalanceCard(
                     onClick = {
-                        navigateToAddTransactionScreen(
+                        navigateToSourcesScreen(
                             navigationManager = data.navigationManager,
                         )
                     },
                 )
-            },
-            isFloatingActionButtonDocked = true,
-            modifier = Modifier
-                .fillMaxSize(),
-        ) { innerPadding ->
-            MyScaffoldContentWrapper(
-                innerPadding = innerPadding,
-                onClick = {
-                    state.focusManager.clearFocus()
-                },
-            ) {
-                LazyColumn(
-                    contentPadding = PaddingValues(
-                        bottom = 48.dp,
-                    ),
+            }
+            item {
+                AnimatedVisibility(
+                    visible = data.showBackupCard,
                 ) {
-                    item {
-                        TotalBalanceCard(
-                            onClick = {
-                                navigateToSourcesScreen(
-                                    navigationManager = data.navigationManager,
-                                )
-                            },
-                        )
-                    }
-                    item {
-                        AnimatedVisibility(
-                            visible = data.showBackupCard,
-                        ) {
-                            BackupCard(
-                                onClick = {
-                                    data.createDocument.launch(JSON_MIMETYPE)
-                                }
-                            )
+                    BackupCard(
+                        onClick = {
+                            data.createDocument.launch(JSON_MIMETYPE)
                         }
-                    }
-                    item {
-                        OverviewCard()
-                    }
-                    item {
-                        HomeRecentTransactionsView(
-                            onClick = {
-                                navigateToTransactionsScreen(
-                                    navigationManager = data.navigationManager,
-                                )
-                            },
+                    )
+                }
+            }
+            item {
+                OverviewCard()
+            }
+            item {
+                HomeRecentTransactionsView(
+                    onClick = {
+                        navigateToTransactionsScreen(
+                            navigationManager = data.navigationManager,
                         )
+                    },
+                )
+            }
+            items(
+                items = data.transactionData,
+                key = { listItem ->
+                    listItem.hashCode()
+                },
+            ) { listItem ->
+                val amountColor: Color = listItem.transaction.getAmountTextColor()
+                val amountText: String =
+                    if (listItem.transaction.transactionType == TransactionType.INCOME ||
+                        listItem.transaction.transactionType == TransactionType.EXPENSE ||
+                        listItem.transaction.transactionType == TransactionType.ADJUSTMENT ||
+                        listItem.transaction.transactionType == TransactionType.REFUND
+                    ) {
+                        listItem.transaction.amount.toSignedString(
+                            isPositive = listItem.sourceTo != null,
+                            isNegative = listItem.sourceFrom != null,
+                        )
+                    } else {
+                        listItem.transaction.amount.toString()
                     }
-                    items(
-                        items = data.transactionData,
-                        key = { listItem ->
-                            listItem.hashCode()
-                        },
-                    ) { listItem ->
-                        val amountColor: Color = listItem.transaction.getAmountTextColor()
-                        val amountText: String =
-                            if (listItem.transaction.transactionType == TransactionType.INCOME ||
-                                listItem.transaction.transactionType == TransactionType.EXPENSE ||
-                                listItem.transaction.transactionType == TransactionType.ADJUSTMENT ||
-                                listItem.transaction.transactionType == TransactionType.REFUND
-                            ) {
-                                listItem.transaction.amount.toSignedString(
-                                    isPositive = listItem.sourceTo != null,
-                                    isNegative = listItem.sourceFrom != null,
-                                )
-                            } else {
-                                listItem.transaction.amount.toString()
-                            }
-                        val dateAndTimeText: String = getReadableDateAndTimeString(
-                            timestamp = listItem.transaction.transactionTimestamp,
-                        )
-                        val emoji: String = when (listItem.transaction.transactionType) {
-                            TransactionType.TRANSFER -> {
-                                transferEmoji
-                            }
+                val dateAndTimeText: String = getReadableDateAndTimeString(
+                    timestamp = listItem.transaction.transactionTimestamp,
+                )
+                val emoji: String = when (listItem.transaction.transactionType) {
+                    TransactionType.TRANSFER -> {
+                        transferEmoji
+                    }
 
-                            TransactionType.ADJUSTMENT -> {
-                                adjustmentEmoji
-                            }
+                    TransactionType.ADJUSTMENT -> {
+                        adjustmentEmoji
+                    }
 
-                            else -> {
-                                listItem.category?.emoji.orEmpty()
-                            }
-                        }
-                        val sourceFromName = listItem.sourceFrom?.name
-                        val sourceToName = listItem.sourceTo?.name
-                        val title: String = listItem.transaction.title
-                        val transactionForText: String =
-                            listItem.transactionFor.titleToDisplay
-
-                        TransactionListItem(
-                            amountColor = amountColor,
-                            amountText = amountText,
-                            dateAndTimeText = dateAndTimeText,
-                            emoji = emoji,
-                            sourceFromName = sourceFromName,
-                            sourceToName = sourceToName,
-                            title = title,
-                            transactionForText = transactionForText,
-                        )
+                    else -> {
+                        listItem.category?.emoji.orEmpty()
                     }
                 }
+                val sourceFromName = listItem.sourceFrom?.name
+                val sourceToName = listItem.sourceTo?.name
+                val title: String = listItem.transaction.title
+                val transactionForText: String =
+                    listItem.transactionFor.titleToDisplay
+
+                TransactionListItem(
+                    amountColor = amountColor,
+                    amountText = amountText,
+                    dateAndTimeText = dateAndTimeText,
+                    emoji = emoji,
+                    sourceFromName = sourceFromName,
+                    sourceToName = sourceToName,
+                    title = title,
+                    transactionForText = transactionForText,
+                )
             }
         }
     }

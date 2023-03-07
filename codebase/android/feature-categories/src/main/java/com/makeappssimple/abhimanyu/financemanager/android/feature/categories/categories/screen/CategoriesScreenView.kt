@@ -2,11 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
@@ -23,12 +21,11 @@ import com.google.accompanist.pager.rememberPagerState
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabData
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabRow
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToAddCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
@@ -154,9 +151,8 @@ internal fun CategoriesScreenView(
         resetBottomSheetType()
     }
 
-    ModalBottomSheetLayout(
+    MyScaffold(
         sheetState = state.modalBottomSheetState,
-        sheetShape = BottomSheetShape,
         sheetContent = {
             when (categoriesBottomSheetType) {
                 is CategoriesBottomSheetType.DeleteConfirmation -> {
@@ -227,173 +223,166 @@ internal fun CategoriesScreenView(
                 }
             }
         },
-    ) {
-        Scaffold(
-            topBar = {
-                MyTopAppBar(
-                    titleTextStringResourceId = R.string.screen_categories_appbar_title,
-                    navigationAction = {
-                        navigateUp(
-                            navigationManager = data.navigationManager,
-                        )
-                    },
-                )
-            },
-            floatingActionButton = {
-                MyFloatingActionButton(
-                    iconImageVector = Icons.Rounded.Add,
-                    contentDescription = stringResource(
-                        id = R.string.screen_categories_floating_action_button_content_description,
-                    ),
-                    onClick = {
-                        navigateToAddCategoryScreen(
-                            navigationManager = data.navigationManager,
-                            transactionType = when (data.selectedTabIndex) {
-                                0 -> {
-                                    TransactionType.EXPENSE.title
-                                }
-
-                                1 -> {
-                                    TransactionType.INCOME.title
-                                }
-
-                                else -> {
-                                    TransactionType.INVESTMENT.title
-                                }
+        topBar = {
+            MyTopAppBar(
+                titleTextStringResourceId = R.string.screen_categories_appbar_title,
+                navigationAction = {
+                    navigateUp(
+                        navigationManager = data.navigationManager,
+                    )
+                },
+            )
+        },
+        floatingActionButton = {
+            MyFloatingActionButton(
+                iconImageVector = Icons.Rounded.Add,
+                contentDescription = stringResource(
+                    id = R.string.screen_categories_floating_action_button_content_description,
+                ),
+                onClick = {
+                    navigateToAddCategoryScreen(
+                        navigationManager = data.navigationManager,
+                        transactionType = when (data.selectedTabIndex) {
+                            0 -> {
+                                TransactionType.EXPENSE.title
                             }
-                        )
-                    },
-                )
-            },
+
+                            1 -> {
+                                TransactionType.INCOME.title
+                            }
+
+                            else -> {
+                                TransactionType.INVESTMENT.title
+                            }
+                        }
+                    )
+                },
+            )
+        },
+        onClick = {
+            state.focusManager.clearFocus()
+        },
+        modifier = Modifier
+            .fillMaxSize(),
+    ) {
+        Column(
             modifier = Modifier
                 .fillMaxSize(),
-        ) { innerPadding ->
-            MyScaffoldContentWrapper(
-                innerPadding = innerPadding,
-                onClick = {
-                    state.focusManager.clearFocus()
-                },
-            ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                ) {
-                    MyTabRow(
-                        selectedTabIndex = data.selectedTabIndex,
-                        updateSelectedTabIndex = data.updateSelectedTabIndex,
-                        tabData = tabData,
-                    )
-                    HorizontalPager(
-                        count = 3,
-                        state = pagerState,
-                        modifier = Modifier
-                            .weight(
-                                weight = 1F,
-                            ),
-                    ) { page ->
-                        val transactionType: TransactionType = transactionTypes[page]
-                        val categoriesGridItemDataList: List<CategoriesGridItemData> =
-                            when (transactionType) {
-                                TransactionType.EXPENSE -> {
-                                    data.expenseCategories.map { category ->
-                                        CategoriesGridItemData(
-                                            isSelected = if (data.defaultExpenseCategoryId.isNull()) {
-                                                isDefaultExpenseCategory(
-                                                    category = category.title,
-                                                )
-                                            } else {
-                                                data.defaultExpenseCategoryId == category.id
-                                            },
-                                            category = category,
+        ) {
+            MyTabRow(
+                selectedTabIndex = data.selectedTabIndex,
+                updateSelectedTabIndex = data.updateSelectedTabIndex,
+                tabData = tabData,
+            )
+            HorizontalPager(
+                count = 3,
+                state = pagerState,
+                modifier = Modifier
+                    .weight(
+                        weight = 1F,
+                    ),
+            ) { page ->
+                val transactionType: TransactionType = transactionTypes[page]
+                val categoriesGridItemDataList: List<CategoriesGridItemData> =
+                    when (transactionType) {
+                        TransactionType.EXPENSE -> {
+                            data.expenseCategories.map { category ->
+                                CategoriesGridItemData(
+                                    isSelected = if (data.defaultExpenseCategoryId.isNull()) {
+                                        isDefaultExpenseCategory(
+                                            category = category.title,
                                         )
-                                    }
-                                }
+                                    } else {
+                                        data.defaultExpenseCategoryId == category.id
+                                    },
+                                    category = category,
+                                )
+                            }
+                        }
 
-                                TransactionType.INCOME -> {
-                                    data.incomeCategories.map { category ->
-                                        CategoriesGridItemData(
-                                            isSelected = if (data.defaultIncomeCategoryId.isNull()) {
-                                                isDefaultIncomeCategory(
-                                                    category = category.title,
-                                                )
-                                            } else {
-                                                data.defaultIncomeCategoryId == category.id
-                                            },
-                                            category = category,
+                        TransactionType.INCOME -> {
+                            data.incomeCategories.map { category ->
+                                CategoriesGridItemData(
+                                    isSelected = if (data.defaultIncomeCategoryId.isNull()) {
+                                        isDefaultIncomeCategory(
+                                            category = category.title,
                                         )
-                                    }
-                                }
+                                    } else {
+                                        data.defaultIncomeCategoryId == category.id
+                                    },
+                                    category = category,
+                                )
+                            }
+                        }
 
-                                TransactionType.INVESTMENT -> {
-                                    data.investmentCategories.map { category ->
-                                        CategoriesGridItemData(
-                                            isSelected = if (data.defaultInvestmentCategoryId.isNull()) {
-                                                isDefaultInvestmentCategory(
-                                                    category = category.title,
-                                                )
-                                            } else {
-                                                data.defaultInvestmentCategoryId == category.id
-                                            },
-                                            category = category,
+                        TransactionType.INVESTMENT -> {
+                            data.investmentCategories.map { category ->
+                                CategoriesGridItemData(
+                                    isSelected = if (data.defaultInvestmentCategoryId.isNull()) {
+                                        isDefaultInvestmentCategory(
+                                            category = category.title,
                                         )
-                                    }
-                                }
+                                    } else {
+                                        data.defaultInvestmentCategoryId == category.id
+                                    },
+                                    category = category,
+                                )
+                            }
+                        }
 
-                                else -> {
-                                    data.investmentCategories.map { category ->
-                                        CategoriesGridItemData(
-                                            isSelected = false,
-                                            category = category,
-                                        )
-                                    }
-                                }
+                        else -> {
+                            data.investmentCategories.map { category ->
+                                CategoriesGridItemData(
+                                    isSelected = false,
+                                    category = category,
+                                )
+                            }
+                        }
+                    }
+
+                CategoriesGrid(
+                    bottomPadding = 80.dp,
+                    topPadding = 8.dp,
+                    categoriesGridItemDataList = categoriesGridItemDataList,
+                    onItemClick = { index ->
+                        val deleteEnabled = when (transactionType) {
+                            TransactionType.EXPENSE -> {
+                                !categoriesGridItemDataList[index].isSelected && data.expenseCategoryIsUsedInTransactions.getOrNull(
+                                    index = index,
+                                )?.not() ?: false
                             }
 
-                        CategoriesGrid(
-                            bottomPadding = 80.dp,
-                            topPadding = 8.dp,
-                            categoriesGridItemDataList = categoriesGridItemDataList,
-                            onItemClick = { index ->
-                                val deleteEnabled = when (transactionType) {
-                                    TransactionType.EXPENSE -> {
-                                        !categoriesGridItemDataList[index].isSelected && data.expenseCategoryIsUsedInTransactions.getOrNull(
-                                            index = index,
-                                        )?.not() ?: false
-                                    }
+                            TransactionType.INCOME -> {
+                                !categoriesGridItemDataList[index].isSelected && data.incomeCategoryIsUsedInTransactions.getOrNull(
+                                    index = index,
+                                )?.not() ?: false
+                            }
 
-                                    TransactionType.INCOME -> {
-                                        !categoriesGridItemDataList[index].isSelected && data.incomeCategoryIsUsedInTransactions.getOrNull(
-                                            index = index,
-                                        )?.not() ?: false
-                                    }
+                            TransactionType.INVESTMENT -> {
+                                !categoriesGridItemDataList[index].isSelected && data.investmentCategoryIsUsedInTransactions.getOrNull(
+                                    index = index,
+                                )?.not() ?: false
+                            }
 
-                                    TransactionType.INVESTMENT -> {
-                                        !categoriesGridItemDataList[index].isSelected && data.investmentCategoryIsUsedInTransactions.getOrNull(
-                                            index = index,
-                                        )?.not() ?: false
-                                    }
+                            else -> {
+                                false
+                            }
+                        }
 
-                                    else -> {
-                                        false
-                                    }
-                                }
-
-                                categoriesBottomSheetType =
-                                    CategoriesBottomSheetType.Menu(
-                                        deleteEnabled = deleteEnabled,
-                                        isDefault = categoriesGridItemDataList[index].isSelected,
-                                        categoryId = categoriesGridItemDataList[index].category.id,
-                                        categoryTitle = categoriesGridItemDataList[index].category.title,
-                                    )
-                                clickedItemId = categoriesGridItemDataList[index].category.id
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                )
-                            },
+                        categoriesBottomSheetType =
+                            CategoriesBottomSheetType.Menu(
+                                deleteEnabled = deleteEnabled,
+                                isDefault = categoriesGridItemDataList[index].isSelected,
+                                categoryId = categoriesGridItemDataList[index].category.id,
+                                categoryTitle = categoriesGridItemDataList[index].category.title,
+                            )
+                        clickedItemId = categoriesGridItemDataList[index].category.id
+                        toggleModalBottomSheetState(
+                            coroutineScope = state.coroutineScope,
+                            modalBottomSheetState = state.modalBottomSheetState,
                         )
-                    }
-                }
+                    },
+                )
             }
         }
     }

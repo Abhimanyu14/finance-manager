@@ -10,9 +10,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
@@ -29,7 +27,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.SourceType
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
@@ -107,7 +105,7 @@ internal fun AddOrEditSourceScreenView(
         addOrEditSourceBottomSheetType = AddOrEditSourceBottomSheetType.NONE
     }
 
-    ModalBottomSheetLayout(
+    MyScaffold(
         sheetState = state.modalBottomSheetState,
         sheetContent = {
             when (addOrEditSourceBottomSheetType) {
@@ -116,140 +114,133 @@ internal fun AddOrEditSourceScreenView(
                 }
             }
         },
-    ) {
-        Scaffold(
-            topBar = {
-                MyTopAppBar(
-                    titleTextStringResourceId = data.appBarTitleTextStringResourceId,
-                    navigationAction = {
-                        navigateUp(
-                            navigationManager = data.navigationManager,
-                        )
-                    },
-                )
-            },
-            modifier = Modifier
-                .fillMaxSize(),
-        ) { innerPadding ->
-            MyScaffoldContentWrapper(
-                innerPadding = innerPadding,
-                onClick = {
-                    state.focusManager.clearFocus()
-                },
-            ) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .verticalScroll(
-                            state = rememberScrollState(),
-                        ),
-                ) {
-                    AnimatedVisibility(
-                        visible = data.isSourceTypesRadioGroupVisible,
-                    ) {
-                        MyRadioGroup(
-                            items = data.sourceTypes
-                                .map { sourceType ->
-                                    ChipItem(
-                                        text = sourceType.title,
-                                        icon = sourceType.icon,
-                                    )
-                                },
-                            selectedItemIndex = data.selectedSourceTypeIndex,
-                            onSelectionChange = { updatedIndex ->
-                                data.updateSelectedSourceTypeIndex(updatedIndex)
-                            },
-                            modifier = Modifier
-                                .padding(
-                                    horizontal = 16.dp,
-                                    vertical = 8.dp,
-                                ),
-                        )
-                    }
-                    AnimatedVisibility(
-                        visible = data.isNameTextFieldVisible,
-                    ) {
-                        MyOutlinedTextField(
-                            value = data.name,
-                            labelTextStringResourceId = R.string.screen_add_or_edit_source_name,
-                            trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_source_clear_name,
-                            onClickTrailingIcon = {
-                                data.clearName()
-                            },
-                            onValueChange = { updatedName ->
-                                data.updateName(updatedName)
-                            },
-                            keyboardActions = KeyboardActions(
-                                onNext = {
-                                    state.focusManager.moveFocus(
-                                        focusDirection = FocusDirection.Down,
-                                    )
-                                },
-                            ),
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Text,
-                                imeAction = ImeAction.Next,
-                            ),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .focusRequester(
-                                    focusRequester = state.focusRequester,
-                                )
-                                .padding(
-                                    horizontal = 16.dp,
-                                    vertical = 8.dp,
-                                ),
-                        )
-                    }
-                    AnimatedVisibility(
-                        visible = data.isBalanceAmountTextFieldVisible,
-                    ) {
-                        MyOutlinedTextField(
-                            value = data.balanceAmountValue,
-                            labelTextStringResourceId = R.string.screen_edit_source_balance_amount_value,
-                            trailingIconContentDescriptionTextStringResourceId = R.string.screen_edit_source_clear_balance_amount_value,
-                            onClickTrailingIcon = {
-                                data.clearBalanceAmountValue()
-                            },
-                            onValueChange = { updatedBalanceAmountValue ->
-                                data.updateBalanceAmountValue(updatedBalanceAmountValue)
-                            },
-                            visualTransformation = AmountCommaVisualTransformation(),
-                            keyboardActions = KeyboardActions(
-                                onNext = {
-                                    state.focusManager.moveFocus(
-                                        focusDirection = FocusDirection.Down,
-                                    )
-                                },
-                                onDone = {
-                                    state.focusManager.clearFocus()
-                                },
-                            ),
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.NumberPassword,
-                                imeAction = ImeAction.Done,
-                            ),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .focusRequester(
-                                    focusRequester = state.focusRequester,
-                                )
-                                .padding(
-                                    horizontal = 16.dp,
-                                    vertical = 8.dp,
-                                ),
-                        )
-                    }
-                    SaveButton(
-                        textStringResourceId = data.ctaButtonLabelTextStringResourceId,
-                        isEnabled = data.isValidSourceData(),
-                        onClick = {
-                            data.onCtaButtonClick()
-                        },
+        topBar = {
+            MyTopAppBar(
+                titleTextStringResourceId = data.appBarTitleTextStringResourceId,
+                navigationAction = {
+                    navigateUp(
+                        navigationManager = data.navigationManager,
                     )
-                }
+                },
+            )
+        },
+        onClick = {
+            state.focusManager.clearFocus()
+        },
+        modifier = Modifier
+            .fillMaxSize(),
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(
+                    state = rememberScrollState(),
+                ),
+        ) {
+            AnimatedVisibility(
+                visible = data.isSourceTypesRadioGroupVisible,
+            ) {
+                MyRadioGroup(
+                    items = data.sourceTypes
+                        .map { sourceType ->
+                            ChipItem(
+                                text = sourceType.title,
+                                icon = sourceType.icon,
+                            )
+                        },
+                    selectedItemIndex = data.selectedSourceTypeIndex,
+                    onSelectionChange = { updatedIndex ->
+                        data.updateSelectedSourceTypeIndex(updatedIndex)
+                    },
+                    modifier = Modifier
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 8.dp,
+                        ),
+                )
             }
+            AnimatedVisibility(
+                visible = data.isNameTextFieldVisible,
+            ) {
+                MyOutlinedTextField(
+                    value = data.name,
+                    labelTextStringResourceId = R.string.screen_add_or_edit_source_name,
+                    trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_source_clear_name,
+                    onClickTrailingIcon = {
+                        data.clearName()
+                    },
+                    onValueChange = { updatedName ->
+                        data.updateName(updatedName)
+                    },
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            state.focusManager.moveFocus(
+                                focusDirection = FocusDirection.Down,
+                            )
+                        },
+                    ),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Next,
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(
+                            focusRequester = state.focusRequester,
+                        )
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 8.dp,
+                        ),
+                )
+            }
+            AnimatedVisibility(
+                visible = data.isBalanceAmountTextFieldVisible,
+            ) {
+                MyOutlinedTextField(
+                    value = data.balanceAmountValue,
+                    labelTextStringResourceId = R.string.screen_edit_source_balance_amount_value,
+                    trailingIconContentDescriptionTextStringResourceId = R.string.screen_edit_source_clear_balance_amount_value,
+                    onClickTrailingIcon = {
+                        data.clearBalanceAmountValue()
+                    },
+                    onValueChange = { updatedBalanceAmountValue ->
+                        data.updateBalanceAmountValue(updatedBalanceAmountValue)
+                    },
+                    visualTransformation = AmountCommaVisualTransformation(),
+                    keyboardActions = KeyboardActions(
+                        onNext = {
+                            state.focusManager.moveFocus(
+                                focusDirection = FocusDirection.Down,
+                            )
+                        },
+                        onDone = {
+                            state.focusManager.clearFocus()
+                        },
+                    ),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.NumberPassword,
+                        imeAction = ImeAction.Done,
+                    ),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(
+                            focusRequester = state.focusRequester,
+                        )
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 8.dp,
+                        ),
+                )
+            }
+            SaveButton(
+                textStringResourceId = data.ctaButtonLabelTextStringResourceId,
+                isEnabled = data.isValidSourceData(),
+                onClick = {
+                    data.onCtaButtonClick()
+                },
+            )
         }
     }
 }

@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
@@ -23,7 +22,6 @@ import androidx.compose.material.icons.rounded.SwapVert
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
@@ -42,7 +40,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
@@ -138,7 +136,7 @@ internal fun TransactionsScreenView(
         transactionsBottomSheetType = TransactionsBottomSheetType.NONE
     }
 
-    ModalBottomSheetLayout(
+    MyScaffold(
         sheetState = state.modalBottomSheetState,
         sheetShape = when (transactionsBottomSheetType) {
             TransactionsBottomSheetType.NONE,
@@ -214,277 +212,270 @@ internal fun TransactionsScreenView(
                 }
             }
         },
+        topBar = {
+            MyTopAppBar(
+                titleTextStringResourceId = R.string.screen_transactions_appbar_title,
+                navigationAction = {
+                    navigateUp(
+                        navigationManager = data.navigationManager,
+                    )
+                },
+            )
+        },
+        floatingActionButton = {
+            MyFloatingActionButton(
+                iconImageVector = Icons.Rounded.Add,
+                contentDescription = stringResource(
+                    id = R.string.screen_transactions_floating_action_button_content_description,
+                ),
+                onClick = {
+                    navigateToAddTransactionScreen(
+                        navigationManager = data.navigationManager,
+                    )
+                },
+            )
+        },
+        onClick = {
+            state.focusManager.clearFocus()
+        },
+        modifier = Modifier
+            .fillMaxSize(),
     ) {
-        Scaffold(
-            topBar = {
-                MyTopAppBar(
-                    titleTextStringResourceId = R.string.screen_transactions_appbar_title,
-                    navigationAction = {
-                        navigateUp(
-                            navigationManager = data.navigationManager,
-                        )
-                    },
-                )
-            },
-            floatingActionButton = {
-                MyFloatingActionButton(
-                    iconImageVector = Icons.Rounded.Add,
-                    contentDescription = stringResource(
-                        id = R.string.screen_transactions_floating_action_button_content_description,
-                    ),
-                    onClick = {
-                        navigateToAddTransactionScreen(
-                            navigationManager = data.navigationManager,
-                        )
-                    },
-                )
-            },
+        Column(
             modifier = Modifier
                 .fillMaxSize(),
-        ) { innerPadding ->
-            MyScaffoldContentWrapper(
-                innerPadding = innerPadding,
-                onClick = {
-                    state.focusManager.clearFocus()
-                },
+        ) {
+            AnimatedVisibility(
+                visible = data.isLoading,
             ) {
-                Column(
+                MyLinearProgressIndicator()
+            }
+            AnimatedVisibility(
+                visible = data.transactionDetailsListItemViewData.isNotEmpty() ||
+                        data.searchText.isNotEmpty() ||
+                        data.selectedFilter.areFiltersSelected()
+            ) {
+                Row(
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
-                        .fillMaxSize(),
+                        .fillMaxWidth()
+                        .defaultMinSize(
+                            minHeight = 48.dp,
+                        )
+                        .padding(
+                            start = 16.dp,
+                            end = 16.dp,
+                            top = 6.dp,
+                            bottom = 2.dp,
+                        ),
                 ) {
                     AnimatedVisibility(
-                        visible = data.isLoading,
+                        visible = true,
+                        modifier = Modifier
+                            .weight(
+                                weight = 1F,
+                            ),
                     ) {
-                        MyLinearProgressIndicator()
+                        MySearchBar(
+                            autoFocus = false,
+                            searchText = data.searchText,
+                            placeholderText = stringResource(
+                                id = R.string.screen_transactions_searchbar_placeholder,
+                            ),
+                            onValueChange = data.updateSearchText,
+                            onSearch = {
+                                state.focusManager.clearFocus()
+                            },
+                        )
                     }
-                    AnimatedVisibility(
-                        visible = data.transactionDetailsListItemViewData.isNotEmpty() ||
-                                data.searchText.isNotEmpty() ||
-                                data.selectedFilter.areFiltersSelected()
+                    ElevatedCard(
+                        onClick = {
+                            transactionsBottomSheetType =
+                                TransactionsBottomSheetType.SORT
+                            toggleModalBottomSheetState(
+                                coroutineScope = state.coroutineScope,
+                                modalBottomSheetState = state.modalBottomSheetState,
+                            )
+                        },
+                        modifier = Modifier,
                     ) {
-                        Row(
-                            horizontalArrangement = Arrangement.End,
-                            verticalAlignment = Alignment.CenterVertically,
+                        Icon(
+                            imageVector = Icons.Rounded.SwapVert,
+                            contentDescription = stringResource(
+                                id = R.string.screen_transactions_sort_button_content_description,
+                            ),
+                            tint = MaterialTheme.colorScheme.onPrimaryContainer,
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .defaultMinSize(
-                                    minHeight = 48.dp,
+                                .background(
+                                    color = MaterialTheme.colorScheme.primaryContainer,
                                 )
                                 .padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                    top = 6.dp,
-                                    bottom = 2.dp,
+                                    all = 8.dp,
                                 ),
-                        ) {
-                            AnimatedVisibility(
-                                visible = true,
+                        )
+                    }
+                    ElevatedCard(
+                        onClick = {
+                            transactionsBottomSheetType =
+                                TransactionsBottomSheetType.FILTERS
+                            toggleModalBottomSheetState(
+                                coroutineScope = state.coroutineScope,
+                                modalBottomSheetState = state.modalBottomSheetState,
+                            )
+                        },
+                        modifier = Modifier,
+                    ) {
+                        Box {
+                            Icon(
+                                imageVector = Icons.Rounded.FilterAlt,
+                                contentDescription = stringResource(
+                                    id = R.string.screen_transactions_filter_button_content_description,
+                                ),
+                                tint = MaterialTheme.colorScheme.onPrimaryContainer,
                                 modifier = Modifier
-                                    .weight(
-                                        weight = 1F,
-                                    ),
-                            ) {
-                                MySearchBar(
-                                    autoFocus = false,
-                                    searchText = data.searchText,
-                                    placeholderText = stringResource(
-                                        id = R.string.screen_transactions_searchbar_placeholder,
-                                    ),
-                                    onValueChange = data.updateSearchText,
-                                    onSearch = {
-                                        state.focusManager.clearFocus()
-                                    },
-                                )
-                            }
-                            ElevatedCard(
-                                onClick = {
-                                    transactionsBottomSheetType =
-                                        TransactionsBottomSheetType.SORT
-                                    toggleModalBottomSheetState(
-                                        coroutineScope = state.coroutineScope,
-                                        modalBottomSheetState = state.modalBottomSheetState,
+                                    .background(
+                                        color = MaterialTheme.colorScheme.primaryContainer,
                                     )
-                                },
-                                modifier = Modifier,
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Rounded.SwapVert,
-                                    contentDescription = stringResource(
-                                        id = R.string.screen_transactions_sort_button_content_description,
+                                    .padding(
+                                        all = 8.dp,
                                     ),
-                                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                            )
+                            if (data.selectedFilter.areFiltersSelected()) {
+                                Dot(
                                     modifier = Modifier
-                                        .background(
-                                            color = MaterialTheme.colorScheme.primaryContainer,
+                                        .align(
+                                            alignment = Alignment.TopEnd,
                                         )
                                         .padding(
                                             all = 8.dp,
                                         ),
+                                    color = MaterialTheme.colorScheme.error,
                                 )
-                            }
-                            ElevatedCard(
-                                onClick = {
-                                    transactionsBottomSheetType =
-                                        TransactionsBottomSheetType.FILTERS
-                                    toggleModalBottomSheetState(
-                                        coroutineScope = state.coroutineScope,
-                                        modalBottomSheetState = state.modalBottomSheetState,
-                                    )
-                                },
-                                modifier = Modifier,
-                            ) {
-                                Box {
-                                    Icon(
-                                        imageVector = Icons.Rounded.FilterAlt,
-                                        contentDescription = stringResource(
-                                            id = R.string.screen_transactions_filter_button_content_description,
-                                        ),
-                                        tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                                        modifier = Modifier
-                                            .background(
-                                                color = MaterialTheme.colorScheme.primaryContainer,
-                                            )
-                                            .padding(
-                                                all = 8.dp,
-                                            ),
-                                    )
-                                    if (data.selectedFilter.areFiltersSelected()) {
-                                        Dot(
-                                            modifier = Modifier
-                                                .align(
-                                                    alignment = Alignment.TopEnd,
-                                                )
-                                                .padding(
-                                                    all = 8.dp,
-                                                ),
-                                            color = MaterialTheme.colorScheme.error,
-                                        )
-                                    }
-                                }
                             }
                         }
                     }
-                    LazyColumn(
-                        contentPadding = PaddingValues(
-                            bottom = 72.dp,
-                        ),
-                    ) {
-                        data.transactionDetailsListItemViewData.forEach { (date, listItemData) ->
-                            if (date.isNotBlank()) {
-                                stickyHeader {
-                                    MyText(
-                                        modifier = Modifier
-                                            .background(
-                                                color = MaterialTheme.colorScheme.background,
-                                            )
-                                            .fillMaxWidth()
-                                            .padding(
-                                                start = 16.dp,
-                                                top = 8.dp,
-                                                bottom = 4.dp,
-                                                end = 16.dp,
-                                            ),
-                                        text = date,
-                                        style = MaterialTheme.typography.headlineSmall
-                                            .copy(
-                                                color = MaterialTheme.colorScheme.onBackground,
-                                            ),
+                }
+            }
+            LazyColumn(
+                contentPadding = PaddingValues(
+                    bottom = 72.dp,
+                ),
+            ) {
+                data.transactionDetailsListItemViewData.forEach { (date, listItemData) ->
+                    if (date.isNotBlank()) {
+                        stickyHeader {
+                            MyText(
+                                modifier = Modifier
+                                    .background(
+                                        color = MaterialTheme.colorScheme.background,
                                     )
-                                }
-                            }
-                            itemsIndexed(
-                                items = listItemData,
-                                key = { _, listItem ->
-                                    listItem.hashCode()
-                                },
-                            ) { _, listItem ->
-                                val isDeleteButtonEnabled =
-                                    listItem.transaction.refundTransactionIds?.run {
-                                        this.isEmpty()
-                                    } ?: true
-                                val isEditButtonVisible =
-                                    listItem.transaction.transactionType != TransactionType.ADJUSTMENT
-                                val isRefundButtonVisible =
-                                    listItem.transaction.transactionType == TransactionType.EXPENSE
-                                val amountColor = listItem.transaction.getAmountTextColor()
-                                val amountText =
-                                    if (listItem.transaction.transactionType == TransactionType.INCOME ||
-                                        listItem.transaction.transactionType == TransactionType.EXPENSE ||
-                                        listItem.transaction.transactionType == TransactionType.ADJUSTMENT ||
-                                        listItem.transaction.transactionType == TransactionType.REFUND
-                                    ) {
-                                        listItem.transaction.amount.toSignedString(
-                                            isPositive = listItem.sourceTo != null,
-                                            isNegative = listItem.sourceFrom != null,
-                                        )
-                                    } else {
-                                        listItem.transaction.amount.toString()
-                                    }
-                                val dateAndTimeText = getReadableDateAndTimeString(
-                                    timestamp = listItem.transaction.transactionTimestamp,
-                                )
-                                val emoji = when (listItem.transaction.transactionType) {
-                                    TransactionType.TRANSFER -> {
-                                        transferEmoji
-                                    }
-
-                                    TransactionType.ADJUSTMENT -> {
-                                        adjustmentEmoji
-                                    }
-
-                                    else -> {
-                                        listItem.category?.emoji
-                                    }
-                                }.orEmpty()
-                                val sourceFromName = listItem.sourceFrom?.name
-                                val sourceToName = listItem.sourceTo?.name
-                                val title = listItem.transaction.title
-                                val transactionForText = listItem.transactionFor.titleToDisplay
-
-                                TransactionListItem(
-                                    isDeleteButtonEnabled = isDeleteButtonEnabled,
-                                    isDeleteButtonVisible = true,
-                                    isEditButtonVisible = isEditButtonVisible,
-                                    isExpanded = false,
-                                    isRefundButtonVisible = isRefundButtonVisible,
-                                    amountColor = amountColor,
-                                    amountText = amountText,
-                                    dateAndTimeText = dateAndTimeText,
-                                    emoji = emoji,
-                                    sourceFromName = sourceFromName,
-                                    sourceToName = sourceToName,
-                                    title = title,
-                                    transactionForText = transactionForText,
-                                    onClick = {
-                                        navigateToViewTransactionScreen(
-                                            navigationManager = data.navigationManager,
-                                            transactionId = listItem.transaction.id,
-                                        )
-                                    },
-                                    onDeleteButtonClick = {
-                                        transactionIdToDelete = listItem.transaction.id
-                                        transactionsBottomSheetType =
-                                            TransactionsBottomSheetType.DELETE_CONFIRMATION
-                                        toggleModalBottomSheetState(
-                                            coroutineScope = state.coroutineScope,
-                                            modalBottomSheetState = state.modalBottomSheetState,
-                                        )
-                                    },
-                                    onEditButtonClick = {
-                                        navigateToEditTransactionScreen(
-                                            navigationManager = data.navigationManager,
-                                            transactionId = listItem.transaction.id,
-                                        )
-                                    },
-                                    onRefundButtonClick = {
-                                        navigateToAddTransactionScreen(
-                                            navigationManager = data.navigationManager,
-                                            transactionId = listItem.transaction.id,
-                                        )
-                                    },
-                                )
-                            }
+                                    .fillMaxWidth()
+                                    .padding(
+                                        start = 16.dp,
+                                        top = 8.dp,
+                                        bottom = 4.dp,
+                                        end = 16.dp,
+                                    ),
+                                text = date,
+                                style = MaterialTheme.typography.headlineSmall
+                                    .copy(
+                                        color = MaterialTheme.colorScheme.onBackground,
+                                    ),
+                            )
                         }
+                    }
+                    itemsIndexed(
+                        items = listItemData,
+                        key = { _, listItem ->
+                            listItem.hashCode()
+                        },
+                    ) { _, listItem ->
+                        val isDeleteButtonEnabled =
+                            listItem.transaction.refundTransactionIds?.run {
+                                this.isEmpty()
+                            } ?: true
+                        val isEditButtonVisible =
+                            listItem.transaction.transactionType != TransactionType.ADJUSTMENT
+                        val isRefundButtonVisible =
+                            listItem.transaction.transactionType == TransactionType.EXPENSE
+                        val amountColor = listItem.transaction.getAmountTextColor()
+                        val amountText =
+                            if (listItem.transaction.transactionType == TransactionType.INCOME ||
+                                listItem.transaction.transactionType == TransactionType.EXPENSE ||
+                                listItem.transaction.transactionType == TransactionType.ADJUSTMENT ||
+                                listItem.transaction.transactionType == TransactionType.REFUND
+                            ) {
+                                listItem.transaction.amount.toSignedString(
+                                    isPositive = listItem.sourceTo != null,
+                                    isNegative = listItem.sourceFrom != null,
+                                )
+                            } else {
+                                listItem.transaction.amount.toString()
+                            }
+                        val dateAndTimeText = getReadableDateAndTimeString(
+                            timestamp = listItem.transaction.transactionTimestamp,
+                        )
+                        val emoji = when (listItem.transaction.transactionType) {
+                            TransactionType.TRANSFER -> {
+                                transferEmoji
+                            }
+
+                            TransactionType.ADJUSTMENT -> {
+                                adjustmentEmoji
+                            }
+
+                            else -> {
+                                listItem.category?.emoji
+                            }
+                        }.orEmpty()
+                        val sourceFromName = listItem.sourceFrom?.name
+                        val sourceToName = listItem.sourceTo?.name
+                        val title = listItem.transaction.title
+                        val transactionForText = listItem.transactionFor.titleToDisplay
+
+                        TransactionListItem(
+                            isDeleteButtonEnabled = isDeleteButtonEnabled,
+                            isDeleteButtonVisible = true,
+                            isEditButtonVisible = isEditButtonVisible,
+                            isExpanded = false,
+                            isRefundButtonVisible = isRefundButtonVisible,
+                            amountColor = amountColor,
+                            amountText = amountText,
+                            dateAndTimeText = dateAndTimeText,
+                            emoji = emoji,
+                            sourceFromName = sourceFromName,
+                            sourceToName = sourceToName,
+                            title = title,
+                            transactionForText = transactionForText,
+                            onClick = {
+                                navigateToViewTransactionScreen(
+                                    navigationManager = data.navigationManager,
+                                    transactionId = listItem.transaction.id,
+                                )
+                            },
+                            onDeleteButtonClick = {
+                                transactionIdToDelete = listItem.transaction.id
+                                transactionsBottomSheetType =
+                                    TransactionsBottomSheetType.DELETE_CONFIRMATION
+                                toggleModalBottomSheetState(
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
+                                )
+                            },
+                            onEditButtonClick = {
+                                navigateToEditTransactionScreen(
+                                    navigationManager = data.navigationManager,
+                                    transactionId = listItem.transaction.id,
+                                )
+                            },
+                            onRefundButtonClick = {
+                                navigateToAddTransactionScreen(
+                                    navigationManager = data.navigationManager,
+                                    transactionId = listItem.transaction.id,
+                                )
+                            },
+                        )
                     }
                 }
             }
