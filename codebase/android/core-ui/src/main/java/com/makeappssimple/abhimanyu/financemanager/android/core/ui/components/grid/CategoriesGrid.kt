@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.g
 
 import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.itemsIndexed
@@ -33,8 +32,7 @@ fun CategoriesGrid(
                 top = topPadding,
                 bottom = bottomPadding,
             ),
-            modifier = Modifier
-                .fillMaxSize(),
+            modifier = Modifier,
         ) {
             itemsIndexed(
                 items = categoriesGridItemDataList,

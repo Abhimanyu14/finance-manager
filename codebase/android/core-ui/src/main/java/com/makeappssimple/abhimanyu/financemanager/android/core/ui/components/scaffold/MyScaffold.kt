@@ -1,6 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.material.DrawerDefaults
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FabPosition
@@ -20,8 +23,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
 import kotlinx.coroutines.CoroutineScope
@@ -76,7 +82,22 @@ fun MyScaffold(
     )
 
     ModalBottomSheetLayout(
-        sheetContent = sheetContent,
+        sheetContent = {
+            val screenHeight = LocalConfiguration.current.screenHeightDp.dp
+            val bottomSheetModifier = if (sheetShape == BottomSheetExpandedShape) {
+                Modifier.fillMaxSize()
+            } else {
+                Modifier
+                    .heightIn(
+                        max = screenHeight - 60.dp,
+                    )
+            }
+            Column(
+                modifier = bottomSheetModifier,
+            ) {
+                sheetContent()
+            }
+        },
         sheetState = sheetState,
         sheetShape = sheetShape,
         sheetElevation = sheetElevation,

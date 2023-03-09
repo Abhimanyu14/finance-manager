@@ -38,8 +38,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
@@ -167,12 +165,6 @@ internal fun AddOrEditTransactionScreenView(
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
-        // TODO-Abhi: To fix sheetShape according to content size
-        sheetShape = if (state.modalBottomSheetState.currentValue == ModalBottomSheetValue.Expanded) {
-            BottomSheetExpandedShape
-        } else {
-            BottomSheetShape
-        },
         sheetContent = {
             when (addOrEditTransactionBottomSheetType) {
                 AddOrEditTransactionBottomSheetType.NONE -> {

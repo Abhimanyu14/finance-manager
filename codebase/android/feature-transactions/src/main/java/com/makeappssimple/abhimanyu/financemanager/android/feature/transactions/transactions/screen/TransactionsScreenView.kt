@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,6 +24,7 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
@@ -353,125 +355,129 @@ internal fun TransactionsScreenView(
                     }
                 }
             }
-            LazyColumn(
-                contentPadding = PaddingValues(
-                    bottom = 72.dp,
-                ),
+            CompositionLocalProvider(
+                LocalOverscrollConfiguration provides null
             ) {
-                data.transactionDetailsListItemViewData.forEach { (date, listItemData) ->
-                    if (date.isNotBlank()) {
-                        stickyHeader {
-                            MyText(
-                                modifier = Modifier
-                                    .background(
-                                        color = MaterialTheme.colorScheme.background,
+                LazyColumn(
+                    contentPadding = PaddingValues(
+                        bottom = 72.dp,
+                    ),
+                ) {
+                    data.transactionDetailsListItemViewData.forEach { (date, listItemData) ->
+                        if (date.isNotBlank()) {
+                            stickyHeader {
+                                MyText(
+                                    modifier = Modifier
+                                        .background(
+                                            color = MaterialTheme.colorScheme.background,
+                                        )
+                                        .fillMaxWidth()
+                                        .padding(
+                                            start = 16.dp,
+                                            top = 8.dp,
+                                            bottom = 4.dp,
+                                            end = 16.dp,
+                                        ),
+                                    text = date,
+                                    style = MaterialTheme.typography.headlineSmall
+                                        .copy(
+                                            color = MaterialTheme.colorScheme.onBackground,
+                                        ),
+                                )
+                            }
+                        }
+                        itemsIndexed(
+                            items = listItemData,
+                            key = { _, listItem ->
+                                listItem.hashCode()
+                            },
+                        ) { _, listItem ->
+                            val isDeleteButtonEnabled =
+                                listItem.transaction.refundTransactionIds?.run {
+                                    this.isEmpty()
+                                } ?: true
+                            val isEditButtonVisible =
+                                listItem.transaction.transactionType != TransactionType.ADJUSTMENT
+                            val isRefundButtonVisible =
+                                listItem.transaction.transactionType == TransactionType.EXPENSE
+                            val amountColor = listItem.transaction.getAmountTextColor()
+                            val amountText =
+                                if (listItem.transaction.transactionType == TransactionType.INCOME ||
+                                    listItem.transaction.transactionType == TransactionType.EXPENSE ||
+                                    listItem.transaction.transactionType == TransactionType.ADJUSTMENT ||
+                                    listItem.transaction.transactionType == TransactionType.REFUND
+                                ) {
+                                    listItem.transaction.amount.toSignedString(
+                                        isPositive = listItem.sourceTo != null,
+                                        isNegative = listItem.sourceFrom != null,
                                     )
-                                    .fillMaxWidth()
-                                    .padding(
-                                        start = 16.dp,
-                                        top = 8.dp,
-                                        bottom = 4.dp,
-                                        end = 16.dp,
-                                    ),
-                                text = date,
-                                style = MaterialTheme.typography.headlineSmall
-                                    .copy(
-                                        color = MaterialTheme.colorScheme.onBackground,
-                                    ),
+                                } else {
+                                    listItem.transaction.amount.toString()
+                                }
+                            val dateAndTimeText = getReadableDateAndTimeString(
+                                timestamp = listItem.transaction.transactionTimestamp,
+                            )
+                            val emoji = when (listItem.transaction.transactionType) {
+                                TransactionType.TRANSFER -> {
+                                    transferEmoji
+                                }
+
+                                TransactionType.ADJUSTMENT -> {
+                                    adjustmentEmoji
+                                }
+
+                                else -> {
+                                    listItem.category?.emoji
+                                }
+                            }.orEmpty()
+                            val sourceFromName = listItem.sourceFrom?.name
+                            val sourceToName = listItem.sourceTo?.name
+                            val title = listItem.transaction.title
+                            val transactionForText = listItem.transactionFor.titleToDisplay
+
+                            TransactionListItem(
+                                isDeleteButtonEnabled = isDeleteButtonEnabled,
+                                isDeleteButtonVisible = true,
+                                isEditButtonVisible = isEditButtonVisible,
+                                isExpanded = false,
+                                isRefundButtonVisible = isRefundButtonVisible,
+                                amountColor = amountColor,
+                                amountText = amountText,
+                                dateAndTimeText = dateAndTimeText,
+                                emoji = emoji,
+                                sourceFromName = sourceFromName,
+                                sourceToName = sourceToName,
+                                title = title,
+                                transactionForText = transactionForText,
+                                onClick = {
+                                    navigateToViewTransactionScreen(
+                                        navigationManager = data.navigationManager,
+                                        transactionId = listItem.transaction.id,
+                                    )
+                                },
+                                onDeleteButtonClick = {
+                                    transactionIdToDelete = listItem.transaction.id
+                                    transactionsBottomSheetType =
+                                        TransactionsBottomSheetType.DELETE_CONFIRMATION
+                                    toggleModalBottomSheetState(
+                                        coroutineScope = state.coroutineScope,
+                                        modalBottomSheetState = state.modalBottomSheetState,
+                                    )
+                                },
+                                onEditButtonClick = {
+                                    navigateToEditTransactionScreen(
+                                        navigationManager = data.navigationManager,
+                                        transactionId = listItem.transaction.id,
+                                    )
+                                },
+                                onRefundButtonClick = {
+                                    navigateToAddTransactionScreen(
+                                        navigationManager = data.navigationManager,
+                                        transactionId = listItem.transaction.id,
+                                    )
+                                },
                             )
                         }
-                    }
-                    itemsIndexed(
-                        items = listItemData,
-                        key = { _, listItem ->
-                            listItem.hashCode()
-                        },
-                    ) { _, listItem ->
-                        val isDeleteButtonEnabled =
-                            listItem.transaction.refundTransactionIds?.run {
-                                this.isEmpty()
-                            } ?: true
-                        val isEditButtonVisible =
-                            listItem.transaction.transactionType != TransactionType.ADJUSTMENT
-                        val isRefundButtonVisible =
-                            listItem.transaction.transactionType == TransactionType.EXPENSE
-                        val amountColor = listItem.transaction.getAmountTextColor()
-                        val amountText =
-                            if (listItem.transaction.transactionType == TransactionType.INCOME ||
-                                listItem.transaction.transactionType == TransactionType.EXPENSE ||
-                                listItem.transaction.transactionType == TransactionType.ADJUSTMENT ||
-                                listItem.transaction.transactionType == TransactionType.REFUND
-                            ) {
-                                listItem.transaction.amount.toSignedString(
-                                    isPositive = listItem.sourceTo != null,
-                                    isNegative = listItem.sourceFrom != null,
-                                )
-                            } else {
-                                listItem.transaction.amount.toString()
-                            }
-                        val dateAndTimeText = getReadableDateAndTimeString(
-                            timestamp = listItem.transaction.transactionTimestamp,
-                        )
-                        val emoji = when (listItem.transaction.transactionType) {
-                            TransactionType.TRANSFER -> {
-                                transferEmoji
-                            }
-
-                            TransactionType.ADJUSTMENT -> {
-                                adjustmentEmoji
-                            }
-
-                            else -> {
-                                listItem.category?.emoji
-                            }
-                        }.orEmpty()
-                        val sourceFromName = listItem.sourceFrom?.name
-                        val sourceToName = listItem.sourceTo?.name
-                        val title = listItem.transaction.title
-                        val transactionForText = listItem.transactionFor.titleToDisplay
-
-                        TransactionListItem(
-                            isDeleteButtonEnabled = isDeleteButtonEnabled,
-                            isDeleteButtonVisible = true,
-                            isEditButtonVisible = isEditButtonVisible,
-                            isExpanded = false,
-                            isRefundButtonVisible = isRefundButtonVisible,
-                            amountColor = amountColor,
-                            amountText = amountText,
-                            dateAndTimeText = dateAndTimeText,
-                            emoji = emoji,
-                            sourceFromName = sourceFromName,
-                            sourceToName = sourceToName,
-                            title = title,
-                            transactionForText = transactionForText,
-                            onClick = {
-                                navigateToViewTransactionScreen(
-                                    navigationManager = data.navigationManager,
-                                    transactionId = listItem.transaction.id,
-                                )
-                            },
-                            onDeleteButtonClick = {
-                                transactionIdToDelete = listItem.transaction.id
-                                transactionsBottomSheetType =
-                                    TransactionsBottomSheetType.DELETE_CONFIRMATION
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                )
-                            },
-                            onEditButtonClick = {
-                                navigateToEditTransactionScreen(
-                                    navigationManager = data.navigationManager,
-                                    transactionId = listItem.transaction.id,
-                                )
-                            },
-                            onRefundButtonClick = {
-                                navigateToAddTransactionScreen(
-                                    navigationManager = data.navigationManager,
-                                    transactionId = listItem.transaction.id,
-                                )
-                            },
-                        )
                     }
                 }
             }
