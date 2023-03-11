@@ -135,6 +135,36 @@ internal fun AddOrEditTransactionScreenView(
             value = AddOrEditTransactionBottomSheetType.NONE,
         )
     }
+    val transactionTypesForNewTransactionChipItems = remember(
+        key1 = data.transactionTypesForNewTransaction,
+    ) {
+        data.transactionTypesForNewTransaction
+            .map { transactionType ->
+                ChipItem(
+                    text = transactionType.title,
+                )
+            }
+    }
+    val titleSuggestionsChipItems = remember(
+        key1 = data.titleSuggestions,
+    ) {
+        data.titleSuggestions
+            .map { title ->
+                ChipItem(
+                    text = title,
+                )
+            }
+    }
+    val transactionForValuesChipItems = remember(
+        key1 = data.transactionForValues,
+    ) {
+        data.transactionForValues
+            .map { transactionFor ->
+                ChipItem(
+                    text = transactionFor.titleToDisplay,
+                )
+            }
+    }
 
     val clearFocus = {
         state.focusManager.clearFocus()
@@ -253,12 +283,7 @@ internal fun AddOrEditTransactionScreenView(
                 visible = data.uiVisibilityState.isTransactionTypesRadioGroupVisible,
             ) {
                 MyHorizontalScrollingRadioGroup(
-                    items = data.transactionTypesForNewTransaction
-                        .map { transactionType ->
-                            ChipItem(
-                                text = transactionType.title,
-                            )
-                        },
+                    items = transactionTypesForNewTransactionChipItems,
                     selectedItemIndex = data.uiState.selectedTransactionTypeIndex,
                     onSelectionChange = { updatedSelectedTransactionTypeIndex ->
                         data.updateSelectedTransactionTypeIndex(
@@ -372,15 +397,10 @@ internal fun AddOrEditTransactionScreenView(
                 )
             }
             AnimatedVisibility(
-                visible = data.uiVisibilityState.isTitleSuggestionsVisible,
+                visible = data.uiVisibilityState.isTitleSuggestionsVisible && titleSuggestionsChipItems.isNotEmpty(),
             ) {
                 MyHorizontalScrollingSelectionGroup(
-                    items = data.titleSuggestions
-                        .map { title ->
-                            ChipItem(
-                                text = title,
-                            )
-                        },
+                    items = titleSuggestionsChipItems,
                     onSelectionChange = { index ->
                         clearFocus()
                         data.updateTitle(data.titleSuggestions[index])
@@ -396,12 +416,7 @@ internal fun AddOrEditTransactionScreenView(
                 visible = data.uiVisibilityState.isTransactionForRadioGroupVisible,
             ) {
                 MyHorizontalScrollingRadioGroup(
-                    items = data.transactionForValues
-                        .map { transactionFor ->
-                            ChipItem(
-                                text = transactionFor.titleToDisplay,
-                            )
-                        },
+                    items = transactionForValuesChipItems,
                     selectedItemIndex = data.uiState.selectedTransactionForIndex,
                     onSelectionChange = { updatedSelectedTransactionForIndex ->
                         clearFocus()
