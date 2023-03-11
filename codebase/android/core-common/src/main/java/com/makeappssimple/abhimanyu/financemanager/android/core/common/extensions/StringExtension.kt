@@ -25,3 +25,12 @@ fun String.capitalizeWords(): String {
             }
         }
 }
+
+fun String.equalsIgnoringCase(
+    other: String,
+): Boolean {
+    return this.equals(
+        other = other,
+        ignoreCase = true,
+    )
+}

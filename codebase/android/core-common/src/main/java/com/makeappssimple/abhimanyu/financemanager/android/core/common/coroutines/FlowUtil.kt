@@ -8,36 +8,39 @@ import kotlinx.coroutines.flow.stateIn
 
 fun Flow<Boolean>.defaultBooleanStateIn(
     scope: CoroutineScope,
+    started: SharingStarted = SharingStarted.WhileSubscribed(
+        stopTimeoutMillis = 5000,
+    ),
 ): StateFlow<Boolean> {
     return this.stateIn(
         scope = scope,
-        started = SharingStarted.WhileSubscribed(
-            stopTimeoutMillis = 5000,
-        ),
+        started = started,
         initialValue = false,
     )
 }
 
 fun <T> Flow<List<T>>.defaultListStateIn(
     scope: CoroutineScope,
+    started: SharingStarted = SharingStarted.WhileSubscribed(
+        stopTimeoutMillis = 5000,
+    ),
 ): StateFlow<List<T>> {
     return this.stateIn(
         scope = scope,
-        started = SharingStarted.WhileSubscribed(
-            stopTimeoutMillis = 5000,
-        ),
+        started = started,
         initialValue = emptyList(),
     )
 }
 
 fun <T> Flow<T>.defaultObjectStateIn(
     scope: CoroutineScope,
+    started: SharingStarted = SharingStarted.WhileSubscribed(
+        stopTimeoutMillis = 5000,
+    ),
 ): StateFlow<T?> {
     return this.stateIn(
         scope = scope,
-        started = SharingStarted.WhileSubscribed(
-            stopTimeoutMillis = 5000,
-        ),
+        started = started,
         initialValue = null,
     )
 }

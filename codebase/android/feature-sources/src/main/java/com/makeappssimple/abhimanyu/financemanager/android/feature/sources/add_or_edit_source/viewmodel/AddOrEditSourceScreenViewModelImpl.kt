@@ -4,11 +4,15 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.defaultListStateIn
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.SourceType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourceUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.InsertSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
@@ -22,12 +26,14 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.math.abs
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
+    getSourcesUseCase: GetSourcesUseCase,
     savedStateHandle: SavedStateHandle,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
@@ -36,6 +42,10 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     private val insertTransactionsUseCase: InsertTransactionsUseCase,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
 ) : AddOrEditSourceScreenViewModel, ViewModel() {
+    private val sources: StateFlow<List<Source>> = getSourcesUseCase().defaultListStateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+    )
     private val _source: MutableStateFlow<Source?> = MutableStateFlow(
         value = null,
     )
@@ -154,10 +164,13 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     }
 
     override fun isValidSourceData(): Boolean {
-        return name.value.isNotNullOrBlank() &&
-                (selectedSourceTypeIndex.value == -1 || !isCashSource(
-                    source = name.value,
-                ))
+        return name.value.isNotNullOrBlank() && (selectedSourceTypeIndex.value == -1 || !isCashSource(
+            source = name.value,
+        )) && ((source.value?.name == name.value) || sources.value.find {
+            it.name.equalsIgnoringCase(
+                other = name.value,
+            )
+        }.isNull())
     }
 
     override fun clearName() {
