@@ -33,10 +33,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyData
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isCashSource
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.math.abs
@@ -57,12 +57,12 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     savedStateHandle: SavedStateHandle,
     override val navigationManager: NavigationManager,
+    private val dataStore: MyDataStore,
     private val dispatcherProvider: DispatcherProvider,
-    private val getTitleSuggestionsUseCase: GetTitleSuggestionsUseCase,
     private val getSourcesCountUseCase: GetSourcesCountUseCase,
+    private val getTitleSuggestionsUseCase: GetTitleSuggestionsUseCase,
     private val getTransactionDataUseCase: GetTransactionDataUseCase,
     private val insertTransactionUseCase: InsertTransactionUseCase,
-    private val dataStore: MyDataStore,
     private val updateSourcesBalanceAmountUseCase: UpdateSourcesBalanceAmountUseCase,
     private val updateTransactionUseCase: UpdateTransactionUseCase,
 ) : AddOrEditTransactionScreenViewModel, ViewModel() {
@@ -338,7 +338,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     defaultSource = getSource(
                         sourceId = defaultSourceIdFromDataStore,
                     ) ?: sources.firstOrNull { source ->
-                        isCashSource(
+                        isDefaultSource(
                             source = source.name,
                         )
                     }

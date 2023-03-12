@@ -19,8 +19,8 @@ import kotlinx.coroutines.launch
 internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     savedStateHandle: SavedStateHandle,
     override val navigationManager: NavigationManager,
-    private val dispatcherProvider: DispatcherProvider,
     private val deleteTransactionAndRevertOtherDataUseCase: DeleteTransactionAndRevertOtherDataUseCase,
+    private val dispatcherProvider: DispatcherProvider,
     private val getTransactionDataUseCase: GetTransactionDataUseCase,
 ) : ViewTransactionScreenViewModel, ViewModel() {
     private var transactionId: Int? = null

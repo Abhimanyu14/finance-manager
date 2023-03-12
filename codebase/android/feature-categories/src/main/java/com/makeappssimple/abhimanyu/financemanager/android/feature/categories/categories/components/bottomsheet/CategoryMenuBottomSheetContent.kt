@@ -8,6 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import kotlinx.coroutines.CoroutineScope
 
@@ -24,45 +25,42 @@ internal fun CategoryMenuBottomSheetContent(
     onSetAsDefaultClick: () -> Unit,
     resetBottomSheetType: () -> Unit,
 ) {
-    val editItem = CategoryMenuBottomSheetItemData(
-        text = stringResource(
-            id = R.string.bottom_sheet_category_menu_edit,
-        ),
-        onClick = {
-            toggleModalBottomSheetState(
-                coroutineScope = coroutineScope,
-                modalBottomSheetState = modalBottomSheetState,
-            ) {
-                resetBottomSheetType()
-                navigateToEditCategoryScreen(
-                    navigationManager = navigationManager,
-                    categoryId = categoryId,
-                )
-            }
-        },
-    )
-    val setAsDefaultItem = CategoryMenuBottomSheetItemData(
-        text = stringResource(
-            id = R.string.bottom_sheet_category_menu_set_as_default_category,
-        ),
-        onClick = {
-            onSetAsDefaultClick()
-        },
-    )
-    val deleteItem = CategoryMenuBottomSheetItemData(
-        text = stringResource(
-            id = R.string.bottom_sheet_category_menu_delete,
-        ),
-        onClick = {
-            onDeleteClick()
-        },
-    )
-
     val items = mutableListOf<CategoryMenuBottomSheetItemData>()
-
-    items.add(editItem)
+    if (!isDefaultExpenseCategory(categoryTitle) &&
+        !isDefaultIncomeCategory(categoryTitle) &&
+        !isDefaultInvestmentCategory(categoryTitle)
+    ) {
+        items.add(
+            CategoryMenuBottomSheetItemData(
+                text = stringResource(
+                    id = R.string.bottom_sheet_category_menu_edit,
+                ),
+                onClick = {
+                    toggleModalBottomSheetState(
+                        coroutineScope = coroutineScope,
+                        modalBottomSheetState = modalBottomSheetState,
+                    ) {
+                        resetBottomSheetType()
+                        navigateToEditCategoryScreen(
+                            navigationManager = navigationManager,
+                            categoryId = categoryId,
+                        )
+                    }
+                },
+            )
+        )
+    }
     if (!isDefault) {
-        items.add(setAsDefaultItem)
+        items.add(
+            CategoryMenuBottomSheetItemData(
+                text = stringResource(
+                    id = R.string.bottom_sheet_category_menu_set_as_default_category,
+                ),
+                onClick = {
+                    onSetAsDefaultClick()
+                },
+            )
+        )
     }
     if (
         !isDefaultExpenseCategory(
@@ -71,7 +69,26 @@ internal fun CategoryMenuBottomSheetContent(
             category = categoryTitle,
         ) && deleteEnabled
     ) {
-        items.add(deleteItem)
+        items.add(
+            CategoryMenuBottomSheetItemData(
+                text = stringResource(
+                    id = R.string.bottom_sheet_category_menu_delete,
+                ),
+                onClick = {
+                    onDeleteClick()
+                },
+            )
+        )
+    }
+
+    // Close bottom sheet if there are no menu items
+    if (items.isEmpty()) {
+        toggleModalBottomSheetState(
+            coroutineScope = coroutineScope,
+            modalBottomSheetState = modalBottomSheetState,
+        ) {
+            resetBottomSheetType()
+        }
     }
 
     CategoryMenuBottomSheet(

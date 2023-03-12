@@ -27,12 +27,12 @@ import java.util.Calendar
 
 @HiltViewModel
 internal class TransactionsScreenViewModelImpl @Inject constructor(
+    getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
     getCategoriesUseCase: GetCategoriesUseCase,
     getSourcesUseCase: GetSourcesUseCase,
-    getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
     override val navigationManager: NavigationManager,
-    private val dispatcherProvider: DispatcherProvider,
     private val deleteTransactionAndRevertOtherDataUseCase: DeleteTransactionAndRevertOtherDataUseCase,
+    private val dispatcherProvider: DispatcherProvider,
 ) : TransactionsScreenViewModel, ViewModel() {
     private val categories: Flow<List<Category>> = getCategoriesUseCase()
     private val allTransactionData: Flow<List<TransactionData>> =

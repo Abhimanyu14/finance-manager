@@ -16,10 +16,10 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 internal class SettingsScreenViewModelImpl @Inject constructor(
     override val navigationManager: NavigationManager,
-    private val dispatcherProvider: DispatcherProvider,
     private val backupDataUseCase: BackupDataUseCase,
-    private val restoreDataUseCase: RestoreDataUseCase,
+    private val dispatcherProvider: DispatcherProvider,
     private val recalculateTotalUseCase: RecalculateTotalUseCase,
+    private val restoreDataUseCase: RestoreDataUseCase,
 ) : SettingsScreenViewModel, ViewModel() {
 
     override fun trackScreen() {

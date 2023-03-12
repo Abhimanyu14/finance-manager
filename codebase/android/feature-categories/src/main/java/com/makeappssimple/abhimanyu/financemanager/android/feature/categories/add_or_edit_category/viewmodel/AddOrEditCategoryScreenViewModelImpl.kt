@@ -6,8 +6,10 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.loadingEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.defaultListStateIn
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.InsertCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.UpdateCategoriesUseCase
@@ -20,10 +22,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
@@ -32,14 +36,19 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
-    savedStateHandle: SavedStateHandle,
+    getCategoriesUseCase: GetCategoriesUseCase,
     getEmojisUseCase: GetEmojisUseCase,
+    savedStateHandle: SavedStateHandle,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
+    private val getCategoryUseCase: GetCategoryUseCase,
     private val insertCategoriesUseCase: InsertCategoriesUseCase,
     private val updateCategoriesUseCase: UpdateCategoriesUseCase,
-    private val getCategoryUseCase: GetCategoryUseCase,
 ) : AddOrEditCategoryScreenViewModel, ViewModel() {
+    private val categories: StateFlow<List<Category>> = getCategoriesUseCase().defaultListStateIn(
+        scope = viewModelScope,
+        started = SharingStarted.Eagerly,
+    )
     private val category: MutableStateFlow<Category?> = MutableStateFlow(
         value = null,
     )
@@ -150,13 +159,48 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     }
 
     override fun isValidCategoryData(): Boolean {
-        return title.value.isNotNullOrBlank() &&
-                !isDefaultIncomeCategory(
-                    category = title.value,
-                ) &&
-                !isDefaultExpenseCategory(
-                    category = title.value,
+        val title = title.value
+
+        // TODO-Abhi: Error message - "Title can not be empty"
+        if (title.isBlank()) {
+            return false
+        }
+
+        // TODO-Abhi: Error message - "Title already exists"
+        if (isDefaultIncomeCategory(
+                category = title,
+            )
+        ) {
+            return false
+        }
+
+        // TODO-Abhi: Error message - "Title already exists"
+        if (isDefaultExpenseCategory(
+                category = title,
+            )
+        ) {
+            return false
+        }
+
+        // TODO-Abhi: Error message - "Title already exists"
+        if (isDefaultInvestmentCategory(
+                category = title,
+            )
+        ) {
+            return false
+        }
+
+        // TODO-Abhi: Error message - "Title already exists"
+        if (title != category.value?.title &&
+            categories.value.find {
+                it.title.equalsIgnoringCase(
+                    other = title,
                 )
+            }.isNotNull()
+        ) {
+            return false
+        }
+        return true
     }
 
     override fun clearTitle() {

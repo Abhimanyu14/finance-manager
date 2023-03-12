@@ -6,8 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.SourceType
@@ -21,7 +20,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isCashSource
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.math.abs
@@ -164,13 +163,32 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     }
 
     override fun isValidSourceData(): Boolean {
-        return name.value.isNotNullOrBlank() && (selectedSourceTypeIndex.value == -1 || !isCashSource(
-            source = name.value,
-        )) && ((source.value?.name == name.value) || sources.value.find {
-            it.name.equalsIgnoringCase(
-                other = name.value,
+        val name = name.value
+
+        // TODO-Abhi: Error message - "Name can not be empty"
+        if (name.isBlank()) {
+            return false
+        }
+
+        // TODO-Abhi: Error message - "Name already exists"
+        if (isDefaultSource(
+                source = name,
             )
-        }.isNull())
+        ) {
+            return false
+        }
+
+        // TODO-Abhi: Error message - "Name already exists"
+        if (source.value?.name != name && sources.value.find {
+                it.name.equalsIgnoringCase(
+                    other = name,
+                )
+            }.isNotNull()
+        ) {
+            return false
+        }
+
+        return true
     }
 
     override fun clearName() {

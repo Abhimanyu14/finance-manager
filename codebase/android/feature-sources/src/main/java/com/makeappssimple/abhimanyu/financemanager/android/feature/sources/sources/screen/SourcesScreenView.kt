@@ -31,7 +31,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.total_balance_card.TotalBalanceCard
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isCashSource
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultSource
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.components.SourcesListItem
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.components.bottomsheet.SourcesDeleteConfirmationBottomSheetContent
@@ -190,7 +190,7 @@ internal fun SourcesScreenView(
                     index = index,
                 )?.not()
                 val isDefault = if (data.defaultSourceId.isNull()) {
-                    isCashSource(
+                    isDefaultSource(
                         source = listItem.name,
                     )
                 } else {

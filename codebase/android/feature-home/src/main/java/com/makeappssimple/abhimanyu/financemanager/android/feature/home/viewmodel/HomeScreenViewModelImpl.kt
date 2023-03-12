@@ -21,8 +21,8 @@ internal class HomeScreenViewModelImpl @Inject constructor(
     dataStore: MyDataStore,
     getRecentTransactionDataUseCase: GetRecentTransactionDataUseCase,
     override val navigationManager: NavigationManager,
-    private val dispatcherProvider: DispatcherProvider,
     private val backupDataUseCase: BackupDataUseCase,
+    private val dispatcherProvider: DispatcherProvider,
 ) : HomeScreenViewModel, ViewModel() {
     private val lastDataChangeTimestamp: Flow<Long?> = dataStore.getLastDataChangeTimestamp()
     private val lastDataBackupTimestamp: Flow<Long?> = dataStore.getLastDataBackupTimestamp()

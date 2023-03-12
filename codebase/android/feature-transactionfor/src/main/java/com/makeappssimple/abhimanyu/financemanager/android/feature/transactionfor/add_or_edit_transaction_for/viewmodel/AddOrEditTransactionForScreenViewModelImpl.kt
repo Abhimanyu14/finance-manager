@@ -4,8 +4,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.defaultListStateIn
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.InsertTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.UpdateTransactionForValuesUseCase
@@ -15,12 +18,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
+    getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     savedStateHandle: SavedStateHandle,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
@@ -28,6 +33,11 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
     private val insertTransactionForUseCase: InsertTransactionForValuesUseCase,
     private val updateTransactionForValuesUseCase: UpdateTransactionForValuesUseCase,
 ) : AddOrEditTransactionForScreenViewModel, ViewModel() {
+    private val transactionForValues: StateFlow<List<TransactionFor>> =
+        getAllTransactionForValuesUseCase().defaultListStateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+        )
     private val _title: MutableStateFlow<String> = MutableStateFlow(
         value = "",
     )
@@ -82,8 +92,25 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
     }
 
     override fun isValidTitle(): Boolean {
-        // TODO-Abhi: Add check to avoid duplicates
-        return title.value.isNotNullOrBlank()
+        val title = title.value
+
+        // TODO-Abhi: Error message - "Title can not be empty"
+        if (title.isBlank()) {
+            return false
+        }
+
+        // TODO-Abhi: Error message - "Title already exists"
+        if (title != transactionFor.value?.title &&
+            transactionForValues.value.find {
+                it.title.equalsIgnoringCase(
+                    other = title,
+                )
+            }.isNotNull()
+        ) {
+            return false
+        }
+
+        return true
     }
 
     override fun clearTitle() {

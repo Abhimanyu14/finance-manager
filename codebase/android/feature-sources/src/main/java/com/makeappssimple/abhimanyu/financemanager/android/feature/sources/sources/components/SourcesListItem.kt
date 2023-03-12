@@ -24,7 +24,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemViewWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.icon
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isCashSource
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultSource
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 
 @Composable
@@ -147,7 +147,7 @@ internal fun SourcesListItem(
                     labelText = stringResource(
                         id = R.string.list_item_sources_delete,
                     ),
-                    enabled = !isCashSource(
+                    enabled = !isDefaultSource(
                         source = source.name,
                     ) && deleteEnabled,
                     onClick = onDeleteClick,
