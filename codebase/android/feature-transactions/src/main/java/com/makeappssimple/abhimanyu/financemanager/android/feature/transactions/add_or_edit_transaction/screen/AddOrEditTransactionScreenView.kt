@@ -27,6 +27,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDate
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
@@ -305,7 +306,7 @@ internal fun AddOrEditTransactionScreenView(
                     data.clearAmount()
                 },
                 onValueChange = { updatedAmount ->
-                    data.updateAmount(updatedAmount)
+                    data.updateAmount(updatedAmount.filterDigits())
                 },
                 supportingText = {
                     AnimatedVisibility(

@@ -34,3 +34,9 @@ fun String.equalsIgnoringCase(
         ignoreCase = true,
     )
 }
+
+fun String.filterDigits(): String {
+    return this.filter {
+        it.isDigit()
+    }
+}

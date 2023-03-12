@@ -26,6 +26,7 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.SourceType
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -202,7 +203,7 @@ internal fun AddOrEditSourceScreenView(
                         data.clearBalanceAmountValue()
                     },
                     onValueChange = { updatedBalanceAmountValue ->
-                        data.updateBalanceAmountValue(updatedBalanceAmountValue)
+                        data.updateBalanceAmountValue(updatedBalanceAmountValue.filterDigits())
                     },
                     visualTransformation = AmountCommaVisualTransformation(),
                     keyboardActions = KeyboardActions(
