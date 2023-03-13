@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.viewmodel
 
+import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -10,7 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 interface AddOrEditCategoryScreenViewModel : ScreenViewModel {
     val navigationManager: NavigationManager
     val transactionTypes: List<TransactionType>
-    val title: StateFlow<String>
+    val title: StateFlow<TextFieldValue>
     val selectedTransactionTypeIndex: StateFlow<Int>
     val emoji: StateFlow<String>
     val searchText: StateFlow<String>
@@ -25,7 +26,7 @@ interface AddOrEditCategoryScreenViewModel : ScreenViewModel {
     fun clearTitle()
 
     fun updateTitle(
-        updatedTitle: String,
+        updatedTitle: TextFieldValue,
     )
 
     fun updateSelectedTransactionTypeIndex(

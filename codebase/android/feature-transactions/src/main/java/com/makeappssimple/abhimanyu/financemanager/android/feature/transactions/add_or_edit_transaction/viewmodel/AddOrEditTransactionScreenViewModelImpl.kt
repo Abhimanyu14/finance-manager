@@ -1,5 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel
 
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,6 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
@@ -127,9 +130,15 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     private val _uiState: MutableStateFlow<AddOrEditTransactionScreenUiState> = MutableStateFlow(
         value = AddOrEditTransactionScreenUiState(
             selectedTransactionTypeIndex = null,
-            amount = "",
-            title = "",
-            description = "",
+            amount = TextFieldValue(
+                text = "",
+            ),
+            title = TextFieldValue(
+                text = "",
+            ),
+            description = TextFieldValue(
+                text = "",
+            ),
             category = null,
             selectedTransactionForIndex = 0,
             sourceFrom = null,
@@ -170,23 +179,23 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     ) { uiState, selectedTransactionType ->
         when (selectedTransactionType) {
             TransactionType.INCOME -> {
-                uiState.amount.isNotNullOrBlank() &&
-                        uiState.title.isNotNullOrBlank() &&
-                        uiState.amount.toInt().isNotZero() &&
+                uiState.amount.text.isNotNullOrBlank() &&
+                        uiState.title.text.isNotNullOrBlank() &&
+                        uiState.amount.text.toInt().isNotZero() &&
                         uiState.amountErrorText.isNull()
             }
 
             TransactionType.EXPENSE -> {
-                uiState.amount.isNotNullOrBlank() &&
-                        uiState.title.isNotNullOrBlank() &&
-                        uiState.amount.toInt().isNotZero() &&
+                uiState.amount.text.isNotNullOrBlank() &&
+                        uiState.title.text.isNotNullOrBlank() &&
+                        uiState.amount.text.toInt().isNotZero() &&
                         uiState.amountErrorText.isNull()
             }
 
             TransactionType.TRANSFER -> {
-                uiState.amount.isNotNullOrBlank() &&
+                uiState.amount.text.isNotNullOrBlank() &&
                         uiState.sourceFrom?.id != uiState.sourceTo?.id &&
-                        uiState.amount.toInt().isNotZero() &&
+                        uiState.amount.text.toInt().isNotZero() &&
                         uiState.amountErrorText.isNull()
             }
 
@@ -195,16 +204,16 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             }
 
             TransactionType.INVESTMENT -> {
-                uiState.amount.isNotNullOrBlank() &&
-                        uiState.title.isNotNullOrBlank() &&
-                        uiState.amount.toInt().isNotZero() &&
+                uiState.amount.text.isNotNullOrBlank() &&
+                        uiState.title.text.isNotNullOrBlank() &&
+                        uiState.amount.text.toInt().isNotZero() &&
                         uiState.amountErrorText.isNull()
             }
 
             TransactionType.REFUND -> {
                 val maxRefundAmountValue = maxRefundAmount.value?.value ?: 0L
                 if (uiState.amountErrorText == null &&
-                    ((uiState.amount.toLongOrNull() ?: 0L) > maxRefundAmountValue)
+                    ((uiState.amount.text.toLongOrNull() ?: 0L) > maxRefundAmountValue)
                 ) {
                     updateAddOrEditTransactionScreenUiState(
                         updatedAddOrEditTransactionScreenUiState = uiState.copy(
@@ -215,7 +224,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     )
                     false
                 } else if (uiState.amountErrorText != null &&
-                    ((uiState.amount.toLongOrNull() ?: 0L) <= maxRefundAmountValue)
+                    ((uiState.amount.text.toLongOrNull() ?: 0L) <= maxRefundAmountValue)
                 ) {
                     updateAddOrEditTransactionScreenUiState(
                         updatedAddOrEditTransactionScreenUiState = uiState.copy(
@@ -224,9 +233,9 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     )
                     false
                 } else {
-                    uiState.amount.isNotNullOrBlank() &&
-                            uiState.title.isNotNullOrBlank() &&
-                            uiState.amount.toInt().isNotZero() &&
+                    uiState.amount.text.isNotNullOrBlank() &&
+                            uiState.title.text.isNotNullOrBlank() &&
+                            uiState.amount.text.toInt().isNotZero() &&
                             uiState.amountErrorText.isNull()
                 }
             }
@@ -534,7 +543,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         ) {
             val uiStateValue = uiState.value
             selectedTransactionType.value?.let { selectedTransactionTypeValue ->
-                val amountValue = uiStateValue.amount.toLong()
+                val amountValue = uiStateValue.amount.text.toLong()
                 val amount = Amount(
                     value = amountValue,
                 )
@@ -623,7 +632,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     }
 
                     else -> {
-                        uiStateValue.title.capitalizeWords()
+                        uiStateValue.title.text.capitalizeWords()
                     }
                 }
                 val transactionForId: Int = when (selectedTransactionTypeValue) {
@@ -677,7 +686,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                         originalTransactionId = originalTransactionId,
                         sourceFromId = sourceFromId,
                         sourceToId = sourceToId,
-                        description = uiStateValue.description,
+                        description = uiStateValue.description.text,
                         title = title,
                         creationTimestamp = System.currentTimeMillis(),
                         transactionTimestamp = uiStateValue.transactionCalendar.timeInMillis,
@@ -714,7 +723,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             val uiStateValue = uiState.value
             selectedTransactionTypeValue?.let {
                 val amount = Amount(
-                    value = uiStateValue.amount.toLong(),
+                    value = uiStateValue.amount.text.toLong(),
                 )
                 val categoryId = when (selectedTransactionTypeValue) {
                     TransactionType.INCOME -> {
@@ -801,7 +810,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     }
 
                     else -> {
-                        uiStateValue.title.capitalizeWords()
+                        uiStateValue.title.text.capitalizeWords()
                     }
                 }
                 val transactionForId: Int = when (selectedTransactionTypeValue) {
@@ -838,7 +847,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                             categoryId = categoryId,
                             sourceFromId = sourceFromId,
                             sourceToId = sourceToId,
-                            description = uiStateValue.description,
+                            description = uiStateValue.description.text,
                             title = title,
                             creationTimestamp = System.currentTimeMillis(),
                             transactionTimestamp = uiStateValue.transactionCalendar.timeInMillis,
@@ -857,7 +866,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     uiStateValue.sourceFrom?.let { sourceFrom ->
                         sourceBalanceAmountChangeMap[sourceFrom.id] =
                             (sourceBalanceAmountChangeMap[sourceFrom.id]
-                                ?: 0) - uiState.value.amount.toLong()
+                                ?: 0) - uiState.value.amount.text.toLong()
                     }
                     originalTransactionData.value?.sourceTo?.let { transactionSourceTo ->
                         sourceBalanceAmountChangeMap[transactionSourceTo.id] =
@@ -867,7 +876,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     uiStateValue.sourceTo?.let { sourceTo ->
                         sourceBalanceAmountChangeMap[sourceTo.id] =
                             (sourceBalanceAmountChangeMap[sourceTo.id]
-                                ?: 0) + uiState.value.amount.toLong()
+                                ?: 0) + uiState.value.amount.text.toLong()
                     }
                     updateSourcesBalanceAmountUseCase(
                         sourcesBalanceAmountChange = sourceBalanceAmountChangeMap.toList(),
@@ -887,33 +896,37 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         updatedSelectedTransactionTypeIndex: Int,
     ) {
         updateAddOrEditTransactionScreenUiState(
-            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = uiState.value.copy(
                 selectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex,
             ),
         )
     }
 
     override fun updateAmount(
-        updatedAmount: String,
+        updatedAmount: TextFieldValue,
     ) {
         updateAddOrEditTransactionScreenUiState(
-            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
-                amount = updatedAmount,
+            updatedAddOrEditTransactionScreenUiState = uiState.value.copy(
+                amount = updatedAmount.copy(
+                    updatedAmount.text.filterDigits(),
+                ),
             ),
         )
     }
 
     override fun clearAmount() {
         updateAmount(
-            updatedAmount = "",
+            updatedAmount = uiState.value.amount.copy(
+                text = "",
+            ),
         )
     }
 
     override fun updateTitle(
-        updatedTitle: String,
+        updatedTitle: TextFieldValue,
     ) {
         updateAddOrEditTransactionScreenUiState(
-            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = uiState.value.copy(
                 title = updatedTitle,
             ),
         )
@@ -921,15 +934,17 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
 
     override fun clearTitle() {
         updateTitle(
-            updatedTitle = "",
+            updatedTitle = uiState.value.title.copy(
+                text = "",
+            ),
         )
     }
 
     override fun updateDescription(
-        updatedDescription: String,
+        updatedDescription: TextFieldValue,
     ) {
         updateAddOrEditTransactionScreenUiState(
-            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = uiState.value.copy(
                 description = updatedDescription,
             ),
         )
@@ -937,7 +952,9 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
 
     override fun clearDescription() {
         updateDescription(
-            updatedDescription = "",
+            updatedDescription = uiState.value.description.copy(
+                text = "",
+            ),
         )
     }
 
@@ -945,7 +962,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         updatedCategory: Category?,
     ) {
         updateAddOrEditTransactionScreenUiState(
-            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = uiState.value.copy(
                 category = updatedCategory,
             ),
         )
@@ -955,7 +972,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         updatedSelectedTransactionForIndex: Int,
     ) {
         updateAddOrEditTransactionScreenUiState(
-            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = uiState.value.copy(
                 selectedTransactionForIndex = updatedSelectedTransactionForIndex,
             ),
         )
@@ -965,7 +982,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         updatedSourceFrom: Source?,
     ) {
         updateAddOrEditTransactionScreenUiState(
-            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = uiState.value.copy(
                 sourceFrom = updatedSourceFrom,
             ),
         )
@@ -975,7 +992,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         updatedSourceTo: Source?,
     ) {
         updateAddOrEditTransactionScreenUiState(
-            updatedAddOrEditTransactionScreenUiState = _uiState.value.copy(
+            updatedAddOrEditTransactionScreenUiState = uiState.value.copy(
                 sourceTo = updatedSourceTo,
             ),
         )
@@ -1101,9 +1118,16 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                 selectedTransactionTypeIndex = transactionTypesForNewTransaction.indexOf(
                     element = TransactionType.REFUND,
                 ),
-                amount = (maxRefundAmount?.value ?: 0L).toString(),
-                title = TransactionType.REFUND.title,
-                description = originalTransaction.description,
+                amount = uiState.value.amount.copy(
+                    text = (maxRefundAmount?.value ?: 0L).toString(),
+                    selection = TextRange((maxRefundAmount?.value ?: 0L).toString().length),
+                ),
+                title = uiState.value.title.copy(
+                    text = TransactionType.REFUND.title,
+                ),
+                description = uiState.value.description.copy(
+                    text = originalTransaction.description,
+                ),
                 category = originalTransactionData.value?.category,
                 selectedTransactionForIndex = transactionForValues.indexOf(
                     element = transactionForValues.firstOrNull {
@@ -1119,9 +1143,16 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                 selectedTransactionTypeIndex = transactionTypesForNewTransaction.indexOf(
                     element = originalTransaction.transactionType,
                 ),
-                amount = abs(originalTransaction.amount.value).toString(),
-                title = originalTransaction.title,
-                description = originalTransaction.description,
+                amount = uiState.value.amount.copy(
+                    text = abs(originalTransaction.amount.value).toString(),
+                    selection = TextRange(abs(originalTransaction.amount.value).toString().length),
+                ),
+                title = uiState.value.title.copy(
+                    text = originalTransaction.title,
+                ),
+                description = uiState.value.description.copy(
+                    text = originalTransaction.description,
+                ),
                 category = originalTransactionData.value?.category,
                 selectedTransactionForIndex = transactionForValues.indexOf(
                     element = transactionForValues.firstOrNull {

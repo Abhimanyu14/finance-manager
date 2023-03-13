@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.edit
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.logError
@@ -26,8 +27,8 @@ fun EditSourceScreen(
     val source: Source? by screenViewModel.source.collectAsStateWithLifecycle(
         initialValue = null,
     )
-    val balanceAmountValue: String by screenViewModel.balanceAmountValue.collectAsStateWithLifecycle()
-    val name: String by screenViewModel.name.collectAsStateWithLifecycle()
+    val balanceAmountValue: TextFieldValue by screenViewModel.balanceAmountValue.collectAsStateWithLifecycle()
+    val name: TextFieldValue by screenViewModel.name.collectAsStateWithLifecycle()
 
     LaunchedEffect(
         key1 = Unit,
@@ -37,7 +38,6 @@ fun EditSourceScreen(
 
     AddOrEditSourceScreenView(
         data = AddOrEditSourceScreenViewData(
-            autoFocus = source?.type == SourceType.CASH,
             isBalanceAmountTextFieldVisible = true,
             isNameTextFieldVisible = source?.type != SourceType.CASH,
             isSourceTypesRadioGroupVisible = source?.type != SourceType.CASH,
@@ -52,21 +52,9 @@ fun EditSourceScreen(
             clearName = screenViewModel::clearName,
             isValidSourceData = screenViewModel::isValidSourceData,
             onCtaButtonClick = screenViewModel::updateSource,
-            updateBalanceAmountValue = { updatedBalanceAmountValue ->
-                screenViewModel.updateBalanceAmountValue(
-                    updatedBalanceAmountValue = updatedBalanceAmountValue,
-                )
-            },
-            updateName = { updatedName ->
-                screenViewModel.updateName(
-                    updatedName = updatedName,
-                )
-            },
-            updateSelectedSourceTypeIndex = { updatedIndex ->
-                screenViewModel.updateSelectedSourceTypeIndex(
-                    updatedIndex = updatedIndex,
-                )
-            },
+            updateBalanceAmountValue = screenViewModel::updateBalanceAmountValue,
+            updateName = screenViewModel::updateName,
+            updateSelectedSourceTypeIndex = screenViewModel::updateSelectedSourceTypeIndex,
         ),
         state = rememberCommonScreenViewState(),
     )

@@ -1,5 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.viewmodel
 
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -38,10 +40,12 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,
         )
-    private val _title: MutableStateFlow<String> = MutableStateFlow(
-        value = "",
+    private val _title: MutableStateFlow<TextFieldValue> = MutableStateFlow(
+        value = TextFieldValue(
+            text = "",
+        ),
     )
-    override val title: StateFlow<String> = _title
+    override val title: StateFlow<TextFieldValue> = _title
 
     private val _transactionFor: MutableStateFlow<TransactionFor?> = MutableStateFlow(
         value = null,
@@ -62,7 +66,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
 
     override fun updateTransactionFor() {
         val updatedTransactionFor = transactionFor.value?.copy(
-            title = title.value,
+            title = title.value.text,
         ) ?: return
         viewModelScope.launch(
             context = dispatcherProvider.io,
@@ -82,7 +86,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
         ) {
             insertTransactionForUseCase(
                 TransactionFor(
-                    title = title.value,
+                    title = title.value.text,
                 )
             )
             navigateUp(
@@ -92,7 +96,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
     }
 
     override fun isValidTitle(): Boolean {
-        val title = title.value
+        val title = title.value.text
 
         // TODO-Abhi: Error message - "Title can not be empty"
         if (title.isBlank()) {
@@ -115,12 +119,14 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
 
     override fun clearTitle() {
         updateTitle(
-            updatedTitle = "",
+            updatedTitle = title.value.copy(
+                text = "",
+            ),
         )
     }
 
     override fun updateTitle(
-        updatedTitle: String,
+        updatedTitle: TextFieldValue,
     ) {
         _title.update {
             updatedTitle
@@ -144,8 +150,11 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
 
     private fun updateInitialTransactionForValue() {
         val transactionFor = transactionFor.value ?: return
-        updateTitle(
-            updatedTitle = transactionFor.title,
-        )
+        _title.update {
+            it.copy(
+                text = transactionFor.title,
+                selection = TextRange(transactionFor.title.length),
+            )
+        }
     }
 }

@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -46,11 +47,11 @@ internal data class AddOrEditTransactionForScreenViewData(
     @StringRes val appBarTitleTextStringResourceId: Int,
     @StringRes val ctaButtonLabelTextStringResourceId: Int,
     val navigationManager: NavigationManager,
-    val title: String,
+    val title: TextFieldValue,
     val clearTitle: () -> Unit,
     val isValidTitle: () -> Boolean,
     val onCtaButtonClick: () -> Unit,
-    val updateTitle: (updatedTitle: String) -> Unit,
+    val updateTitle: (updatedTitle: TextFieldValue) -> Unit,
 )
 
 @Composable
@@ -126,7 +127,7 @@ internal fun AddOrEditTransactionForScreenView(
                 ),
         ) {
             MyOutlinedTextField(
-                value = data.title,
+                textFieldValue = data.title,
                 labelTextStringResourceId = R.string.screen_add_or_edit_transaction_for_title,
                 trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_for_clear_title,
                 onClickTrailingIcon = {

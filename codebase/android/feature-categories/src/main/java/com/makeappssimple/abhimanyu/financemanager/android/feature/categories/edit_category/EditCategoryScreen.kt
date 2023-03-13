@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.e
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.loadingCompletedEmoji
@@ -29,7 +30,7 @@ fun EditCategoryScreen(
     )
     val emoji: String by screenViewModel.emoji.collectAsStateWithLifecycle()
     val searchText: String by screenViewModel.searchText.collectAsStateWithLifecycle()
-    val title: String by screenViewModel.title.collectAsStateWithLifecycle()
+    val title: TextFieldValue by screenViewModel.title.collectAsStateWithLifecycle()
 
     LaunchedEffect(
         key1 = Unit,
@@ -61,26 +62,10 @@ fun EditCategoryScreen(
             clearTitle = screenViewModel::clearTitle,
             isValidCategoryData = screenViewModel::isValidCategoryData,
             onCtaButtonClick = screenViewModel::updateCategory,
-            updateEmoji = { updatedEmoji ->
-                screenViewModel.updateEmoji(
-                    updatedEmoji = updatedEmoji,
-                )
-            },
-            updateSearchText = { updatedSearchText ->
-                screenViewModel.updateSearchText(
-                    updatedSearchText = updatedSearchText,
-                )
-            },
-            updateSelectedTransactionTypeIndex = { updatedIndex ->
-                screenViewModel.updateSelectedTransactionTypeIndex(
-                    updatedIndex = updatedIndex,
-                )
-            },
-            updateTitle = { updatedTitle ->
-                screenViewModel.updateTitle(
-                    updatedTitle = updatedTitle,
-                )
-            },
+            updateEmoji = screenViewModel::updateEmoji,
+            updateSearchText = screenViewModel::updateSearchText,
+            updateSelectedTransactionTypeIndex = screenViewModel::updateSelectedTransactionTypeIndex,
+            updateTitle = screenViewModel::updateTitle,
         ),
         state = rememberCommonScreenViewState(),
     )

@@ -120,16 +120,16 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
 
             if (selectedFilterValue.fromDate == null) {
                 _oldestTransactionTimestamp.update {
-                    allTransactionDataValue.minOf { transactionData ->
+                    allTransactionDataValue.minOfOrNull { transactionData ->
                         transactionData.transaction.transactionTimestamp
-                    }
+                    } ?: 0L
                 }
                 updateSelectedFilter(
-                    selectedFilterValue.copy(
+                    updatedSelectedFilter = selectedFilterValue.copy(
                         fromDate = Calendar.getInstance().apply {
                             timeInMillis = oldestTransactionTimestamp.value
                         },
-                    )
+                    ),
                 )
             }
 

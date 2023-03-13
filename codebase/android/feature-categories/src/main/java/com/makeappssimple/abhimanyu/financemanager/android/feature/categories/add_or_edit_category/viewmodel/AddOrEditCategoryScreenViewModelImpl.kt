@@ -1,5 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.viewmodel
 
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -58,10 +60,12 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
             it != TransactionType.TRANSFER && it != TransactionType.ADJUSTMENT && it != TransactionType.REFUND
         }
 
-    private val _title = MutableStateFlow(
-        value = "",
+    private val _title: MutableStateFlow<TextFieldValue> = MutableStateFlow(
+        value = TextFieldValue(
+            text = "",
+        ),
     )
-    override val title: StateFlow<String> = _title
+    override val title: StateFlow<TextFieldValue> = _title
 
     private val _selectedTransactionTypeIndex = MutableStateFlow(
         value = transactionTypes.indexOf(
@@ -130,7 +134,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
             insertCategoriesUseCase(
                 Category(
                     emoji = emoji.value,
-                    title = title.value,
+                    title = title.value.text,
                     transactionType = transactionTypes[selectedTransactionTypeIndex.value],
                 ),
             )
@@ -143,7 +147,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     override fun updateCategory() {
         val updatedCategory = category.value?.copy(
             emoji = emoji.value,
-            title = title.value,
+            title = title.value.text,
             transactionType = transactionTypes[selectedTransactionTypeIndex.value],
         ) ?: return
         viewModelScope.launch(
@@ -159,7 +163,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     }
 
     override fun isValidCategoryData(): Boolean {
-        val title = title.value
+        val title = title.value.text
 
         // TODO-Abhi: Error message - "Title can not be empty"
         if (title.isBlank()) {
@@ -204,13 +208,19 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     }
 
     override fun clearTitle() {
-        _title.value = ""
+        updateTitle(
+            updatedTitle = title.value.copy(
+                text = "",
+            ),
+        )
     }
 
     override fun updateTitle(
-        updatedTitle: String,
+        updatedTitle: TextFieldValue,
     ) {
-        _title.value = updatedTitle
+        _title.update {
+            updatedTitle
+        }
     }
 
     override fun updateSelectedTransactionTypeIndex(
@@ -253,9 +263,12 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
                 element = category.transactionType,
             ),
         )
-        updateTitle(
-            updatedTitle = category.title,
-        )
+        _title.update {
+            it.copy(
+                text = category.title,
+                selection = TextRange(category.title.length),
+            )
+        }
         updateEmoji(
             updatedEmoji = category.emoji,
         )

@@ -25,8 +25,8 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.SourceType
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -49,7 +49,6 @@ internal enum class AddOrEditSourceBottomSheetType : BottomSheetType {
 
 @Immutable
 internal data class AddOrEditSourceScreenViewData(
-    val autoFocus: Boolean,
     val isBalanceAmountTextFieldVisible: Boolean,
     val isNameTextFieldVisible: Boolean,
     val isSourceTypesRadioGroupVisible: Boolean,
@@ -58,14 +57,14 @@ internal data class AddOrEditSourceScreenViewData(
     val selectedSourceTypeIndex: Int,
     val sourceTypes: List<SourceType>,
     val navigationManager: NavigationManager,
-    val balanceAmountValue: String,
-    val name: String,
+    val balanceAmountValue: TextFieldValue,
+    val name: TextFieldValue,
     val clearBalanceAmountValue: () -> Unit,
     val clearName: () -> Unit,
     val isValidSourceData: () -> Boolean,
     val onCtaButtonClick: () -> Unit,
-    val updateBalanceAmountValue: (updatedBalanceAmountValue: String) -> Unit,
-    val updateName: (updatedName: String) -> Unit,
+    val updateBalanceAmountValue: (updatedBalanceAmountValue: TextFieldValue) -> Unit,
+    val updateName: (updatedName: TextFieldValue) -> Unit,
     val updateSelectedSourceTypeIndex: (updatedIndex: Int) -> Unit,
 )
 
@@ -79,13 +78,18 @@ internal fun AddOrEditSourceScreenView(
             value = AddOrEditSourceBottomSheetType.NONE,
         )
     }
+    val nameTextFieldModifier = if (data.isBalanceAmountTextFieldVisible) {
+        Modifier
+    } else {
+        Modifier.focusRequester(
+            focusRequester = state.focusRequester,
+        )
+    }
 
-    if (data.autoFocus) {
-        LaunchedEffect(
-            key1 = Unit,
-        ) {
-            state.focusRequester.requestFocus()
-        }
+    LaunchedEffect(
+        key1 = Unit,
+    ) {
+        state.focusRequester.requestFocus()
     }
 
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
@@ -161,7 +165,7 @@ internal fun AddOrEditSourceScreenView(
                 visible = data.isNameTextFieldVisible,
             ) {
                 MyOutlinedTextField(
-                    value = data.name,
+                    textFieldValue = data.name,
                     labelTextStringResourceId = R.string.screen_add_or_edit_source_name,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_source_clear_name,
                     onClickTrailingIcon = {
@@ -181,11 +185,8 @@ internal fun AddOrEditSourceScreenView(
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Next,
                     ),
-                    modifier = Modifier
+                    modifier = nameTextFieldModifier
                         .fillMaxWidth()
-                        .focusRequester(
-                            focusRequester = state.focusRequester,
-                        )
                         .padding(
                             horizontal = 16.dp,
                             vertical = 8.dp,
@@ -196,14 +197,14 @@ internal fun AddOrEditSourceScreenView(
                 visible = data.isBalanceAmountTextFieldVisible,
             ) {
                 MyOutlinedTextField(
-                    value = data.balanceAmountValue,
+                    textFieldValue = data.balanceAmountValue,
                     labelTextStringResourceId = R.string.screen_edit_source_balance_amount_value,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_edit_source_clear_balance_amount_value,
                     onClickTrailingIcon = {
                         data.clearBalanceAmountValue()
                     },
                     onValueChange = { updatedBalanceAmountValue ->
-                        data.updateBalanceAmountValue(updatedBalanceAmountValue.filterDigits())
+                        data.updateBalanceAmountValue(updatedBalanceAmountValue)
                     },
                     visualTransformation = AmountCommaVisualTransformation(),
                     keyboardActions = KeyboardActions(

@@ -66,26 +66,10 @@ fun TransactionsScreen(
             navigationManager = screenViewModel.navigationManager,
             searchText = searchText,
             selectedSortOption = selectedSortOption,
-            deleteTransaction = { transactionId ->
-                screenViewModel.deleteTransaction(
-                    id = transactionId,
-                )
-            },
-            updateSearchText = { updatedSearchText ->
-                screenViewModel.updateSearchText(
-                    updatedSearchText = updatedSearchText,
-                )
-            },
-            updateSelectedFilter = { updatedSelectedFilter ->
-                screenViewModel.updateSelectedFilter(
-                    updatedSelectedFilter = updatedSelectedFilter,
-                )
-            },
-            updateSelectedSortOption = { updatedSelectedSortOption ->
-                screenViewModel.updateSelectedSortOption(
-                    updatedSelectedSortOption = updatedSelectedSortOption,
-                )
-            },
+            deleteTransaction = screenViewModel::deleteTransaction,
+            updateSearchText = screenViewModel::updateSearchText,
+            updateSelectedFilter = screenViewModel::updateSelectedFilter,
+            updateSelectedSortOption = screenViewModel::updateSelectedSortOption,
         ),
         state = rememberCommonScreenViewState(),
     )

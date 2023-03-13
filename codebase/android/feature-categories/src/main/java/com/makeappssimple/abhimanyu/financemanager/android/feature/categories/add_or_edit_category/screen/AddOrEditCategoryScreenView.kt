@@ -25,6 +25,7 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
@@ -62,14 +63,14 @@ internal data class AddOrEditCategoryScreenViewData(
     val navigationManager: NavigationManager,
     val emoji: String,
     val searchText: String,
-    val title: String,
+    val title: TextFieldValue,
     val clearTitle: () -> Unit,
     val isValidCategoryData: () -> Boolean,
     val onCtaButtonClick: () -> Unit,
     val updateEmoji: (updatedEmoji: String) -> Unit,
     val updateSearchText: (updatedSearchText: String) -> Unit,
     val updateSelectedTransactionTypeIndex: (updatedIndex: Int) -> Unit,
-    val updateTitle: (updatedTitle: String) -> Unit,
+    val updateTitle: (updatedTitle: TextFieldValue) -> Unit,
 )
 
 @Composable
@@ -202,7 +203,7 @@ internal fun AddOrEditCategoryScreenView(
                     },
                 )
                 MyOutlinedTextField(
-                    value = data.title,
+                    textFieldValue = data.title,
                     labelTextStringResourceId = R.string.screen_add_or_edit_category_title,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_category_clear_title,
                     onClickTrailingIcon = {

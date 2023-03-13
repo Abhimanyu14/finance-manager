@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.viewmodel
 
+import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.SourceType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -12,8 +13,8 @@ interface AddOrEditSourceScreenViewModel : ScreenViewModel {
     val source: Flow<Source?>
     val sourceTypes: List<SourceType>
     val selectedSourceTypeIndex: StateFlow<Int>
-    val name: StateFlow<String>
-    val balanceAmountValue: StateFlow<String>
+    val name: StateFlow<TextFieldValue>
+    val balanceAmountValue: StateFlow<TextFieldValue>
 
     fun insertSource()
 
@@ -22,13 +23,13 @@ interface AddOrEditSourceScreenViewModel : ScreenViewModel {
     fun clearName()
 
     fun updateName(
-        updatedName: String,
+        updatedName: TextFieldValue,
     )
 
     fun clearBalanceAmountValue()
 
     fun updateBalanceAmountValue(
-        updatedBalanceAmountValue: String,
+        updatedBalanceAmountValue: TextFieldValue,
     )
 
     fun updateSelectedSourceTypeIndex(

@@ -15,6 +15,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
@@ -24,18 +25,18 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 fun MyOutlinedTextField(
     modifier: Modifier = Modifier,
     isError: Boolean = false,
-    value: String,
     @StringRes labelTextStringResourceId: Int,
     @StringRes trailingIconContentDescriptionTextStringResourceId: Int,
     keyboardActions: KeyboardActions,
     keyboardOptions: KeyboardOptions,
+    textFieldValue: TextFieldValue,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     onClickTrailingIcon: () -> Unit,
-    onValueChange: (updatedValue: String) -> Unit,
+    onValueChange: (updatedValue: TextFieldValue) -> Unit,
     supportingText: @Composable (() -> Unit)? = null,
 ) {
     OutlinedTextField(
-        value = value,
+        value = textFieldValue,
         label = {
             MyOutlinedTextFieldLabelText(
                 textStringResourceId = labelTextStringResourceId,
@@ -43,7 +44,7 @@ fun MyOutlinedTextField(
         },
         trailingIcon = {
             AnimatedVisibility(
-                visible = value.isNotNullOrBlank(),
+                visible = textFieldValue.text.isNotNullOrBlank(),
                 enter = fadeIn(),
                 exit = fadeOut(),
             ) {

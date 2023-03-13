@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.logError
@@ -20,7 +21,7 @@ fun AddTransactionForScreen(
     logError(
         message = "Inside AddTransactionForScreen",
     )
-    val title: String by screenViewModel.title.collectAsStateWithLifecycle()
+    val title: TextFieldValue by screenViewModel.title.collectAsStateWithLifecycle()
 
     LaunchedEffect(
         key1 = Unit,
@@ -37,11 +38,7 @@ fun AddTransactionForScreen(
             clearTitle = screenViewModel::clearTitle,
             isValidTitle = screenViewModel::isValidTitle,
             onCtaButtonClick = screenViewModel::insertTransactionFor,
-            updateTitle = { updatedTitle ->
-                screenViewModel.updateTitle(
-                    updatedTitle = updatedTitle,
-                )
-            },
+            updateTitle = screenViewModel::updateTitle,
         ),
         state = rememberCommonScreenViewState(),
     )

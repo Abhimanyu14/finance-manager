@@ -1,11 +1,14 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.viewmodel
 
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
@@ -62,15 +65,19 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     )
     override val selectedSourceTypeIndex: StateFlow<Int> = _selectedSourceTypeIndex
 
-    private val _name: MutableStateFlow<String> = MutableStateFlow(
-        value = "",
+    private val _name: MutableStateFlow<TextFieldValue> = MutableStateFlow(
+        value = TextFieldValue(
+            text = "",
+        ),
     )
-    override val name: StateFlow<String> = _name
+    override val name: StateFlow<TextFieldValue> = _name
 
-    private val _balanceAmountValue: MutableStateFlow<String> = MutableStateFlow(
-        value = "",
+    private val _balanceAmountValue: MutableStateFlow<TextFieldValue> = MutableStateFlow(
+        value = TextFieldValue(
+            text = "",
+        ),
     )
-    override val balanceAmountValue: StateFlow<String> = _balanceAmountValue
+    override val balanceAmountValue: StateFlow<TextFieldValue> = _balanceAmountValue
 
     init {
         savedStateHandle.get<Int>(NavArgs.SOURCE_ID)?.let { sourceId ->
@@ -86,19 +93,19 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
 
     override fun updateSource() {
         val source = source.value ?: return
-        val amountValue = balanceAmountValue.value.toInt() - source.balanceAmount.value
+        val amountValue = balanceAmountValue.value.text.toInt() - source.balanceAmount.value
         val updatedSource = source
             .copy(
                 balanceAmount = source.balanceAmount
                     .copy(
-                        value = balanceAmountValue.value.toLong(),
+                        value = balanceAmountValue.value.text.toLong(),
                     ),
                 type = if (source.type != SourceType.CASH) {
                     sourceTypes[selectedSourceTypeIndex.value]
                 } else {
                     source.type
                 },
-                name = name.value.ifBlank {
+                name = name.value.text.ifBlank {
                     source.name
                 },
             )
@@ -153,7 +160,7 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
                         value = 0L,
                     ),
                     type = sourceTypes[selectedSourceTypeIndex.value],
-                    name = name.value,
+                    name = name.value.text,
                 ),
             )
             navigateUp(
@@ -163,7 +170,7 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     }
 
     override fun isValidSourceData(): Boolean {
-        val name = name.value
+        val name = name.value.text
 
         // TODO-Abhi: Error message - "Name can not be empty"
         if (name.isBlank()) {
@@ -193,12 +200,12 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
 
     override fun clearName() {
         updateName(
-            updatedName = "",
+            updatedName = name.value.copy(""),
         )
     }
 
     override fun updateName(
-        updatedName: String,
+        updatedName: TextFieldValue,
     ) {
         _name.update {
             updatedName
@@ -207,15 +214,19 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
 
     override fun clearBalanceAmountValue() {
         updateBalanceAmountValue(
-            updatedBalanceAmountValue = "",
+            updatedBalanceAmountValue = balanceAmountValue.value.copy(
+                text = "",
+            ),
         )
     }
 
     override fun updateBalanceAmountValue(
-        updatedBalanceAmountValue: String,
+        updatedBalanceAmountValue: TextFieldValue,
     ) {
         _balanceAmountValue.update {
-            updatedBalanceAmountValue
+            it.copy(
+                text = updatedBalanceAmountValue.text.filterDigits(),
+            )
         }
     }
 
@@ -250,10 +261,15 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
             ),
         )
         updateName(
-            updatedName = source.name,
+            updatedName = name.value.copy(
+                text = source.name,
+            )
         )
-        updateBalanceAmountValue(
-            updatedBalanceAmountValue = source.balanceAmount.value.toString(),
-        )
+        _balanceAmountValue.update {
+            TextFieldValue(
+                text = source.balanceAmount.value.toString(),
+                selection = TextRange(source.balanceAmount.value.toString().length),
+            )
+        }
     }
 }

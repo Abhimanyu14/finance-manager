@@ -26,8 +26,8 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDate
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
@@ -87,14 +87,14 @@ internal data class AddOrEditTransactionScreenViewData(
     val clearDescription: () -> Unit,
     val clearTitle: () -> Unit,
     val onCtaButtonClick: () -> Unit,
-    val updateAmount: (updatedAmount: String) -> Unit,
+    val updateAmount: (updatedAmount: TextFieldValue) -> Unit,
     val updateCategory: (updatedCategory: Category?) -> Unit,
-    val updateDescription: (updatedDescription: String) -> Unit,
+    val updateDescription: (updatedDescription: TextFieldValue) -> Unit,
     val updateSelectedTransactionForIndex: (updatedSelectedTransactionForIndex: Int) -> Unit,
     val updateSelectedTransactionTypeIndex: (updatedSelectedTransactionTypeIndex: Int) -> Unit,
     val updateSourceFrom: (updatedSourceFrom: Source?) -> Unit,
     val updateSourceTo: (updatedSourceTo: Source?) -> Unit,
-    val updateTitle: (updatedTitle: String) -> Unit,
+    val updateTitle: (updatedTitle: TextFieldValue) -> Unit,
     val updateTransactionCalendar: (updatedTransactionCalendar: Calendar) -> Unit,
 )
 
@@ -299,14 +299,14 @@ internal fun AddOrEditTransactionScreenView(
                 )
             }
             MyOutlinedTextField(
-                value = data.uiState.amount,
+                textFieldValue = data.uiState.amount,
                 labelTextStringResourceId = R.string.screen_add_or_edit_transaction_amount,
                 trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_amount,
                 onClickTrailingIcon = {
                     data.clearAmount()
                 },
                 onValueChange = { updatedAmount ->
-                    data.updateAmount(updatedAmount.filterDigits())
+                    data.updateAmount(updatedAmount)
                 },
                 supportingText = {
                     AnimatedVisibility(
@@ -371,7 +371,7 @@ internal fun AddOrEditTransactionScreenView(
                 visible = data.uiVisibilityState.isTitleTextFieldVisible,
             ) {
                 MyOutlinedTextField(
-                    value = data.uiState.title,
+                    textFieldValue = data.uiState.title,
                     labelTextStringResourceId = R.string.screen_add_or_edit_transaction_title,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_title,
                     onClickTrailingIcon = {
@@ -404,7 +404,7 @@ internal fun AddOrEditTransactionScreenView(
                     items = titleSuggestionsChipItems,
                     onSelectionChange = { index ->
                         clearFocus()
-                        data.updateTitle(data.titleSuggestions[index])
+                        data.updateTitle(TextFieldValue(data.titleSuggestions[index]))
                     },
                     modifier = Modifier
                         .padding(
@@ -436,7 +436,7 @@ internal fun AddOrEditTransactionScreenView(
                 visible = data.uiVisibilityState.isDescriptionTextFieldVisible,
             ) {
                 MyOutlinedTextField(
-                    value = data.uiState.description,
+                    textFieldValue = data.uiState.description,
                     labelTextStringResourceId = R.string.screen_add_or_edit_transaction_description,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_description,
                     onClickTrailingIcon = {

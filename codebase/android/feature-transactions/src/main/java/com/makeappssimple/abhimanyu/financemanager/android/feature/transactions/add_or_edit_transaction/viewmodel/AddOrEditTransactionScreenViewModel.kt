@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel
 
+import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
@@ -30,19 +31,19 @@ interface AddOrEditTransactionScreenViewModel : ScreenViewModel {
     )
 
     fun updateTitle(
-        updatedTitle: String,
+        updatedTitle: TextFieldValue,
     )
 
     fun clearTitle()
 
     fun updateDescription(
-        updatedDescription: String,
+        updatedDescription: TextFieldValue,
     )
 
     fun clearDescription()
 
     fun updateAmount(
-        updatedAmount: String,
+        updatedAmount: TextFieldValue,
     )
 
     fun clearAmount()

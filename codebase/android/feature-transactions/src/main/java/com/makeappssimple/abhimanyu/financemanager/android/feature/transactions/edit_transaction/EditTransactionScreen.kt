@@ -68,51 +68,15 @@ fun EditTransactionScreen(
             clearDescription = screenViewModel::clearDescription,
             clearTitle = screenViewModel::clearTitle,
             onCtaButtonClick = screenViewModel::updateTransaction,
-            updateAmount = { updatedAmount ->
-                screenViewModel.updateAmount(
-                    updatedAmount = updatedAmount,
-                )
-            },
-            updateCategory = { updatedCategory ->
-                screenViewModel.updateCategory(
-                    updatedCategory = updatedCategory,
-                )
-            },
-            updateDescription = { updatedDescription ->
-                screenViewModel.updateDescription(
-                    updatedDescription = updatedDescription,
-                )
-            },
-            updateSelectedTransactionForIndex = { updatedSelectedTransactionForIndex ->
-                screenViewModel.updateSelectedTransactionForIndex(
-                    updatedSelectedTransactionForIndex = updatedSelectedTransactionForIndex,
-                )
-            },
-            updateSelectedTransactionTypeIndex = { updatedSelectedTransactionTypeIndex ->
-                screenViewModel.updateSelectedTransactionTypeIndex(
-                    updatedSelectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex,
-                )
-            },
-            updateSourceFrom = { updatedSourceFrom ->
-                screenViewModel.updateSourceFrom(
-                    updatedSourceFrom = updatedSourceFrom,
-                )
-            },
-            updateSourceTo = { updatedSourceTo ->
-                screenViewModel.updateSourceTo(
-                    updatedSourceTo = updatedSourceTo,
-                )
-            },
-            updateTitle = { updatedTitle ->
-                screenViewModel.updateTitle(
-                    updatedTitle = updatedTitle,
-                )
-            },
-            updateTransactionCalendar = { updatedTransactionCalendar ->
-                screenViewModel.updateTransactionCalendar(
-                    updatedTransactionCalendar = updatedTransactionCalendar,
-                )
-            },
+            updateAmount = screenViewModel::updateAmount,
+            updateCategory = screenViewModel::updateCategory,
+            updateDescription = screenViewModel::updateDescription,
+            updateSelectedTransactionForIndex = screenViewModel::updateSelectedTransactionForIndex,
+            updateSelectedTransactionTypeIndex = screenViewModel::updateSelectedTransactionTypeIndex,
+            updateSourceFrom = screenViewModel::updateSourceFrom,
+            updateSourceTo = screenViewModel::updateSourceTo,
+            updateTitle = screenViewModel::updateTitle,
+            updateTransactionCalendar = screenViewModel::updateTransactionCalendar,
         ),
         state = rememberCommonScreenViewState(),
     )
