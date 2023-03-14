@@ -2,10 +2,10 @@ buildscript {
 
     ext {
         // App version code
-        appVersionCode = 56
+        appVersionCode = 57
 
         // App version name
-        appVersionName = "2023.03.06.1"
+        appVersionName = "2023.03.14.0"
 
         // Gradle build tools
         gradleBuildToolsVersion = "7.3.1"
