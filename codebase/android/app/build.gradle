@@ -33,28 +33,28 @@ plugins {
 //    // true to run all tests in all projects if `koverHtmlReport`, `koverXmlReport`, `koverReport`, `koverVerify` or `check` tasks executed on some project
 //}
 
-//tasks.koverHtmlReport {
-//    excludes = [
-//            // Hilt
-//            "*.di.*",
-//            "dagger.hilt.**",
-//            "hilt_aggregated_deps.*",
-//            "com.makeappssimple.abhimanyu.financemanager.android.*.*_Factory",
-//
-//            // Room
-//            // MyRoomDatabase_AutoMigration_*_Impl, *Dao_Impl
-//            "com.makeappssimple.abhimanyu.financemanager.android.*.*_Impl*",
-//
-//            // BuildConfig
-//            "com.makeappssimple.abhimanyu.financemanager.android.BuildConfig",
-//
-//            // Moshi - Json Adapter
-//            "com.makeappssimple.abhimanyu.financemanager.android.*.*JsonAdapter",
-//
-//            // UI
-//            "com.makeappssimple.abhimanyu.financemanager.android.ui.*"
-//    ]
-//}
+tasks.koverHtmlReport {
+    excludes = [
+            // Hilt
+            "*.di.*",
+            "dagger.hilt.**",
+            "hilt_aggregated_deps.*",
+            "com.makeappssimple.abhimanyu.financemanager.android.*.*_Factory",
+
+            // Room
+            // MyRoomDatabase_AutoMigration_*_Impl, *Dao_Impl
+            "com.makeappssimple.abhimanyu.financemanager.android.*.*_Impl*",
+
+            // BuildConfig
+            "com.makeappssimple.abhimanyu.financemanager.android.BuildConfig",
+
+            // Moshi - Json Adapter
+            "com.makeappssimple.abhimanyu.financemanager.android.*.*JsonAdapter",
+
+            // UI
+            "com.makeappssimple.abhimanyu.financemanager.android.ui.*"
+    ]
+}
 
 // TODO-Abhi: Jacoco
 // Jacoco
@@ -151,6 +151,10 @@ android {
 
     // Kover
     testOptions {
+//        unitTests {
+//            returnDefaultValues = true
+//        }
+
         unitTests.all {
             if (name == "testDebugUnitTest") {
                 kover {
