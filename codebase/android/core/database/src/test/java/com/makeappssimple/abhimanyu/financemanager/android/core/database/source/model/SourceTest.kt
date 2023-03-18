@@ -14,38 +14,23 @@ class SourceTest {
     }
 
     @Test
-    fun getSortOrder() {
+    fun updateBalanceAmount_defaultTest() {
         Assert.assertEquals(
-            SourceType.CASH,
-            source.type,
+            0L,
+            source.balanceAmount.value,
         )
-        Assert.assertEquals(
-            1,
-            source.type.sortOrder,
-        )
-    }
 
-    @Test
-    fun getSortOrder_bank() {
-        source = source
-            .copy(
-                type = SourceType.BANK,
-            )
-        Assert.assertEquals(
-            2,
-            source.type.sortOrder,
+        val result = source.updateBalanceAmount(
+            updatedBalanceAmount = 100L,
         )
-    }
-
-    @Test
-    fun getSortOrder_e_wallet() {
-        source = source
-            .copy(
-                type = SourceType.E_WALLET,
-            )
+        
         Assert.assertEquals(
-            3,
-            source.type.sortOrder,
+            0L,
+            source.balanceAmount.value,
+        )
+        Assert.assertEquals(
+            100L,
+            result.balanceAmount.value,
         )
     }
 }

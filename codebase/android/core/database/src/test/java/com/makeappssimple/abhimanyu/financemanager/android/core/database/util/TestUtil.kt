@@ -6,6 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.m
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 
 const val timeInMillis_01_JAN_2022_00_00_00 = 1640975400000 // 01-01-2022 00:00:00 IST
 const val timeInMillis_01_JUN_2022_00_00_00 = 1654021800000 // 01-06-2022 00:00:00 IST
@@ -113,6 +114,17 @@ fun getTestTransactions(): Array<Transaction> {
             title = "title 1",
             creationTimestamp = timeInMillis_01_JUN_2022_00_00_00,
             transactionTimestamp = timeInMillis_01_JUN_2022_00_00_00,
+        ),
+    )
+}
+
+fun getTestTransactionForValues(): Array<TransactionFor> {
+    return arrayOf(
+        TransactionFor(
+            title = "Self"
+        ),
+        TransactionFor(
+            title = "Family"
         ),
     )
 }

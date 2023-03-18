@@ -12,7 +12,7 @@ class GetSourcesTotalBalanceAmountValueUseCaseImpl(
     private val sourceRepository: SourceRepository,
 ) : GetSourcesTotalBalanceAmountValueUseCase {
     override operator fun invoke(): Flow<Long> {
-        return sourceRepository.sources.map {
+        return sourceRepository.allSources.map {
             it.sumOf { source ->
                 source.balanceAmount.value
             }

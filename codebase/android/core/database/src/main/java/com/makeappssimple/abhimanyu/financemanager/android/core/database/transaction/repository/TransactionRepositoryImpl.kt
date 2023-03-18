@@ -40,24 +40,13 @@ class TransactionRepositoryImpl(
         )
     }
 
-    override fun getCurrentDayTransactions(): Flow<List<Transaction>> {
+    override fun getTransactionsBetweenTimestamps(
+        startingTimestamp: Long,
+        endingTimestamp: Long,
+    ): Flow<List<Transaction>> {
         return transactionDao.getTransactionsBetweenTimestamps(
-            startingTimestamp = getStartOfDayTimestamp(),
-            endingTimestamp = getEndOfDayTimestamp(),
-        )
-    }
-
-    override fun getCurrentMonthTransactions(): Flow<List<Transaction>> {
-        return transactionDao.getTransactionsBetweenTimestamps(
-            startingTimestamp = getStartOfMonthTimestamp(),
-            endingTimestamp = getEndOfMonthTimestamp(),
-        )
-    }
-
-    override fun getCurrentYearTransactions(): Flow<List<Transaction>> {
-        return transactionDao.getTransactionsBetweenTimestamps(
-            startingTimestamp = getStartOfYearTimestamp(),
-            endingTimestamp = getEndOfYearTimestamp(),
+            startingTimestamp = startingTimestamp,
+            endingTimestamp = endingTimestamp,
         )
     }
 

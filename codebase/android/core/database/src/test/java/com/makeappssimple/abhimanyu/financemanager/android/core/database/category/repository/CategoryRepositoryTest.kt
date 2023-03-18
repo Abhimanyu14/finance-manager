@@ -3,18 +3,16 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.catego
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.datasource.local.CategoryDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestCategories
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestCategory
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
-class CategoryRepositoryImplTest {
+class CategoryRepositoryTest {
     private val categoryDao: CategoryDao = mock()
-    private val id: Int = 1
-    private val category: Category = getTestCategory()
-    private val categories: Array<Category> = getTestCategories()
+    private val testId: Int = 1
+    private val testCategories: Array<Category> = getTestCategories()
     private lateinit var categoryRepository: CategoryRepository
 
     @Before
@@ -45,65 +43,65 @@ class CategoryRepositoryImplTest {
     @Test
     fun getCategory() = runTest {
         categoryRepository.getCategory(
-            id = id,
+            id = testId,
         )
 
         verify(
             mock = categoryDao,
         ).getCategory(
-            id = id,
+            id = testId,
         )
     }
 
     @Test
     fun insertCategories() = runTest {
         categoryRepository.insertCategories(
-            *categories,
+            *testCategories,
         )
 
         verify(
             mock = categoryDao,
         ).insertCategories(
-            *categories,
+            *testCategories,
         )
     }
 
     @Test
     fun updateCategories() = runTest {
         categoryRepository.updateCategories(
-            *categories,
+            *testCategories,
         )
 
         verify(
             mock = categoryDao,
         ).updateCategories(
-            *categories,
+            *testCategories,
         )
     }
 
     @Test
     fun deleteCategory() = runTest {
         categoryRepository.deleteCategory(
-            id = id,
+            id = testId,
         )
 
         verify(
             mock = categoryDao,
         ).deleteCategory(
-            id = id,
+            id = testId,
         )
     }
 
     @Test
     fun deleteCategories() = runTest {
         categoryRepository.deleteCategories(
-            *categories,
+            *testCategories,
         )
 
         verify(
             mock = categoryDao,
         ).deleteCategories(
-            *categories,
+            *testCategories,
         )
     }
 }

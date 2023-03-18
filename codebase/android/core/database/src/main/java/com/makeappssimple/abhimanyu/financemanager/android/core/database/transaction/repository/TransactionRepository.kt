@@ -21,11 +21,10 @@ interface TransactionRepository {
         numberOfTransactions: Int,
     ): Flow<List<TransactionData>>
 
-    fun getCurrentDayTransactions(): Flow<List<Transaction>>
-
-    fun getCurrentMonthTransactions(): Flow<List<Transaction>>
-
-    fun getCurrentYearTransactions(): Flow<List<Transaction>>
+    fun getTransactionsBetweenTimestamps(
+        startingTimestamp: Long,
+        endingTimestamp: Long,
+    ): Flow<List<Transaction>>
 
     suspend fun getTransactionsCount(): Int
 

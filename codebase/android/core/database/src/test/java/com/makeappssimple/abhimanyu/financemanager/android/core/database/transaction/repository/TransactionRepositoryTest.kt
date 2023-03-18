@@ -11,11 +11,11 @@ import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
-class TransactionRepositoryImplTest {
+class TransactionRepositoryTest {
     private val transactionDao: TransactionDao = mock()
-    private val id: Int = 1
-    private val transactions: Array<Transaction> = getTestTransactions()
-    private val sources: Array<Source> = getTestSources()
+    private val testId: Int = 1
+    private val testTransactions: Array<Transaction> = getTestTransactions()
+    private val testSources: Array<Source> = getTestSources()
     private lateinit var transactionRepository: TransactionRepository
 
     @Before
@@ -46,41 +46,41 @@ class TransactionRepositoryImplTest {
     @Test
     fun getTransaction() = runTest {
         transactionRepository.getTransaction(
-            id = id,
+            id = testId,
         )
 
         verify(
             mock = transactionDao,
         ).getTransaction(
-            id = id,
+            id = testId,
         )
     }
 
     @Test
     fun insertTransactions() = runTest {
         transactionRepository.insertTransactions(
-            *transactions,
+            *testTransactions,
         )
 
         verify(
             mock = transactionDao,
         ).insertTransactions(
-            *transactions,
+            *testTransactions,
         )
     }
 
     @Test
     fun deleteTransaction() = runTest {
         transactionRepository.deleteTransaction(
-            id = id,
-            sources = sources,
+            id = testId,
+            sources = testSources,
         )
 
         verify(
             mock = transactionDao,
         ).deleteTransaction(
-            id = id,
-            sources = sources,
+            id = testId,
+            sources = testSources,
         )
     }
 

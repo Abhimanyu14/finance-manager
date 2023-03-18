@@ -6,7 +6,7 @@ import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
-class EmojiRepositoryImplTest {
+class EmojiRepositoryTest {
     private val emojiDao: EmojiDao = mock()
     private lateinit var emojiRepository: EmojiRepository
 

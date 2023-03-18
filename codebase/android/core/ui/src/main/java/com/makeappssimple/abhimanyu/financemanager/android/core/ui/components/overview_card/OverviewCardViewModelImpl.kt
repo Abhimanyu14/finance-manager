@@ -5,12 +5,16 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.defaultObjectStateIn
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getEndOfDayTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getEndOfMonthTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getEndOfYearTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getStartOfDayTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getStartOfMonthTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getStartOfYearTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetCurrentDayTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetCurrentMonthTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetCurrentYearTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionsBetweenTimestampsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.math.abs
@@ -24,9 +28,7 @@ import kotlinx.coroutines.flow.map
 @HiltViewModel
 internal class OverviewCardViewModelImpl @Inject constructor(
     dispatcherProvider: DispatcherProvider,
-    getCurrentDayTransactionsUseCase: GetCurrentDayTransactionsUseCase,
-    getCurrentMonthTransactionsUseCase: GetCurrentMonthTransactionsUseCase,
-    getCurrentYearTransactionsUseCase: GetCurrentYearTransactionsUseCase,
+    getTransactionsBetweenTimestampsUseCase: GetTransactionsBetweenTimestampsUseCase,
     getTransactionUseCase: GetTransactionUseCase,
 ) : OverviewCardViewModel, ViewModel() {
     private val _overviewTabSelectionIndex: MutableStateFlow<Int> = MutableStateFlow(
@@ -35,14 +37,20 @@ internal class OverviewCardViewModelImpl @Inject constructor(
     override val overviewTabSelectionIndex: StateFlow<Int>
         get() = _overviewTabSelectionIndex
     private val currentDayTransactions: StateFlow<List<Transaction>> =
-        getCurrentDayTransactionsUseCase()
-            .defaultListStateIn(viewModelScope)
+        getTransactionsBetweenTimestampsUseCase(
+            startingTimestamp = getStartOfDayTimestamp(),
+            endingTimestamp = getEndOfDayTimestamp(),
+        ).defaultListStateIn(viewModelScope)
     private val currentMonthTransactions: StateFlow<List<Transaction>> =
-        getCurrentMonthTransactionsUseCase()
-            .defaultListStateIn(viewModelScope)
+        getTransactionsBetweenTimestampsUseCase(
+            startingTimestamp = getStartOfMonthTimestamp(),
+            endingTimestamp = getEndOfMonthTimestamp(),
+        ).defaultListStateIn(viewModelScope)
     private val currentYearTransactions: StateFlow<List<Transaction>> =
-        getCurrentYearTransactionsUseCase()
-            .defaultListStateIn(viewModelScope)
+        getTransactionsBetweenTimestampsUseCase(
+            startingTimestamp = getStartOfYearTimestamp(),
+            endingTimestamp = getEndOfYearTimestamp(),
+        ).defaultListStateIn(viewModelScope)
 
     private val incomeAmount: Flow<Float?> = combine(
         flow = overviewTabSelectionIndex,

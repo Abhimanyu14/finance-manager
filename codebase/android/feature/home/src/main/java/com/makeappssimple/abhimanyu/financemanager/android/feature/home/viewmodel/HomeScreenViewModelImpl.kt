@@ -24,13 +24,11 @@ internal class HomeScreenViewModelImpl @Inject constructor(
     private val backupDataUseCase: BackupDataUseCase,
     private val dispatcherProvider: DispatcherProvider,
 ) : HomeScreenViewModel, ViewModel() {
-    private val lastDataChangeTimestamp: Flow<Long?> = dataStore.getLastDataChangeTimestamp()
-    private val lastDataBackupTimestamp: Flow<Long?> = dataStore.getLastDataBackupTimestamp()
-
     override val homeListItemViewData: Flow<List<TransactionData>> =
         getRecentTransactionDataUseCase()
     override val showBackupCard: Flow<Boolean> = combine(
-        lastDataBackupTimestamp, lastDataChangeTimestamp
+        flow = dataStore.getLastDataBackupTimestamp(),
+        flow2 = dataStore.getLastDataChangeTimestamp(),
     ) { lastDataBackupTimestamp, lastDataChangeTimestamp ->
         lastDataBackupTimestamp != null &&
                 lastDataChangeTimestamp != null &&

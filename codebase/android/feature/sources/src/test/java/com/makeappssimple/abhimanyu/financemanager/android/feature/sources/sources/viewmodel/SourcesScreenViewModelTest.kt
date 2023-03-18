@@ -18,7 +18,7 @@ import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.stub
 
-class SourcesScreenViewModelImplTest {
+class SourcesScreenViewModelTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 

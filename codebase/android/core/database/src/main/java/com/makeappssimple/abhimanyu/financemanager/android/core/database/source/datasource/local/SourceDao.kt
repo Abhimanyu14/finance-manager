@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 interface SourceDao {
 
     @Query(value = "SELECT * from source_table ORDER BY id ASC")
-    fun getSources(): Flow<List<Source>>
+    fun getAllSources(): Flow<List<Source>>
 
     @Query(value = "SELECT COUNT(*) FROM source_table")
     suspend fun getSourcesCount(): Int

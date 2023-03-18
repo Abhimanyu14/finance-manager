@@ -10,7 +10,7 @@ import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
-class SourceRepositoryImplTest {
+class SourceRepositoryTest {
     private val sourceDao: SourceDao = mock()
     private val id: Int = 1
     private val source: Source = getTestSource()
@@ -26,11 +26,11 @@ class SourceRepositoryImplTest {
 
     @Test
     fun getSources() {
-        sourceRepository.sources
+        sourceRepository.allSources
 
         verify(
             mock = sourceDao,
-        ).getSources()
+        ).getAllSources()
     }
 
     @Test
@@ -52,6 +52,19 @@ class SourceRepositoryImplTest {
             mock = sourceDao,
         ).getSource(
             id = id,
+        )
+    }
+
+    @Test
+    fun getSources_defaultTest() = runTest {
+        sourceRepository.getSources(
+            ids = listOf(id),
+        )
+
+        verify(
+            mock = sourceDao,
+        ).getSources(
+            ids = listOf(id),
         )
     }
 

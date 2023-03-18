@@ -4,7 +4,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import kotlinx.coroutines.flow.Flow
 
 interface SourceRepository {
-    val sources: Flow<List<Source>>
+    val allSources: Flow<List<Source>>
 
     suspend fun getSourcesCount(): Int
 

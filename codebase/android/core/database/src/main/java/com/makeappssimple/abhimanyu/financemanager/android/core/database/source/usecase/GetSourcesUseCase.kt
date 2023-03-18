@@ -12,6 +12,6 @@ class GetSourcesUseCaseImpl(
     private val sourceRepository: SourceRepository,
 ) : GetSourcesUseCase {
     override operator fun invoke(): Flow<List<Source>> {
-        return sourceRepository.sources
+        return sourceRepository.allSources
     }
 }

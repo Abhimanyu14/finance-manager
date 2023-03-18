@@ -5,7 +5,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-class DispatcherProviderImplTest {
+class DispatcherProviderTest {
     private lateinit var dispatcherProvider: DispatcherProvider
 
     @Before

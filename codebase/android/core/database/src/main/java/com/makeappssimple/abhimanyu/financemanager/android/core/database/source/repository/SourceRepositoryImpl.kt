@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.Flow
 class SourceRepositoryImpl(
     private val sourceDao: SourceDao,
 ) : SourceRepository {
-    override val sources: Flow<List<Source>> = sourceDao.getSources()
+    override val allSources: Flow<List<Source>> = sourceDao.getAllSources()
 
     override suspend fun getSourcesCount(): Int {
         return sourceDao.getSourcesCount()
