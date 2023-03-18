@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace "com.makeappssimple.abhimanyu.financemanager.android.feature.settings"
+    namespace "com.makeappssimple.abhimanyu.financemanager.android.feature.transactions"
     compileSdk rootProject.compileSdkVersion
 
     defaultConfig {
@@ -68,18 +68,17 @@ android {
 }
 
 dependencies {
-    implementation project(":core-common")
-    implementation project(":core-navigation")
-    implementation project(":core-model")
-    implementation project(":core-database")
-    implementation project(":core-datastore")
-    implementation project(":core-designsystem")
-    implementation project(":core-ui")
+    implementation project(":core:common")
+    implementation project(":core:navigation")
+    implementation project(":core:model")
+    implementation project(":core:database")
+    implementation project(":core:datastore")
+    implementation project(":core:designsystem")
+    implementation project(":core:ui")
     implementation project(":chart")
+    testImplementation project(":core:testing")
+    androidTestImplementation project(":core:testing")
 
-    testImplementation project(":core-testing")
-
-    androidTestImplementation project(":core-testing")
 
     // Androidx core
     implementation "androidx.core:core-ktx:$rootProject.androidXCoreVersion"
@@ -133,4 +132,23 @@ dependencies {
     // Junit
     testImplementation "junit:junit:$rootProject.junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXJUnitExtensionVersion"
+
+    // Mockito kotlin
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$rootProject.mockitoKotlinVersion"
+
+    // Coroutines test
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
+
+    // Jacoco
+    androidTestImplementation "androidx.test:runner:$rootProject.testRunnerVersion"
+    androidTestImplementation "androidx.test:rules:$rootProject.testRulesVersion"
+
+    // Espresso
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
+
+    // Jetpack compose UI tests
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$rootProject.jetpackComposeVersion"
+
+    // Jetpack compose UI tests manifest - Needed for createComposeRule, but not createAndroidComposeRule
+    debugImplementation("androidx.compose.ui:ui-test-manifest:$rootProject.jetpackComposeVersion")
 }

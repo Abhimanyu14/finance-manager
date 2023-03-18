@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace "com.makeappssimple.abhimanyu.financemanager.android.core.ui"
+    namespace "com.makeappssimple.abhimanyu.financemanager.android.feature.home"
     compileSdk rootProject.compileSdkVersion
 
     defaultConfig {
@@ -68,13 +68,17 @@ android {
 }
 
 dependencies {
-    implementation project(":core-common")
-    implementation project(":core-navigation")
-    implementation project(":core-model")
-    implementation project(":core-database")
-    implementation project(":core-datastore")
-    implementation project(":core-designsystem")
+    implementation project(":core:common")
+    implementation project(":core:navigation")
+    implementation project(":core:model")
+    implementation project(":core:database")
+    implementation project(":core:datastore")
+    implementation project(":core:designsystem")
+    implementation project(":core:ui")
     implementation project(":chart")
+    testImplementation project(":core:testing")
+    androidTestImplementation project(":core:testing")
+
 
     // Androidx core
     implementation "androidx.core:core-ktx:$rootProject.androidXCoreVersion"
@@ -84,6 +88,14 @@ dependencies {
 
     // Appcompat
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
+
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion")
+
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$rootProject.hiltVersion"
+    kapt "androidx.hilt:hilt-compiler:$rootProject.hiltCompilerVersion"
 
     // Jetpack compose
     implementation "androidx.compose.ui:ui:$rootProject.jetpackComposeVersion"
@@ -103,9 +115,6 @@ dependencies {
     // Jetpack compose material design adapter
     implementation "com.google.android.material:compose-theme-adapter:$rootProject.jetpackComposeMaterialDesignAdapterVersion"
 
-    // Jetpack compose integration with activities
-    implementation "androidx.activity:activity-compose:$rootProject.jetpackComposeActivityIntegrationVersion"
-
     // Jetpack compose integration with view models
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$rootProject.jetpackComposeViewModelIntegrationVersion"
 
@@ -118,45 +127,9 @@ dependencies {
     // Jetpack compose navigation with hilt
     implementation "androidx.hilt:hilt-navigation-compose:$rootProject.jetpackComposeNavigationHiltVersion"
 
-    // Accompanist
-    implementation "com.google.accompanist:accompanist-insets:$rootProject.accompanistVersion"
-
-    // Accompanist flow layout
-    implementation "com.google.accompanist:accompanist-flowlayout:$rootProject.accompanistVersion"
-
-    // Accompanist pager
-    implementation "com.google.accompanist:accompanist-pager:$rootProject.accompanistVersion"
-
-    // Accompanist pager indicators
-    implementation "com.google.accompanist:accompanist-pager-indicators:$rootProject.accompanistVersion"
-
-    // Hilt
-    implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
-    kapt "com.google.dagger:hilt-compiler:$rootProject.hiltVersion"
-    kapt "androidx.hilt:hilt-compiler:$rootProject.hiltCompilerVersion"
-
     // Testing
 
     // Junit
     testImplementation "junit:junit:$rootProject.junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXJUnitExtensionVersion"
-
-    // Mockito kotlin
-    testImplementation "org.mockito.kotlin:mockito-kotlin:$rootProject.mockitoKotlinVersion"
-
-    // Coroutines test
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
-
-    // Jacoco
-    androidTestImplementation "androidx.test:runner:$rootProject.testRunnerVersion"
-    androidTestImplementation "androidx.test:rules:$rootProject.testRulesVersion"
-
-    // Espresso
-    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
-
-    // Jetpack compose UI tests
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$rootProject.jetpackComposeVersion"
-
-    // Jetpack compose UI tests manifest - Needed for createComposeRule, but not createAndroidComposeRule
-    debugImplementation("androidx.compose.ui:ui-test-manifest:$rootProject.jetpackComposeVersion")
 }

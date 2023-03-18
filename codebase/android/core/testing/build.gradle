@@ -60,8 +60,7 @@ android {
 }
 
 dependencies {
-    implementation project(":core-common")
-
+    implementation project(":core:common")
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion")
 
