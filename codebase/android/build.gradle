@@ -358,12 +358,41 @@ koverMerged {
     filters {
         classes {
             excludes.addAll(
+                    // Fragment
                     "*Fragment",
                     "*Fragment\$*",
+
+                    // Activity
                     "*Activity",
                     "*Activity\$*",
-                    "*.databinding.*", // ViewBinding
-                    "org.jetbrains.kover_android_groovy_example.BuildConfig"
+
+                    // ViewBinding
+                    "*.databinding.*",
+
+                    // Hilt
+                    "dagger.hilt.**",
+                    "*HiltModules*",
+                    "hilt_aggregated_deps.*",
+                    "*.di.*",
+
+                    // Room
+                    "*Dao_Impl*",
+                    "*MyRoomDatabase_AutoMigration*",
+                    "*MyRoomDatabase_Impl*",
+
+                    // Moshi
+                    "*JsonAdapter",
+
+                    // BuildConfig
+                    "*BuildConfig*",
+            )
+        }
+
+        annotations {
+            excludes.addAll(
+                    "*Composable",
+                    "*Preview",
+                    "*Generated",
             )
         }
     }
