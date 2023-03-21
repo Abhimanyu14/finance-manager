@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
 import androidx.compose.runtime.Immutable
+import androidx.core.content.pm.PackageInfoCompat
 
 @Immutable
 data class AppVersion(
@@ -24,7 +25,7 @@ fun getAppVersion(
         }
         AppVersion(
             versionName = packageInfo.versionName,
-            versionNumber = packageInfo.longVersionCode,
+            versionNumber = PackageInfoCompat.getLongVersionCode(packageInfo),
         )
     } catch (e: Exception) {
         null

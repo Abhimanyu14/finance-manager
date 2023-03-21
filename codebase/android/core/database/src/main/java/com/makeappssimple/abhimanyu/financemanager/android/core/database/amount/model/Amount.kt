@@ -15,10 +15,10 @@ data class Amount(
     val value: Long = 0,
 ) {
     fun toNonSignedString(): String {
-        val formattedValue = formattedCurrencyValue(
-            value = abs(value),
+        return toSignedString(
+            isPositive = false,
+            isNegative = false
         )
-        return "${currency.symbol}$formattedValue"
     }
 
     fun toSignedString(

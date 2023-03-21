@@ -283,9 +283,6 @@ buildscript {
         // AndroidX core testing
         androidXCoreTestingVersion = "2.1.0"
 
-        // Espresso
-        espressoVersion = "3.5.1"
-
         // Test runner
         testRunnerVersion = "1.5.2"
 

@@ -32,7 +32,9 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            launch {
+            launch(
+                context = dispatcherProvider.io,
+            ) {
                 backupDataUseCase(
                     uri = uri,
                 )

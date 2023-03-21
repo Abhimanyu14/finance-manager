@@ -74,7 +74,4 @@ dependencies {
     // Junit
     testImplementation "junit:junit:$rootProject.junitVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXJUnitExtensionVersion"
-
-    // Espresso
-    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
 }

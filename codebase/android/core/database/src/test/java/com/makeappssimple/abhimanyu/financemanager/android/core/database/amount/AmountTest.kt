@@ -29,6 +29,36 @@ class AmountTest {
     }
 
     @Test
+    fun toNonSignedString_valueIsPositive(){
+        val result = amount.toNonSignedString()
+
+        Assert.assertEquals(
+            "₹23",
+            result,
+        )
+    }
+
+    @Test
+    fun toNonSignedString_valueIsNegative(){
+        val result = amount2.toNonSignedString()
+
+        Assert.assertEquals(
+            "₹31",
+            result,
+        )
+    }
+
+    @Test
+    fun toNonSignedString_valueIsZero(){
+        val result = amount3.toNonSignedString()
+
+        Assert.assertEquals(
+            "₹0",
+            result,
+        )
+    }
+
+    @Test
     fun toSignedString_valueIsPositive() {
         val result = amount.toSignedString(
             isPositive = true,
@@ -88,6 +118,20 @@ class AmountTest {
 
         Assert.assertEquals(
             50,
+            result.value,
+        )
+        Assert.assertEquals(
+            CURRENCY_CODE_INR,
+            result.currency.currencyCode,
+        )
+    }
+
+    @Test
+    fun minus() {
+        val result = amount - amount1
+
+        Assert.assertEquals(
+            -4,
             result.value,
         )
         Assert.assertEquals(
