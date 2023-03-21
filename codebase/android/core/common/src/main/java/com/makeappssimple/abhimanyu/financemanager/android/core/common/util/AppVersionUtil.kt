@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.util
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.util
 
 import android.content.Context
 import android.content.pm.PackageManager

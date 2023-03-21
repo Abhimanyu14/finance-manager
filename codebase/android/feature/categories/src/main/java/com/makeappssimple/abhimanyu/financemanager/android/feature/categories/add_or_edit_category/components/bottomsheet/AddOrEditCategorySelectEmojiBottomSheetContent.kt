@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.components
+package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.components.bottomsheet
 
 import android.content.Context
 import android.widget.Toast

@@ -43,8 +43,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.tr
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transferEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.HomeBottomAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.HomeRecentTransactionsView
+import com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.bottomappbar.HomeBottomAppBar
+import com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.recenttransactions.HomeRecentTransactionsView
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.bottomsheet.HomeMenuBottomSheetContent
 
 internal enum class HomeBottomSheetType : BottomSheetType {

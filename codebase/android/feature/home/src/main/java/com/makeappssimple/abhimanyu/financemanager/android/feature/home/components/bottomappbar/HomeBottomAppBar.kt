@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.home.components
+package com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.bottomappbar
 
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.shape.CircleShape

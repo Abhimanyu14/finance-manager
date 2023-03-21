@@ -22,19 +22,19 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavAr
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs.TRANSACTION_ID
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs.TRANSACTION_TYPE
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Screen
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.AddCategoryScreen
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.screen.AddCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.screen.CategoriesScreen
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.EditCategoryScreen
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.screen.EditCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen.HomeScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.screen.SettingsScreen
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_source.AddSourceScreen
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.edit_source.EditSourceScreen
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_source.screen.AddSourceScreen
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.edit_source.screen.EditSourceScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.screen.SourcesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.screen.AddTransactionForScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.screen.EditTransactionForScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.screen.TransactionForValuesScreen
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.AddTransactionScreen
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.EditTransactionScreen
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.screen.AddTransactionScreen
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.screen.EditTransactionScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen.TransactionsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.screen.ViewTransactionScreen
 

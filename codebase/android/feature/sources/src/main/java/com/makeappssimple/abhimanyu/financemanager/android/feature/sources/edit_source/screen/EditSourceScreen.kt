@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.edit_source
+package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.edit_source.screen
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
