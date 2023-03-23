@@ -32,13 +32,9 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            launch(
-                context = dispatcherProvider.io,
-            ) {
-                backupDataUseCase(
-                    uri = uri,
-                )
-            }
+            backupDataUseCase(
+                uri = uri,
+            )
             navigateUp(
                 navigationManager = navigationManager,
             )

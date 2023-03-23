@@ -79,23 +79,21 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
             viewModelScope.launch(
                 context = dispatcherProvider.io,
             ) {
-                launch {
-                    getTransactionDataUseCase(
-                        id = id,
-                    )?.let {
-                        _transactionData.value = it
+                getTransactionDataUseCase(
+                    id = id,
+                )?.let {
+                    _transactionData.value = it
 
-                        it.transaction.originalTransactionId?.let { transactionId ->
-                            updateOriginalTransactionData(
-                                transactionId = transactionId,
-                            )
-                        }
+                    it.transaction.originalTransactionId?.let { transactionId ->
+                        updateOriginalTransactionData(
+                            transactionId = transactionId,
+                        )
+                    }
 
-                        it.transaction.refundTransactionIds?.let { ids ->
-                            updateRefundTransactionData(
-                                ids = ids,
-                            )
-                        }
+                    it.transaction.refundTransactionIds?.let { ids ->
+                        updateRefundTransactionData(
+                            ids = ids,
+                        )
                     }
                 }
             }
@@ -108,12 +106,10 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            launch {
-                getTransactionDataUseCase(
-                    id = transactionId,
-                )?.let {
-                    _originalTransactionData.value = it
-                }
+            getTransactionDataUseCase(
+                id = transactionId,
+            )?.let {
+                _originalTransactionData.value = it
             }
         }
     }
