@@ -7,23 +7,23 @@ import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
-class GetAllTransactionForValuesUseCaseTest {
+class GetAllTransactionForValuesFlowUseCaseTest {
     private val transactionForRepository: TransactionForRepository = mock()
-    private lateinit var getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase
+    private lateinit var getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase
 
     @Before
     fun setUp() {
-        getAllTransactionForValuesUseCase = GetAllTransactionForValuesUseCaseImpl(
+        getAllTransactionForValuesFlowUseCase = GetAllTransactionForValuesFlowUseCaseImpl(
             transactionForRepository = transactionForRepository,
         )
     }
 
     @Test
     fun invoke_defaultTest() = runTest {
-        getAllTransactionForValuesUseCase()
+        getAllTransactionForValuesFlowUseCase()
 
         verify(
             mock = transactionForRepository,
-        ).transactionForValues
+        ).getAllTransactionForValuesFlow()
     }
 }

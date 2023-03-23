@@ -23,21 +23,21 @@ class CategoryRepositoryTest {
     }
 
     @Test
-    fun getCategories() {
-        categoryRepository.categories
+    fun getAllCategoriesFlow() {
+        categoryRepository.getAllCategoriesFlow()
 
         verify(
             mock = categoryDao,
-        ).getCategories()
+        ).getAllCategoriesFlow()
     }
 
     @Test
-    fun getCategoriesCount() = runTest {
-        categoryRepository.getCategoriesCount()
+    fun getAllCategoriesCount() = runTest {
+        categoryRepository.getAllCategoriesCount()
 
         verify(
             mock = categoryDao,
-        ).getCategoriesCount()
+        ).getAllCategoriesCount()
     }
 
     @Test

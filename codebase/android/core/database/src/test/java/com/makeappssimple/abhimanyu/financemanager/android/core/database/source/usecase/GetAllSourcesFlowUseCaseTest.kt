@@ -7,23 +7,23 @@ import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
-class GetSourcesUseCaseTest {
+class GetAllSourcesFlowUseCaseTest {
     private val sourceRepository: SourceRepository = mock()
-    private lateinit var getSourcesUseCase: GetSourcesUseCase
+    private lateinit var getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase
 
     @Before
     fun setUp() {
-        getSourcesUseCase = GetSourcesUseCaseImpl(
+        getAllSourcesFlowUseCase = GetAllSourcesFlowUseCaseImpl(
             sourceRepository = sourceRepository,
         )
     }
 
     @Test
     fun invoke_defaultTest() = runTest {
-        getSourcesUseCase()
+        getAllSourcesFlowUseCase()
 
         verify(
             mock = sourceRepository,
-        ).allSources
+        ).getAllSourcesFlow()
     }
 }

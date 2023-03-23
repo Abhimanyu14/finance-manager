@@ -4,14 +4,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.m
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.repository.EmojiRepository
 import kotlinx.coroutines.flow.Flow
 
-interface GetEmojisUseCase {
+interface GetAllEmojisUseCase {
     operator fun invoke(): Flow<List<EmojiLocalEntity>>
 }
 
-class GetEmojisUseCaseImpl(
+class GetAllAllEmojisUseCaseImpl(
     private val emojiRepository: EmojiRepository,
-) : GetEmojisUseCase {
+) : GetAllEmojisUseCase {
     override operator fun invoke(): Flow<List<EmojiLocalEntity>> {
-        return emojiRepository.emojis
+        return emojiRepository.getAllEmojisFlow()
     }
 }

@@ -5,12 +5,12 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getDateString
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoriesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetAllCategoriesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionDataFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.DeleteTransactionAndRevertOtherDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,16 +27,16 @@ import java.util.Calendar
 
 @HiltViewModel
 internal class TransactionsScreenViewModelImpl @Inject constructor(
-    getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
-    getCategoriesUseCase: GetCategoriesUseCase,
-    getSourcesUseCase: GetSourcesUseCase,
+    getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
+    getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
+    getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase,
     override val navigationManager: NavigationManager,
     private val deleteTransactionAndRevertOtherDataUseCase: DeleteTransactionAndRevertOtherDataUseCase,
     private val dispatcherProvider: DispatcherProvider,
 ) : TransactionsScreenViewModel, ViewModel() {
-    private val categories: Flow<List<Category>> = getCategoriesUseCase()
+    private val categories: Flow<List<Category>> = getAllCategoriesFlowUseCase()
     private val allTransactionData: Flow<List<TransactionData>> =
-        getAllTransactionDataUseCase()
+        getAllTransactionDataFlowUseCase()
 
     // region Search
     private val _searchText = MutableStateFlow(
@@ -78,7 +78,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             category.transactionType == TransactionType.INVESTMENT
         }
     }
-    override val sources: Flow<List<Source>> = getSourcesUseCase()
+    override val sources: Flow<List<Source>> = getAllSourcesFlowUseCase()
     override val transactionTypes: List<TransactionType> = TransactionType.values().toList()
 
     private var _oldestTransactionTimestamp: MutableStateFlow<Long> = MutableStateFlow(

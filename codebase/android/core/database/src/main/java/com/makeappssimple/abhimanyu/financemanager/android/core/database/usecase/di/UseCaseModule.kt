@@ -1,15 +1,15 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.di
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoriesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetEmojisUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetAllCategoriesFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetAllEmojisUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.DeleteTransactionUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionDataFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionsFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.BackupDataUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.DeleteTransactionAndRevertOtherDataUseCase
@@ -32,20 +32,20 @@ class UseCaseModule {
     @Provides
     fun providesBackupDataUseCase(
         dataStore: MyDataStore,
-        getCategoriesUseCase: GetCategoriesUseCase,
-        getEmojisUseCase: GetEmojisUseCase,
-        getSourcesUseCase: GetSourcesUseCase,
-        getAllTransactionsUseCase: GetAllTransactionsUseCase,
-        getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
+        getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
+        getAllEmojisUseCase: GetAllEmojisUseCase,
+        getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase,
+        getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
+        getAllTransactionsFlowUseCase: GetAllTransactionsFlowUseCase,
         jsonUtil: JsonUtil,
     ): BackupDataUseCase {
         return BackupDataUseCaseImpl(
             dataStore = dataStore,
-            getCategoriesUseCase = getCategoriesUseCase,
-            getEmojisUseCase = getEmojisUseCase,
-            getSourcesUseCase = getSourcesUseCase,
-            getAllTransactionsUseCase = getAllTransactionsUseCase,
-            getAllTransactionForValuesUseCase = getAllTransactionForValuesUseCase,
+            getAllCategoriesFlowUseCase = getAllCategoriesFlowUseCase,
+            getAllEmojisUseCase = getAllEmojisUseCase,
+            getAllSourcesFlowUseCase = getAllSourcesFlowUseCase,
+            getAllTransactionForValuesFlowUseCase = getAllTransactionForValuesFlowUseCase,
+            getAllTransactionsFlowUseCase = getAllTransactionsFlowUseCase,
             jsonUtil = jsonUtil,
         )
     }
@@ -66,14 +66,14 @@ class UseCaseModule {
     @Provides
     fun providesRecalculateTotalUseCase(
         dataStore: MyDataStore,
-        getSourcesUseCase: GetSourcesUseCase,
-        getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
+        getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase,
+        getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
         updateSourcesUseCase: UpdateSourcesUseCase,
     ): RecalculateTotalUseCase {
         return RecalculateTotalUseCaseImpl(
             dataStore = dataStore,
-            getSourcesUseCase = getSourcesUseCase,
-            getAllTransactionDataUseCase = getAllTransactionDataUseCase,
+            getAllSourcesFlowUseCase = getAllSourcesFlowUseCase,
+            getAllTransactionDataFlowUseCase = getAllTransactionDataFlowUseCase,
             updateSourcesUseCase = updateSourcesUseCase,
         )
     }

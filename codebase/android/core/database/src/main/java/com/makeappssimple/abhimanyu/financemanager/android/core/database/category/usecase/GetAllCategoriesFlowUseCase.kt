@@ -4,14 +4,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.repository.CategoryRepository
 import kotlinx.coroutines.flow.Flow
 
-interface GetCategoriesUseCase {
+interface GetAllCategoriesFlowUseCase {
     operator fun invoke(): Flow<List<Category>>
 }
 
-class GetCategoriesUseCaseImpl(
+class GetAllCategoriesFlowUseCaseImpl(
     private val categoryRepository: CategoryRepository,
-) : GetCategoriesUseCase {
+) : GetAllCategoriesFlowUseCase {
     override operator fun invoke(): Flow<List<Category>> {
-        return categoryRepository.categories
+        return categoryRepository.getAllCategoriesFlow()
     }
 }

@@ -12,7 +12,10 @@ import kotlinx.coroutines.flow.Flow
 interface TransactionForDao {
 
     @Query(value = "SELECT * from transaction_for_table ORDER BY id ASC")
-    fun getTransactionForValues(): Flow<List<TransactionFor>>
+    fun getAllTransactionForValuesFlow(): Flow<List<TransactionFor>>
+
+    @Query(value = "SELECT * from transaction_for_table ORDER BY id ASC")
+    suspend fun getAllTransactionForValues(): List<TransactionFor>
 
     @Query(value = "SELECT COUNT(*) FROM transaction_for_table")
     suspend fun getTransactionForValuesCount(): Int

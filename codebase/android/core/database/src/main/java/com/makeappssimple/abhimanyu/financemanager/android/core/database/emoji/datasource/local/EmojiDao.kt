@@ -11,10 +11,13 @@ import kotlinx.coroutines.flow.Flow
 interface EmojiDao {
 
     @Query(value = "SELECT * from emoji_table")
-    fun getEmojis(): Flow<List<EmojiLocalEntity>>
+    fun getAllEmojisFlow(): Flow<List<EmojiLocalEntity>>
+
+    @Query(value = "SELECT * from emoji_table")
+    suspend fun getAllEmojis(): List<EmojiLocalEntity>
 
     @Query(value = "SELECT COUNT(*) FROM emoji_table")
-    suspend fun getEmojisCount(): Int
+    suspend fun getAllEmojisCount(): Int
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertEmoji(

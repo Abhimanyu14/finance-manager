@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sour
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.DeleteSourcesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.CheckIfSourceIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -22,7 +22,7 @@ class SourcesScreenViewModelTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
-    private val getSourcesUseCase: GetSourcesUseCase = mock()
+    private val getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase = mock()
     private val navigationManager: NavigationManager = mock()
     private val checkIfSourceIsUsedInTransactionsUseCase: CheckIfSourceIsUsedInTransactionsUseCase =
         mock()
@@ -39,7 +39,7 @@ class SourcesScreenViewModelTest {
     fun setUp() {
         sourcesScreenViewModel =
             SourcesScreenViewModelImpl(
-                getSourcesUseCase = getSourcesUseCase,
+                getAllSourcesFlowUseCase = getAllSourcesFlowUseCase,
                 navigationManager = navigationManager,
                 checkIfSourceIsUsedInTransactionsUseCase = checkIfSourceIsUsedInTransactionsUseCase,
                 dataStore = dataStore,
@@ -51,7 +51,7 @@ class SourcesScreenViewModelTest {
     @Ignore
     @Test
     fun deleteSource() {
-        getSourcesUseCase.stub {
+        getAllSourcesFlowUseCase.stub {
             onBlocking {
                 invoke()
             }.doReturn(

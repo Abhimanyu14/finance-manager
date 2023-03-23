@@ -2,14 +2,14 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.source
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.repository.SourceRepository
 
-interface GetSourcesCountUseCase {
+interface GetAllSourcesCountUseCase {
     suspend operator fun invoke(): Int
 }
 
-class GetSourcesCountUseCaseImpl(
+class GetAllSourcesCountUseCaseImpl(
     private val sourceRepository: SourceRepository,
-) : GetSourcesCountUseCase {
+) : GetAllSourcesCountUseCase {
     override suspend operator fun invoke(): Int {
-        return sourceRepository.getSourcesCount()
+        return sourceRepository.getAllSourcesCount()
     }
 }

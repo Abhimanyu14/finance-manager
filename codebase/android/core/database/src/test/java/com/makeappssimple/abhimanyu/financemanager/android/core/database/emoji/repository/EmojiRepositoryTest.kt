@@ -18,11 +18,11 @@ class EmojiRepositoryTest {
     }
 
     @Test
-    fun getEmojis() {
-        emojiRepository.emojis
+    fun getAllEmojisFlow() {
+        emojiRepository.getAllEmojisFlow()
 
         verify(
             mock = emojiDao,
-        ).getEmojis()
+        ).getAllEmojisFlow()
     }
 }

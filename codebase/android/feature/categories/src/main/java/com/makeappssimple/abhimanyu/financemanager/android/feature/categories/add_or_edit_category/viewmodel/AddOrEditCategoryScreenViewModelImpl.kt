@@ -11,13 +11,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoriesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetAllCategoriesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.InsertCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.UpdateCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.EmojiLocalEntity
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetEmojisUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetAllEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -38,8 +38,8 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
-    getCategoriesUseCase: GetCategoriesUseCase,
-    getEmojisUseCase: GetEmojisUseCase,
+    getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
+    getAllEmojisUseCase: GetAllEmojisUseCase,
     savedStateHandle: SavedStateHandle,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
@@ -47,7 +47,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     private val insertCategoriesUseCase: InsertCategoriesUseCase,
     private val updateCategoriesUseCase: UpdateCategoriesUseCase,
 ) : AddOrEditCategoryScreenViewModel, ViewModel() {
-    private val categories: StateFlow<List<Category>> = getCategoriesUseCase().defaultListStateIn(
+    private val categories: StateFlow<List<Category>> = getAllCategoriesFlowUseCase().defaultListStateIn(
         scope = viewModelScope,
         started = SharingStarted.Eagerly,
     )
@@ -84,7 +84,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     )
     override val searchText: StateFlow<String> = _searchText
 
-    private val emojis: StateFlow<List<EmojiLocalEntity>> = getEmojisUseCase().defaultListStateIn(
+    private val emojis: StateFlow<List<EmojiLocalEntity>> = getAllEmojisUseCase().defaultListStateIn(
         scope = viewModelScope,
     )
     override val emojiGroups: Flow<Map<String, List<Emoji>>> = combine(

@@ -4,14 +4,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.repository.SourceRepository
 import kotlinx.coroutines.flow.Flow
 
-interface GetSourcesUseCase {
+interface GetAllSourcesFlowUseCase {
     operator fun invoke(): Flow<List<Source>>
 }
 
-class GetSourcesUseCaseImpl(
+class GetAllSourcesFlowUseCaseImpl(
     private val sourceRepository: SourceRepository,
-) : GetSourcesUseCase {
+) : GetAllSourcesFlowUseCase {
     override operator fun invoke(): Flow<List<Source>> {
-        return sourceRepository.allSources
+        return sourceRepository.getAllSourcesFlow()
     }
 }

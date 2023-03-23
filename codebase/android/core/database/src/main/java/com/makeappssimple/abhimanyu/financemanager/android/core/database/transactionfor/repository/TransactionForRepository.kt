@@ -4,7 +4,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import kotlinx.coroutines.flow.Flow
 
 interface TransactionForRepository {
-    val transactionForValues: Flow<List<TransactionFor>>
+    fun getAllTransactionForValuesFlow(): Flow<List<TransactionFor>>
 
     suspend fun getTransactionFor(
         id: Int,

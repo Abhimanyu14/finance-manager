@@ -6,8 +6,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.repository.TransactionForRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.DeleteTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.DeleteTransactionForUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesFlowUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetTransactionForUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.InsertTransactionForValuesUseCase
@@ -61,10 +61,10 @@ class TransactionForModule {
     }
 
     @Provides
-    fun providesGetTransactionForValuesUseCase(
+    fun providesGetAllTransactionForValuesFlowUseCase(
         transactionForRepository: TransactionForRepository,
-    ): GetAllTransactionForValuesUseCase {
-        return GetAllTransactionForValuesUseCaseImpl(
+    ): GetAllTransactionForValuesFlowUseCase {
+        return GetAllTransactionForValuesFlowUseCaseImpl(
             transactionForRepository = transactionForRepository,
         )
     }

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetRecentTransactionDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetRecentTransactionDataFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -19,13 +19,13 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 internal class HomeScreenViewModelImpl @Inject constructor(
     dataStore: MyDataStore,
-    getRecentTransactionDataUseCase: GetRecentTransactionDataUseCase,
+    getRecentTransactionDataFlowUseCase: GetRecentTransactionDataFlowUseCase,
     override val navigationManager: NavigationManager,
     private val backupDataUseCase: BackupDataUseCase,
     private val dispatcherProvider: DispatcherProvider,
 ) : HomeScreenViewModel, ViewModel() {
     override val homeListItemViewData: Flow<List<TransactionData>> =
-        getRecentTransactionDataUseCase()
+        getRecentTransactionDataFlowUseCase()
     override val showBackupCard: Flow<Boolean> = combine(
         flow = dataStore.getLastDataBackupTimestamp(),
         flow2 = dataStore.getLastDataChangeTimestamp(),

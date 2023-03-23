@@ -6,14 +6,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.repository.SourceRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.DeleteSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.DeleteSourcesUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesCountUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesCountUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesFlowUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourceUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesCountUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesCountUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesTotalBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesTotalBalanceAmountValueUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.InsertSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.InsertSourcesUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesBalanceAmountUseCase
@@ -58,10 +58,10 @@ class SourceModule {
     }
 
     @Provides
-    fun providesGetSourcesCountUseCase(
+    fun providesGetAllSourcesCountUseCase(
         sourceRepository: SourceRepository,
-    ): GetSourcesCountUseCase {
-        return GetSourcesCountUseCaseImpl(
+    ): GetAllSourcesCountUseCase {
+        return GetAllSourcesCountUseCaseImpl(
             sourceRepository = sourceRepository,
         )
     }
@@ -76,10 +76,10 @@ class SourceModule {
     }
 
     @Provides
-    fun providesGetSourcesUseCase(
+    fun providesGetAllSourcesFlowUseCase(
         sourceRepository: SourceRepository,
-    ): GetSourcesUseCase {
-        return GetSourcesUseCaseImpl(
+    ): GetAllSourcesFlowUseCase {
+        return GetAllSourcesFlowUseCaseImpl(
             sourceRepository = sourceRepository,
         )
     }

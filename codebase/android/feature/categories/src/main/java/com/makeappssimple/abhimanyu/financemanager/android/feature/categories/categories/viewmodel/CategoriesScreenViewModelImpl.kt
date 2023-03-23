@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.DeleteCategoryUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoriesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetAllCategoriesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.CheckIfCategoryIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
@@ -20,7 +20,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 internal class CategoriesScreenViewModelImpl @Inject constructor(
-    getCategoriesUseCase: GetCategoriesUseCase,
+    getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
     override val navigationManager: NavigationManager,
     private val checkIfCategoryIsUsedInTransactionsUseCase: CheckIfCategoryIsUsedInTransactionsUseCase,
     private val dataStore: MyDataStore,
@@ -32,7 +32,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
     )
     override val selectedTabIndex: StateFlow<Int> = _selectedTabIndex
 
-    private val categories: Flow<List<Category>> = getCategoriesUseCase()
+    private val categories: Flow<List<Category>> = getAllCategoriesFlowUseCase()
     override val expenseCategories: Flow<List<Category>> = categories.map { categories ->
         categories.filter { category ->
             category.transactionType == TransactionType.EXPENSE

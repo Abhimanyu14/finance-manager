@@ -7,10 +7,16 @@ import kotlinx.coroutines.flow.Flow
 class CategoryRepositoryImpl(
     private val categoryDao: CategoryDao,
 ) : CategoryRepository {
-    override val categories: Flow<List<Category>> = categoryDao.getCategories()
+    override  fun getAllCategoriesFlow(): Flow<List<Category>> {
+        return categoryDao.getAllCategoriesFlow()
+    }
 
-    override suspend fun getCategoriesCount(): Int {
-        return categoryDao.getCategoriesCount()
+    override suspend fun getAllCategories(): List<Category> {
+        return categoryDao.getAllCategories()
+    }
+
+    override suspend fun getAllCategoriesCount(): Int {
+        return categoryDao.getAllCategoriesCount()
     }
 
     override suspend fun getCategory(

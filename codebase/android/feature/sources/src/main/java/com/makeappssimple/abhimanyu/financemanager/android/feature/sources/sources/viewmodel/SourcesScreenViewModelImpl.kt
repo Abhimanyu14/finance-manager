@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.DeleteSourcesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.CheckIfSourceIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -20,14 +20,14 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 internal class SourcesScreenViewModelImpl @Inject constructor(
-    getSourcesUseCase: GetSourcesUseCase,
+    getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase,
     override val navigationManager: NavigationManager,
     private val checkIfSourceIsUsedInTransactionsUseCase: CheckIfSourceIsUsedInTransactionsUseCase,
     private val dataStore: MyDataStore,
     private val deleteSourcesUseCase: DeleteSourcesUseCase,
     private val dispatcherProvider: DispatcherProvider,
 ) : SourcesScreenViewModel, ViewModel() {
-    override val sources: StateFlow<List<Source>> = getSourcesUseCase()
+    override val sources: StateFlow<List<Source>> = getAllSourcesFlowUseCase()
         .map {
             it.sortedWith(
                 comparator = compareBy<Source> { source ->

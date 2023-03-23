@@ -13,10 +13,13 @@ import kotlinx.coroutines.flow.Flow
 interface CategoryDao {
 
     @Query(value = "SELECT * from category_table ORDER BY id ASC")
-    fun getCategories(): Flow<List<Category>>
+    fun getAllCategoriesFlow(): Flow<List<Category>>
+
+    @Query(value = "SELECT * from category_table ORDER BY id ASC")
+    suspend fun getAllCategories(): List<Category>
 
     @Query(value = "SELECT COUNT(*) FROM category_table")
-    suspend fun getCategoriesCount(): Int
+    suspend fun getAllCategoriesCount(): Int
 
     @Query(value = "SELECT * from category_table WHERE id = :id")
     suspend fun getCategory(

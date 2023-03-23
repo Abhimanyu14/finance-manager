@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.CheckIfTransactionForIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.DeleteTransactionForUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -18,14 +18,14 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
-    getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
+    getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
     override val navigationManager: NavigationManager,
     private val checkIfTransactionForIsUsedInTransactionsUseCase: CheckIfTransactionForIsUsedInTransactionsUseCase,
     private val deleteTransactionForUseCase: DeleteTransactionForUseCase,
     private val dispatcherProvider: DispatcherProvider,
 ) : TransactionForValuesScreenViewModel, ViewModel() {
     override val transactionForValues: StateFlow<List<TransactionFor>> =
-        getAllTransactionForValuesUseCase().defaultListStateIn(
+        getAllTransactionForValuesFlowUseCase().defaultListStateIn(
             scope = viewModelScope,
         )
     override val transactionForValuesIsUsedInTransactions: Flow<List<Boolean>> =

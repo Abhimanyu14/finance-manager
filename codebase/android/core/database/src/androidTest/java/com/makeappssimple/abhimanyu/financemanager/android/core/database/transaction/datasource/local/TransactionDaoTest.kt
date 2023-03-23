@@ -45,7 +45,7 @@ class TransactionDaoTest {
     }
 
     @Test
-    fun insertTransaction() = runTest {
+    fun insertTransactions() = runTest {
         val transactions = getTestTransactions(
             size = 10,
             frequency = THIRTY_DAYS,
@@ -53,7 +53,7 @@ class TransactionDaoTest {
         dao.insertTransactions(
             *transactions,
         )
-        val fetchedTransactions = dao.getAllTransactions().first().toTypedArray()
+        val fetchedTransactions = dao.getAllTransactionsFlow().first().toTypedArray()
 
         val transactionTimes = fetchedTransactions.map {
             getReadableDateAndTimeString(it.transactionTimestamp)
@@ -66,7 +66,7 @@ class TransactionDaoTest {
     }
 
     @Test
-    fun getTransactionsBetweenTimestamps() = runTest {
+    fun getTransactionsBetweenTimestampsFlow() = runTest {
         val transactions = getTestTransactions(
             size = 100,
             frequency = ONE_HOUR,
@@ -74,7 +74,8 @@ class TransactionDaoTest {
         dao.insertTransactions(
             *transactions,
         )
-        val fetchedTransactions = dao.getTransactionsBetweenTimestamps(
+
+        val fetchedTransactions = dao.getTransactionsBetweenTimestampsFlow(
             startingTimestamp = timeInMillis_01_JUN_2022 - ONE_DAY,
             endingTimestamp = timeInMillis_01_JUN_2022 - 1,
         ).first().toTypedArray()

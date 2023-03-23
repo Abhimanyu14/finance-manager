@@ -22,14 +22,27 @@ interface TransactionDao {
         value = "SELECT * from transaction_table " +
                 "ORDER BY transaction_timestamp DESC"
     )
-    fun getAllTransactions(): Flow<List<Transaction>>
+    fun getAllTransactionsFlow(): Flow<List<Transaction>>
+
+    @Query(
+        value = "SELECT * from transaction_table " +
+                "ORDER BY transaction_timestamp DESC"
+    )
+    suspend fun getAllTransactions(): List<Transaction>
 
     @androidx.room.Transaction
     @Query(
         value = "SELECT * FROM transaction_table " +
                 "ORDER BY transaction_timestamp DESC"
     )
-    fun getAllTransactionData(): Flow<List<TransactionData>>
+    fun getAllTransactionDataFlow(): Flow<List<TransactionData>>
+
+    @androidx.room.Transaction
+    @Query(
+        value = "SELECT * FROM transaction_table " +
+                "ORDER BY transaction_timestamp DESC"
+    )
+    suspend fun getAllTransactionData(): List<TransactionData>
 
     /**
      * TODO-Abhi: To search amount properly, JSON1 extension is required which is not available in Android.
@@ -52,7 +65,7 @@ interface TransactionDao {
                 "WHERE transaction_timestamp BETWEEN :startingTimestamp AND :endingTimestamp " +
                 "ORDER BY transaction_timestamp DESC"
     )
-    fun getTransactionsBetweenTimestamps(
+    fun getTransactionsBetweenTimestampsFlow(
         startingTimestamp: Long,
         endingTimestamp: Long,
     ): Flow<List<Transaction>>
@@ -63,7 +76,7 @@ interface TransactionDao {
                 "ORDER BY transaction_timestamp DESC " +
                 "LIMIT :numberOfTransactions"
     )
-    fun getRecentTransactionData(
+    fun getRecentTransactionDataFlow(
         numberOfTransactions: Int,
     ): Flow<List<TransactionData>>
 

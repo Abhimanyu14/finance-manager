@@ -3,8 +3,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.datasource.local.EmojiDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.repository.EmojiRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.repository.EmojiRepositoryImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetEmojisUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetEmojisUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetAllAllEmojisUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetAllEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
 import dagger.Module
 import dagger.Provides
@@ -32,10 +32,10 @@ class EmojiModule {
     }
 
     @Provides
-    fun providesGetEmojisUseCase(
+    fun providesGetAllEmojisUseCase(
         emojiRepository: EmojiRepository,
-    ): GetEmojisUseCase {
-        return GetEmojisUseCaseImpl(
+    ): GetAllEmojisUseCase {
+        return GetAllAllEmojisUseCaseImpl(
             emojiRepository = emojiRepository,
         )
     }

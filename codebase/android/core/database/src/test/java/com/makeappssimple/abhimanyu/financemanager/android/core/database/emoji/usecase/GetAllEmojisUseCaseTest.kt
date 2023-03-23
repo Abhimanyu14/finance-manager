@@ -7,23 +7,23 @@ import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
-class GetEmojisUseCaseTest {
+class GetAllEmojisUseCaseTest {
     private val emojiRepository: EmojiRepository = mock()
-    private lateinit var getEmojisUseCase: GetEmojisUseCase
+    private lateinit var getAllEmojisUseCase: GetAllEmojisUseCase
 
     @Before
     fun setUp() {
-        getEmojisUseCase = GetEmojisUseCaseImpl(
+        getAllEmojisUseCase = GetAllAllEmojisUseCaseImpl(
             emojiRepository = emojiRepository,
         )
     }
 
     @Test
     fun invoke_defaultTest() = runTest {
-        getEmojisUseCase()
+        getAllEmojisUseCase()
 
         verify(
             mock = emojiRepository,
-        ).emojis
+        ).getAllEmojisFlow()
     }
 }

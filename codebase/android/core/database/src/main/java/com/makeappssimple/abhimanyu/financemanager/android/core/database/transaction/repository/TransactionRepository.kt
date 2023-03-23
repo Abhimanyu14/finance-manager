@@ -9,19 +9,19 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import kotlinx.coroutines.flow.Flow
 
 interface TransactionRepository {
-    val allTransactions: Flow<List<Transaction>>
+    fun getAllTransactionsFlow(): Flow<List<Transaction>>
 
-    fun getAllTransactionData(): Flow<List<TransactionData>>
+    fun getAllTransactionDataFlow(): Flow<List<TransactionData>>
 
     suspend fun getSearchedTransactionData(
         searchText: String,
     ): List<TransactionData>
 
-    fun getRecentTransactionData(
+    fun getRecentTransactionDataFlow(
         numberOfTransactions: Int,
     ): Flow<List<TransactionData>>
 
-    fun getTransactionsBetweenTimestamps(
+    fun getTransactionsBetweenTimestampsFlow(
         startingTimestamp: Long,
         endingTimestamp: Long,
     ): Flow<List<Transaction>>

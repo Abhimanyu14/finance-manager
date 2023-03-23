@@ -4,9 +4,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import kotlinx.coroutines.flow.Flow
 
 interface CategoryRepository {
-    val categories: Flow<List<Category>>
+    fun getAllCategoriesFlow(): Flow<List<Category>>
 
-    suspend fun getCategoriesCount(): Int
+    suspend fun getAllCategories(): List<Category>
+
+    suspend fun getAllCategoriesCount(): Int
 
     suspend fun getCategory(
         id: Int,

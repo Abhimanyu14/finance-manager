@@ -7,23 +7,23 @@ import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
-class GetCategoriesUseCaseTest {
+class GetAllCategoriesFlowUseCaseTest {
     private val categoryRepository: CategoryRepository = mock()
-    private lateinit var getCategoriesUseCase: GetCategoriesUseCase
+    private lateinit var getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase
 
     @Before
     fun setUp() {
-        getCategoriesUseCase = GetCategoriesUseCaseImpl(
+        getAllCategoriesFlowUseCase = GetAllCategoriesFlowUseCaseImpl(
             categoryRepository = categoryRepository,
         )
     }
 
     @Test
     fun invoke_defaultTest() = runTest {
-        getCategoriesUseCase()
+        getAllCategoriesFlowUseCase()
 
         verify(
             mock = categoryRepository,
-        ).categories
+        ).getAllCategoriesFlow()
     }
 }

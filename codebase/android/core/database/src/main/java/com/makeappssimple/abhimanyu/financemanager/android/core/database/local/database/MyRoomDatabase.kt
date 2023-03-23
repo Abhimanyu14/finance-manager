@@ -234,7 +234,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
             initialDatabaseData: InitialDatabaseData,
         ) {
             val categoryDao = myRoomDatabase.categoryDao()
-            if (categoryDao.getCategoriesCount() == 0) {
+            if (categoryDao.getAllCategoriesCount() == 0) {
                 val categoriesData = initialDatabaseData.defaultCategories.categoriesData
                 categoriesData.forEach {
                     categoryDao.insertCategories(
@@ -274,7 +274,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
             initialDatabaseData: InitialDatabaseData,
         ) {
             val emojiDao = myRoomDatabase.emojiDao()
-            if (emojiDao.getEmojisCount() == 0) {
+            if (emojiDao.getAllEmojisCount() == 0) {
                 emojiDao.insertEmojis(
                     emojis = initialDatabaseData.emojis.emojisData.toTypedArray(),
                 )
@@ -305,7 +305,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
             initialDatabaseData: InitialDatabaseData,
         ) {
             val sourceDao = myRoomDatabase.sourceDao()
-            if (sourceDao.getSourcesCount() == 0) {
+            if (sourceDao.getAllSourcesCount() == 0) {
                 sourceDao.insertSources(
                     sources = initialDatabaseData.defaultSources.toTypedArray(),
                 )
@@ -336,7 +336,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     val currentTransactionsDataVersion = 1
                     if (transactionsDataVersion < currentTransactionsDataVersion) {
                         val transactionDao = myRoomDatabase.transactionDao()
-                        val transactions = transactionDao.getAllTransactions().first()
+                        val transactions = transactionDao.getAllTransactionsFlow().first()
                         transactionDao.deleteAllTransactions()
                         transactionDao.insertTransactions(
                             *transactionsCleanUp(transactions).toTypedArray()

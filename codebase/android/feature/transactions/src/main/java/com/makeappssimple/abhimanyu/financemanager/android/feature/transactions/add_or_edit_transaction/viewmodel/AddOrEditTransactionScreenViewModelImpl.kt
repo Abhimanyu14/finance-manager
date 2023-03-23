@@ -17,11 +17,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Quadruple
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoriesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetAllCategoriesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.sortOrder
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesCountUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesCountUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesBalanceAmountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
@@ -30,7 +30,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.UpdateTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
@@ -55,14 +55,14 @@ import java.util.Locale
 
 @HiltViewModel
 internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
-    getCategoriesUseCase: GetCategoriesUseCase,
-    getSourcesUseCase: GetSourcesUseCase,
-    getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
+    getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
+    getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase,
+    getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
     savedStateHandle: SavedStateHandle,
     override val navigationManager: NavigationManager,
     private val dataStore: MyDataStore,
     private val dispatcherProvider: DispatcherProvider,
-    private val getSourcesCountUseCase: GetSourcesCountUseCase,
+    private val getAllSourcesCountUseCase: GetAllSourcesCountUseCase,
     private val getTitleSuggestionsUseCase: GetTitleSuggestionsUseCase,
     private val getTransactionDataUseCase: GetTransactionDataUseCase,
     private val insertTransactionUseCase: InsertTransactionUseCase,
@@ -101,7 +101,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         value = null,
     )
 
-    private val categories: StateFlow<List<Category>> = getCategoriesUseCase().defaultListStateIn(
+    private val categories: StateFlow<List<Category>> = getAllCategoriesFlowUseCase().defaultListStateIn(
         scope = viewModelScope,
     )
 
@@ -112,7 +112,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     override val transactionTypesForNewTransaction: StateFlow<List<TransactionType>> =
         _transactionTypesForNewTransaction
 
-    override val sources: StateFlow<List<Source>> = getSourcesUseCase()
+    override val sources: StateFlow<List<Source>> = getAllSourcesFlowUseCase()
         .map {
             it.sortedBy { source ->
                 source.type.sortOrder
@@ -123,7 +123,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         )
 
     override val transactionForValues: StateFlow<List<TransactionFor>> =
-        getAllTransactionForValuesUseCase().defaultListStateIn(
+        getAllTransactionForValuesFlowUseCase().defaultListStateIn(
             scope = viewModelScope,
         )
 
@@ -1021,7 +1021,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     }
 
     private suspend fun getTransactionTypesForNewTransaction() {
-        val sourceCount = getSourcesCountUseCase()
+        val sourceCount = getAllSourcesCountUseCase()
         val excludedTransactionTypes = mutableSetOf(
             TransactionType.ADJUSTMENT,
             TransactionType.REFUND

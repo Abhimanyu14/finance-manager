@@ -14,7 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.SourceType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourceUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.InsertSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
@@ -35,7 +35,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
-    getSourcesUseCase: GetSourcesUseCase,
+    getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase,
     savedStateHandle: SavedStateHandle,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
@@ -44,7 +44,7 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     private val insertTransactionsUseCase: InsertTransactionsUseCase,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
 ) : AddOrEditSourceScreenViewModel, ViewModel() {
-    private val sources: StateFlow<List<Source>> = getSourcesUseCase().defaultListStateIn(
+    private val sources: StateFlow<List<Source>> = getAllSourcesFlowUseCase().defaultListStateIn(
         scope = viewModelScope,
         started = SharingStarted.Eagerly,
     )

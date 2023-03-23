@@ -7,8 +7,9 @@ import kotlinx.coroutines.flow.Flow
 class TransactionForRepositoryImpl(
     private val transactionForDao: TransactionForDao,
 ) : TransactionForRepository {
-    override val transactionForValues: Flow<List<TransactionFor>> =
-        transactionForDao.getTransactionForValues()
+    override fun getAllTransactionForValuesFlow(): Flow<List<TransactionFor>> {
+        return transactionForDao.getAllTransactionForValuesFlow()
+    }
 
     override suspend fun getTransactionFor(
         id: Int,

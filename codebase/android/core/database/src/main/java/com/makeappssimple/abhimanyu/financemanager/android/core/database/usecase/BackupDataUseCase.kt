@@ -3,16 +3,16 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.usecas
 import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getReadableDateAndTimeString
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoriesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetAllCategoriesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.databasebackupdata.model.DatabaseBackupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.EmojiLocalEntity
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetEmojisUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetAllEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionsFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.JsonUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import kotlinx.coroutines.flow.Flow
@@ -25,19 +25,19 @@ interface BackupDataUseCase {
 }
 
 class BackupDataUseCaseImpl(
-    getCategoriesUseCase: GetCategoriesUseCase,
-    getEmojisUseCase: GetEmojisUseCase,
-    getSourcesUseCase: GetSourcesUseCase,
-    getAllTransactionsUseCase: GetAllTransactionsUseCase,
-    getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
+    getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
+    getAllEmojisUseCase: GetAllEmojisUseCase,
+    getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase,
+    getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
+    getAllTransactionsFlowUseCase: GetAllTransactionsFlowUseCase,
     private val dataStore: MyDataStore,
     private val jsonUtil: JsonUtil,
 ) : BackupDataUseCase {
-    val categories: Flow<List<Category>> = getCategoriesUseCase()
-    val emojis: Flow<List<EmojiLocalEntity>> = getEmojisUseCase()
-    val sources: Flow<List<Source>> = getSourcesUseCase()
-    val transactions: Flow<List<Transaction>> = getAllTransactionsUseCase()
-    val transactionForValues: Flow<List<TransactionFor>> = getAllTransactionForValuesUseCase()
+    val categories: Flow<List<Category>> = getAllCategoriesFlowUseCase()
+    val emojis: Flow<List<EmojiLocalEntity>> = getAllEmojisUseCase()
+    val sources: Flow<List<Source>> = getAllSourcesFlowUseCase()
+    val transactionForValues: Flow<List<TransactionFor>> = getAllTransactionForValuesFlowUseCase()
+    val transactions: Flow<List<Transaction>> = getAllTransactionsFlowUseCase()
 
     override suspend operator fun invoke(
         uri: Uri,

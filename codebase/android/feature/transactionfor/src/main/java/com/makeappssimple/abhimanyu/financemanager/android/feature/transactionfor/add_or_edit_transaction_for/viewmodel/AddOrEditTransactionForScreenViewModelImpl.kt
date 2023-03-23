@@ -10,7 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.InsertTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.UpdateTransactionForValuesUseCase
@@ -27,7 +27,7 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
-    getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
+    getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
     savedStateHandle: SavedStateHandle,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
@@ -36,7 +36,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
     private val updateTransactionForValuesUseCase: UpdateTransactionForValuesUseCase,
 ) : AddOrEditTransactionForScreenViewModel, ViewModel() {
     private val transactionForValues: StateFlow<List<TransactionFor>> =
-        getAllTransactionForValuesUseCase().defaultListStateIn(
+        getAllTransactionForValuesFlowUseCase().defaultListStateIn(
             scope = viewModelScope,
             started = SharingStarted.Eagerly,
         )

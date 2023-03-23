@@ -5,7 +5,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.m
 import kotlinx.coroutines.flow.Flow
 
 class EmojiRepositoryImpl(
-    emojiDao: EmojiDao,
+    private val emojiDao: EmojiDao,
 ) : EmojiRepository {
-    override val emojis: Flow<List<EmojiLocalEntity>> = emojiDao.getEmojis()
+
+    override fun getAllEmojisFlow(): Flow<List<EmojiLocalEntity>> {
+        return emojiDao.getAllEmojisFlow()
+    }
 }

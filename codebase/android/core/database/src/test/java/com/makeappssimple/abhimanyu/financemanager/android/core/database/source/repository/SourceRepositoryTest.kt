@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.source
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.datasource.local.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestSource
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestSources
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -13,7 +12,6 @@ import org.mockito.kotlin.verify
 class SourceRepositoryTest {
     private val sourceDao: SourceDao = mock()
     private val id: Int = 1
-    private val source: Source = getTestSource()
     private val sources: Array<Source> = getTestSources()
     private lateinit var sourceRepository: SourceRepository
 
@@ -25,21 +23,21 @@ class SourceRepositoryTest {
     }
 
     @Test
-    fun getSources() {
-        sourceRepository.allSources
+    fun getAllSourcesFlow() {
+        sourceRepository.getAllSourcesFlow()
 
         verify(
             mock = sourceDao,
-        ).getAllSources()
+        ).getAllSourcesFlow()
     }
 
     @Test
-    fun getSourcesCount() = runTest {
-        sourceRepository.getSourcesCount()
+    fun getAllSourcesCount() = runTest {
+        sourceRepository.getAllSourcesCount()
 
         verify(
             mock = sourceDao,
-        ).getSourcesCount()
+        ).getAllSourcesCount()
     }
 
     @Test

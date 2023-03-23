@@ -7,23 +7,23 @@ import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
-class GetSourcesCountUseCaseTest {
+class GetAllSourcesCountUseCaseTest {
     private val sourceRepository: SourceRepository = mock()
-    private lateinit var getSourcesCountUseCase: GetSourcesCountUseCase
+    private lateinit var getAllSourcesCountUseCase: GetAllSourcesCountUseCase
 
     @Before
     fun setUp() {
-        getSourcesCountUseCase = GetSourcesCountUseCaseImpl(
+        getAllSourcesCountUseCase = GetAllSourcesCountUseCaseImpl(
             sourceRepository = sourceRepository,
         )
     }
 
     @Test
     fun invoke_defaultTest() = runTest {
-        getSourcesCountUseCase()
+        getAllSourcesCountUseCase()
 
         verify(
             mock = sourceRepository,
-        ).getSourcesCount()
+        ).getAllSourcesCount()
     }
 }

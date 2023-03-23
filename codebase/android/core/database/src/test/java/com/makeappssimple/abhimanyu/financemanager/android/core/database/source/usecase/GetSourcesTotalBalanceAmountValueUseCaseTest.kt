@@ -25,7 +25,7 @@ class GetSourcesTotalBalanceAmountValueUseCaseTest {
 
         verify(
             mock = sourceRepository,
-        ).allSources.map {
+        ).getAllSourcesFlow().map {
             it.sumOf { source ->
                 source.balanceAmount.value
             }

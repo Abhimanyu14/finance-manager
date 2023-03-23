@@ -1,11 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.repository
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getEndOfDayTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getEndOfMonthTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getEndOfYearTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getStartOfDayTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getStartOfMonthTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getStartOfYearTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
@@ -18,10 +12,12 @@ import kotlinx.coroutines.flow.Flow
 class TransactionRepositoryImpl(
     private val transactionDao: TransactionDao,
 ) : TransactionRepository {
-    override val allTransactions: Flow<List<Transaction>> = transactionDao.getAllTransactions()
+    override fun getAllTransactionsFlow(): Flow<List<Transaction>> {
+        return transactionDao.getAllTransactionsFlow()
+    }
 
-    override fun getAllTransactionData(): Flow<List<TransactionData>> {
-        return transactionDao.getAllTransactionData()
+    override fun getAllTransactionDataFlow(): Flow<List<TransactionData>> {
+        return transactionDao.getAllTransactionDataFlow()
     }
 
     override suspend fun getSearchedTransactionData(
@@ -32,19 +28,19 @@ class TransactionRepositoryImpl(
         )
     }
 
-    override fun getRecentTransactionData(
+    override fun getRecentTransactionDataFlow(
         numberOfTransactions: Int,
     ): Flow<List<TransactionData>> {
-        return transactionDao.getRecentTransactionData(
+        return transactionDao.getRecentTransactionDataFlow(
             numberOfTransactions = numberOfTransactions,
         )
     }
 
-    override fun getTransactionsBetweenTimestamps(
+    override fun getTransactionsBetweenTimestampsFlow(
         startingTimestamp: Long,
         endingTimestamp: Long,
     ): Flow<List<Transaction>> {
-        return transactionDao.getTransactionsBetweenTimestamps(
+        return transactionDao.getTransactionsBetweenTimestampsFlow(
             startingTimestamp = startingTimestamp,
             endingTimestamp = endingTimestamp,
         )

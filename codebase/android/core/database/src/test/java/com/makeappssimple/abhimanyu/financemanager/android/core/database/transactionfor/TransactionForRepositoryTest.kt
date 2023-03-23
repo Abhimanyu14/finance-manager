@@ -25,12 +25,12 @@ class TransactionForRepositoryTest {
     }
 
     @Test
-    fun getTransactionForValues() {
-        transactionForRepository.transactionForValues
+    fun getAllTransactionForValuesFlow() {
+        transactionForRepository.getAllTransactionForValuesFlow()
 
         verify(
             mock = transactionForDao,
-        ).getTransactionForValues()
+        ).getAllTransactionForValuesFlow()
     }
 
     @Test

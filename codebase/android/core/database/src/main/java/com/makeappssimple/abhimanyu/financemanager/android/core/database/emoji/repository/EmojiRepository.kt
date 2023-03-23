@@ -4,5 +4,5 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.m
 import kotlinx.coroutines.flow.Flow
 
 interface EmojiRepository {
-    val emojis: Flow<List<EmojiLocalEntity>>
+    fun getAllEmojisFlow(): Flow<List<EmojiLocalEntity>>
 }
