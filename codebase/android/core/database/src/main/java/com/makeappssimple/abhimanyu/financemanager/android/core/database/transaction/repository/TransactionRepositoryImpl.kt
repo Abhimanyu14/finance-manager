@@ -54,6 +54,16 @@ class TransactionRepositoryImpl(
         )
     }
 
+    override suspend fun getTransactionsBetweenTimestamps(
+        startingTimestamp: Long,
+        endingTimestamp: Long,
+    ): List<Transaction> {
+        return transactionDao.getTransactionsBetweenTimestamps(
+            startingTimestamp = startingTimestamp,
+            endingTimestamp = endingTimestamp,
+        )
+    }
+
     override suspend fun getTransactionsCount(): Int {
         return transactionDao.getTransactionsCount()
     }

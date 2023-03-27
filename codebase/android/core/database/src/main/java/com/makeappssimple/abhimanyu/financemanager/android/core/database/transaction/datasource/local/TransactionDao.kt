@@ -70,6 +70,16 @@ interface TransactionDao {
         endingTimestamp: Long,
     ): Flow<List<Transaction>>
 
+    @Query(
+        value = "SELECT * from transaction_table " +
+                "WHERE transaction_timestamp BETWEEN :startingTimestamp AND :endingTimestamp " +
+                "ORDER BY transaction_timestamp DESC"
+    )
+    suspend fun getTransactionsBetweenTimestamps(
+        startingTimestamp: Long,
+        endingTimestamp: Long,
+    ): List<Transaction>
+
     @androidx.room.Transaction
     @Query(
         value = "SELECT * FROM transaction_table " +

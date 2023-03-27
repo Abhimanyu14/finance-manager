@@ -34,6 +34,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionsBetweenTimestampsFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionsBetweenTimestampsFlowUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionsBetweenTimestampsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionsBetweenTimestampsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionsUseCase
@@ -139,6 +141,15 @@ class TransactionModule {
         transactionRepository: TransactionRepository,
     ): GetTransactionsBetweenTimestampsFlowUseCase {
         return GetTransactionsBetweenTimestampsFlowUseCaseImpl(
+            transactionRepository = transactionRepository,
+        )
+    }
+
+    @Provides
+    fun providesGetTransactionsBetweenTimestampsUseCase(
+        transactionRepository: TransactionRepository,
+    ): GetTransactionsBetweenTimestampsUseCase {
+        return GetTransactionsBetweenTimestampsUseCaseImpl(
             transactionRepository = transactionRepository,
         )
     }

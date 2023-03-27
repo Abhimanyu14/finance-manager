@@ -30,6 +30,11 @@ interface TransactionRepository {
         endingTimestamp: Long,
     ): Flow<List<Transaction>>
 
+    suspend fun getTransactionsBetweenTimestamps(
+        startingTimestamp: Long,
+        endingTimestamp: Long,
+    ): List<Transaction>
+
     suspend fun getTransactionsCount(): Int
 
     suspend fun getTitleSuggestions(
