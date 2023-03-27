@@ -62,7 +62,7 @@ buildscript {
         kotlinReflectionVersion = "1.5.31"
 
         // Kotlin androidx core
-        androidXCoreVersion = "1.9.0"
+        androidXCoreVersion = "1.11.0-alpha01"
 
         // Androidx legacy support
         androidxLegacySupportVersion = "1.0.0"
@@ -83,7 +83,7 @@ buildscript {
         lifecycleExtensionsVersion = "2.2.0"
 
         // Lifecycle runtime
-        lifecycleRuntimeVersion = "2.6.0-alpha04"
+        lifecycleRuntimeVersion = "2.6.1"
 
         // Kotlin coroutines
         kotlinCoroutinesVersion = "1.5.1"
@@ -101,13 +101,13 @@ buildscript {
         recyclerViewVersion = "1.2.1"
 
         // Jetpack compose
-        jetpackComposeVersion = "1.4.0-beta02"
+        jetpackComposeVersion = "1.5.0-alpha01"
 
         // Jetpack compose compiler
         jetpackComposeCompilerVersion = "1.4.3"
 
         // Jetpack compose material 3
-        jetpackComposeMaterial3Version = "1.1.0-alpha07"
+        jetpackComposeMaterial3Version = "1.1.0-beta01"
 
         // Jetpack compose material design adapter
         jetpackComposeMaterialDesignAdapterVersion = "1.2.1"
@@ -119,10 +119,10 @@ buildscript {
         jetpackComposeActivityIntegrationVersion = "1.6.1"
 
         // Jetpack compose integration with view models
-        jetpackComposeViewModelIntegrationVersion = "2.6.0-alpha04"
+        jetpackComposeViewModelIntegrationVersion = "2.6.1"
 
         // Jetpack compose lifecycle runtime
-        jetpackComposeLifecycleRuntimeVersion = "2.6.0-rc01"
+        jetpackComposeLifecycleRuntimeVersion = "2.6.1"
 
         // Jetpack compose navigation
         jetpackComposeNavigationVersion = "2.5.3"
@@ -146,7 +146,7 @@ buildscript {
         datastorePreferencesVersion = "1.0.0"
 
         // Room
-        roomVersion = "2.5.0"
+        roomVersion = "2.5.1"
 
         // Camera X
         cameraXVersion = "1.1.0-alpha10"
