@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.Flow
 interface SourceRepository {
     fun getAllSourcesFlow(): Flow<List<Source>>
 
+    suspend fun getAllSources(): List<Source>
+
     suspend fun getAllSourcesCount(): Int
 
     suspend fun getSource(

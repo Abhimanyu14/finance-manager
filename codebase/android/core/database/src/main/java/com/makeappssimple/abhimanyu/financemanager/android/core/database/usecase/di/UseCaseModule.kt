@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.di
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetAllCategoriesFlowUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetAllEmojisUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetAllEmojisFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.repository.TransactionRepository
@@ -33,7 +33,7 @@ class UseCaseModule {
     fun providesBackupDataUseCase(
         dataStore: MyDataStore,
         getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
-        getAllEmojisUseCase: GetAllEmojisUseCase,
+        getAllEmojisFlowUseCase: GetAllEmojisFlowUseCase,
         getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase,
         getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
         getAllTransactionsFlowUseCase: GetAllTransactionsFlowUseCase,
@@ -42,7 +42,7 @@ class UseCaseModule {
         return BackupDataUseCaseImpl(
             dataStore = dataStore,
             getAllCategoriesFlowUseCase = getAllCategoriesFlowUseCase,
-            getAllEmojisUseCase = getAllEmojisUseCase,
+            getAllEmojisFlowUseCase = getAllEmojisFlowUseCase,
             getAllSourcesFlowUseCase = getAllSourcesFlowUseCase,
             getAllTransactionForValuesFlowUseCase = getAllTransactionForValuesFlowUseCase,
             getAllTransactionsFlowUseCase = getAllTransactionsFlowUseCase,

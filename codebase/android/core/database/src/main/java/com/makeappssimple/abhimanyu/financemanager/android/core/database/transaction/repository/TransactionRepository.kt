@@ -11,7 +11,11 @@ import kotlinx.coroutines.flow.Flow
 interface TransactionRepository {
     fun getAllTransactionsFlow(): Flow<List<Transaction>>
 
+    suspend fun getAllTransactions(): List<Transaction>
+
     fun getAllTransactionDataFlow(): Flow<List<TransactionData>>
+
+    suspend fun getAllTransactionData(): List<TransactionData>
 
     suspend fun getSearchedTransactionData(
         searchText: String,

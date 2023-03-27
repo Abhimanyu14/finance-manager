@@ -6,7 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetAllCategoriesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.databasebackupdata.model.DatabaseBackupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.EmojiLocalEntity
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetAllEmojisUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetAllEmojisFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
@@ -26,7 +26,7 @@ interface BackupDataUseCase {
 
 class BackupDataUseCaseImpl(
     getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
-    getAllEmojisUseCase: GetAllEmojisUseCase,
+    getAllEmojisFlowUseCase: GetAllEmojisFlowUseCase,
     getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase,
     getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
     getAllTransactionsFlowUseCase: GetAllTransactionsFlowUseCase,
@@ -34,7 +34,7 @@ class BackupDataUseCaseImpl(
     private val jsonUtil: JsonUtil,
 ) : BackupDataUseCase {
     val categories: Flow<List<Category>> = getAllCategoriesFlowUseCase()
-    val emojis: Flow<List<EmojiLocalEntity>> = getAllEmojisUseCase()
+    val emojis: Flow<List<EmojiLocalEntity>> = getAllEmojisFlowUseCase()
     val sources: Flow<List<Source>> = getAllSourcesFlowUseCase()
     val transactionForValues: Flow<List<TransactionFor>> = getAllTransactionForValuesFlowUseCase()
     val transactions: Flow<List<Transaction>> = getAllTransactionsFlowUseCase()

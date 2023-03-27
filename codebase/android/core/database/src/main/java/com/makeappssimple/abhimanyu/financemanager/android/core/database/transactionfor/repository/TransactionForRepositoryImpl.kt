@@ -11,6 +11,10 @@ class TransactionForRepositoryImpl(
         return transactionForDao.getAllTransactionForValuesFlow()
     }
 
+    override suspend fun getAllTransactionForValues(): List<TransactionFor> {
+        return transactionForDao.getAllTransactionForValues()
+    }
+
     override suspend fun getTransactionFor(
         id: Int,
     ): TransactionFor? {

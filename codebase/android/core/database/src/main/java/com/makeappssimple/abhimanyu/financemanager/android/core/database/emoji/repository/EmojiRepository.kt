@@ -5,4 +5,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface EmojiRepository {
     fun getAllEmojisFlow(): Flow<List<EmojiLocalEntity>>
+
+    suspend fun getAllEmojis(): List<EmojiLocalEntity>
 }

@@ -7,6 +7,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.DeleteCategoryUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetAllCategoriesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetAllCategoriesFlowUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetAllCategoriesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetAllCategoriesUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetCategoryUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.InsertCategoriesUseCase
@@ -56,6 +58,15 @@ class CategoryModule {
         categoryRepository: CategoryRepository,
     ): GetAllCategoriesFlowUseCase {
         return GetAllCategoriesFlowUseCaseImpl(
+            categoryRepository = categoryRepository,
+        )
+    }
+
+    @Provides
+    fun providesGetAllCategoriesUseCase(
+        categoryRepository: CategoryRepository,
+    ): GetAllCategoriesUseCase {
+        return GetAllCategoriesUseCaseImpl(
             categoryRepository = categoryRepository,
         )
     }

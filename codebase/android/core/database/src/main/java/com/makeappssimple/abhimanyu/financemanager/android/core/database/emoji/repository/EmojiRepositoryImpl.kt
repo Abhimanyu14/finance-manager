@@ -11,4 +11,8 @@ class EmojiRepositoryImpl(
     override fun getAllEmojisFlow(): Flow<List<EmojiLocalEntity>> {
         return emojiDao.getAllEmojisFlow()
     }
+
+    override suspend fun getAllEmojis(): List<EmojiLocalEntity> {
+        return emojiDao.getAllEmojis()
+    }
 }

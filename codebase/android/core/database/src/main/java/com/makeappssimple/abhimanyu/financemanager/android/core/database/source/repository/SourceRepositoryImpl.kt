@@ -12,6 +12,10 @@ class SourceRepositoryImpl(
         return sourceDao.getAllSourcesFlow()
     }
 
+    override suspend fun getAllSources(): List<Source> {
+        return sourceDao.getAllSources()
+    }
+
     override suspend fun getAllSourcesCount(): Int {
         return sourceDao.getAllSourcesCount()
     }

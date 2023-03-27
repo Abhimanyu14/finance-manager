@@ -31,26 +31,27 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
-    getAllEmojisUseCase: GetAllEmojisUseCase,
     savedStateHandle: SavedStateHandle,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
+    private val getAllEmojisUseCase: GetAllEmojisUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val insertCategoriesUseCase: InsertCategoriesUseCase,
     private val updateCategoriesUseCase: UpdateCategoriesUseCase,
 ) : AddOrEditCategoryScreenViewModel, ViewModel() {
-    private val categories: StateFlow<List<Category>> = getAllCategoriesFlowUseCase().defaultListStateIn(
-        scope = viewModelScope,
-        started = SharingStarted.Eagerly,
-    )
+    private val categories: StateFlow<List<Category>> =
+        getAllCategoriesFlowUseCase().defaultListStateIn(
+            scope = viewModelScope,
+            started = SharingStarted.Eagerly,
+        )
     private val category: MutableStateFlow<Category?> = MutableStateFlow(
         value = null,
     )
@@ -84,18 +85,13 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     )
     override val searchText: StateFlow<String> = _searchText
 
-    private val emojis: StateFlow<List<EmojiLocalEntity>> = getAllEmojisUseCase().defaultListStateIn(
-        scope = viewModelScope,
-    )
-    override val emojiGroups: Flow<Map<String, List<Emoji>>> = combine(
-        flow = emojis,
-        flow2 = searchText,
-    ) { emojis, searchText ->
+    private var emojis: List<EmojiLocalEntity> = emptyList()
+    override val emojiGroups: Flow<Map<String, List<Emoji>>> = searchText.map { searchTextValue ->
         emojis.filter { emoji ->
-            if (searchText.isBlank()) {
+            if (searchTextValue.isBlank()) {
                 true
             } else {
-                emoji.unicodeName.contains(searchText)
+                emoji.unicodeName.contains(searchTextValue)
             }
         }.groupBy { emoji ->
             emoji.group
@@ -107,20 +103,10 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     )
 
     init {
-        savedStateHandle.get<String>(NavArgs.TRANSACTION_TYPE)?.let { transactionType ->
-            updateSelectedTransactionTypeIndex(
-                updatedIndex = transactionTypes.indexOf(
-                    element = TransactionType.values().find {
-                        it.title == transactionType
-                    },
-                )
-            )
-        }
-        savedStateHandle.get<Int>(NavArgs.CATEGORY_ID)?.let { categoryId ->
-            getCategory(
-                id = categoryId,
-            )
-        }
+        getNavigationArguments(
+            savedStateHandle = savedStateHandle,
+        )
+        fetchData()
     }
 
     override fun trackScreen() {
@@ -241,6 +227,25 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         _searchText.value = updatedSearchText
     }
 
+    private fun getNavigationArguments(
+        savedStateHandle: SavedStateHandle,
+    ) {
+        savedStateHandle.get<String>(NavArgs.TRANSACTION_TYPE)?.let { transactionType ->
+            updateSelectedTransactionTypeIndex(
+                updatedIndex = transactionTypes.indexOf(
+                    element = TransactionType.values().find {
+                        it.title == transactionType
+                    },
+                )
+            )
+        }
+        savedStateHandle.get<Int>(NavArgs.CATEGORY_ID)?.let { categoryId ->
+            getCategory(
+                id = categoryId,
+            )
+        }
+    }
+
     private fun getCategory(
         id: Int,
     ) {
@@ -272,5 +277,13 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         updateEmoji(
             updatedEmoji = category.emoji,
         )
+    }
+
+    private fun fetchData() {
+        viewModelScope.launch(
+            context = dispatcherProvider.io,
+        ) {
+            emojis = getAllEmojisUseCase()
+        }
     }
 }

@@ -14,10 +14,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.DeleteAllTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.DeleteTransactionUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionDataFlowFlowUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionDataFlowUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionsFlowFlowUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionDataFlowUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionDataUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionsFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionsFlowUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetAllTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetRecentTransactionDataFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetRecentTransactionDataFlowUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetSearchedTransactionDataUseCase
@@ -143,7 +147,16 @@ class TransactionModule {
     fun providesGetAllTransactionDataFlowUseCase(
         transactionRepository: TransactionRepository,
     ): GetAllTransactionDataFlowUseCase {
-        return GetAllTransactionDataFlowFlowUseCaseImpl(
+        return GetAllTransactionDataFlowUseCaseImpl(
+            transactionRepository = transactionRepository,
+        )
+    }
+
+    @Provides
+    fun providesGetAllTransactionDataUseCase(
+        transactionRepository: TransactionRepository,
+    ): GetAllTransactionDataUseCase {
+        return GetAllTransactionDataUseCaseImpl(
             transactionRepository = transactionRepository,
         )
     }
@@ -161,7 +174,16 @@ class TransactionModule {
     fun providesGetAllTransactionsFlowUseCase(
         transactionRepository: TransactionRepository,
     ): GetAllTransactionsFlowUseCase {
-        return GetAllTransactionsFlowFlowUseCaseImpl(
+        return GetAllTransactionsFlowUseCaseImpl(
+            transactionRepository = transactionRepository,
+        )
+    }
+
+    @Provides
+    fun providesGetAllTransactionsUseCase(
+        transactionRepository: TransactionRepository,
+    ): GetAllTransactionsUseCase {
+        return GetAllTransactionsUseCaseImpl(
             transactionRepository = transactionRepository,
         )
     }

@@ -16,8 +16,16 @@ class TransactionRepositoryImpl(
         return transactionDao.getAllTransactionsFlow()
     }
 
+    override suspend fun getAllTransactions(): List<Transaction> {
+        return transactionDao.getAllTransactions()
+    }
+
     override fun getAllTransactionDataFlow(): Flow<List<TransactionData>> {
         return transactionDao.getAllTransactionDataFlow()
+    }
+
+    override suspend fun getAllTransactionData(): List<TransactionData> {
+        return transactionDao.getAllTransactionData()
     }
 
     override suspend fun getSearchedTransactionData(

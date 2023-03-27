@@ -2,16 +2,15 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.transa
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.repository.TransactionRepository
-import kotlinx.coroutines.flow.Flow
 
-interface GetAllTransactionDataFlowUseCase {
-    operator fun invoke(): Flow<List<TransactionData>>
+interface GetAllTransactionDataUseCase {
+    suspend operator fun invoke(): List<TransactionData>
 }
 
-class GetAllTransactionDataFlowUseCaseImpl(
+class GetAllTransactionDataUseCaseImpl(
     private val transactionRepository: TransactionRepository,
-) : GetAllTransactionDataFlowUseCase {
-    override operator fun invoke(): Flow<List<TransactionData>> {
-        return transactionRepository.getAllTransactionDataFlow()
+) : GetAllTransactionDataUseCase {
+    override suspend operator fun invoke(): List<TransactionData> {
+        return transactionRepository.getAllTransactionData()
     }
 }

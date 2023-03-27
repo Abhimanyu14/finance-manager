@@ -13,7 +13,7 @@ class GetAllTransactionsFlowUseCaseTest {
 
     @Before
     fun setUp() {
-        getAllTransactionsFlowUseCase = GetAllTransactionsFlowFlowUseCaseImpl(
+        getAllTransactionsFlowUseCase = GetAllTransactionsFlowUseCaseImpl(
             transactionRepository = transactionRepository,
         )
     }

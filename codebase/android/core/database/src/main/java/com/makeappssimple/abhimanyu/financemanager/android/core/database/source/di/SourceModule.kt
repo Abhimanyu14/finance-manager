@@ -10,6 +10,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesCountUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesFlowUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourceUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetSourcesTotalBalanceAmountValueUseCase
@@ -80,6 +82,15 @@ class SourceModule {
         sourceRepository: SourceRepository,
     ): GetAllSourcesFlowUseCase {
         return GetAllSourcesFlowUseCaseImpl(
+            sourceRepository = sourceRepository,
+        )
+    }
+
+    @Provides
+    fun providesGetAllSourcesUseCase(
+        sourceRepository: SourceRepository,
+    ): GetAllSourcesUseCase {
+        return GetAllSourcesUseCaseImpl(
             sourceRepository = sourceRepository,
         )
     }

@@ -2,15 +2,16 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.repository.EmojiRepository
+import kotlinx.coroutines.flow.Flow
 
-interface GetAllEmojisUseCase {
-    suspend operator fun invoke(): List<EmojiLocalEntity>
+interface GetAllEmojisFlowUseCase {
+    operator fun invoke(): Flow<List<EmojiLocalEntity>>
 }
 
-class GetAllEmojisUseCaseImpl(
+class GetAllEmojisFlowUseCaseImpl(
     private val emojiRepository: EmojiRepository,
-) : GetAllEmojisUseCase {
-    override suspend operator fun invoke(): List<EmojiLocalEntity> {
-        return emojiRepository.getAllEmojis()
+) : GetAllEmojisFlowUseCase {
+    override operator fun invoke(): Flow<List<EmojiLocalEntity>> {
+        return emojiRepository.getAllEmojisFlow()
     }
 }
