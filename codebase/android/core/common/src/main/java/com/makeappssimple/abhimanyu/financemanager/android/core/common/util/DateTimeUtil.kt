@@ -11,6 +11,10 @@ import java.time.ZoneId
 import java.util.Calendar
 import java.util.Locale
 
+fun getCurrentTimeMillis(): Long {
+    return Instant.now().toEpochMilli()
+}
+
 fun getDateString(
     timestamp: Long,
 ): String {
@@ -21,7 +25,7 @@ fun getDateString(
 }
 
 fun getDateAndTimeString(
-    timestamp: Long,
+    timestamp: Long = getCurrentTimeMillis(),
 ): String {
     val calendar = Calendar.getInstance(Locale.getDefault()).apply {
         timeInMillis = timestamp
@@ -30,7 +34,7 @@ fun getDateAndTimeString(
 }
 
 fun getReadableDateAndTimeString(
-    timestamp: Long = System.currentTimeMillis(),
+    timestamp: Long = getCurrentTimeMillis(),
 ): String {
     val calendar = Calendar.getInstance(Locale.getDefault()).apply {
         timeInMillis = timestamp
@@ -39,29 +43,31 @@ fun getReadableDateAndTimeString(
 }
 
 fun getStartOfDayTimestamp(
-    timestamp: Long = System.currentTimeMillis(),
+    timestamp: Long = getCurrentTimeMillis(),
 ): Long {
     return LocalDateTime
         .ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault())
         .toLocalDate()
         .atStartOfDay()
-        .atZone(ZoneId.systemDefault()).toInstant()
+        .atZone(ZoneId.systemDefault())
+        .toInstant()
         .toEpochMilli()
 }
 
 fun getEndOfDayTimestamp(
-    timestamp: Long = System.currentTimeMillis(),
+    timestamp: Long = getCurrentTimeMillis(),
 ): Long {
     return LocalDateTime
         .ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault())
         .toLocalDate()
         .atTime(23, 59, 59)
-        .atZone(ZoneId.systemDefault()).toInstant()
+        .atZone(ZoneId.systemDefault())
+        .toInstant()
         .toEpochMilli()
 }
 
 fun getStartOfMonthTimestamp(
-    timestamp: Long = System.currentTimeMillis(),
+    timestamp: Long = getCurrentTimeMillis(),
 ): Long {
     return LocalDateTime
         .ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault())
@@ -69,24 +75,26 @@ fun getStartOfMonthTimestamp(
         .withHour(0)
         .withMinute(0)
         .withSecond(0)
-        .atZone(ZoneId.systemDefault()).toInstant()
+        .atZone(ZoneId.systemDefault())
+        .toInstant()
         .toEpochMilli()
 }
 
 fun getEndOfMonthTimestamp(
-    timestamp: Long = System.currentTimeMillis(),
+    timestamp: Long = getCurrentTimeMillis(),
 ): Long {
     val localDateTime: LocalDateTime = LocalDateTime
         .ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault())
     val yearMonth: LocalDate = YearMonth.from(localDateTime).atEndOfMonth()
     return yearMonth
         .atTime(23, 59, 59)
-        .atZone(ZoneId.systemDefault()).toInstant()
+        .atZone(ZoneId.systemDefault())
+        .toInstant()
         .toEpochMilli()
 }
 
 fun getStartOfYearTimestamp(
-    timestamp: Long = System.currentTimeMillis(),
+    timestamp: Long = getCurrentTimeMillis(),
 ): Long {
     return LocalDateTime
         .ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault())
@@ -95,12 +103,13 @@ fun getStartOfYearTimestamp(
         .withHour(0)
         .withMinute(0)
         .withSecond(0)
-        .atZone(ZoneId.systemDefault()).toInstant()
+        .atZone(ZoneId.systemDefault())
+        .toInstant()
         .toEpochMilli()
 }
 
 fun getEndOfYearTimestamp(
-    timestamp: Long = System.currentTimeMillis(),
+    timestamp: Long = getCurrentTimeMillis(),
 ): Long {
     return LocalDateTime
         .ofInstant(Instant.ofEpochMilli(timestamp), ZoneId.systemDefault())
@@ -109,6 +118,7 @@ fun getEndOfYearTimestamp(
         .withHour(23)
         .withMinute(59)
         .withSecond(59)
-        .atZone(ZoneId.systemDefault()).toInstant()
+        .atZone(ZoneId.systemDefault())
+        .toInstant()
         .toEpochMilli()
 }

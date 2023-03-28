@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.APP_NAME
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getCurrentTimeMillis
 import kotlinx.coroutines.flow.Flow
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
@@ -49,10 +50,10 @@ interface MyDataStore {
     )
 
     suspend fun updateLastDataBackupTimestamp(
-        timestamp: Long = System.currentTimeMillis(),
+        timestamp: Long = getCurrentTimeMillis(),
     )
 
     suspend fun updateLastDataChangeTimestamp(
-        timestamp: Long = System.currentTimeMillis(),
+        timestamp: Long = getCurrentTimeMillis(),
     )
 }

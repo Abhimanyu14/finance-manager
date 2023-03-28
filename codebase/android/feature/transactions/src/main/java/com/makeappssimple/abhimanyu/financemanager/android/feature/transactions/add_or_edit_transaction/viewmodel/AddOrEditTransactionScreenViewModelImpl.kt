@@ -15,6 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Quadruple
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getCurrentTimeMillis
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetAllCategoriesUseCase
@@ -413,7 +414,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                         sourceToId = sourceToId,
                         description = uiStateValue.description.text,
                         title = title,
-                        creationTimestamp = System.currentTimeMillis(),
+                        creationTimestamp = getCurrentTimeMillis(),
                         transactionTimestamp = uiStateValue.transactionCalendar.timeInMillis,
                         transactionForId = transactionForId,
                         transactionType = selectedTransactionTypeValue,
@@ -574,7 +575,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                             sourceToId = sourceToId,
                             description = uiStateValue.description.text,
                             title = title,
-                            creationTimestamp = System.currentTimeMillis(),
+                            creationTimestamp = getCurrentTimeMillis(),
                             transactionTimestamp = uiStateValue.transactionCalendar.timeInMillis,
                             transactionForId = transactionForId,
                             transactionType = selectedTransactionTypeValue,

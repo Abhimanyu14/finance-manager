@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase
 
 import android.net.Uri
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getCurrentTimeMillis
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getReadableDateAndTimeString
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetAllCategoriesFlowUseCase
@@ -45,7 +46,7 @@ class BackupDataUseCaseImpl(
         dataStore.updateLastDataBackupTimestamp()
         val databaseBackupData = DatabaseBackupData(
             lastBackupTime = getReadableDateAndTimeString(),
-            lastBackupTimestamp = System.currentTimeMillis().toString(),
+            lastBackupTimestamp = getCurrentTimeMillis().toString(),
         )
         categories.zip(emojis) { categoriesValue, emojisValue ->
             databaseBackupData.copy(
