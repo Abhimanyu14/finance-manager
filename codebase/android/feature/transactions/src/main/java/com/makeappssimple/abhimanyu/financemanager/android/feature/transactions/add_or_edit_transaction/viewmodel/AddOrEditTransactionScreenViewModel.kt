@@ -8,7 +8,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import kotlinx.coroutines.flow.StateFlow
-import java.util.Calendar
+import java.time.LocalDate
+import java.time.LocalTime
 
 interface AddOrEditTransactionScreenViewModel : ScreenViewModel {
     val navigationManager: NavigationManager
@@ -64,7 +65,11 @@ interface AddOrEditTransactionScreenViewModel : ScreenViewModel {
         updatedSelectedTransactionForIndex: Int,
     )
 
-    fun updateTransactionCalendar(
-        updatedTransactionCalendar: Calendar,
+    fun updateTransactionDate(
+        updatedTransactionDate: LocalDate,
+    )
+
+    fun updateTransactionTime(
+        updatedTransactionTime: LocalTime,
     )
 }

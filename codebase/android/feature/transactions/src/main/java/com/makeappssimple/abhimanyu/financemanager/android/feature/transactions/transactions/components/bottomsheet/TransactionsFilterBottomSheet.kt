@@ -40,9 +40,8 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.addIfDoesNotContainItemElseRemove
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDate
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.setDate
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.setEndOfDayTime
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.setStartOfDayTime
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getCurrentLocalDate
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getLocalDate
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
@@ -53,7 +52,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.Filter
-import java.util.Calendar
+import java.time.LocalDate
 
 @Immutable
 internal data class TransactionFilterBottomSheetFilterGroupData(
@@ -113,18 +112,18 @@ internal fun TransactionsFiltersBottomSheet(
             elements = selectedFilter.selectedTransactionTypeIndices.toTypedArray(),
         )
     }
-    val minDate = Calendar.getInstance().apply {
-        timeInMillis = oldestTransactionTimestamp
-    }.setStartOfDayTime()
-    val maxDate = Calendar.getInstance().setEndOfDayTime()
+    val defaultMinDate = getLocalDate(
+        timestamp = oldestTransactionTimestamp,
+    )
+    val defaultMaxDate = getCurrentLocalDate()
     var fromDate by remember {
         mutableStateOf(
-            value = selectedFilter.fromDate ?: minDate,
+            value = selectedFilter.fromDate ?: defaultMinDate,
         )
     }
     var toDate by remember {
         mutableStateOf(
-            value = selectedFilter.toDate ?: maxDate,
+            value = selectedFilter.toDate ?: defaultMaxDate,
         )
     }
     val filters = listOf(
@@ -235,15 +234,15 @@ internal fun TransactionsFiltersBottomSheet(
                     context = context,
                     headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_transaction_date,
                     onClearButtonClick = {
-                        fromDate = minDate
-                        toDate = maxDate
+                        fromDate = defaultMinDate
+                        toDate = defaultMaxDate
                     },
                     onExpandButtonClick = {
                         expandedItemsIndices[filters.lastIndex + 1] =
                             !expandedItemsIndices[filters.lastIndex + 1]
                     },
-                    minDateTimestamp = minDate.timeInMillis,
-                    maxDateTimestamp = maxDate.timeInMillis,
+                    minDate = defaultMinDate,
+                    maxDate = defaultMaxDate,
                     fromDate = fromDate,
                     toDate = toDate,
                     updateFromDate = {
@@ -274,8 +273,8 @@ internal fun TransactionsFiltersBottomSheet(
                     selectedInvestmentCategoryIndicesValue.clear()
                     selectedSourceIndicesValue.clear()
                     selectedTransactionTypeIndicesValue.clear()
-                    fromDate = minDate
-                    toDate = maxDate
+                    fromDate = defaultMinDate
+                    toDate = defaultMaxDate
                     onNegativeButtonClick()
                 },
             ) {
@@ -293,9 +292,8 @@ internal fun TransactionsFiltersBottomSheet(
                         weight = 1F,
                     ),
                 onClick = {
-                    val isFromDateSameAsOldestTransactionDate =
-                        fromDate.timeInMillis == minDate.timeInMillis
-                    val isToDateSameAsCurrentDayDate = toDate.timeInMillis == maxDate.timeInMillis
+                    val isFromDateSameAsOldestTransactionDate = fromDate == defaultMinDate
+                    val isToDateSameAsCurrentDayDate = toDate == defaultMaxDate
                     val isDateFilterCleared = isFromDateSameAsOldestTransactionDate &&
                             isToDateSameAsCurrentDayDate
                     onPositiveButtonClick(
@@ -433,12 +431,12 @@ fun TransactionFilterBottomSheetDateFilter(
     @StringRes headingTextStringResourceId: Int,
     onClearButtonClick: () -> Unit,
     onExpandButtonClick: () -> Unit,
-    minDateTimestamp: Long,
-    maxDateTimestamp: Long,
-    fromDate: Calendar,
-    toDate: Calendar,
-    updateFromDate: (updatedFromDate: Calendar) -> Unit,
-    updateToDate: (updatedToDate: Calendar) -> Unit,
+    minDate: LocalDate,
+    maxDate: LocalDate,
+    fromDate: LocalDate,
+    toDate: LocalDate,
+    updateFromDate: (updatedFromDate: LocalDate) -> Unit,
+    updateToDate: (updatedToDate: LocalDate) -> Unit,
 ) {
     val chevronDegrees: Float by animateFloatAsState(
         targetValue = if (expanded) {
@@ -446,35 +444,25 @@ fun TransactionFilterBottomSheetDateFilter(
         } else {
             0F
         },
+        label = "", // TODO-Abhi: Add label for animation inspection
     )
+
     val fromDatePickerDialog = getMyDatePickerDialog(
         context = context,
-        calendar = fromDate,
-        minDateTimestamp = minDateTimestamp,
-        maxDateTimestamp = toDate.timeInMillis,
-        onDateSetListener = { year, month, dayOfMonth ->
-            updateFromDate(
-                (fromDate.clone() as Calendar).setDate(
-                    dayOfMonth = dayOfMonth,
-                    month = month,
-                    year = year,
-                ).setStartOfDayTime()
-            )
+        currentDate = fromDate,
+        minDate = minDate,
+        maxDate = toDate,
+        onDateSetListener = {
+            updateFromDate(it)
         },
     )
     val toDatePickerDialog = getMyDatePickerDialog(
         context = context,
-        calendar = toDate,
-        minDateTimestamp = fromDate.timeInMillis,
-        maxDateTimestamp = maxDateTimestamp,
-        onDateSetListener = { year, month, dayOfMonth ->
-            updateToDate(
-                (toDate.clone() as Calendar).setDate(
-                    dayOfMonth = dayOfMonth,
-                    month = month,
-                    year = year,
-                ).setEndOfDayTime()
-            )
+        currentDate = toDate,
+        minDate = fromDate,
+        maxDate = maxDate,
+        onDateSetListener = {
+            updateToDate(it)
         },
     )
 

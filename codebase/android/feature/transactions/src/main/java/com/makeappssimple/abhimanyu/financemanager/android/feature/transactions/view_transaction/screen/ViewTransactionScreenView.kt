@@ -12,7 +12,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getReadableDateAndTimeString
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getReadableDateAndTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
@@ -84,7 +84,7 @@ internal fun ViewTransactionScreenView(
     } else {
         transaction?.amount.toString()
     }
-    val dateAndTimeText: String = getReadableDateAndTimeString(
+    val dateAndTimeText: String = getReadableDateAndTime(
         timestamp = transaction?.transactionTimestamp ?: 0L,
     )
     val emoji: String = when (transaction?.transactionType) {

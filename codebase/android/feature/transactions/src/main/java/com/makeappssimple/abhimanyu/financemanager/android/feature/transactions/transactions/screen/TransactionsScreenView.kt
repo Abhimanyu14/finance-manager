@@ -36,7 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.legend.Dot
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getReadableDateAndTimeString
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getReadableDateAndTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
@@ -414,7 +414,7 @@ internal fun TransactionsScreenView(
                                 } else {
                                     listItem.transaction.amount.toString()
                                 }
-                            val dateAndTimeText = getReadableDateAndTimeString(
+                            val dateAndTimeText = getReadableDateAndTime(
                                 timestamp = listItem.transaction.transactionTimestamp,
                             )
                             val emoji = when (listItem.transaction.transactionType) {

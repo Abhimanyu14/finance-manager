@@ -31,8 +31,6 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDate
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.setDate
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.setTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
@@ -60,7 +58,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.te
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiVisibilityState
-import java.util.Calendar
+import java.time.LocalDate
+import java.time.LocalTime
 
 internal enum class AddOrEditTransactionBottomSheetType : BottomSheetType {
     NONE,
@@ -95,7 +94,8 @@ internal data class AddOrEditTransactionScreenViewData(
     val updateSourceFrom: (updatedSourceFrom: Source?) -> Unit,
     val updateSourceTo: (updatedSourceTo: Source?) -> Unit,
     val updateTitle: (updatedTitle: TextFieldValue) -> Unit,
-    val updateTransactionCalendar: (updatedTransactionCalendar: Calendar) -> Unit,
+    val updateTransactionDate: (updatedTransactionDate: LocalDate) -> Unit,
+    val updateTransactionTime: (updatedTransactionTime: LocalTime) -> Unit,
 )
 
 @Composable
@@ -105,29 +105,16 @@ internal fun AddOrEditTransactionScreenView(
 ) {
     val transactionDatePickerDialog = getMyDatePickerDialog(
         context = state.context,
-        calendar = data.uiState.transactionCalendar,
-        onDateSetListener = { year, month, dayOfMonth ->
-            data.updateTransactionCalendar(
-                (data.uiState.transactionCalendar.clone() as Calendar)
-                    .setDate(
-                        dayOfMonth = dayOfMonth,
-                        month = month,
-                        year = year,
-                    ),
-            )
+        currentDate = data.uiState.transactionDate,
+        onDateSetListener = {
+            data.updateTransactionDate(it)
         },
     )
     val transactionTimePickerDialog = getMyTimePickerDialog(
         context = state.context,
-        calendar = data.uiState.transactionCalendar,
-        onTimeSetListener = { hour, minute ->
-            data.updateTransactionCalendar(
-                (data.uiState.transactionCalendar.clone() as Calendar)
-                    .setTime(
-                        hour = hour,
-                        minute = minute,
-                    )
-            )
+        currentTime = data.uiState.transactionTime,
+        onTimeSetListener = {
+            data.updateTransactionTime(it)
         },
     )
 
@@ -517,7 +504,7 @@ internal fun AddOrEditTransactionScreenView(
                 )
             }
             MyReadOnlyTextField(
-                value = data.uiState.transactionCalendar.formattedDate(),
+                value = data.uiState.transactionDate.formattedDate(),
                 labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_date,
                 onClick = {
                     clearFocus()
@@ -531,7 +518,7 @@ internal fun AddOrEditTransactionScreenView(
                     ),
             )
             MyReadOnlyTextField(
-                value = data.uiState.transactionCalendar.formattedTime(),
+                value = data.uiState.transactionTime.formattedTime(),
                 labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_time,
                 onClick = {
                     clearFocus()

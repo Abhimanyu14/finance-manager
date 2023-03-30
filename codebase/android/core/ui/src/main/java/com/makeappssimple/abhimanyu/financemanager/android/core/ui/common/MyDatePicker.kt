@@ -2,32 +2,31 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.common
 
 import android.app.DatePickerDialog
 import android.content.Context
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.dayOfMonth
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.month
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.setEndOfDayTime
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.year
-import java.util.Calendar
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getCurrentTimeMillis
+import java.time.LocalDate
 
 fun getMyDatePickerDialog(
     context: Context,
-    calendar: Calendar,
-    minDateTimestamp: Long? = null,
-    maxDateTimestamp: Long? = null,
-    onDateSetListener: (year: Int, month: Int, dayOfMonth: Int) -> Unit,
+    currentDate: LocalDate,
+    minDate: LocalDate? = null,
+    maxDate: LocalDate? = null,
+    onDateSetListener: (updatedDate: LocalDate) -> Unit,
 ): DatePickerDialog {
     return DatePickerDialog(
         context,
         { _, year, month, dayOfMonth ->
-            onDateSetListener(year, month, dayOfMonth)
+            onDateSetListener(LocalDate.of(year, month + 1, dayOfMonth))
         },
-        calendar.year,
-        calendar.month,
-        calendar.dayOfMonth,
+        currentDate.year,
+        currentDate.monthValue - 1,
+        currentDate.dayOfMonth,
     ).apply {
-        minDateTimestamp?.let {
-            datePicker.minDate = it
+        minDate?.let {
+            datePicker.minDate = it.atStartOfDay().toEpochMilli()
         }
         datePicker.maxDate =
-            maxDateTimestamp ?: Calendar.getInstance().setEndOfDayTime().timeInMillis
+            maxDate?.atEndOfDay()?.toEpochMilli() ?: getCurrentTimeMillis()
     }
 }

@@ -1,0 +1,30 @@
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions
+
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getSystemDefaultZoneId
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+
+/**
+ * [LocalDateTime] to [Instant]
+ */
+internal fun LocalDateTime.toInstant(
+    zoneId: ZoneId = getSystemDefaultZoneId(),
+): Instant {
+    return this
+        .atZone(zoneId)
+        .toInstant()
+}
+
+/**
+ * [LocalDateTime] to [Long]
+ */
+fun LocalDateTime.toEpochMilli(
+    zoneId: ZoneId = getSystemDefaultZoneId(),
+): Long {
+    return this
+        .toInstant(
+            zoneId = zoneId,
+        )
+        .toEpochMilli()
+}

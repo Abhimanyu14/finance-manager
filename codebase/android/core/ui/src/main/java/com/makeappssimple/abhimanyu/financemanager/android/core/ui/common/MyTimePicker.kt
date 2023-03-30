@@ -2,22 +2,20 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.common
 
 import android.app.TimePickerDialog
 import android.content.Context
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.hour
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.minute
-import java.util.Calendar
+import java.time.LocalTime
 
 fun getMyTimePickerDialog(
     context: Context,
-    calendar: Calendar,
-    onTimeSetListener: (hour: Int, minute: Int) -> Unit,
+    currentTime: LocalTime,
+    onTimeSetListener: (LocalTime) -> Unit,
 ): TimePickerDialog {
     return TimePickerDialog(
         context,
         { _, hour, minute ->
-            onTimeSetListener(hour, minute)
+            onTimeSetListener(LocalTime.of(hour, minute))
         },
-        calendar.hour,
-        calendar.minute,
+        currentTime.hour,
+        currentTime.minute,
         false,
     )
 }

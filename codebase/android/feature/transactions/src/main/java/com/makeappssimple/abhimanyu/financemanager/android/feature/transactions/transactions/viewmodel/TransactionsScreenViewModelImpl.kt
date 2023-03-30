@@ -3,7 +3,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getDateString
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getFormattedDate
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getLocalDate
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetAllCategoriesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
@@ -23,7 +26,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.util.Calendar
+import java.time.LocalDate
 
 @HiltViewModel
 internal class TransactionsScreenViewModelImpl @Inject constructor(
@@ -126,9 +129,9 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 }
                 updateSelectedFilter(
                     updatedSelectedFilter = selectedFilterValue.copy(
-                        fromDate = Calendar.getInstance().apply {
-                            timeInMillis = oldestTransactionTimestamp.value
-                        },
+                        fromDate = getLocalDate(
+                            timestamp = oldestTransactionTimestamp.value,
+                        ),
                     ),
                 )
             }
@@ -190,8 +193,8 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 }
                 .groupBy {
                     if (selectedSortOptionValue == SortOption.LATEST_FIRST || selectedSortOptionValue == SortOption.OLDEST_FIRST) {
-                        getDateString(
-                            it.transaction.transactionTimestamp
+                        getFormattedDate(
+                            timestamp = it.transaction.transactionTimestamp,
                         )
                     } else {
                         ""
@@ -262,15 +265,20 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     }
 
     private fun isAvailableAfterDateFilter(
-        fromDate: Calendar?,
-        toDate: Calendar?,
+        fromDate: LocalDate?,
+        toDate: LocalDate?,
         transactionData: TransactionData,
     ): Boolean {
         if (fromDate == null || toDate == null) {
             return true
         }
-        return transactionData.transaction.transactionTimestamp > fromDate.timeInMillis &&
-                transactionData.transaction.transactionTimestamp < toDate.timeInMillis
+        val fromDateStartOfDayTimestamp = fromDate
+            .atStartOfDay()
+            .toEpochMilli()
+        val toDateStartOfDayTimestamp = toDate
+            .atEndOfDay()
+            .toEpochMilli()
+        return transactionData.transaction.transactionTimestamp in (fromDateStartOfDayTimestamp) until toDateStartOfDayTimestamp
     }
 
     private fun isAvailableAfterTransactionTypeFilter(

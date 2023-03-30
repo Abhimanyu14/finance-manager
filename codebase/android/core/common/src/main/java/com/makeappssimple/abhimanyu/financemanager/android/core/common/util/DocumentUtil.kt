@@ -19,7 +19,7 @@ class CreateJsonDocument : ActivityResultContracts.CreateDocument(
         ).apply {
             putExtra(
                 Intent.EXTRA_TITLE,
-                getDateAndTimeString(),
+                getFormattedDateAndTime(),
             )
         }
     }

@@ -76,7 +76,8 @@ fun EditTransactionScreen(
             updateSourceFrom = screenViewModel::updateSourceFrom,
             updateSourceTo = screenViewModel::updateSourceTo,
             updateTitle = screenViewModel::updateTitle,
-            updateTransactionCalendar = screenViewModel::updateTransactionCalendar,
+            updateTransactionDate = screenViewModel::updateTransactionDate,
+            updateTransactionTime = screenViewModel::updateTransactionTime,
         ),
         state = rememberCommonScreenViewState(),
     )

@@ -4,7 +4,8 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
-import java.util.Calendar
+import java.time.LocalDate
+import java.time.LocalTime
 
 @Immutable
 data class AddOrEditTransactionScreenUiState(
@@ -16,6 +17,7 @@ data class AddOrEditTransactionScreenUiState(
     val selectedTransactionForIndex: Int,
     val sourceFrom: Source?,
     val sourceTo: Source?,
-    val transactionCalendar: Calendar,
+    val transactionDate: LocalDate,
+    val transactionTime: LocalTime,
     val amountErrorText: String? = null,
 )
