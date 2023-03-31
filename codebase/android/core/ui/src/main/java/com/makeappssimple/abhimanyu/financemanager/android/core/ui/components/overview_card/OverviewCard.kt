@@ -7,18 +7,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
-
-internal enum class OverviewTabOption(
-    val title: String,
-) {
-    DAY("DAY"),
-
-    // TODO-Abhi: Enable week later
-    // WEEK("Week"),
-    MONTH("MONTH"),
-    YEAR("YEAR"),
-}
 
 @Composable
 fun OverviewCard(
@@ -26,22 +16,22 @@ fun OverviewCard(
     onClick: (() -> Unit)? = null,
 ) {
     val overviewTabSelectionIndex by viewModel.overviewTabSelectionIndex.collectAsStateWithLifecycle()
-    val amountData by viewModel.amountData.collectAsStateWithLifecycle()
+    val overviewCardData by viewModel.overviewCardData.collectAsStateWithLifecycle()
     val totalIncomeAmount = Amount(
-        value = amountData?.getOrNull(0)?.toLong() ?: 0L,
+        value = overviewCardData?.income?.toLong().orZero(),
     )
     val totalExpenseAmount = Amount(
-        value = amountData?.getOrNull(1)?.toLong() ?: 0L,
+        value = overviewCardData?.expense?.toLong().orZero(),
     )
     val pieChartData = PieChartData(
         items = listOf(
             PieChartItemData(
-                value = amountData?.getOrNull(0) ?: 0F,
+                value = overviewCardData?.income.orZero(),
                 text = "Income : $totalIncomeAmount",
                 color = MaterialTheme.colorScheme.tertiary,
             ),
             PieChartItemData(
-                value = amountData?.getOrNull(1) ?: 0F,
+                value = overviewCardData?.expense.orZero(),
                 text = "Expense : ${totalExpenseAmount.toNonSignedString()}",
                 color = MaterialTheme.colorScheme.error,
             ),
@@ -49,13 +39,21 @@ fun OverviewCard(
     )
 
     OverviewCardView(
-        onClick = onClick,
-        overviewTabSelectionIndex = overviewTabSelectionIndex,
-        onOverviewTabClick = {
-            viewModel.setOverviewTabSelectionIndex(
-                updatedOverviewTabSelectionIndex = it,
-            )
-        },
-        pieChartData = pieChartData,
+        data = OverviewCardViewData(
+            overviewTabSelectionIndex = overviewTabSelectionIndex,
+            title = overviewCardData?.title.orEmpty(),
+            pieChartData = pieChartData,
+            onClick = onClick,
+            onOverviewTabClick = {
+                viewModel.setOverviewTabSelectionIndex(
+                    updatedOverviewTabSelectionIndex = it,
+                )
+            },
+            handleOverviewCardAction = {
+                viewModel.handleOverviewCardAction(
+                    overviewCardAction = it
+                )
+            },
+        ),
     )
 }

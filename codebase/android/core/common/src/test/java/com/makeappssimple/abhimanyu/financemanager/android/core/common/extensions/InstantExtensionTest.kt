@@ -20,6 +20,36 @@ class InstantExtensionTest {
     }
 
     @Test
+    fun formattedDay() {
+        Assert.assertEquals(
+            "30 Mar",
+            testInstant.formattedDay(
+                zoneId = testZoneId,
+            ),
+        )
+    }
+
+    @Test
+    fun formattedMonth() {
+        Assert.assertEquals(
+            "March, 2023",
+            testInstant.formattedMonth(
+                zoneId = testZoneId,
+            ),
+        )
+    }
+
+    @Test
+    fun formattedYear() {
+        Assert.assertEquals(
+            "2023",
+            testInstant.formattedYear(
+                zoneId = testZoneId,
+            ),
+        )
+    }
+
+    @Test
     fun formattedTime() {
         Assert.assertEquals(
             "08:24 AM",

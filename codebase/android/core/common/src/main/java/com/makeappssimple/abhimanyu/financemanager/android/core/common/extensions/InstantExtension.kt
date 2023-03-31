@@ -19,17 +19,39 @@ internal fun Instant.formattedDate(
 }
 
 /**
- * Sample format - 08:24 AM
+ * Sample format - 30 Mar
  */
-internal fun Instant.formattedTime(
+internal fun Instant.formattedDay(
     zoneId: ZoneId = getSystemDefaultZoneId(),
 ): String {
     return DateTimeFormatter
-        .ofPattern("hh:mm a")
+        .ofPattern("dd MMM")
         .withZone(zoneId)
         .format(this)
-        .replace("am", "AM")
-        .replace("pm", "PM")
+}
+
+/**
+ * Sample format - March, 2023
+ */
+internal fun Instant.formattedMonth(
+    zoneId: ZoneId = getSystemDefaultZoneId(),
+): String {
+    return DateTimeFormatter
+        .ofPattern("MMMM, yyyy")
+        .withZone(zoneId)
+        .format(this)
+}
+
+/**
+ * Sample format - 2023
+ */
+internal fun Instant.formattedYear(
+    zoneId: ZoneId = getSystemDefaultZoneId(),
+): String {
+    return DateTimeFormatter
+        .ofPattern("yyyy")
+        .withZone(zoneId)
+        .format(this)
 }
 
 /**
@@ -53,6 +75,20 @@ internal fun Instant.formattedReadableDateAndTime(
     zoneId: ZoneId = getSystemDefaultZoneId(),
 ): String {
     return "${formattedDate(zoneId)} at ${formattedTime(zoneId)}"
+}
+
+/**
+ * Sample format - 08:24 AM
+ */
+internal fun Instant.formattedTime(
+    zoneId: ZoneId = getSystemDefaultZoneId(),
+): String {
+    return DateTimeFormatter
+        .ofPattern("hh:mm a")
+        .withZone(zoneId)
+        .format(this)
+        .replace("am", "AM")
+        .replace("pm", "PM")
 }
 
 /**

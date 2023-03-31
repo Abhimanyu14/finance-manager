@@ -5,8 +5,12 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface OverviewCardViewModel : MyViewModel {
     val overviewTabSelectionIndex: StateFlow<Int>
-    val amountData: StateFlow<List<Float>?>
+    val overviewCardData: StateFlow<OverviewCardData?>
     fun setOverviewTabSelectionIndex(
         updatedOverviewTabSelectionIndex: Int,
+    )
+
+    fun handleOverviewCardAction(
+        overviewCardAction: OverviewCardAction,
     )
 }

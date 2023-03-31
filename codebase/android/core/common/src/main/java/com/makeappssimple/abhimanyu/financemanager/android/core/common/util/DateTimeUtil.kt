@@ -3,7 +3,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.util
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDate
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDateAndTime
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDay
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedMonth
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedReadableDateAndTime
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedYear
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toZonedDateTime
 import java.time.Instant
@@ -37,6 +40,9 @@ fun getSystemDefaultZoneId(): ZoneId {
     return ZoneId.systemDefault()
 }
 
+/**
+ * Sample format - 30 Mar, 2023
+ */
 fun getFormattedDate(
     timestamp: Long,
     zoneId: ZoneId = getSystemDefaultZoneId(),
@@ -48,6 +54,51 @@ fun getFormattedDate(
         )
 }
 
+/**
+ * Sample format - 30 Mar
+ */
+fun getFormattedDay(
+    timestamp: Long,
+    zoneId: ZoneId = getSystemDefaultZoneId(),
+): String {
+    return Instant
+        .ofEpochMilli(timestamp)
+        .formattedDay(
+            zoneId = zoneId,
+        )
+}
+
+/**
+ * Sample format - March, 2023
+ */
+fun getFormattedMonth(
+    timestamp: Long,
+    zoneId: ZoneId = getSystemDefaultZoneId(),
+): String {
+    return Instant
+        .ofEpochMilli(timestamp)
+        .formattedMonth(
+            zoneId = zoneId,
+        )
+}
+
+/**
+ * Sample format - 2023
+ */
+fun getFormattedYear(
+    timestamp: Long,
+    zoneId: ZoneId = getSystemDefaultZoneId(),
+): String {
+    return Instant
+        .ofEpochMilli(timestamp)
+        .formattedYear(
+            zoneId = zoneId,
+        )
+}
+
+/**
+ * Sample format - 2023-Mar-30, 08-24 AM
+ */
 fun getFormattedDateAndTime(
     timestamp: Long = getCurrentTimeMillis(),
     zoneId: ZoneId = getSystemDefaultZoneId(),
@@ -59,6 +110,9 @@ fun getFormattedDateAndTime(
         )
 }
 
+/**
+ * Sample format - 30 Mar, 2023 at 08:24 AM
+ */
 fun getReadableDateAndTime(
     timestamp: Long = getCurrentTimeMillis(),
     zoneId: ZoneId = getSystemDefaultZoneId(),

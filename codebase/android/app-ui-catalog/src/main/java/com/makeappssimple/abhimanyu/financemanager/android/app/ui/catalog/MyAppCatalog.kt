@@ -45,6 +45,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBarView
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.overview_card.OverviewCardView
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.overview_card.OverviewCardViewData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MySearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MySearchBarContainer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBar
@@ -351,22 +352,26 @@ private fun LazyListScope.componentsTabContent(
             crossAxisAlignment = FlowCrossAxisAlignment.Center,
         ) {
             OverviewCardView(
-                onClick = {},
-                overviewTabSelectionIndex = 1,
-                onOverviewTabClick = {},
-                pieChartData = PieChartData(
-                    items = listOf(
-                        PieChartItemData(
-                            value = 500F,
-                            text = "Income : ₹500",
-                            color = MaterialTheme.colorScheme.tertiary,
-                        ),
-                        PieChartItemData(
-                            value = 600F,
-                            text = "Expense : ₹600",
-                            color = MaterialTheme.colorScheme.error,
+                data = OverviewCardViewData(
+                    overviewTabSelectionIndex = 1,
+                    title = "2023",
+                    pieChartData = PieChartData(
+                        items = listOf(
+                            PieChartItemData(
+                                value = 500F,
+                                text = "Income : ₹500",
+                                color = MaterialTheme.colorScheme.tertiary,
+                            ),
+                            PieChartItemData(
+                                value = 600F,
+                                text = "Expense : ₹600",
+                                color = MaterialTheme.colorScheme.error,
+                            ),
                         ),
                     ),
+                    onClick = {},
+                    onOverviewTabClick = {},
+                    handleOverviewCardAction = {},
                 ),
             )
         }

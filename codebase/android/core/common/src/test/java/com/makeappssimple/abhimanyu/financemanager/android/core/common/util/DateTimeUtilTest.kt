@@ -44,6 +44,39 @@ class DateTimeUtilTest {
     }
 
     @Test
+    fun getFormattedDay() {
+        Assert.assertEquals(
+            "30 Mar",
+            getFormattedDay(
+                timestamp = testTimestamp,
+                zoneId = testZoneId,
+            ),
+        )
+    }
+
+    @Test
+    fun getFormattedMonth() {
+        Assert.assertEquals(
+            "March, 2023",
+            getFormattedMonth(
+                timestamp = testTimestamp,
+                zoneId = testZoneId,
+            ),
+        )
+    }
+
+    @Test
+    fun getFormattedYear() {
+        Assert.assertEquals(
+            "2023",
+            getFormattedYear(
+                timestamp = testTimestamp,
+                zoneId = testZoneId,
+            ),
+        )
+    }
+
+    @Test
     fun getFormattedDateAndTime() {
         Assert.assertEquals(
             "2023-Mar-30, 08-24 AM",
