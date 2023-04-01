@@ -49,6 +49,7 @@ internal fun PieChartRenderer(
                         0F
                     }
                 }
+
                 else -> {
                     1F
                 }

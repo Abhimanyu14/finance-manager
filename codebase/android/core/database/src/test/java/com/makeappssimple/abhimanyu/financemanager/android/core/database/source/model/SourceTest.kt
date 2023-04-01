@@ -23,7 +23,7 @@ class SourceTest {
         val result = source.updateBalanceAmount(
             updatedBalanceAmount = 100L,
         )
-        
+
         Assert.assertEquals(
             0L,
             source.balanceAmount.value,

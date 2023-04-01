@@ -29,7 +29,7 @@ class AmountTest {
     }
 
     @Test
-    fun toNonSignedString_valueIsPositive(){
+    fun toNonSignedString_valueIsPositive() {
         val result = amount.toNonSignedString()
 
         Assert.assertEquals(
@@ -39,7 +39,7 @@ class AmountTest {
     }
 
     @Test
-    fun toNonSignedString_valueIsNegative(){
+    fun toNonSignedString_valueIsNegative() {
         val result = amount2.toNonSignedString()
 
         Assert.assertEquals(
@@ -49,7 +49,7 @@ class AmountTest {
     }
 
     @Test
-    fun toNonSignedString_valueIsZero(){
+    fun toNonSignedString_valueIsZero() {
         val result = amount3.toNonSignedString()
 
         Assert.assertEquals(

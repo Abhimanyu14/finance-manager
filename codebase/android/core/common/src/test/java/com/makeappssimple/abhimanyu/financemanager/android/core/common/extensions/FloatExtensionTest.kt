@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.extensio
 import org.junit.Assert
 import org.junit.Test
 
-class FloatExtensionTest{
+class FloatExtensionTest {
 
     // region orZero tests
     @Test
