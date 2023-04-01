@@ -35,10 +35,6 @@ internal class HomeScreenViewModelImpl @Inject constructor(
                 lastDataBackupTimestamp < lastDataChangeTimestamp
     }
 
-    override fun trackScreen() {
-        // TODO-Abhi: Add screen tracking code
-    }
-
     override fun backupDataToDocument(
         uri: Uri,
     ) {

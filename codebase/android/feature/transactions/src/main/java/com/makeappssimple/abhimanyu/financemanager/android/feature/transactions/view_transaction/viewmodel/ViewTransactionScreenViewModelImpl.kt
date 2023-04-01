@@ -50,10 +50,6 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
         updateTransactionData()
     }
 
-    override fun trackScreen() {
-        // TODO-Abhi: Add screen tracking code
-    }
-
     private fun getNavigationArguments(
         savedStateHandle: SavedStateHandle,
     ) {

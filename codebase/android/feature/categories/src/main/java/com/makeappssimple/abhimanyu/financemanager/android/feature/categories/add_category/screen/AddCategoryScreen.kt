@@ -32,12 +32,6 @@ fun AddCategoryScreen(
     val title: TextFieldValue by screenViewModel.title.collectAsStateWithLifecycle()
 
     LaunchedEffect(
-        key1 = Unit,
-    ) {
-        screenViewModel.trackScreen()
-    }
-
-    LaunchedEffect(
         key1 = emojiGroups,
     ) {
         if (emojiGroups.isNotEmpty()) {

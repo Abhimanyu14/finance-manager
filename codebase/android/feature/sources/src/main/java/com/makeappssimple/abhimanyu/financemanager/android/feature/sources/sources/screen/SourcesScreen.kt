@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.screen
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -28,12 +27,6 @@ fun SourcesScreen(
         .collectAsStateWithLifecycle(
             initialValue = emptyList(),
         )
-
-    LaunchedEffect(
-        key1 = Unit,
-    ) {
-        screenViewModel.trackScreen()
-    }
 
     SourcesScreenView(
         data = SourcesScreenViewData(

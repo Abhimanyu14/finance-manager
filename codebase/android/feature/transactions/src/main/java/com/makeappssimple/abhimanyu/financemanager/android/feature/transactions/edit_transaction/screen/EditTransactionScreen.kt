@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.screen
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -43,12 +42,6 @@ fun EditTransactionScreen(
         initialValue = emptyList(),
     )
     val selectedTransactionType: TransactionType? by screenViewModel.selectedTransactionType.collectAsStateWithLifecycle()
-
-    LaunchedEffect(
-        key1 = Unit,
-    ) {
-        screenViewModel.trackScreen()
-    }
 
     AddOrEditTransactionScreenView(
         data = AddOrEditTransactionScreenViewData(

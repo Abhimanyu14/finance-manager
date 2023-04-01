@@ -4,7 +4,6 @@ import android.net.Uri
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -40,12 +39,6 @@ fun HomeScreen(
     val showBackupCard: Boolean by screenViewModel.showBackupCard.collectAsStateWithLifecycle(
         initialValue = false,
     )
-
-    LaunchedEffect(
-        key1 = Unit,
-    ) {
-        screenViewModel.trackScreen()
-    }
 
     HomeScreenView(
         data = HomeScreenViewData(

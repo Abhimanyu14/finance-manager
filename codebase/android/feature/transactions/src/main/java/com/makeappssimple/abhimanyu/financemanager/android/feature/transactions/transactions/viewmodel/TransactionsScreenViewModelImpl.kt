@@ -207,10 +207,6 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             context = dispatcherProvider.io,
         )
 
-    override fun trackScreen() {
-        // TODO-Abhi: Add screen tracking code
-    }
-
     // region Search
     override fun updateSearchText(
         updatedSearchText: String,

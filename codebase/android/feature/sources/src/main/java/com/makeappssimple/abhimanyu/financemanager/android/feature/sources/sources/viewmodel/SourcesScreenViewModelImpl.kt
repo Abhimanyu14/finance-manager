@@ -49,10 +49,6 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
         }
     override val defaultSourceId: Flow<Int?> = dataStore.getDefaultSourceIdFromDataStore()
 
-    override fun trackScreen() {
-        // TODO-Abhi: Add screen tracking code
-    }
-
     override fun deleteSource(
         source: Source,
     ) {

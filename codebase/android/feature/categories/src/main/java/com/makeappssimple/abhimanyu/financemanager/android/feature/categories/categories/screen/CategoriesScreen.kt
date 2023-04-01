@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.screen
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -50,12 +49,6 @@ fun CategoriesScreen(
     val investmentCategories: List<Category> by screenViewModel.investmentCategories.collectAsStateWithLifecycle(
         initialValue = emptyList(),
     )
-
-    LaunchedEffect(
-        key1 = Unit,
-    ) {
-        screenViewModel.trackScreen()
-    }
 
     CategoriesScreenView(
         data = CategoriesScreenViewData(

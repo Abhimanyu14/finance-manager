@@ -88,10 +88,6 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun trackScreen() {
-        // TODO-Abhi: Add screen tracking code
-    }
-
     override fun updateSource() {
         val source = source.value ?: return
         val amountValue = balanceAmountValue.value.text.toInt() - source.balanceAmount.value

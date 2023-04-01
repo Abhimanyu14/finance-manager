@@ -22,10 +22,6 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
     private val restoreDataUseCase: RestoreDataUseCase,
 ) : SettingsScreenViewModel, ViewModel() {
 
-    override fun trackScreen() {
-        // TODO-Abhi: Add screen tracking code
-    }
-
     override fun backupDataToDocument(
         uri: Uri,
     ) {

@@ -109,10 +109,6 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         fetchData()
     }
 
-    override fun trackScreen() {
-        // TODO-Abhi: Add screen tracking code
-    }
-
     override fun insertCategory() {
         viewModelScope.launch(
             context = dispatcherProvider.io,

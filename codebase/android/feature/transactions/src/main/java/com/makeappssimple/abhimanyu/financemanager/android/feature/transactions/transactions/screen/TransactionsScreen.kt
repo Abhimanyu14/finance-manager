@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -44,12 +43,6 @@ fun TransactionsScreen(
     val selectedFilter: Filter by screenViewModel.selectedFilter.collectAsStateWithLifecycle()
     val selectedSortOption: SortOption by screenViewModel.selectedSortOption.collectAsStateWithLifecycle()
     val searchText: String by screenViewModel.searchText.collectAsStateWithLifecycle()
-
-    LaunchedEffect(
-        key1 = Unit,
-    ) {
-        screenViewModel.trackScreen()
-    }
 
     TransactionsScreenView(
         data = TransactionsScreenViewData(

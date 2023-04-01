@@ -60,10 +60,6 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun trackScreen() {
-        // TODO-Abhi: Add screen tracking code
-    }
-
     override fun updateTransactionFor() {
         val updatedTransactionFor = transactionFor.value?.copy(
             title = title.value.text,

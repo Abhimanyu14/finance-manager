@@ -38,10 +38,6 @@ internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
                 }
             }
 
-    override fun trackScreen() {
-        // TODO-Abhi: Add screen tracking code
-    }
-
     override fun deleteTransactionFor(
         id: Int,
     ) {

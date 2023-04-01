@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.screen
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -22,12 +21,6 @@ fun AddTransactionForScreen(
         message = "Inside AddTransactionForScreen",
     )
     val title: TextFieldValue by screenViewModel.title.collectAsStateWithLifecycle()
-
-    LaunchedEffect(
-        key1 = Unit,
-    ) {
-        screenViewModel.trackScreen()
-    }
 
     AddOrEditTransactionForScreenView(
         data = AddOrEditTransactionForScreenViewData(

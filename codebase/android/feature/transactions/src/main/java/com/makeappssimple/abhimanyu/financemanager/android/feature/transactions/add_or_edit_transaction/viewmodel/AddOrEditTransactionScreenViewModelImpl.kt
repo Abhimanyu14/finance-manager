@@ -273,10 +273,6 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         fetchData()
     }
 
-    override fun trackScreen() {
-        // TODO-Abhi: Add screen tracking code
-    }
-
     override fun insertTransaction() {
         viewModelScope.launch(
             context = dispatcherProvider.io,

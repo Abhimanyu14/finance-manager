@@ -79,10 +79,6 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
     override val defaultInvestmentCategoryId: Flow<Int?> = dataStore
         .getDefaultInvestmentCategoryIdFromDataStore()
 
-    override fun trackScreen() {
-        // TODO-Abhi: Add screen tracking code
-    }
-
     override fun deleteCategory(
         id: Int,
     ) {

@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.edit_source.screen
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -29,12 +28,6 @@ fun EditSourceScreen(
     )
     val balanceAmountValue: TextFieldValue by screenViewModel.balanceAmountValue.collectAsStateWithLifecycle()
     val name: TextFieldValue by screenViewModel.name.collectAsStateWithLifecycle()
-
-    LaunchedEffect(
-        key1 = Unit,
-    ) {
-        screenViewModel.trackScreen()
-    }
 
     AddOrEditSourceScreenView(
         data = AddOrEditSourceScreenViewData(
