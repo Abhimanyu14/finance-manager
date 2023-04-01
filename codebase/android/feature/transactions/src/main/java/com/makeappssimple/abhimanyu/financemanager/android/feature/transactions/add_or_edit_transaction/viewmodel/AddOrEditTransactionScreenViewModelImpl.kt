@@ -820,29 +820,17 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         }
     }
 
-    private fun observeSelectedCategory(
-        coroutineScope: CoroutineScope,
-    ) {
-        coroutineScope.launch {
-            selectedCategoryId.collectLatest {
-                val selectedCategoryIdValue = it ?: return@collectLatest
-                _titleSuggestions.update {
-                    this@AddOrEditTransactionScreenViewModelImpl.getTitleSuggestionsUseCase(
-                        categoryId = selectedCategoryIdValue,
-                    )
-                }
-            }
-        }
-    }
-
     private fun observeSelectedTransactionType(
         coroutineScope: CoroutineScope,
     ) {
         coroutineScope.launch {
-            selectedTransactionType.collectLatest {
-                it ?: return@collectLatest
+            uiState.collectLatest {
+                val transactionType = transactionTypesForNewTransaction.value.getOrNull(
+                    index = uiState.value.selectedTransactionTypeIndex ?: 0,
+                )
+                transactionType ?: return@collectLatest
                 val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState? =
-                    when (it) {
+                    when (transactionType) {
                         TransactionType.INCOME -> {
                             AddOrEditTransactionScreenUiVisibilityState.Income
                         }
@@ -873,10 +861,10 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     )
                 }
 
-                when (it) {
+                when (transactionType) {
                     TransactionType.INCOME -> {
                         val updatedCategory =
-                            if (it == originalTransactionData.value?.transaction?.transactionType) {
+                            if (transactionType == originalTransactionData.value?.transaction?.transactionType) {
                                 originalTransactionData.value?.category ?: incomeDefaultCategory
                             } else {
                                 incomeDefaultCategory
@@ -896,7 +884,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
 
                     TransactionType.EXPENSE -> {
                         val updatedCategory =
-                            if (it == originalTransactionData.value?.transaction?.transactionType) {
+                            if (transactionType == originalTransactionData.value?.transaction?.transactionType) {
                                 originalTransactionData.value?.category
                                     ?: expenseDefaultCategory
                             } else {
@@ -930,7 +918,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
 
                     TransactionType.INVESTMENT -> {
                         val updatedCategory =
-                            if (it == originalTransactionData.value?.transaction?.transactionType) {
+                            if (transactionType == originalTransactionData.value?.transaction?.transactionType) {
                                 originalTransactionData.value?.category
                                     ?: investmentDefaultCategory
                             } else {
@@ -950,6 +938,21 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     }
 
                     TransactionType.REFUND -> {}
+                }
+            }
+        }
+    }
+
+    private fun observeSelectedCategory(
+        coroutineScope: CoroutineScope,
+    ) {
+        coroutineScope.launch {
+            selectedCategoryId.collectLatest {
+                val selectedCategoryIdValue = it ?: return@collectLatest
+                _titleSuggestions.update {
+                    this@AddOrEditTransactionScreenViewModelImpl.getTitleSuggestionsUseCase(
+                        categoryId = selectedCategoryIdValue,
+                    )
                 }
             }
         }
