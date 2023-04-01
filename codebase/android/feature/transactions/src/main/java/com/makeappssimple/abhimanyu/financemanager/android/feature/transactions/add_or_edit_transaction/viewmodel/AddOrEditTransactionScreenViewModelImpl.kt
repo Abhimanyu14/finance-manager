@@ -82,13 +82,9 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
 ) : AddOrEditTransactionScreenViewModel, ViewModel() {
     // Navigation parameters
     private var isEdit: Boolean? = null
-    private var originalTransactionId: Int? = null
 
-    // Default data
-    private var defaultSource: Source? = null
-    private var expenseDefaultCategory: Category? = null
-    private var incomeDefaultCategory: Category? = null
-    private var investmentDefaultCategory: Category? = null
+    // We would have value for all editing as well as adding refund transaction
+    private var originalTransactionId: Int? = null
 
     // Original transaction data
     private var originalTransactionData: MutableStateFlow<TransactionData?> = MutableStateFlow(
@@ -98,17 +94,21 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         value = null,
     )
 
-    // Default data from data source
+    // region Default data
+    // Default data from data store
+    private var defaultSource: Source? = null
+    private var expenseDefaultCategory: Category? = null
+    private var incomeDefaultCategory: Category? = null
+    private var investmentDefaultCategory: Category? = null
+
+    // Default data from data store
     private var defaultSourceIdFromDataStore: Int? = null
     private var defaultExpenseCategoryIdFromDataStore: Int? = null
     private var defaultIncomeCategoryIdFromDataStore: Int? = null
     private var defaultInvestmentCategoryIdFromDataStore: Int? = null
+    // endregion
 
-    private var _categories: MutableStateFlow<List<Category>> = MutableStateFlow(
-        value = emptyList(),
-    )
-    private val categories: StateFlow<List<Category>> = _categories
-
+    // region Data source
     private var _transactionTypesForNewTransaction: MutableStateFlow<List<TransactionType>> =
         MutableStateFlow(
             value = emptyList(),
@@ -116,15 +116,26 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     override val transactionTypesForNewTransaction: StateFlow<List<TransactionType>> =
         _transactionTypesForNewTransaction
 
-    private var _sources: MutableStateFlow<List<Source>> = MutableStateFlow(
+    private var _categories: MutableStateFlow<List<Category>> = MutableStateFlow(
         value = emptyList(),
     )
-    override val sources: StateFlow<List<Source>> = _sources
+    private val categories: StateFlow<List<Category>> = _categories
+
+    private val _titleSuggestions: MutableStateFlow<List<String>> = MutableStateFlow(
+        value = emptyList(),
+    )
+    override val titleSuggestions: StateFlow<List<String>> = _titleSuggestions
 
     private var _transactionForValues: MutableStateFlow<List<TransactionFor>> = MutableStateFlow(
         value = emptyList(),
     )
     override val transactionForValues: StateFlow<List<TransactionFor>> = _transactionForValues
+
+    private var _sources: MutableStateFlow<List<Source>> = MutableStateFlow(
+        value = emptyList(),
+    )
+    override val sources: StateFlow<List<Source>> = _sources
+    // endregion
 
     private val _uiState: MutableStateFlow<AddOrEditTransactionScreenUiState> = MutableStateFlow(
         value = AddOrEditTransactionScreenUiState(
@@ -170,6 +181,12 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             category.transactionType == selectedTransactionType
         }
     }.defaultListStateIn(
+        scope = viewModelScope,
+    )
+
+    private val selectedCategoryId: StateFlow<Int?> = uiState.map {
+        it.category?.id
+    }.defaultObjectStateIn(
         scope = viewModelScope,
     )
 
@@ -248,16 +265,6 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         scope = viewModelScope,
     )
 
-    private val selectedCategoryId: StateFlow<Int?> = uiState.map {
-        it.category?.id
-    }.defaultObjectStateIn(
-        scope = viewModelScope,
-    )
-
-    private val _titleSuggestions: MutableStateFlow<List<String>> = MutableStateFlow(
-        value = emptyList(),
-    )
-    override val titleSuggestions: StateFlow<List<String>> = _titleSuggestions
 
     init {
         getNavigationArguments(
@@ -639,6 +646,9 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                 selectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex,
             ),
         )
+        _selectedTransactionType.value = transactionTypesForNewTransaction.value.getOrNull(
+            index = updatedSelectedTransactionTypeIndex,
+        )
     }
 
     override fun updateAmount(
@@ -756,6 +766,20 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             ),
         )
     }
+
+    private fun updateAddOrEditTransactionScreenUiState(
+        updatedAddOrEditTransactionScreenUiState: AddOrEditTransactionScreenUiState,
+    ) {
+        _uiState.update {
+            updatedAddOrEditTransactionScreenUiState
+        }
+    }
+
+    private fun updateAddOrEditTransactionScreenUiVisibilityState(
+        updatedAddOrEditTransactionScreenUiVisibilityState: AddOrEditTransactionScreenUiVisibilityState,
+    ) {
+        _uiVisibilityState.value = updatedAddOrEditTransactionScreenUiVisibilityState
+    }
     // endregion
 
     private fun getNavigationArguments(
@@ -773,6 +797,8 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
+            // Initial data setup
+
             // Default data from data store
             awaitAll(
                 async {
@@ -809,8 +835,9 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             )
             setDefaultCategory()
             setDefaultSource()
-            setSelectedTransactionType()
+            setInitialSelectedTransactionType()
 
+            // Observables
             observeSelectedTransactionType(
                 coroutineScope = this,
             )
@@ -824,10 +851,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         coroutineScope: CoroutineScope,
     ) {
         coroutineScope.launch {
-            uiState.collectLatest {
-                val transactionType = transactionTypesForNewTransaction.value.getOrNull(
-                    index = uiState.value.selectedTransactionTypeIndex ?: 0,
-                )
+            selectedTransactionType.collectLatest { transactionType ->
                 transactionType ?: return@collectLatest
                 val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState? =
                     when (transactionType) {
@@ -947,10 +971,10 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         coroutineScope: CoroutineScope,
     ) {
         coroutineScope.launch {
-            selectedCategoryId.collectLatest {
-                val selectedCategoryIdValue = it ?: return@collectLatest
+            selectedCategoryId.collectLatest { selectedCategoryIdValue ->
+                selectedCategoryIdValue ?: return@collectLatest
                 _titleSuggestions.update {
-                    this@AddOrEditTransactionScreenViewModelImpl.getTitleSuggestionsUseCase(
+                    getTitleSuggestionsUseCase(
                         categoryId = selectedCategoryIdValue,
                     )
                 }
@@ -1199,7 +1223,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         }
     }
 
-    private fun setSelectedTransactionType() {
+    private fun setInitialSelectedTransactionType() {
         _selectedTransactionType.value = if (isEdit == true) {
             if (originalTransactionData.value?.transaction?.transactionType == TransactionType.REFUND) {
                 TransactionType.REFUND
@@ -1221,20 +1245,6 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                 }
             }
         }
-    }
-
-    private fun updateAddOrEditTransactionScreenUiState(
-        updatedAddOrEditTransactionScreenUiState: AddOrEditTransactionScreenUiState,
-    ) {
-        _uiState.update {
-            updatedAddOrEditTransactionScreenUiState
-        }
-    }
-
-    private fun updateAddOrEditTransactionScreenUiVisibilityState(
-        updatedAddOrEditTransactionScreenUiVisibilityState: AddOrEditTransactionScreenUiVisibilityState,
-    ) {
-        _uiVisibilityState.value = updatedAddOrEditTransactionScreenUiVisibilityState
     }
 
     private fun getCategory(
