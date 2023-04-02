@@ -63,8 +63,7 @@ internal class OverviewCardViewModelImpl @Inject constructor(
     private val _overviewTabSelectionIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = defaultOverviewTabSelection,
     )
-    override val overviewTabSelectionIndex: StateFlow<Int>
-        get() = _overviewTabSelectionIndex
+    override val overviewTabSelectionIndex: StateFlow<Int> = _overviewTabSelectionIndex
 
     private val timestamp: MutableStateFlow<Long> = MutableStateFlow(
         value = getCurrentTimeMillis(),
