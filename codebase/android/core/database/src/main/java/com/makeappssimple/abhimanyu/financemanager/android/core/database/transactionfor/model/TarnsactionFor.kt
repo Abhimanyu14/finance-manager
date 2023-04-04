@@ -13,5 +13,6 @@ data class TransactionFor(
 
     val title: String,
 ) {
-    val titleToDisplay: String = title.capitalizeWords()
+    val titleToDisplay: String
+        get() = title.capitalizeWords()
 }

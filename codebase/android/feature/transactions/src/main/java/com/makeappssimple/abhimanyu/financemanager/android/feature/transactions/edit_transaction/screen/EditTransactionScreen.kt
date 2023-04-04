@@ -47,6 +47,7 @@ fun EditTransactionScreen(
         data = AddOrEditTransactionScreenViewData(
             uiState = uiState,
             uiVisibilityState = uiVisibilityState,
+            isScanVisible = false,
             isCtaButtonEnabled = isCtaButtonEnabled,
             appBarTitleTextStringResourceId = R.string.screen_edit_transaction_appbar_title,
             ctaButtonLabelTextStringResourceId = R.string.screen_edit_transaction_floating_action_button_content_description,
@@ -57,6 +58,7 @@ fun EditTransactionScreen(
             transactionForValues = transactionForValues,
             navigationManager = screenViewModel.navigationManager,
             selectedTransactionType = selectedTransactionType,
+            uriData = "",
             clearAmount = screenViewModel::clearAmount,
             clearDescription = screenViewModel::clearDescription,
             clearTitle = screenViewModel::clearTitle,
@@ -71,6 +73,7 @@ fun EditTransactionScreen(
             updateTitle = screenViewModel::updateTitle,
             updateTransactionDate = screenViewModel::updateTransactionDate,
             updateTransactionTime = screenViewModel::updateTransactionTime,
+            updateUriData = screenViewModel::updateUriData,
         ),
         state = rememberCommonScreenViewState(),
     )

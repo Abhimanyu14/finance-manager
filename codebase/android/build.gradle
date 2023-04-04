@@ -76,9 +76,6 @@ buildscript {
         // Lifecycle components
         lifecycleViewModelVersion = "2.6.0-alpha01"
 
-        // Lifecycle live data
-        lifecycleLiveDataVersion = "2.4.0"
-
         // Lifecycle components
         lifecycleExtensionsVersion = "2.2.0"
 

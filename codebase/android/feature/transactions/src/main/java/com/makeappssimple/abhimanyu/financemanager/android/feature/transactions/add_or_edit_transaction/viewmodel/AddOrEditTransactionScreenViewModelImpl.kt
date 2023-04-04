@@ -166,6 +166,11 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     override val uiVisibilityState: StateFlow<AddOrEditTransactionScreenUiVisibilityState> =
         _uiVisibilityState
 
+    private val _uriData: MutableStateFlow<String> = MutableStateFlow(
+        value = "",
+    )
+    override val uriData: StateFlow<String> = _uriData
+
 
     // Dependant data
     private val _selectedTransactionType: MutableStateFlow<TransactionType?> = MutableStateFlow(
@@ -775,6 +780,14 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         updatedAddOrEditTransactionScreenUiVisibilityState: AddOrEditTransactionScreenUiVisibilityState,
     ) {
         _uiVisibilityState.value = updatedAddOrEditTransactionScreenUiVisibilityState
+    }
+
+    override fun updateUriData(
+        updatedUriData: String,
+    ) {
+        _uriData.update {
+            updatedUriData
+        }
     }
     // endregion
 
