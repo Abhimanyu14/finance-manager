@@ -120,6 +120,7 @@ proguard/
 
 **/.idea/.name
 **/.idea/misc.xml
+**/.idea/deploymentTargetDropDown.xml
 
 # Kotlin plugin settings
 **/.idea/kotlinc.xml
