@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -31,7 +30,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -70,6 +68,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiVisibilityState
 import java.time.LocalDate
 import java.time.LocalTime
+
+const val scanBarcodeDeeplink = "makeappssimple://barcodes/scan_barcode/?deeplink=true"
 
 internal enum class AddOrEditTransactionBottomSheetType : BottomSheetType {
     NONE,
@@ -116,7 +116,9 @@ internal fun AddOrEditTransactionScreenView(
     data: AddOrEditTransactionScreenViewData,
     state: CommonScreenViewState,
 ) {
-    val context = LocalContext.current
+    val scanBarcodeChooserTitle = stringResource(
+        id = R.string.screen_add_or_edit_transaction_scan_chooser_title,
+    )
     val barcodeScanningResultLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
@@ -335,16 +337,10 @@ internal fun AddOrEditTransactionScreenView(
                                 weight = 1F,
                             ),
                     ) {
-                        val uri = Uri.parse("makeappssimple://barcodes/scan_barcode/?deeplink=true")
+                        val uri = Uri.parse(scanBarcodeDeeplink)
                         val intent = Intent(Intent.ACTION_VIEW, uri)
-                        val packageManager: PackageManager = context.packageManager
-                        val activities = packageManager.queryIntentActivities(intent, 0)
-                        val isIntentSafe = activities.size > 0
-                        if (isIntentSafe) {
-                            barcodeScanningResultLauncher.launch(intent)
-                        } else {
-                            // TODO-Abhi: Show info message to user
-                        }
+                        val chooser = Intent.createChooser(intent, scanBarcodeChooserTitle)
+                        barcodeScanningResultLauncher.launch(chooser)
                     }
                     /*
                     HomeActionView(
