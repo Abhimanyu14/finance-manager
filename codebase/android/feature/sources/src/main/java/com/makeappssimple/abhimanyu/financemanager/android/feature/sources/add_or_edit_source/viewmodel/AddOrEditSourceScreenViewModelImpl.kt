@@ -45,6 +45,9 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     private val insertTransactionsUseCase: InsertTransactionsUseCase,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
 ) : AddOrEditSourceScreenViewModel, ViewModel() {
+    // Navigation parameters
+    private var originalSourceId: Int? = savedStateHandle.get<Int>(NavArgs.SOURCE_ID)
+
     private val sources: StateFlow<List<Source>> = getAllSourcesFlowUseCase().defaultListStateIn(
         scope = viewModelScope,
         started = SharingStarted.Eagerly,
@@ -81,9 +84,9 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     override val balanceAmountValue: StateFlow<TextFieldValue> = _balanceAmountValue
 
     init {
-        savedStateHandle.get<Int>(NavArgs.SOURCE_ID)?.let { sourceId ->
+        originalSourceId?.let {
             getSource(
-                id = sourceId,
+                id = it,
             )
         }
     }

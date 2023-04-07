@@ -81,10 +81,11 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     private val updateTransactionUseCase: UpdateTransactionUseCase,
 ) : AddOrEditTransactionScreenViewModel, ViewModel() {
     // Navigation parameters
-    private var isEdit: Boolean? = null
+    private var isEdit: Boolean? = savedStateHandle.get<Boolean>(NavArgs.EDIT)
 
     // We would have value for all editing as well as adding refund transaction
-    private var originalTransactionId: Int? = null
+    private var originalTransactionId: Int? =
+        savedStateHandle.get<String>(NavArgs.TRANSACTION_ID)?.toIntOrNull()
 
     // Original transaction data
     private var originalTransactionData: MutableStateFlow<TransactionData?> = MutableStateFlow(
@@ -272,9 +273,6 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
 
 
     init {
-        getNavigationArguments(
-            savedStateHandle = savedStateHandle,
-        )
         fetchData()
     }
 
@@ -790,17 +788,6 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         }
     }
     // endregion
-
-    private fun getNavigationArguments(
-        savedStateHandle: SavedStateHandle,
-    ) {
-        savedStateHandle.get<String>(NavArgs.TRANSACTION_ID)?.let {
-            originalTransactionId = it.toIntOrNull()
-        }
-        savedStateHandle.get<Boolean>(NavArgs.EDIT)?.let {
-            isEdit = it
-        }
-    }
 
     private fun fetchData() {
         viewModelScope.launch(

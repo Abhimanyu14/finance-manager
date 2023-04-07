@@ -35,6 +35,10 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
     private val insertTransactionForUseCase: InsertTransactionForValuesUseCase,
     private val updateTransactionForValuesUseCase: UpdateTransactionForValuesUseCase,
 ) : AddOrEditTransactionForScreenViewModel, ViewModel() {
+    // Navigation parameters
+    private var originalTransactionForId: Int? =
+        savedStateHandle.get<Int>(NavArgs.TRANSACTION_FOR_ID)
+
     private val transactionForValues: StateFlow<List<TransactionFor>> =
         getAllTransactionForValuesFlowUseCase().defaultListStateIn(
             scope = viewModelScope,
@@ -53,9 +57,9 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
     override val transactionFor: StateFlow<TransactionFor?> = _transactionFor
 
     init {
-        savedStateHandle.get<Int>(NavArgs.TRANSACTION_FOR_ID)?.let { transactionForId ->
+        originalTransactionForId?.let {
             getTransactionFor(
-                id = transactionForId,
+                id = it,
             )
         }
     }

@@ -23,7 +23,9 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val getTransactionDataUseCase: GetTransactionDataUseCase,
 ) : ViewTransactionScreenViewModel, ViewModel() {
-    private var transactionId: Int? = null
+    // Navigation parameters
+    private var originalTransactionId: Int? =
+        savedStateHandle.get<String>(NavArgs.TRANSACTION_ID)?.toIntOrNull()
 
     // Transaction data
     private var _transactionData: MutableStateFlow<TransactionData?> = MutableStateFlow(
@@ -44,18 +46,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     override val refundTransactionData: StateFlow<List<TransactionData>> = _refundTransactionData
 
     init {
-        getNavigationArguments(
-            savedStateHandle = savedStateHandle,
-        )
         updateTransactionData()
-    }
-
-    private fun getNavigationArguments(
-        savedStateHandle: SavedStateHandle,
-    ) {
-        savedStateHandle.get<String>(NavArgs.TRANSACTION_ID)?.let {
-            transactionId = it.toIntOrNull()
-        }
     }
 
     override fun deleteTransaction(
@@ -71,7 +62,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     }
 
     override fun updateTransactionData() {
-        transactionId?.let { id ->
+        originalTransactionId?.let { id ->
             viewModelScope.launch(
                 context = dispatcherProvider.io,
             ) {

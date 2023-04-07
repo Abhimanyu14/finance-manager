@@ -47,6 +47,11 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     private val insertCategoriesUseCase: InsertCategoriesUseCase,
     private val updateCategoriesUseCase: UpdateCategoriesUseCase,
 ) : AddOrEditCategoryScreenViewModel, ViewModel() {
+    // Navigation parameters
+    private var originalCategoryId: Int? = savedStateHandle.get<Int>(NavArgs.CATEGORY_ID)
+    private var originalTransactionType: String? =
+        savedStateHandle.get<String>(NavArgs.TRANSACTION_TYPE)
+
     private val categories: StateFlow<List<Category>> =
         getAllCategoriesFlowUseCase().defaultListStateIn(
             scope = viewModelScope,
@@ -103,9 +108,20 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     )
 
     init {
-        getNavigationArguments(
-            savedStateHandle = savedStateHandle,
-        )
+        originalTransactionType?.let { originalTransactionType ->
+            updateSelectedTransactionTypeIndex(
+                updatedIndex = transactionTypes.indexOf(
+                    element = TransactionType.values().find { transactionType ->
+                        transactionType.title == originalTransactionType
+                    },
+                )
+            )
+        }
+        originalCategoryId?.let {
+            getCategory(
+                id = it,
+            )
+        }
         fetchData()
     }
 
@@ -221,25 +237,6 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         updatedSearchText: String,
     ) {
         _searchText.value = updatedSearchText
-    }
-
-    private fun getNavigationArguments(
-        savedStateHandle: SavedStateHandle,
-    ) {
-        savedStateHandle.get<String>(NavArgs.TRANSACTION_TYPE)?.let { transactionType ->
-            updateSelectedTransactionTypeIndex(
-                updatedIndex = transactionTypes.indexOf(
-                    element = TransactionType.values().find {
-                        it.title == transactionType
-                    },
-                )
-            )
-        }
-        savedStateHandle.get<Int>(NavArgs.CATEGORY_ID)?.let { categoryId ->
-            getCategory(
-                id = categoryId,
-            )
-        }
     }
 
     private fun getCategory(
