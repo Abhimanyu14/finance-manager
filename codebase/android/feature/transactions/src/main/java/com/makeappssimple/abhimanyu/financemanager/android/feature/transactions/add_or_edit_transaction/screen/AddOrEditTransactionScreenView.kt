@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
@@ -33,6 +34,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -120,8 +122,15 @@ internal fun AddOrEditTransactionScreenView(
     data: AddOrEditTransactionScreenViewData,
     state: CommonScreenViewState,
 ) {
+    val context = LocalContext.current
     val scanBarcodeChooserTitle = stringResource(
         id = R.string.screen_add_or_edit_transaction_scan_chooser_title,
+    )
+    val paymentSuccessfulText = stringResource(
+        id = R.string.screen_add_or_edit_transaction_payment_successful,
+    )
+    val paymentFailedText = stringResource(
+        id = R.string.screen_add_or_edit_transaction_payment_failed,
     )
     val barcodeScanningResultLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -132,7 +141,9 @@ internal fun AddOrEditTransactionScreenView(
         ActivityResultContracts.StartActivityForResult()
     ) {
         if (it.resultCode == Activity.RESULT_OK) {
-            data.onCtaButtonClick()
+            Toast.makeText(context, paymentSuccessfulText, Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, paymentFailedText, Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -348,10 +359,9 @@ internal fun AddOrEditTransactionScreenView(
                             barcodeScanningResultLauncher.launch(chooser)
                         },
                     )
-                    AnimatedVisibility(
-                        visible = data.uriData.isNotNullOrBlank() &&
-                                data.uiState.amount.text.isNotNullOrBlank() &&
-                                data.uiState.amount.text.toInt().isNotZero(),
+                    if (data.uriData.isNotNullOrBlank() &&
+                        data.uiState.amount.text.isNotNullOrBlank() &&
+                        data.uiState.amount.text.toInt().isNotZero()
                     ) {
                         ActionView(
                             modifier = Modifier
