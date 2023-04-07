@@ -18,6 +18,9 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Payment
+import androidx.compose.material.icons.rounded.QrCodeScanner
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -38,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDate
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
@@ -324,37 +328,45 @@ internal fun AddOrEditTransactionScreenView(
                     modifier = Modifier
                         .padding(
                             vertical = 4.dp,
-                            horizontal = 32.dp,
+                            horizontal = 16.dp,
                         ),
                     horizontalArrangement = Arrangement.spacedBy(
                         space = 16.dp,
                     ),
                 ) {
                     ActionView(
+                        modifier = Modifier
+                            .weight(
+                                weight = 1F,
+                            ),
                         textStringResourceId = R.string.screen_add_or_edit_transaction_scan,
-                        modifier = Modifier
-                            .weight(
-                                weight = 1F,
-                            ),
+                        imageVector = Icons.Rounded.QrCodeScanner,
+                        onClick = {
+                            val uri = Uri.parse(scanBarcodeDeeplink)
+                            val intent = Intent(Intent.ACTION_VIEW, uri)
+                            val chooser = Intent.createChooser(intent, scanBarcodeChooserTitle)
+                            barcodeScanningResultLauncher.launch(chooser)
+                        },
+                    )
+                    AnimatedVisibility(
+                        visible = data.uriData.isNotNullOrBlank() &&
+                                data.uiState.amount.text.isNotNullOrBlank() &&
+                                data.uiState.amount.text.toInt().isNotZero(),
                     ) {
-                        val uri = Uri.parse(scanBarcodeDeeplink)
-                        val intent = Intent(Intent.ACTION_VIEW, uri)
-                        val chooser = Intent.createChooser(intent, scanBarcodeChooserTitle)
-                        barcodeScanningResultLauncher.launch(chooser)
-                    }
-                    /*
-                    HomeActionView(
-                        textStringResourceId = R.string.screen_home_pay,
-                        modifier = Modifier
-                            .weight(
-                                weight = 1F,
-                            ),
-                    ) {
-                        navigateToAddTransactionScreen(
-                            navigationManager = data.navigationManager,
+                        ActionView(
+                            modifier = Modifier
+                                .weight(
+                                    weight = 1F,
+                                ),
+                            textStringResourceId = R.string.screen_add_or_edit_transaction_pay,
+                            imageVector = Icons.Rounded.Payment,
+                            onClick = {
+                                data.uiState.amount.text.toDoubleOrNull()?.let {
+                                    startUpiPayment(it, data.uriData)
+                                }
+                            }
                         )
                     }
-                    */
                 }
             }
             AnimatedVisibility(
@@ -626,13 +638,7 @@ internal fun AddOrEditTransactionScreenView(
                 isEnabled = data.isCtaButtonEnabled,
                 onClick = {
                     clearFocus()
-                    if (data.uriData.isNotNullOrBlank()) {
-                        data.uiState.amount.text.toDoubleOrNull()?.let {
-                            startUpiPayment(it, data.uriData)
-                        }
-                    } else {
-                        data.onCtaButtonClick()
-                    }
+                    data.onCtaButtonClick()
                 },
             )
         }

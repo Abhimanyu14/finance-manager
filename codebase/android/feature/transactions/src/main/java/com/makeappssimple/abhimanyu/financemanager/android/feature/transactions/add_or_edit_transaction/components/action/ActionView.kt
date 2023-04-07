@@ -5,8 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.QrCodeScanner
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -14,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
@@ -22,6 +21,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.condit
 @Composable
 fun ActionView(
     modifier: Modifier = Modifier,
+    imageVector: ImageVector,
     @StringRes textStringResourceId: Int,
     onClick: () -> Unit,
 ) {
@@ -46,7 +46,7 @@ fun ActionView(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
-                imageVector = Icons.Rounded.QrCodeScanner,
+                imageVector = imageVector,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.onBackground,
             )
