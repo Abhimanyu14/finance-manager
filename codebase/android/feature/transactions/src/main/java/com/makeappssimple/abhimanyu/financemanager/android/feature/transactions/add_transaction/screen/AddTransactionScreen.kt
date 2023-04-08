@@ -51,11 +51,7 @@ fun AddTransactionScreen(
             isScanVisible = uiVisibilityState.isTransactionTypesRadioGroupVisible, // TODO-Abhi: Change to check based on transaction type for Refund
             isCtaButtonEnabled = isCtaButtonEnabled,
             appBarTitleTextStringResourceId = R.string.screen_add_transaction_appbar_title,
-            ctaButtonLabelTextStringResourceId = if (uriData.isBlank()) {
-                R.string.screen_add_transaction_floating_action_button_content_description
-            } else {
-                R.string.screen_add_or_edit_transaction_pay
-            },
+            ctaButtonLabelTextStringResourceId = R.string.screen_add_transaction_floating_action_button_content_description,
             filteredCategories = filteredCategories,
             sources = sources,
             titleSuggestions = titleSuggestions,
