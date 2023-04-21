@@ -77,10 +77,14 @@ class JsonUtilImpl(
                     fileOutputStream.write(jsonString.toByteArray())
                 }
             }
-        } catch (fileNotFoundException: FileNotFoundException) {
-            fileNotFoundException.printStackTrace()
-        } catch (ioException: IOException) {
-            ioException.printStackTrace()
+        } catch (
+            exception: FileNotFoundException,
+        ) {
+            exception.printStackTrace()
+        } catch (
+            exception: IOException,
+        ) {
+            exception.printStackTrace()
         }
     }
 }
@@ -110,8 +114,10 @@ private fun readJsonFileFromAssets(
             bytes = byteArray,
             charset = Charset.forName("UTF-8"),
         )
-    } catch (ioException: IOException) {
-        ioException.printStackTrace()
+    } catch (
+        exception: IOException,
+    ) {
+        exception.printStackTrace()
         null
     }
     return json

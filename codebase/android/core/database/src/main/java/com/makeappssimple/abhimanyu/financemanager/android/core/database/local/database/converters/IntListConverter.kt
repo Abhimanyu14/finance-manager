@@ -23,8 +23,9 @@ class IntListConverter {
                 listType,
             )
         } catch (
-            JsonSyntaxException: JsonSyntaxException,
+            exception: JsonSyntaxException,
         ) {
+            exception.printStackTrace()
             null
         }
     }

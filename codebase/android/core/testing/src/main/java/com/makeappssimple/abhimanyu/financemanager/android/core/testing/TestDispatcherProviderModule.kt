@@ -14,7 +14,7 @@ import javax.inject.Singleton
     components = [SingletonComponent::class],
     replaces = [DispatcherProviderModule::class],
 )
-object TestCoroutinesModule {
+object TestDispatcherProviderModule {
 
     @Singleton
     @Provides

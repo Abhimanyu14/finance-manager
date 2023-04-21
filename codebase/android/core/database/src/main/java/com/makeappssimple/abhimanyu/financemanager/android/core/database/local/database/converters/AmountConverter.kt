@@ -22,8 +22,9 @@ class AmountConverter {
                 Amount::class.java,
             )
         } catch (
-            JsonSyntaxException: JsonSyntaxException,
+            exception: JsonSyntaxException,
         ) {
+            exception.printStackTrace()
             null
         }
     }

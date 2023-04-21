@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.util
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow

@@ -22,8 +22,9 @@ class CategoryConverter {
                 Category::class.java,
             )
         } catch (
-            JsonSyntaxException: JsonSyntaxException,
+            exception: JsonSyntaxException,
         ) {
+            exception.printStackTrace()
             null
         }
     }
