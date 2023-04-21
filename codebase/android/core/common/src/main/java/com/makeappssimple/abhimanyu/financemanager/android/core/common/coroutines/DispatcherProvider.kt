@@ -3,8 +3,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutin
 import kotlinx.coroutines.CoroutineDispatcher
 
 interface DispatcherProvider {
-    val main: CoroutineDispatcher
-    val io: CoroutineDispatcher
     val default: CoroutineDispatcher
+    val io: CoroutineDispatcher
+    val main: CoroutineDispatcher
     val unconfined: CoroutineDispatcher
 }

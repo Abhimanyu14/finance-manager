@@ -47,11 +47,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToAddTransactionScreen
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToEditTransactionScreen
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToViewTransactionScreen
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
@@ -209,8 +206,8 @@ internal fun TransactionsScreenView(
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_transactions_appbar_title,
                 navigationAction = {
-                    navigateUp(
-                        navigationManager = data.navigationManager,
+                    data.navigationManager.navigate(
+                        navigationCommand = MyNavigationDirections.NavigateUp
                     )
                 },
             )
@@ -222,8 +219,10 @@ internal fun TransactionsScreenView(
                     id = R.string.screen_transactions_floating_action_button_content_description,
                 ),
                 onClick = {
-                    navigateToAddTransactionScreen(
-                        navigationManager = data.navigationManager,
+                    data.navigationManager.navigate(
+                        navigationCommand = MyNavigationDirections.AddTransaction(
+                            transactionId = null,
+                        )
                     )
                 },
             )
@@ -450,9 +449,10 @@ internal fun TransactionsScreenView(
                                 title = title,
                                 transactionForText = transactionForText,
                                 onClick = {
-                                    navigateToViewTransactionScreen(
-                                        navigationManager = data.navigationManager,
-                                        transactionId = listItem.transaction.id,
+                                    data.navigationManager.navigate(
+                                        navigationCommand = MyNavigationDirections.ViewTransaction(
+                                            transactionId = listItem.transaction.id,
+                                        )
                                     )
                                 },
                                 onDeleteButtonClick = {
@@ -465,15 +465,17 @@ internal fun TransactionsScreenView(
                                     )
                                 },
                                 onEditButtonClick = {
-                                    navigateToEditTransactionScreen(
-                                        navigationManager = data.navigationManager,
-                                        transactionId = listItem.transaction.id,
+                                    data.navigationManager.navigate(
+                                        navigationCommand = MyNavigationDirections.EditTransaction(
+                                            transactionId = listItem.transaction.id,
+                                        )
                                     )
                                 },
                                 onRefundButtonClick = {
-                                    navigateToAddTransactionScreen(
-                                        navigationManager = data.navigationManager,
-                                        transactionId = listItem.transaction.id,
+                                    data.navigationManager.navigate(
+                                        navigationCommand = MyNavigationDirections.AddTransaction(
+                                            transactionId = listItem.transaction.id,
+                                        )
                                     )
                                 },
                             )

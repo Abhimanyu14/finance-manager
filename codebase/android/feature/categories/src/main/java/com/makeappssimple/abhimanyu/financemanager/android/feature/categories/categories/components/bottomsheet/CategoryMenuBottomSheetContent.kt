@@ -3,8 +3,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToEditCategoryScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
@@ -41,9 +41,10 @@ internal fun CategoryMenuBottomSheetContent(
                         modalBottomSheetState = modalBottomSheetState,
                     ) {
                         resetBottomSheetType()
-                        navigateToEditCategoryScreen(
-                            navigationManager = navigationManager,
-                            categoryId = categoryId,
+                        navigationManager.navigate(
+                            navigationCommand = MyNavigationDirections.EditCategory(
+                                categoryId = categoryId,
+                            )
                         )
                     }
                 },

@@ -26,9 +26,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToAddTransactionForScreen
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
@@ -132,8 +131,8 @@ internal fun TransactionForValuesScreenView(
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_transaction_for_values_appbar_title,
                 navigationAction = {
-                    navigateUp(
-                        navigationManager = data.navigationManager,
+                    data.navigationManager.navigate(
+                        navigationCommand = MyNavigationDirections.NavigateUp
                     )
                 },
             )
@@ -145,8 +144,8 @@ internal fun TransactionForValuesScreenView(
                     id = R.string.screen_transaction_for_values_floating_action_button_content_description,
                 ),
                 onClick = {
-                    navigateToAddTransactionForScreen(
-                        navigationManager = data.navigationManager,
+                    data.navigationManager.navigate(
+                        navigationCommand = MyNavigationDirections.AddTransactionFor
                     )
                 },
             )

@@ -21,10 +21,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToAddSourceScreen
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToEditSourceScreen
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
@@ -142,8 +140,8 @@ internal fun SourcesScreenView(
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_sources_appbar_title,
                 navigationAction = {
-                    navigateUp(
-                        navigationManager = data.navigationManager,
+                    data.navigationManager.navigate(
+                        navigationCommand = MyNavigationDirections.NavigateUp
                     )
                 },
             )
@@ -155,8 +153,8 @@ internal fun SourcesScreenView(
                     id = R.string.screen_sources_floating_action_button_content_description,
                 ),
                 onClick = {
-                    navigateToAddSourceScreen(
-                        navigationManager = data.navigationManager,
+                    data.navigationManager.navigate(
+                        navigationCommand = MyNavigationDirections.AddSource
                     )
                 },
             )
@@ -220,9 +218,10 @@ internal fun SourcesScreenView(
                         }
                     },
                     onEditClick = {
-                        navigateToEditSourceScreen(
-                            navigationManager = data.navigationManager,
-                            sourceId = listItem.id,
+                        data.navigationManager.navigate(
+                            navigationCommand = MyNavigationDirections.EditSource(
+                                sourceId = listItem.id,
+                            )
                         )
                         expandedItemIndex = null
                     },

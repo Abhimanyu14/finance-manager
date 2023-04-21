@@ -39,9 +39,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.UpdateTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
@@ -445,8 +445,8 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                         ),
                     )
                 }
-                navigateUp(
-                    navigationManager = navigationManager,
+                navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.NavigateUp
                 )
             }
         }
@@ -625,8 +625,8 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
 
                 }
             }
-            navigateUp(
-                navigationManager = navigationManager,
+            navigationManager.navigate(
+                navigationCommand = MyNavigationDirections.NavigateUp
             )
         }
     }

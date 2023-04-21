@@ -19,9 +19,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.m
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetAllEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
@@ -136,8 +136,8 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
                     transactionType = transactionTypes[selectedTransactionTypeIndex.value],
                 ),
             )
-            navigateUp(
-                navigationManager = navigationManager,
+            navigationManager.navigate(
+                navigationCommand = MyNavigationDirections.NavigateUp
             )
         }
     }
@@ -154,8 +154,8 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
             updateCategoriesUseCase(
                 updatedCategory,
             )
-            navigateUp(
-                navigationManager = navigationManager,
+            navigationManager.navigate(
+                navigationCommand = MyNavigationDirections.NavigateUp
             )
         }
     }

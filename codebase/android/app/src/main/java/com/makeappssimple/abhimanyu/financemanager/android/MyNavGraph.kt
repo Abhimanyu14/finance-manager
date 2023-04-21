@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -14,7 +14,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.logE
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Command
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.DEEPLINK_BASE_URL
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.DEEPLINK_BROWSER_BASE_URL
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs.CATEGORY_ID
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs.EDIT
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs.SOURCE_ID
@@ -48,59 +47,43 @@ internal fun MyNavGraph(
     val navHostController = rememberNavController()
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    activityViewModel.navigationManager.command.collectAsStateWithLifecycle().value.also { command ->
-        keyboardController?.hide()
-        when (command.command) {
-            Command.NAVIGATE -> {
-                navHostController.navigate(
-                    route = command.destination,
-                )
+    LaunchedEffect(
+        key1 = Unit,
+    ) {
+        activityViewModel.navigationManager.command.collect { command ->
+            keyboardController?.hide()
+            when (command.command) {
+                Command.NAVIGATE -> {
+                    navHostController.navigate(
+                        route = command.destination,
+                    )
+                }
 
-                // TODO-Abhi: Fix this hack to clear previous navigation command
-                activityViewModel.navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.default()
-                )
-            }
+                Command.NAVIGATE_UP -> {
+                    navHostController.navigateUp()
+                }
 
-            Command.NAVIGATE_UP -> {
-                navHostController.navigateUp()
-
-                // TODO-Abhi: Fix this hack to clear previous navigation command
-                activityViewModel.navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.default()
-                )
-            }
-
-            Command.CLEAR_BACKSTACK_AND_NAVIGATE -> {
-                navHostController.navigate(
-                    route = command.destination,
-                ) {
-                    popUpTo(
-                        id = navHostController.graph.findStartDestination().id,
+                Command.CLEAR_BACKSTACK_AND_NAVIGATE -> {
+                    navHostController.navigate(
+                        route = command.destination,
                     ) {
-                        inclusive = true
+                        popUpTo(
+                            id = navHostController.graph.findStartDestination().id,
+                        ) {
+                            inclusive = true
+                        }
                     }
                 }
 
-                // TODO-Abhi: Fix this hack to clear previous navigation command
-                activityViewModel.navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.default()
-                )
+                Command.CLEAR_TILL_ROOT -> {
+                    navHostController.popBackStack(
+                        destinationId = navHostController.graph.findStartDestination().id,
+                        inclusive = false,
+                    )
+                }
+
+                Command.NOOP -> {}
             }
-
-            Command.CLEAR_TILL_ROOT -> {
-                navHostController.popBackStack(
-                    destinationId = navHostController.graph.findStartDestination().id,
-                    inclusive = false,
-                )
-
-                // TODO-Abhi: Fix this hack to clear previous navigation command
-                activityViewModel.navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.default()
-                )
-            }
-
-            Command.NOOP -> {}
         }
     }
 

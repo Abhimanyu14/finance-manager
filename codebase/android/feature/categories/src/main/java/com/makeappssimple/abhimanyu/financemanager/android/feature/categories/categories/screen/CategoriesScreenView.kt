@@ -26,9 +26,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabRow
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToAddCategoryScreen
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
@@ -219,8 +218,8 @@ internal fun CategoriesScreenView(
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_categories_appbar_title,
                 navigationAction = {
-                    navigateUp(
-                        navigationManager = data.navigationManager,
+                    data.navigationManager.navigate(
+                        navigationCommand = MyNavigationDirections.NavigateUp
                     )
                 },
             )
@@ -232,21 +231,22 @@ internal fun CategoriesScreenView(
                     id = R.string.screen_categories_floating_action_button_content_description,
                 ),
                 onClick = {
-                    navigateToAddCategoryScreen(
-                        navigationManager = data.navigationManager,
-                        transactionType = when (data.selectedTabIndex) {
-                            0 -> {
-                                TransactionType.EXPENSE.title
-                            }
+                    data.navigationManager.navigate(
+                        navigationCommand = MyNavigationDirections.AddCategory(
+                            transactionType = when (data.selectedTabIndex) {
+                                0 -> {
+                                    TransactionType.EXPENSE.title
+                                }
 
-                            1 -> {
-                                TransactionType.INCOME.title
-                            }
+                                1 -> {
+                                    TransactionType.INCOME.title
+                                }
 
-                            else -> {
-                                TransactionType.INVESTMENT.title
+                                else -> {
+                                    TransactionType.INVESTMENT.title
+                                }
                             }
-                        }
+                        )
                     )
                 },
             )

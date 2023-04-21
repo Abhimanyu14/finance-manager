@@ -35,9 +35,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getA
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToTransactionForValuesScreen
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
@@ -93,8 +92,8 @@ internal fun SettingsScreenView(
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_settings_appbar_title,
                 navigationAction = {
-                    navigateUp(
-                        navigationManager = data.navigationManager,
+                    data.navigationManager.navigate(
+                        navigationCommand = MyNavigationDirections.NavigateUp
                     )
                 },
             )
@@ -235,8 +234,8 @@ internal fun SettingsScreenView(
                         .clickable(
                             enabled = !data.isLoading,
                             onClick = {
-                                navigateToTransactionForValuesScreen(
-                                    navigationManager = data.navigationManager,
+                                data.navigationManager.navigate(
+                                    navigationCommand = MyNavigationDirections.TransactionForValues
                                 )
                             },
                         ),

@@ -27,10 +27,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToAddTransactionScreen
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToSourcesScreen
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToTransactionsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
@@ -121,8 +119,10 @@ internal fun HomeScreenView(
                     id = R.string.screen_home_floating_action_button_content_description,
                 ),
                 onClick = {
-                    navigateToAddTransactionScreen(
-                        navigationManager = data.navigationManager,
+                    data.navigationManager.navigate(
+                        navigationCommand = MyNavigationDirections.AddTransaction(
+                            transactionId = null,
+                        )
                     )
                 },
             )
@@ -147,8 +147,8 @@ internal fun HomeScreenView(
             item {
                 TotalBalanceCard(
                     onClick = {
-                        navigateToSourcesScreen(
-                            navigationManager = data.navigationManager,
+                        data.navigationManager.navigate(
+                            navigationCommand = MyNavigationDirections.Sources
                         )
                     },
                 )
@@ -170,8 +170,8 @@ internal fun HomeScreenView(
             item {
                 HomeRecentTransactionsView(
                     onClick = {
-                        navigateToTransactionsScreen(
-                            navigationManager = data.navigationManager,
+                        data.navigationManager.navigate(
+                            navigationCommand = MyNavigationDirections.Transactions
                         )
                     },
                 )

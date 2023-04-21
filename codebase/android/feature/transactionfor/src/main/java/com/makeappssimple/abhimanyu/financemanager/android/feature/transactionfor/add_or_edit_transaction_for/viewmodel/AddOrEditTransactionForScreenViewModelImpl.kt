@@ -14,9 +14,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.InsertTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.UpdateTransactionForValuesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -74,8 +74,8 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
             updateTransactionForValuesUseCase(
                 updatedTransactionFor,
             )
-            navigateUp(
-                navigationManager = navigationManager,
+            navigationManager.navigate(
+                navigationCommand = MyNavigationDirections.NavigateUp
             )
         }
     }
@@ -89,8 +89,8 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
                     title = title.value.text,
                 )
             )
-            navigateUp(
-                navigationManager = navigationManager,
+            navigationManager.navigate(
+                navigationCommand = MyNavigationDirections.NavigateUp
             )
         }
     }

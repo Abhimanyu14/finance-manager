@@ -21,9 +21,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultSource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -33,6 +33,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @HiltViewModel
 internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
@@ -144,8 +145,8 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
             updateSourcesUseCase(
                 updatedSource,
             )
-            navigateUp(
-                navigationManager = navigationManager,
+            navigationManager.navigate(
+                navigationCommand = MyNavigationDirections.NavigateUp
             )
         }
     }
@@ -163,8 +164,8 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
                     name = name.value.text,
                 ),
             )
-            navigateUp(
-                navigationManager = navigationManager,
+            navigationManager.navigate(
+                navigationCommand = MyNavigationDirections.NavigateUp
             )
         }
     }

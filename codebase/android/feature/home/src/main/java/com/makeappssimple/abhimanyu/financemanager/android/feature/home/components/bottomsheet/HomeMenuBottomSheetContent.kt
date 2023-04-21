@@ -10,10 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToCategoriesScreen
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToSettingsScreen
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.util.navigateToSourcesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 import kotlinx.coroutines.CoroutineScope
@@ -37,8 +35,8 @@ internal fun HomeMenuBottomSheetContent(
             iconImageVector = Icons.Rounded.AccountBalance,
             textStringResourceId = R.string.screen_home_bottom_sheet_sources,
             onClick = {
-                navigateToSourcesScreen(
-                    navigationManager = navigationManager,
+                navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.Sources
                 )
             },
         ),
@@ -46,8 +44,8 @@ internal fun HomeMenuBottomSheetContent(
             iconImageVector = Icons.Rounded.Category,
             textStringResourceId = R.string.screen_home_bottom_sheet_categories,
             onClick = {
-                navigateToCategoriesScreen(
-                    navigationManager = navigationManager,
+                navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.Categories
                 )
             },
         ),
@@ -55,8 +53,8 @@ internal fun HomeMenuBottomSheetContent(
             iconImageVector = Icons.Rounded.Settings,
             textStringResourceId = R.string.screen_home_bottom_sheet_settings,
             onClick = {
-                navigateToSettingsScreen(
-                    navigationManager = navigationManager,
+                navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.Settings
                 )
             },
         ),
@@ -82,36 +80,3 @@ internal fun HomeMenuBottomSheetContent(
         }
     )
 }
-
-/*
-// TODO-Abhi: Deeplink based navigation
-private fun navigateToCategoriesScreen(
-    context: Context,
-) {
-    val intent = Intent(
-        Intent.ACTION_VIEW,
-        Uri.parse("$DEEPLINK_BASE_URL/${Screen.Categories.route}"),
-    )
-    context.startActivity(intent)
-}
-
-private fun navigateToSettingsScreen(
-    context: Context,
-) {
-    val intent = Intent(
-        Intent.ACTION_VIEW,
-        Uri.parse("$DEEPLINK_BASE_URL/${Screen.Settings.route}"),
-    )
-    context.startActivity(intent)
-}
-
-private fun navigateToSourcesScreen(
-    context: Context,
-) {
-    val intent = Intent(
-        Intent.ACTION_VIEW,
-        Uri.parse("$DEEPLINK_BASE_URL/${Screen.Sources.route}"),
-    )
-    context.startActivity(intent)
-}
-*/
