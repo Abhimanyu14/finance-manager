@@ -2,37 +2,40 @@
 
 A simple finance manager app
 
-# Features
+## Features
 
-1. Transaction - CRUD
-2. Source - CRUD
-3. Category - CRUD
-4. Statistics
+1. Transactions - Create, Read, Update and Delete (CRUD)
+2. Sources - CRUD
+3. Categories - CRUD
+4. TransactionFor - CRUD
+5. Overview
+6. Local Data Backup
+7. Scan & Pay - Experimental
 
-# Database
+## Database
 
-## Tables
+### Tables
 
-1. Sources
-2. Transactions
-3. Income
-4. Expense
+1. Transactions
+2. Sources
+3. Categories - Income, Expense and Investment
+4. TransactionFor
 
-## Data Structure
+### Data Structure
 
-### Amount
+**Amount**
 
 - value: Double = 0.0
 - unit: Unit = Unit.INR
 
-### Category
+**Category**
 
 - id: Int
 - title: String
 - description: String = ""
 - children: List<Category>? = null
 
-### MyTransaction
+**MyTransaction**
 
 - id: Int
 - title: String = ""
@@ -42,7 +45,7 @@ A simple finance manager app
 - creationTimestamp: Timestamp
 - transactionTimestamp: Timestamp
 
-### Source
+**Source**
 
 - id: Int
 - id: Int
@@ -50,19 +53,19 @@ A simple finance manager app
 - type: SourceType = SourceType.CASH
 - balanceAmount: Amount
 
-### SourceType
+**SourceType**
 
 - enum
   - CASH
   - BANK
   - E_WALLET
 
-### Timestamp
+**Timestamp**
 
 - date: String
 - time: String
 
-### Unit
+**Unit**
 
 - enum
   - INR
@@ -70,7 +73,14 @@ A simple finance manager app
 
 ---
 
-Commands
+## Unit Testing
+
+**To generate Kover Unit test coverage HTML Report**
+`./gradlew koverMergedHtmlReport`
+
+---
+
+**Commonly Used Commands**
 
 1. Screen mirroring
 
@@ -83,11 +93,3 @@ Commands
 3. Unit Test
 
 `./gradlew testDebugUnitTest `
-
-4. Test coverage report
-
-`./gradlew createDebugCoverageReport`
-
-5. Kover report
-
-`./gradlew koverHtmlReport`
