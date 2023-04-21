@@ -35,6 +35,7 @@ android {
 
 dependencies {
     implementation project(":core:common")
+
     // Androidx core
     implementation "androidx.core:core-ktx:$rootProject.androidXCoreVersion"
 

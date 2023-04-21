@@ -22,7 +22,6 @@ interface AddOrEditTransactionScreenViewModel : ScreenViewModel {
     val transactionForValues: StateFlow<List<TransactionFor>>
     val transactionTypesForNewTransaction: StateFlow<List<TransactionType>>
     val selectedTransactionType: StateFlow<TransactionType?>
-    val uriData: StateFlow<String>
 
     fun insertTransaction()
 
@@ -72,9 +71,5 @@ interface AddOrEditTransactionScreenViewModel : ScreenViewModel {
 
     fun updateTransactionTime(
         updatedTransactionTime: LocalTime,
-    )
-
-    fun updateUriData(
-        updatedUriData: String,
     )
 }

@@ -6,7 +6,6 @@ const val DEEPLINK_BASE_URL = "makeappssimple://financemanager"
 sealed class Screen(
     val route: String,
 ) {
-    // App specific
     object AddCategory : Screen(
         route = "add_category",
     )

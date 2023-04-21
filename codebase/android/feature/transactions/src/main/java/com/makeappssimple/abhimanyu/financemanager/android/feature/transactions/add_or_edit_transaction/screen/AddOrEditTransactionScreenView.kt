@@ -1,16 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen
 
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
-import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,9 +11,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Payment
-import androidx.compose.material.icons.rounded.QrCodeScanner
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -34,7 +23,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -43,7 +31,6 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDate
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
@@ -69,7 +56,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.sc
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.components.action.ActionView
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiVisibilityState
 import java.time.LocalDate
@@ -89,7 +75,6 @@ internal data class AddOrEditTransactionScreenViewData(
     val uiState: AddOrEditTransactionScreenUiState,
     val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState,
     val isCtaButtonEnabled: Boolean,
-    val isScanVisible: Boolean,
     @StringRes val appBarTitleTextStringResourceId: Int,
     @StringRes val ctaButtonLabelTextStringResourceId: Int,
     val filteredCategories: List<Category>,
@@ -99,7 +84,6 @@ internal data class AddOrEditTransactionScreenViewData(
     val transactionForValues: List<TransactionFor>,
     val navigationManager: NavigationManager,
     val selectedTransactionType: TransactionType?,
-    val uriData: String,
     val clearAmount: () -> Unit,
     val clearDescription: () -> Unit,
     val clearTitle: () -> Unit,
@@ -114,7 +98,6 @@ internal data class AddOrEditTransactionScreenViewData(
     val updateTitle: (updatedTitle: TextFieldValue) -> Unit,
     val updateTransactionDate: (updatedTransactionDate: LocalDate) -> Unit,
     val updateTransactionTime: (updatedTransactionTime: LocalTime) -> Unit,
-    val updateUriData: (updatedDataUri: String) -> Unit,
 )
 
 @Composable
@@ -122,31 +105,6 @@ internal fun AddOrEditTransactionScreenView(
     data: AddOrEditTransactionScreenViewData,
     state: CommonScreenViewState,
 ) {
-    val context = LocalContext.current
-    val scanBarcodeChooserTitle = stringResource(
-        id = R.string.screen_add_or_edit_transaction_scan_chooser_title,
-    )
-    val paymentSuccessfulText = stringResource(
-        id = R.string.screen_add_or_edit_transaction_payment_successful,
-    )
-    val paymentFailedText = stringResource(
-        id = R.string.screen_add_or_edit_transaction_payment_failed,
-    )
-    val barcodeScanningResultLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) {
-        data.updateUriData(it.data?.extras?.getString("value").orEmpty())
-    }
-    val upiPaymentResultLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            Toast.makeText(context, paymentSuccessfulText, Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(context, paymentFailedText, Toast.LENGTH_SHORT).show()
-        }
-    }
-
     val transactionDatePickerDialog = getMyDatePickerDialog(
         context = state.context,
         currentDate = data.uiState.transactionDate,
@@ -201,27 +159,6 @@ internal fun AddOrEditTransactionScreenView(
     val clearFocus = {
         state.focusManager.clearFocus()
     }
-
-    val startUpiPayment: (
-        amount: Double,
-        uriString: String,
-    ) -> Unit =
-        startUpiPayment@{ amount: Double, uriString: String ->
-            val amountString = "%.2f".format(amount)
-            val uri = Uri.parse("${uriString}&am=$amountString")
-
-            // Comment line - if you want to open specific application then you can pass that package name
-            // For example if you want to open Bhim app then pass Bhim app package name
-            // val packageManager: PackageManager = packageManager
-            // Intent intent = packageManager.getLaunchIntentForPackage("com.mgs.induspsp")
-
-            val intent = Intent().apply {
-                action = Intent.ACTION_VIEW
-                this.data = uri
-            }
-            val chooser = Intent.createChooser(intent, "Pay with...")
-            upiPaymentResultLauncher.launch(chooser)
-        }
 
     LaunchedEffect(
         key1 = Unit,
@@ -332,53 +269,6 @@ internal fun AddOrEditTransactionScreenView(
                     state = rememberScrollState(),
                 ),
         ) {
-            AnimatedVisibility(
-                visible = data.isScanVisible,
-            ) {
-                Row(
-                    modifier = Modifier
-                        .padding(
-                            vertical = 4.dp,
-                            horizontal = 16.dp,
-                        ),
-                    horizontalArrangement = Arrangement.spacedBy(
-                        space = 16.dp,
-                    ),
-                ) {
-                    ActionView(
-                        modifier = Modifier
-                            .weight(
-                                weight = 1F,
-                            ),
-                        textStringResourceId = R.string.screen_add_or_edit_transaction_scan,
-                        imageVector = Icons.Rounded.QrCodeScanner,
-                        onClick = {
-                            val uri = Uri.parse(scanBarcodeDeeplink)
-                            val intent = Intent(Intent.ACTION_VIEW, uri)
-                            val chooser = Intent.createChooser(intent, scanBarcodeChooserTitle)
-                            barcodeScanningResultLauncher.launch(chooser)
-                        },
-                    )
-                    if (data.uriData.isNotNullOrBlank() &&
-                        data.uiState.amount.text.isNotNullOrBlank() &&
-                        data.uiState.amount.text.toInt().isNotZero()
-                    ) {
-                        ActionView(
-                            modifier = Modifier
-                                .weight(
-                                    weight = 1F,
-                                ),
-                            textStringResourceId = R.string.screen_add_or_edit_transaction_pay,
-                            imageVector = Icons.Rounded.Payment,
-                            onClick = {
-                                data.uiState.amount.text.toDoubleOrNull()?.let {
-                                    startUpiPayment(it, data.uriData)
-                                }
-                            }
-                        )
-                    }
-                }
-            }
             AnimatedVisibility(
                 visible = data.uiVisibilityState.isTransactionTypesRadioGroupVisible,
             ) {

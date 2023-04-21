@@ -147,6 +147,7 @@ internal fun MyNavGraph(
             route = "${Screen.AddTransaction.route}/{${TRANSACTION_ID}}?${EDIT}={${EDIT}}",
             arguments = listOf(
                 navArgument(TRANSACTION_ID) {
+                    type = NavType.StringType
                     nullable = true
                 },
                 navArgument(EDIT) {
@@ -222,6 +223,7 @@ internal fun MyNavGraph(
             route = "${Screen.EditTransaction.route}/{${TRANSACTION_ID}}?${EDIT}={${EDIT}}",
             arguments = listOf(
                 navArgument(TRANSACTION_ID) {
+                    type = NavType.StringType
                     nullable = true
                 },
                 navArgument(EDIT) {
@@ -304,6 +306,7 @@ internal fun MyNavGraph(
             route = "${Screen.ViewTransaction.route}/{${TRANSACTION_ID}}",
             arguments = listOf(
                 navArgument(TRANSACTION_ID) {
+                    type = NavType.StringType
                     nullable = true
                 },
             ),

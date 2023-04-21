@@ -28,7 +28,6 @@ fun AddTransactionScreen(
     val uiState: AddOrEditTransactionScreenUiState by screenViewModel.uiState.collectAsStateWithLifecycle()
     val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState by screenViewModel.uiVisibilityState.collectAsStateWithLifecycle()
     val isCtaButtonEnabled: Boolean by screenViewModel.isCtaButtonEnabled.collectAsStateWithLifecycle()
-    val uriData: String by screenViewModel.uriData.collectAsStateWithLifecycle()
     val filteredCategories: List<Category> by screenViewModel.filteredCategories.collectAsStateWithLifecycle(
         initialValue = emptyList(),
     )
@@ -48,7 +47,6 @@ fun AddTransactionScreen(
         data = AddOrEditTransactionScreenViewData(
             uiState = uiState,
             uiVisibilityState = uiVisibilityState,
-            isScanVisible = uiVisibilityState.isTransactionTypesRadioGroupVisible, // TODO-Abhi: Change to check based on transaction type for Refund
             isCtaButtonEnabled = isCtaButtonEnabled,
             appBarTitleTextStringResourceId = R.string.screen_add_transaction_appbar_title,
             ctaButtonLabelTextStringResourceId = R.string.screen_add_transaction_floating_action_button_content_description,
@@ -59,7 +57,6 @@ fun AddTransactionScreen(
             transactionForValues = transactionForValues,
             navigationManager = screenViewModel.navigationManager,
             selectedTransactionType = selectedTransactionType,
-            uriData = uriData,
             clearAmount = screenViewModel::clearAmount,
             clearDescription = screenViewModel::clearDescription,
             clearTitle = screenViewModel::clearTitle,
@@ -74,7 +71,6 @@ fun AddTransactionScreen(
             updateTitle = screenViewModel::updateTitle,
             updateTransactionDate = screenViewModel::updateTransactionDate,
             updateTransactionTime = screenViewModel::updateTransactionTime,
-            updateUriData = screenViewModel::updateUriData,
         ),
         state = rememberCommonScreenViewState(),
     )
