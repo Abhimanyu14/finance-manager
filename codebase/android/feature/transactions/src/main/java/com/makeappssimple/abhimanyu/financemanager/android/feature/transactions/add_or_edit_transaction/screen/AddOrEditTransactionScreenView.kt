@@ -61,8 +61,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import java.time.LocalDate
 import java.time.LocalTime
 
-const val scanBarcodeDeeplink = "makeappssimple://barcodes/scan_barcode/?deeplink=true"
-
 internal enum class AddOrEditTransactionBottomSheetType : BottomSheetType {
     NONE,
     SELECT_CATEGORY,
