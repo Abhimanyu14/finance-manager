@@ -37,15 +37,14 @@ class SourcesScreenViewModelTest {
 
     @Before
     fun setUp() {
-        sourcesScreenViewModel =
-            SourcesScreenViewModelImpl(
-                getAllSourcesFlowUseCase = getAllSourcesFlowUseCase,
-                navigationManager = navigationManager,
-                checkIfSourceIsUsedInTransactionsUseCase = checkIfSourceIsUsedInTransactionsUseCase,
-                dataStore = dataStore,
-                deleteSourcesUseCase = deleteSourcesUseCase,
-                dispatcherProvider = dispatcherProvider,
-            )
+        sourcesScreenViewModel = SourcesScreenViewModelImpl(
+            getAllSourcesFlowUseCase = getAllSourcesFlowUseCase,
+            navigationManager = navigationManager,
+            checkIfSourceIsUsedInTransactionsUseCase = checkIfSourceIsUsedInTransactionsUseCase,
+            dataStore = dataStore,
+            deleteSourcesUseCase = deleteSourcesUseCase,
+            dispatcherProvider = dispatcherProvider,
+        )
     }
 
     @Ignore
