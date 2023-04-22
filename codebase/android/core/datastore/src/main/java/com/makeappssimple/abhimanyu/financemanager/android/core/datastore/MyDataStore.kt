@@ -4,12 +4,12 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.APP_NAME
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.appName
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getCurrentTimeMillis
 import kotlinx.coroutines.flow.Flow
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
-    name = APP_NAME,
+    name = appName,
 )
 
 interface MyDataStore {
