@@ -5,6 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import kotlinx.coroutines.flow.StateFlow
@@ -12,6 +13,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 interface AddOrEditTransactionScreenViewModel : ScreenViewModel {
+    val logger: Logger
     val navigationManager: NavigationManager
     val uiState: StateFlow<AddOrEditTransactionScreenUiState>
     val uiVisibilityState: StateFlow<AddOrEditTransactionScreenUiVisibilityState>

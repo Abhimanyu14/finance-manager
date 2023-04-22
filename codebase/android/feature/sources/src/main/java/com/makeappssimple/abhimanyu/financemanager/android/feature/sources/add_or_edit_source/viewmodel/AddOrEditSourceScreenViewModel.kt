@@ -3,12 +3,14 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.SourceType
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 interface AddOrEditSourceScreenViewModel : ScreenViewModel {
+    val logger: Logger
     val navigationManager: NavigationManager
     val source: Flow<Source?>
     val sourceTypes: List<SourceType>

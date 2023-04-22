@@ -10,7 +10,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.logError
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Command
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.DEEPLINK_BASE_URL
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.DEEPLINK_BROWSER_BASE_URL
@@ -41,7 +40,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 internal fun MyNavGraph(
     activityViewModel: MainActivityViewModel,
 ) {
-    logError(
+    activityViewModel.logger.logError(
         message = "Inside MyNavGraph",
     )
     val navHostController = rememberNavController()

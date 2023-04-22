@@ -2,12 +2,14 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 
 interface CategoriesScreenViewModel : ScreenViewModel {
+    val logger: Logger
     val navigationManager: NavigationManager
     val selectedTabIndex: StateFlow<Int>
     val expenseCategories: Flow<List<Category>>
