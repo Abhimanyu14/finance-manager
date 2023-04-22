@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.navigation.di
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.ApplicationScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.ApplicationScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManagerImpl
 import dagger.Module
