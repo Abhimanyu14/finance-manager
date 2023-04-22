@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.JSON_MIMETYPE
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getReadableDateAndTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
@@ -190,8 +191,8 @@ internal fun HomeScreenView(
                         listItem.transaction.transactionType == TransactionType.REFUND
                     ) {
                         listItem.transaction.amount.toSignedString(
-                            isPositive = listItem.sourceTo != null,
-                            isNegative = listItem.sourceFrom != null,
+                            isPositive = listItem.sourceTo.isNotNull(),
+                            isNegative = listItem.sourceFrom.isNotNull(),
                         )
                     } else {
                         listItem.transaction.amount.toString()

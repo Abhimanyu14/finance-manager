@@ -10,6 +10,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.room.migration.AutoMigrationSpec
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.datasource.local.CategoryDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.datasource.local.EmojiDao
@@ -124,7 +125,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
             context: Context,
         ): MyRoomDatabase {
             val tempInstance = INSTANCE
-            if (tempInstance != null) {
+            if (tempInstance.isNotNull()) {
                 return tempInstance
             }
             synchronized(

@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.common
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.ui.Modifier
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 
 fun Modifier.conditionalClickable(
     onClick: (() -> Unit)? = null,
@@ -10,7 +11,7 @@ fun Modifier.conditionalClickable(
 ): Modifier {
     var result = this
     onClick?.let {
-        result = if (onLongClick != null) {
+        result = if (onLongClick.isNotNull()) {
             result.then(
                 other = Modifier
                     .combinedClickable(

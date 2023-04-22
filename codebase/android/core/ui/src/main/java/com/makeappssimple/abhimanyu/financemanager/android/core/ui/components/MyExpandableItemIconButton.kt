@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.conditionalClickable
 
@@ -27,7 +28,7 @@ fun MyExpandableItemIconButton(
                 shape = CircleShape,
             )
             .conditionalClickable(
-                onClick = if (enabled && onClick != null) {
+                onClick = if (enabled && onClick.isNotNull()) {
                     onClick
                 } else {
                     null

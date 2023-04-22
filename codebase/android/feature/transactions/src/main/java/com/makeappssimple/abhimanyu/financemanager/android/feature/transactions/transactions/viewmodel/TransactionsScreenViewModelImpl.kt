@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getFormattedDate
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getLocalDate
@@ -123,7 +124,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 category.transactionType == TransactionType.INVESTMENT
             }
 
-            if (selectedFilterValue.fromDate == null) {
+            if (selectedFilterValue.fromDate.isNull()) {
                 _oldestTransactionTimestamp.update {
                     allTransactionDataValue.minOfOrNull { transactionData ->
                         transactionData.transaction.transactionTimestamp
@@ -267,7 +268,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         toDate: LocalDate?,
         transactionData: TransactionData,
     ): Boolean {
-        if (fromDate == null || toDate == null) {
+        if (fromDate.isNull() || toDate.isNull()) {
             return true
         }
         val fromDateStartOfDayTimestamp = fromDate

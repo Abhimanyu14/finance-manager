@@ -8,9 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isFalse
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isTrue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Quadruple
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultBooleanStateIn
@@ -232,7 +235,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
 
             TransactionType.REFUND -> {
                 val maxRefundAmountValue = maxRefundAmount.value?.value ?: 0L
-                if (uiState.amountErrorText == null &&
+                if (uiState.amountErrorText.isNull() &&
                     ((uiState.amount.text.toLongOrNull() ?: 0L) > maxRefundAmountValue)
                 ) {
                     updateAddOrEditTransactionScreenUiState(
@@ -243,7 +246,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                         )
                     )
                     false
-                } else if (uiState.amountErrorText != null &&
+                } else if (uiState.amountErrorText.isNotNull() &&
                     ((uiState.amount.text.toLongOrNull() ?: 0L) <= maxRefundAmountValue)
                 ) {
                     updateAddOrEditTransactionScreenUiState(
@@ -396,25 +399,26 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                         1
                     }
                 }
-                val originalTransactionId = if (isEdit == false && originalTransactionId != null ||
-                    isEdit == true && originalTransactionData.value?.transaction?.transactionType == TransactionType.REFUND
-                ) {
-                    originalTransactionId
-                } else {
-                    null
-                }
+                val originalTransactionId =
+                    if (isEdit.isFalse() && originalTransactionId.isNotNull() ||
+                        isEdit.isTrue() && originalTransactionData.value?.transaction?.transactionType == TransactionType.REFUND
+                    ) {
+                        originalTransactionId
+                    } else {
+                        null
+                    }
 
                 val transactionTimestamp = LocalDateTime
                     .of(uiStateValue.transactionDate, uiStateValue.transactionTime)
                     .toEpochMilli()
                 val id = insertTransactionUseCase(
                     amountValue = amountValue,
-                    sourceFrom = if (sourceFromId != null) {
+                    sourceFrom = if (sourceFromId.isNotNull()) {
                         uiStateValue.sourceFrom
                     } else {
                         null
                     },
-                    sourceTo = if (sourceToId != null) {
+                    sourceTo = if (sourceToId.isNotNull()) {
                         uiStateValue.sourceTo
                     } else {
                         null
@@ -982,7 +986,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             (TransactionType.values().toSet() - excludedTransactionTypes).toList()
         _transactionTypesForNewTransaction.value = transactionTypesForNewTransaction
 
-        if (isEdit == false && originalTransactionId == null) {
+        if (isEdit.isFalse() && originalTransactionId.isNull()) {
             updateSelectedTransactionTypeIndex(
                 updatedSelectedTransactionTypeIndex = transactionTypesForNewTransaction.indexOf(
                     element = TransactionType.EXPENSE,
@@ -1054,7 +1058,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         transactionForValues: List<TransactionFor>,
         maxRefundAmount: Amount?,
     ) {
-        val isAddingRefund = isEdit == false && originalTransactionId != null
+        val isAddingRefund = isEdit.isFalse() && originalTransactionId.isNotNull()
         val initialAddOrEditTransactionScreenUiState = if (isAddingRefund) {
             AddOrEditTransactionScreenUiState(
                 selectedTransactionTypeIndex = transactionTypesForNewTransaction.indexOf(
@@ -1122,12 +1126,12 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         val transactionData = getTransactionDataUseCase(
             id = transactionId,
         )
-        if (!((isEdit == true && transactionData?.transaction?.transactionType == TransactionType.REFUND) || isEdit == false)) {
+        if (!((isEdit.isTrue() && transactionData?.transaction?.transactionType == TransactionType.REFUND) || isEdit.isFalse())) {
             return
         }
 
         var transactionDataToRefund: TransactionData? = null
-        if (isEdit == true) {
+        if (isEdit.isTrue()) {
             transactionData?.transaction?.originalTransactionId?.let {
                 transactionDataToRefund = getTransactionDataUseCase(
                     id = it,
@@ -1136,7 +1140,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         } else {
             transactionDataToRefund = transactionData
         }
-        if (transactionDataToRefund == null) {
+        if (transactionDataToRefund.isNull()) {
             return
         }
 
@@ -1153,7 +1157,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             }
         }
         transactionDataToRefund?.transaction?.amount?.let { originalTransactionAmount ->
-            maxRefundAmount.value = if (refundedAmountCalculated != null) {
+            maxRefundAmount.value = if (refundedAmountCalculated.isNotNull()) {
                 originalTransactionAmount - (refundedAmountCalculated ?: Amount())
             } else {
                 originalTransactionAmount
@@ -1209,7 +1213,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     }
 
     private fun setInitialSelectedTransactionType() {
-        _selectedTransactionType.value = if (isEdit == true) {
+        _selectedTransactionType.value = if (isEdit.isTrue()) {
             if (originalTransactionData.value?.transaction?.transactionType == TransactionType.REFUND) {
                 TransactionType.REFUND
             } else {
@@ -1220,7 +1224,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                 }
             }
         } else {
-            if (originalTransactionId != null) {
+            if (originalTransactionId.isNotNull()) {
                 TransactionType.REFUND
             } else {
                 uiState.value.selectedTransactionTypeIndex?.let {

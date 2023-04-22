@@ -30,6 +30,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDate
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedTime
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
@@ -310,7 +311,7 @@ internal fun AddOrEditTransactionScreenView(
                         )
                     }
                 },
-                isError = data.uiState.amountErrorText != null,
+                isError = data.uiState.amountErrorText.isNotNull(),
                 visualTransformation = AmountCommaVisualTransformation(),
                 keyboardActions = KeyboardActions(
                     onDone = {

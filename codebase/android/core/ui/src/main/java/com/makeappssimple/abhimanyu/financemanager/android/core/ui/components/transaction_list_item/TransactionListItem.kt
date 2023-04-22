@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.ExpandedListItemShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
@@ -50,7 +51,7 @@ fun TransactionListItem(
     onEditButtonClick: () -> Unit = {},
     onRefundButtonClick: () -> Unit = {},
 ) {
-    val sourceText: String = if (sourceFromName != null && sourceToName != null) {
+    val sourceText: String = if (sourceFromName.isNotNull() && sourceToName.isNotNull()) {
         stringResource(
             id = R.string.transaction_list_item_source,
             sourceFromName,

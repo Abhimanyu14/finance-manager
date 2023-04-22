@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetRecentTransactionDataFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.BackupDataUseCase
@@ -32,8 +33,8 @@ internal class HomeScreenViewModelImpl @Inject constructor(
         flow = dataStore.getLastDataBackupTimestamp(),
         flow2 = dataStore.getLastDataChangeTimestamp(),
     ) { lastDataBackupTimestamp, lastDataChangeTimestamp ->
-        lastDataBackupTimestamp != null &&
-                lastDataChangeTimestamp != null &&
+        lastDataBackupTimestamp.isNotNull() &&
+                lastDataChangeTimestamp.isNotNull() &&
                 lastDataBackupTimestamp < lastDataChangeTimestamp
     }
 

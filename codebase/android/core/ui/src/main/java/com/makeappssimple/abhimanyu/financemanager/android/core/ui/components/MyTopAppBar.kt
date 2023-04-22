@@ -7,6 +7,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 @Composable
@@ -16,7 +17,7 @@ fun MyTopAppBar(
     navigationAction: (() -> Unit)? = null,
 ) {
     MyTopAppBarView(
-        isNavigationIconVisible = navigationAction != null,
+        isNavigationIconVisible = navigationAction.isNotNull(),
         titleText = stringResource(
             id = titleTextStringResourceId,
         ),

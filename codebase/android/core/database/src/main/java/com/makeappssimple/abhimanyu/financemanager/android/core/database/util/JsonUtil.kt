@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.util
 
 import android.content.Context
 import android.net.Uri
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.AmountJsonAdapter
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.databasebackupdata.model.DatabaseBackupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.initialdatabasedata.model.InitialDatabaseData
@@ -46,7 +47,7 @@ class JsonUtilImpl(
         contentResolver.openInputStream(uri)?.use { inputStream ->
             BufferedReader(InputStreamReader(inputStream)).use { bufferedReader ->
                 var line: String? = bufferedReader.readLine()
-                while (line != null) {
+                while (line.isNotNull()) {
                     stringBuilder.append(line)
                     line = bufferedReader.readLine()
                 }

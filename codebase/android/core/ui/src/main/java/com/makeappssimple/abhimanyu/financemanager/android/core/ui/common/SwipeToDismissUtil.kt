@@ -4,6 +4,7 @@ import androidx.compose.material.DismissState
 import androidx.compose.material.DismissValue
 import androidx.compose.material.rememberDismissState
 import androidx.compose.runtime.Composable
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 
 @Composable
 fun getDismissState(
@@ -15,7 +16,7 @@ fun getDismissState(
         confirmStateChange = { dismissValue ->
             when (dismissValue) {
                 DismissValue.DismissedToEnd -> {
-                    if (dismissedToEndAction != null) {
+                    if (dismissedToEndAction.isNotNull()) {
                         dismissedToEndAction()
                         true
                     } else {
@@ -24,7 +25,7 @@ fun getDismissState(
                 }
 
                 DismissValue.DismissedToStart -> {
-                    if (dismissedToStart != null) {
+                    if (dismissedToStart.isNotNull()) {
                         dismissedToStart()
                         true
                     } else {
@@ -33,7 +34,7 @@ fun getDismissState(
                 }
 
                 DismissValue.Default -> {
-                    if (defaultAction != null) {
+                    if (defaultAction.isNotNull()) {
                         defaultAction()
                         true
                     } else {

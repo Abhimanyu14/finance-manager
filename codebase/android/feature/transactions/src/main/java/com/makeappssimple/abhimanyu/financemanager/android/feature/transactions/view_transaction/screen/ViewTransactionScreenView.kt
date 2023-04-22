@@ -12,6 +12,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getReadableDateAndTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
@@ -76,8 +78,8 @@ internal fun ViewTransactionScreenView(
         transaction?.transactionType == TransactionType.REFUND
     ) {
         data.transactionData.transaction.amount.toSignedString(
-            isPositive = data.transactionData.sourceTo != null,
-            isNegative = data.transactionData.sourceFrom != null,
+            isPositive = data.transactionData.sourceTo.isNotNull(),
+            isNegative = data.transactionData.sourceFrom.isNotNull(),
         )
     } else {
         transaction?.amount.toString()
@@ -157,12 +159,12 @@ internal fun ViewTransactionScreenView(
                 .fillMaxSize(),
         ) {
             AnimatedVisibility(
-                visible = data.transactionData == null,
+                visible = data.transactionData.isNull(),
             ) {
                 MyLinearProgressIndicator()
             }
             AnimatedVisibility(
-                visible = data.transactionData != null,
+                visible = data.transactionData.isNotNull(),
             ) {
                 TransactionListItem(
                     isDeleteButtonEnabled = isDeleteButtonEnabled,

@@ -3,13 +3,14 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.util
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 
 @Composable
 fun Transaction.getAmountTextColor(): Color {
     return this.transactionType.calculateAmountTextColor(
-        isBalanceReduced = this.sourceFromId != null,
+        isBalanceReduced = this.sourceFromId.isNotNull(),
     )
 }
 
