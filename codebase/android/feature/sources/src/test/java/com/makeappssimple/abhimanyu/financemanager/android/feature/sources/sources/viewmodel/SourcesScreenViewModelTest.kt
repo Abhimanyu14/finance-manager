@@ -6,6 +6,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.CheckIfSourceIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LoggerImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.TestDispatcherProviderImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
@@ -24,6 +26,7 @@ class SourcesScreenViewModelTest {
 
     private val getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase = mock()
     private val navigationManager: NavigationManager = mock()
+    private val logger: Logger = LoggerImpl()
     private val checkIfSourceIsUsedInTransactionsUseCase: CheckIfSourceIsUsedInTransactionsUseCase =
         mock()
     private val dataStore: MyDataStore = mock()
@@ -39,6 +42,7 @@ class SourcesScreenViewModelTest {
     fun setUp() {
         sourcesScreenViewModel = SourcesScreenViewModelImpl(
             getAllSourcesFlowUseCase = getAllSourcesFlowUseCase,
+            logger = logger,
             navigationManager = navigationManager,
             checkIfSourceIsUsedInTransactionsUseCase = checkIfSourceIsUsedInTransactionsUseCase,
             dataStore = dataStore,
