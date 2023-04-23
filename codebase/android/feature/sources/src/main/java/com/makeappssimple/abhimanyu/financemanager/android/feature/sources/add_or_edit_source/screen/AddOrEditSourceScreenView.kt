@@ -93,7 +93,9 @@ internal fun AddOrEditSourceScreenView(
     }
 
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
-        DisposableEffect(Unit) {
+        DisposableEffect(
+            key1 = Unit,
+        ) {
             onDispose {
                 addOrEditSourceBottomSheetType = AddOrEditSourceBottomSheetType.NONE
                 state.keyboardController?.hide()

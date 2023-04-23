@@ -71,7 +71,9 @@ internal fun HomeScreenView(
     }
 
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
-        DisposableEffect(Unit) {
+        DisposableEffect(
+            key1 = Unit,
+        ) {
             onDispose {
                 homeBottomSheetType = HomeBottomSheetType.NONE
                 state.keyboardController?.hide()

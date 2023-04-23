@@ -78,7 +78,9 @@ internal fun SourcesScreenView(
     }
 
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
-        DisposableEffect(Unit) {
+        DisposableEffect(
+            key1 = Unit,
+        ) {
             onDispose {
                 sourcesBottomSheetType = SourcesBottomSheetType.NONE
                 state.keyboardController?.hide()

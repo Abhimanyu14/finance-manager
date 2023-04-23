@@ -1,7 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.screen
 
-import android.net.Uri
-import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -28,9 +26,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.JSON_MIMETYPE
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getAppVersion
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
@@ -50,9 +48,9 @@ internal enum class SettingsBottomSheetType : BottomSheetType {
 @Immutable
 internal data class SettingsScreenViewData(
     val isLoading: Boolean,
-    val createDocument: ManagedActivityResultLauncher<String, Uri?>,
-    val openDocument: ManagedActivityResultLauncher<Array<String>, Uri?>,
     val navigationManager: NavigationManager,
+    val createDocument: () -> Unit,
+    val openDocument: () -> Unit,
     val recalculateTotal: () -> Unit,
 )
 
@@ -71,7 +69,9 @@ internal fun SettingsScreenView(
     )?.versionName
 
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
-        DisposableEffect(Unit) {
+        DisposableEffect(
+            key1 = Unit,
+        ) {
             onDispose {
                 settingsBottomSheetType = SettingsBottomSheetType.NONE
                 state.keyboardController?.hide()
@@ -152,9 +152,7 @@ internal fun SettingsScreenView(
                     modifier = Modifier
                         .clickable(
                             enabled = !data.isLoading,
-                            onClick = {
-                                data.createDocument.launch(JSON_MIMETYPE)
-                            },
+                            onClick = data.createDocument,
                         ),
                 )
                 ListItem(
@@ -179,9 +177,7 @@ internal fun SettingsScreenView(
                     modifier = Modifier
                         .clickable(
                             enabled = !data.isLoading,
-                            onClick = {
-                                data.openDocument.launch(arrayOf(JSON_MIMETYPE))
-                            },
+                            onClick = data.openDocument,
                         ),
                 )
                 ListItem(
@@ -248,7 +244,10 @@ internal fun SettingsScreenView(
                         .padding(
                             all = 16.dp,
                         ),
-                    text = "Version - $it",
+                    text = stringResource(
+                        id = R.string.screen_settings_app_version,
+                        it,
+                    ),
                     style = MaterialTheme.typography.headlineLarge
                         .copy(
                             color = MaterialTheme.colorScheme.primary,

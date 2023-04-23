@@ -134,7 +134,9 @@ internal fun CategoriesScreenView(
     }
 
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
-        DisposableEffect(Unit) {
+        DisposableEffect(
+            key1 = Unit,
+        ) {
             onDispose {
                 resetBottomSheetType()
                 state.keyboardController?.hide()

@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.CreateJsonDocument
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.JSON_MIMETYPE
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.viewmodel.SettingsScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.viewmodel.SettingsScreenViewModelImpl
@@ -25,7 +26,7 @@ fun SettingsScreen(
     var isLoading by remember {
         mutableStateOf(false)
     }
-    val createDocument: ManagedActivityResultLauncher<String, Uri?> =
+    val createDocumentResultLauncher: ManagedActivityResultLauncher<String, Uri?> =
         rememberLauncherForActivityResult(
             contract = CreateJsonDocument(),
         ) { uri ->
@@ -36,7 +37,7 @@ fun SettingsScreen(
                 )
             }
         }
-    val openDocument: ManagedActivityResultLauncher<Array<String>, Uri?> =
+    val openDocumentResultLauncher: ManagedActivityResultLauncher<Array<String>, Uri?> =
         rememberLauncherForActivityResult(
             contract = ActivityResultContracts.OpenDocument(),
         ) { uri ->
@@ -51,8 +52,12 @@ fun SettingsScreen(
     SettingsScreenView(
         data = SettingsScreenViewData(
             isLoading = isLoading,
-            createDocument = createDocument,
-            openDocument = openDocument,
+            createDocument = {
+                createDocumentResultLauncher.launch(JSON_MIMETYPE)
+            },
+            openDocument = {
+                openDocumentResultLauncher.launch(arrayOf(JSON_MIMETYPE))
+            },
             navigationManager = screenViewModel.navigationManager,
             recalculateTotal = {
                 isLoading = true

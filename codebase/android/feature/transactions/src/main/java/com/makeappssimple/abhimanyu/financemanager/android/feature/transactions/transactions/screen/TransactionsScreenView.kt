@@ -112,7 +112,9 @@ internal fun TransactionsScreenView(
     }
 
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
-        DisposableEffect(Unit) {
+        DisposableEffect(
+            key1 = Unit,
+        ) {
             onDispose {
                 transactionsBottomSheetType = TransactionsBottomSheetType.NONE
                 state.keyboardController?.hide()
