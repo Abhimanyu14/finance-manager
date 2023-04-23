@@ -80,9 +80,17 @@ dependencies {
 
     // Testing
 
-    // Junit
+    // Android X test
     testImplementation "junit:junit:$rootProject.junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXTestExtensionJUnitVersion"
+    androidTestImplementation "androidx.test.ext:truth:$rootProject.androidXTestExtensionTruthVersion"
+    androidTestImplementation "androidx.test:runner:$rootProject.androidXTestRunnerVersion"
+    androidTestImplementation "androidx.test:rules:$rootProject.androidXTestRulesVersion"
+
+    // Mockito kotlin
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$rootProject.mockitoKotlinVersion"
 
     // Coroutines test
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
 }

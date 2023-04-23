@@ -247,8 +247,17 @@ buildscript {
         // JUnit testing
         junitVersion = "4.13.2"
 
-        // AndroidX JUnit extension
-        androidXJUnitExtensionVersion = "1.1.5"
+        // AndroidX test extension JUnit
+        androidXTestExtensionJUnitVersion = "1.1.5"
+
+        // AndroidX test extension truth
+        androidXTestExtensionTruthVersion = "1.5.0"
+
+        // AndroidX test runner
+        androidXTestRunnerVersion = "1.5.2"
+
+        // AndroidX test rules
+        androidXTestRulesVersion = "1.5.0"
 
         // AndroidX test core
         androidXTestCoreVersion = "1.4.0"
@@ -279,12 +288,6 @@ buildscript {
 
         // AndroidX core testing
         androidXCoreTestingVersion = "2.1.0"
-
-        // Test runner
-        testRunnerVersion = "1.5.2"
-
-        // Test rules
-        testRulesVersion = "1.5.0"
 
         // Mockito
         mockitoVersion = "2.8.9"

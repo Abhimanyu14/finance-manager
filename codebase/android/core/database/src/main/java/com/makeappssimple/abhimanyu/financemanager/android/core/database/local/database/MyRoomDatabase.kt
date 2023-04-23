@@ -154,9 +154,9 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
                 val instance = Room
                     .databaseBuilder(
-                        context.applicationContext,
-                        MyRoomDatabase::class.java,
-                        "finance_manager_database",
+                        context = context.applicationContext,
+                        klass = MyRoomDatabase::class.java,
+                        name = "finance_manager_database",
                     )
                     .addMigrations(
                         MIGRATION_17_18,
@@ -173,7 +173,9 @@ abstract class MyRoomDatabase : RoomDatabase() {
                         MIGRATION_3_4,
                         MIGRATION_2_3,
                     )
-                    .addCallback(callback)
+                    .addCallback(
+                        callback = callback,
+                    )
                     .build()
                 INSTANCE = instance
                 return instance

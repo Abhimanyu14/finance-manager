@@ -1,15 +1,30 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.datastore
 
-import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.emptyPreferences
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 
 internal class MyDataStoreImpl(
-    private val context: Context,
+    private val dataStore: DataStore<Preferences>,
+    private val logger: Logger,
 ) : MyDataStore {
+    private val preferences: Flow<Preferences> = dataStore.data
+        .catch { exception ->
+            logger.logError(
+                message = "Error reading preferences. ${exception.localizedMessage}",
+            )
+            emit(
+                value = emptyPreferences(),
+            )
+        }
+
     override fun getDefaultExpenseCategoryIdFromDataStore(): Flow<Int?> {
-        return context.dataStore.data.map {
+        return preferences.map {
             it[DEFAULT_EXPENSE_CATEGORY_ID]
         }
     }
@@ -17,13 +32,13 @@ internal class MyDataStoreImpl(
     override suspend fun setDefaultExpenseCategoryIdInDataStore(
         defaultExpenseCategoryId: Int,
     ) {
-        context.dataStore.edit {
+        dataStore.edit {
             it[DEFAULT_EXPENSE_CATEGORY_ID] = defaultExpenseCategoryId
         }
     }
 
     override fun getDefaultIncomeCategoryIdFromDataStore(): Flow<Int?> {
-        return context.dataStore.data.map {
+        return preferences.map {
             it[DEFAULT_INCOME_CATEGORY_ID]
         }
     }
@@ -31,13 +46,13 @@ internal class MyDataStoreImpl(
     override suspend fun setDefaultIncomeCategoryIdInDataStore(
         defaultIncomeCategoryId: Int,
     ) {
-        context.dataStore.edit {
+        dataStore.edit {
             it[DEFAULT_INCOME_CATEGORY_ID] = defaultIncomeCategoryId
         }
     }
 
     override fun getDefaultInvestmentCategoryIdFromDataStore(): Flow<Int?> {
-        return context.dataStore.data.map {
+        return preferences.map {
             it[DEFAULT_INVESTMENT_CATEGORY_ID]
         }
     }
@@ -45,13 +60,13 @@ internal class MyDataStoreImpl(
     override suspend fun setDefaultInvestmentCategoryIdInDataStore(
         defaultInvestmentCategoryId: Int,
     ) {
-        context.dataStore.edit {
+        dataStore.edit {
             it[DEFAULT_INVESTMENT_CATEGORY_ID] = defaultInvestmentCategoryId
         }
     }
 
     override fun getDefaultSourceIdFromDataStore(): Flow<Int?> {
-        return context.dataStore.data.map {
+        return preferences.map {
             it[DEFAULT_SOURCE_ID]
         }
     }
@@ -59,13 +74,13 @@ internal class MyDataStoreImpl(
     override suspend fun setDefaultSourceIdInDataStore(
         defaultSourceId: Int,
     ) {
-        context.dataStore.edit {
+        dataStore.edit {
             it[DEFAULT_SOURCE_ID] = defaultSourceId
         }
     }
 
     override fun getLastDataBackupTimestamp(): Flow<Long?> {
-        return context.dataStore.data.map {
+        return preferences.map {
             it[LAST_DATA_BACKUP_TIMESTAMP]
         }
     }
@@ -73,13 +88,13 @@ internal class MyDataStoreImpl(
     override suspend fun setLastDataBackupTimestamp(
         lastChangeTimestamp: Long,
     ) {
-        context.dataStore.edit {
+        dataStore.edit {
             it[LAST_DATA_BACKUP_TIMESTAMP] = lastChangeTimestamp
         }
     }
 
     override fun getLastDataChangeTimestamp(): Flow<Long?> {
-        return context.dataStore.data.map {
+        return preferences.map {
             it[LAST_DATA_CHANGE_TIMESTAMP]
         }
     }
@@ -87,7 +102,7 @@ internal class MyDataStoreImpl(
     override suspend fun setLastDataChangeTimestamp(
         lastChangeTimestamp: Long,
     ) {
-        context.dataStore.edit {
+        dataStore.edit {
             it[LAST_DATA_CHANGE_TIMESTAMP] = lastChangeTimestamp
         }
     }

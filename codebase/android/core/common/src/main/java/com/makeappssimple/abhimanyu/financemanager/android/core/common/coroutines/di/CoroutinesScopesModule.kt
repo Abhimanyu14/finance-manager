@@ -20,7 +20,7 @@ object CoroutinesScopesModule {
         @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
     ): CoroutineScope {
         return CoroutineScope(
-            context = SupervisorJob() + defaultDispatcher,
+            context = defaultDispatcher + SupervisorJob(),
         )
     }
 }
