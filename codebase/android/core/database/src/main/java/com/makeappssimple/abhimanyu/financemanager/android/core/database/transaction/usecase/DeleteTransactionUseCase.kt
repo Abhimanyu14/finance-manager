@@ -19,7 +19,7 @@ class DeleteTransactionUseCaseImpl(
         id: Int,
         vararg sources: Source,
     ) {
-        dataStore.updateLastDataChangeTimestamp()
+        dataStore.setLastDataChangeTimestamp()
         return transactionRepository.deleteTransaction(
             id = id,
             sources = sources,

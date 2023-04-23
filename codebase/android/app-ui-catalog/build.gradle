@@ -92,7 +92,9 @@ dependencies {
     implementation project(":core:designsystem")
     implementation project(":core:ui")
     implementation project(":chart")
+
     testImplementation project(":core:testing")
+
     androidTestImplementation project(":core:testing")
 
 

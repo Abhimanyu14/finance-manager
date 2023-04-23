@@ -16,7 +16,7 @@ class DeleteCategoryUseCaseImpl(
     override suspend operator fun invoke(
         id: Int,
     ) {
-        dataStore.updateLastDataChangeTimestamp()
+        dataStore.setLastDataChangeTimestamp()
         return categoryRepository.deleteCategory(
             id = id,
         )

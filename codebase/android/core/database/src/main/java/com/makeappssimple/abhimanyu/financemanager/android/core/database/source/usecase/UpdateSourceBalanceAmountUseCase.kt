@@ -16,7 +16,7 @@ class UpdateSourcesBalanceAmountUseCaseImpl(
     override suspend operator fun invoke(
         sourcesBalanceAmountChange: List<Pair<Int, Long>>,
     ) {
-        dataStore.updateLastDataChangeTimestamp()
+        dataStore.setLastDataChangeTimestamp()
         return sourceRepository.updateSourceBalanceAmount(
             sourcesBalanceAmountChange = sourcesBalanceAmountChange,
         )

@@ -17,7 +17,7 @@ class InsertTransactionsUseCaseImpl(
     override suspend operator fun invoke(
         vararg transactions: Transaction,
     ) {
-        dataStore.updateLastDataChangeTimestamp()
+        dataStore.setLastDataChangeTimestamp()
         return transactionRepository.insertTransactions(
             transactions = transactions,
         )

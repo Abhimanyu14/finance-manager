@@ -17,7 +17,7 @@ class InsertSourcesUseCaseImpl(
     override suspend operator fun invoke(
         vararg sources: Source,
     ) {
-        dataStore.updateLastDataChangeTimestamp()
+        dataStore.setLastDataChangeTimestamp()
         return sourceRepository.insertSources(
             sources = sources,
         )

@@ -12,7 +12,7 @@ class DeleteAllTransactionsUseCaseImpl(
     private val transactionRepository: TransactionRepository,
 ) : DeleteAllTransactionsUseCase {
     override suspend operator fun invoke() {
-        dataStore.updateLastDataChangeTimestamp()
+        dataStore.setLastDataChangeTimestamp()
         return transactionRepository.deleteAllTransactions()
     }
 }

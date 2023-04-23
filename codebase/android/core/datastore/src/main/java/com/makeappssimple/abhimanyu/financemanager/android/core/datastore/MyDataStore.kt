@@ -40,20 +40,12 @@ interface MyDataStore {
     fun getLastDataBackupTimestamp(): Flow<Long?>
 
     suspend fun setLastDataBackupTimestamp(
-        lastChangeTimestamp: Long,
+        lastDataBackupTimestamp: Long = getCurrentTimeMillis(),
     )
 
     fun getLastDataChangeTimestamp(): Flow<Long?>
 
     suspend fun setLastDataChangeTimestamp(
-        lastChangeTimestamp: Long,
-    )
-
-    suspend fun updateLastDataBackupTimestamp(
-        timestamp: Long = getCurrentTimeMillis(),
-    )
-
-    suspend fun updateLastDataChangeTimestamp(
-        timestamp: Long = getCurrentTimeMillis(),
+        lastDataChangeTimestamp: Long = getCurrentTimeMillis(),
     )
 }

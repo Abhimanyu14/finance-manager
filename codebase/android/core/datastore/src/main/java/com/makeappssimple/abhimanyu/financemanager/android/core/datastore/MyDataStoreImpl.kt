@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.datastore
 
+import androidx.annotation.VisibleForTesting
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -13,7 +14,8 @@ internal class MyDataStoreImpl(
     private val dataStore: DataStore<Preferences>,
     private val logger: Logger,
 ) : MyDataStore {
-    private val preferences: Flow<Preferences> = dataStore.data
+    @VisibleForTesting
+    internal val preferences: Flow<Preferences> = dataStore.data
         .catch { exception ->
             logger.logError(
                 message = "Error reading preferences. ${exception.localizedMessage}",
@@ -86,10 +88,10 @@ internal class MyDataStoreImpl(
     }
 
     override suspend fun setLastDataBackupTimestamp(
-        lastChangeTimestamp: Long,
+        lastDataBackupTimestamp: Long,
     ) {
         dataStore.edit {
-            it[LAST_DATA_BACKUP_TIMESTAMP] = lastChangeTimestamp
+            it[LAST_DATA_BACKUP_TIMESTAMP] = lastDataBackupTimestamp
         }
     }
 
@@ -100,26 +102,10 @@ internal class MyDataStoreImpl(
     }
 
     override suspend fun setLastDataChangeTimestamp(
-        lastChangeTimestamp: Long,
+        lastDataChangeTimestamp: Long,
     ) {
         dataStore.edit {
-            it[LAST_DATA_CHANGE_TIMESTAMP] = lastChangeTimestamp
+            it[LAST_DATA_CHANGE_TIMESTAMP] = lastDataChangeTimestamp
         }
-    }
-
-    override suspend fun updateLastDataBackupTimestamp(
-        timestamp: Long,
-    ) {
-        setLastDataBackupTimestamp(
-            lastChangeTimestamp = timestamp,
-        )
-    }
-
-    override suspend fun updateLastDataChangeTimestamp(
-        timestamp: Long,
-    ) {
-        setLastDataChangeTimestamp(
-            lastChangeTimestamp = timestamp,
-        )
     }
 }

@@ -20,8 +20,8 @@ class RestoreDataUseCaseImpl(
     override suspend operator fun invoke(
         uri: Uri,
     ) {
-        dataStore.updateLastDataChangeTimestamp()
-        dataStore.updateLastDataBackupTimestamp()
+        dataStore.setLastDataChangeTimestamp()
+        dataStore.setLastDataBackupTimestamp()
         val databaseBackupData = jsonUtil.readDatabaseBackupDataFromFile(
             uri = uri,
         ) ?: return

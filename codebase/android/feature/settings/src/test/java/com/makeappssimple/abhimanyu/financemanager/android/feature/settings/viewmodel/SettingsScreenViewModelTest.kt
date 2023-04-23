@@ -5,6 +5,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.RestoreDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.RecalculateTotalUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LoggerImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.TestDispatcherProviderImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
@@ -20,6 +22,7 @@ class SettingsScreenViewModelTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
+    private val logger: Logger = LoggerImpl()
     private val navigationManager: NavigationManager = mock()
     private val backupDataUseCase: BackupDataUseCase = mock()
     private val recalculateTotalUseCase: RecalculateTotalUseCase = mock()
@@ -33,6 +36,7 @@ class SettingsScreenViewModelTest {
     @Before
     fun setUp() {
         settingsScreenViewModel = SettingsScreenViewModelImpl(
+            logger = logger,
             navigationManager = navigationManager,
             backupDataUseCase = backupDataUseCase,
             dispatcherProvider = dispatcherProvider,

@@ -11,6 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.IoDispatcher
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStoreImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.dataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import dagger.Module
 import dagger.Provides
@@ -49,13 +50,14 @@ class DataStoreModule {
         )
     }
 
+    // TODO-Abhi: Replace with Injected Data store once injection in Database is resolved
     @Provides
     fun providesMyDataStore(
-        dataStore: DataStore<Preferences>,
+        @ApplicationContext appContext: Context,
         logger: Logger,
     ): MyDataStore {
         return MyDataStoreImpl(
-            dataStore = dataStore,
+            dataStore = appContext.dataStore,
             logger = logger,
         )
     }

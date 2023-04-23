@@ -20,7 +20,7 @@ class DeleteTransactionAndRevertOtherDataUseCaseImpl(
     override suspend operator fun invoke(
         id: Int,
     ) {
-        dataStore.updateLastDataChangeTimestamp()
+        dataStore.setLastDataChangeTimestamp()
         val transactionData = getTransactionDataUseCase(
             id = id,
         ) ?: return

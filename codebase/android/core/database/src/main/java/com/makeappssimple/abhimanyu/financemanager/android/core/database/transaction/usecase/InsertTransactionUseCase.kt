@@ -24,7 +24,7 @@ class InsertTransactionUseCaseImpl(
         sourceTo: Source?,
         transaction: Transaction,
     ): Long {
-        dataStore.updateLastDataChangeTimestamp()
+        dataStore.setLastDataChangeTimestamp()
         return transactionRepository.insertTransaction(
             amountValue = amountValue,
             sourceFrom = sourceFrom,

@@ -24,7 +24,7 @@ class RecalculateTotalUseCaseImpl(
     private val allTransactionData: Flow<List<TransactionData>> = getAllTransactionDataFlowUseCase()
 
     override suspend operator fun invoke() {
-        dataStore.updateLastDataChangeTimestamp()
+        dataStore.setLastDataChangeTimestamp()
         val sourceBalances = hashMapOf<Int, Long>()
         val allSourcesValue = allSources.first()
         val allTransactionDataValue = allTransactionData.first()

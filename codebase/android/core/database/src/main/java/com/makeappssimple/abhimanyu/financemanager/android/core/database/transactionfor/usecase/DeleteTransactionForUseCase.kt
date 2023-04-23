@@ -16,7 +16,7 @@ class DeleteTransactionForUseCaseImpl(
     override suspend operator fun invoke(
         id: Int,
     ) {
-        dataStore.updateLastDataChangeTimestamp()
+        dataStore.setLastDataChangeTimestamp()
         return transactionForRepository.deleteTransactionFor(
             id = id,
         )

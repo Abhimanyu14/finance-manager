@@ -43,7 +43,7 @@ class BackupDataUseCaseImpl(
     override suspend operator fun invoke(
         uri: Uri,
     ) {
-        dataStore.updateLastDataBackupTimestamp()
+        dataStore.setLastDataBackupTimestamp()
         val databaseBackupData = DatabaseBackupData(
             lastBackupTime = getReadableDateAndTime(),
             lastBackupTimestamp = getCurrentTimeMillis().toString(),

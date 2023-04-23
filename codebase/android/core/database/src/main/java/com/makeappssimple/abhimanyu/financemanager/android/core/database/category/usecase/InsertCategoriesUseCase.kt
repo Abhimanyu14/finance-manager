@@ -17,7 +17,7 @@ class InsertCategoriesUseCaseImpl(
     override suspend operator fun invoke(
         vararg categories: Category,
     ) {
-        dataStore.updateLastDataChangeTimestamp()
+        dataStore.setLastDataChangeTimestamp()
         return categoryRepository.insertCategories(
             categories = categories,
         )

@@ -19,7 +19,7 @@ class UpdateTransactionUseCaseImpl(
         originalTransaction: Transaction,
         updatedTransaction: Transaction,
     ) {
-        dataStore.updateLastDataChangeTimestamp()
+        dataStore.setLastDataChangeTimestamp()
         transactionRepository.updateTransaction(
             transaction = updatedTransaction,
         )

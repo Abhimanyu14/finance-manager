@@ -17,7 +17,7 @@ class DeleteSourcesUseCaseImpl(
     override suspend operator fun invoke(
         vararg sources: Source,
     ) {
-        dataStore.updateLastDataChangeTimestamp()
+        dataStore.setLastDataChangeTimestamp()
         return sourceRepository.deleteSources(
             sources = sources,
         )

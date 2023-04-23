@@ -76,7 +76,9 @@ dependencies {
     implementation project(":core:logger")
     implementation project(":core:ui")
     implementation project(":chart")
+
     testImplementation project(":core:testing")
+
     androidTestImplementation project(":core:testing")
 
 

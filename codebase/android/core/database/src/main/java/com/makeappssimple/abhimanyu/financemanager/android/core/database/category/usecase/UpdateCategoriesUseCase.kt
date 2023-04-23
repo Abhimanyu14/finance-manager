@@ -17,7 +17,7 @@ class UpdateCategoriesUseCaseImpl(
     override suspend operator fun invoke(
         vararg categories: Category,
     ) {
-        dataStore.updateLastDataChangeTimestamp()
+        dataStore.setLastDataChangeTimestamp()
         return categoryRepository.updateCategories(
             categories = categories,
         )
