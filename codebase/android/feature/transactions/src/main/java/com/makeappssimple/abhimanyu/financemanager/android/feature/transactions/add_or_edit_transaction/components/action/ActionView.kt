@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.conditionalClickable
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 
 @Composable
 fun ActionView(

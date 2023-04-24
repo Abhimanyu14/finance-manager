@@ -24,7 +24,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.Comp
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.conditionalClickable
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 
 @Immutable
 data class OverviewCardViewData(

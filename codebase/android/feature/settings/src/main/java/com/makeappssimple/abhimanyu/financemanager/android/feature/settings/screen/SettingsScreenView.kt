@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.screen
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,17 +25,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getAppVersion
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
@@ -48,8 +49,10 @@ internal enum class SettingsBottomSheetType : BottomSheetType {
 @Immutable
 internal data class SettingsScreenViewData(
     val isLoading: Boolean,
-    val navigationManager: NavigationManager,
+    val appVersion: String?,
     val createDocument: () -> Unit,
+    val navigateToTransactionForValuesScreen: () -> Unit,
+    val navigateUp: () -> Unit,
     val openDocument: () -> Unit,
     val recalculateTotal: () -> Unit,
 )
@@ -64,9 +67,6 @@ internal fun SettingsScreenView(
             value = SettingsBottomSheetType.NONE,
         )
     }
-    val appVersionName = getAppVersion(
-        context = state.context,
-    )?.versionName
 
     if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
         DisposableEffect(
@@ -91,11 +91,7 @@ internal fun SettingsScreenView(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_settings_appbar_title,
-                navigationAction = {
-                    data.navigationManager.navigate(
-                        navigationCommand = MyNavigationDirections.NavigateUp
-                    )
-                },
+                navigationAction = data.navigateUp,
             )
         },
         onClick = {
@@ -128,7 +124,12 @@ internal fun SettingsScreenView(
                 AnimatedVisibility(
                     visible = data.isLoading,
                 ) {
-                    MyLinearProgressIndicator()
+                    MyLinearProgressIndicator(
+                        modifier = Modifier
+                            .testTag(
+                                tag = "linear_progress_indicator",
+                            ),
+                    )
                 }
                 ListItem(
                     icon = {
@@ -150,9 +151,12 @@ internal fun SettingsScreenView(
                         )
                     },
                     modifier = Modifier
-                        .clickable(
-                            enabled = !data.isLoading,
-                            onClick = data.createDocument,
+                        .conditionalClickable(
+                            onClick = if (data.isLoading) {
+                                null
+                            } else {
+                                data.createDocument
+                            },
                         ),
                 )
                 ListItem(
@@ -175,9 +179,12 @@ internal fun SettingsScreenView(
                         )
                     },
                     modifier = Modifier
-                        .clickable(
-                            enabled = !data.isLoading,
-                            onClick = data.openDocument,
+                        .conditionalClickable(
+                            onClick = if (data.isLoading) {
+                                null
+                            } else {
+                                data.openDocument
+                            },
                         ),
                 )
                 ListItem(
@@ -200,10 +207,11 @@ internal fun SettingsScreenView(
                         )
                     },
                     modifier = Modifier
-                        .clickable(
-                            enabled = !data.isLoading,
-                            onClick = {
-                                data.recalculateTotal()
+                        .conditionalClickable(
+                            onClick = if (data.isLoading) {
+                                null
+                            } else {
+                                data.recalculateTotal
                             },
                         ),
                 )
@@ -227,17 +235,16 @@ internal fun SettingsScreenView(
                         )
                     },
                     modifier = Modifier
-                        .clickable(
-                            enabled = !data.isLoading,
-                            onClick = {
-                                data.navigationManager.navigate(
-                                    navigationCommand = MyNavigationDirections.TransactionForValues
-                                )
+                        .conditionalClickable(
+                            onClick = if (data.isLoading) {
+                                null
+                            } else {
+                                data.navigateToTransactionForValuesScreen
                             },
                         ),
                 )
             }
-            appVersionName?.let {
+            data.appVersion?.let {
                 MyText(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -258,3 +265,23 @@ internal fun SettingsScreenView(
         }
     }
 }
+
+@Preview
+@Composable
+fun SettingsScreenViewPreview() {
+    MyAppTheme {
+        SettingsScreenView(
+            data = SettingsScreenViewData(
+                isLoading = false,
+                appVersion = "2023.04.07.1",
+                createDocument = {},
+                navigateToTransactionForValuesScreen = {},
+                navigateUp = {},
+                openDocument = {},
+                recalculateTotal = {},
+            ),
+            state = rememberCommonScreenViewState(),
+        )
+    }
+}
+

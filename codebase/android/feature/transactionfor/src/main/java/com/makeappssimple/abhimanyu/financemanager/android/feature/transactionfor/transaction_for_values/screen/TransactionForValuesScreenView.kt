@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.screen
 
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -30,6 +29,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNav
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
@@ -183,7 +183,7 @@ internal fun TransactionForValuesScreenView(
                         .clip(
                             shape = MaterialTheme.shapes.large,
                         )
-                        .combinedClickable(
+                        .conditionalClickable(
                             onClick = {
                                 transactionForValuesBottomSheetType =
                                     TransactionForValuesBottomSheetType.Menu(

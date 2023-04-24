@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.components.listitem
 
-import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.ExpandedListItemShape
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyDefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemViewWrapper
@@ -54,13 +54,9 @@ internal fun SourcesListItem(
                         MaterialTheme.shapes.large
                     },
                 )
-                .combinedClickable(
-                    onClick = {
-                        onClick()
-                    },
-                    onLongClick = {
-                        onLongClick()
-                    },
+                .conditionalClickable(
+                    onClick = onClick,
+                    onLongClick = onLongClick,
                 )
                 .padding(
                     start = 16.dp,

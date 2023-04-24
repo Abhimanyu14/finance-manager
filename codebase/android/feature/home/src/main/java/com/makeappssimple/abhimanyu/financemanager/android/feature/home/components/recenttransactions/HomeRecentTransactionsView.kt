@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.recenttransactions
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -13,6 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 
 @Composable
@@ -32,7 +32,7 @@ internal fun HomeRecentTransactionsView(
             .clip(
                 shape = CircleShape,
             )
-            .clickable(
+            .conditionalClickable(
                 onClickLabel = stringResource(
                     id = R.string.screen_home_view_all_transactions,
                 ),

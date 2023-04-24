@@ -13,6 +13,10 @@ interface SettingsScreenViewModel : ScreenViewModel {
         uri: Uri,
     )
 
+    fun navigateToTransactionForValuesScreen()
+
+    fun navigateUp()
+
     fun restoreDataFromDocument(
         uri: Uri,
     )

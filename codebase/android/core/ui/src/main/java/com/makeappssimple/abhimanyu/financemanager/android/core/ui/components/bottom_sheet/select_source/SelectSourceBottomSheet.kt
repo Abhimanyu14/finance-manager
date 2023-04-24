@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.select_source
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
@@ -21,6 +20,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.MyBottomSheetTitle
 
 @Immutable
@@ -68,7 +68,7 @@ private fun SelectSourceBottomSheetItem(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(
+            .conditionalClickable(
                 onClickLabel = data.text,
                 role = Role.Button,
                 onClick = data.onClick,

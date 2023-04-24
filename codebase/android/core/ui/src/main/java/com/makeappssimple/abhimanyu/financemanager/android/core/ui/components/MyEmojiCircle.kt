@@ -18,7 +18,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.conditionalClickable
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 
 const val defaultEmoji = "😟"
 const val adjustmentEmoji = "😑️"

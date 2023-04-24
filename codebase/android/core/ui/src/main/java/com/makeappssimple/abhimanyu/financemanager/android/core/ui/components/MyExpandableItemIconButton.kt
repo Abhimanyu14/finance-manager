@@ -11,7 +11,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.conditionalClickable
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 
 @Composable
 fun MyExpandableItemIconButton(

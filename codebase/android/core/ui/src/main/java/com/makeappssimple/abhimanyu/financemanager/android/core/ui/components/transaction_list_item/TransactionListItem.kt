@@ -25,7 +25,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.ExpandedListItemShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.conditionalClickable
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemViewWrapper

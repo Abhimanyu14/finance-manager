@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.bottomsheet
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -17,6 +16,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 
 @Immutable
 internal data class HomeMenuBottomSheetItemData(
@@ -60,7 +60,7 @@ private fun HomeMenuBottomSheetItem(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(
+            .conditionalClickable(
                 onClickLabel = data.text,
                 role = Role.Button,
                 onClick = data.onClick,

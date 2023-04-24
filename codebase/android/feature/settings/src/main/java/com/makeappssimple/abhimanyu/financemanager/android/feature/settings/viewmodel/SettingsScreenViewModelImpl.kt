@@ -39,6 +39,18 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
         }
     }
 
+    override fun navigateToTransactionForValuesScreen() {
+        navigationManager.navigate(
+            MyNavigationDirections.TransactionForValues
+        )
+    }
+
+    override fun navigateUp() {
+        navigationManager.navigate(
+            MyNavigationDirections.NavigateUp
+        )
+    }
+
     override fun restoreDataFromDocument(
         uri: Uri,
     ) {
