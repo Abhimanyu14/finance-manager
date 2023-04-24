@@ -50,11 +50,11 @@ internal enum class SettingsBottomSheetType : BottomSheetType {
 internal data class SettingsScreenViewData(
     val isLoading: Boolean,
     val appVersion: String?,
-    val createDocument: () -> Unit,
+    val backupData: () -> Unit,
     val navigateToTransactionForValuesScreen: () -> Unit,
     val navigateUp: () -> Unit,
-    val openDocument: () -> Unit,
     val recalculateTotal: () -> Unit,
+    val restoreData: () -> Unit,
 )
 
 @Composable
@@ -155,7 +155,7 @@ internal fun SettingsScreenView(
                             onClick = if (data.isLoading) {
                                 null
                             } else {
-                                data.createDocument
+                                data.backupData
                             },
                         ),
                 )
@@ -183,7 +183,7 @@ internal fun SettingsScreenView(
                             onClick = if (data.isLoading) {
                                 null
                             } else {
-                                data.openDocument
+                                data.restoreData
                             },
                         ),
                 )
@@ -274,11 +274,11 @@ fun SettingsScreenViewPreview() {
             data = SettingsScreenViewData(
                 isLoading = false,
                 appVersion = "2023.04.07.1",
-                createDocument = {},
+                backupData = {},
                 navigateToTransactionForValuesScreen = {},
                 navigateUp = {},
-                openDocument = {},
                 recalculateTotal = {},
+                restoreData = {},
             ),
             state = rememberCommonScreenViewState(),
         )

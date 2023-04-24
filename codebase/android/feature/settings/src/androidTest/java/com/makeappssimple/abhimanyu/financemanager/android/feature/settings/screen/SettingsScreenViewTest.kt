@@ -21,11 +21,11 @@ class SettingsScreenViewTest {
     private val testSettingsScreenViewData = SettingsScreenViewData(
         isLoading = false,
         appVersion = testAppVersion,
-        createDocument = {},
+        backupData = {},
         navigateToTransactionForValuesScreen = {},
         navigateUp = {},
-        openDocument = {},
         recalculateTotal = {},
+        restoreData = {},
     )
 
     private lateinit var linearProgressIndicator: SemanticsNodeInteraction

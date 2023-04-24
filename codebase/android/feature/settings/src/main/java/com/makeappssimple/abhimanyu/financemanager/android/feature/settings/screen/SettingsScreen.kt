@@ -59,17 +59,17 @@ fun SettingsScreen(
         data = SettingsScreenViewData(
             isLoading = isLoading,
             appVersion = appVersion,
-            createDocument = {
+            backupData = {
                 createDocumentResultLauncher.launch(JSON_MIMETYPE)
             },
             navigateToTransactionForValuesScreen = screenViewModel::navigateToTransactionForValuesScreen,
             navigateUp = screenViewModel::navigateUp,
-            openDocument = {
-                openDocumentResultLauncher.launch(arrayOf(JSON_MIMETYPE))
-            },
             recalculateTotal = {
                 isLoading = true
                 screenViewModel.recalculateTotal()
+            },
+            restoreData = {
+                openDocumentResultLauncher.launch(arrayOf(JSON_MIMETYPE))
             },
         ),
         state = rememberCommonScreenViewState(),
