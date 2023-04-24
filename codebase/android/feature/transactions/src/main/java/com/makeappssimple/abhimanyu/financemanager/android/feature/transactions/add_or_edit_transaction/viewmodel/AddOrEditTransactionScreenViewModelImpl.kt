@@ -1119,6 +1119,9 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         updateAddOrEditTransactionScreenUiState(
             updatedAddOrEditTransactionScreenUiState = initialAddOrEditTransactionScreenUiState,
         )
+
+        // TODO-Abhi: This is a better race condition, but still not reactive
+        setInitialSelectedTransactionType()
     }
 
     private suspend fun calculateMaxRefundAmount() {
