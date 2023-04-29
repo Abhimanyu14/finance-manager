@@ -32,8 +32,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
@@ -60,12 +58,12 @@ internal data class AddOrEditCategoryScreenViewData(
     val selectedTransactionTypeIndex: Int,
     val emojiGroups: Map<String, List<Emoji>>,
     val transactionTypes: List<TransactionType>,
-    val navigationManager: NavigationManager,
     val emoji: String,
     val searchText: String,
     val title: TextFieldValue,
     val clearTitle: () -> Unit,
     val isValidCategoryData: () -> Boolean,
+    val navigateUp: () -> Unit,
     val onCtaButtonClick: () -> Unit,
     val updateEmoji: (updatedEmoji: String) -> Unit,
     val updateSearchText: (updatedSearchText: String) -> Unit,
@@ -141,11 +139,7 @@ internal fun AddOrEditCategoryScreenView(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = data.appBarTitleTextStringResourceId,
-                navigationAction = {
-                    data.navigationManager.navigate(
-                        navigationCommand = MyNavigationDirections.NavigateUp
-                    )
-                },
+                navigationAction = data.navigateUp,
             )
         },
         onClick = {

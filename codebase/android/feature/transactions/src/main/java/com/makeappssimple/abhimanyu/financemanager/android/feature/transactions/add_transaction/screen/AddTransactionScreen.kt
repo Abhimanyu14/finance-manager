@@ -8,6 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.categor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenView
@@ -54,11 +55,15 @@ fun AddTransactionScreen(
             titleSuggestions = titleSuggestions,
             transactionTypesForNewTransaction = transactionTypesForNewTransaction,
             transactionForValues = transactionForValues,
-            navigationManager = screenViewModel.navigationManager,
             selectedTransactionType = selectedTransactionType,
             clearAmount = screenViewModel::clearAmount,
             clearDescription = screenViewModel::clearDescription,
             clearTitle = screenViewModel::clearTitle,
+            navigateUp = {
+                screenViewModel.navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.NavigateUp
+                )
+            },
             onCtaButtonClick = screenViewModel::insertTransaction,
             updateAmount = screenViewModel::updateAmount,
             updateCategory = screenViewModel::updateCategory,

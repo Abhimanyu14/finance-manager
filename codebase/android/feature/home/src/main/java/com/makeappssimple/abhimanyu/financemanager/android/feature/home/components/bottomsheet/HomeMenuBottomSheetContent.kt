@@ -10,8 +10,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 import kotlinx.coroutines.CoroutineScope
@@ -27,36 +25,26 @@ internal data class HomeMenuBottomSheetContentItemData(
 internal fun HomeMenuBottomSheetContent(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
-    navigationManager: NavigationManager,
+    navigateToCategoriesScreen: () -> Unit,
+    navigateToSettingsScreen: () -> Unit,
+    navigateToSourcesScreen: () -> Unit,
     resetBottomSheetType: () -> Unit,
 ) {
     val homeMenuBottomSheetContentItemDataList = listOf(
         HomeMenuBottomSheetContentItemData(
             iconImageVector = Icons.Rounded.AccountBalance,
             textStringResourceId = R.string.screen_home_bottom_sheet_sources,
-            onClick = {
-                navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.Sources
-                )
-            },
+            onClick = navigateToSourcesScreen,
         ),
         HomeMenuBottomSheetContentItemData(
             iconImageVector = Icons.Rounded.Category,
             textStringResourceId = R.string.screen_home_bottom_sheet_categories,
-            onClick = {
-                navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.Categories
-                )
-            },
+            onClick = navigateToCategoriesScreen,
         ),
         HomeMenuBottomSheetContentItemData(
             iconImageVector = Icons.Rounded.Settings,
             textStringResourceId = R.string.screen_home_bottom_sheet_settings,
-            onClick = {
-                navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.Settings
-                )
-            },
+            onClick = navigateToSettingsScreen,
         ),
     )
 

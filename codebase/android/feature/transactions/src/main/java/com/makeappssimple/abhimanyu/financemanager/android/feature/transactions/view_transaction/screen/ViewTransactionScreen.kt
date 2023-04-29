@@ -30,12 +30,30 @@ fun ViewTransactionScreen(
 
     ViewTransactionScreenView(
         data = ViewTransactionScreenViewData(
-            navigationManager = screenViewModel.navigationManager,
             transactionData = transactionData,
             deleteTransaction = { transactionId ->
                 screenViewModel.deleteTransaction(
                     id = transactionId,
                 )
+                screenViewModel.navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.NavigateUp
+                )
+            },
+            navigateToAddTransactionScreen = { transactionId ->
+                screenViewModel.navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.AddTransaction(
+                        transactionId = transactionId,
+                    )
+                )
+            },
+            navigateToEditTransactionScreen = { transactionId ->
+                screenViewModel.navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.EditTransaction(
+                        transactionId = transactionId,
+                    )
+                )
+            },
+            navigateUp = {
                 screenViewModel.navigationManager.navigate(
                     navigationCommand = MyNavigationDirections.NavigateUp
                 )

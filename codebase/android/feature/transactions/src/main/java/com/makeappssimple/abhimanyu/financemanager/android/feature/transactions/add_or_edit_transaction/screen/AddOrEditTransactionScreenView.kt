@@ -38,8 +38,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.AmountCommaVisualTransformation
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
@@ -81,11 +79,11 @@ internal data class AddOrEditTransactionScreenViewData(
     val titleSuggestions: List<String>,
     val transactionTypesForNewTransaction: List<TransactionType>,
     val transactionForValues: List<TransactionFor>,
-    val navigationManager: NavigationManager,
     val selectedTransactionType: TransactionType?,
     val clearAmount: () -> Unit,
     val clearDescription: () -> Unit,
     val clearTitle: () -> Unit,
+    val navigateUp: () -> Unit,
     val onCtaButtonClick: () -> Unit,
     val updateAmount: (updatedAmount: TextFieldValue) -> Unit,
     val updateCategory: (updatedCategory: Category?) -> Unit,
@@ -244,11 +242,7 @@ internal fun AddOrEditTransactionScreenView(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = data.appBarTitleTextStringResourceId,
-                navigationAction = {
-                    data.navigationManager.navigate(
-                        navigationCommand = MyNavigationDirections.NavigateUp
-                    )
-                },
+                navigationAction = data.navigateUp,
             )
         },
         onClick = {

@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenView
@@ -31,7 +32,6 @@ fun AddSourceScreen(
             ctaButtonLabelTextStringResourceId = R.string.screen_add_source_floating_action_button_content_description,
             selectedSourceTypeIndex = selectedSourceTypeIndex,
             sourceTypes = screenViewModel.sourceTypes,
-            navigationManager = screenViewModel.navigationManager,
             balanceAmountValue = TextFieldValue(
                 text = "",
             ),
@@ -39,6 +39,11 @@ fun AddSourceScreen(
             clearBalanceAmountValue = {},
             clearName = screenViewModel::clearName,
             isValidSourceData = screenViewModel::isValidSourceData,
+            navigateUp = {
+                screenViewModel.navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.NavigateUp
+                )
+            },
             onCtaButtonClick = screenViewModel::insertSource,
             updateBalanceAmountValue = {},
             updateName = screenViewModel::updateName,

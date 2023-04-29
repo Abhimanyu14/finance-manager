@@ -21,8 +21,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
@@ -46,8 +44,10 @@ internal data class SourcesScreenViewData(
     val defaultSourceId: Int?,
     val sourcesIsUsedInTransactions: List<Boolean>,
     val sources: List<Source>,
-    val navigationManager: NavigationManager,
     val deleteSource: (source: Source) -> Unit,
+    val navigateToAddSourceScreen: () -> Unit,
+    val navigateToEditSourceScreen: (sourceId: Int) -> Unit,
+    val navigateUp: () -> Unit,
     val setDefaultSourceIdInDataStore: (defaultSourceId: Int) -> Unit,
 )
 
@@ -141,11 +141,7 @@ internal fun SourcesScreenView(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_sources_appbar_title,
-                navigationAction = {
-                    data.navigationManager.navigate(
-                        navigationCommand = MyNavigationDirections.NavigateUp
-                    )
-                },
+                navigationAction = data.navigateUp,
             )
         },
         floatingActionButton = {
@@ -154,11 +150,7 @@ internal fun SourcesScreenView(
                 contentDescription = stringResource(
                     id = R.string.screen_sources_floating_action_button_content_description,
                 ),
-                onClick = {
-                    data.navigationManager.navigate(
-                        navigationCommand = MyNavigationDirections.AddSource
-                    )
-                },
+                onClick = data.navigateToAddSourceScreen,
             )
         },
         onClick = {
@@ -220,11 +212,7 @@ internal fun SourcesScreenView(
                         }
                     },
                     onEditClick = {
-                        data.navigationManager.navigate(
-                            navigationCommand = MyNavigationDirections.EditSource(
-                                sourceId = listItem.id,
-                            )
-                        )
+                        data.navigateToEditSourceScreen(listItem.id)
                         expandedItemIndex = null
                     },
                     onDeleteClick = {
@@ -241,3 +229,25 @@ internal fun SourcesScreenView(
         }
     }
 }
+
+/*
+@Preview
+@Composable
+fun SourcesScreenViewPreview() {
+    MyAppTheme {
+        SourcesScreenView(
+            data = SourcesScreenViewData(
+                defaultSourceId = 0,
+                sourcesIsUsedInTransactions = emptyList(),
+                sources = emptyList(),
+                deleteSource = {},
+                navigateUp = {},
+                navigateToAddSourceScreen = {},
+                navigateToEditSourceScreen = {},
+                setDefaultSourceIdInDataStore = {},
+            ),
+            state = rememberCommonScreenViewState(),
+        )
+    }
+}
+*/

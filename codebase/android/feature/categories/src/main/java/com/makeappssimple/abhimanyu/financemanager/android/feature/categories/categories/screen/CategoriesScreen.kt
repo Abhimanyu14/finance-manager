@@ -6,6 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.viewmodel.CategoriesScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.viewmodel.CategoriesScreenViewModelImpl
@@ -61,10 +62,28 @@ fun CategoriesScreen(
             expenseCategories = expenseCategories,
             incomeCategories = incomeCategories,
             investmentCategories = investmentCategories,
-            navigationManager = screenViewModel.navigationManager,
             deleteCategory = { categoryId ->
                 screenViewModel.deleteCategory(
                     id = categoryId,
+                )
+            },
+            navigateToAddCategoryScreen = { transactionType ->
+                screenViewModel.navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.AddCategory(
+                        transactionType = transactionType,
+                    )
+                )
+            },
+            navigateToEditCategoryScreen = { categoryId ->
+                screenViewModel.navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.EditCategory(
+                        categoryId = categoryId,
+                    )
+                )
+            },
+            navigateUp = {
+                screenViewModel.navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.NavigateUp
                 )
             },
             setDefaultCategoryIdInDataStore = { defaultCategoryId: Int, transactionType: TransactionType ->

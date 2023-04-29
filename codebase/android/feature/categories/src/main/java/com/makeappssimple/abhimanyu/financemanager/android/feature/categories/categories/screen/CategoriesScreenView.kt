@@ -26,8 +26,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabRow
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
@@ -70,8 +68,10 @@ internal data class CategoriesScreenViewData(
     val expenseCategories: List<Category>,
     val incomeCategories: List<Category>,
     val investmentCategories: List<Category>,
-    val navigationManager: NavigationManager,
     val deleteCategory: (categoryId: Int) -> Unit,
+    val navigateToAddCategoryScreen: (transactionType: String) -> Unit,
+    val navigateToEditCategoryScreen: (categoryId: Int) -> Unit,
+    val navigateUp: () -> Unit,
     val setDefaultCategoryIdInDataStore: (
         defaultCategoryId: Int,
         transactionType: TransactionType,
@@ -199,8 +199,8 @@ internal fun CategoriesScreenView(
                         coroutineScope = state.coroutineScope,
                         categoryId = bottomSheetData.categoryId,
                         modalBottomSheetState = state.modalBottomSheetState,
-                        navigationManager = data.navigationManager,
                         categoryTitle = bottomSheetData.categoryTitle,
+                        navigateToEditCategoryScreen = data.navigateToEditCategoryScreen,
                         onDeleteClick = {
                             categoryIdToDelete = bottomSheetData.categoryId
                             categoriesBottomSheetType =
@@ -219,11 +219,7 @@ internal fun CategoriesScreenView(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_categories_appbar_title,
-                navigationAction = {
-                    data.navigationManager.navigate(
-                        navigationCommand = MyNavigationDirections.NavigateUp
-                    )
-                },
+                navigationAction = data.navigateUp,
             )
         },
         floatingActionButton = {
@@ -233,22 +229,20 @@ internal fun CategoriesScreenView(
                     id = R.string.screen_categories_floating_action_button_content_description,
                 ),
                 onClick = {
-                    data.navigationManager.navigate(
-                        navigationCommand = MyNavigationDirections.AddCategory(
-                            transactionType = when (data.selectedTabIndex) {
-                                0 -> {
-                                    TransactionType.EXPENSE.title
-                                }
-
-                                1 -> {
-                                    TransactionType.INCOME.title
-                                }
-
-                                else -> {
-                                    TransactionType.INVESTMENT.title
-                                }
+                    data.navigateToAddCategoryScreen(
+                        when (data.selectedTabIndex) {
+                            0 -> {
+                                TransactionType.EXPENSE.title
                             }
-                        )
+
+                            1 -> {
+                                TransactionType.INCOME.title
+                            }
+
+                            else -> {
+                                TransactionType.INVESTMENT.title
+                            }
+                        }
                     )
                 },
             )

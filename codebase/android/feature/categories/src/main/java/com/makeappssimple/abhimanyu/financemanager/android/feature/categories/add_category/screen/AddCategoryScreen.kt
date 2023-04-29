@@ -8,6 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.loadingCompletedEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenView
@@ -47,12 +48,16 @@ fun AddCategoryScreen(
             selectedTransactionTypeIndex = selectedTransactionTypeIndex,
             emojiGroups = emojiGroups,
             transactionTypes = screenViewModel.transactionTypes,
-            navigationManager = screenViewModel.navigationManager,
             emoji = emoji,
             searchText = searchText,
             title = title,
             clearTitle = screenViewModel::clearTitle,
             isValidCategoryData = screenViewModel::isValidCategoryData,
+            navigateUp = {
+                screenViewModel.navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.NavigateUp
+                )
+            },
             onCtaButtonClick = screenViewModel::insertCategory,
             updateEmoji = screenViewModel::updateEmoji,
             updateSearchText = screenViewModel::updateSearchText,

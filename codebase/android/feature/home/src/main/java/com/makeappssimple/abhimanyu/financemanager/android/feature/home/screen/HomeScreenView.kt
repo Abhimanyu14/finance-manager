@@ -28,8 +28,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
@@ -56,7 +54,11 @@ internal data class HomeScreenViewData(
     val showBackupCard: Boolean,
     val transactionData: List<TransactionData>,
     val createDocument: ManagedActivityResultLauncher<String, Uri?>,
-    val navigationManager: NavigationManager,
+    val navigateToAddTransactionScreen: () -> Unit,
+    val navigateToCategoriesScreen: () -> Unit,
+    val navigateToSettingsScreen: () -> Unit,
+    val navigateToSourcesScreen: () -> Unit,
+    val navigateToTransactionsScreen: () -> Unit,
 )
 
 @Composable
@@ -93,7 +95,9 @@ internal fun HomeScreenView(
                     HomeMenuBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
-                        navigationManager = data.navigationManager,
+                        navigateToCategoriesScreen = data.navigateToCategoriesScreen,
+                        navigateToSettingsScreen = data.navigateToSettingsScreen,
+                        navigateToSourcesScreen = data.navigateToSourcesScreen,
                         resetBottomSheetType = {
                             homeBottomSheetType = HomeBottomSheetType.NONE
                         },
@@ -121,13 +125,7 @@ internal fun HomeScreenView(
                 contentDescription = stringResource(
                     id = R.string.screen_home_floating_action_button_content_description,
                 ),
-                onClick = {
-                    data.navigationManager.navigate(
-                        navigationCommand = MyNavigationDirections.AddTransaction(
-                            transactionId = null,
-                        )
-                    )
-                },
+                onClick = data.navigateToAddTransactionScreen,
             )
         },
         isFloatingActionButtonDocked = true,
@@ -149,11 +147,7 @@ internal fun HomeScreenView(
         ) {
             item {
                 TotalBalanceCard(
-                    onClick = {
-                        data.navigationManager.navigate(
-                            navigationCommand = MyNavigationDirections.Sources
-                        )
-                    },
+                    onClick = data.navigateToSourcesScreen,
                 )
             }
             item {
@@ -172,11 +166,7 @@ internal fun HomeScreenView(
             }
             item {
                 HomeRecentTransactionsView(
-                    onClick = {
-                        data.navigationManager.navigate(
-                            navigationCommand = MyNavigationDirections.Transactions
-                        )
-                    },
+                    onClick = data.navigateToTransactionsScreen,
                 )
             }
             items(

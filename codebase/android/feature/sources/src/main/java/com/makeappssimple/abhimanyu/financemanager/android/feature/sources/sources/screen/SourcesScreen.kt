@@ -5,6 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.viewmodel.SourcesScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.viewmodel.SourcesScreenViewModelImpl
@@ -32,10 +33,26 @@ fun SourcesScreen(
             defaultSourceId = defaultSourceId,
             sourcesIsUsedInTransactions = sourcesIsUsedInTransactions,
             sources = sources,
-            navigationManager = screenViewModel.navigationManager,
             deleteSource = { sourceId ->
                 screenViewModel.deleteSource(
                     source = sourceId,
+                )
+            },
+            navigateToAddSourceScreen = {
+                screenViewModel.navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.AddSource
+                )
+            },
+            navigateToEditSourceScreen = {
+                screenViewModel.navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.EditSource(
+                        sourceId = it,
+                    )
+                )
+            },
+            navigateUp = {
+                screenViewModel.navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.NavigateUp
                 )
             },
             setDefaultSourceIdInDataStore = { clickedItemIdValue ->

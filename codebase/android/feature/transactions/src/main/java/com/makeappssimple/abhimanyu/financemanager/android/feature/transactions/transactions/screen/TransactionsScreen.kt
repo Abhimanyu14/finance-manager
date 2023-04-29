@@ -7,6 +7,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.SortOption
@@ -55,10 +56,26 @@ fun TransactionsScreen(
             transactionTypes = screenViewModel.transactionTypes,
             oldestTransactionTimestamp = oldestTransactionTimestamp,
             transactionDetailsListItemViewData = transactionDetailsListItemViewData,
-            navigationManager = screenViewModel.navigationManager,
             searchText = searchText,
             selectedSortOption = selectedSortOption,
             deleteTransaction = screenViewModel::deleteTransaction,
+            navigateToAddTransactionScreen = {
+                screenViewModel.navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.AddTransaction()
+                )
+            },
+            navigateToViewTransactionScreen = { transactionId ->
+                screenViewModel.navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.ViewTransaction(
+                        transactionId = transactionId,
+                    )
+                )
+            },
+            navigateUp = {
+                screenViewModel.navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.NavigateUp
+                )
+            },
             updateSearchText = screenViewModel::updateSearchText,
             updateSelectedFilter = screenViewModel::updateSelectedFilter,
             updateSelectedSortOption = screenViewModel::updateSelectedSortOption,

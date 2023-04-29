@@ -48,8 +48,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
@@ -86,10 +84,12 @@ internal data class TransactionsScreenViewData(
     val transactionTypes: List<TransactionType>,
     val oldestTransactionTimestamp: Long,
     val transactionDetailsListItemViewData: Map<String, List<TransactionData>>,
-    val navigationManager: NavigationManager,
     val searchText: String,
     val selectedSortOption: SortOption,
     val deleteTransaction: (transactionId: Int) -> Unit,
+    val navigateToAddTransactionScreen: () -> Unit,
+    val navigateToViewTransactionScreen: (transactionId: Int) -> Unit,
+    val navigateUp: () -> Unit,
     val updateSearchText: (updatedSearchText: String) -> Unit,
     val updateSelectedFilter: (updatedSelectedFilter: Filter) -> Unit,
     val updateSelectedSortOption: (updatedSelectedSortOption: SortOption) -> Unit,
@@ -208,11 +208,7 @@ internal fun TransactionsScreenView(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_transactions_appbar_title,
-                navigationAction = {
-                    data.navigationManager.navigate(
-                        navigationCommand = MyNavigationDirections.NavigateUp
-                    )
-                },
+                navigationAction = data.navigateUp,
             )
         },
         floatingActionButton = {
@@ -221,13 +217,7 @@ internal fun TransactionsScreenView(
                 contentDescription = stringResource(
                     id = R.string.screen_transactions_floating_action_button_content_description,
                 ),
-                onClick = {
-                    data.navigationManager.navigate(
-                        navigationCommand = MyNavigationDirections.AddTransaction(
-                            transactionId = null,
-                        )
-                    )
-                },
+                onClick = data.navigateToAddTransactionScreen,
             )
         },
         onClick = {
@@ -394,14 +384,6 @@ internal fun TransactionsScreenView(
                                 listItem.hashCode()
                             },
                         ) { _, listItem ->
-                            val isDeleteButtonEnabled =
-                                listItem.transaction.refundTransactionIds?.run {
-                                    this.isEmpty()
-                                } ?: true
-                            val isEditButtonVisible =
-                                listItem.transaction.transactionType != TransactionType.ADJUSTMENT
-                            val isRefundButtonVisible =
-                                listItem.transaction.transactionType == TransactionType.EXPENSE
                             val amountColor = listItem.transaction.getAmountTextColor()
                             val amountText =
                                 if (listItem.transaction.transactionType == TransactionType.INCOME ||
@@ -438,11 +420,11 @@ internal fun TransactionsScreenView(
                             val transactionForText = listItem.transactionFor.titleToDisplay
 
                             TransactionListItem(
-                                isDeleteButtonEnabled = isDeleteButtonEnabled,
+                                isDeleteButtonEnabled = false,
                                 isDeleteButtonVisible = true,
-                                isEditButtonVisible = isEditButtonVisible,
+                                isEditButtonVisible = false,
                                 isExpanded = false,
-                                isRefundButtonVisible = isRefundButtonVisible,
+                                isRefundButtonVisible = false,
                                 amountColor = amountColor,
                                 amountText = amountText,
                                 dateAndTimeText = dateAndTimeText,
@@ -452,34 +434,7 @@ internal fun TransactionsScreenView(
                                 title = title,
                                 transactionForText = transactionForText,
                                 onClick = {
-                                    data.navigationManager.navigate(
-                                        navigationCommand = MyNavigationDirections.ViewTransaction(
-                                            transactionId = listItem.transaction.id,
-                                        )
-                                    )
-                                },
-                                onDeleteButtonClick = {
-                                    transactionIdToDelete = listItem.transaction.id
-                                    transactionsBottomSheetType =
-                                        TransactionsBottomSheetType.DELETE_CONFIRMATION
-                                    toggleModalBottomSheetState(
-                                        coroutineScope = state.coroutineScope,
-                                        modalBottomSheetState = state.modalBottomSheetState,
-                                    )
-                                },
-                                onEditButtonClick = {
-                                    data.navigationManager.navigate(
-                                        navigationCommand = MyNavigationDirections.EditTransaction(
-                                            transactionId = listItem.transaction.id,
-                                        )
-                                    )
-                                },
-                                onRefundButtonClick = {
-                                    data.navigationManager.navigate(
-                                        navigationCommand = MyNavigationDirections.AddTransaction(
-                                            transactionId = listItem.transaction.id,
-                                        )
-                                    )
+                                    data.navigateToViewTransactionScreen(listItem.transaction.id)
                                 },
                             )
                         }

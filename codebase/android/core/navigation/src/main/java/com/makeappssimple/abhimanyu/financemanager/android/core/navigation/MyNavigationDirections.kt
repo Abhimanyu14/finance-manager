@@ -46,7 +46,7 @@ object MyNavigationDirections {
     }
 
     data class AddTransaction(
-        private val transactionId: Int?,
+        private val transactionId: Int? = null,
     ) : NavigationCommand {
         override val command = Command.NAVIGATE
         override val destination = "${Screen.AddTransaction.route}/${transactionId}"

@@ -19,8 +19,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
@@ -40,9 +38,11 @@ internal enum class ViewTransactionBottomSheetType : BottomSheetType {
 
 @Immutable
 internal data class ViewTransactionScreenViewData(
-    val navigationManager: NavigationManager,
     val transactionData: TransactionData?,
     val deleteTransaction: (transactionId: Int) -> Unit,
+    val navigateToAddTransactionScreen: (transactionId: Int) -> Unit,
+    val navigateToEditTransactionScreen: (transactionId: Int) -> Unit,
+    val navigateUp: () -> Unit,
 )
 
 @Composable
@@ -136,11 +136,7 @@ internal fun ViewTransactionScreenView(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_view_transaction_appbar_title,
-                navigationAction = {
-                    data.navigationManager.navigate(
-                        navigationCommand = MyNavigationDirections.NavigateUp
-                    )
-                },
+                navigationAction = data.navigateUp,
             )
         },
         onClick = {
@@ -192,20 +188,12 @@ internal fun ViewTransactionScreenView(
                     },
                     onEditButtonClick = {
                         transaction?.id?.let { transactionId ->
-                            data.navigationManager.navigate(
-                                navigationCommand = MyNavigationDirections.EditTransaction(
-                                    transactionId = transactionId,
-                                )
-                            )
+                            data.navigateToEditTransactionScreen(transactionId)
                         }
                     },
                     onRefundButtonClick = {
                         transaction?.id?.let { transactionId ->
-                            data.navigationManager.navigate(
-                                navigationCommand = MyNavigationDirections.AddTransaction(
-                                    transactionId = transactionId,
-                                )
-                            )
+                            data.navigateToAddTransactionScreen(transactionId)
                         }
                     },
                 )

@@ -9,6 +9,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.CreateJsonDocument
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmodel.HomeScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmodel.HomeScreenViewModelImpl
@@ -44,7 +45,31 @@ fun HomeScreen(
             showBackupCard = showBackupCard,
             transactionData = homeListItemViewData,
             createDocument = createDocument,
-            navigationManager = screenViewModel.navigationManager,
+            navigateToAddTransactionScreen = {
+                screenViewModel.navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.AddTransaction()
+                )
+            },
+            navigateToCategoriesScreen = {
+                screenViewModel.navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.Categories
+                )
+            },
+            navigateToSettingsScreen = {
+                screenViewModel.navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.Settings
+                )
+            },
+            navigateToSourcesScreen = {
+                screenViewModel.navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.Sources
+                )
+            },
+            navigateToTransactionsScreen = {
+                screenViewModel.navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.Transactions
+                )
+            },
         ),
         state = rememberCommonScreenViewState(),
     )
