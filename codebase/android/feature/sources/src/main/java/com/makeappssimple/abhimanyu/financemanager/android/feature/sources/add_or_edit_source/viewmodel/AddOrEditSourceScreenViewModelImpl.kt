@@ -226,7 +226,7 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
         updatedBalanceAmountValue: TextFieldValue,
     ) {
         _balanceAmountValue.update {
-            it.copy(
+            updatedBalanceAmountValue.copy(
                 text = updatedBalanceAmountValue.text.filterDigits(),
             )
         }
