@@ -792,19 +792,19 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             awaitAll(
                 async {
                     defaultSourceIdFromDataStore =
-                        dataStore.getDefaultSourceIdFromDataStore().first()
+                        dataStore.getDefaultSourceId().first()
                 },
                 async {
                     defaultExpenseCategoryIdFromDataStore =
-                        dataStore.getDefaultExpenseCategoryIdFromDataStore().first()
+                        dataStore.getDefaultExpenseCategoryId().first()
                 },
                 async {
                     defaultIncomeCategoryIdFromDataStore =
-                        dataStore.getDefaultIncomeCategoryIdFromDataStore().first()
+                        dataStore.getDefaultIncomeCategoryId().first()
                 },
                 async {
                     defaultInvestmentCategoryIdFromDataStore =
-                        dataStore.getDefaultInvestmentCategoryIdFromDataStore().first()
+                        dataStore.getDefaultInvestmentCategoryId().first()
                 },
                 async {
                     _categories.value = getAllCategoriesUseCase()

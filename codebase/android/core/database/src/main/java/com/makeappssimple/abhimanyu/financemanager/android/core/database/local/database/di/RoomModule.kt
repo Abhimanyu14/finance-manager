@@ -1,7 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.di
 
 import android.content.Context
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
+import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,9 +16,13 @@ class RoomModule {
     @Provides
     fun providesMyRoomDatabase(
         @ApplicationContext context: Context,
+        dispatcherProvider: DispatcherProvider,
+        myDataStore: MyDataStore,
     ): MyRoomDatabase {
         return MyRoomDatabase.getDatabase(
             context = context,
+            dispatcherProvider = dispatcherProvider,
+            myDataStore = myDataStore,
         )
     }
 }

@@ -49,7 +49,7 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
                 )
             }
         }
-    override val defaultSourceId: Flow<Int?> = dataStore.getDefaultSourceIdFromDataStore()
+    override val defaultSourceId: Flow<Int?> = dataStore.getDefaultSourceId()
 
     override fun deleteSource(
         source: Source,
@@ -69,7 +69,7 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            dataStore.setDefaultSourceIdInDataStore(
+            dataStore.setDefaultSourceId(
                 defaultSourceId = defaultSourceId,
             )
         }

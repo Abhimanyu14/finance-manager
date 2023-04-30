@@ -8,10 +8,9 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.appName
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.IoDispatcher
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStoreImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.dataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import dagger.Module
 import dagger.Provides
@@ -19,7 +18,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
@@ -30,7 +28,7 @@ class DataStoreModule {
     @Provides
     fun providePreferencesDataStore(
         @ApplicationContext appContext: Context,
-        @IoDispatcher ioDispatcher: CoroutineDispatcher,
+        dispatcherProvider: DispatcherProvider,
     ): DataStore<Preferences> {
         return PreferenceDataStoreFactory.create(
             corruptionHandler = ReplaceFileCorruptionHandler(
@@ -39,7 +37,7 @@ class DataStoreModule {
                 }
             ),
             scope = CoroutineScope(
-                context = ioDispatcher + SupervisorJob(),
+                context = dispatcherProvider.io + SupervisorJob(),
             ),
             produceFile = {
                 appContext.preferencesDataStoreFile(
@@ -49,14 +47,13 @@ class DataStoreModule {
         )
     }
 
-    // TODO-Abhi: Replace with Injected Data store once injection in Database is resolved
     @Provides
     fun providesMyDataStore(
-        @ApplicationContext appContext: Context,
+        dataStore: DataStore<Preferences>,
         logger: Logger,
     ): MyDataStore {
         return MyDataStoreImpl(
-            dataStore = appContext.dataStore,
+            dataStore = dataStore,
             logger = logger,
         )
     }

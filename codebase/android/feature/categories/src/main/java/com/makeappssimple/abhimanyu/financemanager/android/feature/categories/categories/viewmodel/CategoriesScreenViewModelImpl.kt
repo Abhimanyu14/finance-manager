@@ -75,11 +75,11 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
             }
         }
     override val defaultExpenseCategoryId: Flow<Int?> = dataStore
-        .getDefaultExpenseCategoryIdFromDataStore()
+        .getDefaultExpenseCategoryId()
     override val defaultIncomeCategoryId: Flow<Int?> = dataStore
-        .getDefaultIncomeCategoryIdFromDataStore()
+        .getDefaultIncomeCategoryId()
     override val defaultInvestmentCategoryId: Flow<Int?> = dataStore
-        .getDefaultInvestmentCategoryIdFromDataStore()
+        .getDefaultInvestmentCategoryId()
 
     override fun deleteCategory(
         id: Int,
@@ -108,19 +108,19 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
         ) {
             when (transactionType) {
                 TransactionType.EXPENSE -> {
-                    dataStore.setDefaultExpenseCategoryIdInDataStore(
+                    dataStore.setDefaultExpenseCategoryId(
                         defaultExpenseCategoryId = defaultCategoryId,
                     )
                 }
 
                 TransactionType.INCOME -> {
-                    dataStore.setDefaultIncomeCategoryIdInDataStore(
+                    dataStore.setDefaultIncomeCategoryId(
                         defaultIncomeCategoryId = defaultCategoryId,
                     )
                 }
 
                 TransactionType.INVESTMENT -> {
-                    dataStore.setDefaultInvestmentCategoryIdInDataStore(
+                    dataStore.setDefaultInvestmentCategoryId(
                         defaultInvestmentCategoryId = defaultCategoryId,
                     )
                 }

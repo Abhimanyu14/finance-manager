@@ -1,13 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database
 
 import android.content.Context
-import androidx.datastore.preferences.core.edit
 import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.datasource.local.CategoryDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
@@ -39,12 +39,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.readInitialDataFromAssets
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.transactionsCleanUp
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.CATEGORY_DATA_VERSION_NUMBER
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.EMOJI_DATA_VERSION_NUMBER
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.TRANSACTIONS_DATA_VERSION_NUMBER
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.dataStore
+import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -102,6 +99,8 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
         fun getDatabase(
             context: Context,
+            dispatcherProvider: DispatcherProvider,
+            myDataStore: MyDataStore,
         ): MyRoomDatabase {
             val tempInstance = INSTANCE
             if (tempInstance.isNotNull()) {
@@ -126,6 +125,8 @@ abstract class MyRoomDatabase : RoomDatabase() {
                             .execute {
                                 populateInitialData(
                                     context = context,
+                                    dispatcherProvider = dispatcherProvider,
+                                    myDataStore = myDataStore,
                                 )
                             }
                     }
@@ -163,27 +164,31 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
         private fun populateInitialData(
             context: Context,
+            dispatcherProvider: DispatcherProvider,
+            myDataStore: MyDataStore,
         ) {
             val myRoomDatabase = getDatabase(
                 context = context,
+                dispatcherProvider = dispatcherProvider,
+                myDataStore = myDataStore,
             )
             myRoomDatabase.runInTransaction {
                 CoroutineScope(
-                    context = Dispatchers.IO,
+                    context = dispatcherProvider.io + SupervisorJob(),
                 ).launch {
                     val initialDatabaseData = readInitialDataFromAssets(
                         context = context,
                     ) ?: return@launch
                     launch {
                         populateCategoryData(
-                            context = context,
+                            myDataStore = myDataStore,
                             myRoomDatabase = myRoomDatabase,
                             initialDatabaseData = initialDatabaseData,
                         )
                     }
                     launch {
                         populateEmojiData(
-                            context = context,
+                            myDataStore = myDataStore,
                             myRoomDatabase = myRoomDatabase,
                             initialDatabaseData = initialDatabaseData,
                         )
@@ -202,7 +207,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     }
                     launch {
                         transactionsCleanUpIfRequired(
-                            context = context,
+                            myDataStore = myDataStore,
                             myRoomDatabase = myRoomDatabase,
                         )
                     }
@@ -211,7 +216,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
         }
 
         private suspend fun populateCategoryData(
-            context: Context,
+            myDataStore: MyDataStore,
             myRoomDatabase: MyRoomDatabase,
             initialDatabaseData: InitialDatabaseData,
         ) {
@@ -224,9 +229,9 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     )
                 }
             } else {
-                context.dataStore.data
-                    .map { preferences ->
-                        preferences[CATEGORY_DATA_VERSION_NUMBER] ?: 2
+                myDataStore.getCategoryDataVersionNumber()
+                    .map {
+                        it ?: 2
                     }
                     .collectLatest { categoryDataVersion ->
                         if (categoryDataVersion < initialDatabaseData.defaultCategories.versionNumber) {
@@ -241,17 +246,16 @@ abstract class MyRoomDatabase : RoomDatabase() {
                                         categories = it.categories.toTypedArray(),
                                     )
                                 }
-                            context.dataStore.edit { preferences ->
-                                preferences[CATEGORY_DATA_VERSION_NUMBER] =
-                                    initialDatabaseData.defaultCategories.versionNumber
-                            }
+                            myDataStore.setCategoryDataVersionNumber(
+                                categoryDataVersionNumber = initialDatabaseData.defaultCategories.versionNumber,
+                            )
                         }
                     }
             }
         }
 
         private suspend fun populateEmojiData(
-            context: Context,
+            myDataStore: MyDataStore,
             myRoomDatabase: MyRoomDatabase,
             initialDatabaseData: InitialDatabaseData,
         ) {
@@ -261,11 +265,10 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     emojis = initialDatabaseData.emojis.emojisData.toTypedArray(),
                 )
             } else {
-                context.dataStore.data
-                    .map { preferences ->
-                        preferences[EMOJI_DATA_VERSION_NUMBER] ?: 0
-                    }
-                    .collectLatest { emojiDataVersion ->
+                myDataStore.getEmojiDataVersionNumber()
+                    .map {
+                        it ?: 0
+                    }.collectLatest { emojiDataVersion ->
                         if (emojiDataVersion < initialDatabaseData.emojis.versionNumber) {
                             emojiDao.deleteAllEmojis()
                             initialDatabaseData.emojis.emojisData.forEach {
@@ -273,10 +276,9 @@ abstract class MyRoomDatabase : RoomDatabase() {
                                     emoji = it,
                                 )
                             }
-                            context.dataStore.edit { preferences ->
-                                preferences[EMOJI_DATA_VERSION_NUMBER] =
-                                    initialDatabaseData.emojis.versionNumber
-                            }
+                            myDataStore.setEmojiDataVersionNumber(
+                                emojiDataVersionNumber = initialDatabaseData.emojis.versionNumber,
+                            )
                         }
                     }
             }
@@ -307,14 +309,13 @@ abstract class MyRoomDatabase : RoomDatabase() {
         }
 
         private suspend fun transactionsCleanUpIfRequired(
-            context: Context,
+            myDataStore: MyDataStore,
             myRoomDatabase: MyRoomDatabase,
         ) {
-            context.dataStore.data
-                .map { preferences ->
-                    preferences[TRANSACTIONS_DATA_VERSION_NUMBER] ?: 0
-                }
-                .collectLatest { transactionsDataVersion ->
+            myDataStore.getTransactionsDataVersionNumber()
+                .map {
+                    it ?: 0
+                }.collectLatest { transactionsDataVersion ->
                     val currentTransactionsDataVersion = 1
                     if (transactionsDataVersion < currentTransactionsDataVersion) {
                         val transactionDao = myRoomDatabase.transactionDao()
@@ -323,10 +324,9 @@ abstract class MyRoomDatabase : RoomDatabase() {
                         transactionDao.insertTransactions(
                             *transactionsCleanUp(transactions).toTypedArray()
                         )
-                        context.dataStore.edit { preferences ->
-                            preferences[TRANSACTIONS_DATA_VERSION_NUMBER] =
-                                currentTransactionsDataVersion
-                        }
+                        myDataStore.setTransactionsDataVersionNumber(
+                            transactionsDataVersionNumber = currentTransactionsDataVersion,
+                        )
                     }
                 }
         }

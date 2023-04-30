@@ -1,40 +1,43 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.datastore
 
-import android.content.Context
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.appName
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getCurrentTimeMillis
 import kotlinx.coroutines.flow.Flow
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
-    name = appName,
-)
-
 interface MyDataStore {
-    fun getDefaultExpenseCategoryIdFromDataStore(): Flow<Int?>
+    fun getCategoryDataVersionNumber(): Flow<Int?>
 
-    suspend fun setDefaultExpenseCategoryIdInDataStore(
+    suspend fun setCategoryDataVersionNumber(
+        categoryDataVersionNumber: Int,
+    )
+
+    fun getDefaultExpenseCategoryId(): Flow<Int?>
+
+    suspend fun setDefaultExpenseCategoryId(
         defaultExpenseCategoryId: Int,
     )
 
-    fun getDefaultIncomeCategoryIdFromDataStore(): Flow<Int?>
+    fun getDefaultIncomeCategoryId(): Flow<Int?>
 
-    suspend fun setDefaultIncomeCategoryIdInDataStore(
+    suspend fun setDefaultIncomeCategoryId(
         defaultIncomeCategoryId: Int,
     )
 
-    fun getDefaultInvestmentCategoryIdFromDataStore(): Flow<Int?>
+    fun getDefaultInvestmentCategoryId(): Flow<Int?>
 
-    suspend fun setDefaultInvestmentCategoryIdInDataStore(
+    suspend fun setDefaultInvestmentCategoryId(
         defaultInvestmentCategoryId: Int,
     )
 
-    fun getDefaultSourceIdFromDataStore(): Flow<Int?>
+    fun getDefaultSourceId(): Flow<Int?>
 
-    suspend fun setDefaultSourceIdInDataStore(
+    suspend fun setDefaultSourceId(
         defaultSourceId: Int,
+    )
+
+    fun getEmojiDataVersionNumber(): Flow<Int?>
+
+    suspend fun setEmojiDataVersionNumber(
+        emojiDataVersionNumber: Int,
     )
 
     fun getLastDataBackupTimestamp(): Flow<Long?>
@@ -47,5 +50,11 @@ interface MyDataStore {
 
     suspend fun setLastDataChangeTimestamp(
         lastDataChangeTimestamp: Long = getCurrentTimeMillis(),
+    )
+
+    fun getTransactionsDataVersionNumber(): Flow<Int?>
+
+    suspend fun setTransactionsDataVersionNumber(
+        transactionsDataVersionNumber: Int,
     )
 }

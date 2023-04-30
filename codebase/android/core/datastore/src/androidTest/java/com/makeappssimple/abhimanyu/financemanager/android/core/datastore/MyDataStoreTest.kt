@@ -73,18 +73,18 @@ class MyDataStoreTest {
 
     @Test
     fun getDefaultExpenseCategoryIdFromDataStore_returnsNull() = runTest {
-        val result = myDataStore.getDefaultExpenseCategoryIdFromDataStore().first()
+        val result = myDataStore.getDefaultExpenseCategoryId().first()
 
         Assert.assertNull(result)
     }
 
     @Test
     fun setDefaultExpenseCategoryIdInDataStore_defaultTest() = runTest {
-        myDataStore.setDefaultExpenseCategoryIdInDataStore(
+        myDataStore.setDefaultExpenseCategoryId(
             defaultExpenseCategoryId = testId,
         )
 
-        val result = myDataStore.getDefaultExpenseCategoryIdFromDataStore().first()
+        val result = myDataStore.getDefaultExpenseCategoryId().first()
 
         Assert.assertEquals(
             testId,
@@ -94,18 +94,18 @@ class MyDataStoreTest {
 
     @Test
     fun getDefaultIncomeCategoryIdFromDataStore_returnsNull() = runTest {
-        val result = myDataStore.getDefaultIncomeCategoryIdFromDataStore().first()
+        val result = myDataStore.getDefaultIncomeCategoryId().first()
 
         Assert.assertNull(result)
     }
 
     @Test
     fun setDefaultIncomeCategoryIdInDataStore_defaultTest() = runTest {
-        myDataStore.setDefaultIncomeCategoryIdInDataStore(
+        myDataStore.setDefaultIncomeCategoryId(
             defaultIncomeCategoryId = testId,
         )
 
-        val result = myDataStore.getDefaultIncomeCategoryIdFromDataStore().first()
+        val result = myDataStore.getDefaultIncomeCategoryId().first()
 
         Assert.assertEquals(
             testId,
@@ -115,18 +115,18 @@ class MyDataStoreTest {
 
     @Test
     fun getDefaultInvestmentCategoryIdFromDataStore_returnsNull() = runTest {
-        val result = myDataStore.getDefaultInvestmentCategoryIdFromDataStore().first()
+        val result = myDataStore.getDefaultInvestmentCategoryId().first()
 
         Assert.assertNull(result)
     }
 
     @Test
     fun setDefaultInvestmentCategoryIdInDataStore_defaultTest() = runTest {
-        myDataStore.setDefaultInvestmentCategoryIdInDataStore(
+        myDataStore.setDefaultInvestmentCategoryId(
             defaultInvestmentCategoryId = testId,
         )
 
-        val result = myDataStore.getDefaultInvestmentCategoryIdFromDataStore().first()
+        val result = myDataStore.getDefaultInvestmentCategoryId().first()
 
         Assert.assertEquals(
             testId,
@@ -136,18 +136,18 @@ class MyDataStoreTest {
 
     @Test
     fun getDefaultSourceIdFromDataStore_returnsNull() = runTest {
-        val result = myDataStore.getDefaultSourceIdFromDataStore().first()
+        val result = myDataStore.getDefaultSourceId().first()
 
         Assert.assertNull(result)
     }
 
     @Test
     fun setDefaultSourceIdInDataStore_defaultTest() = runTest {
-        myDataStore.setDefaultSourceIdInDataStore(
+        myDataStore.setDefaultSourceId(
             defaultSourceId = testId,
         )
 
-        val result = myDataStore.getDefaultSourceIdFromDataStore().first()
+        val result = myDataStore.getDefaultSourceId().first()
 
         Assert.assertEquals(
             testId,

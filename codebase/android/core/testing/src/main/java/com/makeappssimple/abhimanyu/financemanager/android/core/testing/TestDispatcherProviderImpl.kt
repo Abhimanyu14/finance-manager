@@ -10,5 +10,6 @@ class TestDispatcherProviderImpl(
     override val default: CoroutineDispatcher = testDispatcher
     override val io: CoroutineDispatcher = testDispatcher
     override val main: CoroutineDispatcher = testDispatcher
+    override val immediate: CoroutineDispatcher = testDispatcher
     override val unconfined: CoroutineDispatcher = testDispatcher
 }

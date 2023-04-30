@@ -1,11 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 
@@ -16,10 +16,10 @@ object CoroutinesScopesModule {
     @ApplicationScope
     @Provides
     fun providesCoroutineScope(
-        @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
+        dispatcherProvider: DispatcherProvider,
     ): CoroutineScope {
         return CoroutineScope(
-            context = defaultDispatcher + SupervisorJob(),
+            context = dispatcherProvider.default + SupervisorJob(),
         )
     }
 }

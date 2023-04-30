@@ -25,13 +25,27 @@ internal class MyDataStoreImpl(
             )
         }
 
-    override fun getDefaultExpenseCategoryIdFromDataStore(): Flow<Int?> {
+    override fun getCategoryDataVersionNumber(): Flow<Int?> {
+        return preferences.map {
+            it[CATEGORY_DATA_VERSION_NUMBER]
+        }
+    }
+
+    override suspend fun setCategoryDataVersionNumber(
+        categoryDataVersionNumber: Int,
+    ) {
+        dataStore.edit {
+            it[CATEGORY_DATA_VERSION_NUMBER] = categoryDataVersionNumber
+        }
+    }
+
+    override fun getDefaultExpenseCategoryId(): Flow<Int?> {
         return preferences.map {
             it[DEFAULT_EXPENSE_CATEGORY_ID]
         }
     }
 
-    override suspend fun setDefaultExpenseCategoryIdInDataStore(
+    override suspend fun setDefaultExpenseCategoryId(
         defaultExpenseCategoryId: Int,
     ) {
         dataStore.edit {
@@ -39,13 +53,13 @@ internal class MyDataStoreImpl(
         }
     }
 
-    override fun getDefaultIncomeCategoryIdFromDataStore(): Flow<Int?> {
+    override fun getDefaultIncomeCategoryId(): Flow<Int?> {
         return preferences.map {
             it[DEFAULT_INCOME_CATEGORY_ID]
         }
     }
 
-    override suspend fun setDefaultIncomeCategoryIdInDataStore(
+    override suspend fun setDefaultIncomeCategoryId(
         defaultIncomeCategoryId: Int,
     ) {
         dataStore.edit {
@@ -53,13 +67,13 @@ internal class MyDataStoreImpl(
         }
     }
 
-    override fun getDefaultInvestmentCategoryIdFromDataStore(): Flow<Int?> {
+    override fun getDefaultInvestmentCategoryId(): Flow<Int?> {
         return preferences.map {
             it[DEFAULT_INVESTMENT_CATEGORY_ID]
         }
     }
 
-    override suspend fun setDefaultInvestmentCategoryIdInDataStore(
+    override suspend fun setDefaultInvestmentCategoryId(
         defaultInvestmentCategoryId: Int,
     ) {
         dataStore.edit {
@@ -67,17 +81,31 @@ internal class MyDataStoreImpl(
         }
     }
 
-    override fun getDefaultSourceIdFromDataStore(): Flow<Int?> {
+    override fun getDefaultSourceId(): Flow<Int?> {
         return preferences.map {
             it[DEFAULT_SOURCE_ID]
         }
     }
 
-    override suspend fun setDefaultSourceIdInDataStore(
+    override suspend fun setDefaultSourceId(
         defaultSourceId: Int,
     ) {
         dataStore.edit {
             it[DEFAULT_SOURCE_ID] = defaultSourceId
+        }
+    }
+
+    override fun getEmojiDataVersionNumber(): Flow<Int?> {
+        return preferences.map {
+            it[EMOJI_DATA_VERSION_NUMBER]
+        }
+    }
+
+    override suspend fun setEmojiDataVersionNumber(
+        emojiDataVersionNumber: Int,
+    ) {
+        dataStore.edit {
+            it[EMOJI_DATA_VERSION_NUMBER] = emojiDataVersionNumber
         }
     }
 
@@ -106,6 +134,20 @@ internal class MyDataStoreImpl(
     ) {
         dataStore.edit {
             it[LAST_DATA_CHANGE_TIMESTAMP] = lastDataChangeTimestamp
+        }
+    }
+
+    override fun getTransactionsDataVersionNumber(): Flow<Int?> {
+        return preferences.map {
+            it[TRANSACTIONS_DATA_VERSION_NUMBER]
+        }
+    }
+
+    override suspend fun setTransactionsDataVersionNumber(
+        transactionsDataVersionNumber: Int,
+    ) {
+        dataStore.edit {
+            it[TRANSACTIONS_DATA_VERSION_NUMBER] = transactionsDataVersionNumber
         }
     }
 }
