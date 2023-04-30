@@ -52,7 +52,6 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 class TransactionModule {
-
     @Provides
     fun providesTransactionDao(
         myRoomDatabase: MyRoomDatabase,

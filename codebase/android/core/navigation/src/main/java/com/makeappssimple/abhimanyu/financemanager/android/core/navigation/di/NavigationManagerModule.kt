@@ -13,7 +13,6 @@ import kotlinx.coroutines.CoroutineScope
 @Module
 @InstallIn(SingletonComponent::class)
 class NavigationManagerModule {
-
     @Singleton
     @Provides
     fun providesNavigationManager(

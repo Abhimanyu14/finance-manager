@@ -4,11 +4,9 @@ import android.content.Context
 import androidx.datastore.preferences.core.edit
 import androidx.room.AutoMigration
 import androidx.room.Database
-import androidx.room.RenameColumn
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import androidx.room.migration.AutoMigrationSpec
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.datasource.local.CategoryDao
@@ -19,6 +17,20 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.initial
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.converters.AmountConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.converters.CategoryConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.converters.IntListConverter
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.migrations.AutoDatabaseMigrations
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.migrations.MIGRATION_12_13
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.migrations.MIGRATION_13_14
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.migrations.MIGRATION_14_15
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.migrations.MIGRATION_15_16
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.migrations.MIGRATION_16_17
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.migrations.MIGRATION_17_18
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.migrations.MIGRATION_2_3
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.migrations.MIGRATION_3_4
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.migrations.MIGRATION_4_5
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.migrations.MIGRATION_6_7
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.migrations.MIGRATION_7_8
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.migrations.MIGRATION_8_9
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.migrations.MIGRATION_9_10
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.datasource.local.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.datasource.local.TransactionDao
@@ -52,22 +64,22 @@ import java.util.concurrent.Executors
         AutoMigration(
             from = 11,
             to = 12,
-            spec = MyRoomDatabase.AutoMigration11to12::class,
+            spec = AutoDatabaseMigrations.AutoMigration11to12::class,
         ),
         AutoMigration(
             from = 10,
             to = 11,
-            spec = MyRoomDatabase.AutoMigration10to11::class,
+            spec = AutoDatabaseMigrations.AutoMigration10to11::class,
         ),
         AutoMigration(
             from = 5,
             to = 6,
-            spec = MyRoomDatabase.AutoMigration5to6::class,
+            spec = AutoDatabaseMigrations.AutoMigration5to6::class,
         ),
         AutoMigration(
             from = 1,
             to = 2,
-            spec = MyRoomDatabase.AutoMigration1to2::class,
+            spec = AutoDatabaseMigrations.AutoMigration1to2::class,
         ),
     ],
     exportSchema = true,
@@ -84,39 +96,6 @@ abstract class MyRoomDatabase : RoomDatabase() {
     abstract fun transactionDao(): TransactionDao
     abstract fun transactionForDao(): TransactionForDao
 
-    /**
-     * Room auto-migration
-     * Source - https://developer.android.com/training/data-storage/room/migrating-db-versions#automigrationspec
-     */
-    @RenameColumn(
-        tableName = "transaction_table",
-        fromColumnName = "source_id",
-        toColumnName = "source_from_id",
-    )
-    class AutoMigration11to12 : AutoMigrationSpec
-
-    @RenameColumn(
-        tableName = "transaction_table",
-        fromColumnName = "sourceToId",
-        toColumnName = "source_to_id",
-    )
-    class AutoMigration10to11 : AutoMigrationSpec
-
-    @RenameColumn(
-        tableName = "transaction_table",
-        fromColumnName = "categoryId",
-        toColumnName = "category_id",
-    )
-    class AutoMigration5to6 : AutoMigrationSpec
-
-    @RenameColumn(
-        tableName = "source_table",
-        fromColumnName = "balanceAmount",
-        toColumnName = "balance_amount",
-    )
-    class AutoMigration1to2 : AutoMigrationSpec
-
-
     companion object {
         @Volatile
         private var INSTANCE: MyRoomDatabase? = null
@@ -131,7 +110,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
             synchronized(
                 lock = this,
             ) {
-                val callback: Callback = object : Callback() {
+                val roomDatabaseCallback: Callback = object : Callback() {
                     override fun onCreate(
                         db: SupportSQLiteDatabase,
                     ) {
@@ -174,7 +153,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                         MIGRATION_2_3,
                     )
                     .addCallback(
-                        callback = callback,
+                        callback = roomDatabaseCallback,
                     )
                     .build()
                 INSTANCE = instance

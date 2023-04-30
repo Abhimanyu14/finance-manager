@@ -15,7 +15,6 @@ import javax.inject.Singleton
     replaces = [DispatcherProviderModule::class],
 )
 object TestDispatcherProviderModule {
-
     @Singleton
     @Provides
     fun providesDispatcherProvider(): DispatcherProvider {

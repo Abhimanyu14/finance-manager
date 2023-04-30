@@ -26,7 +26,6 @@ import kotlinx.coroutines.SupervisorJob
 @Module
 @InstallIn(SingletonComponent::class)
 class DataStoreModule {
-
     @Singleton
     @Provides
     fun providePreferencesDataStore(

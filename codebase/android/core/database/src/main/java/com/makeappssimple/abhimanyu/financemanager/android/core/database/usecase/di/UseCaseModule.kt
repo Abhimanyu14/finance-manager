@@ -28,7 +28,6 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 class UseCaseModule {
-
     @Provides
     fun providesBackupDataUseCase(
         dataStore: MyDataStore,

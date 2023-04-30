@@ -31,7 +31,6 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 class SourceModule {
-
     @Provides
     fun providesSourceDao(
         myRoomDatabase: MyRoomDatabase,
