@@ -13,6 +13,8 @@ interface SettingsScreenViewModel : ScreenViewModel {
         uri: Uri,
     )
 
+    fun getAppVersionName(): String
+
     fun navigateToTransactionForValuesScreen()
 
     fun navigateUp()

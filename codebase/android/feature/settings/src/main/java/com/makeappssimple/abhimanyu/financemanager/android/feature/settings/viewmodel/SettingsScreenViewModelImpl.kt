@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.appversion.AppVersionUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.RestoreDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.RecalculateTotalUseCase
@@ -18,12 +19,12 @@ import kotlinx.coroutines.launch
 internal class SettingsScreenViewModelImpl @Inject constructor(
     override val logger: Logger,
     override val navigationManager: NavigationManager,
+    private val appVersionUtil: AppVersionUtil,
     private val backupDataUseCase: BackupDataUseCase,
     private val dispatcherProvider: DispatcherProvider,
     private val recalculateTotalUseCase: RecalculateTotalUseCase,
     private val restoreDataUseCase: RestoreDataUseCase,
 ) : SettingsScreenViewModel, ViewModel() {
-
     override fun backupDataToDocument(
         uri: Uri,
     ) {
@@ -37,6 +38,10 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
                 navigationCommand = MyNavigationDirections.NavigateUp
             )
         }
+    }
+
+    override fun getAppVersionName(): String {
+        return appVersionUtil.getAppVersion()?.versionName.orEmpty()
     }
 
     override fun navigateToTransactionForValuesScreen() {

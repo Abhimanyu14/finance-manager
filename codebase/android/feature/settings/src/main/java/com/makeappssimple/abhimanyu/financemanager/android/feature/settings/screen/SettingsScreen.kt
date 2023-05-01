@@ -9,11 +9,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.CreateJsonDocument
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.JSON_MIMETYPE
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getAppVersion
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.viewmodel.SettingsScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.viewmodel.SettingsScreenViewModelImpl
@@ -25,7 +23,6 @@ fun SettingsScreen(
     screenViewModel.logger.logError(
         message = "Inside SettingsScreen",
     )
-    val context = LocalContext.current
     var isLoading by remember {
         mutableStateOf(false)
     }
@@ -51,14 +48,11 @@ fun SettingsScreen(
                 )
             }
         }
-    val appVersion = getAppVersion(
-        context = context,
-    )?.versionName
 
     SettingsScreenView(
         data = SettingsScreenViewData(
             isLoading = isLoading,
-            appVersion = appVersion,
+            appVersion = screenViewModel.getAppVersionName(),
             backupData = {
                 createDocumentResultLauncher.launch(JSON_MIMETYPE)
             },
