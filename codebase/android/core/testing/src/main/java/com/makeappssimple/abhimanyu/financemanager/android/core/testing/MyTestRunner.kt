@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.datastore
+package com.makeappssimple.abhimanyu.financemanager.android.core.testing
 
 import android.app.Application
 import android.content.Context

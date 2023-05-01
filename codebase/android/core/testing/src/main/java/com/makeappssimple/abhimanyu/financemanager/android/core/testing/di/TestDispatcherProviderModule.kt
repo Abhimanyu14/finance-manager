@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.testing
+package com.makeappssimple.abhimanyu.financemanager.android.core.testing.di
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProviderImpl

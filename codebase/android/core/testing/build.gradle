@@ -13,7 +13,7 @@ android {
         minSdk rootProject.minSdkVersion
         targetSdk rootProject.targetSdkVersion
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.makeappssimple.abhimanyu.financemanager.android.core.testing.MyTestRunner"
     }
 
     buildTypes {
@@ -60,6 +60,7 @@ android {
 
 dependencies {
     implementation project(":core:common")
+
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion")
 
@@ -70,24 +71,20 @@ dependencies {
 
     // Testing
 
-    // Junit
+    // Android X test
     implementation "junit:junit:$rootProject.junitVersion"
+    implementation "androidx.test.ext:junit:$rootProject.androidXTestExtensionJUnitVersion"
+    implementation "androidx.test.ext:truth:$rootProject.androidXTestExtensionTruthVersion"
+    implementation "androidx.test:runner:$rootProject.androidXTestRunnerVersion"
+    implementation "androidx.test:rules:$rootProject.androidXTestRulesVersion"
+
+    // Mockito kotlin
+    implementation "org.mockito.kotlin:mockito-kotlin:$rootProject.mockitoKotlinVersion"
 
     // Coroutines test
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
 
-    // For Robolectric tests.
+    // Hilt testing
     implementation "com.google.dagger:hilt-android-testing:2.44"
-    // ...with Kotlin.
     kapt "com.google.dagger:hilt-android-compiler:2.44.2"
-
-    // For Robolectric tests.
-    testImplementation "com.google.dagger:hilt-android-testing:2.44"
-    // ...with Kotlin.
-    kaptTest "com.google.dagger:hilt-android-compiler:2.44.2"
-
-    // For instrumented tests.
-    androidTestImplementation "com.google.dagger:hilt-android-testing:2.44"
-    // ...with Kotlin.
-    kaptAndroidTest "com.google.dagger:hilt-android-compiler:2.44.2"
 }

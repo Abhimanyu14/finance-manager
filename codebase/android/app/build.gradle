@@ -113,7 +113,7 @@ android {
         versionCode rootProject.appVersionCode
         versionName rootProject.appVersionName
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.makeappssimple.abhimanyu.financemanager.android.core.testing.MyTestRunner"
         vectorDrawables {
             useSupportLibrary true
         }

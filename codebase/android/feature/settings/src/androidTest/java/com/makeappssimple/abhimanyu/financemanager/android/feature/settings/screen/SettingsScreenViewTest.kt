@@ -17,17 +17,6 @@ class SettingsScreenViewTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    private val testAppVersion = "2023.04.07.1"
-    private val testSettingsScreenViewData = SettingsScreenViewData(
-        isLoading = false,
-        appVersion = testAppVersion,
-        backupData = {},
-        navigateToTransactionForValuesScreen = {},
-        navigateUp = {},
-        recalculateTotal = {},
-        restoreData = {},
-    )
-
     private lateinit var linearProgressIndicator: SemanticsNodeInteraction
     private lateinit var backupDataListItem: SemanticsNodeInteraction
     private lateinit var restoreDataListItem: SemanticsNodeInteraction
@@ -148,5 +137,18 @@ class SettingsScreenViewTest {
 
         // Assert that the progress indicator is not shown
         appVersionText.assertDoesNotExist()
+    }
+
+    companion object {
+        private const val testAppVersion = "2023.04.07.1"
+        private val testSettingsScreenViewData = SettingsScreenViewData(
+            isLoading = false,
+            appVersion = testAppVersion,
+            backupData = {},
+            navigateToTransactionForValuesScreen = {},
+            navigateUp = {},
+            recalculateTotal = {},
+            restoreData = {},
+        )
     }
 }

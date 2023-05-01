@@ -13,7 +13,7 @@ android {
         minSdk rootProject.minSdkVersion
         targetSdk rootProject.targetSdkVersion
 
-        testInstrumentationRunner "com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyTestRunner"
+        testInstrumentationRunner "com.makeappssimple.abhimanyu.financemanager.android.core.testing.MyTestRunner"
     }
 
     buildTypes {
