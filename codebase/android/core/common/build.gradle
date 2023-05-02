@@ -80,8 +80,11 @@ dependencies {
 
     // Testing
 
-    // Android X test
+    // JUnit
     testImplementation "junit:junit:$rootProject.junitVersion"
+
+    // Android X test
+    androidTestImplementation "androidx.test:core-ktx:$rootProject.androidXTestCoreVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXTestExtensionJUnitVersion"
     androidTestImplementation "androidx.test.ext:truth:$rootProject.androidXTestExtensionTruthVersion"
     androidTestImplementation "androidx.test:runner:$rootProject.androidXTestRunnerVersion"

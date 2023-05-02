@@ -13,7 +13,13 @@ import javax.inject.Singleton
 object DispatcherProviderModule {
     @Singleton
     @Provides
-    fun providesDispatcherProvider(): DispatcherProvider {
+    fun providesDispatcherProvider(
+//        @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
+//        @IoDispatcher ioDispatcher: CoroutineDispatcher,
+//        @MainDispatcher mainDispatcher: CoroutineDispatcher,
+//        @MainImmediateDispatcher mainImmediateDispatcher: CoroutineDispatcher,
+//        @UnconfinedDispatcher unconfinedDispatcher: CoroutineDispatcher,
+    ): DispatcherProvider {
         return DispatcherProviderImpl()
     }
 }

@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.CreateJsonDocument
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.CreateJsonDocument
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState

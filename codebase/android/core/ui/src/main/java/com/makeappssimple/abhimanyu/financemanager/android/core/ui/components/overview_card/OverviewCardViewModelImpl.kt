@@ -3,20 +3,19 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.o
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toZonedDateTime
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getCurrentTimeMillis
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getEndOfDayTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getEndOfMonthTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getEndOfYearTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getFormattedDate
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getFormattedMonth
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getFormattedYear
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getStartOfDayTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getStartOfMonthTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getStartOfYearTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getCurrentTimeMillis
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getEndOfDayTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getEndOfMonthTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getEndOfYearTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getFormattedDate
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getFormattedMonth
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getFormattedYear
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getStartOfDayTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getStartOfMonthTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getStartOfYearTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionUseCase
@@ -56,7 +55,6 @@ data class OverviewCardData(
 
 @HiltViewModel
 internal class OverviewCardViewModelImpl @Inject constructor(
-    dispatcherProvider: DispatcherProvider,
     getTransactionsBetweenTimestampsUseCase: GetTransactionsBetweenTimestampsUseCase,
     getTransactionUseCase: GetTransactionUseCase,
 ) : OverviewCardViewModel, ViewModel() {

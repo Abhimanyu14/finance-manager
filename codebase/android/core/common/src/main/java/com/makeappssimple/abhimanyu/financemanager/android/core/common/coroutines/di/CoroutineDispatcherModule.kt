@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 
 @InstallIn(SingletonComponent::class)
 @Module
-object CoroutinesDispatchersModule {
+object CoroutineDispatcherModule {
     @DefaultDispatcher
     @Provides
     fun providesDefaultDispatcher(): CoroutineDispatcher {
@@ -32,5 +32,11 @@ object CoroutinesDispatchersModule {
     @Provides
     fun providesMainImmediateDispatcher(): CoroutineDispatcher {
         return Dispatchers.Main.immediate
+    }
+
+    @UnconfinedDispatcher
+    @Provides
+    fun providesUnconfinedDispatcher(): CoroutineDispatcher {
+        return Dispatchers.Unconfined
     }
 }

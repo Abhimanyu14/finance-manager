@@ -37,7 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.legend.Dot
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getReadableDateAndTime
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getReadableDateAndTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData

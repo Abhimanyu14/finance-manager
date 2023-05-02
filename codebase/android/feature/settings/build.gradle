@@ -131,8 +131,13 @@ dependencies {
 
     // Testing
 
-    // Android X test
+    // JUnit
     testImplementation "junit:junit:$rootProject.junitVersion"
+    androidTestImplementation "junit:junit:$rootProject.junitVersion"
+
+    // Android X test
+    testImplementation "androidx.test:core-ktx:$rootProject.androidXTestCoreVersion"
+    androidTestImplementation "androidx.test:core-ktx:$rootProject.androidXTestCoreVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXTestExtensionJUnitVersion"
     androidTestImplementation "androidx.test.ext:truth:$rootProject.androidXTestExtensionTruthVersion"
     androidTestImplementation "androidx.test:runner:$rootProject.androidXTestRunnerVersion"
@@ -140,10 +145,17 @@ dependencies {
 
     // Mockito kotlin
     testImplementation "org.mockito.kotlin:mockito-kotlin:$rootProject.mockitoKotlinVersion"
+    androidTestImplementation "org.mockito.kotlin:mockito-kotlin:$rootProject.mockitoKotlinVersion"
 
     // Coroutines test
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
+
+    // Hilt testing
+    testImplementation "com.google.dagger:hilt-android-testing:$rootProject.daggerHiltAndroidTesting"
+    kaptTest "com.google.dagger:hilt-android-compiler:$rootProject.daggerHiltAndroidCompiler"
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$rootProject.daggerHiltAndroidTesting"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$rootProject.daggerHiltAndroidCompiler"
 
     // Jetpack compose UI tests
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$rootProject.jetpackComposeVersion"

@@ -71,8 +71,11 @@ dependencies {
 
     // Testing
 
-    // Android X test
+    // JUnit
     implementation "junit:junit:$rootProject.junitVersion"
+
+    // Android X test
+    implementation "androidx.test:core-ktx:$rootProject.androidXTestCoreVersion"
     implementation "androidx.test.ext:junit:$rootProject.androidXTestExtensionJUnitVersion"
     implementation "androidx.test.ext:truth:$rootProject.androidXTestExtensionTruthVersion"
     implementation "androidx.test:runner:$rootProject.androidXTestRunnerVersion"

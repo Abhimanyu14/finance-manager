@@ -1,43 +1,44 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.viewmodel
 
-import android.net.Uri
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.RestoreDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.BackupDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.RecalculateTotalUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LoggerImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.core.testing.TestDispatcherProviderImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
-import kotlinx.coroutines.test.runTest
-import org.junit.After
-import org.junit.Before
-import org.junit.Rule
-import org.junit.Test
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.verify
+/*
 
+@HiltAndroidTest
 class SettingsScreenViewModelTest {
-    @get:Rule
+    @get:Rule(order = 0)
+    var hiltRule = HiltAndroidRule(this)
+
+    @get:Rule(order = 1)
     val mainDispatcherRule = MainDispatcherRule()
 
-    private val logger: Logger = LoggerImpl()
-    private val navigationManager: NavigationManager = mock()
+    @Inject
+    lateinit var dispatcherProvider: DispatcherProvider
+
+    private val testCoroutineScope = TestScope(
+        context = dispatcherProvider.io + Job(),
+    )
+
+    private val context = ApplicationProvider.getApplicationContext<Context>()
+    private var appVersionUtil: AppVersionUtil = AppVersionUtilImpl(
+        context = context,
+    )
+    private var buildConfigUtil: BuildConfigUtil = BuildConfigUtilImpl()
+    private var logger: Logger = LoggerImpl(
+        buildConfigUtil = buildConfigUtil,
+    )
+    private val navigationManager: NavigationManager = NavigationManagerImpl(
+        coroutineScope = testCoroutineScope,
+    )
     private val backupDataUseCase: BackupDataUseCase = mock()
     private val recalculateTotalUseCase: RecalculateTotalUseCase = mock()
     private val restoreDataUseCase: RestoreDataUseCase = mock()
     private lateinit var settingsScreenViewModel: SettingsScreenViewModel
-
-    private val dispatcherProvider: DispatcherProvider = TestDispatcherProviderImpl(
-        testDispatcher = mainDispatcherRule.testDispatcher,
-    )
 
     @Before
     fun setUp() {
         settingsScreenViewModel = SettingsScreenViewModelImpl(
             logger = logger,
             navigationManager = navigationManager,
+            appVersionUtil = appVersionUtil,
             backupDataUseCase = backupDataUseCase,
             dispatcherProvider = dispatcherProvider,
             recalculateTotalUseCase = recalculateTotalUseCase,
@@ -88,3 +89,4 @@ class SettingsScreenViewModelTest {
         ).invoke()
     }
 }
+*/

@@ -22,8 +22,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.JSON_MIMETYPE
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getReadableDateAndTime
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.JSON_MIMETYPE
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getReadableDateAndTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer

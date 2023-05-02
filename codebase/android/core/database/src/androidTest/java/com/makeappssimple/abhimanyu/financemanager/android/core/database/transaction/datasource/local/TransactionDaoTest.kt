@@ -5,7 +5,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getReadableDateAndTime
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getReadableDateAndTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import kotlinx.coroutines.flow.first

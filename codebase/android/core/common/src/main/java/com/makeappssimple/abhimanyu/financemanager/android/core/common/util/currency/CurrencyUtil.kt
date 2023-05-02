@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.common.util
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.util.currency
 
 import java.text.DecimalFormat
 

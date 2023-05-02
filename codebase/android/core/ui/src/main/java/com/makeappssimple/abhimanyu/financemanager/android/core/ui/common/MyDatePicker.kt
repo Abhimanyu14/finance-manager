@@ -4,7 +4,7 @@ import android.app.DatePickerDialog
 import android.content.Context
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getCurrentTimeMillis
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getCurrentTimeMillis
 import java.time.LocalDate
 
 fun getMyDatePickerDialog(

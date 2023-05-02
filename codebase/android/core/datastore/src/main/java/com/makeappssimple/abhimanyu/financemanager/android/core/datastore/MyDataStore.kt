@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.datastore
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.getCurrentTimeMillis
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getCurrentTimeMillis
 import kotlinx.coroutines.flow.Flow
 
 interface MyDataStore {

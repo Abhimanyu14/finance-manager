@@ -16,10 +16,14 @@ data class Quadruple<out A, out B, out C, out D>(
      * Returns string representation of the [Quadruple] including its
      * [first], [second], [third] and [fourth] values.
      */
-    override fun toString(): String = "($first, $second, $third, $fourth)"
+    override fun toString(): String {
+        return "($first, $second, $third, $fourth)"
+    }
 }
 
 /**
  * Converts this quadruple into a list.
  */
-fun <T> Quadruple<T, T, T, T>.toList(): List<T> = listOf(first, second, third, fourth)
+fun <T> Quadruple<T, T, T, T>.toList(): List<T> {
+    return listOf(first, second, third, fourth)
+}

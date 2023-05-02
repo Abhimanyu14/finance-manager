@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.common.util
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDate
