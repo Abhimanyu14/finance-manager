@@ -4,7 +4,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.m
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface EmojiApiService {
+internal interface EmojiApiService {
     @GET("emojis")
     suspend fun getEmojis(
         @Query("access_key") accessKey: String,

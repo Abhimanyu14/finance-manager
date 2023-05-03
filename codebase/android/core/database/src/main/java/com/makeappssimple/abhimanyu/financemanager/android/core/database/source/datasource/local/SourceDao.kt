@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface SourceDao {
-
     @Query(value = "SELECT * from source_table ORDER BY id ASC")
     fun getAllSourcesFlow(): Flow<List<Source>>
 

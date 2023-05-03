@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface EmojiDao {
-
     @Query(value = "SELECT * from emoji_table")
     fun getAllEmojisFlow(): Flow<List<EmojiLocalEntity>>
 

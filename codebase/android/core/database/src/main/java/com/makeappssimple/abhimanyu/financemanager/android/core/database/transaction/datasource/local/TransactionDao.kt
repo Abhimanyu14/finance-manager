@@ -17,7 +17,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TransactionDao {
-
     @Query(
         value = "SELECT * from transaction_table " +
                 "ORDER BY transaction_timestamp DESC"
