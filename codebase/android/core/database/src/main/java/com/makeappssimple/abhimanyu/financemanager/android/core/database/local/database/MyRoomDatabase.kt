@@ -7,6 +7,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.AppConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.datasource.local.CategoryDao
@@ -136,7 +137,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     .databaseBuilder(
                         context = context.applicationContext,
                         klass = MyRoomDatabase::class.java,
-                        name = "finance_manager_database",
+                        name = AppConstants.DATABASE_NAME,
                     )
                     .addMigrations(
                         MIGRATION_17_18,

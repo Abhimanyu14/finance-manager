@@ -1,15 +1,15 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.util
 
-const val defaultExpenseCategory = "Default"
-const val defaultIncomeCategory = "Salary"
-const val defaultInvestmentCategory = "Provident Fund"
-const val defaultSource = "Cash"
+private const val DEFAULT_EXPENSE_CATEGORY = "Default"
+private const val DEFAULT_INCOME_CATEGORY = "Salary"
+private const val DEFAULT_INVESTMENT_CATEGORY = "Provident Fund"
+private const val DEFAULT_SOURCE = "Cash"
 
 fun isDefaultExpenseCategory(
     category: String,
 ): Boolean {
     return category.contains(
-        other = defaultExpenseCategory,
+        other = DEFAULT_EXPENSE_CATEGORY,
         ignoreCase = true,
     )
 }
@@ -18,7 +18,7 @@ fun isDefaultIncomeCategory(
     category: String,
 ): Boolean {
     return category.contains(
-        other = defaultIncomeCategory,
+        other = DEFAULT_INCOME_CATEGORY,
         ignoreCase = true,
     )
 }
@@ -27,7 +27,7 @@ fun isDefaultInvestmentCategory(
     category: String,
 ): Boolean {
     return category.contains(
-        other = defaultInvestmentCategory,
+        other = DEFAULT_INVESTMENT_CATEGORY,
         ignoreCase = true,
     )
 }
@@ -36,7 +36,7 @@ fun isDefaultSource(
     source: String,
 ): Boolean {
     return source.contains(
-        other = defaultSource,
+        other = DEFAULT_SOURCE,
         ignoreCase = true,
     )
 }

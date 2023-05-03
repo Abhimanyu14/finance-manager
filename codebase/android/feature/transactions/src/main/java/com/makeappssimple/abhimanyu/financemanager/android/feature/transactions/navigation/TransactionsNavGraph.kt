@@ -5,8 +5,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.DEEPLINK_BASE_URL
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.DEEPLINK_BROWSER_BASE_URL
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.DeeplinkUrl
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Screen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_transaction.screen.AddTransactionScreen
@@ -30,11 +29,11 @@ fun NavGraphBuilder.transactionsNavGraph() {
         deepLinks = listOf(
             navDeepLink {
                 uriPattern =
-                    "$DEEPLINK_BROWSER_BASE_URL/${Screen.AddTransaction.route}/${NavArgs.TRANSACTION_ID}?${NavArgs.EDIT}={${NavArgs.EDIT}}"
+                    "${DeeplinkUrl.BROWSER_BASE_URL}/${Screen.AddTransaction.route}/${NavArgs.TRANSACTION_ID}?${NavArgs.EDIT}={${NavArgs.EDIT}}"
             },
             navDeepLink {
                 uriPattern =
-                    "$DEEPLINK_BASE_URL/${Screen.AddTransaction.route}/${NavArgs.TRANSACTION_ID}?${NavArgs.EDIT}={${NavArgs.EDIT}}"
+                    "${DeeplinkUrl.BASE_URL}/${Screen.AddTransaction.route}/${NavArgs.TRANSACTION_ID}?${NavArgs.EDIT}={${NavArgs.EDIT}}"
             },
         ),
     ) {
@@ -61,10 +60,10 @@ fun NavGraphBuilder.transactionsNavGraph() {
         route = Screen.Transactions.route,
         deepLinks = listOf(
             navDeepLink {
-                uriPattern = "$DEEPLINK_BROWSER_BASE_URL/${Screen.Transactions.route}"
+                uriPattern = "${DeeplinkUrl.BROWSER_BASE_URL}/${Screen.Transactions.route}"
             },
             navDeepLink {
-                uriPattern = "$DEEPLINK_BASE_URL/${Screen.Transactions.route}"
+                uriPattern = "${DeeplinkUrl.BASE_URL}/${Screen.Transactions.route}"
             },
         ),
     ) {

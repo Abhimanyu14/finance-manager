@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-const val sliceThickness = 30F
+private const val SLICE_THICKNESS = 30F
 /*
 val pieChartData = PieChartData(
     items = listOf(
@@ -39,7 +39,7 @@ fun PieChart(
         com.makeappssimple.abhimanyu.financemanager.android.chart.pie.PieChart(
             pieChartData = pieChartData,
             sliceDrawer = com.makeappssimple.abhimanyu.financemanager.android.chart.pie.renderer.SimpleSliceDrawer(
-                sliceThickness = sliceThickness
+                sliceThickness = SLICE_THICKNESS
             ),
         )
     }

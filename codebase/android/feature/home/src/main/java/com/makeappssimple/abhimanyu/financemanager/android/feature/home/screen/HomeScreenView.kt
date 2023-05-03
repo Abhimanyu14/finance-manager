@@ -21,9 +21,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.MimeTypeConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.DateTimeUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.JSON_MIMETYPE
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
@@ -31,13 +32,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.adjustmentEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.backup_card.BackupCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.overview_card.OverviewCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItem
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transferEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.bottomappbar.HomeBottomAppBar
@@ -157,7 +156,7 @@ internal fun HomeScreenView(
                 ) {
                     BackupCard(
                         onClick = {
-                            data.createDocument.launch(JSON_MIMETYPE)
+                            data.createDocument.launch(MimeTypeConstants.JSON)
                         }
                     )
                 }
@@ -195,11 +194,11 @@ internal fun HomeScreenView(
                 )
                 val emoji: String = when (listItem.transaction.transactionType) {
                     TransactionType.TRANSFER -> {
-                        transferEmoji
+                        EmojiConstants.LEFT_RIGHT_ARROW
                     }
 
                     TransactionType.ADJUSTMENT -> {
-                        adjustmentEmoji
+                        EmojiConstants.EXPRESSIONLESS_FACE
                     }
 
                     else -> {

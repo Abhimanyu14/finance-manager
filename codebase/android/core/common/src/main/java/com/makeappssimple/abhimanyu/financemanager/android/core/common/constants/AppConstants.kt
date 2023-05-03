@@ -1,3 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 
-const val appName: String = "finance_manager"
+object AppConstants {
+    const val APP_NAME: String = "finance_manager"
+    const val DATABASE_NAME: String = "finance_manager_database"
+}

@@ -6,8 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.loadingCompletedEmoji
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.loadingEmoji
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
@@ -35,9 +34,9 @@ fun EditCategoryScreen(
     LaunchedEffect(
         key1 = emojiGroups,
     ) {
-        if (emojiGroups.isNotEmpty() && emoji == loadingEmoji) {
+        if (emojiGroups.isNotEmpty() && emoji == EmojiConstants.HOURGLASS_NOT_DONE) {
             screenViewModel.updateEmoji(
-                updatedEmoji = loadingCompletedEmoji,
+                updatedEmoji = EmojiConstants.GRINNING_FACE_WITH_BIG_EYES,
             )
         }
     }

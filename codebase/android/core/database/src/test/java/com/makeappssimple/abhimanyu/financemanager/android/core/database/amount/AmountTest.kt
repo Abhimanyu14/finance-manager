@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.amount
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.CurrencyCodeConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.CURRENCY_CODE_INR
 import org.junit.Assert
 import org.junit.Test
 
@@ -99,7 +99,7 @@ class AmountTest {
             result.value,
         )
         Assert.assertEquals(
-            CURRENCY_CODE_INR,
+            CurrencyCodeConstants.INR,
             result.currency.currencyCode,
         )
     }
@@ -113,7 +113,7 @@ class AmountTest {
             result.value,
         )
         Assert.assertEquals(
-            CURRENCY_CODE_INR,
+            CurrencyCodeConstants.INR,
             result.currency.currencyCode,
         )
     }

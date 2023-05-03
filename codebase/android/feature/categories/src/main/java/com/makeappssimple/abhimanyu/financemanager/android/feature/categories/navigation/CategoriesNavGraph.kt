@@ -5,8 +5,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.DEEPLINK_BASE_URL
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.DEEPLINK_BROWSER_BASE_URL
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.DeeplinkUrl
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Screen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_category.screen.AddCategoryScreen
@@ -24,11 +23,11 @@ fun NavGraphBuilder.categoriesNavGraph() {
         deepLinks = listOf(
             navDeepLink {
                 uriPattern =
-                    "$DEEPLINK_BROWSER_BASE_URL/${Screen.AddCategory.route}/{${NavArgs.TRANSACTION_TYPE}}"
+                    "${DeeplinkUrl.BROWSER_BASE_URL}/${Screen.AddCategory.route}/{${NavArgs.TRANSACTION_TYPE}}"
             },
             navDeepLink {
                 uriPattern =
-                    "$DEEPLINK_BASE_URL/${Screen.AddCategory.route}/{${NavArgs.TRANSACTION_TYPE}}"
+                    "${DeeplinkUrl.BASE_URL}/${Screen.AddCategory.route}/{${NavArgs.TRANSACTION_TYPE}}"
             },
         ),
     ) {
@@ -39,10 +38,10 @@ fun NavGraphBuilder.categoriesNavGraph() {
         route = Screen.Categories.route,
         deepLinks = listOf(
             navDeepLink {
-                uriPattern = "$DEEPLINK_BROWSER_BASE_URL/${Screen.Categories.route}"
+                uriPattern = "${DeeplinkUrl.BROWSER_BASE_URL}/${Screen.Categories.route}"
             },
             navDeepLink {
-                uriPattern = "$DEEPLINK_BASE_URL/${Screen.Categories.route}"
+                uriPattern = "${DeeplinkUrl.BASE_URL}/${Screen.Categories.route}"
             },
         ),
     ) {

@@ -18,11 +18,8 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
-
-const val defaultEmoji = "😟"
-const val adjustmentEmoji = "😑️"
-const val transferEmoji = "↔️"
 
 @Immutable
 sealed class EmojiCircleSize(
@@ -75,14 +72,14 @@ fun MyEmojiCircle(
             factory = { context ->
                 AppCompatTextView(context).apply {
                     setTextColor(Black.toArgb())
-                    text = emoji ?: defaultEmoji
+                    text = emoji ?: EmojiConstants.WORRIED_FACE
                     textSize = emojiCircleSize.textSize
                     textAlignment = View.TEXT_ALIGNMENT_CENTER
                 }
             },
             update = {
                 it.apply {
-                    text = emoji ?: defaultEmoji
+                    text = emoji ?: EmojiConstants.WORRIED_FACE
                 }
             },
         )

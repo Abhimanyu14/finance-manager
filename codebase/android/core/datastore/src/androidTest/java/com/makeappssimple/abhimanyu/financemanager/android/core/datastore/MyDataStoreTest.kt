@@ -7,7 +7,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.test.core.app.ApplicationProvider
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.appName
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.AppConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
@@ -44,7 +44,7 @@ class MyDataStoreTest {
         scope = testCoroutineScope,
         produceFile = {
             testContext.preferencesDataStoreFile(
-                name = appName,
+                name = AppConstants.APP_NAME,
             )
         },
     )

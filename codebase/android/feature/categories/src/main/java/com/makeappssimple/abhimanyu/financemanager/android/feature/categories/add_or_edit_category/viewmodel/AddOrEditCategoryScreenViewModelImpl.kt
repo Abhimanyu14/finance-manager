@@ -5,7 +5,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.loadingEmoji
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
@@ -83,7 +83,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     override val selectedTransactionTypeIndex: StateFlow<Int> = _selectedTransactionTypeIndex
 
     private val _emoji = MutableStateFlow(
-        value = loadingEmoji,
+        value = EmojiConstants.HOURGLASS_NOT_DONE,
     )
     override val emoji: StateFlow<String> = _emoji
 

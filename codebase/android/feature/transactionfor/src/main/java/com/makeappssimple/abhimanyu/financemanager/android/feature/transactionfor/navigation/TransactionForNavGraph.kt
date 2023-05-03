@@ -5,8 +5,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navDeepLink
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.DEEPLINK_BASE_URL
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.DEEPLINK_BROWSER_BASE_URL
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.DeeplinkUrl
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Screen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_transaction_for.screen.AddTransactionForScreen
@@ -18,10 +17,10 @@ fun NavGraphBuilder.transactionForNavGraph() {
         route = Screen.AddTransactionFor.route,
         deepLinks = listOf(
             navDeepLink {
-                uriPattern = "$DEEPLINK_BROWSER_BASE_URL/${Screen.AddTransactionFor.route}"
+                uriPattern = "${DeeplinkUrl.BROWSER_BASE_URL}/${Screen.AddTransactionFor.route}"
             },
             navDeepLink {
-                uriPattern = "$DEEPLINK_BASE_URL/${Screen.AddTransactionFor.route}"
+                uriPattern = "${DeeplinkUrl.BASE_URL}/${Screen.AddTransactionFor.route}"
             },
         ),
     ) {
@@ -43,10 +42,10 @@ fun NavGraphBuilder.transactionForNavGraph() {
         route = Screen.TransactionForValues.route,
         deepLinks = listOf(
             navDeepLink {
-                uriPattern = "$DEEPLINK_BROWSER_BASE_URL/${Screen.TransactionForValues.route}"
+                uriPattern = "${DeeplinkUrl.BROWSER_BASE_URL}/${Screen.TransactionForValues.route}"
             },
             navDeepLink {
-                uriPattern = "$DEEPLINK_BASE_URL/${Screen.TransactionForValues.route}"
+                uriPattern = "${DeeplinkUrl.BASE_URL}/${Screen.TransactionForValues.route}"
             },
         ),
     ) {

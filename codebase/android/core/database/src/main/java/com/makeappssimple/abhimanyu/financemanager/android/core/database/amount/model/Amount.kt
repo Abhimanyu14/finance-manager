@@ -1,17 +1,14 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model
 
-import androidx.annotation.VisibleForTesting
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.CurrencyCodeConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.currency.formattedCurrencyValue
 import com.squareup.moshi.JsonClass
 import kotlin.math.abs
 import java.util.Currency
 
-@VisibleForTesting
-internal const val CURRENCY_CODE_INR = "INR"
-
 @JsonClass(generateAdapter = false)
 data class Amount(
-    val currency: Currency = Currency.getInstance(CURRENCY_CODE_INR),
+    val currency: Currency = Currency.getInstance(CurrencyCodeConstants.INR),
     val value: Long = 0,
 ) {
     fun toNonSignedString(): String {

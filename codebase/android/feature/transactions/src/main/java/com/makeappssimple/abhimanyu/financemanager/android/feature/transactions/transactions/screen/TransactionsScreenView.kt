@@ -36,6 +36,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.legend.Dot
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
@@ -52,11 +53,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSh
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.adjustmentEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MySearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItem
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transferEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.common.TransactionDeleteConfirmationBottomSheetContent
@@ -405,11 +404,11 @@ internal fun TransactionsScreenView(
                             )
                             val emoji = when (listItem.transaction.transactionType) {
                                 TransactionType.TRANSFER -> {
-                                    transferEmoji
+                                    EmojiConstants.LEFT_RIGHT_ARROW
                                 }
 
                                 TransactionType.ADJUSTMENT -> {
-                                    adjustmentEmoji
+                                    EmojiConstants.EXPRESSIONLESS_FACE
                                 }
 
                                 else -> {

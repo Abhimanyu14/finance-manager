@@ -3,14 +3,13 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.util.doc
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContracts
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.MimeTypeConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDateAndTime
 import java.time.Instant
 import java.time.ZoneId
 
-const val JSON_MIMETYPE = "application/json"
-
 class CreateJsonDocument : ActivityResultContracts.CreateDocument(
-    mimeType = JSON_MIMETYPE,
+    mimeType = MimeTypeConstants.JSON,
 ) {
     override fun createIntent(
         context: Context,

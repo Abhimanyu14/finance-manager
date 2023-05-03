@@ -21,7 +21,7 @@ import kotlin.math.cos
 import kotlin.math.max
 import kotlin.math.sin
 
-private const val StartDegree = -90F
+private const val START_DEGREE = -90F
 
 @Composable
 internal fun PieChartRenderer(
@@ -114,7 +114,7 @@ internal fun PieChartRenderer(
             var innerRadius = userInnerRadius
             val accountForSliceSpacing = sliceSpacingPx > 0F && sliceAngle <= 180F
             val sliceSpaceAngleOuter = sliceSpacingPx / (FDEG2RAD * outerRadius)
-            val startAngleOuter = StartDegree + (angle + sliceSpaceAngleOuter / 2F) * phase
+            val startAngleOuter = START_DEGREE + (angle + sliceSpaceAngleOuter / 2F) * phase
             val sweepAngleOuter = (sliceAngle - sliceSpaceAngleOuter) * phase
             pathBuffer.reset()
             val arcStartPointX = center.x + outerRadius * cos(startAngleOuter * FDEG2RAD)
@@ -123,7 +123,7 @@ internal fun PieChartRenderer(
                 // Android is doing "mod 360"
                 pathBuffer.addArc(
                     oval = circleBox,
-                    startAngleDegrees = StartDegree,
+                    startAngleDegrees = START_DEGREE,
                     sweepAngleDegrees = sweepAngleOuter,
                 )
             } else {
@@ -157,7 +157,7 @@ internal fun PieChartRenderer(
 
                 val sliceSpaceAngleInner = sliceSpacingPx / (FDEG2RAD * innerRadius)
 
-                val startAngleInner = StartDegree + (angle + sliceSpaceAngleInner / 2F) * phase
+                val startAngleInner = START_DEGREE + (angle + sliceSpaceAngleInner / 2F) * phase
                 val sweepAngleInner = ((sliceAngle - sliceSpaceAngleInner) * phase).coerceAtLeast(
                     minimumValue = 0F,
                 )
@@ -167,7 +167,7 @@ internal fun PieChartRenderer(
                     // Android is doing "mod 360"
                     pathBuffer.addArc(
                         oval = innerRectBuffer,
-                        startAngleDegrees = StartDegree,
+                        startAngleDegrees = START_DEGREE,
                         sweepAngleDegrees = sweepAngleOuter,
                     )
                 } else {
