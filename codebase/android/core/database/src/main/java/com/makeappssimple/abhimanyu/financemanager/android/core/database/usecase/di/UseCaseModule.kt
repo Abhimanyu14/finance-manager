@@ -19,7 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.RecalculateTotalUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.UpdateTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.UpdateTransactionUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.JsonUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.json.JsonUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import dagger.Module
 import dagger.Provides

@@ -42,18 +42,16 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.RestoreDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.RestoreDataUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.JsonUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.json.JsonUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 class TransactionModule {
-    @Singleton
     @Provides
     fun providesTransactionDao(
         myRoomDatabase: MyRoomDatabase,
@@ -61,7 +59,6 @@ class TransactionModule {
         return myRoomDatabase.transactionDao()
     }
 
-    @Singleton
     @Provides
     fun providesTransactionRepository(
         transactionDao: TransactionDao,
@@ -71,7 +68,6 @@ class TransactionModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesCheckIfCategoryIsUsedInTransactionsUseCase(
         transactionRepository: TransactionRepository,
@@ -81,7 +77,6 @@ class TransactionModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesCheckIfSourceIsUsedInTransactionsUseCase(
         transactionRepository: TransactionRepository,
@@ -91,7 +86,6 @@ class TransactionModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesCheckIfTransactionForIsUsedInTransactionsUseCase(
         transactionRepository: TransactionRepository,
@@ -101,7 +95,6 @@ class TransactionModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesDeleteAllTransactionsUseCase(
         dataStore: MyDataStore,
@@ -113,7 +106,6 @@ class TransactionModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesDeleteTransactionUseCase(
         dataStore: MyDataStore,
@@ -125,7 +117,6 @@ class TransactionModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesGetRecentTransactionDataFlowUseCase(
         transactionRepository: TransactionRepository,
@@ -135,7 +126,6 @@ class TransactionModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesGetTitleSuggestionsUseCase(
         transactionRepository: TransactionRepository,
@@ -145,7 +135,6 @@ class TransactionModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesGetTransactionsBetweenTimestampsFlowUseCase(
         transactionRepository: TransactionRepository,
@@ -155,7 +144,6 @@ class TransactionModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesGetTransactionsBetweenTimestampsUseCase(
         transactionRepository: TransactionRepository,
@@ -165,7 +153,6 @@ class TransactionModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesGetAllTransactionDataFlowUseCase(
         transactionRepository: TransactionRepository,
@@ -175,7 +162,6 @@ class TransactionModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesGetAllTransactionDataUseCase(
         transactionRepository: TransactionRepository,
@@ -185,7 +171,6 @@ class TransactionModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesGetSearchedTransactionDataUseCase(
         transactionRepository: TransactionRepository,
@@ -195,7 +180,6 @@ class TransactionModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesGetAllTransactionsFlowUseCase(
         transactionRepository: TransactionRepository,
@@ -205,7 +189,6 @@ class TransactionModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesGetAllTransactionsUseCase(
         transactionRepository: TransactionRepository,
@@ -215,7 +198,6 @@ class TransactionModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesGetTransactionUseCase(
         transactionRepository: TransactionRepository,
@@ -225,7 +207,6 @@ class TransactionModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesGetTransactionDataUseCase(
         transactionRepository: TransactionRepository,
@@ -257,7 +238,6 @@ class TransactionModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesRestoreDataUseCase(
         dataStore: MyDataStore,

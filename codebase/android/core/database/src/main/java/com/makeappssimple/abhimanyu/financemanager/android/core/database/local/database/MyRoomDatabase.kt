@@ -37,7 +37,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.datasource.local.TransactionForDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.readInitialDataFromAssets
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.json.readInitialDataFromAssets
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.transactionsCleanUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import kotlinx.coroutines.CoroutineScope

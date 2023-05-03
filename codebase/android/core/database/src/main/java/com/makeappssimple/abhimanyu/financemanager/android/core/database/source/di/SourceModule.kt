@@ -27,12 +27,10 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 class SourceModule {
-    @Singleton
     @Provides
     fun providesSourceDao(
         myRoomDatabase: MyRoomDatabase,
@@ -40,7 +38,6 @@ class SourceModule {
         return myRoomDatabase.sourceDao()
     }
 
-    @Singleton
     @Provides
     fun providesSourceRepository(
         sourceDao: SourceDao,
@@ -50,7 +47,6 @@ class SourceModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesDeleteSourcesUseCase(
         dataStore: MyDataStore,
@@ -62,7 +58,6 @@ class SourceModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesGetAllSourcesCountUseCase(
         sourceRepository: SourceRepository,
@@ -72,7 +67,6 @@ class SourceModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesGetSourcesTotalBalanceAmountValueUseCase(
         sourceRepository: SourceRepository,
@@ -82,7 +76,6 @@ class SourceModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesGetAllSourcesFlowUseCase(
         sourceRepository: SourceRepository,
@@ -92,7 +85,6 @@ class SourceModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesGetAllSourcesUseCase(
         sourceRepository: SourceRepository,
@@ -102,7 +94,6 @@ class SourceModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesGetSourceUseCase(
         sourceRepository: SourceRepository,
@@ -112,7 +103,6 @@ class SourceModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesInsertSourcesUseCase(
         dataStore: MyDataStore,
@@ -124,7 +114,6 @@ class SourceModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesUpdateSourcesBalanceAmountUseCase(
         dataStore: MyDataStore,
@@ -136,7 +125,6 @@ class SourceModule {
         )
     }
 
-    @Singleton
     @Provides
     fun providesUpdateSourcesUseCase(
         dataStore: MyDataStore,

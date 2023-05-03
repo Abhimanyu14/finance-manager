@@ -1,8 +1,8 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.util.di
+package com.makeappssimple.abhimanyu.financemanager.android.core.database.util.json.di
 
 import android.content.Context
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.JsonUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.JsonUtilImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.json.JsonUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.json.JsonUtilImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class UtilModule {
+class JsonUtilModule {
     @Singleton
     @Provides
     fun providesJsonUtil(

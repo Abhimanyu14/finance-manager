@@ -8,11 +8,9 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
-import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
 
 @Module
-@Singleton
 @TestInstallIn(
     components = [SingletonComponent::class],
     replaces = [DispatcherProviderModule::class],

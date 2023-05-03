@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.common.util.di
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.util.appversion.di
 
 import android.content.Context
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.appversion.AppVersionUtil
@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class UtilModule {
+class AppVersionUtilModule {
     @Singleton
     @Provides
     fun providesAppVersionUtil(

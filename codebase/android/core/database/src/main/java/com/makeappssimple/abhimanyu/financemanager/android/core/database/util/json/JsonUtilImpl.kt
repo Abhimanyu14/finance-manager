@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.util
+package com.makeappssimple.abhimanyu.financemanager.android.core.database.util.json
 
 import android.content.Context
 import android.net.Uri
