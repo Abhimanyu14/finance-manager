@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.di
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetAllCategoriesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetAllEmojisFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesFlowUseCase
@@ -30,6 +31,7 @@ import dagger.hilt.components.SingletonComponent
 class UseCaseModule {
     @Provides
     fun providesBackupDataUseCase(
+        dateTimeUtil: DateTimeUtil,
         dataStore: MyDataStore,
         getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
         getAllEmojisFlowUseCase: GetAllEmojisFlowUseCase,
@@ -39,6 +41,7 @@ class UseCaseModule {
         jsonUtil: JsonUtil,
     ): BackupDataUseCase {
         return BackupDataUseCaseImpl(
+            dateTimeUtil = dateTimeUtil,
             dataStore = dataStore,
             getAllCategoriesFlowUseCase = getAllCategoriesFlowUseCase,
             getAllEmojisFlowUseCase = getAllEmojisFlowUseCase,

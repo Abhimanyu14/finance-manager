@@ -9,8 +9,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getCurrentTimeMillis
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.SourceType
@@ -41,6 +41,7 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     savedStateHandle: SavedStateHandle,
     override val logger: Logger,
     override val navigationManager: NavigationManager,
+    private val dateTimeUtil: DateTimeUtil, // TODO(Abhi): Change this to private
     private val dispatcherProvider: DispatcherProvider,
     private val getSourceUseCase: GetSourceUseCase,
     private val insertSourcesUseCase: InsertSourcesUseCase,
@@ -137,8 +138,8 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
                         sourceToId = sourceToId,
                         description = "",
                         title = TransactionType.ADJUSTMENT.title,
-                        creationTimestamp = getCurrentTimeMillis(),
-                        transactionTimestamp = getCurrentTimeMillis(),
+                        creationTimestamp = dateTimeUtil.getCurrentTimeMillis(),
+                        transactionTimestamp = dateTimeUtil.getCurrentTimeMillis(),
                         transactionType = TransactionType.ADJUSTMENT,
                     ),
                 )

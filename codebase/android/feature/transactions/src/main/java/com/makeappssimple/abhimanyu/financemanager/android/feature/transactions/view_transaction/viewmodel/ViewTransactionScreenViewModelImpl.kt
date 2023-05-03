@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.DeleteTransactionAndRevertOtherDataUseCase
@@ -19,6 +20,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    override val dateTimeUtil: DateTimeUtil, // TODO(Abhi): Change this to private
     override val logger: Logger,
     override val navigationManager: NavigationManager,
     private val deleteTransactionAndRevertOtherDataUseCase: DeleteTransactionAndRevertOtherDataUseCase,

@@ -22,8 +22,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.JSON_MIMETYPE
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getReadableDateAndTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
@@ -52,6 +52,7 @@ internal enum class HomeBottomSheetType : BottomSheetType {
 @Immutable
 internal data class HomeScreenViewData(
     val showBackupCard: Boolean,
+    val dateTimeUtil: DateTimeUtil,
     val transactionData: List<TransactionData>,
     val createDocument: ManagedActivityResultLauncher<String, Uri?>,
     val navigateToAddTransactionScreen: () -> Unit,
@@ -189,7 +190,7 @@ internal fun HomeScreenView(
                     } else {
                         listItem.transaction.amount.toString()
                     }
-                val dateAndTimeText: String = getReadableDateAndTime(
+                val dateAndTimeText: String = data.dateTimeUtil.getReadableDateAndTime(
                     timestamp = listItem.transaction.transactionTimestamp,
                 )
                 val emoji: String = when (listItem.transaction.transactionType) {

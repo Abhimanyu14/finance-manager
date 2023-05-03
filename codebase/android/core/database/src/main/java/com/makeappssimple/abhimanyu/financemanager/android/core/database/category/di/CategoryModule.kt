@@ -21,10 +21,12 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 class CategoryModule {
+    @Singleton
     @Provides
     fun providesCategoryDao(
         myRoomDatabase: MyRoomDatabase,
@@ -32,6 +34,7 @@ class CategoryModule {
         return myRoomDatabase.categoryDao()
     }
 
+    @Singleton
     @Provides
     fun providesCategoryRepository(
         categoryDao: CategoryDao,
@@ -41,6 +44,7 @@ class CategoryModule {
         )
     }
 
+    @Singleton
     @Provides
     fun providesDeleteCategoryUseCase(
         dataStore: MyDataStore,
@@ -52,6 +56,7 @@ class CategoryModule {
         )
     }
 
+    @Singleton
     @Provides
     fun providesGetAllCategoriesFlowUseCase(
         categoryRepository: CategoryRepository,
@@ -61,6 +66,7 @@ class CategoryModule {
         )
     }
 
+    @Singleton
     @Provides
     fun providesGetAllCategoriesUseCase(
         categoryRepository: CategoryRepository,
@@ -70,6 +76,7 @@ class CategoryModule {
         )
     }
 
+    @Singleton
     @Provides
     fun providesGetCategoryUseCase(
         categoryRepository: CategoryRepository,
@@ -79,6 +86,7 @@ class CategoryModule {
         )
     }
 
+    @Singleton
     @Provides
     fun providesInsertCategoriesUseCase(
         dataStore: MyDataStore,
@@ -90,6 +98,7 @@ class CategoryModule {
         )
     }
 
+    @Singleton
     @Provides
     fun providesUpdateCategoriesUseCase(
         dataStore: MyDataStore,

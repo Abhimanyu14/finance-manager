@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getSystemDefaultZoneId
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -25,4 +24,8 @@ fun LocalDate.formattedDate(
         .ofPattern("dd MMM, yyyy")
         .withZone(zoneId)
         .format(this)
+}
+
+private fun getSystemDefaultZoneId(): ZoneId {
+    return ZoneId.systemDefault()
 }

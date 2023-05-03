@@ -55,6 +55,7 @@ fun EditTransactionScreen(
             titleSuggestions = titleSuggestions,
             transactionTypesForNewTransaction = transactionTypesForNewTransaction,
             transactionForValues = transactionForValues,
+            currentTimeMillis = screenViewModel.dateTimeUtil.getCurrentTimeMillis(),
             selectedTransactionType = selectedTransactionType,
             clearAmount = screenViewModel::clearAmount,
             clearDescription = screenViewModel::clearDescription,

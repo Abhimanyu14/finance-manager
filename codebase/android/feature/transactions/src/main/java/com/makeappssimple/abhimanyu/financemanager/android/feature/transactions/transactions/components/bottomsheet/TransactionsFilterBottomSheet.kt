@@ -40,8 +40,7 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.addIfDoesNotContainItemElseRemove
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDate
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getCurrentLocalDate
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getLocalDate
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
@@ -66,6 +65,7 @@ internal data class TransactionFilterBottomSheetFilterGroupData(
 internal fun TransactionsFiltersBottomSheet(
     modifier: Modifier = Modifier,
     context: Context,
+    dateTimeUtil: DateTimeUtil,
     expenseCategories: List<Category>,
     incomeCategories: List<Category>,
     investmentCategories: List<Category>,
@@ -112,10 +112,10 @@ internal fun TransactionsFiltersBottomSheet(
             elements = selectedFilter.selectedTransactionTypeIndices.toTypedArray(),
         )
     }
-    val defaultMinDate = getLocalDate(
+    val defaultMinDate = dateTimeUtil.getLocalDate(
         timestamp = oldestTransactionTimestamp,
     )
-    val defaultMaxDate = getCurrentLocalDate()
+    val defaultMaxDate = dateTimeUtil.getCurrentLocalDate()
     var fromDate by remember {
         mutableStateOf(
             value = selectedFilter.fromDate ?: defaultMinDate,
@@ -233,6 +233,7 @@ internal fun TransactionsFiltersBottomSheet(
                     expanded = expandedItemsIndices[filters.lastIndex + 1],
                     context = context,
                     headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_transaction_date,
+                    currentTimeMillis = dateTimeUtil.getCurrentTimeMillis(),
                     onClearButtonClick = {
                         fromDate = defaultMinDate
                         toDate = defaultMaxDate
@@ -429,6 +430,7 @@ fun TransactionFilterBottomSheetDateFilter(
     expanded: Boolean,
     context: Context,
     @StringRes headingTextStringResourceId: Int,
+    currentTimeMillis: Long,
     onClearButtonClick: () -> Unit,
     onExpandButtonClick: () -> Unit,
     minDate: LocalDate,
@@ -449,18 +451,20 @@ fun TransactionFilterBottomSheetDateFilter(
 
     val fromDatePickerDialog = getMyDatePickerDialog(
         context = context,
-        currentDate = fromDate,
+        selectedDate = fromDate,
         minDate = minDate,
         maxDate = toDate,
+        currentTimeMillis = currentTimeMillis,
         onDateSetListener = {
             updateFromDate(it)
         },
     )
     val toDatePickerDialog = getMyDatePickerDialog(
         context = context,
-        currentDate = toDate,
+        selectedDate = toDate,
         minDate = fromDate,
         maxDate = maxDate,
+        currentTimeMillis = currentTimeMillis,
         onDateSetListener = {
             updateToDate(it)
         },

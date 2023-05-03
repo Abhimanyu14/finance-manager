@@ -5,16 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toZonedDateTime
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getCurrentTimeMillis
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getEndOfDayTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getEndOfMonthTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getEndOfYearTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getFormattedDate
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getFormattedMonth
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getFormattedYear
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getStartOfDayTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getStartOfMonthTimestamp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getStartOfYearTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
@@ -55,6 +46,7 @@ data class OverviewCardData(
 
 @HiltViewModel
 internal class OverviewCardViewModelImpl @Inject constructor(
+    dateTimeUtil: DateTimeUtil,
     getTransactionsBetweenTimestampsUseCase: GetTransactionsBetweenTimestampsUseCase,
     getTransactionUseCase: GetTransactionUseCase,
 ) : OverviewCardViewModel, ViewModel() {
@@ -64,7 +56,7 @@ internal class OverviewCardViewModelImpl @Inject constructor(
     override val overviewTabSelectionIndex: StateFlow<Int> = _overviewTabSelectionIndex
 
     private val timestamp: MutableStateFlow<Long> = MutableStateFlow(
-        value = getCurrentTimeMillis(),
+        value = dateTimeUtil.getCurrentTimeMillis(),
     )
 
     override val overviewCardData: StateFlow<OverviewCardData?> = combine(
@@ -75,38 +67,38 @@ internal class OverviewCardViewModelImpl @Inject constructor(
         val transactions = getTransactionsBetweenTimestampsUseCase(
             startingTimestamp = when (overviewTabOption) {
                 OverviewTabOption.DAY -> {
-                    getStartOfDayTimestamp(
+                    dateTimeUtil.getStartOfDayTimestamp(
                         timestamp = timestamp,
                     )
                 }
 
                 OverviewTabOption.MONTH -> {
-                    getStartOfMonthTimestamp(
+                    dateTimeUtil.getStartOfMonthTimestamp(
                         timestamp = timestamp,
                     )
                 }
 
                 OverviewTabOption.YEAR -> {
-                    getStartOfYearTimestamp(
+                    dateTimeUtil.getStartOfYearTimestamp(
                         timestamp = timestamp,
                     )
                 }
             },
             endingTimestamp = when (overviewTabOption) {
                 OverviewTabOption.DAY -> {
-                    getEndOfDayTimestamp(
+                    dateTimeUtil.getEndOfDayTimestamp(
                         timestamp = timestamp,
                     )
                 }
 
                 OverviewTabOption.MONTH -> {
-                    getEndOfMonthTimestamp(
+                    dateTimeUtil.getEndOfMonthTimestamp(
                         timestamp = timestamp,
                     )
                 }
 
                 OverviewTabOption.YEAR -> {
-                    getEndOfYearTimestamp(
+                    dateTimeUtil.getEndOfYearTimestamp(
                         timestamp = timestamp,
                     )
                 }
@@ -143,15 +135,15 @@ internal class OverviewCardViewModelImpl @Inject constructor(
 
         val title = when (overviewTabOption) {
             OverviewTabOption.DAY -> {
-                getFormattedDate(timestamp).uppercase()
+                dateTimeUtil.getFormattedDate(timestamp).uppercase()
             }
 
             OverviewTabOption.MONTH -> {
-                getFormattedMonth(timestamp).uppercase()
+                dateTimeUtil.getFormattedMonth(timestamp).uppercase()
             }
 
             OverviewTabOption.YEAR -> {
-                getFormattedYear(timestamp).uppercase()
+                dateTimeUtil.getFormattedYear(timestamp).uppercase()
             }
         }
 

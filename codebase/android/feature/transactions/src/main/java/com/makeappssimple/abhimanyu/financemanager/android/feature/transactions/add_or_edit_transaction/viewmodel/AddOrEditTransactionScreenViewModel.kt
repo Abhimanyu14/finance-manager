@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel
 
 import androidx.compose.ui.text.input.TextFieldValue
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
@@ -14,6 +15,7 @@ import java.time.LocalTime
 
 interface AddOrEditTransactionScreenViewModel : ScreenViewModel {
     val logger: Logger
+    val dateTimeUtil: DateTimeUtil
     val navigationManager: NavigationManager
     val uiState: StateFlow<AddOrEditTransactionScreenUiState>
     val uiVisibilityState: StateFlow<AddOrEditTransactionScreenUiVisibilityState>

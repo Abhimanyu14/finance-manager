@@ -37,7 +37,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.legend.Dot
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getReadableDateAndTime
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
@@ -75,6 +75,7 @@ internal enum class TransactionsBottomSheetType : BottomSheetType {
 @Immutable
 internal data class TransactionsScreenViewData(
     val isLoading: Boolean,
+    val dateTimeUtil: DateTimeUtil,
     val selectedFilter: Filter,
     val expenseCategories: List<Category>,
     val incomeCategories: List<Category>,
@@ -152,6 +153,7 @@ internal fun TransactionsScreenView(
                 TransactionsBottomSheetType.FILTERS -> {
                     TransactionsFilterBottomSheetContent(
                         context = state.context,
+                        dateTimeUtil = data.dateTimeUtil,
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
                         expenseCategories = data.expenseCategories,
@@ -398,7 +400,7 @@ internal fun TransactionsScreenView(
                                 } else {
                                     listItem.transaction.amount.toString()
                                 }
-                            val dateAndTimeText = getReadableDateAndTime(
+                            val dateAndTimeText = data.dateTimeUtil.getReadableDateAndTime(
                                 timestamp = listItem.transaction.transactionTimestamp,
                             )
                             val emoji = when (listItem.transaction.transactionType) {

@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getReadableDateAndTime
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
@@ -38,6 +38,7 @@ internal enum class ViewTransactionBottomSheetType : BottomSheetType {
 
 @Immutable
 internal data class ViewTransactionScreenViewData(
+    val dateTimeUtil: DateTimeUtil,
     val transactionData: TransactionData?,
     val deleteTransaction: (transactionId: Int) -> Unit,
     val navigateToAddTransactionScreen: (transactionId: Int) -> Unit,
@@ -84,7 +85,7 @@ internal fun ViewTransactionScreenView(
     } else {
         transaction?.amount.toString()
     }
-    val dateAndTimeText: String = getReadableDateAndTime(
+    val dateAndTimeText: String = data.dateTimeUtil.getReadableDateAndTime(
         timestamp = transaction?.transactionTimestamp ?: 0L,
     )
     val emoji: String = when (transaction?.transactionType) {

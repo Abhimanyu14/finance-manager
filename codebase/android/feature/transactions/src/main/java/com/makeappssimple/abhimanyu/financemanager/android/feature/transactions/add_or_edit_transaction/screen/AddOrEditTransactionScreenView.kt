@@ -79,6 +79,7 @@ internal data class AddOrEditTransactionScreenViewData(
     val titleSuggestions: List<String>,
     val transactionTypesForNewTransaction: List<TransactionType>,
     val transactionForValues: List<TransactionFor>,
+    val currentTimeMillis: Long,
     val selectedTransactionType: TransactionType?,
     val clearAmount: () -> Unit,
     val clearDescription: () -> Unit,
@@ -104,7 +105,8 @@ internal fun AddOrEditTransactionScreenView(
 ) {
     val transactionDatePickerDialog = getMyDatePickerDialog(
         context = state.context,
-        currentDate = data.uiState.transactionDate,
+        selectedDate = data.uiState.transactionDate,
+        currentTimeMillis = data.currentTimeMillis,
         onDateSetListener = {
             data.updateTransactionDate(it)
         },

@@ -6,8 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getFormattedDate
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getLocalDate
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetAllCategoriesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
@@ -35,6 +34,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
     getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
     getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase,
+    override val dateTimeUtil: DateTimeUtil, // TODO(Abhi): Change this to private
     override val logger: Logger,
     override val navigationManager: NavigationManager,
     private val deleteTransactionAndRevertOtherDataUseCase: DeleteTransactionAndRevertOtherDataUseCase,
@@ -132,7 +132,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 }
                 updateSelectedFilter(
                     updatedSelectedFilter = selectedFilterValue.copy(
-                        fromDate = getLocalDate(
+                        fromDate = dateTimeUtil.getLocalDate(
                             timestamp = oldestTransactionTimestamp.value,
                         ),
                     ),
@@ -196,7 +196,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 }
                 .groupBy {
                     if (selectedSortOptionValue == SortOption.LATEST_FIRST || selectedSortOptionValue == SortOption.OLDEST_FIRST) {
-                        getFormattedDate(
+                        dateTimeUtil.getFormattedDate(
                             timestamp = it.transaction.transactionTimestamp,
                         )
                     } else {

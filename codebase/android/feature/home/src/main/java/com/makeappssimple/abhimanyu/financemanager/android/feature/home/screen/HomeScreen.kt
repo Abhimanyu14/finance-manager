@@ -43,6 +43,7 @@ fun HomeScreen(
     HomeScreenView(
         data = HomeScreenViewData(
             showBackupCard = showBackupCard,
+            dateTimeUtil = screenViewModel.dateTimeUtil,
             transactionData = homeListItemViewData,
             createDocument = createDocument,
             navigateToAddTransactionScreen = {

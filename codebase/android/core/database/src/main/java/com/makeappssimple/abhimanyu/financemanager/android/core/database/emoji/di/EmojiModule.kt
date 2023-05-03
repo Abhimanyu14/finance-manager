@@ -12,10 +12,12 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 class EmojiModule {
+    @Singleton
     @Provides
     fun providesEmojiDao(
         myRoomDatabase: MyRoomDatabase,
@@ -23,6 +25,7 @@ class EmojiModule {
         return myRoomDatabase.emojiDao()
     }
 
+    @Singleton
     @Provides
     fun providesEmojiRepository(
         emojiDao: EmojiDao,
@@ -32,6 +35,7 @@ class EmojiModule {
         )
     }
 
+    @Singleton
     @Provides
     fun providesGetAllEmojisFlowUseCase(
         emojiRepository: EmojiRepository,
@@ -41,6 +45,7 @@ class EmojiModule {
         )
     }
 
+    @Singleton
     @Provides
     fun providesGetAllEmojisUseCase(
         emojiRepository: EmojiRepository,

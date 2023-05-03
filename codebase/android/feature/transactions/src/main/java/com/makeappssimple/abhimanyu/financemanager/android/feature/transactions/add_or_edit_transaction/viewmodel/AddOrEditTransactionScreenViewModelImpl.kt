@@ -16,14 +16,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isTrue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Quadruple
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultBooleanStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getCurrentLocalDate
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getCurrentLocalTime
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getCurrentTimeMillis
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getLocalDate
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getLocalTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetAllCategoriesUseCase
@@ -72,6 +68,7 @@ import java.time.LocalTime
 internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     savedStateHandle: SavedStateHandle,
     override val logger: Logger,
+    override val dateTimeUtil: DateTimeUtil, // TODO(Abhi): Change this to private
     override val navigationManager: NavigationManager,
     private val dataStore: MyDataStore,
     private val dispatcherProvider: DispatcherProvider,
@@ -159,8 +156,8 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             selectedTransactionForIndex = 0,
             sourceFrom = null,
             sourceTo = null,
-            transactionDate = getCurrentLocalDate(),
-            transactionTime = getCurrentLocalTime(),
+            transactionDate = dateTimeUtil.getCurrentLocalDate(),
+            transactionTime = dateTimeUtil.getCurrentLocalTime(),
         ),
     )
     override val uiState: StateFlow<AddOrEditTransactionScreenUiState> = _uiState
@@ -431,7 +428,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                         sourceToId = sourceToId,
                         description = uiStateValue.description.text,
                         title = title,
-                        creationTimestamp = getCurrentTimeMillis(),
+                        creationTimestamp = dateTimeUtil.getCurrentTimeMillis(),
                         transactionTimestamp = transactionTimestamp,
                         transactionForId = transactionForId,
                         transactionType = selectedTransactionTypeValue,
@@ -595,7 +592,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                             sourceToId = sourceToId,
                             description = uiStateValue.description.text,
                             title = title,
-                            creationTimestamp = getCurrentTimeMillis(),
+                            creationTimestamp = dateTimeUtil.getCurrentTimeMillis(),
                             transactionTimestamp = transactionTimestamp,
                             transactionForId = transactionForId,
                             transactionType = selectedTransactionTypeValue,
@@ -1082,8 +1079,8 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                 ),
                 sourceFrom = originalTransactionData.value?.sourceTo,
                 sourceTo = originalTransactionData.value?.sourceFrom,
-                transactionDate = getCurrentLocalDate(),
-                transactionTime = getCurrentLocalTime(),
+                transactionDate = dateTimeUtil.getCurrentLocalDate(),
+                transactionTime = dateTimeUtil.getCurrentLocalTime(),
             )
         } else {
             AddOrEditTransactionScreenUiState(
@@ -1108,10 +1105,10 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                 ),
                 sourceFrom = originalTransactionData.value?.sourceFrom,
                 sourceTo = originalTransactionData.value?.sourceTo,
-                transactionDate = getLocalDate(
+                transactionDate = dateTimeUtil.getLocalDate(
                     timestamp = originalTransaction.transactionTimestamp,
                 ),
-                transactionTime = getLocalTime(
+                transactionTime = dateTimeUtil.getLocalTime(
                     timestamp = originalTransaction.transactionTimestamp,
                 ),
             )

@@ -1,8 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase
 
 import android.net.Uri
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getCurrentTimeMillis
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getReadableDateAndTime
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetAllCategoriesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.databasebackupdata.model.DatabaseBackupData
@@ -31,6 +30,7 @@ class BackupDataUseCaseImpl(
     getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase,
     getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
     getAllTransactionsFlowUseCase: GetAllTransactionsFlowUseCase,
+    private val dateTimeUtil: DateTimeUtil,
     private val dataStore: MyDataStore,
     private val jsonUtil: JsonUtil,
 ) : BackupDataUseCase {
@@ -45,8 +45,8 @@ class BackupDataUseCaseImpl(
     ) {
         dataStore.setLastDataBackupTimestamp()
         val databaseBackupData = DatabaseBackupData(
-            lastBackupTime = getReadableDateAndTime(),
-            lastBackupTimestamp = getCurrentTimeMillis().toString(),
+            lastBackupTime = dateTimeUtil.getReadableDateAndTime(),
+            lastBackupTimestamp = dateTimeUtil.getCurrentTimeMillis().toString(),
         )
         categories.zip(emojis) { categoriesValue, emojisValue ->
             databaseBackupData.copy(

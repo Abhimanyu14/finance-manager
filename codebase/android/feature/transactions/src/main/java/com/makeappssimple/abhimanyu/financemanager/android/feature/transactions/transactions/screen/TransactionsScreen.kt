@@ -47,6 +47,7 @@ fun TransactionsScreen(
     TransactionsScreenView(
         data = TransactionsScreenViewData(
             isLoading = isLoading,
+            dateTimeUtil = screenViewModel.dateTimeUtil,
             selectedFilter = selectedFilter,
             expenseCategories = expenseCategories,
             incomeCategories = incomeCategories,

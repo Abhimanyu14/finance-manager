@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.datastore
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getCurrentTimeMillis
 import kotlinx.coroutines.flow.Flow
+import java.time.Instant
 
 interface MyDataStore {
     fun getCategoryDataVersionNumber(): Flow<Int?>
@@ -57,4 +57,9 @@ interface MyDataStore {
     suspend fun setTransactionsDataVersionNumber(
         transactionsDataVersionNumber: Int,
     )
+
+    // TODO(Abhi): Figure out how to inject this
+    private fun getCurrentTimeMillis(): Long {
+        return Instant.now().toEpochMilli()
+    }
 }

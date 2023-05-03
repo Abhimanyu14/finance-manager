@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetRecentTransactionDataFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.BackupDataUseCase
@@ -22,6 +23,7 @@ import kotlinx.coroutines.launch
 internal class HomeScreenViewModelImpl @Inject constructor(
     dataStore: MyDataStore,
     getRecentTransactionDataFlowUseCase: GetRecentTransactionDataFlowUseCase,
+    override val dateTimeUtil: DateTimeUtil, // TODO(Abhi): Change this to private
     override val logger: Logger,
     override val navigationManager: NavigationManager,
     private val backupDataUseCase: BackupDataUseCase,

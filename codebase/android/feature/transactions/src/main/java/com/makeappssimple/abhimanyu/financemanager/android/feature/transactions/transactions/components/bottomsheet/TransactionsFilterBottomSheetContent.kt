@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 import android.content.Context
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
@@ -14,6 +15,7 @@ import kotlinx.coroutines.CoroutineScope
 internal fun TransactionsFilterBottomSheetContent(
     context: Context,
     coroutineScope: CoroutineScope,
+    dateTimeUtil: DateTimeUtil,
     modalBottomSheetState: ModalBottomSheetState,
     expenseCategories: List<Category>,
     incomeCategories: List<Category>,
@@ -27,6 +29,7 @@ internal fun TransactionsFilterBottomSheetContent(
 ) {
     TransactionsFiltersBottomSheet(
         context = context,
+        dateTimeUtil = dateTimeUtil,
         expenseCategories = expenseCategories,
         incomeCategories = incomeCategories,
         investmentCategories = investmentCategories,

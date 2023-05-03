@@ -12,12 +12,12 @@ import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineDispatcher
 
 @Module
+@Singleton
 @TestInstallIn(
     components = [SingletonComponent::class],
     replaces = [DispatcherProviderModule::class],
 )
 object TestDispatcherProviderModule {
-    @Singleton
     @Provides
     fun providesDispatcherProvider(
         @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,

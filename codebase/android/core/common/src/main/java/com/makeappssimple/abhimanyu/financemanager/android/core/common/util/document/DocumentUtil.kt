@@ -3,7 +3,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.util.doc
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContracts
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getFormattedDateAndTime
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDateAndTime
+import java.time.Instant
+import java.time.ZoneId
 
 const val JSON_MIMETYPE = "application/json"
 
@@ -24,4 +26,20 @@ class CreateJsonDocument : ActivityResultContracts.CreateDocument(
             )
         }
     }
+}
+
+// TODO(Abhi): To inject this method
+private fun getFormattedDateAndTime(
+    timestamp: Long = Instant.now().toEpochMilli(),
+    zoneId: ZoneId = getSystemDefaultZoneId(),
+): String {
+    return Instant
+        .ofEpochMilli(timestamp)
+        .formattedDateAndTime(
+            zoneId = zoneId,
+        )
+}
+
+private fun getSystemDefaultZoneId(): ZoneId {
+    return ZoneId.systemDefault()
 }

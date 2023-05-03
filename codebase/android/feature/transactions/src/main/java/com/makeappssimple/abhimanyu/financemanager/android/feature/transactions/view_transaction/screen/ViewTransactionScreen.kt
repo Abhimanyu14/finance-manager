@@ -30,6 +30,7 @@ fun ViewTransactionScreen(
 
     ViewTransactionScreenView(
         data = ViewTransactionScreenViewData(
+            dateTimeUtil = screenViewModel.dateTimeUtil,
             transactionData = transactionData,
             deleteTransaction = { transactionId ->
                 screenViewModel.deleteTransaction(
