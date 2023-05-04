@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.source.di
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.repository.SourceRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.repository.SourceRepositoryImpl
@@ -31,13 +30,6 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 class SourceModule {
-    @Provides
-    fun providesSourceDao(
-        myRoomDatabase: MyRoomDatabase,
-    ): SourceDao {
-        return myRoomDatabase.sourceDao()
-    }
-
     @Provides
     fun providesSourceRepository(
         sourceDao: SourceDao,

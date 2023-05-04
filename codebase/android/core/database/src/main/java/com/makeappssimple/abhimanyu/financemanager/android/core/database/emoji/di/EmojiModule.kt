@@ -7,7 +7,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.u
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetAllEmojisFlowUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetAllEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase.GetAllEmojisUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,13 +15,6 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 class EmojiModule {
-    @Provides
-    fun providesEmojiDao(
-        myRoomDatabase: MyRoomDatabase,
-    ): EmojiDao {
-        return myRoomDatabase.emojiDao()
-    }
-
     @Provides
     fun providesEmojiRepository(
         emojiDao: EmojiDao,

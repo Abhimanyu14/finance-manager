@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.di
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionForDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.repository.TransactionForRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.repository.TransactionForRepositoryImpl
@@ -25,13 +24,6 @@ import dagger.hilt.components.SingletonComponent
 @Module
 @InstallIn(SingletonComponent::class)
 class TransactionForModule {
-    @Provides
-    fun providesTransactionForDao(
-        myRoomDatabase: MyRoomDatabase,
-    ): TransactionForDao {
-        return myRoomDatabase.transactionForDao()
-    }
-
     @Provides
     fun providesTransactionForRepository(
         transactionForDao: TransactionForDao,

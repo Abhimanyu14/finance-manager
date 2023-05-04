@@ -11,6 +11,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.AmountConverter
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.CategoryConverter
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.IntListConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.CategoryDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.EmojiDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.SourceDao
@@ -18,9 +21,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.Tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionForDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.initialdatabasedata.model.InitialDatabaseData
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.AmountConverter
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.CategoryConverter
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.IntListConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.AutoDatabaseMigrations
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_12_13
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_13_14
