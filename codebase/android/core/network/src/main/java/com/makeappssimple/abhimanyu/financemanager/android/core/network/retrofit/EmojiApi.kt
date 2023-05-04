@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.datasource.remote
+package com.makeappssimple.abhimanyu.financemanager.android.core.network.retrofit
 
 import com.squareup.moshi.Moshi
 import javax.inject.Inject

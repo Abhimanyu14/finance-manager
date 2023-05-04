@@ -21,14 +21,4 @@ data class EmojiLocalEntity(
     @ColumnInfo(name = "unicode_name")
     @Json(name = "unicode_name")
     override val unicodeName: String,
-) : Emoji {
-
-    constructor(
-        emoji: Emoji,
-    ) : this(
-        character = emoji.character,
-        codePoint = emoji.codePoint,
-        group = emoji.group,
-        unicodeName = emoji.unicodeName,
-    )
-}
+) : Emoji

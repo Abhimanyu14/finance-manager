@@ -1,0 +1,81 @@
+plugins {
+    id "com.android.library"
+    id "org.jetbrains.kotlin.android"
+    id "org.jetbrains.kotlinx.kover"
+    id "kotlinx-serialization"
+    id "kotlin-kapt"
+    id "com.google.devtools.ksp" version "1.8.10-1.0.9"
+}
+
+android {
+    namespace "com.makeappssimple.abhimanyu.financemanager.android.core.network"
+    compileSdk rootProject.compileSdkVersion
+
+    defaultConfig {
+        minSdk rootProject.minSdkVersion
+        targetSdk rootProject.targetSdkVersion
+
+        testInstrumentationRunner "com.makeappssimple.abhimanyu.financemanager.android.core.testing.MyTestRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+
+dependencies {
+    implementation project(":core:common")
+
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion")
+
+    // Hilt
+    implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
+    kapt "com.google.dagger:hilt-compiler:$rootProject.hiltVersion"
+    kapt "androidx.hilt:hilt-compiler:$rootProject.hiltCompilerVersion"
+
+    // KSP
+    implementation "com.google.devtools.ksp:symbol-processing-api:$rootProject.kspVersion"
+
+    // KotlinX serialization
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$rootProject.kotlinXSerializationVersion"
+
+    // Moshi
+    implementation "com.squareup.moshi:moshi:$rootProject.moshiVersion"
+    implementation "com.squareup.moshi:moshi-kotlin:$rootProject.moshiKotlinVersion"
+    // kapt "com.squareup.moshi:moshi-kotlin-codegen:$rootProject.moshiVersion"
+    ksp "com.squareup.moshi:moshi-kotlin-codegen:$rootProject.moshiVersion"
+
+    // Retrofit with Moshi Converter
+    implementation "com.squareup.retrofit2:converter-moshi:$rootProject.retrofitMoshiConverterVersion"
+
+    // Testing
+
+    // JUnit
+    testImplementation "junit:junit:$rootProject.junitVersion"
+
+    // Android X test
+    androidTestImplementation "androidx.test:core-ktx:$rootProject.androidXTestCoreVersion"
+    androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXTestExtensionJUnitVersion"
+    androidTestImplementation "androidx.test.ext:truth:$rootProject.androidXTestExtensionTruthVersion"
+    androidTestImplementation "androidx.test:runner:$rootProject.androidXTestRunnerVersion"
+    androidTestImplementation "androidx.test:rules:$rootProject.androidXTestRulesVersion"
+
+    // Mockito kotlin
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$rootProject.mockitoKotlinVersion"
+
+    // Coroutines test
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
+}
