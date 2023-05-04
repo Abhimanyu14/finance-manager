@@ -5,7 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.converters.IntListConverter
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.IntListConverter
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.converters
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.IntListConverter
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test

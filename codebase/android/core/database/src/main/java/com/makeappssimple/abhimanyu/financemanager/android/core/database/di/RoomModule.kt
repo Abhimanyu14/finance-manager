@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.di
+package com.makeappssimple.abhimanyu.financemanager.android.core.database.di
 
 import android.content.Context
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider

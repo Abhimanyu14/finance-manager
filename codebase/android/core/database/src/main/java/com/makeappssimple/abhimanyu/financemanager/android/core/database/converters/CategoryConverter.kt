@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.converters
+package com.makeappssimple.abhimanyu.financemanager.android.core.database.converters
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson

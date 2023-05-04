@@ -1,26 +1,25 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.converters
+package com.makeappssimple.abhimanyu.financemanager.android.core.database.converters
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
-import com.google.gson.reflect.TypeToken
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
 
-class IntListConverter {
+class AmountConverter {
 
     @TypeConverter
-    fun stringToIntList(
+    fun stringToAmount(
         value: String?,
-    ): List<Int>? {
+    ): Amount? {
         if (value.isNullOrBlank()) {
             return null
         }
         val gson = Gson()
-        val listType = object : TypeToken<List<Int>>() {}.type
         return try {
             gson.fromJson(
                 value,
-                listType,
+                Amount::class.java,
             )
         } catch (
             exception: JsonSyntaxException,
@@ -31,15 +30,15 @@ class IntListConverter {
     }
 
     @TypeConverter
-    fun intListToString(
-        intList: List<Int>?,
+    fun amountToString(
+        amount: Amount?,
     ): String {
-        if (intList.isNull()) {
+        if (amount.isNull()) {
             return ""
         }
         val gson = Gson()
         return gson.toJson(
-            intList,
+            amount,
         )
     }
 }
