@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.datasource.local
+package com.makeappssimple.abhimanyu.financemanager.android.core.database.dao
 
 import androidx.room.Dao
 import androidx.room.Insert

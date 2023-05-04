@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.source.di
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.datasource.local.SourceDao
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.repository.SourceRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.repository.SourceRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.DeleteSourcesUseCase

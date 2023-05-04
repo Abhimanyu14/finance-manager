@@ -10,9 +10,12 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.AppConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.datasource.local.CategoryDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.datasource.local.EmojiDao
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.CategoryDao
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.EmojiDao
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.SourceDao
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionForDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.initialdatabasedata.model.InitialDatabaseData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.converters.AmountConverter
@@ -32,11 +35,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.d
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.migrations.MIGRATION_7_8
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.migrations.MIGRATION_8_9
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.migrations.MIGRATION_9_10
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.datasource.local.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.datasource.local.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.datasource.local.TransactionForDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.json.readInitialDataFromAssets
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.transactionsCleanUp

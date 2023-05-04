@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.category.di
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.datasource.local.CategoryDao
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.CategoryDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.repository.CategoryRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.repository.CategoryRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.DeleteCategoryUseCase

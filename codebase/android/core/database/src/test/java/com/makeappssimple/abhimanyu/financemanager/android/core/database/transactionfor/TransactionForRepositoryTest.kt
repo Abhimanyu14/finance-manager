@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.datasource.local.TransactionForDao
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionForDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.repository.TransactionForRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.repository.TransactionForRepositoryImpl

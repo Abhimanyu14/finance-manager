@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.di
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.datasource.local.TransactionDao
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.repository.TransactionRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.CheckIfCategoryIsUsedInTransactionsUseCase

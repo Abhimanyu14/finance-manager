@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.di
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.datasource.local.TransactionForDao
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionForDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.repository.TransactionForRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.repository.TransactionForRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.DeleteTransactionForUseCase

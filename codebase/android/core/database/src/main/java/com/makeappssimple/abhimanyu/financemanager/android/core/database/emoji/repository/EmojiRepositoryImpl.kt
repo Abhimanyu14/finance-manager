@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.repository
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.datasource.local.EmojiDao
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.EmojiDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.EmojiLocalEntity
 import kotlinx.coroutines.flow.Flow
 

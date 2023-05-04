@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.category.datasource.local
+package com.makeappssimple.abhimanyu.financemanager.android.core.database.dao
 
 import androidx.room.Dao
 import androidx.room.Delete
