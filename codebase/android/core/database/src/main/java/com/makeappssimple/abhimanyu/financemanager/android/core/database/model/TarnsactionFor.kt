@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model
+package com.makeappssimple.abhimanyu.financemanager.android.core.database.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

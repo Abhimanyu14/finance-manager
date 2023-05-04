@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.usecase
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.EmojiLocalEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.repository.EmojiRepository
 
 interface GetAllEmojisUseCase {

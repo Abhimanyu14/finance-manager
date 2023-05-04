@@ -21,9 +21,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defa
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.usecase.GetAllCategoriesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesCountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.usecase.GetAllSourcesUseCase
@@ -34,7 +34,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.transac
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTitleSuggestionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.GetTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.usecase.UpdateTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore

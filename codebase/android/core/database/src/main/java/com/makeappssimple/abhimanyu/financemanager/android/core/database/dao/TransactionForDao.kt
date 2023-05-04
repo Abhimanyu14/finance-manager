@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionFor
 import kotlinx.coroutines.flow.Flow
 
 @Dao

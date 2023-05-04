@@ -10,7 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.AppConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.AmountConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.CategoryConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.IntListConverter
@@ -19,7 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.Emo
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionForDao
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.EmojiLocalEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.initialdatabasedata.model.InitialDatabaseData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.AutoDatabaseMigrations
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_12_13
@@ -35,9 +35,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrati
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_7_8
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_8_9
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_9_10
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.json.readInitialDataFromAssets
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.transactionsCleanUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore

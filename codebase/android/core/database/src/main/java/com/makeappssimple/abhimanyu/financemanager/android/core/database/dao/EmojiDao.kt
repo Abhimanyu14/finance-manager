@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.emoji.model.EmojiLocalEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiLocalEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -2,9 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.transa
 
 import androidx.room.Embedded
 import androidx.room.Relation
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transactionfor.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionFor
 
 data class TransactionData(
     @Embedded

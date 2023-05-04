@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.converters
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.CategoryConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestCategory
 import org.junit.Assert

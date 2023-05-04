@@ -1,5 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.updateBalanceAmount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestSource
 import org.junit.Assert
 import org.junit.Before

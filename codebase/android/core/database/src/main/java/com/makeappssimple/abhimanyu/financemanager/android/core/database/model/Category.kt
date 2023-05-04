@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.category.model
+package com.makeappssimple.abhimanyu.financemanager.android.core.database.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
