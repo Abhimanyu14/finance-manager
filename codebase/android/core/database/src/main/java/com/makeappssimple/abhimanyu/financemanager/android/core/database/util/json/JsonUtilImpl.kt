@@ -2,7 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.util.j
 
 import android.content.Context
 import android.net.Uri
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.AppConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.JsonReader
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AmountJsonAdapter
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.DatabaseBackupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.InitialDatabaseData
@@ -12,9 +14,7 @@ import java.io.BufferedReader
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
-import java.io.InputStream
 import java.io.InputStreamReader
-import java.nio.charset.Charset
 
 private val moshi = Moshi.Builder()
     .add(AmountJsonAdapter())
@@ -81,34 +81,11 @@ class JsonUtilImpl(
 
 fun readInitialDataFromAssets(
     context: Context,
+    jsonReader: JsonReader,
 ): InitialDatabaseData? {
-    val jsonString = readJsonFileFromAssets(
+    val jsonString = jsonReader.readJsonFileFromAssets(
         context = context,
-        fileName = "database/initial_data.json",
+        fileName = AppConstants.INITIAL_DATA_FILE_NAME,
     ) ?: return null
     return initialDatabaseDataJsonAdapter.fromJson(jsonString)
-}
-
-@Suppress("SameParameterValue")
-private fun readJsonFileFromAssets(
-    context: Context,
-    fileName: String,
-): String? {
-    val json = try {
-        val inputStream: InputStream = context.assets.open(fileName)
-        val size: Int = inputStream.available()
-        val byteArray = ByteArray(size)
-        inputStream.read(byteArray)
-        inputStream.close()
-        String(
-            bytes = byteArray,
-            charset = Charset.forName("UTF-8"),
-        )
-    } catch (
-        exception: IOException,
-    ) {
-        exception.printStackTrace()
-        null
-    }
-    return json
 }

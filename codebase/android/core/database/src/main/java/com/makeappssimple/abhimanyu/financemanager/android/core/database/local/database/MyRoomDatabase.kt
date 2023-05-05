@@ -10,6 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.AppConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.JsonReader
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.AmountConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.CategoryConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.IntListConverter
@@ -18,7 +19,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.Emo
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionForDao
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.InitialDatabaseData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.AutoDatabaseMigrations
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_12_13
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_13_14
@@ -35,6 +35,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrati
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_9_10
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiLocalEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.InitialDatabaseData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionFor
@@ -101,6 +102,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
         fun getDatabase(
             context: Context,
             dispatcherProvider: DispatcherProvider,
+            jsonReader: JsonReader,
             myDataStore: MyDataStore,
         ): MyRoomDatabase {
             val tempInstance = INSTANCE
@@ -127,6 +129,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                                 populateInitialData(
                                     context = context,
                                     dispatcherProvider = dispatcherProvider,
+                                    jsonReader = jsonReader,
                                     myDataStore = myDataStore,
                                 )
                             }
@@ -166,11 +169,13 @@ abstract class MyRoomDatabase : RoomDatabase() {
         private fun populateInitialData(
             context: Context,
             dispatcherProvider: DispatcherProvider,
+            jsonReader: JsonReader,
             myDataStore: MyDataStore,
         ) {
             val myRoomDatabase = getDatabase(
                 context = context,
                 dispatcherProvider = dispatcherProvider,
+                jsonReader = jsonReader,
                 myDataStore = myDataStore,
             )
             myRoomDatabase.runInTransaction {
@@ -179,6 +184,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                 ).launch {
                     val initialDatabaseData = readInitialDataFromAssets(
                         context = context,
+                        jsonReader = jsonReader,
                     ) ?: return@launch
                     launch {
                         populateCategoryData(
