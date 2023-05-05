@@ -14,7 +14,7 @@ interface DeleteTransactionUseCase {
 class DeleteTransactionUseCaseImpl(
     private val dataStore: MyDataStore,
     private val transactionRepository: TransactionRepository,
-) : DeleteTransactionUseCase {
+) : com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.DeleteTransactionUseCase {
     override suspend operator fun invoke(
         id: Int,
         vararg sources: Source,

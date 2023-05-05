@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.a
 
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Emoji
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel

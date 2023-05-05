@@ -3,9 +3,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.util.j
 import android.content.Context
 import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.AmountJsonAdapter
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.databasebackupdata.model.DatabaseBackupData
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.initialdatabasedata.model.InitialDatabaseData
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AmountJsonAdapter
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.InitialDatabaseData
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.DatabaseBackupData
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import java.io.BufferedReader

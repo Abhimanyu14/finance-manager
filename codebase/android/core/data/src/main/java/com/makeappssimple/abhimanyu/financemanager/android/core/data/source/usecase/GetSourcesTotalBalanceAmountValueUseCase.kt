@@ -1,0 +1,21 @@
+package com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase
+
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.repository.SourceRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+
+interface GetSourcesTotalBalanceAmountValueUseCase {
+    operator fun invoke(): Flow<Long>
+}
+
+class GetSourcesTotalBalanceAmountValueUseCaseImpl(
+    private val sourceRepository: SourceRepository,
+) : GetSourcesTotalBalanceAmountValueUseCase {
+    override operator fun invoke(): Flow<Long> {
+        return sourceRepository.getAllSourcesFlow().map {
+            it.sumOf { source ->
+                source.balanceAmount.value
+            }
+        }
+    }
+}

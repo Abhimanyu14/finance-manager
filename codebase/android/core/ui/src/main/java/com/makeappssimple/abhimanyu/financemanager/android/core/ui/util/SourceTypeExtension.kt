@@ -5,7 +5,7 @@ import androidx.compose.material.icons.rounded.AccountBalance
 import androidx.compose.material.icons.rounded.AccountBalanceWallet
 import androidx.compose.material.icons.rounded.AttachMoney
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.SourceType
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.SourceType
 
 val SourceType.icon: ImageVector
     get() = when (this) {

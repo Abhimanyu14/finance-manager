@@ -3,8 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.source.model.SourceType
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.SourceType
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 

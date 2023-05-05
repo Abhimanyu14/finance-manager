@@ -1,11 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.datasource.local
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.amount.model.Amount
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 
 const val timeInMillis_01_JUN_2022 = 1654021800000
 const val timeInMillis_01_JAN_2022_00_00_00 = 1640975400000 // 01-01-2022 00:00:00 IST

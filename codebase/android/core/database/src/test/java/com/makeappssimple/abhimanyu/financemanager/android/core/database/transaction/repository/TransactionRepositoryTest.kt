@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.repository
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.model.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestSources
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestTransactions
 import kotlinx.coroutines.test.runTest

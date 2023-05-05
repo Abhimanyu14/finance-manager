@@ -10,7 +10,7 @@ interface CheckIfTransactionForIsUsedInTransactionsUseCase {
 
 class CheckIfTransactionForIsUsedInTransactionsUseCaseImpl(
     private val transactionRepository: TransactionRepository,
-) : CheckIfTransactionForIsUsedInTransactionsUseCase {
+) : com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.CheckIfTransactionForIsUsedInTransactionsUseCase {
     override suspend operator fun invoke(
         transactionForId: Int,
     ): Boolean {

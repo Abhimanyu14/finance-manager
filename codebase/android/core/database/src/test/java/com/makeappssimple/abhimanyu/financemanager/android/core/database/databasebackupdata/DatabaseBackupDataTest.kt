@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.databasebackupdata
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.databasebackupdata.model.DatabaseBackupData
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.DatabaseBackupData
 import org.junit.Assert
 import org.junit.Test
 
