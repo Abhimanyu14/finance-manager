@@ -15,10 +15,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usec
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.InsertSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.UpdateSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.InsertTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.usecase.InsertTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.SourceType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
