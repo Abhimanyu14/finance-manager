@@ -51,14 +51,11 @@ dependencies {
     // KotlinX serialization
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$rootProject.kotlinXSerializationVersion"
 
-    // Moshi
-    implementation "com.squareup.moshi:moshi:$rootProject.moshiVersion"
-    implementation "com.squareup.moshi:moshi-kotlin:$rootProject.moshiKotlinVersion"
-    // kapt "com.squareup.moshi:moshi-kotlin-codegen:$rootProject.moshiVersion"
-    ksp "com.squareup.moshi:moshi-kotlin-codegen:$rootProject.moshiVersion"
+    // Okhttp logging interceptor
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpLoggingInterceptorVersion"
 
-    // Retrofit with Moshi Converter
-    implementation "com.squareup.retrofit2:converter-moshi:$rootProject.retrofitMoshiConverterVersion"
+    // Retrofit kotlinX serialization converter
+    implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$rootProject.retrofitKotlinxSerializationConverterVersion"
 
     // Testing
 

@@ -355,20 +355,8 @@ dependencies {
     // JDK desugaring
     coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:$rootProject.jdkDesugaringVersion")
 
-    // Moshi
-    implementation "com.squareup.moshi:moshi:$rootProject.moshiVersion"
-    implementation "com.squareup.moshi:moshi-kotlin:$rootProject.moshiKotlinVersion"
-    // kapt "com.squareup.moshi:moshi-kotlin-codegen:$rootProject.moshiKotlinCodegenVersion"
-    ksp "com.squareup.moshi:moshi-kotlin-codegen:$rootProject.moshiVersion"
-
-    // Retrofit with Moshi Converter
-    implementation "com.squareup.retrofit2:converter-moshi:$rootProject.retrofitMoshiConverterVersion"
-
     // Coil
     implementation "io.coil-kt:coil:$rootProject.coilVersion"
-
-    // Gson
-    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
 
     // Paging
     implementation "androidx.paging:paging-runtime-ktx:$rootProject.pagingVersion"

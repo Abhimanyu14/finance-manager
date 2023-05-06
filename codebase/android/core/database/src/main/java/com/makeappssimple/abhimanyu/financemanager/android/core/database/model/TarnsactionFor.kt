@@ -3,9 +3,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.model
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
+@Serializable
 @Entity(tableName = "transaction_for_table")
 data class TransactionFor(
     @PrimaryKey(autoGenerate = true)

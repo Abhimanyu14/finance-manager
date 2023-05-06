@@ -1,20 +1,21 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.network.retrofit
+package com.makeappssimple.abhimanyu.financemanager.android.core.network.retrofit.emoji
 
-import com.squareup.moshi.Moshi
+import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlinx.serialization.json.Json
+import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 
 private const val EMOJI_API_BASE_URL = "https://emoji-api.com/"
 
 @Singleton
-class EmojiApi @Inject constructor() {
-    private val moshi = Moshi.Builder()
-        .build()
+class EmojiApi @Inject constructor(
+    json: Json,
+) {
     private val retrofit = Retrofit.Builder()
         .baseUrl(EMOJI_API_BASE_URL)
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
+        .addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
         .build()
 
     private val retrofitService: EmojiApiService by lazy {

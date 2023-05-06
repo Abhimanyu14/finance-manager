@@ -154,9 +154,6 @@ buildscript {
         // Open source software licenses
         openSourceSoftwareLicensesVersion = "17.0.0"
 
-        // Gson
-        gsonVersion = "2.9.0"
-
         // Material design
         materialDesignVersion = "1.4.0"
 
@@ -184,20 +181,14 @@ buildscript {
         // JDK desugaring
         jdkDesugaringVersion = "1.1.5"
 
-        // Moshi
+        // KotlinX Serialization
         kotlinXSerializationVersion = "1.5.0"
 
-        // Moshi
-        moshiVersion = "1.13.0"
+        // KotlinX Serialization
+        okhttpLoggingInterceptorVersion = "4.10.0"
 
-        // Moshi
-        moshiKotlinVersion = "1.11.0"
-
-        // Moshi
-        moshiKotlinCodegenVersion = "1.13.0"
-
-        // Retrofit with moshi converter
-        retrofitMoshiConverterVersion = "2.9.0"
+        // KotlinX Serialization
+        retrofitKotlinxSerializationConverterVersion = "1.0.0"
 
         // Coil
         coilVersion = "2.2.2"
@@ -381,9 +372,6 @@ koverMerged {
                     "*Dao_Impl*",
                     "*MyRoomDatabase_AutoMigration*",
                     "*MyRoomDatabase_Impl*",
-
-                    // Moshi
-                    "*JsonAdapter",
 
                     // BuildConfig
                     "*BuildConfig*",

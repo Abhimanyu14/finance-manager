@@ -1,13 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.converters
 
 import androidx.room.TypeConverter
-import com.google.gson.Gson
-import com.google.gson.JsonSyntaxException
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class CategoryConverter {
-
     @TypeConverter
     fun stringToCategory(
         value: String?,
@@ -15,14 +15,12 @@ class CategoryConverter {
         if (value.isNullOrBlank()) {
             return null
         }
-        val gson = Gson()
         return try {
-            gson.fromJson(
-                value,
-                Category::class.java,
+            Json.decodeFromString<Category>(
+                string = value,
             )
         } catch (
-            exception: JsonSyntaxException,
+            exception: Exception,
         ) {
             exception.printStackTrace()
             null
@@ -36,9 +34,15 @@ class CategoryConverter {
         if (category.isNull()) {
             return ""
         }
-        val gson = Gson()
-        return gson.toJson(
-            category,
-        )
+        return try {
+            Json.encodeToString(
+                value = category,
+            )
+        } catch (
+            exception: Exception,
+        ) {
+            exception.printStackTrace()
+            ""
+        }
     }
 }

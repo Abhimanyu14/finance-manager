@@ -4,21 +4,26 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.SourceType
-import com.squareup.moshi.Json
-import com.squareup.moshi.JsonClass
+import kotlinx.serialization.EncodeDefault
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
-@JsonClass(generateAdapter = true)
 @Entity(tableName = "source_table")
-data class Source(
+@Serializable
+data class Source @OptIn(ExperimentalSerializationApi::class) constructor(
+    @EncodeDefault
     @ColumnInfo(name = "balance_amount")
-    @Json(name = "balance_amount")
+    @SerialName(value = "balance_amount")
     val balanceAmount: Amount = Amount(
         value = 0,
     ),
 
+    @EncodeDefault
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
 
+    @EncodeDefault
     val type: SourceType = SourceType.CASH,
 
     val name: String,

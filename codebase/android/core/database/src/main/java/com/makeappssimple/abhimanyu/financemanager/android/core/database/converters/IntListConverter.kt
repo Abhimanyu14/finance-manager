@@ -1,13 +1,12 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.converters
 
 import androidx.room.TypeConverter
-import com.google.gson.Gson
-import com.google.gson.JsonSyntaxException
-import com.google.gson.reflect.TypeToken
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class IntListConverter {
-
     @TypeConverter
     fun stringToIntList(
         value: String?,
@@ -15,15 +14,12 @@ class IntListConverter {
         if (value.isNullOrBlank()) {
             return null
         }
-        val gson = Gson()
-        val listType = object : TypeToken<List<Int>>() {}.type
         return try {
-            gson.fromJson(
-                value,
-                listType,
+            Json.decodeFromString<List<Int>>(
+                string = value,
             )
         } catch (
-            exception: JsonSyntaxException,
+            exception: Exception,
         ) {
             exception.printStackTrace()
             null
@@ -37,9 +33,15 @@ class IntListConverter {
         if (intList.isNull()) {
             return ""
         }
-        val gson = Gson()
-        return gson.toJson(
-            intList,
-        )
+        return try {
+            Json.encodeToString(
+                value = intList,
+            )
+        } catch (
+            exception: Exception,
+        ) {
+            exception.printStackTrace()
+            ""
+        }
     }
 }

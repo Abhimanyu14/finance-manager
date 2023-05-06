@@ -40,7 +40,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.InsertTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.RestoreDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.RestoreDataUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.json.JsonUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.json.JsonUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import dagger.Module

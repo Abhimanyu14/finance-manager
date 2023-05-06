@@ -2,13 +2,20 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.model
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.CurrencyCodeConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.currency.formattedCurrencyValue
-import com.squareup.moshi.JsonClass
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.serializer.CurrencySerializer
 import kotlin.math.abs
+import kotlinx.serialization.EncodeDefault
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.Serializable
 import java.util.Currency
 
-@JsonClass(generateAdapter = false)
-data class Amount(
+@Serializable
+data class Amount @OptIn(ExperimentalSerializationApi::class) constructor(
+    @EncodeDefault
+    @Serializable(CurrencySerializer::class)
     val currency: Currency = Currency.getInstance(CurrencyCodeConstants.INR),
+
+    @EncodeDefault
     val value: Long = 0,
 ) {
     fun toNonSignedString(): String {

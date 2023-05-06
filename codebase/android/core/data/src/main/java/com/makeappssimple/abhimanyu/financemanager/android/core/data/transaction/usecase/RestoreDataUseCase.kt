@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.transactio
 
 import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.json.JsonUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.json.JsonUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.transactionsCleanUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 

@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.network.retrofit
+package com.makeappssimple.abhimanyu.financemanager.android.core.network.retrofit.emoji
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.network.model.NetworkEmoji
 import retrofit2.http.GET

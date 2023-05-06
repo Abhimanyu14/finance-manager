@@ -1,11 +1,12 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader
 
 import android.content.Context
+import javax.inject.Inject
 import java.io.IOException
 import java.io.InputStream
 import java.nio.charset.Charset
 
-class JsonReaderImpl : JsonReader {
+class JsonReaderImpl @Inject constructor() : JsonReader {
     override fun readJsonFileFromAssets(
         context: Context,
         fileName: String,

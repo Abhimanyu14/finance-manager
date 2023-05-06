@@ -1,10 +1,11 @@
 plugins {
     id "com.android.library"
     id "org.jetbrains.kotlin.android"
+    id "org.jetbrains.kotlinx.kover"
+    id "kotlinx-serialization"
     id "kotlin-kapt"
     id "dagger.hilt.android.plugin"
     id "com.google.devtools.ksp" version "1.8.10-1.0.9"
-    id "org.jetbrains.kotlinx.kover"
 }
 
 // API Key
@@ -111,17 +112,8 @@ dependencies {
     // KSP
     implementation "com.google.devtools.ksp:symbol-processing-api:$rootProject.kspVersion"
 
-    // Moshi
-    implementation "com.squareup.moshi:moshi:$rootProject.moshiVersion"
-    implementation "com.squareup.moshi:moshi-kotlin:$rootProject.moshiKotlinVersion"
-    // kapt "com.squareup.moshi:moshi-kotlin-codegen:$rootProject.moshiVersion"
-    ksp "com.squareup.moshi:moshi-kotlin-codegen:$rootProject.moshiVersion"
-
-    // Retrofit with Moshi Converter
-    implementation "com.squareup.retrofit2:converter-moshi:$rootProject.retrofitMoshiConverterVersion"
-
-    // Gson
-    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
+    // KotlinX serialization
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$rootProject.kotlinXSerializationVersion"
 
     // Paging
     implementation "androidx.paging:paging-runtime-ktx:$rootProject.pagingVersion"

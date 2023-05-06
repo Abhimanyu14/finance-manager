@@ -1,13 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.converters
 
 import androidx.room.TypeConverter
-import com.google.gson.Gson
-import com.google.gson.JsonSyntaxException
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Amount
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 class AmountConverter {
-
     @TypeConverter
     fun stringToAmount(
         value: String?,
@@ -15,14 +15,12 @@ class AmountConverter {
         if (value.isNullOrBlank()) {
             return null
         }
-        val gson = Gson()
         return try {
-            gson.fromJson(
-                value,
-                Amount::class.java,
+            Json.decodeFromString<Amount>(
+                string = value,
             )
         } catch (
-            exception: JsonSyntaxException,
+            exception: Exception,
         ) {
             exception.printStackTrace()
             null
@@ -36,9 +34,15 @@ class AmountConverter {
         if (amount.isNull()) {
             return ""
         }
-        val gson = Gson()
-        return gson.toJson(
-            amount,
-        )
+        return try {
+            Json.encodeToString(
+                value = amount,
+            )
+        } catch (
+            exception: Exception,
+        ) {
+            exception.printStackTrace()
+            ""
+        }
     }
 }

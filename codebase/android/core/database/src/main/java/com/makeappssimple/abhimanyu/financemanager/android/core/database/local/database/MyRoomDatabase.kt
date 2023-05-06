@@ -39,7 +39,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.I
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.json.readInitialDataFromAssets
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.transactionsCleanUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import kotlinx.coroutines.CoroutineScope
@@ -48,6 +47,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import java.util.concurrent.Executors
 
 @Database(
@@ -182,10 +183,20 @@ abstract class MyRoomDatabase : RoomDatabase() {
                 CoroutineScope(
                     context = dispatcherProvider.io + SupervisorJob(),
                 ).launch {
-                    val initialDatabaseData = readInitialDataFromAssets(
-                        context = context,
-                        jsonReader = jsonReader,
-                    ) ?: return@launch
+                    val initialDatabaseData = try {
+                        val jsonString = jsonReader.readJsonFileFromAssets(
+                            context = context,
+                            fileName = AppConstants.INITIAL_DATA_FILE_NAME,
+                        ) ?: return@launch
+                        Json.decodeFromString<InitialDatabaseData>(
+                            string = jsonString,
+                        )
+                    } catch (
+                        exception: Exception,
+                    ) {
+                        exception.printStackTrace()
+                        return@launch
+                    }
                     launch {
                         populateCategoryData(
                             myDataStore = myDataStore,

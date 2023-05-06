@@ -1,10 +1,11 @@
 plugins {
     id "com.android.library"
     id "org.jetbrains.kotlin.android"
+    id "org.jetbrains.kotlinx.kover"
+    id "kotlinx-serialization"
     id "kotlin-kapt"
     id "dagger.hilt.android.plugin"
     id "com.google.devtools.ksp" version "1.8.10-1.0.9"
-    id "org.jetbrains.kotlinx.kover"
 }
 
 android {
@@ -31,6 +32,32 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
+
+        freeCompilerArgs += [
+                "-opt-in=kotlin.RequiresOptIn",
+                "-opt-in=kotlin.contracts.ExperimentalContracts",
+                "-opt-in=kotlin.ExperimentalUnsignedTypes",
+                "-opt-in=kotlin.time.ExperimentalTime",
+
+                "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+                "-opt-in=kotlinx.coroutines.FlowPreview",
+                "-opt-in=kotlinx.coroutines.InternalCoroutinesApi",
+                "-opt-in=kotlinx.coroutines.ObsoleteCoroutinesApi",
+
+                "-opt-in=androidx.lifecycle.compose.ExperimentalLifecycleComposeApi",
+
+                "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
+                "-opt-in=androidx.compose.animation.core.InternalAnimationApi",
+                "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+                "-opt-in=androidx.compose.material.ExperimentalMaterialApi",
+                "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+                "-opt-in=androidx.compose.runtime.ExperimentalComposeApi",
+                "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+
+                "-opt-in=com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi",
+                "-opt-in=com.google.accompanist.pager.ExperimentalPagerApi",
+                "-opt-in=com.google.accompanist.permissions.ExperimentalPermissionsApi",
+        ]
     }
 }
 
@@ -63,17 +90,8 @@ dependencies {
     // KSP
     implementation "com.google.devtools.ksp:symbol-processing-api:$rootProject.kspVersion"
 
-    // Moshi
-    implementation "com.squareup.moshi:moshi:$rootProject.moshiVersion"
-    implementation "com.squareup.moshi:moshi-kotlin:$rootProject.moshiKotlinVersion"
-    // kapt "com.squareup.moshi:moshi-kotlin-codegen:$rootProject.moshiVersion"
-    ksp "com.squareup.moshi:moshi-kotlin-codegen:$rootProject.moshiVersion"
-
-    // Retrofit with Moshi Converter
-    implementation "com.squareup.retrofit2:converter-moshi:$rootProject.retrofitMoshiConverterVersion"
-
-    // Gson
-    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
+    // KotlinX serialization
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$rootProject.kotlinXSerializationVersion"
 
     // Paging
     implementation "androidx.paging:paging-runtime-ktx:$rootProject.pagingVersion"
