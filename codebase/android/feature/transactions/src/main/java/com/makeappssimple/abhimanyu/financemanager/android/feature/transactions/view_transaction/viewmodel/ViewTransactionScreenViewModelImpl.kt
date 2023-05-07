@@ -5,12 +5,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.DeleteTransactionAndRevertOtherDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.navigation.ViewTransactionScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,6 +21,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    stringDecoder: StringDecoder,
     override val dateTimeUtil: DateTimeUtil, // TODO(Abhi): Change this to private
     override val logger: Logger,
     override val navigationManager: NavigationManager,
@@ -27,9 +29,10 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val getTransactionDataUseCase: GetTransactionDataUseCase,
 ) : ViewTransactionScreenViewModel, ViewModel() {
-    // Navigation parameters
-    private var originalTransactionId: Int? =
-        savedStateHandle.get<String>(NavArgs.TRANSACTION_ID)?.toIntOrNull()
+    private var viewTransactionScreenArgs: ViewTransactionScreenArgs = ViewTransactionScreenArgs(
+        savedStateHandle = savedStateHandle,
+        stringDecoder = stringDecoder,
+    )
 
     // Transaction data
     private var _transactionData: MutableStateFlow<TransactionData?> = MutableStateFlow(
@@ -66,7 +69,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     }
 
     override fun updateTransactionData() {
-        originalTransactionId?.let { id ->
+        viewTransactionScreenArgs.originalTransactionId?.let { id ->
             viewModelScope.launch(
                 context = dispatcherProvider.io,
             ) {
