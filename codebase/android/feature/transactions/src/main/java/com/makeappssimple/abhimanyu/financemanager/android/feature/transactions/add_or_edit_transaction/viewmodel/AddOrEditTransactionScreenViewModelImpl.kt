@@ -6,6 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isFalse
@@ -15,8 +16,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isTrue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Quadruple
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultBooleanStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
@@ -40,12 +41,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultSource
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.navigation.AddOrEditTransactionScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.math.abs
@@ -67,6 +68,7 @@ import java.time.LocalTime
 @HiltViewModel
 internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     savedStateHandle: SavedStateHandle,
+    stringDecoder: StringDecoder,
     override val logger: Logger,
     override val dateTimeUtil: DateTimeUtil, // TODO(Abhi): Change this to private
     override val navigationManager: NavigationManager,
@@ -82,12 +84,11 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     private val updateSourcesBalanceAmountUseCase: UpdateSourcesBalanceAmountUseCase,
     private val updateTransactionUseCase: UpdateTransactionUseCase,
 ) : AddOrEditTransactionScreenViewModel, ViewModel() {
-    // Navigation parameters
-    private var isEdit: Boolean? = savedStateHandle.get<Boolean>(NavArgs.EDIT)
-
-    // We would have value for all editing as well as adding refund transaction
-    private var originalTransactionId: Int? =
-        savedStateHandle.get<String>(NavArgs.TRANSACTION_ID)?.toIntOrNull()
+    private val addOrEditTransactionScreenArgs: AddOrEditTransactionScreenArgs =
+        AddOrEditTransactionScreenArgs(
+            savedStateHandle = savedStateHandle,
+            stringDecoder = stringDecoder,
+        )
 
     // Original transaction data
     private var originalTransactionData: MutableStateFlow<TransactionData?> = MutableStateFlow(
@@ -397,10 +398,10 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     }
                 }
                 val originalTransactionId =
-                    if (isEdit.isFalse() && originalTransactionId.isNotNull() ||
-                        isEdit.isTrue() && originalTransactionData.value?.transaction?.transactionType == TransactionType.REFUND
+                    if (addOrEditTransactionScreenArgs.isEdit.isFalse() && addOrEditTransactionScreenArgs.originalTransactionId.isNotNull() ||
+                        addOrEditTransactionScreenArgs.isEdit.isTrue() && originalTransactionData.value?.transaction?.transactionType == TransactionType.REFUND
                     ) {
-                        originalTransactionId
+                        addOrEditTransactionScreenArgs.originalTransactionId
                     } else {
                         null
                     }
@@ -983,7 +984,9 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             (TransactionType.values().toSet() - excludedTransactionTypes).toList()
         _transactionTypesForNewTransaction.value = transactionTypesForNewTransaction
 
-        if (isEdit.isFalse() && originalTransactionId.isNull()) {
+        if (addOrEditTransactionScreenArgs.isEdit.isFalse() &&
+            addOrEditTransactionScreenArgs.originalTransactionId.isNull()
+        ) {
             updateSelectedTransactionTypeIndex(
                 updatedSelectedTransactionTypeIndex = transactionTypesForNewTransaction.indexOf(
                     element = TransactionType.EXPENSE,
@@ -995,7 +998,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     private suspend fun getOriginalTransactionData(
         coroutineScope: CoroutineScope,
     ) {
-        originalTransactionId?.let { id ->
+        addOrEditTransactionScreenArgs.originalTransactionId?.let { id ->
             coroutineScope.launch(
                 context = dispatcherProvider.io,
             ) {
@@ -1055,7 +1058,8 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         transactionForValues: List<TransactionFor>,
         maxRefundAmount: Amount?,
     ) {
-        val isAddingRefund = isEdit.isFalse() && originalTransactionId.isNotNull()
+        val isAddingRefund = addOrEditTransactionScreenArgs.isEdit.isFalse() &&
+                addOrEditTransactionScreenArgs.originalTransactionId.isNotNull()
         val initialAddOrEditTransactionScreenUiState = if (isAddingRefund) {
             AddOrEditTransactionScreenUiState(
                 selectedTransactionTypeIndex = transactionTypesForNewTransaction.indexOf(
@@ -1122,16 +1126,19 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     }
 
     private suspend fun calculateMaxRefundAmount() {
-        val transactionId = originalTransactionId ?: return
+        val transactionId = addOrEditTransactionScreenArgs.originalTransactionId ?: return
         val transactionData = getTransactionDataUseCase(
             id = transactionId,
         )
-        if (!((isEdit.isTrue() && transactionData?.transaction?.transactionType == TransactionType.REFUND) || isEdit.isFalse())) {
+        if (!((addOrEditTransactionScreenArgs.isEdit.isTrue() &&
+                    transactionData?.transaction?.transactionType == TransactionType.REFUND) ||
+                    addOrEditTransactionScreenArgs.isEdit.isFalse())
+        ) {
             return
         }
 
         var transactionDataToRefund: TransactionData? = null
-        if (isEdit.isTrue()) {
+        if (addOrEditTransactionScreenArgs.isEdit.isTrue()) {
             transactionData?.transaction?.originalTransactionId?.let {
                 transactionDataToRefund = getTransactionDataUseCase(
                     id = it,
@@ -1146,7 +1153,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
 
         var refundedAmountCalculated: Amount? = null
         transactionDataToRefund?.transaction?.refundTransactionIds?.forEach {
-            if (it != originalTransactionId) {
+            if (it != addOrEditTransactionScreenArgs.originalTransactionId) {
                 getTransactionDataUseCase(
                     id = it,
                 )?.transaction?.amount?.let { prevRefundedTransactionAmount ->
@@ -1187,7 +1194,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                 category = category.title,
             )
         }
-        if (isEdit != true) {
+        if (addOrEditTransactionScreenArgs.isEdit != true) {
             updateCategory(
                 updatedCategory = expenseDefaultCategory,
             )
@@ -1202,7 +1209,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                 source = source.name,
             )
         }
-        if (isEdit != true) {
+        if (addOrEditTransactionScreenArgs.isEdit != true) {
             updateSourceFrom(
                 updatedSourceFrom = defaultSource,
             )
@@ -1213,7 +1220,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     }
 
     private fun setInitialSelectedTransactionType() {
-        _selectedTransactionType.value = if (isEdit.isTrue()) {
+        _selectedTransactionType.value = if (addOrEditTransactionScreenArgs.isEdit.isTrue()) {
             if (originalTransactionData.value?.transaction?.transactionType == TransactionType.REFUND) {
                 TransactionType.REFUND
             } else {
@@ -1224,7 +1231,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                 }
             }
         } else {
-            if (originalTransactionId.isNotNull()) {
+            if (addOrEditTransactionScreenArgs.originalTransactionId.isNotNull()) {
                 TransactionType.REFUND
             } else {
                 uiState.value.selectedTransactionTypeIndex?.let {

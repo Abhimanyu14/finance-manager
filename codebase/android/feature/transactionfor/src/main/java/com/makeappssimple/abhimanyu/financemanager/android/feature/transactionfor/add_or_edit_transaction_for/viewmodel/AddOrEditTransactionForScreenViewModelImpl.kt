@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetTransactionForUseCase
@@ -16,8 +17,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.navigation.AddOrEditTransactionForScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -30,6 +31,7 @@ import kotlinx.coroutines.launch
 internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
     getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
     savedStateHandle: SavedStateHandle,
+    stringDecoder: StringDecoder,
     override val logger: Logger,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
@@ -37,9 +39,11 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
     private val insertTransactionForUseCase: InsertTransactionForValuesUseCase,
     private val updateTransactionForValuesUseCase: UpdateTransactionForValuesUseCase,
 ) : AddOrEditTransactionForScreenViewModel, ViewModel() {
-    // Navigation parameters
-    private var originalTransactionForId: Int? =
-        savedStateHandle.get<Int>(NavArgs.TRANSACTION_FOR_ID)
+    private val addOrEditTransactionForScreenArgs: AddOrEditTransactionForScreenArgs =
+        AddOrEditTransactionForScreenArgs(
+            savedStateHandle = savedStateHandle,
+            stringDecoder = stringDecoder,
+        )
 
     private val transactionForValues: StateFlow<List<TransactionFor>> =
         getAllTransactionForValuesFlowUseCase().defaultListStateIn(
@@ -59,7 +63,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
     override val transactionFor: StateFlow<TransactionFor?> = _transactionFor
 
     init {
-        originalTransactionForId?.let {
+        addOrEditTransactionForScreenArgs.originalTransactionForId?.let {
             getTransactionFor(
                 id = it,
             )

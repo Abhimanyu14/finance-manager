@@ -6,10 +6,11 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetSourceUseCase
@@ -23,9 +24,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.SourceType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultSource
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.navigation.AddOrEditSourceScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.math.abs
@@ -39,6 +40,7 @@ import kotlinx.coroutines.launch
 internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase,
     savedStateHandle: SavedStateHandle,
+    stringDecoder: StringDecoder,
     override val logger: Logger,
     override val navigationManager: NavigationManager,
     private val dateTimeUtil: DateTimeUtil, // TODO(Abhi): Change this to private
@@ -48,8 +50,11 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     private val insertTransactionsUseCase: InsertTransactionsUseCase,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
 ) : AddOrEditSourceScreenViewModel, ViewModel() {
-    // Navigation parameters
-    private var originalSourceId: Int? = savedStateHandle.get<Int>(NavArgs.SOURCE_ID)
+    private val addOrEditSourceScreenArgs: AddOrEditSourceScreenArgs =
+        AddOrEditSourceScreenArgs(
+            savedStateHandle = savedStateHandle,
+            stringDecoder = stringDecoder,
+        )
 
     private val sources: StateFlow<List<Source>> = getAllSourcesFlowUseCase().defaultListStateIn(
         scope = viewModelScope,
@@ -87,7 +92,7 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     override val balanceAmountValue: StateFlow<TextFieldValue> = _balanceAmountValue
 
     init {
-        originalSourceId?.let {
+        addOrEditSourceScreenArgs.originalSourceId?.let {
             getSource(
                 id = it,
             )

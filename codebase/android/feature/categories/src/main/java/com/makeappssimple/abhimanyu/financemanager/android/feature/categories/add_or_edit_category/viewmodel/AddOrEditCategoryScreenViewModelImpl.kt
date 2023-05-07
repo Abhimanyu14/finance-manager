@@ -9,6 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetCategoryUseCase
@@ -21,11 +22,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.E
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.navigation.AddOrEditCategoryScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -41,6 +42,7 @@ import kotlinx.coroutines.launch
 internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
     savedStateHandle: SavedStateHandle,
+    stringDecoder: StringDecoder,
     override val logger: Logger,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
@@ -49,10 +51,11 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     private val insertCategoriesUseCase: InsertCategoriesUseCase,
     private val updateCategoriesUseCase: UpdateCategoriesUseCase,
 ) : AddOrEditCategoryScreenViewModel, ViewModel() {
-    // Navigation parameters
-    private var originalCategoryId: Int? = savedStateHandle.get<Int>(NavArgs.CATEGORY_ID)
-    private var originalTransactionType: String? =
-        savedStateHandle.get<String>(NavArgs.TRANSACTION_TYPE)
+    private val addOrEditCategoryScreenArgs: AddOrEditCategoryScreenArgs =
+        AddOrEditCategoryScreenArgs(
+            savedStateHandle = savedStateHandle,
+            stringDecoder = stringDecoder,
+        )
 
     private val categories: StateFlow<List<Category>> =
         getAllCategoriesFlowUseCase().defaultListStateIn(
@@ -110,7 +113,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     )
 
     init {
-        originalTransactionType?.let { originalTransactionType ->
+        addOrEditCategoryScreenArgs.originalTransactionType?.let { originalTransactionType ->
             updateSelectedTransactionTypeIndex(
                 updatedIndex = transactionTypes.indexOf(
                     element = TransactionType.values().find { transactionType ->
@@ -119,7 +122,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
                 )
             )
         }
-        originalCategoryId?.let {
+        addOrEditCategoryScreenArgs.originalCategoryId?.let {
             getCategory(
                 id = it,
             )
