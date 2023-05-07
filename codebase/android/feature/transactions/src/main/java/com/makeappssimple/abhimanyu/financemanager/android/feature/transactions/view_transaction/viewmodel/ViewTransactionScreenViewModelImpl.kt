@@ -40,6 +40,22 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
         stringDecoder = stringDecoder,
     )
 
+    // Original transaction data
+    private var _originalTransactionData: MutableStateFlow<TransactionListItemData?> =
+        MutableStateFlow(
+            value = null,
+        )
+    override val originalTransactionListItemData: StateFlow<TransactionListItemData?> =
+        _originalTransactionData
+
+    // Refund transaction data
+    private var _refundTransactionData: MutableStateFlow<List<TransactionListItemData>> =
+        MutableStateFlow(
+            value = emptyList(),
+        )
+    override val refundTransactionListItemData: StateFlow<List<TransactionListItemData>> =
+        _refundTransactionData
+
     // Transaction data
     private var _transactionListItemData: MutableStateFlow<TransactionListItemData?> =
         MutableStateFlow(
@@ -48,18 +64,6 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     override val transactionListItemData: StateFlow<TransactionListItemData?> =
         _transactionListItemData
 
-    // Original transaction data
-    private var _originalTransactionData: MutableStateFlow<TransactionData?> = MutableStateFlow(
-        value = null,
-    )
-    override val originalTransactionData: StateFlow<TransactionData?> = _originalTransactionData
-
-    // Original transaction data
-    private var _refundTransactionData: MutableStateFlow<List<TransactionData>> = MutableStateFlow(
-        value = emptyList(),
-    )
-    override val refundTransactionData: StateFlow<List<TransactionData>> = _refundTransactionData
-
     override fun getTransactionData() {
         viewTransactionScreenArgs.originalTransactionId?.let { id ->
             viewModelScope.launch(
@@ -67,76 +71,16 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
             ) {
                 getTransactionDataUseCase(
                     id = id,
-                )?.let {
-                    val transaction = it.transaction
-                    val isDeleteButtonEnabled = transaction.refundTransactionIds?.run {
-                        this.isEmpty()
-                    } ?: true
-                    val isEditButtonVisible =
-                        transaction.transactionType != TransactionType.ADJUSTMENT
-                    val isRefundButtonVisible =
-                        transaction.transactionType == TransactionType.EXPENSE
-
-                    val amountColor: MyColor = transaction.getAmountTextColor()
-                    val amountText: String = if (
-                        transaction.transactionType == TransactionType.INCOME ||
-                        transaction.transactionType == TransactionType.EXPENSE ||
-                        transaction.transactionType == TransactionType.ADJUSTMENT ||
-                        transaction.transactionType == TransactionType.REFUND
-                    ) {
-                        it.transaction.amount.toSignedString(
-                            isPositive = it.sourceTo.isNotNull(),
-                            isNegative = it.sourceFrom.isNotNull(),
-                        )
-                    } else {
-                        transaction.amount.toString()
-                    }
-                    val dateAndTimeText: String = dateTimeUtil.getReadableDateAndTime(
-                        timestamp = transaction.transactionTimestamp,
+                )?.let { transactionData ->
+                    _transactionListItemData.value = getTransactionListItemData(
+                        transactionData = transactionData,
                     )
-                    val emoji: String = when (transaction.transactionType) {
-                        TransactionType.TRANSFER -> {
-                            EmojiConstants.LEFT_RIGHT_ARROW
-                        }
-
-                        TransactionType.ADJUSTMENT -> {
-                            EmojiConstants.EXPRESSIONLESS_FACE
-                        }
-
-                        else -> {
-                            it.category?.emoji.orEmpty()
-                        }
-                    }
-                    val sourceFromName = it.sourceFrom?.name
-                    val sourceToName = it.sourceTo?.name
-                    val title: String = transaction.title
-                    val transactionForText: String = it.transactionFor.titleToDisplay
-
-                    _transactionListItemData.value = TransactionListItemData(
-                        isDeleteButtonEnabled = isDeleteButtonEnabled,
-                        isDeleteButtonVisible = true,
-                        isEditButtonVisible = isEditButtonVisible,
-                        isExpanded = true,
-                        isRefundButtonVisible = isRefundButtonVisible,
-                        transactionId = transaction.id,
-                        amountColor = amountColor,
-                        amountText = amountText,
-                        dateAndTimeText = dateAndTimeText,
-                        emoji = emoji,
-                        sourceFromName = sourceFromName,
-                        sourceToName = sourceToName,
-                        title = title,
-                        transactionForText = transactionForText,
-                        onClick = null,
-                    )
-
-                    it.transaction.originalTransactionId?.let { transactionId ->
+                    transactionData.transaction.originalTransactionId?.let { transactionId ->
                         updateOriginalTransactionData(
                             transactionId = transactionId,
                         )
                     }
-
-                    it.transaction.refundTransactionIds?.let { ids ->
+                    transactionData.transaction.refundTransactionIds?.let { ids ->
                         updateRefundTransactionData(
                             ids = ids,
                         )
@@ -158,6 +102,70 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
         }
     }
 
+    private fun getTransactionListItemData(
+        transactionData: TransactionData,
+    ): TransactionListItemData {
+        val transaction = transactionData.transaction
+        val isDeleteButtonEnabled = transaction.refundTransactionIds?.run {
+            this.isEmpty()
+        } ?: true
+        val isEditButtonVisible =
+            transaction.transactionType != TransactionType.ADJUSTMENT
+        val isRefundButtonVisible =
+            transaction.transactionType == TransactionType.EXPENSE
+        val amountColor: MyColor = transaction.getAmountTextColor()
+        val amountText: String = if (
+            transaction.transactionType == TransactionType.INCOME ||
+            transaction.transactionType == TransactionType.EXPENSE ||
+            transaction.transactionType == TransactionType.ADJUSTMENT ||
+            transaction.transactionType == TransactionType.REFUND
+        ) {
+            transactionData.transaction.amount.toSignedString(
+                isPositive = transactionData.sourceTo.isNotNull(),
+                isNegative = transactionData.sourceFrom.isNotNull(),
+            )
+        } else {
+            transaction.amount.toString()
+        }
+        val dateAndTimeText: String = dateTimeUtil.getReadableDateAndTime(
+            timestamp = transaction.transactionTimestamp,
+        )
+        val emoji: String = when (transaction.transactionType) {
+            TransactionType.TRANSFER -> {
+                EmojiConstants.LEFT_RIGHT_ARROW
+            }
+
+            TransactionType.ADJUSTMENT -> {
+                EmojiConstants.EXPRESSIONLESS_FACE
+            }
+
+            else -> {
+                transactionData.category?.emoji.orEmpty()
+            }
+        }
+        val sourceFromName = transactionData.sourceFrom?.name
+        val sourceToName = transactionData.sourceTo?.name
+        val title: String = transaction.title
+        val transactionForText: String = transactionData.transactionFor.titleToDisplay
+
+        return TransactionListItemData(
+            isDeleteButtonEnabled = isDeleteButtonEnabled,
+            isDeleteButtonVisible = true,
+            isEditButtonVisible = isEditButtonVisible,
+            isExpanded = true,
+            isRefundButtonVisible = isRefundButtonVisible,
+            transactionId = transaction.id,
+            amountColor = amountColor,
+            amountText = amountText,
+            dateAndTimeText = dateAndTimeText,
+            emoji = emoji,
+            sourceFromName = sourceFromName,
+            sourceToName = sourceToName,
+            title = title,
+            transactionForText = transactionForText,
+        )
+    }
+
     private fun updateOriginalTransactionData(
         transactionId: Int,
     ) {
@@ -167,7 +175,9 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
             getTransactionDataUseCase(
                 id = transactionId,
             )?.let {
-                _originalTransactionData.value = it
+                _originalTransactionData.value = getTransactionListItemData(
+                    transactionData = it,
+                )
             }
         }
     }
@@ -178,15 +188,16 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            // TODO-Abhi: Optimize later
-            _refundTransactionData.value = emptyList()
-            ids.forEach {
-                launch {
+            _refundTransactionData.value = buildList {
+                ids.map {
                     getTransactionDataUseCase(
                         id = it,
-                    )?.let {
-                        _refundTransactionData.value
-                        _originalTransactionData.value = it
+                    )?.let { transactionData ->
+                        add(
+                            getTransactionListItemData(
+                                transactionData = transactionData,
+                            )
+                        )
                     }
                 }
             }

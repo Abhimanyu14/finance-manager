@@ -18,6 +18,12 @@ fun ViewTransactionScreen(
     screenViewModel.logger.logError(
         message = "Inside ViewTransactionScreen",
     )
+    val originalTransactionListItemData: TransactionListItemData? by screenViewModel.originalTransactionListItemData.collectAsStateWithLifecycle(
+        initialValue = null,
+    )
+    val refundTransactionListItemData: List<TransactionListItemData>? by screenViewModel.refundTransactionListItemData.collectAsStateWithLifecycle(
+        initialValue = null,
+    )
     val transactionListItemData: TransactionListItemData? by screenViewModel.transactionListItemData.collectAsStateWithLifecycle(
         initialValue = null,
     )
@@ -30,6 +36,8 @@ fun ViewTransactionScreen(
 
     ViewTransactionScreenView(
         data = ViewTransactionScreenViewData(
+            originalTransactionListItemData = originalTransactionListItemData,
+            refundTransactionListItemData = refundTransactionListItemData,
             transactionListItemData = transactionListItemData,
             deleteTransaction = { transactionId ->
                 screenViewModel.deleteTransaction(
