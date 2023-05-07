@@ -70,9 +70,9 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
     override val logger: Logger,
-    override val dateTimeUtil: DateTimeUtil, // TODO(Abhi): Change this to private
     override val navigationManager: NavigationManager,
     private val dataStore: MyDataStore,
+    private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val getAllSourcesCountUseCase: GetAllSourcesCountUseCase,
@@ -139,6 +139,9 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         value = emptyList(),
     )
     override val sources: StateFlow<List<Source>> = _sources
+
+    override val currentTimeMillis: Long
+        get() = dateTimeUtil.getCurrentTimeMillis()
     // endregion
 
     private val _uiState: MutableStateFlow<AddOrEditTransactionScreenUiState> = MutableStateFlow(

@@ -55,7 +55,7 @@ fun AddTransactionScreen(
             titleSuggestions = titleSuggestions,
             transactionTypesForNewTransaction = transactionTypesForNewTransaction,
             transactionForValues = transactionForValues,
-            currentTimeMillis = screenViewModel.dateTimeUtil.getCurrentTimeMillis(),
+            currentTimeMillis = screenViewModel.currentTimeMillis,
             selectedTransactionType = selectedTransactionType,
             clearAmount = screenViewModel::clearAmount,
             clearDescription = screenViewModel::clearDescription,

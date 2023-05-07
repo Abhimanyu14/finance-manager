@@ -18,17 +18,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.MimeTypeConstants
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
@@ -38,7 +32,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.sc
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.bottomappbar.HomeBottomAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.bottomsheet.HomeMenuBottomSheetContent
@@ -52,8 +45,7 @@ internal enum class HomeBottomSheetType : BottomSheetType {
 @Immutable
 internal data class HomeScreenViewData(
     val showBackupCard: Boolean,
-    val dateTimeUtil: DateTimeUtil,
-    val transactionData: List<TransactionData>,
+    val transactionListItemDataList: List<TransactionListItemData>,
     val createDocument: ManagedActivityResultLauncher<String, Uri?>,
     val navigateToAddTransactionScreen: () -> Unit,
     val navigateToCategoriesScreen: () -> Unit,
@@ -171,58 +163,13 @@ internal fun HomeScreenView(
                 )
             }
             items(
-                items = data.transactionData,
+                items = data.transactionListItemDataList,
                 key = { listItem ->
                     listItem.hashCode()
                 },
             ) { listItem ->
-                val amountColor: Color = listItem.transaction.getAmountTextColor()
-                val amountText: String =
-                    if (listItem.transaction.transactionType == TransactionType.INCOME ||
-                        listItem.transaction.transactionType == TransactionType.EXPENSE ||
-                        listItem.transaction.transactionType == TransactionType.ADJUSTMENT ||
-                        listItem.transaction.transactionType == TransactionType.REFUND
-                    ) {
-                        listItem.transaction.amount.toSignedString(
-                            isPositive = listItem.sourceTo.isNotNull(),
-                            isNegative = listItem.sourceFrom.isNotNull(),
-                        )
-                    } else {
-                        listItem.transaction.amount.toString()
-                    }
-                val dateAndTimeText: String = data.dateTimeUtil.getReadableDateAndTime(
-                    timestamp = listItem.transaction.transactionTimestamp,
-                )
-                val emoji: String = when (listItem.transaction.transactionType) {
-                    TransactionType.TRANSFER -> {
-                        EmojiConstants.LEFT_RIGHT_ARROW
-                    }
-
-                    TransactionType.ADJUSTMENT -> {
-                        EmojiConstants.EXPRESSIONLESS_FACE
-                    }
-
-                    else -> {
-                        listItem.category?.emoji.orEmpty()
-                    }
-                }
-                val sourceFromName = listItem.sourceFrom?.name
-                val sourceToName = listItem.sourceTo?.name
-                val title: String = listItem.transaction.title
-                val transactionForText: String =
-                    listItem.transactionFor.titleToDisplay
-
                 TransactionListItem(
-                    data = TransactionListItemData(
-                        amountColor = amountColor,
-                        amountText = amountText,
-                        dateAndTimeText = dateAndTimeText,
-                        emoji = emoji,
-                        sourceFromName = sourceFromName,
-                        sourceToName = sourceToName,
-                        title = title,
-                        transactionForText = transactionForText,
-                    ),
+                    data = listItem,
                 )
             }
         }

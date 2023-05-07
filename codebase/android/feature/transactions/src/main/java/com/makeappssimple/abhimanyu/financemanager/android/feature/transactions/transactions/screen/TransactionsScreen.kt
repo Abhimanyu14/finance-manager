@@ -6,13 +6,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.SortOption
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.TransactionsScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.TransactionsScreenViewModelImpl
+import java.time.LocalDate
 
 @Composable
 fun TransactionsScreen(
@@ -33,10 +34,10 @@ fun TransactionsScreen(
     val sources: List<Source> by screenViewModel.sources.collectAsStateWithLifecycle(
         initialValue = emptyList(),
     )
-    val oldestTransactionTimestamp: Long by screenViewModel.oldestTransactionTimestamp.collectAsStateWithLifecycle(
-        initialValue = 0L,
+    val oldestTransactionLocalDate: LocalDate by screenViewModel.oldestTransactionLocalDate.collectAsStateWithLifecycle(
+        initialValue = LocalDate.MIN,
     )
-    val transactionDetailsListItemViewData: Map<String, List<TransactionData>> by screenViewModel.transactionDetailsListItemViewData.collectAsStateWithLifecycle(
+    val transactionDetailsListItemViewData: Map<String, List<TransactionListItemData>> by screenViewModel.transactionDetailsListItemViewData.collectAsStateWithLifecycle(
         initialValue = emptyMap(),
     )
     val isLoading: Boolean by screenViewModel.isLoading.collectAsStateWithLifecycle()
@@ -47,7 +48,6 @@ fun TransactionsScreen(
     TransactionsScreenView(
         data = TransactionsScreenViewData(
             isLoading = isLoading,
-            dateTimeUtil = screenViewModel.dateTimeUtil,
             selectedFilter = selectedFilter,
             expenseCategories = expenseCategories,
             incomeCategories = incomeCategories,
@@ -55,8 +55,22 @@ fun TransactionsScreen(
             sortOptions = screenViewModel.sortOptions,
             sources = sources,
             transactionTypes = screenViewModel.transactionTypes,
-            oldestTransactionTimestamp = oldestTransactionTimestamp,
-            transactionDetailsListItemViewData = transactionDetailsListItemViewData,
+            oldestTransactionLocalDate = oldestTransactionLocalDate,
+            currentLocalDate = screenViewModel.currentLocalDate,
+            currentTimeMillis = screenViewModel.currentTimeMillis,
+            transactionDetailsListItemViewData = transactionDetailsListItemViewData.mapValues {
+                it.value.map { transactionListItemData ->
+                    transactionListItemData.copy(
+                        onClick = {
+                            screenViewModel.navigationManager.navigate(
+                                navigationCommand = MyNavigationDirections.ViewTransaction(
+                                    transactionId = transactionListItemData.transactionId,
+                                )
+                            )
+                        },
+                    )
+                }
+            },
             searchText = searchText,
             selectedSortOption = selectedSortOption,
             deleteTransaction = screenViewModel::deleteTransaction,

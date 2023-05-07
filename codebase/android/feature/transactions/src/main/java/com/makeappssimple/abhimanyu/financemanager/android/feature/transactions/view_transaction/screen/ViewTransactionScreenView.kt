@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
@@ -11,15 +10,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
@@ -27,7 +22,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.common.TransactionDeleteConfirmationBottomSheetContent
 
@@ -38,7 +32,7 @@ internal enum class ViewTransactionBottomSheetType : BottomSheetType {
 
 @Immutable
 internal data class ViewTransactionScreenViewData(
-    val dateTimeUtil: DateTimeUtil,
+    val transactionListItemData: TransactionListItemData?,
     val transactionData: TransactionData?,
     val deleteTransaction: (transactionId: Int) -> Unit,
     val navigateToAddTransactionScreen: (transactionId: Int) -> Unit,
@@ -63,49 +57,6 @@ internal fun ViewTransactionScreenView(
     }
 
     val transaction = data.transactionData?.transaction
-
-    val isDeleteButtonEnabled = transaction?.refundTransactionIds?.run {
-        this.isEmpty()
-    } ?: true
-    val isEditButtonVisible = transaction?.transactionType != TransactionType.ADJUSTMENT
-    val isRefundButtonVisible = transaction?.transactionType == TransactionType.EXPENSE
-
-    val amountColor: Color =
-        transaction?.getAmountTextColor() ?: MaterialTheme.colorScheme.onBackground
-    val amountText: String = if (
-        transaction?.transactionType == TransactionType.INCOME ||
-        transaction?.transactionType == TransactionType.EXPENSE ||
-        transaction?.transactionType == TransactionType.ADJUSTMENT ||
-        transaction?.transactionType == TransactionType.REFUND
-    ) {
-        data.transactionData.transaction.amount.toSignedString(
-            isPositive = data.transactionData.sourceTo.isNotNull(),
-            isNegative = data.transactionData.sourceFrom.isNotNull(),
-        )
-    } else {
-        transaction?.amount.toString()
-    }
-    val dateAndTimeText: String = data.dateTimeUtil.getReadableDateAndTime(
-        timestamp = transaction?.transactionTimestamp ?: 0L,
-    )
-    val emoji: String = when (transaction?.transactionType) {
-        TransactionType.TRANSFER -> {
-            EmojiConstants.LEFT_RIGHT_ARROW
-        }
-
-        TransactionType.ADJUSTMENT -> {
-            EmojiConstants.EXPRESSIONLESS_FACE
-        }
-
-        else -> {
-            data.transactionData?.category?.emoji.orEmpty()
-        }
-    }
-    val sourceFromName = data.transactionData?.sourceFrom?.name
-    val sourceToName = data.transactionData?.sourceTo?.name
-    val title: String = transaction?.title.orEmpty()
-    val transactionForText: String =
-        data.transactionData?.transactionFor?.titleToDisplay.orEmpty()
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
@@ -163,43 +114,31 @@ internal fun ViewTransactionScreenView(
             AnimatedVisibility(
                 visible = data.transactionData.isNotNull(),
             ) {
-                TransactionListItem(
-                    data = TransactionListItemData(
-                        isDeleteButtonEnabled = isDeleteButtonEnabled,
-                        isDeleteButtonVisible = true,
-                        isEditButtonVisible = isEditButtonVisible,
-                        isExpanded = true,
-                        isRefundButtonVisible = isRefundButtonVisible,
-                        amountColor = amountColor,
-                        amountText = amountText,
-                        dateAndTimeText = dateAndTimeText,
-                        emoji = emoji,
-                        sourceFromName = sourceFromName,
-                        sourceToName = sourceToName,
-                        title = title,
-                        transactionForText = transactionForText,
-                        onClick = null,
-                        onDeleteButtonClick = {
-                            transactionIdToDelete = transaction?.id
-                            viewTransactionBottomSheetType =
-                                ViewTransactionBottomSheetType.DELETE_CONFIRMATION
-                            toggleModalBottomSheetState(
-                                coroutineScope = state.coroutineScope,
-                                modalBottomSheetState = state.modalBottomSheetState,
-                            )
-                        },
-                        onEditButtonClick = {
-                            transaction?.id?.let { transactionId ->
-                                data.navigateToEditTransactionScreen(transactionId)
-                            }
-                        },
-                        onRefundButtonClick = {
-                            transaction?.id?.let { transactionId ->
-                                data.navigateToAddTransactionScreen(transactionId)
-                            }
-                        },
-                    ),
-                )
+                data.transactionListItemData?.let {
+                    TransactionListItem(
+                        data = data.transactionListItemData.copy(
+                            onDeleteButtonClick = {
+                                transactionIdToDelete = transaction?.id
+                                viewTransactionBottomSheetType =
+                                    ViewTransactionBottomSheetType.DELETE_CONFIRMATION
+                                toggleModalBottomSheetState(
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
+                                )
+                            },
+                            onEditButtonClick = {
+                                transaction?.id?.let { transactionId ->
+                                    data.navigateToEditTransactionScreen(transactionId)
+                                }
+                            },
+                            onRefundButtonClick = {
+                                transaction?.id?.let { transactionId ->
+                                    data.navigateToAddTransactionScreen(transactionId)
+                                }
+                            },
+                        ),
+                    )
+                }
             }
         }
     }

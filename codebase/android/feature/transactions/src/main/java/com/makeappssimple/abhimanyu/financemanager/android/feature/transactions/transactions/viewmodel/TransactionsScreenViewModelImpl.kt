@@ -2,11 +2,13 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionDataFlowUseCase
@@ -17,6 +19,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.T
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -34,9 +38,9 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
     getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
     getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase,
-    override val dateTimeUtil: DateTimeUtil, // TODO(Abhi): Change this to private
     override val logger: Logger,
     override val navigationManager: NavigationManager,
+    private val dateTimeUtil: DateTimeUtil,
     private val deleteTransactionAndRevertOtherDataUseCase: DeleteTransactionAndRevertOtherDataUseCase,
     private val dispatcherProvider: DispatcherProvider,
 ) : TransactionsScreenViewModel, ViewModel() {
@@ -86,15 +90,19 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     }
     override val sources: Flow<List<Source>> = getAllSourcesFlowUseCase()
     override val transactionTypes: List<TransactionType> = TransactionType.values().toList()
+    override val currentLocalDate: LocalDate
+        get() = dateTimeUtil.getCurrentLocalDate()
+    override val currentTimeMillis: Long
+        get() = dateTimeUtil.getCurrentTimeMillis()
 
-    private var _oldestTransactionTimestamp: MutableStateFlow<Long> = MutableStateFlow(
-        value = 0L,
+    private var _oldestTransactionTimestamp: MutableStateFlow<LocalDate> = MutableStateFlow(
+        value = LocalDate.MIN,
     )
-    override val oldestTransactionTimestamp: StateFlow<Long> = _oldestTransactionTimestamp
+    override val oldestTransactionLocalDate: StateFlow<LocalDate> = _oldestTransactionTimestamp
 
     override val sortOptions: List<SortOption> = SortOption.values().toList()
 
-    override val transactionDetailsListItemViewData: Flow<Map<String, List<TransactionData>>> =
+    override val transactionDetailsListItemViewData: Flow<Map<String, List<TransactionListItemData>>> =
         combine(
             allTransactionData,
             searchText,
@@ -126,15 +134,15 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
 
             if (selectedFilterValue.fromDate.isNull()) {
                 _oldestTransactionTimestamp.update {
-                    allTransactionDataValue.minOfOrNull { transactionData ->
-                        transactionData.transaction.transactionTimestamp
-                    } ?: 0L
+                    dateTimeUtil.getLocalDate(
+                        timestamp = allTransactionDataValue.minOfOrNull { transactionData ->
+                            transactionData.transaction.transactionTimestamp
+                        } ?: 0L,
+                    )
                 }
                 updateSelectedFilter(
                     updatedSelectedFilter = selectedFilterValue.copy(
-                        fromDate = dateTimeUtil.getLocalDate(
-                            timestamp = oldestTransactionTimestamp.value,
-                        ),
+                        fromDate = oldestTransactionLocalDate.value,
                     ),
                 )
             }
@@ -195,13 +203,71 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                     }
                 }
                 .groupBy {
-                    if (selectedSortOptionValue == SortOption.LATEST_FIRST || selectedSortOptionValue == SortOption.OLDEST_FIRST) {
+                    if (selectedSortOptionValue == SortOption.LATEST_FIRST ||
+                        selectedSortOptionValue == SortOption.OLDEST_FIRST
+                    ) {
                         dateTimeUtil.getFormattedDate(
                             timestamp = it.transaction.transactionTimestamp,
                         )
                     } else {
                         ""
                     }
+                }
+                .mapValues {
+                    val transactionListItemDataList = it.value.map { listItem ->
+                        val amountColor = listItem.transaction.getAmountTextColor()
+                        val amountText =
+                            if (listItem.transaction.transactionType == TransactionType.INCOME ||
+                                listItem.transaction.transactionType == TransactionType.EXPENSE ||
+                                listItem.transaction.transactionType == TransactionType.ADJUSTMENT ||
+                                listItem.transaction.transactionType == TransactionType.REFUND
+                            ) {
+                                listItem.transaction.amount.toSignedString(
+                                    isPositive = listItem.sourceTo.isNotNull(),
+                                    isNegative = listItem.sourceFrom.isNotNull(),
+                                )
+                            } else {
+                                listItem.transaction.amount.toString()
+                            }
+                        val dateAndTimeText = dateTimeUtil.getReadableDateAndTime(
+                            timestamp = listItem.transaction.transactionTimestamp,
+                        )
+                        val emoji = when (listItem.transaction.transactionType) {
+                            TransactionType.TRANSFER -> {
+                                EmojiConstants.LEFT_RIGHT_ARROW
+                            }
+
+                            TransactionType.ADJUSTMENT -> {
+                                EmojiConstants.EXPRESSIONLESS_FACE
+                            }
+
+                            else -> {
+                                listItem.category?.emoji
+                            }
+                        }.orEmpty()
+                        val sourceFromName = listItem.sourceFrom?.name
+                        val sourceToName = listItem.sourceTo?.name
+                        val title = listItem.transaction.title
+                        val transactionForText = listItem.transactionFor.titleToDisplay
+
+                        TransactionListItemData(
+                            isDeleteButtonEnabled = false,
+                            isDeleteButtonVisible = true,
+                            isEditButtonVisible = false,
+                            isExpanded = false,
+                            isRefundButtonVisible = false,
+                            transactionId = listItem.transaction.id,
+                            amountColor = amountColor,
+                            amountText = amountText,
+                            dateAndTimeText = dateAndTimeText,
+                            emoji = emoji,
+                            sourceFromName = sourceFromName,
+                            sourceToName = sourceToName,
+                            title = title,
+                            transactionForText = transactionForText,
+                        )
+                    }
+                    transactionListItemDataList
                 }
                 .also {
                     _isLoading.value = false

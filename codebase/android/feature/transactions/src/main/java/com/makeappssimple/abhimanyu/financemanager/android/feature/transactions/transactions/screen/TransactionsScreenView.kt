@@ -36,12 +36,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.legend.Dot
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
@@ -57,13 +53,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.sc
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MySearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.common.TransactionDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsFilterBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsSortBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.SortOption
+import java.time.LocalDate
 
 internal enum class TransactionsBottomSheetType : BottomSheetType {
     NONE,
@@ -75,7 +71,6 @@ internal enum class TransactionsBottomSheetType : BottomSheetType {
 @Immutable
 internal data class TransactionsScreenViewData(
     val isLoading: Boolean,
-    val dateTimeUtil: DateTimeUtil,
     val selectedFilter: Filter,
     val expenseCategories: List<Category>,
     val incomeCategories: List<Category>,
@@ -83,8 +78,10 @@ internal data class TransactionsScreenViewData(
     val sortOptions: List<SortOption>,
     val sources: List<Source>,
     val transactionTypes: List<TransactionType>,
-    val oldestTransactionTimestamp: Long,
-    val transactionDetailsListItemViewData: Map<String, List<TransactionData>>,
+    val oldestTransactionLocalDate: LocalDate,
+    val currentLocalDate: LocalDate,
+    val currentTimeMillis: Long,
+    val transactionDetailsListItemViewData: Map<String, List<TransactionListItemData>>,
     val searchText: String,
     val selectedSortOption: SortOption,
     val deleteTransaction: (transactionId: Int) -> Unit,
@@ -153,7 +150,6 @@ internal fun TransactionsScreenView(
                 TransactionsBottomSheetType.FILTERS -> {
                     TransactionsFilterBottomSheetContent(
                         context = state.context,
-                        dateTimeUtil = data.dateTimeUtil,
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
                         expenseCategories = data.expenseCategories,
@@ -161,7 +157,9 @@ internal fun TransactionsScreenView(
                         investmentCategories = data.investmentCategories,
                         sources = data.sources,
                         transactionTypes = data.transactionTypes,
-                        oldestTransactionTimestamp = data.oldestTransactionTimestamp,
+                        defaultMinDate = data.oldestTransactionLocalDate,
+                        defaultMaxDate = data.currentLocalDate,
+                        currentTimeMillis = data.currentTimeMillis,
                         selectedFilter = data.selectedFilter,
                         updateSelectedFilter = { updatedSelectedFilter ->
                             data.updateSelectedFilter(updatedSelectedFilter)
@@ -386,60 +384,8 @@ internal fun TransactionsScreenView(
                                 listItem.hashCode()
                             },
                         ) { _, listItem ->
-                            val amountColor = listItem.transaction.getAmountTextColor()
-                            val amountText =
-                                if (listItem.transaction.transactionType == TransactionType.INCOME ||
-                                    listItem.transaction.transactionType == TransactionType.EXPENSE ||
-                                    listItem.transaction.transactionType == TransactionType.ADJUSTMENT ||
-                                    listItem.transaction.transactionType == TransactionType.REFUND
-                                ) {
-                                    listItem.transaction.amount.toSignedString(
-                                        isPositive = listItem.sourceTo.isNotNull(),
-                                        isNegative = listItem.sourceFrom.isNotNull(),
-                                    )
-                                } else {
-                                    listItem.transaction.amount.toString()
-                                }
-                            val dateAndTimeText = data.dateTimeUtil.getReadableDateAndTime(
-                                timestamp = listItem.transaction.transactionTimestamp,
-                            )
-                            val emoji = when (listItem.transaction.transactionType) {
-                                TransactionType.TRANSFER -> {
-                                    EmojiConstants.LEFT_RIGHT_ARROW
-                                }
-
-                                TransactionType.ADJUSTMENT -> {
-                                    EmojiConstants.EXPRESSIONLESS_FACE
-                                }
-
-                                else -> {
-                                    listItem.category?.emoji
-                                }
-                            }.orEmpty()
-                            val sourceFromName = listItem.sourceFrom?.name
-                            val sourceToName = listItem.sourceTo?.name
-                            val title = listItem.transaction.title
-                            val transactionForText = listItem.transactionFor.titleToDisplay
-
                             TransactionListItem(
-                                data = TransactionListItemData(
-                                    isDeleteButtonEnabled = false,
-                                    isDeleteButtonVisible = true,
-                                    isEditButtonVisible = false,
-                                    isExpanded = false,
-                                    isRefundButtonVisible = false,
-                                    amountColor = amountColor,
-                                    amountText = amountText,
-                                    dateAndTimeText = dateAndTimeText,
-                                    emoji = emoji,
-                                    sourceFromName = sourceFromName,
-                                    sourceToName = sourceToName,
-                                    title = title,
-                                    transactionForText = transactionForText,
-                                    onClick = {
-                                        data.navigateToViewTransactionScreen(listItem.transaction.id)
-                                    },
-                                ),
+                                data = listItem,
                             )
                         }
                     }

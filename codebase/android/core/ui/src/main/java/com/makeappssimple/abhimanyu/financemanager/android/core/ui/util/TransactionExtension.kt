@@ -1,50 +1,46 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.util
 
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 
-@Composable
-fun Transaction.getAmountTextColor(): Color {
-    return this.transactionType.calculateAmountTextColor(
+fun Transaction.getAmountTextColor(): MyColor {
+    return this.transactionType.getAmountTextColor(
         isBalanceReduced = this.sourceFromId.isNotNull(),
     )
 }
 
-@Composable
-private fun TransactionType.calculateAmountTextColor(
+private fun TransactionType.getAmountTextColor(
     isBalanceReduced: Boolean,
-): Color {
+): MyColor {
     return when (this) {
         TransactionType.INCOME -> {
-            MaterialTheme.colorScheme.onTertiaryContainer
+            MyColor.ON_TERTIARY_CONTAINER
         }
 
         TransactionType.EXPENSE -> {
-            MaterialTheme.colorScheme.error
+            MyColor.ERROR
         }
 
         TransactionType.TRANSFER -> {
-            MaterialTheme.colorScheme.onBackground
+            MyColor.ON_BACKGROUND
         }
 
         TransactionType.ADJUSTMENT -> {
             if (isBalanceReduced) {
-                MaterialTheme.colorScheme.error
+                MyColor.ERROR
             } else {
-                MaterialTheme.colorScheme.onTertiaryContainer
+                MyColor.ON_TERTIARY_CONTAINER
             }
         }
 
         TransactionType.INVESTMENT -> {
-            MaterialTheme.colorScheme.primary
+            MyColor.PRIMARY
         }
 
         TransactionType.REFUND -> {
-            MaterialTheme.colorScheme.onTertiaryContainer
+            MyColor.ON_TERTIARY_CONTAINER
         }
     }
 }

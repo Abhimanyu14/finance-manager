@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -25,6 +24,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.ExpandedListItemShape
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.getComposeColor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemIconButton
@@ -37,7 +38,8 @@ data class TransactionListItemData(
     val isEditButtonVisible: Boolean = false,
     val isExpanded: Boolean = false,
     val isRefundButtonVisible: Boolean = false,
-    val amountColor: Color,
+    val transactionId: Int,
+    val amountColor: MyColor,
     val amountText: String,
     val dateAndTimeText: String,
     val emoji: String,
@@ -55,7 +57,10 @@ data class TransactionListItemData(
 fun TransactionListItem(
     data: TransactionListItemData,
 ) {
-    val sourceText: String = if (data.sourceFromName.isNotNull() && data.sourceToName.isNotNull()) {
+    val sourceText: String = if (
+        data.sourceFromName.isNotNull() &&
+        data.sourceToName.isNotNull()
+    ) {
         stringResource(
             id = R.string.transaction_list_item_source,
             data.sourceFromName,
@@ -134,7 +139,7 @@ fun TransactionListItem(
                         text = data.amountText,
                         style = MaterialTheme.typography.headlineMedium
                             .copy(
-                                color = data.amountColor,
+                                color = data.amountColor.getComposeColor(),
                                 textAlign = TextAlign.End,
                             ),
                     )
