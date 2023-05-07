@@ -12,10 +12,9 @@ import kotlinx.coroutines.CoroutineScope
 internal fun CategoriesDeleteConfirmationBottomSheetContent(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
-    categoryIdToDelete: Int?,
+    deleteCategory: () -> Unit,
     resetBottomSheetType: () -> Unit,
     resetCategoryIdToDelete: () -> Unit,
-    deleteCategory: () -> Unit,
 ) {
     MyConfirmationBottomSheet(
         title = stringResource(
@@ -35,10 +34,8 @@ internal fun CategoriesDeleteConfirmationBottomSheetContent(
                 coroutineScope = coroutineScope,
                 modalBottomSheetState = modalBottomSheetState,
             ) {
-                categoryIdToDelete?.let {
-                    deleteCategory()
-                    resetCategoryIdToDelete()
-                }
+                deleteCategory()
+                resetCategoryIdToDelete()
                 resetBottomSheetType()
             }
         },
@@ -47,8 +44,8 @@ internal fun CategoriesDeleteConfirmationBottomSheetContent(
                 coroutineScope = coroutineScope,
                 modalBottomSheetState = modalBottomSheetState,
             ) {
-                resetBottomSheetType()
                 resetCategoryIdToDelete()
+                resetBottomSheetType()
             }
         },
     )

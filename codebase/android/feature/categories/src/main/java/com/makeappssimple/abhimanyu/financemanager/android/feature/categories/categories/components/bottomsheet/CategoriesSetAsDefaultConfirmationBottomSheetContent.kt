@@ -14,7 +14,6 @@ internal fun CategoriesSetAsDefaultConfirmationBottomSheetContent(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
     transactionType: TransactionType,
-    clickedItemId: Int?,
     resetBottomSheetType: () -> Unit,
     resetClickedItemId: () -> Unit,
     setDefaultCategoryIdInDataStore: () -> Unit,
@@ -38,10 +37,8 @@ internal fun CategoriesSetAsDefaultConfirmationBottomSheetContent(
                 coroutineScope = coroutineScope,
                 modalBottomSheetState = modalBottomSheetState,
             ) {
-                clickedItemId?.let {
-                    setDefaultCategoryIdInDataStore()
-                    resetClickedItemId()
-                }
+                setDefaultCategoryIdInDataStore()
+                resetClickedItemId()
                 resetBottomSheetType()
             }
         },
@@ -50,8 +47,8 @@ internal fun CategoriesSetAsDefaultConfirmationBottomSheetContent(
                 coroutineScope = coroutineScope,
                 modalBottomSheetState = modalBottomSheetState,
             ) {
-                resetBottomSheetType()
                 resetClickedItemId()
+                resetBottomSheetType()
             }
         },
     )

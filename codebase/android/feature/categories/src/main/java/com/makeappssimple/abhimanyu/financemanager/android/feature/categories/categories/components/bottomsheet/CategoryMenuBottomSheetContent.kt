@@ -23,57 +23,58 @@ internal fun CategoryMenuBottomSheetContent(
     onSetAsDefaultClick: () -> Unit,
     resetBottomSheetType: () -> Unit,
 ) {
-    val items = mutableListOf<CategoryMenuBottomSheetItemData>()
-    if (!isDefaultExpenseCategory(categoryTitle) &&
-        !isDefaultIncomeCategory(categoryTitle) &&
-        !isDefaultInvestmentCategory(categoryTitle)
-    ) {
-        items.add(
-            CategoryMenuBottomSheetItemData(
-                text = stringResource(
-                    id = R.string.bottom_sheet_category_menu_edit,
-                ),
-                onClick = {
-                    toggleModalBottomSheetState(
-                        coroutineScope = coroutineScope,
-                        modalBottomSheetState = modalBottomSheetState,
-                    ) {
-                        resetBottomSheetType()
-                        navigateToEditCategoryScreen(categoryId)
-                    }
-                },
+    val items = buildList {
+        if (!isDefaultExpenseCategory(categoryTitle) &&
+            !isDefaultIncomeCategory(categoryTitle) &&
+            !isDefaultInvestmentCategory(categoryTitle)
+        ) {
+            add(
+                CategoryMenuBottomSheetItemData(
+                    text = stringResource(
+                        id = R.string.bottom_sheet_category_menu_edit,
+                    ),
+                    onClick = {
+                        toggleModalBottomSheetState(
+                            coroutineScope = coroutineScope,
+                            modalBottomSheetState = modalBottomSheetState,
+                        ) {
+                            resetBottomSheetType()
+                            navigateToEditCategoryScreen(categoryId)
+                        }
+                    },
+                )
             )
-        )
-    }
-    if (!isDefault) {
-        items.add(
-            CategoryMenuBottomSheetItemData(
-                text = stringResource(
-                    id = R.string.bottom_sheet_category_menu_set_as_default_category,
-                ),
-                onClick = {
-                    onSetAsDefaultClick()
-                },
+        }
+        if (!isDefault) {
+            add(
+                CategoryMenuBottomSheetItemData(
+                    text = stringResource(
+                        id = R.string.bottom_sheet_category_menu_set_as_default_category,
+                    ),
+                    onClick = {
+                        onSetAsDefaultClick()
+                    },
+                )
             )
-        )
-    }
-    if (
-        !isDefaultExpenseCategory(
-            category = categoryTitle,
-        ) && !isDefaultIncomeCategory(
-            category = categoryTitle,
-        ) && deleteEnabled
-    ) {
-        items.add(
-            CategoryMenuBottomSheetItemData(
-                text = stringResource(
-                    id = R.string.bottom_sheet_category_menu_delete,
-                ),
-                onClick = {
-                    onDeleteClick()
-                },
+        }
+        if (
+            !isDefaultExpenseCategory(
+                category = categoryTitle,
+            ) && !isDefaultIncomeCategory(
+                category = categoryTitle,
+            ) && deleteEnabled
+        ) {
+            add(
+                CategoryMenuBottomSheetItemData(
+                    text = stringResource(
+                        id = R.string.bottom_sheet_category_menu_delete,
+                    ),
+                    onClick = {
+                        onDeleteClick()
+                    },
+                )
             )
-        )
+        }
     }
 
     // Close bottom sheet if there are no menu items

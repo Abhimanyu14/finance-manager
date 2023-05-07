@@ -152,15 +152,14 @@ internal fun CategoriesScreenView(
                     CategoriesDeleteConfirmationBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
-                        categoryIdToDelete = categoryIdToDelete,
-                        resetBottomSheetType = resetBottomSheetType,
-                        resetCategoryIdToDelete = {
-                            categoryIdToDelete = null
-                        },
                         deleteCategory = {
                             categoryIdToDelete?.let { categoryIdToDeleteValue ->
                                 data.deleteCategory(categoryIdToDeleteValue)
                             }
+                        },
+                        resetBottomSheetType = resetBottomSheetType,
+                        resetCategoryIdToDelete = {
+                            categoryIdToDelete = null
                         },
                     )
                 }
@@ -174,7 +173,6 @@ internal fun CategoriesScreenView(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
                         transactionType = transactionTypes[data.selectedTabIndex],
-                        clickedItemId = clickedItemId,
                         resetBottomSheetType = resetBottomSheetType,
                         resetClickedItemId = {
                             clickedItemId = null
@@ -363,13 +361,12 @@ internal fun CategoriesScreenView(
                             }
                         }
 
-                        categoriesBottomSheetType =
-                            CategoriesBottomSheetType.Menu(
-                                deleteEnabled = deleteEnabled,
-                                isDefault = categoriesGridItemDataList[index].isSelected,
-                                categoryId = categoriesGridItemDataList[index].category.id,
-                                categoryTitle = categoriesGridItemDataList[index].category.title,
-                            )
+                        categoriesBottomSheetType = CategoriesBottomSheetType.Menu(
+                            deleteEnabled = deleteEnabled,
+                            isDefault = categoriesGridItemDataList[index].isSelected,
+                            categoryId = categoriesGridItemDataList[index].category.id,
+                            categoryTitle = categoriesGridItemDataList[index].category.title,
+                        )
                         clickedItemId = categoriesGridItemDataList[index].category.id
                         toggleModalBottomSheetState(
                             coroutineScope = state.coroutineScope,
