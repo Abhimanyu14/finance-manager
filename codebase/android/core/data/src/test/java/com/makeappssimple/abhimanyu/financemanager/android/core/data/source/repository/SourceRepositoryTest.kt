@@ -33,6 +33,15 @@ class SourceRepositoryTest {
     }
 
     @Test
+    fun getAllSources() = runTest {
+        sourceRepository.getAllSources()
+
+        verify(
+            mock = sourceDao,
+        ).getAllSources()
+    }
+
+    @Test
     fun getAllSourcesCount() = runTest {
         sourceRepository.getAllSourcesCount()
 
@@ -55,7 +64,7 @@ class SourceRepositoryTest {
     }
 
     @Test
-    fun getSources_defaultTest() = runTest {
+    fun getSources() = runTest {
         sourceRepository.getSources(
             ids = listOf(id),
         )

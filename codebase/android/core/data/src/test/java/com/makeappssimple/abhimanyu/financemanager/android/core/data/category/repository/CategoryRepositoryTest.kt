@@ -33,6 +33,15 @@ class CategoryRepositoryTest {
     }
 
     @Test
+    fun getAllCategories() = runTest {
+        categoryRepository.getAllCategories()
+
+        verify(
+            mock = categoryDao,
+        ).getAllCategories()
+    }
+
+    @Test
     fun getAllCategoriesCount() = runTest {
         categoryRepository.getAllCategoriesCount()
 
