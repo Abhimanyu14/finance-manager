@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.common.util.appversion
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion
 
 import androidx.compose.runtime.Immutable
 

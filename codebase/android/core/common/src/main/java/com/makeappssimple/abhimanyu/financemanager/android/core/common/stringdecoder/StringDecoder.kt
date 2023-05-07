@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.common.decoder
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder
 
 interface StringDecoder {
     fun decodeString(

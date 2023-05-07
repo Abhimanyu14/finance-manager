@@ -234,7 +234,7 @@ class TransactionModule {
     fun providesRestoreDataUseCase(
         dataStore: MyDataStore,
         transactionRepository: TransactionRepository,
-        jsonReader: JsonReader
+        jsonReader: JsonReader,
     ): RestoreDataUseCase {
         return RestoreDataUseCaseImpl(
             dataStore = dataStore,

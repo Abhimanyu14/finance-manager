@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.common.util.buildconfig
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig
 
 import android.os.Build
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.BuildConfig

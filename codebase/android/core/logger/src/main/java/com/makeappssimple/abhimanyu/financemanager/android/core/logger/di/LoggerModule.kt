@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.logger.di
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.buildconfig.BuildConfigUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LoggerImpl
 import dagger.Module

@@ -1,7 +1,7 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.common.util.buildconfig.di
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.di
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.buildconfig.BuildConfigUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.buildconfig.BuildConfigUtilImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigUtilImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

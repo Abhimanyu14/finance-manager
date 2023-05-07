@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.logger
 
 import android.util.Log
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.buildconfig.BuildConfigUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigUtil
 
 class LoggerImpl(
     private val buildConfigUtil: BuildConfigUtil,

@@ -1,7 +1,7 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.di
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.di
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.DateTimeUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.DateTimeUtilImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtilImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

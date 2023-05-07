@@ -1,8 +1,8 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.common.util.appversion.di
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.di
 
 import android.content.Context
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.appversion.AppVersionUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.appversion.AppVersionUtilImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtilImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

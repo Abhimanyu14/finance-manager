@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime
 
 import java.time.Instant
 import java.time.LocalDate

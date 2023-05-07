@@ -25,13 +25,12 @@ class RestoreDataUseCaseImpl(
     ) {
         dataStore.setLastDataChangeTimestamp()
         dataStore.setLastDataBackupTimestamp()
-        val databaseBackupData = jsonReader.readJsonFromFile(
+        val jsonString = jsonReader.readJsonFromFile(
             uri = uri,
-        )?.let { jsonString ->
-            Json.decodeFromString<DatabaseBackupData>(
-                string = jsonString,
-            )
-        } ?: return
+        ) ?: return
+        val databaseBackupData = Json.decodeFromString<DatabaseBackupData>(
+            string = jsonString,
+        )
         val transactions = transactionsCleanUp(
             transactions = databaseBackupData.transactions,
         )

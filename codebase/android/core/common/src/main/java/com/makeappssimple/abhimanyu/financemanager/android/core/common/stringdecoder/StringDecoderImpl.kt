@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.common.decoder
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder
 
 import android.net.Uri
 import javax.inject.Inject
