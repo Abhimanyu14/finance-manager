@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen
 
 import androidx.annotation.StringRes
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -76,13 +75,6 @@ internal fun AddOrEditSourceScreenView(
             value = AddOrEditSourceBottomSheetType.NONE,
         )
     }
-    val nameTextFieldModifier = if (data.isBalanceAmountTextFieldVisible) {
-        Modifier
-    } else {
-        Modifier.focusRequester(
-            focusRequester = state.focusRequester,
-        )
-    }
 
     LaunchedEffect(
         key1 = Unit,
@@ -135,9 +127,7 @@ internal fun AddOrEditSourceScreenView(
                     state = rememberScrollState(),
                 ),
         ) {
-            AnimatedVisibility(
-                visible = data.isSourceTypesRadioGroupVisible,
-            ) {
+            if (data.isSourceTypesRadioGroupVisible) {
                 MyRadioGroup(
                     items = data.sourceTypes
                         .map { sourceType ->
@@ -157,9 +147,7 @@ internal fun AddOrEditSourceScreenView(
                         ),
                 )
             }
-            AnimatedVisibility(
-                visible = data.isNameTextFieldVisible,
-            ) {
+            if (data.isNameTextFieldVisible) {
                 MyOutlinedTextField(
                     textFieldValue = data.name,
                     labelTextStringResourceId = R.string.screen_add_or_edit_source_name,
@@ -181,7 +169,16 @@ internal fun AddOrEditSourceScreenView(
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Next,
                     ),
-                    modifier = nameTextFieldModifier
+                    modifier = Modifier
+                        .then(
+                            if (data.isBalanceAmountTextFieldVisible) {
+                                Modifier
+                            } else {
+                                Modifier.focusRequester(
+                                    focusRequester = state.focusRequester,
+                                )
+                            }
+                        )
                         .fillMaxWidth()
                         .padding(
                             horizontal = 16.dp,
@@ -189,9 +186,7 @@ internal fun AddOrEditSourceScreenView(
                         ),
                 )
             }
-            AnimatedVisibility(
-                visible = data.isBalanceAmountTextFieldVisible,
-            ) {
+            if (data.isBalanceAmountTextFieldVisible) {
                 MyOutlinedTextField(
                     textFieldValue = data.balanceAmountValue,
                     labelTextStringResourceId = R.string.screen_edit_source_balance_amount_value,
