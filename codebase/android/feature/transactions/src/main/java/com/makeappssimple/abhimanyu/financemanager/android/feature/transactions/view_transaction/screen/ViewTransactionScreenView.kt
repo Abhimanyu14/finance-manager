@@ -13,9 +13,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
@@ -26,6 +26,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.common.TransactionDeleteConfirmationBottomSheetContent
@@ -163,39 +164,41 @@ internal fun ViewTransactionScreenView(
                 visible = data.transactionData.isNotNull(),
             ) {
                 TransactionListItem(
-                    isDeleteButtonEnabled = isDeleteButtonEnabled,
-                    isDeleteButtonVisible = true,
-                    isEditButtonVisible = isEditButtonVisible,
-                    isExpanded = true,
-                    isRefundButtonVisible = isRefundButtonVisible,
-                    amountColor = amountColor,
-                    amountText = amountText,
-                    dateAndTimeText = dateAndTimeText,
-                    emoji = emoji,
-                    sourceFromName = sourceFromName,
-                    sourceToName = sourceToName,
-                    title = title,
-                    transactionForText = transactionForText,
-                    onClick = null,
-                    onDeleteButtonClick = {
-                        transactionIdToDelete = transaction?.id
-                        viewTransactionBottomSheetType =
-                            ViewTransactionBottomSheetType.DELETE_CONFIRMATION
-                        toggleModalBottomSheetState(
-                            coroutineScope = state.coroutineScope,
-                            modalBottomSheetState = state.modalBottomSheetState,
-                        )
-                    },
-                    onEditButtonClick = {
-                        transaction?.id?.let { transactionId ->
-                            data.navigateToEditTransactionScreen(transactionId)
-                        }
-                    },
-                    onRefundButtonClick = {
-                        transaction?.id?.let { transactionId ->
-                            data.navigateToAddTransactionScreen(transactionId)
-                        }
-                    },
+                    data = TransactionListItemData(
+                        isDeleteButtonEnabled = isDeleteButtonEnabled,
+                        isDeleteButtonVisible = true,
+                        isEditButtonVisible = isEditButtonVisible,
+                        isExpanded = true,
+                        isRefundButtonVisible = isRefundButtonVisible,
+                        amountColor = amountColor,
+                        amountText = amountText,
+                        dateAndTimeText = dateAndTimeText,
+                        emoji = emoji,
+                        sourceFromName = sourceFromName,
+                        sourceToName = sourceToName,
+                        title = title,
+                        transactionForText = transactionForText,
+                        onClick = null,
+                        onDeleteButtonClick = {
+                            transactionIdToDelete = transaction?.id
+                            viewTransactionBottomSheetType =
+                                ViewTransactionBottomSheetType.DELETE_CONFIRMATION
+                            toggleModalBottomSheetState(
+                                coroutineScope = state.coroutineScope,
+                                modalBottomSheetState = state.modalBottomSheetState,
+                            )
+                        },
+                        onEditButtonClick = {
+                            transaction?.id?.let { transactionId ->
+                                data.navigateToEditTransactionScreen(transactionId)
+                            }
+                        },
+                        onRefundButtonClick = {
+                            transaction?.id?.let { transactionId ->
+                                data.navigateToAddTransactionScreen(transactionId)
+                            }
+                        },
+                    ),
                 )
             }
         }

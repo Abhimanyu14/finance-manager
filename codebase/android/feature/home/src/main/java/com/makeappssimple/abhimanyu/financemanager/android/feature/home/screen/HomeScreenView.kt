@@ -37,6 +37,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ov
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.bottomappbar.HomeBottomAppBar
@@ -212,14 +213,16 @@ internal fun HomeScreenView(
                     listItem.transactionFor.titleToDisplay
 
                 TransactionListItem(
-                    amountColor = amountColor,
-                    amountText = amountText,
-                    dateAndTimeText = dateAndTimeText,
-                    emoji = emoji,
-                    sourceFromName = sourceFromName,
-                    sourceToName = sourceToName,
-                    title = title,
-                    transactionForText = transactionForText,
+                    data = TransactionListItemData(
+                        amountColor = amountColor,
+                        amountText = amountText,
+                        dateAndTimeText = dateAndTimeText,
+                        emoji = emoji,
+                        sourceFromName = sourceFromName,
+                        sourceToName = sourceToName,
+                        title = title,
+                        transactionForText = transactionForText,
+                    ),
                 )
             }
         }

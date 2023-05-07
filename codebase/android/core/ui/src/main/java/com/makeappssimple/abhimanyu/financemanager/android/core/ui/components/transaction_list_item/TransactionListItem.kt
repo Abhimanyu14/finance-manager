@@ -30,64 +30,68 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemViewWrapper
 
+data class TransactionListItemData(
+    val modifier: Modifier = Modifier,
+    val isDeleteButtonEnabled: Boolean = false,
+    val isDeleteButtonVisible: Boolean = false,
+    val isEditButtonVisible: Boolean = false,
+    val isExpanded: Boolean = false,
+    val isRefundButtonVisible: Boolean = false,
+    val amountColor: Color,
+    val amountText: String,
+    val dateAndTimeText: String,
+    val emoji: String,
+    val sourceFromName: String?,
+    val sourceToName: String?,
+    val title: String,
+    val transactionForText: String,
+    val onClick: (() -> Unit)? = null,
+    val onDeleteButtonClick: () -> Unit = {},
+    val onEditButtonClick: () -> Unit = {},
+    val onRefundButtonClick: () -> Unit = {},
+)
+
 @Composable
 fun TransactionListItem(
-    modifier: Modifier = Modifier,
-    isDeleteButtonEnabled: Boolean = false,
-    isDeleteButtonVisible: Boolean = false,
-    isEditButtonVisible: Boolean = false,
-    isExpanded: Boolean = false,
-    isRefundButtonVisible: Boolean = false,
-    amountColor: Color,
-    amountText: String,
-    dateAndTimeText: String,
-    emoji: String,
-    sourceFromName: String?,
-    sourceToName: String?,
-    title: String,
-    transactionForText: String,
-    onClick: (() -> Unit)? = null,
-    onDeleteButtonClick: () -> Unit = {},
-    onEditButtonClick: () -> Unit = {},
-    onRefundButtonClick: () -> Unit = {},
+    data: TransactionListItemData,
 ) {
-    val sourceText: String = if (sourceFromName.isNotNull() && sourceToName.isNotNull()) {
+    val sourceText: String = if (data.sourceFromName.isNotNull() && data.sourceToName.isNotNull()) {
         stringResource(
             id = R.string.transaction_list_item_source,
-            sourceFromName,
-            sourceToName,
+            data.sourceFromName,
+            data.sourceToName,
         )
     } else {
-        sourceFromName ?: sourceToName.orEmpty()
+        data.sourceFromName ?: data.sourceToName.orEmpty()
     }
 
     MyExpandableItemViewWrapper(
-        expanded = isExpanded,
-        modifier = modifier,
+        expanded = data.isExpanded,
+        modifier = data.modifier,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(
-                    shape = if (isExpanded) {
+                    shape = if (data.isExpanded) {
                         ExpandedListItemShape
                     } else {
                         MaterialTheme.shapes.large
                     },
                 )
                 .conditionalClickable(
-                    onClick = onClick,
+                    onClick = data.onClick,
                 )
                 .padding(
                     start = 16.dp,
                     end = 16.dp,
-                    top = if (isExpanded) {
+                    top = if (data.isExpanded) {
                         16.dp
                     } else {
                         8.dp
                     },
-                    bottom = if (isExpanded) {
+                    bottom = if (data.isExpanded) {
                         16.dp
                     } else {
                         8.dp
@@ -96,7 +100,7 @@ fun TransactionListItem(
         ) {
             MyEmojiCircle(
                 backgroundColor = MaterialTheme.colorScheme.outline,
-                emoji = emoji,
+                emoji = data.emoji,
             )
             Column(
                 modifier = Modifier
@@ -115,7 +119,7 @@ fun TransactionListItem(
                             .weight(
                                 weight = 1F,
                             ),
-                        text = title,
+                        text = data.title,
                         style = MaterialTheme.typography.headlineMedium
                             .copy(
                                 color = MaterialTheme.colorScheme.onBackground,
@@ -127,10 +131,10 @@ fun TransactionListItem(
                             .weight(
                                 weight = 1F,
                             ),
-                        text = amountText,
+                        text = data.amountText,
                         style = MaterialTheme.typography.headlineMedium
                             .copy(
-                                color = amountColor,
+                                color = data.amountColor,
                                 textAlign = TextAlign.End,
                             ),
                     )
@@ -144,7 +148,7 @@ fun TransactionListItem(
                 MyText(
                     modifier = Modifier
                         .fillMaxWidth(),
-                    text = transactionForText,
+                    text = data.transactionForText,
                     style = MaterialTheme.typography.bodySmall
                         .copy(
                             color = MaterialTheme.colorScheme.onBackground,
@@ -166,7 +170,7 @@ fun TransactionListItem(
                             .weight(
                                 weight = 1F,
                             ),
-                        text = dateAndTimeText,
+                        text = data.dateAndTimeText,
                         style = MaterialTheme.typography.bodySmall
                             .copy(
                                 color = MaterialTheme.colorScheme.onBackground,
@@ -189,7 +193,7 @@ fun TransactionListItem(
             }
         }
         AnimatedVisibility(
-            visible = isExpanded,
+            visible = data.isExpanded,
         ) {
             Divider(
                 color = MaterialTheme.colorScheme.outline,
@@ -206,7 +210,7 @@ fun TransactionListItem(
                         bottom = 8.dp,
                     ),
             ) {
-                if (isEditButtonVisible) {
+                if (data.isEditButtonVisible) {
                     MyExpandableItemIconButton(
                         iconImageVector = Icons.Rounded.Edit,
                         modifier = Modifier
@@ -217,10 +221,10 @@ fun TransactionListItem(
                             id = R.string.transaction_list_item_edit,
                         ),
                         enabled = true,
-                        onClick = onEditButtonClick,
+                        onClick = data.onEditButtonClick,
                     )
                 }
-                if (isRefundButtonVisible) {
+                if (data.isRefundButtonVisible) {
                     MyExpandableItemIconButton(
                         iconImageVector = Icons.Rounded.CurrencyExchange,
                         modifier = Modifier
@@ -231,10 +235,10 @@ fun TransactionListItem(
                             id = R.string.transaction_list_item_refund,
                         ),
                         enabled = true,
-                        onClick = onRefundButtonClick,
+                        onClick = data.onRefundButtonClick,
                     )
                 }
-                if (isDeleteButtonVisible) {
+                if (data.isDeleteButtonVisible) {
                     MyExpandableItemIconButton(
                         modifier = Modifier
                             .weight(
@@ -244,8 +248,8 @@ fun TransactionListItem(
                         labelText = stringResource(
                             id = R.string.transaction_list_item_delete,
                         ),
-                        enabled = isDeleteButtonEnabled,
-                        onClick = onDeleteButtonClick,
+                        enabled = data.isDeleteButtonEnabled,
+                        onClick = data.onDeleteButtonClick,
                     )
                 }
             }

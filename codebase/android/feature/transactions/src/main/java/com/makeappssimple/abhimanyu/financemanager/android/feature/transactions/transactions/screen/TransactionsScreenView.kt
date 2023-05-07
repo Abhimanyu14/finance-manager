@@ -37,8 +37,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.legend.Dot
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionData
@@ -56,6 +56,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MySearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.common.TransactionDeleteConfirmationBottomSheetContent
@@ -421,22 +422,24 @@ internal fun TransactionsScreenView(
                             val transactionForText = listItem.transactionFor.titleToDisplay
 
                             TransactionListItem(
-                                isDeleteButtonEnabled = false,
-                                isDeleteButtonVisible = true,
-                                isEditButtonVisible = false,
-                                isExpanded = false,
-                                isRefundButtonVisible = false,
-                                amountColor = amountColor,
-                                amountText = amountText,
-                                dateAndTimeText = dateAndTimeText,
-                                emoji = emoji,
-                                sourceFromName = sourceFromName,
-                                sourceToName = sourceToName,
-                                title = title,
-                                transactionForText = transactionForText,
-                                onClick = {
-                                    data.navigateToViewTransactionScreen(listItem.transaction.id)
-                                },
+                                data = TransactionListItemData(
+                                    isDeleteButtonEnabled = false,
+                                    isDeleteButtonVisible = true,
+                                    isEditButtonVisible = false,
+                                    isExpanded = false,
+                                    isRefundButtonVisible = false,
+                                    amountColor = amountColor,
+                                    amountText = amountText,
+                                    dateAndTimeText = dateAndTimeText,
+                                    emoji = emoji,
+                                    sourceFromName = sourceFromName,
+                                    sourceToName = sourceToName,
+                                    title = title,
+                                    transactionForText = transactionForText,
+                                    onClick = {
+                                        data.navigateToViewTransactionScreen(listItem.transaction.id)
+                                    },
+                                ),
                             )
                         }
                     }
