@@ -41,12 +41,6 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     )
 
     // Transaction data
-    private var _transactionData: MutableStateFlow<TransactionData?> = MutableStateFlow(
-        value = null,
-    )
-    override val transactionData: StateFlow<TransactionData?> = _transactionData
-
-    // Transaction data
     private var _transactionListItemData: MutableStateFlow<TransactionListItemData?> =
         MutableStateFlow(
             value = null,
@@ -90,21 +84,6 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
                 getTransactionDataUseCase(
                     id = id,
                 )?.let {
-                    _transactionData.value = it
-
-                    it.transaction.originalTransactionId?.let { transactionId ->
-                        updateOriginalTransactionData(
-                            transactionId = transactionId,
-                        )
-                    }
-
-                    it.transaction.refundTransactionIds?.let { ids ->
-                        updateRefundTransactionData(
-                            ids = ids,
-                        )
-                    }
-
-
                     val transaction = it.transaction
                     val isDeleteButtonEnabled = transaction.refundTransactionIds?.run {
                         this.isEmpty()
@@ -149,7 +128,6 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
                     val title: String = transaction.title
                     val transactionForText: String = it.transactionFor.titleToDisplay
 
-
                     _transactionListItemData.value = TransactionListItemData(
                         isDeleteButtonEnabled = isDeleteButtonEnabled,
                         isDeleteButtonVisible = true,
@@ -167,6 +145,18 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
                         transactionForText = transactionForText,
                         onClick = null,
                     )
+
+                    it.transaction.originalTransactionId?.let { transactionId ->
+                        updateOriginalTransactionData(
+                            transactionId = transactionId,
+                        )
+                    }
+
+                    it.transaction.refundTransactionIds?.let { ids ->
+                        updateRefundTransactionData(
+                            ids = ids,
+                        )
+                    }
                 }
             }
         }

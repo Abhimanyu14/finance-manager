@@ -10,7 +10,6 @@ import kotlinx.coroutines.flow.StateFlow
 interface ViewTransactionScreenViewModel : ScreenViewModel {
     val logger: Logger
     val navigationManager: NavigationManager
-    val transactionData: StateFlow<TransactionData?>
     val transactionListItemData: StateFlow<TransactionListItemData?>
     val originalTransactionData: StateFlow<TransactionData?>
     val refundTransactionData: StateFlow<List<TransactionData>>

@@ -5,7 +5,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItemData
@@ -18,9 +17,6 @@ fun ViewTransactionScreen(
 ) {
     screenViewModel.logger.logError(
         message = "Inside ViewTransactionScreen",
-    )
-    val transactionData: TransactionData? by screenViewModel.transactionData.collectAsStateWithLifecycle(
-        initialValue = null,
     )
     val transactionListItemData: TransactionListItemData? by screenViewModel.transactionListItemData.collectAsStateWithLifecycle(
         initialValue = null,
@@ -35,7 +31,6 @@ fun ViewTransactionScreen(
     ViewTransactionScreenView(
         data = ViewTransactionScreenViewData(
             transactionListItemData = transactionListItemData,
-            transactionData = transactionData,
             deleteTransaction = { transactionId ->
                 screenViewModel.deleteTransaction(
                     id = transactionId,

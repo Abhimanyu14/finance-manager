@@ -12,7 +12,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
@@ -33,7 +32,6 @@ internal enum class ViewTransactionBottomSheetType : BottomSheetType {
 @Immutable
 internal data class ViewTransactionScreenViewData(
     val transactionListItemData: TransactionListItemData?,
-    val transactionData: TransactionData?,
     val deleteTransaction: (transactionId: Int) -> Unit,
     val navigateToAddTransactionScreen: (transactionId: Int) -> Unit,
     val navigateToEditTransactionScreen: (transactionId: Int) -> Unit,
@@ -55,8 +53,6 @@ internal fun ViewTransactionScreenView(
             value = null,
         )
     }
-
-    val transaction = data.transactionData?.transaction
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
@@ -107,18 +103,18 @@ internal fun ViewTransactionScreenView(
                 .fillMaxSize(),
         ) {
             AnimatedVisibility(
-                visible = data.transactionData.isNull(),
+                visible = data.transactionListItemData.isNull(),
             ) {
                 MyLinearProgressIndicator()
             }
             AnimatedVisibility(
-                visible = data.transactionData.isNotNull(),
+                visible = data.transactionListItemData.isNotNull(),
             ) {
                 data.transactionListItemData?.let {
                     TransactionListItem(
                         data = data.transactionListItemData.copy(
                             onDeleteButtonClick = {
-                                transactionIdToDelete = transaction?.id
+                                transactionIdToDelete = data.transactionListItemData.transactionId
                                 viewTransactionBottomSheetType =
                                     ViewTransactionBottomSheetType.DELETE_CONFIRMATION
                                 toggleModalBottomSheetState(
@@ -127,14 +123,10 @@ internal fun ViewTransactionScreenView(
                                 )
                             },
                             onEditButtonClick = {
-                                transaction?.id?.let { transactionId ->
-                                    data.navigateToEditTransactionScreen(transactionId)
-                                }
+                                data.navigateToEditTransactionScreen(data.transactionListItemData.transactionId)
                             },
                             onRefundButtonClick = {
-                                transaction?.id?.let { transactionId ->
-                                    data.navigateToAddTransactionScreen(transactionId)
-                                }
+                                data.navigateToAddTransactionScreen(data.transactionListItemData.transactionId)
                             },
                         ),
                     )
