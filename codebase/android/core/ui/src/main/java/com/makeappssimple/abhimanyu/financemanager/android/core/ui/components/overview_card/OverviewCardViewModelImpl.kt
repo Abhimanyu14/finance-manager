@@ -9,7 +9,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionsBetweenTimestampsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -114,13 +113,14 @@ internal class OverviewCardViewModelImpl @Inject constructor(
         val expenseTransactions = transactions.filter {
             it.transactionType == TransactionType.EXPENSE
         }
-        val expenseTransactionsWithRefund = mutableListOf<Transaction>()
-        expenseTransactions.forEach { expenseTransaction ->
-            expenseTransactionsWithRefund.add(expenseTransaction)
-            expenseTransaction.refundTransactionIds?.let { refundTransactionIds ->
-                refundTransactionIds.forEach { id ->
-                    getTransactionUseCase(id)?.let {
-                        expenseTransactionsWithRefund.add(it)
+        val expenseTransactionsWithRefund = buildList {
+            expenseTransactions.forEach { expenseTransaction ->
+                add(expenseTransaction)
+                expenseTransaction.refundTransactionIds?.let { refundTransactionIds ->
+                    refundTransactionIds.forEach { id ->
+                        getTransactionUseCase(id)?.let {
+                            add(it)
+                        }
                     }
                 }
             }

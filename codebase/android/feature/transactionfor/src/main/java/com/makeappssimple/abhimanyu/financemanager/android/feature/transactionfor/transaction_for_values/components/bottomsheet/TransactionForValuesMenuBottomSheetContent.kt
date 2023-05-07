@@ -19,38 +19,39 @@ internal fun TransactionForValuesMenuBottomSheetContent(
     onDeleteClick: () -> Unit,
     resetBottomSheetType: () -> Unit,
 ) {
-    val items = mutableListOf<TransactionForValuesMenuBottomSheetItemData>()
-    items.add(
-        element = TransactionForValuesMenuBottomSheetItemData(
-            text = stringResource(
-                id = R.string.bottom_sheet_transaction_for_values_menu_edit,
-            ),
-            onClick = {
-                toggleModalBottomSheetState(
-                    coroutineScope = coroutineScope,
-                    modalBottomSheetState = modalBottomSheetState,
-                ) {
-                    resetBottomSheetType()
-                    navigationManager.navigate(
-                        navigationCommand = MyNavigationDirections.EditTransactionFor(
-                            transactionForId = transactionForId,
-                        )
-                    )
-                }
-            },
-        ),
-    )
-    if (isDeleteVisible) {
-        items.add(
+    val items = buildList {
+        add(
             element = TransactionForValuesMenuBottomSheetItemData(
                 text = stringResource(
-                    id = R.string.bottom_sheet_transaction_for_values_menu_delete,
+                    id = R.string.bottom_sheet_transaction_for_values_menu_edit,
                 ),
                 onClick = {
-                    onDeleteClick()
+                    toggleModalBottomSheetState(
+                        coroutineScope = coroutineScope,
+                        modalBottomSheetState = modalBottomSheetState,
+                    ) {
+                        resetBottomSheetType()
+                        navigationManager.navigate(
+                            navigationCommand = MyNavigationDirections.EditTransactionFor(
+                                transactionForId = transactionForId,
+                            )
+                        )
+                    }
                 },
             ),
         )
+        if (isDeleteVisible) {
+            add(
+                element = TransactionForValuesMenuBottomSheetItemData(
+                    text = stringResource(
+                        id = R.string.bottom_sheet_transaction_for_values_menu_delete,
+                    ),
+                    onClick = {
+                        onDeleteClick()
+                    },
+                ),
+            )
+        }
     }
 
     TransactionForValuesMenuBottomSheet(
