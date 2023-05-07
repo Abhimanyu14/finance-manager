@@ -8,18 +8,6 @@ import java.util.Currency
 
 class CurrencySerializerTest {
     @Test
-    fun serialize_defaultTest() {
-        val result = Json.encodeToString(
-            serializer = CurrencySerializer,
-            value = Currency.getInstance(CurrencyCodeConstants.INR),
-        )
-        Assert.assertEquals(
-            testJson,
-            result,
-        )
-    }
-
-    @Test
     fun deserialize_defaultTest() {
         val result = Json.decodeFromString(
             deserializer = CurrencySerializer,
@@ -27,6 +15,18 @@ class CurrencySerializerTest {
         )
         Assert.assertEquals(
             Currency.getInstance(CurrencyCodeConstants.INR),
+            result,
+        )
+    }
+
+    @Test
+    fun serialize_defaultTest() {
+        val result = Json.encodeToString(
+            serializer = CurrencySerializer,
+            value = Currency.getInstance(CurrencyCodeConstants.INR),
+        )
+        Assert.assertEquals(
+            testJson,
             result,
         )
     }

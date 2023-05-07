@@ -1,8 +1,5 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.initialdatabasedata
+package com.makeappssimple.abhimanyu.financemanager.android.core.database.model
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Categories
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Emojis
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.InitialDatabaseData
 import org.junit.Assert
 import org.junit.Test
 

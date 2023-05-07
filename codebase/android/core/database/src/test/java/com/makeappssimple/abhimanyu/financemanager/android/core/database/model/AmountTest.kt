@@ -1,7 +1,6 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.amount
+package com.makeappssimple.abhimanyu.financemanager.android.core.database.model
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.CurrencyCodeConstants
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Amount
 import org.junit.Assert
 import org.junit.Test
 
