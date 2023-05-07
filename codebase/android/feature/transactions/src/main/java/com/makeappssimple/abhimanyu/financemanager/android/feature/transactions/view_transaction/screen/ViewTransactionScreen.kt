@@ -25,7 +25,7 @@ fun ViewTransactionScreen(
     LaunchedEffect(
         key1 = Unit,
     ) {
-        screenViewModel.updateTransactionData()
+        screenViewModel.getTransactionData()
     }
 
     ViewTransactionScreenView(

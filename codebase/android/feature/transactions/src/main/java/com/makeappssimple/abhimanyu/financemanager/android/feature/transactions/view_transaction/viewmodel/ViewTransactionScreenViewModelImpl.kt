@@ -60,23 +60,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     )
     override val refundTransactionData: StateFlow<List<TransactionData>> = _refundTransactionData
 
-    init {
-        updateTransactionData()
-    }
-
-    override fun deleteTransaction(
-        id: Int,
-    ) {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            deleteTransactionAndRevertOtherDataUseCase(
-                id = id,
-            )
-        }
-    }
-
-    override fun updateTransactionData() {
+    override fun getTransactionData() {
         viewTransactionScreenArgs.originalTransactionId?.let { id ->
             viewModelScope.launch(
                 context = dispatcherProvider.io,
@@ -159,6 +143,18 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
                     }
                 }
             }
+        }
+    }
+
+    override fun deleteTransaction(
+        id: Int,
+    ) {
+        viewModelScope.launch(
+            context = dispatcherProvider.io,
+        ) {
+            deleteTransactionAndRevertOtherDataUseCase(
+                id = id,
+            )
         }
     }
 

@@ -14,9 +14,9 @@ interface ViewTransactionScreenViewModel : ScreenViewModel {
     val originalTransactionData: StateFlow<TransactionData?>
     val refundTransactionData: StateFlow<List<TransactionData>>
 
+    fun getTransactionData()
+
     fun deleteTransaction(
         id: Int,
     )
-
-    fun updateTransactionData()
 }
