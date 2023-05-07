@@ -1,8 +1,8 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.data.util.json.di
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.di
 
 import android.content.Context
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.json.JsonUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.json.JsonUtilImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.JsonWriter
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.JsonWriterImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,13 +12,13 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class JsonUtilModule {
+class JsonWriterModule {
     @Singleton
     @Provides
-    fun providesJsonUtil(
+    fun providesJsonWriter(
         @ApplicationContext context: Context,
-    ): JsonUtil {
-        return JsonUtilImpl(
+    ): JsonWriter {
+        return JsonWriterImpl(
             context = context,
         )
     }

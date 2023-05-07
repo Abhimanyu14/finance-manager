@@ -1,14 +1,19 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader
 
 import android.content.Context
+import android.net.Uri
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import javax.inject.Inject
+import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStream
+import java.io.InputStreamReader
 import java.nio.charset.Charset
 
-class JsonReaderImpl @Inject constructor() : JsonReader {
-    override fun readJsonFileFromAssets(
-        context: Context,
+class JsonReaderImpl @Inject constructor(
+    private val context: Context,
+) : JsonReader {
+    override fun readJsonFromAssets(
         fileName: String,
     ): String? {
         val json = try {
@@ -28,5 +33,29 @@ class JsonReaderImpl @Inject constructor() : JsonReader {
             null
         }
         return json
+    }
+
+    override fun readJsonFromFile(
+        uri: Uri,
+    ): String? {
+        try {
+            val contentResolver = context.contentResolver
+            val stringBuilder = StringBuilder()
+            contentResolver.openInputStream(uri)?.use { inputStream ->
+                BufferedReader(InputStreamReader(inputStream)).use { bufferedReader ->
+                    var line: String? = bufferedReader.readLine()
+                    while (line.isNotNull()) {
+                        stringBuilder.append(line)
+                        line = bufferedReader.readLine()
+                    }
+                }
+            }
+            return stringBuilder.toString()
+        } catch (
+            exception: Exception,
+        ) {
+            exception.printStackTrace()
+            return null
+        }
     }
 }

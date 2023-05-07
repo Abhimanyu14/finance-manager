@@ -184,8 +184,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     context = dispatcherProvider.io + SupervisorJob(),
                 ).launch {
                     val initialDatabaseData = try {
-                        val jsonString = jsonReader.readJsonFileFromAssets(
-                            context = context,
+                        val jsonString = jsonReader.readJsonFromAssets(
                             fileName = AppConstants.INITIAL_DATA_FILE_NAME,
                         ) ?: return@launch
                         Json.decodeFromString<InitialDatabaseData>(

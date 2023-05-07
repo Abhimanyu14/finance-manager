@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase
 
 import android.net.Uri
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.JsonWriter
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisFlowUseCase
@@ -8,7 +9,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.Datab
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionsFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesFlowUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.json.JsonUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
@@ -17,6 +17,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.T
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.zip
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
 interface BackupDataUseCase {
     suspend operator fun invoke(
@@ -32,7 +34,7 @@ class BackupDataUseCaseImpl(
     getAllTransactionsFlowUseCase: GetAllTransactionsFlowUseCase,
     private val dateTimeUtil: DateTimeUtil,
     private val dataStore: MyDataStore,
-    private val jsonUtil: JsonUtil,
+    private val jsonWriter: JsonWriter,
 ) : BackupDataUseCase {
     val categories: Flow<List<Category>> = getAllCategoriesFlowUseCase()
     val emojis: Flow<List<EmojiLocalEntity>> = getAllEmojisFlowUseCase()
@@ -66,9 +68,12 @@ class BackupDataUseCaseImpl(
                 transactionForValues = transactionForValuesValue,
             )
         }.collect { databaseBackupDataValue ->
-            jsonUtil.writeDatabaseBackupDataToFile(
+            val jsonString = Json.encodeToString(
+                value = databaseBackupDataValue,
+            )
+            jsonWriter.writeJsonToFile(
                 uri = uri,
-                databaseBackupData = databaseBackupDataValue,
+                jsonString = jsonString,
             )
         }
     }

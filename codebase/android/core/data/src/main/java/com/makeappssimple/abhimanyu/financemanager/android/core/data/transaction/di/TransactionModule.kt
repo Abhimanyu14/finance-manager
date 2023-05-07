@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.di
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.JsonReader
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfCategoryIsUsedInTransactionsUseCase
@@ -40,7 +41,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.InsertTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.RestoreDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.RestoreDataUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.json.JsonUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import dagger.Module
@@ -234,12 +234,12 @@ class TransactionModule {
     fun providesRestoreDataUseCase(
         dataStore: MyDataStore,
         transactionRepository: TransactionRepository,
-        jsonUtil: JsonUtil,
+        jsonReader: JsonReader
     ): RestoreDataUseCase {
         return RestoreDataUseCaseImpl(
             dataStore = dataStore,
             transactionRepository = transactionRepository,
-            jsonUtil = jsonUtil,
+            jsonReader = jsonReader,
         )
     }
 }

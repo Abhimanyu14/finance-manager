@@ -1,10 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader
 
-import android.content.Context
+import android.net.Uri
 
 interface JsonReader {
-    fun readJsonFileFromAssets(
-        context: Context,
+    fun readJsonFromAssets(
         fileName: String,
+    ): String?
+
+    fun readJsonFromFile(
+        uri: Uri,
     ): String?
 }

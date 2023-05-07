@@ -1,9 +1,10 @@
 plugins {
     id "com.android.library"
     id "org.jetbrains.kotlin.android"
+    id "org.jetbrains.kotlinx.kover"
+    id "kotlinx-serialization"
     id "kotlin-kapt"
     id "dagger.hilt.android.plugin"
-    id "org.jetbrains.kotlinx.kover"
 }
 
 android {
@@ -77,6 +78,9 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
     kapt "com.google.dagger:hilt-compiler:$rootProject.hiltVersion"
     kapt "androidx.hilt:hilt-compiler:$rootProject.hiltCompilerVersion"
+
+    // KotlinX serialization
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$rootProject.kotlinXSerializationVersion"
 
     // Testing
 

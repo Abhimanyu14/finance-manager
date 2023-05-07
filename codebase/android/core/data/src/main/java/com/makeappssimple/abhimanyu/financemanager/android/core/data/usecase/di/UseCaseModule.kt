@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.di
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.JsonWriter
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisFlowUseCase
@@ -19,7 +20,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.Rec
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RecalculateTotalUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.UpdateTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.UpdateTransactionUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.json.JsonUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import dagger.Module
 import dagger.Provides
@@ -38,17 +38,17 @@ class UseCaseModule {
         getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase,
         getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
         getAllTransactionsFlowUseCase: GetAllTransactionsFlowUseCase,
-        jsonUtil: JsonUtil,
+        jsonWriter: JsonWriter,
     ): BackupDataUseCase {
         return BackupDataUseCaseImpl(
-            dateTimeUtil = dateTimeUtil,
-            dataStore = dataStore,
             getAllCategoriesFlowUseCase = getAllCategoriesFlowUseCase,
             getAllEmojisFlowUseCase = getAllEmojisFlowUseCase,
             getAllSourcesFlowUseCase = getAllSourcesFlowUseCase,
             getAllTransactionForValuesFlowUseCase = getAllTransactionForValuesFlowUseCase,
             getAllTransactionsFlowUseCase = getAllTransactionsFlowUseCase,
-            jsonUtil = jsonUtil,
+            dateTimeUtil = dateTimeUtil,
+            dataStore = dataStore,
+            jsonWriter = jsonWriter,
         )
     }
 

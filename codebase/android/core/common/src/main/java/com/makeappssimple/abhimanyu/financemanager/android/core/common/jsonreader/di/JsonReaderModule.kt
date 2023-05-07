@@ -1,19 +1,25 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.di
 
+import android.content.Context
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.JsonReader
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.JsonReaderImpl
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface JsonReaderModule {
+class JsonReaderModule {
     @Singleton
-    @Binds
-    fun bindJsonReader(
-        jsonReaderImpl: JsonReaderImpl,
-    ): JsonReader
+    @Provides
+    fun providesJsonReader(
+        @ApplicationContext context: Context,
+    ): JsonReader {
+        return JsonReaderImpl(
+            context = context,
+        )
+    }
 }
