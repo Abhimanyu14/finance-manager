@@ -34,21 +34,21 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
     )
     override val selectedTabIndex: StateFlow<Int> = _selectedTabIndex
 
-    private val categories: Flow<List<Category>> = getAllCategoriesFlowUseCase()
-    override val expenseCategories: Flow<List<Category>> = categories.map { categories ->
-        categories.filter { category ->
-            category.transactionType == TransactionType.EXPENSE
-        }
+    private val categoriesTransactionTypeMap: Flow<Map<TransactionType, List<Category>>> =
+        getAllCategoriesFlowUseCase()
+            .map { categories ->
+                categories.groupBy { category ->
+                    category.transactionType
+                }
+            }
+    override val expenseCategories: Flow<List<Category>> = categoriesTransactionTypeMap.map {
+        it[TransactionType.EXPENSE] ?: emptyList()
     }
-    override val incomeCategories: Flow<List<Category>> = categories.map { categories ->
-        categories.filter { category ->
-            category.transactionType == TransactionType.INCOME
-        }
+    override val incomeCategories: Flow<List<Category>> = categoriesTransactionTypeMap.map {
+        it[TransactionType.INCOME] ?: emptyList()
     }
-    override val investmentCategories: Flow<List<Category>> = categories.map { categories ->
-        categories.filter { category ->
-            category.transactionType == TransactionType.INVESTMENT
-        }
+    override val investmentCategories: Flow<List<Category>> = categoriesTransactionTypeMap.map {
+        it[TransactionType.INVESTMENT] ?: emptyList()
     }
     override val expenseCategoryIsUsedInTransactions: Flow<List<Boolean>> = expenseCategories
         .map {
@@ -93,12 +93,6 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun updateSelectedTabIndex(
-        updatedSelectedTabIndex: Int,
-    ) {
-        _selectedTabIndex.value = updatedSelectedTabIndex
-    }
-
     override fun setDefaultCategoryIdInDataStore(
         defaultCategoryId: Int,
         transactionType: TransactionType,
@@ -132,5 +126,11 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
                 TransactionType.REFUND -> {}
             }
         }
+    }
+
+    override fun updateSelectedTabIndex(
+        updatedSelectedTabIndex: Int,
+    ) {
+        _selectedTabIndex.value = updatedSelectedTabIndex
     }
 }

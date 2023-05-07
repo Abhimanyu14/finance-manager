@@ -26,12 +26,12 @@ interface CategoriesScreenViewModel : ScreenViewModel {
         id: Int,
     )
 
-    fun updateSelectedTabIndex(
-        updatedSelectedTabIndex: Int,
-    )
-
     fun setDefaultCategoryIdInDataStore(
         defaultCategoryId: Int,
         transactionType: TransactionType,
+    )
+
+    fun updateSelectedTabIndex(
+        updatedSelectedTabIndex: Int,
     )
 }
