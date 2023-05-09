@@ -128,7 +128,15 @@ internal fun ViewTransactionScreenView(
                                     bottom = 8.dp,
                                 )
                             ),
-                            onDeleteButtonClick = {},
+                            onDeleteButtonClick = {
+                                transactionIdToDelete = transactionListItemData.transactionId
+                                viewTransactionBottomSheetType =
+                                    ViewTransactionBottomSheetType.DELETE_CONFIRMATION
+                                toggleModalBottomSheetState(
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
+                                )
+                            },
                             onEditButtonClick = {
                                 data.navigateToEditTransactionScreen(transactionListItemData.transactionId)
                             },
