@@ -5,12 +5,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.JsonWriter
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.DeleteTransactionUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionDataFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesUseCase
@@ -72,14 +71,16 @@ class UseCaseModule {
     @Provides
     fun providesRecalculateTotalUseCase(
         dataStore: MyDataStore,
-        getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase,
-        getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
+        dispatcherProvider: DispatcherProvider,
+        getAllSourcesUseCase: GetAllSourcesUseCase,
+        getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
         updateSourcesUseCase: UpdateSourcesUseCase,
     ): RecalculateTotalUseCase {
         return RecalculateTotalUseCaseImpl(
             dataStore = dataStore,
-            getAllSourcesFlowUseCase = getAllSourcesFlowUseCase,
-            getAllTransactionDataFlowUseCase = getAllTransactionDataFlowUseCase,
+            dispatcherProvider = dispatcherProvider,
+            getAllSourcesUseCase = getAllSourcesUseCase,
+            getAllTransactionDataUseCase = getAllTransactionDataUseCase,
             updateSourcesUseCase = updateSourcesUseCase,
         )
     }
