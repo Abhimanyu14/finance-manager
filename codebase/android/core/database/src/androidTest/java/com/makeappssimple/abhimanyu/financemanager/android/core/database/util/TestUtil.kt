@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.database.transaction.datasource.local
+package com.makeappssimple.abhimanyu.financemanager.android.core.database.util
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
@@ -6,6 +6,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.E
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
+import java.time.Instant
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 
 const val timeInMillis_01_JUN_2022 = 1654021800000
 const val timeInMillis_01_JAN_2022_00_00_00 = 1640975400000 // 01-01-2022 00:00:00 IST
@@ -132,4 +135,41 @@ fun getTestTransactions(
         )
     }
     return result
+}
+
+fun getReadableDateAndTime(
+    timestamp: Long,
+    zoneId: ZoneId = ZoneId.systemDefault(),
+): String {
+    return Instant
+        .ofEpochMilli(timestamp)
+        .formattedReadableDateAndTime(
+            zoneId = zoneId,
+        )
+}
+
+fun Instant.formattedReadableDateAndTime(
+    zoneId: ZoneId = ZoneId.systemDefault(),
+): String {
+    return "${formattedDate(zoneId)} at ${formattedTime(zoneId)}"
+}
+
+fun Instant.formattedDate(
+    zoneId: ZoneId = ZoneId.systemDefault(),
+): String {
+    return DateTimeFormatter
+        .ofPattern("dd MMM, yyyy")
+        .withZone(zoneId)
+        .format(this)
+}
+
+fun Instant.formattedTime(
+    zoneId: ZoneId = ZoneId.systemDefault(),
+): String {
+    return DateTimeFormatter
+        .ofPattern("hh:mm a")
+        .withZone(zoneId)
+        .format(this)
+        .replace("am", "AM")
+        .replace("pm", "PM")
 }
