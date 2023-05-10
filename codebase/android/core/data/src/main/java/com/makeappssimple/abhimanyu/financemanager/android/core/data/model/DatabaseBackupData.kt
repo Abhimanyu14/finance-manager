@@ -26,9 +26,9 @@ data class DatabaseBackupData @OptIn(ExperimentalSerializationApi::class) constr
 
     val sources: List<Source> = emptyList(),
 
-    val transactions: List<Transaction> = emptyList(),
-
     @SerialName(value = "transaction_for_values")
     @JsonNames("transactionForValues")
     val transactionForValues: List<TransactionFor> = emptyList(),
+
+    val transactions: List<Transaction> = emptyList(),
 )

@@ -1,22 +1,24 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase
 
 import android.net.Uri
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.JsonWriter
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesFlowUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.DatabaseBackupData
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesFlowUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionsFlowUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.zip
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -27,50 +29,70 @@ interface BackupDataUseCase {
 }
 
 class BackupDataUseCaseImpl(
-    getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
-    getAllEmojisFlowUseCase: GetAllEmojisFlowUseCase,
-    getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase,
-    getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
-    getAllTransactionsFlowUseCase: GetAllTransactionsFlowUseCase,
     private val dateTimeUtil: DateTimeUtil,
     private val dataStore: MyDataStore,
+    private val dispatcherProvider: DispatcherProvider,
+    private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
+    private val getAllEmojisUseCase: GetAllEmojisUseCase,
+    private val getAllSourcesUseCase: GetAllSourcesUseCase,
+    private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
+    private val getAllTransactionsUseCase: GetAllTransactionsUseCase,
     private val jsonWriter: JsonWriter,
 ) : BackupDataUseCase {
-    val categories: Flow<List<Category>> = getAllCategoriesFlowUseCase()
-    val emojis: Flow<List<EmojiLocalEntity>> = getAllEmojisFlowUseCase()
-    val sources: Flow<List<Source>> = getAllSourcesFlowUseCase()
-    val transactionForValues: Flow<List<TransactionFor>> = getAllTransactionForValuesFlowUseCase()
-    val transactions: Flow<List<Transaction>> = getAllTransactionsFlowUseCase()
 
     override suspend operator fun invoke(
         uri: Uri,
     ) {
-        dataStore.setLastDataBackupTimestamp()
-        val databaseBackupData = DatabaseBackupData(
-            lastBackupTime = dateTimeUtil.getReadableDateAndTime(),
-            lastBackupTimestamp = dateTimeUtil.getCurrentTimeMillis().toString(),
-        )
-        categories.zip(emojis) { categoriesValue, emojisValue ->
-            databaseBackupData.copy(
-                categories = categoriesValue,
-                emojis = emojisValue,
+        coroutineScope {
+            val deferredList = awaitAll(
+                async(
+                    dispatcherProvider.io,
+                ) {
+                    getAllCategoriesUseCase()
+                },
+                async(
+                    dispatcherProvider.io,
+                ) {
+                    getAllEmojisUseCase()
+                },
+                async(
+                    dispatcherProvider.io,
+                ) {
+                    getAllSourcesUseCase()
+                },
+                async(
+                    dispatcherProvider.io,
+                ) {
+                    getAllTransactionForValuesUseCase()
+                },
+                async(
+                    dispatcherProvider.io,
+                ) {
+                    getAllTransactionsUseCase()
+                },
             )
-        }.zip(sources) { databaseBackupDataValue, sourcesValue ->
-            databaseBackupDataValue.copy(
-                sources = sourcesValue,
+
+            val categories: List<Category> = deferredList[0].filterIsInstance<Category>()
+            val emojis: List<EmojiLocalEntity> =
+                deferredList[1].filterIsInstance<EmojiLocalEntity>()
+            val sources: List<Source> = deferredList[2].filterIsInstance<Source>()
+            val transactionForValues: List<TransactionFor> =
+                deferredList[3].filterIsInstance<TransactionFor>()
+            val transactions: List<Transaction> = deferredList[4].filterIsInstance<Transaction>()
+
+            val databaseBackupData = DatabaseBackupData(
+                lastBackupTime = dateTimeUtil.getReadableDateAndTime(),
+                lastBackupTimestamp = dateTimeUtil.getCurrentTimeMillis().toString(),
+                categories = categories,
+                emojis = emojis,
+                sources = sources,
+                transactionForValues = transactionForValues,
+                transactions = transactions,
             )
-        }.zip(transactions) { databaseBackupDataValue, transactionsValue ->
-            databaseBackupDataValue.copy(
-                transactions = transactionsValue,
-            )
-        }.zip(transactionForValues) { databaseBackupDataValue, transactionForValuesValue ->
-            databaseBackupDataValue.copy(
-                transactionForValues = transactionForValuesValue,
-            )
-        }.collect { databaseBackupDataValue ->
             val jsonString = Json.encodeToString(
-                value = databaseBackupDataValue,
+                value = databaseBackupData,
             )
+            dataStore.setLastDataBackupTimestamp()
             jsonWriter.writeJsonToFile(
                 uri = uri,
                 jsonString = jsonString,

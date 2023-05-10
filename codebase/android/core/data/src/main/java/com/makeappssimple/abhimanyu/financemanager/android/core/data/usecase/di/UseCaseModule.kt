@@ -1,17 +1,19 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.di
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.JsonWriter
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesFlowUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionDataFlowUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionsFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.BackupDataUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.DeleteTransactionAndRevertOtherDataUseCase
@@ -33,21 +35,23 @@ class UseCaseModule {
     fun providesBackupDataUseCase(
         dateTimeUtil: DateTimeUtil,
         dataStore: MyDataStore,
-        getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
-        getAllEmojisFlowUseCase: GetAllEmojisFlowUseCase,
-        getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase,
-        getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
-        getAllTransactionsFlowUseCase: GetAllTransactionsFlowUseCase,
+        dispatcherProvider: DispatcherProvider,
+        getAllCategoriesUseCase: GetAllCategoriesUseCase,
+        getAllEmojisUseCase: GetAllEmojisUseCase,
+        getAllSourcesUseCase: GetAllSourcesUseCase,
+        getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
+        getAllTransactionsUseCase: GetAllTransactionsUseCase,
         jsonWriter: JsonWriter,
     ): BackupDataUseCase {
         return BackupDataUseCaseImpl(
-            getAllCategoriesFlowUseCase = getAllCategoriesFlowUseCase,
-            getAllEmojisFlowUseCase = getAllEmojisFlowUseCase,
-            getAllSourcesFlowUseCase = getAllSourcesFlowUseCase,
-            getAllTransactionForValuesFlowUseCase = getAllTransactionForValuesFlowUseCase,
-            getAllTransactionsFlowUseCase = getAllTransactionsFlowUseCase,
             dateTimeUtil = dateTimeUtil,
             dataStore = dataStore,
+            dispatcherProvider = dispatcherProvider,
+            getAllCategoriesUseCase = getAllCategoriesUseCase,
+            getAllEmojisUseCase = getAllEmojisUseCase,
+            getAllSourcesUseCase = getAllSourcesUseCase,
+            getAllTransactionForValuesUseCase = getAllTransactionForValuesUseCase,
+            getAllTransactionsUseCase = getAllTransactionsUseCase,
             jsonWriter = jsonWriter,
         )
     }
