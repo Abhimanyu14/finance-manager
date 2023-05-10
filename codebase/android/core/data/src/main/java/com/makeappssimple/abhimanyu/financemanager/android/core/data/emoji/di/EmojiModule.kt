@@ -2,8 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.di
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.repository.EmojiRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.repository.EmojiRepositoryImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisFlowUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisFlowUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.EmojiDao
@@ -21,15 +19,6 @@ class EmojiModule {
     ): EmojiRepository {
         return EmojiRepositoryImpl(
             emojiDao = emojiDao,
-        )
-    }
-
-    @Provides
-    fun providesGetAllEmojisFlowUseCase(
-        emojiRepository: EmojiRepository,
-    ): GetAllEmojisFlowUseCase {
-        return GetAllEmojisFlowUseCaseImpl(
-            emojiRepository = emojiRepository,
         )
     }
 

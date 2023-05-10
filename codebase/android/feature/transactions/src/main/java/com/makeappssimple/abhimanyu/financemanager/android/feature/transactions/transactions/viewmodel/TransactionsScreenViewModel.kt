@@ -14,11 +14,7 @@ import java.time.LocalDate
 interface TransactionsScreenViewModel : ScreenViewModel {
     val logger: Logger
     val navigationManager: NavigationManager
-    val expenseCategories: Flow<List<Category>>
-    val incomeCategories: Flow<List<Category>>
-    val investmentCategories: Flow<List<Category>>
     val sortOptions: List<SortOption>
-    val sources: Flow<List<Source>>
     val transactionDetailsListItemViewData: Flow<Map<String, List<TransactionListItemData>>>
     val transactionTypes: List<TransactionType>
     val currentLocalDate: LocalDate
@@ -28,6 +24,18 @@ interface TransactionsScreenViewModel : ScreenViewModel {
     val selectedFilter: StateFlow<Filter>
     val selectedSortOption: StateFlow<SortOption>
     val searchText: StateFlow<String>
+
+    fun deleteTransaction(
+        id: Int,
+    )
+
+    fun getExpenseCategories(): List<Category>
+
+    fun getIncomeCategories(): List<Category>
+
+    fun getInvestmentCategories(): List<Category>
+
+    fun getSources(): List<Source>
 
     fun updateSelectedFilter(
         updatedSelectedFilter: Filter,
@@ -39,9 +47,5 @@ interface TransactionsScreenViewModel : ScreenViewModel {
 
     fun updateSelectedSortOption(
         updatedSelectedSortOption: SortOption,
-    )
-
-    fun deleteTransaction(
-        id: Int,
     )
 }

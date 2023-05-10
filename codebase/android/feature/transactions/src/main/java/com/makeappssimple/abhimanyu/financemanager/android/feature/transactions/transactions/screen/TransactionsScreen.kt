@@ -4,7 +4,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
@@ -22,18 +21,6 @@ fun TransactionsScreen(
     screenViewModel.logger.logError(
         message = "Inside TransactionsScreen",
     )
-    val expenseCategories: List<Category> by screenViewModel.expenseCategories.collectAsStateWithLifecycle(
-        initialValue = emptyList(),
-    )
-    val incomeCategories: List<Category> by screenViewModel.incomeCategories.collectAsStateWithLifecycle(
-        initialValue = emptyList(),
-    )
-    val investmentCategories: List<Category> by screenViewModel.investmentCategories.collectAsStateWithLifecycle(
-        initialValue = emptyList(),
-    )
-    val sources: List<Source> by screenViewModel.sources.collectAsStateWithLifecycle(
-        initialValue = emptyList(),
-    )
     val oldestTransactionLocalDate: LocalDate by screenViewModel.oldestTransactionLocalDate.collectAsStateWithLifecycle(
         initialValue = LocalDate.MIN,
     )
@@ -49,11 +36,7 @@ fun TransactionsScreen(
         data = TransactionsScreenViewData(
             isLoading = isLoading,
             selectedFilter = selectedFilter,
-            expenseCategories = expenseCategories,
-            incomeCategories = incomeCategories,
-            investmentCategories = investmentCategories,
             sortOptions = screenViewModel.sortOptions,
-            sources = sources,
             transactionTypes = screenViewModel.transactionTypes,
             oldestTransactionLocalDate = oldestTransactionLocalDate,
             currentLocalDate = screenViewModel.currentLocalDate,
@@ -74,6 +57,10 @@ fun TransactionsScreen(
             searchText = searchText,
             selectedSortOption = selectedSortOption,
             deleteTransaction = screenViewModel::deleteTransaction,
+            getExpenseCategories = screenViewModel::getExpenseCategories,
+            getIncomeCategories = screenViewModel::getIncomeCategories,
+            getInvestmentCategories = screenViewModel::getInvestmentCategories,
+            getSources = screenViewModel::getSources,
             navigateToAddTransactionScreen = {
                 screenViewModel.navigationManager.navigate(
                     navigationCommand = MyNavigationDirections.AddTransaction()
