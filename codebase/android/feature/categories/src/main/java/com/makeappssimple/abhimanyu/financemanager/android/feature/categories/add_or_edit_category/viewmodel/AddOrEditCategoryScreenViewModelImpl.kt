@@ -10,8 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.InsertCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.UpdateCategoriesUseCase
@@ -30,9 +29,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.navigation.AddOrEditCategoryScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
@@ -41,12 +41,12 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
-    getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
     override val logger: Logger,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
+    private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val getAllEmojisUseCase: GetAllEmojisUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val insertCategoriesUseCase: InsertCategoriesUseCase,
@@ -58,11 +58,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
             stringDecoder = stringDecoder,
         )
 
-    private val categories: StateFlow<List<Category>> =
-        getAllCategoriesFlowUseCase().defaultListStateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Eagerly,
-        )
+    private lateinit var categories: List<Category>
     private val category: MutableStateFlow<Category?> = MutableStateFlow(
         value = null,
     )
@@ -116,6 +112,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     )
 
     init {
+        getOriginalCategory()
         addOrEditCategoryScreenArgs.originalTransactionType?.let { originalTransactionType ->
             updateSelectedTransactionTypeIndex(
                 updatedIndex = transactionTypes.indexOf(
@@ -123,11 +120,6 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
                         transactionType.title == originalTransactionType
                     },
                 )
-            )
-        }
-        addOrEditCategoryScreenArgs.originalCategoryId?.let {
-            getCategory(
-                id = it,
             )
         }
         fetchData()
@@ -201,16 +193,11 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         }
 
         // TODO-Abhi: Error message - "Title already exists"
-        if (title != category.value?.title &&
-            categories.value.find {
-                it.title.equalsIgnoringCase(
-                    other = title,
-                )
-            }.isNotNull()
-        ) {
-            return false
-        }
-        return true
+        return !(title != category.value?.title && categories.find {
+            it.title.equalsIgnoringCase(
+                other = title,
+            )
+        }.isNotNull())
     }
 
     override fun clearTitle() {
@@ -247,18 +234,18 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         _searchText.value = updatedSearchText
     }
 
-    private fun getCategory(
-        id: Int,
-    ) {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            category.update {
-                getCategoryUseCase(
-                    id = id,
-                )
+    private fun getOriginalCategory() {
+        addOrEditCategoryScreenArgs.originalCategoryId?.let { id ->
+            viewModelScope.launch(
+                context = dispatcherProvider.io,
+            ) {
+                category.update {
+                    getCategoryUseCase(
+                        id = id,
+                    )
+                }
+                updateInitialCategoryValue()
             }
-            updateInitialCategoryValue()
         }
     }
 
@@ -284,7 +271,18 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            emojis = getAllEmojisUseCase()
+            awaitAll(
+                async(
+                    context = dispatcherProvider.io,
+                ) {
+                    categories = getAllCategoriesUseCase()
+                },
+                async(
+                    context = dispatcherProvider.io,
+                ) {
+                    emojis = getAllEmojisUseCase()
+                },
+            )
         }
     }
 }

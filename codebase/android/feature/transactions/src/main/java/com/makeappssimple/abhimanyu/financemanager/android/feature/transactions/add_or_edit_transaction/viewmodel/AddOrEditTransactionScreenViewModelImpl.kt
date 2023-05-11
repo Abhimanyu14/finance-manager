@@ -792,8 +792,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             // Default data from data store
             awaitAll(
                 async {
-                    defaultSourceIdFromDataStore =
-                        dataStore.getDefaultSourceId().first()
+                    defaultSourceIdFromDataStore = dataStore.getDefaultSourceId().first()
                 },
                 async {
                     defaultExpenseCategoryIdFromDataStore =

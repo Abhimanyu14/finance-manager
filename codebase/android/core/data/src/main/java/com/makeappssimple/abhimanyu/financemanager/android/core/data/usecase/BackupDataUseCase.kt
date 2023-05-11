@@ -46,27 +46,27 @@ class BackupDataUseCaseImpl(
         coroutineScope {
             val deferredList = awaitAll(
                 async(
-                    dispatcherProvider.io,
+                    context = dispatcherProvider.io,
                 ) {
                     getAllCategoriesUseCase()
                 },
                 async(
-                    dispatcherProvider.io,
+                    context = dispatcherProvider.io,
                 ) {
                     getAllEmojisUseCase()
                 },
                 async(
-                    dispatcherProvider.io,
+                    context = dispatcherProvider.io,
                 ) {
                     getAllSourcesUseCase()
                 },
                 async(
-                    dispatcherProvider.io,
+                    context = dispatcherProvider.io,
                 ) {
                     getAllTransactionForValuesUseCase()
                 },
                 async(
-                    dispatcherProvider.io,
+                    context = dispatcherProvider.io,
                 ) {
                     getAllTransactionsUseCase()
                 },
