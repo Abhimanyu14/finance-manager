@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.util
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiLocalEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionFor
@@ -49,8 +49,8 @@ fun getTestCategories(): Array<Category> {
     )
 }
 
-fun getTestEmoji(): EmojiLocalEntity {
-    return EmojiLocalEntity(
+fun getTestEmoji(): EmojiEntity {
+    return EmojiEntity(
         character = "character",
         codePoint = "codePoint",
         group = "group",
@@ -58,15 +58,15 @@ fun getTestEmoji(): EmojiLocalEntity {
     )
 }
 
-fun getTestEmojis(): Array<EmojiLocalEntity> {
+fun getTestEmojis(): Array<EmojiEntity> {
     return arrayOf(
-        EmojiLocalEntity(
+        EmojiEntity(
             character = "character",
             codePoint = "codePoint",
             group = "group",
             unicodeName = "unicodeName",
         ),
-        EmojiLocalEntity(
+        EmojiEntity(
             character = "character 1",
             codePoint = "codePoint 1",
             group = "group 1",

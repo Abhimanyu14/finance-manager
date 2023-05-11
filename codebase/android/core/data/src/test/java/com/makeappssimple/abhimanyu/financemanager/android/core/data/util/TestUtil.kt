@@ -2,10 +2,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.util
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 
 const val timeInMillis_01_JAN_2022_00_00_00 = 1640975400000 // 01-01-2022 00:00:00 IST
@@ -49,8 +49,8 @@ fun getTestCategories(): Array<Category> {
     )
 }
 
-fun getTestEmoji(): EmojiLocalEntity {
-    return EmojiLocalEntity(
+fun getTestEmoji(): Emoji {
+    return Emoji(
         character = "character",
         codePoint = "codePoint",
         group = "group",
@@ -58,15 +58,15 @@ fun getTestEmoji(): EmojiLocalEntity {
     )
 }
 
-fun getTestEmojis(): Array<EmojiLocalEntity> {
+fun getTestEmojis(): Array<Emoji> {
     return arrayOf(
-        EmojiLocalEntity(
+        Emoji(
             character = "character",
             codePoint = "codePoint",
             group = "group",
             unicodeName = "unicodeName",
         ),
-        EmojiLocalEntity(
+        Emoji(
             character = "character 1",
             codePoint = "codePoint 1",
             group = "group 1",

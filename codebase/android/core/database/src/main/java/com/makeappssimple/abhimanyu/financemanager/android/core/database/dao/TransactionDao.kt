@@ -6,7 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiLocalEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionData
@@ -302,7 +302,7 @@ interface TransactionDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertData(
         categories: List<Category>,
-        emojis: List<EmojiLocalEntity>,
+        emojis: List<EmojiEntity>,
         sources: List<Source>,
         transactions: List<Transaction>,
         transactionForValues: List<TransactionFor>,
@@ -311,7 +311,7 @@ interface TransactionDao {
     @androidx.room.Transaction
     suspend fun restoreData(
         categories: List<Category>,
-        emojis: List<EmojiLocalEntity>,
+        emojis: List<EmojiEntity>,
         sources: List<Source>,
         transactions: List<Transaction>,
         transactionForValues: List<TransactionFor>,

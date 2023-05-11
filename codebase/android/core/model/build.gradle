@@ -2,9 +2,16 @@ plugins {
     id "java-library"
     id "org.jetbrains.kotlin.jvm"
     id "org.jetbrains.kotlinx.kover"
+    id "kotlinx-serialization"
 }
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+dependencies {
+
+    // KotlinX serialization
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$rootProject.kotlinXSerializationVersion"
 }

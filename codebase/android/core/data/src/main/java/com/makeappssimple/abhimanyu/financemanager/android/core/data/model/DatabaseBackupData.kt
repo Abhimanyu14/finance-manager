@@ -1,10 +1,10 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.model
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -22,7 +22,7 @@ data class DatabaseBackupData @OptIn(ExperimentalSerializationApi::class) constr
 
     val categories: List<Category> = emptyList(),
 
-    val emojis: List<EmojiLocalEntity> = emptyList(),
+    val emojis: List<Emoji> = emptyList(),
 
     val sources: List<Source> = emptyList(),
 

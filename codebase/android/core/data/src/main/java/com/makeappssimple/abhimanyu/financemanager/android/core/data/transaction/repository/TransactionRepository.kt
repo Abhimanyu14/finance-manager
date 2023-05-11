@@ -1,16 +1,14 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import kotlinx.coroutines.flow.Flow
 
 interface TransactionRepository {
-    fun getAllTransactionsFlow(): Flow<List<Transaction>>
-
     suspend fun getAllTransactions(): List<Transaction>
 
     fun getAllTransactionDataFlow(): Flow<List<TransactionData>>
@@ -86,7 +84,7 @@ interface TransactionRepository {
 
     suspend fun restoreData(
         categories: List<Category>,
-        emojis: List<EmojiLocalEntity>,
+        emojis: List<Emoji>,
         sources: List<Source>,
         transactions: List<Transaction>,
         transactionForValues: List<TransactionFor>,

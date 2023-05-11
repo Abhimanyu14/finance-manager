@@ -30,7 +30,7 @@ data class Emojis @OptIn(ExperimentalSerializationApi::class) constructor(
 
     @SerialName("emojis_data")
     @JsonNames("emojisData")
-    val emojisData: List<EmojiLocalEntity>,
+    val emojisData: List<EmojiEntity>,
 )
 
 @Serializable

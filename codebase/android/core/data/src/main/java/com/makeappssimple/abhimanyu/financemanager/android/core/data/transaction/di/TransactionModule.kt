@@ -17,8 +17,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionDataFlowUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionDataUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionsFlowUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionsFlowUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetRecentTransactionDataFlowUseCase
@@ -168,15 +166,6 @@ class TransactionModule {
         transactionRepository: TransactionRepository,
     ): GetSearchedTransactionDataUseCase {
         return GetSearchedTransactionDataUseCaseImpl(
-            transactionRepository = transactionRepository,
-        )
-    }
-
-    @Provides
-    fun providesGetAllTransactionsFlowUseCase(
-        transactionRepository: TransactionRepository,
-    ): GetAllTransactionsFlowUseCase {
-        return GetAllTransactionsFlowUseCaseImpl(
             transactionRepository = transactionRepository,
         )
     }

@@ -9,7 +9,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 @Entity(tableName = "emoji_table")
-data class EmojiLocalEntity(
+data class EmojiEntity(
     @PrimaryKey
     val character: String,
 
@@ -24,9 +24,11 @@ data class EmojiLocalEntity(
     val unicodeName: String,
 )
 
-fun EmojiLocalEntity.asExternalModel() = Emoji(
-    codePoint = codePoint,
-    group = group,
-    character = character,
-    unicodeName = unicodeName,
-)
+fun EmojiEntity.asExternalModel(): Emoji {
+    return Emoji(
+        codePoint = codePoint,
+        group = group,
+        character = character,
+        unicodeName = unicodeName,
+    )
+}

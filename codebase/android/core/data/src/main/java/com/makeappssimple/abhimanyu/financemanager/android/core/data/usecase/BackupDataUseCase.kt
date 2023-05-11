@@ -11,11 +11,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usec
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiLocalEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -73,8 +73,8 @@ class BackupDataUseCaseImpl(
             )
 
             val categories: List<Category> = deferredList[0].filterIsInstance<Category>()
-            val emojis: List<EmojiLocalEntity> =
-                deferredList[1].filterIsInstance<EmojiLocalEntity>()
+            val emojis: List<Emoji> =
+                deferredList[1].filterIsInstance<Emoji>()
             val sources: List<Source> = deferredList[2].filterIsInstance<Source>()
             val transactionForValues: List<TransactionFor> =
                 deferredList[3].filterIsInstance<TransactionFor>()

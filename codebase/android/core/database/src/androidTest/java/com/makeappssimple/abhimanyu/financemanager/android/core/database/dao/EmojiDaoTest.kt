@@ -6,7 +6,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiLocalEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -144,13 +144,13 @@ class EmojiDaoTest {
 
     companion object {
         private val testEmojis = listOf(
-            EmojiLocalEntity(
+            EmojiEntity(
                 character = "😀",
                 codePoint = "1F600",
                 group = "smileys-emotion",
                 unicodeName = "grinning face",
             ),
-            EmojiLocalEntity(
+            EmojiEntity(
                 character = "😃",
                 codePoint = "1F603",
                 group = "smileys-emotion",

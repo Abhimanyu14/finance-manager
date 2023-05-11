@@ -16,8 +16,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.us
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.UpdateCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiLocalEntity
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
@@ -92,7 +90,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     )
     override val searchText: StateFlow<String> = _searchText
 
-    private var emojis: List<EmojiLocalEntity> = emptyList()
+    private var emojis: List<Emoji> = emptyList()
     override val emojiGroups: Flow<Map<String, List<Emoji>>> = searchText.map { searchTextValue ->
         emojis.filter { emoji ->
             if (searchTextValue.isBlank()) {
@@ -100,8 +98,6 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
             } else {
                 emoji.unicodeName.contains(searchTextValue)
             }
-        }.map {
-            it.asExternalModel()
         }.groupBy { emoji ->
             emoji.group
         }.filter { (_, emojis) ->

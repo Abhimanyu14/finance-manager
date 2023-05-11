@@ -34,7 +34,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrati
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_8_9
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_9_10
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiLocalEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.InitialDatabaseData
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
@@ -55,7 +55,7 @@ import java.util.concurrent.Executors
     version = 18,
     entities = [
         Category::class,
-        EmojiLocalEntity::class,
+        EmojiEntity::class,
         Source::class,
         Transaction::class,
         TransactionFor::class,
