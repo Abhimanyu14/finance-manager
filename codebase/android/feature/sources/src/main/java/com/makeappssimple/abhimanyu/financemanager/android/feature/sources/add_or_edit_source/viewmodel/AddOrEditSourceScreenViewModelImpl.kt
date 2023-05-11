@@ -11,8 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.InsertSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.UpdateSourcesUseCase
@@ -31,20 +30,19 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.math.abs
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
-    getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
     override val logger: Logger,
     override val navigationManager: NavigationManager,
     private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
+    private val getAllSourcesUseCase: GetAllSourcesUseCase,
     private val getSourceUseCase: GetSourceUseCase,
     private val insertSourcesUseCase: InsertSourcesUseCase,
     private val insertTransactionsUseCase: InsertTransactionsUseCase,
@@ -56,10 +54,7 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
             stringDecoder = stringDecoder,
         )
 
-    private val sources: StateFlow<List<Source>> = getAllSourcesFlowUseCase().defaultListStateIn(
-        scope = viewModelScope,
-        started = SharingStarted.Eagerly,
-    )
+    private lateinit var sources: List<Source>
     private val _source: MutableStateFlow<Source?> = MutableStateFlow(
         value = null,
     )
@@ -92,11 +87,8 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     override val balanceAmountValue: StateFlow<TextFieldValue> = _balanceAmountValue
 
     init {
-        addOrEditSourceScreenArgs.originalSourceId?.let {
-            getSource(
-                id = it,
-            )
-        }
+        getAllSources()
+        getOriginalSource()
     }
 
     override fun updateSource() {
@@ -194,16 +186,16 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
         }
 
         // TODO-Abhi: Error message - "Name already exists"
-        if (source.value?.name != name && sources.value.find {
-                it.name.equalsIgnoringCase(
-                    other = name,
-                )
-            }.isNotNull()
-        ) {
-            return false
+        val sourcesList = if (::sources.isInitialized) {
+            sources
+        } else {
+            emptyList()
         }
-
-        return true
+        return !(source.value?.name != name && sourcesList.find {
+            it.name.equalsIgnoringCase(
+                other = name,
+            )
+        }.isNotNull())
     }
 
     override fun clearName() {
@@ -246,19 +238,28 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
         }
     }
 
-    private fun getSource(
-        id: Int,
-    ) {
+    private fun getAllSources() {
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            _source.update {
-                getSourceUseCase(
-                    id = id,
-                )
-            }
-            updateInitialSourceValue()
+            sources = getAllSourcesUseCase()
         }
+    }
+
+    private fun getOriginalSource() {
+        addOrEditSourceScreenArgs.originalSourceId?.let { id ->
+            viewModelScope.launch(
+                context = dispatcherProvider.io,
+            ) {
+                _source.update {
+                    getSourceUseCase(
+                        id = id,
+                    )
+                }
+                updateInitialSourceValue()
+            }
+        }
+
     }
 
     private fun updateInitialSourceValue() {
