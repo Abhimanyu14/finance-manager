@@ -9,8 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.InsertTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.UpdateTransactionForValuesUseCase
@@ -22,19 +21,18 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
 internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
-    getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
     override val logger: Logger,
     override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
+    private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val getTransactionForUseCase: GetTransactionForUseCase,
     private val insertTransactionForUseCase: InsertTransactionForValuesUseCase,
     private val updateTransactionForValuesUseCase: UpdateTransactionForValuesUseCase,
@@ -45,11 +43,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
             stringDecoder = stringDecoder,
         )
 
-    private val transactionForValues: StateFlow<List<TransactionFor>> =
-        getAllTransactionForValuesFlowUseCase().defaultListStateIn(
-            scope = viewModelScope,
-            started = SharingStarted.Eagerly,
-        )
+    private lateinit var transactionForValues: List<TransactionFor>
     private val _title: MutableStateFlow<TextFieldValue> = MutableStateFlow(
         value = TextFieldValue(
             text = "",
@@ -63,11 +57,8 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
     override val transactionFor: StateFlow<TransactionFor?> = _transactionFor
 
     init {
-        addOrEditTransactionForScreenArgs.originalTransactionForId?.let {
-            getTransactionFor(
-                id = it,
-            )
-        }
+        getAllTransactionForValues()
+        getOriginalTransactionFor()
     }
 
     override fun updateTransactionFor() {
@@ -110,17 +101,11 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
         }
 
         // TODO-Abhi: Error message - "Title already exists"
-        if (title != transactionFor.value?.title &&
-            transactionForValues.value.find {
-                it.title.equalsIgnoringCase(
-                    other = title,
-                )
-            }.isNotNull()
-        ) {
-            return false
-        }
-
-        return true
+        return !(title != transactionFor.value?.title && transactionForValues.find {
+            it.title.equalsIgnoringCase(
+                other = title,
+            )
+        }.isNotNull())
     }
 
     override fun clearTitle() {
@@ -139,18 +124,26 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
         }
     }
 
-    private fun getTransactionFor(
-        id: Int,
-    ) {
+    private fun getAllTransactionForValues() {
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            _transactionFor.update {
-                getTransactionForUseCase(
-                    id = id,
-                )
+            transactionForValues = getAllTransactionForValuesUseCase()
+        }
+    }
+
+    private fun getOriginalTransactionFor() {
+        addOrEditTransactionForScreenArgs.originalTransactionForId?.let { id ->
+            viewModelScope.launch(
+                context = dispatcherProvider.io,
+            ) {
+                _transactionFor.update {
+                    getTransactionForUseCase(
+                        id = id,
+                    )
+                }
+                updateInitialTransactionForValue()
             }
-            updateInitialTransactionForValue()
         }
     }
 
