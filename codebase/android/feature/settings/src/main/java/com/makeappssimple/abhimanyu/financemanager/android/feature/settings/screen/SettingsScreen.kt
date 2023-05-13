@@ -53,6 +53,8 @@ fun SettingsScreen(
         data = SettingsScreenViewData(
             isLoading = isLoading,
             appVersion = screenViewModel.getAppVersionName(),
+        ),
+        events = SettingsScreenViewEvents(
             backupData = {
                 createDocumentResultLauncher.launch(MimeTypeConstants.JSON)
             },

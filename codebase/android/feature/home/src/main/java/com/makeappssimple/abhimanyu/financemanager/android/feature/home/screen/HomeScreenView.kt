@@ -46,6 +46,10 @@ internal enum class HomeBottomSheetType : BottomSheetType {
 internal data class HomeScreenViewData(
     val showBackupCard: Boolean,
     val transactionListItemDataList: List<TransactionListItemData>,
+)
+
+@Immutable
+internal data class HomeScreenViewEvents(
     val createDocument: ManagedActivityResultLauncher<String, Uri?>,
     val navigateToAddTransactionScreen: () -> Unit,
     val navigateToCategoriesScreen: () -> Unit,
@@ -57,6 +61,7 @@ internal data class HomeScreenViewData(
 @Composable
 internal fun HomeScreenView(
     data: HomeScreenViewData,
+    events: HomeScreenViewEvents,
     state: CommonScreenViewState,
 ) {
     var homeBottomSheetType by remember {
@@ -88,9 +93,9 @@ internal fun HomeScreenView(
                     HomeMenuBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
-                        navigateToCategoriesScreen = data.navigateToCategoriesScreen,
-                        navigateToSettingsScreen = data.navigateToSettingsScreen,
-                        navigateToSourcesScreen = data.navigateToSourcesScreen,
+                        navigateToCategoriesScreen = events.navigateToCategoriesScreen,
+                        navigateToSettingsScreen = events.navigateToSettingsScreen,
+                        navigateToSourcesScreen = events.navigateToSourcesScreen,
                         resetBottomSheetType = {
                             homeBottomSheetType = HomeBottomSheetType.NONE
                         },
@@ -118,7 +123,7 @@ internal fun HomeScreenView(
                 contentDescription = stringResource(
                     id = R.string.screen_home_floating_action_button_content_description,
                 ),
-                onClick = data.navigateToAddTransactionScreen,
+                onClick = events.navigateToAddTransactionScreen,
             )
         },
         isFloatingActionButtonDocked = true,
@@ -140,7 +145,7 @@ internal fun HomeScreenView(
         ) {
             item {
                 TotalBalanceCard(
-                    onClick = data.navigateToSourcesScreen,
+                    onClick = events.navigateToSourcesScreen,
                 )
             }
             item {
@@ -149,7 +154,7 @@ internal fun HomeScreenView(
                 ) {
                     BackupCard(
                         onClick = {
-                            data.createDocument.launch(MimeTypeConstants.JSON)
+                            events.createDocument.launch(MimeTypeConstants.JSON)
                         }
                     )
                 }
@@ -159,7 +164,7 @@ internal fun HomeScreenView(
             }
             item {
                 HomeRecentTransactionsView(
-                    onClick = data.navigateToTransactionsScreen,
+                    onClick = events.navigateToTransactionsScreen,
                 )
             }
             items(

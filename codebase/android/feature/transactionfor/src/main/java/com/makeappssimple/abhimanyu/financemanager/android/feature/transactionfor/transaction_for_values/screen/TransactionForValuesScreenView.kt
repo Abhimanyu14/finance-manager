@@ -21,11 +21,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
@@ -52,12 +52,17 @@ internal data class TransactionForValuesScreenViewData(
     val transactionForValuesIsUsedInTransactions: List<Boolean>,
     val transactionForValues: List<TransactionFor>,
     val navigationManager: NavigationManager,
+)
+
+@Immutable
+internal data class TransactionForValuesScreenViewEvents(
     val deleteTransactionFor: (transactionForId: Int) -> Unit,
 )
 
 @Composable
 internal fun TransactionForValuesScreenView(
     data: TransactionForValuesScreenViewData,
+    events: TransactionForValuesScreenViewEvents,
     state: CommonScreenViewState,
 ) {
     var transactionForValuesBottomSheetType: TransactionForValuesBottomSheetType by remember {
@@ -100,7 +105,7 @@ internal fun TransactionForValuesScreenView(
                         },
                         deleteTransactionFor = {
                             transactionForIdToDelete?.let { transactionForIdToDeleteValue ->
-                                data.deleteTransactionFor(transactionForIdToDeleteValue)
+                                events.deleteTransactionFor(transactionForIdToDeleteValue)
                             }
                         },
                     )

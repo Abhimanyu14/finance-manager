@@ -55,6 +55,8 @@ fun TransactionsScreen(
             },
             searchText = searchText,
             selectedSortOption = selectedSortOption,
+        ),
+        events = TransactionsScreenViewEvents(
             deleteTransaction = screenViewModel::deleteTransaction,
             getExpenseCategories = screenViewModel::getExpenseCategories,
             getIncomeCategories = screenViewModel::getIncomeCategories,

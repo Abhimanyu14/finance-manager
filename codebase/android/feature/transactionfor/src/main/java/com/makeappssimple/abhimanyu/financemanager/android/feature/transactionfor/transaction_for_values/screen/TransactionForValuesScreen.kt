@@ -28,6 +28,8 @@ fun TransactionForValuesScreen(
             transactionForValuesIsUsedInTransactions = transactionForValuesIsUsedInTransactions,
             transactionForValues = transactionForValues,
             navigationManager = screenViewModel.navigationManager,
+        ),
+        events = TransactionForValuesScreenViewEvents(
             deleteTransactionFor = { transactionForId ->
                 screenViewModel.deleteTransactionFor(
                     id = transactionForId,

@@ -39,6 +39,8 @@ fun ViewTransactionScreen(
             originalTransactionListItemData = originalTransactionListItemData,
             refundTransactionListItemData = refundTransactionListItemData,
             transactionListItemData = transactionListItemData,
+        ),
+        events = ViewTransactionScreenViewEvents(
             deleteTransaction = { transactionId ->
                 screenViewModel.deleteTransaction(
                     id = transactionId,

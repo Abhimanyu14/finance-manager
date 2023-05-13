@@ -61,6 +61,10 @@ internal data class AddOrEditCategoryScreenViewData(
     val emoji: String,
     val searchText: String,
     val title: TextFieldValue,
+)
+
+@Immutable
+internal data class AddOrEditCategoryScreenViewEvents(
     val clearTitle: () -> Unit,
     val isValidCategoryData: () -> Boolean,
     val navigateUp: () -> Unit,
@@ -74,6 +78,7 @@ internal data class AddOrEditCategoryScreenViewData(
 @Composable
 internal fun AddOrEditCategoryScreenView(
     data: AddOrEditCategoryScreenViewData,
+    events: AddOrEditCategoryScreenViewEvents,
     state: CommonScreenViewState,
 ) {
     var addOrEditCategoryBottomSheetType by remember {
@@ -127,10 +132,10 @@ internal fun AddOrEditCategoryScreenView(
                             addOrEditCategoryBottomSheetType = AddOrEditCategoryBottomSheetType.NONE
                         },
                         updateEmoji = { updatedEmoji ->
-                            data.updateEmoji(updatedEmoji)
+                            events.updateEmoji(updatedEmoji)
                         },
                         updateSearchText = { updatedSearchText ->
-                            data.updateSearchText(updatedSearchText)
+                            events.updateSearchText(updatedSearchText)
                         },
                     )
                 }
@@ -139,7 +144,7 @@ internal fun AddOrEditCategoryScreenView(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = data.appBarTitleTextStringResourceId,
-                navigationAction = data.navigateUp,
+                navigationAction = events.navigateUp,
             )
         },
         onClick = {
@@ -170,7 +175,7 @@ internal fun AddOrEditCategoryScreenView(
                     },
                 selectedItemIndex = data.selectedTransactionTypeIndex,
                 onSelectionChange = { updatedIndex ->
-                    data.updateSelectedTransactionTypeIndex(updatedIndex)
+                    events.updateSelectedTransactionTypeIndex(updatedIndex)
                 },
                 modifier = Modifier
                     .padding(
@@ -203,10 +208,10 @@ internal fun AddOrEditCategoryScreenView(
                     labelTextStringResourceId = R.string.screen_add_or_edit_category_title,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_category_clear_title,
                     onClickTrailingIcon = {
-                        data.clearTitle()
+                        events.clearTitle()
                     },
                     onValueChange = { updatedTitle ->
-                        data.updateTitle(updatedTitle)
+                        events.updateTitle(updatedTitle)
                     },
                     keyboardActions = KeyboardActions(
                         onNext = {
@@ -236,9 +241,9 @@ internal fun AddOrEditCategoryScreenView(
             }
             SaveButton(
                 textStringResourceId = data.ctaButtonLabelTextStringResourceId,
-                isEnabled = data.isValidCategoryData(),
+                isEnabled = events.isValidCategoryData(),
                 onClick = {
-                    data.onCtaButtonClick()
+                    events.onCtaButtonClick()
                 },
             )
         }

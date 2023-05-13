@@ -18,9 +18,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
@@ -44,6 +44,10 @@ internal data class SourcesScreenViewData(
     val defaultSourceId: Int?,
     val sourcesIsUsedInTransactions: List<Boolean>,
     val sources: List<Source>,
+)
+
+@Immutable
+internal data class SourcesScreenViewEvents(
     val deleteSource: (source: Source) -> Unit,
     val navigateToAddSourceScreen: () -> Unit,
     val navigateToEditSourceScreen: (sourceId: Int) -> Unit,
@@ -54,6 +58,7 @@ internal data class SourcesScreenViewData(
 @Composable
 internal fun SourcesScreenView(
     data: SourcesScreenViewData,
+    events: SourcesScreenViewEvents,
     state: CommonScreenViewState,
 ) {
     var sourcesBottomSheetType by remember {
@@ -109,7 +114,7 @@ internal fun SourcesScreenView(
                         },
                         setDefaultSourceIdInDataStore = {
                             clickedItemId?.let { clickedItemIdValue ->
-                                data.setDefaultSourceIdInDataStore(clickedItemIdValue)
+                                events.setDefaultSourceIdInDataStore(clickedItemIdValue)
                             }
                         },
                     )
@@ -131,7 +136,7 @@ internal fun SourcesScreenView(
                         },
                         deleteSource = {
                             sourceToDelete?.let { sourceToDeleteValue ->
-                                data.deleteSource(sourceToDeleteValue)
+                                events.deleteSource(sourceToDeleteValue)
                             }
                         },
                     )
@@ -141,7 +146,7 @@ internal fun SourcesScreenView(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_sources_appbar_title,
-                navigationAction = data.navigateUp,
+                navigationAction = events.navigateUp,
             )
         },
         floatingActionButton = {
@@ -150,7 +155,7 @@ internal fun SourcesScreenView(
                 contentDescription = stringResource(
                     id = R.string.screen_sources_floating_action_button_content_description,
                 ),
-                onClick = data.navigateToAddSourceScreen,
+                onClick = events.navigateToAddSourceScreen,
             )
         },
         onClick = {
@@ -212,7 +217,7 @@ internal fun SourcesScreenView(
                         }
                     },
                     onEditClick = {
-                        data.navigateToEditSourceScreen(listItem.id)
+                        events.navigateToEditSourceScreen(listItem.id)
                         expandedItemIndex = null
                     },
                     onDeleteClick = {

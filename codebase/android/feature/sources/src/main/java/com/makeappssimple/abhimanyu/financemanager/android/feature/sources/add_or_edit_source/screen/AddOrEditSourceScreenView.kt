@@ -55,6 +55,10 @@ internal data class AddOrEditSourceScreenViewData(
     val sourceTypes: List<SourceType>,
     val balanceAmountValue: TextFieldValue,
     val name: TextFieldValue,
+)
+
+@Immutable
+internal data class AddOrEditSourceScreenViewEvents(
     val clearBalanceAmountValue: () -> Unit,
     val clearName: () -> Unit,
     val isValidSourceData: () -> Boolean,
@@ -68,6 +72,7 @@ internal data class AddOrEditSourceScreenViewData(
 @Composable
 internal fun AddOrEditSourceScreenView(
     data: AddOrEditSourceScreenViewData,
+    events: AddOrEditSourceScreenViewEvents,
     state: CommonScreenViewState,
 ) {
     var addOrEditSourceBottomSheetType by remember {
@@ -105,7 +110,7 @@ internal fun AddOrEditSourceScreenView(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = data.appBarTitleTextStringResourceId,
-                navigationAction = data.navigateUp,
+                navigationAction = events.navigateUp,
             )
         },
         onClick = {
@@ -138,7 +143,7 @@ internal fun AddOrEditSourceScreenView(
                         },
                     selectedItemIndex = data.selectedSourceTypeIndex,
                     onSelectionChange = { updatedIndex ->
-                        data.updateSelectedSourceTypeIndex(updatedIndex)
+                        events.updateSelectedSourceTypeIndex(updatedIndex)
                     },
                     modifier = Modifier
                         .padding(
@@ -152,11 +157,9 @@ internal fun AddOrEditSourceScreenView(
                     textFieldValue = data.name,
                     labelTextStringResourceId = R.string.screen_add_or_edit_source_name,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_source_clear_name,
-                    onClickTrailingIcon = {
-                        data.clearName()
-                    },
+                    onClickTrailingIcon = events.clearName,
                     onValueChange = { updatedName ->
-                        data.updateName(updatedName)
+                        events.updateName(updatedName)
                     },
                     keyboardActions = KeyboardActions(
                         onNext = {
@@ -191,11 +194,9 @@ internal fun AddOrEditSourceScreenView(
                     textFieldValue = data.balanceAmountValue,
                     labelTextStringResourceId = R.string.screen_edit_source_balance_amount_value,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_edit_source_clear_balance_amount_value,
-                    onClickTrailingIcon = {
-                        data.clearBalanceAmountValue()
-                    },
+                    onClickTrailingIcon = events.clearBalanceAmountValue,
                     onValueChange = { updatedBalanceAmountValue ->
-                        data.updateBalanceAmountValue(updatedBalanceAmountValue)
+                        events.updateBalanceAmountValue(updatedBalanceAmountValue)
                     },
                     visualTransformation = AmountCommaVisualTransformation(),
                     keyboardActions = KeyboardActions(
@@ -225,10 +226,8 @@ internal fun AddOrEditSourceScreenView(
             }
             SaveButton(
                 textStringResourceId = data.ctaButtonLabelTextStringResourceId,
-                isEnabled = data.isValidSourceData(),
-                onClick = {
-                    data.onCtaButtonClick()
-                },
+                isEnabled = events.isValidSourceData(),
+                onClick = events.onCtaButtonClick,
             )
         }
     }

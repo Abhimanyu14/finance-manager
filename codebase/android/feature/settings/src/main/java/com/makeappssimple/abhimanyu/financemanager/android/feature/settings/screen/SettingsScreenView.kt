@@ -47,6 +47,10 @@ internal enum class SettingsBottomSheetType : BottomSheetType {
 internal data class SettingsScreenViewData(
     val isLoading: Boolean,
     val appVersion: String?,
+)
+
+@Immutable
+internal data class SettingsScreenViewEvents(
     val backupData: () -> Unit,
     val navigateToTransactionForValuesScreen: () -> Unit,
     val navigateUp: () -> Unit,
@@ -57,6 +61,7 @@ internal data class SettingsScreenViewData(
 @Composable
 internal fun SettingsScreenView(
     data: SettingsScreenViewData,
+    events: SettingsScreenViewEvents,
     state: CommonScreenViewState,
 ) {
     var settingsBottomSheetType by remember {
@@ -88,7 +93,7 @@ internal fun SettingsScreenView(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_settings_appbar_title,
-                navigationAction = data.navigateUp,
+                navigationAction = events.navigateUp,
             )
         },
         onClick = {
@@ -152,7 +157,7 @@ internal fun SettingsScreenView(
                             onClick = if (data.isLoading) {
                                 null
                             } else {
-                                data.backupData
+                                events.backupData
                             },
                         ),
                 )
@@ -180,7 +185,7 @@ internal fun SettingsScreenView(
                             onClick = if (data.isLoading) {
                                 null
                             } else {
-                                data.restoreData
+                                events.restoreData
                             },
                         ),
                 )
@@ -208,7 +213,7 @@ internal fun SettingsScreenView(
                             onClick = if (data.isLoading) {
                                 null
                             } else {
-                                data.recalculateTotal
+                                events.recalculateTotal
                             },
                         ),
                 )
@@ -236,7 +241,7 @@ internal fun SettingsScreenView(
                             onClick = if (data.isLoading) {
                                 null
                             } else {
-                                data.navigateToTransactionForValuesScreen
+                                events.navigateToTransactionForValuesScreen
                             },
                         ),
                 )

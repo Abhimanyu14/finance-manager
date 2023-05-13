@@ -28,6 +28,8 @@ fun CategoriesScreen(
         data = CategoriesScreenViewData(
             selectedTabIndex = selectedTabIndex,
             categoriesGridItemDataMap = categoriesGridItemDataMap,
+        ),
+        events = CategoriesScreenViewEvents(
             deleteCategory = { categoryId ->
                 screenViewModel.deleteCategory(
                     id = categoryId,

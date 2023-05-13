@@ -55,6 +55,10 @@ internal sealed class CategoriesBottomSheetType : BottomSheetType {
 internal data class CategoriesScreenViewData(
     val selectedTabIndex: Int,
     val categoriesGridItemDataMap: Map<TransactionType, List<CategoriesGridItemData>>,
+)
+
+@Immutable
+internal data class CategoriesScreenViewEvents(
     val deleteCategory: (categoryId: Int) -> Unit,
     val navigateToAddCategoryScreen: (transactionType: String) -> Unit,
     val navigateToEditCategoryScreen: (categoryId: Int) -> Unit,
@@ -69,6 +73,7 @@ internal data class CategoriesScreenViewData(
 @Composable
 internal fun CategoriesScreenView(
     data: CategoriesScreenViewData,
+    events: CategoriesScreenViewEvents,
     state: CommonScreenViewState,
 ) {
     val pagerState = rememberPagerState(
@@ -109,7 +114,7 @@ internal fun CategoriesScreenView(
     LaunchedEffect(
         key1 = pagerState.currentPage,
     ) {
-        data.updateSelectedTabIndex(pagerState.currentPage)
+        events.updateSelectedTabIndex(pagerState.currentPage)
     }
 
     LaunchedEffect(
@@ -141,7 +146,7 @@ internal fun CategoriesScreenView(
                         modalBottomSheetState = state.modalBottomSheetState,
                         deleteCategory = {
                             categoryIdToDelete?.let { categoryIdToDeleteValue ->
-                                data.deleteCategory(categoryIdToDeleteValue)
+                                events.deleteCategory(categoryIdToDeleteValue)
                             }
                         },
                         resetBottomSheetType = resetBottomSheetType,
@@ -166,7 +171,7 @@ internal fun CategoriesScreenView(
                         },
                         setDefaultCategoryIdInDataStore = {
                             clickedItemId?.let { clickedItemIdValue ->
-                                data.setDefaultCategoryIdInDataStore(
+                                events.setDefaultCategoryIdInDataStore(
                                     clickedItemIdValue,
                                     transactionTypes[data.selectedTabIndex],
                                 )
@@ -185,7 +190,7 @@ internal fun CategoriesScreenView(
                         categoryId = bottomSheetData.categoryId,
                         modalBottomSheetState = state.modalBottomSheetState,
                         categoryTitle = bottomSheetData.categoryTitle,
-                        navigateToEditCategoryScreen = data.navigateToEditCategoryScreen,
+                        navigateToEditCategoryScreen = events.navigateToEditCategoryScreen,
                         onDeleteClick = {
                             categoryIdToDelete = bottomSheetData.categoryId
                             categoriesBottomSheetType =
@@ -204,7 +209,7 @@ internal fun CategoriesScreenView(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_categories_appbar_title,
-                navigationAction = data.navigateUp,
+                navigationAction = events.navigateUp,
             )
         },
         floatingActionButton = {
@@ -214,7 +219,7 @@ internal fun CategoriesScreenView(
                     id = R.string.screen_categories_floating_action_button_content_description,
                 ),
                 onClick = {
-                    data.navigateToAddCategoryScreen(
+                    events.navigateToAddCategoryScreen(
                         when (data.selectedTabIndex) {
                             0 -> {
                                 TransactionType.EXPENSE.title
@@ -249,7 +254,7 @@ internal fun CategoriesScreenView(
         ) {
             MyTabRow(
                 selectedTabIndex = data.selectedTabIndex,
-                updateSelectedTabIndex = data.updateSelectedTabIndex,
+                updateSelectedTabIndex = events.updateSelectedTabIndex,
                 tabData = tabData,
             )
             HorizontalPager(

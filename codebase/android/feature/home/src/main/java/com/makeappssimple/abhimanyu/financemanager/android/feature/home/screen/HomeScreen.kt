@@ -44,6 +44,8 @@ fun HomeScreen(
         data = HomeScreenViewData(
             showBackupCard = showBackupCard,
             transactionListItemDataList = homeListItemViewData,
+        ),
+        events = HomeScreenViewEvents(
             createDocument = createDocument,
             navigateToAddTransactionScreen = {
                 screenViewModel.navigationManager.navigate(

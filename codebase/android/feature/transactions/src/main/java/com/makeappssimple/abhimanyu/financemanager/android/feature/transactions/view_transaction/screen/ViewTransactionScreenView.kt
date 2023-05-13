@@ -41,6 +41,10 @@ internal data class ViewTransactionScreenViewData(
     val originalTransactionListItemData: TransactionListItemData?,
     val refundTransactionListItemData: List<TransactionListItemData>?,
     val transactionListItemData: TransactionListItemData?,
+)
+
+@Immutable
+internal data class ViewTransactionScreenViewEvents(
     val deleteTransaction: (transactionId: Int) -> Unit,
     val navigateToAddTransactionScreen: (transactionId: Int) -> Unit,
     val navigateToEditTransactionScreen: (transactionId: Int) -> Unit,
@@ -50,6 +54,7 @@ internal data class ViewTransactionScreenViewData(
 @Composable
 internal fun ViewTransactionScreenView(
     data: ViewTransactionScreenViewData,
+    events: ViewTransactionScreenViewEvents,
     state: CommonScreenViewState,
 ) {
     var viewTransactionBottomSheetType by remember {
@@ -84,7 +89,7 @@ internal fun ViewTransactionScreenView(
                         },
                     ) {
                         transactionIdToDelete?.let { transactionIdToDeleteValue ->
-                            data.deleteTransaction(transactionIdToDeleteValue)
+                            events.deleteTransaction(transactionIdToDeleteValue)
                         }
                     }
                 }
@@ -93,7 +98,7 @@ internal fun ViewTransactionScreenView(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_view_transaction_appbar_title,
-                navigationAction = data.navigateUp,
+                navigationAction = events.navigateUp,
             )
         },
         onClick = {
@@ -138,10 +143,10 @@ internal fun ViewTransactionScreenView(
                                 )
                             },
                             onEditButtonClick = {
-                                data.navigateToEditTransactionScreen(transactionListItemData.transactionId)
+                                events.navigateToEditTransactionScreen(transactionListItemData.transactionId)
                             },
                             onRefundButtonClick = {
-                                data.navigateToAddTransactionScreen(transactionListItemData.transactionId)
+                                events.navigateToAddTransactionScreen(transactionListItemData.transactionId)
                             },
                         ),
                     )
@@ -186,10 +191,10 @@ internal fun ViewTransactionScreenView(
                                     )
                                 },
                                 onEditButtonClick = {
-                                    data.navigateToEditTransactionScreen(transactionListItemData.transactionId)
+                                    events.navigateToEditTransactionScreen(transactionListItemData.transactionId)
                                 },
                                 onRefundButtonClick = {
-                                    data.navigateToAddTransactionScreen(transactionListItemData.transactionId)
+                                    events.navigateToAddTransactionScreen(transactionListItemData.transactionId)
                                 },
                             ),
                         )
@@ -240,7 +245,9 @@ internal fun ViewTransactionScreenView(
                                         )
                                     },
                                     onEditButtonClick = {
-                                        data.navigateToEditTransactionScreen(transactionListItemData.transactionId)
+                                        events.navigateToEditTransactionScreen(
+                                            transactionListItemData.transactionId
+                                        )
                                     },
                                     onRefundButtonClick = {},
                                 ),

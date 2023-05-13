@@ -12,6 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememb
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenView
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenViewData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenViewEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.viewmodel.AddOrEditSourceScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.viewmodel.AddOrEditSourceScreenViewModelImpl
 
@@ -40,6 +41,8 @@ fun EditSourceScreen(
             sourceTypes = screenViewModel.sourceTypes,
             balanceAmountValue = balanceAmountValue,
             name = name,
+        ),
+        events = AddOrEditSourceScreenViewEvents(
             clearBalanceAmountValue = screenViewModel::clearBalanceAmountValue,
             clearName = screenViewModel::clearName,
             isValidSourceData = screenViewModel::isValidSourceData,

@@ -33,6 +33,8 @@ fun SourcesScreen(
             defaultSourceId = defaultSourceId,
             sourcesIsUsedInTransactions = sourcesIsUsedInTransactions,
             sources = sources,
+        ),
+        events = SourcesScreenViewEvents(
             deleteSource = { sourceId ->
                 screenViewModel.deleteSource(
                     source = sourceId,

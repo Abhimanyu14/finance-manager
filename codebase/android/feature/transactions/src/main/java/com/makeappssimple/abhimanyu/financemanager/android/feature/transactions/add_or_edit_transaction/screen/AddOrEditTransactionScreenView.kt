@@ -32,11 +32,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.AmountCommaVisualTransformation
@@ -81,6 +81,10 @@ internal data class AddOrEditTransactionScreenViewData(
     val transactionForValues: List<TransactionFor>,
     val currentTimeMillis: Long,
     val selectedTransactionType: TransactionType?,
+)
+
+@Immutable
+internal data class AddOrEditTransactionScreenViewEvents(
     val clearAmount: () -> Unit,
     val clearDescription: () -> Unit,
     val clearTitle: () -> Unit,
@@ -101,6 +105,7 @@ internal data class AddOrEditTransactionScreenViewData(
 @Composable
 internal fun AddOrEditTransactionScreenView(
     data: AddOrEditTransactionScreenViewData,
+    events: AddOrEditTransactionScreenViewEvents,
     state: CommonScreenViewState,
 ) {
     val transactionDatePickerDialog = getMyDatePickerDialog(
@@ -108,14 +113,14 @@ internal fun AddOrEditTransactionScreenView(
         selectedDate = data.uiState.transactionDate,
         currentTimeMillis = data.currentTimeMillis,
         onDateSetListener = {
-            data.updateTransactionDate(it)
+            events.updateTransactionDate(it)
         },
     )
     val transactionTimePickerDialog = getMyTimePickerDialog(
         context = state.context,
         currentTime = data.uiState.transactionTime,
         onTimeSetListener = {
-            data.updateTransactionTime(it)
+            events.updateTransactionTime(it)
         },
     )
 
@@ -203,7 +208,7 @@ internal fun AddOrEditTransactionScreenView(
                                 AddOrEditTransactionBottomSheetType.NONE
                         },
                         updateCategory = { updatedCategory ->
-                            data.updateCategory(updatedCategory)
+                            events.updateCategory(updatedCategory)
                         },
                     )
                 }
@@ -219,7 +224,7 @@ internal fun AddOrEditTransactionScreenView(
                                 AddOrEditTransactionBottomSheetType.NONE
                         },
                         updateSource = { updatedSource ->
-                            data.updateSourceFrom(updatedSource)
+                            events.updateSourceFrom(updatedSource)
                         }
                     )
                 }
@@ -235,7 +240,7 @@ internal fun AddOrEditTransactionScreenView(
                                 AddOrEditTransactionBottomSheetType.NONE
                         },
                         updateSource = { updatedSource ->
-                            data.updateSourceTo(updatedSource)
+                            events.updateSourceTo(updatedSource)
                         }
                     )
                 }
@@ -244,7 +249,7 @@ internal fun AddOrEditTransactionScreenView(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = data.appBarTitleTextStringResourceId,
-                navigationAction = data.navigateUp,
+                navigationAction = events.navigateUp,
             )
         },
         onClick = {
@@ -273,7 +278,7 @@ internal fun AddOrEditTransactionScreenView(
                     items = transactionTypesForNewTransactionChipItems,
                     selectedItemIndex = data.uiState.selectedTransactionTypeIndex,
                     onSelectionChange = { updatedSelectedTransactionTypeIndex ->
-                        data.updateSelectedTransactionTypeIndex(
+                        events.updateSelectedTransactionTypeIndex(
                             updatedSelectedTransactionTypeIndex
                         )
                     },
@@ -289,10 +294,10 @@ internal fun AddOrEditTransactionScreenView(
                 labelTextStringResourceId = R.string.screen_add_or_edit_transaction_amount,
                 trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_amount,
                 onClickTrailingIcon = {
-                    data.clearAmount()
+                    events.clearAmount()
                 },
                 onValueChange = { updatedAmount ->
-                    data.updateAmount(updatedAmount)
+                    events.updateAmount(updatedAmount)
                 },
                 supportingText = {
                     AnimatedVisibility(
@@ -361,10 +366,10 @@ internal fun AddOrEditTransactionScreenView(
                     labelTextStringResourceId = R.string.screen_add_or_edit_transaction_title,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_title,
                     onClickTrailingIcon = {
-                        data.clearTitle()
+                        events.clearTitle()
                     },
                     onValueChange = { updatedTitle ->
-                        data.updateTitle(updatedTitle)
+                        events.updateTitle(updatedTitle)
                     },
                     keyboardActions = KeyboardActions(
                         onDone = {
@@ -390,7 +395,7 @@ internal fun AddOrEditTransactionScreenView(
                     items = titleSuggestionsChipItems,
                     onSelectionChange = { index ->
                         clearFocus()
-                        data.updateTitle(TextFieldValue(data.titleSuggestions[index]))
+                        events.updateTitle(TextFieldValue(data.titleSuggestions[index]))
                     },
                     modifier = Modifier
                         .padding(
@@ -407,7 +412,7 @@ internal fun AddOrEditTransactionScreenView(
                     selectedItemIndex = data.uiState.selectedTransactionForIndex,
                     onSelectionChange = { updatedSelectedTransactionForIndex ->
                         clearFocus()
-                        data.updateSelectedTransactionForIndex(
+                        events.updateSelectedTransactionForIndex(
                             updatedSelectedTransactionForIndex
                         )
                     },
@@ -426,10 +431,10 @@ internal fun AddOrEditTransactionScreenView(
                     labelTextStringResourceId = R.string.screen_add_or_edit_transaction_description,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_description,
                     onClickTrailingIcon = {
-                        data.clearDescription()
+                        events.clearDescription()
                     },
                     onValueChange = { updatedDescription ->
-                        data.updateDescription(updatedDescription)
+                        events.updateDescription(updatedDescription)
                     },
                     keyboardActions = KeyboardActions(
                         onDone = {
@@ -535,7 +540,7 @@ internal fun AddOrEditTransactionScreenView(
                 isEnabled = data.isCtaButtonEnabled,
                 onClick = {
                     clearFocus()
-                    data.onCtaButtonClick()
+                    events.onCtaButtonClick()
                 },
             )
         }

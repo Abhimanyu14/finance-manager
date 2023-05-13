@@ -36,7 +36,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.legend.Dot
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
@@ -44,6 +43,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
@@ -80,6 +80,10 @@ internal data class TransactionsScreenViewData(
     val transactionDetailsListItemViewData: Map<String, List<TransactionListItemData>>,
     val searchText: String,
     val selectedSortOption: SortOption,
+)
+
+@Immutable
+internal data class TransactionsScreenViewEvents(
     val deleteTransaction: (transactionId: Int) -> Unit,
     val getExpenseCategories: () -> List<Category>,
     val getIncomeCategories: () -> List<Category>,
@@ -96,6 +100,7 @@ internal data class TransactionsScreenViewData(
 @Composable
 internal fun TransactionsScreenView(
     data: TransactionsScreenViewData,
+    events: TransactionsScreenViewEvents,
     state: CommonScreenViewState,
 ) {
     var transactionsBottomSheetType by remember {
@@ -123,8 +128,8 @@ internal fun TransactionsScreenView(
     BackHandler(
         enabled = data.searchText.isNotEmpty() || data.selectedFilter.areFiltersSelected(),
     ) {
-        data.updateSearchText("")
-        data.updateSelectedFilter(Filter())
+        events.updateSearchText("")
+        events.updateSelectedFilter(Filter())
     }
 
     MyScaffold(
@@ -152,17 +157,17 @@ internal fun TransactionsScreenView(
                         context = state.context,
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
-                        expenseCategories = data.getExpenseCategories(),
-                        incomeCategories = data.getIncomeCategories(),
-                        investmentCategories = data.getInvestmentCategories(),
-                        sources = data.getSources(),
+                        expenseCategories = events.getExpenseCategories(),
+                        incomeCategories = events.getIncomeCategories(),
+                        investmentCategories = events.getInvestmentCategories(),
+                        sources = events.getSources(),
                         transactionTypes = data.transactionTypes,
                         defaultMinDate = data.oldestTransactionLocalDate,
                         defaultMaxDate = data.currentLocalDate,
                         currentTimeMillis = data.currentTimeMillis,
                         selectedFilter = data.selectedFilter,
                         updateSelectedFilter = { updatedSelectedFilter ->
-                            data.updateSelectedFilter(updatedSelectedFilter)
+                            events.updateSelectedFilter(updatedSelectedFilter)
                         },
                         resetBottomSheetType = {
                             transactionsBottomSheetType = TransactionsBottomSheetType.NONE
@@ -177,7 +182,7 @@ internal fun TransactionsScreenView(
                         sortOptions = data.sortOptions.toList(),
                         selectedSortOptionIndex = data.sortOptions.indexOf(data.selectedSortOption),
                         updateSelectedSortOption = { index ->
-                            data.updateSelectedSortOption(data.sortOptions[index])
+                            events.updateSelectedSortOption(data.sortOptions[index])
                         },
                         resetBottomSheetType = {
                             transactionsBottomSheetType = TransactionsBottomSheetType.NONE
@@ -198,7 +203,7 @@ internal fun TransactionsScreenView(
                         },
                         deleteTransaction = {
                             transactionIdToDelete?.let { transactionIdToDeleteValue ->
-                                data.deleteTransaction(transactionIdToDeleteValue)
+                                events.deleteTransaction(transactionIdToDeleteValue)
                             }
                         },
                     )
@@ -208,7 +213,7 @@ internal fun TransactionsScreenView(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_transactions_appbar_title,
-                navigationAction = data.navigateUp,
+                navigationAction = events.navigateUp,
             )
         },
         floatingActionButton = {
@@ -217,7 +222,7 @@ internal fun TransactionsScreenView(
                 contentDescription = stringResource(
                     id = R.string.screen_transactions_floating_action_button_content_description,
                 ),
-                onClick = data.navigateToAddTransactionScreen,
+                onClick = events.navigateToAddTransactionScreen,
             )
         },
         onClick = {
@@ -273,7 +278,7 @@ internal fun TransactionsScreenView(
                             placeholderText = stringResource(
                                 id = R.string.screen_transactions_searchbar_placeholder,
                             ),
-                            onValueChange = data.updateSearchText,
+                            onValueChange = events.updateSearchText,
                             onSearch = {
                                 state.focusManager.clearFocus()
                             },

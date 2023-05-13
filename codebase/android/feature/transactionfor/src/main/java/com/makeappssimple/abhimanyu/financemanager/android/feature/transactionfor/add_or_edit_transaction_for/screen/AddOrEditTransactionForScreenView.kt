@@ -48,6 +48,10 @@ internal data class AddOrEditTransactionForScreenViewData(
     @StringRes val ctaButtonLabelTextStringResourceId: Int,
     val navigationManager: NavigationManager,
     val title: TextFieldValue,
+)
+
+@Immutable
+internal data class AddOrEditTransactionForScreenViewEvents(
     val clearTitle: () -> Unit,
     val isValidTitle: () -> Boolean,
     val onCtaButtonClick: () -> Unit,
@@ -57,6 +61,7 @@ internal data class AddOrEditTransactionForScreenViewData(
 @Composable
 internal fun AddOrEditTransactionForScreenView(
     data: AddOrEditTransactionForScreenViewData,
+    events: AddOrEditTransactionForScreenViewEvents,
     state: CommonScreenViewState,
 ) {
     var addOrEditTransactionForBottomSheetType by remember {
@@ -133,10 +138,10 @@ internal fun AddOrEditTransactionForScreenView(
                 labelTextStringResourceId = R.string.screen_add_or_edit_transaction_for_title,
                 trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_for_clear_title,
                 onClickTrailingIcon = {
-                    data.clearTitle()
+                    events.clearTitle()
                 },
                 onValueChange = { updatedTitle ->
-                    data.updateTitle(updatedTitle)
+                    events.updateTitle(updatedTitle)
                 },
                 keyboardActions = KeyboardActions(
                     onDone = {
@@ -158,10 +163,8 @@ internal fun AddOrEditTransactionForScreenView(
             )
             SaveButton(
                 textStringResourceId = data.ctaButtonLabelTextStringResourceId,
-                isEnabled = data.isValidTitle(),
-                onClick = {
-                    data.onCtaButtonClick()
-                },
+                isEnabled = events.isValidTitle(),
+                onClick = events.onCtaButtonClick,
             )
         }
     }
