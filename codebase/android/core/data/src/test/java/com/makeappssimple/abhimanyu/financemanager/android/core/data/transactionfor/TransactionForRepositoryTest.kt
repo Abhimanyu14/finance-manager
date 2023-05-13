@@ -4,7 +4,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.repository.TransactionForRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.getTestTransactionForValues
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionForDao
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test

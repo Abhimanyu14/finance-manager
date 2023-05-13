@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.conver
 
 import androidx.room.TypeConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.CategoryEntity
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -11,12 +11,12 @@ class CategoryConverter {
     @TypeConverter
     fun stringToCategory(
         value: String?,
-    ): Category? {
+    ): CategoryEntity? {
         if (value.isNullOrBlank()) {
             return null
         }
         return try {
-            Json.decodeFromString<Category>(
+            Json.decodeFromString<CategoryEntity>(
                 string = value,
             )
         } catch (
@@ -29,14 +29,14 @@ class CategoryConverter {
 
     @TypeConverter
     fun categoryToString(
-        category: Category?,
+        categoryEntity: CategoryEntity?,
     ): String {
-        if (category.isNull()) {
+        if (categoryEntity.isNull()) {
             return ""
         }
         return try {
             Json.encodeToString(
-                value = category,
+                value = categoryEntity,
             )
         } catch (
             exception: Exception,

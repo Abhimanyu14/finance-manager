@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.model
 
-//@JsonClass(generateAdapter = false)
 enum class TransactionType(
     val title: String,
 ) {

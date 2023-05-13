@@ -1,18 +1,27 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.category.repository
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.CategoryDao
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class CategoryRepositoryImpl(
     private val categoryDao: CategoryDao,
 ) : CategoryRepository {
     override fun getAllCategoriesFlow(): Flow<List<Category>> {
-        return categoryDao.getAllCategoriesFlow()
+        return categoryDao.getAllCategoriesFlow().map {
+            it.map { categoryEntity ->
+                categoryEntity.asExternalModel()
+            }
+        }
     }
 
     override suspend fun getAllCategories(): List<Category> {
-        return categoryDao.getAllCategories()
+        return categoryDao.getAllCategories().map {
+            it.asExternalModel()
+        }
     }
 
     override suspend fun getAllCategoriesCount(): Int {
@@ -24,14 +33,16 @@ class CategoryRepositoryImpl(
     ): Category? {
         return categoryDao.getCategory(
             id = id,
-        )
+        )?.asExternalModel()
     }
 
     override suspend fun insertCategories(
         vararg categories: Category,
     ) {
         categoryDao.insertCategories(
-            categories = categories,
+            categories = categories.map {
+                it.asEntity()
+            }.toTypedArray(),
         )
     }
 
@@ -39,7 +50,9 @@ class CategoryRepositoryImpl(
         vararg categories: Category,
     ) {
         categoryDao.updateCategories(
-            categories = categories,
+            categories = categories.map {
+                it.asEntity()
+            }.toTypedArray(),
         )
     }
 
@@ -55,7 +68,9 @@ class CategoryRepositoryImpl(
         vararg categories: Category,
     ) {
         categoryDao.deleteCategories(
-            categories = categories,
+            categories = categories.map {
+                it.asEntity()
+            }.toTypedArray(),
         )
     }
 }

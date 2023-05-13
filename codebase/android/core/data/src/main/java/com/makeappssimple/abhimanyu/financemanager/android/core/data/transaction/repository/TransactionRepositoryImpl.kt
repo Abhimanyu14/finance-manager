@@ -2,27 +2,37 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.transactio
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionData
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class TransactionRepositoryImpl(
     private val transactionDao: TransactionDao,
 ) : TransactionRepository {
     override suspend fun getAllTransactions(): List<Transaction> {
-        return transactionDao.getAllTransactions()
+        return transactionDao.getAllTransactions().map {
+            it.asExternalModel()
+        }
     }
 
     override fun getAllTransactionDataFlow(): Flow<List<TransactionData>> {
-        return transactionDao.getAllTransactionDataFlow()
+        return transactionDao.getAllTransactionDataFlow().map {
+            it.map { transactionDataEntity ->
+                transactionDataEntity.asExternalModel()
+            }
+        }
     }
 
     override suspend fun getAllTransactionData(): List<TransactionData> {
-        return transactionDao.getAllTransactionData()
+        return transactionDao.getAllTransactionData().map {
+            it.asExternalModel()
+        }
     }
 
     override suspend fun getSearchedTransactionData(
@@ -30,7 +40,9 @@ class TransactionRepositoryImpl(
     ): List<TransactionData> {
         return transactionDao.getSearchedTransactionData(
             searchText = searchText,
-        )
+        ).map {
+            it.asExternalModel()
+        }
     }
 
     override fun getRecentTransactionDataFlow(
@@ -38,7 +50,11 @@ class TransactionRepositoryImpl(
     ): Flow<List<TransactionData>> {
         return transactionDao.getRecentTransactionDataFlow(
             numberOfTransactions = numberOfTransactions,
-        )
+        ).map {
+            it.map { transactionDataEntity ->
+                transactionDataEntity.asExternalModel()
+            }
+        }
     }
 
     override fun getTransactionsBetweenTimestampsFlow(
@@ -48,7 +64,11 @@ class TransactionRepositoryImpl(
         return transactionDao.getTransactionsBetweenTimestampsFlow(
             startingTimestamp = startingTimestamp,
             endingTimestamp = endingTimestamp,
-        )
+        ).map {
+            it.map { transactionEntity ->
+                transactionEntity.asExternalModel()
+            }
+        }
     }
 
     override suspend fun getTransactionsBetweenTimestamps(
@@ -58,7 +78,9 @@ class TransactionRepositoryImpl(
         return transactionDao.getTransactionsBetweenTimestamps(
             startingTimestamp = startingTimestamp,
             endingTimestamp = endingTimestamp,
-        )
+        ).map {
+            it.asExternalModel()
+        }
     }
 
     override suspend fun getTransactionsCount(): Int {
@@ -104,7 +126,7 @@ class TransactionRepositoryImpl(
     ): Transaction? {
         return transactionDao.getTransaction(
             id = id,
-        )
+        )?.asExternalModel()
     }
 
     override suspend fun getTransactionData(
@@ -112,7 +134,7 @@ class TransactionRepositoryImpl(
     ): TransactionData? {
         return transactionDao.getTransactionData(
             id = id,
-        )
+        )?.asExternalModel()
     }
 
     override suspend fun insertTransaction(
@@ -123,9 +145,9 @@ class TransactionRepositoryImpl(
     ): Long {
         return transactionDao.insertTransaction(
             amountValue = amountValue,
-            sourceFrom = sourceFrom,
-            sourceTo = sourceTo,
-            transaction = transaction,
+            sourceFrom = sourceFrom?.asEntity(),
+            sourceTo = sourceTo?.asEntity(),
+            transaction = transaction.asEntity(),
         )
     }
 
@@ -133,7 +155,9 @@ class TransactionRepositoryImpl(
         vararg transactions: Transaction,
     ) {
         transactionDao.insertTransactions(
-            transactions = transactions,
+            transactions = transactions.map {
+                it.asEntity()
+            }.toTypedArray(),
         )
     }
 
@@ -141,7 +165,7 @@ class TransactionRepositoryImpl(
         transaction: Transaction,
     ) {
         transactionDao.updateTransaction(
-            transaction = transaction,
+            transaction = transaction.asEntity(),
         )
     }
 
@@ -149,10 +173,11 @@ class TransactionRepositoryImpl(
         id: Int,
         vararg sources: Source,
     ) {
-
         transactionDao.deleteTransaction(
             id = id,
-            sources = sources,
+            sources = sources.map {
+                it.asEntity()
+            }.toTypedArray(),
         )
     }
 
@@ -168,13 +193,21 @@ class TransactionRepositoryImpl(
         transactionForValues: List<TransactionFor>,
     ) {
         transactionDao.restoreData(
-            categories = categories,
+            categories = categories.map {
+                it.asEntity()
+            },
             emojis = emojis.map {
                 it.asEntity()
             },
-            sources = sources,
-            transactions = transactions,
-            transactionForValues = transactionForValues,
+            sources = sources.map {
+                it.asEntity()
+            },
+            transactions = transactions.map {
+                it.asEntity()
+            },
+            transactionForValues = transactionForValues.map {
+                it.asEntity()
+            },
         )
     }
 }

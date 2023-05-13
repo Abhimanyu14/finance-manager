@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.serializer
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.CurrencyCodeConstants
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.serializer.CurrencySerializer
 import kotlinx.serialization.json.Json
 import org.junit.Assert
 import org.junit.Test

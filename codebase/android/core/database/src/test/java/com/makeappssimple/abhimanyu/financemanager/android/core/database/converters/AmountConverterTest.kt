@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.converters
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Amount
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AmountEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestAmount
 import org.junit.Assert
 import org.junit.Before
@@ -18,7 +18,7 @@ class AmountConverterTest {
 
     @Test
     fun stringToAmount() {
-        val result: Amount? = amountConverter.stringToAmount(
+        val result: AmountEntity? = amountConverter.stringToAmount(
             value = testAmountString,
         )
 
@@ -35,7 +35,7 @@ class AmountConverterTest {
 
     @Test
     fun stringToAmount_valueIsNull() {
-        val result: Amount? = amountConverter.stringToAmount(
+        val result: AmountEntity? = amountConverter.stringToAmount(
             value = null,
         )
 
@@ -44,7 +44,7 @@ class AmountConverterTest {
 
     @Test
     fun stringToAmount_valueIsInvalidString() {
-        val result: Amount? = amountConverter.stringToAmount(
+        val result: AmountEntity? = amountConverter.stringToAmount(
             value = "23.45",
         )
 

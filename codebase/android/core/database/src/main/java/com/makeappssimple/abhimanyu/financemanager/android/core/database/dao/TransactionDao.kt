@@ -5,12 +5,12 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.CategoryEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiEntity
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionData
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.SourceEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionDataEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionForEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.updateBalanceAmount
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import kotlinx.coroutines.flow.Flow
@@ -21,27 +21,27 @@ interface TransactionDao {
         value = "SELECT * from transaction_table " +
                 "ORDER BY transaction_timestamp DESC"
     )
-    fun getAllTransactionsFlow(): Flow<List<Transaction>>
+    fun getAllTransactionsFlow(): Flow<List<TransactionEntity>>
 
     @Query(
         value = "SELECT * from transaction_table " +
                 "ORDER BY transaction_timestamp DESC"
     )
-    suspend fun getAllTransactions(): List<Transaction>
+    suspend fun getAllTransactions(): List<TransactionEntity>
 
     @androidx.room.Transaction
     @Query(
         value = "SELECT * FROM transaction_table " +
                 "ORDER BY transaction_timestamp DESC"
     )
-    fun getAllTransactionDataFlow(): Flow<List<TransactionData>>
+    fun getAllTransactionDataFlow(): Flow<List<TransactionDataEntity>>
 
     @androidx.room.Transaction
     @Query(
         value = "SELECT * FROM transaction_table " +
                 "ORDER BY transaction_timestamp DESC"
     )
-    suspend fun getAllTransactionData(): List<TransactionData>
+    suspend fun getAllTransactionData(): List<TransactionDataEntity>
 
     /**
      * TODO-Abhi: To search amount properly, JSON1 extension is required which is not available in Android.
@@ -57,7 +57,7 @@ interface TransactionDao {
     )
     suspend fun getSearchedTransactionData(
         searchText: String,
-    ): List<TransactionData>
+    ): List<TransactionDataEntity>
 
     @Query(
         value = "SELECT * from transaction_table " +
@@ -67,7 +67,7 @@ interface TransactionDao {
     fun getTransactionsBetweenTimestampsFlow(
         startingTimestamp: Long,
         endingTimestamp: Long,
-    ): Flow<List<Transaction>>
+    ): Flow<List<TransactionEntity>>
 
     @Query(
         value = "SELECT * from transaction_table " +
@@ -77,7 +77,7 @@ interface TransactionDao {
     suspend fun getTransactionsBetweenTimestamps(
         startingTimestamp: Long,
         endingTimestamp: Long,
-    ): List<Transaction>
+    ): List<TransactionEntity>
 
     @androidx.room.Transaction
     @Query(
@@ -87,7 +87,7 @@ interface TransactionDao {
     )
     fun getRecentTransactionDataFlow(
         numberOfTransactions: Int,
-    ): Flow<List<TransactionData>>
+    ): Flow<List<TransactionDataEntity>>
 
     @Query(value = "SELECT COUNT(*) FROM transaction_table")
     suspend fun getTransactionsCount(): Int
@@ -134,7 +134,7 @@ interface TransactionDao {
     )
     suspend fun getTransaction(
         id: Int,
-    ): Transaction?
+    ): TransactionEntity?
 
     @androidx.room.Transaction
     @Query(
@@ -143,11 +143,11 @@ interface TransactionDao {
     )
     suspend fun getTransactionData(
         id: Int,
-    ): TransactionData?
+    ): TransactionDataEntity?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTransactions(
-        vararg transactions: Transaction,
+        vararg transactions: TransactionEntity,
     )
 
     @Query(value = "DELETE FROM transaction_table")
@@ -159,9 +159,9 @@ interface TransactionDao {
     @androidx.room.Transaction
     suspend fun insertTransaction(
         amountValue: Long,
-        sourceFrom: Source?,
-        sourceTo: Source?,
-        transaction: Transaction,
+        sourceFrom: SourceEntity?,
+        sourceTo: SourceEntity?,
+        transaction: TransactionEntity,
     ): Long {
         val id = insertTransaction(
             transaction = transaction,
@@ -188,14 +188,14 @@ interface TransactionDao {
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTransaction(
-        transaction: Transaction,
+        transaction: TransactionEntity,
     ): Long
     // endregion
 
     // region Update transaction
     @Update
     suspend fun updateTransaction(
-        transaction: Transaction,
+        transaction: TransactionEntity,
     )
     // endregion
 
@@ -216,13 +216,13 @@ interface TransactionDao {
      */
     @Update
     suspend fun updateSources(
-        vararg sources: Source,
+        vararg sources: SourceEntity,
     )
 
     @androidx.room.Transaction
     suspend fun deleteTransaction(
         id: Int,
-        vararg sources: Source,
+        vararg sources: SourceEntity,
     ) {
         removeTransactionIdFromOriginalTransactionRefundTransactionIds(
             id = id,
@@ -233,7 +233,6 @@ interface TransactionDao {
         updateSources(
             sources = sources,
         )
-
     }
 
     private suspend fun removeTransactionIdFromOriginalTransactionRefundTransactionIds(
@@ -301,20 +300,20 @@ interface TransactionDao {
      */
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertData(
-        categories: List<Category>,
+        categories: List<CategoryEntity>,
         emojis: List<EmojiEntity>,
-        sources: List<Source>,
-        transactions: List<Transaction>,
-        transactionForValues: List<TransactionFor>,
+        sources: List<SourceEntity>,
+        transactions: List<TransactionEntity>,
+        transactionForValues: List<TransactionForEntity>,
     )
 
     @androidx.room.Transaction
     suspend fun restoreData(
-        categories: List<Category>,
+        categories: List<CategoryEntity>,
         emojis: List<EmojiEntity>,
-        sources: List<Source>,
-        transactions: List<Transaction>,
-        transactionForValues: List<TransactionFor>,
+        sources: List<SourceEntity>,
+        transactions: List<TransactionEntity>,
+        transactionForValues: List<TransactionForEntity>,
     ) {
         deleteAllCategories()
         deleteAllEmojis()

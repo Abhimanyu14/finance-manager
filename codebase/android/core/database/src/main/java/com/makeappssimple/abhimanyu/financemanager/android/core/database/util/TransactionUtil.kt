@@ -1,12 +1,12 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.util
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import kotlin.math.abs
 
 fun transactionsCleanUp(
-    transactions: List<Transaction>,
-): List<Transaction> {
+    transactions: List<TransactionEntity>,
+): List<TransactionEntity> {
     return transactions.map {
         when (it.transactionType) {
             TransactionType.INCOME -> {

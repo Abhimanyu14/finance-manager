@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel

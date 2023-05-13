@@ -15,8 +15,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.us
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.InsertCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.UpdateCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections

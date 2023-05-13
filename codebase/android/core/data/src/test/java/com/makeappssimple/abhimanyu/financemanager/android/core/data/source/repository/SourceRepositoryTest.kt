@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.source.rep
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.getTestSources
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.SourceDao
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test

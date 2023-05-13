@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.conver
 
 import androidx.room.TypeConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Amount
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AmountEntity
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -11,12 +11,12 @@ class AmountConverter {
     @TypeConverter
     fun stringToAmount(
         value: String?,
-    ): Amount? {
+    ): AmountEntity? {
         if (value.isNullOrBlank()) {
             return null
         }
         return try {
-            Json.decodeFromString<Amount>(
+            Json.decodeFromString<AmountEntity>(
                 string = value,
             )
         } catch (
@@ -29,7 +29,7 @@ class AmountConverter {
 
     @TypeConverter
     fun amountToString(
-        amount: Amount?,
+        amount: AmountEntity?,
     ): String {
         if (amount.isNull()) {
             return ""

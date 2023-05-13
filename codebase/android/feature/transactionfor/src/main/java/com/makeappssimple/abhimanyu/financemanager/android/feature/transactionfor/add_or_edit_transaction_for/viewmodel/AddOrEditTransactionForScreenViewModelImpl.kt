@@ -13,7 +13,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.InsertTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.UpdateTransactionForValuesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager

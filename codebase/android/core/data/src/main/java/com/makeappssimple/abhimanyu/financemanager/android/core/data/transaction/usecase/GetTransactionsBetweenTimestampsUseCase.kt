@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 
 interface GetTransactionsBetweenTimestampsUseCase {
     suspend operator fun invoke(

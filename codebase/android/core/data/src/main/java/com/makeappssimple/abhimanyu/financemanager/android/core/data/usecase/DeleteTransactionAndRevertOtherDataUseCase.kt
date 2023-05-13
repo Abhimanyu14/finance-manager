@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.updateBalanceAmount
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.updateBalanceAmount
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 
 interface DeleteTransactionAndRevertOtherDataUseCase {

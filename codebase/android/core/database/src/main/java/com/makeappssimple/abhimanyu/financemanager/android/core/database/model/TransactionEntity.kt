@@ -5,14 +5,15 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.IntListConverter
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Entity(tableName = "transaction_table")
 @Serializable
-data class Transaction(
-    val amount: Amount,
+data class TransactionEntity(
+    val amount: AmountEntity,
 
     @ColumnInfo(name = "category_id")
     @SerialName(value = "category_id")
@@ -58,3 +59,21 @@ data class Transaction(
     @SerialName(value = "transaction_type")
     val transactionType: TransactionType = TransactionType.EXPENSE,
 )
+
+fun TransactionEntity.asExternalModel(): Transaction {
+    return Transaction(
+        amount = amount.asExternalModel(),
+        categoryId = categoryId,
+        id = id,
+        originalTransactionId = originalTransactionId,
+        sourceFromId = sourceFromId,
+        sourceToId = sourceToId,
+        transactionForId = transactionForId,
+        refundTransactionIds = refundTransactionIds,
+        creationTimestamp = creationTimestamp,
+        transactionTimestamp = transactionTimestamp,
+        description = description,
+        title = title,
+        transactionType = transactionType,
+    )
+}

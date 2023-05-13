@@ -41,6 +41,8 @@ android {
                 "-opt-in=kotlinx.coroutines.InternalCoroutinesApi",
                 "-opt-in=kotlinx.coroutines.ObsoleteCoroutinesApi",
 
+                "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
+
                 "-opt-in=androidx.lifecycle.compose.ExperimentalLifecycleComposeApi",
 
                 "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
@@ -71,7 +73,6 @@ dependencies {
     implementation project(":core:navigation")
     implementation project(":core:model")
     implementation project(":core:data")
-    implementation project(":core:database")
     implementation project(":core:datastore")
     implementation project(":core:designsystem")
     implementation project(":chart")

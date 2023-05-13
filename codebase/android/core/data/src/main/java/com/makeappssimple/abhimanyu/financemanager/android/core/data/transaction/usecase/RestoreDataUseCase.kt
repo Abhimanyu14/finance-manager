@@ -3,7 +3,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.transactio
 import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.JsonReader
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.DatabaseBackupData
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepository
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.transactionsCleanUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import kotlinx.serialization.decodeFromString
@@ -32,8 +34,12 @@ class RestoreDataUseCaseImpl(
             string = jsonString,
         )
         val transactions = transactionsCleanUp(
-            transactions = databaseBackupData.transactions,
-        )
+            transactions = databaseBackupData.transactions.map {
+                it.asEntity()
+            },
+        ).map {
+            it.asExternalModel()
+        }
         return transactionRepository.restoreData(
             categories = databaseBackupData.categories,
             emojis = databaseBackupData.emojis,

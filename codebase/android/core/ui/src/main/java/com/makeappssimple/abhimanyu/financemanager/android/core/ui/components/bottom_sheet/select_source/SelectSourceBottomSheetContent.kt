@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.b
 
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.icon
 import kotlinx.coroutines.CoroutineScope

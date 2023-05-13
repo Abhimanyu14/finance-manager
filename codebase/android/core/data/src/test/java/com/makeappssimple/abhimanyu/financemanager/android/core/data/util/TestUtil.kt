@@ -1,10 +1,10 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.util
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Amount
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 

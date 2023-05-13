@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.converters
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.CategoryEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.getTestCategory
 import org.junit.Assert
 import org.junit.Before
@@ -19,7 +19,7 @@ class CategoryConverterTest {
 
     @Test
     fun stringToCategory() {
-        val result: Category? = categoryConverter.stringToCategory(
+        val result: CategoryEntity? = categoryConverter.stringToCategory(
             value = testCategoryString,
         )
 
@@ -56,7 +56,7 @@ class CategoryConverterTest {
 
     @Test
     fun stringToCategory_valueIsNull() {
-        val result: Category? = categoryConverter.stringToCategory(
+        val result: CategoryEntity? = categoryConverter.stringToCategory(
             value = null,
         )
 
@@ -65,7 +65,7 @@ class CategoryConverterTest {
 
     @Test
     fun stringToCategory_valueIsInvalidString() {
-        val result: Category? = categoryConverter.stringToCategory(
+        val result: CategoryEntity? = categoryConverter.stringToCategory(
             value = "invalid string",
         )
 
@@ -75,7 +75,7 @@ class CategoryConverterTest {
     @Test
     fun categoryToString() {
         val result: String = categoryConverter.categoryToString(
-            category = testCategory,
+            categoryEntity = testCategory,
         )
 
         Assert.assertEquals(
@@ -87,7 +87,7 @@ class CategoryConverterTest {
     @Test
     fun categoryToString_categoryIsNull() {
         val result: String = categoryConverter.categoryToString(
-            category = null,
+            categoryEntity = null,
         )
 
         Assert.assertEquals(

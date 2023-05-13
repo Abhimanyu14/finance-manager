@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.model
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test

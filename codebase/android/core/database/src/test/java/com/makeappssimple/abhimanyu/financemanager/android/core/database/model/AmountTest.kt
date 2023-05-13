@@ -118,16 +118,16 @@ class AmountTest {
     }
 
     companion object {
-        private var testAmount1: Amount = Amount(
+        private var testAmount1: AmountEntity = AmountEntity(
             value = 23,
         )
-        private var testAmount2: Amount = Amount(
+        private var testAmount2: AmountEntity = AmountEntity(
             value = 27,
         )
-        private var testAmount3: Amount = Amount(
+        private var testAmount3: AmountEntity = AmountEntity(
             value = -31,
         )
-        private var testAmount4: Amount = Amount(
+        private var testAmount4: AmountEntity = AmountEntity(
             value = 0,
         )
     }

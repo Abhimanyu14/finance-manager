@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.repository.CategoryRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 
 interface GetCategoryUseCase {
     suspend operator fun invoke(

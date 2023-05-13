@@ -33,12 +33,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrati
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_7_8
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_8_9
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_9_10
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.CategoryEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.InitialDatabaseData
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.SourceEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionForEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.transactionsCleanUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import kotlinx.coroutines.CoroutineScope
@@ -54,11 +54,11 @@ import java.util.concurrent.Executors
 @Database(
     version = 18,
     entities = [
-        Category::class,
+        CategoryEntity::class,
         EmojiEntity::class,
-        Source::class,
-        Transaction::class,
-        TransactionFor::class,
+        SourceEntity::class,
+        TransactionEntity::class,
+        TransactionForEntity::class,
     ],
     autoMigrations = [
         AutoMigration(

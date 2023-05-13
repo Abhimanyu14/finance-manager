@@ -1,19 +1,28 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.source.repository
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.SourceDao
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.updateBalanceAmount
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.updateBalanceAmount
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 class SourceRepositoryImpl(
     private val sourceDao: SourceDao,
 ) : SourceRepository {
     override fun getAllSourcesFlow(): Flow<List<Source>> {
-        return sourceDao.getAllSourcesFlow()
+        return sourceDao.getAllSourcesFlow().map {
+            it.map { sourceEntity ->
+                sourceEntity.asExternalModel()
+            }
+        }
     }
 
     override suspend fun getAllSources(): List<Source> {
-        return sourceDao.getAllSources()
+        return sourceDao.getAllSources().map {
+            it.asExternalModel()
+        }
     }
 
     override suspend fun getAllSourcesCount(): Int {
@@ -25,7 +34,7 @@ class SourceRepositoryImpl(
     ): Source? {
         return sourceDao.getSource(
             id = id,
-        )
+        )?.asExternalModel()
     }
 
     override suspend fun getSources(
@@ -33,14 +42,18 @@ class SourceRepositoryImpl(
     ): List<Source> {
         return sourceDao.getSources(
             ids = ids,
-        )
+        ).map {
+            it.asExternalModel()
+        }
     }
 
     override suspend fun insertSources(
         vararg sources: Source,
     ) {
         sourceDao.insertSources(
-            sources = sources,
+            sources = sources.map {
+                it.asEntity()
+            }.toTypedArray(),
         )
     }
 
@@ -68,7 +81,9 @@ class SourceRepositoryImpl(
         vararg sources: Source,
     ) {
         sourceDao.updateSources(
-            sources = sources,
+            sources = sources.map {
+                it.asEntity()
+            }.toTypedArray(),
         )
     }
 
@@ -84,7 +99,9 @@ class SourceRepositoryImpl(
         vararg sources: Source,
     ) {
         sourceDao.deleteSources(
-            sources = sources,
+            sources = sources.map {
+                it.asEntity()
+            }.toTypedArray(),
         )
     }
 }

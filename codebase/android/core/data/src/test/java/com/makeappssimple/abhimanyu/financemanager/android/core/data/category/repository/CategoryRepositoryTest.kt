@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.category.r
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.getTestCategories
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.CategoryDao
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test

@@ -1,9 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.util
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Amount
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AmountEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.CategoryEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.SourceEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import java.time.Instant
@@ -23,28 +23,28 @@ const val ONE_DAY = ONE_HOUR * 24
 const val SEVEN_DAYS = ONE_HOUR * 24
 const val THIRTY_DAYS = ONE_DAY * 30
 
-fun getTestAmount(): Amount {
-    return Amount(
+fun getTestAmount(): AmountEntity {
+    return AmountEntity(
         value = 45,
     )
 }
 
-fun getTestCategory(): Category {
-    return Category(
+fun getTestCategory(): CategoryEntity {
+    return CategoryEntity(
         emoji = "emoji",
         title = "title",
         transactionType = TransactionType.EXPENSE,
     )
 }
 
-fun getTestCategories(): Array<Category> {
+fun getTestCategories(): Array<CategoryEntity> {
     return arrayOf(
-        Category(
+        CategoryEntity(
             emoji = "emoji",
             title = "title",
             transactionType = TransactionType.EXPENSE,
         ),
-        Category(
+        CategoryEntity(
             emoji = "emoji 1",
             title = "title 1",
             transactionType = TransactionType.INCOME,
@@ -78,25 +78,25 @@ fun getTestEmojis(): Array<Emoji> {
     )
 }
 
-fun getTestSource(): Source {
-    return Source(
+fun getTestSource(): SourceEntity {
+    return SourceEntity(
         name = "Axis",
     )
 }
 
-fun getTestSources(): Array<Source> {
+fun getTestSources(): Array<SourceEntity> {
     return arrayOf(
-        Source(
+        SourceEntity(
             name = "Axis",
         ),
-        Source(
+        SourceEntity(
             name = "SBI",
         ),
     )
 }
 
-fun getTestTransaction(): Transaction {
-    return Transaction(
+fun getTestTransaction(): TransactionEntity {
+    return TransactionEntity(
         amount = getTestAmount(),
         title = "title",
         creationTimestamp = timeInMillis_01_JUN_2022_00_00_00,
@@ -104,15 +104,15 @@ fun getTestTransaction(): Transaction {
     )
 }
 
-fun getTestTransactions(): Array<Transaction> {
+fun getTestTransactions(): Array<TransactionEntity> {
     return arrayOf(
-        Transaction(
+        TransactionEntity(
             amount = getTestAmount(),
             title = "title",
             creationTimestamp = timeInMillis_01_JUN_2022_00_00_00,
             transactionTimestamp = timeInMillis_01_JUN_2022_00_00_00,
         ),
-        Transaction(
+        TransactionEntity(
             amount = getTestAmount(),
             title = "title 1",
             creationTimestamp = timeInMillis_01_JUN_2022_00_00_00,
@@ -124,9 +124,9 @@ fun getTestTransactions(): Array<Transaction> {
 fun getTestTransactions(
     size: Int = 2,
     frequency: Long,
-): Array<Transaction> {
+): Array<TransactionEntity> {
     val result = Array(size) { index ->
-        Transaction(
+        TransactionEntity(
             id = index + 1,
             amount = getTestAmount(),
             title = "title $index",

@@ -4,9 +4,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionData
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.updateBalanceAmount
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.updateBalanceAmount
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll

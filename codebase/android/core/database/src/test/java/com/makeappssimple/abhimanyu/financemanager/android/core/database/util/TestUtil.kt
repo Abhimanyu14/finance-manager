@@ -1,11 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.util
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Amount
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AmountEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.CategoryEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiEntity
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.SourceEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionForEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 
 const val timeInMillis_01_JAN_2022_00_00_00 = 1640975400000 // 01-01-2022 00:00:00 IST
@@ -20,28 +20,28 @@ const val ONE_DAY = ONE_HOUR * 24
 const val SEVEN_DAYS = ONE_HOUR * 24
 const val THIRTY_DAYS = ONE_DAY * 30
 
-fun getTestAmount(): Amount {
-    return Amount(
+fun getTestAmount(): AmountEntity {
+    return AmountEntity(
         value = 45,
     )
 }
 
-fun getTestCategory(): Category {
-    return Category(
+fun getTestCategory(): CategoryEntity {
+    return CategoryEntity(
         emoji = "emoji",
         title = "title",
         transactionType = TransactionType.EXPENSE,
     )
 }
 
-fun getTestCategories(): Array<Category> {
+fun getTestCategories(): Array<CategoryEntity> {
     return arrayOf(
-        Category(
+        CategoryEntity(
             emoji = "emoji",
             title = "title",
             transactionType = TransactionType.EXPENSE,
         ),
-        Category(
+        CategoryEntity(
             emoji = "emoji 1",
             title = "title 1",
             transactionType = TransactionType.INCOME,
@@ -75,25 +75,25 @@ fun getTestEmojis(): Array<EmojiEntity> {
     )
 }
 
-fun getTestSource(): Source {
-    return Source(
+fun getTestSource(): SourceEntity {
+    return SourceEntity(
         name = "Axis",
     )
 }
 
-fun getTestSources(): Array<Source> {
+fun getTestSources(): Array<SourceEntity> {
     return arrayOf(
-        Source(
+        SourceEntity(
             name = "Axis",
         ),
-        Source(
+        SourceEntity(
             name = "SBI",
         ),
     )
 }
 
-fun getTestTransaction(): Transaction {
-    return Transaction(
+fun getTestTransaction(): TransactionEntity {
+    return TransactionEntity(
         amount = getTestAmount(),
         title = "title",
         creationTimestamp = timeInMillis_01_JUN_2022_00_00_00,
@@ -101,15 +101,15 @@ fun getTestTransaction(): Transaction {
     )
 }
 
-fun getTestTransactions(): Array<Transaction> {
+fun getTestTransactions(): Array<TransactionEntity> {
     return arrayOf(
-        Transaction(
+        TransactionEntity(
             amount = getTestAmount(),
             title = "title",
             creationTimestamp = timeInMillis_01_JUN_2022_00_00_00,
             transactionTimestamp = timeInMillis_01_JUN_2022_00_00_00,
         ),
-        Transaction(
+        TransactionEntity(
             amount = getTestAmount(),
             title = "title 1",
             creationTimestamp = timeInMillis_01_JUN_2022_00_00_00,
@@ -118,12 +118,12 @@ fun getTestTransactions(): Array<Transaction> {
     )
 }
 
-fun getTestTransactionForValues(): Array<TransactionFor> {
+fun getTestTransactionForValues(): Array<TransactionForEntity> {
     return arrayOf(
-        TransactionFor(
+        TransactionForEntity(
             title = "Self"
         ),
-        TransactionFor(
+        TransactionForEntity(
             title = "Family"
         ),
     )
