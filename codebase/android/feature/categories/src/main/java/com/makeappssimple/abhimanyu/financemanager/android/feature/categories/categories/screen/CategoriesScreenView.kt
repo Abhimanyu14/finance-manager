@@ -19,12 +19,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabData
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabRow
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
@@ -33,9 +31,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.grid.CategoriesGrid
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.grid_item.CategoriesGridItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.components.bottomsheet.CategoriesDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.components.bottomsheet.CategoriesSetAsDefaultConfirmationBottomSheetContent
@@ -58,16 +53,8 @@ internal sealed class CategoriesBottomSheetType : BottomSheetType {
 
 @Immutable
 internal data class CategoriesScreenViewData(
-    val defaultExpenseCategoryId: Int?,
-    val defaultIncomeCategoryId: Int?,
-    val defaultInvestmentCategoryId: Int?,
     val selectedTabIndex: Int,
-    val expenseCategoryIsUsedInTransactions: List<Boolean>,
-    val incomeCategoryIsUsedInTransactions: List<Boolean>,
-    val investmentCategoryIsUsedInTransactions: List<Boolean>,
-    val expenseCategories: List<Category>,
-    val incomeCategories: List<Category>,
-    val investmentCategories: List<Category>,
+    val categoriesGridItemDataMap: Map<TransactionType, List<CategoriesGridItemData>>,
     val deleteCategory: (categoryId: Int) -> Unit,
     val navigateToAddCategoryScreen: (transactionType: String) -> Unit,
     val navigateToEditCategoryScreen: (categoryId: Int) -> Unit,
@@ -276,93 +263,16 @@ internal fun CategoriesScreenView(
             ) { page ->
                 val transactionType: TransactionType = transactionTypes[page]
                 val categoriesGridItemDataList: List<CategoriesGridItemData> =
-                    when (transactionType) {
-                        TransactionType.EXPENSE -> {
-                            data.expenseCategories.map { category ->
-                                CategoriesGridItemData(
-                                    isSelected = if (data.defaultExpenseCategoryId.isNull()) {
-                                        isDefaultExpenseCategory(
-                                            category = category.title,
-                                        )
-                                    } else {
-                                        data.defaultExpenseCategoryId == category.id
-                                    },
-                                    category = category,
-                                )
-                            }
-                        }
-
-                        TransactionType.INCOME -> {
-                            data.incomeCategories.map { category ->
-                                CategoriesGridItemData(
-                                    isSelected = if (data.defaultIncomeCategoryId.isNull()) {
-                                        isDefaultIncomeCategory(
-                                            category = category.title,
-                                        )
-                                    } else {
-                                        data.defaultIncomeCategoryId == category.id
-                                    },
-                                    category = category,
-                                )
-                            }
-                        }
-
-                        TransactionType.INVESTMENT -> {
-                            data.investmentCategories.map { category ->
-                                CategoriesGridItemData(
-                                    isSelected = if (data.defaultInvestmentCategoryId.isNull()) {
-                                        isDefaultInvestmentCategory(
-                                            category = category.title,
-                                        )
-                                    } else {
-                                        data.defaultInvestmentCategoryId == category.id
-                                    },
-                                    category = category,
-                                )
-                            }
-                        }
-
-                        else -> {
-                            data.investmentCategories.map { category ->
-                                CategoriesGridItemData(
-                                    isSelected = false,
-                                    category = category,
-                                )
-                            }
-                        }
-                    }
+                    data.categoriesGridItemDataMap[transactionType] ?: emptyList()
 
                 CategoriesGrid(
                     bottomPadding = 80.dp,
                     topPadding = 8.dp,
                     categoriesGridItemDataList = categoriesGridItemDataList,
                     onItemClick = { index ->
-                        val deleteEnabled = when (transactionType) {
-                            TransactionType.EXPENSE -> {
-                                !categoriesGridItemDataList[index].isSelected && data.expenseCategoryIsUsedInTransactions.getOrNull(
-                                    index = index,
-                                )?.not() ?: false
-                            }
-
-                            TransactionType.INCOME -> {
-                                !categoriesGridItemDataList[index].isSelected && data.incomeCategoryIsUsedInTransactions.getOrNull(
-                                    index = index,
-                                )?.not() ?: false
-                            }
-
-                            TransactionType.INVESTMENT -> {
-                                !categoriesGridItemDataList[index].isSelected && data.investmentCategoryIsUsedInTransactions.getOrNull(
-                                    index = index,
-                                )?.not() ?: false
-                            }
-
-                            else -> {
-                                false
-                            }
-                        }
-
                         categoriesBottomSheetType = CategoriesBottomSheetType.Menu(
-                            deleteEnabled = deleteEnabled,
+                            deleteEnabled = categoriesGridItemDataList[index].isDeleteEnabled
+                                ?: false,
                             isDefault = categoriesGridItemDataList[index].isSelected,
                             categoryId = categoriesGridItemDataList[index].category.id,
                             categoryTitle = categoriesGridItemDataList[index].category.title,

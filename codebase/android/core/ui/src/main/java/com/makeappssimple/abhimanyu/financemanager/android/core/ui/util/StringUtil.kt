@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.util
 
 private const val DEFAULT_EXPENSE_CATEGORY = "Default"
 private const val DEFAULT_INCOME_CATEGORY = "Salary"
-private const val DEFAULT_INVESTMENT_CATEGORY = "Provident Fund"
+private const val DEFAULT_INVESTMENT_CATEGORY = "Investment"
 private const val DEFAULT_SOURCE = "Cash"
 
 fun isDefaultExpenseCategory(

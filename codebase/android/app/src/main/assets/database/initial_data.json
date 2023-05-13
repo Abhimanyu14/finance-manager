@@ -1,9 +1,9 @@
 {
-  "defaultCategories": {
-    "versionNumber": 3,
-    "categoriesData": [
+  "default_categories": {
+    "version_number": 4,
+    "categories_data": [
       {
-        "versionNumber": 2,
+        "version_number": 2,
         "categories": [
           {
             "id": 1,
@@ -78,7 +78,7 @@
         ]
       },
       {
-        "versionNumber": 3,
+        "version_number": 3,
         "categories": [
           {
             "description": "",
@@ -99,10 +99,21 @@
             "transaction_type": "INVESTMENT"
           }
         ]
+      },
+      {
+        "version_number": 4,
+        "categories": [
+          {
+            "description": "",
+            "emoji": "💰",
+            "title": "Investment",
+            "transaction_type": "INVESTMENT"
+          }
+        ]
       }
     ]
   },
-  "defaultSources": [
+  "default_sources": [
     {
       "balance_amount": {
         "currency": "INR",
@@ -113,15 +124,15 @@
       "name": "Cash"
     }
   ],
-  "defaultTransactionForValues": [
+  "default_transaction_for_values": [
     {
       "id": 1,
       "title": "SELF"
     }
   ],
   "emojis": {
-    "versionNumber": 3,
-    "emojisData": [
+    "version_number": 3,
+    "emojis_data": [
       {
         "character": "😀",
         "code_point": "1F600",

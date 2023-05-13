@@ -20,6 +20,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.Em
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyEmojiCircle
 
 data class CategoriesGridItemData(
+    val isDeleteEnabled: Boolean? = null,
     val isSelected: Boolean,
     val category: Category,
 )

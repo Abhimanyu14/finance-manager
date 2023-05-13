@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.DeleteCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfCategoryIsUsedInTransactionsUseCase
@@ -11,11 +12,16 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.grid_item.CategoriesGridItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
@@ -34,6 +40,12 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
     )
     override val selectedTabIndex: StateFlow<Int> = _selectedTabIndex
 
+    private val defaultExpenseCategoryId: Flow<Int?> = dataStore
+        .getDefaultExpenseCategoryId()
+    private val defaultIncomeCategoryId: Flow<Int?> = dataStore
+        .getDefaultIncomeCategoryId()
+    private val defaultInvestmentCategoryId: Flow<Int?> = dataStore
+        .getDefaultInvestmentCategoryId()
     private val categoriesTransactionTypeMap: Flow<Map<TransactionType, List<Category>>> =
         getAllCategoriesFlowUseCase()
             .map { categories ->
@@ -41,45 +53,81 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
                     category.transactionType
                 }
             }
-    override val expenseCategories: Flow<List<Category>> = categoriesTransactionTypeMap.map {
-        it[TransactionType.EXPENSE] ?: emptyList()
-    }
-    override val incomeCategories: Flow<List<Category>> = categoriesTransactionTypeMap.map {
-        it[TransactionType.INCOME] ?: emptyList()
-    }
-    override val investmentCategories: Flow<List<Category>> = categoriesTransactionTypeMap.map {
-        it[TransactionType.INVESTMENT] ?: emptyList()
-    }
-    override val expenseCategoryIsUsedInTransactions: Flow<List<Boolean>> = expenseCategories
-        .map {
-            it.map { category ->
-                checkIfCategoryIsUsedInTransactionsUseCase(
-                    categoryId = category.id,
-                )
-            }
+    override val categoriesGridItemDataMap: Flow<Map<TransactionType, List<CategoriesGridItemData>>> =
+        combine(
+            categoriesTransactionTypeMap,
+            defaultExpenseCategoryId,
+            defaultIncomeCategoryId,
+            defaultInvestmentCategoryId,
+        ) {
+                categoriesTransactionTypeMap,
+                defaultExpenseCategoryId,
+                defaultIncomeCategoryId,
+                defaultInvestmentCategoryId,
+            ->
+            val expenseCategoriesGridItemDataList =
+                categoriesTransactionTypeMap[TransactionType.EXPENSE]?.map { category ->
+                    val isDefault = if (defaultExpenseCategoryId.isNull()) {
+                        isDefaultExpenseCategory(
+                            category = category.title,
+                        )
+                    } else {
+                        defaultExpenseCategoryId == category.id
+                    }
+                    val isUsedInTransactions = checkIfCategoryIsUsedInTransactionsUseCase(
+                        categoryId = category.id,
+                    )
+                    val isDeleteEnabled = !isDefault && !isUsedInTransactions
+                    CategoriesGridItemData(
+                        isDeleteEnabled = isDeleteEnabled,
+                        isSelected = isDefault,
+                        category = category,
+                    )
+                } ?: emptyList()
+            val incomeCategoriesGridItemDataList =
+                categoriesTransactionTypeMap[TransactionType.INCOME]?.map { category ->
+                    val isDefault = if (defaultIncomeCategoryId.isNull()) {
+                        isDefaultIncomeCategory(
+                            category = category.title,
+                        )
+                    } else {
+                        defaultIncomeCategoryId == category.id
+                    }
+                    val isUsedInTransactions = checkIfCategoryIsUsedInTransactionsUseCase(
+                        categoryId = category.id,
+                    )
+                    val isDeleteEnabled = !isDefault && !isUsedInTransactions
+                    CategoriesGridItemData(
+                        isDeleteEnabled = isDeleteEnabled,
+                        isSelected = isDefault,
+                        category = category,
+                    )
+                } ?: emptyList()
+            val investmentCategoriesGridItemDataList =
+                categoriesTransactionTypeMap[TransactionType.INVESTMENT]?.map { category ->
+                    val isDefault = if (defaultInvestmentCategoryId.isNull()) {
+                        isDefaultInvestmentCategory(
+                            category = category.title,
+                        )
+                    } else {
+                        defaultInvestmentCategoryId == category.id
+                    }
+                    val isUsedInTransactions = checkIfCategoryIsUsedInTransactionsUseCase(
+                        categoryId = category.id,
+                    )
+                    val isDeleteEnabled = !isDefault && !isUsedInTransactions
+                    CategoriesGridItemData(
+                        isDeleteEnabled = isDeleteEnabled,
+                        isSelected = isDefault,
+                        category = category,
+                    )
+                } ?: emptyList()
+            mapOf(
+                TransactionType.EXPENSE to expenseCategoriesGridItemDataList,
+                TransactionType.INCOME to incomeCategoriesGridItemDataList,
+                TransactionType.INVESTMENT to investmentCategoriesGridItemDataList,
+            )
         }
-    override val incomeCategoryIsUsedInTransactions: Flow<List<Boolean>> = incomeCategories
-        .map {
-            it.map { category ->
-                checkIfCategoryIsUsedInTransactionsUseCase(
-                    categoryId = category.id,
-                )
-            }
-        }
-    override val investmentCategoryIsUsedInTransactions: Flow<List<Boolean>> = incomeCategories
-        .map {
-            it.map { category ->
-                checkIfCategoryIsUsedInTransactionsUseCase(
-                    categoryId = category.id,
-                )
-            }
-        }
-    override val defaultExpenseCategoryId: Flow<Int?> = dataStore
-        .getDefaultExpenseCategoryId()
-    override val defaultIncomeCategoryId: Flow<Int?> = dataStore
-        .getDefaultIncomeCategoryId()
-    override val defaultInvestmentCategoryId: Flow<Int?> = dataStore
-        .getDefaultInvestmentCategoryId()
 
     override fun deleteCategory(
         id: Int,

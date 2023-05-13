@@ -7,6 +7,10 @@ import kotlinx.serialization.json.JsonNames
 
 @Serializable
 data class InitialDatabaseData @OptIn(ExperimentalSerializationApi::class) constructor(
+    @SerialName("default_categories")
+    @JsonNames("defaultCategories")
+    val defaultCategories: Categories,
+
     @SerialName("default_sources")
     @JsonNames("defaultSources")
     val defaultSources: List<SourceEntity>,
@@ -14,10 +18,6 @@ data class InitialDatabaseData @OptIn(ExperimentalSerializationApi::class) const
     @SerialName("default_transaction_for_values")
     @JsonNames("defaultTransactionForValues")
     val defaultTransactionForValues: List<TransactionForEntity>,
-
-    @SerialName("default_categories")
-    @JsonNames("defaultCategories")
-    val defaultCategories: Categories,
 
     val emojis: Emojis,
 )
