@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.grid_item
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,12 +14,15 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircleSize
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyEmojiCircle
 
 data class CategoriesGridItemData(
-    val isDeleteEnabled: Boolean? = null,
+    val isDeleteVisible: Boolean? = null,
+    val isEditVisible: Boolean? = null,
+    val isSetAsDefaultVisible: Boolean? = null,
     val isSelected: Boolean,
     val category: Category,
 )
@@ -30,7 +32,7 @@ fun CategoriesGridItem(
     modifier: Modifier = Modifier,
     isSelected: Boolean,
     category: Category,
-    onClick: () -> Unit,
+    onClick: (() -> Unit)? = null,
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -51,9 +53,9 @@ fun CategoriesGridItem(
                     Color.Transparent
                 },
             )
-            .clickable {
-                onClick()
-            },
+            .conditionalClickable(
+                onClick = onClick,
+            ),
     ) {
         MyEmojiCircle(
             emojiCircleSize = EmojiCircleSize.Large,

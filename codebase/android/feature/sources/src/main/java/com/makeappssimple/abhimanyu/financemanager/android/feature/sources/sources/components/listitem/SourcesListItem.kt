@@ -11,6 +11,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,23 +25,32 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemViewWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.icon
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultSource
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
+
+@Immutable
+data class SourcesListItemData(
+    val source: Source,
+    val isExpanded: Boolean,
+    val isDefault: Boolean,
+    val isDeleteEnabled: Boolean,
+)
+
+@Immutable
+internal data class SourcesListItemEvents(
+    val onClick: () -> Unit,
+    val onLongClick: () -> Unit,
+    val onEditClick: () -> Unit,
+    val onDeleteClick: () -> Unit,
+)
 
 @Composable
 internal fun SourcesListItem(
     modifier: Modifier = Modifier,
-    source: Source,
-    expanded: Boolean,
-    deleteEnabled: Boolean,
-    isDefault: Boolean,
-    onClick: () -> Unit,
-    onLongClick: () -> Unit,
-    onEditClick: () -> Unit,
-    onDeleteClick: () -> Unit,
+    data: SourcesListItemData,
+    events: SourcesListItemEvents,
 ) {
     MyExpandableItemViewWrapper(
-        expanded = expanded,
+        expanded = data.isExpanded,
         modifier = modifier,
     ) {
         Row(
@@ -48,25 +58,25 @@ internal fun SourcesListItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(
-                    shape = if (expanded) {
+                    shape = if (data.isExpanded) {
                         ExpandedListItemShape
                     } else {
                         MaterialTheme.shapes.large
                     },
                 )
                 .conditionalClickable(
-                    onClick = onClick,
-                    onLongClick = onLongClick,
+                    onClick = events.onClick,
+                    onLongClick = events.onLongClick,
                 )
                 .padding(
                     start = 16.dp,
                     end = 16.dp,
-                    top = if (expanded) {
+                    top = if (data.isExpanded) {
                         16.dp
                     } else {
                         8.dp
                     },
-                    bottom = if (expanded) {
+                    bottom = if (data.isExpanded) {
                         16.dp
                     } else {
                         8.dp
@@ -74,7 +84,7 @@ internal fun SourcesListItem(
                 ),
         ) {
             Icon(
-                imageVector = source.type.icon,
+                imageVector = data.source.type.icon,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
@@ -87,13 +97,13 @@ internal fun SourcesListItem(
                     .padding(
                         end = 16.dp,
                     ),
-                text = source.name,
+                text = data.source.name,
                 style = MaterialTheme.typography.headlineLarge
                     .copy(
                         color = MaterialTheme.colorScheme.onBackground,
                     ),
             )
-            if (isDefault) {
+            if (data.isDefault) {
                 MyDefaultTag()
             }
             Spacer(
@@ -103,14 +113,14 @@ internal fun SourcesListItem(
                     ),
             )
             MyText(
-                text = source.balanceAmount.toString(),
+                text = data.source.balanceAmount.toString(),
                 style = MaterialTheme.typography.headlineLarge
                     .copy(
                         color = MaterialTheme.colorScheme.onBackground,
                     ),
             )
         }
-        if (expanded) {
+        if (data.isExpanded) {
             Divider(
                 color = MaterialTheme.colorScheme.outline,
                 thickness = 0.5.dp,
@@ -132,7 +142,7 @@ internal fun SourcesListItem(
                         id = R.string.list_item_sources_edit,
                     ),
                     enabled = true,
-                    onClick = onEditClick,
+                    onClick = events.onEditClick,
                     modifier = Modifier
                         .weight(
                             weight = 1F,
@@ -143,10 +153,8 @@ internal fun SourcesListItem(
                     labelText = stringResource(
                         id = R.string.list_item_sources_delete,
                     ),
-                    enabled = !isDefaultSource(
-                        source = source.name,
-                    ) && deleteEnabled,
-                    onClick = onDeleteClick,
+                    enabled = data.isDeleteEnabled,
+                    onClick = events.onDeleteClick,
                     modifier = Modifier
                         .weight(
                             weight = 1F,

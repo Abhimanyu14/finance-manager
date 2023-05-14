@@ -3,8 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 import kotlinx.coroutines.CoroutineScope
@@ -15,7 +13,7 @@ internal fun TransactionForValuesMenuBottomSheetContent(
     coroutineScope: CoroutineScope,
     transactionForId: Int,
     modalBottomSheetState: ModalBottomSheetState,
-    navigationManager: NavigationManager,
+    navigateToEditTransactionForScreen: (transactionForId: Int) -> Unit,
     onDeleteClick: () -> Unit,
     resetBottomSheetType: () -> Unit,
 ) {
@@ -31,11 +29,7 @@ internal fun TransactionForValuesMenuBottomSheetContent(
                         modalBottomSheetState = modalBottomSheetState,
                     ) {
                         resetBottomSheetType()
-                        navigationManager.navigate(
-                            navigationCommand = MyNavigationDirections.EditTransactionFor(
-                                transactionForId = transactionForId,
-                            )
-                        )
+                        navigateToEditTransactionForScreen(transactionForId)
                     }
                 },
             ),

@@ -26,8 +26,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
@@ -51,12 +49,14 @@ internal sealed class TransactionForValuesBottomSheetType : BottomSheetType {
 internal data class TransactionForValuesScreenViewData(
     val transactionForValuesIsUsedInTransactions: List<Boolean>,
     val transactionForValues: List<TransactionFor>,
-    val navigationManager: NavigationManager,
 )
 
 @Immutable
 internal data class TransactionForValuesScreenViewEvents(
     val deleteTransactionFor: (transactionForId: Int) -> Unit,
+    val navigateToAddTransactionForScreen: () -> Unit,
+    val navigateToEditTransactionForScreen: (transactionForId: Int) -> Unit,
+    val navigateUp: () -> Unit,
 )
 
 @Composable
@@ -119,7 +119,7 @@ internal fun TransactionForValuesScreenView(
                         coroutineScope = state.coroutineScope,
                         transactionForId = bottomSheetData.transactionForId,
                         modalBottomSheetState = state.modalBottomSheetState,
-                        navigationManager = data.navigationManager,
+                        navigateToEditTransactionForScreen = events.navigateToEditTransactionForScreen,
                         onDeleteClick = {
                             transactionForIdToDelete = bottomSheetData.transactionForId
                             transactionForValuesBottomSheetType =
@@ -137,11 +137,7 @@ internal fun TransactionForValuesScreenView(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_transaction_for_values_appbar_title,
-                navigationAction = {
-                    data.navigationManager.navigate(
-                        navigationCommand = MyNavigationDirections.NavigateUp
-                    )
-                },
+                navigationAction = events.navigateUp,
             )
         },
         floatingActionButton = {
@@ -150,11 +146,7 @@ internal fun TransactionForValuesScreenView(
                 contentDescription = stringResource(
                     id = R.string.screen_transaction_for_values_floating_action_button_content_description,
                 ),
-                onClick = {
-                    data.navigationManager.navigate(
-                        navigationCommand = MyNavigationDirections.AddTransactionFor
-                    )
-                },
+                onClick = events.navigateToAddTransactionForScreen,
             )
         },
         onClick = {
@@ -162,9 +154,7 @@ internal fun TransactionForValuesScreenView(
         },
         backHandlerEnabled = transactionForValuesBottomSheetType != TransactionForValuesBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onBackPress = {
-            resetBottomSheetType()
-        },
+        onBackPress = resetBottomSheetType,
         modifier = Modifier
             .fillMaxSize(),
     ) {
@@ -175,10 +165,9 @@ internal fun TransactionForValuesScreenView(
                     listItem.hashCode()
                 },
             ) { index, listItem ->
-                val isDeleteVisible =
-                    data.transactionForValuesIsUsedInTransactions.getOrNull(
-                        index = index,
-                    )?.not() ?: false
+                val isDeleteVisible = data.transactionForValuesIsUsedInTransactions.getOrNull(
+                    index = index,
+                )?.not() ?: false
                 MyText(
                     modifier = Modifier
                         .fillMaxWidth()

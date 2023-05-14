@@ -26,8 +26,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
@@ -46,7 +44,6 @@ internal enum class AddOrEditTransactionForBottomSheetType : BottomSheetType {
 internal data class AddOrEditTransactionForScreenViewData(
     @StringRes val appBarTitleTextStringResourceId: Int,
     @StringRes val ctaButtonLabelTextStringResourceId: Int,
-    val navigationManager: NavigationManager,
     val title: TextFieldValue,
 )
 
@@ -54,6 +51,7 @@ internal data class AddOrEditTransactionForScreenViewData(
 internal data class AddOrEditTransactionForScreenViewEvents(
     val clearTitle: () -> Unit,
     val isValidTitle: () -> Boolean,
+    val navigateUp: () -> Unit,
     val onCtaButtonClick: () -> Unit,
     val updateTitle: (updatedTitle: TextFieldValue) -> Unit,
 )
@@ -107,11 +105,7 @@ internal fun AddOrEditTransactionForScreenView(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = data.appBarTitleTextStringResourceId,
-                navigationAction = {
-                    data.navigationManager.navigate(
-                        navigationCommand = MyNavigationDirections.NavigateUp
-                    )
-                },
+                navigationAction = events.navigateUp,
             )
         },
         onClick = {

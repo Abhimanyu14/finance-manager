@@ -44,10 +44,10 @@ internal sealed class CategoriesBottomSheetType : BottomSheetType {
     object SetAsDefaultConfirmation : CategoriesBottomSheetType()
 
     data class Menu(
-        val deleteEnabled: Boolean,
-        val isDefault: Boolean,
+        val isDeleteVisible: Boolean,
+        val isEditVisible: Boolean,
+        val isSetAsDefaultVisible: Boolean,
         val categoryId: Int,
-        val categoryTitle: String,
     ) : CategoriesBottomSheetType()
 }
 
@@ -183,25 +183,30 @@ internal fun CategoriesScreenView(
                 is CategoriesBottomSheetType.Menu -> {
                     val bottomSheetData =
                         categoriesBottomSheetType as CategoriesBottomSheetType.Menu
+
                     CategoryMenuBottomSheetContent(
-                        deleteEnabled = bottomSheetData.deleteEnabled,
-                        isDefault = bottomSheetData.isDefault,
-                        coroutineScope = state.coroutineScope,
-                        categoryId = bottomSheetData.categoryId,
-                        modalBottomSheetState = state.modalBottomSheetState,
-                        categoryTitle = bottomSheetData.categoryTitle,
-                        navigateToEditCategoryScreen = events.navigateToEditCategoryScreen,
+                        isDeleteVisible = bottomSheetData.isDeleteVisible,
+                        isEditVisible = bottomSheetData.isEditVisible,
+                        isSetAsDefaultVisible = bottomSheetData.isSetAsDefaultVisible,
                         onDeleteClick = {
                             categoryIdToDelete = bottomSheetData.categoryId
                             categoriesBottomSheetType =
                                 CategoriesBottomSheetType.DeleteConfirmation
+                        },
+                        onEditClick = {
+                            toggleModalBottomSheetState(
+                                coroutineScope = state.coroutineScope,
+                                modalBottomSheetState = state.modalBottomSheetState,
+                            ) {
+                                resetBottomSheetType()
+                                events.navigateToEditCategoryScreen(bottomSheetData.categoryId)
+                            }
                         },
                         onSetAsDefaultClick = {
                             clickedItemId = bottomSheetData.categoryId
                             categoriesBottomSheetType =
                                 CategoriesBottomSheetType.SetAsDefaultConfirmation
                         },
-                        resetBottomSheetType = resetBottomSheetType,
                     )
                 }
             }
@@ -275,18 +280,25 @@ internal fun CategoriesScreenView(
                     topPadding = 8.dp,
                     categoriesGridItemDataList = categoriesGridItemDataList,
                     onItemClick = { index ->
-                        categoriesBottomSheetType = CategoriesBottomSheetType.Menu(
-                            deleteEnabled = categoriesGridItemDataList[index].isDeleteEnabled
-                                ?: false,
-                            isDefault = categoriesGridItemDataList[index].isSelected,
-                            categoryId = categoriesGridItemDataList[index].category.id,
-                            categoryTitle = categoriesGridItemDataList[index].category.title,
-                        )
-                        clickedItemId = categoriesGridItemDataList[index].category.id
-                        toggleModalBottomSheetState(
-                            coroutineScope = state.coroutineScope,
-                            modalBottomSheetState = state.modalBottomSheetState,
-                        )
+                        val isDeleteVisible =
+                            categoriesGridItemDataList[index].isDeleteVisible ?: false
+                        val isEditVisible = categoriesGridItemDataList[index].isEditVisible ?: false
+                        val isSetAsDefaultVisible =
+                            categoriesGridItemDataList[index].isSetAsDefaultVisible ?: false
+
+                        if (isEditVisible || isSetAsDefaultVisible || isDeleteVisible) {
+                            categoriesBottomSheetType = CategoriesBottomSheetType.Menu(
+                                isDeleteVisible = isDeleteVisible,
+                                isEditVisible = isEditVisible,
+                                isSetAsDefaultVisible = isSetAsDefaultVisible,
+                                categoryId = categoriesGridItemDataList[index].category.id,
+                            )
+                            clickedItemId = categoriesGridItemDataList[index].category.id
+                            toggleModalBottomSheetState(
+                                coroutineScope = state.coroutineScope,
+                                modalBottomSheetState = state.modalBottomSheetState,
+                            )
+                        }
                     },
                 )
             }

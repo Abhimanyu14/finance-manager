@@ -78,9 +78,10 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
                         categoryId = category.id,
                     )
                     val isDeleteEnabled = !isDefault && !isUsedInTransactions
-                    CategoriesGridItemData(
+
+                    getCategoriesGridItemData(
+                        isDefault = isDefault,
                         isDeleteEnabled = isDeleteEnabled,
-                        isSelected = isDefault,
                         category = category,
                     )
                 } ?: emptyList()
@@ -97,9 +98,10 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
                         categoryId = category.id,
                     )
                     val isDeleteEnabled = !isDefault && !isUsedInTransactions
-                    CategoriesGridItemData(
+
+                    getCategoriesGridItemData(
+                        isDefault = isDefault,
                         isDeleteEnabled = isDeleteEnabled,
-                        isSelected = isDefault,
                         category = category,
                     )
                 } ?: emptyList()
@@ -116,9 +118,10 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
                         categoryId = category.id,
                     )
                     val isDeleteEnabled = !isDefault && !isUsedInTransactions
-                    CategoriesGridItemData(
+
+                    getCategoriesGridItemData(
+                        isDefault = isDefault,
                         isDeleteEnabled = isDeleteEnabled,
-                        isSelected = isDefault,
                         category = category,
                     )
                 } ?: emptyList()
@@ -180,5 +183,35 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
         updatedSelectedTabIndex: Int,
     ) {
         _selectedTabIndex.value = updatedSelectedTabIndex
+    }
+
+    private fun getCategoriesGridItemData(
+        isDefault: Boolean,
+        isDeleteEnabled: Boolean,
+        category: Category,
+    ): CategoriesGridItemData {
+        val isEditVisible = !isDefaultExpenseCategory(
+            category = category.title,
+        ) && !isDefaultIncomeCategory(
+            category = category.title,
+        ) && !isDefaultInvestmentCategory(
+            category = category.title,
+        )
+        val isSetAsDefaultVisible = !isDefault
+        val isDeleteVisible = !isDefaultExpenseCategory(
+            category = category.title,
+        ) && !isDefaultIncomeCategory(
+            category = category.title,
+        ) && !isDefaultInvestmentCategory(
+            category = category.title,
+        ) && isDeleteEnabled
+
+        return CategoriesGridItemData(
+            isDeleteVisible = isDeleteVisible,
+            isEditVisible = isEditVisible,
+            isSetAsDefaultVisible = isSetAsDefaultVisible,
+            isSelected = isDefault,
+            category = category,
+        )
     }
 }

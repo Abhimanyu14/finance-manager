@@ -17,7 +17,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
@@ -27,11 +26,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.total_balance_card.TotalBalanceCard
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultSource
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.components.bottomsheet.SourcesDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.components.bottomsheet.SourcesSetAsDefaultConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.components.listitem.SourcesListItem
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.components.listitem.SourcesListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.components.listitem.SourcesListItemEvents
 
 internal enum class SourcesBottomSheetType : BottomSheetType {
     NONE,
@@ -41,9 +41,7 @@ internal enum class SourcesBottomSheetType : BottomSheetType {
 
 @Immutable
 internal data class SourcesScreenViewData(
-    val defaultSourceId: Int?,
-    val sourcesIsUsedInTransactions: List<Boolean>,
-    val sources: List<Source>,
+    val sourcesListItemDataList: List<SourcesListItemData>,
 )
 
 @Immutable
@@ -178,57 +176,48 @@ internal fun SourcesScreenView(
                 TotalBalanceCard()
             }
             itemsIndexed(
-                items = data.sources,
+                items = data.sourcesListItemDataList,
                 key = { _, listItem ->
                     listItem.hashCode()
                 },
             ) { index, listItem ->
-                val deleteEnabled: Boolean? = data.sourcesIsUsedInTransactions.getOrNull(
-                    index = index,
-                )?.not()
-                val isDefault = if (data.defaultSourceId.isNull()) {
-                    isDefaultSource(
-                        source = listItem.name,
-                    )
-                } else {
-                    data.defaultSourceId == listItem.id
-                }
                 SourcesListItem(
-                    source = listItem,
-                    expanded = index == expandedItemIndex,
-                    deleteEnabled = deleteEnabled ?: false,
-                    isDefault = isDefault,
-                    onClick = {
-                        expandedItemIndex = if (index == expandedItemIndex) {
-                            null
-                        } else {
-                            index
-                        }
-                    },
-                    onLongClick = {
-                        if (!isDefault) {
+                    data = listItem.copy(
+                        isExpanded = index == expandedItemIndex
+                    ),
+                    events = SourcesListItemEvents(
+                        onClick = {
+                            expandedItemIndex = if (index == expandedItemIndex) {
+                                null
+                            } else {
+                                index
+                            }
+                        },
+                        onLongClick = {
+                            if (!listItem.isDefault) {
+                                sourcesBottomSheetType =
+                                    SourcesBottomSheetType.SET_AS_DEFAULT_CONFIRMATION
+                                clickedItemId = listItem.source.id
+                                toggleModalBottomSheetState(
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
+                                )
+                            }
+                        },
+                        onEditClick = {
+                            events.navigateToEditSourceScreen(listItem.source.id)
+                            expandedItemIndex = null
+                        },
+                        onDeleteClick = {
+                            sourceToDelete = listItem.source
                             sourcesBottomSheetType =
-                                SourcesBottomSheetType.SET_AS_DEFAULT_CONFIRMATION
-                            clickedItemId = listItem.id
+                                SourcesBottomSheetType.DELETE_CONFIRMATION
                             toggleModalBottomSheetState(
                                 coroutineScope = state.coroutineScope,
                                 modalBottomSheetState = state.modalBottomSheetState,
                             )
-                        }
-                    },
-                    onEditClick = {
-                        events.navigateToEditSourceScreen(listItem.id)
-                        expandedItemIndex = null
-                    },
-                    onDeleteClick = {
-                        sourceToDelete = listItem
-                        sourcesBottomSheetType =
-                            SourcesBottomSheetType.DELETE_CONFIRMATION
-                        toggleModalBottomSheetState(
-                            coroutineScope = state.coroutineScope,
-                            modalBottomSheetState = state.modalBottomSheetState,
-                        )
-                    },
+                        },
+                    ),
                 )
             }
         }

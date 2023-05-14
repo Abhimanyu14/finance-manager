@@ -18,7 +18,7 @@ fun CategoriesGrid(
     bottomPadding: Dp = 0.dp,
     topPadding: Dp = 0.dp,
     categoriesGridItemDataList: List<CategoriesGridItemData>,
-    onItemClick: (index: Int) -> Unit,
+    onItemClick: ((index: Int) -> Unit)? = null,
 ) {
     // To remove overscroll effect
     CompositionLocalProvider(
@@ -44,7 +44,7 @@ fun CategoriesGrid(
                     isSelected = listItem.isSelected,
                     category = listItem.category,
                     onClick = {
-                        onItemClick(index)
+                        onItemClick?.invoke(index)
                     },
                 )
             }

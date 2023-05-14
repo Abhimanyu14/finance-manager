@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.components.listitem.SourcesListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.viewmodel.SourcesScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.viewmodel.SourcesScreenViewModelImpl
 
@@ -17,22 +17,13 @@ fun SourcesScreen(
     screenViewModel.logger.logError(
         message = "Inside SourcesScreen",
     )
-    val defaultSourceId: Int? by screenViewModel.defaultSourceId.collectAsStateWithLifecycle(
-        initialValue = null,
-    )
-    val sources: List<Source> by screenViewModel.sources.collectAsStateWithLifecycle(
+    val sourcesListItemDataList: List<SourcesListItemData> by screenViewModel.sourcesListItemDataList.collectAsStateWithLifecycle(
         initialValue = emptyList(),
     )
-    val sourcesIsUsedInTransactions: List<Boolean> by screenViewModel.sourcesIsUsedInTransactions
-        .collectAsStateWithLifecycle(
-            initialValue = emptyList(),
-        )
 
     SourcesScreenView(
         data = SourcesScreenViewData(
-            defaultSourceId = defaultSourceId,
-            sourcesIsUsedInTransactions = sourcesIsUsedInTransactions,
-            sources = sources,
+            sourcesListItemDataList = sourcesListItemDataList,
         ),
         events = SourcesScreenViewEvents(
             deleteSource = { sourceId ->
