@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.repository.TransactionForRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.repository.TransactionForRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.getTestTransactionForValues
@@ -55,7 +56,9 @@ class TransactionForRepositoryTest {
         verify(
             mock = transactionForDao,
         ).insertTransactionForValues(
-            *testTransactionForValues,
+            *testTransactionForValues.map {
+                it.asEntity()
+            }.toTypedArray(),
         )
     }
 
@@ -68,7 +71,9 @@ class TransactionForRepositoryTest {
         verify(
             mock = transactionForDao,
         ).updateTransactionForValues(
-            *testTransactionForValues,
+            *testTransactionForValues.map {
+                it.asEntity()
+            }.toTypedArray(),
         )
     }
 
