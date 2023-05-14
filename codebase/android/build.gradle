@@ -98,13 +98,13 @@ buildscript {
         recyclerViewVersion = "1.2.1"
 
         // Jetpack compose
-        jetpackComposeVersion = "1.5.0-alpha01"
+        jetpackComposeVersion = "1.5.0-alpha04"
 
         // Jetpack compose compiler
         jetpackComposeCompilerVersion = "1.4.3"
 
         // Jetpack compose material 3
-        jetpackComposeMaterial3Version = "1.1.0-beta01"
+        jetpackComposeMaterial3Version = "1.2.0-alpha01"
 
         // Jetpack compose material design adapter
         jetpackComposeMaterialDesignAdapterVersion = "1.2.1"
@@ -128,7 +128,7 @@ buildscript {
         jetpackComposeNavigationHiltVersion = "1.0.0"
 
         // Jetpack compose paging
-        jetpackComposePagingVersion = "1.0.0-alpha18"
+        jetpackComposePagingVersion = "1.0.0-alpha19"
 
         // Accompanist
         accompanistVersion = "0.27.0"
