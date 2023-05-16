@@ -8,6 +8,7 @@ import androidx.test.filters.SmallTest
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert
@@ -44,9 +45,9 @@ class EmojiDaoTest {
     }
 
     @Test
-    fun insertEmoji() = runTest {
+    fun getAllEmojis() = runTest {
         emojiDao.insertEmoji(
-            emoji = testEmojis.first(),
+            emoji = testEmojis[0],
         )
 
         val result = emojiDao.getAllEmojis()
@@ -56,7 +57,7 @@ class EmojiDaoTest {
             result.size,
         )
         Assert.assertEquals(
-            testEmojis.first(),
+            testEmojis[0],
             result[0],
         )
     }
@@ -64,7 +65,7 @@ class EmojiDaoTest {
     @Test
     fun insertEmoji_onConflictStrategy() = runTest {
         emojiDao.insertEmoji(
-            emoji = testEmojis.first(),
+            emoji = testEmojis[0],
         )
         emojiDao.insertEmoji(
             emoji = testEmojis[1],
@@ -82,7 +83,7 @@ class EmojiDaoTest {
             result.size,
         )
         Assert.assertEquals(
-            testEmojis.first(),
+            testEmojis[0],
             result[0],
         )
         Assert.assertEquals(
@@ -104,7 +105,29 @@ class EmojiDaoTest {
             result.size,
         )
         Assert.assertEquals(
-            testEmojis.first(),
+            testEmojis[0],
+            result[0],
+        )
+        Assert.assertEquals(
+            testEmojis[1],
+            result[1],
+        )
+    }
+
+    @Test
+    fun getAllEmojisFlow() = runTest {
+        emojiDao.insertEmojis(
+            *testEmojis.toTypedArray(),
+        )
+
+        val result = emojiDao.getAllEmojisFlow().first()
+
+        Assert.assertEquals(
+            2,
+            result.size,
+        )
+        Assert.assertEquals(
+            testEmojis[0],
             result[0],
         )
         Assert.assertEquals(
@@ -122,7 +145,7 @@ class EmojiDaoTest {
         val result = emojiDao.getAllEmojisCount()
 
         Assert.assertEquals(
-            2,
+            testEmojis.size,
             result,
         )
     }
