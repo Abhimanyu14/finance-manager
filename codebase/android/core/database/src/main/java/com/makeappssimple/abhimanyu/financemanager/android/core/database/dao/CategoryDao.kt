@@ -44,4 +44,7 @@ interface CategoryDao {
     suspend fun deleteCategories(
         vararg categories: CategoryEntity,
     )
+
+    @Query(value = "DELETE FROM category_table")
+    suspend fun deleteAllCategories()
 }

@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.transactio
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.datasource.TransactionDataSource
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.map
 
 class TransactionRepositoryImpl(
     private val transactionDao: TransactionDao,
+    private val transactionDataSource: TransactionDataSource,
 ) : TransactionRepository {
     override suspend fun getAllTransactions(): List<Transaction> {
         return transactionDao.getAllTransactions().map {
@@ -143,7 +145,7 @@ class TransactionRepositoryImpl(
         sourceTo: Source?,
         transaction: Transaction,
     ): Long {
-        return transactionDao.insertTransaction(
+        return transactionDataSource.insertTransaction(
             amountValue = amountValue,
             sourceFrom = sourceFrom?.asEntity(),
             sourceTo = sourceTo?.asEntity(),
@@ -173,7 +175,7 @@ class TransactionRepositoryImpl(
         id: Int,
         vararg sources: Source,
     ) {
-        transactionDao.deleteTransaction(
+        transactionDataSource.deleteTransaction(
             id = id,
             sources = sources.map {
                 it.asEntity()
@@ -192,22 +194,22 @@ class TransactionRepositoryImpl(
         transactions: List<Transaction>,
         transactionForValues: List<TransactionFor>,
     ) {
-        transactionDao.restoreData(
+        transactionDataSource.restoreData(
             categories = categories.map {
                 it.asEntity()
-            },
+            }.toTypedArray(),
             emojis = emojis.map {
                 it.asEntity()
-            },
+            }.toTypedArray(),
             sources = sources.map {
                 it.asEntity()
-            },
+            }.toTypedArray(),
             transactions = transactions.map {
                 it.asEntity()
-            },
+            }.toTypedArray(),
             transactionForValues = transactionForValues.map {
                 it.asEntity()
-            },
+            }.toTypedArray(),
         )
     }
 }

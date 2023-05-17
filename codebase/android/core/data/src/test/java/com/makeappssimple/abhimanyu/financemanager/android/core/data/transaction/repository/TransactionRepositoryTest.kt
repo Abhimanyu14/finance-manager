@@ -1,10 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.getTestSources
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.getTestTransactions
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.datasource.TransactionDataSource
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -14,15 +13,16 @@ import org.mockito.kotlin.verify
 
 class TransactionRepositoryTest {
     private val transactionDao: TransactionDao = mock()
+    private val transactionDataSource: TransactionDataSource = mock()
     private val testId: Int = 1
     private val testTransactions: Array<Transaction> = getTestTransactions()
-    private val testSources: Array<Source> = getTestSources()
     private lateinit var transactionRepository: TransactionRepository
 
     @Before
     fun setUp() {
         transactionRepository = TransactionRepositoryImpl(
             transactionDao = transactionDao,
+            transactionDataSource = transactionDataSource,
         )
     }
 
@@ -58,23 +58,6 @@ class TransactionRepositoryTest {
             mock = transactionDao,
         ).insertTransactions(
             *testTransactions.map {
-                it.asEntity()
-            }.toTypedArray(),
-        )
-    }
-
-    @Test
-    fun deleteTransaction() = runTest {
-        transactionRepository.deleteTransaction(
-            id = testId,
-            sources = testSources,
-        )
-
-        verify(
-            mock = transactionDao,
-        ).deleteTransaction(
-            id = testId,
-            sources = testSources.map {
                 it.asEntity()
             }.toTypedArray(),
         )

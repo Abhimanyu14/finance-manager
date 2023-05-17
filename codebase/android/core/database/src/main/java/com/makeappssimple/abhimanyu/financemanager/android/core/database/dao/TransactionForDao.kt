@@ -38,4 +38,7 @@ interface TransactionForDao {
     suspend fun deleteTransactionFor(
         id: Int,
     )
+
+    @Query(value = "DELETE FROM transaction_for_table")
+    suspend fun deleteAllTransactionForValues()
 }

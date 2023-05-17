@@ -40,6 +40,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.RestoreDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.RestoreDataUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.datasource.TransactionDataSource
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import dagger.Module
 import dagger.Provides
@@ -52,9 +53,11 @@ class TransactionModule {
     @Provides
     fun providesTransactionRepository(
         transactionDao: TransactionDao,
+        transactionDataSource: TransactionDataSource,
     ): TransactionRepository {
         return TransactionRepositoryImpl(
             transactionDao = transactionDao,
+            transactionDataSource = transactionDataSource,
         )
     }
 
