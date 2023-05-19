@@ -1,9 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.background
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -53,9 +53,10 @@ fun MyTopAppBarView(
                 navigationBackButton()
             }
         },
-        modifier = modifier
-            .background(
-                color = MaterialTheme.colorScheme.background,
+        colors = TopAppBarDefaults
+            .centerAlignedTopAppBarColors(
+                containerColor = MaterialTheme.colorScheme.background,
             ),
+        modifier = modifier,
     )
 }
