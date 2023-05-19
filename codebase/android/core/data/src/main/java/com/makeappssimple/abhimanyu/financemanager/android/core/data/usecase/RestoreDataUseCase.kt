@@ -33,19 +33,55 @@ class RestoreDataUseCaseImpl(
         val backupData = Json.decodeFromString<BackupData>(
             string = jsonString,
         )
+
+        val categories = if (backupData.databaseData == null) {
+            backupData.categories.orEmpty()
+        } else {
+            backupData.databaseData.categories
+        }
+        val emojis = if (backupData.databaseData == null) {
+            backupData.emojis.orEmpty()
+        } else {
+            backupData.databaseData.emojis
+        }
+        val sources = if (backupData.databaseData == null) {
+            backupData.sources.orEmpty()
+        } else {
+            backupData.databaseData.sources
+        }
         val transactions = transactionsCleanUp(
-            transactions = backupData.transactions.map {
+            transactions = if (backupData.databaseData == null) {
+                backupData.transactions.orEmpty()
+            } else {
+                backupData.databaseData.transactions
+            }.map {
                 it.asEntity()
             },
         ).map {
             it.asExternalModel()
         }
-        return transactionRepository.restoreData(
-            categories = backupData.categories,
-            emojis = backupData.emojis,
-            sources = backupData.sources,
+        val transactionForValues = if (backupData.databaseData == null) {
+            backupData.transactionForValues.orEmpty()
+        } else {
+            backupData.databaseData.transactionForValues
+        }
+
+        transactionRepository.restoreData(
+            categories = categories,
+            emojis = emojis,
+            sources = sources,
             transactions = transactions,
-            transactionForValues = backupData.transactionForValues,
+            transactionForValues = transactionForValues,
         )
+
+        backupData.datastoreData?.let {
+            dataStore.setCategoryDataVersionNumber(it.initialDataVersionNumber.category)
+            dataStore.setDefaultExpenseCategoryId(it.defaultDataId.expenseCategory)
+            dataStore.setDefaultIncomeCategoryId(it.defaultDataId.incomeCategory)
+            dataStore.setDefaultInvestmentCategoryId(it.defaultDataId.investmentCategory)
+            dataStore.setDefaultSourceId(it.defaultDataId.source)
+            dataStore.setEmojiDataVersionNumber(it.initialDataVersionNumber.emoji)
+            dataStore.setTransactionsDataVersionNumber(it.initialDataVersionNumber.transaction)
+        }
     }
 }

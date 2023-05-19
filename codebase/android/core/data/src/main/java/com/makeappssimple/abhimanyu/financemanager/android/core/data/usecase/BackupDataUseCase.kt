@@ -7,18 +7,23 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwrite
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.BackupData
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.DatabaseData
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.DatastoreData
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.first
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -44,7 +49,7 @@ class BackupDataUseCaseImpl(
         uri: Uri,
     ) {
         coroutineScope {
-            val deferredList = awaitAll(
+            val deferredDatabaseData = awaitAll(
                 async(
                     context = dispatcherProvider.io,
                 ) {
@@ -72,22 +77,41 @@ class BackupDataUseCaseImpl(
                 },
             )
 
-            val categories: List<Category> = deferredList[0].filterIsInstance<Category>()
+            val categories: List<Category> = deferredDatabaseData[0].filterIsInstance<Category>()
             val emojis: List<Emoji> =
-                deferredList[1].filterIsInstance<Emoji>()
-            val sources: List<Source> = deferredList[2].filterIsInstance<Source>()
+                deferredDatabaseData[1].filterIsInstance<Emoji>()
+            val sources: List<Source> = deferredDatabaseData[2].filterIsInstance<Source>()
             val transactionForValues: List<TransactionFor> =
-                deferredList[3].filterIsInstance<TransactionFor>()
-            val transactions: List<Transaction> = deferredList[4].filterIsInstance<Transaction>()
+                deferredDatabaseData[3].filterIsInstance<TransactionFor>()
+            val transactions: List<Transaction> =
+                deferredDatabaseData[4].filterIsInstance<Transaction>()
 
             val backupData = BackupData(
                 lastBackupTime = dateTimeUtil.getReadableDateAndTime(),
                 lastBackupTimestamp = dateTimeUtil.getCurrentTimeMillis().toString(),
-                categories = categories,
-                emojis = emojis,
-                sources = sources,
-                transactionForValues = transactionForValues,
-                transactions = transactions,
+                databaseData = DatabaseData(
+                    categories = categories,
+                    emojis = emojis,
+                    sources = sources,
+                    transactionForValues = transactionForValues,
+                    transactions = transactions,
+                ),
+                datastoreData = DatastoreData(
+                    defaultDataId = DefaultDataId(
+                        expenseCategory = dataStore.getDefaultExpenseCategoryId().first() ?: 0,
+                        incomeCategory = dataStore.getDefaultIncomeCategoryId().first() ?: 0,
+                        investmentCategory = dataStore.getDefaultInvestmentCategoryId().first()
+                            ?: 0,
+                        source = dataStore.getDefaultSourceId().first() ?: 0,
+                    ),
+                    initialDataVersionNumber = InitialDataVersionNumber(
+                        category = dataStore.getCategoryDataVersionNumber().first() ?: 0,
+                        emoji = dataStore.getEmojiDataVersionNumber().first() ?: 0,
+                        transaction = dataStore.getTransactionsDataVersionNumber().first() ?: 0,
+                    ),
+                    lastDataBackupTimestamp = dataStore.getLastDataBackupTimestamp().first() ?: 0L,
+                    lastDataChangeTimestamp = dataStore.getLastDataChangeTimestamp().first() ?: 0L,
+                )
             )
             val jsonString = Json.encodeToString(
                 value = backupData,

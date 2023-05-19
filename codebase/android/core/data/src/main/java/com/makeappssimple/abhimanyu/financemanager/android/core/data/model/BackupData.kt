@@ -13,22 +13,28 @@ import kotlinx.serialization.json.JsonNames
 @Serializable
 data class BackupData @OptIn(ExperimentalSerializationApi::class) constructor(
     @SerialName(value = "last_backup_time")
-    @JsonNames("lastBackupTime") // TODO-Abhi: Eventually remove this
-    val lastBackupTime: String = "",
+    @JsonNames("lastBackupTime") // TODO-Abhi: legacy support v69
+    val lastBackupTime: String? = "", // TODO-Abhi: legacy support v69
 
     @SerialName(value = "last_backup_timestamp")
-    @JsonNames("lastBackupTimestamp") // TODO-Abhi: Eventually remove this
-    val lastBackupTimestamp: String = "",
+    @JsonNames("lastBackupTimestamp") // TODO-Abhi: legacy support v69
+    val lastBackupTimestamp: String ?= "", // TODO-Abhi: legacy support v69
 
-    val categories: List<Category> = emptyList(),
+    val categories: List<Category>? = emptyList(), // TODO-Abhi: legacy support v69
 
-    val emojis: List<Emoji> = emptyList(),
+    val emojis: List<Emoji>? = emptyList(), // TODO-Abhi: legacy support v69
 
-    val sources: List<Source> = emptyList(),
+    val sources: List<Source>? = emptyList(), // TODO-Abhi: legacy support v69
 
     @SerialName(value = "transaction_for_values")
-    @JsonNames("transactionForValues") // TODO-Abhi: Eventually remove this
-    val transactionForValues: List<TransactionFor> = emptyList(),
+    @JsonNames("transactionForValues") // TODO-Abhi: legacy support v69
+    val transactionForValues: List<TransactionFor>? = emptyList(), // TODO-Abhi: legacy support v69
 
-    val transactions: List<Transaction> = emptyList(),
+    val transactions: List<Transaction>? = emptyList(), // TODO-Abhi: legacy support v69
+
+    @SerialName(value = "database_data")
+    val databaseData: DatabaseData? = null,
+
+    @SerialName(value = "datastore_data")
+    val datastoreData: DatastoreData? = null,
 )

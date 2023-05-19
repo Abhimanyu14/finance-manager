@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.datastore
 import kotlinx.coroutines.flow.Flow
 import java.time.Instant
 
+// TODO(Abhi): Split using data classes
 interface MyDataStore {
     fun getCategoryDataVersionNumber(): Flow<Int?>
 

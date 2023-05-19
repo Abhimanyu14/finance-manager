@@ -18,21 +18,5 @@ class BackupDataTest {
             "",
             backupData.lastBackupTimestamp,
         )
-        Assert.assertEquals(
-            0,
-            backupData.categories.size,
-        )
-        Assert.assertEquals(
-            0,
-            backupData.emojis.size,
-        )
-        Assert.assertEquals(
-            0,
-            backupData.sources.size,
-        )
-        Assert.assertEquals(
-            0,
-            backupData.transactions.size,
-        )
     }
 }
