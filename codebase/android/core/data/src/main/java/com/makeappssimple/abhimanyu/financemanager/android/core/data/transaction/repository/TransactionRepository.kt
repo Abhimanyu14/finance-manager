@@ -1,11 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import kotlinx.coroutines.flow.Flow
 
 interface TransactionRepository {
@@ -77,7 +77,6 @@ interface TransactionRepository {
 
     suspend fun deleteTransaction(
         id: Int,
-        vararg sources: Source,
     )
 
     suspend fun deleteAllTransactions()

@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.di
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.JsonReader
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfCategoryIsUsedInTransactionsUseCase
@@ -37,10 +36,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.InsertTransactionUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.InsertTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.InsertTransactionsUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.RestoreDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.RestoreDataUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.UpdateTransactionUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.UpdateTransactionUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.datasource.TransactionDataSource
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.datasource.CommonDataSource
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import dagger.Module
 import dagger.Provides
@@ -52,12 +51,12 @@ import dagger.hilt.components.SingletonComponent
 class TransactionModule {
     @Provides
     fun providesTransactionRepository(
+        commonDataSource: CommonDataSource,
         transactionDao: TransactionDao,
-        transactionDataSource: TransactionDataSource,
     ): TransactionRepository {
         return TransactionRepositoryImpl(
+            commonDataSource = commonDataSource,
             transactionDao = transactionDao,
-            transactionDataSource = transactionDataSource,
         )
     }
 
@@ -223,15 +222,13 @@ class TransactionModule {
     }
 
     @Provides
-    fun providesRestoreDataUseCase(
+    fun providesUpdateTransactionUseCase(
         dataStore: MyDataStore,
         transactionRepository: TransactionRepository,
-        jsonReader: JsonReader,
-    ): RestoreDataUseCase {
-        return RestoreDataUseCaseImpl(
+    ): UpdateTransactionUseCase {
+        return UpdateTransactionUseCaseImpl(
             dataStore = dataStore,
             transactionRepository = transactionRepository,
-            jsonReader = jsonReader,
         )
     }
 }

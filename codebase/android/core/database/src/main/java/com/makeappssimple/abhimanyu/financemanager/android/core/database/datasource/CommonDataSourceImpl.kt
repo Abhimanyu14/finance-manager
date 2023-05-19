@@ -10,20 +10,37 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.T
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.updateBalanceAmount
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 
-class TransactionDataSourceImpl(
+class CommonDataSourceImpl(
     private val myRoomDatabase: MyRoomDatabase,
-) : TransactionDataSource {
+) : CommonDataSource {
     override suspend fun deleteTransaction(
         id: Int,
-        vararg sources: SourceEntity,
     ) {
         with(myRoomDatabase) {
             withTransaction {
-                val transaction = transactionDao().getTransaction(
+                val transactionData = transactionDao().getTransactionData(
                     id = id,
                 )
-                if (transaction?.transactionType == TransactionType.REFUND) {
-                    transaction.originalTransactionId?.let { originalTransactionId ->
+
+                val updatesSources = buildList {
+                    transactionData?.sourceFrom?.let {
+                        add(
+                            it.updateBalanceAmount(
+                                updatedBalanceAmount = it.balanceAmount.value + transactionData.transaction.amount.value,
+                            )
+                        )
+                    }
+                    transactionData?.sourceTo?.let {
+                        add(
+                            it.updateBalanceAmount(
+                                updatedBalanceAmount = it.balanceAmount.value - transactionData.transaction.amount.value,
+                            )
+                        )
+                    }
+                }.toTypedArray()
+
+                if (transactionData?.transaction?.transactionType == TransactionType.REFUND) {
+                    transactionData.transaction.originalTransactionId?.let { originalTransactionId ->
                         transactionDao().getTransaction(
                             id = originalTransactionId,
                         )?.let { originalTransaction ->
@@ -52,7 +69,7 @@ class TransactionDataSourceImpl(
                     id = id,
                 )
                 sourceDao().updateSources(
-                    sources = sources,
+                    sources = updatesSources,
                 )
             }
         }

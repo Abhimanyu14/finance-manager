@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.getTestTransactions
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.datasource.TransactionDataSource
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.datasource.CommonDataSource
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
@@ -12,8 +12,8 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
 class TransactionRepositoryTest {
+    private val commonDataSource: CommonDataSource = mock()
     private val transactionDao: TransactionDao = mock()
-    private val transactionDataSource: TransactionDataSource = mock()
     private val testId: Int = 1
     private val testTransactions: Array<Transaction> = getTestTransactions()
     private lateinit var transactionRepository: TransactionRepository
@@ -22,7 +22,7 @@ class TransactionRepositoryTest {
     fun setUp() {
         transactionRepository = TransactionRepositoryImpl(
             transactionDao = transactionDao,
-            transactionDataSource = transactionDataSource,
+            commonDataSource = commonDataSource,
         )
     }
 

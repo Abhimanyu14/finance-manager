@@ -2,25 +2,22 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.di
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.JsonReader
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.JsonWriter
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.BackupDataUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.DeleteTransactionAndRevertOtherDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.DeleteTransactionAndRevertOtherDataUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RecalculateTotalUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RecalculateTotalUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.UpdateTransactionUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.UpdateTransactionUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RestoreDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RestoreDataUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import dagger.Module
 import dagger.Provides
@@ -56,19 +53,6 @@ class UseCaseModule {
     }
 
     @Provides
-    fun providesDeleteTransactionAndRevertOtherDataUseCase(
-        dataStore: MyDataStore,
-        deleteTransactionUseCase: DeleteTransactionUseCase,
-        getTransactionDataUseCase: GetTransactionDataUseCase,
-    ): DeleteTransactionAndRevertOtherDataUseCase {
-        return DeleteTransactionAndRevertOtherDataUseCaseImpl(
-            dataStore = dataStore,
-            deleteTransactionUseCase = deleteTransactionUseCase,
-            getTransactionDataUseCase = getTransactionDataUseCase,
-        )
-    }
-
-    @Provides
     fun providesRecalculateTotalUseCase(
         dataStore: MyDataStore,
         dispatcherProvider: DispatcherProvider,
@@ -86,13 +70,15 @@ class UseCaseModule {
     }
 
     @Provides
-    fun providesUpdateTransactionUseCase(
+    fun providesRestoreDataUseCase(
         dataStore: MyDataStore,
         transactionRepository: TransactionRepository,
-    ): UpdateTransactionUseCase {
-        return UpdateTransactionUseCaseImpl(
+        jsonReader: JsonReader,
+    ): RestoreDataUseCase {
+        return RestoreDataUseCaseImpl(
             dataStore = dataStore,
             transactionRepository = transactionRepository,
+            jsonReader = jsonReader,
         )
     }
 }

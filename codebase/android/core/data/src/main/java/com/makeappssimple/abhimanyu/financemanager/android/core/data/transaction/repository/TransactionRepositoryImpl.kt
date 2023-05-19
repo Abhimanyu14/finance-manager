@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.transactio
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.datasource.TransactionDataSource
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.datasource.CommonDataSource
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
@@ -14,8 +14,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 class TransactionRepositoryImpl(
+    private val commonDataSource: CommonDataSource,
     private val transactionDao: TransactionDao,
-    private val transactionDataSource: TransactionDataSource,
 ) : TransactionRepository {
     override suspend fun getAllTransactions(): List<Transaction> {
         return transactionDao.getAllTransactions().map {
@@ -145,7 +145,7 @@ class TransactionRepositoryImpl(
         sourceTo: Source?,
         transaction: Transaction,
     ): Long {
-        return transactionDataSource.insertTransaction(
+        return commonDataSource.insertTransaction(
             amountValue = amountValue,
             sourceFrom = sourceFrom?.asEntity(),
             sourceTo = sourceTo?.asEntity(),
@@ -173,13 +173,9 @@ class TransactionRepositoryImpl(
 
     override suspend fun deleteTransaction(
         id: Int,
-        vararg sources: Source,
     ) {
-        transactionDataSource.deleteTransaction(
+        commonDataSource.deleteTransaction(
             id = id,
-            sources = sources.map {
-                it.asEntity()
-            }.toTypedArray(),
         )
     }
 
@@ -194,7 +190,7 @@ class TransactionRepositoryImpl(
         transactions: List<Transaction>,
         transactionForValues: List<TransactionFor>,
     ) {
-        transactionDataSource.restoreData(
+        commonDataSource.restoreData(
             categories = categories.map {
                 it.asEntity()
             }.toTypedArray(),

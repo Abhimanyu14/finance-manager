@@ -6,10 +6,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.S
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionForEntity
 
-interface TransactionDataSource {
+interface CommonDataSource {
     suspend fun deleteTransaction(
         id: Int,
-        vararg sources: SourceEntity,
     )
 
     suspend fun insertTransaction(

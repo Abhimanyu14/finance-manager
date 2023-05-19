@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase
+package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase
 
 import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.JsonReader

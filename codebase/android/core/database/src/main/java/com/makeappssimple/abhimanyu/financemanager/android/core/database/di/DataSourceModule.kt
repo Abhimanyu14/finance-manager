@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.di
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.datasource.TransactionDataSource
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.datasource.TransactionDataSourceImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.datasource.CommonDataSource
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.datasource.CommonDataSourceImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
 import dagger.Module
 import dagger.Provides
@@ -14,8 +14,8 @@ class DataSourceModule {
     @Provides
     fun providesTransactionDataSource(
         myRoomDatabase: MyRoomDatabase,
-    ): TransactionDataSource {
-        return TransactionDataSourceImpl(
+    ): CommonDataSource {
+        return CommonDataSourceImpl(
             myRoomDatabase = myRoomDatabase,
         )
     }
