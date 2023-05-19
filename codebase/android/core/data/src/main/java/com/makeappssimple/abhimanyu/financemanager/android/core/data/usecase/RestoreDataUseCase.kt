@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase
 
 import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.JsonReader
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.DatabaseBackupData
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.BackupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
@@ -30,22 +30,22 @@ class RestoreDataUseCaseImpl(
         val jsonString = jsonReader.readJsonFromFile(
             uri = uri,
         ) ?: return
-        val databaseBackupData = Json.decodeFromString<DatabaseBackupData>(
+        val backupData = Json.decodeFromString<BackupData>(
             string = jsonString,
         )
         val transactions = transactionsCleanUp(
-            transactions = databaseBackupData.transactions.map {
+            transactions = backupData.transactions.map {
                 it.asEntity()
             },
         ).map {
             it.asExternalModel()
         }
         return transactionRepository.restoreData(
-            categories = databaseBackupData.categories,
-            emojis = databaseBackupData.emojis,
-            sources = databaseBackupData.sources,
+            categories = backupData.categories,
+            emojis = backupData.emojis,
+            sources = backupData.sources,
             transactions = transactions,
-            transactionForValues = databaseBackupData.transactionForValues,
+            transactionForValues = backupData.transactionForValues,
         )
     }
 }

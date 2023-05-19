@@ -6,16 +6,16 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.JsonWriter
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.DatabaseBackupData
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.BackupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -80,7 +80,7 @@ class BackupDataUseCaseImpl(
                 deferredList[3].filterIsInstance<TransactionFor>()
             val transactions: List<Transaction> = deferredList[4].filterIsInstance<Transaction>()
 
-            val databaseBackupData = DatabaseBackupData(
+            val backupData = BackupData(
                 lastBackupTime = dateTimeUtil.getReadableDateAndTime(),
                 lastBackupTimestamp = dateTimeUtil.getCurrentTimeMillis().toString(),
                 categories = categories,
@@ -90,7 +90,7 @@ class BackupDataUseCaseImpl(
                 transactions = transactions,
             )
             val jsonString = Json.encodeToString(
-                value = databaseBackupData,
+                value = backupData,
             )
             dataStore.setLastDataBackupTimestamp()
             jsonWriter.writeJsonToFile(

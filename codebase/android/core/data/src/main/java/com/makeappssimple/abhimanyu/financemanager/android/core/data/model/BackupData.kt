@@ -11,13 +11,13 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonNames
 
 @Serializable
-data class DatabaseBackupData @OptIn(ExperimentalSerializationApi::class) constructor(
+data class BackupData @OptIn(ExperimentalSerializationApi::class) constructor(
     @SerialName(value = "last_backup_time")
-    @JsonNames("lastBackupTime")
+    @JsonNames("lastBackupTime") // TODO-Abhi: Eventually remove this
     val lastBackupTime: String = "",
 
     @SerialName(value = "last_backup_timestamp")
-    @JsonNames("lastBackupTimestamp")
+    @JsonNames("lastBackupTimestamp") // TODO-Abhi: Eventually remove this
     val lastBackupTimestamp: String = "",
 
     val categories: List<Category> = emptyList(),
@@ -27,7 +27,7 @@ data class DatabaseBackupData @OptIn(ExperimentalSerializationApi::class) constr
     val sources: List<Source> = emptyList(),
 
     @SerialName(value = "transaction_for_values")
-    @JsonNames("transactionForValues")
+    @JsonNames("transactionForValues") // TODO-Abhi: Eventually remove this
     val transactionForValues: List<TransactionFor> = emptyList(),
 
     val transactions: List<Transaction> = emptyList(),
