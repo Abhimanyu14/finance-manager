@@ -189,7 +189,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         }
 
         // TODO-Abhi: Error message - "Title already exists"
-        return !(title.trim() != category.value?.title && categories.find {
+        return !(title.trim() != category.value?.title?.trim() && categories.find {
             it.title.equalsIgnoringCase(
                 other = title.trim(),
             )

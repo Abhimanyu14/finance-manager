@@ -10,7 +10,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememb
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenView
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenViewData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenViewErrorData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenViewEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenViewVisibilityData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.viewmodel.AddOrEditSourceScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.viewmodel.AddOrEditSourceScreenViewModelImpl
 
@@ -21,13 +23,12 @@ fun AddSourceScreen(
     screenViewModel.logger.logError(
         message = "Inside AddSourceScreen",
     )
+    val errorData: AddOrEditSourceScreenViewErrorData by screenViewModel.errorData.collectAsStateWithLifecycle()
     val selectedSourceTypeIndex: Int by screenViewModel.selectedSourceTypeIndex.collectAsStateWithLifecycle()
     val name: TextFieldValue by screenViewModel.name.collectAsStateWithLifecycle()
 
     AddOrEditSourceScreenView(
         data = AddOrEditSourceScreenViewData(
-            isBalanceAmountTextFieldVisible = false,
-            isNameTextFieldVisible = true,
             isSourceTypesRadioGroupVisible = true,
             appBarTitleTextStringResourceId = R.string.screen_add_source_appbar_title,
             ctaButtonLabelTextStringResourceId = R.string.screen_add_source_floating_action_button_content_description,
@@ -37,6 +38,11 @@ fun AddSourceScreen(
                 text = "",
             ),
             name = name,
+            visibilityData = AddOrEditSourceScreenViewVisibilityData(
+                balanceAmount = false,
+                name = true,
+            ),
+            errorData = errorData,
         ),
         events = AddOrEditSourceScreenViewEvents(
             clearBalanceAmountValue = {},

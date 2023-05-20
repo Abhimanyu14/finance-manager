@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetSourceUseCase
@@ -25,6 +25,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultSource
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenViewErrorData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.navigation.AddOrEditSourceScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -55,15 +56,20 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
         )
 
     private lateinit var sources: List<Source>
-    private val _source: MutableStateFlow<Source?> = MutableStateFlow(
+    private val _originalSource: MutableStateFlow<Source?> = MutableStateFlow(
         value = null,
     )
-    override val source: StateFlow<Source?> = _source
+    override val originalSource: StateFlow<Source?> = _originalSource
 
     override val sourceTypes: List<SourceType> = SourceType.values()
         .filter {
             it != SourceType.CASH
         }
+
+    private val _errorData: MutableStateFlow<AddOrEditSourceScreenViewErrorData> = MutableStateFlow(
+        value = AddOrEditSourceScreenViewErrorData(),
+    )
+    override val errorData: StateFlow<AddOrEditSourceScreenViewErrorData> = _errorData
 
     private val _selectedSourceTypeIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = sourceTypes.indexOf(
@@ -92,7 +98,7 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     }
 
     override fun updateSource() {
-        val source = source.value ?: return
+        val source = originalSource.value ?: return
         val amountValue = balanceAmountValue.value.text.toInt() - source.balanceAmount.value
         val updatedSource = source
             .copy(
@@ -177,26 +183,41 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
             return false
         }
 
-        // TODO-Abhi: Error message - "Name already exists"
         if (
             isDefaultSource(
                 source = name.trim(),
             )
         ) {
+            _errorData.update {
+                _errorData.value.copy(
+                    name = "Source already exists" // TODO(Abhi): Move to string resources
+                )
+            }
             return false
         }
 
-        // TODO-Abhi: Error message - "Name already exists"
-        val sourcesList = if (::sources.isInitialized) {
-            sources
+        val doesNotExist = if (::sources.isInitialized) {
+            sources.find {
+                it.name.trim().equalsIgnoringCase(
+                    other = name.trim(),
+                )
+            }.isNull()
         } else {
-            emptyList()
+            true
         }
-        return !(source.value?.name != name.trim() && sourcesList.find {
-            it.name.equalsIgnoringCase(
-                other = name.trim(),
-            )
-        }.isNotNull())
+
+        val result = name.trim() == originalSource.value?.name?.trim() || doesNotExist
+        _errorData.update {
+            if (result) {
+                AddOrEditSourceScreenViewErrorData()
+            } else {
+                _errorData.value.copy(
+                    name = "Source already exists" // TODO(Abhi): Move to string resources
+                )
+            }
+        }
+
+        return result
     }
 
     override fun clearName() {
@@ -252,7 +273,7 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
             viewModelScope.launch(
                 context = dispatcherProvider.io,
             ) {
-                _source.update {
+                _originalSource.update {
                     getSourceUseCase(
                         id = id,
                     )
@@ -264,7 +285,7 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     }
 
     private fun updateInitialSourceValue() {
-        val source = source.value ?: return
+        val source = originalSource.value ?: return
         updateSelectedSourceTypeIndex(
             updatedIndex = sourceTypes.indexOf(
                 element = source.type,

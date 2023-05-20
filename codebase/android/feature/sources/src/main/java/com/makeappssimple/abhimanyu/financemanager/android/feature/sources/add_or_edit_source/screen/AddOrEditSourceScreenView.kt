@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen
 
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -10,6 +11,7 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
@@ -26,6 +28,8 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.SourceType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
@@ -45,9 +49,19 @@ internal enum class AddOrEditSourceBottomSheetType : BottomSheetType {
 }
 
 @Immutable
+internal data class AddOrEditSourceScreenViewVisibilityData(
+    val balanceAmount: Boolean = true,
+    val name: Boolean = true,
+)
+
+@Immutable
+data class AddOrEditSourceScreenViewErrorData(
+    val balanceAmount: String? = null,
+    val name: String? = null,
+)
+
+@Immutable
 internal data class AddOrEditSourceScreenViewData(
-    val isBalanceAmountTextFieldVisible: Boolean,
-    val isNameTextFieldVisible: Boolean,
     val isSourceTypesRadioGroupVisible: Boolean,
     @StringRes val appBarTitleTextStringResourceId: Int,
     @StringRes val ctaButtonLabelTextStringResourceId: Int,
@@ -55,6 +69,8 @@ internal data class AddOrEditSourceScreenViewData(
     val sourceTypes: List<SourceType>,
     val balanceAmountValue: TextFieldValue,
     val name: TextFieldValue,
+    val visibilityData: AddOrEditSourceScreenViewVisibilityData,
+    val errorData: AddOrEditSourceScreenViewErrorData,
 )
 
 @Immutable
@@ -152,7 +168,7 @@ internal fun AddOrEditSourceScreenView(
                         ),
                 )
             }
-            if (data.isNameTextFieldVisible) {
+            if (data.visibilityData.name) {
                 MyOutlinedTextField(
                     textFieldValue = data.name,
                     labelTextStringResourceId = R.string.screen_add_or_edit_source_name,
@@ -161,6 +177,19 @@ internal fun AddOrEditSourceScreenView(
                     onValueChange = { updatedName ->
                         events.updateName(updatedName)
                     },
+                    supportingText = {
+                        AnimatedVisibility(
+                            visible = data.errorData.name.isNotNullOrBlank(),
+                        ) {
+                            MyText(
+                                text = data.errorData.name.orEmpty(),
+                                style = MaterialTheme.typography.bodySmall.copy(
+                                    color = MaterialTheme.colorScheme.error,
+                                ),
+                            )
+                        }
+                    },
+                    isError = data.errorData.name.isNotNullOrBlank(),
                     keyboardActions = KeyboardActions(
                         onNext = {
                             state.focusManager.moveFocus(
@@ -174,7 +203,7 @@ internal fun AddOrEditSourceScreenView(
                     ),
                     modifier = Modifier
                         .then(
-                            if (data.isBalanceAmountTextFieldVisible) {
+                            if (data.visibilityData.balanceAmount) {
                                 Modifier
                             } else {
                                 Modifier.focusRequester(
@@ -189,7 +218,7 @@ internal fun AddOrEditSourceScreenView(
                         ),
                 )
             }
-            if (data.isBalanceAmountTextFieldVisible) {
+            if (data.visibilityData.balanceAmount) {
                 MyOutlinedTextField(
                     textFieldValue = data.balanceAmountValue,
                     labelTextStringResourceId = R.string.screen_edit_source_balance_amount_value,
