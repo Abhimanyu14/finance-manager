@@ -1,13 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.CategoryEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionDataMappedByCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 
 interface GetTransactionDataMappedByCategoryUseCase {
     suspend operator fun invoke(
         transactionType: TransactionType,
-    ): Map<CategoryEntity?, Long>
+    ): List<TransactionDataMappedByCategory>
 }
 
 class GetTransactionDataMappedByCategoryUseCaseImpl(
@@ -15,9 +15,35 @@ class GetTransactionDataMappedByCategoryUseCaseImpl(
 ) : GetTransactionDataMappedByCategoryUseCase {
     override suspend operator fun invoke(
         transactionType: TransactionType,
-    ): Map<CategoryEntity?, Long> {
-        return transactionRepository.getTransactionDataMappedByCategory(
-            transactionType = transactionType,
-        )
+    ): List<TransactionDataMappedByCategory> {
+        // TODO(Abhi): To handle refunds
+        val result = transactionRepository.getAllTransactionData()
+            .filter {
+                it.transaction.transactionType == transactionType
+            }.groupBy {
+                it.category
+            }
+            .mapNotNull { (category, transactionDataList) ->
+                category?.let {
+                    TransactionDataMappedByCategory(
+                        category = it,
+                        amountValue = transactionDataList.sumOf { transactionData ->
+                            transactionData.transaction.amount.value
+                        },
+                        percentage = 0.0,
+                    )
+                }
+            }
+            .sortedByDescending {
+                it.amountValue
+            }
+        val sum = result.sumOf {
+            it.amountValue
+        }
+        return result.map {
+            it.copy(
+                percentage = (it.amountValue.toDouble() / sum) * 100,
+            )
+        }
     }
 }

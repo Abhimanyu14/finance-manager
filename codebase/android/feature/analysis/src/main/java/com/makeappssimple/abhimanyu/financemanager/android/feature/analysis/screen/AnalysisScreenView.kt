@@ -1,7 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -18,6 +19,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Common
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.R
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.AnalysisListItem
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.AnalysisListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.AnalysisListItemEvents
 
 internal enum class AnalysisBottomSheetType : BottomSheetType {
     NONE,
@@ -25,7 +29,7 @@ internal enum class AnalysisBottomSheetType : BottomSheetType {
 
 @Immutable
 internal data class AnalysisScreenViewData(
-    val isLoading: Boolean,
+    val transactionDataMappedByCategory: List<AnalysisListItemData>,
 )
 
 @Immutable
@@ -82,12 +86,22 @@ internal fun AnalysisScreenView(
         modifier = Modifier
             .fillMaxSize(),
     ) {
-        Column(
+        LazyColumn(
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
                 .fillMaxSize(),
         ) {
-
+            items(
+                items = data.transactionDataMappedByCategory,
+                key = { listItem ->
+                    listItem.hashCode()
+                },
+            ) { listItem ->
+                AnalysisListItem(
+                    data = listItem,
+                    events = AnalysisListItemEvents(),
+                )
+            }
         }
     }
 }

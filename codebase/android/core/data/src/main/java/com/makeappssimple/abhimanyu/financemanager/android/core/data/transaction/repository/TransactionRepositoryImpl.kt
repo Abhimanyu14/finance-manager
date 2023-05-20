@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.datasource.CommonDataSource
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.CategoryEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
@@ -11,7 +10,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -47,22 +45,6 @@ class TransactionRepositoryImpl(
         ).map {
             it.asExternalModel()
         }
-    }
-
-    override suspend fun getTransactionDataMappedByCategory(
-        transactionType: TransactionType,
-    ): Map<CategoryEntity?, Long> {
-        // TODO(Abhi): To handle refunds
-        return transactionDao.getAllTransactionData()
-            .filter {
-                it.transaction.transactionType == transactionType
-            }.groupBy {
-                it.category
-            }.map { (category, transactionDataList) ->
-                category to transactionDataList.sumOf {
-                    it.transaction.amount.value
-                }
-            }.toMap()
     }
 
     override fun getRecentTransactionDataFlow(
