@@ -20,6 +20,7 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -32,7 +33,9 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
     private val deleteSourcesUseCase: DeleteSourcesUseCase,
     private val dispatcherProvider: DispatcherProvider,
 ) : SourcesScreenViewModel, ViewModel() {
-    private val defaultSourceId: Flow<Int?> = dataStore.getDefaultSourceId()
+    private val defaultSourceId: Flow<Int?> = dataStore.getDefaultDataId().map {
+        it?.source
+    }
     private val allSourcesFlow: Flow<List<Source>> = getAllSourcesFlowUseCase()
     override val sourcesListItemDataList: StateFlow<List<SourcesListItemData>> = combine(
         flow = defaultSourceId,

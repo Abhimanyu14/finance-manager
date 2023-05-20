@@ -6,6 +6,9 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.DataTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -25,9 +28,33 @@ internal class MyDataStoreImpl(
             )
         }
 
-    override fun getCategoryDataVersionNumber(): Flow<Int?> {
+    override fun getDataTimestamp(): Flow<DataTimestamp?> {
         return preferences.map {
-            it[CATEGORY_DATA_VERSION_NUMBER]
+            DataTimestamp(
+                lastBackup = it[LAST_DATA_BACKUP_TIMESTAMP] ?: 0L,
+                lastChange = it[LAST_DATA_CHANGE_TIMESTAMP] ?: 0L,
+            )
+        }
+    }
+
+    override fun getDefaultDataId(): Flow<DefaultDataId?> {
+        return preferences.map {
+            DefaultDataId(
+                expenseCategory = it[DEFAULT_EXPENSE_CATEGORY_ID] ?: 0,
+                incomeCategory = it[DEFAULT_INCOME_CATEGORY_ID] ?: 0,
+                investmentCategory = it[DEFAULT_INVESTMENT_CATEGORY_ID] ?: 0,
+                source = it[DEFAULT_SOURCE_ID] ?: 0,
+            )
+        }
+    }
+
+    override fun getInitialDataVersionNumber(): Flow<InitialDataVersionNumber?> {
+        return preferences.map {
+            InitialDataVersionNumber(
+                category = it[CATEGORY_DATA_VERSION_NUMBER] ?: 0,
+                emoji = it[EMOJI_DATA_VERSION_NUMBER] ?: 0,
+                transaction = it[TRANSACTIONS_DATA_VERSION_NUMBER] ?: 0,
+            )
         }
     }
 
@@ -39,23 +66,11 @@ internal class MyDataStoreImpl(
         }
     }
 
-    override fun getDefaultExpenseCategoryId(): Flow<Int?> {
-        return preferences.map {
-            it[DEFAULT_EXPENSE_CATEGORY_ID]
-        }
-    }
-
     override suspend fun setDefaultExpenseCategoryId(
         defaultExpenseCategoryId: Int,
     ) {
         dataStore.edit {
             it[DEFAULT_EXPENSE_CATEGORY_ID] = defaultExpenseCategoryId
-        }
-    }
-
-    override fun getDefaultIncomeCategoryId(): Flow<Int?> {
-        return preferences.map {
-            it[DEFAULT_INCOME_CATEGORY_ID]
         }
     }
 
@@ -67,23 +82,11 @@ internal class MyDataStoreImpl(
         }
     }
 
-    override fun getDefaultInvestmentCategoryId(): Flow<Int?> {
-        return preferences.map {
-            it[DEFAULT_INVESTMENT_CATEGORY_ID]
-        }
-    }
-
     override suspend fun setDefaultInvestmentCategoryId(
         defaultInvestmentCategoryId: Int,
     ) {
         dataStore.edit {
             it[DEFAULT_INVESTMENT_CATEGORY_ID] = defaultInvestmentCategoryId
-        }
-    }
-
-    override fun getDefaultSourceId(): Flow<Int?> {
-        return preferences.map {
-            it[DEFAULT_SOURCE_ID]
         }
     }
 
@@ -95,23 +98,11 @@ internal class MyDataStoreImpl(
         }
     }
 
-    override fun getEmojiDataVersionNumber(): Flow<Int?> {
-        return preferences.map {
-            it[EMOJI_DATA_VERSION_NUMBER]
-        }
-    }
-
     override suspend fun setEmojiDataVersionNumber(
         emojiDataVersionNumber: Int,
     ) {
         dataStore.edit {
             it[EMOJI_DATA_VERSION_NUMBER] = emojiDataVersionNumber
-        }
-    }
-
-    override fun getLastDataBackupTimestamp(): Flow<Long?> {
-        return preferences.map {
-            it[LAST_DATA_BACKUP_TIMESTAMP]
         }
     }
 
@@ -123,23 +114,11 @@ internal class MyDataStoreImpl(
         }
     }
 
-    override fun getLastDataChangeTimestamp(): Flow<Long?> {
-        return preferences.map {
-            it[LAST_DATA_CHANGE_TIMESTAMP]
-        }
-    }
-
     override suspend fun setLastDataChangeTimestamp(
         lastDataChangeTimestamp: Long,
     ) {
         dataStore.edit {
             it[LAST_DATA_CHANGE_TIMESTAMP] = lastDataChangeTimestamp
-        }
-    }
-
-    override fun getTransactionsDataVersionNumber(): Flow<Int?> {
-        return preferences.map {
-            it[TRANSACTIONS_DATA_VERSION_NUMBER]
         }
     }
 

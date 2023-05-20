@@ -3,13 +3,13 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.DeleteCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfCategoryIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.grid_item.CategoriesGridItemData
@@ -40,12 +40,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
     )
     override val selectedTabIndex: StateFlow<Int> = _selectedTabIndex
 
-    private val defaultExpenseCategoryId: Flow<Int?> = dataStore
-        .getDefaultExpenseCategoryId()
-    private val defaultIncomeCategoryId: Flow<Int?> = dataStore
-        .getDefaultIncomeCategoryId()
-    private val defaultInvestmentCategoryId: Flow<Int?> = dataStore
-        .getDefaultInvestmentCategoryId()
+    private val defaultDataId: Flow<DefaultDataId?> = dataStore.getDefaultDataId()
     private val categoriesTransactionTypeMap: Flow<Map<TransactionType, List<Category>>> =
         getAllCategoriesFlowUseCase()
             .map { categories ->
@@ -56,24 +51,21 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
     override val categoriesGridItemDataMap: Flow<Map<TransactionType, List<CategoriesGridItemData>>> =
         combine(
             categoriesTransactionTypeMap,
-            defaultExpenseCategoryId,
-            defaultIncomeCategoryId,
-            defaultInvestmentCategoryId,
+            defaultDataId,
         ) {
                 categoriesTransactionTypeMap,
-                defaultExpenseCategoryId,
-                defaultIncomeCategoryId,
-                defaultInvestmentCategoryId,
+                defaultDataId,
             ->
             val expenseCategoriesGridItemDataList =
                 categoriesTransactionTypeMap[TransactionType.EXPENSE]?.map { category ->
-                    val isDefault = if (defaultExpenseCategoryId.isNull()) {
-                        isDefaultExpenseCategory(
-                            category = category.title,
-                        )
-                    } else {
-                        defaultExpenseCategoryId == category.id
-                    }
+                    val isDefault =
+                        if (defaultDataId == null || defaultDataId.expenseCategory == 0) {
+                            isDefaultExpenseCategory(
+                                category = category.title,
+                            )
+                        } else {
+                            defaultDataId.expenseCategory == category.id
+                        }
                     val isUsedInTransactions = checkIfCategoryIsUsedInTransactionsUseCase(
                         categoryId = category.id,
                     )
@@ -87,13 +79,14 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
                 } ?: emptyList()
             val incomeCategoriesGridItemDataList =
                 categoriesTransactionTypeMap[TransactionType.INCOME]?.map { category ->
-                    val isDefault = if (defaultIncomeCategoryId.isNull()) {
-                        isDefaultIncomeCategory(
-                            category = category.title,
-                        )
-                    } else {
-                        defaultIncomeCategoryId == category.id
-                    }
+                    val isDefault =
+                        if (defaultDataId == null || defaultDataId.incomeCategory == 0) {
+                            isDefaultIncomeCategory(
+                                category = category.title,
+                            )
+                        } else {
+                            defaultDataId.incomeCategory == category.id
+                        }
                     val isUsedInTransactions = checkIfCategoryIsUsedInTransactionsUseCase(
                         categoryId = category.id,
                     )
@@ -107,13 +100,14 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
                 } ?: emptyList()
             val investmentCategoriesGridItemDataList =
                 categoriesTransactionTypeMap[TransactionType.INVESTMENT]?.map { category ->
-                    val isDefault = if (defaultInvestmentCategoryId.isNull()) {
-                        isDefaultInvestmentCategory(
-                            category = category.title,
-                        )
-                    } else {
-                        defaultInvestmentCategoryId == category.id
-                    }
+                    val isDefault =
+                        if (defaultDataId == null || defaultDataId.investmentCategory == 0) {
+                            isDefaultInvestmentCategory(
+                                category = category.title,
+                            )
+                        } else {
+                            defaultDataId.investmentCategory == category.id
+                        }
                     val isUsedInTransactions = checkIfCategoryIsUsedInTransactionsUseCase(
                         categoryId = category.id,
                     )

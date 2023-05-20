@@ -41,11 +41,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.T
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionForEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.transactionsCleanUp
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -196,8 +195,11 @@ abstract class MyRoomDatabase : RoomDatabase() {
                         exception.printStackTrace()
                         return@launch
                     }
+                    val initialDataVersionNumber: InitialDataVersionNumber? =
+                        myDataStore.getInitialDataVersionNumber().first()
                     launch {
                         populateCategoryData(
+                            categoryDataVersion = initialDataVersionNumber?.category ?: 2,
                             myDataStore = myDataStore,
                             myRoomDatabase = myRoomDatabase,
                             initialDatabaseData = initialDatabaseData,
@@ -205,6 +207,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     }
                     launch {
                         populateEmojiData(
+                            emojiDataVersion = initialDataVersionNumber?.emoji ?: 0,
                             myDataStore = myDataStore,
                             myRoomDatabase = myRoomDatabase,
                             initialDatabaseData = initialDatabaseData,
@@ -226,6 +229,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                         transactionsCleanUpIfRequired(
                             myDataStore = myDataStore,
                             myRoomDatabase = myRoomDatabase,
+                            transactionsDataVersion = initialDataVersionNumber?.transaction ?: 0,
                         )
                     }
                 }
@@ -233,6 +237,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
         }
 
         private suspend fun populateCategoryData(
+            categoryDataVersion: Int,
             myDataStore: MyDataStore,
             myRoomDatabase: MyRoomDatabase,
             initialDatabaseData: InitialDatabaseData,
@@ -246,32 +251,27 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     )
                 }
             } else {
-                myDataStore.getCategoryDataVersionNumber()
-                    .map {
-                        it ?: 2
-                    }
-                    .collectLatest { categoryDataVersion ->
-                        if (categoryDataVersion < initialDatabaseData.defaultCategories.versionNumber) {
-                            val categoriesData =
-                                initialDatabaseData.defaultCategories.categoriesData
-                            categoriesData
-                                .filter {
-                                    it.versionNumber > categoryDataVersion
-                                }
-                                .forEach {
-                                    categoryDao.insertCategories(
-                                        categories = it.categories.toTypedArray(),
-                                    )
-                                }
-                            myDataStore.setCategoryDataVersionNumber(
-                                categoryDataVersionNumber = initialDatabaseData.defaultCategories.versionNumber,
+                if (categoryDataVersion < initialDatabaseData.defaultCategories.versionNumber) {
+                    val categoriesData =
+                        initialDatabaseData.defaultCategories.categoriesData
+                    categoriesData
+                        .filter {
+                            it.versionNumber > categoryDataVersion
+                        }
+                        .forEach {
+                            categoryDao.insertCategories(
+                                categories = it.categories.toTypedArray(),
                             )
                         }
-                    }
+                    myDataStore.setCategoryDataVersionNumber(
+                        categoryDataVersionNumber = initialDatabaseData.defaultCategories.versionNumber,
+                    )
+                }
             }
         }
 
         private suspend fun populateEmojiData(
+            emojiDataVersion: Int,
             myDataStore: MyDataStore,
             myRoomDatabase: MyRoomDatabase,
             initialDatabaseData: InitialDatabaseData,
@@ -282,22 +282,17 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     emojis = initialDatabaseData.emojis.emojisData.toTypedArray(),
                 )
             } else {
-                myDataStore.getEmojiDataVersionNumber()
-                    .map {
-                        it ?: 0
-                    }.collectLatest { emojiDataVersion ->
-                        if (emojiDataVersion < initialDatabaseData.emojis.versionNumber) {
-                            emojiDao.deleteAllEmojis()
-                            initialDatabaseData.emojis.emojisData.forEach {
-                                emojiDao.insertEmoji(
-                                    emoji = it,
-                                )
-                            }
-                            myDataStore.setEmojiDataVersionNumber(
-                                emojiDataVersionNumber = initialDatabaseData.emojis.versionNumber,
-                            )
-                        }
+                if (emojiDataVersion < initialDatabaseData.emojis.versionNumber) {
+                    emojiDao.deleteAllEmojis()
+                    initialDatabaseData.emojis.emojisData.forEach {
+                        emojiDao.insertEmoji(
+                            emoji = it,
+                        )
                     }
+                    myDataStore.setEmojiDataVersionNumber(
+                        emojiDataVersionNumber = initialDatabaseData.emojis.versionNumber,
+                    )
+                }
             }
         }
 
@@ -328,26 +323,22 @@ abstract class MyRoomDatabase : RoomDatabase() {
         private suspend fun transactionsCleanUpIfRequired(
             myDataStore: MyDataStore,
             myRoomDatabase: MyRoomDatabase,
+            transactionsDataVersion: Int,
         ) {
-            myDataStore.getTransactionsDataVersionNumber()
-                .map {
-                    it ?: 0
-                }.collectLatest { transactionsDataVersion ->
-                    val currentTransactionsDataVersion = 1
-                    if (transactionsDataVersion < currentTransactionsDataVersion) {
-                        val transactionDao = myRoomDatabase.transactionDao()
-                        val transactions = transactionDao.getAllTransactionsFlow().first()
-                        transactionDao.deleteAllTransactions()
-                        transactionDao.insertTransactions(
-                            *transactionsCleanUp(
-                                transactions = transactions,
-                            ).toTypedArray()
-                        )
-                        myDataStore.setTransactionsDataVersionNumber(
-                            transactionsDataVersionNumber = currentTransactionsDataVersion,
-                        )
-                    }
-                }
+            val currentTransactionsDataVersion = 1
+            if (transactionsDataVersion < currentTransactionsDataVersion) {
+                val transactionDao = myRoomDatabase.transactionDao()
+                val transactions = transactionDao.getAllTransactionsFlow().first()
+                transactionDao.deleteAllTransactions()
+                transactionDao.insertTransactions(
+                    *transactionsCleanUp(
+                        transactions = transactions,
+                    ).toTypedArray()
+                )
+                myDataStore.setTransactionsDataVersionNumber(
+                    transactionsDataVersionNumber = currentTransactionsDataVersion,
+                )
+            }
         }
     }
 }

@@ -1,59 +1,49 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.datastore
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.DataTimestamp
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
 import kotlinx.coroutines.flow.Flow
 import java.time.Instant
 
-// TODO(Abhi): Split using data classes
 interface MyDataStore {
-    fun getCategoryDataVersionNumber(): Flow<Int?>
+    fun getDataTimestamp(): Flow<DataTimestamp?>
+
+    fun getDefaultDataId(): Flow<DefaultDataId?>
+
+    fun getInitialDataVersionNumber(): Flow<InitialDataVersionNumber?>
 
     suspend fun setCategoryDataVersionNumber(
         categoryDataVersionNumber: Int,
     )
 
-    fun getDefaultExpenseCategoryId(): Flow<Int?>
-
     suspend fun setDefaultExpenseCategoryId(
         defaultExpenseCategoryId: Int,
     )
-
-    fun getDefaultIncomeCategoryId(): Flow<Int?>
 
     suspend fun setDefaultIncomeCategoryId(
         defaultIncomeCategoryId: Int,
     )
 
-    fun getDefaultInvestmentCategoryId(): Flow<Int?>
-
     suspend fun setDefaultInvestmentCategoryId(
         defaultInvestmentCategoryId: Int,
     )
-
-    fun getDefaultSourceId(): Flow<Int?>
 
     suspend fun setDefaultSourceId(
         defaultSourceId: Int,
     )
 
-    fun getEmojiDataVersionNumber(): Flow<Int?>
-
     suspend fun setEmojiDataVersionNumber(
         emojiDataVersionNumber: Int,
     )
-
-    fun getLastDataBackupTimestamp(): Flow<Long?>
 
     suspend fun setLastDataBackupTimestamp(
         lastDataBackupTimestamp: Long = getCurrentTimeMillis(),
     )
 
-    fun getLastDataChangeTimestamp(): Flow<Long?>
-
     suspend fun setLastDataChangeTimestamp(
         lastDataChangeTimestamp: Long = getCurrentTimeMillis(),
     )
-
-    fun getTransactionsDataVersionNumber(): Flow<Int?>
 
     suspend fun setTransactionsDataVersionNumber(
         transactionsDataVersionNumber: Int,

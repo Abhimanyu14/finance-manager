@@ -14,6 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.DataTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
@@ -97,20 +98,10 @@ class BackupDataUseCaseImpl(
                     transactions = transactions,
                 ),
                 datastoreData = DatastoreData(
-                    defaultDataId = DefaultDataId(
-                        expenseCategory = dataStore.getDefaultExpenseCategoryId().first() ?: 0,
-                        incomeCategory = dataStore.getDefaultIncomeCategoryId().first() ?: 0,
-                        investmentCategory = dataStore.getDefaultInvestmentCategoryId().first()
-                            ?: 0,
-                        source = dataStore.getDefaultSourceId().first() ?: 0,
-                    ),
-                    initialDataVersionNumber = InitialDataVersionNumber(
-                        category = dataStore.getCategoryDataVersionNumber().first() ?: 0,
-                        emoji = dataStore.getEmojiDataVersionNumber().first() ?: 0,
-                        transaction = dataStore.getTransactionsDataVersionNumber().first() ?: 0,
-                    ),
-                    lastDataBackupTimestamp = dataStore.getLastDataBackupTimestamp().first() ?: 0L,
-                    lastDataChangeTimestamp = dataStore.getLastDataChangeTimestamp().first() ?: 0L,
+                    defaultDataId = dataStore.getDefaultDataId().first() ?: DefaultDataId(),
+                    initialDataVersionNumber = dataStore.getInitialDataVersionNumber().first()
+                        ?: InitialDataVersionNumber(),
+                    dataTimestamp = dataStore.getDataTimestamp().first() ?: DataTimestamp(),
                 )
             )
             val jsonString = Json.encodeToString(

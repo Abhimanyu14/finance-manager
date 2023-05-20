@@ -20,7 +20,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmoun
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
@@ -86,13 +85,8 @@ internal class HomeScreenViewModelImpl @Inject constructor(
                 )
             }
         }
-    override val showBackupCard: Flow<Boolean> = combine(
-        flow = dataStore.getLastDataBackupTimestamp(),
-        flow2 = dataStore.getLastDataChangeTimestamp(),
-    ) { lastDataBackupTimestamp, lastDataChangeTimestamp ->
-        lastDataBackupTimestamp.isNotNull() &&
-                lastDataChangeTimestamp.isNotNull() &&
-                lastDataBackupTimestamp < lastDataChangeTimestamp
+    override val showBackupCard: Flow<Boolean> = dataStore.getDataTimestamp().map {
+        it.isNotNull() && it.lastBackup < it.lastChange
     }
 
     override fun backupDataToDocument(

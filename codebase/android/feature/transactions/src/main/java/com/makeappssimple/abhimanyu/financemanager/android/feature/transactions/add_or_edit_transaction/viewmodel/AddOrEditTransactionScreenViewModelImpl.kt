@@ -28,12 +28,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usec
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTitleSuggestionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.InsertTransactionUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.UpdateTransactionUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
@@ -106,10 +107,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     private var investmentDefaultCategory: Category? = null
 
     // Default data from data store
-    private var defaultSourceIdFromDataStore: Int? = null
-    private var defaultExpenseCategoryIdFromDataStore: Int? = null
-    private var defaultIncomeCategoryIdFromDataStore: Int? = null
-    private var defaultInvestmentCategoryIdFromDataStore: Int? = null
+    private var defaultDataIdFromDataStore: DefaultDataId? = null
     // endregion
 
     // region Data source
@@ -792,19 +790,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             // Default data from data store
             awaitAll(
                 async {
-                    defaultSourceIdFromDataStore = dataStore.getDefaultSourceId().first()
-                },
-                async {
-                    defaultExpenseCategoryIdFromDataStore =
-                        dataStore.getDefaultExpenseCategoryId().first()
-                },
-                async {
-                    defaultIncomeCategoryIdFromDataStore =
-                        dataStore.getDefaultIncomeCategoryId().first()
-                },
-                async {
-                    defaultInvestmentCategoryIdFromDataStore =
-                        dataStore.getDefaultInvestmentCategoryId().first()
+                    defaultDataIdFromDataStore = dataStore.getDefaultDataId().first()
                 },
                 async {
                     _categories.value = getAllCategoriesUseCase()
@@ -1176,21 +1162,21 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
 
     private fun setDefaultCategory() {
         expenseDefaultCategory = getCategory(
-            categoryId = defaultExpenseCategoryIdFromDataStore,
+            categoryId = defaultDataIdFromDataStore?.expenseCategory,
         ) ?: categories.value.firstOrNull { category ->
             isDefaultExpenseCategory(
                 category = category.title,
             )
         }
         incomeDefaultCategory = getCategory(
-            categoryId = defaultIncomeCategoryIdFromDataStore,
+            categoryId = defaultDataIdFromDataStore?.incomeCategory,
         ) ?: categories.value.firstOrNull { category ->
             isDefaultIncomeCategory(
                 category = category.title,
             )
         }
         investmentDefaultCategory = getCategory(
-            categoryId = defaultInvestmentCategoryIdFromDataStore,
+            categoryId = defaultDataIdFromDataStore?.investmentCategory,
         ) ?: categories.value.firstOrNull { category ->
             isDefaultInvestmentCategory(
                 category = category.title,
@@ -1205,7 +1191,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
 
     private fun setDefaultSource() {
         defaultSource = getSource(
-            sourceId = defaultSourceIdFromDataStore,
+            sourceId = defaultDataIdFromDataStore?.source,
         ) ?: sources.value.firstOrNull { source ->
             isDefaultSource(
                 source = source.name,

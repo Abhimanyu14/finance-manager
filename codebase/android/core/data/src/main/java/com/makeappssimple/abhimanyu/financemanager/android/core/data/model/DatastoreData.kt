@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.model
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.DataTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
 import kotlinx.serialization.SerialName
@@ -13,9 +14,6 @@ data class DatastoreData(
     @SerialName(value = "initial_data_version_number")
     val initialDataVersionNumber: InitialDataVersionNumber = InitialDataVersionNumber(),
 
-    @SerialName(value = "last_data_backup_timestamp")
-    val lastDataBackupTimestamp: Long = 0L,
-
-    @SerialName(value = "last_data_change_timestamp")
-    val lastDataChangeTimestamp: Long = 0L,
+    @SerialName(value = "data_timestamp")
+    val dataTimestamp: DataTimestamp = DataTimestamp(),
 )
