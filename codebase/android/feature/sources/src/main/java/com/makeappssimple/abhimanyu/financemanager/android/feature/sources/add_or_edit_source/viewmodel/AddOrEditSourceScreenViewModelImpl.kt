@@ -178,8 +178,9 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
         }
 
         // TODO-Abhi: Error message - "Name already exists"
-        if (isDefaultSource(
-                source = name,
+        if (
+            isDefaultSource(
+                source = name.trim(),
             )
         ) {
             return false
@@ -191,9 +192,9 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
         } else {
             emptyList()
         }
-        return !(source.value?.name != name && sourcesList.find {
+        return !(source.value?.name != name.trim() && sourcesList.find {
             it.name.equalsIgnoringCase(
-                other = name,
+                other = name.trim(),
             )
         }.isNotNull())
     }

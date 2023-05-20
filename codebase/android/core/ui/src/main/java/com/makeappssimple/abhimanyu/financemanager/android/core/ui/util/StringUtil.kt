@@ -8,7 +8,7 @@ private const val DEFAULT_SOURCE = "Cash"
 fun isDefaultExpenseCategory(
     category: String,
 ): Boolean {
-    return category.contains(
+    return category.equals(
         other = DEFAULT_EXPENSE_CATEGORY,
         ignoreCase = true,
     )
@@ -17,7 +17,7 @@ fun isDefaultExpenseCategory(
 fun isDefaultIncomeCategory(
     category: String,
 ): Boolean {
-    return category.contains(
+    return category.equals(
         other = DEFAULT_INCOME_CATEGORY,
         ignoreCase = true,
     )
@@ -26,7 +26,7 @@ fun isDefaultIncomeCategory(
 fun isDefaultInvestmentCategory(
     category: String,
 ): Boolean {
-    return category.contains(
+    return category.equals(
         other = DEFAULT_INVESTMENT_CATEGORY,
         ignoreCase = true,
     )
@@ -35,7 +35,7 @@ fun isDefaultInvestmentCategory(
 fun isDefaultSource(
     source: String,
 ): Boolean {
-    return source.contains(
+    return source.equals(
         other = DEFAULT_SOURCE,
         ignoreCase = true,
     )

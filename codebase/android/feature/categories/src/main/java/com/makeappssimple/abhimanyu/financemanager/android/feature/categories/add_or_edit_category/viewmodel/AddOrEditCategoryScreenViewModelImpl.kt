@@ -166,7 +166,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
 
         // TODO-Abhi: Error message - "Title already exists"
         if (isDefaultIncomeCategory(
-                category = title,
+                category = title.trim(),
             )
         ) {
             return false
@@ -174,7 +174,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
 
         // TODO-Abhi: Error message - "Title already exists"
         if (isDefaultExpenseCategory(
-                category = title,
+                category = title.trim(),
             )
         ) {
             return false
@@ -182,16 +182,16 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
 
         // TODO-Abhi: Error message - "Title already exists"
         if (isDefaultInvestmentCategory(
-                category = title,
+                category = title.trim(),
             )
         ) {
             return false
         }
 
         // TODO-Abhi: Error message - "Title already exists"
-        return !(title != category.value?.title && categories.find {
+        return !(title.trim() != category.value?.title && categories.find {
             it.title.equalsIgnoringCase(
-                other = title,
+                other = title.trim(),
             )
         }.isNotNull())
     }
