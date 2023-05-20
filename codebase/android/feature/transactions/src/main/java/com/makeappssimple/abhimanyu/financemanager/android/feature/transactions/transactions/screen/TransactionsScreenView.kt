@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,7 +23,6 @@ import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
@@ -352,47 +350,43 @@ internal fun TransactionsScreenView(
                     }
                 }
             }
-            CompositionLocalProvider(
-                LocalOverscrollConfiguration provides null
+            LazyColumn(
+                contentPadding = PaddingValues(
+                    bottom = 72.dp,
+                ),
             ) {
-                LazyColumn(
-                    contentPadding = PaddingValues(
-                        bottom = 72.dp,
-                    ),
-                ) {
-                    data.transactionDetailsListItemViewData.forEach { (date, listItemData) ->
-                        if (date.isNotBlank()) {
-                            stickyHeader {
-                                MyText(
-                                    modifier = Modifier
-                                        .background(
-                                            color = MaterialTheme.colorScheme.background,
-                                        )
-                                        .fillMaxWidth()
-                                        .padding(
-                                            start = 16.dp,
-                                            top = 8.dp,
-                                            bottom = 4.dp,
-                                            end = 16.dp,
-                                        ),
-                                    text = date,
-                                    style = MaterialTheme.typography.headlineSmall
-                                        .copy(
-                                            color = MaterialTheme.colorScheme.onBackground,
-                                        ),
-                                )
-                            }
-                        }
-                        itemsIndexed(
-                            items = listItemData,
-                            key = { _, listItem ->
-                                listItem.hashCode()
-                            },
-                        ) { _, listItem ->
-                            TransactionListItem(
-                                data = listItem,
+                data.transactionDetailsListItemViewData.forEach { (date, listItemData) ->
+                    if (date.isNotBlank()) {
+                        stickyHeader {
+                            MyText(
+                                modifier = Modifier
+                                    .background(
+                                        color = MaterialTheme.colorScheme.background,
+                                    )
+                                    .fillMaxWidth()
+                                    .padding(
+                                        start = 16.dp,
+                                        top = 8.dp,
+                                        bottom = 4.dp,
+                                        end = 16.dp,
+                                    ),
+                                text = date,
+                                style = MaterialTheme.typography.headlineSmall
+                                    .copy(
+                                        color = MaterialTheme.colorScheme.onBackground,
+                                    ),
                             )
                         }
+                    }
+                    itemsIndexed(
+                        items = listItemData,
+                        key = { _, listItem ->
+                            listItem.hashCode()
+                        },
+                    ) { _, listItem ->
+                        TransactionListItem(
+                            data = listItem,
+                        )
                     }
                 }
             }
