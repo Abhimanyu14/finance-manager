@@ -35,18 +35,18 @@ fun EditSourceScreen(
 
     AddOrEditSourceScreenView(
         data = AddOrEditSourceScreenViewData(
-            isSourceTypesRadioGroupVisible = source?.type != SourceType.CASH,
+            visibilityData = AddOrEditSourceScreenViewVisibilityData(
+                balanceAmount = true,
+                name = source?.type != SourceType.CASH,
+                sourceTypes = source?.type != SourceType.CASH,
+            ),
+            errorData = errorData,
             appBarTitleTextStringResourceId = R.string.screen_edit_source_appbar_title,
             ctaButtonLabelTextStringResourceId = R.string.screen_edit_source_floating_action_button_content_description,
             selectedSourceTypeIndex = selectedSourceTypeIndex,
             sourceTypes = screenViewModel.sourceTypes,
             balanceAmountValue = balanceAmountValue,
             name = name,
-            visibilityData = AddOrEditSourceScreenViewVisibilityData(
-                balanceAmount = true,
-                name = source?.type != SourceType.CASH,
-            ),
-            errorData = errorData,
         ),
         events = AddOrEditSourceScreenViewEvents(
             clearBalanceAmountValue = screenViewModel::clearBalanceAmountValue,

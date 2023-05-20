@@ -49,9 +49,10 @@ internal enum class AddOrEditSourceBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class AddOrEditSourceScreenViewVisibilityData(
-    val balanceAmount: Boolean = true,
-    val name: Boolean = true,
+data class AddOrEditSourceScreenViewVisibilityData(
+    val balanceAmount: Boolean,
+    val name: Boolean,
+    val sourceTypes: Boolean,
 )
 
 @Immutable
@@ -62,15 +63,14 @@ data class AddOrEditSourceScreenViewErrorData(
 
 @Immutable
 internal data class AddOrEditSourceScreenViewData(
-    val isSourceTypesRadioGroupVisible: Boolean,
+    val visibilityData: AddOrEditSourceScreenViewVisibilityData,
+    val errorData: AddOrEditSourceScreenViewErrorData,
     @StringRes val appBarTitleTextStringResourceId: Int,
     @StringRes val ctaButtonLabelTextStringResourceId: Int,
     val selectedSourceTypeIndex: Int,
     val sourceTypes: List<SourceType>,
     val balanceAmountValue: TextFieldValue,
     val name: TextFieldValue,
-    val visibilityData: AddOrEditSourceScreenViewVisibilityData,
-    val errorData: AddOrEditSourceScreenViewErrorData,
 )
 
 @Immutable
@@ -148,7 +148,7 @@ internal fun AddOrEditSourceScreenView(
                     state = rememberScrollState(),
                 ),
         ) {
-            if (data.isSourceTypesRadioGroupVisible) {
+            if (data.visibilityData.sourceTypes) {
                 MyRadioGroup(
                     items = data.sourceTypes
                         .map { sourceType ->

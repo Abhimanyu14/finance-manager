@@ -29,7 +29,12 @@ fun AddSourceScreen(
 
     AddOrEditSourceScreenView(
         data = AddOrEditSourceScreenViewData(
-            isSourceTypesRadioGroupVisible = true,
+            visibilityData = AddOrEditSourceScreenViewVisibilityData(
+                balanceAmount = false,
+                name = true,
+                sourceTypes = true,
+            ),
+            errorData = errorData,
             appBarTitleTextStringResourceId = R.string.screen_add_source_appbar_title,
             ctaButtonLabelTextStringResourceId = R.string.screen_add_source_floating_action_button_content_description,
             selectedSourceTypeIndex = selectedSourceTypeIndex,
@@ -38,11 +43,6 @@ fun AddSourceScreen(
                 text = "",
             ),
             name = name,
-            visibilityData = AddOrEditSourceScreenViewVisibilityData(
-                balanceAmount = false,
-                name = true,
-            ),
-            errorData = errorData,
         ),
         events = AddOrEditSourceScreenViewEvents(
             clearBalanceAmountValue = {},
