@@ -1,11 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.CategoryEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import kotlinx.coroutines.flow.Flow
 
 interface TransactionRepository {
@@ -18,6 +20,10 @@ interface TransactionRepository {
     suspend fun getSearchedTransactionData(
         searchText: String,
     ): List<TransactionData>
+
+    suspend fun getTransactionDataMappedByCategory(
+        transactionType: TransactionType,
+    ): Map<CategoryEntity?, Long>
 
     fun getRecentTransactionDataFlow(
         numberOfTransactions: Int,

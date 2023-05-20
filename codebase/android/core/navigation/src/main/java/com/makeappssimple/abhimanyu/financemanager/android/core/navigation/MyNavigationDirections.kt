@@ -58,6 +58,12 @@ object MyNavigationDirections {
         override val screen = Screen.AddTransactionFor.route
     }
 
+    object Analysis : NavigationCommand {
+        override val command = Command.NAVIGATE
+        override val destination = Screen.Analysis.route
+        override val screen = Screen.Analysis.route
+    }
+
     object Categories : NavigationCommand {
         override val command = Command.NAVIGATE
         override val destination = Screen.Categories.route

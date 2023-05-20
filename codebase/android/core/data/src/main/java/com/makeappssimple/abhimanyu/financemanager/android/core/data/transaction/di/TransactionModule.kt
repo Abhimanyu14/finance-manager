@@ -24,6 +24,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetSearchedTransactionDataUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTitleSuggestionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTitleSuggestionsUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionDataMappedByCategoryUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionDataMappedByCategoryUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionDataUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionUseCase
@@ -123,6 +125,15 @@ class TransactionModule {
         transactionRepository: TransactionRepository,
     ): GetTitleSuggestionsUseCase {
         return GetTitleSuggestionsUseCaseImpl(
+            transactionRepository = transactionRepository,
+        )
+    }
+
+    @Provides
+    fun providesGetTransactionDataMappedByCategoryUseCase(
+        transactionRepository: TransactionRepository,
+    ): GetTransactionDataMappedByCategoryUseCase {
+        return GetTransactionDataMappedByCategoryUseCaseImpl(
             transactionRepository = transactionRepository,
         )
     }

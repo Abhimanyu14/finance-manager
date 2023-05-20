@@ -52,6 +52,7 @@ internal data class HomeScreenViewData(
 internal data class HomeScreenViewEvents(
     val createDocument: ManagedActivityResultLauncher<String, Uri?>,
     val navigateToAddTransactionScreen: () -> Unit,
+    val navigateToAnalysisScreen: () -> Unit,
     val navigateToCategoriesScreen: () -> Unit,
     val navigateToSettingsScreen: () -> Unit,
     val navigateToSourcesScreen: () -> Unit,
@@ -160,7 +161,9 @@ internal fun HomeScreenView(
                 }
             }
             item {
-                OverviewCard()
+                OverviewCard(
+                    onClick = events.navigateToAnalysisScreen,
+                )
             }
             item {
                 HomeRecentTransactionsView(

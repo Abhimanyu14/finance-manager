@@ -47,6 +47,11 @@ fun HomeScreen(
         ),
         events = HomeScreenViewEvents(
             createDocument = createDocument,
+            navigateToAnalysisScreen = {
+                screenViewModel.navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.Analysis
+                )
+            },
             navigateToAddTransactionScreen = {
                 screenViewModel.navigationManager.navigate(
                     navigationCommand = MyNavigationDirections.AddTransaction()
