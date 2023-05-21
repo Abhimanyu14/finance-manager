@@ -52,7 +52,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.te
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.common.TransactionDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsFilterBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsSortBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.Filter
@@ -63,7 +62,6 @@ internal enum class TransactionsBottomSheetType : BottomSheetType {
     NONE,
     FILTERS,
     SORT,
-    DELETE_CONFIRMATION,
 }
 
 @Immutable
@@ -82,7 +80,6 @@ internal data class TransactionsScreenViewData(
 
 @Immutable
 internal data class TransactionsScreenViewEvents(
-    val deleteTransaction: (transactionId: Int) -> Unit,
     val getExpenseCategories: () -> List<Category>,
     val getIncomeCategories: () -> List<Category>,
     val getInvestmentCategories: () -> List<Category>,
@@ -135,7 +132,6 @@ internal fun TransactionsScreenView(
         sheetShape = when (transactionsBottomSheetType) {
             TransactionsBottomSheetType.NONE,
             TransactionsBottomSheetType.SORT,
-            TransactionsBottomSheetType.DELETE_CONFIRMATION,
             -> {
                 BottomSheetShape
             }
@@ -184,25 +180,6 @@ internal fun TransactionsScreenView(
                         },
                         resetBottomSheetType = {
                             transactionsBottomSheetType = TransactionsBottomSheetType.NONE
-                        },
-                    )
-                }
-
-                TransactionsBottomSheetType.DELETE_CONFIRMATION -> {
-                    TransactionDeleteConfirmationBottomSheetContent(
-                        coroutineScope = state.coroutineScope,
-                        modalBottomSheetState = state.modalBottomSheetState,
-                        transactionIdToDelete = transactionIdToDelete,
-                        resetBottomSheetType = {
-                            transactionsBottomSheetType = TransactionsBottomSheetType.NONE
-                        },
-                        resetTransactionIdToDelete = {
-                            transactionIdToDelete = null
-                        },
-                        deleteTransaction = {
-                            transactionIdToDelete?.let { transactionIdToDeleteValue ->
-                                events.deleteTransaction(transactionIdToDeleteValue)
-                            }
                         },
                     )
                 }

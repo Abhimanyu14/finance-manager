@@ -9,9 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.DeleteTransactionUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionDataFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
@@ -28,29 +26,55 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import java.time.LocalDate
 
 @HiltViewModel
 internal class TransactionsScreenViewModelImpl @Inject constructor(
+    dispatcherProvider: DispatcherProvider,
     getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
     override val logger: Logger,
     override val navigationManager: NavigationManager,
     private val dateTimeUtil: DateTimeUtil,
-    private val deleteTransactionUseCase: DeleteTransactionUseCase,
-    private val dispatcherProvider: DispatcherProvider,
-    private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
-    private val getAllSourcesUseCase: GetAllSourcesUseCase,
 ) : TransactionsScreenViewModel, ViewModel() {
-    private lateinit var categoriesList: List<Category>
-    private lateinit var sourcesList: List<Source>
-    private lateinit var expenseCategoriesList: List<Category>
-    private lateinit var incomeCategoriesList: List<Category>
-    private lateinit var investmentCategoriesList: List<Category>
-
     private val allTransactionData: Flow<List<TransactionData>> =
         getAllTransactionDataFlowUseCase()
+    private val categoriesMap: Flow<Map<TransactionType, List<Category>>> = allTransactionData.map {
+        it.mapNotNull { transactionData ->
+            transactionData.category
+        }.groupBy { category ->
+            category.transactionType
+        }.mapValues { (_, categories) ->
+            categories.distinct()
+        }.toMap()
+    }
+
+    override val expenseCategories: StateFlow<List<Category>?> = categoriesMap.map {
+        it[TransactionType.EXPENSE] ?: emptyList()
+    }.defaultObjectStateIn(
+        scope = viewModelScope,
+    )
+    override val incomeCategories: StateFlow<List<Category>?> = categoriesMap.map {
+        it[TransactionType.INCOME] ?: emptyList()
+    }.defaultObjectStateIn(
+        scope = viewModelScope,
+    )
+    override val investmentCategories: StateFlow<List<Category>?> = categoriesMap.map {
+        it[TransactionType.INVESTMENT] ?: emptyList()
+    }.defaultObjectStateIn(
+        scope = viewModelScope,
+    )
+    override val sources: StateFlow<List<Source>?> = allTransactionData.map {
+        it.flatMap { transactionData ->
+            listOfNotNull(
+                transactionData.sourceFrom,
+                transactionData.sourceTo,
+            )
+        }.distinct()
+    }.defaultObjectStateIn(
+        scope = viewModelScope,
+    )
 
     // region Search
     private val _searchText = MutableStateFlow(
@@ -96,7 +120,11 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             searchText,
             selectedFilter,
             selectedSortOption,
-        ) { flows ->
+            expenseCategories,
+            incomeCategories,
+            investmentCategories,
+            sources,
+        ) { flows: Array<Any?> ->
             _isLoading.value = true
 
             val allTransactionDataValue: List<TransactionData> =
@@ -105,6 +133,14 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             val selectedFilterValue: Filter = flows[2] as? Filter ?: Filter()
             val selectedSortOptionValue: SortOption =
                 flows[3] as? SortOption ?: SortOption.LATEST_FIRST
+            val expenseCategoriesValue: List<Category> =
+                flows[4] as? List<Category> ?: emptyList()
+            val incomeCategoriesValue: List<Category> =
+                flows[5] as? List<Category> ?: emptyList()
+            val investmentCategoriesValue: List<Category> =
+                flows[6] as? List<Category> ?: emptyList()
+            val sourcesValue: List<Source> =
+                flows[7] as? List<Source> ?: emptyList()
 
             if (selectedFilterValue.fromDate.isNull()) {
                 _oldestTransactionTimestamp.update {
@@ -135,16 +171,16 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                         transactionData = transactionDetail
                     ) && isAvailableAfterSourceFilter(
                         selectedSourceIndicesValue = selectedFilterValue.selectedSourceIndices,
-                        sourcesValue = sourcesList,
+                        sourcesValue = sourcesValue,
                         transactionData = transactionDetail,
                     ) && isAvailableAfterCategoryFilter(
                         selectedExpenseCategoryIndicesValue = selectedFilterValue.selectedExpenseCategoryIndices,
                         selectedIncomeCategoryIndicesValue = selectedFilterValue.selectedIncomeCategoryIndices,
                         selectedInvestmentCategoryIndicesValue = selectedFilterValue.selectedInvestmentCategoryIndices,
-                        expenseCategoriesValue = expenseCategoriesList,
+                        expenseCategoriesValue = expenseCategoriesValue,
                         transactionData = transactionDetail,
-                        incomeCategoriesValue = incomeCategoriesList,
-                        investmentCategoriesValue = incomeCategoriesList,
+                        incomeCategoriesValue = incomeCategoriesValue,
+                        investmentCategoriesValue = investmentCategoriesValue,
                     )
                 }
                 .also {
@@ -250,30 +286,6 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             context = dispatcherProvider.io,
         )
 
-    init {
-        init()
-    }
-
-    private fun init() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            categoriesList = getAllCategoriesUseCase()
-            sourcesList = getAllSourcesUseCase()
-
-            expenseCategoriesList = categoriesList.filter { category ->
-                category.transactionType == TransactionType.EXPENSE
-            }
-            incomeCategoriesList = categoriesList.filter { category ->
-                category.transactionType == TransactionType.INCOME
-            }
-            investmentCategoriesList = categoriesList.filter { category ->
-                category.transactionType == TransactionType.INVESTMENT
-            }
-        }
-    }
-
-
     // region Search
     override fun updateSearchText(
         updatedSearchText: String,
@@ -299,50 +311,6 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         _selectedSortOption.value = updatedSelectedSortOption
     }
     // endregion
-
-    override fun deleteTransaction(
-        id: Int,
-    ) {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            deleteTransactionUseCase(
-                id = id,
-            )
-        }
-    }
-
-    override fun getExpenseCategories(): List<Category> {
-        return if (::expenseCategoriesList.isInitialized) {
-            expenseCategoriesList
-        } else {
-            emptyList()
-        }
-    }
-
-    override fun getIncomeCategories(): List<Category> {
-        return if (::incomeCategoriesList.isInitialized) {
-            incomeCategoriesList
-        } else {
-            emptyList()
-        }
-    }
-
-    override fun getInvestmentCategories(): List<Category> {
-        return if (::investmentCategoriesList.isInitialized) {
-            investmentCategoriesList
-        } else {
-            emptyList()
-        }
-    }
-
-    override fun getSources(): List<Source> {
-        return if (::sourcesList.isInitialized) {
-            sourcesList
-        } else {
-            emptyList()
-        }
-    }
 
     private fun isAvailableAfterSearch(
         searchTextValue: String,

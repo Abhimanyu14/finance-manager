@@ -21,21 +21,13 @@ interface TransactionsScreenViewModel : ScreenViewModel {
     val currentTimeMillis: Long
     val oldestTransactionLocalDate: StateFlow<LocalDate>
     val isLoading: StateFlow<Boolean>
+    val expenseCategories: StateFlow<List<Category>?>
+    val incomeCategories: StateFlow<List<Category>?>
+    val investmentCategories: StateFlow<List<Category>?>
     val selectedFilter: StateFlow<Filter>
     val selectedSortOption: StateFlow<SortOption>
+    val sources: StateFlow<List<Source>?>
     val searchText: StateFlow<String>
-
-    fun deleteTransaction(
-        id: Int,
-    )
-
-    fun getExpenseCategories(): List<Category>
-
-    fun getIncomeCategories(): List<Category>
-
-    fun getInvestmentCategories(): List<Category>
-
-    fun getSources(): List<Source>
 
     fun updateSelectedFilter(
         updatedSelectedFilter: Filter,
