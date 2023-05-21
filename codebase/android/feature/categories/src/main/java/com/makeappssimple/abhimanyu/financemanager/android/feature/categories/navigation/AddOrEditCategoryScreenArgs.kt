@@ -13,10 +13,10 @@ internal class AddOrEditCategoryScreenArgs(
         stringDecoder: StringDecoder,
     ) : this(
         originalCategoryId = savedStateHandle.get<Int>(NavArgs.CATEGORY_ID),
-        originalTransactionType = stringDecoder.decodeString(
-            encodedString = checkNotNull(
-                value = savedStateHandle.get<String>(NavArgs.TRANSACTION_TYPE),
-            ),
-        ),
+        originalTransactionType = savedStateHandle.get<String>(NavArgs.TRANSACTION_TYPE)?.let {
+            stringDecoder.decodeString(
+                encodedString = it,
+            )
+        },
     )
 }
