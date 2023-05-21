@@ -208,28 +208,28 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     launch {
                         populateEmojiData(
                             emojiDataVersion = initialDataVersionNumber?.emoji ?: 0,
+                            initialDatabaseData = initialDatabaseData,
                             myDataStore = myDataStore,
                             myRoomDatabase = myRoomDatabase,
-                            initialDatabaseData = initialDatabaseData,
                         )
                     }
                     launch {
                         populateSourceData(
-                            myRoomDatabase = myRoomDatabase,
                             initialDatabaseData = initialDatabaseData,
+                            myRoomDatabase = myRoomDatabase,
                         )
                     }
                     launch {
                         populateTransactionForData(
-                            myRoomDatabase = myRoomDatabase,
                             initialDatabaseData = initialDatabaseData,
+                            myRoomDatabase = myRoomDatabase,
                         )
                     }
                     launch {
                         transactionsCleanUpIfRequired(
+                            transactionsDataVersion = initialDataVersionNumber?.transaction ?: 0,
                             myDataStore = myDataStore,
                             myRoomDatabase = myRoomDatabase,
-                            transactionsDataVersion = initialDataVersionNumber?.transaction ?: 0,
                         )
                     }
                 }
@@ -244,37 +244,65 @@ abstract class MyRoomDatabase : RoomDatabase() {
         ) {
             val categoryDao = myRoomDatabase.categoryDao()
             if (categoryDao.getAllCategoriesCount() == 0) {
-                val categoriesData = initialDatabaseData.defaultCategories.categoriesData
-                categoriesData.forEach {
-                    categoryDao.insertCategories(
-                        categories = it.categories.toTypedArray(),
-                    )
-                }
+                populateCategoryDataForFreshAppInstall(
+                    categoryDao = categoryDao,
+                    initialDatabaseData = initialDatabaseData,
+                    myDataStore = myDataStore,
+                )
             } else {
-                if (categoryDataVersion < initialDatabaseData.defaultCategories.versionNumber) {
-                    val categoriesData =
-                        initialDatabaseData.defaultCategories.categoriesData
-                    categoriesData
-                        .filter {
-                            it.versionNumber > categoryDataVersion
-                        }
-                        .forEach {
-                            categoryDao.insertCategories(
-                                categories = it.categories.toTypedArray(),
-                            )
-                        }
-                    myDataStore.setCategoryDataVersionNumber(
-                        categoryDataVersionNumber = initialDatabaseData.defaultCategories.versionNumber,
-                    )
-                }
+                populateCategoryDataForAppUpdate(
+                    categoryDao = categoryDao,
+                    initialDatabaseData = initialDatabaseData,
+                    categoryDataVersion = categoryDataVersion,
+                    myDataStore = myDataStore,
+                )
+            }
+        }
+
+        private suspend fun populateCategoryDataForFreshAppInstall(
+            categoryDao: CategoryDao,
+            initialDatabaseData: InitialDatabaseData,
+            myDataStore: MyDataStore,
+        ) {
+            val categoriesData = initialDatabaseData.defaultCategories.categoriesData
+            categoriesData.forEach {
+                categoryDao.insertCategories(
+                    categories = it.categories.toTypedArray(),
+                )
+            }
+            myDataStore.setCategoryDataVersionNumber(
+                categoryDataVersionNumber = initialDatabaseData.defaultCategories.versionNumber,
+            )
+        }
+
+        private suspend fun populateCategoryDataForAppUpdate(
+            categoryDao: CategoryDao,
+            initialDatabaseData: InitialDatabaseData,
+            categoryDataVersion: Int,
+            myDataStore: MyDataStore,
+        ) {
+            if (categoryDataVersion < initialDatabaseData.defaultCategories.versionNumber) {
+                val categoriesData = initialDatabaseData.defaultCategories.categoriesData
+                categoriesData
+                    .filter {
+                        it.versionNumber > categoryDataVersion
+                    }
+                    .forEach {
+                        categoryDao.insertCategories(
+                            categories = it.categories.toTypedArray(),
+                        )
+                    }
+                myDataStore.setCategoryDataVersionNumber(
+                    categoryDataVersionNumber = initialDatabaseData.defaultCategories.versionNumber,
+                )
             }
         }
 
         private suspend fun populateEmojiData(
             emojiDataVersion: Int,
+            initialDatabaseData: InitialDatabaseData,
             myDataStore: MyDataStore,
             myRoomDatabase: MyRoomDatabase,
-            initialDatabaseData: InitialDatabaseData,
         ) {
             val emojiDao = myRoomDatabase.emojiDao()
             if (emojiDao.getAllEmojisCount() == 0) {
@@ -297,8 +325,8 @@ abstract class MyRoomDatabase : RoomDatabase() {
         }
 
         private suspend fun populateSourceData(
-            myRoomDatabase: MyRoomDatabase,
             initialDatabaseData: InitialDatabaseData,
+            myRoomDatabase: MyRoomDatabase,
         ) {
             val sourceDao = myRoomDatabase.sourceDao()
             if (sourceDao.getAllSourcesCount() == 0) {
@@ -309,8 +337,8 @@ abstract class MyRoomDatabase : RoomDatabase() {
         }
 
         private suspend fun populateTransactionForData(
-            myRoomDatabase: MyRoomDatabase,
             initialDatabaseData: InitialDatabaseData,
+            myRoomDatabase: MyRoomDatabase,
         ) {
             val transactionForDao = myRoomDatabase.transactionForDao()
             if (transactionForDao.getTransactionForValuesCount() == 0) {
@@ -321,9 +349,9 @@ abstract class MyRoomDatabase : RoomDatabase() {
         }
 
         private suspend fun transactionsCleanUpIfRequired(
+            transactionsDataVersion: Int,
             myDataStore: MyDataStore,
             myRoomDatabase: MyRoomDatabase,
-            transactionsDataVersion: Int,
         ) {
             val currentTransactionsDataVersion = 1
             if (transactionsDataVersion < currentTransactionsDataVersion) {
