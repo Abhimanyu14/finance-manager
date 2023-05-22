@@ -31,6 +31,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Common
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultTransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.components.bottomsheet.TransactionForValuesDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.components.bottomsheet.TransactionForValuesMenuBottomSheetContent
@@ -165,7 +166,9 @@ internal fun TransactionForValuesScreenView(
                     listItem.hashCode()
                 },
             ) { index, listItem ->
-                val isDeleteVisible = data.transactionForValuesIsUsedInTransactions.getOrNull(
+                val isDeleteVisible = !isDefaultTransactionFor(
+                    transactionFor = listItem.title,
+                ) && data.transactionForValuesIsUsedInTransactions.getOrNull(
                     index = index,
                 )?.not() ?: false
                 MyText(

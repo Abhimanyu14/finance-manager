@@ -6,6 +6,7 @@ private const val DEFAULT_EXPENSE_CATEGORY = "Default"
 private const val DEFAULT_INCOME_CATEGORY = "Salary"
 private const val DEFAULT_INVESTMENT_CATEGORY = "Investment"
 private const val DEFAULT_SOURCE = "Cash"
+private const val DEFAULT_TRANSACTION_FOR = "Self"
 
 fun isDefaultExpenseCategory(
     category: String,
@@ -36,5 +37,13 @@ fun isDefaultSource(
 ): Boolean {
     return source.equalsIgnoringCase(
         other = DEFAULT_SOURCE,
+    )
+}
+
+fun isDefaultTransactionFor(
+    transactionFor: String,
+): Boolean {
+    return transactionFor.equalsIgnoringCase(
+        other = DEFAULT_TRANSACTION_FOR,
     )
 }
