@@ -64,14 +64,14 @@
           {
             "id": 9,
             "description": "",
-            "emoji": "💰",
+            "emoji": "🔄",
             "title": "Refund",
             "transaction_type": "INCOME"
           },
           {
             "id": 10,
             "description": "",
-            "emoji": "💎",
+            "emoji": "🎁",
             "title": "Rewards",
             "transaction_type": "INCOME"
           }
