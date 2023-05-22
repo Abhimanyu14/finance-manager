@@ -46,19 +46,7 @@ fun TransactionsScreen(
             oldestTransactionLocalDate = oldestTransactionLocalDate,
             currentLocalDate = screenViewModel.currentLocalDate,
             currentTimeMillis = screenViewModel.currentTimeMillis,
-            transactionDetailsListItemViewData = transactionDetailsListItemViewData.mapValues {
-                it.value.map { transactionListItemData ->
-                    transactionListItemData.copy(
-                        onClick = {
-                            screenViewModel.navigationManager.navigate(
-                                navigationCommand = MyNavigationDirections.ViewTransaction(
-                                    transactionId = transactionListItemData.transactionId,
-                                )
-                            )
-                        },
-                    )
-                }
-            },
+            transactionDetailsListItemViewData = transactionDetailsListItemViewData,
             searchText = searchText,
             selectedSortOption = selectedSortOption,
         ),

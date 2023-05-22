@@ -51,6 +51,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.sc
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MySearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsFilterBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.components.bottomsheet.TransactionsSortBottomSheetContent
@@ -101,11 +102,6 @@ internal fun TransactionsScreenView(
     var transactionsBottomSheetType by remember {
         mutableStateOf(
             value = TransactionsBottomSheetType.NONE,
-        )
-    }
-    var transactionIdToDelete: Int? by remember {
-        mutableStateOf(
-            value = null,
         )
     }
 
@@ -363,6 +359,11 @@ internal fun TransactionsScreenView(
                     ) { _, listItem ->
                         TransactionListItem(
                             data = listItem,
+                            events = TransactionListItemEvents(
+                                onClick = {
+                                    events.navigateToViewTransactionScreen(listItem.transactionId)
+                                },
+                            ),
                         )
                     }
                 }

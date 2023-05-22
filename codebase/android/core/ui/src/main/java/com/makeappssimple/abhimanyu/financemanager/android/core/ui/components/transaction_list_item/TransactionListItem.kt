@@ -14,6 +14,7 @@ import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -32,8 +33,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemViewWrapper
 
+@Immutable
 data class TransactionListItemData(
-    val modifier: Modifier = Modifier,
     val isDeleteButtonEnabled: Boolean = false,
     val isDeleteButtonVisible: Boolean = false,
     val isEditButtonVisible: Boolean = false,
@@ -48,6 +49,10 @@ data class TransactionListItemData(
     val sourceToName: String?,
     val title: String,
     val transactionForText: String,
+)
+
+@Immutable
+data class TransactionListItemEvents(
     val onClick: (() -> Unit)? = null,
     val onDeleteButtonClick: () -> Unit = {},
     val onEditButtonClick: () -> Unit = {},
@@ -56,7 +61,9 @@ data class TransactionListItemData(
 
 @Composable
 fun TransactionListItem(
+    modifier: Modifier = Modifier,
     data: TransactionListItemData,
+    events: TransactionListItemEvents,
 ) {
     val sourceText: String = if (
         data.sourceFromName.isNotNull() &&
@@ -73,7 +80,7 @@ fun TransactionListItem(
 
     MyExpandableItemViewWrapper(
         expanded = data.isExpanded,
-        modifier = data.modifier,
+        modifier = modifier,
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -87,7 +94,7 @@ fun TransactionListItem(
                     },
                 )
                 .conditionalClickable(
-                    onClick = data.onClick,
+                    onClick = events.onClick,
                 )
                 .padding(
                     start = 16.dp,
@@ -229,7 +236,7 @@ fun TransactionListItem(
                             id = R.string.transaction_list_item_edit,
                         ),
                         enabled = true,
-                        onClick = data.onEditButtonClick,
+                        onClick = events.onEditButtonClick,
                     )
                 }
                 if (data.isRefundButtonVisible) {
@@ -243,7 +250,7 @@ fun TransactionListItem(
                             id = R.string.transaction_list_item_refund,
                         ),
                         enabled = true,
-                        onClick = data.onRefundButtonClick,
+                        onClick = events.onRefundButtonClick,
                     )
                 }
                 if (data.isDeleteButtonVisible) {
@@ -257,7 +264,7 @@ fun TransactionListItem(
                             id = R.string.transaction_list_item_delete,
                         ),
                         enabled = data.isDeleteButtonEnabled,
-                        onClick = data.onDeleteButtonClick,
+                        onClick = events.onDeleteButtonClick,
                     )
                 }
             }

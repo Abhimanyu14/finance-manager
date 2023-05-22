@@ -28,6 +28,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.common.TransactionDeleteConfirmationBottomSheetContent
 
@@ -126,13 +127,13 @@ internal fun ViewTransactionScreenView(
             ) {
                 data.transactionListItemData?.let { transactionListItemData ->
                     TransactionListItem(
-                        data = data.transactionListItemData.copy(
-                            modifier = transactionListItemData.modifier.then(
-                                Modifier.padding(
-                                    top = 8.dp,
-                                    bottom = 8.dp,
-                                )
+                        modifier = Modifier
+                            .padding(
+                                top = 8.dp,
+                                bottom = 8.dp,
                             ),
+                        data = data.transactionListItemData,
+                        events = TransactionListItemEvents(
                             onDeleteButtonClick = {
                                 transactionIdToDelete = transactionListItemData.transactionId
                                 viewTransactionBottomSheetType =
@@ -174,13 +175,13 @@ internal fun ViewTransactionScreenView(
                                 ),
                         )
                         TransactionListItem(
-                            data = transactionListItemData.copy(
-                                modifier = transactionListItemData.modifier.then(
-                                    Modifier.padding(
-                                        top = 8.dp,
-                                        bottom = 8.dp,
-                                    )
+                            modifier = Modifier
+                                .padding(
+                                    top = 8.dp,
+                                    bottom = 8.dp,
                                 ),
+                            data = transactionListItemData,
+                            events = TransactionListItemEvents(
                                 onDeleteButtonClick = {
                                     transactionIdToDelete = transactionListItemData.transactionId
                                     viewTransactionBottomSheetType =
@@ -227,13 +228,13 @@ internal fun ViewTransactionScreenView(
                         }
                         items(data.refundTransactionListItemData) { transactionListItemData ->
                             TransactionListItem(
-                                data = transactionListItemData.copy(
-                                    modifier = transactionListItemData.modifier.then(
-                                        Modifier.padding(
-                                            top = 8.dp,
-                                            bottom = 8.dp,
-                                        )
+                                modifier = Modifier
+                                    .padding(
+                                        top = 8.dp,
+                                        bottom = 8.dp,
                                     ),
+                                data = transactionListItemData,
+                                events = TransactionListItemEvents(
                                     onDeleteButtonClick = {
                                         transactionIdToDelete =
                                             transactionListItemData.transactionId
