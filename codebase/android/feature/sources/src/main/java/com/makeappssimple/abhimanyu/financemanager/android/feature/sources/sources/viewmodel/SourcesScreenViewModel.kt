@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.viewmodel
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.components.listitem.SourcesListItemData
@@ -13,7 +12,7 @@ interface SourcesScreenViewModel : ScreenViewModel {
     val sourcesListItemDataList: Flow<List<SourcesListItemData>>
 
     fun deleteSource(
-        source: Source,
+        id: Int,
     )
 
     fun setDefaultSourceIdInDataStore(

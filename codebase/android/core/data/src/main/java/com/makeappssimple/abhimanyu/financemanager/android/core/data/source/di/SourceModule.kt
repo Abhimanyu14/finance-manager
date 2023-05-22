@@ -2,6 +2,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.source.di
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.repository.SourceRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.repository.SourceRepositoryImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.DeleteSourceUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.DeleteSourceUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.DeleteSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.DeleteSourcesUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesCountUseCase
@@ -45,6 +47,17 @@ class SourceModule {
         sourceRepository: SourceRepository,
     ): DeleteSourcesUseCase {
         return DeleteSourcesUseCaseImpl(
+            dataStore = dataStore,
+            sourceRepository = sourceRepository,
+        )
+    }
+
+    @Provides
+    fun providesDeleteSourceUseCase(
+        dataStore: MyDataStore,
+        sourceRepository: SourceRepository,
+    ): DeleteSourceUseCase {
+        return DeleteSourceUseCaseImpl(
             dataStore = dataStore,
             sourceRepository = sourceRepository,
         )

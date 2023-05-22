@@ -28,7 +28,7 @@ fun SourcesScreen(
         events = SourcesScreenViewEvents(
             deleteSource = { sourceId ->
                 screenViewModel.deleteSource(
-                    source = sourceId,
+                    id = sourceId,
                 )
             },
             navigateToAddSourceScreen = {

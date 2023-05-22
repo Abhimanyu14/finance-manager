@@ -19,7 +19,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
@@ -46,7 +45,7 @@ internal data class SourcesScreenViewData(
 
 @Immutable
 internal data class SourcesScreenViewEvents(
-    val deleteSource: (source: Source) -> Unit,
+    val deleteSource: (sourceId: Int) -> Unit,
     val navigateToAddSourceScreen: () -> Unit,
     val navigateToEditSourceScreen: (sourceId: Int) -> Unit,
     val navigateUp: () -> Unit,
@@ -74,7 +73,7 @@ internal fun SourcesScreenView(
             value = null,
         )
     }
-    var sourceToDelete: Source? by remember {
+    var sourceIdToDelete: Int? by remember {
         mutableStateOf(
             value = null,
         )
@@ -122,19 +121,19 @@ internal fun SourcesScreenView(
                     SourcesDeleteConfirmationBottomSheetContent(
                         coroutineScope = state.coroutineScope,
                         modalBottomSheetState = state.modalBottomSheetState,
-                        sourceToDelete = sourceToDelete,
+                        sourceIdToDelete = sourceIdToDelete,
                         resetBottomSheetType = {
                             sourcesBottomSheetType = SourcesBottomSheetType.NONE
                         },
                         resetSourceIdToDelete = {
-                            sourceToDelete = null
+                            sourceIdToDelete = null
                         },
                         resetExpandedItemIndex = {
                             expandedItemIndex = null
                         },
                         deleteSource = {
-                            sourceToDelete?.let { sourceToDeleteValue ->
-                                events.deleteSource(sourceToDeleteValue)
+                            sourceIdToDelete?.let { sourceId ->
+                                events.deleteSource(sourceId)
                             }
                         },
                     )
@@ -197,7 +196,7 @@ internal fun SourcesScreenView(
                             if (!listItem.isDefault) {
                                 sourcesBottomSheetType =
                                     SourcesBottomSheetType.SET_AS_DEFAULT_CONFIRMATION
-                                clickedItemId = listItem.source.id
+                                clickedItemId = listItem.sourceId
                                 toggleModalBottomSheetState(
                                     coroutineScope = state.coroutineScope,
                                     modalBottomSheetState = state.modalBottomSheetState,
@@ -205,11 +204,11 @@ internal fun SourcesScreenView(
                             }
                         },
                         onEditClick = {
-                            events.navigateToEditSourceScreen(listItem.source.id)
+                            events.navigateToEditSourceScreen(listItem.sourceId)
                             expandedItemIndex = null
                         },
                         onDeleteClick = {
-                            sourceToDelete = listItem.source
+                            sourceIdToDelete = listItem.sourceId
                             sourcesBottomSheetType =
                                 SourcesBottomSheetType.DELETE_CONFIRMATION
                             toggleModalBottomSheetState(

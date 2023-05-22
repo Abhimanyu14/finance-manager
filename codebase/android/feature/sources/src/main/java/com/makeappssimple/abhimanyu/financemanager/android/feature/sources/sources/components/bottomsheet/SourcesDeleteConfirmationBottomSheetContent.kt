@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sour
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bottom_sheet.MyConfirmationBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
@@ -13,7 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 internal fun SourcesDeleteConfirmationBottomSheetContent(
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
-    sourceToDelete: Source?,
+    sourceIdToDelete: Int?,
     resetBottomSheetType: () -> Unit,
     resetSourceIdToDelete: () -> Unit,
     resetExpandedItemIndex: () -> Unit,
@@ -37,7 +36,7 @@ internal fun SourcesDeleteConfirmationBottomSheetContent(
                 coroutineScope = coroutineScope,
                 modalBottomSheetState = modalBottomSheetState,
             ) {
-                sourceToDelete?.let {
+                sourceIdToDelete?.let {
                     deleteSource()
                     resetSourceIdToDelete()
                     resetExpandedItemIndex()

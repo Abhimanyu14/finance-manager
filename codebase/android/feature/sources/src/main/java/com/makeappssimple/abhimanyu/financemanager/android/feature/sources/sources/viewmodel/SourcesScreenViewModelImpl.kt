@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.DeleteSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.DeleteSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfSourceIsUsedInTransactionsUseCase
@@ -13,6 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultSource
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.components.listitem.SourcesListItemData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -31,6 +33,7 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
     private val checkIfSourceIsUsedInTransactionsUseCase: CheckIfSourceIsUsedInTransactionsUseCase,
     private val dataStore: MyDataStore,
     private val deleteSourcesUseCase: DeleteSourcesUseCase,
+    private val deleteSourceUseCase: DeleteSourceUseCase,
     private val dispatcherProvider: DispatcherProvider,
 ) : SourcesScreenViewModel, ViewModel() {
     private val defaultSourceId: Flow<Int?> = dataStore.getDefaultDataId().map {
@@ -60,12 +63,15 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
                     defaultSourceId == source.id
                 }
                 SourcesListItemData(
-                    source = source,
-                    isExpanded = false,
+                    icon = source.type.icon,
+                    sourceId = source.id,
+                    balance = source.balanceAmount.toString(),
+                    name = source.name,
                     isDefault = isDefault,
                     isDeleteEnabled = !isDefaultSource(
                         source = source.name,
                     ) && deleteEnabled,
+                    isExpanded = false,
                 )
             }
     }.defaultListStateIn(
@@ -74,13 +80,13 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
 
 
     override fun deleteSource(
-        source: Source,
+        id: Int,
     ) {
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            deleteSourcesUseCase(
-                source,
+            deleteSourceUseCase(
+                id = id,
             )
         }
     }

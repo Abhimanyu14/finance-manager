@@ -15,24 +15,26 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.ExpandedListItemShape
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyDefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyExpandableItemViewWrapper
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.icon
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 
 @Immutable
 data class SourcesListItemData(
-    val source: Source,
-    val isExpanded: Boolean,
+    val icon: ImageVector,
+    val sourceId: Int,
+    val balance: String,
+    val name: String,
     val isDefault: Boolean,
     val isDeleteEnabled: Boolean,
+    val isExpanded: Boolean,
 )
 
 @Immutable
@@ -84,7 +86,7 @@ internal fun SourcesListItem(
                 ),
         ) {
             Icon(
-                imageVector = data.source.type.icon,
+                imageVector = data.icon,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
@@ -97,7 +99,7 @@ internal fun SourcesListItem(
                     .padding(
                         end = 16.dp,
                     ),
-                text = data.source.name,
+                text = data.name,
                 style = MaterialTheme.typography.headlineLarge
                     .copy(
                         color = MaterialTheme.colorScheme.onBackground,
@@ -113,7 +115,7 @@ internal fun SourcesListItem(
                     ),
             )
             MyText(
-                text = data.source.balanceAmount.toString(),
+                text = data.balance,
                 style = MaterialTheme.typography.headlineLarge
                     .copy(
                         color = MaterialTheme.colorScheme.onBackground,
