@@ -26,11 +26,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.components.bottomsheet.SourcesDeleteConfirmationBottomSheetContent
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.components.bottomsheet.SourcesSetAsDefaultConfirmationBottomSheetContent
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.components.listitem.SourcesListItem
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.components.listitem.SourcesListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.components.listitem.SourcesListItemEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.bottomsheet.SourcesDeleteConfirmationBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.bottomsheet.SourcesSetAsDefaultConfirmationBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.SourcesListItem
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.SourcesListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.SourcesListItemEvents
 
 internal enum class SourcesBottomSheetType : BottomSheetType {
     NONE,

@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.vie
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.AnalysisListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItemData
 import kotlinx.coroutines.flow.StateFlow
 
 interface AnalysisScreenViewModel : ScreenViewModel {

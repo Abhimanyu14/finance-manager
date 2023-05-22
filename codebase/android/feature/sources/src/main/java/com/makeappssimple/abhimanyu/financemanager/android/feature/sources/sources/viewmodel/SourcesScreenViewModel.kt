@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sour
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.components.listitem.SourcesListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.SourcesListItemData
 import kotlinx.coroutines.flow.Flow
 
 interface SourcesScreenViewModel : ScreenViewModel {

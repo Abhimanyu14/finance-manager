@@ -19,9 +19,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Common
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.AnalysisListItem
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.AnalysisListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.AnalysisListItemEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItem
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItemEvents
 
 internal enum class AnalysisBottomSheetType : BottomSheetType {
     NONE,

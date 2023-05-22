@@ -16,7 +16,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultSource
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.components.listitem.SourcesListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.SourcesListItemData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow

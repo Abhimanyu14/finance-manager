@@ -44,7 +44,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.bu
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.components.bottomsheet.AddOrEditCategorySelectEmojiBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.component.bottomsheet.AddOrEditCategorySelectEmojiBottomSheetContent
 
 internal enum class AddOrEditCategoryBottomSheetType : BottomSheetType {
     NONE,

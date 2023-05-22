@@ -34,9 +34,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.tr
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.transaction_list_item.TransactionListItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.bottomappbar.HomeBottomAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.bottomsheet.HomeMenuBottomSheetContent
-import com.makeappssimple.abhimanyu.financemanager.android.feature.home.components.recenttransactions.HomeRecentTransactionsView
+import com.makeappssimple.abhimanyu.financemanager.android.feature.home.component.bottomappbar.HomeBottomAppBar
+import com.makeappssimple.abhimanyu.financemanager.android.feature.home.component.bottomsheet.HomeMenuBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.home.component.recenttransactions.HomeRecentTransactionsView
 
 internal enum class HomeBottomSheetType : BottomSheetType {
     NONE,
