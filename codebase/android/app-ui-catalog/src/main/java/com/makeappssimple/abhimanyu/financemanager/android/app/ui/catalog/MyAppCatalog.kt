@@ -33,23 +33,23 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabRow
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.ChipItem
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.EmojiCircleSize
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyDefaultTag
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyEmojiCircle
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyHorizontalScrollingRadioGroup
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyHorizontalScrollingSelectionGroup
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyNavigationBackButton
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyRadioGroup
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MySelectionGroup
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.MyTopAppBarView
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.buttons.SaveButton
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.overview_card.OverviewCardView
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.overview_card.OverviewCardViewData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MySearchBar
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.MySearchBarContainer
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.textfields.SearchBar
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.total_balance_card.TotalBalanceCardView
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.EmojiCircleSize
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyDefaultTag
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyHorizontalScrollingRadioGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyHorizontalScrollingSelectionGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyNavigationBackButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyRadioGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MySelectionGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBarView
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardView
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarContainer
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.SearchBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardView
 
 @Composable
 fun MyAppCatalog() {

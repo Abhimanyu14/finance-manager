@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.total_balance_card
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card
 
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertIsDisplayed
