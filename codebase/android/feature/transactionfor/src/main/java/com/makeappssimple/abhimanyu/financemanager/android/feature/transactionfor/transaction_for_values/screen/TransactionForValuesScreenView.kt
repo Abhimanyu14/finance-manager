@@ -1,14 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.screen
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
@@ -17,14 +14,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
@@ -35,6 +28,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.components.bottomsheet.TransactionForValuesDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.components.bottomsheet.TransactionForValuesMenuBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.components.listitem.TransactionForListItem
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.components.listitem.TransactionForListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.components.listitem.TransactionForListItemEvents
 
 internal sealed class TransactionForValuesBottomSheetType : BottomSheetType {
     object DeleteConfirmation : TransactionForValuesBottomSheetType()
@@ -171,37 +167,24 @@ internal fun TransactionForValuesScreenView(
                 ) && data.transactionForValuesIsUsedInTransactions.getOrNull(
                     index = index,
                 )?.not() ?: false
-                MyText(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            horizontal = 8.dp,
-                        )
-                        .clip(
-                            shape = MaterialTheme.shapes.large,
-                        )
-                        .conditionalClickable(
-                            onClick = {
-                                transactionForValuesBottomSheetType =
-                                    TransactionForValuesBottomSheetType.Menu(
-                                        isDeleteVisible = isDeleteVisible,
-                                        transactionForId = listItem.id,
-                                    )
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
+                TransactionForListItem(
+                    data = TransactionForListItemData(
+                        title = listItem.title.capitalizeWords(),
+                        isDeleteVisible = isDeleteVisible,
+                    ),
+                    events = TransactionForListItemEvents(
+                        onClick = {
+                            transactionForValuesBottomSheetType =
+                                TransactionForValuesBottomSheetType.Menu(
+                                    isDeleteVisible = isDeleteVisible,
+                                    transactionForId = listItem.id,
                                 )
-                            },
-                        )
-                        .padding(
-                            horizontal = 16.dp,
-                            vertical = 12.dp,
-                        ),
-                    text = listItem.title.capitalizeWords(),
-                    style = MaterialTheme.typography.bodyLarge
-                        .copy(
-                            color = MaterialTheme.colorScheme.onBackground,
-                        ),
+                            toggleModalBottomSheetState(
+                                coroutineScope = state.coroutineScope,
+                                modalBottomSheetState = state.modalBottomSheetState,
+                            )
+                        },
+                    ),
                 )
             }
         }
