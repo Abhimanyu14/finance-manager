@@ -33,8 +33,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.common.TransactionDeleteConfirmationBottomSheetContent
 
 internal enum class ViewTransactionBottomSheetType : BottomSheetType {
-    NONE,
     DELETE_CONFIRMATION,
+    NONE,
 }
 
 @Immutable
@@ -73,10 +73,6 @@ internal fun ViewTransactionScreenView(
         sheetState = state.modalBottomSheetState,
         sheetContent = {
             when (viewTransactionBottomSheetType) {
-                ViewTransactionBottomSheetType.NONE -> {
-                    VerticalSpacer()
-                }
-
                 ViewTransactionBottomSheetType.DELETE_CONFIRMATION -> {
                     TransactionDeleteConfirmationBottomSheetContent(
                         coroutineScope = state.coroutineScope,
@@ -93,6 +89,10 @@ internal fun ViewTransactionScreenView(
                             events.deleteTransaction(transactionIdToDeleteValue)
                         }
                     }
+                }
+
+                ViewTransactionBottomSheetType.NONE -> {
+                    VerticalSpacer()
                 }
             }
         },

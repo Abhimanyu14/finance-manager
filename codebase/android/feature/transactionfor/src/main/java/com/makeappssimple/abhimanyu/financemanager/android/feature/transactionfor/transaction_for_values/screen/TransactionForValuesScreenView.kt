@@ -108,6 +108,10 @@ internal fun TransactionForValuesScreenView(
                     )
                 }
 
+                is TransactionForValuesBottomSheetType.None -> {
+                    VerticalSpacer()
+                }
+
                 is TransactionForValuesBottomSheetType.Menu -> {
                     val bottomSheetData =
                         transactionForValuesBottomSheetType as TransactionForValuesBottomSheetType.Menu
@@ -124,10 +128,6 @@ internal fun TransactionForValuesScreenView(
                         },
                         resetBottomSheetType = resetBottomSheetType,
                     )
-                }
-
-                is TransactionForValuesBottomSheetType.None -> {
-                    VerticalSpacer()
                 }
             }
         },

@@ -33,9 +33,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sourc
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.SourcesListItemEvents
 
 internal enum class SourcesBottomSheetType : BottomSheetType {
+    DELETE_CONFIRMATION,
     NONE,
     SET_AS_DEFAULT_CONFIRMATION,
-    DELETE_CONFIRMATION,
 }
 
 @Immutable
@@ -94,6 +94,28 @@ internal fun SourcesScreenView(
         sheetState = state.modalBottomSheetState,
         sheetContent = {
             when (sourcesBottomSheetType) {
+                SourcesBottomSheetType.DELETE_CONFIRMATION -> {
+                    SourcesDeleteConfirmationBottomSheetContent(
+                        coroutineScope = state.coroutineScope,
+                        modalBottomSheetState = state.modalBottomSheetState,
+                        sourceIdToDelete = sourceIdToDelete,
+                        resetBottomSheetType = {
+                            sourcesBottomSheetType = SourcesBottomSheetType.NONE
+                        },
+                        resetSourceIdToDelete = {
+                            sourceIdToDelete = null
+                        },
+                        resetExpandedItemIndex = {
+                            expandedItemIndex = null
+                        },
+                        deleteSource = {
+                            sourceIdToDelete?.let { sourceId ->
+                                events.deleteSource(sourceId)
+                            }
+                        },
+                    )
+                }
+
                 SourcesBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
@@ -112,28 +134,6 @@ internal fun SourcesScreenView(
                         setDefaultSourceIdInDataStore = {
                             clickedItemId?.let { clickedItemIdValue ->
                                 events.setDefaultSourceIdInDataStore(clickedItemIdValue)
-                            }
-                        },
-                    )
-                }
-
-                SourcesBottomSheetType.DELETE_CONFIRMATION -> {
-                    SourcesDeleteConfirmationBottomSheetContent(
-                        coroutineScope = state.coroutineScope,
-                        modalBottomSheetState = state.modalBottomSheetState,
-                        sourceIdToDelete = sourceIdToDelete,
-                        resetBottomSheetType = {
-                            sourcesBottomSheetType = SourcesBottomSheetType.NONE
-                        },
-                        resetSourceIdToDelete = {
-                            sourceIdToDelete = null
-                        },
-                        resetExpandedItemIndex = {
-                            expandedItemIndex = null
-                        },
-                        deleteSource = {
-                            sourceIdToDelete?.let { sourceId ->
-                                events.deleteSource(sourceId)
                             }
                         },
                     )

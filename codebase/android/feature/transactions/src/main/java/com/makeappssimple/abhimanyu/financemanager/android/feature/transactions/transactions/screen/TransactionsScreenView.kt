@@ -60,8 +60,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import java.time.LocalDate
 
 internal enum class TransactionsBottomSheetType : BottomSheetType {
-    NONE,
     FILTERS,
+    NONE,
     SORT,
 }
 
@@ -138,10 +138,6 @@ internal fun TransactionsScreenView(
         },
         sheetContent = {
             when (transactionsBottomSheetType) {
-                TransactionsBottomSheetType.NONE -> {
-                    VerticalSpacer()
-                }
-
                 TransactionsBottomSheetType.FILTERS -> {
                     TransactionsFilterBottomSheetContent(
                         context = state.context,
@@ -163,6 +159,10 @@ internal fun TransactionsScreenView(
                             transactionsBottomSheetType = TransactionsBottomSheetType.NONE
                         },
                     )
+                }
+
+                TransactionsBottomSheetType.NONE -> {
+                    VerticalSpacer()
                 }
 
                 TransactionsBottomSheetType.SORT -> {

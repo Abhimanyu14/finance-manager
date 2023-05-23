@@ -39,8 +39,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.home.componen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.component.recenttransactions.HomeRecentTransactionsView
 
 internal enum class HomeBottomSheetType : BottomSheetType {
-    NONE,
     MENU,
+    NONE,
 }
 
 @Immutable
@@ -87,10 +87,6 @@ internal fun HomeScreenView(
         sheetState = state.modalBottomSheetState,
         sheetContent = {
             when (homeBottomSheetType) {
-                HomeBottomSheetType.NONE -> {
-                    VerticalSpacer()
-                }
-
                 HomeBottomSheetType.MENU -> {
                     HomeMenuBottomSheetContent(
                         coroutineScope = state.coroutineScope,
@@ -102,6 +98,10 @@ internal fun HomeScreenView(
                             homeBottomSheetType = HomeBottomSheetType.NONE
                         },
                     )
+                }
+
+                HomeBottomSheetType.NONE -> {
+                    VerticalSpacer()
                 }
             }
         },

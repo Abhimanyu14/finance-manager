@@ -35,9 +35,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 
 internal enum class AddOrEditTransactionForBottomSheetType : BottomSheetType {
-    NONE,
-    EDIT,
     DELETE,
+    EDIT,
+    NONE,
 }
 
 @Immutable
@@ -89,7 +89,7 @@ internal fun AddOrEditTransactionForScreenView(
         sheetState = state.modalBottomSheetState,
         sheetContent = {
             when (addOrEditTransactionForBottomSheetType) {
-                AddOrEditTransactionForBottomSheetType.NONE -> {
+                AddOrEditTransactionForBottomSheetType.DELETE -> {
                     VerticalSpacer()
                 }
 
@@ -97,7 +97,7 @@ internal fun AddOrEditTransactionForScreenView(
                     VerticalSpacer()
                 }
 
-                AddOrEditTransactionForBottomSheetType.DELETE -> {
+                AddOrEditTransactionForBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
             }
