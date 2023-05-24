@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircle
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemViewWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyItemViewWrapper
 
 @Immutable
 data class AnalysisListItemData(
@@ -39,8 +39,7 @@ internal fun AnalysisListItem(
     data: AnalysisListItemData,
     events: AnalysisListItemEvents,
 ) {
-    MyExpandableItemViewWrapper(
-        expanded = false,
+    MyItemViewWrapper(
         modifier = modifier,
     ) {
         Row(
