@@ -24,16 +24,26 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.SortOption
 
 @Immutable
+internal data class TransactionsSortBottomSheetData(
+    val data: TransactionsSortBottomSheetItemData,
+    val events: TransactionsSortBottomSheetItemEvents,
+)
+
+@Immutable
 internal data class TransactionsSortBottomSheetItemData(
     val sortOption: SortOption,
     val isSelected: Boolean,
+)
+
+@Immutable
+internal data class TransactionsSortBottomSheetItemEvents(
     val onClick: () -> Unit,
 )
 
 @Composable
 internal fun TransactionsSortBottomSheet(
     modifier: Modifier = Modifier,
-    items: List<TransactionsSortBottomSheetItemData>,
+    data: List<TransactionsSortBottomSheetData>,
 ) {
     LazyColumn(
         modifier = modifier
@@ -47,13 +57,14 @@ internal fun TransactionsSortBottomSheet(
             )
         }
         items(
-            items = items,
+            items = data,
             key = { listItem ->
                 listItem.hashCode()
             },
         ) { listItem ->
             TransactionsSortBottomSheetItem(
-                data = listItem,
+                data = listItem.data,
+                events = listItem.events,
             )
         }
     }
@@ -62,6 +73,7 @@ internal fun TransactionsSortBottomSheet(
 @Composable
 private fun TransactionsSortBottomSheetItem(
     data: TransactionsSortBottomSheetItemData,
+    events: TransactionsSortBottomSheetItemEvents,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -70,7 +82,7 @@ private fun TransactionsSortBottomSheetItem(
             .conditionalClickable(
                 onClickLabel = data.sortOption.title,
                 role = Role.Button,
-                onClick = data.onClick,
+                onClick = events.onClick,
             )
             .padding(
                 horizontal = 16.dp,

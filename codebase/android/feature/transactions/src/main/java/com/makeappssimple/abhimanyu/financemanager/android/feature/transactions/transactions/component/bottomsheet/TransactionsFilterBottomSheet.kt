@@ -53,10 +53,20 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import java.time.LocalDate
 
 @Immutable
+internal data class TransactionsFiltersBottomSheetData(
+    val data: TransactionFilterBottomSheetFilterGroupData,
+    val events: TransactionFilterBottomSheetFilterGroupEvents,
+)
+
+@Immutable
 internal data class TransactionFilterBottomSheetFilterGroupData(
     @StringRes val headingTextStringResourceId: Int,
     val items: List<ChipItem>,
     val selectedItemsIndices: SnapshotStateList<Int>,
+)
+
+@Immutable
+internal data class TransactionFilterBottomSheetFilterGroupEvents(
     val onClearButtonClick: () -> Unit,
 )
 
@@ -122,68 +132,108 @@ internal fun TransactionsFiltersBottomSheet(
             value = selectedFilter.toDate ?: defaultMaxDate,
         )
     }
-    val filters = listOf(
-        TransactionFilterBottomSheetFilterGroupData(
-            headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_expense_categories,
-            items = expenseCategories.map { category ->
-                ChipItem(
-                    text = category.title,
+    val filters = buildList {
+        if (expenseCategories.isNotEmpty() && expenseCategories.size > 1) {
+            add(
+                TransactionsFiltersBottomSheetData(
+                    data = TransactionFilterBottomSheetFilterGroupData(
+                        headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_expense_categories,
+                        items = expenseCategories.map { category ->
+                            ChipItem(
+                                text = category.title,
+                            )
+                        },
+                        selectedItemsIndices = selectedExpenseCategoryIndicesValue,
+                    ),
+                    events = TransactionFilterBottomSheetFilterGroupEvents(
+                        onClearButtonClick = {
+                            selectedExpenseCategoryIndicesValue.clear()
+                        },
+                    ),
                 )
-            },
-            selectedItemsIndices = selectedExpenseCategoryIndicesValue,
-            onClearButtonClick = {
-                selectedExpenseCategoryIndicesValue.clear()
-            },
-        ),
-        TransactionFilterBottomSheetFilterGroupData(
-            headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_income_categories,
-            items = incomeCategories.map { category ->
-                ChipItem(
-                    text = category.title,
+            )
+        }
+        if (incomeCategories.isNotEmpty() && incomeCategories.size > 1) {
+            add(
+                TransactionsFiltersBottomSheetData(
+                    data = TransactionFilterBottomSheetFilterGroupData(
+                        headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_income_categories,
+                        items = incomeCategories.map { category ->
+                            ChipItem(
+                                text = category.title,
+                            )
+                        },
+                        selectedItemsIndices = selectedIncomeCategoryIndicesValue,
+                    ),
+                    events = TransactionFilterBottomSheetFilterGroupEvents(
+                        onClearButtonClick = {
+                            selectedIncomeCategoryIndicesValue.clear()
+                        },
+                    ),
                 )
-            },
-            selectedItemsIndices = selectedIncomeCategoryIndicesValue,
-            onClearButtonClick = {
-                selectedIncomeCategoryIndicesValue.clear()
-            },
-        ),
-        TransactionFilterBottomSheetFilterGroupData(
-            headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_investment_categories,
-            items = investmentCategories.map { category ->
-                ChipItem(
-                    text = category.title,
+            )
+        }
+        if (investmentCategories.isNotEmpty() && investmentCategories.size > 1) {
+            add(
+                TransactionsFiltersBottomSheetData(
+                    data = TransactionFilterBottomSheetFilterGroupData(
+                        headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_investment_categories,
+                        items = investmentCategories.map { category ->
+                            ChipItem(
+                                text = category.title,
+                            )
+                        },
+                        selectedItemsIndices = selectedInvestmentCategoryIndicesValue,
+                    ),
+                    events = TransactionFilterBottomSheetFilterGroupEvents(
+                        onClearButtonClick = {
+                            selectedInvestmentCategoryIndicesValue.clear()
+                        },
+                    ),
                 )
-            },
-            selectedItemsIndices = selectedInvestmentCategoryIndicesValue,
-            onClearButtonClick = {
-                selectedInvestmentCategoryIndicesValue.clear()
-            },
-        ),
-        TransactionFilterBottomSheetFilterGroupData(
-            headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_sources,
-            items = sources.map { source ->
-                ChipItem(
-                    text = source.name,
+            )
+        }
+        if (sources.isNotEmpty() && sources.size > 1) {
+            add(
+                TransactionsFiltersBottomSheetData(
+                    data = TransactionFilterBottomSheetFilterGroupData(
+                        headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_sources,
+                        items = sources.map { source ->
+                            ChipItem(
+                                text = source.name,
+                            )
+                        },
+                        selectedItemsIndices = selectedSourceIndicesValue,
+                    ),
+                    events = TransactionFilterBottomSheetFilterGroupEvents(
+                        onClearButtonClick = {
+                            selectedSourceIndicesValue.clear()
+                        },
+                    ),
                 )
-            },
-            selectedItemsIndices = selectedSourceIndicesValue,
-            onClearButtonClick = {
-                selectedSourceIndicesValue.clear()
-            },
-        ),
-        TransactionFilterBottomSheetFilterGroupData(
-            headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_transaction_types,
-            items = transactionTypes.map { transactionType ->
-                ChipItem(
-                    text = transactionType.title,
+            )
+        }
+        if (transactionTypes.isNotEmpty() && transactionTypes.size > 1) {
+            add(
+                TransactionsFiltersBottomSheetData(
+                    data = TransactionFilterBottomSheetFilterGroupData(
+                        headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_transaction_types,
+                        items = transactionTypes.map { transactionType ->
+                            ChipItem(
+                                text = transactionType.title,
+                            )
+                        },
+                        selectedItemsIndices = selectedTransactionTypeIndicesValue,
+                    ),
+                    events = TransactionFilterBottomSheetFilterGroupEvents(
+                        onClearButtonClick = {
+                            selectedTransactionTypeIndicesValue.clear()
+                        },
+                    ),
                 )
-            },
-            selectedItemsIndices = selectedTransactionTypeIndicesValue,
-            onClearButtonClick = {
-                selectedTransactionTypeIndicesValue.clear()
-            },
-        ),
-    )
+            )
+        }
+    }
 
     Column(
         modifier = modifier
@@ -205,20 +255,20 @@ internal fun TransactionsFiltersBottomSheet(
             itemsIndexed(
                 items = filters,
                 key = { _, listItem ->
-                    listItem.headingTextStringResourceId.hashCode()
+                    listItem.data.headingTextStringResourceId.hashCode()
                 },
             ) { index, listItem ->
                 TransactionFilterBottomSheetFilterGroup(
                     expanded = expandedItemsIndices[index],
-                    headingTextStringResourceId = listItem.headingTextStringResourceId,
-                    items = listItem.items,
-                    selectedItemsIndices = listItem.selectedItemsIndices,
-                    onClearButtonClick = listItem.onClearButtonClick,
+                    headingTextStringResourceId = listItem.data.headingTextStringResourceId,
+                    items = listItem.data.items,
+                    selectedItemsIndices = listItem.data.selectedItemsIndices,
+                    onClearButtonClick = listItem.events.onClearButtonClick,
                     onExpandButtonClick = {
                         expandedItemsIndices[index] = !expandedItemsIndices[index]
                     },
                     onItemClick = { clickedItemIndex ->
-                        listItem.selectedItemsIndices.addIfDoesNotContainItemElseRemove(
+                        listItem.data.selectedItemsIndices.addIfDoesNotContainItemElseRemove(
                             item = clickedItemIndex,
                         )
                     },
@@ -335,6 +385,7 @@ private fun TransactionFilterBottomSheetFilterGroup(
         } else {
             0F
         },
+        label = "", // TODO-Abhi: Add label for animation inspection
     )
 
     Column(
