@@ -17,13 +17,17 @@ fun AnalysisScreen(
         message = "Inside AnalysisScreen",
     )
     val transactionDataMappedByCategory: List<AnalysisListItemData> by screenViewModel.transactionDataMappedByCategory.collectAsStateWithLifecycle()
+    val selectedTransactionTypeIndex: Int? by screenViewModel.selectedTransactionTypeIndex.collectAsStateWithLifecycle()
 
     AnalysisScreenView(
         data = AnalysisScreenViewData(
+            selectedTransactionTypeIndex = selectedTransactionTypeIndex,
             transactionDataMappedByCategory = transactionDataMappedByCategory,
+            transactionTypesChipItems = screenViewModel.transactionTypesChipItems,
         ),
         events = AnalysisScreenViewEvents(
             navigateUp = screenViewModel::navigateUp,
+            updateSelectedTransactionTypeIndex = screenViewModel::updateSelectedTransactionTypeIndex,
         ),
         state = rememberCommonScreenViewState(),
     )
