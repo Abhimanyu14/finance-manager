@@ -58,7 +58,8 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
                             value = it.amountValue,
                         ).toString(),
                         emoji = it.category.emoji,
-                        percentage = "%.2f".format(it.percentage).let { percentage ->
+                        percentage = (it.percentage / 100).toFloat(),
+                        percentageText = "%.2f".format(it.percentage).let { percentage ->
                             "$percentage%"
                         },
                         title = it.category.title,
