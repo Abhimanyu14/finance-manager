@@ -6,7 +6,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.DeleteSourceUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.DeleteSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfSourceIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
@@ -32,7 +31,6 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
     override val navigationManager: NavigationManager,
     private val checkIfSourceIsUsedInTransactionsUseCase: CheckIfSourceIsUsedInTransactionsUseCase,
     private val dataStore: MyDataStore,
-    private val deleteSourcesUseCase: DeleteSourcesUseCase,
     private val deleteSourceUseCase: DeleteSourceUseCase,
     private val dispatcherProvider: DispatcherProvider,
 ) : SourcesScreenViewModel, ViewModel() {
@@ -77,7 +75,6 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
     }.defaultListStateIn(
         scope = viewModelScope,
     )
-
 
     override fun deleteSource(
         id: Int,

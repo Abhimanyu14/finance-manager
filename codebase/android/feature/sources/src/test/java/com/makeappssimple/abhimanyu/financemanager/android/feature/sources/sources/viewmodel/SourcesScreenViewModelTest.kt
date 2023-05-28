@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sour
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigUtilImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.DeleteSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.DeleteSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfSourceIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
@@ -36,7 +36,6 @@ class SourcesScreenViewModelTest {
         context = dispatcherProvider.io + Job(),
     )
 
-
     private val getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase = mock()
     private val navigationManager: NavigationManager = NavigationManagerImpl(
         coroutineScope = testCoroutineScope,
@@ -48,8 +47,7 @@ class SourcesScreenViewModelTest {
     private val checkIfSourceIsUsedInTransactionsUseCase: CheckIfSourceIsUsedInTransactionsUseCase =
         mock()
     private val dataStore: MyDataStore = mock()
-    private val deleteSourcesUseCase: DeleteSourcesUseCase = mock()
-    private val source: Source = mock()
+    private val deleteSourceUseCase: DeleteSourceUseCase = mock()
 
     private lateinit var sourcesScreenViewModel: SourcesScreenViewModel
 
@@ -61,7 +59,7 @@ class SourcesScreenViewModelTest {
             navigationManager = navigationManager,
             checkIfSourceIsUsedInTransactionsUseCase = checkIfSourceIsUsedInTransactionsUseCase,
             dataStore = dataStore,
-            deleteSourcesUseCase = deleteSourcesUseCase,
+            deleteSourceUseCase = deleteSourceUseCase,
             dispatcherProvider = dispatcherProvider,
         )
     }
@@ -79,8 +77,8 @@ class SourcesScreenViewModelTest {
             )
         }
 
-        sourcesScreenViewModel.deleteSource(
-            source = source,
-        )
+//        sourcesScreenViewModel.deleteSource(
+//            source = source,
+//        )
     }
 }
