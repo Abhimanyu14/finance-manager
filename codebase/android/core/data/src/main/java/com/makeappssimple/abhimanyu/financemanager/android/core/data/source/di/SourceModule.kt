@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.source.di
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.repository.SourceRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.repository.SourceRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.DeleteSourceUseCase
@@ -23,7 +24,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usec
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.UpdateSourcesUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.SourceDao
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -43,22 +43,22 @@ class SourceModule {
 
     @Provides
     fun providesDeleteSourcesUseCase(
-        dataStore: MyDataStore,
+        myPreferencesRepository: MyPreferencesRepository,
         sourceRepository: SourceRepository,
     ): DeleteSourcesUseCase {
         return DeleteSourcesUseCaseImpl(
-            dataStore = dataStore,
+            myPreferencesRepository = myPreferencesRepository,
             sourceRepository = sourceRepository,
         )
     }
 
     @Provides
     fun providesDeleteSourceUseCase(
-        dataStore: MyDataStore,
+        myPreferencesRepository: MyPreferencesRepository,
         sourceRepository: SourceRepository,
     ): DeleteSourceUseCase {
         return DeleteSourceUseCaseImpl(
-            dataStore = dataStore,
+            myPreferencesRepository = myPreferencesRepository,
             sourceRepository = sourceRepository,
         )
     }
@@ -110,33 +110,33 @@ class SourceModule {
 
     @Provides
     fun providesInsertSourcesUseCase(
-        dataStore: MyDataStore,
+        myPreferencesRepository: MyPreferencesRepository,
         sourceRepository: SourceRepository,
     ): InsertSourcesUseCase {
         return InsertSourcesUseCaseImpl(
-            dataStore = dataStore,
+            myPreferencesRepository = myPreferencesRepository,
             sourceRepository = sourceRepository,
         )
     }
 
     @Provides
     fun providesUpdateSourcesBalanceAmountUseCase(
-        dataStore: MyDataStore,
+        myPreferencesRepository: MyPreferencesRepository,
         sourceRepository: SourceRepository,
     ): UpdateSourcesBalanceAmountUseCase {
         return UpdateSourcesBalanceAmountUseCaseImpl(
-            dataStore = dataStore,
+            myPreferencesRepository = myPreferencesRepository,
             sourceRepository = sourceRepository,
         )
     }
 
     @Provides
     fun providesUpdateSourcesUseCase(
-        dataStore: MyDataStore,
+        myPreferencesRepository: MyPreferencesRepository,
         sourceRepository: SourceRepository,
     ): UpdateSourcesUseCase {
         return UpdateSourcesUseCaseImpl(
-            dataStore = dataStore,
+            myPreferencesRepository = myPreferencesRepository,
             sourceRepository = sourceRepository,
         )
     }

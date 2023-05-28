@@ -26,7 +26,7 @@ import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
-class MyDataStoreTest {
+class MyPreferencesDataSourceTest {
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
 
@@ -52,11 +52,11 @@ class MyDataStoreTest {
     @Inject
     lateinit var logger: Logger
 
-    private lateinit var myDataStore: MyDataStore
+    private lateinit var myPreferencesDataSource: MyPreferencesDataSource
 
     @Before
     fun setUp() {
-        myDataStore = MyDataStoreImpl(
+        myPreferencesDataSource = MyPreferencesDataSource(
             dataStore = testDataStore,
             logger = logger,
         )
@@ -74,18 +74,18 @@ class MyDataStoreTest {
 
     @Test
     fun getDefaultExpenseCategoryIdFromDataStore_returnsNull() = testCoroutineScope.runTest {
-        val result = myDataStore.getDefaultExpenseCategoryId().first()
+        val result = myPreferencesDataSource.getDefaultDataId().first()?.expenseCategory
 
         Assert.assertNull(result)
     }
 
     @Test
     fun setDefaultExpenseCategoryIdInDataStore_defaultTest() = testCoroutineScope.runTest {
-        myDataStore.setDefaultExpenseCategoryId(
+        myPreferencesDataSource.setDefaultExpenseCategoryId(
             defaultExpenseCategoryId = testId,
         )
 
-        val result = myDataStore.getDefaultExpenseCategoryId().first()
+        val result = myPreferencesDataSource.getDefaultDataId().first()?.expenseCategory
 
         Assert.assertEquals(
             testId,
@@ -95,18 +95,18 @@ class MyDataStoreTest {
 
     @Test
     fun getDefaultIncomeCategoryIdFromDataStore_returnsNull() = testCoroutineScope.runTest {
-        val result = myDataStore.getDefaultIncomeCategoryId().first()
+        val result = myPreferencesDataSource.getDefaultDataId().first()?.incomeCategory
 
         Assert.assertNull(result)
     }
 
     @Test
     fun setDefaultIncomeCategoryIdInDataStore_defaultTest() = testCoroutineScope.runTest {
-        myDataStore.setDefaultIncomeCategoryId(
+        myPreferencesDataSource.setDefaultIncomeCategoryId(
             defaultIncomeCategoryId = testId,
         )
 
-        val result = myDataStore.getDefaultIncomeCategoryId().first()
+        val result = myPreferencesDataSource.getDefaultDataId().first()?.incomeCategory
 
         Assert.assertEquals(
             testId,
@@ -116,18 +116,18 @@ class MyDataStoreTest {
 
     @Test
     fun getDefaultInvestmentCategoryIdFromDataStore_returnsNull() = testCoroutineScope.runTest {
-        val result = myDataStore.getDefaultInvestmentCategoryId().first()
+        val result = myPreferencesDataSource.getDefaultDataId().first()?.investmentCategory
 
         Assert.assertNull(result)
     }
 
     @Test
     fun setDefaultInvestmentCategoryIdInDataStore_defaultTest() = testCoroutineScope.runTest {
-        myDataStore.setDefaultInvestmentCategoryId(
+        myPreferencesDataSource.setDefaultInvestmentCategoryId(
             defaultInvestmentCategoryId = testId,
         )
 
-        val result = myDataStore.getDefaultInvestmentCategoryId().first()
+        val result = myPreferencesDataSource.getDefaultDataId().first()?.investmentCategory
 
         Assert.assertEquals(
             testId,
@@ -137,18 +137,18 @@ class MyDataStoreTest {
 
     @Test
     fun getDefaultSourceIdFromDataStore_returnsNull() = testCoroutineScope.runTest {
-        val result = myDataStore.getDefaultSourceId().first()
+        val result = myPreferencesDataSource.getDefaultDataId().first()?.source
 
         Assert.assertNull(result)
     }
 
     @Test
     fun setDefaultSourceIdInDataStore_defaultTest() = testCoroutineScope.runTest {
-        myDataStore.setDefaultSourceId(
+        myPreferencesDataSource.setDefaultSourceId(
             defaultSourceId = testId,
         )
 
-        val result = myDataStore.getDefaultSourceId().first()
+        val result = myPreferencesDataSource.getDefaultDataId().first()?.source
 
         Assert.assertEquals(
             testId,
@@ -158,18 +158,18 @@ class MyDataStoreTest {
 
     @Test
     fun getLastDataBackupTimestamp_returnsNull() = testCoroutineScope.runTest {
-        val result = myDataStore.getLastDataBackupTimestamp().first()
+        val result = myPreferencesDataSource.getDataTimestamp().first()?.lastBackup
 
         Assert.assertNull(result)
     }
 
     @Test
     fun setLastDataBackupTimestamp_defaultTest() = testCoroutineScope.runTest {
-        myDataStore.setLastDataBackupTimestamp(
+        myPreferencesDataSource.setLastDataBackupTimestamp(
             lastDataBackupTimestamp = testTimestamp,
         )
 
-        val result = myDataStore.getLastDataBackupTimestamp().first()
+        val result = myPreferencesDataSource.getDataTimestamp().first()?.lastBackup
 
         Assert.assertEquals(
             testTimestamp,
@@ -179,18 +179,18 @@ class MyDataStoreTest {
 
     @Test
     fun getLastDataChangeTimestamp_returnsNull() = testCoroutineScope.runTest {
-        val result = myDataStore.getLastDataChangeTimestamp().first()
+        val result = myPreferencesDataSource.getDataTimestamp().first()?.lastChange
 
         Assert.assertNull(result)
     }
 
     @Test
     fun setLastDataChangeTimestamp_defaultTest() = testCoroutineScope.runTest {
-        myDataStore.setLastDataChangeTimestamp(
+        myPreferencesDataSource.setLastDataChangeTimestamp(
             lastDataChangeTimestamp = testTimestamp,
         )
 
-        val result = myDataStore.getLastDataChangeTimestamp().first()
+        val result = myPreferencesDataSource.getDataTimestamp().first()?.lastChange
 
         Assert.assertEquals(
             testTimestamp,

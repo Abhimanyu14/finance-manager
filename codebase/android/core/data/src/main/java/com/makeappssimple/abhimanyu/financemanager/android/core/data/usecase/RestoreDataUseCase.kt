@@ -4,10 +4,10 @@ import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.JsonReader
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.BackupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.transactionsCleanUp
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
@@ -18,15 +18,15 @@ interface RestoreDataUseCase {
 }
 
 class RestoreDataUseCaseImpl(
-    private val dataStore: MyDataStore,
-    private val transactionRepository: TransactionRepository,
     private val jsonReader: JsonReader,
+    private val myPreferencesRepository: MyPreferencesRepository,
+    private val transactionRepository: TransactionRepository,
 ) : RestoreDataUseCase {
     override suspend operator fun invoke(
         uri: Uri,
     ) {
-        dataStore.setLastDataChangeTimestamp()
-        dataStore.setLastDataBackupTimestamp()
+        myPreferencesRepository.setLastDataChangeTimestamp()
+        myPreferencesRepository.setLastDataBackupTimestamp()
         val jsonString = jsonReader.readJsonFromFile(
             uri = uri,
         ) ?: return
@@ -75,13 +75,15 @@ class RestoreDataUseCaseImpl(
         )
 
         backupData.datastoreData?.let {
-            dataStore.setCategoryDataVersionNumber(it.initialDataVersionNumber.category)
-            dataStore.setDefaultExpenseCategoryId(it.defaultDataId.expenseCategory)
-            dataStore.setDefaultIncomeCategoryId(it.defaultDataId.incomeCategory)
-            dataStore.setDefaultInvestmentCategoryId(it.defaultDataId.investmentCategory)
-            dataStore.setDefaultSourceId(it.defaultDataId.source)
-            dataStore.setEmojiDataVersionNumber(it.initialDataVersionNumber.emoji)
-            dataStore.setTransactionsDataVersionNumber(it.initialDataVersionNumber.transaction)
+            with(myPreferencesRepository) {
+                setCategoryDataVersionNumber(it.initialDataVersionNumber.category)
+                setDefaultExpenseCategoryId(it.defaultDataId.expenseCategory)
+                setDefaultIncomeCategoryId(it.defaultDataId.incomeCategory)
+                setDefaultInvestmentCategoryId(it.defaultDataId.investmentCategory)
+                setDefaultSourceId(it.defaultDataId.source)
+                setEmojiDataVersionNumber(it.initialDataVersionNumber.emoji)
+                setTransactionsDataVersionNumber(it.initialDataVersionNumber.transaction)
+            }
         }
     }
 }

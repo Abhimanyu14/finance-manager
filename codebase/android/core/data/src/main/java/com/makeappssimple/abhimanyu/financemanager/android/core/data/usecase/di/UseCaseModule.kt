@@ -6,6 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreade
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.JsonWriter
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepository
@@ -18,7 +19,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.Rec
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RecalculateTotalUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RestoreDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RestoreDataUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,7 +30,6 @@ class UseCaseModule {
     @Provides
     fun providesBackupDataUseCase(
         dateTimeUtil: DateTimeUtil,
-        dataStore: MyDataStore,
         dispatcherProvider: DispatcherProvider,
         getAllCategoriesUseCase: GetAllCategoriesUseCase,
         getAllEmojisUseCase: GetAllEmojisUseCase,
@@ -38,10 +37,10 @@ class UseCaseModule {
         getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
         getAllTransactionsUseCase: GetAllTransactionsUseCase,
         jsonWriter: JsonWriter,
+        myPreferencesRepository: MyPreferencesRepository,
     ): BackupDataUseCase {
         return BackupDataUseCaseImpl(
             dateTimeUtil = dateTimeUtil,
-            dataStore = dataStore,
             dispatcherProvider = dispatcherProvider,
             getAllCategoriesUseCase = getAllCategoriesUseCase,
             getAllEmojisUseCase = getAllEmojisUseCase,
@@ -49,36 +48,37 @@ class UseCaseModule {
             getAllTransactionForValuesUseCase = getAllTransactionForValuesUseCase,
             getAllTransactionsUseCase = getAllTransactionsUseCase,
             jsonWriter = jsonWriter,
+            myPreferencesRepository = myPreferencesRepository,
         )
     }
 
     @Provides
     fun providesRecalculateTotalUseCase(
-        dataStore: MyDataStore,
         dispatcherProvider: DispatcherProvider,
         getAllSourcesUseCase: GetAllSourcesUseCase,
         getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
+        myPreferencesRepository: MyPreferencesRepository,
         updateSourcesUseCase: UpdateSourcesUseCase,
     ): RecalculateTotalUseCase {
         return RecalculateTotalUseCaseImpl(
-            dataStore = dataStore,
             dispatcherProvider = dispatcherProvider,
             getAllSourcesUseCase = getAllSourcesUseCase,
             getAllTransactionDataUseCase = getAllTransactionDataUseCase,
+            myPreferencesRepository = myPreferencesRepository,
             updateSourcesUseCase = updateSourcesUseCase,
         )
     }
 
     @Provides
     fun providesRestoreDataUseCase(
-        dataStore: MyDataStore,
-        transactionRepository: TransactionRepository,
         jsonReader: JsonReader,
+        myPreferencesRepository: MyPreferencesRepository,
+        transactionRepository: TransactionRepository,
     ): RestoreDataUseCase {
         return RestoreDataUseCaseImpl(
-            dataStore = dataStore,
-            transactionRepository = transactionRepository,
             jsonReader = jsonReader,
+            myPreferencesRepository = myPreferencesRepository,
+            transactionRepository = transactionRepository,
         )
     }
 }

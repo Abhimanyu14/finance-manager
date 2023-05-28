@@ -9,8 +9,7 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.AppConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStoreImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyPreferencesDataSource
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import dagger.Module
 import dagger.Provides
@@ -23,10 +22,10 @@ import kotlinx.coroutines.SupervisorJob
 
 @Module
 @InstallIn(SingletonComponent::class)
-class DataStoreModule {
+class PreferencesModule {
     @Singleton
     @Provides
-    fun providePreferencesDataStore(
+    fun provideDataStorePreferencesDataStore(
         @ApplicationContext appContext: Context,
         dispatcherProvider: DispatcherProvider,
     ): DataStore<Preferences> {
@@ -48,11 +47,11 @@ class DataStoreModule {
     }
 
     @Provides
-    fun providesMyDataStore(
+    fun providesMyPreferencesDataSource(
         dataStore: DataStore<Preferences>,
         logger: Logger,
-    ): MyDataStore {
-        return MyDataStoreImpl(
+    ): MyPreferencesDataSource {
+        return MyPreferencesDataSource(
             dataStore = dataStore,
             logger = logger,
         )

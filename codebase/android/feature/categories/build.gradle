@@ -73,7 +73,6 @@ dependencies {
     implementation project(":core:navigation")
     implementation project(":core:model")
     implementation project(":core:data")
-    implementation project(":core:datastore")
     implementation project(":core:designsystem")
     implementation project(":core:logger")
     implementation project(":core:ui")

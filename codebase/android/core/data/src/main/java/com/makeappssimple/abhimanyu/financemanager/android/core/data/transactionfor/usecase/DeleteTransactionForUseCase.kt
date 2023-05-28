@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.repository.TransactionForRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 
 interface DeleteTransactionForUseCase {
     suspend operator fun invoke(
@@ -10,13 +10,13 @@ interface DeleteTransactionForUseCase {
 }
 
 class DeleteTransactionForUseCaseImpl(
-    private val dataStore: MyDataStore,
+    private val myPreferencesRepository: MyPreferencesRepository,
     private val transactionForRepository: TransactionForRepository,
 ) : DeleteTransactionForUseCase {
     override suspend operator fun invoke(
         id: Int,
     ) {
-        dataStore.setLastDataChangeTimestamp()
+        myPreferencesRepository.setLastDataChangeTimestamp()
         return transactionForRepository.deleteTransactionFor(
             id = id,
         )

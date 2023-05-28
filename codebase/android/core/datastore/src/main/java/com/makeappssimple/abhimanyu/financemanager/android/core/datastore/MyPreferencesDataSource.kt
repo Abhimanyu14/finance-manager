@@ -13,22 +13,22 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 
-internal class MyDataStoreImpl(
+class MyPreferencesDataSource(
     private val dataStore: DataStore<Preferences>,
     private val logger: Logger,
-) : MyDataStore {
+) {
     @VisibleForTesting
     internal val preferences: Flow<Preferences> = dataStore.data
         .catch { exception ->
-            logger.logError(
-                message = "Error reading preferences. ${exception.localizedMessage}",
-            )
-            emit(
-                value = emptyPreferences(),
-            )
-        }
+        logger.logError(
+            message = "Error reading preferences. ${exception.localizedMessage}",
+        )
+        emit(
+            value = emptyPreferences(),
+        )
+    }
 
-    override fun getDataTimestamp(): Flow<DataTimestamp?> {
+    fun getDataTimestamp(): Flow<DataTimestamp?> {
         return preferences.map {
             DataTimestamp(
                 lastBackup = it[LAST_DATA_BACKUP_TIMESTAMP] ?: 0L,
@@ -37,7 +37,7 @@ internal class MyDataStoreImpl(
         }
     }
 
-    override fun getDefaultDataId(): Flow<DefaultDataId?> {
+    fun getDefaultDataId(): Flow<DefaultDataId?> {
         return preferences.map {
             DefaultDataId(
                 expenseCategory = it[DEFAULT_EXPENSE_CATEGORY_ID] ?: 0,
@@ -48,7 +48,7 @@ internal class MyDataStoreImpl(
         }
     }
 
-    override fun getInitialDataVersionNumber(): Flow<InitialDataVersionNumber?> {
+    fun getInitialDataVersionNumber(): Flow<InitialDataVersionNumber?> {
         return preferences.map {
             InitialDataVersionNumber(
                 category = it[CATEGORY_DATA_VERSION_NUMBER] ?: 0,
@@ -58,7 +58,7 @@ internal class MyDataStoreImpl(
         }
     }
 
-    override suspend fun setCategoryDataVersionNumber(
+    suspend fun setCategoryDataVersionNumber(
         categoryDataVersionNumber: Int,
     ) {
         dataStore.edit {
@@ -66,7 +66,7 @@ internal class MyDataStoreImpl(
         }
     }
 
-    override suspend fun setDefaultExpenseCategoryId(
+    suspend fun setDefaultExpenseCategoryId(
         defaultExpenseCategoryId: Int,
     ) {
         dataStore.edit {
@@ -74,7 +74,7 @@ internal class MyDataStoreImpl(
         }
     }
 
-    override suspend fun setDefaultIncomeCategoryId(
+    suspend fun setDefaultIncomeCategoryId(
         defaultIncomeCategoryId: Int,
     ) {
         dataStore.edit {
@@ -82,7 +82,7 @@ internal class MyDataStoreImpl(
         }
     }
 
-    override suspend fun setDefaultInvestmentCategoryId(
+    suspend fun setDefaultInvestmentCategoryId(
         defaultInvestmentCategoryId: Int,
     ) {
         dataStore.edit {
@@ -90,7 +90,7 @@ internal class MyDataStoreImpl(
         }
     }
 
-    override suspend fun setDefaultSourceId(
+    suspend fun setDefaultSourceId(
         defaultSourceId: Int,
     ) {
         dataStore.edit {
@@ -98,7 +98,7 @@ internal class MyDataStoreImpl(
         }
     }
 
-    override suspend fun setEmojiDataVersionNumber(
+    suspend fun setEmojiDataVersionNumber(
         emojiDataVersionNumber: Int,
     ) {
         dataStore.edit {
@@ -106,7 +106,7 @@ internal class MyDataStoreImpl(
         }
     }
 
-    override suspend fun setLastDataBackupTimestamp(
+    suspend fun setLastDataBackupTimestamp(
         lastDataBackupTimestamp: Long,
     ) {
         dataStore.edit {
@@ -114,7 +114,7 @@ internal class MyDataStoreImpl(
         }
     }
 
-    override suspend fun setLastDataChangeTimestamp(
+    suspend fun setLastDataChangeTimestamp(
         lastDataChangeTimestamp: Long,
     ) {
         dataStore.edit {
@@ -122,7 +122,7 @@ internal class MyDataStoreImpl(
         }
     }
 
-    override suspend fun setTransactionsDataVersionNumber(
+    suspend fun setTransactionsDataVersionNumber(
         transactionsDataVersionNumber: Int,
     ) {
         dataStore.edit {

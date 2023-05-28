@@ -1,13 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.UpdateSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.updateBalanceAmount
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
@@ -17,10 +17,10 @@ interface RecalculateTotalUseCase {
 }
 
 class RecalculateTotalUseCaseImpl(
-    private val dataStore: MyDataStore,
     private val dispatcherProvider: DispatcherProvider,
     private val getAllSourcesUseCase: GetAllSourcesUseCase,
     private val getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
+    private val myPreferencesRepository: MyPreferencesRepository,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
 ) : RecalculateTotalUseCase {
     override suspend operator fun invoke() {
@@ -42,7 +42,7 @@ class RecalculateTotalUseCaseImpl(
             val allTransactionData: List<TransactionData> =
                 deferredList[1].filterIsInstance<TransactionData>()
 
-            dataStore.setLastDataChangeTimestamp()
+            myPreferencesRepository.setLastDataChangeTimestamp()
             val sourceBalances = hashMapOf<Int, Long>()
             allTransactionData.forEach { transactionData ->
                 transactionData.sourceFrom?.let {

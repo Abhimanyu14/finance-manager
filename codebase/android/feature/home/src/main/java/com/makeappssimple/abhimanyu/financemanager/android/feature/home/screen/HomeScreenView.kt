@@ -45,7 +45,7 @@ internal enum class HomeBottomSheetType : BottomSheetType {
 
 @Immutable
 internal data class HomeScreenViewData(
-    val showBackupCard: Boolean,
+    val isBackupCardVisible: Boolean,
     val transactionListItemDataList: List<TransactionListItemData>,
 )
 
@@ -152,7 +152,7 @@ internal fun HomeScreenView(
             }
             item {
                 AnimatedVisibility(
-                    visible = data.showBackupCard,
+                    visible = data.isBackupCardVisible,
                 ) {
                     BackupCard(
                         onClick = {

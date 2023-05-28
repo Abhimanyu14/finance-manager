@@ -3,10 +3,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sour
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigUtilImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.DeleteSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfSourceIsUsedInTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LoggerImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
@@ -46,7 +46,7 @@ class SourcesScreenViewModelTest {
     )
     private val checkIfSourceIsUsedInTransactionsUseCase: CheckIfSourceIsUsedInTransactionsUseCase =
         mock()
-    private val dataStore: MyDataStore = mock()
+    private val myPreferencesRepository: MyPreferencesRepository = mock()
     private val deleteSourceUseCase: DeleteSourceUseCase = mock()
 
     private lateinit var sourcesScreenViewModel: SourcesScreenViewModel
@@ -58,9 +58,9 @@ class SourcesScreenViewModelTest {
             logger = logger,
             navigationManager = navigationManager,
             checkIfSourceIsUsedInTransactionsUseCase = checkIfSourceIsUsedInTransactionsUseCase,
-            dataStore = dataStore,
             deleteSourceUseCase = deleteSourceUseCase,
             dispatcherProvider = dispatcherProvider,
+            myPreferencesRepository = myPreferencesRepository,
         )
     }
 

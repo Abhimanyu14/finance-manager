@@ -36,13 +36,13 @@ fun HomeScreen(
         .collectAsStateWithLifecycle(
             initialValue = emptyList(),
         )
-    val showBackupCard: Boolean by screenViewModel.showBackupCard.collectAsStateWithLifecycle(
+    val isBackupCardVisible: Boolean by screenViewModel.isBackupCardVisible.collectAsStateWithLifecycle(
         initialValue = false,
     )
 
     HomeScreenView(
         data = HomeScreenViewData(
-            showBackupCard = showBackupCard,
+            isBackupCardVisible = isBackupCardVisible,
             transactionListItemDataList = homeListItemViewData,
         ),
         events = HomeScreenViewEvents(

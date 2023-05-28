@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.repository.TransactionForRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -9,14 +9,14 @@ import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
 class DeleteTransactionForUseCaseTest {
-    private val dataStore: MyDataStore = mock()
+    private val myPreferencesRepository: MyPreferencesRepository = mock()
     private val transactionForRepository: TransactionForRepository = mock()
     private lateinit var deleteTransactionForUseCase: DeleteTransactionForUseCase
 
     @Before
     fun setUp() {
         deleteTransactionForUseCase = DeleteTransactionForUseCaseImpl(
-            dataStore = dataStore,
+            myPreferencesRepository = myPreferencesRepository,
             transactionForRepository = transactionForRepository,
         )
     }

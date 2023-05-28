@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.di
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfCategoryIsUsedInTransactionsUseCase
@@ -42,7 +43,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.UpdateTransactionUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.datasource.CommonDataSource
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -91,22 +91,22 @@ class TransactionModule {
 
     @Provides
     fun providesDeleteAllTransactionsUseCase(
-        dataStore: MyDataStore,
+        myPreferencesRepository: MyPreferencesRepository,
         transactionRepository: TransactionRepository,
     ): DeleteAllTransactionsUseCase {
         return DeleteAllTransactionsUseCaseImpl(
-            dataStore = dataStore,
+            myPreferencesRepository = myPreferencesRepository,
             transactionRepository = transactionRepository,
         )
     }
 
     @Provides
     fun providesDeleteTransactionUseCase(
-        dataStore: MyDataStore,
+        myPreferencesRepository: MyPreferencesRepository,
         transactionRepository: TransactionRepository,
     ): DeleteTransactionUseCase {
         return DeleteTransactionUseCaseImpl(
-            dataStore = dataStore,
+            myPreferencesRepository = myPreferencesRepository,
             transactionRepository = transactionRepository,
         )
     }
@@ -212,33 +212,33 @@ class TransactionModule {
 
     @Provides
     fun providesInsertTransactionUseCase(
-        dataStore: MyDataStore,
+        myPreferencesRepository: MyPreferencesRepository,
         transactionRepository: TransactionRepository,
     ): InsertTransactionUseCase {
         return InsertTransactionUseCaseImpl(
-            dataStore = dataStore,
+            myPreferencesRepository = myPreferencesRepository,
             transactionRepository = transactionRepository,
         )
     }
 
     @Provides
     fun providesInsertTransactionsUseCase(
-        dataStore: MyDataStore,
+        myPreferencesRepository: MyPreferencesRepository,
         transactionRepository: TransactionRepository,
     ): InsertTransactionsUseCase {
         return InsertTransactionsUseCaseImpl(
-            dataStore = dataStore,
+            myPreferencesRepository = myPreferencesRepository,
             transactionRepository = transactionRepository,
         )
     }
 
     @Provides
     fun providesUpdateTransactionUseCase(
-        dataStore: MyDataStore,
+        myPreferencesRepository: MyPreferencesRepository,
         transactionRepository: TransactionRepository,
     ): UpdateTransactionUseCase {
         return UpdateTransactionUseCaseImpl(
-            dataStore = dataStore,
+            myPreferencesRepository = myPreferencesRepository,
             transactionRepository = transactionRepository,
         )
     }

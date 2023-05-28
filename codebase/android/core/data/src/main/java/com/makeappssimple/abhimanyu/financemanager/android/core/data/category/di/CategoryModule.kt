@@ -14,8 +14,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.us
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.InsertCategoriesUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.UpdateCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.UpdateCategoriesUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.CategoryDao
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,12 +35,12 @@ class CategoryModule {
 
     @Provides
     fun providesDeleteCategoryUseCase(
-        dataStore: MyDataStore,
         categoryRepository: CategoryRepository,
+        myPreferencesRepository: MyPreferencesRepository,
     ): DeleteCategoryUseCase {
         return DeleteCategoryUseCaseImpl(
-            dataStore = dataStore,
             categoryRepository = categoryRepository,
+            myPreferencesRepository = myPreferencesRepository,
         )
     }
 
@@ -73,23 +73,23 @@ class CategoryModule {
 
     @Provides
     fun providesInsertCategoriesUseCase(
-        dataStore: MyDataStore,
         categoryRepository: CategoryRepository,
+        myPreferencesRepository: MyPreferencesRepository,
     ): InsertCategoriesUseCase {
         return InsertCategoriesUseCaseImpl(
-            dataStore = dataStore,
             categoryRepository = categoryRepository,
+            myPreferencesRepository = myPreferencesRepository,
         )
     }
 
     @Provides
     fun providesUpdateCategoriesUseCase(
-        dataStore: MyDataStore,
         categoryRepository: CategoryRepository,
+        myPreferencesRepository: MyPreferencesRepository,
     ): UpdateCategoriesUseCase {
         return UpdateCategoriesUseCaseImpl(
-            dataStore = dataStore,
             categoryRepository = categoryRepository,
+            myPreferencesRepository = myPreferencesRepository,
         )
     }
 }

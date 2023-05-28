@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.repository.CategoryRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 
 interface UpdateCategoriesUseCase {
@@ -11,13 +11,13 @@ interface UpdateCategoriesUseCase {
 }
 
 class UpdateCategoriesUseCaseImpl(
-    private val dataStore: MyDataStore,
     private val categoryRepository: CategoryRepository,
+    private val myPreferencesRepository: MyPreferencesRepository,
 ) : UpdateCategoriesUseCase {
     override suspend operator fun invoke(
         vararg categories: Category,
     ) {
-        dataStore.setLastDataChangeTimestamp()
+        myPreferencesRepository.setLastDataChangeTimestamp()
         return categoryRepository.updateCategories(
             categories = categories,
         )

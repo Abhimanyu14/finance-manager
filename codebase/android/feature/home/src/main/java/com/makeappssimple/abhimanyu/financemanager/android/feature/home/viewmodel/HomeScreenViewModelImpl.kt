@@ -7,9 +7,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetRecentTransactionDataFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.BackupDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
@@ -25,16 +25,38 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 internal class HomeScreenViewModelImpl @Inject constructor(
-    dataStore: MyDataStore,
-    getRecentTransactionDataFlowUseCase: GetRecentTransactionDataFlowUseCase,
     override val logger: Logger,
     override val navigationManager: NavigationManager,
     private val backupDataUseCase: BackupDataUseCase,
     private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
+    private val getRecentTransactionDataFlowUseCase: GetRecentTransactionDataFlowUseCase,
+    private val myPreferencesRepository: MyPreferencesRepository,
 ) : HomeScreenViewModel, ViewModel() {
     override val homeListItemViewData: Flow<List<TransactionListItemData>> =
-        getRecentTransactionDataFlowUseCase().map {
+        getHomeListItemViewDataFromData()
+
+    override val isBackupCardVisible: Flow<Boolean> = getIsBackupCardVisibleFromData()
+
+    override fun backupDataToDocument(
+        uri: Uri,
+    ) {
+        viewModelScope.launch(
+            context = dispatcherProvider.io,
+        ) {
+            launch {
+                backupDataUseCase(
+                    uri = uri,
+                )
+            }
+            navigationManager.navigate(
+                navigationCommand = MyNavigationDirections.NavigateUp
+            )
+        }
+    }
+
+    private fun getHomeListItemViewDataFromData(): Flow<List<TransactionListItemData>> {
+        return getRecentTransactionDataFlowUseCase().map {
             it.map { listItem ->
                 val amountColor: MyColor = listItem.transaction.getAmountTextColor()
                 val amountText: String =
@@ -85,24 +107,11 @@ internal class HomeScreenViewModelImpl @Inject constructor(
                 )
             }
         }
-    override val showBackupCard: Flow<Boolean> = dataStore.getDataTimestamp().map {
-        it.isNotNull() && it.lastBackup < it.lastChange
     }
 
-    override fun backupDataToDocument(
-        uri: Uri,
-    ) {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            launch {
-                backupDataUseCase(
-                    uri = uri,
-                )
-            }
-            navigationManager.navigate(
-                navigationCommand = MyNavigationDirections.NavigateUp
-            )
+    private fun getIsBackupCardVisibleFromData(): Flow<Boolean> {
+        return myPreferencesRepository.getDataTimestamp().map {
+            it.isNotNull() && it.lastBackup < it.lastChange
         }
     }
 }

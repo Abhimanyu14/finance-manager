@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.datastore
+package com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DataTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
@@ -6,7 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDat
 import kotlinx.coroutines.flow.Flow
 import java.time.Instant
 
-interface MyDataStore {
+interface MyPreferencesRepository {
     fun getDataTimestamp(): Flow<DataTimestamp?>
 
     fun getDefaultDataId(): Flow<DefaultDataId?>

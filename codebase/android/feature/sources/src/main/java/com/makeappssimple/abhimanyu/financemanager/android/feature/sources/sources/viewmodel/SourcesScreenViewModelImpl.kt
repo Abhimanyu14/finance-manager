@@ -5,10 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.DeleteSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfSourceIsUsedInTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.sortOrder
@@ -30,11 +30,11 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
     override val logger: Logger,
     override val navigationManager: NavigationManager,
     private val checkIfSourceIsUsedInTransactionsUseCase: CheckIfSourceIsUsedInTransactionsUseCase,
-    private val dataStore: MyDataStore,
     private val deleteSourceUseCase: DeleteSourceUseCase,
     private val dispatcherProvider: DispatcherProvider,
+    private val myPreferencesRepository: MyPreferencesRepository,
 ) : SourcesScreenViewModel, ViewModel() {
-    private val defaultSourceId: Flow<Int?> = dataStore.getDefaultDataId().map {
+    private val defaultSourceId: Flow<Int?> = myPreferencesRepository.getDefaultDataId().map {
         it?.source
     }
     private val allSourcesFlow: Flow<List<Source>> = getAllSourcesFlowUseCase()
@@ -94,7 +94,7 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            dataStore.setDefaultSourceId(
+            myPreferencesRepository.setDefaultSourceId(
                 defaultSourceId = defaultSourceId,
             )
         }

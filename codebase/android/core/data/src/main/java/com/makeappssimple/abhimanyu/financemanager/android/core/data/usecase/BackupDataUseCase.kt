@@ -9,10 +9,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.useca
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.BackupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.DatabaseData
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.DatastoreData
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DataTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
@@ -36,7 +36,6 @@ interface BackupDataUseCase {
 
 class BackupDataUseCaseImpl(
     private val dateTimeUtil: DateTimeUtil,
-    private val dataStore: MyDataStore,
     private val dispatcherProvider: DispatcherProvider,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val getAllEmojisUseCase: GetAllEmojisUseCase,
@@ -44,6 +43,7 @@ class BackupDataUseCaseImpl(
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val getAllTransactionsUseCase: GetAllTransactionsUseCase,
     private val jsonWriter: JsonWriter,
+    private val myPreferencesRepository: MyPreferencesRepository,
 ) : BackupDataUseCase {
 
     override suspend operator fun invoke(
@@ -98,16 +98,16 @@ class BackupDataUseCaseImpl(
                     transactions = transactions,
                 ),
                 datastoreData = DatastoreData(
-                    defaultDataId = dataStore.getDefaultDataId().first() ?: DefaultDataId(),
-                    initialDataVersionNumber = dataStore.getInitialDataVersionNumber().first()
+                    defaultDataId = myPreferencesRepository.getDefaultDataId().first() ?: DefaultDataId(),
+                    initialDataVersionNumber = myPreferencesRepository.getInitialDataVersionNumber().first()
                         ?: InitialDataVersionNumber(),
-                    dataTimestamp = dataStore.getDataTimestamp().first() ?: DataTimestamp(),
+                    dataTimestamp = myPreferencesRepository.getDataTimestamp().first() ?: DataTimestamp(),
                 )
             )
             val jsonString = Json.encodeToString(
                 value = backupData,
             )
-            dataStore.setLastDataBackupTimestamp()
+            myPreferencesRepository.setLastDataBackupTimestamp()
             jsonWriter.writeJsonToFile(
                 uri = uri,
                 jsonString = jsonString,

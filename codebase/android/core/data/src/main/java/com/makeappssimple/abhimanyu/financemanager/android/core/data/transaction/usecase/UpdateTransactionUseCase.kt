@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 
 interface UpdateTransactionUseCase {
@@ -12,14 +12,14 @@ interface UpdateTransactionUseCase {
 }
 
 class UpdateTransactionUseCaseImpl(
+    private val myPreferencesRepository: MyPreferencesRepository,
     private val transactionRepository: TransactionRepository,
-    private val dataStore: MyDataStore,
 ) : UpdateTransactionUseCase {
     override suspend operator fun invoke(
         originalTransaction: Transaction,
         updatedTransaction: Transaction,
     ) {
-        dataStore.setLastDataChangeTimestamp()
+        myPreferencesRepository.setLastDataChangeTimestamp()
         transactionRepository.updateTransaction(
             transaction = updatedTransaction,
         )

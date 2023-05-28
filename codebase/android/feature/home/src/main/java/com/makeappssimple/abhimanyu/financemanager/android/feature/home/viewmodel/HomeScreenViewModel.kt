@@ -8,10 +8,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tra
 import kotlinx.coroutines.flow.Flow
 
 interface HomeScreenViewModel : ScreenViewModel {
+    val homeListItemViewData: Flow<List<TransactionListItemData>>
+    val isBackupCardVisible: Flow<Boolean>
     val logger: Logger
     val navigationManager: NavigationManager
-    val homeListItemViewData: Flow<List<TransactionListItemData>>
-    val showBackupCard: Flow<Boolean>
 
     fun backupDataToDocument(
         uri: Uri,

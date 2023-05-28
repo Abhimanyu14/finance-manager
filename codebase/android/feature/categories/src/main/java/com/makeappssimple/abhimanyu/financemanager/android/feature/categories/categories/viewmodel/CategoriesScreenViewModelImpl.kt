@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.DeleteCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfCategoryIsUsedInTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyDataStore
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
@@ -31,16 +31,16 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
     override val logger: Logger,
     override val navigationManager: NavigationManager,
     private val checkIfCategoryIsUsedInTransactionsUseCase: CheckIfCategoryIsUsedInTransactionsUseCase,
-    private val dataStore: MyDataStore,
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
     private val dispatcherProvider: DispatcherProvider,
+    private val myPreferencesRepository: MyPreferencesRepository,
 ) : CategoriesScreenViewModel, ViewModel() {
     private val _selectedTabIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = 0,
     )
     override val selectedTabIndex: StateFlow<Int> = _selectedTabIndex
 
-    private val defaultDataId: Flow<DefaultDataId?> = dataStore.getDefaultDataId()
+    private val defaultDataId: Flow<DefaultDataId?> = myPreferencesRepository.getDefaultDataId()
     private val categoriesTransactionTypeMap: Flow<Map<TransactionType, List<Category>>> =
         getAllCategoriesFlowUseCase()
             .map { categories ->
@@ -147,19 +147,19 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
         ) {
             when (transactionType) {
                 TransactionType.EXPENSE -> {
-                    dataStore.setDefaultExpenseCategoryId(
+                    myPreferencesRepository.setDefaultExpenseCategoryId(
                         defaultExpenseCategoryId = defaultCategoryId,
                     )
                 }
 
                 TransactionType.INCOME -> {
-                    dataStore.setDefaultIncomeCategoryId(
+                    myPreferencesRepository.setDefaultIncomeCategoryId(
                         defaultIncomeCategoryId = defaultCategoryId,
                     )
                 }
 
                 TransactionType.INVESTMENT -> {
-                    dataStore.setDefaultInvestmentCategoryId(
+                    myPreferencesRepository.setDefaultInvestmentCategoryId(
                         defaultInvestmentCategoryId = defaultCategoryId,
                     )
                 }
