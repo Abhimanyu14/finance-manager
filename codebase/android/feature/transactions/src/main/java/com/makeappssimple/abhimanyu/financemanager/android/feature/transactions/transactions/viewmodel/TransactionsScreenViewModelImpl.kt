@@ -158,27 +158,27 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             }
 
             allTransactionDataValue
-                .filter { transactionDetail ->
+                .filter { transactionData ->
                     isAvailableAfterSearch(
                         searchTextValue = searchTextValue,
-                        transactionData = transactionDetail,
+                        transactionData = transactionData,
                     ) && isAvailableAfterDateFilter(
                         fromDate = selectedFilterValue.fromDate,
                         toDate = selectedFilterValue.toDate,
-                        transactionData = transactionDetail,
+                        transactionData = transactionData,
                     ) && isAvailableAfterTransactionTypeFilter(
                         selectedTransactionTypesIndicesValue = selectedFilterValue.selectedTransactionTypeIndices,
-                        transactionData = transactionDetail
+                        transactionData = transactionData
                     ) && isAvailableAfterSourceFilter(
                         selectedSourceIndicesValue = selectedFilterValue.selectedSourceIndices,
                         sourcesValue = sourcesValue,
-                        transactionData = transactionDetail,
+                        transactionData = transactionData,
                     ) && isAvailableAfterCategoryFilter(
                         selectedExpenseCategoryIndicesValue = selectedFilterValue.selectedExpenseCategoryIndices,
                         selectedIncomeCategoryIndicesValue = selectedFilterValue.selectedIncomeCategoryIndices,
                         selectedInvestmentCategoryIndicesValue = selectedFilterValue.selectedInvestmentCategoryIndices,
                         expenseCategoriesValue = expenseCategoriesValue,
-                        transactionData = transactionDetail,
+                        transactionData = transactionData,
                         incomeCategoriesValue = incomeCategoriesValue,
                         investmentCategoriesValue = investmentCategoriesValue,
                     )

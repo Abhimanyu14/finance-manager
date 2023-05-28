@@ -4,7 +4,6 @@ import androidx.activity.compose.BackHandler
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -19,8 +18,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.FilterAlt
 import androidx.compose.material.icons.rounded.SwapVert
-import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -33,7 +30,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.legend.Dot
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
@@ -47,6 +43,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSh
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButtonData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButtonEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItem
@@ -255,72 +254,39 @@ internal fun TransactionsScreenView(
                             },
                         )
                     }
-                    ElevatedCard(
-                        onClick = {
-                            transactionsBottomSheetType =
-                                TransactionsBottomSheetType.SORT
-                            toggleModalBottomSheetState(
-                                coroutineScope = state.coroutineScope,
-                                modalBottomSheetState = state.modalBottomSheetState,
-                            )
-                        },
-                        modifier = Modifier,
-                    ) {
-                        Icon(
+                    ActionButton(
+                        data = ActionButtonData(
                             imageVector = Icons.Rounded.SwapVert,
-                            contentDescription = stringResource(
-                                id = R.string.screen_transactions_sort_button_content_description,
-                            ),
-                            tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                            modifier = Modifier
-                                .background(
-                                    color = MaterialTheme.colorScheme.primaryContainer,
+                            contentDescriptionStringResourceId = R.string.screen_transactions_sort_button_content_description,
+                        ),
+                        events = ActionButtonEvents(
+                            onClick = {
+                                transactionsBottomSheetType =
+                                    TransactionsBottomSheetType.SORT
+                                toggleModalBottomSheetState(
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
                                 )
-                                .padding(
-                                    all = 8.dp,
-                                ),
-                        )
-                    }
-                    ElevatedCard(
-                        onClick = {
-                            transactionsBottomSheetType =
-                                TransactionsBottomSheetType.FILTERS
-                            toggleModalBottomSheetState(
-                                coroutineScope = state.coroutineScope,
-                                modalBottomSheetState = state.modalBottomSheetState,
-                            )
-                        },
-                        modifier = Modifier,
-                    ) {
-                        Box {
-                            Icon(
-                                imageVector = Icons.Rounded.FilterAlt,
-                                contentDescription = stringResource(
-                                    id = R.string.screen_transactions_filter_button_content_description,
-                                ),
-                                tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                                modifier = Modifier
-                                    .background(
-                                        color = MaterialTheme.colorScheme.primaryContainer,
-                                    )
-                                    .padding(
-                                        all = 8.dp,
-                                    ),
-                            )
-                            if (data.selectedFilter.areFiltersSelected()) {
-                                Dot(
-                                    modifier = Modifier
-                                        .align(
-                                            alignment = Alignment.TopEnd,
-                                        )
-                                        .padding(
-                                            all = 8.dp,
-                                        ),
-                                    color = MaterialTheme.colorScheme.error,
+                            },
+                        ),
+                    )
+                    ActionButton(
+                        data = ActionButtonData(
+                            isIndicatorVisible = data.selectedFilter.areFiltersSelected(),
+                            imageVector = Icons.Rounded.FilterAlt,
+                            contentDescriptionStringResourceId = R.string.screen_transactions_filter_button_content_description,
+                        ),
+                        events = ActionButtonEvents(
+                            onClick = {
+                                transactionsBottomSheetType =
+                                    TransactionsBottomSheetType.FILTERS
+                                toggleModalBottomSheetState(
+                                    coroutineScope = state.coroutineScope,
+                                    modalBottomSheetState = state.modalBottomSheetState,
                                 )
-                            }
-                        }
-                    }
+                            },
+                        ),
+                    )
                 }
             }
             LazyColumn(

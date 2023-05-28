@@ -76,12 +76,13 @@ fun MyRadioGroup(
 @Composable
 fun MyHorizontalScrollingRadioGroup(
     modifier: Modifier = Modifier,
+    horizontalArrangement: Arrangement.Horizontal = Arrangement.SpaceBetween,
     items: List<ChipItem>,
     selectedItemIndex: Int?,
     onSelectionChange: (index: Int) -> Unit,
 ) {
     LazyRow(
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = horizontalArrangement,
         modifier = modifier,
     ) {
         itemsIndexed(

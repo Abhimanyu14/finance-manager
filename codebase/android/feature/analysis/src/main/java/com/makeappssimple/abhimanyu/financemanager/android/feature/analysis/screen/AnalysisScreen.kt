@@ -8,6 +8,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememb
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.viewmodel.AnalysisScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.viewmodel.AnalysisScreenViewModelImpl
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.viewmodel.Filter
+import java.time.LocalDate
 
 @Composable
 fun AnalysisScreen(
@@ -16,17 +18,26 @@ fun AnalysisScreen(
     screenViewModel.logger.logError(
         message = "Inside AnalysisScreen",
     )
+    val oldestTransactionLocalDate: LocalDate? by screenViewModel.oldestTransactionLocalDate.collectAsStateWithLifecycle(
+        initialValue = LocalDate.MIN,
+    )
+    val selectedFilter: Filter by screenViewModel.selectedFilter.collectAsStateWithLifecycle()
     val transactionDataMappedByCategory: List<AnalysisListItemData> by screenViewModel.transactionDataMappedByCategory.collectAsStateWithLifecycle()
     val selectedTransactionTypeIndex: Int? by screenViewModel.selectedTransactionTypeIndex.collectAsStateWithLifecycle()
 
     AnalysisScreenView(
         data = AnalysisScreenViewData(
+            selectedFilter = selectedFilter,
             selectedTransactionTypeIndex = selectedTransactionTypeIndex,
             transactionDataMappedByCategory = transactionDataMappedByCategory,
             transactionTypesChipItems = screenViewModel.transactionTypesChipItems,
+            defaultMinDate = oldestTransactionLocalDate ?: LocalDate.MIN,
+            defaultMaxDate = screenViewModel.currentLocalDate,
+            currentTimeMillis = screenViewModel.currentTimeMillis,
         ),
         events = AnalysisScreenViewEvents(
             navigateUp = screenViewModel::navigateUp,
+            updateSelectedFilter = screenViewModel::updateSelectedFilter,
             updateSelectedTransactionTypeIndex = screenViewModel::updateSelectedTransactionTypeIndex,
         ),
         state = rememberCommonScreenViewState(),
