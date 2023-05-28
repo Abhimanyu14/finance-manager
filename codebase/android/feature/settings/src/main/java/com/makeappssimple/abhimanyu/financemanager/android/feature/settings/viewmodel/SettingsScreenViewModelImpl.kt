@@ -5,9 +5,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RestoreDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RecalculateTotalUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RestoreDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -17,14 +17,16 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 internal class SettingsScreenViewModelImpl @Inject constructor(
+    appVersionUtil: AppVersionUtil,
     override val logger: Logger,
     override val navigationManager: NavigationManager,
-    private val appVersionUtil: AppVersionUtil,
     private val backupDataUseCase: BackupDataUseCase,
     private val dispatcherProvider: DispatcherProvider,
     private val recalculateTotalUseCase: RecalculateTotalUseCase,
     private val restoreDataUseCase: RestoreDataUseCase,
 ) : SettingsScreenViewModel, ViewModel() {
+    override val appVersionName: String = appVersionUtil.getAppVersion()?.versionName.orEmpty()
+
     override fun backupDataToDocument(
         uri: Uri,
     ) {
@@ -40,10 +42,6 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
                 navigationCommand = MyNavigationDirections.NavigateUp
             )
         }
-    }
-
-    override fun getAppVersionName(): String {
-        return appVersionUtil.getAppVersion()?.versionName.orEmpty()
     }
 
     override fun navigateToTransactionForValuesScreen() {

@@ -52,7 +52,7 @@ fun SettingsScreen(
     SettingsScreenView(
         data = SettingsScreenViewData(
             isLoading = isLoading,
-            appVersion = screenViewModel.getAppVersionName(),
+            appVersion = screenViewModel.appVersionName,
         ),
         events = SettingsScreenViewEvents(
             backupData = {

@@ -8,12 +8,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenVi
 interface SettingsScreenViewModel : ScreenViewModel {
     val logger: Logger
     val navigationManager: NavigationManager
+    val appVersionName: String
 
     fun backupDataToDocument(
         uri: Uri,
     )
-
-    fun getAppVersionName(): String
 
     fun navigateToTransactionForValuesScreen()
 
