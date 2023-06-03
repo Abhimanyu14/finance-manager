@@ -45,7 +45,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.getMyDatePickerDialog
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MySelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
@@ -61,7 +61,7 @@ internal data class TransactionsFiltersBottomSheetData(
 @Immutable
 internal data class TransactionFilterBottomSheetFilterGroupData(
     @StringRes val headingTextStringResourceId: Int,
-    val items: List<ChipItem>,
+    val items: List<ChipUIData>,
     val selectedItemsIndices: SnapshotStateList<Int>,
 )
 
@@ -139,7 +139,7 @@ internal fun TransactionsFiltersBottomSheet(
                     data = TransactionFilterBottomSheetFilterGroupData(
                         headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_expense_categories,
                         items = expenseCategories.map { category ->
-                            ChipItem(
+                            ChipUIData(
                                 text = category.title,
                             )
                         },
@@ -159,7 +159,7 @@ internal fun TransactionsFiltersBottomSheet(
                     data = TransactionFilterBottomSheetFilterGroupData(
                         headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_income_categories,
                         items = incomeCategories.map { category ->
-                            ChipItem(
+                            ChipUIData(
                                 text = category.title,
                             )
                         },
@@ -179,7 +179,7 @@ internal fun TransactionsFiltersBottomSheet(
                     data = TransactionFilterBottomSheetFilterGroupData(
                         headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_investment_categories,
                         items = investmentCategories.map { category ->
-                            ChipItem(
+                            ChipUIData(
                                 text = category.title,
                             )
                         },
@@ -199,7 +199,7 @@ internal fun TransactionsFiltersBottomSheet(
                     data = TransactionFilterBottomSheetFilterGroupData(
                         headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_sources,
                         items = sources.map { source ->
-                            ChipItem(
+                            ChipUIData(
                                 text = source.name,
                             )
                         },
@@ -219,7 +219,7 @@ internal fun TransactionsFiltersBottomSheet(
                     data = TransactionFilterBottomSheetFilterGroupData(
                         headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_transaction_types,
                         items = transactionTypes.map { transactionType ->
-                            ChipItem(
+                            ChipUIData(
                                 text = transactionType.title,
                             )
                         },
@@ -373,7 +373,7 @@ internal fun TransactionsFiltersBottomSheet(
 private fun TransactionFilterBottomSheetFilterGroup(
     expanded: Boolean,
     @StringRes headingTextStringResourceId: Int,
-    items: List<ChipItem>,
+    items: List<ChipUIData>,
     selectedItemsIndices: List<Int>,
     onClearButtonClick: () -> Unit,
     onExpandButtonClick: () -> Unit,

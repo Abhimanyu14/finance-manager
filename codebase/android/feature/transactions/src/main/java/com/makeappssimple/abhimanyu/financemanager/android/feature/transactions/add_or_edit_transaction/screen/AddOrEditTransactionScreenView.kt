@@ -44,7 +44,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Common
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.getMyDatePickerDialog
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.getMyTimePickerDialog
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyHorizontalScrollingRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyHorizontalScrollingSelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
@@ -129,32 +129,32 @@ internal fun AddOrEditTransactionScreenView(
             value = AddOrEditTransactionBottomSheetType.NONE,
         )
     }
-    val transactionTypesForNewTransactionChipItems = remember(
+    val transactionTypesForNewTransactionChipUIData = remember(
         key1 = data.transactionTypesForNewTransaction,
     ) {
         data.transactionTypesForNewTransaction
             .map { transactionType ->
-                ChipItem(
+                ChipUIData(
                     text = transactionType.title,
                 )
             }
     }
-    val titleSuggestionsChipItems = remember(
+    val titleSuggestionsChipUIData = remember(
         key1 = data.titleSuggestions,
     ) {
         data.titleSuggestions
             .map { title ->
-                ChipItem(
+                ChipUIData(
                     text = title,
                 )
             }
     }
-    val transactionForValuesChipItems = remember(
+    val transactionForValuesChipUIData = remember(
         key1 = data.transactionForValues,
     ) {
         data.transactionForValues
             .map { transactionFor ->
-                ChipItem(
+                ChipUIData(
                     text = transactionFor.titleToDisplay,
                 )
             }
@@ -275,7 +275,7 @@ internal fun AddOrEditTransactionScreenView(
                 visible = data.uiVisibilityState.isTransactionTypesRadioGroupVisible,
             ) {
                 MyHorizontalScrollingRadioGroup(
-                    items = transactionTypesForNewTransactionChipItems,
+                    items = transactionTypesForNewTransactionChipUIData,
                     selectedItemIndex = data.uiState.selectedTransactionTypeIndex,
                     onSelectionChange = { updatedSelectedTransactionTypeIndex ->
                         events.updateSelectedTransactionTypeIndex(
@@ -389,10 +389,10 @@ internal fun AddOrEditTransactionScreenView(
                 )
             }
             AnimatedVisibility(
-                visible = data.uiVisibilityState.isTitleSuggestionsVisible && titleSuggestionsChipItems.isNotEmpty(),
+                visible = data.uiVisibilityState.isTitleSuggestionsVisible && titleSuggestionsChipUIData.isNotEmpty(),
             ) {
                 MyHorizontalScrollingSelectionGroup(
-                    items = titleSuggestionsChipItems,
+                    items = titleSuggestionsChipUIData,
                     onSelectionChange = { index ->
                         clearFocus()
                         events.updateTitle(TextFieldValue(data.titleSuggestions[index]))
@@ -408,7 +408,7 @@ internal fun AddOrEditTransactionScreenView(
                 visible = data.uiVisibilityState.isTransactionForRadioGroupVisible,
             ) {
                 MyHorizontalScrollingRadioGroup(
-                    items = transactionForValuesChipItems,
+                    items = transactionForValuesChipUIData,
                     selectedItemIndex = data.uiState.selectedTransactionForIndex,
                     onSelectionChange = { updatedSelectedTransactionForIndex ->
                         clearFocus()

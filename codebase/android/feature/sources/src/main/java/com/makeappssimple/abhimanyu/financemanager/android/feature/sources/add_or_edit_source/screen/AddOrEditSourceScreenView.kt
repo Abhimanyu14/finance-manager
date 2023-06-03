@@ -35,7 +35,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.SourceType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.AmountCommaVisualTransformation
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
@@ -152,7 +152,7 @@ internal fun AddOrEditSourceScreenView(
                 MyRadioGroup(
                     items = data.sourceTypes
                         .map { sourceType ->
-                            ChipItem(
+                            ChipUIData(
                                 text = sourceType.title,
                                 icon = sourceType.icon,
                             )

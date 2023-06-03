@@ -25,7 +25,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyHorizontalScrollingRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButton
@@ -50,7 +50,7 @@ internal data class AnalysisScreenViewData(
     val selectedFilter: Filter,
     val selectedTransactionTypeIndex: Int?,
     val transactionDataMappedByCategory: List<AnalysisListItemData>,
-    val transactionTypesChipItems: List<ChipItem>,
+    val transactionTypesChipUIData: List<ChipUIData>,
     val defaultMinDate: LocalDate,
     val defaultMaxDate: LocalDate,
     val currentTimeMillis: Long,
@@ -148,7 +148,7 @@ internal fun AnalysisScreenView(
             Row {
                 MyHorizontalScrollingRadioGroup(
                     horizontalArrangement = Arrangement.Start,
-                    items = data.transactionTypesChipItems,
+                    items = data.transactionTypesChipUIData,
                     selectedItemIndex = data.selectedTransactionTypeIndex,
                     onSelectionChange = { updatedSelectedTransactionTypeIndex ->
                         events.updateSelectedTransactionTypeIndex(

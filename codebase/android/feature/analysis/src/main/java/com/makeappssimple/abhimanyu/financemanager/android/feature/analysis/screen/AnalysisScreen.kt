@@ -30,7 +30,7 @@ fun AnalysisScreen(
             selectedFilter = selectedFilter,
             selectedTransactionTypeIndex = selectedTransactionTypeIndex,
             transactionDataMappedByCategory = transactionDataMappedByCategory,
-            transactionTypesChipItems = screenViewModel.transactionTypesChipItems,
+            transactionTypesChipUIData = screenViewModel.transactionTypesChipUIData,
             defaultMinDate = oldestTransactionLocalDate ?: LocalDate.MIN,
             defaultMaxDate = screenViewModel.currentLocalDate,
             currentTimeMillis = screenViewModel.currentTimeMillis,

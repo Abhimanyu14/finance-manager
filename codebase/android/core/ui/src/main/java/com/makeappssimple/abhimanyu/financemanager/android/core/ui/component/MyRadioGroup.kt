@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -22,30 +21,38 @@ import androidx.compose.ui.unit.dp
 import com.google.accompanist.flowlayout.FlowRow
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 
 @Immutable
-data class ChipItem(
+data class ChipUIData(
     val text: String,
     val icon: ImageVector? = null,
+)
+
+@Immutable
+data class ChipUIEvents(
+    val onSelectionChange: () -> Unit,
 )
 
 @Composable
 fun MySelectionGroup(
     modifier: Modifier = Modifier,
-    items: List<ChipItem>,
+    items: List<ChipUIData>,
     selectedItemsIndices: List<Int>,
     onSelectionChange: (index: Int) -> Unit,
 ) {
     FlowRow(
         modifier = modifier,
     ) {
-        items.mapIndexed { index, item ->
-            ChipView(
-                item = item,
+        items.mapIndexed { index, data ->
+            ChipUI(
+                data = data,
+                events = ChipUIEvents(
+                    onSelectionChange = {
+                        onSelectionChange(index)
+                    }
+                ),
                 isSelected = selectedItemsIndices.contains(index),
-                onSelectionChange = {
-                    onSelectionChange(index)
-                },
             )
         }
     }
@@ -54,20 +61,22 @@ fun MySelectionGroup(
 @Composable
 fun MyRadioGroup(
     modifier: Modifier = Modifier,
-    items: List<ChipItem>,
+    items: List<ChipUIData>,
     selectedItemIndex: Int?,
     onSelectionChange: (index: Int) -> Unit,
 ) {
     FlowRow(
         modifier = modifier,
     ) {
-        items.mapIndexed { index, item ->
-            ChipView(
-                item = item,
+        items.mapIndexed { index, data ->
+            ChipUI(
+                data = data,
+                events = ChipUIEvents(
+                    onSelectionChange = {
+                        onSelectionChange(index)
+                    }
+                ),
                 isSelected = index == selectedItemIndex,
-                onSelectionChange = {
-                    onSelectionChange(index)
-                },
             )
         }
     }
@@ -77,7 +86,7 @@ fun MyRadioGroup(
 fun MyHorizontalScrollingRadioGroup(
     modifier: Modifier = Modifier,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.SpaceBetween,
-    items: List<ChipItem>,
+    items: List<ChipUIData>,
     selectedItemIndex: Int?,
     onSelectionChange: (index: Int) -> Unit,
 ) {
@@ -90,13 +99,15 @@ fun MyHorizontalScrollingRadioGroup(
             key = { _, listItem ->
                 listItem.hashCode()
             },
-        ) { index, listItem ->
-            ChipView(
-                item = listItem,
+        ) { index, data ->
+            ChipUI(
+                data = data,
+                events = ChipUIEvents(
+                    onSelectionChange = {
+                        onSelectionChange(index)
+                    }
+                ),
                 isSelected = index == selectedItemIndex,
-                onSelectionChange = {
-                    onSelectionChange(index)
-                },
             )
         }
     }
@@ -105,7 +116,7 @@ fun MyHorizontalScrollingRadioGroup(
 @Composable
 fun MyHorizontalScrollingSelectionGroup(
     modifier: Modifier = Modifier,
-    items: List<ChipItem>,
+    items: List<ChipUIData>,
     onSelectionChange: (index: Int) -> Unit,
 ) {
     LazyRow(
@@ -117,24 +128,26 @@ fun MyHorizontalScrollingSelectionGroup(
             key = { _, listItem ->
                 listItem.hashCode()
             },
-        ) { index, listItem ->
-            ChipView(
-                item = listItem,
+        ) { index, data ->
+            ChipUI(
+                data = data,
+                events = ChipUIEvents(
+                    onSelectionChange = {
+                        onSelectionChange(index)
+                    }
+                ),
                 isSelected = false,
-                onSelectionChange = {
-                    onSelectionChange(index)
-                },
             )
         }
     }
 }
 
 @Composable
-private fun ChipView(
+private fun ChipUI(
     modifier: Modifier = Modifier,
-    item: ChipItem,
+    data: ChipUIData,
+    events: ChipUIEvents,
     isSelected: Boolean,
-    onSelectionChange: () -> Unit,
 ) {
     val shape = CircleShape
 
@@ -157,9 +170,9 @@ private fun ChipView(
                 },
                 shape = shape,
             )
-            .clickable {
-                onSelectionChange()
-            }
+            .conditionalClickable(
+                onClick = events.onSelectionChange,
+            )
             .background(
                 if (isSelected) {
                     MaterialTheme.colorScheme.primary
@@ -168,7 +181,7 @@ private fun ChipView(
                 }
             ),
     ) {
-        item.icon?.let {
+        data.icon?.let {
             Icon(
                 imageVector = it,
                 contentDescription = null,
@@ -195,13 +208,13 @@ private fun ChipView(
                     top = 6.dp,
                     bottom = 6.dp,
                     end = 16.dp,
-                    start = if (item.icon.isNotNull()) {
+                    start = if (data.icon.isNotNull()) {
                         0.dp
                     } else {
                         16.dp
                     },
                 ),
-            text = item.text,
+            text = data.text,
             style = MaterialTheme.typography.labelMedium
                 .copy(
                     color = if (isSelected) {

@@ -33,7 +33,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabRow
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.EmojiCircleSize
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyDefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircle
@@ -140,22 +140,22 @@ private fun LazyListScope.componentsTabContent(
     }
     item {
         val items = listOf(
-            ChipItem(
+            ChipUIData(
                 text = "Item 1",
             ),
-            ChipItem(
+            ChipUIData(
                 text = "Item 2",
             ),
-            ChipItem(
+            ChipUIData(
                 text = "Item 3",
             ),
-            ChipItem(
+            ChipUIData(
                 text = "Item 4",
             ),
-            ChipItem(
+            ChipUIData(
                 text = "Item 5",
             ),
-            ChipItem(
+            ChipUIData(
                 text = "Item 6",
             ),
         )
@@ -186,22 +186,22 @@ private fun LazyListScope.componentsTabContent(
     }
     item {
         val items = listOf(
-            ChipItem(
+            ChipUIData(
                 text = "Item 1",
             ),
-            ChipItem(
+            ChipUIData(
                 text = "Item 2",
             ),
-            ChipItem(
+            ChipUIData(
                 text = "Item 3",
             ),
-            ChipItem(
+            ChipUIData(
                 text = "Item 4",
             ),
-            ChipItem(
+            ChipUIData(
                 text = "Item 5",
             ),
-            ChipItem(
+            ChipUIData(
                 text = "Item 6",
             ),
         )
@@ -232,22 +232,22 @@ private fun LazyListScope.componentsTabContent(
     }
     item {
         val items = listOf(
-            ChipItem(
+            ChipUIData(
                 text = "Item 1",
             ),
-            ChipItem(
+            ChipUIData(
                 text = "Item 2",
             ),
-            ChipItem(
+            ChipUIData(
                 text = "Item 3",
             ),
-            ChipItem(
+            ChipUIData(
                 text = "Item 4",
             ),
-            ChipItem(
+            ChipUIData(
                 text = "Item 5",
             ),
-            ChipItem(
+            ChipUIData(
                 text = "Item 6",
             ),
         )
@@ -278,22 +278,22 @@ private fun LazyListScope.componentsTabContent(
     }
     item {
         val items = listOf(
-            ChipItem(
+            ChipUIData(
                 text = "Item 1",
             ),
-            ChipItem(
+            ChipUIData(
                 text = "Item 2",
             ),
-            ChipItem(
+            ChipUIData(
                 text = "Item 3",
             ),
-            ChipItem(
+            ChipUIData(
                 text = "Item 4",
             ),
-            ChipItem(
+            ChipUIData(
                 text = "Item 5",
             ),
-            ChipItem(
+            ChipUIData(
                 text = "Item 6",
             ),
         )

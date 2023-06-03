@@ -17,7 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItemData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -46,8 +46,8 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
         TransactionType.INVESTMENT,
     )
 
-    override val transactionTypesChipItems: List<ChipItem> = validTransactionTypes.map {
-        ChipItem(
+    override val transactionTypesChipUIData: List<ChipUIData> = validTransactionTypes.map {
+        ChipUIData(
             text = it.title,
         )
     }
