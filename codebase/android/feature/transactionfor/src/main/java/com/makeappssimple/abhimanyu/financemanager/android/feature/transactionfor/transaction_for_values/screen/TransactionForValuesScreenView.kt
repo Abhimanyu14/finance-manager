@@ -3,11 +3,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,8 +18,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultTransactionFor
@@ -32,7 +30,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.component.listitem.TransactionForListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.component.listitem.TransactionForListItemEvents
 
-internal sealed class TransactionForValuesBottomSheetType : BottomSheetType {
+private sealed class TransactionForValuesBottomSheetType : BottomSheetType {
     object DeleteConfirmation : TransactionForValuesBottomSheetType()
     object None : TransactionForValuesBottomSheetType()
 
@@ -67,25 +65,23 @@ internal fun TransactionForValuesScreenView(
             value = TransactionForValuesBottomSheetType.None,
         )
     }
-    val resetBottomSheetType = {
-        transactionForValuesBottomSheetType = TransactionForValuesBottomSheetType.None
-    }
     var transactionForIdToDelete: Int? by remember {
         mutableStateOf(
             value = null,
         )
     }
-
-    if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
-        DisposableEffect(
-            key1 = Unit,
-        ) {
-            onDispose {
-                resetBottomSheetType()
-                state.keyboardController?.hide()
-            }
-        }
+    val resetBottomSheetType = {
+        transactionForValuesBottomSheetType = TransactionForValuesBottomSheetType.None
     }
+
+    BottomSheetHandler(
+        showModalBottomSheet = transactionForValuesBottomSheetType != TransactionForValuesBottomSheetType.None,
+        bottomSheetType = transactionForValuesBottomSheetType,
+        coroutineScope = state.coroutineScope,
+        keyboardController = state.keyboardController,
+        modalBottomSheetState = state.modalBottomSheetState,
+        resetBottomSheetType = resetBottomSheetType,
+    )
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
@@ -93,19 +89,16 @@ internal fun TransactionForValuesScreenView(
             when (transactionForValuesBottomSheetType) {
                 is TransactionForValuesBottomSheetType.DeleteConfirmation -> {
                     TransactionForValuesDeleteConfirmationBottomSheetContent(
-                        coroutineScope = state.coroutineScope,
-                        modalBottomSheetState = state.modalBottomSheetState,
                         transactionForIdToDelete = transactionForIdToDelete,
                         resetBottomSheetType = resetBottomSheetType,
                         resetTransactionForIdToDelete = {
                             transactionForIdToDelete = null
                         },
-                        deleteTransactionFor = {
-                            transactionForIdToDelete?.let { transactionForIdToDeleteValue ->
-                                events.deleteTransactionFor(transactionForIdToDeleteValue)
-                            }
-                        },
-                    )
+                    ) {
+                        transactionForIdToDelete?.let { transactionForIdToDeleteValue ->
+                            events.deleteTransactionFor(transactionForIdToDeleteValue)
+                        }
+                    }
                 }
 
                 is TransactionForValuesBottomSheetType.None -> {
@@ -117,9 +110,7 @@ internal fun TransactionForValuesScreenView(
                         transactionForValuesBottomSheetType as TransactionForValuesBottomSheetType.Menu
                     TransactionForValuesMenuBottomSheetContent(
                         isDeleteVisible = bottomSheetData.isDeleteVisible,
-                        coroutineScope = state.coroutineScope,
                         transactionForId = bottomSheetData.transactionForId,
-                        modalBottomSheetState = state.modalBottomSheetState,
                         navigateToEditTransactionForScreen = events.navigateToEditTransactionForScreen,
                         onDeleteClick = {
                             transactionForIdToDelete = bottomSheetData.transactionForId
@@ -179,10 +170,6 @@ internal fun TransactionForValuesScreenView(
                                     isDeleteVisible = isDeleteVisible,
                                     transactionForId = listItem.id,
                                 )
-                            toggleModalBottomSheetState(
-                                coroutineScope = state.coroutineScope,
-                                modalBottomSheetState = state.modalBottomSheetState,
-                            )
                         },
                     ),
                 )

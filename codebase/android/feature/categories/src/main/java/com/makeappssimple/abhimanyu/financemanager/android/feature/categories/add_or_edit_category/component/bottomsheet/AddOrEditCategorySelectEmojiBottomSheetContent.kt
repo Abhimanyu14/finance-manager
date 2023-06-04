@@ -2,19 +2,14 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.a
 
 import android.content.Context
 import android.widget.Toast
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.runtime.Composable
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.MyEmojiPickerBottomSheet
-import kotlinx.coroutines.CoroutineScope
 
 @Composable
 internal fun AddOrEditCategorySelectEmojiBottomSheetContent(
     context: Context,
-    coroutineScope: CoroutineScope,
-    modalBottomSheetState: ModalBottomSheetState,
     emojiGroups: Map<String, List<Emoji>>,
     searchText: String,
     resetBottomSheetType: () -> Unit,
@@ -25,13 +20,8 @@ internal fun AddOrEditCategorySelectEmojiBottomSheetContent(
         emojiGroups = emojiGroups,
         searchText = searchText,
         onEmojiClick = { emoji ->
-            toggleModalBottomSheetState(
-                coroutineScope = coroutineScope,
-                modalBottomSheetState = modalBottomSheetState,
-            ) {
-                resetBottomSheetType()
-                updateEmoji(emoji.character)
-            }
+            resetBottomSheetType()
+            updateEmoji(emoji.character)
         },
         onEmojiLongClick = { emoji ->
             Toast.makeText(

@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.home.component.bottomsheet
 
 import androidx.annotation.StringRes
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AccountBalance
 import androidx.compose.material.icons.rounded.Category
@@ -10,9 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
-import kotlinx.coroutines.CoroutineScope
 
 @Immutable
 internal data class HomeMenuBottomSheetContentItemData(
@@ -23,8 +20,6 @@ internal data class HomeMenuBottomSheetContentItemData(
 
 @Composable
 internal fun HomeMenuBottomSheetContent(
-    coroutineScope: CoroutineScope,
-    modalBottomSheetState: ModalBottomSheetState,
     navigateToCategoriesScreen: () -> Unit,
     navigateToSettingsScreen: () -> Unit,
     navigateToSourcesScreen: () -> Unit,
@@ -56,13 +51,8 @@ internal fun HomeMenuBottomSheetContent(
                     id = homeMenuBottomSheetContentItemData.textStringResourceId,
                 ),
                 onClick = {
-                    toggleModalBottomSheetState(
-                        coroutineScope = coroutineScope,
-                        modalBottomSheetState = modalBottomSheetState,
-                    ) {
-                        resetBottomSheetType()
-                        homeMenuBottomSheetContentItemData.onClick()
-                    }
+                    resetBottomSheetType()
+                    homeMenuBottomSheetContentItemData.onClick()
                 },
             )
         }

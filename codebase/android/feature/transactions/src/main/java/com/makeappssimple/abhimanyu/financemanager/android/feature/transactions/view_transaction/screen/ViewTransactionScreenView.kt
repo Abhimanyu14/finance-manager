@@ -22,8 +22,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItem
@@ -32,7 +32,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tra
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.common.TransactionDeleteConfirmationBottomSheetContent
 
-internal enum class ViewTransactionBottomSheetType : BottomSheetType {
+private enum class ViewTransactionBottomSheetType : BottomSheetType {
     DELETE_CONFIRMATION,
     NONE,
 }
@@ -68,6 +68,18 @@ internal fun ViewTransactionScreenView(
             value = null,
         )
     }
+    val resetBottomSheetType = {
+        viewTransactionBottomSheetType = ViewTransactionBottomSheetType.NONE
+    }
+
+    BottomSheetHandler(
+        showModalBottomSheet = viewTransactionBottomSheetType != ViewTransactionBottomSheetType.NONE,
+        bottomSheetType = viewTransactionBottomSheetType,
+        coroutineScope = state.coroutineScope,
+        keyboardController = state.keyboardController,
+        modalBottomSheetState = state.modalBottomSheetState,
+        resetBottomSheetType = resetBottomSheetType,
+    )
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
@@ -75,20 +87,17 @@ internal fun ViewTransactionScreenView(
             when (viewTransactionBottomSheetType) {
                 ViewTransactionBottomSheetType.DELETE_CONFIRMATION -> {
                     TransactionDeleteConfirmationBottomSheetContent(
-                        coroutineScope = state.coroutineScope,
-                        modalBottomSheetState = state.modalBottomSheetState,
                         transactionIdToDelete = transactionIdToDelete,
-                        resetBottomSheetType = {
-                            viewTransactionBottomSheetType = ViewTransactionBottomSheetType.NONE
-                        },
+                        resetBottomSheetType = resetBottomSheetType,
                         resetTransactionIdToDelete = {
                             transactionIdToDelete = null
                         },
-                    ) {
-                        transactionIdToDelete?.let { transactionIdToDeleteValue ->
-                            events.deleteTransaction(transactionIdToDeleteValue)
-                        }
-                    }
+                        deleteTransaction = {
+                            transactionIdToDelete?.let { transactionIdToDeleteValue ->
+                                events.deleteTransaction(transactionIdToDeleteValue)
+                            }
+                        },
+                    )
                 }
 
                 ViewTransactionBottomSheetType.NONE -> {
@@ -107,9 +116,7 @@ internal fun ViewTransactionScreenView(
         },
         backHandlerEnabled = viewTransactionBottomSheetType != ViewTransactionBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = {
-            viewTransactionBottomSheetType = ViewTransactionBottomSheetType.NONE
-        },
+        onBackPress = resetBottomSheetType,
         modifier = Modifier
             .fillMaxSize(),
     ) {
@@ -138,10 +145,6 @@ internal fun ViewTransactionScreenView(
                                 transactionIdToDelete = transactionListItemData.transactionId
                                 viewTransactionBottomSheetType =
                                     ViewTransactionBottomSheetType.DELETE_CONFIRMATION
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                )
                             },
                             onEditButtonClick = {
                                 events.navigateToEditTransactionScreen(transactionListItemData.transactionId)
@@ -186,10 +189,6 @@ internal fun ViewTransactionScreenView(
                                     transactionIdToDelete = transactionListItemData.transactionId
                                     viewTransactionBottomSheetType =
                                         ViewTransactionBottomSheetType.DELETE_CONFIRMATION
-                                    toggleModalBottomSheetState(
-                                        coroutineScope = state.coroutineScope,
-                                        modalBottomSheetState = state.modalBottomSheetState,
-                                    )
                                 },
                                 onEditButtonClick = {
                                     events.navigateToEditTransactionScreen(transactionListItemData.transactionId)
@@ -240,10 +239,6 @@ internal fun ViewTransactionScreenView(
                                             transactionListItemData.transactionId
                                         viewTransactionBottomSheetType =
                                             ViewTransactionBottomSheetType.DELETE_CONFIRMATION
-                                        toggleModalBottomSheetState(
-                                            coroutineScope = state.coroutineScope,
-                                            modalBottomSheetState = state.modalBottomSheetState,
-                                        )
                                     },
                                     onEditButtonClick = {
                                         events.navigateToEditTransactionScreen(

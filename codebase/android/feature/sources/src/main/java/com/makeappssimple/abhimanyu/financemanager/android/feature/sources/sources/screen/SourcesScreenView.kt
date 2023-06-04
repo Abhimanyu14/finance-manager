@@ -4,11 +4,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,8 +18,8 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
@@ -32,7 +30,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sourc
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.SourcesListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.SourcesListItemEvents
 
-internal enum class SourcesBottomSheetType : BottomSheetType {
+private enum class SourcesBottomSheetType : BottomSheetType {
     DELETE_CONFIRMATION,
     NONE,
     SET_AS_DEFAULT_CONFIRMATION,
@@ -78,17 +76,18 @@ internal fun SourcesScreenView(
             value = null,
         )
     }
-
-    if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
-        DisposableEffect(
-            key1 = Unit,
-        ) {
-            onDispose {
-                sourcesBottomSheetType = SourcesBottomSheetType.NONE
-                state.keyboardController?.hide()
-            }
-        }
+    val resetBottomSheetType = {
+        sourcesBottomSheetType = SourcesBottomSheetType.NONE
     }
+
+    BottomSheetHandler(
+        showModalBottomSheet = sourcesBottomSheetType != SourcesBottomSheetType.NONE,
+        bottomSheetType = sourcesBottomSheetType,
+        coroutineScope = state.coroutineScope,
+        keyboardController = state.keyboardController,
+        modalBottomSheetState = state.modalBottomSheetState,
+        resetBottomSheetType = resetBottomSheetType,
+    )
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
@@ -96,24 +95,19 @@ internal fun SourcesScreenView(
             when (sourcesBottomSheetType) {
                 SourcesBottomSheetType.DELETE_CONFIRMATION -> {
                     SourcesDeleteConfirmationBottomSheetContent(
-                        coroutineScope = state.coroutineScope,
-                        modalBottomSheetState = state.modalBottomSheetState,
                         sourceIdToDelete = sourceIdToDelete,
-                        resetBottomSheetType = {
-                            sourcesBottomSheetType = SourcesBottomSheetType.NONE
-                        },
+                        resetBottomSheetType = resetBottomSheetType,
                         resetSourceIdToDelete = {
                             sourceIdToDelete = null
                         },
                         resetExpandedItemIndex = {
                             expandedItemIndex = null
                         },
-                        deleteSource = {
-                            sourceIdToDelete?.let { sourceId ->
-                                events.deleteSource(sourceId)
-                            }
-                        },
-                    )
+                    ) {
+                        sourceIdToDelete?.let { sourceId ->
+                            events.deleteSource(sourceId)
+                        }
+                    }
                 }
 
                 SourcesBottomSheetType.NONE -> {
@@ -122,21 +116,16 @@ internal fun SourcesScreenView(
 
                 SourcesBottomSheetType.SET_AS_DEFAULT_CONFIRMATION -> {
                     SourcesSetAsDefaultConfirmationBottomSheetContent(
-                        coroutineScope = state.coroutineScope,
-                        modalBottomSheetState = state.modalBottomSheetState,
                         clickedItemId = clickedItemId,
-                        resetBottomSheetType = {
-                            sourcesBottomSheetType = SourcesBottomSheetType.NONE
-                        },
+                        resetBottomSheetType = resetBottomSheetType,
                         resetClickedItemId = {
                             clickedItemId = null
                         },
-                        setDefaultSourceIdInDataStore = {
-                            clickedItemId?.let { clickedItemIdValue ->
-                                events.setDefaultSourceIdInDataStore(clickedItemIdValue)
-                            }
-                        },
-                    )
+                    ) {
+                        clickedItemId?.let { clickedItemIdValue ->
+                            events.setDefaultSourceIdInDataStore(clickedItemIdValue)
+                        }
+                    }
                 }
             }
         },
@@ -160,9 +149,7 @@ internal fun SourcesScreenView(
         },
         backHandlerEnabled = sourcesBottomSheetType != SourcesBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = {
-            sourcesBottomSheetType = SourcesBottomSheetType.NONE
-        },
+        onBackPress = resetBottomSheetType,
         modifier = Modifier
             .fillMaxSize(),
     ) {
@@ -197,10 +184,6 @@ internal fun SourcesScreenView(
                                 sourcesBottomSheetType =
                                     SourcesBottomSheetType.SET_AS_DEFAULT_CONFIRMATION
                                 clickedItemId = listItem.sourceId
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                )
                             }
                         },
                         onEditClick = {
@@ -211,10 +194,6 @@ internal fun SourcesScreenView(
                             sourceIdToDelete = listItem.sourceId
                             sourcesBottomSheetType =
                                 SourcesBottomSheetType.DELETE_CONFIRMATION
-                            toggleModalBottomSheetState(
-                                coroutineScope = state.coroutineScope,
-                                modalBottomSheetState = state.modalBottomSheetState,
-                            )
                         },
                     ),
                 )

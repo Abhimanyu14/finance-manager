@@ -2,23 +2,79 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.common
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.material.ModalBottomSheetState
+import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.SoftwareKeyboardController
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-fun toggleModalBottomSheetState(
+@Composable
+fun BottomSheetHandler(
+    showModalBottomSheet: Boolean,
+    bottomSheetType: BottomSheetType,
     coroutineScope: CoroutineScope,
     modalBottomSheetState: ModalBottomSheetState,
-    action: (() -> Unit)? = null,
+    keyboardController: SoftwareKeyboardController?,
+    resetBottomSheetType: () -> Unit,
 ) {
-    coroutineScope.launch {
-        if (modalBottomSheetState.currentValue == modalBottomSheetState.targetValue) {
-            if (modalBottomSheetState.isVisible) {
-                modalBottomSheetState.hide()
-            } else {
-                modalBottomSheetState.show()
+    BottomSheetDisposeHandler(
+        modalBottomSheetState = modalBottomSheetState,
+        keyboardController = keyboardController,
+        resetBottomSheetType = resetBottomSheetType,
+    )
+
+    BottomSheetTypeChangeHandler(
+        showModalBottomSheet = showModalBottomSheet,
+        bottomSheetType = bottomSheetType,
+        coroutineScope = coroutineScope,
+        modalBottomSheetState = modalBottomSheetState,
+        keyboardController = keyboardController,
+    )
+}
+
+@Composable
+private fun BottomSheetDisposeHandler(
+    modalBottomSheetState: ModalBottomSheetState,
+    keyboardController: SoftwareKeyboardController?,
+    resetBottomSheetType: () -> Unit,
+) {
+    if (modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
+        DisposableEffect(
+            key1 = Unit,
+        ) {
+            onDispose {
+                resetBottomSheetType()
+                keyboardController?.hide()
             }
-            action?.invoke()
+        }
+    }
+}
+
+@Composable
+private fun BottomSheetTypeChangeHandler(
+    showModalBottomSheet: Boolean,
+    bottomSheetType: BottomSheetType,
+    coroutineScope: CoroutineScope,
+    modalBottomSheetState: ModalBottomSheetState,
+    keyboardController: SoftwareKeyboardController?,
+) {
+    LaunchedEffect(
+        key1 = bottomSheetType,
+    ) {
+        if (showModalBottomSheet) {
+            keyboardController?.hide()
+            showModalBottomSheet(
+                coroutineScope = coroutineScope,
+                modalBottomSheetState = modalBottomSheetState,
+            )
+        } else {
+            hideModalBottomSheet(
+                coroutineScope = coroutineScope,
+                modalBottomSheetState = modalBottomSheetState,
+            )
         }
     }
 }
@@ -33,11 +89,37 @@ internal fun BottomSheetBackHandler(
     BackHandler(
         enabled = enabled,
     ) {
-        toggleModalBottomSheetState(
+        hideModalBottomSheet(
             coroutineScope = coroutineScope,
             modalBottomSheetState = modalBottomSheetState,
         ) {
             resetBottomSheetType()
+        }
+    }
+}
+
+private fun showModalBottomSheet(
+    coroutineScope: CoroutineScope,
+    modalBottomSheetState: ModalBottomSheetState,
+    action: (() -> Unit)? = null,
+) {
+    coroutineScope.launch {
+        if (modalBottomSheetState.currentValue == modalBottomSheetState.targetValue) {
+            modalBottomSheetState.show()
+            action?.invoke()
+        }
+    }
+}
+
+private fun hideModalBottomSheet(
+    coroutineScope: CoroutineScope,
+    modalBottomSheetState: ModalBottomSheetState,
+    action: (() -> Unit)? = null,
+) {
+    coroutineScope.launch {
+        if (modalBottomSheetState.currentValue == modalBottomSheetState.targetValue) {
+            modalBottomSheetState.hide()
+            action?.invoke()
         }
     }
 }

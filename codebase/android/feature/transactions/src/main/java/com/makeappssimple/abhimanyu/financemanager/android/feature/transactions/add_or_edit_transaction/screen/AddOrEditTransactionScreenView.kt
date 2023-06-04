@@ -10,10 +10,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -40,10 +38,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.AmountCommaVisualTransformation
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.getMyDatePickerDialog
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.getMyTimePickerDialog
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyHorizontalScrollingRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyHorizontalScrollingSelectionGroup
@@ -60,7 +58,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import java.time.LocalDate
 import java.time.LocalTime
 
-internal enum class AddOrEditTransactionBottomSheetType : BottomSheetType {
+private enum class AddOrEditTransactionBottomSheetType : BottomSheetType {
     NONE,
     SELECT_CATEGORY,
     SELECT_SOURCE_FROM,
@@ -163,6 +161,9 @@ internal fun AddOrEditTransactionScreenView(
     val clearFocus = {
         state.focusManager.clearFocus()
     }
+    val resetBottomSheetType = {
+        addOrEditTransactionBottomSheetType = AddOrEditTransactionBottomSheetType.NONE
+    }
 
     LaunchedEffect(
         key1 = Unit,
@@ -170,24 +171,14 @@ internal fun AddOrEditTransactionScreenView(
         state.focusRequester.requestFocus()
     }
 
-    LaunchedEffect(
-        key1 = state.modalBottomSheetState,
-    ) {
-        if (state.modalBottomSheetState.isVisible) {
-            state.keyboardController?.hide()
-        }
-    }
-
-    if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
-        DisposableEffect(
-            key1 = Unit,
-        ) {
-            onDispose {
-                addOrEditTransactionBottomSheetType = AddOrEditTransactionBottomSheetType.NONE
-                state.keyboardController?.hide()
-            }
-        }
-    }
+    BottomSheetHandler(
+        showModalBottomSheet = addOrEditTransactionBottomSheetType != AddOrEditTransactionBottomSheetType.NONE,
+        bottomSheetType = addOrEditTransactionBottomSheetType,
+        coroutineScope = state.coroutineScope,
+        keyboardController = state.keyboardController,
+        modalBottomSheetState = state.modalBottomSheetState,
+        resetBottomSheetType = resetBottomSheetType,
+    )
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
@@ -199,50 +190,32 @@ internal fun AddOrEditTransactionScreenView(
 
                 AddOrEditTransactionBottomSheetType.SELECT_CATEGORY -> {
                     SelectCategoryBottomSheetContent(
-                        coroutineScope = state.coroutineScope,
-                        modalBottomSheetState = state.modalBottomSheetState,
                         filteredCategories = data.filteredCategories,
                         selectedCategoryId = data.uiState.category?.id,
-                        resetBottomSheetType = {
-                            addOrEditTransactionBottomSheetType =
-                                AddOrEditTransactionBottomSheetType.NONE
-                        },
-                        updateCategory = { updatedCategory ->
-                            events.updateCategory(updatedCategory)
-                        },
-                    )
+                        resetBottomSheetType = resetBottomSheetType,
+                    ) { updatedCategory ->
+                        events.updateCategory(updatedCategory)
+                    }
                 }
 
                 AddOrEditTransactionBottomSheetType.SELECT_SOURCE_FROM -> {
                     SelectSourceBottomSheetContent(
-                        coroutineScope = state.coroutineScope,
-                        modalBottomSheetState = state.modalBottomSheetState,
                         sources = data.sources,
                         selectedSourceId = data.uiState.sourceFrom?.id,
-                        resetBottomSheetType = {
-                            addOrEditTransactionBottomSheetType =
-                                AddOrEditTransactionBottomSheetType.NONE
-                        },
-                        updateSource = { updatedSource ->
-                            events.updateSourceFrom(updatedSource)
-                        }
-                    )
+                        resetBottomSheetType = resetBottomSheetType
+                    ) { updatedSource ->
+                        events.updateSourceFrom(updatedSource)
+                    }
                 }
 
                 AddOrEditTransactionBottomSheetType.SELECT_SOURCE_TO -> {
                     SelectSourceBottomSheetContent(
-                        coroutineScope = state.coroutineScope,
-                        modalBottomSheetState = state.modalBottomSheetState,
                         sources = data.sources,
                         selectedSourceId = data.uiState.sourceTo?.id,
-                        resetBottomSheetType = {
-                            addOrEditTransactionBottomSheetType =
-                                AddOrEditTransactionBottomSheetType.NONE
-                        },
-                        updateSource = { updatedSource ->
-                            events.updateSourceTo(updatedSource)
-                        }
-                    )
+                        resetBottomSheetType = resetBottomSheetType
+                    ) { updatedSource ->
+                        events.updateSourceTo(updatedSource)
+                    }
                 }
             }
         },
@@ -257,9 +230,7 @@ internal fun AddOrEditTransactionScreenView(
         },
         backHandlerEnabled = addOrEditTransactionBottomSheetType != AddOrEditTransactionBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = {
-            addOrEditTransactionBottomSheetType = AddOrEditTransactionBottomSheetType.NONE
-        },
+        onBackPress = resetBottomSheetType,
         modifier = Modifier
             .fillMaxSize(),
     ) {
@@ -345,10 +316,6 @@ internal fun AddOrEditTransactionScreenView(
                         clearFocus()
                         addOrEditTransactionBottomSheetType =
                             AddOrEditTransactionBottomSheetType.SELECT_CATEGORY
-                        toggleModalBottomSheetState(
-                            coroutineScope = state.coroutineScope,
-                            modalBottomSheetState = state.modalBottomSheetState,
-                        )
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -467,10 +434,6 @@ internal fun AddOrEditTransactionScreenView(
                         clearFocus()
                         addOrEditTransactionBottomSheetType =
                             AddOrEditTransactionBottomSheetType.SELECT_SOURCE_FROM
-                        toggleModalBottomSheetState(
-                            coroutineScope = state.coroutineScope,
-                            modalBottomSheetState = state.modalBottomSheetState,
-                        )
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -494,10 +457,6 @@ internal fun AddOrEditTransactionScreenView(
                         clearFocus()
                         addOrEditTransactionBottomSheetType =
                             AddOrEditTransactionBottomSheetType.SELECT_SOURCE_TO
-                        toggleModalBottomSheetState(
-                            coroutineScope = state.coroutineScope,
-                            modalBottomSheetState = state.modalBottomSheetState,
-                        )
                     },
                     modifier = Modifier
                         .fillMaxWidth()

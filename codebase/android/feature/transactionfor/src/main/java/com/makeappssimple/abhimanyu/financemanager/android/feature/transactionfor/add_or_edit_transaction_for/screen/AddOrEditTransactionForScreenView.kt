@@ -9,9 +9,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -27,6 +25,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
@@ -34,7 +33,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sca
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 
-internal enum class AddOrEditTransactionForBottomSheetType : BottomSheetType {
+private enum class AddOrEditTransactionForBottomSheetType : BottomSheetType {
     DELETE,
     EDIT,
     NONE,
@@ -67,6 +66,9 @@ internal fun AddOrEditTransactionForScreenView(
             value = AddOrEditTransactionForBottomSheetType.NONE,
         )
     }
+    val resetBottomSheetType = {
+        addOrEditTransactionForBottomSheetType = AddOrEditTransactionForBottomSheetType.NONE
+    }
 
     LaunchedEffect(
         key1 = Unit,
@@ -74,16 +76,14 @@ internal fun AddOrEditTransactionForScreenView(
         state.focusRequester.requestFocus()
     }
 
-    if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
-        DisposableEffect(
-            key1 = Unit,
-        ) {
-            onDispose {
-                addOrEditTransactionForBottomSheetType = AddOrEditTransactionForBottomSheetType.NONE
-                state.keyboardController?.hide()
-            }
-        }
-    }
+    BottomSheetHandler(
+        showModalBottomSheet = addOrEditTransactionForBottomSheetType != AddOrEditTransactionForBottomSheetType.NONE,
+        bottomSheetType = addOrEditTransactionForBottomSheetType,
+        coroutineScope = state.coroutineScope,
+        keyboardController = state.keyboardController,
+        modalBottomSheetState = state.modalBottomSheetState,
+        resetBottomSheetType = resetBottomSheetType,
+    )
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
@@ -113,9 +113,7 @@ internal fun AddOrEditTransactionForScreenView(
         },
         backHandlerEnabled = addOrEditTransactionForBottomSheetType != AddOrEditTransactionForBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = {
-            addOrEditTransactionForBottomSheetType = AddOrEditTransactionForBottomSheetType.NONE
-        },
+        onBackPress = resetBottomSheetType,
         modifier = Modifier
             .fillMaxSize(),
     ) {

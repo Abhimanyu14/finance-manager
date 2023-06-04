@@ -7,11 +7,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.FilterAlt
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,8 +21,8 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyHorizontalScrollingRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
@@ -40,7 +38,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.comp
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.viewmodel.Filter
 import java.time.LocalDate
 
-internal enum class AnalysisBottomSheetType : BottomSheetType {
+private enum class AnalysisBottomSheetType : BottomSheetType {
     FILTERS,
     NONE,
 }
@@ -82,17 +80,18 @@ internal fun AnalysisScreenView(
             value = AnalysisBottomSheetType.NONE,
         )
     }
-
-    if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
-        DisposableEffect(
-            key1 = Unit,
-        ) {
-            onDispose {
-                analysisBottomSheetType = AnalysisBottomSheetType.NONE
-                state.keyboardController?.hide()
-            }
-        }
+    val resetBottomSheetType = {
+        analysisBottomSheetType = AnalysisBottomSheetType.NONE
     }
+
+    BottomSheetHandler(
+        showModalBottomSheet = analysisBottomSheetType != AnalysisBottomSheetType.NONE,
+        bottomSheetType = analysisBottomSheetType,
+        coroutineScope = state.coroutineScope,
+        modalBottomSheetState = state.modalBottomSheetState,
+        keyboardController = state.keyboardController,
+        resetBottomSheetType = resetBottomSheetType,
+    )
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
@@ -108,12 +107,7 @@ internal fun AnalysisScreenView(
                         maxDate = data.defaultMaxDate,
                         onPositiveButtonClick = {
                             events.updateSelectedFilter(it)
-                            toggleModalBottomSheetState(
-                                coroutineScope = state.coroutineScope,
-                                modalBottomSheetState = state.modalBottomSheetState,
-                            ) {
-                                analysisBottomSheetType = AnalysisBottomSheetType.NONE
-                            }
+                            resetBottomSheetType()
                         },
                         onNegativeButtonClick = {},
                     )
@@ -135,9 +129,7 @@ internal fun AnalysisScreenView(
         },
         backHandlerEnabled = analysisBottomSheetType != AnalysisBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = {
-            analysisBottomSheetType = AnalysisBottomSheetType.NONE
-        },
+        onBackPress = resetBottomSheetType,
         modifier = Modifier
             .fillMaxSize(),
     ) {
@@ -173,10 +165,6 @@ internal fun AnalysisScreenView(
                     events = ActionButtonEvents(
                         onClick = {
                             analysisBottomSheetType = AnalysisBottomSheetType.FILTERS
-                            toggleModalBottomSheetState(
-                                coroutineScope = state.coroutineScope,
-                                modalBottomSheetState = state.modalBottomSheetState,
-                            )
                         },
                     ),
                     modifier = Modifier
@@ -207,3 +195,5 @@ internal fun AnalysisScreenView(
         }
     }
 }
+
+

@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ListItem
-import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Backup
 import androidx.compose.material.icons.rounded.Calculate
@@ -17,7 +16,6 @@ import androidx.compose.material.icons.rounded.Restore
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,12 +32,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
 
-internal enum class SettingsBottomSheetType : BottomSheetType {
+private enum class SettingsBottomSheetType : BottomSheetType {
     NONE,
 }
 
@@ -69,17 +68,18 @@ internal fun SettingsScreenView(
             value = SettingsBottomSheetType.NONE,
         )
     }
-
-    if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
-        DisposableEffect(
-            key1 = Unit,
-        ) {
-            onDispose {
-                settingsBottomSheetType = SettingsBottomSheetType.NONE
-                state.keyboardController?.hide()
-            }
-        }
+    val resetBottomSheetType = {
+        settingsBottomSheetType = SettingsBottomSheetType.NONE
     }
+
+    BottomSheetHandler(
+        showModalBottomSheet = settingsBottomSheetType != SettingsBottomSheetType.NONE,
+        bottomSheetType = settingsBottomSheetType,
+        coroutineScope = state.coroutineScope,
+        keyboardController = state.keyboardController,
+        modalBottomSheetState = state.modalBottomSheetState,
+        resetBottomSheetType = resetBottomSheetType,
+    )
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
@@ -101,9 +101,7 @@ internal fun SettingsScreenView(
         },
         backHandlerEnabled = settingsBottomSheetType != SettingsBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = {
-            settingsBottomSheetType = SettingsBottomSheetType.NONE
-        },
+        onBackPress = resetBottomSheetType,
         modifier = Modifier
             .fillMaxSize(),
     ) {

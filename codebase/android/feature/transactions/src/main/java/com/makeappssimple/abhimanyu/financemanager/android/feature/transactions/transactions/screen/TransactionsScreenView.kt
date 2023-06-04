@@ -13,14 +13,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.material.icons.rounded.FilterAlt
 import androidx.compose.material.icons.rounded.SwapVert
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -40,8 +38,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButtonData
@@ -58,7 +56,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.SortOption
 import java.time.LocalDate
 
-internal enum class TransactionsBottomSheetType : BottomSheetType {
+private enum class TransactionsBottomSheetType : BottomSheetType {
     FILTERS,
     NONE,
     SORT,
@@ -103,17 +101,18 @@ internal fun TransactionsScreenView(
             value = TransactionsBottomSheetType.NONE,
         )
     }
-
-    if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
-        DisposableEffect(
-            key1 = Unit,
-        ) {
-            onDispose {
-                transactionsBottomSheetType = TransactionsBottomSheetType.NONE
-                state.keyboardController?.hide()
-            }
-        }
+    val resetBottomSheetType = {
+        transactionsBottomSheetType = TransactionsBottomSheetType.NONE
     }
+
+    BottomSheetHandler(
+        showModalBottomSheet = transactionsBottomSheetType != TransactionsBottomSheetType.NONE,
+        bottomSheetType = transactionsBottomSheetType,
+        coroutineScope = state.coroutineScope,
+        keyboardController = state.keyboardController,
+        modalBottomSheetState = state.modalBottomSheetState,
+        resetBottomSheetType = resetBottomSheetType,
+    )
 
     BackHandler(
         enabled = data.searchText.isNotEmpty() || data.selectedFilter.areFiltersSelected(),
@@ -140,8 +139,6 @@ internal fun TransactionsScreenView(
                 TransactionsBottomSheetType.FILTERS -> {
                     TransactionsFilterBottomSheetContent(
                         context = state.context,
-                        coroutineScope = state.coroutineScope,
-                        modalBottomSheetState = state.modalBottomSheetState,
                         expenseCategories = events.getExpenseCategories(),
                         incomeCategories = events.getIncomeCategories(),
                         investmentCategories = events.getInvestmentCategories(),
@@ -154,9 +151,7 @@ internal fun TransactionsScreenView(
                         updateSelectedFilter = { updatedSelectedFilter ->
                             events.updateSelectedFilter(updatedSelectedFilter)
                         },
-                        resetBottomSheetType = {
-                            transactionsBottomSheetType = TransactionsBottomSheetType.NONE
-                        },
+                        resetBottomSheetType = resetBottomSheetType,
                     )
                 }
 
@@ -166,15 +161,11 @@ internal fun TransactionsScreenView(
 
                 TransactionsBottomSheetType.SORT -> {
                     TransactionsSortBottomSheetContent(
-                        coroutineScope = state.coroutineScope,
-                        modalBottomSheetState = state.modalBottomSheetState,
-                        sortOptions = data.sortOptions.toList(),
                         selectedSortOptionIndex = data.sortOptions.indexOf(data.selectedSortOption),
+                        sortOptions = data.sortOptions.toList(),
+                        resetBottomSheetType = resetBottomSheetType,
                         updateSelectedSortOption = { index ->
                             events.updateSelectedSortOption(data.sortOptions[index])
-                        },
-                        resetBottomSheetType = {
-                            transactionsBottomSheetType = TransactionsBottomSheetType.NONE
                         },
                     )
                 }
@@ -200,9 +191,7 @@ internal fun TransactionsScreenView(
         },
         backHandlerEnabled = transactionsBottomSheetType != TransactionsBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = {
-            transactionsBottomSheetType = TransactionsBottomSheetType.NONE
-        },
+        onBackPress = resetBottomSheetType,
         modifier = Modifier
             .fillMaxSize(),
     ) {
@@ -263,10 +252,6 @@ internal fun TransactionsScreenView(
                             onClick = {
                                 transactionsBottomSheetType =
                                     TransactionsBottomSheetType.SORT
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                )
                             },
                         ),
                     )
@@ -280,10 +265,6 @@ internal fun TransactionsScreenView(
                             onClick = {
                                 transactionsBottomSheetType =
                                     TransactionsBottomSheetType.FILTERS
-                                toggleModalBottomSheetState(
-                                    coroutineScope = state.coroutineScope,
-                                    modalBottomSheetState = state.modalBottomSheetState,
-                                )
                             },
                         ),
                     )

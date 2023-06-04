@@ -10,9 +10,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -33,8 +31,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.EmojiCircleSize
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircle
@@ -46,7 +44,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.component.bottomsheet.AddOrEditCategorySelectEmojiBottomSheetContent
 
-internal enum class AddOrEditCategoryBottomSheetType : BottomSheetType {
+private enum class AddOrEditCategoryBottomSheetType : BottomSheetType {
     NONE,
     SELECT_EMOJI,
 }
@@ -86,6 +84,9 @@ internal fun AddOrEditCategoryScreenView(
             value = AddOrEditCategoryBottomSheetType.NONE,
         )
     }
+    val resetBottomSheetType = {
+        addOrEditCategoryBottomSheetType = AddOrEditCategoryBottomSheetType.NONE
+    }
 
     LaunchedEffect(
         key1 = Unit,
@@ -93,16 +94,14 @@ internal fun AddOrEditCategoryScreenView(
         state.focusRequester.requestFocus()
     }
 
-    if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
-        DisposableEffect(
-            key1 = Unit,
-        ) {
-            onDispose {
-                addOrEditCategoryBottomSheetType = AddOrEditCategoryBottomSheetType.NONE
-                state.keyboardController?.hide()
-            }
-        }
-    }
+    BottomSheetHandler(
+        showModalBottomSheet = addOrEditCategoryBottomSheetType != AddOrEditCategoryBottomSheetType.NONE,
+        bottomSheetType = addOrEditCategoryBottomSheetType,
+        coroutineScope = state.coroutineScope,
+        keyboardController = state.keyboardController,
+        modalBottomSheetState = state.modalBottomSheetState,
+        resetBottomSheetType = resetBottomSheetType,
+    )
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
@@ -124,20 +123,15 @@ internal fun AddOrEditCategoryScreenView(
                 AddOrEditCategoryBottomSheetType.SELECT_EMOJI -> {
                     AddOrEditCategorySelectEmojiBottomSheetContent(
                         context = state.context,
-                        coroutineScope = state.coroutineScope,
-                        modalBottomSheetState = state.modalBottomSheetState,
                         emojiGroups = data.emojiGroups,
                         searchText = data.searchText,
-                        resetBottomSheetType = {
-                            addOrEditCategoryBottomSheetType = AddOrEditCategoryBottomSheetType.NONE
-                        },
+                        resetBottomSheetType = resetBottomSheetType,
                         updateEmoji = { updatedEmoji ->
                             events.updateEmoji(updatedEmoji)
                         },
-                        updateSearchText = { updatedSearchText ->
-                            events.updateSearchText(updatedSearchText)
-                        },
-                    )
+                    ) { updatedSearchText ->
+                        events.updateSearchText(updatedSearchText)
+                    }
                 }
             }
         },
@@ -152,9 +146,7 @@ internal fun AddOrEditCategoryScreenView(
         },
         backHandlerEnabled = addOrEditCategoryBottomSheetType != AddOrEditCategoryBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = {
-            addOrEditCategoryBottomSheetType = AddOrEditCategoryBottomSheetType.NONE
-        },
+        onBackPress = resetBottomSheetType,
         modifier = Modifier
             .fillMaxSize(),
     ) {
@@ -197,10 +189,6 @@ internal fun AddOrEditCategoryScreenView(
                         state.keyboardController?.hide()
                         addOrEditCategoryBottomSheetType =
                             AddOrEditCategoryBottomSheetType.SELECT_EMOJI
-                        toggleModalBottomSheetState(
-                            coroutineScope = state.coroutineScope,
-                            modalBottomSheetState = state.modalBottomSheetState,
-                        )
                     },
                 )
                 MyOutlinedTextField(

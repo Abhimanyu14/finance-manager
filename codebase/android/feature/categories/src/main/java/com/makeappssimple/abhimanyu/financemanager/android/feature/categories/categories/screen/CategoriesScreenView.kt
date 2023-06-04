@@ -2,11 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -25,8 +23,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.toggleModalBottomSheetState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid.CategoriesGrid
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid_item.CategoriesGridItemData
@@ -38,7 +36,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ca
 import kotlinx.coroutines.launch
 
 @Immutable
-internal sealed class CategoriesBottomSheetType : BottomSheetType {
+private sealed class CategoriesBottomSheetType : BottomSheetType {
     object DeleteConfirmation : CategoriesBottomSheetType()
     object None : CategoriesBottomSheetType()
     object SetAsDefaultConfirmation : CategoriesBottomSheetType()
@@ -125,16 +123,14 @@ internal fun CategoriesScreenView(
         }
     }
 
-    if (state.modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
-        DisposableEffect(
-            key1 = Unit,
-        ) {
-            onDispose {
-                resetBottomSheetType()
-                state.keyboardController?.hide()
-            }
-        }
-    }
+    BottomSheetHandler(
+        showModalBottomSheet = categoriesBottomSheetType != CategoriesBottomSheetType.None,
+        bottomSheetType = categoriesBottomSheetType,
+        coroutineScope = state.coroutineScope,
+        keyboardController = state.keyboardController,
+        modalBottomSheetState = state.modalBottomSheetState,
+        resetBottomSheetType = resetBottomSheetType,
+    )
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
@@ -142,18 +138,15 @@ internal fun CategoriesScreenView(
             when (categoriesBottomSheetType) {
                 is CategoriesBottomSheetType.DeleteConfirmation -> {
                     CategoriesDeleteConfirmationBottomSheetContent(
-                        coroutineScope = state.coroutineScope,
-                        modalBottomSheetState = state.modalBottomSheetState,
                         deleteCategory = {
                             categoryIdToDelete?.let { categoryIdToDeleteValue ->
                                 events.deleteCategory(categoryIdToDeleteValue)
                             }
                         },
                         resetBottomSheetType = resetBottomSheetType,
-                        resetCategoryIdToDelete = {
-                            categoryIdToDelete = null
-                        },
-                    )
+                    ) {
+                        categoryIdToDelete = null
+                    }
                 }
 
                 is CategoriesBottomSheetType.None -> {
@@ -162,22 +155,19 @@ internal fun CategoriesScreenView(
 
                 is CategoriesBottomSheetType.SetAsDefaultConfirmation -> {
                     CategoriesSetAsDefaultConfirmationBottomSheetContent(
-                        coroutineScope = state.coroutineScope,
-                        modalBottomSheetState = state.modalBottomSheetState,
                         transactionType = transactionTypes[data.selectedTabIndex],
                         resetBottomSheetType = resetBottomSheetType,
                         resetClickedItemId = {
                             clickedItemId = null
                         },
-                        setDefaultCategoryIdInDataStore = {
-                            clickedItemId?.let { clickedItemIdValue ->
-                                events.setDefaultCategoryIdInDataStore(
-                                    clickedItemIdValue,
-                                    transactionTypes[data.selectedTabIndex],
-                                )
-                            }
-                        },
-                    )
+                    ) {
+                        clickedItemId?.let { clickedItemIdValue ->
+                            events.setDefaultCategoryIdInDataStore(
+                                clickedItemIdValue,
+                                transactionTypes[data.selectedTabIndex],
+                            )
+                        }
+                    }
                 }
 
                 is CategoriesBottomSheetType.Menu -> {
@@ -194,13 +184,8 @@ internal fun CategoriesScreenView(
                                 CategoriesBottomSheetType.DeleteConfirmation
                         },
                         onEditClick = {
-                            toggleModalBottomSheetState(
-                                coroutineScope = state.coroutineScope,
-                                modalBottomSheetState = state.modalBottomSheetState,
-                            ) {
-                                resetBottomSheetType()
-                                events.navigateToEditCategoryScreen(bottomSheetData.categoryId)
-                            }
+                            resetBottomSheetType()
+                            events.navigateToEditCategoryScreen(bottomSheetData.categoryId)
                         },
                         onSetAsDefaultClick = {
                             clickedItemId = bottomSheetData.categoryId
@@ -247,9 +232,7 @@ internal fun CategoriesScreenView(
         },
         backHandlerEnabled = categoriesBottomSheetType != CategoriesBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onBackPress = {
-            resetBottomSheetType()
-        },
+        onBackPress = resetBottomSheetType,
         modifier = Modifier
             .fillMaxSize(),
     ) {
@@ -294,10 +277,6 @@ internal fun CategoriesScreenView(
                                 categoryId = categoriesGridItemDataList[index].category.id,
                             )
                             clickedItemId = categoriesGridItemDataList[index].category.id
-                            toggleModalBottomSheetState(
-                                coroutineScope = state.coroutineScope,
-                                modalBottomSheetState = state.modalBottomSheetState,
-                            )
                         }
                     },
                 )
