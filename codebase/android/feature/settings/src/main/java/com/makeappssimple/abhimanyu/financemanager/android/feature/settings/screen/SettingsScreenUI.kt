@@ -33,7 +33,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
@@ -43,13 +43,13 @@ private enum class SettingsBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class SettingsScreenViewData(
+internal data class SettingsScreenUIData(
     val isLoading: Boolean,
     val appVersion: String?,
 )
 
 @Immutable
-internal data class SettingsScreenViewEvents(
+internal data class SettingsScreenUIEvents(
     val backupData: () -> Unit,
     val navigateToTransactionForValuesScreen: () -> Unit,
     val navigateUp: () -> Unit,
@@ -58,10 +58,10 @@ internal data class SettingsScreenViewEvents(
 )
 
 @Composable
-internal fun SettingsScreenView(
-    data: SettingsScreenViewData,
-    events: SettingsScreenViewEvents,
-    state: CommonScreenViewState,
+internal fun SettingsScreenUI(
+    data: SettingsScreenUIData,
+    events: SettingsScreenUIEvents,
+    state: CommonScreenUIState,
 ) {
     var settingsBottomSheetType by remember {
         mutableStateOf(

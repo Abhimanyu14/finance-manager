@@ -24,7 +24,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid.CategoriesGrid
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid_item.CategoriesGridItemData
@@ -50,13 +50,13 @@ private sealed class CategoriesBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class CategoriesScreenViewData(
+internal data class CategoriesScreenUIData(
     val selectedTabIndex: Int,
     val categoriesGridItemDataMap: Map<TransactionType, List<CategoriesGridItemData>>,
 )
 
 @Immutable
-internal data class CategoriesScreenViewEvents(
+internal data class CategoriesScreenUIEvents(
     val deleteCategory: (categoryId: Int) -> Unit,
     val navigateToAddCategoryScreen: (transactionType: String) -> Unit,
     val navigateToEditCategoryScreen: (categoryId: Int) -> Unit,
@@ -69,10 +69,10 @@ internal data class CategoriesScreenViewEvents(
 )
 
 @Composable
-internal fun CategoriesScreenView(
-    data: CategoriesScreenViewData,
-    events: CategoriesScreenViewEvents,
-    state: CommonScreenViewState,
+internal fun CategoriesScreenUI(
+    data: CategoriesScreenUIData,
+    events: CategoriesScreenUIEvents,
+    state: CommonScreenUIState,
 ) {
     val pagerState = rememberPagerState(
         initialPage = 0,

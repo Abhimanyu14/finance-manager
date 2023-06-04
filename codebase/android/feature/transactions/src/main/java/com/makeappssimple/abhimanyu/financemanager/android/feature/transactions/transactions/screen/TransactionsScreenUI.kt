@@ -39,7 +39,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButtonData
@@ -63,7 +63,7 @@ private enum class TransactionsBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class TransactionsScreenViewData(
+internal data class TransactionsScreenUIData(
     val isLoading: Boolean,
     val selectedFilter: Filter,
     val sortOptions: List<SortOption>,
@@ -77,7 +77,7 @@ internal data class TransactionsScreenViewData(
 )
 
 @Immutable
-internal data class TransactionsScreenViewEvents(
+internal data class TransactionsScreenUIEvents(
     val getExpenseCategories: () -> List<Category>,
     val getIncomeCategories: () -> List<Category>,
     val getInvestmentCategories: () -> List<Category>,
@@ -91,10 +91,10 @@ internal data class TransactionsScreenViewEvents(
 )
 
 @Composable
-internal fun TransactionsScreenView(
-    data: TransactionsScreenViewData,
-    events: TransactionsScreenViewEvents,
-    state: CommonScreenViewState,
+internal fun TransactionsScreenUI(
+    data: TransactionsScreenUIData,
+    events: TransactionsScreenUIEvents,
+    state: CommonScreenUIState,
 ) {
     var transactionsBottomSheetType by remember {
         mutableStateOf(

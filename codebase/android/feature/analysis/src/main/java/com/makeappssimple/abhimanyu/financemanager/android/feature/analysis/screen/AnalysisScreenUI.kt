@@ -22,7 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyHorizontalScrollingRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
@@ -44,7 +44,7 @@ private enum class AnalysisBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class AnalysisScreenViewData(
+internal data class AnalysisScreenUIData(
     val selectedFilter: Filter,
     val selectedTransactionTypeIndex: Int?,
     val transactionDataMappedByCategory: List<AnalysisListItemData>,
@@ -57,17 +57,17 @@ internal data class AnalysisScreenViewData(
 )
 
 @Immutable
-internal data class AnalysisScreenViewEvents(
+internal data class AnalysisScreenUIEvents(
     val navigateUp: () -> Unit,
     val updateSelectedFilter: (updatedSelectedFilter: Filter) -> Unit,
     val updateSelectedTransactionTypeIndex: (updatedSelectedTransactionTypeIndex: Int) -> Unit,
 )
 
 @Composable
-internal fun AnalysisScreenView(
-    data: AnalysisScreenViewData,
-    events: AnalysisScreenViewEvents,
-    state: CommonScreenViewState,
+internal fun AnalysisScreenUI(
+    data: AnalysisScreenUIData,
+    events: AnalysisScreenUIEvents,
+    state: CommonScreenUIState,
 ) {
     val textMeasurer = rememberTextMeasurer()
     val maxAmountTextWidth: Int = if (data.transactionDataMappedByCategory.isEmpty()) {

@@ -12,7 +12,7 @@ import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.MimeTypeConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.CreateJsonDocument
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.viewmodel.SettingsScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.viewmodel.SettingsScreenViewModelImpl
 
@@ -49,12 +49,12 @@ fun SettingsScreen(
             }
         }
 
-    SettingsScreenView(
-        data = SettingsScreenViewData(
+    SettingsScreenUI(
+        data = SettingsScreenUIData(
             isLoading = isLoading,
             appVersion = screenViewModel.appVersionName,
         ),
-        events = SettingsScreenViewEvents(
+        events = SettingsScreenUIEvents(
             backupData = {
                 createDocumentResultLauncher.launch(MimeTypeConstants.JSON)
             },
@@ -68,6 +68,6 @@ fun SettingsScreen(
                 openDocumentResultLauncher.launch(arrayOf(MimeTypeConstants.JSON))
             },
         ),
-        state = rememberCommonScreenViewState(),
+        state = rememberCommonScreenUIState(),
     )
 }

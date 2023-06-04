@@ -6,7 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.viewmodel.ViewTransactionScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.viewmodel.ViewTransactionScreenViewModelImpl
@@ -34,13 +34,13 @@ fun ViewTransactionScreen(
         screenViewModel.getTransactionData()
     }
 
-    ViewTransactionScreenView(
-        data = ViewTransactionScreenViewData(
+    ViewTransactionScreenUI(
+        data = ViewTransactionScreenUIData(
             originalTransactionListItemData = originalTransactionListItemData,
             refundTransactionListItemData = refundTransactionListItemData,
             transactionListItemData = transactionListItemData,
         ),
-        events = ViewTransactionScreenViewEvents(
+        events = ViewTransactionScreenUIEvents(
             deleteTransaction = { transactionId ->
                 screenViewModel.deleteTransaction(
                     id = transactionId,
@@ -69,6 +69,6 @@ fun ViewTransactionScreen(
                 )
             },
         ),
-        state = rememberCommonScreenViewState(),
+        state = rememberCommonScreenUIState(),
     )
 }

@@ -32,7 +32,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.EmojiCircleSize
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircle
@@ -50,7 +50,7 @@ private enum class AddOrEditCategoryBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class AddOrEditCategoryScreenViewData(
+internal data class AddOrEditCategoryScreenUIData(
     @StringRes val appBarTitleTextStringResourceId: Int,
     @StringRes val ctaButtonLabelTextStringResourceId: Int,
     val selectedTransactionTypeIndex: Int,
@@ -62,7 +62,7 @@ internal data class AddOrEditCategoryScreenViewData(
 )
 
 @Immutable
-internal data class AddOrEditCategoryScreenViewEvents(
+internal data class AddOrEditCategoryScreenUIEvents(
     val clearTitle: () -> Unit,
     val isValidCategoryData: () -> Boolean,
     val navigateUp: () -> Unit,
@@ -74,10 +74,10 @@ internal data class AddOrEditCategoryScreenViewEvents(
 )
 
 @Composable
-internal fun AddOrEditCategoryScreenView(
-    data: AddOrEditCategoryScreenViewData,
-    events: AddOrEditCategoryScreenViewEvents,
-    state: CommonScreenViewState,
+internal fun AddOrEditCategoryScreenUI(
+    data: AddOrEditCategoryScreenUIData,
+    events: AddOrEditCategoryScreenUIEvents,
+    state: CommonScreenUIState,
 ) {
     var addOrEditCategoryBottomSheetType by remember {
         mutableStateOf(

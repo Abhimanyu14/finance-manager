@@ -9,11 +9,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenView
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenViewData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenViewEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUI
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUIEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.viewmodel.AddOrEditCategoryScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.viewmodel.AddOrEditCategoryScreenViewModelImpl
 
@@ -42,8 +42,8 @@ fun AddCategoryScreen(
         }
     }
 
-    AddOrEditCategoryScreenView(
-        data = AddOrEditCategoryScreenViewData(
+    AddOrEditCategoryScreenUI(
+        data = AddOrEditCategoryScreenUIData(
             appBarTitleTextStringResourceId = R.string.screen_add_category_appbar_title,
             ctaButtonLabelTextStringResourceId = R.string.screen_add_category_floating_action_button_content_description,
             selectedTransactionTypeIndex = selectedTransactionTypeIndex,
@@ -53,7 +53,7 @@ fun AddCategoryScreen(
             searchText = searchText,
             title = title,
         ),
-        events = AddOrEditCategoryScreenViewEvents(
+        events = AddOrEditCategoryScreenUIEvents(
             clearTitle = screenViewModel::clearTitle,
             isValidCategoryData = screenViewModel::isValidCategoryData,
             navigateUp = {
@@ -67,6 +67,6 @@ fun AddCategoryScreen(
             updateSelectedTransactionTypeIndex = screenViewModel::updateSelectedTransactionTypeIndex,
             updateTitle = screenViewModel::updateTitle,
         ),
-        state = rememberCommonScreenViewState(),
+        state = rememberCommonScreenUIState(),
     )
 }

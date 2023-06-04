@@ -7,7 +7,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.SortOption
@@ -37,8 +37,8 @@ fun TransactionsScreen(
     val sources: List<Source>? by screenViewModel.sources.collectAsStateWithLifecycle()
     val searchText: String by screenViewModel.searchText.collectAsStateWithLifecycle()
 
-    TransactionsScreenView(
-        data = TransactionsScreenViewData(
+    TransactionsScreenUI(
+        data = TransactionsScreenUIData(
             isLoading = isLoading,
             selectedFilter = selectedFilter,
             sortOptions = screenViewModel.sortOptions,
@@ -50,7 +50,7 @@ fun TransactionsScreen(
             searchText = searchText,
             selectedSortOption = selectedSortOption,
         ),
-        events = TransactionsScreenViewEvents(
+        events = TransactionsScreenUIEvents(
             getExpenseCategories = {
                 expenseCategories ?: emptyList()
             },
@@ -84,6 +84,6 @@ fun TransactionsScreen(
             updateSelectedFilter = screenViewModel::updateSelectedFilter,
             updateSelectedSortOption = screenViewModel::updateSelectedSortOption,
         ),
-        state = rememberCommonScreenViewState(),
+        state = rememberCommonScreenUIState(),
     )
 }

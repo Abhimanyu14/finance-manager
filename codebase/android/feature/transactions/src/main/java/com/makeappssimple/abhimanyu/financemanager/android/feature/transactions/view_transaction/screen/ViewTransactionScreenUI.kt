@@ -23,7 +23,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItem
@@ -38,14 +38,14 @@ private enum class ViewTransactionBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class ViewTransactionScreenViewData(
+internal data class ViewTransactionScreenUIData(
     val originalTransactionListItemData: TransactionListItemData?,
     val refundTransactionListItemData: List<TransactionListItemData>?,
     val transactionListItemData: TransactionListItemData?,
 )
 
 @Immutable
-internal data class ViewTransactionScreenViewEvents(
+internal data class ViewTransactionScreenUIEvents(
     val deleteTransaction: (transactionId: Int) -> Unit,
     val navigateToAddTransactionScreen: (transactionId: Int) -> Unit,
     val navigateToEditTransactionScreen: (transactionId: Int) -> Unit,
@@ -53,10 +53,10 @@ internal data class ViewTransactionScreenViewEvents(
 )
 
 @Composable
-internal fun ViewTransactionScreenView(
-    data: ViewTransactionScreenViewData,
-    events: ViewTransactionScreenViewEvents,
-    state: CommonScreenViewState,
+internal fun ViewTransactionScreenUI(
+    data: ViewTransactionScreenUIData,
+    events: ViewTransactionScreenUIEvents,
+    state: CommonScreenUIState,
 ) {
     var viewTransactionBottomSheetType by remember {
         mutableStateOf(

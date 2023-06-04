@@ -39,7 +39,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.AmountCommaVisualTransformation
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.getMyDatePickerDialog
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.getMyTimePickerDialog
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
@@ -66,7 +66,7 @@ private enum class AddOrEditTransactionBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class AddOrEditTransactionScreenViewData(
+internal data class AddOrEditTransactionScreenUIData(
     val uiState: AddOrEditTransactionScreenUiState,
     val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState,
     val isCtaButtonEnabled: Boolean,
@@ -82,7 +82,7 @@ internal data class AddOrEditTransactionScreenViewData(
 )
 
 @Immutable
-internal data class AddOrEditTransactionScreenViewEvents(
+internal data class AddOrEditTransactionScreenUIEvents(
     val clearAmount: () -> Unit,
     val clearDescription: () -> Unit,
     val clearTitle: () -> Unit,
@@ -101,10 +101,10 @@ internal data class AddOrEditTransactionScreenViewEvents(
 )
 
 @Composable
-internal fun AddOrEditTransactionScreenView(
-    data: AddOrEditTransactionScreenViewData,
-    events: AddOrEditTransactionScreenViewEvents,
-    state: CommonScreenViewState,
+internal fun AddOrEditTransactionScreenUI(
+    data: AddOrEditTransactionScreenUIData,
+    events: AddOrEditTransactionScreenUIEvents,
+    state: CommonScreenUIState,
 ) {
     val transactionDatePickerDialog = getMyDatePickerDialog(
         context = state.context,

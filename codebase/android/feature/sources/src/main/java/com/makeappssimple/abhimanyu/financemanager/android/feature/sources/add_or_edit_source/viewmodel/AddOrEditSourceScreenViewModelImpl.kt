@@ -25,7 +25,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultSource
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenViewErrorData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUIErrorData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.navigation.AddOrEditSourceScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -66,10 +66,10 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
             it != SourceType.CASH
         }
 
-    private val _errorData: MutableStateFlow<AddOrEditSourceScreenViewErrorData> = MutableStateFlow(
-        value = AddOrEditSourceScreenViewErrorData(),
+    private val _errorData: MutableStateFlow<AddOrEditSourceScreenUIErrorData> = MutableStateFlow(
+        value = AddOrEditSourceScreenUIErrorData(),
     )
-    override val errorData: StateFlow<AddOrEditSourceScreenViewErrorData> = _errorData
+    override val errorData: StateFlow<AddOrEditSourceScreenUIErrorData> = _errorData
 
     private val _selectedSourceTypeIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = sourceTypes.indexOf(
@@ -209,7 +209,7 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
         val result = name.trim() == originalSource.value?.name?.trim() || doesNotExist
         _errorData.update {
             if (result) {
-                AddOrEditSourceScreenViewErrorData()
+                AddOrEditSourceScreenUIErrorData()
             } else {
                 _errorData.value.copy(
                     name = "Source already exists" // TODO(Abhi): Move to string resources

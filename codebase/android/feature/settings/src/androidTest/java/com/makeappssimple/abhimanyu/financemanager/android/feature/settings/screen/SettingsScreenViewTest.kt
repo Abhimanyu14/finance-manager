@@ -8,7 +8,7 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -51,11 +51,11 @@ class SettingsScreenViewTest {
     fun isLoading_isTrue() {
         composeTestRule.setContent {
             MyAppTheme {
-                SettingsScreenView(
+                SettingsScreenUI(
                     data = testSettingsScreenViewData.copy(
                         isLoading = true,
                     ),
-                    state = rememberCommonScreenViewState(),
+                    state = rememberCommonScreenUIState(),
                 )
             }
         }
@@ -80,11 +80,11 @@ class SettingsScreenViewTest {
     fun isLoading_isFalse() {
         composeTestRule.setContent {
             MyAppTheme {
-                SettingsScreenView(
+                SettingsScreenUI(
                     data = testSettingsScreenViewData.copy(
                         isLoading = false,
                     ),
-                    state = rememberCommonScreenViewState(),
+                    state = rememberCommonScreenUIState(),
                 )
             }
         }
@@ -109,11 +109,11 @@ class SettingsScreenViewTest {
     fun appVersion_isShown() {
         composeTestRule.setContent {
             MyAppTheme {
-                SettingsScreenView(
+                SettingsScreenUI(
                     data = testSettingsScreenViewData.copy(
                         appVersion = testAppVersion,
                     ),
-                    state = rememberCommonScreenViewState(),
+                    state = rememberCommonScreenUIState(),
                 )
             }
         }
@@ -126,11 +126,11 @@ class SettingsScreenViewTest {
     fun appVersion_isNotShown() {
         composeTestRule.setContent {
             MyAppTheme {
-                SettingsScreenView(
+                SettingsScreenUI(
                     data = testSettingsScreenViewData.copy(
                         appVersion = null,
                     ),
-                    state = rememberCommonScreenViewState(),
+                    state = rememberCommonScreenUIState(),
                 )
             }
         }
@@ -141,7 +141,7 @@ class SettingsScreenViewTest {
 
     companion object {
         private const val testAppVersion = "2023.04.07.1"
-        private val testSettingsScreenViewData = SettingsScreenViewData(
+        private val testSettingsScreenViewData = SettingsScreenUIData(
             isLoading = false,
             appVersion = testAppVersion,
             backupData = {},

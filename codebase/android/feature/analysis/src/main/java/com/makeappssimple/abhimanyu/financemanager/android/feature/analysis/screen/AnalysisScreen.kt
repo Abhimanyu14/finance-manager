@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.viewmodel.AnalysisScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.viewmodel.AnalysisScreenViewModelImpl
@@ -25,8 +25,8 @@ fun AnalysisScreen(
     val transactionDataMappedByCategory: List<AnalysisListItemData> by screenViewModel.transactionDataMappedByCategory.collectAsStateWithLifecycle()
     val selectedTransactionTypeIndex: Int? by screenViewModel.selectedTransactionTypeIndex.collectAsStateWithLifecycle()
 
-    AnalysisScreenView(
-        data = AnalysisScreenViewData(
+    AnalysisScreenUI(
+        data = AnalysisScreenUIData(
             selectedFilter = selectedFilter,
             selectedTransactionTypeIndex = selectedTransactionTypeIndex,
             transactionDataMappedByCategory = transactionDataMappedByCategory,
@@ -37,11 +37,11 @@ fun AnalysisScreen(
             startOfYearLocalDate = screenViewModel.startOfYearLocalDate,
             currentTimeMillis = screenViewModel.currentTimeMillis,
         ),
-        events = AnalysisScreenViewEvents(
+        events = AnalysisScreenUIEvents(
             navigateUp = screenViewModel::navigateUp,
             updateSelectedFilter = screenViewModel::updateSelectedFilter,
             updateSelectedTransactionTypeIndex = screenViewModel::updateSelectedTransactionTypeIndex,
         ),
-        state = rememberCommonScreenViewState(),
+        state = rememberCommonScreenUIState(),
     )
 }

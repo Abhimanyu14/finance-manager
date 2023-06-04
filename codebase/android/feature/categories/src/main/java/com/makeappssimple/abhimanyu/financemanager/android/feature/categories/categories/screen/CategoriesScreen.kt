@@ -6,7 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid_item.CategoriesGridItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.viewmodel.CategoriesScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.viewmodel.CategoriesScreenViewModelImpl
@@ -24,12 +24,12 @@ fun CategoriesScreen(
             initialValue = emptyMap(),
         )
 
-    CategoriesScreenView(
-        data = CategoriesScreenViewData(
+    CategoriesScreenUI(
+        data = CategoriesScreenUIData(
             selectedTabIndex = selectedTabIndex,
             categoriesGridItemDataMap = categoriesGridItemDataMap,
         ),
-        events = CategoriesScreenViewEvents(
+        events = CategoriesScreenUIEvents(
             deleteCategory = { categoryId ->
                 screenViewModel.deleteCategory(
                     id = categoryId,
@@ -66,6 +66,6 @@ fun CategoriesScreen(
                 )
             },
         ),
-        state = rememberCommonScreenViewState(),
+        state = rememberCommonScreenUIState(),
     )
 }

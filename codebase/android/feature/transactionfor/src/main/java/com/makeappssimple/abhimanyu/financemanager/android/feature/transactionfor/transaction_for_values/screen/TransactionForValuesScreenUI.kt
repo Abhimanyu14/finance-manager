@@ -19,7 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultTransactionFor
@@ -41,13 +41,13 @@ private sealed class TransactionForValuesBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class TransactionForValuesScreenViewData(
+internal data class TransactionForValuesScreenUIData(
     val transactionForValuesIsUsedInTransactions: List<Boolean>,
     val transactionForValues: List<TransactionFor>,
 )
 
 @Immutable
-internal data class TransactionForValuesScreenViewEvents(
+internal data class TransactionForValuesScreenUIEvents(
     val deleteTransactionFor: (transactionForId: Int) -> Unit,
     val navigateToAddTransactionForScreen: () -> Unit,
     val navigateToEditTransactionForScreen: (transactionForId: Int) -> Unit,
@@ -55,10 +55,10 @@ internal data class TransactionForValuesScreenViewEvents(
 )
 
 @Composable
-internal fun TransactionForValuesScreenView(
-    data: TransactionForValuesScreenViewData,
-    events: TransactionForValuesScreenViewEvents,
-    state: CommonScreenViewState,
+internal fun TransactionForValuesScreenUI(
+    data: TransactionForValuesScreenUIData,
+    events: TransactionForValuesScreenUIEvents,
+    state: CommonScreenUIState,
 ) {
     var transactionForValuesBottomSheetType: TransactionForValuesBottomSheetType by remember {
         mutableStateOf(

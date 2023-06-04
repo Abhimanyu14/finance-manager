@@ -9,7 +9,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.CreateJsonDocument
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmodel.HomeScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmodel.HomeScreenViewModelImpl
@@ -40,12 +40,12 @@ fun HomeScreen(
         initialValue = false,
     )
 
-    HomeScreenView(
-        data = HomeScreenViewData(
+    HomeScreenUI(
+        data = HomeScreenUIData(
             isBackupCardVisible = isBackupCardVisible,
             transactionListItemDataList = homeListItemViewData,
         ),
-        events = HomeScreenViewEvents(
+        events = HomeScreenUIEvents(
             createDocument = createDocument,
             navigateToAnalysisScreen = {
                 screenViewModel.navigationManager.navigate(
@@ -78,6 +78,6 @@ fun HomeScreen(
                 )
             },
         ),
-        state = rememberCommonScreenViewState(),
+        state = rememberCommonScreenUIState(),
     )
 }

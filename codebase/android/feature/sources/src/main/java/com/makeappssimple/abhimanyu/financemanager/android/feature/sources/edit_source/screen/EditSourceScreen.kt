@@ -8,13 +8,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.SourceType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenView
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenViewData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenViewErrorData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenViewEvents
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenViewVisibilityData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUI
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUIErrorData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUIEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUIVisibilityData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.viewmodel.AddOrEditSourceScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.viewmodel.AddOrEditSourceScreenViewModelImpl
 
@@ -25,7 +25,7 @@ fun EditSourceScreen(
     screenViewModel.logger.logError(
         message = "Inside EditSourceScreen",
     )
-    val errorData: AddOrEditSourceScreenViewErrorData by screenViewModel.errorData.collectAsStateWithLifecycle()
+    val errorData: AddOrEditSourceScreenUIErrorData by screenViewModel.errorData.collectAsStateWithLifecycle()
     val selectedSourceTypeIndex: Int by screenViewModel.selectedSourceTypeIndex.collectAsStateWithLifecycle()
     val source: Source? by screenViewModel.originalSource.collectAsStateWithLifecycle(
         initialValue = null,
@@ -33,9 +33,9 @@ fun EditSourceScreen(
     val balanceAmountValue: TextFieldValue by screenViewModel.balanceAmountValue.collectAsStateWithLifecycle()
     val name: TextFieldValue by screenViewModel.name.collectAsStateWithLifecycle()
 
-    AddOrEditSourceScreenView(
-        data = AddOrEditSourceScreenViewData(
-            visibilityData = AddOrEditSourceScreenViewVisibilityData(
+    AddOrEditSourceScreenUI(
+        data = AddOrEditSourceScreenUIData(
+            visibilityData = AddOrEditSourceScreenUIVisibilityData(
                 balanceAmount = true,
                 name = source?.type != SourceType.CASH,
                 sourceTypes = source?.type != SourceType.CASH,
@@ -48,7 +48,7 @@ fun EditSourceScreen(
             balanceAmountValue = balanceAmountValue,
             name = name,
         ),
-        events = AddOrEditSourceScreenViewEvents(
+        events = AddOrEditSourceScreenUIEvents(
             clearBalanceAmountValue = screenViewModel::clearBalanceAmountValue,
             clearName = screenViewModel::clearName,
             isValidSourceData = screenViewModel::isValidSourceData,
@@ -62,6 +62,6 @@ fun EditSourceScreen(
             updateName = screenViewModel::updateName,
             updateSelectedSourceTypeIndex = screenViewModel::updateSelectedSourceTypeIndex,
         ),
-        state = rememberCommonScreenViewState(),
+        state = rememberCommonScreenUIState(),
     )
 }

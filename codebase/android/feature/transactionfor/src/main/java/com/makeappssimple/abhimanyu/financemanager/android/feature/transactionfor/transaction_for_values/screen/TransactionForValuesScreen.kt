@@ -6,7 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.viewmodel.TransactionForValuesScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.viewmodel.TransactionForValuesScreenViewModelImpl
 
@@ -24,12 +24,12 @@ fun TransactionForValuesScreen(
         initialValue = emptyList(),
     )
 
-    TransactionForValuesScreenView(
-        data = TransactionForValuesScreenViewData(
+    TransactionForValuesScreenUI(
+        data = TransactionForValuesScreenUIData(
             transactionForValuesIsUsedInTransactions = transactionForValuesIsUsedInTransactions,
             transactionForValues = transactionForValues,
         ),
-        events = TransactionForValuesScreenViewEvents(
+        events = TransactionForValuesScreenUIEvents(
             deleteTransactionFor = { transactionForId ->
                 screenViewModel.deleteTransactionFor(
                     id = transactionForId,
@@ -53,6 +53,6 @@ fun TransactionForValuesScreen(
                 )
             },
         ),
-        state = rememberCommonScreenViewState(),
+        state = rememberCommonScreenUIState(),
     )
 }

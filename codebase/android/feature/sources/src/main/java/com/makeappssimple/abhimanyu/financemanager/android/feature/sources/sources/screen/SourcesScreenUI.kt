@@ -19,7 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
@@ -37,12 +37,12 @@ private enum class SourcesBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class SourcesScreenViewData(
+internal data class SourcesScreenUIData(
     val sourcesListItemDataList: List<SourcesListItemData>,
 )
 
 @Immutable
-internal data class SourcesScreenViewEvents(
+internal data class SourcesScreenUIEvents(
     val deleteSource: (sourceId: Int) -> Unit,
     val navigateToAddSourceScreen: () -> Unit,
     val navigateToEditSourceScreen: (sourceId: Int) -> Unit,
@@ -51,10 +51,10 @@ internal data class SourcesScreenViewEvents(
 )
 
 @Composable
-internal fun SourcesScreenView(
-    data: SourcesScreenViewData,
-    events: SourcesScreenViewEvents,
-    state: CommonScreenViewState,
+internal fun SourcesScreenUI(
+    data: SourcesScreenUIData,
+    events: SourcesScreenUIEvents,
+    state: CommonScreenUIState,
 ) {
     var sourcesBottomSheetType by remember {
         mutableStateOf(

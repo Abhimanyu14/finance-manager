@@ -5,7 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.SourcesListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.viewmodel.SourcesScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.viewmodel.SourcesScreenViewModelImpl
@@ -21,11 +21,11 @@ fun SourcesScreen(
         initialValue = emptyList(),
     )
 
-    SourcesScreenView(
-        data = SourcesScreenViewData(
+    SourcesScreenUI(
+        data = SourcesScreenUIData(
             sourcesListItemDataList = sourcesListItemDataList,
         ),
-        events = SourcesScreenViewEvents(
+        events = SourcesScreenUIEvents(
             deleteSource = { sourceId ->
                 screenViewModel.deleteSource(
                     id = sourceId,
@@ -54,6 +54,6 @@ fun SourcesScreen(
                 )
             },
         ),
-        state = rememberCommonScreenViewState(),
+        state = rememberCommonScreenUIState(),
     )
 }

@@ -6,11 +6,11 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenView
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenViewData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenViewEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUI
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.viewmodel.AddOrEditTransactionForScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.viewmodel.AddOrEditTransactionForScreenViewModelImpl
 
@@ -23,13 +23,13 @@ fun EditTransactionForScreen(
     )
     val title: TextFieldValue by screenViewModel.title.collectAsStateWithLifecycle()
 
-    AddOrEditTransactionForScreenView(
-        data = AddOrEditTransactionForScreenViewData(
+    AddOrEditTransactionForScreenUI(
+        data = AddOrEditTransactionForScreenUIData(
             appBarTitleTextStringResourceId = R.string.screen_edit_transaction_for_appbar_title,
             ctaButtonLabelTextStringResourceId = R.string.screen_edit_transaction_for_floating_action_button_content_description,
             title = title,
         ),
-        events = AddOrEditTransactionForScreenViewEvents(
+        events = AddOrEditTransactionForScreenUIEvents(
             clearTitle = screenViewModel::clearTitle,
             isValidTitle = screenViewModel::isValidTitle,
             navigateUp = {
@@ -40,6 +40,6 @@ fun EditTransactionForScreen(
             onCtaButtonClick = screenViewModel::updateTransactionFor,
             updateTitle = screenViewModel::updateTitle,
         ),
-        state = rememberCommonScreenViewState(),
+        state = rememberCommonScreenUIState(),
     )
 }

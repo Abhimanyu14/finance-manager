@@ -23,7 +23,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCard
@@ -43,13 +43,13 @@ private enum class HomeBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class HomeScreenViewData(
+internal data class HomeScreenUIData(
     val isBackupCardVisible: Boolean,
     val transactionListItemDataList: List<TransactionListItemData>,
 )
 
 @Immutable
-internal data class HomeScreenViewEvents(
+internal data class HomeScreenUIEvents(
     val createDocument: ManagedActivityResultLauncher<String, Uri?>,
     val navigateToAddTransactionScreen: () -> Unit,
     val navigateToAnalysisScreen: () -> Unit,
@@ -60,10 +60,10 @@ internal data class HomeScreenViewEvents(
 )
 
 @Composable
-internal fun HomeScreenView(
-    data: HomeScreenViewData,
-    events: HomeScreenViewEvents,
-    state: CommonScreenViewState,
+internal fun HomeScreenUI(
+    data: HomeScreenUIData,
+    events: HomeScreenUIEvents,
+    state: CommonScreenUIState,
 ) {
     var homeBottomSheetType by remember {
         mutableStateOf(

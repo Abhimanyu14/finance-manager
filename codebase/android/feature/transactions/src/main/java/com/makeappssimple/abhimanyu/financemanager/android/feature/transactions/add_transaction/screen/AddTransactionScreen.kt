@@ -9,11 +9,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenView
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenViewData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenViewEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUI
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUIEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiVisibilityState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenViewModel
@@ -44,8 +44,8 @@ fun AddTransactionScreen(
     )
     val selectedTransactionType: TransactionType? by screenViewModel.selectedTransactionType.collectAsStateWithLifecycle()
 
-    AddOrEditTransactionScreenView(
-        data = AddOrEditTransactionScreenViewData(
+    AddOrEditTransactionScreenUI(
+        data = AddOrEditTransactionScreenUIData(
             uiState = uiState,
             uiVisibilityState = uiVisibilityState,
             isCtaButtonEnabled = isCtaButtonEnabled,
@@ -59,7 +59,7 @@ fun AddTransactionScreen(
             currentTimeMillis = screenViewModel.currentTimeMillis,
             selectedTransactionType = selectedTransactionType,
         ),
-        events = AddOrEditTransactionScreenViewEvents(
+        events = AddOrEditTransactionScreenUIEvents(
             clearAmount = screenViewModel::clearAmount,
             clearDescription = screenViewModel::clearDescription,
             clearTitle = screenViewModel::clearTitle,
@@ -80,6 +80,6 @@ fun AddTransactionScreen(
             updateTransactionDate = screenViewModel::updateTransactionDate,
             updateTransactionTime = screenViewModel::updateTransactionTime,
         ),
-        state = rememberCommonScreenViewState(),
+        state = rememberCommonScreenUIState(),
     )
 }

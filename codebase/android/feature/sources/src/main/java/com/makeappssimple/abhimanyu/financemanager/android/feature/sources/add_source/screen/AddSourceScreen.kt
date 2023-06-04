@@ -6,13 +6,13 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenView
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenViewData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenViewErrorData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenViewEvents
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenViewVisibilityData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUI
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUIErrorData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUIEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUIVisibilityData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.viewmodel.AddOrEditSourceScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.viewmodel.AddOrEditSourceScreenViewModelImpl
 
@@ -23,13 +23,13 @@ fun AddSourceScreen(
     screenViewModel.logger.logError(
         message = "Inside AddSourceScreen",
     )
-    val errorData: AddOrEditSourceScreenViewErrorData by screenViewModel.errorData.collectAsStateWithLifecycle()
+    val errorData: AddOrEditSourceScreenUIErrorData by screenViewModel.errorData.collectAsStateWithLifecycle()
     val selectedSourceTypeIndex: Int by screenViewModel.selectedSourceTypeIndex.collectAsStateWithLifecycle()
     val name: TextFieldValue by screenViewModel.name.collectAsStateWithLifecycle()
 
-    AddOrEditSourceScreenView(
-        data = AddOrEditSourceScreenViewData(
-            visibilityData = AddOrEditSourceScreenViewVisibilityData(
+    AddOrEditSourceScreenUI(
+        data = AddOrEditSourceScreenUIData(
+            visibilityData = AddOrEditSourceScreenUIVisibilityData(
                 balanceAmount = false,
                 name = true,
                 sourceTypes = true,
@@ -44,7 +44,7 @@ fun AddSourceScreen(
             ),
             name = name,
         ),
-        events = AddOrEditSourceScreenViewEvents(
+        events = AddOrEditSourceScreenUIEvents(
             clearBalanceAmountValue = {},
             clearName = screenViewModel::clearName,
             isValidSourceData = screenViewModel::isValidSourceData,
@@ -58,6 +58,6 @@ fun AddSourceScreen(
             updateName = screenViewModel::updateName,
             updateSelectedSourceTypeIndex = screenViewModel::updateSelectedSourceTypeIndex,
         ),
-        state = rememberCommonScreenViewState(),
+        state = rememberCommonScreenUIState(),
     )
 }

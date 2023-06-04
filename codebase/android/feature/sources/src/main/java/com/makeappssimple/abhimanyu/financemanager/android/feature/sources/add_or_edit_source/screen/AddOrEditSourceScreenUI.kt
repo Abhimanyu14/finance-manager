@@ -33,7 +33,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.SourceType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.AmountCommaVisualTransformation
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
@@ -48,22 +48,22 @@ private enum class AddOrEditSourceBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-data class AddOrEditSourceScreenViewVisibilityData(
+data class AddOrEditSourceScreenUIVisibilityData(
     val balanceAmount: Boolean,
     val name: Boolean,
     val sourceTypes: Boolean,
 )
 
 @Immutable
-data class AddOrEditSourceScreenViewErrorData(
+data class AddOrEditSourceScreenUIErrorData(
     val balanceAmount: String? = null,
     val name: String? = null,
 )
 
 @Immutable
-internal data class AddOrEditSourceScreenViewData(
-    val visibilityData: AddOrEditSourceScreenViewVisibilityData,
-    val errorData: AddOrEditSourceScreenViewErrorData,
+internal data class AddOrEditSourceScreenUIData(
+    val visibilityData: AddOrEditSourceScreenUIVisibilityData,
+    val errorData: AddOrEditSourceScreenUIErrorData,
     @StringRes val appBarTitleTextStringResourceId: Int,
     @StringRes val ctaButtonLabelTextStringResourceId: Int,
     val selectedSourceTypeIndex: Int,
@@ -73,7 +73,7 @@ internal data class AddOrEditSourceScreenViewData(
 )
 
 @Immutable
-internal data class AddOrEditSourceScreenViewEvents(
+internal data class AddOrEditSourceScreenUIEvents(
     val clearBalanceAmountValue: () -> Unit,
     val clearName: () -> Unit,
     val isValidSourceData: () -> Boolean,
@@ -85,10 +85,10 @@ internal data class AddOrEditSourceScreenViewEvents(
 )
 
 @Composable
-internal fun AddOrEditSourceScreenView(
-    data: AddOrEditSourceScreenViewData,
-    events: AddOrEditSourceScreenViewEvents,
-    state: CommonScreenViewState,
+internal fun AddOrEditSourceScreenUI(
+    data: AddOrEditSourceScreenUIData,
+    events: AddOrEditSourceScreenUIEvents,
+    state: CommonScreenUIState,
 ) {
     var addOrEditSourceBottomSheetType by remember {
         mutableStateOf(

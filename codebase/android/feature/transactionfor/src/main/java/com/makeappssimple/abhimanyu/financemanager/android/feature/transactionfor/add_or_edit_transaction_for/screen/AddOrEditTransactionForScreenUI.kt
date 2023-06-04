@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenViewState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
@@ -40,14 +40,14 @@ private enum class AddOrEditTransactionForBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class AddOrEditTransactionForScreenViewData(
+internal data class AddOrEditTransactionForScreenUIData(
     @StringRes val appBarTitleTextStringResourceId: Int,
     @StringRes val ctaButtonLabelTextStringResourceId: Int,
     val title: TextFieldValue,
 )
 
 @Immutable
-internal data class AddOrEditTransactionForScreenViewEvents(
+internal data class AddOrEditTransactionForScreenUIEvents(
     val clearTitle: () -> Unit,
     val isValidTitle: () -> Boolean,
     val navigateUp: () -> Unit,
@@ -56,10 +56,10 @@ internal data class AddOrEditTransactionForScreenViewEvents(
 )
 
 @Composable
-internal fun AddOrEditTransactionForScreenView(
-    data: AddOrEditTransactionForScreenViewData,
-    events: AddOrEditTransactionForScreenViewEvents,
-    state: CommonScreenViewState,
+internal fun AddOrEditTransactionForScreenUI(
+    data: AddOrEditTransactionForScreenUIData,
+    events: AddOrEditTransactionForScreenUIEvents,
+    state: CommonScreenUIState,
 ) {
     var addOrEditTransactionForBottomSheetType by remember {
         mutableStateOf(
