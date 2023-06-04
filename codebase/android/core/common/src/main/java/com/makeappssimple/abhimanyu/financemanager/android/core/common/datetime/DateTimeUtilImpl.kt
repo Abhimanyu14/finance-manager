@@ -211,6 +211,19 @@ class DateTimeUtilImpl @Inject constructor() : DateTimeUtil {
             )
     }
 
+    override fun getStartOfMonthLocalDate(
+        timestamp: Long,
+        zoneId: ZoneId,
+    ): LocalDate {
+        return Instant
+            .ofEpochMilli(timestamp)
+            .toZonedDateTime(
+                zoneId = zoneId,
+            )
+            .toLocalDate()
+            .withDayOfMonth(1)
+    }
+
     override fun getEndOfMonthTimestamp(
         timestamp: Long,
         zoneId: ZoneId,
@@ -247,6 +260,20 @@ class DateTimeUtilImpl @Inject constructor() : DateTimeUtil {
             .toEpochMilli(
                 zoneId = zoneId,
             )
+    }
+
+    override fun getStartOfYearLocalDate(
+        timestamp: Long,
+        zoneId: ZoneId,
+    ): LocalDate {
+        return Instant
+            .ofEpochMilli(timestamp)
+            .toZonedDateTime(
+                zoneId = zoneId,
+            )
+            .toLocalDate()
+            .withMonth(1)
+            .withDayOfMonth(1)
     }
 
     override fun getEndOfYearTimestamp(

@@ -31,7 +31,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.act
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButtonEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.bottomsheet.AnalysisFilterBottomSheetDateFilter
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.bottomsheet.AnalysisFilterBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItem
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItemEvents
@@ -49,8 +49,10 @@ internal data class AnalysisScreenViewData(
     val selectedTransactionTypeIndex: Int?,
     val transactionDataMappedByCategory: List<AnalysisListItemData>,
     val transactionTypesChipUIData: List<ChipUIData>,
-    val defaultMinDate: LocalDate,
-    val defaultMaxDate: LocalDate,
+    val defaultMaxLocalDate: LocalDate,
+    val defaultMinLocalDate: LocalDate,
+    val startOfMonthLocalDate: LocalDate,
+    val startOfYearLocalDate: LocalDate,
     val currentTimeMillis: Long,
 )
 
@@ -98,18 +100,20 @@ internal fun AnalysisScreenView(
         sheetContent = {
             when (analysisBottomSheetType) {
                 AnalysisBottomSheetType.FILTERS -> {
-                    AnalysisFilterBottomSheetDateFilter(
+                    AnalysisFilterBottomSheet(
                         context = state.context,
                         selectedFilter = data.selectedFilter,
                         headingTextStringResourceId = R.string.bottom_sheet_analysis_filter_transaction_date,
                         currentTimeMillis = data.currentTimeMillis,
-                        minDate = data.defaultMinDate,
-                        maxDate = data.defaultMaxDate,
+                        maxDate = data.defaultMaxLocalDate,
+                        minDate = data.defaultMinLocalDate,
+                        startOfMonthDate = data.startOfMonthLocalDate,
+                        startOfYearDate = data.startOfYearLocalDate,
+                        onNegativeButtonClick = {},
                         onPositiveButtonClick = {
                             events.updateSelectedFilter(it)
                             resetBottomSheetType()
                         },
-                        onNegativeButtonClick = {},
                     )
                 }
 
@@ -195,5 +199,3 @@ internal fun AnalysisScreenView(
         }
     }
 }
-
-

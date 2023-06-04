@@ -13,6 +13,8 @@ interface AnalysisScreenViewModel : ScreenViewModel {
     val navigationManager: NavigationManager
     val transactionTypesChipUIData: List<ChipUIData>
     val currentLocalDate: LocalDate
+    val startOfMonthLocalDate: LocalDate
+    val startOfYearLocalDate: LocalDate
     val currentTimeMillis: Long
     val selectedFilter: StateFlow<Filter>
     val transactionDataMappedByCategory: StateFlow<List<AnalysisListItemData>>

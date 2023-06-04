@@ -102,7 +102,7 @@ fun Instant.toZonedDateTime(
 /**
  * [Instant] to [Instant]
  */
-fun Instant.atStartOfDay(
+internal fun Instant.atStartOfDay(
     zoneId: ZoneId = getSystemDefaultZoneId(),
 ): Instant {
     return this

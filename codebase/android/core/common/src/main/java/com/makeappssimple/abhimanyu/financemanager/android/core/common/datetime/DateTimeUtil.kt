@@ -97,6 +97,11 @@ interface DateTimeUtil {
         zoneId: ZoneId = getSystemDefaultZoneId(),
     ): Long
 
+    fun getStartOfMonthLocalDate(
+        timestamp: Long = getCurrentTimeMillis(),
+        zoneId: ZoneId = getSystemDefaultZoneId(),
+    ): LocalDate
+
     fun getEndOfMonthTimestamp(
         timestamp: Long = getCurrentTimeMillis(),
         zoneId: ZoneId = getSystemDefaultZoneId(),
@@ -106,6 +111,11 @@ interface DateTimeUtil {
         timestamp: Long = getCurrentTimeMillis(),
         zoneId: ZoneId = getSystemDefaultZoneId(),
     ): Long
+
+    fun getStartOfYearLocalDate(
+        timestamp: Long = getCurrentTimeMillis(),
+        zoneId: ZoneId = getSystemDefaultZoneId(),
+    ): LocalDate
 
     fun getEndOfYearTimestamp(
         timestamp: Long = getCurrentTimeMillis(),

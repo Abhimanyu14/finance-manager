@@ -54,6 +54,10 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
 
     override val currentLocalDate: LocalDate
         get() = dateTimeUtil.getCurrentLocalDate()
+    override val startOfMonthLocalDate: LocalDate
+        get() = dateTimeUtil.getStartOfMonthLocalDate()
+    override val startOfYearLocalDate: LocalDate
+        get() = dateTimeUtil.getStartOfYearLocalDate()
     override val currentTimeMillis: Long
         get() = dateTimeUtil.getCurrentTimeMillis()
 

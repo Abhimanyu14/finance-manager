@@ -31,8 +31,10 @@ fun AnalysisScreen(
             selectedTransactionTypeIndex = selectedTransactionTypeIndex,
             transactionDataMappedByCategory = transactionDataMappedByCategory,
             transactionTypesChipUIData = screenViewModel.transactionTypesChipUIData,
-            defaultMinDate = oldestTransactionLocalDate ?: LocalDate.MIN,
-            defaultMaxDate = screenViewModel.currentLocalDate,
+            defaultMaxLocalDate = screenViewModel.currentLocalDate,
+            defaultMinLocalDate = oldestTransactionLocalDate ?: LocalDate.MIN,
+            startOfMonthLocalDate = screenViewModel.startOfMonthLocalDate,
+            startOfYearLocalDate = screenViewModel.startOfYearLocalDate,
             currentTimeMillis = screenViewModel.currentTimeMillis,
         ),
         events = AnalysisScreenViewEvents(
