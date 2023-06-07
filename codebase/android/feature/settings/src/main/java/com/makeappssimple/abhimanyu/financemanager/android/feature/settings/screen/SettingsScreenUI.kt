@@ -43,9 +43,9 @@ private enum class SettingsBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class SettingsScreenUIData(
-    val isLoading: Boolean,
-    val appVersion: String?,
+data class SettingsScreenUIData(
+    val isLoading: Boolean = false,
+    val appVersion: String? = null,
 )
 
 @Immutable

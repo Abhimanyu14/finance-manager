@@ -9,15 +9,15 @@ import java.time.LocalTime
 
 @Immutable
 data class AddOrEditTransactionScreenUiState(
-    val selectedTransactionTypeIndex: Int?,
-    val amount: TextFieldValue,
-    val title: TextFieldValue,
-    val description: TextFieldValue,
-    val category: Category?,
-    val selectedTransactionForIndex: Int,
-    val sourceFrom: Source?,
-    val sourceTo: Source?,
-    val transactionDate: LocalDate,
-    val transactionTime: LocalTime,
+    val selectedTransactionTypeIndex: Int? = null,
+    val amount: TextFieldValue = TextFieldValue(),
+    val title: TextFieldValue = TextFieldValue(),
+    val description: TextFieldValue = TextFieldValue(),
+    val category: Category? = null,
+    val selectedTransactionForIndex: Int = 0,
+    val sourceFrom: Source? = null,
+    val sourceTo: Source? = null,
+    val transactionDate: LocalDate = LocalDate.MIN,
+    val transactionTime: LocalTime = LocalTime.MIN,
     val amountErrorText: String? = null,
 )

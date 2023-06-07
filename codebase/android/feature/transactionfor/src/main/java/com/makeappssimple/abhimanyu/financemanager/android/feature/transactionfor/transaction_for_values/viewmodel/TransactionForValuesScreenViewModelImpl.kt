@@ -4,16 +4,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfTransactionForIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.DeleteTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.screen.TransactionForValuesScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
@@ -26,11 +29,11 @@ internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
     private val deleteTransactionForUseCase: DeleteTransactionForUseCase,
     private val dispatcherProvider: DispatcherProvider,
 ) : TransactionForValuesScreenViewModel, ViewModel() {
-    override val transactionForValues: StateFlow<List<TransactionFor>> =
+    private val transactionForValues: StateFlow<List<TransactionFor>> =
         getAllTransactionForValuesFlowUseCase().defaultListStateIn(
             scope = viewModelScope,
         )
-    override val transactionForValuesIsUsedInTransactions: Flow<List<Boolean>> =
+    private val transactionForValuesIsUsedInTransactions: Flow<List<Boolean>> =
         transactionForValues
             .map {
                 it.map { transactionFor ->
@@ -39,6 +42,21 @@ internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
                     )
                 }
             }
+
+    override val screenUIData: StateFlow<TransactionForValuesScreenUIData?> = combine(
+        transactionForValuesIsUsedInTransactions,
+        transactionForValues,
+    ) {
+            transactionForValuesIsUsedInTransactions,
+            transactionForValues,
+        ->
+        TransactionForValuesScreenUIData(
+            transactionForValuesIsUsedInTransactions = transactionForValuesIsUsedInTransactions,
+            transactionForValues = transactionForValues,
+        )
+    }.defaultObjectStateIn(
+        scope = viewModelScope,
+    )
 
     override fun deleteTransactionFor(
         id: Int,

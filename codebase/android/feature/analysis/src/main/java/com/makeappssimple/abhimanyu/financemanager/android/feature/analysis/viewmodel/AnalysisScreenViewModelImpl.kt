@@ -19,6 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNav
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen.AnalysisScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -39,39 +40,23 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
 ) : AnalysisScreenViewModel, ViewModel() {
     private var allTransactionData: Flow<List<TransactionData>> = getAllTransactionDataFlowUseCase()
-
     private val validTransactionTypes = listOf(
         TransactionType.EXPENSE,
         TransactionType.INCOME,
         TransactionType.INVESTMENT,
     )
-
-    override val transactionTypesChipUIData: List<ChipUIData> = validTransactionTypes.map {
+    private val transactionTypesChipUIData: List<ChipUIData> = validTransactionTypes.map {
         ChipUIData(
             text = it.title,
         )
     }
-
-    override val currentLocalDate: LocalDate
-        get() = dateTimeUtil.getCurrentLocalDate()
-    override val startOfMonthLocalDate: LocalDate
-        get() = dateTimeUtil.getStartOfMonthLocalDate()
-    override val startOfYearLocalDate: LocalDate
-        get() = dateTimeUtil.getStartOfYearLocalDate()
-    override val currentTimeMillis: Long
-        get() = dateTimeUtil.getCurrentTimeMillis()
-
-    private val _selectedFilter: MutableStateFlow<Filter> = MutableStateFlow(
+    private val selectedFilter: MutableStateFlow<Filter> = MutableStateFlow(
         value = Filter(),
     )
-    override val selectedFilter: StateFlow<Filter> = _selectedFilter
-
-    private val _selectedTransactionTypeIndex: MutableStateFlow<Int> = MutableStateFlow(
+    private val selectedTransactionTypeIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = 0,
     )
-    override val selectedTransactionTypeIndex: StateFlow<Int> = _selectedTransactionTypeIndex
-
-    override val oldestTransactionLocalDate: StateFlow<LocalDate?> = allTransactionData.map {
+    private val oldestTransactionLocalDate: StateFlow<LocalDate?> = allTransactionData.map {
         dateTimeUtil.getLocalDate(
             timestamp = it.minOfOrNull { transactionData ->
                 transactionData.transaction.transactionTimestamp
@@ -81,7 +66,7 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
         scope = viewModelScope,
     )
 
-    override val transactionDataMappedByCategory: StateFlow<List<AnalysisListItemData>> = combine(
+    private val transactionDataMappedByCategory: StateFlow<List<AnalysisListItemData>> = combine(
         allTransactionData,
         selectedTransactionTypeIndex,
         selectedFilter,
@@ -92,6 +77,32 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
             allTransactionDataValue = allTransactionDataValue
         )
     }.defaultListStateIn(
+        scope = viewModelScope,
+    )
+
+    override val screenUIData: StateFlow<AnalysisScreenUIData?> = combine(
+        selectedFilter,
+        selectedTransactionTypeIndex,
+        transactionDataMappedByCategory,
+        oldestTransactionLocalDate,
+    ) {
+            selectedFilter,
+            selectedTransactionTypeIndex,
+            transactionDataMappedByCategory,
+            oldestTransactionLocalDate,
+        ->
+        AnalysisScreenUIData(
+            selectedFilter = selectedFilter,
+            selectedTransactionTypeIndex = selectedTransactionTypeIndex,
+            transactionDataMappedByCategory = transactionDataMappedByCategory,
+            transactionTypesChipUIData = transactionTypesChipUIData,
+            defaultMaxLocalDate = dateTimeUtil.getCurrentLocalDate(),
+            defaultMinLocalDate = oldestTransactionLocalDate ?: LocalDate.MIN,
+            startOfMonthLocalDate = dateTimeUtil.getStartOfMonthLocalDate(),
+            startOfYearLocalDate = dateTimeUtil.getStartOfYearLocalDate(),
+            currentTimeMillis = dateTimeUtil.getCurrentTimeMillis(),
+        )
+    }.defaultObjectStateIn(
         scope = viewModelScope,
     )
 
@@ -116,7 +127,7 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
     override fun updateSelectedFilter(
         updatedSelectedFilter: Filter,
     ) {
-        _selectedFilter.update {
+        selectedFilter.update {
             updatedSelectedFilter
         }
     }
@@ -124,7 +135,7 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
     override fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
     ) {
-        _selectedTransactionTypeIndex.update {
+        selectedTransactionTypeIndex.update {
             updatedSelectedTransactionTypeIndex
         }
     }

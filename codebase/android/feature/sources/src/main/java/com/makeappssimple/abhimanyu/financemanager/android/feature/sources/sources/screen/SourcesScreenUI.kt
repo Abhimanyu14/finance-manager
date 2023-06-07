@@ -37,8 +37,8 @@ private enum class SourcesBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class SourcesScreenUIData(
-    val sourcesListItemDataList: List<SourcesListItemData>,
+data class SourcesScreenUIData(
+    val sourcesListItemDataList: List<SourcesListItemData> = emptyList(),
 )
 
 @Immutable

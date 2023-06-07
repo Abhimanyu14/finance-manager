@@ -4,15 +4,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid_item.CategoriesGridItemData
-import kotlinx.coroutines.flow.Flow
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.screen.CategoriesScreenUIData
 import kotlinx.coroutines.flow.StateFlow
 
 interface CategoriesScreenViewModel : ScreenViewModel {
     val logger: Logger
     val navigationManager: NavigationManager
-    val selectedTabIndex: StateFlow<Int>
-    val categoriesGridItemDataMap: Flow<Map<TransactionType, List<CategoriesGridItemData>>>
+    val screenUIData: StateFlow<CategoriesScreenUIData?>
 
     fun deleteCategory(
         id: Int,

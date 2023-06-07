@@ -3,13 +3,13 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sour
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.SourcesListItemData
-import kotlinx.coroutines.flow.Flow
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.screen.SourcesScreenUIData
+import kotlinx.coroutines.flow.StateFlow
 
 interface SourcesScreenViewModel : ScreenViewModel {
     val logger: Logger
     val navigationManager: NavigationManager
-    val sourcesListItemDataList: Flow<List<SourcesListItemData>>
+    val screenUIData: StateFlow<SourcesScreenUIData?>
 
     fun deleteSource(
         id: Int,

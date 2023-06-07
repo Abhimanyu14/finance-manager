@@ -6,7 +6,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.SourcesListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.viewmodel.SourcesScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.viewmodel.SourcesScreenViewModelImpl
 
@@ -17,14 +16,10 @@ fun SourcesScreen(
     screenViewModel.logger.logError(
         message = "Inside SourcesScreen",
     )
-    val sourcesListItemDataList: List<SourcesListItemData> by screenViewModel.sourcesListItemDataList.collectAsStateWithLifecycle(
-        initialValue = emptyList(),
-    )
+    val screenUIData: SourcesScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
 
     SourcesScreenUI(
-        data = SourcesScreenUIData(
-            sourcesListItemDataList = sourcesListItemDataList,
-        ),
+        data = screenUIData ?: SourcesScreenUIData(),
         events = SourcesScreenUIEvents(
             deleteSource = { sourceId ->
                 screenViewModel.deleteSource(

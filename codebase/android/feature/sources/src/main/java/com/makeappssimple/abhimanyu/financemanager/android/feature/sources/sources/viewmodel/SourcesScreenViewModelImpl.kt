@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.DeleteSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesFlowUseCase
@@ -16,6 +16,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultSource
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.SourcesListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.screen.SourcesScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -38,11 +39,15 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
         it?.source
     }
     private val allSourcesFlow: Flow<List<Source>> = getAllSourcesFlowUseCase()
-    override val sourcesListItemDataList: StateFlow<List<SourcesListItemData>> = combine(
+
+    override val screenUIData: StateFlow<SourcesScreenUIData?> = combine(
         flow = defaultSourceId,
         flow2 = allSourcesFlow,
-    ) { defaultSourceId, allSourcesFlow ->
-        allSourcesFlow
+    ) {
+            defaultSourceId,
+            allSourcesFlow,
+        ->
+        val sourcesListItemDataList = allSourcesFlow
             .sortedWith(
                 comparator = compareBy<Source> { source ->
                     source.type.sortOrder
@@ -72,7 +77,10 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
                     isExpanded = false,
                 )
             }
-    }.defaultListStateIn(
+        SourcesScreenUIData(
+            sourcesListItemDataList = sourcesListItemDataList,
+        )
+    }.defaultObjectStateIn(
         scope = viewModelScope,
     )
 

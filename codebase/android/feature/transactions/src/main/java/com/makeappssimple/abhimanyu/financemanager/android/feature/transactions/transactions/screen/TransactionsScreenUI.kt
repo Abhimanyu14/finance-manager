@@ -63,17 +63,17 @@ private enum class TransactionsBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class TransactionsScreenUIData(
-    val isLoading: Boolean,
-    val selectedFilter: Filter,
-    val sortOptions: List<SortOption>,
-    val transactionTypes: List<TransactionType>,
-    val oldestTransactionLocalDate: LocalDate,
-    val currentLocalDate: LocalDate,
-    val currentTimeMillis: Long,
-    val transactionDetailsListItemViewData: Map<String, List<TransactionListItemData>>,
-    val searchText: String,
-    val selectedSortOption: SortOption,
+ data class TransactionsScreenUIData(
+    val isLoading: Boolean = false,
+    val selectedFilter: Filter = Filter(),
+    val sortOptions: List<SortOption> = emptyList(),
+    val transactionTypes: List<TransactionType> = emptyList(),
+    val oldestTransactionLocalDate: LocalDate = LocalDate.MIN,
+    val currentLocalDate: LocalDate = LocalDate.MIN,
+    val currentTimeMillis: Long = 0L,
+    val transactionDetailsListItemViewData: Map<String, List<TransactionListItemData>> = emptyMap(),
+    val searchText: String = "",
+    val selectedSortOption: SortOption = SortOption.LATEST_FIRST,
 )
 
 @Immutable

@@ -7,7 +7,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.viewmodel.ViewTransactionScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.viewmodel.ViewTransactionScreenViewModelImpl
 
@@ -18,15 +17,8 @@ fun ViewTransactionScreen(
     screenViewModel.logger.logError(
         message = "Inside ViewTransactionScreen",
     )
-    val originalTransactionListItemData: TransactionListItemData? by screenViewModel.originalTransactionListItemData.collectAsStateWithLifecycle(
-        initialValue = null,
-    )
-    val refundTransactionListItemData: List<TransactionListItemData>? by screenViewModel.refundTransactionListItemData.collectAsStateWithLifecycle(
-        initialValue = null,
-    )
-    val transactionListItemData: TransactionListItemData? by screenViewModel.transactionListItemData.collectAsStateWithLifecycle(
-        initialValue = null,
-    )
+
+    val screenUIData: ViewTransactionScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
 
     LaunchedEffect(
         key1 = Unit,
@@ -35,11 +27,7 @@ fun ViewTransactionScreen(
     }
 
     ViewTransactionScreenUI(
-        data = ViewTransactionScreenUIData(
-            originalTransactionListItemData = originalTransactionListItemData,
-            refundTransactionListItemData = refundTransactionListItemData,
-            transactionListItemData = transactionListItemData,
-        ),
+        data = screenUIData ?: ViewTransactionScreenUIData(),
         events = ViewTransactionScreenUIEvents(
             deleteTransaction = { transactionId ->
                 screenViewModel.deleteTransaction(

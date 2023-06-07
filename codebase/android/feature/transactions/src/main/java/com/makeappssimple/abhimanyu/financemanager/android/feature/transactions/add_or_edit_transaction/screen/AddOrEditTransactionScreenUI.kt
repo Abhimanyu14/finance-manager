@@ -66,19 +66,19 @@ private enum class AddOrEditTransactionBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class AddOrEditTransactionScreenUIData(
-    val uiState: AddOrEditTransactionScreenUiState,
-    val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState,
-    val isCtaButtonEnabled: Boolean,
-    @StringRes val appBarTitleTextStringResourceId: Int,
-    @StringRes val ctaButtonLabelTextStringResourceId: Int,
-    val filteredCategories: List<Category>,
-    val sources: List<Source>,
-    val titleSuggestions: List<String>,
-    val transactionTypesForNewTransaction: List<TransactionType>,
-    val transactionForValues: List<TransactionFor>,
-    val currentTimeMillis: Long,
-    val selectedTransactionType: TransactionType?,
+data class AddOrEditTransactionScreenUIData(
+    val uiState: AddOrEditTransactionScreenUiState = AddOrEditTransactionScreenUiState(),
+    val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState = AddOrEditTransactionScreenUiVisibilityState.Expense,
+    val isCtaButtonEnabled: Boolean = false,
+    @StringRes val appBarTitleTextStringResourceId: Int = 0,
+    @StringRes val ctaButtonLabelTextStringResourceId: Int = 0,
+    val filteredCategories: List<Category> = emptyList(),
+    val sources: List<Source> = emptyList(),
+    val titleSuggestions: List<String> = emptyList(),
+    val transactionTypesForNewTransaction: List<TransactionType> = emptyList(),
+    val transactionForValues: List<TransactionFor> = emptyList(),
+    val currentTimeMillis: Long = 0L,
+    val selectedTransactionType: TransactionType? = null,
 )
 
 @Immutable

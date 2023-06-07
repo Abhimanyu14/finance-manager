@@ -11,6 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.InsertSourcesUseCase
@@ -25,13 +26,16 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultSource
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUIErrorData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUIVisibilityData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.navigation.AddOrEditSourceScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlin.math.abs
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -49,52 +53,77 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     private val insertTransactionsUseCase: InsertTransactionsUseCase,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
 ) : AddOrEditSourceScreenViewModel, ViewModel() {
-    private val addOrEditSourceScreenArgs: AddOrEditSourceScreenArgs =
-        AddOrEditSourceScreenArgs(
-            savedStateHandle = savedStateHandle,
-            stringDecoder = stringDecoder,
-        )
+    private val addOrEditSourceScreenArgs: AddOrEditSourceScreenArgs = AddOrEditSourceScreenArgs(
+        savedStateHandle = savedStateHandle,
+        stringDecoder = stringDecoder,
+    )
 
     private lateinit var sources: List<Source>
-    private val _originalSource: MutableStateFlow<Source?> = MutableStateFlow(
+    private val originalSource: MutableStateFlow<Source?> = MutableStateFlow(
         value = null,
     )
-    override val originalSource: StateFlow<Source?> = _originalSource
-
-    override val sourceTypes: List<SourceType> = SourceType.values()
-        .filter {
-            it != SourceType.CASH
-        }
-
-    private val _errorData: MutableStateFlow<AddOrEditSourceScreenUIErrorData> = MutableStateFlow(
+    private val sourceTypes: List<SourceType> = SourceType.values().filter {
+        it != SourceType.CASH
+    }
+    private val errorData: MutableStateFlow<AddOrEditSourceScreenUIErrorData> = MutableStateFlow(
         value = AddOrEditSourceScreenUIErrorData(),
     )
-    override val errorData: StateFlow<AddOrEditSourceScreenUIErrorData> = _errorData
-
-    private val _selectedSourceTypeIndex: MutableStateFlow<Int> = MutableStateFlow(
+    private val selectedSourceTypeIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = sourceTypes.indexOf(
             element = SourceType.BANK,
         ),
     )
-    override val selectedSourceTypeIndex: StateFlow<Int> = _selectedSourceTypeIndex
-
-    private val _name: MutableStateFlow<TextFieldValue> = MutableStateFlow(
+    private val name: MutableStateFlow<TextFieldValue> = MutableStateFlow(
         value = TextFieldValue(
             text = "",
         ),
     )
-    override val name: StateFlow<TextFieldValue> = _name
-
-    private val _balanceAmountValue: MutableStateFlow<TextFieldValue> = MutableStateFlow(
+    private val balanceAmountValue: MutableStateFlow<TextFieldValue> = MutableStateFlow(
         value = TextFieldValue(
             text = "",
         ),
     )
-    override val balanceAmountValue: StateFlow<TextFieldValue> = _balanceAmountValue
+
+    override val screenUIData: StateFlow<AddOrEditSourceScreenUIData?> = combine(
+        errorData,
+        selectedSourceTypeIndex,
+        balanceAmountValue,
+        name,
+        originalSource,
+    ) {
+            errorData,
+            selectedSourceTypeIndex,
+            balanceAmountValue,
+            name,
+            originalSource,
+        ->
+        AddOrEditSourceScreenUIData(
+            visibilityData = AddOrEditSourceScreenUIVisibilityData(
+                balanceAmount = false,
+                name = originalSource?.type != SourceType.CASH,
+                sourceTypes = originalSource?.type != SourceType.CASH,
+            ),
+            errorData = errorData,
+            selectedSourceTypeIndex = selectedSourceTypeIndex,
+            sourceTypes = sourceTypes,
+            balanceAmountValue = balanceAmountValue,
+            name = name,
+        )
+    }.defaultObjectStateIn(
+        scope = viewModelScope,
+    )
 
     init {
-        getAllSources()
-        getOriginalSource()
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        viewModelScope.launch(
+            context = dispatcherProvider.io,
+        ) {
+            getAllSources()
+            getOriginalSource()
+        }
     }
 
     override fun updateSource() {
@@ -188,8 +217,8 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
                 source = name.trim(),
             )
         ) {
-            _errorData.update {
-                _errorData.value.copy(
+            errorData.update {
+                errorData.value.copy(
                     name = "Source already exists" // TODO(Abhi): Move to string resources
                 )
             }
@@ -207,11 +236,11 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
         }
 
         val result = name.trim() == originalSource.value?.name?.trim() || doesNotExist
-        _errorData.update {
+        errorData.update {
             if (result) {
                 AddOrEditSourceScreenUIErrorData()
             } else {
-                _errorData.value.copy(
+                errorData.value.copy(
                     name = "Source already exists" // TODO(Abhi): Move to string resources
                 )
             }
@@ -229,7 +258,7 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     override fun updateName(
         updatedName: TextFieldValue,
     ) {
-        _name.update {
+        name.update {
             updatedName
         }
     }
@@ -245,7 +274,7 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     override fun updateBalanceAmountValue(
         updatedBalanceAmountValue: TextFieldValue,
     ) {
-        _balanceAmountValue.update {
+        balanceAmountValue.update {
             updatedBalanceAmountValue.copy(
                 text = updatedBalanceAmountValue.text.filterDigits(),
             )
@@ -255,7 +284,7 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     override fun updateSelectedSourceTypeIndex(
         updatedIndex: Int,
     ) {
-        _selectedSourceTypeIndex.update {
+        selectedSourceTypeIndex.update {
             updatedIndex
         }
     }
@@ -273,7 +302,7 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
             viewModelScope.launch(
                 context = dispatcherProvider.io,
             ) {
-                _originalSource.update {
+                originalSource.update {
                     getSourceUseCase(
                         id = id,
                     )
@@ -296,7 +325,7 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
                 text = source.name,
             )
         )
-        _balanceAmountValue.update {
+        balanceAmountValue.update {
             TextFieldValue(
                 text = source.balanceAmount.value.toString(),
                 selection = TextRange(source.balanceAmount.value.toString().length),

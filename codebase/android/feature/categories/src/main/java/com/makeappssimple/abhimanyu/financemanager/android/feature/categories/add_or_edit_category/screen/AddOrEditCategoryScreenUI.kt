@@ -50,15 +50,15 @@ private enum class AddOrEditCategoryBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class AddOrEditCategoryScreenUIData(
-    @StringRes val appBarTitleTextStringResourceId: Int,
-    @StringRes val ctaButtonLabelTextStringResourceId: Int,
-    val selectedTransactionTypeIndex: Int,
-    val emojiGroups: Map<String, List<Emoji>>,
-    val transactionTypes: List<TransactionType>,
-    val emoji: String,
-    val searchText: String,
-    val title: TextFieldValue,
+data class AddOrEditCategoryScreenUIData(
+    @StringRes val appBarTitleTextStringResourceId: Int = 0,
+    @StringRes val ctaButtonLabelTextStringResourceId: Int = 0,
+    val selectedTransactionTypeIndex: Int = 0,
+    val emojiGroups: Map<String, List<Emoji>> = emptyMap(),
+    val transactionTypes: List<TransactionType> = emptyList(),
+    val emoji: String = "",
+    val searchText: String = "",
+    val title: TextFieldValue = TextFieldValue(),
 )
 
 @Immutable

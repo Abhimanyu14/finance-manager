@@ -38,10 +38,10 @@ private enum class ViewTransactionBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class ViewTransactionScreenUIData(
-    val originalTransactionListItemData: TransactionListItemData?,
-    val refundTransactionListItemData: List<TransactionListItemData>?,
-    val transactionListItemData: TransactionListItemData?,
+data class ViewTransactionScreenUIData(
+    val originalTransactionListItemData: TransactionListItemData? = null,
+    val refundTransactionListItemData: List<TransactionListItemData>? = null,
+    val transactionListItemData: TransactionListItemData? = null,
 )
 
 @Immutable

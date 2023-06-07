@@ -2,23 +2,15 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_
 
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.SourceType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUIErrorData
-import kotlinx.coroutines.flow.Flow
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUIData
 import kotlinx.coroutines.flow.StateFlow
 
 interface AddOrEditSourceScreenViewModel : ScreenViewModel {
     val logger: Logger
     val navigationManager: NavigationManager
-    val originalSource: Flow<Source?>
-    val sourceTypes: List<SourceType>
-    val errorData: StateFlow<AddOrEditSourceScreenUIErrorData>
-    val selectedSourceTypeIndex: StateFlow<Int>
-    val name: StateFlow<TextFieldValue>
-    val balanceAmountValue: StateFlow<TextFieldValue>
+    val screenUIData: StateFlow<AddOrEditSourceScreenUIData?>
 
     fun insertSource()
 

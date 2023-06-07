@@ -3,11 +3,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.e
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
@@ -24,18 +22,15 @@ fun EditCategoryScreen(
     screenViewModel.logger.logError(
         message = "Inside EditCategoryScreen",
     )
-    val selectedTransactionTypeIndex: Int by screenViewModel.selectedTransactionTypeIndex.collectAsStateWithLifecycle()
-    val emojiGroups: Map<String, List<Emoji>> by screenViewModel.emojiGroups.collectAsStateWithLifecycle(
-        initialValue = emptyMap(),
-    )
-    val emoji: String by screenViewModel.emoji.collectAsStateWithLifecycle()
-    val searchText: String by screenViewModel.searchText.collectAsStateWithLifecycle()
-    val title: TextFieldValue by screenViewModel.title.collectAsStateWithLifecycle()
+
+    val screenUIData: AddOrEditCategoryScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
 
     LaunchedEffect(
-        key1 = emojiGroups,
+        key1 = screenUIData?.emojiGroups,
     ) {
-        if (emojiGroups.isNotEmpty() && emoji == EmojiConstants.HOURGLASS_NOT_DONE) {
+        // TODO(Abhi): Fix this bug
+        //  Bug: Editing category with `HOURGLASS_NOT_DONE` overrides the emoji with `GRINNING_FACE_WITH_BIG_EYES`
+        if (screenUIData?.emojiGroups?.isNotEmpty() == true && screenUIData?.emoji == EmojiConstants.HOURGLASS_NOT_DONE) {
             screenViewModel.updateEmoji(
                 updatedEmoji = EmojiConstants.GRINNING_FACE_WITH_BIG_EYES,
             )
@@ -43,15 +38,12 @@ fun EditCategoryScreen(
     }
 
     AddOrEditCategoryScreenUI(
-        data = AddOrEditCategoryScreenUIData(
+        data = screenUIData?.copy(
             appBarTitleTextStringResourceId = R.string.screen_edit_category_appbar_title,
             ctaButtonLabelTextStringResourceId = R.string.screen_edit_category_floating_action_button_content_description,
-            selectedTransactionTypeIndex = selectedTransactionTypeIndex,
-            emojiGroups = emojiGroups,
-            transactionTypes = screenViewModel.transactionTypes,
-            emoji = emoji,
-            searchText = searchText,
-            title = title,
+        ) ?: AddOrEditCategoryScreenUIData(
+            appBarTitleTextStringResourceId = R.string.screen_edit_category_appbar_title,
+            ctaButtonLabelTextStringResourceId = R.string.screen_edit_category_floating_action_button_content_description,
         ),
         events = AddOrEditCategoryScreenUIEvents(
             clearTitle = screenViewModel::clearTitle,

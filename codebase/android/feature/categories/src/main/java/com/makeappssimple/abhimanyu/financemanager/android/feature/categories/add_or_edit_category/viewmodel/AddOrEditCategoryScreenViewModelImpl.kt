@@ -10,6 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.InsertCategoriesUseCase
@@ -24,6 +25,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.navigation.AddOrEditCategoryScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -32,6 +34,7 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
@@ -61,37 +64,33 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         value = null,
     )
 
-    override val transactionTypes: List<TransactionType> = TransactionType.values()
+    private val transactionTypes: List<TransactionType> = TransactionType.values()
         .filter {
             it != TransactionType.TRANSFER && it != TransactionType.ADJUSTMENT && it != TransactionType.REFUND
         }
 
-    private val _title: MutableStateFlow<TextFieldValue> = MutableStateFlow(
+    private val title: MutableStateFlow<TextFieldValue> = MutableStateFlow(
         value = TextFieldValue(
             text = "",
         ),
     )
-    override val title: StateFlow<TextFieldValue> = _title
 
-    private val _selectedTransactionTypeIndex = MutableStateFlow(
+    private val selectedTransactionTypeIndex = MutableStateFlow(
         value = transactionTypes.indexOf(
             element = TransactionType.EXPENSE,
         ),
     )
-    override val selectedTransactionTypeIndex: StateFlow<Int> = _selectedTransactionTypeIndex
 
-    private val _emoji = MutableStateFlow(
+    private val emoji = MutableStateFlow(
         value = EmojiConstants.HOURGLASS_NOT_DONE,
     )
-    override val emoji: StateFlow<String> = _emoji
 
-    private val _searchText = MutableStateFlow(
+    private val searchText = MutableStateFlow(
         value = "",
     )
-    override val searchText: StateFlow<String> = _searchText
 
     private var emojis: List<Emoji> = emptyList()
-    override val emojiGroups: Flow<Map<String, List<Emoji>>> = searchText.map { searchTextValue ->
+    private val emojiGroups: Flow<Map<String, List<Emoji>>> = searchText.map { searchTextValue ->
         emojis.filter { emoji ->
             if (searchTextValue.isBlank()) {
                 true
@@ -107,18 +106,51 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         context = dispatcherProvider.io,
     )
 
+    override val screenUIData: StateFlow<AddOrEditCategoryScreenUIData?> = combine(
+        selectedTransactionTypeIndex,
+        emojiGroups,
+        emoji,
+        searchText,
+        title,
+    ) {
+            selectedTransactionTypeIndex,
+            emojiGroups,
+            emoji,
+            searchText,
+            title,
+        ->
+        AddOrEditCategoryScreenUIData(
+            selectedTransactionTypeIndex = selectedTransactionTypeIndex,
+            emojiGroups = emojiGroups,
+            transactionTypes = transactionTypes,
+            emoji = emoji,
+            searchText = searchText,
+            title = title,
+        )
+    }.defaultObjectStateIn(
+        scope = viewModelScope,
+    )
+
     init {
-        getOriginalCategory()
-        addOrEditCategoryScreenArgs.originalTransactionType?.let { originalTransactionType ->
-            updateSelectedTransactionTypeIndex(
-                updatedIndex = transactionTypes.indexOf(
-                    element = TransactionType.values().find { transactionType ->
-                        transactionType.title == originalTransactionType
-                    },
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        viewModelScope.launch(
+            context = dispatcherProvider.io,
+        ) {
+            getOriginalCategory()
+            addOrEditCategoryScreenArgs.originalTransactionType?.let { originalTransactionType ->
+                updateSelectedTransactionTypeIndex(
+                    updatedIndex = transactionTypes.indexOf(
+                        element = TransactionType.values().find { transactionType ->
+                            transactionType.title == originalTransactionType
+                        },
+                    )
                 )
-            )
+            }
+            fetchData()
         }
-        fetchData()
     }
 
     override fun insertCategory() {
@@ -207,7 +239,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     override fun updateTitle(
         updatedTitle: TextFieldValue,
     ) {
-        _title.update {
+        title.update {
             updatedTitle
         }
     }
@@ -215,19 +247,19 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     override fun updateSelectedTransactionTypeIndex(
         updatedIndex: Int,
     ) {
-        _selectedTransactionTypeIndex.value = updatedIndex
+        selectedTransactionTypeIndex.value = updatedIndex
     }
 
     override fun updateEmoji(
         updatedEmoji: String,
     ) {
-        _emoji.value = updatedEmoji
+        emoji.value = updatedEmoji
     }
 
     override fun updateSearchText(
         updatedSearchText: String,
     ) {
-        _searchText.value = updatedSearchText
+        searchText.value = updatedSearchText
     }
 
     private fun getOriginalCategory() {
@@ -252,7 +284,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
                 element = category.transactionType,
             ),
         )
-        _title.update {
+        title.update {
             it.copy(
                 text = category.title,
                 selection = TextRange(category.title.length),

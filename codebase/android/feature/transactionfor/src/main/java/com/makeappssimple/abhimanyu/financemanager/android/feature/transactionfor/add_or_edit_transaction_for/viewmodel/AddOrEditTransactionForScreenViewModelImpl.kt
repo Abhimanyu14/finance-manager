@@ -9,6 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.InsertTransactionForValuesUseCase
@@ -17,11 +18,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.navigation.AddOrEditTransactionForScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -44,21 +47,35 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
         )
 
     private lateinit var transactionForValues: List<TransactionFor>
-    private val _title: MutableStateFlow<TextFieldValue> = MutableStateFlow(
+    private val title: MutableStateFlow<TextFieldValue> = MutableStateFlow(
         value = TextFieldValue(
             text = "",
         ),
     )
-    override val title: StateFlow<TextFieldValue> = _title
-
-    private val _transactionFor: MutableStateFlow<TransactionFor?> = MutableStateFlow(
+    private val transactionFor: MutableStateFlow<TransactionFor?> = MutableStateFlow(
         value = null,
     )
-    override val transactionFor: StateFlow<TransactionFor?> = _transactionFor
+
+    override val screenUIData: StateFlow<AddOrEditTransactionForScreenUIData?> =
+        title.map { title ->
+            AddOrEditTransactionForScreenUIData(
+                title = title,
+            )
+        }.defaultObjectStateIn(
+            scope = viewModelScope,
+        )
 
     init {
-        getAllTransactionForValues()
-        getOriginalTransactionFor()
+        initViewModel()
+    }
+
+    private fun initViewModel() {
+        viewModelScope.launch(
+            context = dispatcherProvider.io,
+        ) {
+            getAllTransactionForValues()
+            getOriginalTransactionFor()
+        }
     }
 
     override fun updateTransactionFor() {
@@ -119,7 +136,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
     override fun updateTitle(
         updatedTitle: TextFieldValue,
     ) {
-        _title.update {
+        title.update {
             updatedTitle
         }
     }
@@ -137,7 +154,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
             viewModelScope.launch(
                 context = dispatcherProvider.io,
             ) {
-                _transactionFor.update {
+                transactionFor.update {
                     getTransactionForUseCase(
                         id = id,
                     )
@@ -149,7 +166,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
 
     private fun updateInitialTransactionForValue() {
         val transactionFor = transactionFor.value ?: return
-        _title.update {
+        title.update {
             it.copy(
                 text = transactionFor.title,
                 selection = TextRange(transactionFor.title.length),

@@ -8,12 +8,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.Filter
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.SortOption
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.TransactionsScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.TransactionsScreenViewModelImpl
-import java.time.LocalDate
 
 @Composable
 fun TransactionsScreen(
@@ -22,46 +18,26 @@ fun TransactionsScreen(
     screenViewModel.logger.logError(
         message = "Inside TransactionsScreen",
     )
-    val oldestTransactionLocalDate: LocalDate by screenViewModel.oldestTransactionLocalDate.collectAsStateWithLifecycle(
-        initialValue = LocalDate.MIN,
-    )
-    val transactionDetailsListItemViewData: Map<String, List<TransactionListItemData>> by screenViewModel.transactionDetailsListItemViewData.collectAsStateWithLifecycle(
-        initialValue = emptyMap(),
-    )
-    val isLoading: Boolean by screenViewModel.isLoading.collectAsStateWithLifecycle()
+    val screenUIData: TransactionsScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
     val expenseCategories: List<Category>? by screenViewModel.expenseCategories.collectAsStateWithLifecycle()
     val incomeCategories: List<Category>? by screenViewModel.incomeCategories.collectAsStateWithLifecycle()
     val investmentCategories: List<Category>? by screenViewModel.investmentCategories.collectAsStateWithLifecycle()
-    val selectedFilter: Filter by screenViewModel.selectedFilter.collectAsStateWithLifecycle()
-    val selectedSortOption: SortOption by screenViewModel.selectedSortOption.collectAsStateWithLifecycle()
     val sources: List<Source>? by screenViewModel.sources.collectAsStateWithLifecycle()
-    val searchText: String by screenViewModel.searchText.collectAsStateWithLifecycle()
 
     TransactionsScreenUI(
-        data = TransactionsScreenUIData(
-            isLoading = isLoading,
-            selectedFilter = selectedFilter,
-            sortOptions = screenViewModel.sortOptions,
-            transactionTypes = screenViewModel.transactionTypes,
-            oldestTransactionLocalDate = oldestTransactionLocalDate,
-            currentLocalDate = screenViewModel.currentLocalDate,
-            currentTimeMillis = screenViewModel.currentTimeMillis,
-            transactionDetailsListItemViewData = transactionDetailsListItemViewData,
-            searchText = searchText,
-            selectedSortOption = selectedSortOption,
-        ),
+        data = screenUIData ?: TransactionsScreenUIData(),
         events = TransactionsScreenUIEvents(
             getExpenseCategories = {
-                expenseCategories ?: emptyList()
+                expenseCategories.orEmpty()
             },
             getIncomeCategories = {
-                incomeCategories ?: emptyList()
+                incomeCategories.orEmpty()
             },
             getInvestmentCategories = {
-                investmentCategories ?: emptyList()
+                investmentCategories.orEmpty()
             },
             getSources = {
-                sources ?: emptyList()
+                sources.orEmpty()
             },
             navigateToAddTransactionScreen = {
                 screenViewModel.navigationManager.navigate(

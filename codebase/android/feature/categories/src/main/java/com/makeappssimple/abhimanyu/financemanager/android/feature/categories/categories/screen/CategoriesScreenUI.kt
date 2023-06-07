@@ -50,9 +50,9 @@ private sealed class CategoriesBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class CategoriesScreenUIData(
-    val selectedTabIndex: Int,
-    val categoriesGridItemDataMap: Map<TransactionType, List<CategoriesGridItemData>>,
+data class CategoriesScreenUIData(
+    val selectedTabIndex: Int = 0,
+    val categoriesGridItemDataMap: Map<TransactionType, List<CategoriesGridItemData>> = emptyMap(),
 )
 
 @Immutable
@@ -256,7 +256,7 @@ internal fun CategoriesScreenUI(
             ) { page ->
                 val transactionType: TransactionType = transactionTypes[page]
                 val categoriesGridItemDataList: List<CategoriesGridItemData> =
-                    data.categoriesGridItemDataMap[transactionType] ?: emptyList()
+                    data.categoriesGridItemDataMap[transactionType].orEmpty()
 
                 CategoriesGrid(
                     bottomPadding = 80.dp,

@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
@@ -21,13 +20,16 @@ fun EditTransactionForScreen(
     screenViewModel.logger.logError(
         message = "Inside EditTransactionForScreen",
     )
-    val title: TextFieldValue by screenViewModel.title.collectAsStateWithLifecycle()
+
+    val screenUIData: AddOrEditTransactionForScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
 
     AddOrEditTransactionForScreenUI(
-        data = AddOrEditTransactionForScreenUIData(
+        data = screenUIData?.copy(
             appBarTitleTextStringResourceId = R.string.screen_edit_transaction_for_appbar_title,
             ctaButtonLabelTextStringResourceId = R.string.screen_edit_transaction_for_floating_action_button_content_description,
-            title = title,
+        ) ?: AddOrEditTransactionForScreenUIData(
+            appBarTitleTextStringResourceId = R.string.screen_edit_transaction_for_appbar_title,
+            ctaButtonLabelTextStringResourceId = R.string.screen_edit_transaction_for_floating_action_button_content_description,
         ),
         events = AddOrEditTransactionForScreenUIEvents(
             clearTitle = screenViewModel::clearTitle,

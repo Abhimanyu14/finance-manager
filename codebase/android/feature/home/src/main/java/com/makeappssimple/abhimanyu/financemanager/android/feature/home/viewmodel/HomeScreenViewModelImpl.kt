@@ -7,6 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetRecentTransactionDataFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.BackupDataUseCase
@@ -17,9 +18,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNav
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
+import com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen.HomeScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
@@ -33,10 +37,24 @@ internal class HomeScreenViewModelImpl @Inject constructor(
     private val getRecentTransactionDataFlowUseCase: GetRecentTransactionDataFlowUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
 ) : HomeScreenViewModel, ViewModel() {
-    override val homeListItemViewData: Flow<List<TransactionListItemData>> =
+    private val homeListItemViewData: Flow<List<TransactionListItemData>> =
         getHomeListItemViewDataFromData()
+    private val isBackupCardVisible: Flow<Boolean> = getIsBackupCardVisibleFromData()
 
-    override val isBackupCardVisible: Flow<Boolean> = getIsBackupCardVisibleFromData()
+    override val screenUIData: StateFlow<HomeScreenUIData?> = combine(
+        isBackupCardVisible,
+        homeListItemViewData,
+    ) {
+            isBackupCardVisible,
+            homeListItemViewData,
+        ->
+        HomeScreenUIData(
+            isBackupCardVisible = isBackupCardVisible,
+            transactionListItemDataList = homeListItemViewData,
+        )
+    }.defaultObjectStateIn(
+        scope = viewModelScope,
+    )
 
     override fun backupDataToDocument(
         uri: Uri,

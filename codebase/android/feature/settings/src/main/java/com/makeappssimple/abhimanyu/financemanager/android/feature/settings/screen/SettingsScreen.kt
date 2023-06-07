@@ -10,6 +10,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.MimeTypeConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.CreateJsonDocument
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
@@ -49,11 +50,12 @@ fun SettingsScreen(
             }
         }
 
+    val screenUIData: SettingsScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
+
     SettingsScreenUI(
-        data = SettingsScreenUIData(
+        data = screenUIData?.copy(
             isLoading = isLoading,
-            appVersion = screenViewModel.appVersionName,
-        ),
+        ) ?: SettingsScreenUIData(),
         events = SettingsScreenUIEvents(
             backupData = {
                 createDocumentResultLauncher.launch(MimeTypeConstants.JSON)

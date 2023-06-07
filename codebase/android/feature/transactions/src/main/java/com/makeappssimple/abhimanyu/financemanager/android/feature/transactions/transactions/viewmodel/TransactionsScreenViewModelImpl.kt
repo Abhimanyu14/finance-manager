@@ -19,6 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen.TransactionsScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -51,17 +52,17 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     }
 
     override val expenseCategories: StateFlow<List<Category>?> = categoriesMap.map {
-        it[TransactionType.EXPENSE] ?: emptyList()
+        it[TransactionType.EXPENSE].orEmpty()
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )
     override val incomeCategories: StateFlow<List<Category>?> = categoriesMap.map {
-        it[TransactionType.INCOME] ?: emptyList()
+        it[TransactionType.INCOME].orEmpty()
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )
     override val investmentCategories: StateFlow<List<Category>?> = categoriesMap.map {
-        it[TransactionType.INVESTMENT] ?: emptyList()
+        it[TransactionType.INVESTMENT].orEmpty()
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )
@@ -77,44 +78,35 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     )
 
     // region Search
-    private val _searchText = MutableStateFlow(
+    private val searchText = MutableStateFlow(
         value = "",
     )
-    override val searchText: StateFlow<String> = _searchText
     // endregion
 
     // region Filter
-    private val _isLoading = MutableStateFlow(
+    private val isLoading = MutableStateFlow(
         value = false,
     )
-    override val isLoading: StateFlow<Boolean> = _isLoading
-    private val _selectedFilter: MutableStateFlow<Filter> = MutableStateFlow(
+    private val selectedFilter: MutableStateFlow<Filter> = MutableStateFlow(
         value = Filter(),
     )
-    override val selectedFilter: StateFlow<Filter> = _selectedFilter
     // endregion
 
     // region Sort
-    private val _selectedSortOption = MutableStateFlow(
+    private val selectedSortOption = MutableStateFlow(
         value = SortOption.LATEST_FIRST,
     )
-    override val selectedSortOption: StateFlow<SortOption> = _selectedSortOption
     // endregion
 
-    override val transactionTypes: List<TransactionType> = TransactionType.values().toList()
-    override val currentLocalDate: LocalDate
-        get() = dateTimeUtil.getCurrentLocalDate()
-    override val currentTimeMillis: Long
-        get() = dateTimeUtil.getCurrentTimeMillis()
+    private val transactionTypes: List<TransactionType> = TransactionType.values().toList()
 
-    private var _oldestTransactionTimestamp: MutableStateFlow<LocalDate> = MutableStateFlow(
+    private var oldestTransactionLocalDate: MutableStateFlow<LocalDate> = MutableStateFlow(
         value = LocalDate.MIN,
     )
-    override val oldestTransactionLocalDate: StateFlow<LocalDate> = _oldestTransactionTimestamp
 
-    override val sortOptions: List<SortOption> = SortOption.values().toList()
+    private val sortOptions: List<SortOption> = SortOption.values().toList()
 
-    override val transactionDetailsListItemViewData: Flow<Map<String, List<TransactionListItemData>>> =
+    private val transactionDetailsListItemViewData: Flow<Map<String, List<TransactionListItemData>>> =
         combine(
             allTransactionData,
             searchText,
@@ -124,8 +116,8 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             incomeCategories,
             investmentCategories,
             sources,
-        ) { flows: Array<Any?> ->
-            _isLoading.value = true
+        ) { flows ->
+            isLoading.value = true
 
             val allTransactionDataValue: List<TransactionData> =
                 flows[0] as? List<TransactionData> ?: emptyList()
@@ -143,7 +135,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 flows[7] as? List<Source> ?: emptyList()
 
             if (selectedFilterValue.fromDate.isNull()) {
-                _oldestTransactionTimestamp.update {
+                oldestTransactionLocalDate.update {
                     dateTimeUtil.getLocalDate(
                         timestamp = allTransactionDataValue.minOfOrNull { transactionData ->
                             transactionData.transaction.transactionTimestamp
@@ -185,7 +177,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 }
                 .also {
                     if (it.isEmpty()) {
-                        _isLoading.value = false
+                        isLoading.value = false
                     }
                 }
                 .sortedWith(compareBy {
@@ -209,7 +201,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 })
                 .also {
                     if (it.isEmpty()) {
-                        _isLoading.value = false
+                        isLoading.value = false
                     }
                 }
                 .groupBy {
@@ -280,17 +272,42 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                     transactionListItemDataList
                 }
                 .also {
-                    _isLoading.value = false
+                    isLoading.value = false
                 }
         }.flowOn(
             context = dispatcherProvider.io,
         )
 
+    override val screenUIData: StateFlow<TransactionsScreenUIData?> = combine(
+        isLoading,
+        selectedFilter,
+        oldestTransactionLocalDate,
+        transactionDetailsListItemViewData,
+        searchText,
+        selectedSortOption,
+    ) { flows ->
+        TransactionsScreenUIData(
+            isLoading = flows[0] as? Boolean ?: false,
+            selectedFilter = flows[1] as? Filter ?: Filter(),
+            sortOptions = sortOptions,
+            transactionTypes = transactionTypes,
+            oldestTransactionLocalDate = flows[2] as? LocalDate ?: LocalDate.MIN,
+            currentLocalDate = dateTimeUtil.getCurrentLocalDate(),
+            currentTimeMillis = dateTimeUtil.getCurrentTimeMillis(),
+            transactionDetailsListItemViewData = flows[3] as? Map<String, List<TransactionListItemData>>
+                ?: emptyMap(),
+            searchText = flows[4] as? String ?: "",
+            selectedSortOption = flows[5] as? SortOption ?: SortOption.LATEST_FIRST,
+        )
+    }.defaultObjectStateIn(
+        scope = viewModelScope,
+    )
+
     // region Search
     override fun updateSearchText(
         updatedSearchText: String,
     ) {
-        _searchText.value = updatedSearchText
+        searchText.value = updatedSearchText
     }
     // endregion
 
@@ -298,7 +315,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     override fun updateSelectedFilter(
         updatedSelectedFilter: Filter,
     ) {
-        _selectedFilter.update {
+        selectedFilter.update {
             updatedSelectedFilter
         }
     }
@@ -308,7 +325,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     override fun updateSelectedSortOption(
         updatedSelectedSortOption: SortOption,
     ) {
-        _selectedSortOption.value = updatedSelectedSortOption
+        selectedSortOption.value = updatedSelectedSortOption
     }
     // endregion
 

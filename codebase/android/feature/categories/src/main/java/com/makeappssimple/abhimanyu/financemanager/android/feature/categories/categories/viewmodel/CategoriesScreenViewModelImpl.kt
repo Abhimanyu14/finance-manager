@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.DeleteCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
@@ -16,6 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.gri
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.screen.CategoriesScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
@@ -35,10 +37,9 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val myPreferencesRepository: MyPreferencesRepository,
 ) : CategoriesScreenViewModel, ViewModel() {
-    private val _selectedTabIndex: MutableStateFlow<Int> = MutableStateFlow(
+    private val selectedTabIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = 0,
     )
-    override val selectedTabIndex: StateFlow<Int> = _selectedTabIndex
 
     private val defaultDataId: Flow<DefaultDataId?> = myPreferencesRepository.getDefaultDataId()
     private val categoriesTransactionTypeMap: Flow<Map<TransactionType, List<Category>>> =
@@ -48,7 +49,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
                     category.transactionType
                 }
             }
-    override val categoriesGridItemDataMap: Flow<Map<TransactionType, List<CategoriesGridItemData>>> =
+    private val categoriesGridItemDataMap: Flow<Map<TransactionType, List<CategoriesGridItemData>>> =
         combine(
             categoriesTransactionTypeMap,
             defaultDataId,
@@ -76,7 +77,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
                         isDeleteEnabled = isDeleteEnabled,
                         category = category,
                     )
-                } ?: emptyList()
+                }.orEmpty()
             val incomeCategoriesGridItemDataList =
                 categoriesTransactionTypeMap[TransactionType.INCOME]?.map { category ->
                     val isDefault =
@@ -97,7 +98,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
                         isDeleteEnabled = isDeleteEnabled,
                         category = category,
                     )
-                } ?: emptyList()
+                }.orEmpty()
             val investmentCategoriesGridItemDataList =
                 categoriesTransactionTypeMap[TransactionType.INVESTMENT]?.map { category ->
                     val isDefault =
@@ -118,13 +119,28 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
                         isDeleteEnabled = isDeleteEnabled,
                         category = category,
                     )
-                } ?: emptyList()
+                }.orEmpty()
             mapOf(
                 TransactionType.EXPENSE to expenseCategoriesGridItemDataList,
                 TransactionType.INCOME to incomeCategoriesGridItemDataList,
                 TransactionType.INVESTMENT to investmentCategoriesGridItemDataList,
             )
         }
+
+    override val screenUIData: StateFlow<CategoriesScreenUIData?> = combine(
+        selectedTabIndex,
+        categoriesGridItemDataMap,
+    ) {
+            selectedTabIndex,
+            categoriesGridItemDataMap,
+        ->
+        CategoriesScreenUIData(
+            selectedTabIndex = selectedTabIndex,
+            categoriesGridItemDataMap = categoriesGridItemDataMap,
+        )
+    }.defaultObjectStateIn(
+        scope = viewModelScope,
+    )
 
     override fun deleteCategory(
         id: Int,
@@ -176,7 +192,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
     override fun updateSelectedTabIndex(
         updatedSelectedTabIndex: Int,
     ) {
-        _selectedTabIndex.value = updatedSelectedTabIndex
+        selectedTabIndex.value = updatedSelectedTabIndex
     }
 
     private fun getCategoriesGridItemData(

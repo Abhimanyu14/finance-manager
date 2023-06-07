@@ -8,6 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
@@ -18,10 +19,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.navigation.ViewTransactionScreenArgs
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.screen.ViewTransactionScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -39,30 +42,36 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,
     )
-
-    // Original transaction data
-    private var _originalTransactionData: MutableStateFlow<TransactionListItemData?> =
+    private var originalTransactionListItemData: MutableStateFlow<TransactionListItemData?> =
         MutableStateFlow(
             value = null,
         )
-    override val originalTransactionListItemData: StateFlow<TransactionListItemData?> =
-        _originalTransactionData
-
-    // Refund transaction data
-    private var _refundTransactionData: MutableStateFlow<List<TransactionListItemData>> =
+    private var refundTransactionListItemData: MutableStateFlow<List<TransactionListItemData>> =
         MutableStateFlow(
             value = emptyList(),
         )
-    override val refundTransactionListItemData: StateFlow<List<TransactionListItemData>> =
-        _refundTransactionData
-
-    // Transaction data
-    private var _transactionListItemData: MutableStateFlow<TransactionListItemData?> =
+    private var transactionListItemData: MutableStateFlow<TransactionListItemData?> =
         MutableStateFlow(
             value = null,
         )
-    override val transactionListItemData: StateFlow<TransactionListItemData?> =
-        _transactionListItemData
+
+    override val screenUIData: StateFlow<ViewTransactionScreenUIData?> = combine(
+        originalTransactionListItemData,
+        refundTransactionListItemData,
+        transactionListItemData,
+    ) {
+            originalTransactionListItemData,
+            refundTransactionListItemData,
+            transactionListItemData,
+        ->
+        ViewTransactionScreenUIData(
+            originalTransactionListItemData = originalTransactionListItemData,
+            refundTransactionListItemData = refundTransactionListItemData,
+            transactionListItemData = transactionListItemData,
+        )
+    }.defaultObjectStateIn(
+        scope = viewModelScope,
+    )
 
     override fun getTransactionData() {
         viewTransactionScreenArgs.originalTransactionId?.let { id ->
@@ -72,7 +81,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
                 getTransactionDataUseCase(
                     id = id,
                 )?.let { transactionData ->
-                    _transactionListItemData.value = getTransactionListItemData(
+                    transactionListItemData.value = getTransactionListItemData(
                         transactionData = transactionData,
                     )
                     transactionData.transaction.originalTransactionId?.let { transactionId ->
@@ -175,7 +184,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
             getTransactionDataUseCase(
                 id = transactionId,
             )?.let {
-                _originalTransactionData.value = getTransactionListItemData(
+                originalTransactionListItemData.value = getTransactionListItemData(
                     transactionData = it,
                 )
             }
@@ -188,7 +197,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            _refundTransactionData.value = buildList {
+            refundTransactionListItemData.value = buildList {
                 ids.map {
                     getTransactionDataUseCase(
                         id = it,

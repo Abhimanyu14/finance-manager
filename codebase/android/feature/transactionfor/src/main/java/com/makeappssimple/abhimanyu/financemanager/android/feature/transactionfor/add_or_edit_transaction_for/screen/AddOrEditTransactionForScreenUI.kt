@@ -40,10 +40,10 @@ private enum class AddOrEditTransactionForBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class AddOrEditTransactionForScreenUIData(
-    @StringRes val appBarTitleTextStringResourceId: Int,
-    @StringRes val ctaButtonLabelTextStringResourceId: Int,
-    val title: TextFieldValue,
+data class AddOrEditTransactionForScreenUIData(
+    @StringRes val appBarTitleTextStringResourceId: Int = 0,
+    @StringRes val ctaButtonLabelTextStringResourceId: Int = 0,
+    val title: TextFieldValue = TextFieldValue(),
 )
 
 @Immutable

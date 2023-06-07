@@ -41,9 +41,9 @@ private sealed class TransactionForValuesBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class TransactionForValuesScreenUIData(
-    val transactionForValuesIsUsedInTransactions: List<Boolean>,
-    val transactionForValues: List<TransactionFor>,
+ data class TransactionForValuesScreenUIData(
+    val transactionForValuesIsUsedInTransactions: List<Boolean> = emptyList(),
+    val transactionForValues: List<TransactionFor> = emptyList(),
 )
 
 @Immutable

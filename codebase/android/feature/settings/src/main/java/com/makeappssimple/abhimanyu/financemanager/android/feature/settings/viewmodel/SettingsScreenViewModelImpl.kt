@@ -5,14 +5,18 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RecalculateTotalUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RestoreDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.screen.SettingsScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -25,7 +29,14 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
     private val recalculateTotalUseCase: RecalculateTotalUseCase,
     private val restoreDataUseCase: RestoreDataUseCase,
 ) : SettingsScreenViewModel, ViewModel() {
-    override val appVersionName: String = appVersionUtil.getAppVersion()?.versionName.orEmpty()
+    private val appVersionName: String = appVersionUtil.getAppVersion()?.versionName.orEmpty()
+    override val screenUIData: StateFlow<SettingsScreenUIData?> = flow<SettingsScreenUIData> {
+        SettingsScreenUIData(
+            appVersion = appVersionName,
+        )
+    }.defaultObjectStateIn(
+        scope = viewModelScope,
+    )
 
     override fun backupDataToDocument(
         uri: Uri,

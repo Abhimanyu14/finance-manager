@@ -2,22 +2,15 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.a
 
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
-import kotlinx.coroutines.flow.Flow
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUIData
 import kotlinx.coroutines.flow.StateFlow
 
 interface AddOrEditCategoryScreenViewModel : ScreenViewModel {
     val logger: Logger
     val navigationManager: NavigationManager
-    val transactionTypes: List<TransactionType>
-    val title: StateFlow<TextFieldValue>
-    val selectedTransactionTypeIndex: StateFlow<Int>
-    val emoji: StateFlow<String>
-    val searchText: StateFlow<String>
-    val emojiGroups: Flow<Map<String, List<Emoji>>>
+    val screenUIData: StateFlow<AddOrEditCategoryScreenUIData?>
 
     fun insertCategory()
 

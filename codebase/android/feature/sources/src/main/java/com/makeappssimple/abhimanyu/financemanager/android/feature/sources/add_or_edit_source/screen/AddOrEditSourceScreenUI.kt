@@ -14,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -21,6 +22,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -49,9 +51,9 @@ private enum class AddOrEditSourceBottomSheetType : BottomSheetType {
 
 @Immutable
 data class AddOrEditSourceScreenUIVisibilityData(
-    val balanceAmount: Boolean,
-    val name: Boolean,
-    val sourceTypes: Boolean,
+    val balanceAmount: Boolean = false,
+    val name: Boolean = false,
+    val sourceTypes: Boolean = false,
 )
 
 @Immutable
@@ -61,15 +63,15 @@ data class AddOrEditSourceScreenUIErrorData(
 )
 
 @Immutable
-internal data class AddOrEditSourceScreenUIData(
-    val visibilityData: AddOrEditSourceScreenUIVisibilityData,
-    val errorData: AddOrEditSourceScreenUIErrorData,
-    @StringRes val appBarTitleTextStringResourceId: Int,
-    @StringRes val ctaButtonLabelTextStringResourceId: Int,
-    val selectedSourceTypeIndex: Int,
-    val sourceTypes: List<SourceType>,
-    val balanceAmountValue: TextFieldValue,
-    val name: TextFieldValue,
+data class AddOrEditSourceScreenUIData(
+    val visibilityData: AddOrEditSourceScreenUIVisibilityData = AddOrEditSourceScreenUIVisibilityData(),
+    val errorData: AddOrEditSourceScreenUIErrorData = AddOrEditSourceScreenUIErrorData(),
+    @StringRes val appBarTitleTextStringResourceId: Int = 0,
+    @StringRes val ctaButtonLabelTextStringResourceId: Int = 0,
+    val selectedSourceTypeIndex: Int = 0,
+    val sourceTypes: List<SourceType> = emptyList(),
+    val balanceAmountValue: TextFieldValue = TextFieldValue(),
+    val name: TextFieldValue = TextFieldValue(),
 )
 
 @Immutable
@@ -95,15 +97,41 @@ internal fun AddOrEditSourceScreenUI(
             value = AddOrEditSourceBottomSheetType.NONE,
         )
     }
+    val nameTextFieldFocusRequester = remember {
+        FocusRequester()
+    }
+    val balanceAmountTextFieldFocusRequester = remember {
+        FocusRequester()
+    }
+    val isNameTextFieldVisible by remember(data.visibilityData.name) {
+        derivedStateOf {
+            data.visibilityData.name
+        }
+    }
+    val isBalanceAmountTextFieldVisible by remember(data.visibilityData.balanceAmount) {
+        derivedStateOf {
+            data.visibilityData.balanceAmount
+        }
+    }
     val resetBottomSheetType = {
         addOrEditSourceBottomSheetType = AddOrEditSourceBottomSheetType.NONE
     }
 
     LaunchedEffect(
-        key1 = Unit,
+        key1 = isNameTextFieldVisible,
+        key2 = isBalanceAmountTextFieldVisible,
     ) {
-        state.focusRequester.requestFocus()
+        /*
+        TODO(Abhi): Fix focus requester
+        if (isBalanceAmountTextFieldVisible) {
+            balanceAmountTextFieldFocusRequester.requestFocus()
+        } else if (isNameTextFieldVisible) {
+            nameTextFieldFocusRequester.requestFocus()
+        }
+        */
     }
+
+    // Use multiple focus Requester
 
     BottomSheetHandler(
         showModalBottomSheet = addOrEditSourceBottomSheetType != AddOrEditSourceBottomSheetType.NONE,
@@ -166,7 +194,7 @@ internal fun AddOrEditSourceScreenUI(
                         ),
                 )
             }
-            if (data.visibilityData.name) {
+            if (isNameTextFieldVisible) {
                 MyOutlinedTextField(
                     textFieldValue = data.name,
                     labelTextStringResourceId = R.string.screen_add_or_edit_source_name,
@@ -200,14 +228,8 @@ internal fun AddOrEditSourceScreenUI(
                         imeAction = ImeAction.Next,
                     ),
                     modifier = Modifier
-                        .then(
-                            if (data.visibilityData.balanceAmount) {
-                                Modifier
-                            } else {
-                                Modifier.focusRequester(
-                                    focusRequester = state.focusRequester,
-                                )
-                            }
+                        .focusRequester(
+                            focusRequester = nameTextFieldFocusRequester,
                         )
                         .fillMaxWidth()
                         .padding(
@@ -216,7 +238,7 @@ internal fun AddOrEditSourceScreenUI(
                         ),
                 )
             }
-            if (data.visibilityData.balanceAmount) {
+            if (isBalanceAmountTextFieldVisible) {
                 MyOutlinedTextField(
                     textFieldValue = data.balanceAmountValue,
                     labelTextStringResourceId = R.string.screen_edit_source_balance_amount_value,
@@ -243,7 +265,7 @@ internal fun AddOrEditSourceScreenUI(
                     modifier = Modifier
                         .fillMaxWidth()
                         .focusRequester(
-                            focusRequester = state.focusRequester,
+                            focusRequester = balanceAmountTextFieldFocusRequester,
                         )
                         .padding(
                             horizontal = 16.dp,

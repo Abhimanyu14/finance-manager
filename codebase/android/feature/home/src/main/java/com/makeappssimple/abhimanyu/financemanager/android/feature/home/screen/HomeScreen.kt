@@ -10,7 +10,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.CreateJsonDocument
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmodel.HomeScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmodel.HomeScreenViewModelImpl
 
@@ -32,19 +31,10 @@ fun HomeScreen(
             }
         }
 
-    val homeListItemViewData: List<TransactionListItemData> by screenViewModel.homeListItemViewData
-        .collectAsStateWithLifecycle(
-            initialValue = emptyList(),
-        )
-    val isBackupCardVisible: Boolean by screenViewModel.isBackupCardVisible.collectAsStateWithLifecycle(
-        initialValue = false,
-    )
+    val screenUIData: HomeScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
 
     HomeScreenUI(
-        data = HomeScreenUIData(
-            isBackupCardVisible = isBackupCardVisible,
-            transactionListItemDataList = homeListItemViewData,
-        ),
+        data = screenUIData ?: HomeScreenUIData(),
         events = HomeScreenUIEvents(
             createDocument = createDocument,
             navigateToAnalysisScreen = {

@@ -37,11 +37,12 @@ fun <T> Flow<T>.defaultObjectStateIn(
     started: SharingStarted = SharingStarted.WhileSubscribed(
         stopTimeoutMillis = 5000,
     ),
+    initialValue: T? = null,
 ): StateFlow<T?> {
     return this.stateIn(
         scope = scope,
         started = started,
-        initialValue = null,
+        initialValue = initialValue,
     )
 }
 

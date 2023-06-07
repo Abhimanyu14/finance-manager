@@ -43,9 +43,9 @@ private enum class HomeBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class HomeScreenUIData(
-    val isBackupCardVisible: Boolean,
-    val transactionListItemDataList: List<TransactionListItemData>,
+data class HomeScreenUIData(
+    val isBackupCardVisible: Boolean = false,
+    val transactionListItemDataList: List<TransactionListItemData> = emptyList(),
 )
 
 @Immutable

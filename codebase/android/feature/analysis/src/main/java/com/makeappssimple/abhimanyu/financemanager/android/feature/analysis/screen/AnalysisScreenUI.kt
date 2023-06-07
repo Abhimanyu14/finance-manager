@@ -44,16 +44,16 @@ private enum class AnalysisBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-internal data class AnalysisScreenUIData(
-    val selectedFilter: Filter,
-    val selectedTransactionTypeIndex: Int?,
-    val transactionDataMappedByCategory: List<AnalysisListItemData>,
-    val transactionTypesChipUIData: List<ChipUIData>,
-    val defaultMaxLocalDate: LocalDate,
-    val defaultMinLocalDate: LocalDate,
-    val startOfMonthLocalDate: LocalDate,
-    val startOfYearLocalDate: LocalDate,
-    val currentTimeMillis: Long,
+data class AnalysisScreenUIData(
+    val selectedFilter: Filter = Filter(),
+    val selectedTransactionTypeIndex: Int = 0,
+    val transactionDataMappedByCategory: List<AnalysisListItemData> = emptyList(),
+    val transactionTypesChipUIData: List<ChipUIData> = emptyList(),
+    val defaultMaxLocalDate: LocalDate = LocalDate.MIN,
+    val defaultMinLocalDate: LocalDate = LocalDate.MIN,
+    val startOfMonthLocalDate: LocalDate = LocalDate.MIN,
+    val startOfYearLocalDate: LocalDate = LocalDate.MIN,
+    val currentTimeMillis: Long = 0L,
 )
 
 @Immutable
