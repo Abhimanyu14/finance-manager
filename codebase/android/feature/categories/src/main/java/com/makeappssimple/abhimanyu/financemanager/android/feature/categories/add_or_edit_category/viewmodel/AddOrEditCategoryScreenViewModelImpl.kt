@@ -58,37 +58,30 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
             savedStateHandle = savedStateHandle,
             stringDecoder = stringDecoder,
         )
-
     private lateinit var categories: List<Category>
     private val category: MutableStateFlow<Category?> = MutableStateFlow(
         value = null,
     )
-
     private val transactionTypes: List<TransactionType> = TransactionType.values()
         .filter {
             it != TransactionType.TRANSFER && it != TransactionType.ADJUSTMENT && it != TransactionType.REFUND
         }
-
     private val title: MutableStateFlow<TextFieldValue> = MutableStateFlow(
         value = TextFieldValue(
             text = "",
         ),
     )
-
     private val selectedTransactionTypeIndex = MutableStateFlow(
         value = transactionTypes.indexOf(
             element = TransactionType.EXPENSE,
         ),
     )
-
     private val emoji = MutableStateFlow(
         value = EmojiConstants.HOURGLASS_NOT_DONE,
     )
-
     private val searchText = MutableStateFlow(
         value = "",
     )
-
     private var emojis: List<Emoji> = emptyList()
     private val emojiGroups: Flow<Map<String, List<Emoji>>> = searchText.map { searchTextValue ->
         emojis.filter { emoji ->
@@ -105,6 +98,20 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     }.flowOn(
         context = dispatcherProvider.io,
     )
+    private val isValidCategoryData = combine(
+        title,
+        category,
+    ) {
+            title,
+            category,
+        ->
+        checkIfCategoryDataIsValid(
+            title = title.text,
+            category = category,
+        )
+    }.flowOn(
+        context = dispatcherProvider.io,
+    )
 
     override val screenUIData: StateFlow<AddOrEditCategoryScreenUIData?> = combine(
         selectedTransactionTypeIndex,
@@ -112,20 +119,16 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         emoji,
         searchText,
         title,
-    ) {
-            selectedTransactionTypeIndex,
-            emojiGroups,
-            emoji,
-            searchText,
-            title,
-        ->
+        isValidCategoryData,
+    ) { flows ->
         AddOrEditCategoryScreenUIData(
-            selectedTransactionTypeIndex = selectedTransactionTypeIndex,
-            emojiGroups = emojiGroups,
+            isValidCategoryData = flows[5] as? Boolean ?: false,
+            selectedTransactionTypeIndex = flows[0] as? Int ?: 0,
+            emojiGroups = flows[1] as? Map<String, List<Emoji>> ?: emptyMap(),
             transactionTypes = transactionTypes,
-            emoji = emoji,
-            searchText = searchText,
-            title = title,
+            emoji = flows[2] as? String ?: "",
+            searchText = flows[3] as? String ?: "",
+            title = flows[4] as? TextFieldValue ?: TextFieldValue(),
         )
     }.defaultObjectStateIn(
         scope = viewModelScope,
@@ -186,46 +189,6 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
                 navigationCommand = MyNavigationDirections.NavigateUp
             )
         }
-    }
-
-    override fun isValidCategoryData(): Boolean {
-        val title = title.value.text
-
-        // TODO-Abhi: Error message - "Title can not be empty"
-        if (title.isBlank()) {
-            return false
-        }
-
-        // TODO-Abhi: Error message - "Title already exists"
-        if (isDefaultIncomeCategory(
-                category = title.trim(),
-            )
-        ) {
-            return false
-        }
-
-        // TODO-Abhi: Error message - "Title already exists"
-        if (isDefaultExpenseCategory(
-                category = title.trim(),
-            )
-        ) {
-            return false
-        }
-
-        // TODO-Abhi: Error message - "Title already exists"
-        if (isDefaultInvestmentCategory(
-                category = title.trim(),
-            )
-        ) {
-            return false
-        }
-
-        // TODO-Abhi: Error message - "Title already exists"
-        return !(title.trim() != category.value?.title?.trim() && categories.find {
-            it.title.equalsIgnoringCase(
-                other = title.trim(),
-            )
-        }.isNotNull())
     }
 
     override fun clearTitle() {
@@ -312,5 +275,46 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
                 },
             )
         }
+    }
+
+    private fun checkIfCategoryDataIsValid(
+        title: String,
+        category: Category?,
+    ): Boolean {
+        // TODO-Abhi: Error message - "Title can not be empty"
+        if (title.isBlank()) {
+            return false
+        }
+
+        // TODO-Abhi: Error message - "Title already exists"
+        if (isDefaultIncomeCategory(
+                category = title.trim(),
+            )
+        ) {
+            return false
+        }
+
+        // TODO-Abhi: Error message - "Title already exists"
+        if (isDefaultExpenseCategory(
+                category = title.trim(),
+            )
+        ) {
+            return false
+        }
+
+        // TODO-Abhi: Error message - "Title already exists"
+        if (isDefaultInvestmentCategory(
+                category = title.trim(),
+            )
+        ) {
+            return false
+        }
+
+        // TODO-Abhi: Error message - "Title already exists"
+        return !(title.trim() != category?.title?.trim() && categories.find {
+            it.title.equalsIgnoringCase(
+                other = title.trim(),
+            )
+        }.isNotNull())
     }
 }

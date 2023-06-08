@@ -16,8 +16,6 @@ interface AddOrEditCategoryScreenViewModel : ScreenViewModel {
 
     fun updateCategory()
 
-    fun isValidCategoryData(): Boolean
-
     fun clearTitle()
 
     fun updateTitle(

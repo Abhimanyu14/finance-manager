@@ -51,6 +51,7 @@ private enum class AddOrEditCategoryBottomSheetType : BottomSheetType {
 
 @Immutable
 data class AddOrEditCategoryScreenUIData(
+    val isValidCategoryData: Boolean = false,
     @StringRes val appBarTitleTextStringResourceId: Int = 0,
     @StringRes val ctaButtonLabelTextStringResourceId: Int = 0,
     val selectedTransactionTypeIndex: Int = 0,
@@ -64,7 +65,6 @@ data class AddOrEditCategoryScreenUIData(
 @Immutable
 internal data class AddOrEditCategoryScreenUIEvents(
     val clearTitle: () -> Unit,
-    val isValidCategoryData: () -> Boolean,
     val navigateUp: () -> Unit,
     val onCtaButtonClick: () -> Unit,
     val updateEmoji: (updatedEmoji: String) -> Unit,
@@ -229,7 +229,7 @@ internal fun AddOrEditCategoryScreenUI(
             }
             SaveButton(
                 textStringResourceId = data.ctaButtonLabelTextStringResourceId,
-                isEnabled = events.isValidCategoryData(),
+                isEnabled = data.isValidCategoryData,
                 onClick = {
                     events.onCtaButtonClick()
                 },

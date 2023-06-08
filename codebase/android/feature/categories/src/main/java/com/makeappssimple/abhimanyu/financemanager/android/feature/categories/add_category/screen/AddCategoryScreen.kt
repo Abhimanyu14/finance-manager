@@ -45,7 +45,6 @@ fun AddCategoryScreen(
         ),
         events = AddOrEditCategoryScreenUIEvents(
             clearTitle = screenViewModel::clearTitle,
-            isValidCategoryData = screenViewModel::isValidCategoryData,
             navigateUp = {
                 screenViewModel.navigationManager.navigate(
                     navigationCommand = MyNavigationDirections.NavigateUp
