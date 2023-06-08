@@ -28,6 +28,7 @@ val LAST_DATA_BACKUP_TIMESTAMP: Preferences.Key<Long> = longPreferencesKey(
 val LAST_DATA_CHANGE_TIMESTAMP: Preferences.Key<Long> = longPreferencesKey(
     name = "last_data_change_timestamp",
 )
+
 // TODO(Abhi): Migrate to "transaction_data_version_number"
 val TRANSACTIONS_DATA_VERSION_NUMBER: Preferences.Key<Int> = intPreferencesKey(
     name = "transactions_data_version_number",

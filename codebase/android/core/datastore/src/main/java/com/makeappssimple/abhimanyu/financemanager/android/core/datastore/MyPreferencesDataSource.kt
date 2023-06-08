@@ -20,13 +20,13 @@ class MyPreferencesDataSource(
     @VisibleForTesting
     internal val preferences: Flow<Preferences> = dataStore.data
         .catch { exception ->
-        logger.logError(
-            message = "Error reading preferences. ${exception.localizedMessage}",
-        )
-        emit(
-            value = emptyPreferences(),
-        )
-    }
+            logger.logError(
+                message = "Error reading preferences. ${exception.localizedMessage}",
+            )
+            emit(
+                value = emptyPreferences(),
+            )
+        }
 
     fun getDataTimestamp(): Flow<DataTimestamp?> {
         return preferences.map {

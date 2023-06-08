@@ -18,7 +18,7 @@ data class BackupData @OptIn(ExperimentalSerializationApi::class) constructor(
 
     @SerialName(value = "last_backup_timestamp")
     @JsonNames("lastBackupTimestamp") // TODO-Abhi: legacy support v69
-    val lastBackupTimestamp: String ?= "", // TODO-Abhi: legacy support v69
+    val lastBackupTimestamp: String? = "", // TODO-Abhi: legacy support v69
 
     val categories: List<Category>? = emptyList(), // TODO-Abhi: legacy support v69
 

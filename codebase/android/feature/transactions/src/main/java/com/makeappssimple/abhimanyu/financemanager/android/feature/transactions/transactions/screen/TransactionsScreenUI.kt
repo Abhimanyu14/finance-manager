@@ -63,7 +63,7 @@ private enum class TransactionsBottomSheetType : BottomSheetType {
 }
 
 @Immutable
- data class TransactionsScreenUIData(
+data class TransactionsScreenUIData(
     val isLoading: Boolean = false,
     val selectedFilter: Filter = Filter(),
     val sortOptions: List<SortOption> = emptyList(),

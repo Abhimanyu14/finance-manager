@@ -98,10 +98,13 @@ class BackupDataUseCaseImpl(
                     transactions = transactions,
                 ),
                 datastoreData = DatastoreData(
-                    defaultDataId = myPreferencesRepository.getDefaultDataId().first() ?: DefaultDataId(),
-                    initialDataVersionNumber = myPreferencesRepository.getInitialDataVersionNumber().first()
+                    defaultDataId = myPreferencesRepository.getDefaultDataId().first()
+                        ?: DefaultDataId(),
+                    initialDataVersionNumber = myPreferencesRepository.getInitialDataVersionNumber()
+                        .first()
                         ?: InitialDataVersionNumber(),
-                    dataTimestamp = myPreferencesRepository.getDataTimestamp().first() ?: DataTimestamp(),
+                    dataTimestamp = myPreferencesRepository.getDataTimestamp().first()
+                        ?: DataTimestamp(),
                 )
             )
             val jsonString = Json.encodeToString(
