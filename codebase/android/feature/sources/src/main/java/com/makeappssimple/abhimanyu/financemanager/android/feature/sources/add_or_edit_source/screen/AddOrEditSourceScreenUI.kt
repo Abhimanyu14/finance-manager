@@ -66,6 +66,7 @@ data class AddOrEditSourceScreenUIErrorData(
 data class AddOrEditSourceScreenUIData(
     val visibilityData: AddOrEditSourceScreenUIVisibilityData = AddOrEditSourceScreenUIVisibilityData(),
     val errorData: AddOrEditSourceScreenUIErrorData = AddOrEditSourceScreenUIErrorData(),
+    val isValidSourceData: Boolean = false,
     @StringRes val appBarTitleTextStringResourceId: Int = 0,
     @StringRes val ctaButtonLabelTextStringResourceId: Int = 0,
     val selectedSourceTypeIndex: Int = 0,
@@ -78,7 +79,6 @@ data class AddOrEditSourceScreenUIData(
 internal data class AddOrEditSourceScreenUIEvents(
     val clearBalanceAmountValue: () -> Unit,
     val clearName: () -> Unit,
-    val isValidSourceData: () -> Boolean,
     val navigateUp: () -> Unit,
     val onCtaButtonClick: () -> Unit,
     val updateBalanceAmountValue: (updatedBalanceAmountValue: TextFieldValue) -> Unit,
@@ -275,7 +275,7 @@ internal fun AddOrEditSourceScreenUI(
             }
             SaveButton(
                 textStringResourceId = data.ctaButtonLabelTextStringResourceId,
-                isEnabled = events.isValidSourceData(),
+                isEnabled = data.isValidSourceData,
                 onClick = events.onCtaButtonClick,
             )
         }

@@ -38,7 +38,6 @@ fun EditSourceScreen(
         events = AddOrEditSourceScreenUIEvents(
             clearBalanceAmountValue = screenViewModel::clearBalanceAmountValue,
             clearName = screenViewModel::clearName,
-            isValidSourceData = screenViewModel::isValidSourceData,
             navigateUp = {
                 screenViewModel.navigationManager.navigate(
                     navigationCommand = MyNavigationDirections.NavigateUp

@@ -40,7 +40,6 @@ fun AddSourceScreen(
         events = AddOrEditSourceScreenUIEvents(
             clearBalanceAmountValue = {},
             clearName = screenViewModel::clearName,
-            isValidSourceData = screenViewModel::isValidSourceData,
             navigateUp = {
                 screenViewModel.navigationManager.navigate(
                     navigationCommand = MyNavigationDirections.NavigateUp

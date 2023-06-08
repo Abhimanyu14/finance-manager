@@ -14,8 +14,6 @@ interface AddOrEditSourceScreenViewModel : ScreenViewModel {
 
     fun insertSource()
 
-    fun isValidSourceData(): Boolean
-
     fun clearName()
 
     fun updateName(

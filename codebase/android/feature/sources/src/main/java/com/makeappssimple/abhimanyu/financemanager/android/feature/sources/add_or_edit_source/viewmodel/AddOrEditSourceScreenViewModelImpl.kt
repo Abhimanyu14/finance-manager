@@ -83,6 +83,15 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
             text = "",
         ),
     )
+    private val isValidSourceData = combine(
+        name,
+        originalSource,
+    ) { name, originalSource ->
+        checkIfSourceDataIsValid(
+            name = name.text,
+            originalSource = originalSource,
+        )
+    }
 
     override val screenUIData: StateFlow<AddOrEditSourceScreenUIData?> = combine(
         errorData,
@@ -90,24 +99,22 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
         balanceAmountValue,
         name,
         originalSource,
-    ) {
-            errorData,
-            selectedSourceTypeIndex,
-            balanceAmountValue,
-            name,
-            originalSource,
-        ->
+        isValidSourceData,
+    ) { flows ->
+        val sourceIsNotCash = (flows[4] as? Source)?.type != SourceType.CASH
         AddOrEditSourceScreenUIData(
             visibilityData = AddOrEditSourceScreenUIVisibilityData(
                 balanceAmount = false,
-                name = originalSource?.type != SourceType.CASH,
-                sourceTypes = originalSource?.type != SourceType.CASH,
+                name = sourceIsNotCash,
+                sourceTypes = sourceIsNotCash,
             ),
-            errorData = errorData,
-            selectedSourceTypeIndex = selectedSourceTypeIndex,
+            errorData = flows[0] as? AddOrEditSourceScreenUIErrorData
+                ?: AddOrEditSourceScreenUIErrorData(),
+            isValidSourceData = flows[5] as? Boolean ?: false,
+            selectedSourceTypeIndex = flows[1] as? Int ?: 0,
             sourceTypes = sourceTypes,
-            balanceAmountValue = balanceAmountValue,
-            name = name,
+            balanceAmountValue = flows[2] as? TextFieldValue ?: TextFieldValue(),
+            name = flows[3] as? TextFieldValue ?: TextFieldValue(),
         )
     }.defaultObjectStateIn(
         scope = viewModelScope,
@@ -204,51 +211,6 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun isValidSourceData(): Boolean {
-        val name = name.value.text
-
-        // TODO-Abhi: Error message - "Name can not be empty"
-        if (name.isBlank()) {
-            return false
-        }
-
-        if (
-            isDefaultSource(
-                source = name.trim(),
-            )
-        ) {
-            errorData.update {
-                errorData.value.copy(
-                    name = "Source already exists" // TODO(Abhi): Move to string resources
-                )
-            }
-            return false
-        }
-
-        val doesNotExist = if (::sources.isInitialized) {
-            sources.find {
-                it.name.trim().equalsIgnoringCase(
-                    other = name.trim(),
-                )
-            }.isNull()
-        } else {
-            true
-        }
-
-        val result = name.trim() == originalSource.value?.name?.trim() || doesNotExist
-        errorData.update {
-            if (result) {
-                AddOrEditSourceScreenUIErrorData()
-            } else {
-                errorData.value.copy(
-                    name = "Source already exists" // TODO(Abhi): Move to string resources
-                )
-            }
-        }
-
-        return result
-    }
-
     override fun clearName() {
         updateName(
             updatedName = name.value.copy(""),
@@ -331,5 +293,51 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
                 selection = TextRange(source.balanceAmount.value.toString().length),
             )
         }
+    }
+
+    private fun checkIfSourceDataIsValid(
+        name: String,
+        originalSource: Source?,
+    ): Boolean {
+        // TODO-Abhi: Error message - "Name can not be empty"
+        if (name.isBlank()) {
+            return false
+        }
+
+        if (
+            isDefaultSource(
+                source = name.trim(),
+            )
+        ) {
+            errorData.update {
+                errorData.value.copy(
+                    name = "Source already exists" // TODO(Abhi): Move to string resources
+                )
+            }
+            return false
+        }
+
+        val doesNotExist = if (::sources.isInitialized) {
+            sources.find {
+                it.name.trim().equalsIgnoringCase(
+                    other = name.trim(),
+                )
+            }.isNull()
+        } else {
+            true
+        }
+
+        val result = name.trim() == originalSource?.name?.trim() || doesNotExist
+        errorData.update {
+            if (result) {
+                AddOrEditSourceScreenUIErrorData()
+            } else {
+                errorData.value.copy(
+                    name = "Source already exists" // TODO(Abhi): Move to string resources
+                )
+            }
+        }
+
+        return result
     }
 }
