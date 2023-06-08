@@ -41,6 +41,7 @@ private enum class AddOrEditTransactionForBottomSheetType : BottomSheetType {
 
 @Immutable
 data class AddOrEditTransactionForScreenUIData(
+    val isValidTransactionForData: Boolean = false,
     @StringRes val appBarTitleTextStringResourceId: Int = 0,
     @StringRes val ctaButtonLabelTextStringResourceId: Int = 0,
     val title: TextFieldValue = TextFieldValue(),
@@ -49,7 +50,6 @@ data class AddOrEditTransactionForScreenUIData(
 @Immutable
 internal data class AddOrEditTransactionForScreenUIEvents(
     val clearTitle: () -> Unit,
-    val isValidTitle: () -> Boolean,
     val navigateUp: () -> Unit,
     val onCtaButtonClick: () -> Unit,
     val updateTitle: (updatedTitle: TextFieldValue) -> Unit,
@@ -155,7 +155,7 @@ internal fun AddOrEditTransactionForScreenUI(
             )
             SaveButton(
                 textStringResourceId = data.ctaButtonLabelTextStringResourceId,
-                isEnabled = events.isValidTitle(),
+                isEnabled = data.isValidTransactionForData,
                 onClick = events.onCtaButtonClick,
             )
         }

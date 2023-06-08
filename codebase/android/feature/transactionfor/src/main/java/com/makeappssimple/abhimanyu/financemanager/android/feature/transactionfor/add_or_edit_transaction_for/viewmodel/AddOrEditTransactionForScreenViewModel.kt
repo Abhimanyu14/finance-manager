@@ -14,8 +14,6 @@ interface AddOrEditTransactionForScreenViewModel : ScreenViewModel {
 
     fun insertTransactionFor()
 
-    fun isValidTitle(): Boolean
-
     fun clearTitle()
 
     fun updateTitle(

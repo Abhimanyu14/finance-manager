@@ -33,7 +33,6 @@ fun AddTransactionForScreen(
         ),
         events = AddOrEditTransactionForScreenUIEvents(
             clearTitle = screenViewModel::clearTitle,
-            isValidTitle = screenViewModel::isValidTitle,
             navigateUp = {
                 screenViewModel.navigationManager.navigate(
                     navigationCommand = MyNavigationDirections.NavigateUp

@@ -24,7 +24,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -55,15 +55,33 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
     private val transactionFor: MutableStateFlow<TransactionFor?> = MutableStateFlow(
         value = null,
     )
-
-    override val screenUIData: StateFlow<AddOrEditTransactionForScreenUIData?> =
-        title.map { title ->
-            AddOrEditTransactionForScreenUIData(
-                title = title,
-            )
-        }.defaultObjectStateIn(
-            scope = viewModelScope,
+    private val isValidTransactionForData = combine(
+        title,
+        transactionFor,
+    ) {
+            title,
+            transactionFor,
+        ->
+        checkIfTransactionForDataIsValid(
+            title = title.text,
+            transactionFor = transactionFor,
         )
+    }
+
+    override val screenUIData: StateFlow<AddOrEditTransactionForScreenUIData?> = combine(
+        title,
+        isValidTransactionForData,
+    ) {
+            title,
+            isValidTransactionForData,
+        ->
+        AddOrEditTransactionForScreenUIData(
+            isValidTransactionForData = isValidTransactionForData,
+            title = title,
+        )
+    }.defaultObjectStateIn(
+        scope = viewModelScope,
+    )
 
     init {
         initViewModel()
@@ -107,22 +125,6 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
                 navigationCommand = MyNavigationDirections.NavigateUp
             )
         }
-    }
-
-    override fun isValidTitle(): Boolean {
-        val title = title.value.text
-
-        // TODO-Abhi: Error message - "Title can not be empty"
-        if (title.isBlank()) {
-            return false
-        }
-
-        // TODO-Abhi: Error message - "Title already exists"
-        return !(title != transactionFor.value?.title && transactionForValues.find {
-            it.title.equalsIgnoringCase(
-                other = title,
-            )
-        }.isNotNull())
     }
 
     override fun clearTitle() {
@@ -172,5 +174,22 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
                 selection = TextRange(transactionFor.title.length),
             )
         }
+    }
+
+    private fun checkIfTransactionForDataIsValid(
+        title: String,
+        transactionFor: TransactionFor?,
+    ): Boolean {
+        // TODO-Abhi: Error message - "Title can not be empty"
+        if (title.isBlank()) {
+            return false
+        }
+
+        // TODO-Abhi: Error message - "Title already exists"
+        return !(title != transactionFor?.title && transactionForValues.find {
+            it.title.equalsIgnoringCase(
+                other = title,
+            )
+        }.isNotNull())
     }
 }
