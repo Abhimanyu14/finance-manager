@@ -13,19 +13,8 @@ import java.time.LocalTime
 
 interface AddOrEditTransactionScreenViewModel : ScreenViewModel {
     val logger: Logger
-//    val currentTimeMillis: Long
     val navigationManager: NavigationManager
     val screenUIData: StateFlow<AddOrEditTransactionScreenUIData?>
-
-//    val uiState: StateFlow<AddOrEditTransactionScreenUiState>
-//    val uiVisibilityState: StateFlow<AddOrEditTransactionScreenUiVisibilityState>
-//    val isCtaButtonEnabled: StateFlow<Boolean>
-//    val filteredCategories: StateFlow<List<Category>>
-//    val sources: StateFlow<List<Source>>
-//    val titleSuggestions: StateFlow<List<String>>
-//    val transactionForValues: StateFlow<List<TransactionFor>>
-//    val transactionTypesForNewTransaction: StateFlow<List<TransactionType>>
-//    val selectedTransactionType: StateFlow<TransactionType?>
 
     fun insertTransaction()
 
