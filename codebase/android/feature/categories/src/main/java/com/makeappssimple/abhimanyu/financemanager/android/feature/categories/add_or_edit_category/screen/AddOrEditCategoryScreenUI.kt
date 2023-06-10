@@ -186,7 +186,6 @@ internal fun AddOrEditCategoryScreenUI(
                     emojiCircleSize = EmojiCircleSize.Normal,
                     emoji = data.emoji,
                     onClick = {
-                        state.keyboardController?.hide()
                         addOrEditCategoryBottomSheetType =
                             AddOrEditCategoryBottomSheetType.SELECT_EMOJI
                     },
@@ -195,12 +194,8 @@ internal fun AddOrEditCategoryScreenUI(
                     textFieldValue = data.title,
                     labelTextStringResourceId = R.string.screen_add_or_edit_category_title,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_category_clear_title,
-                    onClickTrailingIcon = {
-                        events.clearTitle()
-                    },
-                    onValueChange = { updatedTitle ->
-                        events.updateTitle(updatedTitle)
-                    },
+                    onClickTrailingIcon = events.clearTitle,
+                    onValueChange = events.updateTitle,
                     keyboardActions = KeyboardActions(
                         onNext = {
                             state.focusManager.moveFocus(
@@ -230,9 +225,7 @@ internal fun AddOrEditCategoryScreenUI(
             SaveButton(
                 textStringResourceId = data.ctaButtonLabelTextStringResourceId,
                 isEnabled = data.isValidCategoryData,
-                onClick = {
-                    events.onCtaButtonClick()
-                },
+                onClick = events.onCtaButtonClick,
             )
         }
     }
