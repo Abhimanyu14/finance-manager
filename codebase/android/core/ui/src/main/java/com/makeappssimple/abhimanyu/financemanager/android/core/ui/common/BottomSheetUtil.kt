@@ -22,7 +22,6 @@ fun BottomSheetHandler(
 ) {
     BottomSheetDisposeHandler(
         modalBottomSheetState = modalBottomSheetState,
-        keyboardController = keyboardController,
         resetBottomSheetType = resetBottomSheetType,
     )
 
@@ -38,7 +37,6 @@ fun BottomSheetHandler(
 @Composable
 private fun BottomSheetDisposeHandler(
     modalBottomSheetState: ModalBottomSheetState,
-    keyboardController: SoftwareKeyboardController?,
     resetBottomSheetType: () -> Unit,
 ) {
     if (modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
@@ -47,7 +45,6 @@ private fun BottomSheetDisposeHandler(
         ) {
             onDispose {
                 resetBottomSheetType()
-                keyboardController?.hide()
             }
         }
     }
