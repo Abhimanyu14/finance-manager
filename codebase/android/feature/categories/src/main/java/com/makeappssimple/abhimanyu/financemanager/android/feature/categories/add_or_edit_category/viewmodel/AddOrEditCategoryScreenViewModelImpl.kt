@@ -202,8 +202,12 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     override fun updateTitle(
         updatedTitle: TextFieldValue,
     ) {
-        title.update {
-            updatedTitle
+        viewModelScope.launch(
+            context = dispatcherProvider.main
+        ) {
+            title.update {
+                updatedTitle
+            }
         }
     }
 
@@ -247,11 +251,15 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
                 element = category.transactionType,
             ),
         )
-        title.update {
-            it.copy(
-                text = category.title,
-                selection = TextRange(category.title.length),
-            )
+        viewModelScope.launch(
+            context = dispatcherProvider.main
+        ) {
+            title.update {
+                it.copy(
+                    text = category.title,
+                    selection = TextRange(category.title.length),
+                )
+            }
         }
         updateEmoji(
             updatedEmoji = category.emoji,
