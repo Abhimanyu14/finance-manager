@@ -39,13 +39,15 @@ fun rememberCommonScreenUIState(
         skipHalfExpanded = true,
     ),
     keyboardController: SoftwareKeyboardController? = LocalSoftwareKeyboardController.current,
-) = remember {
-    CommonScreenUIState(
-        context = context,
-        coroutineScope = coroutineScope,
-        focusManager = focusManager,
-        focusRequester = focusRequester,
-        modalBottomSheetState = modalBottomSheetState,
-        keyboardController = keyboardController,
-    )
+): CommonScreenUIState {
+    return remember {
+        CommonScreenUIState(
+            context = context,
+            coroutineScope = coroutineScope,
+            focusManager = focusManager,
+            focusRequester = focusRequester,
+            modalBottomSheetState = modalBottomSheetState,
+            keyboardController = keyboardController,
+        )
+    }
 }

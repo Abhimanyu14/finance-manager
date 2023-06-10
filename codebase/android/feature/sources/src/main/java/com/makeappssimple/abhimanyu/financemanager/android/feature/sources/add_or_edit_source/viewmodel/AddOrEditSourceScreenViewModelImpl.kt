@@ -62,14 +62,14 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     private val originalSource: MutableStateFlow<Source?> = MutableStateFlow(
         value = null,
     )
-    private val sourceTypes: List<SourceType> = SourceType.values().filter {
+    private val validSourceTypes: List<SourceType> = SourceType.values().filter {
         it != SourceType.CASH
     }
     private val errorData: MutableStateFlow<AddOrEditSourceScreenUIErrorData> = MutableStateFlow(
         value = AddOrEditSourceScreenUIErrorData(),
     )
     private val selectedSourceTypeIndex: MutableStateFlow<Int> = MutableStateFlow(
-        value = sourceTypes.indexOf(
+        value = validSourceTypes.indexOf(
             element = SourceType.BANK,
         ),
     )
@@ -83,15 +83,6 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
             text = "",
         ),
     )
-    private val isValidSourceData = combine(
-        name,
-        originalSource,
-    ) { name, originalSource ->
-        checkIfSourceDataIsValid(
-            name = name.text,
-            originalSource = originalSource,
-        )
-    }
 
     override val screenUIData: StateFlow<AddOrEditSourceScreenUIData?> = combine(
         errorData,
@@ -99,22 +90,31 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
         balanceAmountValue,
         name,
         originalSource,
-        isValidSourceData,
     ) { flows ->
-        val sourceIsNotCash = (flows[4] as? Source)?.type != SourceType.CASH
+        val errorData = flows[0] as? AddOrEditSourceScreenUIErrorData
+            ?: AddOrEditSourceScreenUIErrorData()
+        val selectedSourceTypeIndex = flows[1] as? Int ?: 0
+        val balanceAmountValue = flows[2] as? TextFieldValue ?: TextFieldValue()
+        val name = flows[3] as? TextFieldValue ?: TextFieldValue()
+        val originalSource = flows[4] as? Source
+
+        val sourceIsNotCash = originalSource?.type != SourceType.CASH
+        val isValidSourceData = checkIfSourceDataIsValid(
+            name = name.text,
+            originalSource = originalSource,
+        )
         AddOrEditSourceScreenUIData(
             visibilityData = AddOrEditSourceScreenUIVisibilityData(
                 balanceAmount = false,
                 name = sourceIsNotCash,
                 sourceTypes = sourceIsNotCash,
             ),
-            errorData = flows[0] as? AddOrEditSourceScreenUIErrorData
-                ?: AddOrEditSourceScreenUIErrorData(),
-            isValidSourceData = flows[5] as? Boolean ?: false,
-            selectedSourceTypeIndex = flows[1] as? Int ?: 0,
-            sourceTypes = sourceTypes,
-            balanceAmountValue = flows[2] as? TextFieldValue ?: TextFieldValue(),
-            name = flows[3] as? TextFieldValue ?: TextFieldValue(),
+            errorData = errorData,
+            isValidSourceData = isValidSourceData,
+            selectedSourceTypeIndex = selectedSourceTypeIndex,
+            sourceTypes = validSourceTypes,
+            balanceAmountValue = balanceAmountValue,
+            name = name,
         )
     }.defaultObjectStateIn(
         scope = viewModelScope,
@@ -134,21 +134,21 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     }
 
     override fun updateSource() {
-        val source = originalSource.value ?: return
-        val amountValue = balanceAmountValue.value.text.toInt() - source.balanceAmount.value
-        val updatedSource = source
+        val originalSourceValue = originalSource.value ?: return
+        val amountValue = balanceAmountValue.value.text.toInt() - originalSourceValue.balanceAmount.value
+        val updatedSource = originalSourceValue
             .copy(
-                balanceAmount = source.balanceAmount
+                balanceAmount = originalSourceValue.balanceAmount
                     .copy(
                         value = balanceAmountValue.value.text.toLong(),
                     ),
-                type = if (source.type != SourceType.CASH) {
-                    sourceTypes[selectedSourceTypeIndex.value]
+                type = if (originalSourceValue.type != SourceType.CASH) {
+                    validSourceTypes[selectedSourceTypeIndex.value]
                 } else {
-                    source.type
+                    originalSourceValue.type
                 },
                 name = name.value.text.ifBlank {
-                    source.name
+                    originalSourceValue.name
                 },
             )
 
@@ -201,7 +201,7 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
                     balanceAmount = Amount(
                         value = 0L,
                     ),
-                    type = sourceTypes[selectedSourceTypeIndex.value],
+                    type = validSourceTypes[selectedSourceTypeIndex.value],
                     name = name.value.text,
                 ),
             )
@@ -264,21 +264,25 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
             viewModelScope.launch(
                 context = dispatcherProvider.io,
             ) {
-                originalSource.update {
-                    getSourceUseCase(
-                        id = id,
+                getSourceUseCase(
+                    id = id,
+                )?.let { fetchedOriginalSource ->
+                    originalSource.update {
+                        fetchedOriginalSource
+                    }
+                    updateInitialSourceValue(
+                        source = fetchedOriginalSource,
                     )
                 }
-                updateInitialSourceValue()
             }
         }
-
     }
 
-    private fun updateInitialSourceValue() {
-        val source = originalSource.value ?: return
+    private fun updateInitialSourceValue(
+        source: Source,
+    ) {
         updateSelectedSourceTypeIndex(
-            updatedIndex = sourceTypes.indexOf(
+            updatedIndex = validSourceTypes.indexOf(
                 element = source.type,
             ),
         )

@@ -14,21 +14,14 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.derivedStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.SourceType
@@ -36,16 +29,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSh
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.AmountCommaVisualTransformation
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextField
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.icon
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 
-private enum class AddOrEditSourceBottomSheetType : BottomSheetType {
+enum class AddOrEditSourceBottomSheetType : BottomSheetType {
     NONE,
 }
 
@@ -64,8 +55,8 @@ data class AddOrEditSourceScreenUIErrorData(
 
 @Immutable
 data class AddOrEditSourceScreenUIData(
-    val visibilityData: AddOrEditSourceScreenUIVisibilityData = AddOrEditSourceScreenUIVisibilityData(),
     val errorData: AddOrEditSourceScreenUIErrorData = AddOrEditSourceScreenUIErrorData(),
+    val visibilityData: AddOrEditSourceScreenUIVisibilityData = AddOrEditSourceScreenUIVisibilityData(),
     val isValidSourceData: Boolean = false,
     @StringRes val appBarTitleTextStringResourceId: Int = 0,
     @StringRes val ctaButtonLabelTextStringResourceId: Int = 0,
@@ -88,38 +79,13 @@ internal data class AddOrEditSourceScreenUIEvents(
 
 @Composable
 internal fun AddOrEditSourceScreenUI(
-    data: AddOrEditSourceScreenUIData,
     events: AddOrEditSourceScreenUIEvents,
+    uiState: AddOrEditSourceScreenUIState,
     state: CommonScreenUIState,
 ) {
-    var addOrEditSourceBottomSheetType by remember {
-        mutableStateOf(
-            value = AddOrEditSourceBottomSheetType.NONE,
-        )
-    }
-    val nameTextFieldFocusRequester = remember {
-        FocusRequester()
-    }
-    val balanceAmountTextFieldFocusRequester = remember {
-        FocusRequester()
-    }
-    val isNameTextFieldVisible by remember(data.visibilityData.name) {
-        derivedStateOf {
-            data.visibilityData.name
-        }
-    }
-    val isBalanceAmountTextFieldVisible by remember(data.visibilityData.balanceAmount) {
-        derivedStateOf {
-            data.visibilityData.balanceAmount
-        }
-    }
-    val resetBottomSheetType = {
-        addOrEditSourceBottomSheetType = AddOrEditSourceBottomSheetType.NONE
-    }
-
     LaunchedEffect(
-        key1 = isNameTextFieldVisible,
-        key2 = isBalanceAmountTextFieldVisible,
+        key1 = uiState.isNameTextFieldVisible,
+        key2 = uiState.isBalanceAmountTextFieldVisible,
     ) {
         /*
         TODO(Abhi): Fix focus requester
@@ -131,21 +97,19 @@ internal fun AddOrEditSourceScreenUI(
         */
     }
 
-    // Use multiple focus Requester
-
     BottomSheetHandler(
-        showModalBottomSheet = addOrEditSourceBottomSheetType != AddOrEditSourceBottomSheetType.NONE,
-        bottomSheetType = addOrEditSourceBottomSheetType,
+        showModalBottomSheet = uiState.addOrEditSourceBottomSheetType != AddOrEditSourceBottomSheetType.NONE,
+        bottomSheetType = uiState.addOrEditSourceBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = resetBottomSheetType,
+        resetBottomSheetType = uiState.resetBottomSheetType,
     )
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
         sheetContent = {
-            when (addOrEditSourceBottomSheetType) {
+            when (uiState.addOrEditSourceBottomSheetType) {
                 AddOrEditSourceBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
@@ -153,16 +117,16 @@ internal fun AddOrEditSourceScreenUI(
         },
         topBar = {
             MyTopAppBar(
-                titleTextStringResourceId = data.appBarTitleTextStringResourceId,
+                titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
                 navigationAction = events.navigateUp,
             )
         },
         onClick = {
             state.focusManager.clearFocus()
         },
-        backHandlerEnabled = addOrEditSourceBottomSheetType != AddOrEditSourceBottomSheetType.NONE,
+        backHandlerEnabled = uiState.addOrEditSourceBottomSheetType != AddOrEditSourceBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = resetBottomSheetType,
+        onBackPress = uiState.resetBottomSheetType,
         modifier = Modifier
             .fillMaxSize(),
     ) {
@@ -174,16 +138,10 @@ internal fun AddOrEditSourceScreenUI(
                     state = rememberScrollState(),
                 ),
         ) {
-            if (data.visibilityData.sourceTypes) {
+            if (uiState.isSourceTypesRadioGroupVisible) {
                 MyRadioGroup(
-                    items = data.sourceTypes
-                        .map { sourceType ->
-                            ChipUIData(
-                                text = sourceType.title,
-                                icon = sourceType.icon,
-                            )
-                        },
-                    selectedItemIndex = data.selectedSourceTypeIndex,
+                    items = uiState.sourceTypesChipUIDataList,
+                    selectedItemIndex = uiState.selectedSourceTypeIndex,
                     onSelectionChange = { updatedIndex ->
                         events.updateSelectedSourceTypeIndex(updatedIndex)
                     },
@@ -194,9 +152,9 @@ internal fun AddOrEditSourceScreenUI(
                         ),
                 )
             }
-            if (isNameTextFieldVisible) {
+            if (uiState.isNameTextFieldVisible) {
                 MyOutlinedTextField(
-                    textFieldValue = data.name,
+                    textFieldValue = uiState.name,
                     labelTextStringResourceId = R.string.screen_add_or_edit_source_name,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_source_clear_name,
                     onClickTrailingIcon = events.clearName,
@@ -205,17 +163,17 @@ internal fun AddOrEditSourceScreenUI(
                     },
                     supportingText = {
                         AnimatedVisibility(
-                            visible = data.errorData.name.isNotNullOrBlank(),
+                            visible = uiState.isNameTextFieldErrorTextVisible,
                         ) {
                             MyText(
-                                text = data.errorData.name.orEmpty(),
+                                text = uiState.nameTextFieldErrorText,
                                 style = MaterialTheme.typography.bodySmall.copy(
                                     color = MaterialTheme.colorScheme.error,
                                 ),
                             )
                         }
                     },
-                    isError = data.errorData.name.isNotNullOrBlank(),
+                    isError = uiState.isNameTextFieldErrorTextVisible,
                     keyboardActions = KeyboardActions(
                         onNext = {
                             state.focusManager.moveFocus(
@@ -229,7 +187,7 @@ internal fun AddOrEditSourceScreenUI(
                     ),
                     modifier = Modifier
                         .focusRequester(
-                            focusRequester = nameTextFieldFocusRequester,
+                            focusRequester = uiState.nameTextFieldFocusRequester,
                         )
                         .fillMaxWidth()
                         .padding(
@@ -238,9 +196,9 @@ internal fun AddOrEditSourceScreenUI(
                         ),
                 )
             }
-            if (isBalanceAmountTextFieldVisible) {
+            if (uiState.isBalanceAmountTextFieldVisible) {
                 MyOutlinedTextField(
-                    textFieldValue = data.balanceAmountValue,
+                    textFieldValue = uiState.balanceAmountValue,
                     labelTextStringResourceId = R.string.screen_edit_source_balance_amount_value,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_edit_source_clear_balance_amount_value,
                     onClickTrailingIcon = events.clearBalanceAmountValue,
@@ -265,7 +223,7 @@ internal fun AddOrEditSourceScreenUI(
                     modifier = Modifier
                         .fillMaxWidth()
                         .focusRequester(
-                            focusRequester = balanceAmountTextFieldFocusRequester,
+                            focusRequester = uiState.balanceAmountTextFieldFocusRequester,
                         )
                         .padding(
                             horizontal = 16.dp,
@@ -274,8 +232,8 @@ internal fun AddOrEditSourceScreenUI(
                 )
             }
             SaveButton(
-                textStringResourceId = data.ctaButtonLabelTextStringResourceId,
-                isEnabled = data.isValidSourceData,
+                textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
+                isEnabled = uiState.isCtaButtonEnabled,
                 onClick = events.onCtaButtonClick,
             )
         }
