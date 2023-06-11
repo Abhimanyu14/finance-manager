@@ -125,4 +125,98 @@ class StringExtensionTest {
         )
     }
     // endregion
+
+    // region toIntOrZero
+    @Test
+    fun toIntOrZero_zero() {
+        val input = "0"
+        Assert.assertEquals(
+            0,
+            input.toIntOrZero(),
+        )
+    }
+
+    @Test
+    fun toIntOrZero_negative() {
+        val input = "-45"
+        Assert.assertEquals(
+            -45,
+            input.toIntOrZero(),
+        )
+    }
+
+    @Test
+    fun toIntOrZero_positive() {
+        val input = "45"
+        Assert.assertEquals(
+            45,
+            input.toIntOrZero(),
+        )
+    }
+
+    @Test
+    fun toIntOrZero_notNumber() {
+        val input = "string"
+        Assert.assertEquals(
+            0,
+            input.toIntOrZero(),
+        )
+    }
+
+    @Test
+    fun toIntOrZero_stringWithNumber() {
+        val input = "string 123"
+        Assert.assertEquals(
+            0,
+            input.toIntOrZero(),
+        )
+    }
+    // endregion
+
+    // region toLongOrZero
+    @Test
+    fun toLongOrZero_zero() {
+        val input = "0"
+        Assert.assertEquals(
+            0L,
+            input.toLongOrZero(),
+        )
+    }
+
+    @Test
+    fun toLongOrZero_negative() {
+        val input = "-45"
+        Assert.assertEquals(
+            -45L,
+            input.toLongOrZero(),
+        )
+    }
+
+    @Test
+    fun toLongOrZero_positive() {
+        val input = "45"
+        Assert.assertEquals(
+            45L,
+            input.toLongOrZero(),
+        )
+    }
+
+    @Test
+    fun toLongOrZero_notNumber() {
+        val input = "string"
+        Assert.assertEquals(
+            0L,
+            input.toLongOrZero(),
+        )
+    }
+
+    @Test
+    fun toLongOrZero_stringWithNumber() {
+        val input = "string 123"
+        Assert.assertEquals(
+            0L,
+            input.toLongOrZero(),
+        )
+    }
+    // endregion
 }

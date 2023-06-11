@@ -16,6 +16,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isTrue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toIntOrZero
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Quadruple
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultBooleanStateIn
@@ -185,21 +187,21 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             TransactionType.INCOME -> {
                 uiState.amount.text.isNotNullOrBlank() &&
                         uiState.title.text.isNotNullOrBlank() &&
-                        uiState.amount.text.toInt().isNotZero() &&
+                        uiState.amount.text.toIntOrZero().isNotZero() &&
                         uiState.amountErrorText.isNull()
             }
 
             TransactionType.EXPENSE -> {
                 uiState.amount.text.isNotNullOrBlank() &&
                         uiState.title.text.isNotNullOrBlank() &&
-                        uiState.amount.text.toInt().isNotZero() &&
+                        uiState.amount.text.toIntOrZero().isNotZero() &&
                         uiState.amountErrorText.isNull()
             }
 
             TransactionType.TRANSFER -> {
                 uiState.amount.text.isNotNullOrBlank() &&
                         uiState.sourceFrom?.id != uiState.sourceTo?.id &&
-                        uiState.amount.text.toInt().isNotZero() &&
+                        uiState.amount.text.toIntOrZero().isNotZero() &&
                         uiState.amountErrorText.isNull()
             }
 
@@ -210,14 +212,14 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             TransactionType.INVESTMENT -> {
                 uiState.amount.text.isNotNullOrBlank() &&
                         uiState.title.text.isNotNullOrBlank() &&
-                        uiState.amount.text.toInt().isNotZero() &&
+                        uiState.amount.text.toIntOrZero().isNotZero() &&
                         uiState.amountErrorText.isNull()
             }
 
             TransactionType.REFUND -> {
                 val maxRefundAmountValue = maxRefundAmount.value?.value ?: 0L
                 if (uiState.amountErrorText.isNull() &&
-                    ((uiState.amount.text.toLongOrNull() ?: 0L) > maxRefundAmountValue)
+                    (uiState.amount.text.toLongOrZero() > maxRefundAmountValue)
                 ) {
                     updateAddOrEditTransactionScreenUiState(
                         updatedAddOrEditTransactionScreenUiState = uiState.copy(
@@ -228,7 +230,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     )
                     false
                 } else if (uiState.amountErrorText.isNotNull() &&
-                    ((uiState.amount.text.toLongOrNull() ?: 0L) <= maxRefundAmountValue)
+                    (uiState.amount.text.toLongOrZero() <= maxRefundAmountValue)
                 ) {
                     updateAddOrEditTransactionScreenUiState(
                         updatedAddOrEditTransactionScreenUiState = uiState.copy(
@@ -239,7 +241,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                 } else {
                     uiState.amount.text.isNotNullOrBlank() &&
                             uiState.title.text.isNotNullOrBlank() &&
-                            uiState.amount.text.toInt().isNotZero() &&
+                            uiState.amount.text.toIntOrZero().isNotZero() &&
                             uiState.amountErrorText.isNull()
                 }
             }
@@ -316,7 +318,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         ) {
             val uiStateValue = uiState.value
             selectedTransactionType.value?.let { selectedTransactionTypeValue ->
-                val amountValue = uiStateValue.amount.text.toLong()
+                val amountValue = uiStateValue.amount.text.toLongOrZero()
                 val amount = Amount(
                     value = amountValue,
                 )
@@ -500,7 +502,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             val uiStateValue = uiState.value
             selectedTransactionTypeValue?.let {
                 val amount = Amount(
-                    value = uiStateValue.amount.text.toLong(),
+                    value = uiStateValue.amount.text.toLongOrZero(),
                 )
                 val categoryId = when (selectedTransactionTypeValue) {
                     TransactionType.INCOME -> {
@@ -646,7 +648,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     uiStateValue.sourceFrom?.let { sourceFrom ->
                         sourceBalanceAmountChangeMap[sourceFrom.id] =
                             (sourceBalanceAmountChangeMap[sourceFrom.id]
-                                ?: 0) - uiState.value.amount.text.toLong()
+                                ?: 0) - uiState.value.amount.text.toLongOrZero()
                     }
                     originalTransactionData.value?.sourceTo?.let { transactionSourceTo ->
                         sourceBalanceAmountChangeMap[transactionSourceTo.id] =
@@ -656,7 +658,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     uiStateValue.sourceTo?.let { sourceTo ->
                         sourceBalanceAmountChangeMap[sourceTo.id] =
                             (sourceBalanceAmountChangeMap[sourceTo.id]
-                                ?: 0) + uiState.value.amount.text.toLong()
+                                ?: 0) + uiState.value.amount.text.toLongOrZero()
                     }
                     updateSourcesBalanceAmountUseCase(
                         sourcesBalanceAmountChange = sourceBalanceAmountChangeMap.toList(),

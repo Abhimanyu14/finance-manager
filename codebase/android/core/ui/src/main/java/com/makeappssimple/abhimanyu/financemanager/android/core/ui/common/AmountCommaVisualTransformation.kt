@@ -4,6 +4,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.currency.formattedCurrencyValue
 
 /**
@@ -18,7 +19,7 @@ class AmountCommaVisualTransformation : VisualTransformation {
         return TransformedText(
             text = AnnotatedString(
                 formattedCurrencyValue(
-                    value = text.text.toLongOrNull() ?: 0,
+                    value = text.text.toLongOrZero(),
                 ),
             ),
             offsetMapping = object : OffsetMapping {
@@ -26,7 +27,7 @@ class AmountCommaVisualTransformation : VisualTransformation {
                     offset: Int,
                 ): Int {
                     return formattedCurrencyValue(
-                        value = text.text.toLongOrNull() ?: 0,
+                        value = text.text.toLongOrZero(),
                     ).length
                 }
 

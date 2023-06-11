@@ -45,3 +45,23 @@ fun String.filterDigits(): String {
         it.isDigit()
     }
 }
+
+fun String.toIntOrZero(): Int {
+    return try {
+        this.toInt()
+    } catch (
+        exception: Exception,
+    ) {
+        0
+    }
+}
+
+fun String.toLongOrZero(): Long {
+    return try {
+        this.toLong()
+    } catch (
+        exception: Exception,
+    ) {
+        0L
+    }
+}

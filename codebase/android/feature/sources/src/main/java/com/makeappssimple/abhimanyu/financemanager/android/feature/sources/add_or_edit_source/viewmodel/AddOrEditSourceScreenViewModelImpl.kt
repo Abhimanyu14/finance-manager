@@ -10,6 +10,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toIntOrZero
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCase
@@ -131,27 +133,13 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
 
     override fun updateSource() {
         val originalSourceValue = originalSource.value ?: return
-        val balanceAmountValueToInt = try {
-            balanceAmountValue.value.text.toInt()
-        } catch (
-            exception: Exception,
-        ) {
-            0
-        }
-        val balanceAmountValueToLong = try {
-            balanceAmountValue.value.text.toLong()
-        } catch (
-            exception: Exception,
-        ) {
-            0L
-        }
-
-        val amountChangeValue = balanceAmountValueToInt - originalSourceValue.balanceAmount.value
+        val amountChangeValue =
+            balanceAmountValue.value.text.toIntOrZero() - originalSourceValue.balanceAmount.value
         val updatedSource = originalSourceValue
             .copy(
                 balanceAmount = originalSourceValue.balanceAmount
                     .copy(
-                        value = balanceAmountValueToLong,
+                        value = balanceAmountValue.value.text.toLongOrZero(),
                     ),
                 type = if (originalSourceValue.type != SourceType.CASH) {
                     validSourceTypes[selectedSourceTypeIndex.value]
