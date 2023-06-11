@@ -9,6 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.filterDigits
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toIntOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
@@ -307,9 +308,13 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
         }
 
         if (
-            isDefaultSource(
+            (originalSource.isNull() && isDefaultSource(
                 source = name.trim(),
-            )
+            )) || (originalSource.isNotNull() && isDefaultSource(
+                source = name.trim(),
+            ) && isDefaultSource(
+                source = originalSource.name,
+            ).not())
         ) {
             errorData.update {
                 errorData.value.copy(
@@ -329,9 +334,9 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
             true
         }
 
-        val result = name.trim() == originalSource?.name?.trim() || doesNotExist
+        val isValidData = name.trim() == originalSource?.name?.trim() || doesNotExist
         errorData.update {
-            if (result) {
+            if (isValidData) {
                 AddOrEditSourceScreenUIErrorData()
             } else {
                 errorData.value.copy(
@@ -340,6 +345,6 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
             }
         }
 
-        return result
+        return isValidData
     }
 }
