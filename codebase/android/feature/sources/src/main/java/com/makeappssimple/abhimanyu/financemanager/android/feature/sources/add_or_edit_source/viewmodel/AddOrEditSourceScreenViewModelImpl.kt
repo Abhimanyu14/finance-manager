@@ -28,7 +28,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultSource
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUIErrorData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUIVisibilityData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUIErrorText
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.navigation.AddOrEditSourceScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -104,13 +104,9 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
             originalSource = originalSource,
         )
         AddOrEditSourceScreenUIData(
-            visibilityData = AddOrEditSourceScreenUIVisibilityData(
-                balanceAmount = false,
-                name = sourceIsNotCash,
-                sourceTypes = sourceIsNotCash,
-            ),
             errorData = errorData,
             isValidSourceData = isValidSourceData,
+            sourceIsNotCash = sourceIsNotCash,
             selectedSourceTypeIndex = selectedSourceTypeIndex,
             sourceTypes = validSourceTypes,
             balanceAmountValue = balanceAmountValue,
@@ -135,12 +131,27 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
 
     override fun updateSource() {
         val originalSourceValue = originalSource.value ?: return
-        val amountValue = balanceAmountValue.value.text.toInt() - originalSourceValue.balanceAmount.value
+        val balanceAmountValueToInt = try {
+            balanceAmountValue.value.text.toInt()
+        } catch (
+            exception: Exception,
+        ) {
+            0
+        }
+        val balanceAmountValueToLong = try {
+            balanceAmountValue.value.text.toLong()
+        } catch (
+            exception: Exception,
+        ) {
+            0L
+        }
+
+        val amountChangeValue = balanceAmountValueToInt - originalSourceValue.balanceAmount.value
         val updatedSource = originalSourceValue
             .copy(
                 balanceAmount = originalSourceValue.balanceAmount
                     .copy(
-                        value = balanceAmountValue.value.text.toLong(),
+                        value = balanceAmountValueToLong,
                     ),
                 type = if (originalSourceValue.type != SourceType.CASH) {
                     validSourceTypes[selectedSourceTypeIndex.value]
@@ -155,22 +166,22 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
-            val sourceFromId = if (amountValue < 0L) {
+            val sourceFromId = if (amountChangeValue < 0L) {
                 updatedSource.id
             } else {
                 null
             }
-            val sourceToId = if (amountValue < 0L) {
+            val sourceToId = if (amountChangeValue < 0L) {
                 null
             } else {
                 updatedSource.id
             }
 
-            if (amountValue != 0L) {
+            if (amountChangeValue != 0L) {
                 insertTransactionsUseCase(
                     Transaction(
                         amount = Amount(
-                            value = abs(amountValue),
+                            value = abs(amountChangeValue),
                         ),
                         categoryId = null,
                         sourceFromId = sourceFromId,
@@ -303,7 +314,6 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
         name: String,
         originalSource: Source?,
     ): Boolean {
-        // TODO-Abhi: Error message - "Name can not be empty"
         if (name.isBlank()) {
             return false
         }
@@ -315,7 +325,7 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
         ) {
             errorData.update {
                 errorData.value.copy(
-                    name = "Source already exists" // TODO(Abhi): Move to string resources
+                    nameTextField = AddOrEditSourceScreenUIErrorText.SOURCE_EXISTS
                 )
             }
             return false
@@ -337,7 +347,7 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
                 AddOrEditSourceScreenUIErrorData()
             } else {
                 errorData.value.copy(
-                    name = "Source already exists" // TODO(Abhi): Move to string resources
+                    nameTextField = AddOrEditSourceScreenUIErrorText.SOURCE_EXISTS
                 )
             }
         }

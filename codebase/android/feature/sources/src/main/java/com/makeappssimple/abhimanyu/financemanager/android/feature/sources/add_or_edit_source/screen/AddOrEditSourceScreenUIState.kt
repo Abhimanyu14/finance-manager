@@ -9,29 +9,53 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.input.TextFieldValue
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.icon
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 
 @Stable
 class AddOrEditSourceScreenUIState(
     data: AddOrEditSourceScreenUIData,
+    isEdit: Boolean,
     val addOrEditSourceBottomSheetType: AddOrEditSourceBottomSheetType,
     val nameTextFieldFocusRequester: FocusRequester,
     val balanceAmountTextFieldFocusRequester: FocusRequester,
     val updateBottomSheetType: (AddOrEditSourceBottomSheetType) -> Unit,
 ) {
-    val isBalanceAmountTextFieldVisible: Boolean = data.visibilityData.balanceAmount
+    val visibilityData = AddOrEditSourceScreenUIVisibilityData(
+        balanceAmountTextField = isEdit,
+        nameTextField = if (isEdit) {
+            data.sourceIsNotCash
+        } else {
+            true
+        },
+        nameTextFieldErrorText = data.errorData.nameTextField.isNotNull(),
+        sourceTypesRadioGroup = if (isEdit) {
+            data.sourceIsNotCash
+        } else {
+            true
+        },
+    )
     val isCtaButtonEnabled: Boolean = data.isValidSourceData
-    val isNameTextFieldVisible: Boolean = data.visibilityData.name
-    val isNameTextFieldErrorTextVisible: Boolean = data.errorData.name.isNotNullOrBlank()
-    val isSourceTypesRadioGroupVisible: Boolean = data.visibilityData.sourceTypes
 
     @StringRes
-    val appBarTitleTextStringResourceId: Int = data.appBarTitleTextStringResourceId
+    val appBarTitleTextStringResourceId: Int = if (isEdit) {
+        R.string.screen_edit_source_appbar_title
+    } else {
+        R.string.screen_add_source_appbar_title
+    }
 
     @StringRes
-    val ctaButtonLabelTextStringResourceId: Int = data.ctaButtonLabelTextStringResourceId
+    val ctaButtonLabelTextStringResourceId: Int = if (isEdit) {
+        R.string.screen_edit_source_floating_action_button_content_description
+    } else {
+        R.string.screen_add_source_floating_action_button_content_description
+    }
+
+    @StringRes
+    val nameTextFieldErrorTextStringResourceId: Int? = data.errorData.nameTextField?.textStringResourceId
+
     val selectedSourceTypeIndex: Int = data.selectedSourceTypeIndex
     val sourceTypesChipUIDataList: List<ChipUIData> = data.sourceTypes
         .map { sourceType ->
@@ -40,7 +64,7 @@ class AddOrEditSourceScreenUIState(
                 icon = sourceType.icon,
             )
         }
-    val nameTextFieldErrorText: String = data.errorData.name.orEmpty()
+
     val balanceAmountValue: TextFieldValue = data.balanceAmountValue
     val name: TextFieldValue = data.name
     val resetBottomSheetType: () -> Unit = {
@@ -51,6 +75,7 @@ class AddOrEditSourceScreenUIState(
 @Composable
 fun rememberAddOrEditSourceScreenUIState(
     data: AddOrEditSourceScreenUIData,
+    isEdit: Boolean,
 ): AddOrEditSourceScreenUIState {
     var addOrEditSourceBottomSheetType by remember {
         mutableStateOf(
@@ -70,12 +95,14 @@ fun rememberAddOrEditSourceScreenUIState(
 
     return remember(
         data,
+        isEdit,
         addOrEditSourceBottomSheetType,
         nameTextFieldFocusRequester,
         balanceAmountTextFieldFocusRequester,
     ) {
         AddOrEditSourceScreenUIState(
             data = data,
+            isEdit = isEdit,
             addOrEditSourceBottomSheetType = addOrEditSourceBottomSheetType,
             nameTextFieldFocusRequester = nameTextFieldFocusRequester,
             balanceAmountTextFieldFocusRequester = balanceAmountTextFieldFocusRequester,

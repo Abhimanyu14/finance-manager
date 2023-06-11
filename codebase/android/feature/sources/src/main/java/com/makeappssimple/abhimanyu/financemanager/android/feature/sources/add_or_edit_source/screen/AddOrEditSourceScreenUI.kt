@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
@@ -40,26 +41,33 @@ enum class AddOrEditSourceBottomSheetType : BottomSheetType {
     NONE,
 }
 
+enum class AddOrEditSourceScreenUIErrorText(
+    @StringRes val textStringResourceId: Int,
+) {
+    SOURCE_EXISTS(
+        textStringResourceId = R.string.screen_add_or_edit_source_error_source_exists,
+    ),
+}
+
 @Immutable
 data class AddOrEditSourceScreenUIVisibilityData(
-    val balanceAmount: Boolean = false,
-    val name: Boolean = false,
-    val sourceTypes: Boolean = false,
+    val balanceAmountTextField: Boolean = false,
+    val nameTextField: Boolean = false,
+    val nameTextFieldErrorText: Boolean = false,
+    val sourceTypesRadioGroup: Boolean = false,
 )
 
 @Immutable
 data class AddOrEditSourceScreenUIErrorData(
-    val balanceAmount: String? = null,
-    val name: String? = null,
+    val balanceAmountTextField: AddOrEditSourceScreenUIErrorText? = null,
+    val nameTextField: AddOrEditSourceScreenUIErrorText? = null,
 )
 
 @Immutable
 data class AddOrEditSourceScreenUIData(
     val errorData: AddOrEditSourceScreenUIErrorData = AddOrEditSourceScreenUIErrorData(),
-    val visibilityData: AddOrEditSourceScreenUIVisibilityData = AddOrEditSourceScreenUIVisibilityData(),
     val isValidSourceData: Boolean = false,
-    @StringRes val appBarTitleTextStringResourceId: Int = 0,
-    @StringRes val ctaButtonLabelTextStringResourceId: Int = 0,
+    val sourceIsNotCash: Boolean = false,
     val selectedSourceTypeIndex: Int = 0,
     val sourceTypes: List<SourceType> = emptyList(),
     val balanceAmountValue: TextFieldValue = TextFieldValue(),
@@ -84,8 +92,8 @@ internal fun AddOrEditSourceScreenUI(
     state: CommonScreenUIState,
 ) {
     LaunchedEffect(
-        key1 = uiState.isNameTextFieldVisible,
-        key2 = uiState.isBalanceAmountTextFieldVisible,
+        key1 = uiState.visibilityData.balanceAmountTextField,
+        key2 = uiState.visibilityData.nameTextField,
     ) {
         /*
         TODO(Abhi): Fix focus requester
@@ -138,7 +146,7 @@ internal fun AddOrEditSourceScreenUI(
                     state = rememberScrollState(),
                 ),
         ) {
-            if (uiState.isSourceTypesRadioGroupVisible) {
+            if (uiState.visibilityData.sourceTypesRadioGroup) {
                 MyRadioGroup(
                     items = uiState.sourceTypesChipUIDataList,
                     selectedItemIndex = uiState.selectedSourceTypeIndex,
@@ -152,7 +160,7 @@ internal fun AddOrEditSourceScreenUI(
                         ),
                 )
             }
-            if (uiState.isNameTextFieldVisible) {
+            if (uiState.visibilityData.nameTextField) {
                 MyOutlinedTextField(
                     textFieldValue = uiState.name,
                     labelTextStringResourceId = R.string.screen_add_or_edit_source_name,
@@ -163,17 +171,21 @@ internal fun AddOrEditSourceScreenUI(
                     },
                     supportingText = {
                         AnimatedVisibility(
-                            visible = uiState.isNameTextFieldErrorTextVisible,
+                            visible = uiState.visibilityData.nameTextFieldErrorText,
                         ) {
                             MyText(
-                                text = uiState.nameTextFieldErrorText,
+                                text = uiState.nameTextFieldErrorTextStringResourceId?.run {
+                                    stringResource(
+                                        id = uiState.nameTextFieldErrorTextStringResourceId,
+                                    )
+                                }.orEmpty(),
                                 style = MaterialTheme.typography.bodySmall.copy(
                                     color = MaterialTheme.colorScheme.error,
                                 ),
                             )
                         }
                     },
-                    isError = uiState.isNameTextFieldErrorTextVisible,
+                    isError = uiState.visibilityData.nameTextFieldErrorText,
                     keyboardActions = KeyboardActions(
                         onNext = {
                             state.focusManager.moveFocus(
@@ -196,11 +208,11 @@ internal fun AddOrEditSourceScreenUI(
                         ),
                 )
             }
-            if (uiState.isBalanceAmountTextFieldVisible) {
+            if (uiState.visibilityData.balanceAmountTextField) {
                 MyOutlinedTextField(
                     textFieldValue = uiState.balanceAmountValue,
-                    labelTextStringResourceId = R.string.screen_edit_source_balance_amount_value,
-                    trailingIconContentDescriptionTextStringResourceId = R.string.screen_edit_source_clear_balance_amount_value,
+                    labelTextStringResourceId = R.string.screen_add_or_edit_source_balance_amount_value,
+                    trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_source_clear_balance_amount_value,
                     onClickTrailingIcon = events.clearBalanceAmountValue,
                     onValueChange = { updatedBalanceAmountValue ->
                         events.updateBalanceAmountValue(updatedBalanceAmountValue)
