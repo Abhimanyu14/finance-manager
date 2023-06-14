@@ -15,14 +15,17 @@ fun AnalysisScreen(
     screenViewModel.logger.logError(
         message = "Inside AnalysisScreen",
     )
+
     val screenUIData: AnalysisScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
 
     AnalysisScreenUI(
-        data = screenUIData ?: AnalysisScreenUIData(),
         events = AnalysisScreenUIEvents(
             navigateUp = screenViewModel::navigateUp,
             updateSelectedFilter = screenViewModel::updateSelectedFilter,
             updateSelectedTransactionTypeIndex = screenViewModel::updateSelectedTransactionTypeIndex,
+        ),
+        uiState = rememberAnalysisScreenUIState(
+            data = screenUIData ?: AnalysisScreenUIData(),
         ),
         state = rememberCommonScreenUIState(),
     )

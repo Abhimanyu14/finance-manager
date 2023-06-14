@@ -11,13 +11,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.FilterAlt
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
@@ -38,7 +33,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.comp
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.viewmodel.Filter
 import java.time.LocalDate
 
-private enum class AnalysisBottomSheetType : BottomSheetType {
+enum class AnalysisBottomSheetType : BottomSheetType {
     FILTERS,
     NONE,
 }
@@ -65,54 +60,39 @@ internal data class AnalysisScreenUIEvents(
 
 @Composable
 internal fun AnalysisScreenUI(
-    data: AnalysisScreenUIData,
     events: AnalysisScreenUIEvents,
+    uiState: AnalysisScreenUIState,
     state: CommonScreenUIState,
 ) {
-    val textMeasurer = rememberTextMeasurer()
-    val maxAmountTextWidth: Int = if (data.transactionDataMappedByCategory.isEmpty()) {
-        0
-    } else {
-        data.transactionDataMappedByCategory.maxOf {
-            textMeasurer.measure(it.amountText).size.width
-        }
-    }
-    var analysisBottomSheetType by remember {
-        mutableStateOf(
-            value = AnalysisBottomSheetType.NONE,
-        )
-    }
-    val resetBottomSheetType = {
-        analysisBottomSheetType = AnalysisBottomSheetType.NONE
-    }
+
 
     BottomSheetHandler(
-        showModalBottomSheet = analysisBottomSheetType != AnalysisBottomSheetType.NONE,
-        bottomSheetType = analysisBottomSheetType,
+        showModalBottomSheet = uiState.analysisBottomSheetType != AnalysisBottomSheetType.NONE,
+        bottomSheetType = uiState.analysisBottomSheetType,
         coroutineScope = state.coroutineScope,
         modalBottomSheetState = state.modalBottomSheetState,
         keyboardController = state.keyboardController,
-        resetBottomSheetType = resetBottomSheetType,
+        resetBottomSheetType = uiState.resetBottomSheetType,
     )
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
         sheetContent = {
-            when (analysisBottomSheetType) {
+            when (uiState.analysisBottomSheetType) {
                 AnalysisBottomSheetType.FILTERS -> {
                     AnalysisFilterBottomSheet(
                         context = state.context,
-                        selectedFilter = data.selectedFilter,
+                        selectedFilter = uiState.selectedFilter,
                         headingTextStringResourceId = R.string.bottom_sheet_analysis_filter_transaction_date,
-                        currentTimeMillis = data.currentTimeMillis,
-                        maxDate = data.defaultMaxLocalDate,
-                        minDate = data.defaultMinLocalDate,
-                        startOfMonthDate = data.startOfMonthLocalDate,
-                        startOfYearDate = data.startOfYearLocalDate,
+                        currentTimeMillis = uiState.currentTimeMillis,
+                        maxDate = uiState.defaultMaxLocalDate,
+                        minDate = uiState.defaultMinLocalDate,
+                        startOfMonthDate = uiState.startOfMonthLocalDate,
+                        startOfYearDate = uiState.startOfYearLocalDate,
                         onNegativeButtonClick = {},
                         onPositiveButtonClick = {
                             events.updateSelectedFilter(it)
-                            resetBottomSheetType()
+                            uiState.resetBottomSheetType()
                         },
                     )
                 }
@@ -131,9 +111,9 @@ internal fun AnalysisScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
-        backHandlerEnabled = analysisBottomSheetType != AnalysisBottomSheetType.NONE,
+        backHandlerEnabled = uiState.analysisBottomSheetType != AnalysisBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = resetBottomSheetType,
+        onBackPress = uiState.resetBottomSheetType,
         modifier = Modifier
             .fillMaxSize(),
     ) {
@@ -144,8 +124,8 @@ internal fun AnalysisScreenUI(
             Row {
                 MyHorizontalScrollingRadioGroup(
                     horizontalArrangement = Arrangement.Start,
-                    items = data.transactionTypesChipUIData,
-                    selectedItemIndex = data.selectedTransactionTypeIndex,
+                    items = uiState.transactionTypesChipUIData,
+                    selectedItemIndex = uiState.selectedTransactionTypeIndex,
                     onSelectionChange = { updatedSelectedTransactionTypeIndex ->
                         events.updateSelectedTransactionTypeIndex(
                             updatedSelectedTransactionTypeIndex
@@ -162,13 +142,13 @@ internal fun AnalysisScreenUI(
                 )
                 ActionButton(
                     data = ActionButtonData(
-                        isIndicatorVisible = data.selectedFilter.areFiltersSelected(),
+                        isIndicatorVisible = uiState.selectedFilter.areFiltersSelected(),
                         imageVector = Icons.Rounded.FilterAlt,
                         contentDescriptionStringResourceId = R.string.screen_analysis_filter_button_content_description,
                     ),
                     events = ActionButtonEvents(
                         onClick = {
-                            analysisBottomSheetType = AnalysisBottomSheetType.FILTERS
+                            uiState.setAnalysisBottomSheetType(AnalysisBottomSheetType.FILTERS)
                         },
                     ),
                     modifier = Modifier
@@ -183,14 +163,14 @@ internal fun AnalysisScreenUI(
                     .fillMaxSize(),
             ) {
                 items(
-                    items = data.transactionDataMappedByCategory,
+                    items = uiState.transactionDataMappedByCategory,
                     key = { listItem ->
                         listItem.hashCode()
                     },
                 ) { listItem ->
                     AnalysisListItem(
                         data = listItem.copy(
-                            maxEndTextWidth = maxAmountTextWidth,
+                            maxEndTextWidth = uiState.maxAmountTextWidth,
                         ),
                         events = AnalysisListItemEvents(),
                     )
