@@ -8,10 +8,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -30,7 +26,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sourc
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.SourcesListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.SourcesListItemEvents
 
-private enum class SourcesBottomSheetType : BottomSheetType {
+enum class SourcesBottomSheetType : BottomSheetType {
     DELETE_CONFIRMATION,
     NONE,
     SET_AS_DEFAULT_CONFIRMATION,
@@ -52,59 +48,35 @@ internal data class SourcesScreenUIEvents(
 
 @Composable
 internal fun SourcesScreenUI(
-    data: SourcesScreenUIData,
     events: SourcesScreenUIEvents,
+    uiState: SourcesScreenUIState,
     state: CommonScreenUIState,
 ) {
-    var sourcesBottomSheetType by remember {
-        mutableStateOf(
-            value = SourcesBottomSheetType.NONE,
-        )
-    }
-    var expandedItemIndex: Int? by remember {
-        mutableStateOf(
-            value = null,
-        )
-    }
-    var clickedItemId: Int? by remember {
-        mutableStateOf(
-            value = null,
-        )
-    }
-    var sourceIdToDelete: Int? by remember {
-        mutableStateOf(
-            value = null,
-        )
-    }
-    val resetBottomSheetType = {
-        sourcesBottomSheetType = SourcesBottomSheetType.NONE
-    }
-
     BottomSheetHandler(
-        showModalBottomSheet = sourcesBottomSheetType != SourcesBottomSheetType.NONE,
-        bottomSheetType = sourcesBottomSheetType,
+        showModalBottomSheet = uiState.sourcesBottomSheetType != SourcesBottomSheetType.NONE,
+        bottomSheetType = uiState.sourcesBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = resetBottomSheetType,
+        resetBottomSheetType = uiState.resetBottomSheetType,
     )
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
         sheetContent = {
-            when (sourcesBottomSheetType) {
+            when (uiState.sourcesBottomSheetType) {
                 SourcesBottomSheetType.DELETE_CONFIRMATION -> {
                     SourcesDeleteConfirmationBottomSheetContent(
-                        sourceIdToDelete = sourceIdToDelete,
-                        resetBottomSheetType = resetBottomSheetType,
+                        sourceIdToDelete = uiState.sourceIdToDelete,
+                        resetBottomSheetType = uiState.resetBottomSheetType,
                         resetSourceIdToDelete = {
-                            sourceIdToDelete = null
+                            uiState.setSourceIdToDelete(null)
                         },
                         resetExpandedItemIndex = {
-                            expandedItemIndex = null
+                            uiState.setExpandedItemIndex(null)
                         },
                     ) {
-                        sourceIdToDelete?.let { sourceId ->
+                        uiState.sourceIdToDelete?.let { sourceId ->
                             events.deleteSource(sourceId)
                         }
                     }
@@ -116,13 +88,13 @@ internal fun SourcesScreenUI(
 
                 SourcesBottomSheetType.SET_AS_DEFAULT_CONFIRMATION -> {
                     SourcesSetAsDefaultConfirmationBottomSheetContent(
-                        clickedItemId = clickedItemId,
-                        resetBottomSheetType = resetBottomSheetType,
+                        clickedItemId = uiState.clickedItemId,
+                        resetBottomSheetType = uiState.resetBottomSheetType,
                         resetClickedItemId = {
-                            clickedItemId = null
+                            uiState.setClickedItemId(null)
                         },
                     ) {
-                        clickedItemId?.let { clickedItemIdValue ->
+                        uiState.clickedItemId?.let { clickedItemIdValue ->
                             events.setDefaultSourceIdInDataStore(clickedItemIdValue)
                         }
                     }
@@ -147,9 +119,9 @@ internal fun SourcesScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
-        backHandlerEnabled = sourcesBottomSheetType != SourcesBottomSheetType.NONE,
+        backHandlerEnabled = uiState.sourcesBottomSheetType != SourcesBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = resetBottomSheetType,
+        onBackPress = uiState.resetBottomSheetType,
         modifier = Modifier
             .fillMaxSize(),
     ) {
@@ -162,38 +134,38 @@ internal fun SourcesScreenUI(
                 TotalBalanceCard()
             }
             itemsIndexed(
-                items = data.sourcesListItemDataList,
+                items = uiState.sourcesListItemDataList,
                 key = { _, listItem ->
                     listItem.hashCode()
                 },
             ) { index, listItem ->
                 SourcesListItem(
                     data = listItem.copy(
-                        isExpanded = index == expandedItemIndex
+                        isExpanded = index == uiState.expandedItemIndex
                     ),
                     events = SourcesListItemEvents(
                         onClick = {
-                            expandedItemIndex = if (index == expandedItemIndex) {
-                                null
-                            } else {
-                                index
-                            }
+                            uiState.setExpandedItemIndex(
+                                if (index == uiState.expandedItemIndex) {
+                                    null
+                                } else {
+                                    index
+                                }
+                            )
                         },
                         onLongClick = {
                             if (!listItem.isDefault) {
-                                sourcesBottomSheetType =
-                                    SourcesBottomSheetType.SET_AS_DEFAULT_CONFIRMATION
-                                clickedItemId = listItem.sourceId
+                                uiState.setSourcesBottomSheetType(SourcesBottomSheetType.SET_AS_DEFAULT_CONFIRMATION)
+                                uiState.setClickedItemId(listItem.sourceId)
                             }
                         },
                         onEditClick = {
                             events.navigateToEditSourceScreen(listItem.sourceId)
-                            expandedItemIndex = null
+                            uiState.setExpandedItemIndex(null)
                         },
                         onDeleteClick = {
-                            sourceIdToDelete = listItem.sourceId
-                            sourcesBottomSheetType =
-                                SourcesBottomSheetType.DELETE_CONFIRMATION
+                            uiState.setSourceIdToDelete(listItem.sourceId)
+                            uiState.setSourcesBottomSheetType(SourcesBottomSheetType.DELETE_CONFIRMATION)
                         },
                     ),
                 )

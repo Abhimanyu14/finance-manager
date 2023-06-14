@@ -3,10 +3,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
@@ -18,10 +16,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 class AddOrEditSourceScreenUIState(
     data: AddOrEditSourceScreenUIData,
     isEdit: Boolean,
+    setAddOrEditSourceBottomSheetType: (AddOrEditSourceBottomSheetType) -> Unit,
     val addOrEditSourceBottomSheetType: AddOrEditSourceBottomSheetType,
     val nameTextFieldFocusRequester: FocusRequester,
     val balanceAmountTextFieldFocusRequester: FocusRequester,
-    val updateBottomSheetType: (AddOrEditSourceBottomSheetType) -> Unit,
 ) {
     val visibilityData = AddOrEditSourceScreenUIVisibilityData(
         balanceAmountTextField = isEdit,
@@ -54,7 +52,8 @@ class AddOrEditSourceScreenUIState(
     }
 
     @StringRes
-    val nameTextFieldErrorTextStringResourceId: Int? = data.errorData.nameTextField?.textStringResourceId
+    val nameTextFieldErrorTextStringResourceId: Int? =
+        data.errorData.nameTextField?.textStringResourceId
 
     val selectedSourceTypeIndex: Int = data.selectedSourceTypeIndex
     val sourceTypesChipUIDataList: List<ChipUIData> = data.sourceTypes
@@ -68,7 +67,7 @@ class AddOrEditSourceScreenUIState(
     val balanceAmountValue: TextFieldValue = data.balanceAmountValue
     val name: TextFieldValue = data.name
     val resetBottomSheetType: () -> Unit = {
-        updateBottomSheetType(AddOrEditSourceBottomSheetType.NONE)
+        setAddOrEditSourceBottomSheetType(AddOrEditSourceBottomSheetType.NONE)
     }
 }
 
@@ -77,7 +76,7 @@ fun rememberAddOrEditSourceScreenUIState(
     data: AddOrEditSourceScreenUIData,
     isEdit: Boolean,
 ): AddOrEditSourceScreenUIState {
-    var addOrEditSourceBottomSheetType by remember {
+    val (addOrEditSourceBottomSheetType, setAddOrEditSourceBottomSheetType) = remember {
         mutableStateOf(
             value = AddOrEditSourceBottomSheetType.NONE,
         )
@@ -88,10 +87,6 @@ fun rememberAddOrEditSourceScreenUIState(
     val balanceAmountTextFieldFocusRequester = remember {
         FocusRequester()
     }
-    val updateBottomSheetType: (AddOrEditSourceBottomSheetType) -> Unit =
-        { updatedBottomSheetType ->
-            addOrEditSourceBottomSheetType = updatedBottomSheetType
-        }
 
     return remember(
         data,
@@ -106,7 +101,7 @@ fun rememberAddOrEditSourceScreenUIState(
             addOrEditSourceBottomSheetType = addOrEditSourceBottomSheetType,
             nameTextFieldFocusRequester = nameTextFieldFocusRequester,
             balanceAmountTextFieldFocusRequester = balanceAmountTextFieldFocusRequester,
-            updateBottomSheetType = updateBottomSheetType,
+            setAddOrEditSourceBottomSheetType = setAddOrEditSourceBottomSheetType,
         )
     }
 }

@@ -16,10 +16,10 @@ fun SourcesScreen(
     screenViewModel.logger.logError(
         message = "Inside SourcesScreen",
     )
+
     val screenUIData: SourcesScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
 
     SourcesScreenUI(
-        data = screenUIData ?: SourcesScreenUIData(),
         events = SourcesScreenUIEvents(
             deleteSource = { sourceId ->
                 screenViewModel.deleteSource(
@@ -48,6 +48,9 @@ fun SourcesScreen(
                     defaultSourceId = clickedItemIdValue,
                 )
             },
+        ),
+        uiState = rememberSourcesScreenUIState(
+            data = screenUIData ?: SourcesScreenUIData(),
         ),
         state = rememberCommonScreenUIState(),
     )
