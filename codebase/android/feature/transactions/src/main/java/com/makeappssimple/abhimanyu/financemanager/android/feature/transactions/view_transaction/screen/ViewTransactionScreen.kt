@@ -27,7 +27,6 @@ fun ViewTransactionScreen(
     }
 
     ViewTransactionScreenUI(
-        data = screenUIData ?: ViewTransactionScreenUIData(),
         events = ViewTransactionScreenUIEvents(
             deleteTransaction = { transactionId ->
                 screenViewModel.deleteTransaction(
@@ -56,6 +55,9 @@ fun ViewTransactionScreen(
                     navigationCommand = MyNavigationDirections.NavigateUp
                 )
             },
+        ),
+        uiState = rememberViewTransactionScreenUIState(
+            data = screenUIData ?: ViewTransactionScreenUIData(),
         ),
         state = rememberCommonScreenUIState(),
     )

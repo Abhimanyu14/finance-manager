@@ -10,10 +10,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
@@ -32,7 +28,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tra
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.common.TransactionDeleteConfirmationBottomSheetContent
 
-private enum class ViewTransactionBottomSheetType : BottomSheetType {
+enum class ViewTransactionBottomSheetType : BottomSheetType {
     DELETE_CONFIRMATION,
     NONE,
 }
@@ -54,46 +50,32 @@ internal data class ViewTransactionScreenUIEvents(
 
 @Composable
 internal fun ViewTransactionScreenUI(
-    data: ViewTransactionScreenUIData,
     events: ViewTransactionScreenUIEvents,
+    uiState: ViewTransactionScreenUIState,
     state: CommonScreenUIState,
 ) {
-    var viewTransactionBottomSheetType by remember {
-        mutableStateOf(
-            value = ViewTransactionBottomSheetType.NONE,
-        )
-    }
-    var transactionIdToDelete: Int? by remember {
-        mutableStateOf(
-            value = null,
-        )
-    }
-    val resetBottomSheetType = {
-        viewTransactionBottomSheetType = ViewTransactionBottomSheetType.NONE
-    }
-
     BottomSheetHandler(
-        showModalBottomSheet = viewTransactionBottomSheetType != ViewTransactionBottomSheetType.NONE,
-        bottomSheetType = viewTransactionBottomSheetType,
+        showModalBottomSheet = uiState.viewTransactionBottomSheetType != ViewTransactionBottomSheetType.NONE,
+        bottomSheetType = uiState.viewTransactionBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = resetBottomSheetType,
+        resetBottomSheetType = uiState.resetBottomSheetType,
     )
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
         sheetContent = {
-            when (viewTransactionBottomSheetType) {
+            when (uiState.viewTransactionBottomSheetType) {
                 ViewTransactionBottomSheetType.DELETE_CONFIRMATION -> {
                     TransactionDeleteConfirmationBottomSheetContent(
-                        transactionIdToDelete = transactionIdToDelete,
-                        resetBottomSheetType = resetBottomSheetType,
+                        transactionIdToDelete = uiState.transactionIdToDelete,
+                        resetBottomSheetType = uiState.resetBottomSheetType,
                         resetTransactionIdToDelete = {
-                            transactionIdToDelete = null
+                            uiState.setTransactionIdToDelete(null)
                         },
                         deleteTransaction = {
-                            transactionIdToDelete?.let { transactionIdToDeleteValue ->
+                            uiState.transactionIdToDelete?.let { transactionIdToDeleteValue ->
                                 events.deleteTransaction(transactionIdToDeleteValue)
                             }
                         },
@@ -114,9 +96,9 @@ internal fun ViewTransactionScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
-        backHandlerEnabled = viewTransactionBottomSheetType != ViewTransactionBottomSheetType.NONE,
+        backHandlerEnabled = uiState.viewTransactionBottomSheetType != ViewTransactionBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = resetBottomSheetType,
+        onBackPress = uiState.resetBottomSheetType,
         modifier = Modifier
             .fillMaxSize(),
     ) {
@@ -125,26 +107,27 @@ internal fun ViewTransactionScreenUI(
                 .fillMaxSize(),
         ) {
             AnimatedVisibility(
-                visible = data.transactionListItemData.isNull(),
+                visible = uiState.transactionListItemData.isNull(),
             ) {
                 MyLinearProgressIndicator()
             }
             AnimatedVisibility(
-                visible = data.transactionListItemData.isNotNull(),
+                visible = uiState.transactionListItemData.isNotNull(),
             ) {
-                data.transactionListItemData?.let { transactionListItemData ->
+                uiState.transactionListItemData?.let { transactionListItemData ->
                     TransactionListItem(
                         modifier = Modifier
                             .padding(
                                 top = 8.dp,
                                 bottom = 8.dp,
                             ),
-                        data = data.transactionListItemData,
+                        data = uiState.transactionListItemData,
                         events = TransactionListItemEvents(
                             onDeleteButtonClick = {
-                                transactionIdToDelete = transactionListItemData.transactionId
-                                viewTransactionBottomSheetType =
+                                uiState.setTransactionIdToDelete(transactionListItemData.transactionId)
+                                uiState.setViewTransactionBottomSheetType(
                                     ViewTransactionBottomSheetType.DELETE_CONFIRMATION
+                                )
                             },
                             onEditButtonClick = {
                                 events.navigateToEditTransactionScreen(transactionListItemData.transactionId)
@@ -157,9 +140,9 @@ internal fun ViewTransactionScreenUI(
                 }
             }
             AnimatedVisibility(
-                visible = data.originalTransactionListItemData.isNotNull(),
+                visible = uiState.originalTransactionListItemData.isNotNull(),
             ) {
-                data.originalTransactionListItemData?.let { transactionListItemData ->
+                uiState.originalTransactionListItemData?.let { transactionListItemData ->
                     Column(
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -186,9 +169,10 @@ internal fun ViewTransactionScreenUI(
                             data = transactionListItemData,
                             events = TransactionListItemEvents(
                                 onDeleteButtonClick = {
-                                    transactionIdToDelete = transactionListItemData.transactionId
-                                    viewTransactionBottomSheetType =
+                                    uiState.setTransactionIdToDelete(transactionListItemData.transactionId)
+                                    uiState.setViewTransactionBottomSheetType(
                                         ViewTransactionBottomSheetType.DELETE_CONFIRMATION
+                                    )
                                 },
                                 onEditButtonClick = {
                                     events.navigateToEditTransactionScreen(transactionListItemData.transactionId)
@@ -202,14 +186,14 @@ internal fun ViewTransactionScreenUI(
                 }
             }
             AnimatedVisibility(
-                visible = data.refundTransactionListItemData.isNotNull() &&
-                        data.refundTransactionListItemData.isNotEmpty(),
+                visible = uiState.refundTransactionListItemData.isNotNull() &&
+                        uiState.refundTransactionListItemData.isNotEmpty(),
             ) {
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth(),
                 ) {
-                    data.refundTransactionListItemData?.let {
+                    uiState.refundTransactionListItemData?.let {
                         item {
                             MyText(
                                 modifier = Modifier
@@ -225,7 +209,7 @@ internal fun ViewTransactionScreenUI(
                                     ),
                             )
                         }
-                        items(data.refundTransactionListItemData) { transactionListItemData ->
+                        items(uiState.refundTransactionListItemData) { transactionListItemData ->
                             TransactionListItem(
                                 modifier = Modifier
                                     .padding(
@@ -235,10 +219,10 @@ internal fun ViewTransactionScreenUI(
                                 data = transactionListItemData,
                                 events = TransactionListItemEvents(
                                     onDeleteButtonClick = {
-                                        transactionIdToDelete =
-                                            transactionListItemData.transactionId
-                                        viewTransactionBottomSheetType =
+                                        uiState.setTransactionIdToDelete(transactionListItemData.transactionId)
+                                        uiState.setViewTransactionBottomSheetType(
                                             ViewTransactionBottomSheetType.DELETE_CONFIRMATION
+                                        )
                                     },
                                     onEditButtonClick = {
                                         events.navigateToEditTransactionScreen(
