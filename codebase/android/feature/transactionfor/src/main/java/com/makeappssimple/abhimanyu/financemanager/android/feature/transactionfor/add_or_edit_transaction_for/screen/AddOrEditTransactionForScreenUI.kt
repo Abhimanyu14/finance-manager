@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,10 +11,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
@@ -33,7 +28,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sca
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 
-private enum class AddOrEditTransactionForBottomSheetType : BottomSheetType {
+enum class AddOrEditTransactionForBottomSheetType : BottomSheetType {
     DELETE,
     EDIT,
     NONE,
@@ -42,8 +37,6 @@ private enum class AddOrEditTransactionForBottomSheetType : BottomSheetType {
 @Immutable
 data class AddOrEditTransactionForScreenUIData(
     val isValidTransactionForData: Boolean = false,
-    @StringRes val appBarTitleTextStringResourceId: Int = 0,
-    @StringRes val ctaButtonLabelTextStringResourceId: Int = 0,
     val title: TextFieldValue = TextFieldValue(),
 )
 
@@ -57,19 +50,10 @@ internal data class AddOrEditTransactionForScreenUIEvents(
 
 @Composable
 internal fun AddOrEditTransactionForScreenUI(
-    data: AddOrEditTransactionForScreenUIData,
     events: AddOrEditTransactionForScreenUIEvents,
+    uiState: AddOrEditTransactionForScreenUIState,
     state: CommonScreenUIState,
 ) {
-    var addOrEditTransactionForBottomSheetType by remember {
-        mutableStateOf(
-            value = AddOrEditTransactionForBottomSheetType.NONE,
-        )
-    }
-    val resetBottomSheetType = {
-        addOrEditTransactionForBottomSheetType = AddOrEditTransactionForBottomSheetType.NONE
-    }
-
     LaunchedEffect(
         key1 = Unit,
     ) {
@@ -77,18 +61,18 @@ internal fun AddOrEditTransactionForScreenUI(
     }
 
     BottomSheetHandler(
-        showModalBottomSheet = addOrEditTransactionForBottomSheetType != AddOrEditTransactionForBottomSheetType.NONE,
-        bottomSheetType = addOrEditTransactionForBottomSheetType,
+        showModalBottomSheet = uiState.addOrEditTransactionForBottomSheetType != AddOrEditTransactionForBottomSheetType.NONE,
+        bottomSheetType = uiState.addOrEditTransactionForBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = resetBottomSheetType,
+        resetBottomSheetType = uiState.resetBottomSheetType,
     )
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
         sheetContent = {
-            when (addOrEditTransactionForBottomSheetType) {
+            when (uiState.addOrEditTransactionForBottomSheetType) {
                 AddOrEditTransactionForBottomSheetType.DELETE -> {
                     VerticalSpacer()
                 }
@@ -104,16 +88,16 @@ internal fun AddOrEditTransactionForScreenUI(
         },
         topBar = {
             MyTopAppBar(
-                titleTextStringResourceId = data.appBarTitleTextStringResourceId,
+                titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
                 navigationAction = events.navigateUp,
             )
         },
         onClick = {
             state.focusManager.clearFocus()
         },
-        backHandlerEnabled = addOrEditTransactionForBottomSheetType != AddOrEditTransactionForBottomSheetType.NONE,
+        backHandlerEnabled = uiState.addOrEditTransactionForBottomSheetType != AddOrEditTransactionForBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = resetBottomSheetType,
+        onBackPress = uiState.resetBottomSheetType,
         modifier = Modifier
             .fillMaxSize(),
     ) {
@@ -126,7 +110,7 @@ internal fun AddOrEditTransactionForScreenUI(
                 ),
         ) {
             MyOutlinedTextField(
-                textFieldValue = data.title,
+                textFieldValue = uiState.title,
                 labelTextStringResourceId = R.string.screen_add_or_edit_transaction_for_title,
                 trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_for_clear_title,
                 onClickTrailingIcon = {
@@ -154,8 +138,8 @@ internal fun AddOrEditTransactionForScreenUI(
                     ),
             )
             SaveButton(
-                textStringResourceId = data.ctaButtonLabelTextStringResourceId,
-                isEnabled = data.isValidTransactionForData,
+                textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
+                isEnabled = uiState.isCtaButtonEnabled,
                 onClick = events.onCtaButtonClick,
             )
         }
