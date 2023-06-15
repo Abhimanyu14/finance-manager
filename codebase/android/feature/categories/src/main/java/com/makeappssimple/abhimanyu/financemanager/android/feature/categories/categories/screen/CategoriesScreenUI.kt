@@ -7,17 +7,11 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabData
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabRow
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
@@ -36,7 +30,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ca
 import kotlinx.coroutines.launch
 
 @Immutable
-private sealed class CategoriesBottomSheetType : BottomSheetType {
+sealed class CategoriesBottomSheetType : BottomSheetType {
     object DeleteConfirmation : CategoriesBottomSheetType()
     object None : CategoriesBottomSheetType()
     object SetAsDefaultConfirmation : CategoriesBottomSheetType()
@@ -70,82 +64,47 @@ internal data class CategoriesScreenUIEvents(
 
 @Composable
 internal fun CategoriesScreenUI(
-    data: CategoriesScreenUIData,
     events: CategoriesScreenUIEvents,
+    uiState: CategoriesScreenUIState,
     state: CommonScreenUIState,
 ) {
-    val pagerState = rememberPagerState(
-        initialPage = 0,
-    )
-    var categoriesBottomSheetType: CategoriesBottomSheetType by remember {
-        mutableStateOf(
-            value = CategoriesBottomSheetType.None,
-        )
-    }
-    val resetBottomSheetType = {
-        categoriesBottomSheetType = CategoriesBottomSheetType.None
-    }
-    var clickedItemId: Int? by remember {
-        mutableStateOf(
-            value = null,
-        )
-    }
-    var categoryIdToDelete: Int? by remember {
-        mutableStateOf(
-            value = null,
-        )
-    }
-    val transactionTypes = listOf(
-        TransactionType.EXPENSE,
-        TransactionType.INCOME,
-        TransactionType.INVESTMENT,
-    )
-    val tabData = remember {
-        transactionTypes
-            .map {
-                MyTabData(
-                    title = it.title,
-                )
-            }
-    }
-
     LaunchedEffect(
-        key1 = pagerState.currentPage,
+        key1 = uiState.pagerState.currentPage,
     ) {
-        events.updateSelectedTabIndex(pagerState.currentPage)
+        events.updateSelectedTabIndex(uiState.pagerState.currentPage)
     }
 
     LaunchedEffect(
-        key1 = data.selectedTabIndex,
+        key1 = uiState.selectedTabIndex,
     ) {
         state.coroutineScope.launch {
-            pagerState.animateScrollToPage(data.selectedTabIndex)
+            uiState.pagerState.animateScrollToPage(uiState.selectedTabIndex)
         }
     }
 
     BottomSheetHandler(
-        showModalBottomSheet = categoriesBottomSheetType != CategoriesBottomSheetType.None,
-        bottomSheetType = categoriesBottomSheetType,
+        showModalBottomSheet = uiState.categoriesBottomSheetType != CategoriesBottomSheetType.None,
+        bottomSheetType = uiState.categoriesBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = resetBottomSheetType,
+        resetBottomSheetType = uiState.resetBottomSheetType,
     )
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
         sheetContent = {
-            when (categoriesBottomSheetType) {
+            when (uiState.categoriesBottomSheetType) {
                 is CategoriesBottomSheetType.DeleteConfirmation -> {
                     CategoriesDeleteConfirmationBottomSheetContent(
                         deleteCategory = {
-                            categoryIdToDelete?.let { categoryIdToDeleteValue ->
+                            uiState.categoryIdToDelete?.let { categoryIdToDeleteValue ->
                                 events.deleteCategory(categoryIdToDeleteValue)
                             }
                         },
-                        resetBottomSheetType = resetBottomSheetType,
+                        resetBottomSheetType = uiState.resetBottomSheetType,
                     ) {
-                        categoryIdToDelete = null
+                        uiState.setCategoryIdToDelete(null)
                     }
                 }
 
@@ -155,16 +114,16 @@ internal fun CategoriesScreenUI(
 
                 is CategoriesBottomSheetType.SetAsDefaultConfirmation -> {
                     CategoriesSetAsDefaultConfirmationBottomSheetContent(
-                        transactionType = transactionTypes[data.selectedTabIndex],
-                        resetBottomSheetType = resetBottomSheetType,
+                        transactionType = uiState.transactionTypes[uiState.selectedTabIndex],
+                        resetBottomSheetType = uiState.resetBottomSheetType,
                         resetClickedItemId = {
-                            clickedItemId = null
+                            uiState.setClickedItemId(null)
                         },
                     ) {
-                        clickedItemId?.let { clickedItemIdValue ->
+                        uiState.clickedItemId?.let { clickedItemIdValue ->
                             events.setDefaultCategoryIdInDataStore(
                                 clickedItemIdValue,
-                                transactionTypes[data.selectedTabIndex],
+                                uiState.transactionTypes[uiState.selectedTabIndex],
                             )
                         }
                     }
@@ -172,25 +131,23 @@ internal fun CategoriesScreenUI(
 
                 is CategoriesBottomSheetType.Menu -> {
                     val bottomSheetData =
-                        categoriesBottomSheetType as CategoriesBottomSheetType.Menu
+                        uiState.categoriesBottomSheetType as CategoriesBottomSheetType.Menu
 
                     CategoryMenuBottomSheetContent(
                         isDeleteVisible = bottomSheetData.isDeleteVisible,
                         isEditVisible = bottomSheetData.isEditVisible,
                         isSetAsDefaultVisible = bottomSheetData.isSetAsDefaultVisible,
                         onDeleteClick = {
-                            categoryIdToDelete = bottomSheetData.categoryId
-                            categoriesBottomSheetType =
-                                CategoriesBottomSheetType.DeleteConfirmation
+                            uiState.setCategoryIdToDelete(bottomSheetData.categoryId)
+                            uiState.setCategoriesBottomSheetType(CategoriesBottomSheetType.DeleteConfirmation)
                         },
                         onEditClick = {
-                            resetBottomSheetType()
+                            uiState.resetBottomSheetType()
                             events.navigateToEditCategoryScreen(bottomSheetData.categoryId)
                         },
                         onSetAsDefaultClick = {
-                            clickedItemId = bottomSheetData.categoryId
-                            categoriesBottomSheetType =
-                                CategoriesBottomSheetType.SetAsDefaultConfirmation
+                            uiState.setClickedItemId(bottomSheetData.categoryId)
+                            uiState.setCategoriesBottomSheetType(CategoriesBottomSheetType.SetAsDefaultConfirmation)
                         },
                     )
                 }
@@ -210,7 +167,7 @@ internal fun CategoriesScreenUI(
                 ),
                 onClick = {
                     events.navigateToAddCategoryScreen(
-                        when (data.selectedTabIndex) {
+                        when (uiState.selectedTabIndex) {
                             0 -> {
                                 TransactionType.EXPENSE.title
                             }
@@ -230,9 +187,9 @@ internal fun CategoriesScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
-        backHandlerEnabled = categoriesBottomSheetType != CategoriesBottomSheetType.None,
+        backHandlerEnabled = uiState.categoriesBottomSheetType != CategoriesBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onBackPress = resetBottomSheetType,
+        onBackPress = uiState.resetBottomSheetType,
         modifier = Modifier
             .fillMaxSize(),
     ) {
@@ -241,22 +198,22 @@ internal fun CategoriesScreenUI(
                 .fillMaxSize(),
         ) {
             MyTabRow(
-                selectedTabIndex = data.selectedTabIndex,
+                selectedTabIndex = uiState.selectedTabIndex,
                 updateSelectedTabIndex = events.updateSelectedTabIndex,
-                tabData = tabData,
+                tabData = uiState.tabData,
             )
             HorizontalPager(
                 count = 3,
-                state = pagerState,
+                state = uiState.pagerState,
                 verticalAlignment = Alignment.Top,
                 modifier = Modifier
                     .weight(
                         weight = 1F,
                     ),
             ) { page ->
-                val transactionType: TransactionType = transactionTypes[page]
+                val transactionType: TransactionType = uiState.transactionTypes[page]
                 val categoriesGridItemDataList: List<CategoriesGridItemData> =
-                    data.categoriesGridItemDataMap[transactionType].orEmpty()
+                    uiState.categoriesGridItemDataMap[transactionType].orEmpty()
 
                 CategoriesGrid(
                     bottomPadding = 80.dp,
@@ -270,13 +227,15 @@ internal fun CategoriesScreenUI(
                             categoriesGridItemDataList[index].isSetAsDefaultVisible ?: false
 
                         if (isEditVisible || isSetAsDefaultVisible || isDeleteVisible) {
-                            categoriesBottomSheetType = CategoriesBottomSheetType.Menu(
-                                isDeleteVisible = isDeleteVisible,
-                                isEditVisible = isEditVisible,
-                                isSetAsDefaultVisible = isSetAsDefaultVisible,
-                                categoryId = categoriesGridItemDataList[index].category.id,
+                            uiState.setCategoriesBottomSheetType(
+                                CategoriesBottomSheetType.Menu(
+                                    isDeleteVisible = isDeleteVisible,
+                                    isEditVisible = isEditVisible,
+                                    isSetAsDefaultVisible = isSetAsDefaultVisible,
+                                    categoryId = categoriesGridItemDataList[index].category.id,
+                                )
                             )
-                            clickedItemId = categoriesGridItemDataList[index].category.id
+                            uiState.setClickedItemId(categoriesGridItemDataList[index].category.id)
                         }
                     },
                 )

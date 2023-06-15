@@ -21,7 +21,6 @@ fun CategoriesScreen(
     val screenUIData: CategoriesScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
 
     CategoriesScreenUI(
-        data = screenUIData ?: CategoriesScreenUIData(),
         events = CategoriesScreenUIEvents(
             deleteCategory = { categoryId ->
                 screenViewModel.deleteCategory(
@@ -58,6 +57,9 @@ fun CategoriesScreen(
                     updatedSelectedTabIndex = updatedSelectedTabIndex,
                 )
             },
+        ),
+        uiState = rememberCategoriesScreenUIState(
+            data = screenUIData ?: CategoriesScreenUIData(),
         ),
         state = rememberCommonScreenUIState(),
     )
