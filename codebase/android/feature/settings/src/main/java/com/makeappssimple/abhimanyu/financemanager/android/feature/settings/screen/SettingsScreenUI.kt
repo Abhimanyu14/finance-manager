@@ -17,10 +17,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -38,7 +34,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyT
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
 
-private enum class SettingsBottomSheetType : BottomSheetType {
+enum class SettingsBottomSheetType : BottomSheetType {
     NONE,
 }
 
@@ -59,32 +55,23 @@ internal data class SettingsScreenUIEvents(
 
 @Composable
 internal fun SettingsScreenUI(
-    data: SettingsScreenUIData,
     events: SettingsScreenUIEvents,
+    uiState: SettingsScreenUIState,
     state: CommonScreenUIState,
 ) {
-    var settingsBottomSheetType by remember {
-        mutableStateOf(
-            value = SettingsBottomSheetType.NONE,
-        )
-    }
-    val resetBottomSheetType = {
-        settingsBottomSheetType = SettingsBottomSheetType.NONE
-    }
-
     BottomSheetHandler(
-        showModalBottomSheet = settingsBottomSheetType != SettingsBottomSheetType.NONE,
-        bottomSheetType = settingsBottomSheetType,
+        showModalBottomSheet = uiState.settingsBottomSheetType != SettingsBottomSheetType.NONE,
+        bottomSheetType = uiState.settingsBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = resetBottomSheetType,
+        resetBottomSheetType = uiState.resetBottomSheetType,
     )
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
         sheetContent = {
-            when (settingsBottomSheetType) {
+            when (uiState.settingsBottomSheetType) {
                 SettingsBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
@@ -99,9 +86,9 @@ internal fun SettingsScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
-        backHandlerEnabled = settingsBottomSheetType != SettingsBottomSheetType.NONE,
+        backHandlerEnabled = uiState.settingsBottomSheetType != SettingsBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = resetBottomSheetType,
+        onBackPress = uiState.resetBottomSheetType,
         modifier = Modifier
             .fillMaxSize(),
     ) {
@@ -122,7 +109,7 @@ internal fun SettingsScreenUI(
                     ),
             ) {
                 AnimatedVisibility(
-                    visible = data.isLoading,
+                    visible = uiState.isLoading,
                 ) {
                     MyLinearProgressIndicator(
                         modifier = Modifier
@@ -152,7 +139,7 @@ internal fun SettingsScreenUI(
                     },
                     modifier = Modifier
                         .conditionalClickable(
-                            onClick = if (data.isLoading) {
+                            onClick = if (uiState.isLoading) {
                                 null
                             } else {
                                 events.backupData
@@ -180,7 +167,7 @@ internal fun SettingsScreenUI(
                     },
                     modifier = Modifier
                         .conditionalClickable(
-                            onClick = if (data.isLoading) {
+                            onClick = if (uiState.isLoading) {
                                 null
                             } else {
                                 events.restoreData
@@ -208,7 +195,7 @@ internal fun SettingsScreenUI(
                     },
                     modifier = Modifier
                         .conditionalClickable(
-                            onClick = if (data.isLoading) {
+                            onClick = if (uiState.isLoading) {
                                 null
                             } else {
                                 events.recalculateTotal
@@ -236,7 +223,7 @@ internal fun SettingsScreenUI(
                     },
                     modifier = Modifier
                         .conditionalClickable(
-                            onClick = if (data.isLoading) {
+                            onClick = if (uiState.isLoading) {
                                 null
                             } else {
                                 events.navigateToTransactionForValuesScreen
@@ -244,7 +231,7 @@ internal fun SettingsScreenUI(
                         ),
                 )
             }
-            data.appVersion?.let {
+            uiState.appVersion?.let {
                 MyText(
                     modifier = Modifier
                         .fillMaxWidth()
