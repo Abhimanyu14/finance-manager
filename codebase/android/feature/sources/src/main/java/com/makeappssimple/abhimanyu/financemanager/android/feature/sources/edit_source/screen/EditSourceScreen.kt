@@ -21,7 +21,7 @@ fun EditSourceScreen(
         message = "Inside EditSourceScreen",
     )
 
-    val data: AddOrEditSourceScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
+    val screenUIData: AddOrEditSourceScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
 
     AddOrEditSourceScreenUI(
         events = AddOrEditSourceScreenUIEvents(
@@ -38,7 +38,7 @@ fun EditSourceScreen(
             updateSelectedSourceTypeIndex = screenViewModel::updateSelectedSourceTypeIndex,
         ),
         uiState = rememberAddOrEditSourceScreenUIState(
-            data = data ?: AddOrEditSourceScreenUIData(),
+            data = screenUIData ?: AddOrEditSourceScreenUIData(),
             isEdit = true,
         ),
         state = rememberCommonScreenUIState(),

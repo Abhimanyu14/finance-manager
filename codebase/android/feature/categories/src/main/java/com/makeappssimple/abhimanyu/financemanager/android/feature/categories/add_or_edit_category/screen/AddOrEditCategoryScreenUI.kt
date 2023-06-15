@@ -13,10 +13,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
@@ -44,7 +40,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.component.bottomsheet.AddOrEditCategorySelectEmojiBottomSheetContent
 
-private enum class AddOrEditCategoryBottomSheetType : BottomSheetType {
+enum class AddOrEditCategoryBottomSheetType : BottomSheetType {
     NONE,
     SELECT_EMOJI,
 }
@@ -75,19 +71,10 @@ internal data class AddOrEditCategoryScreenUIEvents(
 
 @Composable
 internal fun AddOrEditCategoryScreenUI(
-    data: AddOrEditCategoryScreenUIData,
     events: AddOrEditCategoryScreenUIEvents,
+    uiState: AddOrEditCategoryScreenUIState,
     state: CommonScreenUIState,
 ) {
-    var addOrEditCategoryBottomSheetType by remember {
-        mutableStateOf(
-            value = AddOrEditCategoryBottomSheetType.NONE,
-        )
-    }
-    val resetBottomSheetType = {
-        addOrEditCategoryBottomSheetType = AddOrEditCategoryBottomSheetType.NONE
-    }
-
     LaunchedEffect(
         key1 = Unit,
     ) {
@@ -95,17 +82,17 @@ internal fun AddOrEditCategoryScreenUI(
     }
 
     BottomSheetHandler(
-        showModalBottomSheet = addOrEditCategoryBottomSheetType != AddOrEditCategoryBottomSheetType.NONE,
-        bottomSheetType = addOrEditCategoryBottomSheetType,
+        showModalBottomSheet = uiState.addOrEditCategoryBottomSheetType != AddOrEditCategoryBottomSheetType.NONE,
+        bottomSheetType = uiState.addOrEditCategoryBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = resetBottomSheetType,
+        resetBottomSheetType = uiState.resetBottomSheetType,
     )
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
-        sheetShape = when (addOrEditCategoryBottomSheetType) {
+        sheetShape = when (uiState.addOrEditCategoryBottomSheetType) {
             AddOrEditCategoryBottomSheetType.NONE -> {
                 BottomSheetShape
             }
@@ -115,7 +102,7 @@ internal fun AddOrEditCategoryScreenUI(
             }
         },
         sheetContent = {
-            when (addOrEditCategoryBottomSheetType) {
+            when (uiState.addOrEditCategoryBottomSheetType) {
                 AddOrEditCategoryBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
@@ -123,9 +110,9 @@ internal fun AddOrEditCategoryScreenUI(
                 AddOrEditCategoryBottomSheetType.SELECT_EMOJI -> {
                     AddOrEditCategorySelectEmojiBottomSheetContent(
                         context = state.context,
-                        emojiGroups = data.emojiGroups,
-                        searchText = data.searchText,
-                        resetBottomSheetType = resetBottomSheetType,
+                        emojiGroups = uiState.emojiGroups,
+                        searchText = uiState.searchText,
+                        resetBottomSheetType = uiState.resetBottomSheetType,
                         updateEmoji = { updatedEmoji ->
                             events.updateEmoji(updatedEmoji)
                         },
@@ -137,16 +124,16 @@ internal fun AddOrEditCategoryScreenUI(
         },
         topBar = {
             MyTopAppBar(
-                titleTextStringResourceId = data.appBarTitleTextStringResourceId,
+                titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
                 navigationAction = events.navigateUp,
             )
         },
         onClick = {
             state.focusManager.clearFocus()
         },
-        backHandlerEnabled = addOrEditCategoryBottomSheetType != AddOrEditCategoryBottomSheetType.NONE,
+        backHandlerEnabled = uiState.addOrEditCategoryBottomSheetType != AddOrEditCategoryBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = resetBottomSheetType,
+        onBackPress = uiState.resetBottomSheetType,
         modifier = Modifier
             .fillMaxSize(),
     ) {
@@ -159,13 +146,13 @@ internal fun AddOrEditCategoryScreenUI(
                 ),
         ) {
             MyRadioGroup(
-                items = data.transactionTypes
+                items = uiState.transactionTypes
                     .map { transactionType ->
                         ChipUIData(
                             text = transactionType.title,
                         )
                     },
-                selectedItemIndex = data.selectedTransactionTypeIndex,
+                selectedItemIndex = uiState.selectedTransactionTypeIndex,
                 onSelectionChange = { updatedIndex ->
                     events.updateSelectedTransactionTypeIndex(updatedIndex)
                 },
@@ -184,14 +171,13 @@ internal fun AddOrEditCategoryScreenUI(
             ) {
                 MyEmojiCircle(
                     emojiCircleSize = EmojiCircleSize.Normal,
-                    emoji = data.emoji,
+                    emoji = uiState.emoji,
                     onClick = {
-                        addOrEditCategoryBottomSheetType =
-                            AddOrEditCategoryBottomSheetType.SELECT_EMOJI
+                        uiState.setAddOrEditCategoryBottomSheetType(AddOrEditCategoryBottomSheetType.SELECT_EMOJI)
                     },
                 )
                 MyOutlinedTextField(
-                    textFieldValue = data.title,
+                    textFieldValue = uiState.title,
                     labelTextStringResourceId = R.string.screen_add_or_edit_category_title,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_category_clear_title,
                     onClickTrailingIcon = events.clearTitle,
@@ -223,8 +209,8 @@ internal fun AddOrEditCategoryScreenUI(
                 )
             }
             SaveButton(
-                textStringResourceId = data.ctaButtonLabelTextStringResourceId,
-                isEnabled = data.isValidCategoryData,
+                textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
+                isEnabled = uiState.isValidCategoryData,
                 onClick = events.onCtaButtonClick,
             )
         }
