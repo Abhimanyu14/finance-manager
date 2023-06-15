@@ -25,7 +25,6 @@ fun TransactionsScreen(
     val sources: List<Source>? by screenViewModel.sources.collectAsStateWithLifecycle()
 
     TransactionsScreenUI(
-        data = screenUIData ?: TransactionsScreenUIData(),
         events = TransactionsScreenUIEvents(
             getExpenseCategories = {
                 expenseCategories.orEmpty()
@@ -59,6 +58,9 @@ fun TransactionsScreen(
             updateSearchText = screenViewModel::updateSearchText,
             updateSelectedFilter = screenViewModel::updateSelectedFilter,
             updateSelectedSortOption = screenViewModel::updateSelectedSortOption,
+        ),
+        uiState = rememberTransactionsScreenUIState(
+            data = screenUIData ?: TransactionsScreenUIData(),
         ),
         state = rememberCommonScreenUIState(),
     )

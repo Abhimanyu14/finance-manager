@@ -20,10 +20,6 @@ import androidx.compose.material.icons.rounded.SwapVert
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -56,7 +52,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.SortOption
 import java.time.LocalDate
 
-private enum class TransactionsBottomSheetType : BottomSheetType {
+enum class TransactionsBottomSheetType : BottomSheetType {
     FILTERS,
     NONE,
     SORT,
@@ -92,30 +88,21 @@ internal data class TransactionsScreenUIEvents(
 
 @Composable
 internal fun TransactionsScreenUI(
-    data: TransactionsScreenUIData,
     events: TransactionsScreenUIEvents,
+    uiState: TransactionsScreenUIState,
     state: CommonScreenUIState,
 ) {
-    var transactionsBottomSheetType by remember {
-        mutableStateOf(
-            value = TransactionsBottomSheetType.NONE,
-        )
-    }
-    val resetBottomSheetType = {
-        transactionsBottomSheetType = TransactionsBottomSheetType.NONE
-    }
-
     BottomSheetHandler(
-        showModalBottomSheet = transactionsBottomSheetType != TransactionsBottomSheetType.NONE,
-        bottomSheetType = transactionsBottomSheetType,
+        showModalBottomSheet = uiState.transactionsBottomSheetType != TransactionsBottomSheetType.NONE,
+        bottomSheetType = uiState.transactionsBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = resetBottomSheetType,
+        resetBottomSheetType = uiState.resetBottomSheetType,
     )
 
     BackHandler(
-        enabled = data.searchText.isNotEmpty() || data.selectedFilter.areFiltersSelected(),
+        enabled = uiState.searchText.isNotEmpty() || uiState.selectedFilter.areFiltersSelected(),
     ) {
         events.updateSearchText("")
         events.updateSelectedFilter(Filter())
@@ -123,7 +110,7 @@ internal fun TransactionsScreenUI(
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
-        sheetShape = when (transactionsBottomSheetType) {
+        sheetShape = when (uiState.transactionsBottomSheetType) {
             TransactionsBottomSheetType.NONE,
             TransactionsBottomSheetType.SORT,
             -> {
@@ -135,7 +122,7 @@ internal fun TransactionsScreenUI(
             }
         },
         sheetContent = {
-            when (transactionsBottomSheetType) {
+            when (uiState.transactionsBottomSheetType) {
                 TransactionsBottomSheetType.FILTERS -> {
                     TransactionsFilterBottomSheetContent(
                         context = state.context,
@@ -143,15 +130,15 @@ internal fun TransactionsScreenUI(
                         incomeCategories = events.getIncomeCategories(),
                         investmentCategories = events.getInvestmentCategories(),
                         sources = events.getSources(),
-                        transactionTypes = data.transactionTypes,
-                        defaultMinDate = data.oldestTransactionLocalDate,
-                        defaultMaxDate = data.currentLocalDate,
-                        currentTimeMillis = data.currentTimeMillis,
-                        selectedFilter = data.selectedFilter,
+                        transactionTypes = uiState.transactionTypes,
+                        defaultMinDate = uiState.oldestTransactionLocalDate,
+                        defaultMaxDate = uiState.currentLocalDate,
+                        currentTimeMillis = uiState.currentTimeMillis,
+                        selectedFilter = uiState.selectedFilter,
                         updateSelectedFilter = { updatedSelectedFilter ->
                             events.updateSelectedFilter(updatedSelectedFilter)
                         },
-                        resetBottomSheetType = resetBottomSheetType,
+                        resetBottomSheetType = uiState.resetBottomSheetType,
                     )
                 }
 
@@ -161,11 +148,11 @@ internal fun TransactionsScreenUI(
 
                 TransactionsBottomSheetType.SORT -> {
                     TransactionsSortBottomSheetContent(
-                        selectedSortOptionIndex = data.sortOptions.indexOf(data.selectedSortOption),
-                        sortOptions = data.sortOptions.toList(),
-                        resetBottomSheetType = resetBottomSheetType,
+                        selectedSortOptionIndex = uiState.sortOptions.indexOf(uiState.selectedSortOption),
+                        sortOptions = uiState.sortOptions.toList(),
+                        resetBottomSheetType = uiState.resetBottomSheetType,
                         updateSelectedSortOption = { index ->
-                            events.updateSelectedSortOption(data.sortOptions[index])
+                            events.updateSelectedSortOption(uiState.sortOptions[index])
                         },
                     )
                 }
@@ -189,9 +176,9 @@ internal fun TransactionsScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
-        backHandlerEnabled = transactionsBottomSheetType != TransactionsBottomSheetType.NONE,
+        backHandlerEnabled = uiState.transactionsBottomSheetType != TransactionsBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = resetBottomSheetType,
+        onBackPress = uiState.resetBottomSheetType,
         modifier = Modifier
             .fillMaxSize(),
     ) {
@@ -200,14 +187,14 @@ internal fun TransactionsScreenUI(
                 .fillMaxSize(),
         ) {
             AnimatedVisibility(
-                visible = data.isLoading,
+                visible = uiState.isLoading,
             ) {
                 MyLinearProgressIndicator()
             }
             AnimatedVisibility(
-                visible = data.transactionDetailsListItemViewData.isNotEmpty() ||
-                        data.searchText.isNotEmpty() ||
-                        data.selectedFilter.areFiltersSelected()
+                visible = uiState.transactionDetailsListItemViewData.isNotEmpty() ||
+                        uiState.searchText.isNotEmpty() ||
+                        uiState.selectedFilter.areFiltersSelected()
             ) {
                 Row(
                     horizontalArrangement = Arrangement.End,
@@ -233,7 +220,7 @@ internal fun TransactionsScreenUI(
                     ) {
                         MySearchBar(
                             autoFocus = false,
-                            searchText = data.searchText,
+                            searchText = uiState.searchText,
                             placeholderText = stringResource(
                                 id = R.string.screen_transactions_searchbar_placeholder,
                             ),
@@ -250,21 +237,19 @@ internal fun TransactionsScreenUI(
                         ),
                         events = ActionButtonEvents(
                             onClick = {
-                                transactionsBottomSheetType =
-                                    TransactionsBottomSheetType.SORT
+                                uiState.setTransactionsBottomSheetType(TransactionsBottomSheetType.SORT)
                             },
                         ),
                     )
                     ActionButton(
                         data = ActionButtonData(
-                            isIndicatorVisible = data.selectedFilter.areFiltersSelected(),
+                            isIndicatorVisible = uiState.selectedFilter.areFiltersSelected(),
                             imageVector = Icons.Rounded.FilterAlt,
                             contentDescriptionStringResourceId = R.string.screen_transactions_filter_button_content_description,
                         ),
                         events = ActionButtonEvents(
                             onClick = {
-                                transactionsBottomSheetType =
-                                    TransactionsBottomSheetType.FILTERS
+                                uiState.setTransactionsBottomSheetType(TransactionsBottomSheetType.FILTERS)
                             },
                         ),
                     )
@@ -275,7 +260,7 @@ internal fun TransactionsScreenUI(
                     bottom = 72.dp,
                 ),
             ) {
-                data.transactionDetailsListItemViewData.forEach { (date, listItemData) ->
+                uiState.transactionDetailsListItemViewData.forEach { (date, listItemData) ->
                     if (date.isNotBlank()) {
                         stickyHeader {
                             MyText(
