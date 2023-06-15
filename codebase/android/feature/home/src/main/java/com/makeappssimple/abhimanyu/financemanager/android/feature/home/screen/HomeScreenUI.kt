@@ -11,10 +11,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -37,7 +33,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.home.componen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.component.bottomsheet.HomeMenuBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.component.recenttransactions.HomeRecentTransactionsView
 
-private enum class HomeBottomSheetType : BottomSheetType {
+enum class HomeBottomSheetType : BottomSheetType {
     MENU,
     NONE,
 }
@@ -61,38 +57,29 @@ internal data class HomeScreenUIEvents(
 
 @Composable
 internal fun HomeScreenUI(
-    data: HomeScreenUIData,
     events: HomeScreenUIEvents,
+    uiState: HomeScreenUIState,
     state: CommonScreenUIState,
 ) {
-    var homeBottomSheetType by remember {
-        mutableStateOf(
-            value = HomeBottomSheetType.NONE,
-        )
-    }
-    val resetBottomSheetType = {
-        homeBottomSheetType = HomeBottomSheetType.NONE
-    }
-
     BottomSheetHandler(
-        showModalBottomSheet = homeBottomSheetType != HomeBottomSheetType.NONE,
-        bottomSheetType = homeBottomSheetType,
+        showModalBottomSheet = uiState.homeBottomSheetType != HomeBottomSheetType.NONE,
+        bottomSheetType = uiState.homeBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = resetBottomSheetType,
+        resetBottomSheetType = uiState.resetBottomSheetType,
     )
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
         sheetContent = {
-            when (homeBottomSheetType) {
+            when (uiState.homeBottomSheetType) {
                 HomeBottomSheetType.MENU -> {
                     HomeMenuBottomSheetContent(
                         navigateToCategoriesScreen = events.navigateToCategoriesScreen,
                         navigateToSettingsScreen = events.navigateToSettingsScreen,
                         navigateToSourcesScreen = events.navigateToSourcesScreen,
-                        resetBottomSheetType = resetBottomSheetType,
+                        resetBottomSheetType = uiState.resetBottomSheetType,
                     )
                 }
 
@@ -108,7 +95,7 @@ internal fun HomeScreenUI(
         },
         bottomBar = {
             HomeBottomAppBar {
-                homeBottomSheetType = HomeBottomSheetType.MENU
+                uiState.setHomeBottomSheetType(HomeBottomSheetType.MENU)
             }
         },
         floatingActionButton = {
@@ -124,9 +111,9 @@ internal fun HomeScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
-        backHandlerEnabled = homeBottomSheetType != HomeBottomSheetType.NONE,
+        backHandlerEnabled = uiState.homeBottomSheetType != HomeBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = resetBottomSheetType,
+        onBackPress = uiState.resetBottomSheetType,
         modifier = Modifier
             .fillMaxSize(),
     ) {
@@ -142,7 +129,7 @@ internal fun HomeScreenUI(
             }
             item {
                 AnimatedVisibility(
-                    visible = data.isBackupCardVisible,
+                    visible = uiState.isBackupCardVisible,
                 ) {
                     BackupCard(
                         onClick = {
@@ -162,7 +149,7 @@ internal fun HomeScreenUI(
                 )
             }
             items(
-                items = data.transactionListItemDataList,
+                items = uiState.transactionListItemDataList,
                 key = { listItem ->
                     listItem.hashCode()
                 },

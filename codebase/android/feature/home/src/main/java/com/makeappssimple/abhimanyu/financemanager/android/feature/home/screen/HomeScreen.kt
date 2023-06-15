@@ -34,7 +34,6 @@ fun HomeScreen(
     val screenUIData: HomeScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
 
     HomeScreenUI(
-        data = screenUIData ?: HomeScreenUIData(),
         events = HomeScreenUIEvents(
             createDocument = createDocument,
             navigateToAnalysisScreen = {
@@ -67,6 +66,9 @@ fun HomeScreen(
                     navigationCommand = MyNavigationDirections.Transactions
                 )
             },
+        ),
+        uiState = rememberHomeScreenUIState(
+            data = screenUIData ?: HomeScreenUIData(),
         ),
         state = rememberCommonScreenUIState(),
     )
