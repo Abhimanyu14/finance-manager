@@ -10,7 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiStateData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiVisibilityState
 
 @Stable
@@ -20,7 +20,7 @@ class AddOrEditTransactionScreenUIState(
     val setAddOrEditTransactionBottomSheetType: (AddOrEditTransactionBottomSheetType) -> Unit,
     val addOrEditTransactionBottomSheetType: AddOrEditTransactionBottomSheetType,
 ) {
-    val uiState: AddOrEditTransactionScreenUiState = data.uiState
+    val uiState: AddOrEditTransactionScreenUiStateData = data.uiState
     val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState = data.uiVisibilityState
     val isCtaButtonEnabled: Boolean = data.isCtaButtonEnabled
     val filteredCategories: List<Category> = data.filteredCategories
