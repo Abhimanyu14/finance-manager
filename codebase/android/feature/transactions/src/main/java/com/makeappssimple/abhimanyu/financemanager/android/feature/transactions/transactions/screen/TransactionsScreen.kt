@@ -18,6 +18,7 @@ fun TransactionsScreen(
     screenViewModel.logger.logError(
         message = "Inside TransactionsScreen",
     )
+
     val screenUIData: TransactionsScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
     val expenseCategories: List<Category>? by screenViewModel.expenseCategories.collectAsStateWithLifecycle()
     val incomeCategories: List<Category>? by screenViewModel.incomeCategories.collectAsStateWithLifecycle()

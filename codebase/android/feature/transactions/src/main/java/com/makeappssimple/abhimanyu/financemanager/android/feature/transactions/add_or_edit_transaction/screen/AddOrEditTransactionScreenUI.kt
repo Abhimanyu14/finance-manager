@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen
 
-import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,10 +13,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
@@ -42,7 +37,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Bottom
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.getMyDatePickerDialog
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.getMyTimePickerDialog
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyHorizontalScrollingRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyHorizontalScrollingSelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
@@ -58,7 +52,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import java.time.LocalDate
 import java.time.LocalTime
 
-private enum class AddOrEditTransactionBottomSheetType : BottomSheetType {
+enum class AddOrEditTransactionBottomSheetType : BottomSheetType {
     NONE,
     SELECT_CATEGORY,
     SELECT_SOURCE_FROM,
@@ -70,8 +64,6 @@ data class AddOrEditTransactionScreenUIData(
     val uiState: AddOrEditTransactionScreenUiState = AddOrEditTransactionScreenUiState(),
     val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState = AddOrEditTransactionScreenUiVisibilityState.Expense,
     val isCtaButtonEnabled: Boolean = false,
-    @StringRes val appBarTitleTextStringResourceId: Int = 0,
-    @StringRes val ctaButtonLabelTextStringResourceId: Int = 0,
     val filteredCategories: List<Category> = emptyList(),
     val sources: List<Source> = emptyList(),
     val titleSuggestions: List<String> = emptyList(),
@@ -102,67 +94,27 @@ internal data class AddOrEditTransactionScreenUIEvents(
 
 @Composable
 internal fun AddOrEditTransactionScreenUI(
-    data: AddOrEditTransactionScreenUIData,
     events: AddOrEditTransactionScreenUIEvents,
+    uiState: AddOrEditTransactionScreenUIState,
     state: CommonScreenUIState,
 ) {
     val transactionDatePickerDialog = getMyDatePickerDialog(
         context = state.context,
-        selectedDate = data.uiState.transactionDate,
-        currentTimeMillis = data.currentTimeMillis,
+        selectedDate = uiState.uiState.transactionDate,
+        currentTimeMillis = uiState.currentTimeMillis,
         onDateSetListener = {
             events.updateTransactionDate(it)
         },
     )
     val transactionTimePickerDialog = getMyTimePickerDialog(
         context = state.context,
-        currentTime = data.uiState.transactionTime,
+        currentTime = uiState.uiState.transactionTime,
         onTimeSetListener = {
             events.updateTransactionTime(it)
         },
     )
-
-    var addOrEditTransactionBottomSheetType by remember {
-        mutableStateOf(
-            value = AddOrEditTransactionBottomSheetType.NONE,
-        )
-    }
-    val transactionTypesForNewTransactionChipUIData = remember(
-        key1 = data.transactionTypesForNewTransaction,
-    ) {
-        data.transactionTypesForNewTransaction
-            .map { transactionType ->
-                ChipUIData(
-                    text = transactionType.title,
-                )
-            }
-    }
-    val titleSuggestionsChipUIData = remember(
-        key1 = data.titleSuggestions,
-    ) {
-        data.titleSuggestions
-            .map { title ->
-                ChipUIData(
-                    text = title,
-                )
-            }
-    }
-    val transactionForValuesChipUIData = remember(
-        key1 = data.transactionForValues,
-    ) {
-        data.transactionForValues
-            .map { transactionFor ->
-                ChipUIData(
-                    text = transactionFor.titleToDisplay,
-                )
-            }
-    }
-
     val clearFocus = {
         state.focusManager.clearFocus()
-    }
-    val resetBottomSheetType = {
-        addOrEditTransactionBottomSheetType = AddOrEditTransactionBottomSheetType.NONE
     }
 
     LaunchedEffect(
@@ -172,27 +124,27 @@ internal fun AddOrEditTransactionScreenUI(
     }
 
     BottomSheetHandler(
-        showModalBottomSheet = addOrEditTransactionBottomSheetType != AddOrEditTransactionBottomSheetType.NONE,
-        bottomSheetType = addOrEditTransactionBottomSheetType,
+        showModalBottomSheet = uiState.addOrEditTransactionBottomSheetType != AddOrEditTransactionBottomSheetType.NONE,
+        bottomSheetType = uiState.addOrEditTransactionBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = resetBottomSheetType,
+        resetBottomSheetType = uiState.resetBottomSheetType,
     )
 
     MyScaffold(
         sheetState = state.modalBottomSheetState,
         sheetContent = {
-            when (addOrEditTransactionBottomSheetType) {
+            when (uiState.addOrEditTransactionBottomSheetType) {
                 AddOrEditTransactionBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
 
                 AddOrEditTransactionBottomSheetType.SELECT_CATEGORY -> {
                     SelectCategoryBottomSheetContent(
-                        filteredCategories = data.filteredCategories,
-                        selectedCategoryId = data.uiState.category?.id,
-                        resetBottomSheetType = resetBottomSheetType,
+                        filteredCategories = uiState.filteredCategories,
+                        selectedCategoryId = uiState.uiState.category?.id,
+                        resetBottomSheetType = uiState.resetBottomSheetType,
                     ) { updatedCategory ->
                         events.updateCategory(updatedCategory)
                     }
@@ -200,9 +152,9 @@ internal fun AddOrEditTransactionScreenUI(
 
                 AddOrEditTransactionBottomSheetType.SELECT_SOURCE_FROM -> {
                     SelectSourceBottomSheetContent(
-                        sources = data.sources,
-                        selectedSourceId = data.uiState.sourceFrom?.id,
-                        resetBottomSheetType = resetBottomSheetType
+                        sources = uiState.sources,
+                        selectedSourceId = uiState.uiState.sourceFrom?.id,
+                        resetBottomSheetType = uiState.resetBottomSheetType
                     ) { updatedSource ->
                         events.updateSourceFrom(updatedSource)
                     }
@@ -210,9 +162,9 @@ internal fun AddOrEditTransactionScreenUI(
 
                 AddOrEditTransactionBottomSheetType.SELECT_SOURCE_TO -> {
                     SelectSourceBottomSheetContent(
-                        sources = data.sources,
-                        selectedSourceId = data.uiState.sourceTo?.id,
-                        resetBottomSheetType = resetBottomSheetType
+                        sources = uiState.sources,
+                        selectedSourceId = uiState.uiState.sourceTo?.id,
+                        resetBottomSheetType = uiState.resetBottomSheetType
                     ) { updatedSource ->
                         events.updateSourceTo(updatedSource)
                     }
@@ -221,16 +173,16 @@ internal fun AddOrEditTransactionScreenUI(
         },
         topBar = {
             MyTopAppBar(
-                titleTextStringResourceId = data.appBarTitleTextStringResourceId,
+                titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
                 navigationAction = events.navigateUp,
             )
         },
         onClick = {
             clearFocus()
         },
-        backHandlerEnabled = addOrEditTransactionBottomSheetType != AddOrEditTransactionBottomSheetType.NONE,
+        backHandlerEnabled = uiState.addOrEditTransactionBottomSheetType != AddOrEditTransactionBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = resetBottomSheetType,
+        onBackPress = uiState.resetBottomSheetType,
         modifier = Modifier
             .fillMaxSize(),
     ) {
@@ -243,11 +195,11 @@ internal fun AddOrEditTransactionScreenUI(
                 ),
         ) {
             AnimatedVisibility(
-                visible = data.uiVisibilityState.isTransactionTypesRadioGroupVisible,
+                visible = uiState.uiVisibilityState.isTransactionTypesRadioGroupVisible,
             ) {
                 MyHorizontalScrollingRadioGroup(
-                    items = transactionTypesForNewTransactionChipUIData,
-                    selectedItemIndex = data.uiState.selectedTransactionTypeIndex,
+                    items = uiState.transactionTypesForNewTransactionChipUIData,
+                    selectedItemIndex = uiState.uiState.selectedTransactionTypeIndex,
                     onSelectionChange = { updatedSelectedTransactionTypeIndex ->
                         events.updateSelectedTransactionTypeIndex(
                             updatedSelectedTransactionTypeIndex
@@ -261,7 +213,7 @@ internal fun AddOrEditTransactionScreenUI(
                 )
             }
             MyOutlinedTextField(
-                textFieldValue = data.uiState.amount,
+                textFieldValue = uiState.uiState.amount,
                 labelTextStringResourceId = R.string.screen_add_or_edit_transaction_amount,
                 trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_amount,
                 onClickTrailingIcon = {
@@ -272,12 +224,12 @@ internal fun AddOrEditTransactionScreenUI(
                 },
                 supportingText = {
                     AnimatedVisibility(
-                        data.uiState.amountErrorText.isNotNullOrBlank(),
+                        uiState.uiState.amountErrorText.isNotNullOrBlank(),
                     ) {
                         MyText(
                             text = stringResource(
                                 id = R.string.screen_add_or_edit_transaction_amount_error_text,
-                                data.uiState.amountErrorText.orEmpty(),
+                                uiState.uiState.amountErrorText.orEmpty(),
                             ),
                             style = MaterialTheme.typography.bodySmall.copy(
                                 color = MaterialTheme.colorScheme.error,
@@ -285,7 +237,7 @@ internal fun AddOrEditTransactionScreenUI(
                         )
                     }
                 },
-                isError = data.uiState.amountErrorText.isNotNull(),
+                isError = uiState.uiState.amountErrorText.isNotNull(),
                 visualTransformation = AmountCommaVisualTransformation(),
                 keyboardActions = KeyboardActions(
                     onDone = {
@@ -307,15 +259,16 @@ internal fun AddOrEditTransactionScreenUI(
                     ),
             )
             AnimatedVisibility(
-                visible = data.uiVisibilityState.isCategoryTextFieldVisible,
+                visible = uiState.uiVisibilityState.isCategoryTextFieldVisible,
             ) {
                 MyReadOnlyTextField(
-                    value = data.uiState.category?.title.orEmpty(),
+                    value = uiState.uiState.category?.title.orEmpty(),
                     labelTextStringResourceId = R.string.screen_add_or_edit_transaction_category,
                     onClick = {
                         clearFocus()
-                        addOrEditTransactionBottomSheetType =
+                        uiState.setAddOrEditTransactionBottomSheetType(
                             AddOrEditTransactionBottomSheetType.SELECT_CATEGORY
+                        )
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -326,10 +279,10 @@ internal fun AddOrEditTransactionScreenUI(
                 )
             }
             AnimatedVisibility(
-                visible = data.uiVisibilityState.isTitleTextFieldVisible,
+                visible = uiState.uiVisibilityState.isTitleTextFieldVisible,
             ) {
                 MyOutlinedTextField(
-                    textFieldValue = data.uiState.title,
+                    textFieldValue = uiState.uiState.title,
                     labelTextStringResourceId = R.string.screen_add_or_edit_transaction_title,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_title,
                     onClickTrailingIcon = {
@@ -356,13 +309,13 @@ internal fun AddOrEditTransactionScreenUI(
                 )
             }
             AnimatedVisibility(
-                visible = data.uiVisibilityState.isTitleSuggestionsVisible && titleSuggestionsChipUIData.isNotEmpty(),
+                visible = uiState.uiVisibilityState.isTitleSuggestionsVisible && uiState.titleSuggestionsChipUIData.isNotEmpty(),
             ) {
                 MyHorizontalScrollingSelectionGroup(
-                    items = titleSuggestionsChipUIData,
+                    items = uiState.titleSuggestionsChipUIData,
                     onSelectionChange = { index ->
                         clearFocus()
-                        events.updateTitle(TextFieldValue(data.titleSuggestions[index]))
+                        events.updateTitle(TextFieldValue(uiState.titleSuggestions[index]))
                     },
                     modifier = Modifier
                         .padding(
@@ -372,11 +325,11 @@ internal fun AddOrEditTransactionScreenUI(
                 )
             }
             AnimatedVisibility(
-                visible = data.uiVisibilityState.isTransactionForRadioGroupVisible,
+                visible = uiState.uiVisibilityState.isTransactionForRadioGroupVisible,
             ) {
                 MyHorizontalScrollingRadioGroup(
-                    items = transactionForValuesChipUIData,
-                    selectedItemIndex = data.uiState.selectedTransactionForIndex,
+                    items = uiState.transactionForValuesChipUIData,
+                    selectedItemIndex = uiState.uiState.selectedTransactionForIndex,
                     onSelectionChange = { updatedSelectedTransactionForIndex ->
                         clearFocus()
                         events.updateSelectedTransactionForIndex(
@@ -391,10 +344,10 @@ internal fun AddOrEditTransactionScreenUI(
                 )
             }
             AnimatedVisibility(
-                visible = data.uiVisibilityState.isDescriptionTextFieldVisible,
+                visible = uiState.uiVisibilityState.isDescriptionTextFieldVisible,
             ) {
                 MyOutlinedTextField(
-                    textFieldValue = data.uiState.description,
+                    textFieldValue = uiState.uiState.description,
                     labelTextStringResourceId = R.string.screen_add_or_edit_transaction_description,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_description,
                     onClickTrailingIcon = {
@@ -421,19 +374,20 @@ internal fun AddOrEditTransactionScreenUI(
                 )
             }
             AnimatedVisibility(
-                visible = data.uiVisibilityState.isSourceFromTextFieldVisible,
+                visible = uiState.uiVisibilityState.isSourceFromTextFieldVisible,
             ) {
                 MyReadOnlyTextField(
-                    value = data.uiState.sourceFrom?.name.orEmpty(),
-                    labelTextStringResourceId = if (data.selectedTransactionType == TransactionType.TRANSFER) {
+                    value = uiState.uiState.sourceFrom?.name.orEmpty(),
+                    labelTextStringResourceId = if (uiState.selectedTransactionType == TransactionType.TRANSFER) {
                         R.string.screen_add_or_edit_transaction_source_from
                     } else {
                         R.string.screen_add_or_edit_transaction_source
                     },
                     onClick = {
                         clearFocus()
-                        addOrEditTransactionBottomSheetType =
+                        uiState.setAddOrEditTransactionBottomSheetType(
                             AddOrEditTransactionBottomSheetType.SELECT_SOURCE_FROM
+                        )
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -444,19 +398,20 @@ internal fun AddOrEditTransactionScreenUI(
                 )
             }
             AnimatedVisibility(
-                visible = data.uiVisibilityState.isSourceToTextFieldVisible,
+                visible = uiState.uiVisibilityState.isSourceToTextFieldVisible,
             ) {
                 MyReadOnlyTextField(
-                    value = data.uiState.sourceTo?.name.orEmpty(),
-                    labelTextStringResourceId = if (data.selectedTransactionType == TransactionType.TRANSFER) {
+                    value = uiState.uiState.sourceTo?.name.orEmpty(),
+                    labelTextStringResourceId = if (uiState.selectedTransactionType == TransactionType.TRANSFER) {
                         R.string.screen_add_or_edit_transaction_source_to
                     } else {
                         R.string.screen_add_or_edit_transaction_source
                     },
                     onClick = {
                         clearFocus()
-                        addOrEditTransactionBottomSheetType =
+                        uiState.setAddOrEditTransactionBottomSheetType(
                             AddOrEditTransactionBottomSheetType.SELECT_SOURCE_TO
+                        )
                     },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -467,7 +422,7 @@ internal fun AddOrEditTransactionScreenUI(
                 )
             }
             MyReadOnlyTextField(
-                value = data.uiState.transactionDate.formattedDate(),
+                value = uiState.uiState.transactionDate.formattedDate(),
                 labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_date,
                 onClick = {
                     clearFocus()
@@ -481,7 +436,7 @@ internal fun AddOrEditTransactionScreenUI(
                     ),
             )
             MyReadOnlyTextField(
-                value = data.uiState.transactionTime.formattedTime(),
+                value = uiState.uiState.transactionTime.formattedTime(),
                 labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_time,
                 onClick = {
                     clearFocus()
@@ -495,8 +450,8 @@ internal fun AddOrEditTransactionScreenUI(
                     ),
             )
             SaveButton(
-                textStringResourceId = data.ctaButtonLabelTextStringResourceId,
-                isEnabled = data.isCtaButtonEnabled,
+                textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
+                isEnabled = uiState.isCtaButtonEnabled,
                 onClick = {
                     clearFocus()
                     events.onCtaButtonClick()

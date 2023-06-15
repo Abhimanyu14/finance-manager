@@ -16,6 +16,7 @@ fun TransactionForValuesScreen(
     screenViewModel.logger.logError(
         message = "Inside TransactionForValuesScreen",
     )
+
     val screenUIData: TransactionForValuesScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
 
     TransactionForValuesScreenUI(
