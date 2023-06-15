@@ -19,7 +19,6 @@ fun TransactionForValuesScreen(
     val screenUIData: TransactionForValuesScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
 
     TransactionForValuesScreenUI(
-        data = screenUIData ?: TransactionForValuesScreenUIData(),
         events = TransactionForValuesScreenUIEvents(
             deleteTransactionFor = { transactionForId ->
                 screenViewModel.deleteTransactionFor(
@@ -43,6 +42,9 @@ fun TransactionForValuesScreen(
                     navigationCommand = MyNavigationDirections.NavigateUp
                 )
             },
+        ),
+        uiState = rememberTransactionForValuesScreenUIState(
+            data = screenUIData ?: TransactionForValuesScreenUIData(),
         ),
         state = rememberCommonScreenUIState(),
     )
