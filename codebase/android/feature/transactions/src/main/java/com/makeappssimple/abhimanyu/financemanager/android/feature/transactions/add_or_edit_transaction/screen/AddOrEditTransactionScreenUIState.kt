@@ -23,11 +23,6 @@ class AddOrEditTransactionScreenUIState(
     val uiState: AddOrEditTransactionScreenUiStateData = data.uiState
     val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState = data.uiVisibilityState
     val isCtaButtonEnabled: Boolean = data.isCtaButtonEnabled
-    val filteredCategories: List<Category> = data.filteredCategories
-    val sources: List<Source> = data.sources
-    val titleSuggestions: List<String> = data.titleSuggestions
-    val currentTimeMillis: Long = data.currentTimeMillis
-    val selectedTransactionType: TransactionType? = data.selectedTransactionType
 
     @StringRes
     val appBarTitleTextStringResourceId: Int = if (isEdit) {
@@ -42,23 +37,44 @@ class AddOrEditTransactionScreenUIState(
     } else {
         R.string.screen_add_transaction_floating_action_button_content_description
     }
-    val transactionTypesForNewTransactionChipUIData =
+
+    val filteredCategories: List<Category> = data.filteredCategories
+    val transactionTypesForNewTransactionChipUIData: List<ChipUIData> =
         data.transactionTypesForNewTransaction.map { transactionType ->
             ChipUIData(
                 text = transactionType.title,
             )
         }
-    val titleSuggestionsChipUIData = titleSuggestions.map { title ->
+    val titleSuggestions: List<String> = data.titleSuggestions
+    val titleSuggestionsChipUIData: List<ChipUIData> = titleSuggestions.map { title ->
         ChipUIData(
             text = title,
         )
     }
-    val transactionForValuesChipUIData = data.transactionForValues.map { transactionFor ->
-        ChipUIData(
-            text = transactionFor.titleToDisplay,
-        )
-    }
+    val sources: List<Source> = data.sources
+    val currentTimeMillis: Long = data.currentTimeMillis
+    val transactionForValuesChipUIData: List<ChipUIData> =
+        data.transactionForValues.map { transactionFor ->
+            ChipUIData(
+                text = transactionFor.titleToDisplay,
+            )
+        }
 
+    @StringRes
+    val sourceFromTextFieldLabelTextStringResourceId: Int =
+        if (data.selectedTransactionType == TransactionType.TRANSFER) {
+            R.string.screen_add_or_edit_transaction_source_from
+        } else {
+            R.string.screen_add_or_edit_transaction_source
+        }
+
+    @StringRes
+    val sourceToTextFieldLabelTextStringResourceId: Int =
+        if (data.selectedTransactionType == TransactionType.TRANSFER) {
+            R.string.screen_add_or_edit_transaction_source_to
+        } else {
+            R.string.screen_add_or_edit_transaction_source
+        }
     val resetBottomSheetType: () -> Unit = {
         setAddOrEditTransactionBottomSheetType(AddOrEditTransactionBottomSheetType.NONE)
     }

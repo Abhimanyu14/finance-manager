@@ -315,7 +315,11 @@ internal fun AddOrEditTransactionScreenUI(
                     items = uiState.titleSuggestionsChipUIData,
                     onSelectionChange = { index ->
                         clearFocus()
-                        events.updateTitle(TextFieldValue(uiState.titleSuggestions[index]))
+                        events.updateTitle(
+                            uiState.uiState.title.copy(
+                                text = uiState.titleSuggestions[index],
+                            )
+                        )
                     },
                     modifier = Modifier
                         .padding(
@@ -378,11 +382,7 @@ internal fun AddOrEditTransactionScreenUI(
             ) {
                 MyReadOnlyTextField(
                     value = uiState.uiState.sourceFrom?.name.orEmpty(),
-                    labelTextStringResourceId = if (uiState.selectedTransactionType == TransactionType.TRANSFER) {
-                        R.string.screen_add_or_edit_transaction_source_from
-                    } else {
-                        R.string.screen_add_or_edit_transaction_source
-                    },
+                    labelTextStringResourceId = uiState.sourceFromTextFieldLabelTextStringResourceId,
                     onClick = {
                         clearFocus()
                         uiState.setAddOrEditTransactionBottomSheetType(
@@ -402,11 +402,7 @@ internal fun AddOrEditTransactionScreenUI(
             ) {
                 MyReadOnlyTextField(
                     value = uiState.uiState.sourceTo?.name.orEmpty(),
-                    labelTextStringResourceId = if (uiState.selectedTransactionType == TransactionType.TRANSFER) {
-                        R.string.screen_add_or_edit_transaction_source_to
-                    } else {
-                        R.string.screen_add_or_edit_transaction_source
-                    },
+                    labelTextStringResourceId = uiState.sourceToTextFieldLabelTextStringResourceId,
                     onClick = {
                         clearFocus()
                         uiState.setAddOrEditTransactionBottomSheetType(

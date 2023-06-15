@@ -20,11 +20,12 @@ class AddOrEditCategoryScreenUIState(
     val isValidCategoryData: Boolean = data.isValidCategoryData
     val selectedTransactionTypeIndex: Int = data.selectedTransactionTypeIndex
     val emojiGroups: Map<String, List<Emoji>> = data.emojiGroups
-    val transactionTypesChipUIData: List<ChipUIData> = data.transactionTypes.map { transactionType ->
-        ChipUIData(
-            text = transactionType.title,
-        )
-    }
+    val transactionTypesChipUIData: List<ChipUIData> =
+        data.transactionTypes.map { transactionType ->
+            ChipUIData(
+                text = transactionType.title,
+            )
+        }
     val emoji: String = data.emoji
     val searchText: String = data.searchText
     val title: TextFieldValue = data.title
