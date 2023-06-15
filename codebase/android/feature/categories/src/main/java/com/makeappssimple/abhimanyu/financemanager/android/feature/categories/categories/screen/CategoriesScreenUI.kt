@@ -114,7 +114,7 @@ internal fun CategoriesScreenUI(
 
                 is CategoriesBottomSheetType.SetAsDefaultConfirmation -> {
                     CategoriesSetAsDefaultConfirmationBottomSheetContent(
-                        transactionType = uiState.transactionTypes[uiState.selectedTabIndex],
+                        transactionType = uiState.validTransactionTypes[uiState.selectedTabIndex],
                         resetBottomSheetType = uiState.resetBottomSheetType,
                         resetClickedItemId = {
                             uiState.setClickedItemId(null)
@@ -123,7 +123,7 @@ internal fun CategoriesScreenUI(
                         uiState.clickedItemId?.let { clickedItemIdValue ->
                             events.setDefaultCategoryIdInDataStore(
                                 clickedItemIdValue,
-                                uiState.transactionTypes[uiState.selectedTabIndex],
+                                uiState.validTransactionTypes[uiState.selectedTabIndex],
                             )
                         }
                     }
@@ -211,7 +211,7 @@ internal fun CategoriesScreenUI(
                         weight = 1F,
                     ),
             ) { page ->
-                val transactionType: TransactionType = uiState.transactionTypes[page]
+                val transactionType: TransactionType = uiState.validTransactionTypes[page]
                 val categoriesGridItemDataList: List<CategoriesGridItemData> =
                     uiState.categoriesGridItemDataMap[transactionType].orEmpty()
 

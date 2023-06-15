@@ -18,14 +18,22 @@ class CategoriesScreenUIState(
     val categoriesBottomSheetType: CategoriesBottomSheetType,
     var categoryIdToDelete: Int?,
     var clickedItemId: Int?,
-    val tabData: List<MyTabData>,
-    val transactionTypes: List<TransactionType>,
     val pagerState: PagerState,
     val setCategoriesBottomSheetType: (CategoriesBottomSheetType) -> Unit,
     val setCategoryIdToDelete: (Int?) -> Unit,
     val setClickedItemId: (Int?) -> Unit,
 ) {
     val selectedTabIndex: Int = data.selectedTabIndex
+    val validTransactionTypes: List<TransactionType> = listOf(
+        TransactionType.EXPENSE,
+        TransactionType.INCOME,
+        TransactionType.INVESTMENT,
+    )
+    val tabData: List<MyTabData> = validTransactionTypes.map {
+        MyTabData(
+            title = it.title,
+        )
+    }
     val categoriesGridItemDataMap: Map<TransactionType, List<CategoriesGridItemData>> =
         data.categoriesGridItemDataMap
     val resetBottomSheetType: () -> Unit = {
@@ -51,19 +59,6 @@ fun rememberCategoriesScreenUIState(
         mutableStateOf(
             value = null,
         )
-    }
-    val transactionTypes: List<TransactionType> = listOf(
-        TransactionType.EXPENSE,
-        TransactionType.INCOME,
-        TransactionType.INVESTMENT,
-    )
-    val tabData: List<MyTabData> = remember {
-        transactionTypes
-            .map {
-                MyTabData(
-                    title = it.title,
-                )
-            }
     }
     val pagerState: PagerState = rememberPagerState(
         initialPage = 0,
@@ -94,8 +89,6 @@ fun rememberCategoriesScreenUIState(
             categoriesBottomSheetType = categoriesBottomSheetType,
             categoryIdToDelete = categoryIdToDelete,
             clickedItemId = clickedItemId,
-            tabData = tabData,
-            transactionTypes = transactionTypes,
             pagerState = pagerState,
             setCategoriesBottomSheetType = setCategoriesBottomSheetType,
             setCategoryIdToDelete = setCategoryIdToDelete,

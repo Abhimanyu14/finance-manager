@@ -7,7 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 
 @Stable
@@ -20,7 +20,11 @@ class AddOrEditCategoryScreenUIState(
     val isValidCategoryData: Boolean = data.isValidCategoryData
     val selectedTransactionTypeIndex: Int = data.selectedTransactionTypeIndex
     val emojiGroups: Map<String, List<Emoji>> = data.emojiGroups
-    val transactionTypes: List<TransactionType> = data.transactionTypes
+    val transactionTypesChipUIData: List<ChipUIData> = data.transactionTypes.map { transactionType ->
+        ChipUIData(
+            text = transactionType.title,
+        )
+    }
     val emoji: String = data.emoji
     val searchText: String = data.searchText
     val title: TextFieldValue = data.title

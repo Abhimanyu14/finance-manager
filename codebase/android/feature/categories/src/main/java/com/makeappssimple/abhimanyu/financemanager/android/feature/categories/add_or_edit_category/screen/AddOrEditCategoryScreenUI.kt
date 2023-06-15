@@ -29,7 +29,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.EmojiCircleSize
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyRadioGroup
@@ -146,12 +145,7 @@ internal fun AddOrEditCategoryScreenUI(
                 ),
         ) {
             MyRadioGroup(
-                items = uiState.transactionTypes
-                    .map { transactionType ->
-                        ChipUIData(
-                            text = transactionType.title,
-                        )
-                    },
+                items = uiState.transactionTypesChipUIData,
                 selectedItemIndex = uiState.selectedTransactionTypeIndex,
                 onSelectionChange = { updatedIndex ->
                     events.updateSelectedTransactionTypeIndex(updatedIndex)
