@@ -98,13 +98,13 @@ buildscript {
         recyclerViewVersion = "1.2.1"
 
         // Jetpack compose
-        jetpackComposeVersion = "1.5.0-alpha04"
+        jetpackComposeVersion = "1.5.0-beta02"
 
         // Jetpack compose compiler
         jetpackComposeCompilerVersion = "1.4.3"
 
         // Jetpack compose material 3
-        jetpackComposeMaterial3Version = "1.2.0-alpha01"
+        jetpackComposeMaterial3Version = "1.2.0-alpha02"
 
         // Jetpack compose material design adapter
         jetpackComposeMaterialDesignAdapterVersion = "1.2.1"
@@ -113,7 +113,7 @@ buildscript {
         jetpackComposeConstraintLayoutVersion = "1.0.0-rc01"
 
         // Jetpack compose integration with activities
-        jetpackComposeActivityIntegrationVersion = "1.6.1"
+        jetpackComposeActivityIntegrationVersion = "1.7.2"
 
         // Jetpack compose integration with view models
         jetpackComposeViewModelIntegrationVersion = "2.6.1"
@@ -122,13 +122,13 @@ buildscript {
         jetpackComposeLifecycleRuntimeVersion = "2.6.1"
 
         // Jetpack compose navigation
-        jetpackComposeNavigationVersion = "2.5.3"
+        jetpackComposeNavigationVersion = "2.6.0"
 
         // Jetpack compose navigation with hilt
         jetpackComposeNavigationHiltVersion = "1.0.0"
 
         // Jetpack compose paging
-        jetpackComposePagingVersion = "1.0.0-alpha19"
+        jetpackComposePagingVersion = "3.2.0-beta01"
 
         // Accompanist
         accompanistVersion = "0.27.0"
@@ -158,7 +158,7 @@ buildscript {
         materialDesignVersion = "1.4.0"
 
         // Paging
-        pagingVersion = "3.1.1"
+        pagingVersion = "3.2.0-beta01"
 
         // Dagger
         daggerVersion = "2.29.1"
