@@ -13,10 +13,10 @@ internal class AddOrEditTransactionScreenArgs(
         stringDecoder: StringDecoder,
     ) : this(
         isEdit = savedStateHandle.get<Boolean>(NavArgs.EDIT),
-        originalTransactionId = stringDecoder.decodeString(
-            encodedString = checkNotNull(
-                value = savedStateHandle.get<String>(NavArgs.TRANSACTION_ID),
-            ),
-        ).toIntOrNull(),
+        originalTransactionId = savedStateHandle.get<String>(NavArgs.TRANSACTION_ID)?.let {
+            stringDecoder.decodeString(
+                encodedString = it,
+            ).toIntOrNull()
+        },
     )
 }
