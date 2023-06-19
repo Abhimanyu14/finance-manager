@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.getSystemDefaultZoneId
 import java.time.Instant
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -26,8 +27,4 @@ fun LocalDateTime.toEpochMilli(
             zoneId = zoneId,
         )
         .toEpochMilli()
-}
-
-private fun getSystemDefaultZoneId(): ZoneId {
-    return ZoneId.systemDefault()
 }

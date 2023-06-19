@@ -44,9 +44,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.getMyDatePickerDialog
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MySelectionGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePicker
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.Filter
@@ -495,28 +497,47 @@ fun TransactionFilterBottomSheetDateFilter(
         },
         label = "", // TODO-Abhi: Add label for animation inspection
     )
+    var isFromDatePickerDialogVisible by remember {
+        mutableStateOf(false)
+    }
+    var isToDatePickerDialogVisible by remember {
+        mutableStateOf(false)
+    }
 
-    val fromDatePickerDialog = getMyDatePickerDialog(
-        context = context,
-        selectedDate = fromDate,
-        minDate = minDate,
-        maxDate = toDate,
-        currentTimeMillis = currentTimeMillis,
-        onDateSetListener = {
-            updateFromDate(it)
-        },
+    MyDatePicker(
+        data = MyDatePickerData(
+            isVisible = isFromDatePickerDialogVisible,
+            endLocalDate = toDate,
+            selectedLocalDate = fromDate,
+            startLocalDate = minDate,
+        ),
+        events = MyDatePickerEvents(
+            onPositiveButtonClick = {
+                updateFromDate(it)
+                isFromDatePickerDialogVisible = false
+            },
+            onNegativeButtonClick = {
+                isFromDatePickerDialogVisible = false
+            },
+        )
     )
-    val toDatePickerDialog = getMyDatePickerDialog(
-        context = context,
-        selectedDate = toDate,
-        minDate = fromDate,
-        maxDate = maxDate,
-        currentTimeMillis = currentTimeMillis,
-        onDateSetListener = {
-            updateToDate(it)
-        },
+    MyDatePicker(
+        data = MyDatePickerData(
+            isVisible = isToDatePickerDialogVisible,
+            endLocalDate = maxDate,
+            selectedLocalDate = toDate,
+            startLocalDate = fromDate,
+        ),
+        events = MyDatePickerEvents(
+            onPositiveButtonClick = {
+                updateToDate(it)
+                isToDatePickerDialogVisible = false
+            },
+            onNegativeButtonClick = {
+                isToDatePickerDialogVisible = false
+            },
+        )
     )
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -597,7 +618,7 @@ fun TransactionFilterBottomSheetDateFilter(
                     value = fromDate.formattedDate(),
                     labelTextStringResourceId = R.string.bottom_sheet_transactions_filter_from_date,
                     onClick = {
-                        fromDatePickerDialog.show()
+                        isFromDatePickerDialogVisible = true
                     },
                     modifier = Modifier
                         .weight(
@@ -611,7 +632,7 @@ fun TransactionFilterBottomSheetDateFilter(
                     value = toDate.formattedDate(),
                     labelTextStringResourceId = R.string.bottom_sheet_transactions_filter_to_date,
                     onClick = {
-                        toDatePickerDialog.show()
+                        isToDatePickerDialogVisible = true
                     },
                     modifier = Modifier
                         .weight(

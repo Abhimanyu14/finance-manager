@@ -16,6 +16,11 @@
     <string name="backup_card">Backup data</string>
     <!-- endregion -->
 
+    <!-- region date picker -->
+    <string name="date_picker_negative_button">Cancel</string>
+    <string name="date_picker_positive_button">OK</string>
+    <!-- endregion -->
+
     <!-- region total balance card -->
     <string name="total_balance_card_title">TOTAL BALANCE</string>
     <!-- endregion -->

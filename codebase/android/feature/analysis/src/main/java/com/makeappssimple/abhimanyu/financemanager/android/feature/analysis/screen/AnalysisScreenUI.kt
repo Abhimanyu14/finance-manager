@@ -44,11 +44,10 @@ data class AnalysisScreenUIData(
     val selectedTransactionTypeIndex: Int = 0,
     val transactionDataMappedByCategory: List<AnalysisListItemData> = emptyList(),
     val transactionTypesChipUIData: List<ChipUIData> = emptyList(),
-    val defaultMaxLocalDate: LocalDate = LocalDate.MIN,
-    val defaultMinLocalDate: LocalDate = LocalDate.MIN,
+    val currentLocalDate: LocalDate = LocalDate.MIN,
+    val oldestTransactionLocalDate: LocalDate = LocalDate.MIN,
     val startOfMonthLocalDate: LocalDate = LocalDate.MIN,
     val startOfYearLocalDate: LocalDate = LocalDate.MIN,
-    val currentTimeMillis: Long = 0L,
 )
 
 @Immutable
@@ -64,8 +63,6 @@ internal fun AnalysisScreenUI(
     uiState: AnalysisScreenUIState,
     state: CommonScreenUIState,
 ) {
-
-
     BottomSheetHandler(
         showModalBottomSheet = uiState.analysisBottomSheetType != AnalysisBottomSheetType.NONE,
         bottomSheetType = uiState.analysisBottomSheetType,
@@ -81,14 +78,12 @@ internal fun AnalysisScreenUI(
             when (uiState.analysisBottomSheetType) {
                 AnalysisBottomSheetType.FILTERS -> {
                     AnalysisFilterBottomSheet(
-                        context = state.context,
                         selectedFilter = uiState.selectedFilter,
                         headingTextStringResourceId = R.string.bottom_sheet_analysis_filter_transaction_date,
-                        currentTimeMillis = uiState.currentTimeMillis,
-                        maxDate = uiState.defaultMaxLocalDate,
-                        minDate = uiState.defaultMinLocalDate,
-                        startOfMonthDate = uiState.startOfMonthLocalDate,
-                        startOfYearDate = uiState.startOfYearLocalDate,
+                        endLocalDate = uiState.defaultEndLocalDate,
+                        startLocalDate = uiState.defaultStartLocalDate,
+                        startOfMonthLocalDate = uiState.startOfMonthLocalDate,
+                        startOfYearLocalDate = uiState.startOfYearLocalDate,
                         onNegativeButtonClick = {},
                         onPositiveButtonClick = {
                             events.updateSelectedFilter(it)

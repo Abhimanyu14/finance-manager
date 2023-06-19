@@ -298,3 +298,27 @@ class DateTimeUtilImpl @Inject constructor() : DateTimeUtil {
     }
 }
 
+fun getLocalDate(
+    timestamp: Long,
+    zoneId: ZoneId = getSystemDefaultZoneId(),
+): LocalDate {
+    return Instant
+        .ofEpochMilli(timestamp)
+        .toZonedDateTime(
+            zoneId = zoneId,
+        )
+        .toLocalDate()
+}
+
+fun getTimestamp(
+    localDate: LocalDate,
+    zoneId: ZoneId = getSystemDefaultZoneId(),
+): Long {
+    return localDate
+        .atStartOfDay(zoneId)
+        .toEpochMilli()
+}
+
+fun getSystemDefaultZoneId(): ZoneId {
+    return ZoneId.systemDefault()
+}

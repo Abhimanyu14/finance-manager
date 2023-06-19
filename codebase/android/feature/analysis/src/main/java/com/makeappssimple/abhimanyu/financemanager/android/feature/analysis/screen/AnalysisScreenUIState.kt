@@ -27,11 +27,10 @@ class AnalysisScreenUIState(
     val transactionDataMappedByCategory: List<AnalysisListItemData> =
         data.transactionDataMappedByCategory
     val transactionTypesChipUIData: List<ChipUIData> = data.transactionTypesChipUIData
-    val defaultMaxLocalDate: LocalDate = data.defaultMaxLocalDate
-    val defaultMinLocalDate: LocalDate = data.defaultMinLocalDate
+    val defaultStartLocalDate: LocalDate = data.oldestTransactionLocalDate
+    val defaultEndLocalDate: LocalDate = data.currentLocalDate
     val startOfMonthLocalDate: LocalDate = data.startOfMonthLocalDate
     val startOfYearLocalDate: LocalDate = data.startOfYearLocalDate
-    val currentTimeMillis: Long = data.currentTimeMillis
 
     val maxAmountTextWidth: Int = if (transactionDataMappedByCategory.isEmpty()) {
         0

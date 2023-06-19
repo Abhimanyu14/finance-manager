@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContracts
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.MimeTypeConstants
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.getSystemDefaultZoneId
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDateAndTime
 import java.time.Instant
 import java.time.ZoneId
@@ -37,8 +38,4 @@ private fun getFormattedDateAndTime(
         .formattedDateAndTime(
             zoneId = zoneId,
         )
-}
-
-private fun getSystemDefaultZoneId(): ZoneId {
-    return ZoneId.systemDefault()
 }

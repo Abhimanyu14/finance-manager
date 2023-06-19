@@ -17,22 +17,72 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyHorizontalScrollingSelectionGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePicker
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.R
+import java.time.LocalDate
 
 @Composable
 fun AnalysisFilterBottomSheetUI(
     modifier: Modifier = Modifier,
+    isFromDatePickerDialogVisible: Boolean,
+    isToDatePickerDialogVisible: Boolean,
     headingTextStringResourceId: Int,
+    fromDatePickerEndLocalDate: LocalDate,
+    fromDatePickerSelectedLocalDate: LocalDate,
+    fromDatePickerStartLocalDate: LocalDate,
+    toDatePickerEndLocalDate: LocalDate,
+    toDatePickerSelectedLocalDate: LocalDate,
+    toDatePickerStartLocalDate: LocalDate,
     fromDateText: String,
     toDateText: String,
     onClearButtonClick: () -> Unit,
     onDateRangeOptionClick: (dateRangeOption: DateRangeOptions) -> Unit,
+    onFromDateSelected: (LocalDate) -> Unit,
     onFromDateTextFieldClick: () -> Unit,
     onNegativeButtonClick: () -> Unit,
     onPositiveButtonClick: () -> Unit,
+    onToDateSelected: (LocalDate) -> Unit,
     onToDateTextFieldClick: () -> Unit,
+    setFromDatePickerDialogVisible: (Boolean) -> Unit,
+    setToDatePickerDialogVisible: (Boolean) -> Unit,
 ) {
+    MyDatePicker(
+        data = MyDatePickerData(
+            isVisible = isFromDatePickerDialogVisible,
+            endLocalDate = fromDatePickerEndLocalDate,
+            selectedLocalDate = fromDatePickerSelectedLocalDate,
+            startLocalDate = fromDatePickerStartLocalDate,
+        ),
+        events = MyDatePickerEvents(
+            onPositiveButtonClick = {
+                onFromDateSelected(it)
+                setFromDatePickerDialogVisible(false)
+            },
+            onNegativeButtonClick = {
+                setFromDatePickerDialogVisible(false)
+            },
+        )
+    )
+    MyDatePicker(
+        data = MyDatePickerData(
+            isVisible = isToDatePickerDialogVisible,
+            endLocalDate = toDatePickerEndLocalDate,
+            selectedLocalDate = toDatePickerSelectedLocalDate,
+            startLocalDate = toDatePickerStartLocalDate,
+        ),
+        events = MyDatePickerEvents(
+            onPositiveButtonClick = {
+                onToDateSelected(it)
+                setToDatePickerDialogVisible(false)
+            },
+            onNegativeButtonClick = {
+                setToDatePickerDialogVisible(false)
+            },
+        )
+    )
     Column(
         modifier = modifier
             .fillMaxWidth()

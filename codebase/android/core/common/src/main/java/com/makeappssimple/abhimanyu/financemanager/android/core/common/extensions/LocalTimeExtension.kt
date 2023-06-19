@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.getSystemDefaultZoneId
 import java.time.LocalTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -16,8 +17,4 @@ fun LocalTime.formattedTime(
         .format(this)
         .replace("am", "AM")
         .replace("pm", "PM")
-}
-
-private fun getSystemDefaultZoneId(): ZoneId {
-    return ZoneId.systemDefault()
 }

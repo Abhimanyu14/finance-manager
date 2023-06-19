@@ -6,6 +6,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orMin
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
@@ -60,7 +62,7 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
         dateTimeUtil.getLocalDate(
             timestamp = it.minOfOrNull { transactionData ->
                 transactionData.transaction.transactionTimestamp
-            } ?: 0L,
+            }.orZero(),
         )
     }.defaultObjectStateIn(
         scope = viewModelScope,
@@ -96,11 +98,10 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
             selectedTransactionTypeIndex = selectedTransactionTypeIndex,
             transactionDataMappedByCategory = transactionDataMappedByCategory,
             transactionTypesChipUIData = transactionTypesChipUIData,
-            defaultMaxLocalDate = dateTimeUtil.getCurrentLocalDate(),
-            defaultMinLocalDate = oldestTransactionLocalDate ?: LocalDate.MIN,
+            currentLocalDate = dateTimeUtil.getCurrentLocalDate(),
+            oldestTransactionLocalDate = oldestTransactionLocalDate.orMin(),
             startOfMonthLocalDate = dateTimeUtil.getStartOfMonthLocalDate(),
             startOfYearLocalDate = dateTimeUtil.getStartOfYearLocalDate(),
-            currentTimeMillis = dateTimeUtil.getCurrentTimeMillis(),
         )
     }.defaultObjectStateIn(
         scope = viewModelScope,
@@ -149,8 +150,8 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
         val result = allTransactionDataValue
             .filter { transactionData ->
                 transactionData.transaction.transactionType == selectedTransactionType && isAvailableAfterDateFilter(
-                    fromDate = selectedFilterValue.fromDate,
-                    toDate = selectedFilterValue.toDate,
+                    startLocalDate = selectedFilterValue.fromLocalDate,
+                    endLocalDate = selectedFilterValue.toLocalDate,
                     transactionData = transactionData,
                 )
             }.groupBy {
@@ -189,17 +190,17 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
     }
 
     private fun isAvailableAfterDateFilter(
-        fromDate: LocalDate?,
-        toDate: LocalDate?,
+        startLocalDate: LocalDate?,
+        endLocalDate: LocalDate?,
         transactionData: TransactionData,
     ): Boolean {
-        if (fromDate.isNull() || toDate.isNull()) {
+        if (startLocalDate.isNull() || endLocalDate.isNull()) {
             return true
         }
-        val fromDateStartOfDayTimestamp = fromDate
+        val fromDateStartOfDayTimestamp = startLocalDate
             .atStartOfDay()
             .toEpochMilli()
-        val toDateStartOfDayTimestamp = toDate
+        val toDateStartOfDayTimestamp = endLocalDate
             .atEndOfDay()
             .toEpochMilli()
         return transactionData.transaction.transactionTimestamp in (fromDateStartOfDayTimestamp) until toDateStartOfDayTimestamp
