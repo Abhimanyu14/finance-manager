@@ -43,7 +43,7 @@ fun MyDatePicker(
     events: MyDatePickerEvents,
 ) {
     if (data.isVisible) {
-        val fromDatePickerState = rememberDatePickerState(
+        val datePickerState = rememberDatePickerState(
             initialSelectedDateMillis = getTimestamp(
                 localDate = data.selectedLocalDate ?: data.endLocalDate.orMin(),
                 zoneId = ZoneId.of(AppConstants.ZONE_ID_GMT),
@@ -79,7 +79,7 @@ fun MyDatePicker(
         )
         val confirmEnabled = remember {
             derivedStateOf {
-                fromDatePickerState.selectedDateMillis != null
+                datePickerState.selectedDateMillis != null
             }
         }
         DatePickerDialog(
@@ -89,7 +89,7 @@ fun MyDatePicker(
                 TextButton(
                     onClick = {
                         val startOfDayTimestamp: LocalDate = getLocalDate(
-                            timestamp = fromDatePickerState.selectedDateMillis.orZero(),
+                            timestamp = datePickerState.selectedDateMillis.orZero(),
                         )
                         events.onPositiveButtonClick(startOfDayTimestamp)
                     },
@@ -115,7 +115,7 @@ fun MyDatePicker(
             }
         ) {
             DatePicker(
-                state = fromDatePickerState,
+                state = datePickerState,
             )
         }
     }
