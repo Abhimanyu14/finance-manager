@@ -12,13 +12,16 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.Chi
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiStateData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiVisibilityState
+import java.time.LocalDate
 
 @Stable
 class AddOrEditTransactionScreenUIState(
     data: AddOrEditTransactionScreenUIData,
     isEdit: Boolean,
-    val setAddOrEditTransactionBottomSheetType: (AddOrEditTransactionBottomSheetType) -> Unit,
     val addOrEditTransactionBottomSheetType: AddOrEditTransactionBottomSheetType,
+    val isTransactionDatePickerDialogVisible: Boolean,
+    val setAddOrEditTransactionBottomSheetType: (AddOrEditTransactionBottomSheetType) -> Unit,
+    val setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit,
 ) {
     val uiState: AddOrEditTransactionScreenUiStateData = data.uiState
     val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState = data.uiVisibilityState
@@ -38,28 +41,6 @@ class AddOrEditTransactionScreenUIState(
         R.string.screen_add_transaction_floating_action_button_content_description
     }
 
-    val filteredCategories: List<Category> = data.filteredCategories
-    val transactionTypesForNewTransactionChipUIData: List<ChipUIData> =
-        data.transactionTypesForNewTransaction.map { transactionType ->
-            ChipUIData(
-                text = transactionType.title,
-            )
-        }
-    val titleSuggestions: List<String> = data.titleSuggestions
-    val titleSuggestionsChipUIData: List<ChipUIData> = titleSuggestions.map { title ->
-        ChipUIData(
-            text = title,
-        )
-    }
-    val sources: List<Source> = data.sources
-    val currentTimeMillis: Long = data.currentTimeMillis
-    val transactionForValuesChipUIData: List<ChipUIData> =
-        data.transactionForValues.map { transactionFor ->
-            ChipUIData(
-                text = transactionFor.titleToDisplay,
-            )
-        }
-
     @StringRes
     val sourceFromTextFieldLabelTextStringResourceId: Int =
         if (data.selectedTransactionType == TransactionType.TRANSFER) {
@@ -75,6 +56,28 @@ class AddOrEditTransactionScreenUIState(
         } else {
             R.string.screen_add_or_edit_transaction_source
         }
+
+    val filteredCategories: List<Category> = data.filteredCategories
+    val transactionTypesForNewTransactionChipUIData: List<ChipUIData> =
+        data.transactionTypesForNewTransaction.map { transactionType ->
+            ChipUIData(
+                text = transactionType.title,
+            )
+        }
+    val titleSuggestions: List<String> = data.titleSuggestions
+    val titleSuggestionsChipUIData: List<ChipUIData> = titleSuggestions.map { title ->
+        ChipUIData(
+            text = title,
+        )
+    }
+    val sources: List<Source> = data.sources
+    val transactionForValuesChipUIData: List<ChipUIData> =
+        data.transactionForValues.map { transactionFor ->
+            ChipUIData(
+                text = transactionFor.titleToDisplay,
+            )
+        }
+    val currentLocalDate: LocalDate = data.currentLocalDate
     val resetBottomSheetType: () -> Unit = {
         setAddOrEditTransactionBottomSheetType(AddOrEditTransactionBottomSheetType.NONE)
     }
@@ -90,18 +93,25 @@ fun rememberAddOrEditTransactionScreenUIState(
             value = AddOrEditTransactionBottomSheetType.NONE,
         )
     }
+    val (isTransactionDatePickerDialogVisible, setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit) = remember {
+        mutableStateOf(false)
+    }
 
     return remember(
         data,
         isEdit,
         addOrEditTransactionBottomSheetType,
+        isTransactionDatePickerDialogVisible,
         setAddOrEditTransactionBottomSheetType,
+        setIsTransactionDatePickerDialogVisible,
     ) {
         AddOrEditTransactionScreenUIState(
             data = data,
             isEdit = isEdit,
             addOrEditTransactionBottomSheetType = addOrEditTransactionBottomSheetType,
+            isTransactionDatePickerDialogVisible = isTransactionDatePickerDialogVisible,
             setAddOrEditTransactionBottomSheetType = setAddOrEditTransactionBottomSheetType,
+            setIsTransactionDatePickerDialogVisible = setIsTransactionDatePickerDialogVisible,
         )
     }
 }

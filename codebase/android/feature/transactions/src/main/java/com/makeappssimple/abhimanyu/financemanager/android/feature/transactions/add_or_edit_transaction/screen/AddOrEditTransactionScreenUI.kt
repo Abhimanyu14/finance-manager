@@ -35,7 +35,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSh
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.AmountCommaVisualTransformation
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.getMyDatePickerDialog
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.getMyTimePickerDialog
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyHorizontalScrollingRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyHorizontalScrollingSelectionGroup
@@ -43,6 +42,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyT
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_category.SelectCategoryBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_source.SelectSourceBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePicker
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextField
@@ -69,7 +71,7 @@ data class AddOrEditTransactionScreenUIData(
     val titleSuggestions: List<String> = emptyList(),
     val transactionTypesForNewTransaction: List<TransactionType> = emptyList(),
     val transactionForValues: List<TransactionFor> = emptyList(),
-    val currentTimeMillis: Long = 0L,
+    val currentLocalDate: LocalDate = LocalDate.MIN,
     val selectedTransactionType: TransactionType? = null,
 )
 
@@ -98,14 +100,6 @@ internal fun AddOrEditTransactionScreenUI(
     uiState: AddOrEditTransactionScreenUIState,
     state: CommonScreenUIState,
 ) {
-    val transactionDatePickerDialog = getMyDatePickerDialog(
-        context = state.context,
-        selectedDate = uiState.uiState.transactionDate,
-        currentTimeMillis = uiState.currentTimeMillis,
-        onDateSetListener = {
-            events.updateTransactionDate(it)
-        },
-    )
     val transactionTimePickerDialog = getMyTimePickerDialog(
         context = state.context,
         currentTime = uiState.uiState.transactionTime,
@@ -186,6 +180,22 @@ internal fun AddOrEditTransactionScreenUI(
         modifier = Modifier
             .fillMaxSize(),
     ) {
+        MyDatePicker(
+            data = MyDatePickerData(
+                isVisible = uiState.isTransactionDatePickerDialogVisible,
+                endLocalDate = uiState.currentLocalDate,
+                selectedLocalDate = uiState.uiState.transactionDate,
+            ),
+            events = MyDatePickerEvents(
+                onPositiveButtonClick = {
+                    events.updateTransactionDate(it)
+                    uiState.setIsTransactionDatePickerDialogVisible(false)
+                },
+                onNegativeButtonClick = {
+                    uiState.setIsTransactionDatePickerDialogVisible(false)
+                },
+            )
+        )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
@@ -422,7 +432,7 @@ internal fun AddOrEditTransactionScreenUI(
                 labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_date,
                 onClick = {
                     clearFocus()
-                    transactionDatePickerDialog.show()
+                    uiState.setIsTransactionDatePickerDialogVisible(true)
                 },
                 modifier = Modifier
                     .fillMaxWidth()

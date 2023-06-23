@@ -59,6 +59,8 @@ fun MyDatePicker(
                         localDate >= data.startLocalDate && localDate <= data.endLocalDate
                     } else if (data.startLocalDate.isNotNull()) {
                         localDate >= data.startLocalDate
+                    } else if (data.endLocalDate.isNotNull()) {
+                        localDate <= data.endLocalDate
                     } else {
                         super.isSelectableDate(utcTimeMillis)
                     }

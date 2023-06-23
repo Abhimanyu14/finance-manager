@@ -293,7 +293,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             titleSuggestions = flows[5] as? List<String> ?: emptyList(),
             transactionTypesForNewTransaction = flows[6] as? List<TransactionType> ?: emptyList(),
             transactionForValues = flows[7] as? List<TransactionFor> ?: emptyList(),
-            currentTimeMillis = dateTimeUtil.getCurrentTimeMillis(),
+            currentLocalDate = dateTimeUtil.getCurrentLocalDate(),
             selectedTransactionType = flows[8] as? TransactionType,
         )
     }.defaultObjectStateIn(
