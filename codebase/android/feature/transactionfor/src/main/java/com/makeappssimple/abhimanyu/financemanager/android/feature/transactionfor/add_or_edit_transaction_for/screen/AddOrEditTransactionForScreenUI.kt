@@ -28,6 +28,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.but
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextField
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 
 enum class AddOrEditTransactionForBottomSheetType : BottomSheetType {
@@ -112,23 +114,23 @@ internal fun AddOrEditTransactionForScreenUI(
                 ),
         ) {
             MyOutlinedTextField(
-                textFieldValue = uiState.title,
-                labelTextStringResourceId = R.string.screen_add_or_edit_transaction_for_title,
-                trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_for_clear_title,
-                onClickTrailingIcon = {
-                    events.clearTitle()
-                },
-                onValueChange = { updatedTitle ->
-                    events.updateTitle(updatedTitle)
-                },
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        state.focusManager.clearFocus()
-                    },
+                data = MyOutlinedTextFieldData(
+                    textFieldValue = uiState.title,
+                    labelTextStringResourceId = R.string.screen_add_or_edit_transaction_for_title,
+                    trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_for_clear_title,
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            state.focusManager.clearFocus()
+                        },
+                    ),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Done,
+                    ),
                 ),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.Text,
-                    imeAction = ImeAction.Done,
+                events = MyOutlinedTextFieldEvents(
+                    onClickTrailingIcon = events.clearTitle,
+                    onValueChange = events.updateTitle,
                 ),
                 modifier = Modifier
                     .fillMaxWidth()

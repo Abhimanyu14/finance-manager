@@ -66,6 +66,7 @@ fun MyEmojiCircle(
 ) {
     if (data.isLoading) {
         MyEmojiCircleLoadingUI(
+            modifier = modifier,
             emojiCircleSize = data.emojiCircleSize,
         )
     } else {
@@ -106,11 +107,12 @@ fun MyEmojiCircle(
 }
 
 @Composable
-fun MyEmojiCircleLoadingUI(
+private fun MyEmojiCircleLoadingUI(
+    modifier: Modifier = Modifier,
     emojiCircleSize: EmojiCircleSize,
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .size(
                 size = when (emojiCircleSize) {
                     EmojiCircleSize.Small -> {
@@ -127,7 +129,7 @@ fun MyEmojiCircleLoadingUI(
                 },
             )
             .clip(
-                CircleShape,
+                shape = CircleShape,
             )
             .shimmer(),
     )

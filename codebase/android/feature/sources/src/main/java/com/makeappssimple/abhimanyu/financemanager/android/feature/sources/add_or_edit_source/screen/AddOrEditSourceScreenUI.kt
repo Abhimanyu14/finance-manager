@@ -31,12 +31,16 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyRadioGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyRadioGroupData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyRadioGroupEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextField
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 
 enum class AddOrEditSourceBottomSheetType : BottomSheetType {
@@ -150,11 +154,13 @@ internal fun AddOrEditSourceScreenUI(
         ) {
             if (uiState.visibilityData.sourceTypesRadioGroup) {
                 MyRadioGroup(
-                    items = uiState.sourceTypesChipUIDataList,
-                    selectedItemIndex = uiState.selectedSourceTypeIndex,
-                    onSelectionChange = { updatedIndex ->
-                        events.updateSelectedSourceTypeIndex(updatedIndex)
-                    },
+                    data = MyRadioGroupData(
+                        items = uiState.sourceTypesChipUIDataList,
+                        selectedItemIndex = uiState.selectedSourceTypeIndex,
+                    ),
+                    events = MyRadioGroupEvents(
+                        onSelectionChange = events.updateSelectedSourceTypeIndex,
+                    ),
                     modifier = Modifier
                         .padding(
                             horizontal = 16.dp,
@@ -164,40 +170,42 @@ internal fun AddOrEditSourceScreenUI(
             }
             if (uiState.visibilityData.nameTextField) {
                 MyOutlinedTextField(
-                    textFieldValue = uiState.name,
-                    labelTextStringResourceId = R.string.screen_add_or_edit_source_name,
-                    trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_source_clear_name,
-                    onClickTrailingIcon = events.clearName,
-                    onValueChange = { updatedName ->
-                        events.updateName(updatedName)
-                    },
-                    supportingText = {
-                        AnimatedVisibility(
-                            visible = uiState.visibilityData.nameTextFieldErrorText,
-                        ) {
-                            MyText(
-                                text = uiState.nameTextFieldErrorTextStringResourceId?.run {
-                                    stringResource(
-                                        id = uiState.nameTextFieldErrorTextStringResourceId,
-                                    )
-                                }.orEmpty(),
-                                style = MaterialTheme.typography.bodySmall.copy(
-                                    color = MaterialTheme.colorScheme.error,
-                                ),
-                            )
-                        }
-                    },
-                    isError = uiState.visibilityData.nameTextFieldErrorText,
-                    keyboardActions = KeyboardActions(
-                        onNext = {
-                            state.focusManager.moveFocus(
-                                focusDirection = FocusDirection.Down,
-                            )
+                    data = MyOutlinedTextFieldData(
+                        textFieldValue = uiState.name,
+                        labelTextStringResourceId = R.string.screen_add_or_edit_source_name,
+                        trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_source_clear_name,
+                        supportingText = {
+                            AnimatedVisibility(
+                                visible = uiState.visibilityData.nameTextFieldErrorText,
+                            ) {
+                                MyText(
+                                    text = uiState.nameTextFieldErrorTextStringResourceId?.run {
+                                        stringResource(
+                                            id = uiState.nameTextFieldErrorTextStringResourceId,
+                                        )
+                                    }.orEmpty(),
+                                    style = MaterialTheme.typography.bodySmall.copy(
+                                        color = MaterialTheme.colorScheme.error,
+                                    ),
+                                )
+                            }
                         },
+                        isError = uiState.visibilityData.nameTextFieldErrorText,
+                        keyboardActions = KeyboardActions(
+                            onNext = {
+                                state.focusManager.moveFocus(
+                                    focusDirection = FocusDirection.Down,
+                                )
+                            },
+                        ),
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Text,
+                            imeAction = ImeAction.Next,
+                        ),
                     ),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Text,
-                        imeAction = ImeAction.Next,
+                    events = MyOutlinedTextFieldEvents(
+                        onClickTrailingIcon = events.clearName,
+                        onValueChange = events.updateName,
                     ),
                     modifier = Modifier
                         .focusRequester(
@@ -212,27 +220,29 @@ internal fun AddOrEditSourceScreenUI(
             }
             if (uiState.visibilityData.balanceAmountTextField) {
                 MyOutlinedTextField(
-                    textFieldValue = uiState.balanceAmountValue,
-                    labelTextStringResourceId = R.string.screen_add_or_edit_source_balance_amount_value,
-                    trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_source_clear_balance_amount_value,
-                    onClickTrailingIcon = events.clearBalanceAmountValue,
-                    onValueChange = { updatedBalanceAmountValue ->
-                        events.updateBalanceAmountValue(updatedBalanceAmountValue)
-                    },
-                    visualTransformation = AmountCommaVisualTransformation(),
-                    keyboardActions = KeyboardActions(
-                        onNext = {
-                            state.focusManager.moveFocus(
-                                focusDirection = FocusDirection.Down,
-                            )
-                        },
-                        onDone = {
-                            state.focusManager.clearFocus()
-                        },
+                    data = MyOutlinedTextFieldData(
+                        textFieldValue = uiState.balanceAmountValue,
+                        labelTextStringResourceId = R.string.screen_add_or_edit_source_balance_amount_value,
+                        trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_source_clear_balance_amount_value,
+                        visualTransformation = AmountCommaVisualTransformation(),
+                        keyboardActions = KeyboardActions(
+                            onNext = {
+                                state.focusManager.moveFocus(
+                                    focusDirection = FocusDirection.Down,
+                                )
+                            },
+                            onDone = {
+                                state.focusManager.clearFocus()
+                            },
+                        ),
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.NumberPassword,
+                            imeAction = ImeAction.Done,
+                        ),
                     ),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.NumberPassword,
-                        imeAction = ImeAction.Done,
+                    events = MyOutlinedTextFieldEvents(
+                        onClickTrailingIcon = events.clearBalanceAmountValue,
+                        onValueChange = events.updateBalanceAmountValue,
                     ),
                     modifier = Modifier
                         .fillMaxWidth()

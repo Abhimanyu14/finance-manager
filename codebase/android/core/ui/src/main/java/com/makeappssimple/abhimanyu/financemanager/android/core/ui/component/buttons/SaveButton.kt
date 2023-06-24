@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
@@ -40,7 +39,9 @@ fun SaveButton(
     events: SaveButtonEvents,
 ) {
     if (data.isLoading) {
-        SaveButtonLoadingUI()
+        SaveButtonLoadingUI(
+            modifier = modifier,
+        )
     } else {
         ElevatedButton(
             modifier = modifier,
@@ -68,18 +69,17 @@ fun SaveButton(
 }
 
 @Composable
-private fun SaveButtonLoadingUI() {
+private fun SaveButtonLoadingUI(
+    modifier: Modifier = Modifier,
+) {
     Box(
-        modifier = Modifier
-            .onSizeChanged {
-
-            }
+        modifier = modifier
             .size(
                 height = 40.dp,
                 width = 128.dp,
             )
             .clip(
-                CircleShape,
+                shape = CircleShape,
             )
             .shimmer(),
     )

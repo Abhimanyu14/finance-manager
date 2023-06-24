@@ -43,6 +43,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyH
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyHorizontalScrollingSelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyNavigationBackButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyRadioGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyRadioGroupData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyRadioGroupEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MySelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBarView
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
@@ -50,6 +52,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.but
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardView
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextField
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarContainer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.SearchBar
@@ -129,6 +134,9 @@ private fun LazyListScope.componentsTabContent(
     titleStyle: TextStyle,
     context: Context,
 ) {
+    myOutlinedTextFieldDemo(
+        titleStyle = titleStyle,
+    )
     emojiCircleDemo(
         titleStyle = titleStyle,
     )
@@ -220,11 +228,15 @@ private fun LazyListScope.componentsTabContent(
             mutableStateOf(0)
         }
         MyRadioGroup(
-            items = items,
-            selectedItemIndex = selectedItemIndex,
-            onSelectionChange = {
-                selectedItemIndex = it
-            },
+            data = MyRadioGroupData(
+                items = items,
+                selectedItemIndex = selectedItemIndex,
+            ),
+            events = MyRadioGroupEvents(
+                onSelectionChange = {
+                    selectedItemIndex = it
+                },
+            ),
         )
     }
 
@@ -674,6 +686,45 @@ private fun LazyListScope.saveButtonDemo(
                 events = SaveButtonEvents(
                     onClick = {},
                 ),
+            )
+        }
+    }
+}
+
+private fun LazyListScope.myOutlinedTextFieldDemo(
+    titleStyle: TextStyle,
+) {
+    item {
+        MyText(
+            modifier = Modifier
+                .padding(
+                    top = 16.dp,
+                ),
+            text = "My Outlined TextField",
+            style = titleStyle,
+        )
+    }
+    item {
+        FlowRow(
+            mainAxisSpacing = 16.dp,
+            crossAxisAlignment = FlowCrossAxisAlignment.Center,
+        ) {
+            MyOutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                data = MyOutlinedTextFieldData(
+                    labelTextStringResourceId = R.string.my_outlined_text_field_label,
+                    trailingIconContentDescriptionTextStringResourceId = R.string.common_empty_string,
+                ),
+                events = MyOutlinedTextFieldEvents(),
+            )
+            MyOutlinedTextField(
+                modifier = Modifier.fillMaxWidth(),
+                data = MyOutlinedTextFieldData(
+                    isLoading = true,
+                    labelTextStringResourceId = R.string.my_outlined_text_field_label,
+                    trailingIconContentDescriptionTextStringResourceId = R.string.common_empty_string,
+                ),
+                events = MyOutlinedTextFieldEvents(),
             )
         }
     }

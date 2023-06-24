@@ -34,12 +34,16 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyE
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyRadioGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyRadioGroupData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyRadioGroupEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextField
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.component.bottomsheet.AddOrEditCategorySelectEmojiBottomSheetContent
@@ -148,11 +152,14 @@ internal fun AddOrEditCategoryScreenUI(
                 ),
         ) {
             MyRadioGroup(
-                items = uiState.transactionTypesChipUIData.orEmpty(),
-                selectedItemIndex = uiState.selectedTransactionTypeIndex,
-                onSelectionChange = { updatedIndex ->
-                    events.updateSelectedTransactionTypeIndex(updatedIndex)
-                },
+                data = MyRadioGroupData(
+                    isLoading = uiState.isLoading,
+                    items = uiState.transactionTypesChipUIData.orEmpty(),
+                    selectedItemIndex = uiState.selectedTransactionTypeIndex,
+                ),
+                events = MyRadioGroupEvents(
+                    onSelectionChange = events.updateSelectedTransactionTypeIndex,
+                ),
                 modifier = Modifier
                     .padding(
                         all = 12.dp,
@@ -181,24 +188,29 @@ internal fun AddOrEditCategoryScreenUI(
                     ),
                 )
                 MyOutlinedTextField(
-                    textFieldValue = uiState.title.orEmpty(),
-                    labelTextStringResourceId = R.string.screen_add_or_edit_category_title,
-                    trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_category_clear_title,
-                    onClickTrailingIcon = events.clearTitle,
-                    onValueChange = events.updateTitle,
-                    keyboardActions = KeyboardActions(
-                        onNext = {
-                            state.focusManager.moveFocus(
-                                focusDirection = FocusDirection.Down,
-                            )
-                        },
-                        onDone = {
-                            state.focusManager.clearFocus()
-                        },
+                    data = MyOutlinedTextFieldData(
+                        isLoading = uiState.isLoading,
+                        textFieldValue = uiState.title.orEmpty(),
+                        labelTextStringResourceId = R.string.screen_add_or_edit_category_title,
+                        trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_category_clear_title,
+                        keyboardActions = KeyboardActions(
+                            onNext = {
+                                state.focusManager.moveFocus(
+                                    focusDirection = FocusDirection.Down,
+                                )
+                            },
+                            onDone = {
+                                state.focusManager.clearFocus()
+                            },
+                        ),
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Text,
+                            imeAction = ImeAction.Done,
+                        ),
                     ),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Text,
-                        imeAction = ImeAction.Done,
+                    events = MyOutlinedTextFieldEvents(
+                        onClickTrailingIcon = events.clearTitle,
+                        onValueChange = events.updateTitle,
                     ),
                     modifier = Modifier
                         .fillMaxWidth()

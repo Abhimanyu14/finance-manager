@@ -9,6 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
@@ -29,7 +30,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.navigation.AddOrEditCategoryScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.Flow
@@ -40,6 +40,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
@@ -78,8 +79,12 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
             element = TransactionType.EXPENSE,
         ),
     )
-    private val emoji = MutableStateFlow(
-        value = EmojiConstants.HOURGLASS_NOT_DONE,
+    private val emoji: MutableStateFlow<String?> = MutableStateFlow(
+        value = if (addOrEditCategoryScreenArgs.originalCategoryId.isNull()) {
+            EmojiConstants.GRINNING_FACE_WITH_BIG_EYES
+        } else {
+            null
+        },
     )
     private val searchText = MutableStateFlow(
         value = "",
@@ -140,18 +145,17 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         ) {
             MyResult.Loading
         } else {
-            MyResult.Loading
-//            MyResult.Success(
-//                AddOrEditCategoryScreenUIData(
-//                    isValidCategoryData = isValidCategoryData,
-//                    selectedTransactionTypeIndex = selectedTransactionTypeIndex,
-//                    emojiGroups = emojiGroups,
-//                    transactionTypes = transactionTypes,
-//                    emoji = emoji,
-//                    searchText = searchText,
-//                    title = title,
-//                )
-//            )
+            MyResult.Success(
+                AddOrEditCategoryScreenUIData(
+                    isValidCategoryData = isValidCategoryData,
+                    selectedTransactionTypeIndex = selectedTransactionTypeIndex,
+                    emojiGroups = emojiGroups,
+                    transactionTypes = transactionTypes,
+                    emoji = emoji,
+                    searchText = searchText,
+                    title = title,
+                )
+            )
         }
     }.defaultObjectStateIn(
         scope = viewModelScope,
@@ -180,16 +184,18 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     }
 
     override fun insertCategory() {
+        val emojiValue = emoji.value ?: return
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
             insertCategoriesUseCase(
                 Category(
-                    emoji = emoji.value,
+                    emoji = emojiValue,
                     title = title.value.text,
                     transactionType = transactionTypes[selectedTransactionTypeIndex.value],
                 ),
             )
+
             navigationManager.navigate(
                 navigationCommand = MyNavigationDirections.NavigateUp
             )
@@ -197,11 +203,13 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     }
 
     override fun updateCategory() {
-        val updatedCategory = category.value?.copy(
-            emoji = emoji.value,
+        val emojiValue = emoji.value ?: return
+        val categoryValue = category.value ?: return
+        val updatedCategory = categoryValue.copy(
+            emoji = emojiValue,
             title = title.value.text,
             transactionType = transactionTypes[selectedTransactionTypeIndex.value],
-        ) ?: return
+        )
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {

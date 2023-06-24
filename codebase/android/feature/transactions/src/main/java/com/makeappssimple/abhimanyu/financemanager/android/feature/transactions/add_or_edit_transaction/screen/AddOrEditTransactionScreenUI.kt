@@ -49,6 +49,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.dat
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextField
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiStateData
@@ -225,40 +227,40 @@ internal fun AddOrEditTransactionScreenUI(
                 )
             }
             MyOutlinedTextField(
-                textFieldValue = uiState.uiState.amount,
-                labelTextStringResourceId = R.string.screen_add_or_edit_transaction_amount,
-                trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_amount,
-                onClickTrailingIcon = {
-                    events.clearAmount()
-                },
-                onValueChange = { updatedAmount ->
-                    events.updateAmount(updatedAmount)
-                },
-                supportingText = {
-                    AnimatedVisibility(
-                        uiState.uiState.amountErrorText.isNotNullOrBlank(),
-                    ) {
-                        MyText(
-                            text = stringResource(
-                                id = R.string.screen_add_or_edit_transaction_amount_error_text,
-                                uiState.uiState.amountErrorText.orEmpty(),
-                            ),
-                            style = MaterialTheme.typography.bodySmall.copy(
-                                color = MaterialTheme.colorScheme.error,
-                            ),
-                        )
-                    }
-                },
-                isError = uiState.uiState.amountErrorText.isNotNull(),
-                visualTransformation = AmountCommaVisualTransformation(),
-                keyboardActions = KeyboardActions(
-                    onDone = {
-                        clearFocus()
+                data = MyOutlinedTextFieldData(
+                    textFieldValue = uiState.uiState.amount,
+                    labelTextStringResourceId = R.string.screen_add_or_edit_transaction_amount,
+                    trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_amount,
+                    supportingText = {
+                        AnimatedVisibility(
+                            uiState.uiState.amountErrorText.isNotNullOrBlank(),
+                        ) {
+                            MyText(
+                                text = stringResource(
+                                    id = R.string.screen_add_or_edit_transaction_amount_error_text,
+                                    uiState.uiState.amountErrorText.orEmpty(),
+                                ),
+                                style = MaterialTheme.typography.bodySmall.copy(
+                                    color = MaterialTheme.colorScheme.error,
+                                ),
+                            )
+                        }
                     },
+                    isError = uiState.uiState.amountErrorText.isNotNull(),
+                    visualTransformation = AmountCommaVisualTransformation(),
+                    keyboardActions = KeyboardActions(
+                        onDone = {
+                            clearFocus()
+                        },
+                    ),
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.NumberPassword,
+                        imeAction = ImeAction.Done,
+                    ),
                 ),
-                keyboardOptions = KeyboardOptions(
-                    keyboardType = KeyboardType.NumberPassword,
-                    imeAction = ImeAction.Done,
+                events = MyOutlinedTextFieldEvents(
+                    onClickTrailingIcon = events.clearAmount,
+                    onValueChange = events.updateAmount,
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -294,23 +296,23 @@ internal fun AddOrEditTransactionScreenUI(
                 visible = uiState.uiVisibilityState.isTitleTextFieldVisible,
             ) {
                 MyOutlinedTextField(
-                    textFieldValue = uiState.uiState.title,
-                    labelTextStringResourceId = R.string.screen_add_or_edit_transaction_title,
-                    trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_title,
-                    onClickTrailingIcon = {
-                        events.clearTitle()
-                    },
-                    onValueChange = { updatedTitle ->
-                        events.updateTitle(updatedTitle)
-                    },
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            clearFocus()
-                        },
+                    data = MyOutlinedTextFieldData(
+                        textFieldValue = uiState.uiState.title,
+                        labelTextStringResourceId = R.string.screen_add_or_edit_transaction_title,
+                        trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_title,
+                        keyboardActions = KeyboardActions(
+                            onDone = {
+                                clearFocus()
+                            },
+                        ),
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Text,
+                            imeAction = ImeAction.Done,
+                        ),
                     ),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Text,
-                        imeAction = ImeAction.Done,
+                    events = MyOutlinedTextFieldEvents(
+                        onClickTrailingIcon = events.clearTitle,
+                        onValueChange = events.updateTitle,
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
@@ -363,23 +365,23 @@ internal fun AddOrEditTransactionScreenUI(
                 visible = uiState.uiVisibilityState.isDescriptionTextFieldVisible,
             ) {
                 MyOutlinedTextField(
-                    textFieldValue = uiState.uiState.description,
-                    labelTextStringResourceId = R.string.screen_add_or_edit_transaction_description,
-                    trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_description,
-                    onClickTrailingIcon = {
-                        events.clearDescription()
-                    },
-                    onValueChange = { updatedDescription ->
-                        events.updateDescription(updatedDescription)
-                    },
-                    keyboardActions = KeyboardActions(
-                        onDone = {
-                            clearFocus()
-                        },
+                    data = MyOutlinedTextFieldData(
+                        textFieldValue = uiState.uiState.description,
+                        labelTextStringResourceId = R.string.screen_add_or_edit_transaction_description,
+                        trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_description,
+                        keyboardActions = KeyboardActions(
+                            onDone = {
+                                clearFocus()
+                            },
+                        ),
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.Text,
+                            imeAction = ImeAction.Done,
+                        ),
                     ),
-                    keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Text,
-                        imeAction = ImeAction.Done,
+                    events = MyOutlinedTextFieldEvents(
+                        onClickTrailingIcon = events.clearDescription,
+                        onValueChange = events.updateDescription,
                     ),
                     modifier = Modifier
                         .fillMaxWidth()
