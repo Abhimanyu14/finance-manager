@@ -22,6 +22,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Bottom
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCard
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCardEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
@@ -132,9 +133,11 @@ internal fun HomeScreenUI(
                     visible = uiState.isBackupCardVisible,
                 ) {
                     BackupCard(
-                        onClick = {
-                            events.createDocument.launch(MimeTypeConstants.JSON)
-                        }
+                        events = BackupCardEvents(
+                            onClick = {
+                                events.createDocument.launch(MimeTypeConstants.JSON)
+                            },
+                        ),
                     )
                 }
             }

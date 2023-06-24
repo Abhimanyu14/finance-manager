@@ -5,6 +5,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -20,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.shimmer.shimmer
 
 @Immutable
 sealed class EmojiCircleSize(
@@ -42,46 +44,91 @@ sealed class EmojiCircleSize(
     )
 }
 
+@Immutable
+data class MyEmojiCircleData(
+    val isLoading: Boolean = false,
+    val backgroundColor: Color = Transparent,
+    val emojiCircleSize: EmojiCircleSize = EmojiCircleSize.Small,
+    val emoji: String? = "",
+)
+
+@Immutable
+data class MyEmojiCircleEvents(
+    val onClick: (() -> Unit)? = null,
+    val onLongClick: (() -> Unit)? = null,
+)
+
 @Composable
 fun MyEmojiCircle(
     modifier: Modifier = Modifier,
-    backgroundColor: Color = Transparent,
-    emojiCircleSize: EmojiCircleSize = EmojiCircleSize.Small,
-    emoji: String?,
-    onClick: (() -> Unit)? = null,
-    onLongClick: (() -> Unit)? = null,
+    data: MyEmojiCircleData,
+    events: MyEmojiCircleEvents,
+) {
+    if (data.isLoading) {
+        MyEmojiCircleLoadingUI(
+            emojiCircleSize = data.emojiCircleSize,
+        )
+    } else {
+        Box(
+            contentAlignment = Alignment.Center,
+            modifier = modifier
+                .clip(
+                    shape = CircleShape,
+                )
+                .conditionalClickable(
+                    onClick = events.onClick,
+                    onLongClick = events.onLongClick,
+                )
+                .background(
+                    color = data.backgroundColor,
+                )
+                .padding(
+                    all = data.emojiCircleSize.padding,
+                ),
+        ) {
+            AndroidView(
+                factory = { context ->
+                    AppCompatTextView(context).apply {
+                        setTextColor(Black.toArgb())
+                        text = data.emoji ?: EmojiConstants.WORRIED_FACE
+                        textSize = data.emojiCircleSize.textSize
+                        textAlignment = View.TEXT_ALIGNMENT_CENTER
+                    }
+                },
+                update = {
+                    it.apply {
+                        text = data.emoji ?: EmojiConstants.WORRIED_FACE
+                    }
+                },
+            )
+        }
+    }
+}
+
+@Composable
+fun MyEmojiCircleLoadingUI(
+    emojiCircleSize: EmojiCircleSize,
 ) {
     Box(
-        contentAlignment = Alignment.Center,
-        modifier = modifier
+        modifier = Modifier
+            .size(
+                size = when (emojiCircleSize) {
+                    EmojiCircleSize.Small -> {
+                        28.dp
+                    }
+
+                    EmojiCircleSize.Normal -> {
+                        38.dp
+                    }
+
+                    EmojiCircleSize.Large -> {
+                        42.dp
+                    }
+                },
+            )
             .clip(
-                shape = CircleShape,
+                CircleShape,
             )
-            .conditionalClickable(
-                onClick = onClick,
-                onLongClick = onLongClick,
-            )
-            .background(
-                color = backgroundColor,
-            )
-            .padding(
-                all = emojiCircleSize.padding,
-            ),
-    ) {
-        AndroidView(
-            factory = { context ->
-                AppCompatTextView(context).apply {
-                    setTextColor(Black.toArgb())
-                    text = emoji ?: EmojiConstants.WORRIED_FACE
-                    textSize = emojiCircleSize.textSize
-                    textAlignment = View.TEXT_ALIGNMENT_CENTER
-                }
-            },
-            update = {
-                it.apply {
-                    text = emoji ?: EmojiConstants.WORRIED_FACE
-                }
-            },
-        )
-    }
+            .shimmer(),
+    )
 }

@@ -18,6 +18,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.EmojiCircleSize
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarContainer
 
@@ -60,14 +62,18 @@ fun MyEmojiPickerBottomSheet(
                     FlowRow {
                         emojis.map { emoji ->
                             MyEmojiCircle(
-                                emojiCircleSize = EmojiCircleSize.Normal,
-                                emoji = emoji.character,
-                                onClick = {
-                                    onEmojiClick(emoji)
-                                },
-                                onLongClick = {
-                                    onEmojiLongClick(emoji)
-                                },
+                                data = MyEmojiCircleData(
+                                    emojiCircleSize = EmojiCircleSize.Normal,
+                                    emoji = emoji.character,
+                                ),
+                                events = MyEmojiCircleEvents(
+                                    onClick = {
+                                        onEmojiClick(emoji)
+                                    },
+                                    onLongClick = {
+                                        onEmojiLongClick(emoji)
+                                    },
+                                ),
                             )
                         }
                     }

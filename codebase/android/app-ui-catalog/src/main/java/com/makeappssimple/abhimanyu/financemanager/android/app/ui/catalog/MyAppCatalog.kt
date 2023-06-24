@@ -37,6 +37,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.Chi
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.EmojiCircleSize
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyDefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyHorizontalScrollingRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyHorizontalScrollingSelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyNavigationBackButton
@@ -127,6 +129,13 @@ private fun LazyListScope.componentsTabContent(
     titleStyle: TextStyle,
     context: Context,
 ) {
+    emojiCircleDemo(
+        titleStyle = titleStyle,
+    )
+    saveButtonDemo(
+        titleStyle = titleStyle,
+    )
+
     /**
      * Selection Group
      */
@@ -402,94 +411,6 @@ private fun LazyListScope.componentsTabContent(
     }
 
     /**
-     * Emoji Circle
-     */
-    item {
-        MyText(
-            modifier = Modifier
-                .padding(
-                    top = 16.dp,
-                ),
-            text = "Emoji Circle",
-            style = titleStyle,
-        )
-    }
-    item {
-        FlowRow(
-            mainAxisSpacing = 16.dp,
-            crossAxisAlignment = FlowCrossAxisAlignment.Center,
-        ) {
-            MyEmojiCircle(
-                emoji = "😀",
-            )
-            MyEmojiCircle(
-                emojiCircleSize = EmojiCircleSize.Normal,
-                emoji = "😀",
-            )
-            MyEmojiCircle(
-                backgroundColor = MaterialTheme.colorScheme.outline,
-                emoji = "😀",
-            )
-            MyEmojiCircle(
-                backgroundColor = MaterialTheme.colorScheme.outline,
-                emojiCircleSize = EmojiCircleSize.Normal,
-                emoji = "😀",
-            )
-        }
-    }
-
-    /**
-     * Save Button
-     */
-    item {
-        MyText(
-            modifier = Modifier
-                .padding(
-                    top = 16.dp,
-                ),
-            text = "Save Button",
-            style = titleStyle,
-        )
-    }
-    item {
-        FlowRow(
-            mainAxisSpacing = 16.dp,
-            crossAxisAlignment = FlowCrossAxisAlignment.Center,
-        ) {
-            SaveButton(
-                modifier = Modifier,
-                data = SaveButtonData(
-                    isEnabled = false,
-                    textStringResourceId = R.string.save_button,
-                ),
-                events = SaveButtonEvents(
-                    onClick = {},
-                ),
-            )
-            SaveButton(
-                modifier = Modifier,
-                data = SaveButtonData(
-                    isEnabled = true,
-                    textStringResourceId = R.string.save_button,
-                ),
-                events = SaveButtonEvents(
-                    onClick = {},
-                ),
-            )
-            SaveButton(
-                modifier = Modifier,
-                data = SaveButtonData(
-                    isEnabled = true,
-                    textStringResourceId = R.string.save_button,
-                ),
-                events = SaveButtonEvents(
-                    onClick = {},
-                ),
-            )
-        }
-    }
-
-    /**
      * Search Bar
      */
     item {
@@ -612,6 +533,147 @@ private fun LazyListScope.componentsTabContent(
         ) {
             MyNavigationBackButton(
                 onClick = {},
+            )
+        }
+    }
+}
+
+private fun LazyListScope.emojiCircleDemo(
+    titleStyle: TextStyle,
+) {
+    item {
+        MyText(
+            modifier = Modifier
+                .padding(
+                    top = 16.dp,
+                ),
+            text = "Emoji Circle",
+            style = titleStyle,
+        )
+    }
+    item {
+        FlowRow(
+            mainAxisSpacing = 16.dp,
+            crossAxisAlignment = FlowCrossAxisAlignment.Center,
+        ) {
+            MyEmojiCircle(
+                data = MyEmojiCircleData(
+                    emojiCircleSize = EmojiCircleSize.Small,
+                    isLoading = true,
+                ),
+                events = MyEmojiCircleEvents(),
+            )
+            MyEmojiCircle(
+                data = MyEmojiCircleData(
+                    emojiCircleSize = EmojiCircleSize.Normal,
+                    isLoading = true,
+                ),
+                events = MyEmojiCircleEvents(),
+            )
+            MyEmojiCircle(
+                data = MyEmojiCircleData(
+                    emojiCircleSize = EmojiCircleSize.Large,
+                    isLoading = true,
+                ),
+                events = MyEmojiCircleEvents(),
+            )
+            MyEmojiCircle(
+                data = MyEmojiCircleData(
+                    emojiCircleSize = EmojiCircleSize.Small,
+                    emoji = "😀",
+                ),
+                events = MyEmojiCircleEvents(),
+            )
+            MyEmojiCircle(
+                data = MyEmojiCircleData(
+                    emojiCircleSize = EmojiCircleSize.Normal,
+                    emoji = "😀",
+                ),
+                events = MyEmojiCircleEvents(),
+            )
+            MyEmojiCircle(
+                data = MyEmojiCircleData(
+                    emojiCircleSize = EmojiCircleSize.Large,
+                    emoji = "😀",
+                ),
+                events = MyEmojiCircleEvents(),
+            )
+            MyEmojiCircle(
+                data = MyEmojiCircleData(
+                    emojiCircleSize = EmojiCircleSize.Small,
+                    backgroundColor = MaterialTheme.colorScheme.outline,
+                    emoji = "😀",
+                ),
+                events = MyEmojiCircleEvents(),
+            )
+            MyEmojiCircle(
+                data = MyEmojiCircleData(
+                    emojiCircleSize = EmojiCircleSize.Normal,
+                    backgroundColor = MaterialTheme.colorScheme.outline,
+                    emoji = "😀",
+                ),
+                events = MyEmojiCircleEvents(),
+            )
+            MyEmojiCircle(
+                data = MyEmojiCircleData(
+                    emojiCircleSize = EmojiCircleSize.Large,
+                    backgroundColor = MaterialTheme.colorScheme.outline,
+                    emoji = "😀",
+                ),
+                events = MyEmojiCircleEvents(),
+            )
+        }
+    }
+}
+
+private fun LazyListScope.saveButtonDemo(
+    titleStyle: TextStyle,
+) {
+    item {
+        MyText(
+            modifier = Modifier
+                .padding(
+                    top = 16.dp,
+                ),
+            text = "Save Button",
+            style = titleStyle,
+        )
+    }
+    item {
+        FlowRow(
+            mainAxisSpacing = 16.dp,
+            crossAxisAlignment = FlowCrossAxisAlignment.Center,
+        ) {
+            SaveButton(
+                modifier = Modifier,
+                data = SaveButtonData(
+                    isEnabled = false,
+                    textStringResourceId = R.string.save_button,
+                ),
+                events = SaveButtonEvents(
+                    onClick = {},
+                ),
+            )
+            SaveButton(
+                modifier = Modifier,
+                data = SaveButtonData(
+                    isEnabled = true,
+                    textStringResourceId = R.string.save_button,
+                ),
+                events = SaveButtonEvents(
+                    onClick = {},
+                ),
+            )
+            SaveButton(
+                modifier = Modifier,
+                data = SaveButtonData(
+                    isEnabled = true,
+                    isLoading = true,
+                    textStringResourceId = R.string.save_button,
+                ),
+                events = SaveButtonEvents(
+                    onClick = {},
+                ),
             )
         }
     }

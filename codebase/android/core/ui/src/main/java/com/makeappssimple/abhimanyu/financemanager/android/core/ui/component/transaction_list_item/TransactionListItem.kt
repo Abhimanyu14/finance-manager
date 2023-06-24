@@ -30,6 +30,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.getComposeColor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemViewWrapper
 
@@ -112,8 +114,11 @@ fun TransactionListItem(
                 ),
         ) {
             MyEmojiCircle(
-                backgroundColor = MaterialTheme.colorScheme.outline,
-                emoji = data.emoji,
+                data = MyEmojiCircleData(
+                    backgroundColor = MaterialTheme.colorScheme.outline,
+                    emoji = data.emoji,
+                ),
+                events = MyEmojiCircleEvents(),
             )
             Column(
                 modifier = Modifier

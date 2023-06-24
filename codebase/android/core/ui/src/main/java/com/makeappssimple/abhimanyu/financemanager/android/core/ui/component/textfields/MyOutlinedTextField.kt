@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -13,6 +14,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
@@ -35,48 +37,52 @@ fun MyOutlinedTextField(
     onValueChange: (updatedValue: TextFieldValue) -> Unit,
     supportingText: @Composable (() -> Unit)? = null,
 ) {
-    OutlinedTextField(
-        value = textFieldValue,
-        label = {
-            MyOutlinedTextFieldLabelText(
-                textStringResourceId = labelTextStringResourceId,
-            )
-        },
-        trailingIcon = {
-            AnimatedVisibility(
-                visible = textFieldValue.text.isNotNullOrBlank(),
-                enter = fadeIn(),
-                exit = fadeOut(),
-            ) {
-                MyIconButton(
-                    onClickLabel = stringResource(
-                        id = trailingIconContentDescriptionTextStringResourceId,
-                    ),
-                    onClick = onClickTrailingIcon,
-                    modifier = Modifier
-                        .padding(
-                            end = 4.dp,
-                        ),
+    Box(
+        contentAlignment = Alignment.Center,
+    ) {
+        OutlinedTextField(
+            value = textFieldValue,
+            label = {
+                MyOutlinedTextFieldLabelText(
+                    textStringResourceId = labelTextStringResourceId,
+                )
+            },
+            trailingIcon = {
+                AnimatedVisibility(
+                    visible = textFieldValue.text.isNotNullOrBlank(),
+                    enter = fadeIn(),
+                    exit = fadeOut(),
                 ) {
-                    Icon(
-                        imageVector = Icons.Rounded.Clear,
-                        tint = MaterialTheme.colorScheme.onBackground,
-                        contentDescription = stringResource(
+                    MyIconButton(
+                        onClickLabel = stringResource(
                             id = trailingIconContentDescriptionTextStringResourceId,
                         ),
-                    )
+                        onClick = onClickTrailingIcon,
+                        modifier = Modifier
+                            .padding(
+                                end = 4.dp,
+                            ),
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Clear,
+                            tint = MaterialTheme.colorScheme.onBackground,
+                            contentDescription = stringResource(
+                                id = trailingIconContentDescriptionTextStringResourceId,
+                            ),
+                        )
+                    }
                 }
-            }
-        },
-        onValueChange = {
-            onValueChange(it)
-        },
-        supportingText = supportingText,
-        isError = isError,
-        visualTransformation = visualTransformation,
-        keyboardActions = keyboardActions,
-        keyboardOptions = keyboardOptions,
-        singleLine = true,
-        modifier = modifier,
-    )
+            },
+            onValueChange = {
+                onValueChange(it)
+            },
+            supportingText = supportingText,
+            isError = isError,
+            visualTransformation = visualTransformation,
+            keyboardActions = keyboardActions,
+            keyboardOptions = keyboardOptions,
+            singleLine = true,
+            modifier = modifier,
+        )
+    }
 }

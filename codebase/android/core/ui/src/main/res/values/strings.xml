@@ -1,5 +1,7 @@
 <resources>
 
+    <string name="common_empty_string" />
+
     <!-- region bottom sheet emoji picker -->
     <string name="emoji_picker_bottom_sheet_placeholder_text">Search Emojis</string>
     <!-- endregion -->

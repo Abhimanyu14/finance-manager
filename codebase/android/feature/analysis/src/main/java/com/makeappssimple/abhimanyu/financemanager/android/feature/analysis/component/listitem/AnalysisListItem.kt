@@ -23,6 +23,8 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleEvents
 
 @Immutable
 data class AnalysisListItemData(
@@ -63,8 +65,11 @@ internal fun AnalysisListItem(
             ),
     ) {
         MyEmojiCircle(
-            backgroundColor = MaterialTheme.colorScheme.outline,
-            emoji = data.emoji,
+            data = MyEmojiCircleData(
+                backgroundColor = MaterialTheme.colorScheme.outline,
+                emoji = data.emoji,
+            ),
+            events = MyEmojiCircleEvents(),
         )
         BoxWithConstraints(
             modifier = Modifier

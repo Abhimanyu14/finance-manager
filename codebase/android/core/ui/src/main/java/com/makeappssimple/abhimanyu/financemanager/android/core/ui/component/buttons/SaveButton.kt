@@ -1,16 +1,22 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.shimmer.shimmer
 import java.time.LocalDate
 
 @Immutable
@@ -33,24 +39,48 @@ fun SaveButton(
     data: SaveButtonData,
     events: SaveButtonEvents,
 ) {
-    ElevatedButton(
-        onClick = events.onClick,
-        enabled = data.isEnabled,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            contentColor = MaterialTheme.colorScheme.onPrimary,
-        ),
-    ) {
-        MyText(
-            modifier = modifier
-                .defaultMinSize(
-                    minWidth = 80.dp,
+    if (data.isLoading) {
+        SaveButtonLoadingUI()
+    } else {
+        ElevatedButton(
+            modifier = modifier,
+            onClick = events.onClick,
+            enabled = data.isEnabled,
+            colors = ButtonDefaults
+                .buttonColors(
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    contentColor = MaterialTheme.colorScheme.onPrimary,
                 ),
-            textStringResourceId = data.textStringResourceId,
-            style = MaterialTheme.typography.labelLarge
-                .copy(
-                    textAlign = TextAlign.Center,
-                ),
-        )
+        ) {
+            MyText(
+                modifier = Modifier
+                    .defaultMinSize(
+                        minWidth = 80.dp,
+                    ),
+                textStringResourceId = data.textStringResourceId,
+                style = MaterialTheme.typography.labelLarge
+                    .copy(
+                        textAlign = TextAlign.Center,
+                    ),
+            )
+        }
     }
+}
+
+@Composable
+private fun SaveButtonLoadingUI() {
+    Box(
+        modifier = Modifier
+            .onSizeChanged {
+
+            }
+            .size(
+                height = 40.dp,
+                width = 128.dp,
+            )
+            .clip(
+                CircleShape,
+            )
+            .shimmer(),
+    )
 }

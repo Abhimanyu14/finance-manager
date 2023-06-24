@@ -1,17 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -20,7 +14,6 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.input.ImeAction
@@ -38,6 +31,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Bottom
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.EmojiCircleSize
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
@@ -46,7 +41,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.but
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.orEmpty
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.shimmer.shimmer
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.component.bottomsheet.AddOrEditCategorySelectEmojiBottomSheetContent
 
@@ -173,13 +167,18 @@ internal fun AddOrEditCategoryScreenUI(
                     .fillMaxWidth(),
             ) {
                 MyEmojiCircle(
-                    emojiCircleSize = EmojiCircleSize.Normal,
-                    emoji = uiState.emoji,
-                    onClick = {
-                        uiState.setAddOrEditCategoryBottomSheetType(
-                            AddOrEditCategoryBottomSheetType.SELECT_EMOJI
-                        )
-                    },
+                    data = MyEmojiCircleData(
+                        isLoading = uiState.isLoading,
+                        emojiCircleSize = EmojiCircleSize.Normal,
+                        emoji = uiState.emoji,
+                    ),
+                    events = MyEmojiCircleEvents(
+                        onClick = {
+                            uiState.setAddOrEditCategoryBottomSheetType(
+                                AddOrEditCategoryBottomSheetType.SELECT_EMOJI
+                            )
+                        },
+                    ),
                 )
                 MyOutlinedTextField(
                     textFieldValue = uiState.title.orEmpty(),
@@ -217,6 +216,7 @@ internal fun AddOrEditCategoryScreenUI(
                 modifier = Modifier,
                 data = SaveButtonData(
                     isEnabled = uiState.isValidCategoryData.orFalse(),
+                    isLoading = uiState.isLoading,
                     textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
                 ),
                 events = SaveButtonEvents(
@@ -224,55 +224,5 @@ internal fun AddOrEditCategoryScreenUI(
                 ),
             )
         }
-    }
-}
-
-@Composable
-fun AddOrEditCategoryScreenLoadingUI() {
-    Column(
-        Modifier.fillMaxSize(),
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-        ) {
-            Box(
-                modifier = Modifier
-                    .size(
-                        size = 32.dp,
-                    )
-                    .clip(
-                        shape = CircleShape,
-                    )
-                    .shimmer(),
-            )
-            Box(
-                modifier = Modifier
-                    .weight(
-                        weight = 1F,
-                    )
-                    .height(
-                        height = 40.dp,
-                    )
-                    .clip(
-                        shape = RoundedCornerShape(
-                            size = 8.dp,
-                        )
-                    )
-                    .shimmer(),
-            )
-        }
-        Box(
-            modifier = Modifier
-                .width(
-                    width = 120.dp,
-                )
-                .height(
-                    height = 40.dp,
-                )
-                .clip(
-                    shape = CircleShape,
-                )
-                .shimmer(),
-        )
     }
 }
