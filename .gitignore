@@ -144,6 +144,10 @@ proguard/
 # android test user preferences
 **/.idea/androidTestResultsUserPreferences.xml
 
+# code style
+**/.idea/codeStyles/codeStyleConfig.xml
+**/.idea/codeStyles/Project.xml
+
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
 .cxx/
