@@ -24,6 +24,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Bottom
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
@@ -138,9 +140,14 @@ internal fun AddOrEditTransactionForScreenUI(
                     ),
             )
             SaveButton(
-                textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
-                isEnabled = uiState.isCtaButtonEnabled,
-                onClick = events.onCtaButtonClick,
+                modifier = Modifier,
+                data = SaveButtonData(
+                    isEnabled = uiState.isCtaButtonEnabled,
+                    textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
+                ),
+                events = SaveButtonEvents(
+                    onClick = events.onCtaButtonClick,
+                ),
             )
         }
     }

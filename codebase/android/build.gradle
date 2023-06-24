@@ -133,6 +133,9 @@ buildscript {
         // Accompanist
         accompanistVersion = "0.27.0"
 
+        // Shimmer
+        shimmerVersion = "1.0.5"
+
         // Detekt formatting
         detektFormattingVersion = "1.20.0"
 

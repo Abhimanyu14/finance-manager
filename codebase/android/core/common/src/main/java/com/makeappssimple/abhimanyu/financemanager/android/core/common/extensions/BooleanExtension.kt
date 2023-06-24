@@ -15,3 +15,11 @@ fun Boolean?.isFalse(): Boolean {
     }
     return this == false
 }
+
+fun Boolean?.orFalse(): Boolean {
+    return if (this.isNull()) {
+        false
+    } else {
+        this
+    }
+}

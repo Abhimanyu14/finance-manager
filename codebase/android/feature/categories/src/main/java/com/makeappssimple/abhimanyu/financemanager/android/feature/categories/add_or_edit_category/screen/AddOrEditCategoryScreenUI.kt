@@ -1,12 +1,17 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen
 
-import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -15,12 +20,14 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
@@ -34,8 +41,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyE
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextField
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.orEmpty
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.shimmer.shimmer
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.component.bottomsheet.AddOrEditCategorySelectEmojiBottomSheetContent
 
@@ -47,8 +58,6 @@ enum class AddOrEditCategoryBottomSheetType : BottomSheetType {
 @Immutable
 data class AddOrEditCategoryScreenUIData(
     val isValidCategoryData: Boolean = false,
-    @StringRes val appBarTitleTextStringResourceId: Int = 0,
-    @StringRes val ctaButtonLabelTextStringResourceId: Int = 0,
     val selectedTransactionTypeIndex: Int = 0,
     val emojiGroups: Map<String, List<Emoji>> = emptyMap(),
     val transactionTypes: List<TransactionType> = emptyList(),
@@ -77,7 +86,7 @@ internal fun AddOrEditCategoryScreenUI(
     LaunchedEffect(
         key1 = Unit,
     ) {
-        state.focusRequester.requestFocus()
+        // state.focusRequester.requestFocus()
     }
 
     BottomSheetHandler(
@@ -109,8 +118,8 @@ internal fun AddOrEditCategoryScreenUI(
                 AddOrEditCategoryBottomSheetType.SELECT_EMOJI -> {
                     AddOrEditCategorySelectEmojiBottomSheetContent(
                         context = state.context,
-                        emojiGroups = uiState.emojiGroups,
-                        searchText = uiState.searchText,
+                        emojiGroups = uiState.emojiGroups.orEmpty(),
+                        searchText = uiState.searchText.orEmpty(),
                         resetBottomSheetType = uiState.resetBottomSheetType,
                         updateEmoji = { updatedEmoji ->
                             events.updateEmoji(updatedEmoji)
@@ -145,7 +154,7 @@ internal fun AddOrEditCategoryScreenUI(
                 ),
         ) {
             MyRadioGroup(
-                items = uiState.transactionTypesChipUIData,
+                items = uiState.transactionTypesChipUIData.orEmpty(),
                 selectedItemIndex = uiState.selectedTransactionTypeIndex,
                 onSelectionChange = { updatedIndex ->
                     events.updateSelectedTransactionTypeIndex(updatedIndex)
@@ -167,11 +176,13 @@ internal fun AddOrEditCategoryScreenUI(
                     emojiCircleSize = EmojiCircleSize.Normal,
                     emoji = uiState.emoji,
                     onClick = {
-                        uiState.setAddOrEditCategoryBottomSheetType(AddOrEditCategoryBottomSheetType.SELECT_EMOJI)
+                        uiState.setAddOrEditCategoryBottomSheetType(
+                            AddOrEditCategoryBottomSheetType.SELECT_EMOJI
+                        )
                     },
                 )
                 MyOutlinedTextField(
-                    textFieldValue = uiState.title,
+                    textFieldValue = uiState.title.orEmpty(),
                     labelTextStringResourceId = R.string.screen_add_or_edit_category_title,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_category_clear_title,
                     onClickTrailingIcon = events.clearTitle,
@@ -203,10 +214,65 @@ internal fun AddOrEditCategoryScreenUI(
                 )
             }
             SaveButton(
-                textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
-                isEnabled = uiState.isValidCategoryData,
-                onClick = events.onCtaButtonClick,
+                modifier = Modifier,
+                data = SaveButtonData(
+                    isEnabled = uiState.isValidCategoryData.orFalse(),
+                    textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
+                ),
+                events = SaveButtonEvents(
+                    onClick = events.onCtaButtonClick,
+                ),
             )
         }
+    }
+}
+
+@Composable
+fun AddOrEditCategoryScreenLoadingUI() {
+    Column(
+        Modifier.fillMaxSize(),
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Box(
+                modifier = Modifier
+                    .size(
+                        size = 32.dp,
+                    )
+                    .clip(
+                        shape = CircleShape,
+                    )
+                    .shimmer(),
+            )
+            Box(
+                modifier = Modifier
+                    .weight(
+                        weight = 1F,
+                    )
+                    .height(
+                        height = 40.dp,
+                    )
+                    .clip(
+                        shape = RoundedCornerShape(
+                            size = 8.dp,
+                        )
+                    )
+                    .shimmer(),
+            )
+        }
+        Box(
+            modifier = Modifier
+                .width(
+                    width = 120.dp,
+                )
+                .height(
+                    height = 40.dp,
+                )
+                .clip(
+                    shape = CircleShape,
+                )
+                .shimmer(),
+        )
     }
 }

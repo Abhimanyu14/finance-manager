@@ -6,29 +6,42 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.text.input.TextFieldValue
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 
 @Stable
 class AddOrEditCategoryScreenUIState(
-    data: AddOrEditCategoryScreenUIData,
+    data: MyResult<AddOrEditCategoryScreenUIData>?,
     isEdit: Boolean,
     val addOrEditCategoryBottomSheetType: AddOrEditCategoryBottomSheetType,
     val setAddOrEditCategoryBottomSheetType: (AddOrEditCategoryBottomSheetType) -> Unit,
 ) {
-    val isValidCategoryData: Boolean = data.isValidCategoryData
-    val selectedTransactionTypeIndex: Int = data.selectedTransactionTypeIndex
-    val emojiGroups: Map<String, List<Emoji>> = data.emojiGroups
-    val transactionTypesChipUIData: List<ChipUIData> =
-        data.transactionTypes.map { transactionType ->
+    private val unwrappedData = when (data) {
+        is MyResult.Success -> {
+            data.data
+        }
+
+        else -> {
+            null
+        }
+    }
+
+    val isLoading = unwrappedData.isNull()
+    val isValidCategoryData: Boolean? = unwrappedData?.isValidCategoryData
+    val selectedTransactionTypeIndex: Int? = unwrappedData?.selectedTransactionTypeIndex
+    val emojiGroups: Map<String, List<Emoji>>? = unwrappedData?.emojiGroups
+    val transactionTypesChipUIData: List<ChipUIData>? =
+        unwrappedData?.transactionTypes?.map { transactionType ->
             ChipUIData(
                 text = transactionType.title,
             )
         }
-    val emoji: String = data.emoji
-    val searchText: String = data.searchText
-    val title: TextFieldValue = data.title
+    val emoji: String? = unwrappedData?.emoji
+    val searchText: String? = unwrappedData?.searchText
+    val title: TextFieldValue? = unwrappedData?.title
 
     @StringRes
     val appBarTitleTextStringResourceId: Int = if (isEdit) {
@@ -50,7 +63,7 @@ class AddOrEditCategoryScreenUIState(
 
 @Composable
 fun rememberAddOrEditCategoryScreenUIState(
-    data: AddOrEditCategoryScreenUIData,
+    data: MyResult<AddOrEditCategoryScreenUIData>?,
     isEdit: Boolean,
 ): AddOrEditCategoryScreenUIState {
     val (addOrEditCategoryBottomSheetType, setAddOrEditCategoryBottomSheetType) = remember {

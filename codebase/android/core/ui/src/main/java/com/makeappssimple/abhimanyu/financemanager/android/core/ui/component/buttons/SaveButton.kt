@@ -6,21 +6,36 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
+import java.time.LocalDate
+
+@Immutable
+data class SaveButtonData(
+    val isEnabled: Boolean,
+    val isLoading: Boolean = false,
+    @StringRes val textStringResourceId: Int,
+    val selectedLocalDate: LocalDate? = null,
+    val startLocalDate: LocalDate? = null,
+)
+
+@Immutable
+data class SaveButtonEvents(
+    val onClick: () -> Unit,
+)
 
 @Composable
 fun SaveButton(
     modifier: Modifier = Modifier,
-    @StringRes textStringResourceId: Int,
-    isEnabled: Boolean,
-    onClick: () -> Unit,
+    data: SaveButtonData,
+    events: SaveButtonEvents,
 ) {
     ElevatedButton(
-        onClick = onClick,
-        enabled = isEnabled,
+        onClick = events.onClick,
+        enabled = data.isEnabled,
         colors = ButtonDefaults.buttonColors(
             containerColor = MaterialTheme.colorScheme.primary,
             contentColor = MaterialTheme.colorScheme.onPrimary,
@@ -31,7 +46,7 @@ fun SaveButton(
                 .defaultMinSize(
                     minWidth = 80.dp,
                 ),
-            textStringResourceId = textStringResourceId,
+            textStringResourceId = data.textStringResourceId,
             style = MaterialTheme.typography.labelLarge
                 .copy(
                     textAlign = TextAlign.Center,

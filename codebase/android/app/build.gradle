@@ -339,6 +339,9 @@ dependencies {
     // Accompanist pager indicators
     implementation "com.google.accompanist:accompanist-pager-indicators:$rootProject.accompanistVersion"
 
+    // Shimmer
+    implementation "com.valentinilk.shimmer:compose-shimmer:$rootProject.shimmerVersion"
+
     // Detekt formatting
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:$rootProject.detektFormattingVersion")
 

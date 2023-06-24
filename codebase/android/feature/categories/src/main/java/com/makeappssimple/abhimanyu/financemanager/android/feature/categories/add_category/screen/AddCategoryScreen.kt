@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUI
@@ -23,15 +24,17 @@ fun AddCategoryScreen(
         message = "Inside AddCategoryScreen",
     )
 
-    val screenUIData: AddOrEditCategoryScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
+    val screenUIData: MyResult<AddOrEditCategoryScreenUIData>? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
 
-    LaunchedEffect(
-        key1 = screenUIData?.emojiGroups,
-    ) {
-        if (screenUIData?.emojiGroups?.isNotEmpty() == true) {
-            screenViewModel.updateEmoji(
-                updatedEmoji = EmojiConstants.GRINNING_FACE_WITH_BIG_EYES,
-            )
+    (screenUIData as? MyResult.Success)?.let {
+        LaunchedEffect(
+            key1 = it.data.emojiGroups,
+        ) {
+            if (it.data.emojiGroups.isNotEmpty()) {
+                screenViewModel.updateEmoji(
+                    updatedEmoji = EmojiConstants.GRINNING_FACE_WITH_BIG_EYES,
+                )
+            }
         }
     }
 
@@ -50,7 +53,7 @@ fun AddCategoryScreen(
             updateTitle = screenViewModel::updateTitle,
         ),
         uiState = rememberAddOrEditCategoryScreenUIState(
-            data = screenUIData ?: AddOrEditCategoryScreenUIData(),
+            data = screenUIData,
             isEdit = false,
         ),
         state = rememberCommonScreenUIState(),

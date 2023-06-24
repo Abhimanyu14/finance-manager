@@ -44,6 +44,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyR
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MySelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBarView
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardView
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBar
@@ -455,14 +457,34 @@ private fun LazyListScope.componentsTabContent(
             crossAxisAlignment = FlowCrossAxisAlignment.Center,
         ) {
             SaveButton(
-                textStringResourceId = R.string.save_button,
-                isEnabled = false,
-                onClick = {},
+                modifier = Modifier,
+                data = SaveButtonData(
+                    isEnabled = false,
+                    textStringResourceId = R.string.save_button,
+                ),
+                events = SaveButtonEvents(
+                    onClick = {},
+                ),
             )
             SaveButton(
-                textStringResourceId = R.string.save_button,
-                isEnabled = true,
-                onClick = {},
+                modifier = Modifier,
+                data = SaveButtonData(
+                    isEnabled = true,
+                    textStringResourceId = R.string.save_button,
+                ),
+                events = SaveButtonEvents(
+                    onClick = {},
+                ),
+            )
+            SaveButton(
+                modifier = Modifier,
+                data = SaveButtonData(
+                    isEnabled = true,
+                    textStringResourceId = R.string.save_button,
+                ),
+                events = SaveButtonEvents(
+                    onClick = {},
+                ),
             )
         }
     }

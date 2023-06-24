@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUI
@@ -23,17 +24,19 @@ fun EditCategoryScreen(
         message = "Inside EditCategoryScreen",
     )
 
-    val screenUIData: AddOrEditCategoryScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
+    val screenUIData: MyResult<AddOrEditCategoryScreenUIData>? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
 
-    LaunchedEffect(
-        key1 = screenUIData?.emojiGroups,
-    ) {
-        // TODO(Abhi): Fix this bug
-        //  Bug: Editing category with `HOURGLASS_NOT_DONE` overrides the emoji with `GRINNING_FACE_WITH_BIG_EYES`
-        if (screenUIData?.emojiGroups?.isNotEmpty() == true && screenUIData?.emoji == EmojiConstants.HOURGLASS_NOT_DONE) {
-            screenViewModel.updateEmoji(
-                updatedEmoji = EmojiConstants.GRINNING_FACE_WITH_BIG_EYES,
-            )
+    (screenUIData as? MyResult.Success)?.let {
+        LaunchedEffect(
+            key1 = it.data.emojiGroups,
+        ) {
+            // TODO(Abhi): Fix this bug
+            //  Bug: Editing category with `HOURGLASS_NOT_DONE` overrides the emoji with `GRINNING_FACE_WITH_BIG_EYES`
+            if (it.data.emojiGroups.isNotEmpty() && it.data.emoji == EmojiConstants.HOURGLASS_NOT_DONE) {
+                screenViewModel.updateEmoji(
+                    updatedEmoji = EmojiConstants.GRINNING_FACE_WITH_BIG_EYES,
+                )
+            }
         }
     }
 
@@ -52,7 +55,7 @@ fun EditCategoryScreen(
             updateTitle = screenViewModel::updateTitle,
         ),
         uiState = rememberAddOrEditCategoryScreenUIState(
-            data = screenUIData ?: AddOrEditCategoryScreenUIData(),
+            data = screenUIData,
             isEdit = true,
         ),
         state = rememberCommonScreenUIState(),

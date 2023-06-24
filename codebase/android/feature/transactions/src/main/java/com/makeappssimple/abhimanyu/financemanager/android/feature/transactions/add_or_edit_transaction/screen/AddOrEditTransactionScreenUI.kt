@@ -42,6 +42,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyT
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_category.SelectCategoryBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_source.SelectSourceBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePicker
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerEvents
@@ -456,12 +458,14 @@ internal fun AddOrEditTransactionScreenUI(
                     ),
             )
             SaveButton(
-                textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
-                isEnabled = uiState.isCtaButtonEnabled,
-                onClick = {
-                    clearFocus()
-                    events.onCtaButtonClick()
-                },
+                modifier = Modifier,
+                data = SaveButtonData(
+                    isEnabled = uiState.isCtaButtonEnabled,
+                    textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
+                ),
+                events = SaveButtonEvents(
+                    onClick = events.onCtaButtonClick,
+                ),
             )
         }
     }

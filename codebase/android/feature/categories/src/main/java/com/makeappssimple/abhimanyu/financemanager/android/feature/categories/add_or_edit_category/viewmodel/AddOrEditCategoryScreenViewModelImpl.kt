@@ -9,6 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesUseCase
@@ -62,10 +63,11 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     private val category: MutableStateFlow<Category?> = MutableStateFlow(
         value = null,
     )
-    private val transactionTypes: List<TransactionType> = TransactionType.values()
-        .filter {
-            it != TransactionType.TRANSFER && it != TransactionType.ADJUSTMENT && it != TransactionType.REFUND
-        }
+    private val transactionTypes: List<TransactionType> = listOf(
+        TransactionType.INCOME,
+        TransactionType.EXPENSE,
+        TransactionType.REFUND,
+    )
     private val title: MutableStateFlow<TextFieldValue> = MutableStateFlow(
         value = TextFieldValue(
             text = "",
@@ -113,7 +115,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         context = dispatcherProvider.io,
     )
 
-    override val screenUIData: StateFlow<AddOrEditCategoryScreenUIData?> = combine(
+    override val screenUIData: StateFlow<MyResult<AddOrEditCategoryScreenUIData>?> = combine(
         selectedTransactionTypeIndex,
         emojiGroups,
         emoji,
@@ -121,15 +123,36 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         title,
         isValidCategoryData,
     ) { flows ->
-        AddOrEditCategoryScreenUIData(
-            isValidCategoryData = flows[5] as? Boolean ?: false,
-            selectedTransactionTypeIndex = flows[0] as? Int ?: 0,
-            emojiGroups = flows[1] as? Map<String, List<Emoji>> ?: emptyMap(),
-            transactionTypes = transactionTypes,
-            emoji = flows[2] as? String ?: "",
-            searchText = flows[3] as? String ?: "",
-            title = flows[4] as? TextFieldValue ?: TextFieldValue(),
-        )
+        val selectedTransactionTypeIndex = flows[0] as? Int
+        val emojiGroups = flows[1] as? Map<String, List<Emoji>>
+        val emoji = flows[2] as? String
+        val searchText = flows[3] as? String
+        val title = flows[4] as? TextFieldValue
+        val isValidCategoryData = flows[5] as? Boolean
+
+        if (
+            selectedTransactionTypeIndex == null ||
+            emojiGroups == null ||
+            emoji == null ||
+            searchText == null ||
+            title == null ||
+            isValidCategoryData == null
+        ) {
+            MyResult.Loading
+        } else {
+            MyResult.Loading
+//            MyResult.Success(
+//                AddOrEditCategoryScreenUIData(
+//                    isValidCategoryData = isValidCategoryData,
+//                    selectedTransactionTypeIndex = selectedTransactionTypeIndex,
+//                    emojiGroups = emojiGroups,
+//                    transactionTypes = transactionTypes,
+//                    emoji = emoji,
+//                    searchText = searchText,
+//                    title = title,
+//                )
+//            )
+        }
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )
