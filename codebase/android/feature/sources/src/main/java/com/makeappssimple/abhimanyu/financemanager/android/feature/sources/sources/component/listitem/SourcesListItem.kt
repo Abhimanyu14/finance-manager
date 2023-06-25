@@ -23,7 +23,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ext
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.ExpandedListItemShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyDefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemIconButton
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemViewWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemUIWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 
 @Immutable
@@ -51,7 +51,7 @@ internal fun SourcesListItem(
     data: SourcesListItemData,
     events: SourcesListItemEvents,
 ) {
-    MyExpandableItemViewWrapper(
+    MyExpandableItemUIWrapper(
         expanded = data.isExpanded,
         modifier = modifier,
     ) {

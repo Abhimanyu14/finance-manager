@@ -16,15 +16,12 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.shimmer.shimmer
-import java.time.LocalDate
 
 @Immutable
 data class SaveButtonData(
     val isEnabled: Boolean,
     val isLoading: Boolean = false,
     @StringRes val textStringResourceId: Int,
-    val selectedLocalDate: LocalDate? = null,
-    val startLocalDate: LocalDate? = null,
 )
 
 @Immutable

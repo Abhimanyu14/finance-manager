@@ -33,7 +33,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyE
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemIconButton
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemViewWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemUIWrapper
 
 @Immutable
 data class TransactionListItemData(
@@ -80,7 +80,7 @@ fun TransactionListItem(
         data.sourceFromName ?: data.sourceToName.orEmpty()
     }
 
-    MyExpandableItemViewWrapper(
+    MyExpandableItemUIWrapper(
         expanded = data.isExpanded,
         modifier = modifier,
     ) {

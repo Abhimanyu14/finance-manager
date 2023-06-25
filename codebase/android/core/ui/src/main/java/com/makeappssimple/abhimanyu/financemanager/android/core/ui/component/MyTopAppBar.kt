@@ -16,7 +16,7 @@ fun MyTopAppBar(
     @StringRes titleTextStringResourceId: Int,
     navigationAction: (() -> Unit)? = null,
 ) {
-    MyTopAppBarView(
+    MyTopAppBarUI(
         isNavigationIconVisible = navigationAction.isNotNull(),
         titleText = stringResource(
             id = titleTextStringResourceId,
@@ -32,7 +32,7 @@ fun MyTopAppBar(
 }
 
 @Composable
-fun MyTopAppBarView(
+fun MyTopAppBarUI(
     modifier: Modifier = Modifier,
     isNavigationIconVisible: Boolean,
     titleText: String,

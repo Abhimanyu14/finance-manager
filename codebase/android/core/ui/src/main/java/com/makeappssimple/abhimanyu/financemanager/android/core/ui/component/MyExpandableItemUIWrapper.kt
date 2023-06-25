@@ -13,7 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun MyExpandableItemViewWrapper(
+fun MyExpandableItemUIWrapper(
     modifier: Modifier = Modifier,
     expanded: Boolean,
     content: @Composable ColumnScope.() -> Unit,

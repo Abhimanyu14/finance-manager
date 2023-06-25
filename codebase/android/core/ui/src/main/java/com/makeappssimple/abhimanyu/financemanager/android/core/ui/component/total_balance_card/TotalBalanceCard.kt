@@ -14,7 +14,7 @@ fun TotalBalanceCard(
         initialValue = 0L,
     )
 
-    TotalBalanceCardView(
+    TotalBalanceCardUI(
         totalBalanceAmount = totalBalanceAmount,
         onClick = onClick,
     )

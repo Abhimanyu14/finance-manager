@@ -38,8 +38,8 @@ fun OverviewCard(
         ),
     )
 
-    OverviewCardView(
-        data = OverviewCardViewData(
+    OverviewCardUI(
+        data = OverviewCardUIData(
             overviewTabSelectionIndex = overviewTabSelectionIndex,
             title = overviewCardData?.title.orEmpty(),
             pieChartData = pieChartData,

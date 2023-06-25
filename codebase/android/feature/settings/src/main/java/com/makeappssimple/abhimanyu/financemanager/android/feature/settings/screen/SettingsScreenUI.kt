@@ -252,24 +252,3 @@ internal fun SettingsScreenUI(
         }
     }
 }
-
-/*
-@Preview
-@Composable
-fun SettingsScreenViewPreview() {
-    MyAppTheme {
-        SettingsScreenView(
-            data = SettingsScreenViewData(
-                isLoading = false,
-                appVersion = "2023.04.07.1",
-                backupData = {},
-                navigateToTransactionForValuesScreen = {},
-                navigateUp = {},
-                recalculateTotal = {},
-                restoreData = {},
-            ),
-            state = rememberCommonScreenViewState(),
-        )
-    }
-}
-*/

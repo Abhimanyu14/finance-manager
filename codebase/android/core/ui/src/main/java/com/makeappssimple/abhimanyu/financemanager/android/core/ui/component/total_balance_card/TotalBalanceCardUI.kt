@@ -17,7 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 
 @Composable
-fun TotalBalanceCardView(
+fun TotalBalanceCardUI(
     modifier: Modifier = Modifier,
     totalBalanceAmount: Long,
     onClick: (() -> Unit)? = null,

@@ -19,7 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 
 @Composable
-fun ActionView(
+fun ActionUI(
     modifier: Modifier = Modifier,
     imageVector: ImageVector,
     @StringRes textStringResourceId: Int,

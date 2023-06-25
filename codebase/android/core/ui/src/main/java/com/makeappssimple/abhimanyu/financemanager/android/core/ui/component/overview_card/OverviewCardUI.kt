@@ -27,7 +27,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 
 @Immutable
-data class OverviewCardViewData(
+data class OverviewCardUIData(
     val overviewTabSelectionIndex: Int,
     val title: String,
     val pieChartData: PieChartData?,
@@ -37,9 +37,9 @@ data class OverviewCardViewData(
 )
 
 @Composable
-fun OverviewCardView(
+fun OverviewCardUI(
     modifier: Modifier = Modifier,
-    data: OverviewCardViewData,
+    data: OverviewCardUIData,
 ) {
     ElevatedCard(
         modifier = modifier

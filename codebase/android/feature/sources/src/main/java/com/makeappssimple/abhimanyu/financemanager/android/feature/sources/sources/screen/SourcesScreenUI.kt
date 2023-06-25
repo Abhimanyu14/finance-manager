@@ -173,25 +173,3 @@ internal fun SourcesScreenUI(
         }
     }
 }
-
-/*
-@Preview
-@Composable
-fun SourcesScreenViewPreview() {
-    MyAppTheme {
-        SourcesScreenView(
-            data = SourcesScreenViewData(
-                defaultSourceId = 0,
-                sourcesIsUsedInTransactions = emptyList(),
-                sources = emptyList(),
-                deleteSource = {},
-                navigateUp = {},
-                navigateToAddSourceScreen = {},
-                navigateToEditSourceScreen = {},
-                setDefaultSourceIdInDataStore = {},
-            ),
-            state = rememberCommonScreenViewState(),
-        )
-    }
-}
-*/

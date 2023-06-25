@@ -15,7 +15,7 @@ internal fun MyApp() {
         viewModelStoreOwner = viewModelStoreOwner,
     )
 
-    MyAppView(
+    MyAppUI(
         activityViewModel = activityViewModel,
     )
 }

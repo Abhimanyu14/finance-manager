@@ -88,28 +88,3 @@ private fun HomeMenuBottomSheetItem(
         )
     }
 }
-
-/*
-@Preview
-@Composable
-private fun MyBottomSheetContentPreview() {
-    MyAppTheme {
-        HomeMenuBottomSheet(
-            items = listOf(
-                HomeMenuBottomSheetItemData(
-                    text = stringResource(
-                        id = R.string.bottom_sheet_home_menu_sources,
-                    ),
-                    onClick = {},
-                ),
-                HomeMenuBottomSheetItemData(
-                    text = stringResource(
-                        id = R.string.bottom_sheet_home_menu_categories,
-                    ),
-                    onClick = {},
-                ),
-            ),
-        )
-    }
-}
-*/

@@ -46,12 +46,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyR
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyRadioGroupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyRadioGroupEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MySelectionGroup
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBarView
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBarUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardView
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardUI
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldEvents
@@ -60,7 +60,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.SearchBar
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardView
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardUI
 
 @Composable
 fun MyAppCatalog() {
@@ -354,7 +354,7 @@ private fun LazyListScope.componentsTabContent(
             mainAxisSpacing = 16.dp,
             crossAxisAlignment = FlowCrossAxisAlignment.Center,
         ) {
-            TotalBalanceCardView(
+            TotalBalanceCardUI(
                 totalBalanceAmount = 1234567890,
             )
         }
@@ -378,8 +378,8 @@ private fun LazyListScope.componentsTabContent(
             mainAxisSpacing = 16.dp,
             crossAxisAlignment = FlowCrossAxisAlignment.Center,
         ) {
-            OverviewCardView(
-                data = OverviewCardViewData(
+            OverviewCardUI(
+                data = OverviewCardUIData(
                     overviewTabSelectionIndex = 1,
                     title = "2023",
                     pieChartData = PieChartData(
@@ -512,7 +512,7 @@ private fun LazyListScope.componentsTabContent(
             mainAxisSpacing = 16.dp,
             crossAxisAlignment = FlowCrossAxisAlignment.Center,
         ) {
-            MyTopAppBarView(
+            MyTopAppBarUI(
                 isNavigationIconVisible = true,
                 titleText = "Title",
                 navigationBackButton = {
@@ -521,7 +521,7 @@ private fun LazyListScope.componentsTabContent(
                     )
                 },
             )
-            MyTopAppBarView(
+            MyTopAppBarUI(
                 isNavigationIconVisible = false,
                 titleText = "Title",
                 navigationBackButton = {

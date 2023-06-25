@@ -6,7 +6,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
 
 @Composable
-internal fun MyAppView(
+internal fun MyAppUI(
     activityViewModel: MainActivityViewModel,
 ) {
     MyAppTheme {

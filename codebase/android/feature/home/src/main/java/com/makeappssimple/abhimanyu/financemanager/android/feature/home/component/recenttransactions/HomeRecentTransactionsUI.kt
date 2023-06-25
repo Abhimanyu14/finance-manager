@@ -16,7 +16,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ext
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 
 @Composable
-internal fun HomeRecentTransactionsView(
+internal fun HomeRecentTransactionsUI(
     onClick: () -> Unit,
 ) {
     Row(
