@@ -2,8 +2,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwrit
 
 import android.content.Context
 import android.net.Uri
-import javax.inject.Inject
 import java.io.FileOutputStream
+import javax.inject.Inject
 
 class JsonWriterImpl @Inject constructor(
     private val context: Context,

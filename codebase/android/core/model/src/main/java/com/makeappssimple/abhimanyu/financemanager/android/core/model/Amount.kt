@@ -3,11 +3,11 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.model
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.CurrencyCodeConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.currency.formattedCurrencyValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.serializer.CurrencySerializer
-import kotlin.math.abs
 import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import java.util.Currency
+import kotlin.math.abs
 
 @Serializable
 data class Amount @OptIn(ExperimentalSerializationApi::class) constructor(

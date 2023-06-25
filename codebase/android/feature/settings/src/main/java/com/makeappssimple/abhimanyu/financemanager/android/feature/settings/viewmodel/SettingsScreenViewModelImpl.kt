@@ -14,10 +14,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNav
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.screen.SettingsScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 internal class SettingsScreenViewModelImpl @Inject constructor(

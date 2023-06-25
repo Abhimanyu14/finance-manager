@@ -21,7 +21,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen.TransactionsScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -30,6 +29,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import java.time.LocalDate
+import javax.inject.Inject
 
 @HiltViewModel
 internal class TransactionsScreenViewModelImpl @Inject constructor(

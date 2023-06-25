@@ -4,8 +4,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyPref
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DataTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
 class MyPreferencesRepositoryImpl @Inject constructor(
     private val myPreferencesDataSource: MyPreferencesDataSource,

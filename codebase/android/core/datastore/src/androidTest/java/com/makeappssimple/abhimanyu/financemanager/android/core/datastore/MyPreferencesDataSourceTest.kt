@@ -13,7 +13,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
-import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
@@ -24,6 +23,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import javax.inject.Inject
 
 @HiltAndroidTest
 class MyPreferencesDataSourceTest {

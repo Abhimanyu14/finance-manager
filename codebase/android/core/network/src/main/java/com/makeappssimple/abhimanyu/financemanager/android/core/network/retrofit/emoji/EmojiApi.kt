@@ -1,11 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.network.retrofit.emoji
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
+import javax.inject.Inject
+import javax.inject.Singleton
 
 private const val EMOJI_API_BASE_URL = "https://emoji-api.com/"
 

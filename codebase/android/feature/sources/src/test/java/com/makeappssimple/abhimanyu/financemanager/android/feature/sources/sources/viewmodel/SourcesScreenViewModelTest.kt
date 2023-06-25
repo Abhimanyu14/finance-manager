@@ -13,7 +13,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManagerImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
-import javax.inject.Inject
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.TestScope
@@ -24,6 +23,7 @@ import org.junit.Test
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.stub
+import javax.inject.Inject
 
 class SourcesScreenViewModelTest {
     @get:Rule

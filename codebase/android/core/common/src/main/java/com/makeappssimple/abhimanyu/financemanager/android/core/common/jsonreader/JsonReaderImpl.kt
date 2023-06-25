@@ -3,12 +3,12 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonread
 import android.content.Context
 import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import javax.inject.Inject
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.nio.charset.Charset
+import javax.inject.Inject
 
 class JsonReaderImpl @Inject constructor(
     private val context: Context,
