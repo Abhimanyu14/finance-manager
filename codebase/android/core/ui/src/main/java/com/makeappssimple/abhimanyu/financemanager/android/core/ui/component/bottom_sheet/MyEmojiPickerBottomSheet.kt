@@ -22,6 +22,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyE
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarContainer
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarEvents
 
 @Composable
 fun MyEmojiPickerBottomSheet(
@@ -41,11 +43,15 @@ fun MyEmojiPickerBottomSheet(
     ) {
         MySearchBarContainer {
             MySearchBar(
-                searchText = searchText,
-                placeholderText = stringResource(
-                    id = R.string.emoji_picker_bottom_sheet_placeholder_text,
+                data = MySearchBarData(
+                    placeholderText = stringResource(
+                        id = R.string.emoji_picker_bottom_sheet_placeholder_text,
+                    ),
+                    searchText = searchText,
                 ),
-                onValueChange = updateSearchText,
+                events = MySearchBarEvents(
+                    onValueChange = updateSearchText,
+                ),
             )
         }
         LazyColumn(

@@ -42,6 +42,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.act
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButtonEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemEvents
@@ -219,15 +221,19 @@ internal fun TransactionsScreenUI(
                             ),
                     ) {
                         MySearchBar(
-                            autoFocus = false,
-                            searchText = uiState.searchText,
-                            placeholderText = stringResource(
-                                id = R.string.screen_transactions_searchbar_placeholder,
+                            data = MySearchBarData(
+                                autoFocus = false,
+                                placeholderText = stringResource(
+                                    id = R.string.screen_transactions_searchbar_placeholder,
+                                ),
+                                searchText = uiState.searchText,
                             ),
-                            onValueChange = events.updateSearchText,
-                            onSearch = {
-                                state.focusManager.clearFocus()
-                            },
+                            events = MySearchBarEvents(
+                                onSearch = {
+                                    state.focusManager.clearFocus()
+                                },
+                                onValueChange = events.updateSearchText,
+                            ),
                         )
                     }
                     ActionButton(

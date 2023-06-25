@@ -57,6 +57,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarContainer
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.SearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardView
 
@@ -479,10 +481,14 @@ private fun LazyListScope.componentsTabContent(
             }
             MySearchBarContainer {
                 MySearchBar(
-                    autoFocus = false,
-                    searchText = searchText,
-                    placeholderText = "Placeholder",
-                    onValueChange = setSearchText,
+                    data = MySearchBarData(
+                        autoFocus = false,
+                        placeholderText = "Placeholder",
+                        searchText = searchText,
+                    ),
+                    events = MySearchBarEvents(
+                        onValueChange = setSearchText,
+                    ),
                 )
             }
         }
