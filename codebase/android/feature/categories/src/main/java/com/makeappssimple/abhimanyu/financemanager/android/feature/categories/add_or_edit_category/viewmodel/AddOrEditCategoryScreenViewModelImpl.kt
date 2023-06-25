@@ -146,7 +146,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
             MyResult.Loading
         } else {
             MyResult.Success(
-                AddOrEditCategoryScreenUIData(
+                data = AddOrEditCategoryScreenUIData(
                     isValidCategoryData = isValidCategoryData,
                     selectedTransactionTypeIndex = selectedTransactionTypeIndex,
                     emojiGroups = emojiGroups,
@@ -154,7 +154,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
                     emoji = emoji,
                     searchText = searchText,
                     title = title,
-                )
+                ),
             )
         }
     }.defaultObjectStateIn(

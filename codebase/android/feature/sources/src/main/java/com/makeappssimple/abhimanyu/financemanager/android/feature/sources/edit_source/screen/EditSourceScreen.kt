@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUI
@@ -21,7 +22,7 @@ fun EditSourceScreen(
         message = "Inside EditSourceScreen",
     )
 
-    val screenUIData: AddOrEditSourceScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
+    val screenUIData: MyResult<AddOrEditSourceScreenUIData>? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
 
     AddOrEditSourceScreenUI(
         events = AddOrEditSourceScreenUIEvents(
@@ -38,7 +39,7 @@ fun EditSourceScreen(
             updateSelectedSourceTypeIndex = screenViewModel::updateSelectedSourceTypeIndex,
         ),
         uiState = rememberAddOrEditSourceScreenUIState(
-            data = screenUIData ?: AddOrEditSourceScreenUIData(),
+            data = screenUIData,
             isEdit = true,
         ),
         state = rememberCommonScreenUIState(),

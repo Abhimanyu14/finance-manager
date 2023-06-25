@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.UpdateSourcesUseCase
@@ -47,16 +48,16 @@ class RecalculateTotalUseCaseImpl(
             allTransactionData.forEach { transactionData ->
                 transactionData.sourceFrom?.let {
                     sourceBalances[it.id] =
-                        (sourceBalances[it.id] ?: 0L) - transactionData.transaction.amount.value
+                        sourceBalances[it.id].orZero() - transactionData.transaction.amount.value
                 }
                 transactionData.sourceTo?.let {
                     sourceBalances[it.id] =
-                        (sourceBalances[it.id] ?: 0L) + transactionData.transaction.amount.value
+                        sourceBalances[it.id].orZero() + transactionData.transaction.amount.value
                 }
             }
             val updatesSources = allSources.map {
                 it.updateBalanceAmount(
-                    updatedBalanceAmount = sourceBalances[it.id] ?: 0L,
+                    updatedBalanceAmount = sourceBalances[it.id].orZero(),
                 )
             }
             updateSourcesUseCase(

@@ -9,6 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orMin
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionDataFlowUseCase
@@ -82,7 +83,7 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
         scope = viewModelScope,
     )
 
-    override val screenUIData: StateFlow<AnalysisScreenUIData?> = combine(
+    override val screenUIData: StateFlow<MyResult<AnalysisScreenUIData>?> = combine(
         selectedFilter,
         selectedTransactionTypeIndex,
         transactionDataMappedByCategory,
@@ -93,15 +94,17 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
             transactionDataMappedByCategory,
             oldestTransactionLocalDate,
         ->
-        AnalysisScreenUIData(
-            selectedFilter = selectedFilter,
-            selectedTransactionTypeIndex = selectedTransactionTypeIndex,
-            transactionDataMappedByCategory = transactionDataMappedByCategory,
-            transactionTypesChipUIData = transactionTypesChipUIData,
-            currentLocalDate = dateTimeUtil.getCurrentLocalDate(),
-            oldestTransactionLocalDate = oldestTransactionLocalDate.orMin(),
-            startOfMonthLocalDate = dateTimeUtil.getStartOfMonthLocalDate(),
-            startOfYearLocalDate = dateTimeUtil.getStartOfYearLocalDate(),
+        MyResult.Success(
+            data = AnalysisScreenUIData(
+                selectedFilter = selectedFilter,
+                selectedTransactionTypeIndex = selectedTransactionTypeIndex,
+                transactionDataMappedByCategory = transactionDataMappedByCategory,
+                transactionTypesChipUIData = transactionTypesChipUIData,
+                currentLocalDate = dateTimeUtil.getCurrentLocalDate(),
+                oldestTransactionLocalDate = oldestTransactionLocalDate.orMin(),
+                startOfMonthLocalDate = dateTimeUtil.getStartOfMonthLocalDate(),
+                startOfYearLocalDate = dateTimeUtil.getStartOfYearLocalDate(),
+            ),
         )
     }.defaultObjectStateIn(
         scope = viewModelScope,

@@ -8,7 +8,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionDataFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
@@ -139,7 +141,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                     dateTimeUtil.getLocalDate(
                         timestamp = allTransactionDataValue.minOfOrNull { transactionData ->
                             transactionData.transaction.transactionTimestamp
-                        } ?: 0L,
+                        }.orZero(),
                     )
                 }
                 updateSelectedFilter(
@@ -278,7 +280,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             context = dispatcherProvider.io,
         )
 
-    override val screenUIData: StateFlow<TransactionsScreenUIData?> = combine(
+    override val screenUIData: StateFlow<MyResult<TransactionsScreenUIData>?> = combine(
         isLoading,
         selectedFilter,
         oldestTransactionLocalDate,
@@ -286,18 +288,20 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         searchText,
         selectedSortOption,
     ) { flows ->
-        TransactionsScreenUIData(
-            isLoading = flows[0] as? Boolean ?: false,
-            selectedFilter = flows[1] as? Filter ?: Filter(),
-            sortOptions = sortOptions,
-            transactionTypes = transactionTypes,
-            oldestTransactionLocalDate = flows[2] as? LocalDate ?: LocalDate.MIN,
-            currentLocalDate = dateTimeUtil.getCurrentLocalDate(),
-            currentTimeMillis = dateTimeUtil.getCurrentTimeMillis(),
-            transactionDetailsListItemViewData = flows[3] as? Map<String, List<TransactionListItemData>>
-                ?: emptyMap(),
-            searchText = flows[4] as? String ?: "",
-            selectedSortOption = flows[5] as? SortOption ?: SortOption.LATEST_FIRST,
+        MyResult.Success(
+            data = TransactionsScreenUIData(
+                isLoading = flows[0] as? Boolean ?: false,
+                selectedFilter = flows[1] as? Filter ?: Filter(),
+                sortOptions = sortOptions,
+                transactionTypes = transactionTypes,
+                oldestTransactionLocalDate = flows[2] as? LocalDate ?: LocalDate.MIN,
+                currentLocalDate = dateTimeUtil.getCurrentLocalDate(),
+                currentTimeMillis = dateTimeUtil.getCurrentTimeMillis(),
+                transactionDetailsListItemViewData = flows[3] as? Map<String, List<TransactionListItemData>>
+                    ?: emptyMap(),
+                searchText = flows[4] as? String ?: "",
+                selectedSortOption = flows[5] as? SortOption ?: SortOption.LATEST_FIRST,
+            ),
         )
     }.defaultObjectStateIn(
         scope = viewModelScope,

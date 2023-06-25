@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RecalculateTotalUseCase
@@ -30,13 +31,16 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
     private val restoreDataUseCase: RestoreDataUseCase,
 ) : SettingsScreenViewModel, ViewModel() {
     private val appVersionName: String = appVersionUtil.getAppVersion()?.versionName.orEmpty()
-    override val screenUIData: StateFlow<SettingsScreenUIData?> = flow<SettingsScreenUIData> {
-        SettingsScreenUIData(
-            appVersion = appVersionName,
+    override val screenUIData: StateFlow<MyResult<SettingsScreenUIData>?> =
+        flow<MyResult<SettingsScreenUIData>> {
+            MyResult.Success(
+                data = SettingsScreenUIData(
+                    appVersion = appVersionName,
+                ),
+            )
+        }.defaultObjectStateIn(
+            scope = viewModelScope,
         )
-    }.defaultObjectStateIn(
-        scope = viewModelScope,
-    )
 
     override fun backupDataToDocument(
         uri: Uri,

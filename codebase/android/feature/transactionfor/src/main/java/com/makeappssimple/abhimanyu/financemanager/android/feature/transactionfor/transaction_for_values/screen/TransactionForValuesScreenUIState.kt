@@ -6,19 +6,32 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 
 @Stable
 class TransactionForValuesScreenUIState(
-    data: TransactionForValuesScreenUIData,
+    data: MyResult<TransactionForValuesScreenUIData>?,
     val transactionForIdToDelete: Int?,
     val transactionForValuesBottomSheetType: TransactionForValuesBottomSheetType,
     val setTransactionForIdToDelete: (Int?) -> Unit,
     val setTransactionForValuesBottomSheetType: (TransactionForValuesBottomSheetType) -> Unit,
 ) {
+    private val unwrappedData = when (data) {
+        is MyResult.Success -> {
+            data.data
+        }
+
+        else -> {
+            null
+        }
+    }
+
+    val isLoading: Boolean = unwrappedData.isNull()
     val transactionForValuesIsUsedInTransactions: List<Boolean> =
-        data.transactionForValuesIsUsedInTransactions
-    val transactionForValues: List<TransactionFor> = data.transactionForValues
+        unwrappedData?.transactionForValuesIsUsedInTransactions.orEmpty()
+    val transactionForValues: List<TransactionFor> = unwrappedData?.transactionForValues.orEmpty()
     val resetBottomSheetType: () -> Unit = {
         setTransactionForValuesBottomSheetType(TransactionForValuesBottomSheetType.None)
     }
@@ -26,7 +39,7 @@ class TransactionForValuesScreenUIState(
 
 @Composable
 fun rememberTransactionForValuesScreenUIState(
-    data: TransactionForValuesScreenUIData,
+    data: MyResult<TransactionForValuesScreenUIData>?,
 ): TransactionForValuesScreenUIState {
     var transactionForIdToDelete: Int? by remember {
         mutableStateOf(

@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel
 
 import androidx.compose.ui.text.input.TextFieldValue
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
@@ -14,7 +15,7 @@ import java.time.LocalTime
 interface AddOrEditTransactionScreenViewModel : ScreenViewModel {
     val logger: Logger
     val navigationManager: NavigationManager
-    val screenUIData: StateFlow<AddOrEditTransactionScreenUIData?>
+    val screenUIData: StateFlow<MyResult<AddOrEditTransactionScreenUIData>?>
 
     fun insertTransaction()
 

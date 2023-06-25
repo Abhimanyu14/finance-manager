@@ -6,11 +6,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.SourcesListItemData
 
 @Stable
 class SourcesScreenUIState(
-    data: SourcesScreenUIData,
+    data: MyResult<SourcesScreenUIData>?,
     val clickedItemId: Int?,
     val expandedItemIndex: Int?,
     val sourceIdToDelete: Int?,
@@ -20,7 +22,19 @@ class SourcesScreenUIState(
     val setSourceIdToDelete: (Int?) -> Unit,
     val setSourcesBottomSheetType: (SourcesBottomSheetType) -> Unit,
 ) {
-    val sourcesListItemDataList: List<SourcesListItemData> = data.sourcesListItemDataList
+    private val unwrappedData = when (data) {
+        is MyResult.Success -> {
+            data.data
+        }
+
+        else -> {
+            null
+        }
+    }
+
+    val isLoading: Boolean = unwrappedData.isNull()
+    val sourcesListItemDataList: List<SourcesListItemData> =
+        unwrappedData?.sourcesListItemDataList.orEmpty()
     val resetBottomSheetType: () -> Unit = {
         setSourcesBottomSheetType(SourcesBottomSheetType.NONE)
     }
@@ -28,7 +42,7 @@ class SourcesScreenUIState(
 
 @Composable
 fun rememberSourcesScreenUIState(
-    data: SourcesScreenUIData,
+    data: MyResult<SourcesScreenUIData>?,
 ): SourcesScreenUIState {
     var clickedItemId: Int? by remember {
         mutableStateOf(

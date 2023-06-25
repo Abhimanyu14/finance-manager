@@ -12,6 +12,7 @@ import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.MimeTypeConstants
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.CreateJsonDocument
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.viewmodel.SettingsScreenViewModel
@@ -50,7 +51,7 @@ fun SettingsScreen(
             }
         }
 
-    val screenUIData: SettingsScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
+    val screenUIData: MyResult<SettingsScreenUIData>? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
 
     SettingsScreenUI(
         events = SettingsScreenUIEvents(
@@ -68,7 +69,7 @@ fun SettingsScreen(
             },
         ),
         uiState = rememberSettingsScreenUIState(
-            data = screenUIData ?: SettingsScreenUIData(),
+            data = screenUIData,
         ),
         state = rememberCommonScreenUIState(),
     )

@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.viewmodel.SourcesScreenViewModel
@@ -17,7 +18,7 @@ fun SourcesScreen(
         message = "Inside SourcesScreen",
     )
 
-    val screenUIData: SourcesScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
+    val screenUIData: MyResult<SourcesScreenUIData>? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
 
     SourcesScreenUI(
         events = SourcesScreenUIEvents(
@@ -50,7 +51,7 @@ fun SourcesScreen(
             },
         ),
         uiState = rememberSourcesScreenUIState(
-            data = screenUIData ?: SourcesScreenUIData(),
+            data = screenUIData,
         ),
         state = rememberCommonScreenUIState(),
     )

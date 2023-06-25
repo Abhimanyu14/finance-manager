@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.viewmodel.TransactionForValuesScreenViewModel
@@ -17,7 +18,7 @@ fun TransactionForValuesScreen(
         message = "Inside TransactionForValuesScreen",
     )
 
-    val screenUIData: TransactionForValuesScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
+    val screenUIData: MyResult<TransactionForValuesScreenUIData>? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
 
     TransactionForValuesScreenUI(
         events = TransactionForValuesScreenUIEvents(
@@ -45,7 +46,7 @@ fun TransactionForValuesScreen(
             },
         ),
         uiState = rememberTransactionForValuesScreenUIState(
-            data = screenUIData ?: TransactionForValuesScreenUIData(),
+            data = screenUIData,
         ),
         state = rememberCommonScreenUIState(),
     )

@@ -13,6 +13,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toIntOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCase
@@ -87,7 +88,7 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
         ),
     )
 
-    override val screenUIData: StateFlow<AddOrEditSourceScreenUIData?> = combine(
+    override val screenUIData: StateFlow<MyResult<AddOrEditSourceScreenUIData>?> = combine(
         errorData,
         selectedSourceTypeIndex,
         balanceAmountValue,
@@ -106,14 +107,16 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
             name = name.text,
             originalSource = originalSource,
         )
-        AddOrEditSourceScreenUIData(
-            errorData = errorData,
-            isValidSourceData = isValidSourceData,
-            sourceIsNotCash = sourceIsNotCash,
-            selectedSourceTypeIndex = selectedSourceTypeIndex,
-            sourceTypes = validSourceTypes,
-            balanceAmountValue = balanceAmountValue,
-            name = name,
+        MyResult.Success(
+            data = AddOrEditSourceScreenUIData(
+                errorData = errorData,
+                isValidSourceData = isValidSourceData,
+                sourceIsNotCash = sourceIsNotCash,
+                selectedSourceTypeIndex = selectedSourceTypeIndex,
+                sourceTypes = validSourceTypes,
+                balanceAmountValue = balanceAmountValue,
+                name = name,
+            ),
         )
     }.defaultObjectStateIn(
         scope = viewModelScope,

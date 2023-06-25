@@ -7,6 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.DeleteTransactionUseCase
@@ -55,7 +56,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
             value = null,
         )
 
-    override val screenUIData: StateFlow<ViewTransactionScreenUIData?> = combine(
+    override val screenUIData: StateFlow<MyResult<ViewTransactionScreenUIData>?> = combine(
         originalTransactionListItemData,
         refundTransactionListItemData,
         transactionListItemData,
@@ -64,10 +65,12 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
             refundTransactionListItemData,
             transactionListItemData,
         ->
-        ViewTransactionScreenUIData(
-            originalTransactionListItemData = originalTransactionListItemData,
-            refundTransactionListItemData = refundTransactionListItemData,
-            transactionListItemData = transactionListItemData,
+        MyResult.Success(
+            data = ViewTransactionScreenUIData(
+                originalTransactionListItemData = originalTransactionListItemData,
+                refundTransactionListItemData = refundTransactionListItemData,
+                transactionListItemData = transactionListItemData,
+            ),
         )
     }.defaultObjectStateIn(
         scope = viewModelScope,

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.DeleteSourceUseCase
@@ -40,7 +41,7 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
     }
     private val allSourcesFlow: Flow<List<Source>> = getAllSourcesFlowUseCase()
 
-    override val screenUIData: StateFlow<SourcesScreenUIData?> = combine(
+    override val screenUIData: StateFlow<MyResult<SourcesScreenUIData>?> = combine(
         flow = defaultSourceId,
         flow2 = allSourcesFlow,
     ) {
@@ -77,8 +78,10 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
                     isExpanded = false,
                 )
             }
-        SourcesScreenUIData(
-            sourcesListItemDataList = sourcesListItemDataList,
+        MyResult.Success(
+            data = SourcesScreenUIData(
+                sourcesListItemDataList = sourcesListItemDataList,
+            ),
         )
     }.defaultObjectStateIn(
         scope = viewModelScope,

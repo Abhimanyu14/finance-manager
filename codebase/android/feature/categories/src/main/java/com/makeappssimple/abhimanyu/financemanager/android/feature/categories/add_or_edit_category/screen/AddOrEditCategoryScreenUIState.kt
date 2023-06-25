@@ -7,9 +7,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 
 @Stable
@@ -29,19 +31,19 @@ class AddOrEditCategoryScreenUIState(
         }
     }
 
-    val isLoading = unwrappedData.isNull()
-    val isValidCategoryData: Boolean? = unwrappedData?.isValidCategoryData
+    val isLoading: Boolean = unwrappedData.isNull()
+    val isValidCategoryData: Boolean = unwrappedData?.isValidCategoryData.orFalse()
     val selectedTransactionTypeIndex: Int? = unwrappedData?.selectedTransactionTypeIndex
-    val emojiGroups: Map<String, List<Emoji>>? = unwrappedData?.emojiGroups
-    val transactionTypesChipUIData: List<ChipUIData>? =
+    val emojiGroups: Map<String, List<Emoji>> = unwrappedData?.emojiGroups.orEmpty()
+    val transactionTypesChipUIData: List<ChipUIData> =
         unwrappedData?.transactionTypes?.map { transactionType ->
             ChipUIData(
                 text = transactionType.title,
             )
-        }
-    val emoji: String? = unwrappedData?.emoji
-    val searchText: String? = unwrappedData?.searchText
-    val title: TextFieldValue? = unwrappedData?.title
+        }.orEmpty()
+    val emoji: String = unwrappedData?.emoji.orEmpty()
+    val searchText: String = unwrappedData?.searchText.orEmpty()
+    val title: TextFieldValue = unwrappedData?.title.orEmpty()
 
     @StringRes
     val appBarTitleTextStringResourceId: Int = if (isEdit) {

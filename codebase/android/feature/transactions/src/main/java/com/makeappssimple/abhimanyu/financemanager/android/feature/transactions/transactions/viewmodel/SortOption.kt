@@ -1,5 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+
 enum class SortOption(
     val title: String,
 ) {
@@ -15,4 +17,12 @@ enum class SortOption(
     OLDEST_FIRST(
         title = "Oldest First",
     ),
+}
+
+fun SortOption?.orDefault(): SortOption {
+    return if (this.isNull()) {
+        SortOption.LATEST_FIRST
+    } else {
+        this
+    }
 }

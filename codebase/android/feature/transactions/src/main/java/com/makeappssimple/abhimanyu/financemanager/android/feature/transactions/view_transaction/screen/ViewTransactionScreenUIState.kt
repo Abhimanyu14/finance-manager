@@ -6,21 +6,34 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 
 @Stable
 class ViewTransactionScreenUIState(
-    data: ViewTransactionScreenUIData,
+    data: MyResult<ViewTransactionScreenUIData>?,
     val transactionIdToDelete: Int?,
     val viewTransactionBottomSheetType: ViewTransactionBottomSheetType,
     val setTransactionIdToDelete: (Int?) -> Unit,
     val setViewTransactionBottomSheetType: (ViewTransactionBottomSheetType) -> Unit,
 ) {
+    private val unwrappedData = when (data) {
+        is MyResult.Success -> {
+            data.data
+        }
+
+        else -> {
+            null
+        }
+    }
+
+    val isLoading: Boolean = unwrappedData.isNull()
     val originalTransactionListItemData: TransactionListItemData? =
-        data.originalTransactionListItemData
+        unwrappedData?.originalTransactionListItemData
     val refundTransactionListItemData: List<TransactionListItemData>? =
-        data.refundTransactionListItemData
-    val transactionListItemData: TransactionListItemData? = data.transactionListItemData
+        unwrappedData?.refundTransactionListItemData
+    val transactionListItemData: TransactionListItemData? = unwrappedData?.transactionListItemData
     val resetBottomSheetType: () -> Unit = {
         setViewTransactionBottomSheetType(ViewTransactionBottomSheetType.NONE)
     }
@@ -28,7 +41,7 @@ class ViewTransactionScreenUIState(
 
 @Composable
 fun rememberViewTransactionScreenUIState(
-    data: ViewTransactionScreenUIData,
+    data: MyResult<ViewTransactionScreenUIData>?,
 ): ViewTransactionScreenUIState {
     val (viewTransactionBottomSheetType, setViewTransactionBottomSheetType) = remember {
         mutableStateOf(

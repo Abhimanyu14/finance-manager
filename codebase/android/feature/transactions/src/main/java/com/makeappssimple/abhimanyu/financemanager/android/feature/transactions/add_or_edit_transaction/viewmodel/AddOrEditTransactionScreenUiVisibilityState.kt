@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel
 
 import androidx.compose.runtime.Immutable
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 
 @Immutable
 sealed class AddOrEditTransactionScreenUiVisibilityState(
@@ -13,7 +14,6 @@ sealed class AddOrEditTransactionScreenUiVisibilityState(
     val isSourceToTextFieldVisible: Boolean = false,
     val isTitleSuggestionsVisible: Boolean = false,
 ) {
-
     object Expense : AddOrEditTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = true,
         isDescriptionTextFieldVisible = false,
@@ -68,4 +68,12 @@ sealed class AddOrEditTransactionScreenUiVisibilityState(
         isSourceToTextFieldVisible = true,
         isTitleSuggestionsVisible = false,
     )
+}
+
+fun AddOrEditTransactionScreenUiVisibilityState?.orDefault(): AddOrEditTransactionScreenUiVisibilityState {
+    return if (this.isNull()) {
+        AddOrEditTransactionScreenUiVisibilityState.Expense
+    } else {
+        this
+    }
 }

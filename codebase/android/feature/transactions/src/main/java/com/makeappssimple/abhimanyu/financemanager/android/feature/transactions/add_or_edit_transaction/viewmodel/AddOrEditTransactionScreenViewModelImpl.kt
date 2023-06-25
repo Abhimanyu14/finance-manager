@@ -15,9 +15,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isTrue
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toIntOrZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toLongOrZero
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.Quadruple
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultBooleanStateIn
@@ -217,7 +219,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             }
 
             TransactionType.REFUND -> {
-                val maxRefundAmountValue = maxRefundAmount.value?.value ?: 0L
+                val maxRefundAmountValue = maxRefundAmount.value?.value.orZero()
                 if (uiState.amountErrorText.isNull() &&
                     (uiState.amount.text.toLongOrZero() > maxRefundAmountValue)
                 ) {
@@ -254,7 +256,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         scope = viewModelScope,
     )
 
-    override val screenUIData: StateFlow<AddOrEditTransactionScreenUIData?> = combine(
+    override val screenUIData: StateFlow<MyResult<AddOrEditTransactionScreenUIData>?> = combine(
         uiState,
         uiVisibilityState,
         isCtaButtonEnabled,
@@ -265,36 +267,39 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         transactionForValues,
         selectedTransactionType,
     ) { flows ->
-        AddOrEditTransactionScreenUIData(
-            uiState = flows[0] as? AddOrEditTransactionScreenUiStateData
-                ?: AddOrEditTransactionScreenUiStateData(
-                    selectedTransactionTypeIndex = null,
-                    amount = TextFieldValue(
-                        text = "",
+        MyResult.Success(
+            data = AddOrEditTransactionScreenUIData(
+                uiState = flows[0] as? AddOrEditTransactionScreenUiStateData
+                    ?: AddOrEditTransactionScreenUiStateData(
+                        selectedTransactionTypeIndex = null,
+                        amount = TextFieldValue(
+                            text = "",
+                        ),
+                        title = TextFieldValue(
+                            text = "",
+                        ),
+                        description = TextFieldValue(
+                            text = "",
+                        ),
+                        category = null,
+                        selectedTransactionForIndex = 0,
+                        sourceFrom = null,
+                        sourceTo = null,
+                        transactionDate = dateTimeUtil.getCurrentLocalDate(),
+                        transactionTime = dateTimeUtil.getCurrentLocalTime(),
                     ),
-                    title = TextFieldValue(
-                        text = "",
-                    ),
-                    description = TextFieldValue(
-                        text = "",
-                    ),
-                    category = null,
-                    selectedTransactionForIndex = 0,
-                    sourceFrom = null,
-                    sourceTo = null,
-                    transactionDate = dateTimeUtil.getCurrentLocalDate(),
-                    transactionTime = dateTimeUtil.getCurrentLocalTime(),
-                ),
-            uiVisibilityState = flows[1] as? AddOrEditTransactionScreenUiVisibilityState
-                ?: AddOrEditTransactionScreenUiVisibilityState.Expense,
-            isCtaButtonEnabled = flows[2] as? Boolean ?: false,
-            filteredCategories = flows[3] as? List<Category> ?: emptyList(),
-            sources = flows[4] as? List<Source> ?: emptyList(),
-            titleSuggestions = flows[5] as? List<String> ?: emptyList(),
-            transactionTypesForNewTransaction = flows[6] as? List<TransactionType> ?: emptyList(),
-            transactionForValues = flows[7] as? List<TransactionFor> ?: emptyList(),
-            currentLocalDate = dateTimeUtil.getCurrentLocalDate(),
-            selectedTransactionType = flows[8] as? TransactionType,
+                uiVisibilityState = flows[1] as? AddOrEditTransactionScreenUiVisibilityState
+                    ?: AddOrEditTransactionScreenUiVisibilityState.Expense,
+                isCtaButtonEnabled = flows[2] as? Boolean ?: false,
+                filteredCategories = flows[3] as? List<Category> ?: emptyList(),
+                sources = flows[4] as? List<Source> ?: emptyList(),
+                titleSuggestions = flows[5] as? List<String> ?: emptyList(),
+                transactionTypesForNewTransaction = flows[6] as? List<TransactionType>
+                    ?: emptyList(),
+                transactionForValues = flows[7] as? List<TransactionFor> ?: emptyList(),
+                currentLocalDate = dateTimeUtil.getCurrentLocalDate(),
+                selectedTransactionType = flows[8] as? TransactionType,
+            ),
         )
     }.defaultObjectStateIn(
         scope = viewModelScope,
@@ -642,23 +647,19 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     val sourceBalanceAmountChangeMap = hashMapOf<Int, Long>()
                     originalTransactionData.value?.sourceFrom?.let { transactionSourceFrom ->
                         sourceBalanceAmountChangeMap[transactionSourceFrom.id] =
-                            (sourceBalanceAmountChangeMap[transactionSourceFrom.id]
-                                ?: 0) + transaction.amount.value
+                            sourceBalanceAmountChangeMap[transactionSourceFrom.id].orZero() + transaction.amount.value
                     }
                     uiStateValue.sourceFrom?.let { sourceFrom ->
                         sourceBalanceAmountChangeMap[sourceFrom.id] =
-                            (sourceBalanceAmountChangeMap[sourceFrom.id]
-                                ?: 0) - uiState.value.amount.text.toLongOrZero()
+                            sourceBalanceAmountChangeMap[sourceFrom.id].orZero() - uiState.value.amount.text.toLongOrZero()
                     }
                     originalTransactionData.value?.sourceTo?.let { transactionSourceTo ->
                         sourceBalanceAmountChangeMap[transactionSourceTo.id] =
-                            (sourceBalanceAmountChangeMap[transactionSourceTo.id]
-                                ?: 0) - transaction.amount.value
+                            sourceBalanceAmountChangeMap[transactionSourceTo.id].orZero() - transaction.amount.value
                     }
                     uiStateValue.sourceTo?.let { sourceTo ->
                         sourceBalanceAmountChangeMap[sourceTo.id] =
-                            (sourceBalanceAmountChangeMap[sourceTo.id]
-                                ?: 0) + uiState.value.amount.text.toLongOrZero()
+                            sourceBalanceAmountChangeMap[sourceTo.id].orZero() + uiState.value.amount.text.toLongOrZero()
                     }
                     updateSourcesBalanceAmountUseCase(
                         sourcesBalanceAmountChange = sourceBalanceAmountChangeMap.toList(),
@@ -1091,8 +1092,8 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     element = TransactionType.REFUND,
                 ),
                 amount = uiState.value.amount.copy(
-                    text = (maxRefundAmount?.value ?: 0L).toString(),
-                    selection = TextRange((maxRefundAmount?.value ?: 0L).toString().length),
+                    text = maxRefundAmount?.value.orZero().toString(),
+                    selection = TextRange(maxRefundAmount?.value.orZero().toString().length),
                 ),
                 title = uiState.value.title.copy(
                     text = TransactionType.REFUND.title,
@@ -1251,7 +1252,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             } else {
                 uiState.value.selectedTransactionTypeIndex?.let {
                     transactionTypesForNewTransaction.value.getOrNull(
-                        index = uiState.value.selectedTransactionTypeIndex ?: 0,
+                        index = uiState.value.selectedTransactionTypeIndex.orZero(),
                     )
                 }
             }
@@ -1261,7 +1262,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             } else {
                 uiState.value.selectedTransactionTypeIndex?.let {
                     transactionTypesForNewTransaction.value.getOrNull(
-                        index = uiState.value.selectedTransactionTypeIndex ?: 0,
+                        index = uiState.value.selectedTransactionTypeIndex.orZero(),
                     )
                 }
             }

@@ -44,7 +44,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.component.bottomsheet.AddOrEditCategorySelectEmojiBottomSheetContent
 
@@ -116,8 +115,8 @@ internal fun AddOrEditCategoryScreenUI(
                 AddOrEditCategoryBottomSheetType.SELECT_EMOJI -> {
                     AddOrEditCategorySelectEmojiBottomSheetContent(
                         context = state.context,
-                        emojiGroups = uiState.emojiGroups.orEmpty(),
-                        searchText = uiState.searchText.orEmpty(),
+                        emojiGroups = uiState.emojiGroups,
+                        searchText = uiState.searchText,
                         resetBottomSheetType = uiState.resetBottomSheetType,
                         updateEmoji = { updatedEmoji ->
                             events.updateEmoji(updatedEmoji)
@@ -154,7 +153,7 @@ internal fun AddOrEditCategoryScreenUI(
             MyRadioGroup(
                 data = MyRadioGroupData(
                     isLoading = uiState.isLoading,
-                    items = uiState.transactionTypesChipUIData.orEmpty(),
+                    items = uiState.transactionTypesChipUIData,
                     selectedItemIndex = uiState.selectedTransactionTypeIndex,
                 ),
                 events = MyRadioGroupEvents(
@@ -199,7 +198,7 @@ internal fun AddOrEditCategoryScreenUI(
                         ),
                     data = MyOutlinedTextFieldData(
                         isLoading = uiState.isLoading,
-                        textFieldValue = uiState.title.orEmpty(),
+                        textFieldValue = uiState.title,
                         labelTextStringResourceId = R.string.screen_add_or_edit_category_title,
                         trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_category_clear_title,
                         keyboardActions = KeyboardActions(

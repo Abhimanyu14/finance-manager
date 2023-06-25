@@ -5,6 +5,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DataTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
@@ -31,8 +32,8 @@ class MyPreferencesDataSource(
     fun getDataTimestamp(): Flow<DataTimestamp?> {
         return preferences.map {
             DataTimestamp(
-                lastBackup = it[LAST_DATA_BACKUP_TIMESTAMP] ?: 0L,
-                lastChange = it[LAST_DATA_CHANGE_TIMESTAMP] ?: 0L,
+                lastBackup = it[LAST_DATA_BACKUP_TIMESTAMP].orZero(),
+                lastChange = it[LAST_DATA_CHANGE_TIMESTAMP].orZero(),
             )
         }
     }
@@ -40,9 +41,9 @@ class MyPreferencesDataSource(
     fun getDefaultDataId(): Flow<DefaultDataId?> {
         return preferences.map {
             DefaultDataId(
-                expenseCategory = it[DEFAULT_EXPENSE_CATEGORY_ID] ?: 0,
-                incomeCategory = it[DEFAULT_INCOME_CATEGORY_ID] ?: 0,
-                investmentCategory = it[DEFAULT_INVESTMENT_CATEGORY_ID] ?: 0,
+                expenseCategory = it[DEFAULT_EXPENSE_CATEGORY_ID].orZero(),
+                incomeCategory = it[DEFAULT_INCOME_CATEGORY_ID].orZero(),
+                investmentCategory = it[DEFAULT_INVESTMENT_CATEGORY_ID].orZero(),
                 source = it[DEFAULT_SOURCE_ID] ?: 0,
             )
         }
@@ -51,9 +52,9 @@ class MyPreferencesDataSource(
     fun getInitialDataVersionNumber(): Flow<InitialDataVersionNumber?> {
         return preferences.map {
             InitialDataVersionNumber(
-                category = it[CATEGORY_DATA_VERSION_NUMBER] ?: 0,
-                emoji = it[EMOJI_DATA_VERSION_NUMBER] ?: 0,
-                transaction = it[TRANSACTIONS_DATA_VERSION_NUMBER] ?: 0,
+                category = it[CATEGORY_DATA_VERSION_NUMBER].orZero(),
+                emoji = it[EMOJI_DATA_VERSION_NUMBER].orZero(),
+                transaction = it[TRANSACTIONS_DATA_VERSION_NUMBER].orZero(),
             )
         }
     }

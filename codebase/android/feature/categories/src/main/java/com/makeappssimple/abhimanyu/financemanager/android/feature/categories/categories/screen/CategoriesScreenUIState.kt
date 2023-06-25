@@ -8,13 +8,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.google.accompanist.pager.PagerState
 import com.google.accompanist.pager.rememberPagerState
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid_item.CategoriesGridItemData
 
 @Stable
 class CategoriesScreenUIState(
-    data: CategoriesScreenUIData,
+    data: MyResult<CategoriesScreenUIData>?,
     val categoriesBottomSheetType: CategoriesBottomSheetType,
     var categoryIdToDelete: Int?,
     var clickedItemId: Int?,
@@ -23,7 +26,18 @@ class CategoriesScreenUIState(
     val setCategoryIdToDelete: (Int?) -> Unit,
     val setClickedItemId: (Int?) -> Unit,
 ) {
-    val selectedTabIndex: Int = data.selectedTabIndex
+    private val unwrappedData = when (data) {
+        is MyResult.Success -> {
+            data.data
+        }
+
+        else -> {
+            null
+        }
+    }
+
+    val isLoading: Boolean = unwrappedData.isNull()
+    val selectedTabIndex: Int = unwrappedData?.selectedTabIndex.orZero()
     val validTransactionTypes: List<TransactionType> = listOf(
         TransactionType.EXPENSE,
         TransactionType.INCOME,
@@ -35,7 +49,7 @@ class CategoriesScreenUIState(
         )
     }
     val categoriesGridItemDataMap: Map<TransactionType, List<CategoriesGridItemData>> =
-        data.categoriesGridItemDataMap
+        unwrappedData?.categoriesGridItemDataMap.orEmpty()
     val resetBottomSheetType: () -> Unit = {
         setCategoriesBottomSheetType(CategoriesBottomSheetType.None)
     }
@@ -43,7 +57,7 @@ class CategoriesScreenUIState(
 
 @Composable
 fun rememberCategoriesScreenUIState(
-    data: CategoriesScreenUIData,
+    data: MyResult<CategoriesScreenUIData>?,
 ): CategoriesScreenUIState {
     var categoriesBottomSheetType: CategoriesBottomSheetType by remember {
         mutableStateOf(

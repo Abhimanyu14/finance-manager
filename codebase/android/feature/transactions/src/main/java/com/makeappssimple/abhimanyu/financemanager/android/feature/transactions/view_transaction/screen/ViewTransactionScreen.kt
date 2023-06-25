@@ -5,6 +5,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.viewmodel.ViewTransactionScreenViewModel
@@ -18,7 +19,7 @@ fun ViewTransactionScreen(
         message = "Inside ViewTransactionScreen",
     )
 
-    val screenUIData: ViewTransactionScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
+    val screenUIData: MyResult<ViewTransactionScreenUIData>? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
 
     LaunchedEffect(
         key1 = Unit,
@@ -57,7 +58,7 @@ fun ViewTransactionScreen(
             },
         ),
         uiState = rememberViewTransactionScreenUIState(
-            data = screenUIData ?: ViewTransactionScreenUIData(),
+            data = screenUIData,
         ),
         state = rememberCommonScreenUIState(),
     )

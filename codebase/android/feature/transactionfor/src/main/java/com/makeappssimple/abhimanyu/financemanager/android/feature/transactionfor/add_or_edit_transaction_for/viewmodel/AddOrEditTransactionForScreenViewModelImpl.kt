@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesUseCase
@@ -68,16 +69,18 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override val screenUIData: StateFlow<AddOrEditTransactionForScreenUIData?> = combine(
+    override val screenUIData: StateFlow<MyResult<AddOrEditTransactionForScreenUIData>?> = combine(
         title,
         isValidTransactionForData,
     ) {
             title,
             isValidTransactionForData,
         ->
-        AddOrEditTransactionForScreenUIData(
-            isValidTransactionForData = isValidTransactionForData,
-            title = title,
+        MyResult.Success(
+            data = AddOrEditTransactionForScreenUIData(
+                isValidTransactionForData = isValidTransactionForData,
+                title = title,
+            ),
         )
     }.defaultObjectStateIn(
         scope = viewModelScope,

@@ -4,29 +4,45 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orMin
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.SortOption
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.orDefault
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.orEmpty
 import java.time.LocalDate
 
 @Stable
 class TransactionsScreenUIState(
-    data: TransactionsScreenUIData,
+    data: MyResult<TransactionsScreenUIData>?,
     val transactionsBottomSheetType: TransactionsBottomSheetType,
     val setTransactionsBottomSheetType: (TransactionsBottomSheetType) -> Unit,
 ) {
-    val isLoading: Boolean = data.isLoading
-    val selectedFilter: Filter = data.selectedFilter
-    val sortOptions: List<SortOption> = data.sortOptions
-    val transactionTypes: List<TransactionType> = data.transactionTypes
-    val oldestTransactionLocalDate: LocalDate = data.oldestTransactionLocalDate
-    val currentLocalDate: LocalDate = data.currentLocalDate
-    val currentTimeMillis: Long = data.currentTimeMillis
+    private val unwrappedData = when (data) {
+        is MyResult.Success -> {
+            data.data
+        }
+
+        else -> {
+            null
+        }
+    }
+
+    val isLoading: Boolean = unwrappedData.isNull() || unwrappedData.isLoading
+    val selectedFilter: Filter = unwrappedData?.selectedFilter.orEmpty()
+    val sortOptions: List<SortOption> = unwrappedData?.sortOptions.orEmpty()
+    val transactionTypes: List<TransactionType> = unwrappedData?.transactionTypes.orEmpty()
+    val oldestTransactionLocalDate: LocalDate = unwrappedData?.oldestTransactionLocalDate.orMin()
+    val currentLocalDate: LocalDate = unwrappedData?.currentLocalDate.orMin()
+    val currentTimeMillis: Long = unwrappedData?.currentTimeMillis.orZero()
     val transactionDetailsListItemViewData: Map<String, List<TransactionListItemData>> =
-        data.transactionDetailsListItemViewData
-    val searchText: String = data.searchText
-    val selectedSortOption: SortOption = data.selectedSortOption
+        unwrappedData?.transactionDetailsListItemViewData.orEmpty()
+    val searchText: String = unwrappedData?.searchText.orEmpty()
+    val selectedSortOption: SortOption = unwrappedData?.selectedSortOption.orDefault()
     val resetBottomSheetType: () -> Unit = {
         setTransactionsBottomSheetType(TransactionsBottomSheetType.NONE)
     }
@@ -34,7 +50,7 @@ class TransactionsScreenUIState(
 
 @Composable
 fun rememberTransactionsScreenUIState(
-    data: TransactionsScreenUIData,
+    data: MyResult<TransactionsScreenUIData>?,
 ): TransactionsScreenUIState {
     val (transactionsBottomSheetType: TransactionsBottomSheetType, setTransactionsBottomSheetType: (TransactionsBottomSheetType) -> Unit) = remember {
         mutableStateOf(

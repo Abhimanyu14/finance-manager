@@ -257,7 +257,7 @@ internal fun AddOrEditTransactionScreenUI(
                                 MyText(
                                     text = stringResource(
                                         id = R.string.screen_add_or_edit_transaction_amount_error_text,
-                                        uiState.uiState.amountErrorText.orEmpty(),
+                                        uiState.uiState.amountErrorText,
                                     ),
                                     style = MaterialTheme.typography.bodySmall.copy(
                                         color = MaterialTheme.colorScheme.error,

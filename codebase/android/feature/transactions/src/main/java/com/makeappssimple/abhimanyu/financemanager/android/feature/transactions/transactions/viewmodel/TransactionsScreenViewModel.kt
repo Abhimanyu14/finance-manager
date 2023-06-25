@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
@@ -11,7 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 interface TransactionsScreenViewModel : ScreenViewModel {
     val logger: Logger
     val navigationManager: NavigationManager
-    val screenUIData: StateFlow<TransactionsScreenUIData?>
+    val screenUIData: StateFlow<MyResult<TransactionsScreenUIData>?>
 
     val expenseCategories: StateFlow<List<Category>?>
     val incomeCategories: StateFlow<List<Category>?>

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.DeleteCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesFlowUseCase
@@ -128,16 +129,18 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
             )
         }
 
-    override val screenUIData: StateFlow<CategoriesScreenUIData?> = combine(
+    override val screenUIData: StateFlow<MyResult<CategoriesScreenUIData>?> = combine(
         selectedTabIndex,
         categoriesGridItemDataMap,
     ) {
             selectedTabIndex,
             categoriesGridItemDataMap,
         ->
-        CategoriesScreenUIData(
-            selectedTabIndex = selectedTabIndex,
-            categoriesGridItemDataMap = categoriesGridItemDataMap,
+        MyResult.Success(
+            data = CategoriesScreenUIData(
+                selectedTabIndex = selectedTabIndex,
+                categoriesGridItemDataMap = categoriesGridItemDataMap,
+            ),
         )
     }.defaultObjectStateIn(
         scope = viewModelScope,

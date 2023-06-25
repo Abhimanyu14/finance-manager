@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUI
@@ -21,7 +22,7 @@ fun AddTransactionForScreen(
         message = "Inside AddTransactionForScreen",
     )
 
-    val screenUIData: AddOrEditTransactionForScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
+    val screenUIData: MyResult<AddOrEditTransactionForScreenUIData>? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
 
     AddOrEditTransactionForScreenUI(
         events = AddOrEditTransactionForScreenUIEvents(
@@ -35,7 +36,7 @@ fun AddTransactionForScreen(
             updateTitle = screenViewModel::updateTitle,
         ),
         uiState = rememberAddOrEditTransactionForScreenUIState(
-            data = screenUIData ?: AddOrEditTransactionForScreenUIData(),
+            data = screenUIData,
             isEdit = false,
         ),
         state = rememberCommonScreenUIState(),

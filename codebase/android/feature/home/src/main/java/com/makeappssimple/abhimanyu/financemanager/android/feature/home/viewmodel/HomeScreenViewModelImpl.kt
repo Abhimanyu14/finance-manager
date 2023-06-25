@@ -7,6 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetRecentTransactionDataFlowUseCase
@@ -41,16 +42,18 @@ internal class HomeScreenViewModelImpl @Inject constructor(
         getHomeListItemViewDataFromData()
     private val isBackupCardVisible: Flow<Boolean> = getIsBackupCardVisibleFromData()
 
-    override val screenUIData: StateFlow<HomeScreenUIData?> = combine(
+    override val screenUIData: StateFlow<MyResult<HomeScreenUIData>?> = combine(
         isBackupCardVisible,
         homeListItemViewData,
     ) {
             isBackupCardVisible,
             homeListItemViewData,
         ->
-        HomeScreenUIData(
-            isBackupCardVisible = isBackupCardVisible,
-            transactionListItemDataList = homeListItemViewData,
+        MyResult.Success(
+            data = HomeScreenUIData(
+                isBackupCardVisible = isBackupCardVisible,
+                transactionListItemDataList = homeListItemViewData,
+            ),
         )
     }.defaultObjectStateIn(
         scope = viewModelScope,

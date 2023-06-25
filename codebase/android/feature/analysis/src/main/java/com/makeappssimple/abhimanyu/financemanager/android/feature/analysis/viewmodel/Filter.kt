@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.vie
 
 import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import java.time.LocalDate
 
 @Immutable
@@ -21,5 +22,13 @@ data class Filter(
                 selectedSourceIndices.isNotEmpty() ||
                 selectedTransactionTypeIndices.isNotEmpty() ||
                 toLocalDate.isNotNull()
+    }
+}
+
+fun Filter?.orEmpty(): Filter {
+    return if (this.isNull()) {
+        Filter()
+    } else {
+        this
     }
 }

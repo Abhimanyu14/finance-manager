@@ -18,6 +18,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
@@ -30,6 +31,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sca
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 
 enum class AddOrEditTransactionForBottomSheetType : BottomSheetType {
@@ -115,7 +117,7 @@ internal fun AddOrEditTransactionForScreenUI(
         ) {
             MyOutlinedTextField(
                 data = MyOutlinedTextFieldData(
-                    textFieldValue = uiState.title,
+                    textFieldValue = uiState.title.orEmpty(),
                     labelTextStringResourceId = R.string.screen_add_or_edit_transaction_for_title,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_for_clear_title,
                     keyboardActions = KeyboardActions(
@@ -144,7 +146,7 @@ internal fun AddOrEditTransactionForScreenUI(
             SaveButton(
                 modifier = Modifier,
                 data = SaveButtonData(
-                    isEnabled = uiState.isCtaButtonEnabled,
+                    isEnabled = uiState.isCtaButtonEnabled.orFalse(),
                     textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
                 ),
                 events = SaveButtonEvents(

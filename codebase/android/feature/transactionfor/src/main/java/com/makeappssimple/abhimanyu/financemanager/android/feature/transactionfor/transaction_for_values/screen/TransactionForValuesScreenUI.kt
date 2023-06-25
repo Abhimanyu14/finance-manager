@@ -10,6 +10,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
@@ -140,7 +141,7 @@ internal fun TransactionForValuesScreenUI(
                     transactionFor = listItem.title,
                 ) && uiState.transactionForValuesIsUsedInTransactions.getOrNull(
                     index = index,
-                )?.not() ?: false
+                )?.not().orFalse()
                 TransactionForListItem(
                     data = TransactionForListItemData(
                         title = listItem.title.capitalizeWords(),

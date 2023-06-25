@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.viewmodel
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
@@ -9,7 +10,7 @@ import kotlinx.coroutines.flow.StateFlow
 interface AnalysisScreenViewModel : ScreenViewModel {
     val logger: Logger
     val navigationManager: NavigationManager
-    val screenUIData: StateFlow<AnalysisScreenUIData?>
+    val screenUIData: StateFlow<MyResult<AnalysisScreenUIData>?>
 
     fun navigateUp()
 

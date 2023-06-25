@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfTransactionForIsUsedInTransactionsUseCase
@@ -43,16 +44,18 @@ internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
                 }
             }
 
-    override val screenUIData: StateFlow<TransactionForValuesScreenUIData?> = combine(
+    override val screenUIData: StateFlow<MyResult<TransactionForValuesScreenUIData>?> = combine(
         transactionForValuesIsUsedInTransactions,
         transactionForValues,
     ) {
             transactionForValuesIsUsedInTransactions,
             transactionForValues,
         ->
-        TransactionForValuesScreenUIData(
-            transactionForValuesIsUsedInTransactions = transactionForValuesIsUsedInTransactions,
-            transactionForValues = transactionForValues,
+        MyResult.Success(
+            data = TransactionForValuesScreenUIData(
+                transactionForValuesIsUsedInTransactions = transactionForValuesIsUsedInTransactions,
+                transactionForValues = transactionForValues,
+            ),
         )
     }.defaultObjectStateIn(
         scope = viewModelScope,

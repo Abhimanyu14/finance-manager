@@ -6,31 +6,43 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.rememberTextMeasurer
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orMin
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.viewmodel.Filter
+import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.viewmodel.orEmpty
 import java.time.LocalDate
 
 @Stable
 class AnalysisScreenUIState(
-    data: AnalysisScreenUIData,
+    data: MyResult<AnalysisScreenUIData>?,
     textMeasurer: TextMeasurer,
     val analysisBottomSheetType: AnalysisBottomSheetType,
     val setAnalysisBottomSheetType: (AnalysisBottomSheetType) -> Unit,
 ) {
-    val resetBottomSheetType: () -> Unit = {
-        setAnalysisBottomSheetType(AnalysisBottomSheetType.NONE)
+    private val unwrappedData = when (data) {
+        is MyResult.Success -> {
+            data.data
+        }
+
+        else -> {
+            null
+        }
     }
 
-    val selectedFilter: Filter = data.selectedFilter
-    val selectedTransactionTypeIndex: Int = data.selectedTransactionTypeIndex
+    val isLoading: Boolean = unwrappedData.isNull()
+    val selectedFilter: Filter = unwrappedData?.selectedFilter.orEmpty()
+    val selectedTransactionTypeIndex: Int? = unwrappedData?.selectedTransactionTypeIndex
     val transactionDataMappedByCategory: List<AnalysisListItemData> =
-        data.transactionDataMappedByCategory
-    val transactionTypesChipUIData: List<ChipUIData> = data.transactionTypesChipUIData
-    val defaultStartLocalDate: LocalDate = data.oldestTransactionLocalDate
-    val defaultEndLocalDate: LocalDate = data.currentLocalDate
-    val startOfMonthLocalDate: LocalDate = data.startOfMonthLocalDate
-    val startOfYearLocalDate: LocalDate = data.startOfYearLocalDate
+        unwrappedData?.transactionDataMappedByCategory.orEmpty()
+    val transactionTypesChipUIData: List<ChipUIData> =
+        unwrappedData?.transactionTypesChipUIData.orEmpty()
+    val defaultStartLocalDate: LocalDate = unwrappedData?.oldestTransactionLocalDate.orMin()
+    val defaultEndLocalDate: LocalDate = unwrappedData?.currentLocalDate.orMin()
+    val startOfMonthLocalDate: LocalDate = unwrappedData?.startOfMonthLocalDate.orMin()
+    val startOfYearLocalDate: LocalDate = unwrappedData?.startOfYearLocalDate.orMin()
 
     val maxAmountTextWidth: Int = if (transactionDataMappedByCategory.isEmpty()) {
         0
@@ -39,11 +51,14 @@ class AnalysisScreenUIState(
             textMeasurer.measure(it.amountText).size.width
         }
     }
+    val resetBottomSheetType: () -> Unit = {
+        setAnalysisBottomSheetType(AnalysisBottomSheetType.NONE)
+    }
 }
 
 @Composable
 fun rememberAnalysisScreenUIState(
-    data: AnalysisScreenUIData,
+    data: MyResult<AnalysisScreenUIData>?,
 ): AnalysisScreenUIState {
     val (analysisBottomSheetType, setAnalysisBottomSheetType) = remember {
         mutableStateOf(

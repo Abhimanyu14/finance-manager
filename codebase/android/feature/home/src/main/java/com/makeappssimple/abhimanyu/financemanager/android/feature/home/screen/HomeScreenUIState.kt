@@ -4,17 +4,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 
 @Stable
 class HomeScreenUIState(
-    data: HomeScreenUIData,
+    data: MyResult<HomeScreenUIData>?,
     val homeBottomSheetType: HomeBottomSheetType,
     val setHomeBottomSheetType: (HomeBottomSheetType) -> Unit,
 ) {
-    val isBackupCardVisible: Boolean = data.isBackupCardVisible
+    private val unwrappedData = when (data) {
+        is MyResult.Success -> {
+            data.data
+        }
+
+        else -> {
+            null
+        }
+    }
+
+    val isLoading: Boolean = unwrappedData.isNull()
+    val isBackupCardVisible: Boolean = unwrappedData?.isBackupCardVisible.orFalse()
     val transactionListItemDataList: List<TransactionListItemData> =
-        data.transactionListItemDataList
+        unwrappedData?.transactionListItemDataList.orEmpty()
     val resetBottomSheetType: () -> Unit = {
         setHomeBottomSheetType(HomeBottomSheetType.NONE)
     }
@@ -22,7 +36,7 @@ class HomeScreenUIState(
 
 @Composable
 fun rememberHomeScreenUIState(
-    data: HomeScreenUIData,
+    data: MyResult<HomeScreenUIData>?,
 ): HomeScreenUIState {
     val (homeBottomSheetType: HomeBottomSheetType, setHomeBottomSheetType: (HomeBottomSheetType) -> Unit) = remember {
         mutableStateOf(

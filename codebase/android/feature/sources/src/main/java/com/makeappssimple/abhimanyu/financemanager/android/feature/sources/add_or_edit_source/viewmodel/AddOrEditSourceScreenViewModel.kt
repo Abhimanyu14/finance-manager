@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.viewmodel
 
 import androidx.compose.ui.text.input.TextFieldValue
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
@@ -10,7 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 interface AddOrEditSourceScreenViewModel : ScreenViewModel {
     val logger: Logger
     val navigationManager: NavigationManager
-    val screenUIData: StateFlow<AddOrEditSourceScreenUIData?>
+    val screenUIData: StateFlow<MyResult<AddOrEditSourceScreenUIData>?>
 
     fun insertSource()
 

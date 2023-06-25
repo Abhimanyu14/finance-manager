@@ -6,16 +6,29 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.text.input.TextFieldValue
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 
 @Stable
 class AddOrEditTransactionForScreenUIState(
-    data: AddOrEditTransactionForScreenUIData,
+    data: MyResult<AddOrEditTransactionForScreenUIData>?,
     isEdit: Boolean,
     setAddOrEditTransactionForBottomSheetType: (AddOrEditTransactionForBottomSheetType) -> Unit,
     val addOrEditTransactionForBottomSheetType: AddOrEditTransactionForBottomSheetType,
 ) {
-    val isCtaButtonEnabled: Boolean = data.isValidTransactionForData
+    private val unwrappedData = when (data) {
+        is MyResult.Success -> {
+            data.data
+        }
+
+        else -> {
+            null
+        }
+    }
+
+    val isLoading: Boolean = unwrappedData.isNull()
+    val isCtaButtonEnabled: Boolean? = unwrappedData?.isValidTransactionForData
 
     @StringRes
     val appBarTitleTextStringResourceId: Int = if (isEdit) {
@@ -31,7 +44,7 @@ class AddOrEditTransactionForScreenUIState(
         R.string.screen_add_transaction_for_floating_action_button_content_description
     }
 
-    val title: TextFieldValue = data.title
+    val title: TextFieldValue? = unwrappedData?.title
     val resetBottomSheetType: () -> Unit = {
         setAddOrEditTransactionForBottomSheetType(AddOrEditTransactionForBottomSheetType.NONE)
     }
@@ -39,7 +52,7 @@ class AddOrEditTransactionForScreenUIState(
 
 @Composable
 fun rememberAddOrEditTransactionForScreenUIState(
-    data: AddOrEditTransactionForScreenUIData,
+    data: MyResult<AddOrEditTransactionForScreenUIData>?,
     isEdit: Boolean,
 ): AddOrEditTransactionForScreenUIState {
     val (addOrEditTransactionForBottomSheetType, setAddOrEditTransactionForBottomSheetType) = remember {

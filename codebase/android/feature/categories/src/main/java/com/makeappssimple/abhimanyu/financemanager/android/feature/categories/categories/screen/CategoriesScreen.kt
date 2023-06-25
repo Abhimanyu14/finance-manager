@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
@@ -18,7 +19,7 @@ fun CategoriesScreen(
         message = "Inside CategoriesScreen",
     )
 
-    val screenUIData: CategoriesScreenUIData? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
+    val screenUIData: MyResult<CategoriesScreenUIData>? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
 
     CategoriesScreenUI(
         events = CategoriesScreenUIEvents(
@@ -59,7 +60,7 @@ fun CategoriesScreen(
             },
         ),
         uiState = rememberCategoriesScreenUIState(
-            data = screenUIData ?: CategoriesScreenUIData(),
+            data = screenUIData,
         ),
         state = rememberCommonScreenUIState(),
     )

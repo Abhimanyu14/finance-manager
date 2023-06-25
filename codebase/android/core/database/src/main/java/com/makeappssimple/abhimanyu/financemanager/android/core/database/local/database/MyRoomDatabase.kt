@@ -10,6 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.AppConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.JsonReader
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.AmountConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.CategoryConverter
@@ -208,7 +209,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     launch {
                         populateEmojiData(
                             initialDatabaseData = initialDatabaseData,
-                            emojiDataVersion = initialDataVersionNumber?.emoji ?: 0,
+                            emojiDataVersion = initialDataVersionNumber?.emoji.orZero(),
                             myPreferencesDataSource = myPreferencesDataSource,
                             myRoomDatabase = myRoomDatabase,
                         )
@@ -227,7 +228,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     }
                     launch {
                         transactionsCleanUpIfRequired(
-                            transactionsDataVersion = initialDataVersionNumber?.transaction ?: 0,
+                            transactionsDataVersion = initialDataVersionNumber?.transaction.orZero(),
                             myPreferencesDataSource = myPreferencesDataSource,
                             myRoomDatabase = myRoomDatabase,
                         )
