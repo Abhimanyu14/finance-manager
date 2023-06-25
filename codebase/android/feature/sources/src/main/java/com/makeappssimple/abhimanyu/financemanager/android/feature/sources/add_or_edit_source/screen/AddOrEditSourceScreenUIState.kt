@@ -8,7 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.icon
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 

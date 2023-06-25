@@ -1,14 +1,11 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -20,7 +17,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.flowlayout.FlowRow
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
@@ -39,145 +35,7 @@ data class ChipUIEvents(
 )
 
 @Composable
-fun MySelectionGroup(
-    modifier: Modifier = Modifier,
-    items: List<ChipUIData>,
-    selectedItemsIndices: List<Int>,
-    onSelectionChange: (index: Int) -> Unit,
-) {
-    FlowRow(
-        modifier = modifier,
-    ) {
-        items.mapIndexed { index, data ->
-            ChipUI(
-                data = data,
-                events = ChipUIEvents(
-                    onSelectionChange = {
-                        onSelectionChange(index)
-                    }
-                ),
-                isSelected = selectedItemsIndices.contains(index),
-            )
-        }
-    }
-}
-
-@Immutable
-data class MyRadioGroupData(
-    val isLoading: Boolean = false,
-    val loadingItemSize: Int = 3,
-    val items: List<ChipUIData>,
-    val selectedItemIndex: Int?,
-)
-
-@Immutable
-data class MyRadioGroupEvents(
-    val onSelectionChange: (index: Int) -> Unit,
-)
-
-@Composable
-fun MyRadioGroup(
-    modifier: Modifier = Modifier,
-    data: MyRadioGroupData,
-    events: MyRadioGroupEvents,
-) {
-    FlowRow(
-        modifier = modifier,
-    ) {
-        if (data.isLoading) {
-            MutableList(
-                size = data.loadingItemSize,
-            ) { index ->
-                ChipUI(
-                    data = ChipUIData(
-                        isLoading = true,
-                    ),
-                    events = ChipUIEvents(
-                        onSelectionChange = {
-                            events.onSelectionChange(index)
-                        }
-                    ),
-                    isSelected = index == data.selectedItemIndex,
-                )
-            }
-        } else {
-            data.items.mapIndexed { index, chipUIData ->
-                ChipUI(
-                    data = chipUIData,
-                    events = ChipUIEvents(
-                        onSelectionChange = {
-                            events.onSelectionChange(index)
-                        }
-                    ),
-                    isSelected = index == data.selectedItemIndex,
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun MyHorizontalScrollingRadioGroup(
-    modifier: Modifier = Modifier,
-    horizontalArrangement: Arrangement.Horizontal = Arrangement.SpaceBetween,
-    items: List<ChipUIData>,
-    selectedItemIndex: Int?,
-    onSelectionChange: (index: Int) -> Unit,
-) {
-    LazyRow(
-        horizontalArrangement = horizontalArrangement,
-        modifier = modifier,
-    ) {
-        itemsIndexed(
-            items = items,
-            key = { _, listItem ->
-                listItem.hashCode()
-            },
-        ) { index, data ->
-            ChipUI(
-                data = data,
-                events = ChipUIEvents(
-                    onSelectionChange = {
-                        onSelectionChange(index)
-                    }
-                ),
-                isSelected = index == selectedItemIndex,
-            )
-        }
-    }
-}
-
-@Composable
-fun MyHorizontalScrollingSelectionGroup(
-    modifier: Modifier = Modifier,
-    items: List<ChipUIData>,
-    onSelectionChange: (index: Int) -> Unit,
-) {
-    LazyRow(
-        horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = modifier,
-    ) {
-        itemsIndexed(
-            items = items,
-            key = { _, listItem ->
-                listItem.hashCode()
-            },
-        ) { index, data ->
-            ChipUI(
-                data = data,
-                events = ChipUIEvents(
-                    onSelectionChange = {
-                        onSelectionChange(index)
-                    }
-                ),
-                isSelected = false,
-            )
-        }
-    }
-}
-
-@Composable
-private fun ChipUI(
+fun ChipUI(
     modifier: Modifier = Modifier,
     data: ChipUIData,
     events: ChipUIEvents,
@@ -268,7 +126,7 @@ private fun ChipUI(
 }
 
 @Composable
-private fun ChipLoadingUI(
+fun ChipLoadingUI(
     modifier: Modifier = Modifier,
 ) {
     Box(

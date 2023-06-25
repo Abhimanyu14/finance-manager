@@ -9,7 +9,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 
 @Stable

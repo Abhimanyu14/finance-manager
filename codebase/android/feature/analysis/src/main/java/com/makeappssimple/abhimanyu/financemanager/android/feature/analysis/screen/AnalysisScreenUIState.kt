@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.rememberTextMeasurer
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ChipUIData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.viewmodel.Filter
 import java.time.LocalDate

@@ -1,0 +1,63 @@
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group
+
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
+import androidx.compose.ui.Modifier
+import com.google.accompanist.flowlayout.FlowRow
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUI
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIEvents
+
+@Immutable
+data class MyRadioGroupData(
+    val isLoading: Boolean = false,
+    val loadingItemSize: Int = 3,
+    val items: List<ChipUIData>,
+    val selectedItemIndex: Int?,
+)
+
+@Immutable
+data class MyRadioGroupEvents(
+    val onSelectionChange: (index: Int) -> Unit,
+)
+
+@Composable
+fun MyRadioGroup(
+    modifier: Modifier = Modifier,
+    data: MyRadioGroupData,
+    events: MyRadioGroupEvents,
+) {
+    FlowRow(
+        modifier = modifier,
+    ) {
+        if (data.isLoading) {
+            MutableList(
+                size = data.loadingItemSize,
+            ) { index ->
+                ChipUI(
+                    data = ChipUIData(
+                        isLoading = true,
+                    ),
+                    events = ChipUIEvents(
+                        onSelectionChange = {
+                            events.onSelectionChange(index)
+                        }
+                    ),
+                    isSelected = index == data.selectedItemIndex,
+                )
+            }
+        } else {
+            data.items.mapIndexed { index, chipUIData ->
+                ChipUI(
+                    data = chipUIData,
+                    events = ChipUIEvents(
+                        onSelectionChange = {
+                            events.onSelectionChange(index)
+                        }
+                    ),
+                    isSelected = index == data.selectedItemIndex,
+                )
+            }
+        }
+    }
+}
