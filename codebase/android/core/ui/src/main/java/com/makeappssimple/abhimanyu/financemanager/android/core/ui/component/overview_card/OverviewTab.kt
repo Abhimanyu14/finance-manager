@@ -21,8 +21,8 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -60,6 +60,7 @@ fun OverviewTab(
             durationMillis = 300,
             easing = LinearEasing,
         ),
+        label = "",
     )
     val indicatorOffset: Dp by animateDpAsState(
         targetValue = tabWidths.take(
@@ -73,6 +74,7 @@ fun OverviewTab(
             durationMillis = 300,
             easing = LinearEasing,
         ),
+        label = "",
     )
 
     Box(
@@ -172,7 +174,7 @@ private fun OverviewTabIndicator(
 @Composable
 private fun OverviewSelectionPreview() {
     var selectedIndex by remember {
-        mutableStateOf(0)
+        mutableIntStateOf(0)
     }
     MyAppTheme {
         Box(
