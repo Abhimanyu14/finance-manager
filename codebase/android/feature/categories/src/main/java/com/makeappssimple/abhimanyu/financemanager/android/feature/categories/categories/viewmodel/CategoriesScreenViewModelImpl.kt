@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.DeleteCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesFlowUseCase
@@ -19,13 +20,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.screen.CategoriesScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 internal class CategoriesScreenViewModelImpl @Inject constructor(
@@ -60,7 +61,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
             val expenseCategoriesGridItemDataList =
                 categoriesTransactionTypeMap[TransactionType.EXPENSE]?.map { category ->
                     val isDefault =
-                        if (defaultDataId == null || defaultDataId.expenseCategory == 0) {
+                        if (defaultDataId.isNull() || defaultDataId.expenseCategory == 0) {
                             isDefaultExpenseCategory(
                                 category = category.title,
                             )
@@ -81,7 +82,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
             val incomeCategoriesGridItemDataList =
                 categoriesTransactionTypeMap[TransactionType.INCOME]?.map { category ->
                     val isDefault =
-                        if (defaultDataId == null || defaultDataId.incomeCategory == 0) {
+                        if (defaultDataId.isNull() || defaultDataId.incomeCategory == 0) {
                             isDefaultIncomeCategory(
                                 category = category.title,
                             )
@@ -102,7 +103,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
             val investmentCategoriesGridItemDataList =
                 categoriesTransactionTypeMap[TransactionType.INVESTMENT]?.map { category ->
                     val isDefault =
-                        if (defaultDataId == null || defaultDataId.investmentCategory == 0) {
+                        if (defaultDataId.isNull() || defaultDataId.investmentCategory == 0) {
                             isDefaultInvestmentCategory(
                                 category = category.title,
                             )

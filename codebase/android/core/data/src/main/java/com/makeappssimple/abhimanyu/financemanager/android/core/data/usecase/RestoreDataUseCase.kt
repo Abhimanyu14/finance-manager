@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase
 
 import android.net.Uri
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.JsonReader
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.BackupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
@@ -34,23 +35,23 @@ class RestoreDataUseCaseImpl(
             string = jsonString,
         )
 
-        val categories = if (backupData.databaseData == null) {
+        val categories = if (backupData.databaseData.isNull()) {
             backupData.categories.orEmpty()
         } else {
             backupData.databaseData.categories
         }
-        val emojis = if (backupData.databaseData == null) {
+        val emojis = if (backupData.databaseData.isNull()) {
             backupData.emojis.orEmpty()
         } else {
             backupData.databaseData.emojis
         }
-        val sources = if (backupData.databaseData == null) {
+        val sources = if (backupData.databaseData.isNull()) {
             backupData.sources.orEmpty()
         } else {
             backupData.databaseData.sources
         }
         val transactions = transactionsCleanUp(
-            transactions = if (backupData.databaseData == null) {
+            transactions = if (backupData.databaseData.isNull()) {
                 backupData.transactions.orEmpty()
             } else {
                 backupData.databaseData.transactions
@@ -60,7 +61,7 @@ class RestoreDataUseCaseImpl(
         ).map {
             it.asExternalModel()
         }
-        val transactionForValues = if (backupData.databaseData == null) {
+        val transactionForValues = if (backupData.databaseData.isNull()) {
             backupData.transactionForValues.orEmpty()
         } else {
             backupData.databaseData.transactionForValues

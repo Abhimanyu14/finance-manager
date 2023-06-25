@@ -81,7 +81,7 @@ fun MyDatePicker(
         )
         val confirmEnabled = remember {
             derivedStateOf {
-                datePickerState.selectedDateMillis != null
+                datePickerState.selectedDateMillis.isNotNull()
             }
         }
         DatePickerDialog(

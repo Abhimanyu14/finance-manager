@@ -136,12 +136,12 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         val isValidCategoryData = flows[5] as? Boolean
 
         if (
-            selectedTransactionTypeIndex == null ||
-            emojiGroups == null ||
-            emoji == null ||
-            searchText == null ||
-            title == null ||
-            isValidCategoryData == null
+            selectedTransactionTypeIndex.isNull() ||
+            emojiGroups.isNull() ||
+            emoji.isNull() ||
+            searchText.isNull() ||
+            title.isNull() ||
+            isValidCategoryData.isNull()
         ) {
             MyResult.Loading
         } else {
