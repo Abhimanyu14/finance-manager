@@ -4,23 +4,34 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIEvents
 
+@Immutable
+data class MyHorizontalScrollingSelectionGroupData(
+    val items: List<ChipUIData>,
+)
+
+@Immutable
+data class MyHorizontalScrollingSelectionGroupEvents(
+    val onSelectionChange: (index: Int) -> Unit,
+)
+
 @Composable
 fun MyHorizontalScrollingSelectionGroup(
     modifier: Modifier = Modifier,
-    items: List<ChipUIData>,
-    onSelectionChange: (index: Int) -> Unit,
+    data: MyHorizontalScrollingSelectionGroupData,
+    events: MyHorizontalScrollingSelectionGroupEvents,
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = modifier,
     ) {
         itemsIndexed(
-            items = items,
+            items = data.items,
             key = { _, listItem ->
                 listItem.hashCode()
             },
@@ -29,7 +40,7 @@ fun MyHorizontalScrollingSelectionGroup(
                 data = data,
                 events = ChipUIEvents(
                     onSelectionChange = {
-                        onSelectionChange(index)
+                        events.onSelectionChange(index)
                     }
                 ),
                 isSelected = false,

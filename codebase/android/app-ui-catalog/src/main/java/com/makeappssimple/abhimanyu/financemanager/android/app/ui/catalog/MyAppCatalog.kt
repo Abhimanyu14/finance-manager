@@ -47,11 +47,17 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chi
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingSelectionGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingSelectionGroupData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingSelectionGroupEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroupEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MySelectionGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MySelectionGroupData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MySelectionGroupEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldEvents
@@ -186,11 +192,15 @@ private fun LazyListScope.componentsTabContent(
             mutableStateListOf<Int>()
         }
         MySelectionGroup(
-            items = items,
-            selectedItemsIndices = selectedItemsIndices,
-            onSelectionChange = {
-                selectedItemsIndices.addIfDoesNotContainItemElseRemove(it)
-            },
+            data = MySelectionGroupData(
+                items = items,
+                selectedItemsIndices = selectedItemsIndices,
+            ),
+            events = MySelectionGroupEvents(
+                onSelectionChange = {
+                    selectedItemsIndices.addIfDoesNotContainItemElseRemove(it)
+                },
+            ),
         )
     }
 
@@ -282,11 +292,15 @@ private fun LazyListScope.componentsTabContent(
             mutableStateOf(0)
         }
         MyHorizontalScrollingRadioGroup(
-            items = items,
-            selectedItemIndex = selectedItemIndex,
-            onSelectionChange = {
-                selectedItemIndex = it
-            },
+            data = MyHorizontalScrollingRadioGroupData(
+                items = items,
+                selectedItemIndex = selectedItemIndex,
+            ),
+            events = MyHorizontalScrollingRadioGroupEvents(
+                onSelectionChange = {
+                    selectedItemIndex = it
+                },
+            ),
         )
     }
 
@@ -325,14 +339,18 @@ private fun LazyListScope.componentsTabContent(
             ),
         )
         MyHorizontalScrollingSelectionGroup(
-            items = items,
-            onSelectionChange = {
-                Toast.makeText(
-                    context,
-                    "Selected ${items[it].text}",
-                    Toast.LENGTH_SHORT,
-                ).show()
-            },
+            data = MyHorizontalScrollingSelectionGroupData(
+                items = items,
+            ),
+            events = MyHorizontalScrollingSelectionGroupEvents(
+                onSelectionChange = {
+                    Toast.makeText(
+                        context,
+                        "Selected ${items[it].text}",
+                        Toast.LENGTH_SHORT,
+                    ).show()
+                },
+            ),
         )
     }
 

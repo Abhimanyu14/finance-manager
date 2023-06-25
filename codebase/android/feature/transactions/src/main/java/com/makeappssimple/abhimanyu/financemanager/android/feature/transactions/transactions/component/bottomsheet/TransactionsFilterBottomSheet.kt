@@ -49,6 +49,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.dat
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MySelectionGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MySelectionGroupData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MySelectionGroupEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextFieldEvents
@@ -461,16 +463,20 @@ private fun TransactionFilterBottomSheetFilterGroup(
         }
         if (expanded) {
             MySelectionGroup(
-                items = items,
-                selectedItemsIndices = selectedItemsIndices,
-                onSelectionChange = { index ->
-                    onItemClick(index)
-                },
                 modifier = Modifier
                     .padding(
                         horizontal = 16.dp,
                         vertical = 4.dp,
                     ),
+                data = MySelectionGroupData(
+                    items = items,
+                    selectedItemsIndices = selectedItemsIndices,
+                ),
+                events = MySelectionGroupEvents(
+                    onSelectionChange = { index ->
+                        onItemClick(index)
+                    },
+                ),
             )
         }
     }

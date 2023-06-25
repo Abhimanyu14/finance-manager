@@ -25,6 +25,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.act
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.bottomsheet.AnalysisFilterBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItem
@@ -118,14 +120,6 @@ internal fun AnalysisScreenUI(
         ) {
             Row {
                 MyHorizontalScrollingRadioGroup(
-                    horizontalArrangement = Arrangement.Start,
-                    items = uiState.transactionTypesChipUIData,
-                    selectedItemIndex = uiState.selectedTransactionTypeIndex,
-                    onSelectionChange = { updatedSelectedTransactionTypeIndex ->
-                        events.updateSelectedTransactionTypeIndex(
-                            updatedSelectedTransactionTypeIndex
-                        )
-                    },
                     modifier = Modifier
                         .weight(
                             weight = 1F,
@@ -134,6 +128,18 @@ internal fun AnalysisScreenUI(
                             horizontal = 16.dp,
                             vertical = 4.dp,
                         ),
+                    data = MyHorizontalScrollingRadioGroupData(
+                        horizontalArrangement = Arrangement.Start,
+                        items = uiState.transactionTypesChipUIData,
+                        selectedItemIndex = uiState.selectedTransactionTypeIndex,
+                    ),
+                    events = MyHorizontalScrollingRadioGroupEvents(
+                        onSelectionChange = { updatedSelectedTransactionTypeIndex ->
+                            events.updateSelectedTransactionTypeIndex(
+                                updatedSelectedTransactionTypeIndex
+                            )
+                        },
+                    ),
                 )
                 ActionButton(
                     data = ActionButtonData(

@@ -1,31 +1,42 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import com.google.accompanist.flowlayout.FlowRow
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIEvents
 
+@Immutable
+data class MySelectionGroupData(
+    val items: List<ChipUIData>,
+    val selectedItemsIndices: List<Int>,
+)
+
+@Immutable
+data class MySelectionGroupEvents(
+    val onSelectionChange: (index: Int) -> Unit,
+)
+
 @Composable
 fun MySelectionGroup(
     modifier: Modifier = Modifier,
-    items: List<ChipUIData>,
-    selectedItemsIndices: List<Int>,
-    onSelectionChange: (index: Int) -> Unit,
+    data: MySelectionGroupData,
+    events: MySelectionGroupEvents,
 ) {
     FlowRow(
         modifier = modifier,
     ) {
-        items.mapIndexed { index, data ->
+        data.items.mapIndexed { index, chipUIData ->
             ChipUI(
-                data = data,
+                data = chipUIData,
                 events = ChipUIEvents(
                     onSelectionChange = {
-                        onSelectionChange(index)
+                        events.onSelectionChange(index)
                     }
                 ),
-                isSelected = selectedItemsIndices.contains(index),
+                isSelected = data.selectedItemsIndices.contains(index),
             )
         }
     }

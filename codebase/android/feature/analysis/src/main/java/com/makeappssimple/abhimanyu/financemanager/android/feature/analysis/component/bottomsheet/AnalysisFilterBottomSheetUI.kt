@@ -20,6 +20,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.dat
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingSelectionGroup
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingSelectionGroupData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingSelectionGroupEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextFieldEvents
@@ -166,19 +168,23 @@ fun AnalysisFilterBottomSheetUI(
             )
         }
         MyHorizontalScrollingSelectionGroup(
-            items = DateRangeOptions.values().map {
-                ChipUIData(
-                    text = it.title,
-                )
-            },
-            onSelectionChange = { index ->
-                onDateRangeOptionClick(DateRangeOptions.values()[index])
-            },
             modifier = Modifier
                 .padding(
                     horizontal = 16.dp,
                     vertical = 4.dp,
                 ),
+            data = MyHorizontalScrollingSelectionGroupData(
+                items = DateRangeOptions.values().map {
+                    ChipUIData(
+                        text = it.title,
+                    )
+                },
+            ),
+            events = MyHorizontalScrollingSelectionGroupEvents(
+                onSelectionChange = { index ->
+                    onDateRangeOptionClick(DateRangeOptions.values()[index])
+                },
+            ),
         )
         Row(
             modifier = Modifier
