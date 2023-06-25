@@ -154,6 +154,10 @@ internal fun AddOrEditSourceScreenUI(
         ) {
             if (uiState.visibilityData.sourceTypesRadioGroup) {
                 MyRadioGroup(
+                    modifier = Modifier
+                        .padding(
+                            horizontal = 16.dp,
+                        ),
                     data = MyRadioGroupData(
                         items = uiState.sourceTypesChipUIDataList,
                         selectedItemIndex = uiState.selectedSourceTypeIndex,
@@ -161,34 +165,42 @@ internal fun AddOrEditSourceScreenUI(
                     events = MyRadioGroupEvents(
                         onSelectionChange = events.updateSelectedSourceTypeIndex,
                     ),
-                    modifier = Modifier
-                        .padding(
-                            horizontal = 16.dp,
-                            vertical = 8.dp,
-                        ),
                 )
             }
             if (uiState.visibilityData.nameTextField) {
                 MyOutlinedTextField(
+                    modifier = Modifier
+                        .focusRequester(
+                            focusRequester = uiState.nameTextFieldFocusRequester,
+                        )
+                        .fillMaxWidth()
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 4.dp,
+                        ),
                     data = MyOutlinedTextFieldData(
                         textFieldValue = uiState.name,
                         labelTextStringResourceId = R.string.screen_add_or_edit_source_name,
                         trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_source_clear_name,
-                        supportingText = {
-                            AnimatedVisibility(
-                                visible = uiState.visibilityData.nameTextFieldErrorText,
-                            ) {
-                                MyText(
-                                    text = uiState.nameTextFieldErrorTextStringResourceId?.run {
-                                        stringResource(
-                                            id = uiState.nameTextFieldErrorTextStringResourceId,
-                                        )
-                                    }.orEmpty(),
-                                    style = MaterialTheme.typography.bodySmall.copy(
-                                        color = MaterialTheme.colorScheme.error,
-                                    ),
-                                )
+                        supportingText = if (uiState.visibilityData.nameTextFieldErrorText) {
+                            {
+                                AnimatedVisibility(
+                                    visible = uiState.visibilityData.nameTextFieldErrorText,
+                                ) {
+                                    MyText(
+                                        text = uiState.nameTextFieldErrorTextStringResourceId?.run {
+                                            stringResource(
+                                                id = uiState.nameTextFieldErrorTextStringResourceId,
+                                            )
+                                        }.orEmpty(),
+                                        style = MaterialTheme.typography.bodySmall.copy(
+                                            color = MaterialTheme.colorScheme.error,
+                                        ),
+                                    )
+                                }
                             }
+                        } else {
+                            null
                         },
                         isError = uiState.visibilityData.nameTextFieldErrorText,
                         keyboardActions = KeyboardActions(
@@ -207,19 +219,19 @@ internal fun AddOrEditSourceScreenUI(
                         onClickTrailingIcon = events.clearName,
                         onValueChange = events.updateName,
                     ),
-                    modifier = Modifier
-                        .focusRequester(
-                            focusRequester = uiState.nameTextFieldFocusRequester,
-                        )
-                        .fillMaxWidth()
-                        .padding(
-                            horizontal = 16.dp,
-                            vertical = 8.dp,
-                        ),
                 )
             }
             if (uiState.visibilityData.balanceAmountTextField) {
                 MyOutlinedTextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(
+                            focusRequester = uiState.balanceAmountTextFieldFocusRequester,
+                        )
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 4.dp,
+                        ),
                     data = MyOutlinedTextFieldData(
                         textFieldValue = uiState.balanceAmountValue,
                         labelTextStringResourceId = R.string.screen_add_or_edit_source_balance_amount_value,
@@ -244,19 +256,13 @@ internal fun AddOrEditSourceScreenUI(
                         onClickTrailingIcon = events.clearBalanceAmountValue,
                         onValueChange = events.updateBalanceAmountValue,
                     ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(
-                            focusRequester = uiState.balanceAmountTextFieldFocusRequester,
-                        )
-                        .padding(
-                            horizontal = 16.dp,
-                            vertical = 8.dp,
-                        ),
                 )
             }
             SaveButton(
-                modifier = Modifier,
+                modifier = Modifier
+                    .padding(
+                        all = 8.dp,
+                    ),
                 data = SaveButtonData(
                     isEnabled = uiState.isCtaButtonEnabled,
                     textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,

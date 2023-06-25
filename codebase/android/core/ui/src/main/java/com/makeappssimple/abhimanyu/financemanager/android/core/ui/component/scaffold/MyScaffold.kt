@@ -85,7 +85,8 @@ fun MyScaffold(
         sheetContent = {
             val screenHeight = LocalConfiguration.current.screenHeightDp.dp
             val bottomSheetModifier = if (sheetShape == BottomSheetExpandedShape) {
-                Modifier.fillMaxSize()
+                Modifier
+                    .fillMaxSize()
             } else {
                 Modifier
                     .heightIn(

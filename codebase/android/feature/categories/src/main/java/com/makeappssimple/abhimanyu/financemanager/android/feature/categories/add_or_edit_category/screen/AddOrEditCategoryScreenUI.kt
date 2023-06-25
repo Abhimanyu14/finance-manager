@@ -162,7 +162,8 @@ internal fun AddOrEditCategoryScreenUI(
                 ),
                 modifier = Modifier
                     .padding(
-                        all = 12.dp,
+                        horizontal = 8.dp,
+                        vertical = 4.dp,
                     ),
             )
             Row(
@@ -188,6 +189,14 @@ internal fun AddOrEditCategoryScreenUI(
                     ),
                 )
                 MyOutlinedTextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .focusRequester(
+                            focusRequester = state.focusRequester,
+                        )
+                        .padding(
+                            start = 8.dp,
+                        ),
                     data = MyOutlinedTextFieldData(
                         isLoading = uiState.isLoading,
                         textFieldValue = uiState.title.orEmpty(),
@@ -212,20 +221,13 @@ internal fun AddOrEditCategoryScreenUI(
                         onClickTrailingIcon = events.clearTitle,
                         onValueChange = events.updateTitle,
                     ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .focusRequester(
-                            focusRequester = state.focusRequester,
-                        )
-                        .padding(
-                            start = 4.dp,
-                            top = 8.dp,
-                            bottom = 8.dp,
-                        ),
                 )
             }
             SaveButton(
-                modifier = Modifier,
+                modifier = Modifier
+                    .padding(
+                        all = 8.dp,
+                    ),
                 data = SaveButtonData(
                     isEnabled = uiState.isValidCategoryData.orFalse(),
                     isLoading = uiState.isLoading,

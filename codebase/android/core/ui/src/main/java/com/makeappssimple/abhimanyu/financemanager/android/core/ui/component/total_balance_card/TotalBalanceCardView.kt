@@ -26,8 +26,8 @@ fun TotalBalanceCardView(
         modifier = modifier
             .fillMaxWidth()
             .padding(
-                vertical = 16.dp,
                 horizontal = 32.dp,
+                vertical = 16.dp,
             )
             .clip(
                 MaterialTheme.shapes.medium,

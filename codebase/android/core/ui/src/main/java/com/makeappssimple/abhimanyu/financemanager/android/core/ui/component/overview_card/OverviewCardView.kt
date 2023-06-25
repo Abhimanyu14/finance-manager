@@ -45,8 +45,8 @@ fun OverviewCardView(
         modifier = modifier
             .fillMaxWidth()
             .padding(
-                vertical = 16.dp,
                 horizontal = 32.dp,
+                vertical = 16.dp,
             )
             .clip(
                 shape = MaterialTheme.shapes.medium,
@@ -81,7 +81,8 @@ fun OverviewCardView(
                 height = 8.dp,
             )
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 // TODO-Abhi: Disable the buttons conditionally
@@ -99,8 +100,8 @@ fun OverviewCardView(
                 MyText(
                     modifier = Modifier
                         .padding(
-                            vertical = 8.dp,
                             horizontal = 8.dp,
+                            vertical = 8.dp,
                         )
                         .weight(
                             weight = 1F,

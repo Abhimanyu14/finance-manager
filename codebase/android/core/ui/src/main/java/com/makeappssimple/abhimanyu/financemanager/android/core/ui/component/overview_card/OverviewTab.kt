@@ -127,8 +127,8 @@ fun OverviewTab(
                             onClick(index)
                         }
                         .padding(
-                            vertical = 8.dp,
                             horizontal = 12.dp,
+                            vertical = 8.dp,
                         ),
                     text = text,
                     style = MaterialTheme.typography.labelLarge

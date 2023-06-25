@@ -90,7 +90,8 @@ private fun CatalogContent() {
     }
 
     Column(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize(),
     ) {
         MyText(
             text = "UI Catalog",
@@ -106,7 +107,8 @@ private fun CatalogContent() {
             tabData = tabData,
         )
         LazyColumn(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize(),
             contentPadding = PaddingValues(
                 all = 16.dp,
             ),
@@ -710,7 +712,8 @@ private fun LazyListScope.myOutlinedTextFieldDemo(
             crossAxisAlignment = FlowCrossAxisAlignment.Center,
         ) {
             MyOutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth(),
                 data = MyOutlinedTextFieldData(
                     labelTextStringResourceId = R.string.my_outlined_text_field_label,
                     trailingIconContentDescriptionTextStringResourceId = R.string.common_empty_string,
@@ -718,7 +721,8 @@ private fun LazyListScope.myOutlinedTextFieldDemo(
                 events = MyOutlinedTextFieldEvents(),
             )
             MyOutlinedTextField(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .fillMaxWidth(),
                 data = MyOutlinedTextFieldData(
                     isLoading = true,
                     labelTextStringResourceId = R.string.my_outlined_text_field_label,

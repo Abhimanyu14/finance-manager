@@ -25,8 +25,8 @@ fun MyDefaultTag(
                 color = MaterialTheme.colorScheme.primary,
             )
             .padding(
-                vertical = 1.dp,
                 horizontal = 8.dp,
+                vertical = 1.dp,
             ),
         text = stringResource(
             id = R.string.default_tag,

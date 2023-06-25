@@ -21,8 +21,8 @@ fun MySearchBarContainer(
             )
             .fillMaxWidth()
             .padding(
-                vertical = 8.dp,
                 horizontal = 16.dp,
+                vertical = 8.dp,
             ),
     ) {
         content()

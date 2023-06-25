@@ -212,6 +212,10 @@ internal fun AddOrEditTransactionScreenUI(
                 visible = uiState.uiVisibilityState.isTransactionTypesRadioGroupVisible,
             ) {
                 MyHorizontalScrollingRadioGroup(
+                    modifier = Modifier
+                        .padding(
+                            horizontal = 16.dp,
+                        ),
                     items = uiState.transactionTypesForNewTransactionChipUIData,
                     selectedItemIndex = uiState.uiState.selectedTransactionTypeIndex,
                     onSelectionChange = { updatedSelectedTransactionTypeIndex ->
@@ -219,32 +223,40 @@ internal fun AddOrEditTransactionScreenUI(
                             updatedSelectedTransactionTypeIndex
                         )
                     },
-                    modifier = Modifier
-                        .padding(
-                            horizontal = 16.dp,
-                            vertical = 4.dp,
-                        ),
                 )
             }
             MyOutlinedTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .focusRequester(
+                        focusRequester = state.focusRequester,
+                    )
+                    .padding(
+                        horizontal = 16.dp,
+                        vertical = 4.dp,
+                    ),
                 data = MyOutlinedTextFieldData(
                     textFieldValue = uiState.uiState.amount,
                     labelTextStringResourceId = R.string.screen_add_or_edit_transaction_amount,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_amount,
-                    supportingText = {
-                        AnimatedVisibility(
-                            uiState.uiState.amountErrorText.isNotNullOrBlank(),
-                        ) {
-                            MyText(
-                                text = stringResource(
-                                    id = R.string.screen_add_or_edit_transaction_amount_error_text,
-                                    uiState.uiState.amountErrorText.orEmpty(),
-                                ),
-                                style = MaterialTheme.typography.bodySmall.copy(
-                                    color = MaterialTheme.colorScheme.error,
-                                ),
-                            )
+                    supportingText = if (uiState.uiState.amountErrorText.isNotNullOrBlank()) {
+                        {
+                            AnimatedVisibility(
+                                uiState.uiState.amountErrorText.isNotNullOrBlank(),
+                            ) {
+                                MyText(
+                                    text = stringResource(
+                                        id = R.string.screen_add_or_edit_transaction_amount_error_text,
+                                        uiState.uiState.amountErrorText.orEmpty(),
+                                    ),
+                                    style = MaterialTheme.typography.bodySmall.copy(
+                                        color = MaterialTheme.colorScheme.error,
+                                    ),
+                                )
+                            }
                         }
+                    } else {
+                        null
                     },
                     isError = uiState.uiState.amountErrorText.isNotNull(),
                     visualTransformation = AmountCommaVisualTransformation(),
@@ -262,20 +274,17 @@ internal fun AddOrEditTransactionScreenUI(
                     onClickTrailingIcon = events.clearAmount,
                     onValueChange = events.updateAmount,
                 ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .focusRequester(
-                        focusRequester = state.focusRequester,
-                    )
-                    .padding(
-                        horizontal = 16.dp,
-                        vertical = 4.dp,
-                    ),
             )
             AnimatedVisibility(
                 visible = uiState.uiVisibilityState.isCategoryTextFieldVisible,
             ) {
                 MyReadOnlyTextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 4.dp,
+                        ),
                     value = uiState.uiState.category?.title.orEmpty(),
                     labelTextStringResourceId = R.string.screen_add_or_edit_transaction_category,
                     onClick = {
@@ -284,18 +293,18 @@ internal fun AddOrEditTransactionScreenUI(
                             AddOrEditTransactionBottomSheetType.SELECT_CATEGORY
                         )
                     },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            horizontal = 16.dp,
-                            vertical = 4.dp,
-                        ),
                 )
             }
             AnimatedVisibility(
                 visible = uiState.uiVisibilityState.isTitleTextFieldVisible,
             ) {
                 MyOutlinedTextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 4.dp,
+                        ),
                     data = MyOutlinedTextFieldData(
                         textFieldValue = uiState.uiState.title,
                         labelTextStringResourceId = R.string.screen_add_or_edit_transaction_title,
@@ -314,18 +323,18 @@ internal fun AddOrEditTransactionScreenUI(
                         onClickTrailingIcon = events.clearTitle,
                         onValueChange = events.updateTitle,
                     ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            horizontal = 16.dp,
-                            vertical = 4.dp,
-                        ),
                 )
             }
             AnimatedVisibility(
                 visible = uiState.uiVisibilityState.isTitleSuggestionsVisible && uiState.titleSuggestionsChipUIData.isNotEmpty(),
             ) {
                 MyHorizontalScrollingSelectionGroup(
+                    modifier = Modifier
+                        .padding(
+                            start = 16.dp,
+                            end = 16.dp,
+                            bottom = 4.dp,
+                        ),
                     items = uiState.titleSuggestionsChipUIData,
                     onSelectionChange = { index ->
                         clearFocus()
@@ -335,17 +344,18 @@ internal fun AddOrEditTransactionScreenUI(
                             )
                         )
                     },
-                    modifier = Modifier
-                        .padding(
-                            horizontal = 16.dp,
-                            vertical = 4.dp,
-                        ),
                 )
             }
             AnimatedVisibility(
                 visible = uiState.uiVisibilityState.isTransactionForRadioGroupVisible,
             ) {
                 MyHorizontalScrollingRadioGroup(
+                    modifier = Modifier
+                        .padding(
+                            start = 16.dp,
+                            top = 4.dp,
+                            end = 16.dp,
+                        ),
                     items = uiState.transactionForValuesChipUIData,
                     selectedItemIndex = uiState.uiState.selectedTransactionForIndex,
                     onSelectionChange = { updatedSelectedTransactionForIndex ->
@@ -354,17 +364,18 @@ internal fun AddOrEditTransactionScreenUI(
                             updatedSelectedTransactionForIndex
                         )
                     },
-                    modifier = Modifier
-                        .padding(
-                            horizontal = 16.dp,
-                            vertical = 4.dp,
-                        ),
                 )
             }
             AnimatedVisibility(
                 visible = uiState.uiVisibilityState.isDescriptionTextFieldVisible,
             ) {
                 MyOutlinedTextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 4.dp,
+                        ),
                     data = MyOutlinedTextFieldData(
                         textFieldValue = uiState.uiState.description,
                         labelTextStringResourceId = R.string.screen_add_or_edit_transaction_description,
@@ -383,18 +394,18 @@ internal fun AddOrEditTransactionScreenUI(
                         onClickTrailingIcon = events.clearDescription,
                         onValueChange = events.updateDescription,
                     ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            horizontal = 16.dp,
-                            vertical = 4.dp,
-                        ),
                 )
             }
             AnimatedVisibility(
                 visible = uiState.uiVisibilityState.isSourceFromTextFieldVisible,
             ) {
                 MyReadOnlyTextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 4.dp,
+                        ),
                     value = uiState.uiState.sourceFrom?.name.orEmpty(),
                     labelTextStringResourceId = uiState.sourceFromTextFieldLabelTextStringResourceId,
                     onClick = {
@@ -403,18 +414,18 @@ internal fun AddOrEditTransactionScreenUI(
                             AddOrEditTransactionBottomSheetType.SELECT_SOURCE_FROM
                         )
                     },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            horizontal = 16.dp,
-                            vertical = 4.dp,
-                        ),
                 )
             }
             AnimatedVisibility(
                 visible = uiState.uiVisibilityState.isSourceToTextFieldVisible,
             ) {
                 MyReadOnlyTextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 4.dp,
+                        ),
                     value = uiState.uiState.sourceTo?.name.orEmpty(),
                     labelTextStringResourceId = uiState.sourceToTextFieldLabelTextStringResourceId,
                     onClick = {
@@ -423,44 +434,41 @@ internal fun AddOrEditTransactionScreenUI(
                             AddOrEditTransactionBottomSheetType.SELECT_SOURCE_TO
                         )
                     },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            horizontal = 16.dp,
-                            vertical = 4.dp,
-                        ),
                 )
             }
             MyReadOnlyTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        horizontal = 16.dp,
+                        vertical = 4.dp,
+                    ),
                 value = uiState.uiState.transactionDate.formattedDate(),
                 labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_date,
                 onClick = {
                     clearFocus()
                     uiState.setIsTransactionDatePickerDialogVisible(true)
                 },
+            )
+            MyReadOnlyTextField(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
                         horizontal = 16.dp,
                         vertical = 4.dp,
                     ),
-            )
-            MyReadOnlyTextField(
                 value = uiState.uiState.transactionTime.formattedTime(),
                 labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_time,
                 onClick = {
                     clearFocus()
                     transactionTimePickerDialog.show()
                 },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        horizontal = 16.dp,
-                        vertical = 4.dp,
-                    ),
             )
             SaveButton(
-                modifier = Modifier,
+                modifier = Modifier
+                    .padding(
+                        all = 8.dp,
+                    ),
                 data = SaveButtonData(
                     isEnabled = uiState.isCtaButtonEnabled,
                     textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,

@@ -92,7 +92,6 @@ private fun TransactionsSortBottomSheetItem(
         MyText(
             modifier = Modifier
                 .padding(
-                    horizontal = 0.dp,
                     vertical = 6.dp,
                 ),
             text = data.sortOption.title,

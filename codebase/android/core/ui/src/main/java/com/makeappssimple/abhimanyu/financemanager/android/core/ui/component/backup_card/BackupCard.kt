@@ -38,8 +38,8 @@ fun BackupCard(
         modifier = modifier
             .fillMaxWidth()
             .padding(
-                vertical = 4.dp,
                 horizontal = 32.dp,
+                vertical = 4.dp,
             )
             .clip(
                 MaterialTheme.shapes.medium,
