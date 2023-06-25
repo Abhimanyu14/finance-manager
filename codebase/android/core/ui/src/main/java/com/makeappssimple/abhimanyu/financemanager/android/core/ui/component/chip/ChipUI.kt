@@ -31,7 +31,7 @@ data class ChipUIData(
 
 @Immutable
 data class ChipUIEvents(
-    val onSelectionChange: () -> Unit,
+    val onSelectionChange: () -> Unit = {},
 )
 
 @Composable

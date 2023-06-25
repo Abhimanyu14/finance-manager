@@ -223,6 +223,8 @@ internal fun AddOrEditTransactionScreenUI(
                             horizontal = 16.dp,
                         ),
                     data = MyHorizontalScrollingRadioGroupData(
+                        isLoading = uiState.isLoading,
+                        loadingItemSize = 5,
                         items = uiState.transactionTypesForNewTransactionChipUIData,
                         selectedItemIndex = uiState.uiState.selectedTransactionTypeIndex,
                     ),
@@ -246,6 +248,7 @@ internal fun AddOrEditTransactionScreenUI(
                         vertical = 4.dp,
                     ),
                 data = MyOutlinedTextFieldData(
+                    isLoading = uiState.isLoading,
                     textFieldValue = uiState.uiState.amount,
                     labelTextStringResourceId = R.string.screen_add_or_edit_transaction_amount,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_amount,
@@ -296,6 +299,7 @@ internal fun AddOrEditTransactionScreenUI(
                             vertical = 4.dp,
                         ),
                     data = MyReadOnlyTextFieldData(
+                        isLoading = uiState.isLoading,
                         value = uiState.uiState.category?.title.orEmpty(),
                         labelTextStringResourceId = R.string.screen_add_or_edit_transaction_category,
                     ),
@@ -320,6 +324,7 @@ internal fun AddOrEditTransactionScreenUI(
                             vertical = 4.dp,
                         ),
                     data = MyOutlinedTextFieldData(
+                        isLoading = uiState.isLoading,
                         textFieldValue = uiState.uiState.title,
                         labelTextStringResourceId = R.string.screen_add_or_edit_transaction_title,
                         trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_title,
@@ -350,6 +355,7 @@ internal fun AddOrEditTransactionScreenUI(
                             bottom = 4.dp,
                         ),
                     data = MyHorizontalScrollingSelectionGroupData(
+                        isLoading = uiState.isLoading,
                         items = uiState.titleSuggestionsChipUIData,
                     ),
                     events = MyHorizontalScrollingSelectionGroupEvents(
@@ -375,6 +381,8 @@ internal fun AddOrEditTransactionScreenUI(
                             end = 16.dp,
                         ),
                     data = MyHorizontalScrollingRadioGroupData(
+                        isLoading = uiState.isLoading,
+                        loadingItemSize = 5,
                         items = uiState.transactionForValuesChipUIData,
                         selectedItemIndex = uiState.uiState.selectedTransactionForIndex,
                     ),
@@ -399,6 +407,7 @@ internal fun AddOrEditTransactionScreenUI(
                             vertical = 4.dp,
                         ),
                     data = MyOutlinedTextFieldData(
+                        isLoading = uiState.isLoading,
                         textFieldValue = uiState.uiState.description,
                         labelTextStringResourceId = R.string.screen_add_or_edit_transaction_description,
                         trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_clear_description,
@@ -429,6 +438,7 @@ internal fun AddOrEditTransactionScreenUI(
                             vertical = 4.dp,
                         ),
                     data = MyReadOnlyTextFieldData(
+                        isLoading = uiState.isLoading,
                         value = uiState.uiState.sourceFrom?.name.orEmpty(),
                         labelTextStringResourceId = uiState.sourceFromTextFieldLabelTextStringResourceId,
                     ),
@@ -453,6 +463,7 @@ internal fun AddOrEditTransactionScreenUI(
                             vertical = 4.dp,
                         ),
                     data = MyReadOnlyTextFieldData(
+                        isLoading = uiState.isLoading,
                         value = uiState.uiState.sourceTo?.name.orEmpty(),
                         labelTextStringResourceId = uiState.sourceToTextFieldLabelTextStringResourceId,
                     ),
@@ -474,6 +485,7 @@ internal fun AddOrEditTransactionScreenUI(
                         vertical = 4.dp,
                     ),
                 data = MyReadOnlyTextFieldData(
+                    isLoading = uiState.isLoading,
                     value = uiState.uiState.transactionDate.formattedDate(),
                     labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_date,
                 ),
@@ -492,6 +504,7 @@ internal fun AddOrEditTransactionScreenUI(
                         vertical = 4.dp,
                     ),
                 data = MyReadOnlyTextFieldData(
+                    isLoading = uiState.isLoading,
                     value = uiState.uiState.transactionTime.formattedTime(),
                     labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_time,
                 ),
@@ -508,6 +521,7 @@ internal fun AddOrEditTransactionScreenUI(
                         all = 8.dp,
                     ),
                 data = SaveButtonData(
+                    isLoading = uiState.isLoading,
                     isEnabled = uiState.isCtaButtonEnabled,
                     textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
                 ),

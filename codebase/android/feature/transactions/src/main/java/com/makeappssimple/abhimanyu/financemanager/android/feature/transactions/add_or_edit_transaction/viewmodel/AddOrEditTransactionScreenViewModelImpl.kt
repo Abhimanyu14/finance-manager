@@ -116,21 +116,21 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     // endregion
 
     // region Data source
-    private var transactionTypesForNewTransaction: MutableStateFlow<List<TransactionType>> =
+    private var transactionTypesForNewTransaction: MutableStateFlow<List<TransactionType>?> =
         MutableStateFlow(
-            value = emptyList(),
+            value = null,
         )
-    private var categories: MutableStateFlow<List<Category>> = MutableStateFlow(
-        value = emptyList(),
+    private var categories: MutableStateFlow<List<Category>?> = MutableStateFlow(
+        value = null,
     )
-    private val titleSuggestions: MutableStateFlow<List<String>> = MutableStateFlow(
-        value = emptyList(),
+    private val titleSuggestions: MutableStateFlow<List<String>?> = MutableStateFlow(
+        value = null,
     )
-    private var transactionForValues: MutableStateFlow<List<TransactionFor>> = MutableStateFlow(
-        value = emptyList(),
+    private var transactionForValues: MutableStateFlow<List<TransactionFor>?> = MutableStateFlow(
+        value = null,
     )
-    private var sources: MutableStateFlow<List<Source>> = MutableStateFlow(
-        value = emptyList(),
+    private var sources: MutableStateFlow<List<Source>?> = MutableStateFlow(
+        value = null,
     )
     // endregion
 
@@ -168,9 +168,9 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         flow = categories,
         flow2 = selectedTransactionType,
     ) { categories, selectedTransactionType ->
-        categories.filter { category ->
+        categories?.filter { category ->
             category.transactionType == selectedTransactionType
-        }
+        }.orEmpty()
     }.defaultListStateIn(
         scope = viewModelScope,
     )
@@ -267,40 +267,44 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         transactionForValues,
         selectedTransactionType,
     ) { flows ->
-        MyResult.Success(
-            data = AddOrEditTransactionScreenUIData(
-                uiState = flows[0] as? AddOrEditTransactionScreenUiStateData
-                    ?: AddOrEditTransactionScreenUiStateData(
-                        selectedTransactionTypeIndex = null,
-                        amount = TextFieldValue(
-                            text = "",
-                        ),
-                        title = TextFieldValue(
-                            text = "",
-                        ),
-                        description = TextFieldValue(
-                            text = "",
-                        ),
-                        category = null,
-                        selectedTransactionForIndex = 0,
-                        sourceFrom = null,
-                        sourceTo = null,
-                        transactionDate = dateTimeUtil.getCurrentLocalDate(),
-                        transactionTime = dateTimeUtil.getCurrentLocalTime(),
-                    ),
-                uiVisibilityState = flows[1] as? AddOrEditTransactionScreenUiVisibilityState
-                    ?: AddOrEditTransactionScreenUiVisibilityState.Expense,
-                isCtaButtonEnabled = flows[2] as? Boolean ?: false,
-                filteredCategories = flows[3] as? List<Category> ?: emptyList(),
-                sources = flows[4] as? List<Source> ?: emptyList(),
-                titleSuggestions = flows[5] as? List<String> ?: emptyList(),
-                transactionTypesForNewTransaction = flows[6] as? List<TransactionType>
-                    ?: emptyList(),
-                transactionForValues = flows[7] as? List<TransactionFor> ?: emptyList(),
-                currentLocalDate = dateTimeUtil.getCurrentLocalDate(),
-                selectedTransactionType = flows[8] as? TransactionType,
-            ),
-        )
+        val uiState = flows[0] as? AddOrEditTransactionScreenUiStateData
+        val uiVisibilityState = flows[1] as? AddOrEditTransactionScreenUiVisibilityState
+        val isCtaButtonEnabled = flows[2] as? Boolean
+        val filteredCategories = flows[3] as? List<Category>
+        val sources = flows[4] as? List<Source>
+        val titleSuggestions = flows[5] as? List<String>
+        val transactionTypesForNewTransaction = flows[6] as? List<TransactionType>
+        val transactionForValues = flows[7] as? List<TransactionFor>
+        val selectedTransactionType = flows[8] as? TransactionType
+
+        if (
+            uiState.isNull() ||
+            uiVisibilityState.isNull() ||
+            isCtaButtonEnabled.isNull() ||
+            filteredCategories.isNull() ||
+            sources.isNull() ||
+            titleSuggestions.isNull() ||
+            transactionTypesForNewTransaction.isNull() ||
+            transactionForValues.isNull() ||
+            selectedTransactionType.isNull()
+        ) {
+            MyResult.Loading
+        } else {
+            MyResult.Success(
+                data = AddOrEditTransactionScreenUIData(
+                    uiState = uiState,
+                    uiVisibilityState = uiVisibilityState,
+                    isCtaButtonEnabled = isCtaButtonEnabled,
+                    filteredCategories = filteredCategories,
+                    sources = sources,
+                    titleSuggestions = titleSuggestions,
+                    transactionTypesForNewTransaction = transactionTypesForNewTransaction,
+                    transactionForValues = transactionForValues,
+                    currentLocalDate = dateTimeUtil.getCurrentLocalDate(),
+                    selectedTransactionType = selectedTransactionType,
+                ),
+            )
+        }
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )
@@ -421,7 +425,8 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     }
 
                     TransactionType.EXPENSE -> {
-                        transactionForValues.value[uiStateValue.selectedTransactionForIndex].id
+                        transactionForValues.value?.get(uiStateValue.selectedTransactionForIndex)?.id
+                            ?: 1
                     }
 
                     TransactionType.TRANSFER -> {
@@ -603,7 +608,8 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     }
 
                     TransactionType.EXPENSE -> {
-                        transactionForValues.value[uiStateValue.selectedTransactionForIndex].id
+                        transactionForValues.value?.get(uiStateValue.selectedTransactionForIndex)?.id
+                            ?: 1
                     }
 
                     TransactionType.TRANSFER -> {
@@ -683,7 +689,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                 selectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex,
             ),
         )
-        selectedTransactionType.value = transactionTypesForNewTransaction.value.getOrNull(
+        selectedTransactionType.value = transactionTypesForNewTransaction.value?.getOrNull(
             index = updatedSelectedTransactionTypeIndex,
         )
     }
@@ -1070,8 +1076,8 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             originalTransactionData?.transaction?.let { originalTransaction ->
                 updateAddOrEditTransactionScreenUiStateWithOriginalTransactionData(
                     originalTransaction = originalTransaction,
-                    transactionTypesForNewTransaction = transactionTypesForNewTransaction,
-                    transactionForValues = transactionForValues,
+                    transactionTypesForNewTransaction = transactionTypesForNewTransaction.orEmpty(),
+                    transactionForValues = transactionForValues.orEmpty(),
                     maxRefundAmount = maxRefundAmount,
                 )
             }
@@ -1201,21 +1207,21 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     private fun setDefaultCategory() {
         expenseDefaultCategory = getCategory(
             categoryId = defaultDataIdFromDataStore?.expenseCategory,
-        ) ?: categories.value.firstOrNull { category ->
+        ) ?: categories.value?.firstOrNull { category ->
             isDefaultExpenseCategory(
                 category = category.title,
             )
         }
         incomeDefaultCategory = getCategory(
             categoryId = defaultDataIdFromDataStore?.incomeCategory,
-        ) ?: categories.value.firstOrNull { category ->
+        ) ?: categories.value?.firstOrNull { category ->
             isDefaultIncomeCategory(
                 category = category.title,
             )
         }
         investmentDefaultCategory = getCategory(
             categoryId = defaultDataIdFromDataStore?.investmentCategory,
-        ) ?: categories.value.firstOrNull { category ->
+        ) ?: categories.value?.firstOrNull { category ->
             isDefaultInvestmentCategory(
                 category = category.title,
             )
@@ -1230,7 +1236,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     private fun setDefaultSource() {
         defaultSource = getSource(
             sourceId = defaultDataIdFromDataStore?.source,
-        ) ?: sources.value.firstOrNull { source ->
+        ) ?: sources.value?.firstOrNull { source ->
             isDefaultSource(
                 source = source.name,
             )
@@ -1251,7 +1257,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                 TransactionType.REFUND
             } else {
                 uiState.value.selectedTransactionTypeIndex?.let {
-                    transactionTypesForNewTransaction.value.getOrNull(
+                    transactionTypesForNewTransaction.value?.getOrNull(
                         index = uiState.value.selectedTransactionTypeIndex.orZero(),
                     )
                 }
@@ -1261,7 +1267,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                 TransactionType.REFUND
             } else {
                 uiState.value.selectedTransactionTypeIndex?.let {
-                    transactionTypesForNewTransaction.value.getOrNull(
+                    transactionTypesForNewTransaction.value?.getOrNull(
                         index = uiState.value.selectedTransactionTypeIndex.orZero(),
                     )
                 }
@@ -1272,7 +1278,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     private fun getCategory(
         categoryId: Int?,
     ): Category? {
-        return categories.value.find { category ->
+        return categories.value?.find { category ->
             category.id == categoryId
         }
     }
@@ -1280,7 +1286,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     private fun getSource(
         sourceId: Int?,
     ): Source? {
-        return sources.value.find { source ->
+        return sources.value?.find { source ->
             source.id == sourceId
         }
     }

@@ -31,21 +31,9 @@ fun MyRadioGroup(
         modifier = modifier,
     ) {
         if (data.isLoading) {
-            MutableList(
+            SelectionGroupLoadingUI(
                 size = data.loadingItemSize,
-            ) { index ->
-                ChipUI(
-                    data = ChipUIData(
-                        isLoading = true,
-                    ),
-                    events = ChipUIEvents(
-                        onSelectionChange = {
-                            events.onSelectionChange(index)
-                        }
-                    ),
-                    isSelected = index == data.selectedItemIndex,
-                )
-            }
+            )
         } else {
             data.items.mapIndexed { index, chipUIData ->
                 ChipUI(

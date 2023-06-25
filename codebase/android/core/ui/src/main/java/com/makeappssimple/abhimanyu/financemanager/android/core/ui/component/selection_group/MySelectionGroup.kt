@@ -10,6 +10,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chi
 
 @Immutable
 data class MySelectionGroupData(
+    val isLoading: Boolean = false,
+    val loadingItemSize: Int = 3,
     val items: List<ChipUIData>,
     val selectedItemsIndices: List<Int>,
 )
@@ -28,16 +30,22 @@ fun MySelectionGroup(
     FlowRow(
         modifier = modifier,
     ) {
-        data.items.mapIndexed { index, chipUIData ->
-            ChipUI(
-                data = chipUIData,
-                events = ChipUIEvents(
-                    onSelectionChange = {
-                        events.onSelectionChange(index)
-                    }
-                ),
-                isSelected = data.selectedItemsIndices.contains(index),
+        if (data.isLoading) {
+            SelectionGroupLoadingUI(
+                size = data.loadingItemSize,
             )
+        } else {
+            data.items.mapIndexed { index, chipUIData ->
+                ChipUI(
+                    data = chipUIData,
+                    events = ChipUIEvents(
+                        onSelectionChange = {
+                            events.onSelectionChange(index)
+                        }
+                    ),
+                    isSelected = data.selectedItemsIndices.contains(index),
+                )
+            }
         }
     }
 }

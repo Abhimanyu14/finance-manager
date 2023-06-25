@@ -12,6 +12,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chi
 
 @Immutable
 data class MyHorizontalScrollingSelectionGroupData(
+    val isLoading: Boolean = false,
+    val loadingItemSize: Int = 3,
     val items: List<ChipUIData>,
 )
 
@@ -30,21 +32,33 @@ fun MyHorizontalScrollingSelectionGroup(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = modifier,
     ) {
-        itemsIndexed(
-            items = data.items,
-            key = { _, listItem ->
-                listItem.hashCode()
-            },
-        ) { index, data ->
-            ChipUI(
-                data = data,
-                events = ChipUIEvents(
-                    onSelectionChange = {
-                        events.onSelectionChange(index)
-                    }
-                ),
-                isSelected = false,
-            )
+        if (data.isLoading) {
+            items(data.loadingItemSize) {
+                ChipUI(
+                    data = ChipUIData(
+                        isLoading = true,
+                    ),
+                    events = ChipUIEvents(),
+                    isSelected = false,
+                )
+            }
+        } else {
+            itemsIndexed(
+                items = data.items,
+                key = { _, listItem ->
+                    listItem.hashCode()
+                },
+            ) { index, data ->
+                ChipUI(
+                    data = data,
+                    events = ChipUIEvents(
+                        onSelectionChange = {
+                            events.onSelectionChange(index)
+                        }
+                    ),
+                    isSelected = false,
+                )
+            }
         }
     }
 }
