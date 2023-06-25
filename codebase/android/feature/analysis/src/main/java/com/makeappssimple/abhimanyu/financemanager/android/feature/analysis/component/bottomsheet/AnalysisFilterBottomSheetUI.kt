@@ -21,6 +21,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.dat
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextField
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextFieldData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextFieldEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.R
 import java.time.LocalDate
 
@@ -131,9 +133,6 @@ fun AnalysisFilterBottomSheetUI(
                 ),
         ) {
             MyReadOnlyTextField(
-                value = fromDateText,
-                labelTextStringResourceId = R.string.bottom_sheet_analysis_filter_from_date,
-                onClick = onFromDateTextFieldClick,
                 modifier = Modifier
                     .weight(
                         weight = 1F,
@@ -141,11 +140,15 @@ fun AnalysisFilterBottomSheetUI(
                     .padding(
                         horizontal = 8.dp,
                     ),
+                data = MyReadOnlyTextFieldData(
+                    value = fromDateText,
+                    labelTextStringResourceId = R.string.bottom_sheet_analysis_filter_from_date,
+                ),
+                events = MyReadOnlyTextFieldEvents(
+                    onClick = onFromDateTextFieldClick,
+                ),
             )
             MyReadOnlyTextField(
-                value = toDateText,
-                labelTextStringResourceId = R.string.bottom_sheet_analysis_filter_to_date,
-                onClick = onToDateTextFieldClick,
                 modifier = Modifier
                     .weight(
                         weight = 1F,
@@ -153,6 +156,13 @@ fun AnalysisFilterBottomSheetUI(
                     .padding(
                         horizontal = 8.dp,
                     ),
+                data = MyReadOnlyTextFieldData(
+                    value = toDateText,
+                    labelTextStringResourceId = R.string.bottom_sheet_analysis_filter_to_date,
+                ),
+                events = MyReadOnlyTextFieldEvents(
+                    onClick = onToDateTextFieldClick,
+                ),
             )
         }
         MyHorizontalScrollingSelectionGroup(

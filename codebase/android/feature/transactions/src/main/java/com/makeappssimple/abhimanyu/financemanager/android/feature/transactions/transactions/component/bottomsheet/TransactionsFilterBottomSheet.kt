@@ -50,6 +50,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.dat
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextField
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextFieldData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextFieldEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.Filter
 import java.time.LocalDate
@@ -615,11 +617,6 @@ fun TransactionFilterBottomSheetDateFilter(
                     ),
             ) {
                 MyReadOnlyTextField(
-                    value = fromDate.formattedDate(),
-                    labelTextStringResourceId = R.string.bottom_sheet_transactions_filter_from_date,
-                    onClick = {
-                        isFromDatePickerDialogVisible = true
-                    },
                     modifier = Modifier
                         .weight(
                             weight = 1F,
@@ -627,13 +624,17 @@ fun TransactionFilterBottomSheetDateFilter(
                         .padding(
                             horizontal = 8.dp,
                         ),
+                    data = MyReadOnlyTextFieldData(
+                        value = fromDate.formattedDate(),
+                        labelTextStringResourceId = R.string.bottom_sheet_transactions_filter_from_date,
+                    ),
+                    events = MyReadOnlyTextFieldEvents(
+                        onClick = {
+                            isFromDatePickerDialogVisible = true
+                        },
+                    ),
                 )
                 MyReadOnlyTextField(
-                    value = toDate.formattedDate(),
-                    labelTextStringResourceId = R.string.bottom_sheet_transactions_filter_to_date,
-                    onClick = {
-                        isToDatePickerDialogVisible = true
-                    },
                     modifier = Modifier
                         .weight(
                             weight = 1F,
@@ -641,6 +642,15 @@ fun TransactionFilterBottomSheetDateFilter(
                         .padding(
                             horizontal = 8.dp,
                         ),
+                    data = MyReadOnlyTextFieldData(
+                        value = toDate.formattedDate(),
+                        labelTextStringResourceId = R.string.bottom_sheet_transactions_filter_to_date,
+                    ),
+                    events = MyReadOnlyTextFieldEvents(
+                        onClick = {
+                            isToDatePickerDialogVisible = true
+                        },
+                    ),
                 )
             }
         }

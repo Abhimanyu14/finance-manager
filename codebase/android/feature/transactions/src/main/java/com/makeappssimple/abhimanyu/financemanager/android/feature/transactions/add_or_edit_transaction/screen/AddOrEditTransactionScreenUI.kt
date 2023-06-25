@@ -52,6 +52,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextField
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextFieldData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextFieldEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiStateData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiVisibilityState
@@ -285,14 +287,18 @@ internal fun AddOrEditTransactionScreenUI(
                             horizontal = 16.dp,
                             vertical = 4.dp,
                         ),
-                    value = uiState.uiState.category?.title.orEmpty(),
-                    labelTextStringResourceId = R.string.screen_add_or_edit_transaction_category,
-                    onClick = {
-                        clearFocus()
-                        uiState.setAddOrEditTransactionBottomSheetType(
-                            AddOrEditTransactionBottomSheetType.SELECT_CATEGORY
-                        )
-                    },
+                    data = MyReadOnlyTextFieldData(
+                        value = uiState.uiState.category?.title.orEmpty(),
+                        labelTextStringResourceId = R.string.screen_add_or_edit_transaction_category,
+                    ),
+                    events = MyReadOnlyTextFieldEvents(
+                        onClick = {
+                            clearFocus()
+                            uiState.setAddOrEditTransactionBottomSheetType(
+                                AddOrEditTransactionBottomSheetType.SELECT_CATEGORY
+                            )
+                        },
+                    ),
                 )
             }
             AnimatedVisibility(
@@ -406,14 +412,18 @@ internal fun AddOrEditTransactionScreenUI(
                             horizontal = 16.dp,
                             vertical = 4.dp,
                         ),
-                    value = uiState.uiState.sourceFrom?.name.orEmpty(),
-                    labelTextStringResourceId = uiState.sourceFromTextFieldLabelTextStringResourceId,
-                    onClick = {
-                        clearFocus()
-                        uiState.setAddOrEditTransactionBottomSheetType(
-                            AddOrEditTransactionBottomSheetType.SELECT_SOURCE_FROM
-                        )
-                    },
+                    data = MyReadOnlyTextFieldData(
+                        value = uiState.uiState.sourceFrom?.name.orEmpty(),
+                        labelTextStringResourceId = uiState.sourceFromTextFieldLabelTextStringResourceId,
+                    ),
+                    events = MyReadOnlyTextFieldEvents(
+                        onClick = {
+                            clearFocus()
+                            uiState.setAddOrEditTransactionBottomSheetType(
+                                AddOrEditTransactionBottomSheetType.SELECT_SOURCE_FROM
+                            )
+                        },
+                    ),
                 )
             }
             AnimatedVisibility(
@@ -426,14 +436,18 @@ internal fun AddOrEditTransactionScreenUI(
                             horizontal = 16.dp,
                             vertical = 4.dp,
                         ),
-                    value = uiState.uiState.sourceTo?.name.orEmpty(),
-                    labelTextStringResourceId = uiState.sourceToTextFieldLabelTextStringResourceId,
-                    onClick = {
-                        clearFocus()
-                        uiState.setAddOrEditTransactionBottomSheetType(
-                            AddOrEditTransactionBottomSheetType.SELECT_SOURCE_TO
-                        )
-                    },
+                    data = MyReadOnlyTextFieldData(
+                        value = uiState.uiState.sourceTo?.name.orEmpty(),
+                        labelTextStringResourceId = uiState.sourceToTextFieldLabelTextStringResourceId,
+                    ),
+                    events = MyReadOnlyTextFieldEvents(
+                        onClick = {
+                            clearFocus()
+                            uiState.setAddOrEditTransactionBottomSheetType(
+                                AddOrEditTransactionBottomSheetType.SELECT_SOURCE_TO
+                            )
+                        },
+                    ),
                 )
             }
             MyReadOnlyTextField(
@@ -443,12 +457,16 @@ internal fun AddOrEditTransactionScreenUI(
                         horizontal = 16.dp,
                         vertical = 4.dp,
                     ),
-                value = uiState.uiState.transactionDate.formattedDate(),
-                labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_date,
-                onClick = {
-                    clearFocus()
-                    uiState.setIsTransactionDatePickerDialogVisible(true)
-                },
+                data = MyReadOnlyTextFieldData(
+                    value = uiState.uiState.transactionDate.formattedDate(),
+                    labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_date,
+                ),
+                events = MyReadOnlyTextFieldEvents(
+                    onClick = {
+                        clearFocus()
+                        uiState.setIsTransactionDatePickerDialogVisible(true)
+                    },
+                ),
             )
             MyReadOnlyTextField(
                 modifier = Modifier
@@ -457,12 +475,16 @@ internal fun AddOrEditTransactionScreenUI(
                         horizontal = 16.dp,
                         vertical = 4.dp,
                     ),
-                value = uiState.uiState.transactionTime.formattedTime(),
-                labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_time,
-                onClick = {
-                    clearFocus()
-                    transactionTimePickerDialog.show()
-                },
+                data = MyReadOnlyTextFieldData(
+                    value = uiState.uiState.transactionTime.formattedTime(),
+                    labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_time,
+                ),
+                events = MyReadOnlyTextFieldEvents(
+                    onClick = {
+                        clearFocus()
+                        transactionTimePickerDialog.show()
+                    },
+                ),
             )
             SaveButton(
                 modifier = Modifier
