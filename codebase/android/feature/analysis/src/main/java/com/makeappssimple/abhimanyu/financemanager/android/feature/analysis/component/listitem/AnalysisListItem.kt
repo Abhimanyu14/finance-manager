@@ -76,7 +76,9 @@ internal fun AnalysisListItem(
                 .fillMaxWidth(),
         ) {
             val density = LocalDensity.current
-            val endTextWidth = with(density) {
+            val endTextWidth = with(
+                receiver = density,
+            ) {
                 data.maxEndTextWidth.toDp() + 8.dp
             }
             Row(

@@ -76,14 +76,30 @@ class RestoreDataUseCaseImpl(
         )
 
         backupData.datastoreData?.let {
-            with(myPreferencesRepository) {
-                setCategoryDataVersionNumber(it.initialDataVersionNumber.category)
-                setDefaultExpenseCategoryId(it.defaultDataId.expenseCategory)
-                setDefaultIncomeCategoryId(it.defaultDataId.incomeCategory)
-                setDefaultInvestmentCategoryId(it.defaultDataId.investmentCategory)
-                setDefaultSourceId(it.defaultDataId.source)
-                setEmojiDataVersionNumber(it.initialDataVersionNumber.emoji)
-                setTransactionsDataVersionNumber(it.initialDataVersionNumber.transaction)
+            with(
+                receiver = myPreferencesRepository,
+            ) {
+                setCategoryDataVersionNumber(
+                    categoryDataVersionNumber = it.initialDataVersionNumber.category,
+                )
+                setDefaultExpenseCategoryId(
+                    defaultExpenseCategoryId = it.defaultDataId.expenseCategory,
+                )
+                setDefaultIncomeCategoryId(
+                    defaultIncomeCategoryId = it.defaultDataId.incomeCategory,
+                )
+                setDefaultInvestmentCategoryId(
+                    defaultInvestmentCategoryId = it.defaultDataId.investmentCategory,
+                )
+                setDefaultSourceId(
+                    defaultSourceId = it.defaultDataId.source,
+                )
+                setEmojiDataVersionNumber(
+                    emojiDataVersionNumber = it.initialDataVersionNumber.emoji,
+                )
+                setTransactionsDataVersionNumber(
+                    transactionsDataVersionNumber = it.initialDataVersionNumber.transaction,
+                )
             }
         }
     }

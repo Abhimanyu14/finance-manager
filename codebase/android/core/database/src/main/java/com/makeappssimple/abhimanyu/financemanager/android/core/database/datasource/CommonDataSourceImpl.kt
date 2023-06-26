@@ -16,7 +16,9 @@ class CommonDataSourceImpl(
     override suspend fun deleteTransaction(
         id: Int,
     ) {
-        with(myRoomDatabase) {
+        with(
+            receiver = myRoomDatabase,
+        ) {
             withTransaction {
                 val transactionData = transactionDao().getTransactionData(
                     id = id,
@@ -81,7 +83,9 @@ class CommonDataSourceImpl(
         sourceTo: SourceEntity?,
         transaction: TransactionEntity,
     ): Long {
-        return with(myRoomDatabase) {
+        return with(
+            receiver = myRoomDatabase,
+        ) {
             withTransaction {
                 val id = transactionDao().insertTransaction(
                     transaction = transaction,
@@ -112,7 +116,9 @@ class CommonDataSourceImpl(
         transactions: Array<TransactionEntity>,
         transactionForValues: Array<TransactionForEntity>,
     ) {
-        with(myRoomDatabase) {
+        with(
+            receiver = myRoomDatabase,
+        ) {
             withTransaction {
                 categoryDao().deleteAllCategories()
                 emojiDao().deleteAllEmojis()

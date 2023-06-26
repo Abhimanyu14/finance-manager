@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.fadingedge.fadingEdge
 
 @Immutable
 data class MyHorizontalScrollingSelectionGroupData(
@@ -30,7 +31,8 @@ fun MyHorizontalScrollingSelectionGroup(
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = modifier,
+        modifier = modifier
+            .fadingEdge(),
     ) {
         if (data.isLoading) {
             items(data.loadingItemSize) {

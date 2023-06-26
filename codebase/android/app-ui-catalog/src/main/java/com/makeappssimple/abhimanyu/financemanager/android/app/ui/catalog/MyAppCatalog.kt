@@ -142,9 +142,22 @@ private fun CatalogContent() {
 }
 
 private fun LazyListScope.componentsTabContent(
-    titleStyle: TextStyle,
     context: Context,
+    titleStyle: TextStyle,
 ) {
+    selectionGroupDemo(
+        titleStyle = titleStyle,
+    )
+    radioGroupDemo(
+        titleStyle = titleStyle,
+    )
+    horizontalScrollingRadioGroupDemo(
+        titleStyle = titleStyle,
+    )
+    horizontalScrollingSuggestionGroupDemo(
+        titleStyle = titleStyle,
+        context = context,
+    )
     myOutlinedTextFieldDemo(
         titleStyle = titleStyle,
     )
@@ -154,160 +167,261 @@ private fun LazyListScope.componentsTabContent(
     saveButtonDemo(
         titleStyle = titleStyle,
     )
+    totalBalanceCardDemo(
+        titleStyle = titleStyle,
+    )
+    overviewCardDemo(
+        titleStyle = titleStyle,
+    )
+    defaultTagDemo(
+        titleStyle = titleStyle,
+    )
+    searchBarDemo(
+        titleStyle = titleStyle,
+    )
+    mySearchBarDemo(
+        titleStyle = titleStyle,
+    )
+    myTopAppBarDemo(
+        titleStyle = titleStyle,
+    )
+    navigationBackButtonDemo(
+        titleStyle = titleStyle,
+    )
+}
 
-    /**
-     * Selection Group
-     */
+private fun LazyListScope.navigationBackButtonDemo(
+    titleStyle: TextStyle,
+) {
     item {
         MyText(
             modifier = Modifier
                 .padding(
                     top = 16.dp,
                 ),
-            text = "Selection Group",
+            text = "Navigation Back Button",
             style = titleStyle,
         )
     }
     item {
-        val items = listOf(
-            ChipUIData(
-                text = "Item 1",
-            ),
-            ChipUIData(
-                text = "Item 2",
-            ),
-            ChipUIData(
-                text = "Item 3",
-            ),
-            ChipUIData(
-                text = "Item 4",
-            ),
-            ChipUIData(
-                text = "Item 5",
-            ),
-            ChipUIData(
-                text = "Item 6",
-            ),
-        )
-        val selectedItemsIndices = remember {
-            mutableStateListOf<Int>()
+        FlowRow(
+            mainAxisSpacing = 16.dp,
+            crossAxisAlignment = FlowCrossAxisAlignment.Center,
+        ) {
+            MyNavigationBackButton(
+                onClick = {},
+            )
         }
-        MySelectionGroup(
-            data = MySelectionGroupData(
-                items = items,
-                selectedItemsIndices = selectedItemsIndices,
-            ),
-            events = MySelectionGroupEvents(
-                onSelectionChange = {
-                    selectedItemsIndices.addIfDoesNotContainItemElseRemove(it)
-                },
-            ),
-        )
     }
+}
 
-    /**
-     * Radio Group
-     */
+private fun LazyListScope.myTopAppBarDemo(
+    titleStyle: TextStyle,
+) {
     item {
         MyText(
             modifier = Modifier
                 .padding(
                     top = 16.dp,
                 ),
-            text = "Radio Group",
+            text = "My Top App Bar",
             style = titleStyle,
         )
     }
     item {
-        val items = listOf(
-            ChipUIData(
-                text = "Item 1",
-            ),
-            ChipUIData(
-                text = "Item 2",
-            ),
-            ChipUIData(
-                text = "Item 3",
-            ),
-            ChipUIData(
-                text = "Item 4",
-            ),
-            ChipUIData(
-                text = "Item 5",
-            ),
-            ChipUIData(
-                text = "Item 6",
-            ),
-        )
-        var selectedItemIndex by remember {
-            mutableIntStateOf(0)
-        }
-        MyRadioGroup(
-            data = MyRadioGroupData(
-                items = items,
-                selectedItemIndex = selectedItemIndex,
-            ),
-            events = MyRadioGroupEvents(
-                onSelectionChange = {
-                    selectedItemIndex = it
+        FlowRow(
+            mainAxisSpacing = 16.dp,
+            crossAxisAlignment = FlowCrossAxisAlignment.Center,
+        ) {
+            MyTopAppBarUI(
+                isNavigationIconVisible = true,
+                titleText = "Title",
+                navigationBackButton = {
+                    MyNavigationBackButton(
+                        onClick = {},
+                    )
                 },
-            ),
-        )
+            )
+            MyTopAppBarUI(
+                isNavigationIconVisible = false,
+                titleText = "Title",
+                navigationBackButton = {
+                    MyNavigationBackButton(
+                        onClick = {},
+                    )
+                },
+            )
+        }
     }
+}
 
-    /**
-     * Horizontal Scrolling Radio Group
-     */
+private fun LazyListScope.mySearchBarDemo(
+    titleStyle: TextStyle,
+) {
     item {
         MyText(
             modifier = Modifier
                 .padding(
                     top = 16.dp,
                 ),
-            text = "Horizontal Scrolling Radio Group",
+            text = "My Search Bar",
             style = titleStyle,
         )
     }
     item {
-        val items = listOf(
-            ChipUIData(
-                text = "Item 1",
-            ),
-            ChipUIData(
-                text = "Item 2",
-            ),
-            ChipUIData(
-                text = "Item 3",
-            ),
-            ChipUIData(
-                text = "Item 4",
-            ),
-            ChipUIData(
-                text = "Item 5",
-            ),
-            ChipUIData(
-                text = "Item 6",
-            ),
-        )
-        var selectedItemIndex by remember {
-            mutableIntStateOf(0)
+        FlowRow(
+            mainAxisSpacing = 16.dp,
+            crossAxisAlignment = FlowCrossAxisAlignment.Center,
+        ) {
+            val (searchText, setSearchText) = remember {
+                mutableStateOf("")
+            }
+            MySearchBarContainer {
+                MySearchBar(
+                    data = MySearchBarData(
+                        autoFocus = false,
+                        placeholderText = "Placeholder",
+                        searchText = searchText,
+                    ),
+                    events = MySearchBarEvents(
+                        onValueChange = setSearchText,
+                    ),
+                )
+            }
         }
-        MyHorizontalScrollingRadioGroup(
-            data = MyHorizontalScrollingRadioGroupData(
-                items = items,
-                selectedItemIndex = selectedItemIndex,
-            ),
-            events = MyHorizontalScrollingRadioGroupEvents(
-                onSelectionChange = {
-                    selectedItemIndex = it
-                },
-            ),
+    }
+}
+
+private fun LazyListScope.searchBarDemo(
+    titleStyle: TextStyle,
+) {
+    item {
+        MyText(
+            modifier = Modifier
+                .padding(
+                    top = 16.dp,
+                ),
+            text = "Search Bar",
+            style = titleStyle,
         )
     }
+    item {
+        FlowRow(
+            mainAxisSpacing = 16.dp,
+            crossAxisAlignment = FlowCrossAxisAlignment.Center,
+        ) {
+            val (searchText, setSearchText) = remember {
+                mutableStateOf("")
+            }
+            MySearchBarContainer {
+                SearchBar(
+                    autoFocus = false,
+                    searchText = searchText,
+                    placeholderText = "Placeholder",
+                    onValueChange = setSearchText,
+                )
+            }
+        }
+    }
+}
 
-    /**
-     * Horizontal Scrolling Suggestion Group
-     */
+private fun LazyListScope.defaultTagDemo(
+    titleStyle: TextStyle,
+) {
+    item {
+        MyText(
+            modifier = Modifier
+                .padding(
+                    top = 16.dp,
+                ),
+            text = "Default Tag",
+            style = titleStyle,
+        )
+    }
+    item {
+        FlowRow(
+            mainAxisSpacing = 16.dp,
+            crossAxisAlignment = FlowCrossAxisAlignment.Center,
+        ) {
+            MyDefaultTag()
+        }
+    }
+}
+
+private fun LazyListScope.overviewCardDemo(
+    titleStyle: TextStyle,
+) {
+    item {
+        MyText(
+            modifier = Modifier
+                .padding(
+                    top = 16.dp,
+                ),
+            text = "Overview Card",
+            style = titleStyle,
+        )
+    }
+    item {
+        FlowRow(
+            mainAxisSpacing = 16.dp,
+            crossAxisAlignment = FlowCrossAxisAlignment.Center,
+        ) {
+            OverviewCardUI(
+                data = OverviewCardUIData(
+                    overviewTabSelectionIndex = 1,
+                    title = "2023",
+                    pieChartData = PieChartData(
+                        items = listOf(
+                            PieChartItemData(
+                                value = 500F,
+                                text = "Income : ₹500",
+                                color = MaterialTheme.colorScheme.tertiary,
+                            ),
+                            PieChartItemData(
+                                value = 600F,
+                                text = "Expense : ₹600",
+                                color = MaterialTheme.colorScheme.error,
+                            ),
+                        ),
+                    ),
+                    onClick = {},
+                    onOverviewTabClick = {},
+                    handleOverviewCardAction = {},
+                ),
+            )
+        }
+    }
+}
+
+private fun LazyListScope.totalBalanceCardDemo(
+    titleStyle: TextStyle,
+) {
+    item {
+        MyText(
+            modifier = Modifier
+                .padding(
+                    top = 16.dp,
+                ),
+            text = "Total Balance Card",
+            style = titleStyle,
+        )
+    }
+    item {
+        FlowRow(
+            mainAxisSpacing = 16.dp,
+            crossAxisAlignment = FlowCrossAxisAlignment.Center,
+        ) {
+            TotalBalanceCardUI(
+                totalBalanceAmount = 1234567890,
+            )
+        }
+    }
+}
+
+private fun LazyListScope.horizontalScrollingSuggestionGroupDemo(
+    context: Context,
+    titleStyle: TextStyle,
+) {
     item {
         MyText(
             modifier = Modifier
@@ -354,226 +468,158 @@ private fun LazyListScope.componentsTabContent(
             ),
         )
     }
+}
 
-    /**
-     * Total Balance Card
-     */
+private fun LazyListScope.horizontalScrollingRadioGroupDemo(
+    titleStyle: TextStyle,
+) {
     item {
         MyText(
             modifier = Modifier
                 .padding(
                     top = 16.dp,
                 ),
-            text = "Total Balance Card",
+            text = "Horizontal Scrolling Radio Group",
             style = titleStyle,
         )
     }
     item {
-        FlowRow(
-            mainAxisSpacing = 16.dp,
-            crossAxisAlignment = FlowCrossAxisAlignment.Center,
-        ) {
-            TotalBalanceCardUI(
-                totalBalanceAmount = 1234567890,
-            )
+        val items = listOf(
+            ChipUIData(
+                text = "Item 1",
+            ),
+            ChipUIData(
+                text = "Item 2",
+            ),
+            ChipUIData(
+                text = "Item 3",
+            ),
+            ChipUIData(
+                text = "Item 4",
+            ),
+            ChipUIData(
+                text = "Item 5",
+            ),
+            ChipUIData(
+                text = "Item 6",
+            ),
+        )
+        var selectedItemIndex by remember {
+            mutableIntStateOf(0)
         }
-    }
-
-    /**
-     * Overview Card
-     */
-    item {
-        MyText(
-            modifier = Modifier
-                .padding(
-                    top = 16.dp,
-                ),
-            text = "Overview Card",
-            style = titleStyle,
-        )
-    }
-    item {
-        FlowRow(
-            mainAxisSpacing = 16.dp,
-            crossAxisAlignment = FlowCrossAxisAlignment.Center,
-        ) {
-            OverviewCardUI(
-                data = OverviewCardUIData(
-                    overviewTabSelectionIndex = 1,
-                    title = "2023",
-                    pieChartData = PieChartData(
-                        items = listOf(
-                            PieChartItemData(
-                                value = 500F,
-                                text = "Income : ₹500",
-                                color = MaterialTheme.colorScheme.tertiary,
-                            ),
-                            PieChartItemData(
-                                value = 600F,
-                                text = "Expense : ₹600",
-                                color = MaterialTheme.colorScheme.error,
-                            ),
-                        ),
-                    ),
-                    onClick = {},
-                    onOverviewTabClick = {},
-                    handleOverviewCardAction = {},
-                ),
-            )
-        }
-    }
-
-    /**
-     * Default Tag
-     */
-    item {
-        MyText(
-            modifier = Modifier
-                .padding(
-                    top = 16.dp,
-                ),
-            text = "Default Tag",
-            style = titleStyle,
-        )
-    }
-    item {
-        FlowRow(
-            mainAxisSpacing = 16.dp,
-            crossAxisAlignment = FlowCrossAxisAlignment.Center,
-        ) {
-            MyDefaultTag()
-        }
-    }
-
-    /**
-     * Search Bar
-     */
-    item {
-        MyText(
-            modifier = Modifier
-                .padding(
-                    top = 16.dp,
-                ),
-            text = "Search Bar",
-            style = titleStyle,
-        )
-    }
-    item {
-        FlowRow(
-            mainAxisSpacing = 16.dp,
-            crossAxisAlignment = FlowCrossAxisAlignment.Center,
-        ) {
-            val (searchText, setSearchText) = remember {
-                mutableStateOf("")
-            }
-            MySearchBarContainer {
-                SearchBar(
-                    autoFocus = false,
-                    searchText = searchText,
-                    placeholderText = "Placeholder",
-                    onValueChange = setSearchText,
-                )
-            }
-        }
-    }
-
-    /**
-     * My Search Bar
-     */
-    item {
-        MyText(
-            modifier = Modifier
-                .padding(
-                    top = 16.dp,
-                ),
-            text = "My Search Bar",
-            style = titleStyle,
-        )
-    }
-    item {
-        FlowRow(
-            mainAxisSpacing = 16.dp,
-            crossAxisAlignment = FlowCrossAxisAlignment.Center,
-        ) {
-            val (searchText, setSearchText) = remember {
-                mutableStateOf("")
-            }
-            MySearchBarContainer {
-                MySearchBar(
-                    data = MySearchBarData(
-                        autoFocus = false,
-                        placeholderText = "Placeholder",
-                        searchText = searchText,
-                    ),
-                    events = MySearchBarEvents(
-                        onValueChange = setSearchText,
-                    ),
-                )
-            }
-        }
-    }
-
-    /**
-     * My Top App Bar
-     */
-    item {
-        MyText(
-            modifier = Modifier
-                .padding(
-                    top = 16.dp,
-                ),
-            text = "My Top App Bar",
-            style = titleStyle,
-        )
-    }
-    item {
-        FlowRow(
-            mainAxisSpacing = 16.dp,
-            crossAxisAlignment = FlowCrossAxisAlignment.Center,
-        ) {
-            MyTopAppBarUI(
-                isNavigationIconVisible = true,
-                titleText = "Title",
-                navigationBackButton = {
-                    MyNavigationBackButton(
-                        onClick = {},
-                    )
+        MyHorizontalScrollingRadioGroup(
+            data = MyHorizontalScrollingRadioGroupData(
+                items = items,
+                selectedItemIndex = selectedItemIndex,
+            ),
+            events = MyHorizontalScrollingRadioGroupEvents(
+                onSelectionChange = {
+                    selectedItemIndex = it
                 },
-            )
-            MyTopAppBarUI(
-                isNavigationIconVisible = false,
-                titleText = "Title",
-                navigationBackButton = {
-                    MyNavigationBackButton(
-                        onClick = {},
-                    )
-                },
-            )
-        }
+            ),
+        )
     }
+}
 
-    /**
-     * Navigation Back Button
-     */
+private fun LazyListScope.radioGroupDemo(
+    titleStyle: TextStyle,
+) {
     item {
         MyText(
             modifier = Modifier
                 .padding(
                     top = 16.dp,
                 ),
-            text = "Navigation Back Button",
+            text = "Radio Group",
             style = titleStyle,
         )
     }
     item {
-        FlowRow(
-            mainAxisSpacing = 16.dp,
-            crossAxisAlignment = FlowCrossAxisAlignment.Center,
-        ) {
-            MyNavigationBackButton(
-                onClick = {},
-            )
+        val items = listOf(
+            ChipUIData(
+                text = "Item 1",
+            ),
+            ChipUIData(
+                text = "Item 2",
+            ),
+            ChipUIData(
+                text = "Item 3",
+            ),
+            ChipUIData(
+                text = "Item 4",
+            ),
+            ChipUIData(
+                text = "Item 5",
+            ),
+            ChipUIData(
+                text = "Item 6",
+            ),
+        )
+        var selectedItemIndex by remember {
+            mutableIntStateOf(0)
         }
+        MyRadioGroup(
+            data = MyRadioGroupData(
+                items = items,
+                selectedItemIndex = selectedItemIndex,
+            ),
+            events = MyRadioGroupEvents(
+                onSelectionChange = {
+                    selectedItemIndex = it
+                },
+            ),
+        )
+    }
+}
+
+private fun LazyListScope.selectionGroupDemo(
+    titleStyle: TextStyle,
+) {
+    item {
+        MyText(
+            modifier = Modifier
+                .padding(
+                    top = 16.dp,
+                ),
+            text = "Selection Group",
+            style = titleStyle,
+        )
+    }
+    item {
+        val items = listOf(
+            ChipUIData(
+                text = "Item 1",
+            ),
+            ChipUIData(
+                text = "Item 2",
+            ),
+            ChipUIData(
+                text = "Item 3",
+            ),
+            ChipUIData(
+                text = "Item 4",
+            ),
+            ChipUIData(
+                text = "Item 5",
+            ),
+            ChipUIData(
+                text = "Item 6",
+            ),
+        )
+        val selectedItemsIndices = remember {
+            mutableStateListOf<Int>()
+        }
+        MySelectionGroup(
+            data = MySelectionGroupData(
+                items = items,
+                selectedItemsIndices = selectedItemsIndices,
+            ),
+            events = MySelectionGroupEvents(
+                onSelectionChange = {
+                    selectedItemsIndices.addIfDoesNotContainItemElseRemove(it)
+                },
+            ),
+        )
     }
 }
 
