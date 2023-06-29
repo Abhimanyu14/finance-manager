@@ -111,6 +111,7 @@ fun OverviewTab(
                     animationSpec = tween(
                         easing = LinearEasing,
                     ),
+                    label = "",
                 )
                 MyText(
                     modifier = Modifier

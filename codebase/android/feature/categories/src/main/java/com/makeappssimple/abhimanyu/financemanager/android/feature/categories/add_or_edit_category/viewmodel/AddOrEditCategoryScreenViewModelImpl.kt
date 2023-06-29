@@ -67,7 +67,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     private val transactionTypes: List<TransactionType> = listOf(
         TransactionType.INCOME,
         TransactionType.EXPENSE,
-        TransactionType.REFUND,
+        TransactionType.INVESTMENT,
     )
     private val title: MutableStateFlow<TextFieldValue> = MutableStateFlow(
         value = TextFieldValue(
