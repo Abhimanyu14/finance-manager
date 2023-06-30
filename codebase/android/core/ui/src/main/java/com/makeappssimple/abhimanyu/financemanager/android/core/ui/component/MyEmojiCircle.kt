@@ -62,7 +62,7 @@ data class MyEmojiCircleEvents(
 fun MyEmojiCircle(
     modifier: Modifier = Modifier,
     data: MyEmojiCircleData,
-    events: MyEmojiCircleEvents,
+    events: MyEmojiCircleEvents = MyEmojiCircleEvents(),
 ) {
     if (data.isLoading) {
         MyEmojiCircleLoadingUI(

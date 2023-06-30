@@ -117,6 +117,7 @@ internal fun AddOrEditTransactionForScreenUI(
         ) {
             MyOutlinedTextField(
                 data = MyOutlinedTextFieldData(
+                    isLoading = uiState.isLoading,
                     textFieldValue = uiState.title.orEmpty(),
                     labelTextStringResourceId = R.string.screen_add_or_edit_transaction_for_title,
                     trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_transaction_for_clear_title,
@@ -147,6 +148,7 @@ internal fun AddOrEditTransactionForScreenUI(
                 modifier = Modifier,
                 data = SaveButtonData(
                     isEnabled = uiState.isCtaButtonEnabled.orFalse(),
+                    isLoading = uiState.isLoading,
                     textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
                 ),
                 events = SaveButtonEvents(

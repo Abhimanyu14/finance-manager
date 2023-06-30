@@ -78,11 +78,18 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
                     isExpanded = false,
                 )
             }
-        MyResult.Success(
-            data = SourcesScreenUIData(
-                sourcesListItemDataList = sourcesListItemDataList,
-            ),
-        )
+
+        if (
+            sourcesListItemDataList.isNull()
+        ) {
+            MyResult.Loading
+        } else {
+            MyResult.Success(
+                data = SourcesScreenUIData(
+                    sourcesListItemDataList = sourcesListItemDataList,
+                ),
+            )
+        }
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )

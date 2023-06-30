@@ -159,6 +159,7 @@ internal fun AddOrEditSourceScreenUI(
                             horizontal = 16.dp,
                         ),
                     data = MyRadioGroupData(
+                        isLoading = uiState.isLoading,
                         items = uiState.sourceTypesChipUIDataList,
                         selectedItemIndex = uiState.selectedSourceTypeIndex,
                     ),
@@ -179,6 +180,8 @@ internal fun AddOrEditSourceScreenUI(
                             vertical = 4.dp,
                         ),
                     data = MyOutlinedTextFieldData(
+                        isError = uiState.visibilityData.nameTextFieldErrorText,
+                        isLoading = uiState.isLoading,
                         textFieldValue = uiState.name,
                         labelTextStringResourceId = R.string.screen_add_or_edit_source_name,
                         trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_source_clear_name,
@@ -202,7 +205,6 @@ internal fun AddOrEditSourceScreenUI(
                         } else {
                             null
                         },
-                        isError = uiState.visibilityData.nameTextFieldErrorText,
                         keyboardActions = KeyboardActions(
                             onNext = {
                                 state.focusManager.moveFocus(
@@ -233,6 +235,7 @@ internal fun AddOrEditSourceScreenUI(
                             vertical = 4.dp,
                         ),
                     data = MyOutlinedTextFieldData(
+                        isLoading = uiState.isLoading,
                         textFieldValue = uiState.balanceAmountValue,
                         labelTextStringResourceId = R.string.screen_add_or_edit_source_balance_amount_value,
                         trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_source_clear_balance_amount_value,
@@ -265,6 +268,7 @@ internal fun AddOrEditSourceScreenUI(
                     ),
                 data = SaveButtonData(
                     isEnabled = uiState.isCtaButtonEnabled,
+                    isLoading = uiState.isLoading,
                     textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
                 ),
                 events = SaveButtonEvents(

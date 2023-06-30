@@ -15,7 +15,11 @@ fun TotalBalanceCard(
     )
 
     TotalBalanceCardUI(
-        totalBalanceAmount = totalBalanceAmount,
-        onClick = onClick,
+        data = TotalBalanceCardData(
+            totalBalanceAmount = totalBalanceAmount,
+        ),
+        events = TotalBalanceCardEvents(
+            onClick = onClick,
+        ),
     )
 }

@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultListStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
@@ -51,12 +52,19 @@ internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
             transactionForValuesIsUsedInTransactions,
             transactionForValues,
         ->
-        MyResult.Success(
-            data = TransactionForValuesScreenUIData(
-                transactionForValuesIsUsedInTransactions = transactionForValuesIsUsedInTransactions,
-                transactionForValues = transactionForValues,
-            ),
-        )
+        if (
+            transactionForValuesIsUsedInTransactions.isNull() ||
+            transactionForValues.isNull()
+        ) {
+            MyResult.Loading
+        } else {
+            MyResult.Success(
+                data = TransactionForValuesScreenUIData(
+                    transactionForValuesIsUsedInTransactions = transactionForValuesIsUsedInTransactions,
+                    transactionForValues = transactionForValues,
+                ),
+            )
+        }
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )

@@ -22,13 +22,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Bottom
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCard
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCardData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCardEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.component.bottomappbar.HomeBottomAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.component.bottomsheet.HomeMenuBottomSheetContent
@@ -133,6 +133,9 @@ internal fun HomeScreenUI(
                     visible = uiState.isBackupCardVisible,
                 ) {
                     BackupCard(
+                        data = BackupCardData(
+                            isLoading = uiState.isLoading,
+                        ),
                         events = BackupCardEvents(
                             onClick = {
                                 events.createDocument.launch(MimeTypeConstants.JSON)
@@ -159,7 +162,6 @@ internal fun HomeScreenUI(
             ) { listItem ->
                 TransactionListItem(
                     data = listItem,
-                    events = TransactionListItemEvents(),
                 )
             }
         }

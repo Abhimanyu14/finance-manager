@@ -25,14 +25,14 @@ data class ActionButtonData(
 
 @Immutable
 data class ActionButtonEvents(
-    val onClick: () -> Unit,
+    val onClick: () -> Unit = {},
 )
 
 @Composable
 fun ActionButton(
     modifier: Modifier = Modifier,
     data: ActionButtonData,
-    events: ActionButtonEvents,
+    events: ActionButtonEvents = ActionButtonEvents(),
 ) {
     ElevatedCard(
         onClick = events.onClick,

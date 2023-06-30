@@ -136,12 +136,19 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
             selectedTabIndex,
             categoriesGridItemDataMap,
         ->
-        MyResult.Success(
-            data = CategoriesScreenUIData(
-                selectedTabIndex = selectedTabIndex,
-                categoriesGridItemDataMap = categoriesGridItemDataMap,
-            ),
-        )
+        if (
+            selectedTabIndex.isNull() ||
+            categoriesGridItemDataMap.isNull()
+        ) {
+            MyResult.Loading
+        } else {
+            MyResult.Success(
+                data = CategoriesScreenUIData(
+                    selectedTabIndex = selectedTabIndex,
+                    categoriesGridItemDataMap = categoriesGridItemDataMap,
+                ),
+            )
+        }
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )

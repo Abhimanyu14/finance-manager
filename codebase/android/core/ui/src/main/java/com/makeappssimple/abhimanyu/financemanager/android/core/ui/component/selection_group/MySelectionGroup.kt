@@ -18,14 +18,14 @@ data class MySelectionGroupData(
 
 @Immutable
 data class MySelectionGroupEvents(
-    val onSelectionChange: (index: Int) -> Unit,
+    val onSelectionChange: (index: Int) -> Unit = {},
 )
 
 @Composable
 fun MySelectionGroup(
     modifier: Modifier = Modifier,
     data: MySelectionGroupData,
-    events: MySelectionGroupEvents,
+    events: MySelectionGroupEvents = MySelectionGroupEvents(),
 ) {
     FlowRow(
         modifier = modifier,

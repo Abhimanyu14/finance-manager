@@ -521,8 +521,8 @@ internal fun AddOrEditTransactionScreenUI(
                         all = 8.dp,
                     ),
                 data = SaveButtonData(
-                    isLoading = uiState.isLoading,
                     isEnabled = uiState.isCtaButtonEnabled,
+                    isLoading = uiState.isLoading,
                     textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
                 ),
                 events = SaveButtonEvents(

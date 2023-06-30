@@ -52,7 +52,7 @@ data class MyOutlinedTextFieldEvents(
 fun MyOutlinedTextField(
     modifier: Modifier = Modifier,
     data: MyOutlinedTextFieldData,
-    events: MyOutlinedTextFieldEvents,
+    events: MyOutlinedTextFieldEvents = MyOutlinedTextFieldEvents(),
 ) {
     if (data.isLoading) {
         MyOutlinedTextFieldLoadingUI(

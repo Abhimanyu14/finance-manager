@@ -38,7 +38,7 @@ data class ChipUIEvents(
 fun ChipUI(
     modifier: Modifier = Modifier,
     data: ChipUIData,
-    events: ChipUIEvents,
+    events: ChipUIEvents = ChipUIEvents(),
     isSelected: Boolean,
 ) {
     val shape = CircleShape

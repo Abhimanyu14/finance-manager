@@ -26,14 +26,14 @@ data class SaveButtonData(
 
 @Immutable
 data class SaveButtonEvents(
-    val onClick: () -> Unit,
+    val onClick: () -> Unit = {},
 )
 
 @Composable
 fun SaveButton(
     modifier: Modifier = Modifier,
     data: SaveButtonData,
-    events: SaveButtonEvents,
+    events: SaveButtonEvents = SaveButtonEvents(),
 ) {
     if (data.isLoading) {
         SaveButtonLoadingUI(

@@ -20,6 +20,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -38,7 +39,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.Emo
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyDefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyNavigationBackButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBarUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
@@ -47,6 +47,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.but
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardUIData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardUIEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupEvents
@@ -61,12 +62,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MySelectionGroupEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarContainer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.SearchBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardUI
 
 @Composable
@@ -145,6 +146,12 @@ private fun LazyListScope.componentsTabContent(
     context: Context,
     titleStyle: TextStyle,
 ) {
+    totalBalanceCardDemo(
+        titleStyle = titleStyle,
+    )
+    overviewCardDemo(
+        titleStyle = titleStyle,
+    )
     selectionGroupDemo(
         titleStyle = titleStyle,
     )
@@ -165,12 +172,6 @@ private fun LazyListScope.componentsTabContent(
         titleStyle = titleStyle,
     )
     saveButtonDemo(
-        titleStyle = titleStyle,
-    )
-    totalBalanceCardDemo(
-        titleStyle = titleStyle,
-    )
-    overviewCardDemo(
         titleStyle = titleStyle,
     )
     defaultTagDemo(
@@ -362,9 +363,11 @@ private fun LazyListScope.overviewCardDemo(
         )
     }
     item {
-        FlowRow(
-            mainAxisSpacing = 16.dp,
-            crossAxisAlignment = FlowCrossAxisAlignment.Center,
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(
+                space = 8.dp,
+            )
         ) {
             OverviewCardUI(
                 data = OverviewCardUIData(
@@ -384,9 +387,16 @@ private fun LazyListScope.overviewCardDemo(
                             ),
                         ),
                     ),
+                ),
+                events = OverviewCardUIEvents(
                     onClick = {},
                     onOverviewTabClick = {},
                     handleOverviewCardAction = {},
+                ),
+            )
+            OverviewCardUI(
+                data = OverviewCardUIData(
+                    isLoading = true,
                 ),
             )
         }
@@ -407,12 +417,22 @@ private fun LazyListScope.totalBalanceCardDemo(
         )
     }
     item {
-        FlowRow(
-            mainAxisSpacing = 16.dp,
-            crossAxisAlignment = FlowCrossAxisAlignment.Center,
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(
+                space = 8.dp,
+            )
         ) {
             TotalBalanceCardUI(
-                totalBalanceAmount = 1234567890,
+                data = TotalBalanceCardData(
+                    totalBalanceAmount = 1234567890,
+                ),
+            )
+            TotalBalanceCardUI(
+                data = TotalBalanceCardData(
+                    isLoading = true,
+                    totalBalanceAmount = 1234567890,
+                ),
             )
         }
     }
@@ -646,42 +666,36 @@ private fun LazyListScope.emojiCircleDemo(
                     emojiCircleSize = EmojiCircleSize.Small,
                     isLoading = true,
                 ),
-                events = MyEmojiCircleEvents(),
             )
             MyEmojiCircle(
                 data = MyEmojiCircleData(
                     emojiCircleSize = EmojiCircleSize.Normal,
                     isLoading = true,
                 ),
-                events = MyEmojiCircleEvents(),
             )
             MyEmojiCircle(
                 data = MyEmojiCircleData(
                     emojiCircleSize = EmojiCircleSize.Large,
                     isLoading = true,
                 ),
-                events = MyEmojiCircleEvents(),
             )
             MyEmojiCircle(
                 data = MyEmojiCircleData(
                     emojiCircleSize = EmojiCircleSize.Small,
                     emoji = "😀",
                 ),
-                events = MyEmojiCircleEvents(),
             )
             MyEmojiCircle(
                 data = MyEmojiCircleData(
                     emojiCircleSize = EmojiCircleSize.Normal,
                     emoji = "😀",
                 ),
-                events = MyEmojiCircleEvents(),
             )
             MyEmojiCircle(
                 data = MyEmojiCircleData(
                     emojiCircleSize = EmojiCircleSize.Large,
                     emoji = "😀",
                 ),
-                events = MyEmojiCircleEvents(),
             )
             MyEmojiCircle(
                 data = MyEmojiCircleData(
@@ -689,7 +703,6 @@ private fun LazyListScope.emojiCircleDemo(
                     backgroundColor = MaterialTheme.colorScheme.outline,
                     emoji = "😀",
                 ),
-                events = MyEmojiCircleEvents(),
             )
             MyEmojiCircle(
                 data = MyEmojiCircleData(
@@ -697,7 +710,6 @@ private fun LazyListScope.emojiCircleDemo(
                     backgroundColor = MaterialTheme.colorScheme.outline,
                     emoji = "😀",
                 ),
-                events = MyEmojiCircleEvents(),
             )
             MyEmojiCircle(
                 data = MyEmojiCircleData(
@@ -705,7 +717,6 @@ private fun LazyListScope.emojiCircleDemo(
                     backgroundColor = MaterialTheme.colorScheme.outline,
                     emoji = "😀",
                 ),
-                events = MyEmojiCircleEvents(),
             )
         }
     }
@@ -789,7 +800,6 @@ private fun LazyListScope.myOutlinedTextFieldDemo(
                     labelTextStringResourceId = R.string.my_outlined_text_field_label,
                     trailingIconContentDescriptionTextStringResourceId = R.string.common_empty_string,
                 ),
-                events = MyOutlinedTextFieldEvents(),
             )
             MyOutlinedTextField(
                 modifier = Modifier
@@ -799,7 +809,6 @@ private fun LazyListScope.myOutlinedTextFieldDemo(
                     labelTextStringResourceId = R.string.my_outlined_text_field_label,
                     trailingIconContentDescriptionTextStringResourceId = R.string.common_empty_string,
                 ),
-                events = MyOutlinedTextFieldEvents(),
             )
         }
     }

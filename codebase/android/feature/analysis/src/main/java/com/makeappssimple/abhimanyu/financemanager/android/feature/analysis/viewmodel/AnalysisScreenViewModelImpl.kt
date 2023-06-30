@@ -94,18 +94,24 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
             transactionDataMappedByCategory,
             oldestTransactionLocalDate,
         ->
-        MyResult.Success(
-            data = AnalysisScreenUIData(
-                selectedFilter = selectedFilter,
-                selectedTransactionTypeIndex = selectedTransactionTypeIndex,
-                transactionDataMappedByCategory = transactionDataMappedByCategory,
-                transactionTypesChipUIData = transactionTypesChipUIData,
-                currentLocalDate = dateTimeUtil.getCurrentLocalDate(),
-                oldestTransactionLocalDate = oldestTransactionLocalDate.orMin(),
-                startOfMonthLocalDate = dateTimeUtil.getStartOfMonthLocalDate(),
-                startOfYearLocalDate = dateTimeUtil.getStartOfYearLocalDate(),
-            ),
-        )
+        if (
+            oldestTransactionLocalDate.isNull()
+        ) {
+            MyResult.Loading
+        } else {
+            MyResult.Success(
+                data = AnalysisScreenUIData(
+                    selectedFilter = selectedFilter,
+                    selectedTransactionTypeIndex = selectedTransactionTypeIndex,
+                    transactionDataMappedByCategory = transactionDataMappedByCategory,
+                    transactionTypesChipUIData = transactionTypesChipUIData,
+                    currentLocalDate = dateTimeUtil.getCurrentLocalDate(),
+                    oldestTransactionLocalDate = oldestTransactionLocalDate.orMin(),
+                    startOfMonthLocalDate = dateTimeUtil.getStartOfMonthLocalDate(),
+                    startOfYearLocalDate = dateTimeUtil.getStartOfYearLocalDate(),
+                ),
+            )
+        }
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )

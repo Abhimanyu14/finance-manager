@@ -43,6 +43,8 @@ fun OverviewCard(
             overviewTabSelectionIndex = overviewTabSelectionIndex,
             title = overviewCardData?.title.orEmpty(),
             pieChartData = pieChartData,
+        ),
+        events = OverviewCardUIEvents(
             onClick = onClick,
             onOverviewTabClick = {
                 viewModel.setOverviewTabSelectionIndex(

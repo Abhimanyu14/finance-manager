@@ -288,21 +288,39 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         searchText,
         selectedSortOption,
     ) { flows ->
-        MyResult.Success(
-            data = TransactionsScreenUIData(
-                isLoading = flows[0] as? Boolean ?: false,
-                selectedFilter = flows[1] as? Filter ?: Filter(),
-                sortOptions = sortOptions,
-                transactionTypes = transactionTypes,
-                oldestTransactionLocalDate = flows[2] as? LocalDate ?: LocalDate.MIN,
-                currentLocalDate = dateTimeUtil.getCurrentLocalDate(),
-                currentTimeMillis = dateTimeUtil.getCurrentTimeMillis(),
-                transactionDetailsListItemViewData = flows[3] as? Map<String, List<TransactionListItemData>>
-                    ?: emptyMap(),
-                searchText = flows[4] as? String ?: "",
-                selectedSortOption = flows[5] as? SortOption ?: SortOption.LATEST_FIRST,
-            ),
-        )
+        val isLoading = flows[0] as? Boolean
+        val selectedFilter = flows[1] as? Filter
+        val oldestTransactionLocalDate = flows[2] as? LocalDate
+        val transactionDetailsListItemViewData =
+            flows[3] as? Map<String, List<TransactionListItemData>>
+        val searchText = flows[4] as? String
+        val selectedSortOption = flows[5] as? SortOption
+
+        if (
+            isLoading.isNull() ||
+            selectedFilter.isNull() ||
+            oldestTransactionLocalDate.isNull() ||
+            transactionDetailsListItemViewData.isNull() ||
+            searchText.isNull() ||
+            selectedSortOption.isNull()
+        ) {
+            MyResult.Loading
+        } else {
+            MyResult.Success(
+                data = TransactionsScreenUIData(
+                    isLoading = isLoading,
+                    selectedFilter = selectedFilter,
+                    sortOptions = sortOptions,
+                    transactionTypes = transactionTypes,
+                    oldestTransactionLocalDate = oldestTransactionLocalDate,
+                    currentLocalDate = dateTimeUtil.getCurrentLocalDate(),
+                    currentTimeMillis = dateTimeUtil.getCurrentTimeMillis(),
+                    transactionDetailsListItemViewData = transactionDetailsListItemViewData,
+                    searchText = searchText,
+                    selectedSortOption = selectedSortOption,
+                ),
+            )
+        }
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )

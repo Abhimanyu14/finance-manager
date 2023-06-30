@@ -15,8 +15,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNav
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.screen.SettingsScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,16 +31,15 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
     private val restoreDataUseCase: RestoreDataUseCase,
 ) : SettingsScreenViewModel, ViewModel() {
     private val appVersionName: String = appVersionUtil.getAppVersion()?.versionName.orEmpty()
-    override val screenUIData: StateFlow<MyResult<SettingsScreenUIData>?> =
-        flow<MyResult<SettingsScreenUIData>> {
-            MyResult.Success(
-                data = SettingsScreenUIData(
-                    appVersion = appVersionName,
-                ),
-            )
-        }.defaultObjectStateIn(
-            scope = viewModelScope,
+    override val screenUIData: StateFlow<MyResult<SettingsScreenUIData>?> = MutableStateFlow(
+        value = MyResult.Success(
+            data = SettingsScreenUIData(
+                appVersion = appVersionName,
+            ),
         )
+    ).defaultObjectStateIn(
+        scope = viewModelScope,
+    )
 
     override fun backupDataToDocument(
         uri: Uri,

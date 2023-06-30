@@ -42,7 +42,6 @@ fun MyHorizontalScrollingRadioGroup(
                     data = ChipUIData(
                         isLoading = true,
                     ),
-                    events = ChipUIEvents(),
                     isSelected = false,
                 )
             }

@@ -24,14 +24,14 @@ data class MyReadOnlyTextFieldData(
 
 @Immutable
 data class MyReadOnlyTextFieldEvents(
-    val onClick: () -> Unit,
+    val onClick: () -> Unit = {},
 )
 
 @Composable
 fun MyReadOnlyTextField(
     modifier: Modifier = Modifier,
     data: MyReadOnlyTextFieldData,
-    events: MyReadOnlyTextFieldEvents,
+    events: MyReadOnlyTextFieldEvents = MyReadOnlyTextFieldEvents(),
 ) {
     if (data.isLoading) {
         MyReadOnlyTextFieldLoadingUI(

@@ -32,15 +32,15 @@ data class MyDatePickerData(
 
 @Immutable
 data class MyDatePickerEvents(
-    val onNegativeButtonClick: () -> Unit,
-    val onPositiveButtonClick: (LocalDate) -> Unit,
+    val onNegativeButtonClick: () -> Unit = {},
+    val onPositiveButtonClick: (LocalDate) -> Unit = {},
 )
 
 @Composable
 fun MyDatePicker(
     modifier: Modifier = Modifier,
     data: MyDatePickerData,
-    events: MyDatePickerEvents,
+    events: MyDatePickerEvents = MyDatePickerEvents(),
 ) {
     if (data.isVisible) {
         val datePickerState = rememberDatePickerState(

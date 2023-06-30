@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
@@ -76,12 +77,19 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
             title,
             isValidTransactionForData,
         ->
-        MyResult.Success(
-            data = AddOrEditTransactionForScreenUIData(
-                isValidTransactionForData = isValidTransactionForData,
-                title = title,
-            ),
-        )
+        if (
+            title.isNull() ||
+            isValidTransactionForData.isNull()
+        ) {
+            MyResult.Loading
+        } else {
+            MyResult.Success(
+                data = AddOrEditTransactionForScreenUIData(
+                    isValidTransactionForData = isValidTransactionForData,
+                    title = title,
+                ),
+            )
+        }
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )

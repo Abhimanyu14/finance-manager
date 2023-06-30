@@ -7,6 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
@@ -65,13 +66,21 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
             refundTransactionListItemData,
             transactionListItemData,
         ->
-        MyResult.Success(
-            data = ViewTransactionScreenUIData(
-                originalTransactionListItemData = originalTransactionListItemData,
-                refundTransactionListItemData = refundTransactionListItemData,
-                transactionListItemData = transactionListItemData,
-            ),
-        )
+        if (
+            originalTransactionListItemData.isNull() ||
+            refundTransactionListItemData.isNull() ||
+            transactionListItemData.isNull()
+        ) {
+            MyResult.Loading
+        } else {
+            MyResult.Success(
+                data = ViewTransactionScreenUIData(
+                    originalTransactionListItemData = originalTransactionListItemData,
+                    refundTransactionListItemData = refundTransactionListItemData,
+                    transactionListItemData = transactionListItemData,
+                ),
+            )
+        }
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )

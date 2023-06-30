@@ -31,7 +31,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemUIWrapper
 
@@ -65,7 +64,7 @@ data class TransactionListItemEvents(
 fun TransactionListItem(
     modifier: Modifier = Modifier,
     data: TransactionListItemData,
-    events: TransactionListItemEvents,
+    events: TransactionListItemEvents = TransactionListItemEvents(),
 ) {
     val sourceText: String = if (
         data.sourceFromName.isNotNull() &&
@@ -118,7 +117,6 @@ fun TransactionListItem(
                     backgroundColor = MaterialTheme.colorScheme.outline,
                     emoji = data.emoji,
                 ),
-                events = MyEmojiCircleEvents(),
             )
             Column(
                 modifier = Modifier

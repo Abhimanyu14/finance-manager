@@ -18,14 +18,14 @@ data class MyRadioGroupData(
 
 @Immutable
 data class MyRadioGroupEvents(
-    val onSelectionChange: (index: Int) -> Unit,
+    val onSelectionChange: (index: Int) -> Unit = {},
 )
 
 @Composable
 fun MyRadioGroup(
     modifier: Modifier = Modifier,
     data: MyRadioGroupData,
-    events: MyRadioGroupEvents,
+    events: MyRadioGroupEvents = MyRadioGroupEvents(),
 ) {
     FlowRow(
         modifier = modifier,

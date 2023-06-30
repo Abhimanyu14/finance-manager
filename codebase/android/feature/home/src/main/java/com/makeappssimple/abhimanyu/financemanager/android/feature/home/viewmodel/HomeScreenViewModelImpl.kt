@@ -7,6 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
@@ -49,12 +50,16 @@ internal class HomeScreenViewModelImpl @Inject constructor(
             isBackupCardVisible,
             homeListItemViewData,
         ->
-        MyResult.Success(
-            data = HomeScreenUIData(
-                isBackupCardVisible = isBackupCardVisible,
-                transactionListItemDataList = homeListItemViewData,
-            ),
-        )
+        if (homeListItemViewData.isNull()) {
+            MyResult.Loading
+        } else {
+            MyResult.Success(
+                data = HomeScreenUIData(
+                    isBackupCardVisible = isBackupCardVisible,
+                    transactionListItemDataList = homeListItemViewData,
+                ),
+            )
+        }
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )

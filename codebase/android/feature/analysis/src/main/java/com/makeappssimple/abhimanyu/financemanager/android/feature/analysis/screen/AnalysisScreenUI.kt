@@ -31,7 +31,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.bottomsheet.AnalysisFilterBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItem
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.viewmodel.Filter
 import java.time.LocalDate
 
@@ -173,7 +172,6 @@ internal fun AnalysisScreenUI(
                         data = listItem.copy(
                             maxEndTextWidth = uiState.maxAmountTextWidth,
                         ),
-                        events = AnalysisListItemEvents(),
                     )
                 }
             }

@@ -107,17 +107,29 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
             name = name.text,
             originalSource = originalSource,
         )
-        MyResult.Success(
-            data = AddOrEditSourceScreenUIData(
-                errorData = errorData,
-                isValidSourceData = isValidSourceData,
-                sourceIsNotCash = sourceIsNotCash,
-                selectedSourceTypeIndex = selectedSourceTypeIndex,
-                sourceTypes = validSourceTypes,
-                balanceAmountValue = balanceAmountValue,
-                name = name,
-            ),
-        )
+
+        if (
+            errorData.isNull() ||
+            isValidSourceData.isNull() ||
+            sourceIsNotCash.isNull() ||
+            selectedSourceTypeIndex.isNull() ||
+            balanceAmountValue.isNull() ||
+            name.isNull()
+        ) {
+            MyResult.Loading
+        } else {
+            MyResult.Success(
+                data = AddOrEditSourceScreenUIData(
+                    errorData = errorData,
+                    isValidSourceData = isValidSourceData,
+                    sourceIsNotCash = sourceIsNotCash,
+                    selectedSourceTypeIndex = selectedSourceTypeIndex,
+                    sourceTypes = validSourceTypes,
+                    balanceAmountValue = balanceAmountValue,
+                    name = name,
+                ),
+            )
+        }
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )

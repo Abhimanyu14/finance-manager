@@ -46,14 +46,14 @@ data class MySearchBarData(
 @Immutable
 data class MySearchBarEvents(
     val onSearch: (() -> Unit)? = null,
-    val onValueChange: (updatedSearchText: String) -> Unit,
+    val onValueChange: (updatedSearchText: String) -> Unit = {},
 )
 
 @Composable
 fun MySearchBar(
     modifier: Modifier = Modifier,
     data: MySearchBarData,
-    events: MySearchBarEvents,
+    events: MySearchBarEvents = MySearchBarEvents(),
 ) {
     val focusManager = LocalFocusManager.current
     val focusRequester: FocusRequester = remember {

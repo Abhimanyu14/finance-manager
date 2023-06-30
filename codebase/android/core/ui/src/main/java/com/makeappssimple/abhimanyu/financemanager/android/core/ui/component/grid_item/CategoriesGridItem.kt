@@ -19,7 +19,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.EmojiCircleSize
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleEvents
 
 data class CategoriesGridItemData(
     val isDeleteVisible: Boolean? = null,
@@ -64,7 +63,6 @@ fun CategoriesGridItem(
                 emojiCircleSize = EmojiCircleSize.Large,
                 emoji = category.emoji,
             ),
-            events = MyEmojiCircleEvents(),
         )
         MyText(
             modifier = Modifier

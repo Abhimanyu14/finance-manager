@@ -40,7 +40,6 @@ fun MyHorizontalScrollingSelectionGroup(
                     data = ChipUIData(
                         isLoading = true,
                     ),
-                    events = ChipUIEvents(),
                     isSelected = false,
                 )
             }
