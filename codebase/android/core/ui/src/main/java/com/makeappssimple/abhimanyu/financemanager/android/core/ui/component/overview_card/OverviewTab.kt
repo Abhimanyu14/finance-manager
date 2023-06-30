@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
@@ -39,12 +40,22 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
 
+@Immutable
+data class OverviewTabData(
+    val items: List<String>,
+    val selectedItemIndex: Int,
+)
+
+@Immutable
+data class OverviewTabEvents(
+    val onClick: (index: Int) -> Unit = {},
+)
+
 @Composable
 fun OverviewTab(
     modifier: Modifier = Modifier,
-    items: List<String>,
-    selectedItemIndex: Int,
-    onClick: (index: Int) -> Unit,
+    data: OverviewTabData,
+    events: OverviewTabEvents = OverviewTabEvents(),
 ) {
     val density = LocalDensity.current
     val tabWidths = remember {
@@ -52,7 +63,7 @@ fun OverviewTab(
     }
     val indicatorWidth: Dp by animateDpAsState(
         targetValue = tabWidths.getOrElse(
-            index = selectedItemIndex,
+            index = data.selectedItemIndex,
         ) {
             64.dp
         },
@@ -64,7 +75,7 @@ fun OverviewTab(
     )
     val indicatorOffset: Dp by animateDpAsState(
         targetValue = tabWidths.take(
-            n = selectedItemIndex,
+            n = data.selectedItemIndex,
         ).fold(
             initial = 0.dp,
         ) { accumulator, result ->
@@ -100,8 +111,8 @@ fun OverviewTab(
                     shape = CircleShape,
                 ),
         ) {
-            items.mapIndexed { index, text ->
-                val isSelected = index == selectedItemIndex
+            data.items.mapIndexed { index, text ->
+                val isSelected = index == data.selectedItemIndex
                 val tabTextColor: Color by animateColorAsState(
                     targetValue = if (isSelected) {
                         MaterialTheme.colorScheme.onPrimary
@@ -116,7 +127,7 @@ fun OverviewTab(
                 MyText(
                     modifier = Modifier
                         .onGloballyPositioned {
-                            if (tabWidths.size < items.size) {
+                            if (tabWidths.size < data.items.size) {
                                 tabWidths.add(index, density.run { it.size.width.toDp() })
                             }
                         }
@@ -127,7 +138,7 @@ fun OverviewTab(
                             shape = CircleShape,
                         )
                         .clickable {
-                            onClick(index)
+                            events.onClick(index)
                         }
                         .padding(
                             horizontal = 12.dp,
@@ -187,16 +198,20 @@ private fun OverviewSelectionPreview() {
                 .fillMaxSize(),
         ) {
             OverviewTab(
-                items = listOf(
-                    "Day",
-                    "Week",
-                    "Month",
-                    "Year",
+                data = OverviewTabData(
+                    items = listOf(
+                        "Day",
+                        "Week",
+                        "Month",
+                        "Year",
+                    ),
+                    selectedItemIndex = selectedIndex,
                 ),
-                selectedItemIndex = selectedIndex,
-                onClick = {
-                    selectedIndex = it
-                },
+                events = OverviewTabEvents(
+                    onClick = {
+                        selectedIndex = it
+                    },
+                ),
             )
         }
     }

@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmodel
 
 import android.net.Uri
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
@@ -8,26 +9,39 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toEpochMilli
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toZonedDateTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetRecentTransactionDataFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionsBetweenTimestampsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardAction
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewModelData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewTabOption
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen.HomeScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import java.time.Instant
 import javax.inject.Inject
+import kotlin.math.abs
+
+@VisibleForTesting
+internal const val defaultOverviewTabSelection = 1
 
 @HiltViewModel
 internal class HomeScreenViewModelImpl @Inject constructor(
@@ -37,18 +51,130 @@ internal class HomeScreenViewModelImpl @Inject constructor(
     private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
     private val getRecentTransactionDataFlowUseCase: GetRecentTransactionDataFlowUseCase,
+    private val getTransactionsBetweenTimestampsUseCase: GetTransactionsBetweenTimestampsUseCase,
+    private val getTransactionUseCase: GetTransactionUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
 ) : HomeScreenViewModel, ViewModel() {
     private val homeListItemViewData: Flow<List<TransactionListItemData>> =
         getHomeListItemViewDataFromData()
     private val isBackupCardVisible: Flow<Boolean> = getIsBackupCardVisibleFromData()
 
+    private val overviewTabSelectionIndex: MutableStateFlow<Int> = MutableStateFlow(
+        value = defaultOverviewTabSelection,
+    )
+
+    private val timestamp: MutableStateFlow<Long> = MutableStateFlow(
+        value = dateTimeUtil.getCurrentTimeMillis(),
+    )
+
+    private val overviewCardData: StateFlow<OverviewCardViewModelData?> = combine(
+        flow = overviewTabSelectionIndex,
+        flow2 = timestamp,
+    ) { overviewTabSelectionIndex, timestamp ->
+        val overviewTabOption = OverviewTabOption.values()[overviewTabSelectionIndex]
+        val transactions = getTransactionsBetweenTimestampsUseCase(
+            startingTimestamp = when (overviewTabOption) {
+                OverviewTabOption.DAY -> {
+                    dateTimeUtil.getStartOfDayTimestamp(
+                        timestamp = timestamp,
+                    )
+                }
+
+                OverviewTabOption.MONTH -> {
+                    dateTimeUtil.getStartOfMonthTimestamp(
+                        timestamp = timestamp,
+                    )
+                }
+
+                OverviewTabOption.YEAR -> {
+                    dateTimeUtil.getStartOfYearTimestamp(
+                        timestamp = timestamp,
+                    )
+                }
+            },
+            endingTimestamp = when (overviewTabOption) {
+                OverviewTabOption.DAY -> {
+                    dateTimeUtil.getEndOfDayTimestamp(
+                        timestamp = timestamp,
+                    )
+                }
+
+                OverviewTabOption.MONTH -> {
+                    dateTimeUtil.getEndOfMonthTimestamp(
+                        timestamp = timestamp,
+                    )
+                }
+
+                OverviewTabOption.YEAR -> {
+                    dateTimeUtil.getEndOfYearTimestamp(
+                        timestamp = timestamp,
+                    )
+                }
+            },
+        )
+
+        val incomeAmount = transactions.filter {
+            it.transactionType == TransactionType.INCOME
+        }.sumOf {
+            it.amount.value
+        }.toFloat()
+
+        val expenseTransactions = transactions.filter {
+            it.transactionType == TransactionType.EXPENSE
+        }
+        val expenseTransactionsWithRefund = buildList {
+            expenseTransactions.forEach { expenseTransaction ->
+                add(expenseTransaction)
+                expenseTransaction.refundTransactionIds?.let { refundTransactionIds ->
+                    refundTransactionIds.forEach { id ->
+                        getTransactionUseCase(id)?.let {
+                            add(it)
+                        }
+                    }
+                }
+            }
+        }
+        val expenseAmount = expenseTransactionsWithRefund.sumOf { transaction ->
+            if (transaction.transactionType == TransactionType.EXPENSE) {
+                abs(transaction.amount.value)
+            } else {
+                -abs(transaction.amount.value)
+            }
+        }.toFloat()
+
+        val title = when (overviewTabOption) {
+            OverviewTabOption.DAY -> {
+                dateTimeUtil.getFormattedDate(timestamp).uppercase()
+            }
+
+            OverviewTabOption.MONTH -> {
+                dateTimeUtil.getFormattedMonth(timestamp).uppercase()
+            }
+
+            OverviewTabOption.YEAR -> {
+                dateTimeUtil.getFormattedYear(timestamp).uppercase()
+            }
+        }
+
+        OverviewCardViewModelData(
+            income = incomeAmount,
+            expense = expenseAmount,
+            title = title,
+        )
+    }.defaultObjectStateIn(
+        scope = viewModelScope,
+    )
+
     override val screenUIData: StateFlow<MyResult<HomeScreenUIData>?> = combine(
         isBackupCardVisible,
         homeListItemViewData,
+        overviewTabSelectionIndex,
+        overviewCardData,
     ) {
             isBackupCardVisible,
             homeListItemViewData,
+            overviewTabSelectionIndex,
+            overviewCardData,
         ->
         if (homeListItemViewData.isNull()) {
             MyResult.Loading
@@ -56,7 +182,9 @@ internal class HomeScreenViewModelImpl @Inject constructor(
             MyResult.Success(
                 data = HomeScreenUIData(
                     isBackupCardVisible = isBackupCardVisible,
+                    overviewTabSelectionIndex = overviewTabSelectionIndex,
                     transactionListItemDataList = homeListItemViewData,
+                    overviewCardData = overviewCardData,
                 ),
             )
         }
@@ -79,6 +207,75 @@ internal class HomeScreenViewModelImpl @Inject constructor(
                 navigationCommand = MyNavigationDirections.NavigateUp
             )
         }
+    }
+
+    override fun handleOverviewCardAction(
+        overviewCardAction: OverviewCardAction,
+    ) {
+        val overviewTabOption = OverviewTabOption.values()[overviewTabSelectionIndex.value]
+        when (overviewCardAction) {
+            OverviewCardAction.NEXT -> {
+                when (overviewTabOption) {
+                    OverviewTabOption.DAY -> {
+                        timestamp.value = Instant
+                            .ofEpochMilli(timestamp.value)
+                            .toZonedDateTime()
+                            .plusDays(1)
+                            .toEpochMilli()
+                    }
+
+                    OverviewTabOption.MONTH -> {
+                        timestamp.value = Instant
+                            .ofEpochMilli(timestamp.value)
+                            .toZonedDateTime()
+                            .plusMonths(1)
+                            .toEpochMilli()
+                    }
+
+                    OverviewTabOption.YEAR -> {
+                        timestamp.value = Instant
+                            .ofEpochMilli(timestamp.value)
+                            .toZonedDateTime()
+                            .plusYears(1)
+                            .toEpochMilli()
+                    }
+                }
+            }
+
+            OverviewCardAction.PREV -> {
+                when (overviewTabOption) {
+                    OverviewTabOption.DAY -> {
+                        timestamp.value = Instant
+                            .ofEpochMilli(timestamp.value)
+                            .toZonedDateTime()
+                            .minusDays(1)
+                            .toEpochMilli()
+                    }
+
+                    OverviewTabOption.MONTH -> {
+                        timestamp.value = Instant
+                            .ofEpochMilli(timestamp.value)
+                            .toZonedDateTime()
+                            .minusMonths(1)
+                            .toEpochMilli()
+                    }
+
+                    OverviewTabOption.YEAR -> {
+                        timestamp.value = Instant
+                            .ofEpochMilli(timestamp.value)
+                            .toZonedDateTime()
+                            .minusYears(1)
+                            .toEpochMilli()
+                    }
+                }
+            }
+        }
+    }
+
+    override fun setOverviewTabSelectionIndex(
+        updatedOverviewTabSelectionIndex: Int,
+    ) {
+        overviewTabSelectionIndex.value = updatedOverviewTabSelectionIndex
     }
 
     private fun getHomeListItemViewDataFromData(): Flow<List<TransactionListItemData>> {

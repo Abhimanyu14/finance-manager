@@ -45,9 +45,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.but
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardUI
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardUIData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardUIEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCard
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupEvents
@@ -369,10 +369,9 @@ private fun LazyListScope.overviewCardDemo(
                 space = 8.dp,
             )
         ) {
-            OverviewCardUI(
-                data = OverviewCardUIData(
+            OverviewCard(
+                data = OverviewCardData(
                     overviewTabSelectionIndex = 1,
-                    title = "2023",
                     pieChartData = PieChartData(
                         items = listOf(
                             PieChartItemData(
@@ -387,15 +386,16 @@ private fun LazyListScope.overviewCardDemo(
                             ),
                         ),
                     ),
+                    title = "2023",
                 ),
-                events = OverviewCardUIEvents(
+                events = OverviewCardEvents(
                     onClick = {},
                     onOverviewTabClick = {},
                     handleOverviewCardAction = {},
                 ),
             )
-            OverviewCardUI(
-                data = OverviewCardUIData(
+            OverviewCard(
+                data = OverviewCardData(
                     isLoading = true,
                 ),
             )

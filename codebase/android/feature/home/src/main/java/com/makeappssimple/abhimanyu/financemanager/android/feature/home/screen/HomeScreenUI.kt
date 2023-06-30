@@ -25,6 +25,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bac
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCardData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCardEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCard
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardAction
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewModelData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItem
@@ -42,18 +46,22 @@ enum class HomeBottomSheetType : BottomSheetType {
 @Immutable
 data class HomeScreenUIData(
     val isBackupCardVisible: Boolean = false,
+    val overviewTabSelectionIndex: Int = 0,
     val transactionListItemDataList: List<TransactionListItemData> = emptyList(),
+    val overviewCardData: OverviewCardViewModelData? = null,
 )
 
 @Immutable
 internal data class HomeScreenUIEvents(
     val createDocument: ManagedActivityResultLauncher<String, Uri?>,
+    val handleOverviewCardAction: (OverviewCardAction) -> Unit,
     val navigateToAddTransactionScreen: () -> Unit,
     val navigateToAnalysisScreen: () -> Unit,
     val navigateToCategoriesScreen: () -> Unit,
     val navigateToSettingsScreen: () -> Unit,
     val navigateToSourcesScreen: () -> Unit,
     val navigateToTransactionsScreen: () -> Unit,
+    val onOverviewTabClick: (Int) -> Unit,
 )
 
 @Composable
@@ -146,7 +154,16 @@ internal fun HomeScreenUI(
             }
             item {
                 OverviewCard(
-                    onClick = events.navigateToAnalysisScreen,
+                    data = OverviewCardData(
+                        overviewTabSelectionIndex = uiState.overviewTabSelectionIndex,
+                        pieChartData = uiState.pieChartData,
+                        title = uiState.overviewCardData.title,
+                    ),
+                    events = OverviewCardEvents(
+                        onClick = events.navigateToAnalysisScreen,
+                        onOverviewTabClick = events.onOverviewTabClick,
+                        handleOverviewCardAction = events.handleOverviewCardAction,
+                    ),
                 )
             }
             item {

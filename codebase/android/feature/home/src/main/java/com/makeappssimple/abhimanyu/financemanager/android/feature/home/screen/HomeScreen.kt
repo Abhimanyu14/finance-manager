@@ -37,6 +37,11 @@ fun HomeScreen(
     HomeScreenUI(
         events = HomeScreenUIEvents(
             createDocument = createDocument,
+            handleOverviewCardAction = {
+                screenViewModel.handleOverviewCardAction(
+                    overviewCardAction = it
+                )
+            },
             navigateToAnalysisScreen = {
                 screenViewModel.navigationManager.navigate(
                     navigationCommand = MyNavigationDirections.Analysis
@@ -65,6 +70,11 @@ fun HomeScreen(
             navigateToTransactionsScreen = {
                 screenViewModel.navigationManager.navigate(
                     navigationCommand = MyNavigationDirections.Transactions
+                )
+            },
+            onOverviewTabClick = {
+                screenViewModel.setOverviewTabSelectionIndex(
+                    updatedOverviewTabSelectionIndex = it,
                 )
             },
         ),
