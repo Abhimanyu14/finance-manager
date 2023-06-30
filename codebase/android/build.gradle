@@ -128,7 +128,7 @@ buildscript {
         jetpackComposeNavigationHiltVersion = "1.0.0"
 
         // Jetpack compose paging
-        jetpackComposePagingVersion = "3.2.0-beta01"
+        jetpackComposePagingVersion = "3.2.0-rc01"
 
         // Accompanist
         accompanistVersion = "0.27.0"
@@ -161,7 +161,7 @@ buildscript {
         materialDesignVersion = "1.4.0"
 
         // Paging
-        pagingVersion = "3.2.0-beta01"
+        pagingVersion = "3.2.0-rc01"
 
         // Dagger
         daggerVersion = "2.29.1"
@@ -179,7 +179,7 @@ buildscript {
         hiltCompilerVersion = "1.0.0"
 
         // KSP
-        kspVersion = "1.8.10-1.0.9"
+        kspVersion = "1.8.20-1.0.11"
 
         // JDK desugaring
         jdkDesugaringVersion = "1.1.5"
@@ -197,7 +197,7 @@ buildscript {
         coilVersion = "2.2.2"
 
         // Room
-        roomVersion = "2.5.0"
+        roomVersion = "2.5.2"
 
         // Glide
         glideVersion = "4.11.0"
