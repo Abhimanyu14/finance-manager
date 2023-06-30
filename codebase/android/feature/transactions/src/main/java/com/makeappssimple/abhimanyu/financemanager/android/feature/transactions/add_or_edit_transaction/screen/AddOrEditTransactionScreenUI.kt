@@ -121,10 +121,13 @@ internal fun AddOrEditTransactionScreenUI(
         state.focusManager.clearFocus()
     }
 
-    LaunchedEffect(
-        key1 = Unit,
-    ) {
-        state.focusRequester.requestFocus()
+    if (!uiState.isLoading) {
+        LaunchedEffect(
+            key1 = Unit,
+        ) {
+            state.focusRequester.requestFocus()
+            state.keyboardController?.show()
+        }
     }
 
     BottomSheetHandler(

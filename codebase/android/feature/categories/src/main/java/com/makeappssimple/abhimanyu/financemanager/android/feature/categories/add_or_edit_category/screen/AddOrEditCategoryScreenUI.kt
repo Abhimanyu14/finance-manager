@@ -80,10 +80,12 @@ internal fun AddOrEditCategoryScreenUI(
     uiState: AddOrEditCategoryScreenUIState,
     state: CommonScreenUIState,
 ) {
-    LaunchedEffect(
-        key1 = Unit,
-    ) {
-        // state.focusRequester.requestFocus()
+    if (!uiState.isLoading) {
+        LaunchedEffect(
+            key1 = Unit,
+        ) {
+            state.focusRequester.requestFocus()
+        }
     }
 
     BottomSheetHandler(

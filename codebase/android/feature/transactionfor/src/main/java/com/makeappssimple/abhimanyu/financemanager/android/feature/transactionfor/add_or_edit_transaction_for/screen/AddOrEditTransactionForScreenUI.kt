@@ -60,10 +60,13 @@ internal fun AddOrEditTransactionForScreenUI(
     uiState: AddOrEditTransactionForScreenUIState,
     state: CommonScreenUIState,
 ) {
-    LaunchedEffect(
-        key1 = Unit,
-    ) {
-        state.focusRequester.requestFocus()
+    if (!uiState.isLoading) {
+        LaunchedEffect(
+            key1 = Unit,
+        ) {
+            state.focusRequester.requestFocus()
+            state.keyboardController?.show()
+        }
     }
 
     BottomSheetHandler(

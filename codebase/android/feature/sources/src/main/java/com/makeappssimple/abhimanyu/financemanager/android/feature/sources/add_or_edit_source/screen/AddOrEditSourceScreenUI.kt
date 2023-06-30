@@ -97,18 +97,18 @@ internal fun AddOrEditSourceScreenUI(
     uiState: AddOrEditSourceScreenUIState,
     state: CommonScreenUIState,
 ) {
-    LaunchedEffect(
-        key1 = uiState.visibilityData.balanceAmountTextField,
-        key2 = uiState.visibilityData.nameTextField,
-    ) {
-        /*
-        TODO(Abhi): Fix focus requester
-        if (isBalanceAmountTextFieldVisible) {
-            balanceAmountTextFieldFocusRequester.requestFocus()
-        } else if (isNameTextFieldVisible) {
-            nameTextFieldFocusRequester.requestFocus()
+    if (!uiState.isLoading) {
+        LaunchedEffect(
+            key1 = uiState.visibilityData.balanceAmountTextField,
+            key2 = uiState.visibilityData.nameTextField,
+        ) {
+            if (uiState.visibilityData.balanceAmountTextField) {
+                uiState.balanceAmountTextFieldFocusRequester.requestFocus()
+            } else if (uiState.visibilityData.nameTextField) {
+                uiState.nameTextFieldFocusRequester.requestFocus()
+            }
+            state.keyboardController?.show()
         }
-        */
     }
 
     BottomSheetHandler(
