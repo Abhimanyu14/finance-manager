@@ -19,6 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Common
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.bottomsheet.SourcesDeleteConfirmationBottomSheetContent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.bottomsheet.SourcesSetAsDefaultConfirmationBottomSheetContent
@@ -35,6 +36,7 @@ enum class SourcesBottomSheetType : BottomSheetType {
 @Immutable
 data class SourcesScreenUIData(
     val sourcesListItemDataList: List<SourcesListItemData> = emptyList(),
+    val sourcesTotalBalanceAmountValue: Long = 0L,
 )
 
 @Immutable
@@ -131,7 +133,12 @@ internal fun SourcesScreenUI(
             ),
         ) {
             item {
-                TotalBalanceCard()
+                TotalBalanceCard(
+                    data = TotalBalanceCardData(
+                        isLoading = uiState.isLoading,
+                        totalBalanceAmount = uiState.sourcesTotalBalanceAmountValue,
+                    ),
+                )
             }
             itemsIndexed(
                 items = uiState.sourcesListItemDataList,

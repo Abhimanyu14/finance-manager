@@ -31,6 +31,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ove
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewModelData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
@@ -48,6 +50,7 @@ data class HomeScreenUIData(
     val isBackupCardVisible: Boolean = false,
     val overviewTabSelectionIndex: Int = 0,
     val transactionListItemDataList: List<TransactionListItemData> = emptyList(),
+    val sourcesTotalBalanceAmountValue: Long = 0L,
     val overviewCardData: OverviewCardViewModelData? = null,
 )
 
@@ -133,7 +136,13 @@ internal fun HomeScreenUI(
         ) {
             item {
                 TotalBalanceCard(
-                    onClick = events.navigateToSourcesScreen,
+                    data = TotalBalanceCardData(
+                        isLoading = uiState.isLoading,
+                        totalBalanceAmount = uiState.sourcesTotalBalanceAmountValue,
+                    ),
+                    events = TotalBalanceCardEvents(
+                        onClick = events.navigateToSourcesScreen,
+                    ),
                 )
             }
             item {
@@ -155,6 +164,7 @@ internal fun HomeScreenUI(
             item {
                 OverviewCard(
                     data = OverviewCardData(
+                        isLoading = uiState.isLoading,
                         overviewTabSelectionIndex = uiState.overviewTabSelectionIndex,
                         pieChartData = uiState.pieChartData,
                         title = uiState.overviewCardData.title,

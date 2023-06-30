@@ -67,8 +67,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.SearchBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardUI
 
 @Composable
 fun MyAppCatalog() {
@@ -423,12 +423,12 @@ private fun LazyListScope.totalBalanceCardDemo(
                 space = 8.dp,
             )
         ) {
-            TotalBalanceCardUI(
+            TotalBalanceCard(
                 data = TotalBalanceCardData(
                     totalBalanceAmount = 1234567890,
                 ),
             )
-            TotalBalanceCardUI(
+            TotalBalanceCard(
                 data = TotalBalanceCardData(
                     isLoading = true,
                     totalBalanceAmount = 1234567890,

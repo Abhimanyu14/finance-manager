@@ -25,7 +25,7 @@ class TotalBalanceCardTest {
     fun defaultTest() {
         composeTestRule.setContent {
             MyAppTheme {
-                TotalBalanceCardUI(
+                TotalBalanceCard(
                     totalBalanceAmount = 123456L,
                 )
             }
@@ -43,7 +43,7 @@ class TotalBalanceCardTest {
     fun hasClick() {
         composeTestRule.setContent {
             MyAppTheme {
-                TotalBalanceCardUI(
+                TotalBalanceCard(
                     totalBalanceAmount = 123456L,
                     onClick = {},
                 )

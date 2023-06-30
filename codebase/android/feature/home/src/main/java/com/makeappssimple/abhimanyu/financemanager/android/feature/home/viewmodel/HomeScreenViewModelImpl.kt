@@ -14,6 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetSourcesTotalBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetRecentTransactionDataFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionsBetweenTimestampsUseCase
@@ -45,6 +46,7 @@ internal const val defaultOverviewTabSelection = 1
 
 @HiltViewModel
 internal class HomeScreenViewModelImpl @Inject constructor(
+    getSourcesTotalBalanceAmountValueUseCase: GetSourcesTotalBalanceAmountValueUseCase,
     override val logger: Logger,
     override val navigationManager: NavigationManager,
     private val backupDataUseCase: BackupDataUseCase,
@@ -165,16 +167,21 @@ internal class HomeScreenViewModelImpl @Inject constructor(
         scope = viewModelScope,
     )
 
+    private val sourcesTotalBalanceAmountValue: Flow<Long> =
+        getSourcesTotalBalanceAmountValueUseCase()
+
     override val screenUIData: StateFlow<MyResult<HomeScreenUIData>?> = combine(
         isBackupCardVisible,
         homeListItemViewData,
         overviewTabSelectionIndex,
         overviewCardData,
+        sourcesTotalBalanceAmountValue,
     ) {
             isBackupCardVisible,
             homeListItemViewData,
             overviewTabSelectionIndex,
             overviewCardData,
+            sourcesTotalBalanceAmountValue,
         ->
         if (homeListItemViewData.isNull()) {
             MyResult.Loading
@@ -184,6 +191,7 @@ internal class HomeScreenViewModelImpl @Inject constructor(
                     isBackupCardVisible = isBackupCardVisible,
                     overviewTabSelectionIndex = overviewTabSelectionIndex,
                     transactionListItemDataList = homeListItemViewData,
+                    sourcesTotalBalanceAmountValue = sourcesTotalBalanceAmountValue,
                     overviewCardData = overviewCardData,
                 ),
             )

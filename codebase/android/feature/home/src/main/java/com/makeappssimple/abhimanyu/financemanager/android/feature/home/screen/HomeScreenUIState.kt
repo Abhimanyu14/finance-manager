@@ -44,6 +44,8 @@ class HomeScreenUIState(
     val overviewTabSelectionIndex: Int = unwrappedData?.overviewTabSelectionIndex.orZero()
     val transactionListItemDataList: List<TransactionListItemData> =
         unwrappedData?.transactionListItemDataList.orEmpty()
+    val sourcesTotalBalanceAmountValue: Long =
+        unwrappedData?.sourcesTotalBalanceAmountValue.orZero()
     val overviewCardData: OverviewCardViewModelData = unwrappedData?.overviewCardData.orDefault()
     val pieChartData
         @Composable get() = PieChartData(

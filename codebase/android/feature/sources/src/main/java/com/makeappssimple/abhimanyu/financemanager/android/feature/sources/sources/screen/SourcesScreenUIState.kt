@@ -7,6 +7,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.SourcesListItemData
 
@@ -35,6 +36,8 @@ class SourcesScreenUIState(
     val isLoading: Boolean = unwrappedData.isNull()
     val sourcesListItemDataList: List<SourcesListItemData> =
         unwrappedData?.sourcesListItemDataList.orEmpty()
+    val sourcesTotalBalanceAmountValue: Long =
+        unwrappedData?.sourcesTotalBalanceAmountValue.orZero()
     val resetBottomSheetType: () -> Unit = {
         setSourcesBottomSheetType(SourcesBottomSheetType.NONE)
     }

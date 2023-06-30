@@ -9,6 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defa
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.DeleteSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetSourcesTotalBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfSourceIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
@@ -29,6 +30,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class SourcesScreenViewModelImpl @Inject constructor(
     getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase,
+    getSourcesTotalBalanceAmountValueUseCase: GetSourcesTotalBalanceAmountValueUseCase,
     override val logger: Logger,
     override val navigationManager: NavigationManager,
     private val checkIfSourceIsUsedInTransactionsUseCase: CheckIfSourceIsUsedInTransactionsUseCase,
@@ -40,13 +42,17 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
         it?.source
     }
     private val allSourcesFlow: Flow<List<Source>> = getAllSourcesFlowUseCase()
+    private val sourcesTotalBalanceAmountValue: Flow<Long> =
+        getSourcesTotalBalanceAmountValueUseCase()
 
     override val screenUIData: StateFlow<MyResult<SourcesScreenUIData>?> = combine(
-        flow = defaultSourceId,
-        flow2 = allSourcesFlow,
+        defaultSourceId,
+        allSourcesFlow,
+        sourcesTotalBalanceAmountValue,
     ) {
             defaultSourceId,
             allSourcesFlow,
+            sourcesTotalBalanceAmountValue,
         ->
         val sourcesListItemDataList = allSourcesFlow
             .sortedWith(
@@ -87,6 +93,7 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
             MyResult.Success(
                 data = SourcesScreenUIData(
                     sourcesListItemDataList = sourcesListItemDataList,
+                    sourcesTotalBalanceAmountValue = sourcesTotalBalanceAmountValue,
                 ),
             )
         }
