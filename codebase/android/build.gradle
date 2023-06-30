@@ -274,6 +274,9 @@ buildscript {
         // Coroutines test
         coroutinesTestVersion = "1.6.1"
 
+        // Turbine
+        turbineVersion = "1.0.0"
+
         // Dagger hilt android testing
         daggerHiltAndroidTesting = "2.44"
 

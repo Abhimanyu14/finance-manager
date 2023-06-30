@@ -402,6 +402,9 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
 
+    // Turbine
+    testImplementation "app.cash.turbine:turbine:$rootProject.turbineVersion"
+
     // Jetpack compose UI tests
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$rootProject.jetpackComposeVersion"
 
