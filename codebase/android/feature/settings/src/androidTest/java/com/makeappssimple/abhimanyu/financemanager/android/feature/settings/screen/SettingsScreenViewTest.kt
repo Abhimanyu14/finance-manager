@@ -7,8 +7,8 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -52,10 +52,14 @@ class SettingsScreenViewTest {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
-                    data = testSettingsScreenViewData.copy(
-                        isLoading = true,
+                    events = SettingsScreenUIEvents(),
+                    uiState = SettingsScreenUIState(
+                        data = MyResult.Success(
+                            data = testSettingsScreenViewData.copy(
+                                isLoading = true,
+                            ),
+                        ),
                     ),
-                    state = rememberCommonScreenUIState(),
                 )
             }
         }
@@ -81,10 +85,14 @@ class SettingsScreenViewTest {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
-                    data = testSettingsScreenViewData.copy(
-                        isLoading = false,
+                    events = SettingsScreenUIEvents(),
+                    uiState = SettingsScreenUIState(
+                        data = MyResult.Success(
+                            data = testSettingsScreenViewData.copy(
+                                isLoading = false,
+                            ),
+                        ),
                     ),
-                    state = rememberCommonScreenUIState(),
                 )
             }
         }
@@ -110,10 +118,14 @@ class SettingsScreenViewTest {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
-                    data = testSettingsScreenViewData.copy(
-                        appVersion = testAppVersion,
+                    events = SettingsScreenUIEvents(),
+                    uiState = SettingsScreenUIState(
+                        data = MyResult.Success(
+                            data = testSettingsScreenViewData.copy(
+                                appVersion = testAppVersion,
+                            ),
+                        ),
                     ),
-                    state = rememberCommonScreenUIState(),
                 )
             }
         }
@@ -127,10 +139,14 @@ class SettingsScreenViewTest {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
-                    data = testSettingsScreenViewData.copy(
-                        appVersion = null,
+                    events = SettingsScreenUIEvents(),
+                    uiState = SettingsScreenUIState(
+                        data = MyResult.Success(
+                            data = testSettingsScreenViewData.copy(
+                                appVersion = null,
+                            ),
+                        ),
                     ),
-                    state = rememberCommonScreenUIState(),
                 )
             }
         }
@@ -144,11 +160,6 @@ class SettingsScreenViewTest {
         private val testSettingsScreenViewData = SettingsScreenUIData(
             isLoading = false,
             appVersion = testAppVersion,
-            backupData = {},
-            navigateToTransactionForValuesScreen = {},
-            navigateUp = {},
-            recalculateTotal = {},
-            restoreData = {},
         )
     }
 }

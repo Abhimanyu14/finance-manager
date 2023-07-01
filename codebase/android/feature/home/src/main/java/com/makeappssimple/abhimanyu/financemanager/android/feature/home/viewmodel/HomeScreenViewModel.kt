@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmod
 
 import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardAction
@@ -10,7 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen.H
 import kotlinx.coroutines.flow.StateFlow
 
 interface HomeScreenViewModel : ScreenViewModel {
-    val logger: Logger
+    val myLogger: MyLogger
     val navigationManager: NavigationManager
     val screenUIData: StateFlow<MyResult<HomeScreenUIData>?>
 

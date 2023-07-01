@@ -18,7 +18,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 fun AddTransactionForScreen(
     screenViewModel: AddOrEditTransactionForScreenViewModel = hiltViewModel<AddOrEditTransactionForScreenViewModelImpl>(),
 ) {
-    screenViewModel.logger.logError(
+    screenViewModel.myLogger.logError(
         message = "Inside AddTransactionForScreen",
     )
 

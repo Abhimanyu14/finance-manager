@@ -20,7 +20,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ad
 fun EditCategoryScreen(
     screenViewModel: AddOrEditCategoryScreenViewModel = hiltViewModel<AddOrEditCategoryScreenViewModelImpl>(),
 ) {
-    screenViewModel.logger.logError(
+    screenViewModel.myLogger.logError(
         message = "Inside EditCategoryScreen",
     )
 

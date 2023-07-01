@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -10,7 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import kotlinx.coroutines.flow.StateFlow
 
 interface TransactionsScreenViewModel : ScreenViewModel {
-    val logger: Logger
+    val myLogger: MyLogger
     val navigationManager: NavigationManager
     val screenUIData: StateFlow<MyResult<TransactionsScreenUIData>?>
 

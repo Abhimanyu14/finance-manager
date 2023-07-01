@@ -6,9 +6,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.DeleteSourceUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetSourcesTotalBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfSourceIsUsedInTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LoggerImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLoggerImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManagerImpl
@@ -37,11 +38,13 @@ class SourcesScreenViewModelTest {
     )
 
     private val getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase = mock()
+    private val getSourcesTotalBalanceAmountValueUseCase: GetSourcesTotalBalanceAmountValueUseCase =
+        mock()
     private val navigationManager: NavigationManager = NavigationManagerImpl(
         coroutineScope = testCoroutineScope,
     )
     private var buildConfigUtil: BuildConfigUtil = BuildConfigUtilImpl()
-    private var logger: Logger = LoggerImpl(
+    private var myLogger: MyLogger = MyLoggerImpl(
         buildConfigUtil = buildConfigUtil,
     )
     private val checkIfSourceIsUsedInTransactionsUseCase: CheckIfSourceIsUsedInTransactionsUseCase =
@@ -55,7 +58,8 @@ class SourcesScreenViewModelTest {
     fun setUp() {
         sourcesScreenViewModel = SourcesScreenViewModelImpl(
             getAllSourcesFlowUseCase = getAllSourcesFlowUseCase,
-            logger = logger,
+            getSourcesTotalBalanceAmountValueUseCase = getSourcesTotalBalanceAmountValueUseCase,
+            myLogger = myLogger,
             navigationManager = navigationManager,
             checkIfSourceIsUsedInTransactionsUseCase = checkIfSourceIsUsedInTransactionsUseCase,
             deleteSourceUseCase = deleteSourceUseCase,

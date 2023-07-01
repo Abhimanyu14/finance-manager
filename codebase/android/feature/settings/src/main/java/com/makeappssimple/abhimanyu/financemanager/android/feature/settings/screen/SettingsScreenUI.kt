@@ -30,6 +30,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ext
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
@@ -46,18 +47,18 @@ data class SettingsScreenUIData(
 
 @Immutable
 internal data class SettingsScreenUIEvents(
-    val backupData: () -> Unit,
-    val navigateToTransactionForValuesScreen: () -> Unit,
-    val navigateUp: () -> Unit,
-    val recalculateTotal: () -> Unit,
-    val restoreData: () -> Unit,
+    val backupData: () -> Unit = {},
+    val navigateToTransactionForValuesScreen: () -> Unit = {},
+    val navigateUp: () -> Unit = {},
+    val recalculateTotal: () -> Unit = {},
+    val restoreData: () -> Unit = {},
 )
 
 @Composable
 internal fun SettingsScreenUI(
     events: SettingsScreenUIEvents,
     uiState: SettingsScreenUIState,
-    state: CommonScreenUIState,
+    state: CommonScreenUIState = rememberCommonScreenUIState(),
 ) {
     BottomSheetHandler(
         showModalBottomSheet = uiState.settingsBottomSheetType != SettingsBottomSheetType.NONE,

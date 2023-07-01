@@ -15,7 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ca
 fun CategoriesScreen(
     screenViewModel: CategoriesScreenViewModel = hiltViewModel<CategoriesScreenViewModelImpl>(),
 ) {
-    screenViewModel.logger.logError(
+    screenViewModel.myLogger.logError(
         message = "Inside CategoriesScreen",
     )
 

@@ -14,7 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defa
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -33,7 +33,7 @@ import javax.inject.Inject
 internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
-    override val logger: Logger,
+    override val myLogger: MyLogger,
     override val navigationManager: NavigationManager,
     private val dateTimeUtil: DateTimeUtil,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,

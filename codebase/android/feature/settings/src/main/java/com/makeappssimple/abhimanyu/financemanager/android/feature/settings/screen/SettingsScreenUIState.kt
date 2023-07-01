@@ -9,9 +9,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.My
 
 @Stable
 class SettingsScreenUIState(
-    data: MyResult<SettingsScreenUIData>?,
-    val settingsBottomSheetType: SettingsBottomSheetType,
-    val setSettingsBottomSheetType: (SettingsBottomSheetType) -> Unit,
+    data: MyResult<SettingsScreenUIData>? = null,
+    val settingsBottomSheetType: SettingsBottomSheetType = SettingsBottomSheetType.NONE,
+    val setSettingsBottomSheetType: (SettingsBottomSheetType) -> Unit = {},
 ) {
     private val unwrappedData = when (data) {
         is MyResult.Success -> {

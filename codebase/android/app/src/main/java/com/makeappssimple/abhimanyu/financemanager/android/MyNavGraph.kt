@@ -20,7 +20,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 internal fun MyNavGraph(
     activityViewModel: MainActivityViewModel,
 ) {
-    activityViewModel.logger.logError(
+    activityViewModel.myLogger.logError(
         message = "Inside MyNavGraph",
     )
     val navHostController = rememberNavController()

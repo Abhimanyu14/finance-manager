@@ -6,7 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DataTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
@@ -16,12 +16,12 @@ import kotlinx.coroutines.flow.map
 
 class MyPreferencesDataSource(
     private val dataStore: DataStore<Preferences>,
-    private val logger: Logger,
+    private val myLogger: MyLogger,
 ) {
     @VisibleForTesting
     internal val preferences: Flow<Preferences> = dataStore.data
         .catch { exception ->
-            logger.logError(
+            myLogger.logError(
                 message = "Error reading preferences. ${exception.localizedMessage}",
             )
             emit(

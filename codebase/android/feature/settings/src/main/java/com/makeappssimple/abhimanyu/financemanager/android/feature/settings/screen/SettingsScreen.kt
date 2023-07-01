@@ -22,7 +22,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.view
 fun SettingsScreen(
     screenViewModel: SettingsScreenViewModel = hiltViewModel<SettingsScreenViewModelImpl>(),
 ) {
-    screenViewModel.logger.logError(
+    screenViewModel.myLogger.logError(
         message = "Inside SettingsScreen",
     )
     var isLoading by remember {

@@ -13,7 +13,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionDataFlowUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
@@ -37,7 +37,7 @@ import javax.inject.Inject
 internal class TransactionsScreenViewModelImpl @Inject constructor(
     dispatcherProvider: DispatcherProvider,
     getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
-    override val logger: Logger,
+    override val myLogger: MyLogger,
     override val navigationManager: NavigationManager,
     private val dateTimeUtil: DateTimeUtil,
 ) : TransactionsScreenViewModel, ViewModel() {

@@ -16,7 +16,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 fun TransactionsScreen(
     screenViewModel: TransactionsScreenViewModel = hiltViewModel<TransactionsScreenViewModelImpl>(),
 ) {
-    screenViewModel.logger.logError(
+    screenViewModel.myLogger.logError(
         message = "Inside TransactionsScreen",
     )
 

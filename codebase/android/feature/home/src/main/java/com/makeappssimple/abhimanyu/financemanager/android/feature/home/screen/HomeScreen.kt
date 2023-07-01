@@ -18,7 +18,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmode
 fun HomeScreen(
     screenViewModel: HomeScreenViewModel = hiltViewModel<HomeScreenViewModelImpl>(),
 ) {
-    screenViewModel.logger.logError(
+    screenViewModel.myLogger.logError(
         message = "Inside HomeScreen",
     )
     val createDocument: ManagedActivityResultLauncher<String, Uri?> =

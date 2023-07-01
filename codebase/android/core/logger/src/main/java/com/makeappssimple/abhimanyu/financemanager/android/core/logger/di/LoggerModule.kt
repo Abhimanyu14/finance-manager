@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.logger.di
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LoggerImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLoggerImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,8 +16,8 @@ object LoggerModule {
     @Provides
     fun providesLogger(
         buildConfigUtil: BuildConfigUtil,
-    ): Logger {
-        return LoggerImpl(
+    ): MyLogger {
+        return MyLoggerImpl(
             buildConfigUtil = buildConfigUtil,
         )
     }

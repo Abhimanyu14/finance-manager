@@ -2,14 +2,14 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIData
 import kotlinx.coroutines.flow.StateFlow
 
 interface AddOrEditTransactionForScreenViewModel : ScreenViewModel {
-    val logger: Logger
+    val myLogger: MyLogger
     val navigationManager: NavigationManager
     val screenUIData: StateFlow<MyResult<AddOrEditTransactionForScreenUIData>?>
 

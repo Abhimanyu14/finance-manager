@@ -18,7 +18,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_o
 fun EditSourceScreen(
     screenViewModel: AddOrEditSourceScreenViewModel = hiltViewModel<AddOrEditSourceScreenViewModelImpl>(),
 ) {
-    screenViewModel.logger.logError(
+    screenViewModel.myLogger.logError(
         message = "Inside EditSourceScreen",
     )
 

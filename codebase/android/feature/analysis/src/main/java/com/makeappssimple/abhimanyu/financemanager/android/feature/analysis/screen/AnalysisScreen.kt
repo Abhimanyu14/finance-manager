@@ -13,7 +13,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.view
 fun AnalysisScreen(
     screenViewModel: AnalysisScreenViewModel = hiltViewModel<AnalysisScreenViewModelImpl>(),
 ) {
-    screenViewModel.logger.logError(
+    screenViewModel.myLogger.logError(
         message = "Inside AnalysisScreen",
     )
 

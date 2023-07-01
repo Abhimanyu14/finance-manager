@@ -9,7 +9,7 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.test.core.app.ApplicationProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.AppConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.Logger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -50,7 +50,7 @@ class MyPreferencesDataSourceTest {
     )
 
     @Inject
-    lateinit var logger: Logger
+    lateinit var myLogger: MyLogger
 
     private lateinit var myPreferencesDataSource: MyPreferencesDataSource
 
@@ -58,7 +58,7 @@ class MyPreferencesDataSourceTest {
     fun setUp() {
         myPreferencesDataSource = MyPreferencesDataSource(
             dataStore = testDataStore,
-            logger = logger,
+            myLogger = myLogger,
         )
     }
 

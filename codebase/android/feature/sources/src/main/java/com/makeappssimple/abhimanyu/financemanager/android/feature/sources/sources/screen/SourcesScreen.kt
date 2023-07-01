@@ -14,7 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sourc
 fun SourcesScreen(
     screenViewModel: SourcesScreenViewModel = hiltViewModel<SourcesScreenViewModelImpl>(),
 ) {
-    screenViewModel.logger.logError(
+    screenViewModel.myLogger.logError(
         message = "Inside SourcesScreen",
     )
 
