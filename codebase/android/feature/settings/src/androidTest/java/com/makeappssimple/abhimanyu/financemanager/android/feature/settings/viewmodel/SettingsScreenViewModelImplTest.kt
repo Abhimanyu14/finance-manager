@@ -1,65 +1,113 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.viewmodel
 
-import android.content.Context
-import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.fake.FakeAppVersionUtilImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.fake.FakeBuildConfigUtilImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtilImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.fake.FakeMyJsonReaderImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.fake.FakeMyJsonWriterImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.repository.fake.FakeCategoryRepositoryImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.repository.fake.FakeEmojiRepositoryImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.fake.FakeMyPreferencesRepositoryImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.repository.fake.FakeSourceRepositoryImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.UpdateSourcesUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.fake.FakeTransactionRepositoryImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionDataUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionsUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.repository.fake.FakeTransactionForRepositoryImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.BackupDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.BackupDataUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RecalculateTotalUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RecalculateTotalUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RestoreDataUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RestoreDataUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.fake.FakeMyLoggerImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.core.testing.logger.TestMyLoggerImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.fake.FakeNavigationManagerImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.testing.TestDispatcherProviderImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.kotlin.mock
 
 @RunWith(AndroidJUnit4::class)
 class SettingsScreenViewModelImplTest {
-    /**
-     * Manages the components' state and is used to perform injection on your test
-     */
-//    @get:Rule(order = 0)
-//    val hiltRule = HiltAndroidRule(this)
-
-    @get:Rule(order = 0)
     val mainDispatcherRule = MainDispatcherRule()
 
     private lateinit var appVersionUtil: AppVersionUtil
+    private lateinit var myLogger: MyLogger
+    private lateinit var navigationManager: NavigationManager
+    private lateinit var backupDataUseCase: BackupDataUseCase
+    private lateinit var recalculateTotalUseCase: RecalculateTotalUseCase
+    private lateinit var restoreDataUseCase: RestoreDataUseCase
 
-    private val buildConfigUtil = FakeBuildConfigUtilImpl()
-    private val myLogger: MyLogger = TestMyLoggerImpl(
-        buildConfigUtil = buildConfigUtil,
+    private val dispatcherProvider = TestDispatcherProviderImpl(
+        testDispatcher = UnconfinedTestDispatcher(),
     )
-    private val navigationManager: NavigationManager = mock()
-    private val backupDataUseCase: BackupDataUseCase = mock()
-    private val dispatcherProvider: DispatcherProvider = mock()
-    private val recalculateTotalUseCase: RecalculateTotalUseCase = mock()
-    private val restoreDataUseCase: RestoreDataUseCase = mock()
 
     private lateinit var settingsScreenViewModelImpl: SettingsScreenViewModelImpl
 
     @Before
     fun setUp() {
-        val context = ApplicationProvider.getApplicationContext<Context>()
-        appVersionUtil = FakeAppVersionUtilImpl(
-            context = context,
+        appVersionUtil = FakeAppVersionUtilImpl()
+        myLogger = FakeMyLoggerImpl()
+        navigationManager = FakeNavigationManagerImpl()
+        backupDataUseCase = BackupDataUseCaseImpl(
+            dateTimeUtil = DateTimeUtilImpl(),
+            dispatcherProvider = dispatcherProvider,
+            getAllCategoriesUseCase = GetAllCategoriesUseCaseImpl(
+                categoryRepository = FakeCategoryRepositoryImpl(),
+            ),
+            getAllEmojisUseCase = GetAllEmojisUseCaseImpl(
+                emojiRepository = FakeEmojiRepositoryImpl(),
+            ),
+            getAllSourcesUseCase = GetAllSourcesUseCaseImpl(
+                sourceRepository = FakeSourceRepositoryImpl(),
+            ),
+            getAllTransactionForValuesUseCase = GetAllTransactionForValuesUseCaseImpl(
+                transactionForRepository = FakeTransactionForRepositoryImpl(),
+            ),
+            getAllTransactionsUseCase = GetAllTransactionsUseCaseImpl(
+                transactionRepository = FakeTransactionRepositoryImpl(),
+            ),
+            myJsonWriter = FakeMyJsonWriterImpl(),
+            myPreferencesRepository = FakeMyPreferencesRepositoryImpl(),
         )
+        recalculateTotalUseCase = RecalculateTotalUseCaseImpl(
+            dispatcherProvider = dispatcherProvider,
+            getAllSourcesUseCase = GetAllSourcesUseCaseImpl(
+                sourceRepository = FakeSourceRepositoryImpl(),
+            ),
+            getAllTransactionDataUseCase = GetAllTransactionDataUseCaseImpl(
+                transactionRepository = FakeTransactionRepositoryImpl(),
+            ),
+            myPreferencesRepository = FakeMyPreferencesRepositoryImpl(),
+            updateSourcesUseCase = UpdateSourcesUseCaseImpl(
+                myPreferencesRepository = FakeMyPreferencesRepositoryImpl(),
+                sourceRepository = FakeSourceRepositoryImpl(),
+            ),
+        )
+        restoreDataUseCase = RestoreDataUseCaseImpl(
+            myJsonReader = FakeMyJsonReaderImpl(),
+            myPreferencesRepository = FakeMyPreferencesRepositoryImpl(),
+            transactionRepository = FakeTransactionRepositoryImpl(),
+        )
+
         settingsScreenViewModelImpl = SettingsScreenViewModelImpl(
             appVersionUtil = appVersionUtil,
             myLogger = myLogger,
             navigationManager = navigationManager,
             backupDataUseCase = backupDataUseCase,
-            dispatcherProvider = dispatcherProvider,
+            ioDispatcher = UnconfinedTestDispatcher(),
             recalculateTotalUseCase = recalculateTotalUseCase,
             restoreDataUseCase = restoreDataUseCase,
         )
@@ -81,7 +129,7 @@ class SettingsScreenViewModelImplTest {
 //                ),
 //                awaitItem(),
 //            )
-//            cancelAndIgnoreRemainingEvents()
+//            // cancelAndIgnoreRemainingEvents()
 //        }
     }
 }

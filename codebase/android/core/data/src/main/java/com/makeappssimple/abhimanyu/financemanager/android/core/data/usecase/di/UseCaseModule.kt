@@ -2,8 +2,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.di
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.JsonReader
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.JsonWriter
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.MyJsonReader
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.MyJsonWriter
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
@@ -36,7 +36,7 @@ class UseCaseModule {
         getAllSourcesUseCase: GetAllSourcesUseCase,
         getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
         getAllTransactionsUseCase: GetAllTransactionsUseCase,
-        jsonWriter: JsonWriter,
+        myJsonWriter: MyJsonWriter,
         myPreferencesRepository: MyPreferencesRepository,
     ): BackupDataUseCase {
         return BackupDataUseCaseImpl(
@@ -47,7 +47,7 @@ class UseCaseModule {
             getAllSourcesUseCase = getAllSourcesUseCase,
             getAllTransactionForValuesUseCase = getAllTransactionForValuesUseCase,
             getAllTransactionsUseCase = getAllTransactionsUseCase,
-            jsonWriter = jsonWriter,
+            myJsonWriter = myJsonWriter,
             myPreferencesRepository = myPreferencesRepository,
         )
     }
@@ -71,12 +71,12 @@ class UseCaseModule {
 
     @Provides
     fun providesRestoreDataUseCase(
-        jsonReader: JsonReader,
+        myJsonReader: MyJsonReader,
         myPreferencesRepository: MyPreferencesRepository,
         transactionRepository: TransactionRepository,
     ): RestoreDataUseCase {
         return RestoreDataUseCaseImpl(
-            jsonReader = jsonReader,
+            myJsonReader = myJsonReader,
             myPreferencesRepository = myPreferencesRepository,
             transactionRepository = transactionRepository,
         )

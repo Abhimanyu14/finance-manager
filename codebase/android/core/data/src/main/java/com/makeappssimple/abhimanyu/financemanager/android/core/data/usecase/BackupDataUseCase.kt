@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase
 import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.JsonWriter
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.MyJsonWriter
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.BackupData
@@ -42,7 +42,7 @@ class BackupDataUseCaseImpl(
     private val getAllSourcesUseCase: GetAllSourcesUseCase,
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val getAllTransactionsUseCase: GetAllTransactionsUseCase,
-    private val jsonWriter: JsonWriter,
+    private val myJsonWriter: MyJsonWriter,
     private val myPreferencesRepository: MyPreferencesRepository,
 ) : BackupDataUseCase {
 
@@ -111,7 +111,7 @@ class BackupDataUseCaseImpl(
                 value = backupData,
             )
             myPreferencesRepository.setLastDataBackupTimestamp()
-            jsonWriter.writeJsonToFile(
+            myJsonWriter.writeJsonToFile(
                 uri = uri,
                 jsonString = jsonString,
             )

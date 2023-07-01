@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.JsonReader
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.MyJsonReader
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.AmountConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.CategoryConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.IntListConverter
@@ -103,7 +103,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
         fun getDatabase(
             context: Context,
             dispatcherProvider: DispatcherProvider,
-            jsonReader: JsonReader,
+            myJsonReader: MyJsonReader,
             myPreferencesDataSource: MyPreferencesDataSource,
         ): MyRoomDatabase {
             val tempInstance = INSTANCE
@@ -130,7 +130,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                                 populateInitialData(
                                     context = context,
                                     dispatcherProvider = dispatcherProvider,
-                                    jsonReader = jsonReader,
+                                    myJsonReader = myJsonReader,
                                     myPreferencesDataSource = myPreferencesDataSource,
                                 )
                             }
@@ -170,13 +170,13 @@ abstract class MyRoomDatabase : RoomDatabase() {
         private fun populateInitialData(
             context: Context,
             dispatcherProvider: DispatcherProvider,
-            jsonReader: JsonReader,
+            myJsonReader: MyJsonReader,
             myPreferencesDataSource: MyPreferencesDataSource,
         ) {
             val myRoomDatabase = getDatabase(
                 context = context,
                 dispatcherProvider = dispatcherProvider,
-                jsonReader = jsonReader,
+                myJsonReader = myJsonReader,
                 myPreferencesDataSource = myPreferencesDataSource,
             )
             myRoomDatabase.runInTransaction {
@@ -184,7 +184,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     context = dispatcherProvider.io + SupervisorJob(),
                 ).launch {
                     val initialDatabaseData = try {
-                        val jsonString = jsonReader.readJsonFromAssets(
+                        val jsonString = myJsonReader.readJsonFromAssets(
                             fileName = AppConstants.INITIAL_DATA_FILE_NAME,
                         ) ?: return@launch
                         Json.decodeFromString<InitialDatabaseData>(

@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.di
 
 import android.content.Context
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.JsonReader
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.JsonReaderImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.MyJsonReader
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.MyJsonReaderImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,8 +17,8 @@ class JsonReaderModule {
     @Provides
     fun providesJsonReader(
         @ApplicationContext context: Context,
-    ): JsonReader {
-        return JsonReaderImpl(
+    ): MyJsonReader {
+        return MyJsonReaderImpl(
             context = context,
         )
     }

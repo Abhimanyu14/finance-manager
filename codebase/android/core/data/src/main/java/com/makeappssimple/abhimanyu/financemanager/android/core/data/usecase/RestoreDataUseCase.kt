@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase
 
 import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.JsonReader
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.MyJsonReader
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.BackupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
@@ -19,7 +19,7 @@ interface RestoreDataUseCase {
 }
 
 class RestoreDataUseCaseImpl(
-    private val jsonReader: JsonReader,
+    private val myJsonReader: MyJsonReader,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val transactionRepository: TransactionRepository,
 ) : RestoreDataUseCase {
@@ -28,7 +28,7 @@ class RestoreDataUseCaseImpl(
     ) {
         myPreferencesRepository.setLastDataChangeTimestamp()
         myPreferencesRepository.setLastDataBackupTimestamp()
-        val jsonString = jsonReader.readJsonFromFile(
+        val jsonString = myJsonReader.readJsonFromFile(
             uri = uri,
         ) ?: return
         val backupData = Json.decodeFromString<BackupData>(

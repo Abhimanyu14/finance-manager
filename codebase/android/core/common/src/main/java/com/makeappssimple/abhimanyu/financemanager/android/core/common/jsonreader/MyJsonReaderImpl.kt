@@ -10,9 +10,9 @@ import java.io.InputStreamReader
 import java.nio.charset.Charset
 import javax.inject.Inject
 
-class JsonReaderImpl @Inject constructor(
+class MyJsonReaderImpl @Inject constructor(
     private val context: Context,
-) : JsonReader {
+) : MyJsonReader {
     override fun readJsonFromAssets(
         fileName: String,
     ): String? {

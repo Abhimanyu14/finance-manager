@@ -5,9 +5,9 @@ import android.net.Uri
 import java.io.FileOutputStream
 import javax.inject.Inject
 
-class JsonWriterImpl @Inject constructor(
+class MyJsonWriterImpl @Inject constructor(
     private val context: Context,
-) : JsonWriter {
+) : MyJsonWriter {
     override fun writeJsonToFile(
         jsonString: String,
         uri: Uri,

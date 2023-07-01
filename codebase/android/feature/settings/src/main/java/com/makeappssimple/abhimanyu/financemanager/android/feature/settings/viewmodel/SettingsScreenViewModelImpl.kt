@@ -4,7 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.IoDispatcher
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.BackupDataUseCase
@@ -15,6 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNav
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.screen.SettingsScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -26,7 +27,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
     override val myLogger: MyLogger,
     override val navigationManager: NavigationManager,
     private val backupDataUseCase: BackupDataUseCase,
-    private val dispatcherProvider: DispatcherProvider,
+    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     private val recalculateTotalUseCase: RecalculateTotalUseCase,
     private val restoreDataUseCase: RestoreDataUseCase,
 ) : SettingsScreenViewModel, ViewModel() {
@@ -45,7 +46,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
         uri: Uri,
     ) {
         viewModelScope.launch(
-            context = dispatcherProvider.io,
+            context = ioDispatcher,
         ) {
             launch {
                 backupDataUseCase(
@@ -74,7 +75,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
         uri: Uri,
     ) {
         viewModelScope.launch(
-            context = dispatcherProvider.io,
+            context = ioDispatcher,
         ) {
             restoreDataUseCase(
                 uri = uri,
@@ -87,7 +88,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
 
     override fun recalculateTotal() {
         viewModelScope.launch(
-            context = dispatcherProvider.io,
+            context = ioDispatcher,
         ) {
             recalculateTotalUseCase()
             navigationManager.navigate(

@@ -156,13 +156,18 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
 
+    // Coroutines test
+//    testImplementation "androidx.arch.core:core-testing:$rootProject.androidXCoreTestingVersion"
+//    androidTestImplementation "androidx.arch.core:core-testing:$rootProject.androidXCoreTestingVersion"
+
     // Turbine
     testImplementation "app.cash.turbine:turbine:$rootProject.turbineVersion"
+    androidTestImplementation "app.cash.turbine:turbine:$rootProject.turbineVersion"
 
     // Hilt testing
     testImplementation "com.google.dagger:hilt-android-testing:$rootProject.daggerHiltAndroidTesting"
-    kaptTest "com.google.dagger:hilt-android-compiler:$rootProject.daggerHiltAndroidCompiler"
     androidTestImplementation "com.google.dagger:hilt-android-testing:$rootProject.daggerHiltAndroidTesting"
+    kaptTest "com.google.dagger:hilt-android-compiler:$rootProject.daggerHiltAndroidCompiler"
     kaptAndroidTest "com.google.dagger:hilt-android-compiler:$rootProject.daggerHiltAndroidCompiler"
 
     // Jetpack compose UI tests

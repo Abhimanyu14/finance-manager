@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwrit
 
 import android.net.Uri
 
-interface JsonWriter {
+interface MyJsonWriter {
     fun writeJsonToFile(
         jsonString: String,
         uri: Uri,
