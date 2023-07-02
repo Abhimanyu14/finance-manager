@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -33,7 +34,8 @@ fun MyConfirmationBottomSheet(
             )
             .defaultMinSize(
                 minHeight = 24.dp,
-            ),
+            )
+            .navigationBarsPadding(),
     ) {
         MyText(
             modifier = Modifier

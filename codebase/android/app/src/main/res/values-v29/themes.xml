@@ -15,10 +15,13 @@
         <item name="colorOnSecondary">@color/colorOnSecondary</item>
 
         <!-- Navigation bar color -->
-        <item name="android:navigationBarColor">@color/navigation_bar</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
 
         <!-- Status bar color -->
         <item name="android:statusBarColor">@color/status_bar</item>
+
+        <!-- Status bar icon color -->
+        <item name="android:windowLightStatusBar">true</item>
 
     </style>
 

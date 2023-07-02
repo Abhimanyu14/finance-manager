@@ -1,10 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.core.view.WindowInsetsControllerCompat
+import androidx.core.view.WindowCompat
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -15,20 +14,12 @@ class MainActivity : ComponentActivity() {
     ) {
         super.onCreate(savedInstanceState)
 
-        setDarkStatusBarIcons()
+        // Turn off the decor fitting system windows, which allows us to handle insets,
+        // including IME animations
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
         setContent {
             MyApp()
         }
-    }
-}
-
-/**
- * Source: https://stackoverflow.com/a/71036723/9636037
- */
-fun Activity.setDarkStatusBarIcons() {
-    window?.let { window ->
-        WindowInsetsControllerCompat(window, window.decorView)
-    }?.apply {
-        isAppearanceLightStatusBars = true
     }
 }

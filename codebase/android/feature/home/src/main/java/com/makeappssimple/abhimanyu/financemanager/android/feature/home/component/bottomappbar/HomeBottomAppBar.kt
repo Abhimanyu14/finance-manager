@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.home.component.bottomappbar
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.BottomAppBar
@@ -11,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 
 @Composable
@@ -21,6 +23,9 @@ internal fun HomeBottomAppBar(
     BottomAppBar(
         modifier = modifier,
         cutoutShape = CircleShape,
+        contentPadding = PaddingValues(
+            bottom = 50.dp,
+        )
     ) {
         IconButton(
             onClick = {

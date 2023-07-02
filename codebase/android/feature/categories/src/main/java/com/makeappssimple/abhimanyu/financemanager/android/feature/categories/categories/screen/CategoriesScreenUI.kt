@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
@@ -13,6 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.HorizontalPager
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabRow
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
@@ -161,6 +163,8 @@ internal fun CategoriesScreenUI(
         },
         floatingActionButton = {
             MyFloatingActionButton(
+                modifier = Modifier
+                    .navigationBarsPadding(),
                 iconImageVector = Icons.Rounded.Add,
                 contentDescription = stringResource(
                     id = R.string.screen_categories_floating_action_button_content_description,
@@ -240,6 +244,7 @@ internal fun CategoriesScreenUI(
                     },
                 )
             }
+            NavigationBarSpacer()
         }
     }
 }

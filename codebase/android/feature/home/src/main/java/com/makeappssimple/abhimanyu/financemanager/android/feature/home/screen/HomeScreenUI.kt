@@ -106,9 +106,11 @@ internal fun HomeScreenUI(
             )
         },
         bottomBar = {
-            HomeBottomAppBar {
-                uiState.setHomeBottomSheetType(HomeBottomSheetType.MENU)
-            }
+            HomeBottomAppBar(
+                updateHomeBottomSheetType = {
+                    uiState.setHomeBottomSheetType(HomeBottomSheetType.MENU)
+                },
+            )
         },
         floatingActionButton = {
             MyFloatingActionButton(

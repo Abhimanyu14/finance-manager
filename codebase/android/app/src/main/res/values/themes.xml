@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <!-- Base application theme -->
@@ -13,11 +14,11 @@
         <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
         <item name="colorOnSecondary">@color/colorOnSecondary</item>
 
+        <!-- Navigation bar color -->
+        <item name="android:navigationBarColor">@color/navigation_bar</item>
+
         <!-- Status bar color -->
         <item name="android:statusBarColor">@color/status_bar</item>
-
-        <!-- Navigation bar color -->
-        <!-- <item name="android:navigationBarColor">@color/navigation_bar</item> -->
 
     </style>
 

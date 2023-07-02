@@ -327,7 +327,7 @@ dependencies {
     // Jetpack compose paging
     implementation "androidx.paging:paging-compose:$rootProject.jetpackComposePagingVersion"
 
-    // Accompanist
+    // Accompanist insets
     implementation "com.google.accompanist:accompanist-insets:$rootProject.accompanistVersion"
 
     // Accompanist flow layout

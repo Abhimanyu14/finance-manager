@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
@@ -246,7 +248,9 @@ internal fun TransactionsFiltersBottomSheet(
             .fillMaxSize()
             .defaultMinSize(
                 minHeight = 24.dp,
-            ),
+            )
+            .navigationBarsPadding()
+            .statusBarsPadding(),
     ) {
         LazyColumn(
             modifier = Modifier

@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bo
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
@@ -28,7 +29,8 @@ internal fun SelectCategoryBottomSheet(
         modifier = modifier
             .defaultMinSize(
                 minHeight = 24.dp,
-            ),
+            )
+            .navigationBarsPadding(),
     ) {
         MyBottomSheetTitle(
             textStringResourceId = R.string.bottom_sheet_select_category_title,

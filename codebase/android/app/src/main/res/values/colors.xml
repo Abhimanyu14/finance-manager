@@ -17,7 +17,8 @@
     <color name="colorOnSecondary">#FFFFFF</color>
 
     <color name="black_translucent">#33000000</color>
+    <color name="white_translucent">#B3FFFFFF</color>
     <color name="status_bar">#EAF9FF</color>
-    <color name="navigation_bar">@color/black_translucent</color>
+    <color name="navigation_bar">@color/white_translucent</color>
 
 </resources>

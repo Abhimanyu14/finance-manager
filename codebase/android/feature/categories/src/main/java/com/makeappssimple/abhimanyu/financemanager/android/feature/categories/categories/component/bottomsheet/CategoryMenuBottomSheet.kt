@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -33,7 +34,8 @@ internal fun CategoryMenuBottomSheet(
             )
             .defaultMinSize(
                 minHeight = 24.dp,
-            ),
+            )
+            .navigationBarsPadding(),
     ) {
         items(
             items = items,
