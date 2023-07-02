@@ -2,16 +2,16 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.MyConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.MyConfirmationBottomSheetUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 
 @Composable
-internal fun CategoriesDeleteConfirmationBottomSheetContent(
+internal fun CategoriesDeleteConfirmationBottomSheet(
     deleteCategory: () -> Unit,
     resetBottomSheetType: () -> Unit,
     resetCategoryIdToDelete: () -> Unit,
 ) {
-    MyConfirmationBottomSheet(
+    MyConfirmationBottomSheetUI(
         title = stringResource(
             id = R.string.screen_categories_bottom_sheet_delete_title,
         ),

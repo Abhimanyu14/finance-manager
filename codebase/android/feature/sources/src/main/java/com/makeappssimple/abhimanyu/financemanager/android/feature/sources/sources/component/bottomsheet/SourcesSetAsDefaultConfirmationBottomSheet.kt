@@ -2,17 +2,17 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sour
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.MyConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.MyConfirmationBottomSheetUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 
 @Composable
-internal fun SourcesSetAsDefaultConfirmationBottomSheetContent(
+internal fun SourcesSetAsDefaultConfirmationBottomSheet(
     clickedItemId: Int?,
     resetBottomSheetType: () -> Unit,
     resetClickedItemId: () -> Unit,
     setDefaultSourceIdInDataStore: () -> Unit,
 ) {
-    MyConfirmationBottomSheet(
+    MyConfirmationBottomSheetUI(
         title = stringResource(
             id = R.string.screen_sources_bottom_sheet_set_as_default_title,
         ),

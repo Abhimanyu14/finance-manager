@@ -2,17 +2,17 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.MyConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.MyConfirmationBottomSheetUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 
 @Composable
-internal fun TransactionForValuesDeleteConfirmationBottomSheetContent(
+internal fun TransactionForValuesDeleteConfirmationBottomSheet(
     transactionForIdToDelete: Int?,
     resetBottomSheetType: () -> Unit,
     resetTransactionForIdToDelete: () -> Unit,
     deleteTransactionFor: () -> Unit,
 ) {
-    MyConfirmationBottomSheet(
+    MyConfirmationBottomSheetUI(
         title = stringResource(
             id = R.string.bottom_sheet_transaction_for_values_menu_delete_title,
         ),

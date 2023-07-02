@@ -5,10 +5,10 @@ import android.widget.Toast
 import androidx.compose.runtime.Composable
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.MyEmojiPickerBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.MyEmojiPickerBottomSheetUI
 
 @Composable
-internal fun AddOrEditCategorySelectEmojiBottomSheetContent(
+internal fun AddOrEditCategorySelectEmojiBottomSheet(
     context: Context,
     emojiGroups: Map<String, List<Emoji>>,
     searchText: String,
@@ -16,7 +16,7 @@ internal fun AddOrEditCategorySelectEmojiBottomSheetContent(
     updateEmoji: (updatedEmoji: String) -> Unit,
     updateSearchText: (updatedSearchText: String) -> Unit,
 ) {
-    MyEmojiPickerBottomSheet(
+    MyEmojiPickerBottomSheetUI(
         emojiGroups = emojiGroups,
         searchText = searchText,
         onEmojiClick = { emoji ->

@@ -50,8 +50,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.component.bottomsheet.TransactionsFilterBottomSheetContent
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.component.bottomsheet.TransactionsSortBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.component.bottomsheet.TransactionsFilterBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.component.bottomsheet.TransactionsSortBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.SortOption
 import java.time.LocalDate
@@ -128,7 +128,7 @@ internal fun TransactionsScreenUI(
         sheetContent = {
             when (uiState.transactionsBottomSheetType) {
                 TransactionsBottomSheetType.FILTERS -> {
-                    TransactionsFilterBottomSheetContent(
+                    TransactionsFilterBottomSheet(
                         context = state.context,
                         expenseCategories = events.getExpenseCategories(),
                         incomeCategories = events.getIncomeCategories(),
@@ -151,7 +151,7 @@ internal fun TransactionsScreenUI(
                 }
 
                 TransactionsBottomSheetType.SORT -> {
-                    TransactionsSortBottomSheetContent(
+                    TransactionsSortBottomSheet(
                         selectedSortOptionIndex = uiState.sortOptions.indexOf(uiState.selectedSortOption),
                         sortOptions = uiState.sortOptions.toList(),
                         resetBottomSheetType = uiState.resetBottomSheetType,

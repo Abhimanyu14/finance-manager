@@ -28,7 +28,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarEvents
 
 @Composable
-fun MyEmojiPickerBottomSheet(
+fun MyEmojiPickerBottomSheetUI(
     modifier: Modifier = Modifier,
     emojiGroups: Map<String, List<Emoji>>,
     searchText: String,

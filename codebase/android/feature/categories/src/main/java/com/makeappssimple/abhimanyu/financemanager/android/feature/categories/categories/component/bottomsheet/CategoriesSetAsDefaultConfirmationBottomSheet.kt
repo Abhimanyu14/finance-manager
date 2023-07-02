@@ -3,17 +3,17 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.MyConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.MyConfirmationBottomSheetUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 
 @Composable
-internal fun CategoriesSetAsDefaultConfirmationBottomSheetContent(
+internal fun CategoriesSetAsDefaultConfirmationBottomSheet(
     transactionType: TransactionType,
     resetBottomSheetType: () -> Unit,
     resetClickedItemId: () -> Unit,
     setDefaultCategoryIdInDataStore: () -> Unit,
 ) {
-    MyConfirmationBottomSheet(
+    MyConfirmationBottomSheetUI(
         title = stringResource(
             id = R.string.screen_categories_bottom_sheet_set_as_default_title,
         ),

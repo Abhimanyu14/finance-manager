@@ -26,7 +26,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.common.TransactionDeleteConfirmationBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.common.TransactionDeleteConfirmationBottomSheet
 
 enum class ViewTransactionBottomSheetType : BottomSheetType {
     DELETE_CONFIRMATION,
@@ -68,7 +68,7 @@ internal fun ViewTransactionScreenUI(
         sheetContent = {
             when (uiState.viewTransactionBottomSheetType) {
                 ViewTransactionBottomSheetType.DELETE_CONFIRMATION -> {
-                    TransactionDeleteConfirmationBottomSheetContent(
+                    TransactionDeleteConfirmationBottomSheet(
                         transactionIdToDelete = uiState.transactionIdToDelete,
                         resetBottomSheetType = uiState.resetBottomSheetType,
                         resetTransactionIdToDelete = {

@@ -23,8 +23,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sca
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.bottomsheet.SourcesDeleteConfirmationBottomSheetContent
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.bottomsheet.SourcesSetAsDefaultConfirmationBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.bottomsheet.SourcesDeleteConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.bottomsheet.SourcesSetAsDefaultConfirmationBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.SourcesListItem
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.SourcesListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.SourcesListItemEvents
@@ -70,7 +70,7 @@ internal fun SourcesScreenUI(
         sheetContent = {
             when (uiState.sourcesBottomSheetType) {
                 SourcesBottomSheetType.DELETE_CONFIRMATION -> {
-                    SourcesDeleteConfirmationBottomSheetContent(
+                    SourcesDeleteConfirmationBottomSheet(
                         sourceIdToDelete = uiState.sourceIdToDelete,
                         resetBottomSheetType = uiState.resetBottomSheetType,
                         resetSourceIdToDelete = {
@@ -91,7 +91,7 @@ internal fun SourcesScreenUI(
                 }
 
                 SourcesBottomSheetType.SET_AS_DEFAULT_CONFIRMATION -> {
-                    SourcesSetAsDefaultConfirmationBottomSheetContent(
+                    SourcesSetAsDefaultConfirmationBottomSheet(
                         clickedItemId = uiState.clickedItemId,
                         resetBottomSheetType = uiState.resetBottomSheetType,
                         resetClickedItemId = {

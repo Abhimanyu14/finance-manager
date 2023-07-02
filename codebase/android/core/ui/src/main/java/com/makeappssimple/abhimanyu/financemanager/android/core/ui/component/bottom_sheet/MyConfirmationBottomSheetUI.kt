@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 @Composable
-fun MyConfirmationBottomSheet(
+fun MyConfirmationBottomSheetUI(
     modifier: Modifier = Modifier,
     title: String,
     message: String,

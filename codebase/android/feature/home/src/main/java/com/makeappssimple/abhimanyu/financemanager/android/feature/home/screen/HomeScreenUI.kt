@@ -37,7 +37,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.component.bottomappbar.HomeBottomAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.feature.home.component.bottomsheet.HomeMenuBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.home.component.bottomsheet.HomeMenuBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.component.recenttransactions.HomeRecentTransactionsUI
 
 enum class HomeBottomSheetType : BottomSheetType {
@@ -87,7 +87,7 @@ internal fun HomeScreenUI(
         sheetContent = {
             when (uiState.homeBottomSheetType) {
                 HomeBottomSheetType.MENU -> {
-                    HomeMenuBottomSheetContent(
+                    HomeMenuBottomSheet(
                         navigateToCategoriesScreen = events.navigateToCategoriesScreen,
                         navigateToSettingsScreen = events.navigateToSettingsScreen,
                         navigateToSourcesScreen = events.navigateToSourcesScreen,

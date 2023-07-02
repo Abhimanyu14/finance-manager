@@ -46,7 +46,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.component.bottomsheet.AddOrEditCategorySelectEmojiBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.component.bottomsheet.AddOrEditCategorySelectEmojiBottomSheet
 
 enum class AddOrEditCategoryBottomSheetType : BottomSheetType {
     NONE,
@@ -116,7 +116,7 @@ internal fun AddOrEditCategoryScreenUI(
                 }
 
                 AddOrEditCategoryBottomSheetType.SELECT_EMOJI -> {
-                    AddOrEditCategorySelectEmojiBottomSheetContent(
+                    AddOrEditCategorySelectEmojiBottomSheet(
                         context = state.context,
                         emojiGroups = uiState.emojiGroups,
                         searchText = uiState.searchText,

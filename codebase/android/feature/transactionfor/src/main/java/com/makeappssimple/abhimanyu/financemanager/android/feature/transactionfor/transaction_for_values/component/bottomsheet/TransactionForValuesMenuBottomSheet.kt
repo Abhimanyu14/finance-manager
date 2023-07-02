@@ -1,76 +1,44 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.component.bottomsheet
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.unit.dp
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
-
-@Immutable
-internal data class TransactionForValuesMenuBottomSheetItemData(
-    val text: String,
-    val onClick: () -> Unit,
-)
+import androidx.compose.ui.res.stringResource
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 
 @Composable
 internal fun TransactionForValuesMenuBottomSheet(
-    modifier: Modifier = Modifier,
-    items: List<TransactionForValuesMenuBottomSheetItemData>,
+    isDeleteVisible: Boolean,
+    transactionForId: Int,
+    navigateToEditTransactionForScreen: (transactionForId: Int) -> Unit,
+    onDeleteClick: () -> Unit,
+    resetBottomSheetType: () -> Unit,
 ) {
-    LazyColumn(
-        modifier = modifier
-            .padding(
-                top = 16.dp,
-            )
-            .defaultMinSize(
-                minHeight = 24.dp,
+    val items = buildList {
+        add(
+            element = TransactionForValuesMenuBottomSheetItemData(
+                text = stringResource(
+                    id = R.string.bottom_sheet_transaction_for_values_menu_edit,
+                ),
+                onClick = {
+                    resetBottomSheetType()
+                    navigateToEditTransactionForScreen(transactionForId)
+                },
             ),
-    ) {
-        items(
-            items = items,
-            key = { listItem ->
-                listItem.hashCode()
-            },
-        ) { listItem ->
-            TransactionForValuesMenuBottomSheetItem(
-                data = listItem,
+        )
+        if (isDeleteVisible) {
+            add(
+                element = TransactionForValuesMenuBottomSheetItemData(
+                    text = stringResource(
+                        id = R.string.bottom_sheet_transaction_for_values_menu_delete,
+                    ),
+                    onClick = {
+                        onDeleteClick()
+                    },
+                ),
             )
         }
     }
-}
 
-@Composable
-private fun TransactionForValuesMenuBottomSheetItem(
-    data: TransactionForValuesMenuBottomSheetItemData,
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .conditionalClickable(
-                onClickLabel = data.text,
-                role = Role.Button,
-                onClick = data.onClick,
-            )
-            .padding(
-                all = 16.dp,
-            ),
-    ) {
-        MyText(
-            modifier = Modifier,
-            text = data.text,
-            style = MaterialTheme.typography.headlineMedium
-                .copy(
-                    color = MaterialTheme.colorScheme.onBackground,
-                ),
-        )
-    }
+    TransactionForValuesMenuBottomSheetUI(
+        items = items,
+    )
 }

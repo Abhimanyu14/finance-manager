@@ -26,9 +26,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.gri
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid_item.CategoriesGridItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.component.bottomsheet.CategoriesDeleteConfirmationBottomSheetContent
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.component.bottomsheet.CategoriesSetAsDefaultConfirmationBottomSheetContent
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.component.bottomsheet.CategoryMenuBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.component.bottomsheet.CategoriesDeleteConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.component.bottomsheet.CategoriesSetAsDefaultConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.component.bottomsheet.CategoryMenuBottomSheet
 import kotlinx.coroutines.launch
 
 @Immutable
@@ -98,7 +98,7 @@ internal fun CategoriesScreenUI(
         sheetContent = {
             when (uiState.categoriesBottomSheetType) {
                 is CategoriesBottomSheetType.DeleteConfirmation -> {
-                    CategoriesDeleteConfirmationBottomSheetContent(
+                    CategoriesDeleteConfirmationBottomSheet(
                         deleteCategory = {
                             uiState.categoryIdToDelete?.let { categoryIdToDeleteValue ->
                                 events.deleteCategory(categoryIdToDeleteValue)
@@ -115,7 +115,7 @@ internal fun CategoriesScreenUI(
                 }
 
                 is CategoriesBottomSheetType.SetAsDefaultConfirmation -> {
-                    CategoriesSetAsDefaultConfirmationBottomSheetContent(
+                    CategoriesSetAsDefaultConfirmationBottomSheet(
                         transactionType = uiState.validTransactionTypes[uiState.selectedTabIndex],
                         resetBottomSheetType = uiState.resetBottomSheetType,
                         resetClickedItemId = {
@@ -135,7 +135,7 @@ internal fun CategoriesScreenUI(
                     val bottomSheetData =
                         uiState.categoriesBottomSheetType as CategoriesBottomSheetType.Menu
 
-                    CategoryMenuBottomSheetContent(
+                    CategoryMenuBottomSheet(
                         isDeleteVisible = bottomSheetData.isDeleteVisible,
                         isEditVisible = bottomSheetData.isEditVisible,
                         isSetAsDefaultVisible = bottomSheetData.isSetAsDefaultVisible,

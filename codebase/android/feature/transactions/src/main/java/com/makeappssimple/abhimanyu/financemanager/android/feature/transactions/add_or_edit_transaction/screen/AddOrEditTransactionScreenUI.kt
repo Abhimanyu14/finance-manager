@@ -38,8 +38,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Bottom
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.getMyTimePickerDialog
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_category.SelectCategoryBottomSheetContent
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_source.SelectSourceBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_category.SelectCategoryBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_source.SelectSourceBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonEvents
@@ -149,7 +149,7 @@ internal fun AddOrEditTransactionScreenUI(
                 }
 
                 AddOrEditTransactionBottomSheetType.SELECT_CATEGORY -> {
-                    SelectCategoryBottomSheetContent(
+                    SelectCategoryBottomSheet(
                         filteredCategories = uiState.filteredCategories,
                         selectedCategoryId = uiState.uiState.category?.id,
                         resetBottomSheetType = uiState.resetBottomSheetType,
@@ -159,7 +159,7 @@ internal fun AddOrEditTransactionScreenUI(
                 }
 
                 AddOrEditTransactionBottomSheetType.SELECT_SOURCE_FROM -> {
-                    SelectSourceBottomSheetContent(
+                    SelectSourceBottomSheet(
                         sources = uiState.sources,
                         selectedSourceId = uiState.uiState.sourceFrom?.id,
                         resetBottomSheetType = uiState.resetBottomSheetType
@@ -169,7 +169,7 @@ internal fun AddOrEditTransactionScreenUI(
                 }
 
                 AddOrEditTransactionBottomSheetType.SELECT_SOURCE_TO -> {
-                    SelectSourceBottomSheetContent(
+                    SelectSourceBottomSheet(
                         sources = uiState.sources,
                         selectedSourceId = uiState.uiState.sourceTo?.id,
                         resetBottomSheetType = uiState.resetBottomSheetType

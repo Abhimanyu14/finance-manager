@@ -23,8 +23,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyT
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultTransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.component.bottomsheet.TransactionForValuesDeleteConfirmationBottomSheetContent
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.component.bottomsheet.TransactionForValuesMenuBottomSheetContent
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.component.bottomsheet.TransactionForValuesDeleteConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.component.bottomsheet.TransactionForValuesMenuBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.component.listitem.TransactionForListItem
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.component.listitem.TransactionForListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.component.listitem.TransactionForListItemEvents
@@ -73,7 +73,7 @@ internal fun TransactionForValuesScreenUI(
         sheetContent = {
             when (uiState.transactionForValuesBottomSheetType) {
                 is TransactionForValuesBottomSheetType.DeleteConfirmation -> {
-                    TransactionForValuesDeleteConfirmationBottomSheetContent(
+                    TransactionForValuesDeleteConfirmationBottomSheet(
                         transactionForIdToDelete = uiState.transactionForIdToDelete,
                         resetBottomSheetType = uiState.resetBottomSheetType,
                         resetTransactionForIdToDelete = {
@@ -93,7 +93,7 @@ internal fun TransactionForValuesScreenUI(
                 is TransactionForValuesBottomSheetType.Menu -> {
                     val bottomSheetData =
                         uiState.transactionForValuesBottomSheetType as TransactionForValuesBottomSheetType.Menu
-                    TransactionForValuesMenuBottomSheetContent(
+                    TransactionForValuesMenuBottomSheet(
                         isDeleteVisible = bottomSheetData.isDeleteVisible,
                         transactionForId = bottomSheetData.transactionForId,
                         navigateToEditTransactionForScreen = events.navigateToEditTransactionForScreen,
