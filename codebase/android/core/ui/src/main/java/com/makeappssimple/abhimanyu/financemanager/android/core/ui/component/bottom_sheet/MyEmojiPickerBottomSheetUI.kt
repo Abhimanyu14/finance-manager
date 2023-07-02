@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -16,6 +15,7 @@ import com.google.accompanist.flowlayout.FlowRow
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.StatusBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.EmojiCircleSize
@@ -41,9 +41,9 @@ fun MyEmojiPickerBottomSheetUI(
             .fillMaxWidth()
             .defaultMinSize(
                 minHeight = 24.dp,
-            )
-            .statusBarsPadding(),
+            ),
     ) {
+        StatusBarSpacer()
         MySearchBarContainer {
             MySearchBar(
                 data = MySearchBarData(

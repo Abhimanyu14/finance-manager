@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -20,6 +19,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.MyBottomSheetTitle
@@ -41,8 +41,7 @@ internal fun SelectSourceBottomSheetUI(
         modifier = modifier
             .defaultMinSize(
                 minHeight = 24.dp,
-            )
-            .navigationBarsPadding(),
+            ),
     ) {
         stickyHeader {
             MyBottomSheetTitle(
@@ -58,6 +57,9 @@ internal fun SelectSourceBottomSheetUI(
             SelectSourceBottomSheetItem(
                 data = listItem,
             )
+        }
+        item {
+            NavigationBarSpacer()
         }
     }
 }
