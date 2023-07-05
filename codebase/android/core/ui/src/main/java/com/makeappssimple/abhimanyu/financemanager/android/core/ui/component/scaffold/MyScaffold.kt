@@ -1,12 +1,12 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
-import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.material.DrawerDefaults
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.FabPosition
@@ -87,19 +87,16 @@ fun MyScaffold(
     ModalBottomSheetLayout(
         sheetContent = {
             val screenHeight = LocalConfiguration.current.screenHeightDp.dp
-            val statusBarHeight = WindowInsets.statusBars.asPaddingValues().calculateTopPadding()
+            val topAppBarHeight = 64.dp
+            val navigationBarsHeight =
+                WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
 
-            Log.e("Abhi", "screenHeight: ${screenHeight}")
-            Log.e("Abhi", "statusBarHeight: ${statusBarHeight}")
             val bottomSheetModifier = if (sheetShape == BottomSheetExpandedShape) {
-                Modifier
-                    .heightIn(
-                        max = screenHeight,
-                    )
+                Modifier.fillMaxSize()
             } else {
                 Modifier
                     .heightIn(
-                        max = screenHeight - 60.dp,
+                        max = screenHeight + navigationBarsHeight - topAppBarHeight,
                     )
             }
             Column(
