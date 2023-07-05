@@ -67,8 +67,6 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
             transactionListItemData,
         ->
         if (
-            originalTransactionListItemData.isNull() ||
-            refundTransactionListItemData.isNull() ||
             transactionListItemData.isNull()
         ) {
             MyResult.Loading
