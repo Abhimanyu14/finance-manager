@@ -1,12 +1,18 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component
 
+import android.util.Log
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.areNavigationBarsVisible
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.layout.windowInsetsTopHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -39,12 +45,27 @@ fun HorizontalSpacer(
     )
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun NavigationBarSpacer() {
+    Log.e("Abhi", "${WindowInsets.statusBars.asPaddingValues().calculateTopPadding()}")
+    Log.e("Abhi", "${WindowInsets.navigationBars.asPaddingValues().calculateTopPadding()}")
+    Log.e("Abhi", "${WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()}")
+    Log.e("Abhi", "${WindowInsets.areNavigationBarsVisible}")
     Spacer(
-        modifier = Modifier.windowInsetsBottomHeight(
-            insets = WindowInsets.safeDrawing,
-        ),
+        modifier = if (WindowInsets.areNavigationBarsVisible) {
+            Modifier.navigationBarsPadding()
+
+//            .padding(
+//                bottom = WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding(),
+//            )
+
+//            Modifier.windowInsetsBottomHeight(
+//                insets = WindowInsets.safeDrawing,
+//            )
+        } else {
+            Modifier
+        },
     )
 }
 

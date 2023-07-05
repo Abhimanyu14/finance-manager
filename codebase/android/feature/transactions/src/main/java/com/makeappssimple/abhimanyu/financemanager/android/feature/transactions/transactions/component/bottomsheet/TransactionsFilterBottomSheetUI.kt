@@ -42,7 +42,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.StatusBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
@@ -250,7 +249,6 @@ internal fun TransactionsFiltersBottomSheetUI(
                 minHeight = 24.dp,
             ),
     ) {
-        StatusBarSpacer()
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
