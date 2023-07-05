@@ -44,7 +44,7 @@ buildscript {
         ossPluginVersion = "0.10.4"
 
         // Compile SDK version
-        compileSdkVersion = 33
+        compileSdkVersion = 34
 
         // Build tools version
         buildToolsVersion = "30.0.2"
@@ -53,7 +53,7 @@ buildscript {
         minSdkVersion = 27
 
         // Target SDK version
-        targetSdkVersion = 33
+        targetSdkVersion = 34
 
         // Kotlin data binding compiler
         kotlinCompilerVersion = "3.1.4"
@@ -98,7 +98,7 @@ buildscript {
         recyclerViewVersion = "1.2.1"
 
         // Jetpack compose
-        jetpackComposeVersion = "1.5.0-beta02"
+        jetpackComposeVersion = "1.6.0-alpha01"
 
         // Jetpack compose compiler
         jetpackComposeCompilerVersion = "1.4.3"
@@ -194,7 +194,7 @@ buildscript {
         retrofitKotlinxSerializationConverterVersion = "1.0.0"
 
         // Coil
-        coilVersion = "2.2.2"
+        coilVersion = "2.4.0"
 
         // Room
         roomVersion = "2.5.2"
