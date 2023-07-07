@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -30,6 +29,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
@@ -171,7 +171,7 @@ internal fun TransactionsScreenUI(
         floatingActionButton = {
             MyFloatingActionButton(
                 modifier = Modifier
-                    .navigationBarsPadding(),
+                    .navigationBarSpacer(),
                 iconImageVector = Icons.Rounded.Add,
                 contentDescription = stringResource(
                     id = R.string.screen_transactions_floating_action_button_content_description,

@@ -12,7 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarHeight
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 
 @Composable
@@ -24,8 +24,8 @@ internal fun HomeBottomAppBar(
         modifier = modifier,
         cutoutShape = CircleShape,
         contentPadding = PaddingValues(
-            bottom = 50.dp,
-        )
+            bottom = navigationBarHeight(),
+        ),
     ) {
         IconButton(
             onClick = {

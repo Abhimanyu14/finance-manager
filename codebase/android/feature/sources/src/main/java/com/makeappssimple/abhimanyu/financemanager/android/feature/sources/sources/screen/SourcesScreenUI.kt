@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.screen
 
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
@@ -10,11 +10,13 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
@@ -50,12 +52,14 @@ internal data class SourcesScreenUIEvents(
     val setDefaultSourceIdInDataStore: (defaultSourceId: Int) -> Unit,
 )
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun SourcesScreenUI(
     events: SourcesScreenUIEvents,
     uiState: SourcesScreenUIState,
     state: CommonScreenUIState,
 ) {
+    val density = LocalDensity.current
     BottomSheetHandler(
         showModalBottomSheet = uiState.sourcesBottomSheetType != SourcesBottomSheetType.NONE,
         bottomSheetType = uiState.sourcesBottomSheetType,
@@ -114,7 +118,7 @@ internal fun SourcesScreenUI(
         floatingActionButton = {
             MyFloatingActionButton(
                 modifier = Modifier
-                    .navigationBarsPadding(),
+                    .navigationBarSpacer(),
                 iconImageVector = Icons.Rounded.Add,
                 contentDescription = stringResource(
                     id = R.string.screen_sources_floating_action_button_content_description,
