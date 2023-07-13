@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.common
 
-import androidx.compose.material.DismissState
-import androidx.compose.material.DismissValue
-import androidx.compose.material.rememberDismissState
+import androidx.compose.material3.DismissState
+import androidx.compose.material3.DismissValue
+import androidx.compose.material3.rememberDismissState
 import androidx.compose.runtime.Composable
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 
@@ -13,7 +13,7 @@ fun getDismissState(
     defaultAction: (() -> Unit)? = null,
 ): DismissState {
     return rememberDismissState(
-        confirmStateChange = { dismissValue ->
+        confirmValueChange = { dismissValue ->
             when (dismissValue) {
                 DismissValue.DismissedToEnd -> {
                     if (dismissedToEndAction.isNotNull()) {

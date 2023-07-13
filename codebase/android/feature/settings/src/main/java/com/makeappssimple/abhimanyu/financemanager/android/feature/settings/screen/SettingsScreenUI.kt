@@ -7,13 +7,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.ListItem
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Backup
 import androidx.compose.material.icons.rounded.Calculate
 import androidx.compose.material.icons.rounded.Groups
 import androidx.compose.material.icons.rounded.Restore
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -120,14 +120,14 @@ internal fun SettingsScreenUI(
                     )
                 }
                 ListItem(
-                    icon = {
+                    leadingContent = {
                         Icon(
                             imageVector = Icons.Rounded.Backup,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.onBackground,
                         )
                     },
-                    text = {
+                    headlineContent = {
                         MyText(
                             modifier = Modifier
                                 .fillMaxWidth(),
@@ -148,14 +148,14 @@ internal fun SettingsScreenUI(
                         ),
                 )
                 ListItem(
-                    icon = {
+                    leadingContent = {
                         Icon(
                             imageVector = Icons.Rounded.Restore,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.onBackground,
                         )
                     },
-                    text = {
+                    headlineContent = {
                         MyText(
                             modifier = Modifier
                                 .fillMaxWidth(),
@@ -176,14 +176,14 @@ internal fun SettingsScreenUI(
                         ),
                 )
                 ListItem(
-                    icon = {
+                    leadingContent = {
                         Icon(
                             imageVector = Icons.Rounded.Calculate,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.onBackground,
                         )
                     },
-                    text = {
+                    headlineContent = {
                         MyText(
                             modifier = Modifier
                                 .fillMaxWidth(),
@@ -204,14 +204,14 @@ internal fun SettingsScreenUI(
                         ),
                 )
                 ListItem(
-                    icon = {
+                    leadingContent = {
                         Icon(
                             imageVector = Icons.Rounded.Groups,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.onBackground,
                         )
                     },
-                    text = {
+                    headlineContent = {
                         MyText(
                             modifier = Modifier
                                 .fillMaxWidth(),
