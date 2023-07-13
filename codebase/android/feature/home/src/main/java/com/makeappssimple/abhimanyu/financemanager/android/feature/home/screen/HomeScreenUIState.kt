@@ -36,7 +36,7 @@ class HomeScreenUIState(
         value = unwrappedData?.overviewCardData?.income?.toLong().orZero(),
     )
     private val totalExpenseAmount = Amount(
-        value = unwrappedData?.overviewCardData?.income?.toLong().orZero(),
+        value = unwrappedData?.overviewCardData?.expense?.toLong().orZero(),
     )
 
     val isLoading: Boolean = unwrappedData.isNull()
