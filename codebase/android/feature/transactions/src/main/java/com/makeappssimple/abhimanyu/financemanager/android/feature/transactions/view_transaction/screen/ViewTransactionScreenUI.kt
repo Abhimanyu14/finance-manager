@@ -64,7 +64,8 @@ internal fun ViewTransactionScreenUI(
     )
 
     MyScaffold(
-        sheetState = state.modalBottomSheetState,
+        modifier = Modifier
+            .fillMaxSize(),
         sheetContent = {
             when (uiState.viewTransactionBottomSheetType) {
                 ViewTransactionBottomSheetType.DELETE_CONFIRMATION -> {
@@ -87,6 +88,7 @@ internal fun ViewTransactionScreenUI(
                 }
             }
         },
+        sheetState = state.modalBottomSheetState,
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_view_transaction_appbar_title,
@@ -96,11 +98,10 @@ internal fun ViewTransactionScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
+        isModalBottomSheetVisible = uiState.viewTransactionBottomSheetType != ViewTransactionBottomSheetType.NONE,
         backHandlerEnabled = uiState.viewTransactionBottomSheetType != ViewTransactionBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
-        modifier = Modifier
-            .fillMaxSize(),
     ) {
         Column(
             modifier = Modifier

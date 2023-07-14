@@ -1,9 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.common
 
 import android.content.Context
-import androidx.compose.material.ModalBottomSheetState
-import androidx.compose.material.ModalBottomSheetValue
-import androidx.compose.material.rememberModalBottomSheetState
+import androidx.compose.material3.SheetState
+import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.remember
@@ -22,7 +21,7 @@ data class CommonScreenUIState(
     val coroutineScope: CoroutineScope,
     val focusManager: FocusManager,
     val focusRequester: FocusRequester,
-    val modalBottomSheetState: ModalBottomSheetState,
+    val modalBottomSheetState: SheetState,
     val keyboardController: SoftwareKeyboardController?,
 )
 
@@ -34,9 +33,8 @@ fun rememberCommonScreenUIState(
     focusRequester: FocusRequester = remember {
         FocusRequester()
     },
-    modalBottomSheetState: ModalBottomSheetState = rememberModalBottomSheetState(
-        initialValue = ModalBottomSheetValue.Hidden,
-        skipHalfExpanded = true,
+    modalBottomSheetState: SheetState = rememberModalBottomSheetState(
+        skipPartiallyExpanded = true,
     ),
     keyboardController: SoftwareKeyboardController? = LocalSoftwareKeyboardController.current,
 ): CommonScreenUIState {

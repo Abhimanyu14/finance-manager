@@ -113,18 +113,8 @@ internal fun TransactionsScreenUI(
     }
 
     MyScaffold(
-        sheetState = state.modalBottomSheetState,
-        sheetShape = when (uiState.transactionsBottomSheetType) {
-            TransactionsBottomSheetType.NONE,
-            TransactionsBottomSheetType.SORT,
-            -> {
-                BottomSheetShape
-            }
-
-            TransactionsBottomSheetType.FILTERS -> {
-                BottomSheetExpandedShape
-            }
-        },
+        modifier = Modifier
+            .fillMaxSize(),
         sheetContent = {
             when (uiState.transactionsBottomSheetType) {
                 TransactionsBottomSheetType.FILTERS -> {
@@ -162,6 +152,18 @@ internal fun TransactionsScreenUI(
                 }
             }
         },
+        sheetState = state.modalBottomSheetState,
+        sheetShape = when (uiState.transactionsBottomSheetType) {
+            TransactionsBottomSheetType.NONE,
+            TransactionsBottomSheetType.SORT,
+            -> {
+                BottomSheetShape
+            }
+
+            TransactionsBottomSheetType.FILTERS -> {
+                BottomSheetExpandedShape
+            }
+        },
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_transactions_appbar_title,
@@ -182,11 +184,10 @@ internal fun TransactionsScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
+        isModalBottomSheetVisible = uiState.transactionsBottomSheetType != TransactionsBottomSheetType.NONE,
         backHandlerEnabled = uiState.transactionsBottomSheetType != TransactionsBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
-        modifier = Modifier
-            .fillMaxSize(),
     ) {
         Column(
             modifier = Modifier

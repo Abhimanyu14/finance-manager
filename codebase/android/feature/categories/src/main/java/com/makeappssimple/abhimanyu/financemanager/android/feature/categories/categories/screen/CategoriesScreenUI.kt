@@ -94,7 +94,8 @@ internal fun CategoriesScreenUI(
     )
 
     MyScaffold(
-        sheetState = state.modalBottomSheetState,
+        modifier = Modifier
+            .fillMaxSize(),
         sheetContent = {
             when (uiState.categoriesBottomSheetType) {
                 is CategoriesBottomSheetType.DeleteConfirmation -> {
@@ -133,7 +134,7 @@ internal fun CategoriesScreenUI(
 
                 is CategoriesBottomSheetType.Menu -> {
                     val bottomSheetData =
-                        uiState.categoriesBottomSheetType as CategoriesBottomSheetType.Menu
+                        uiState.categoriesBottomSheetType
 
                     CategoryMenuBottomSheet(
                         isDeleteVisible = bottomSheetData.isDeleteVisible,
@@ -155,6 +156,7 @@ internal fun CategoriesScreenUI(
                 }
             }
         },
+        sheetState = state.modalBottomSheetState,
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_categories_appbar_title,
@@ -191,11 +193,10 @@ internal fun CategoriesScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
+        isModalBottomSheetVisible = uiState.categoriesBottomSheetType != CategoriesBottomSheetType.None,
         backHandlerEnabled = uiState.categoriesBottomSheetType != CategoriesBottomSheetType.None,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
-        modifier = Modifier
-            .fillMaxSize(),
     ) {
         Column(
             modifier = Modifier

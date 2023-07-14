@@ -237,6 +237,7 @@ private fun LazyListScope.myTopAppBarDemo(
             MyTopAppBarUI(
                 isNavigationIconVisible = true,
                 titleText = "Title",
+                appBarActions = {},
                 navigationBackButton = {
                     MyNavigationBackButton(
                         onClick = {},
@@ -246,6 +247,7 @@ private fun LazyListScope.myTopAppBarDemo(
             MyTopAppBarUI(
                 isNavigationIconVisible = false,
                 titleText = "Title",
+                appBarActions = {},
                 navigationBackButton = {
                     MyNavigationBackButton(
                         onClick = {},

@@ -59,11 +59,7 @@ dependencies {
     implementation "androidx.compose.material:material-icons-extended:$rootProject.jetpackComposeVersion"
 
     // Jetpack compose material design
-    implementation "androidx.compose.material:material:$rootProject.jetpackComposeVersion"
     implementation "androidx.compose.material3:material3:$rootProject.jetpackComposeMaterial3Version"
-
-    // Jetpack compose material design adapter
-    implementation "com.google.android.material:compose-theme-adapter:$rootProject.jetpackComposeMaterialDesignAdapterVersion"
 
     // Testing
 

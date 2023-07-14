@@ -6,6 +6,8 @@
     <string name="screen_settings_restore">Restore Data</string>
     <string name="screen_settings_recalculate_total">Recalculate Total</string>
     <string name="screen_settings_transaction_for">Transaction For</string>
+    <string name="screen_settings_sources">Sources</string>
+    <string name="screen_settings_categories">Categories</string>
     <string name="screen_settings_app_version">Version - %1$s</string>
     <!-- endregion -->
 

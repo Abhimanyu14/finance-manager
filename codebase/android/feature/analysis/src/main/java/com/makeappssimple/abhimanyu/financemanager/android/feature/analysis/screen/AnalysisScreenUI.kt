@@ -75,7 +75,8 @@ internal fun AnalysisScreenUI(
     )
 
     MyScaffold(
-        sheetState = state.modalBottomSheetState,
+        modifier = Modifier
+            .fillMaxSize(),
         sheetContent = {
             when (uiState.analysisBottomSheetType) {
                 AnalysisBottomSheetType.FILTERS -> {
@@ -99,6 +100,7 @@ internal fun AnalysisScreenUI(
                 }
             }
         },
+        sheetState = state.modalBottomSheetState,
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_analysis_appbar_title,
@@ -108,11 +110,10 @@ internal fun AnalysisScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
+        isModalBottomSheetVisible = uiState.analysisBottomSheetType != AnalysisBottomSheetType.NONE,
         backHandlerEnabled = uiState.analysisBottomSheetType != AnalysisBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
-        modifier = Modifier
-            .fillMaxSize(),
     ) {
         Column(
             modifier = Modifier

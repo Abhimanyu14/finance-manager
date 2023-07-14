@@ -1,42 +1,10 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-
-private val Material2DarkColorPalette = darkColors(
-    primary = Primary,
-    primaryVariant = PrimaryVariant,
-    onPrimary = OnPrimary,
-    secondary = Secondary,
-    secondaryVariant = SecondaryVariant,
-    onSecondary = OnSecondary,
-    background = Background,
-    surface = Surface,
-    error = Error,
-    onBackground = OnBackground,
-    onSurface = OnSurface,
-    onError = OnError,
-)
-
-private val Material2LightColorPalette = lightColors(
-    primary = Primary,
-    primaryVariant = PrimaryVariant,
-    onPrimary = OnPrimary,
-    secondary = Secondary,
-    secondaryVariant = SecondaryVariant,
-    onSecondary = OnSecondary,
-    background = Background,
-    surface = Surface,
-    error = Error,
-    onBackground = OnBackground,
-    onSurface = OnSurface,
-    onError = OnError,
-)
 
 private val LightColorPalette = lightColorScheme(
     primary = Primary,
@@ -97,25 +65,6 @@ private val DarkColorPalette = darkColorScheme(
 )
 
 @Composable
-internal fun Material2AppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit,
-) {
-    val colors = if (darkTheme) {
-        Material2DarkColorPalette
-    } else {
-        Material2LightColorPalette
-    }
-
-    androidx.compose.material.MaterialTheme(
-        colors = colors,
-        typography = Material2Typography,
-        shapes = Material2Shapes,
-        content = content,
-    )
-}
-
-@Composable
 internal fun Material3AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit,
@@ -142,9 +91,7 @@ fun MyAppTheme(
     Material3AppTheme(
         darkTheme = darkTheme,
         content = {
-            Material2AppTheme {
-                content()
-            }
+            content()
         },
     )
 }

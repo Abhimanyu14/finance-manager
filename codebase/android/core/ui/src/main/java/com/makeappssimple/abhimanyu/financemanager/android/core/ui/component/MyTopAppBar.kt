@@ -15,6 +15,7 @@ fun MyTopAppBar(
     modifier: Modifier = Modifier,
     @StringRes titleTextStringResourceId: Int,
     navigationAction: (() -> Unit)? = null,
+    appBarActions: @Composable (() -> Unit)? = null,
 ) {
     MyTopAppBarUI(
         isNavigationIconVisible = navigationAction.isNotNull(),
@@ -22,13 +23,15 @@ fun MyTopAppBar(
             id = titleTextStringResourceId,
         ),
         modifier = modifier,
-    ) {
-        MyNavigationBackButton(
-            onClick = {
-                navigationAction?.invoke()
-            },
-        )
-    }
+        appBarActions = appBarActions,
+        navigationBackButton = {
+            MyNavigationBackButton(
+                onClick = {
+                    navigationAction?.invoke()
+                },
+            )
+        },
+    )
 }
 
 @Composable
@@ -36,6 +39,7 @@ fun MyTopAppBarUI(
     modifier: Modifier = Modifier,
     isNavigationIconVisible: Boolean,
     titleText: String,
+    appBarActions: @Composable (() -> Unit)?,
     navigationBackButton: @Composable () -> Unit,
 ) {
     CenterAlignedTopAppBar(
@@ -52,6 +56,9 @@ fun MyTopAppBarUI(
             if (isNavigationIconVisible) {
                 navigationBackButton()
             }
+        },
+        actions = {
+            appBarActions?.invoke()
         },
         colors = TopAppBarDefaults
             .centerAlignedTopAppBarColors(

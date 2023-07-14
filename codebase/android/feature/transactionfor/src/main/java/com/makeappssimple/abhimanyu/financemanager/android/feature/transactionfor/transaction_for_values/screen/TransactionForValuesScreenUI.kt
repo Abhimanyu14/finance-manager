@@ -69,7 +69,8 @@ internal fun TransactionForValuesScreenUI(
     )
 
     MyScaffold(
-        sheetState = state.modalBottomSheetState,
+        modifier = Modifier
+            .fillMaxSize(),
         sheetContent = {
             when (uiState.transactionForValuesBottomSheetType) {
                 is TransactionForValuesBottomSheetType.DeleteConfirmation -> {
@@ -92,7 +93,7 @@ internal fun TransactionForValuesScreenUI(
 
                 is TransactionForValuesBottomSheetType.Menu -> {
                     val bottomSheetData =
-                        uiState.transactionForValuesBottomSheetType as TransactionForValuesBottomSheetType.Menu
+                        uiState.transactionForValuesBottomSheetType
                     TransactionForValuesMenuBottomSheet(
                         isDeleteVisible = bottomSheetData.isDeleteVisible,
                         transactionForId = bottomSheetData.transactionForId,
@@ -108,6 +109,7 @@ internal fun TransactionForValuesScreenUI(
                 }
             }
         },
+        sheetState = state.modalBottomSheetState,
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_transaction_for_values_appbar_title,
@@ -128,11 +130,10 @@ internal fun TransactionForValuesScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
+        isModalBottomSheetVisible = uiState.transactionForValuesBottomSheetType != TransactionForValuesBottomSheetType.None,
         backHandlerEnabled = uiState.transactionForValuesBottomSheetType != TransactionForValuesBottomSheetType.None,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
-        modifier = Modifier
-            .fillMaxSize(),
     ) {
         LazyColumn {
             itemsIndexed(

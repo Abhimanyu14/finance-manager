@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.common
 
 import androidx.activity.compose.BackHandler
-import androidx.compose.material.ModalBottomSheetState
-import androidx.compose.material.ModalBottomSheetValue
+import androidx.compose.material3.SheetState
+import androidx.compose.material3.SheetValue
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -16,7 +16,7 @@ fun BottomSheetHandler(
     showModalBottomSheet: Boolean,
     bottomSheetType: BottomSheetType,
     coroutineScope: CoroutineScope,
-    modalBottomSheetState: ModalBottomSheetState,
+    modalBottomSheetState: SheetState,
     keyboardController: SoftwareKeyboardController?,
     resetBottomSheetType: () -> Unit,
 ) {
@@ -36,10 +36,10 @@ fun BottomSheetHandler(
 
 @Composable
 private fun BottomSheetDisposeHandler(
-    modalBottomSheetState: ModalBottomSheetState,
+    modalBottomSheetState: SheetState,
     resetBottomSheetType: () -> Unit,
 ) {
-    if (modalBottomSheetState.currentValue != ModalBottomSheetValue.Hidden) {
+    if (modalBottomSheetState.currentValue != SheetValue.Hidden) {
         DisposableEffect(
             key1 = Unit,
         ) {
@@ -55,7 +55,7 @@ private fun BottomSheetTypeChangeHandler(
     showModalBottomSheet: Boolean,
     bottomSheetType: BottomSheetType,
     coroutineScope: CoroutineScope,
-    modalBottomSheetState: ModalBottomSheetState,
+    modalBottomSheetState: SheetState,
     keyboardController: SoftwareKeyboardController?,
 ) {
     LaunchedEffect(
@@ -80,7 +80,7 @@ private fun BottomSheetTypeChangeHandler(
 internal fun BottomSheetBackHandler(
     enabled: Boolean,
     coroutineScope: CoroutineScope,
-    modalBottomSheetState: ModalBottomSheetState,
+    modalBottomSheetState: SheetState,
     resetBottomSheetType: () -> Unit,
 ) {
     BackHandler(
@@ -97,7 +97,7 @@ internal fun BottomSheetBackHandler(
 
 private fun showModalBottomSheet(
     coroutineScope: CoroutineScope,
-    modalBottomSheetState: ModalBottomSheetState,
+    modalBottomSheetState: SheetState,
     action: (() -> Unit)? = null,
 ) {
     coroutineScope.launch {
@@ -110,7 +110,7 @@ private fun showModalBottomSheet(
 
 private fun hideModalBottomSheet(
     coroutineScope: CoroutineScope,
-    modalBottomSheetState: ModalBottomSheetState,
+    modalBottomSheetState: SheetState,
     action: (() -> Unit)? = null,
 ) {
     coroutineScope.launch {

@@ -2,18 +2,10 @@
 
     <!-- region home screen -->
     <string name="screen_home_appbar_title">Finance Manager</string>
+    <string name="screen_home_appbar_settings">Settings</string>
     <string name="screen_home_recent_transactions">Recent Transactions</string>
     <string name="screen_home_view_all_transactions">VIEW ALL</string>
     <string name="screen_home_floating_action_button_content_description">Add Transaction</string>
-    <string name="screen_home_bottom_app_bar_button_content_description">Menu</string>
-    <string name="screen_home_bottom_sheet_categories">Categories</string>
-    <string name="screen_home_bottom_sheet_settings">Settings</string>
-    <string name="screen_home_bottom_sheet_sources">Sources</string>
-    <!-- endregion -->
-
-    <!-- region home menu bottom sheet -->
-    <string name="bottom_sheet_home_menu_sources">Sources</string>
-    <string name="bottom_sheet_home_menu_categories">Categories</string>
     <!-- endregion -->
 
 </resources>

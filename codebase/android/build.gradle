@@ -71,13 +71,10 @@ buildscript {
         jetpackComposeCompilerVersion = "1.4.3"
 
         // Jetpack compose material 3
-        jetpackComposeMaterial3Version = "1.2.0-alpha02"
+        jetpackComposeMaterial3Version = "1.2.0-alpha03"
 
         // Jetpack compose material design adapter
         jetpackComposeMaterialDesignAdapterVersion = "1.2.1"
-
-        // Jetpack compose constraint layout
-        jetpackComposeConstraintLayoutVersion = "1.0.0-rc01"
 
         // Jetpack compose integration with activities
         jetpackComposeActivityIntegrationVersion = "1.7.2"

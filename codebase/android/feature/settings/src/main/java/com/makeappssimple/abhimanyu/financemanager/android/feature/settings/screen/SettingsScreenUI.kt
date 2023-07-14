@@ -8,12 +8,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.AccountBalance
 import androidx.compose.material.icons.rounded.Backup
 import androidx.compose.material.icons.rounded.Calculate
+import androidx.compose.material.icons.rounded.Category
 import androidx.compose.material.icons.rounded.Groups
 import androidx.compose.material.icons.rounded.Restore
-import androidx.compose.material3.Icon
-import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -26,14 +26,15 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.component.listitem.SettingsListItem
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.component.listitem.SettingsListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.component.listitem.SettingsListItemEvents
 
 enum class SettingsBottomSheetType : BottomSheetType {
     NONE,
@@ -46,8 +47,16 @@ data class SettingsScreenUIData(
 )
 
 @Immutable
+data class SettingsScreenListItemData(
+    val data: SettingsListItemData,
+    val events: SettingsListItemEvents,
+)
+
+@Immutable
 internal data class SettingsScreenUIEvents(
     val backupData: () -> Unit = {},
+    val navigateToCategoriesScreen: () -> Unit = {},
+    val navigateToSourcesScreen: () -> Unit = {},
     val navigateToTransactionForValuesScreen: () -> Unit = {},
     val navigateUp: () -> Unit = {},
     val recalculateTotal: () -> Unit = {},
@@ -60,17 +69,72 @@ internal fun SettingsScreenUI(
     uiState: SettingsScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
 ) {
-    BottomSheetHandler(
-        showModalBottomSheet = uiState.settingsBottomSheetType != SettingsBottomSheetType.NONE,
-        bottomSheetType = uiState.settingsBottomSheetType,
-        coroutineScope = state.coroutineScope,
-        keyboardController = state.keyboardController,
-        modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = uiState.resetBottomSheetType,
+    val listItemsData: List<SettingsScreenListItemData> = listOf(
+        SettingsScreenListItemData(
+            data = SettingsListItemData(
+                isLoading = uiState.isLoading,
+                imageVector = Icons.Rounded.Category,
+                textStringResourceId = R.string.screen_settings_categories,
+            ),
+            events = SettingsListItemEvents(
+                onClick = events.navigateToCategoriesScreen,
+            ),
+        ),
+        SettingsScreenListItemData(
+            data = SettingsListItemData(
+                isLoading = uiState.isLoading,
+                imageVector = Icons.Rounded.AccountBalance,
+                textStringResourceId = R.string.screen_settings_sources,
+            ),
+            events = SettingsListItemEvents(
+                onClick = events.navigateToSourcesScreen,
+            ),
+        ),
+        SettingsScreenListItemData(
+            data = SettingsListItemData(
+                isLoading = uiState.isLoading,
+                imageVector = Icons.Rounded.Groups,
+                textStringResourceId = R.string.screen_settings_transaction_for,
+            ),
+            events = SettingsListItemEvents(
+                onClick = events.navigateToTransactionForValuesScreen,
+            ),
+        ),
+        SettingsScreenListItemData(
+            data = SettingsListItemData(
+                isLoading = uiState.isLoading,
+                imageVector = Icons.Rounded.Backup,
+                textStringResourceId = R.string.screen_settings_backup,
+            ),
+            events = SettingsListItemEvents(
+                onClick = events.backupData,
+            ),
+        ),
+        SettingsScreenListItemData(
+            data = SettingsListItemData(
+                isLoading = uiState.isLoading,
+                imageVector = Icons.Rounded.Restore,
+                textStringResourceId = R.string.screen_settings_restore,
+            ),
+            events = SettingsListItemEvents(
+                onClick = events.restoreData,
+            ),
+        ),
+        SettingsScreenListItemData(
+            data = SettingsListItemData(
+                isLoading = uiState.isLoading,
+                imageVector = Icons.Rounded.Calculate,
+                textStringResourceId = R.string.screen_settings_recalculate_total,
+            ),
+            events = SettingsListItemEvents(
+                onClick = events.recalculateTotal,
+            ),
+        ),
     )
 
     MyScaffold(
-        sheetState = state.modalBottomSheetState,
+        modifier = Modifier
+            .fillMaxSize(),
         sheetContent = {
             when (uiState.settingsBottomSheetType) {
                 SettingsBottomSheetType.NONE -> {
@@ -78,6 +142,7 @@ internal fun SettingsScreenUI(
                 }
             }
         },
+        sheetState = state.modalBottomSheetState,
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_settings_appbar_title,
@@ -87,12 +152,10 @@ internal fun SettingsScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
-        backHandlerEnabled = uiState.settingsBottomSheetType != SettingsBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
-        modifier = Modifier
-            .fillMaxSize(),
     ) {
+        // TODO(Abhi) - Change to LazyColumn using sticky footer
         Column(
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
@@ -119,125 +182,20 @@ internal fun SettingsScreenUI(
                             ),
                     )
                 }
-                ListItem(
-                    leadingContent = {
-                        Icon(
-                            imageVector = Icons.Rounded.Backup,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onBackground,
-                        )
-                    },
-                    headlineContent = {
-                        MyText(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            textStringResourceId = R.string.screen_settings_backup,
-                            style = MaterialTheme.typography.bodyLarge
-                                .copy(
-                                    color = MaterialTheme.colorScheme.onBackground,
-                                ),
-                        )
-                    },
-                    modifier = Modifier
-                        .conditionalClickable(
-                            onClick = if (uiState.isLoading) {
-                                null
-                            } else {
-                                events.backupData
-                            },
-                        ),
-                )
-                ListItem(
-                    leadingContent = {
-                        Icon(
-                            imageVector = Icons.Rounded.Restore,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onBackground,
-                        )
-                    },
-                    headlineContent = {
-                        MyText(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            textStringResourceId = R.string.screen_settings_restore,
-                            style = MaterialTheme.typography.bodyLarge
-                                .copy(
-                                    color = MaterialTheme.colorScheme.onBackground,
-                                ),
-                        )
-                    },
-                    modifier = Modifier
-                        .conditionalClickable(
-                            onClick = if (uiState.isLoading) {
-                                null
-                            } else {
-                                events.restoreData
-                            },
-                        ),
-                )
-                ListItem(
-                    leadingContent = {
-                        Icon(
-                            imageVector = Icons.Rounded.Calculate,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onBackground,
-                        )
-                    },
-                    headlineContent = {
-                        MyText(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            textStringResourceId = R.string.screen_settings_recalculate_total,
-                            style = MaterialTheme.typography.bodyLarge
-                                .copy(
-                                    color = MaterialTheme.colorScheme.onBackground,
-                                ),
-                        )
-                    },
-                    modifier = Modifier
-                        .conditionalClickable(
-                            onClick = if (uiState.isLoading) {
-                                null
-                            } else {
-                                events.recalculateTotal
-                            },
-                        ),
-                )
-                ListItem(
-                    leadingContent = {
-                        Icon(
-                            imageVector = Icons.Rounded.Groups,
-                            contentDescription = null,
-                            tint = MaterialTheme.colorScheme.onBackground,
-                        )
-                    },
-                    headlineContent = {
-                        MyText(
-                            modifier = Modifier
-                                .fillMaxWidth(),
-                            textStringResourceId = R.string.screen_settings_transaction_for,
-                            style = MaterialTheme.typography.bodyLarge
-                                .copy(
-                                    color = MaterialTheme.colorScheme.onBackground,
-                                ),
-                        )
-                    },
-                    modifier = Modifier
-                        .conditionalClickable(
-                            onClick = if (uiState.isLoading) {
-                                null
-                            } else {
-                                events.navigateToTransactionForValuesScreen
-                            },
-                        ),
-                )
+                listItemsData.forEach {
+                    SettingsListItem(
+                        data = it.data,
+                        events = it.events,
+                    )
+                }
             }
             uiState.appVersion?.let {
                 MyText(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(
-                            all = 16.dp,
+                            horizontal = 16.dp,
+                            vertical = 8.dp,
                         ),
                     text = stringResource(
                         id = R.string.screen_settings_app_version,
@@ -253,3 +211,4 @@ internal fun SettingsScreenUI(
         }
     }
 }
+

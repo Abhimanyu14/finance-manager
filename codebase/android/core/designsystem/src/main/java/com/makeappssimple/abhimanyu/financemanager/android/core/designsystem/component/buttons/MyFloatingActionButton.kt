@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons
 
-import androidx.compose.material.FloatingActionButton
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -17,7 +18,8 @@ fun MyFloatingActionButton(
     onClick: () -> Unit,
 ) {
     FloatingActionButton(
-        backgroundColor = MaterialTheme.colorScheme.primary,
+        containerColor = MaterialTheme.colorScheme.primary,
+        shape = CircleShape,
         onClick = onClick,
         modifier = modifier,
     ) {

@@ -99,16 +99,8 @@ internal fun AddOrEditCategoryScreenUI(
     )
 
     MyScaffold(
-        sheetState = state.modalBottomSheetState,
-        sheetShape = when (uiState.addOrEditCategoryBottomSheetType) {
-            AddOrEditCategoryBottomSheetType.NONE -> {
-                BottomSheetShape
-            }
-
-            AddOrEditCategoryBottomSheetType.SELECT_EMOJI -> {
-                BottomSheetExpandedShape
-            }
-        },
+        modifier = Modifier
+            .fillMaxSize(),
         sheetContent = {
             when (uiState.addOrEditCategoryBottomSheetType) {
                 AddOrEditCategoryBottomSheetType.NONE -> {
@@ -130,6 +122,16 @@ internal fun AddOrEditCategoryScreenUI(
                 }
             }
         },
+        sheetState = state.modalBottomSheetState,
+        sheetShape = when (uiState.addOrEditCategoryBottomSheetType) {
+            AddOrEditCategoryBottomSheetType.NONE -> {
+                BottomSheetShape
+            }
+
+            AddOrEditCategoryBottomSheetType.SELECT_EMOJI -> {
+                BottomSheetExpandedShape
+            }
+        },
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
@@ -139,11 +141,10 @@ internal fun AddOrEditCategoryScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
+        isModalBottomSheetVisible = uiState.addOrEditCategoryBottomSheetType != AddOrEditCategoryBottomSheetType.NONE,
         backHandlerEnabled = uiState.addOrEditCategoryBottomSheetType != AddOrEditCategoryBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
-        modifier = Modifier
-            .fillMaxSize(),
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

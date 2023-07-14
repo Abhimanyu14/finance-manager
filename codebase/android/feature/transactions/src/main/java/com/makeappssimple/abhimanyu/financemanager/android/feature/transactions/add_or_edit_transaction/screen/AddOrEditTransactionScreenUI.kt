@@ -141,7 +141,8 @@ internal fun AddOrEditTransactionScreenUI(
     )
 
     MyScaffold(
-        sheetState = state.modalBottomSheetState,
+        modifier = Modifier
+            .fillMaxSize(),
         sheetContent = {
             when (uiState.addOrEditTransactionBottomSheetType) {
                 AddOrEditTransactionBottomSheetType.NONE -> {
@@ -179,6 +180,7 @@ internal fun AddOrEditTransactionScreenUI(
                 }
             }
         },
+        sheetState = state.modalBottomSheetState,
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
@@ -188,11 +190,10 @@ internal fun AddOrEditTransactionScreenUI(
         onClick = {
             clearFocus()
         },
+        isModalBottomSheetVisible = uiState.addOrEditTransactionBottomSheetType != AddOrEditTransactionBottomSheetType.NONE,
         backHandlerEnabled = uiState.addOrEditTransactionBottomSheetType != AddOrEditTransactionBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
-        modifier = Modifier
-            .fillMaxSize(),
     ) {
         MyDatePicker(
             data = MyDatePickerData(

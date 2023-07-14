@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.screen
 
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -52,7 +51,6 @@ internal data class SourcesScreenUIEvents(
     val setDefaultSourceIdInDataStore: (defaultSourceId: Int) -> Unit,
 )
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 internal fun SourcesScreenUI(
     events: SourcesScreenUIEvents,
@@ -70,7 +68,8 @@ internal fun SourcesScreenUI(
     )
 
     MyScaffold(
-        sheetState = state.modalBottomSheetState,
+        modifier = Modifier
+            .fillMaxSize(),
         sheetContent = {
             when (uiState.sourcesBottomSheetType) {
                 SourcesBottomSheetType.DELETE_CONFIRMATION -> {
@@ -109,6 +108,7 @@ internal fun SourcesScreenUI(
                 }
             }
         },
+        sheetState = state.modalBottomSheetState,
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_sources_appbar_title,
@@ -129,11 +129,10 @@ internal fun SourcesScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
+        isModalBottomSheetVisible = uiState.sourcesBottomSheetType != SourcesBottomSheetType.NONE,
         backHandlerEnabled = uiState.sourcesBottomSheetType != SourcesBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
-        modifier = Modifier
-            .fillMaxSize(),
     ) {
         LazyColumn(
             contentPadding = PaddingValues(

@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.th
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
@@ -108,13 +107,4 @@ val Typography = Typography(
         letterSpacing = 1.2.sp,
         lineHeight = 18.sp,
     ),
-)
-
-// Material 2
-val Material2Typography = androidx.compose.material.Typography(
-    body1 = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
-    )
 )

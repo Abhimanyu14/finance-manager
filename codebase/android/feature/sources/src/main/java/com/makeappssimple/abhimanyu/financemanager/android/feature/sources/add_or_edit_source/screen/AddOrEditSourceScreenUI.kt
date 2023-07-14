@@ -28,7 +28,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.SourceType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.AmountCommaVisualTransformation
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
@@ -111,17 +110,9 @@ internal fun AddOrEditSourceScreenUI(
         }
     }
 
-    BottomSheetHandler(
-        showModalBottomSheet = uiState.addOrEditSourceBottomSheetType != AddOrEditSourceBottomSheetType.NONE,
-        bottomSheetType = uiState.addOrEditSourceBottomSheetType,
-        coroutineScope = state.coroutineScope,
-        keyboardController = state.keyboardController,
-        modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = uiState.resetBottomSheetType,
-    )
-
     MyScaffold(
-        sheetState = state.modalBottomSheetState,
+        modifier = Modifier
+            .fillMaxSize(),
         sheetContent = {
             when (uiState.addOrEditSourceBottomSheetType) {
                 AddOrEditSourceBottomSheetType.NONE -> {
@@ -129,6 +120,7 @@ internal fun AddOrEditSourceScreenUI(
                 }
             }
         },
+        sheetState = state.modalBottomSheetState,
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
@@ -138,11 +130,8 @@ internal fun AddOrEditSourceScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
-        backHandlerEnabled = uiState.addOrEditSourceBottomSheetType != AddOrEditSourceBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
-        modifier = Modifier
-            .fillMaxSize(),
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

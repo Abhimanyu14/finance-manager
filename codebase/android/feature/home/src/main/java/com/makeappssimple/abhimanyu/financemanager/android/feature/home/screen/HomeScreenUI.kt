@@ -9,6 +9,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
@@ -18,7 +22,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCard
@@ -36,12 +39,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tot
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.home.component.bottomappbar.HomeBottomAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.feature.home.component.bottomsheet.HomeMenuBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.component.recenttransactions.HomeRecentTransactionsUI
 
 enum class HomeBottomSheetType : BottomSheetType {
-    MENU,
     NONE,
 }
 
@@ -73,42 +73,32 @@ internal fun HomeScreenUI(
     uiState: HomeScreenUIState,
     state: CommonScreenUIState,
 ) {
-    BottomSheetHandler(
-        showModalBottomSheet = uiState.homeBottomSheetType != HomeBottomSheetType.NONE,
-        bottomSheetType = uiState.homeBottomSheetType,
-        coroutineScope = state.coroutineScope,
-        keyboardController = state.keyboardController,
-        modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = uiState.resetBottomSheetType,
-    )
-
     MyScaffold(
-        sheetState = state.modalBottomSheetState,
+        modifier = Modifier
+            .fillMaxSize(),
         sheetContent = {
             when (uiState.homeBottomSheetType) {
-                HomeBottomSheetType.MENU -> {
-                    HomeMenuBottomSheet(
-                        navigateToCategoriesScreen = events.navigateToCategoriesScreen,
-                        navigateToSettingsScreen = events.navigateToSettingsScreen,
-                        navigateToSourcesScreen = events.navigateToSourcesScreen,
-                        resetBottomSheetType = uiState.resetBottomSheetType,
-                    )
-                }
-
                 HomeBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
             }
         },
+        sheetState = state.modalBottomSheetState,
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_home_appbar_title,
-            )
-        },
-        bottomBar = {
-            HomeBottomAppBar(
-                updateHomeBottomSheetType = {
-                    uiState.setHomeBottomSheetType(HomeBottomSheetType.MENU)
+                appBarActions = {
+                    IconButton(
+                        onClick = events.navigateToSettingsScreen,
+                    ) {
+                        Icon(
+                            imageVector = Icons.Rounded.Settings,
+                            contentDescription = stringResource(
+                                id = R.string.screen_home_appbar_settings,
+                            ),
+                            tint = MaterialTheme.colorScheme.onBackground,
+                        )
+                    }
                 },
             )
         },
@@ -121,15 +111,11 @@ internal fun HomeScreenUI(
                 onClick = events.navigateToAddTransactionScreen,
             )
         },
-        isFloatingActionButtonDocked = true,
         onClick = {
             state.focusManager.clearFocus()
         },
-        backHandlerEnabled = uiState.homeBottomSheetType != HomeBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
-        modifier = Modifier
-            .fillMaxSize(),
     ) {
         LazyColumn(
             contentPadding = PaddingValues(

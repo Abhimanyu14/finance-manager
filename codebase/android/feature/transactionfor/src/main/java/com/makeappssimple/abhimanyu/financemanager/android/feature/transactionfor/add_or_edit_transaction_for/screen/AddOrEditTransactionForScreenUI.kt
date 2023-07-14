@@ -79,7 +79,8 @@ internal fun AddOrEditTransactionForScreenUI(
     )
 
     MyScaffold(
-        sheetState = state.modalBottomSheetState,
+        modifier = Modifier
+            .fillMaxSize(),
         sheetContent = {
             when (uiState.addOrEditTransactionForBottomSheetType) {
                 AddOrEditTransactionForBottomSheetType.DELETE -> {
@@ -95,6 +96,7 @@ internal fun AddOrEditTransactionForScreenUI(
                 }
             }
         },
+        sheetState = state.modalBottomSheetState,
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
@@ -104,11 +106,10 @@ internal fun AddOrEditTransactionForScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
+        isModalBottomSheetVisible = uiState.addOrEditTransactionForBottomSheetType != AddOrEditTransactionForBottomSheetType.NONE,
         backHandlerEnabled = uiState.addOrEditTransactionForBottomSheetType != AddOrEditTransactionForBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
-        modifier = Modifier
-            .fillMaxSize(),
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

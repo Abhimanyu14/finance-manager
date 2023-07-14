@@ -17,6 +17,10 @@ interface SettingsScreenViewModel : ScreenViewModel {
         uri: Uri,
     )
 
+    fun navigateToCategoriesScreen()
+
+    fun navigateToSourcesScreen()
+
     fun navigateToTransactionForValuesScreen()
 
     fun navigateUp()

@@ -98,13 +98,13 @@ fun MySearchBar(
         singleLine = true,
         cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
         decorationBox = {
-            TextFieldDefaults.TextFieldDecorationBox(
+            TextFieldDefaults.DecorationBox(
                 value = data.searchText,
                 innerTextField = it,
                 enabled = true,
                 singleLine = true,
                 visualTransformation = VisualTransformation.None,
-                interactionSource = remember {
+                interactionSource = remember<MutableInteractionSource> {
                     MutableInteractionSource()
                 },
                 placeholder = {
@@ -154,18 +154,19 @@ fun MySearchBar(
                     null
                 },
                 shape = CircleShape,
-                colors = TextFieldDefaults.textFieldColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+                    disabledContainerColor = MaterialTheme.colorScheme.primaryContainer,
                     focusedIndicatorColor = Transparent,
                     unfocusedIndicatorColor = Transparent,
                 ),
-                contentPadding = TextFieldDefaults
-                    .textFieldWithoutLabelPadding(
-                        top = 0.dp,
-                        bottom = 0.dp,
-                        start = 0.dp,
-                        end = 0.dp,
-                    ),
+                contentPadding = TextFieldDefaults.contentPaddingWithoutLabel(
+                    start = 0.dp,
+                    top = 0.dp,
+                    end = 0.dp,
+                    bottom = 0.dp,
+                ),
                 container = {
                     Box(
                         modifier = Modifier
@@ -222,12 +223,13 @@ fun SearchBar(
         ),
         shape = CircleShape,
         singleLine = true,
-        colors = TextFieldDefaults
-            .textFieldColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer,
-                focusedIndicatorColor = Transparent,
-                unfocusedIndicatorColor = Transparent,
-            ),
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+            unfocusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
+            disabledContainerColor = MaterialTheme.colorScheme.primaryContainer,
+            focusedIndicatorColor = Transparent,
+            unfocusedIndicatorColor = Transparent,
+        ),
         leadingIcon = {
             Icon(
                 imageVector = Icons.Rounded.Search,
