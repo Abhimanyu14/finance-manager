@@ -6,7 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.MyBottomSheetTitle
@@ -29,8 +29,7 @@ internal fun SelectCategoryBottomSheetUI(
         modifier = modifier
             .defaultMinSize(
                 minHeight = 24.dp,
-            )
-            .navigationBarSpacer(),
+            ),
     ) {
         MyBottomSheetTitle(
             textStringResourceId = R.string.bottom_sheet_select_category_title,
@@ -46,5 +45,6 @@ internal fun SelectCategoryBottomSheetUI(
                 items[it].onClick()
             },
         )
+        NavigationBarSpacer()
     }
 }

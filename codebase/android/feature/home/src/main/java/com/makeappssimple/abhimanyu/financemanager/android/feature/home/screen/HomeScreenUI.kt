@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.MimeTypeConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
@@ -104,6 +106,8 @@ internal fun HomeScreenUI(
         },
         floatingActionButton = {
             MyFloatingActionButton(
+                modifier = Modifier
+                    .navigationBarSpacer(),
                 iconImageVector = Icons.Rounded.Add,
                 contentDescription = stringResource(
                     id = R.string.screen_home_floating_action_button_content_description,
@@ -118,8 +122,10 @@ internal fun HomeScreenUI(
         onBackPress = uiState.resetBottomSheetType,
     ) {
         LazyColumn(
+            modifier = Modifier
+                .navigationBarLandscapeSpacer(),
             contentPadding = PaddingValues(
-                bottom = 48.dp,
+                bottom = 80.dp,
             ),
         ) {
             item {

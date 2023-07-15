@@ -28,6 +28,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
@@ -215,6 +216,7 @@ internal fun AddOrEditTransactionScreenUI(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
+                .navigationBarLandscapeSpacer()
                 .verticalScroll(
                     state = rememberScrollState(),
                 ),

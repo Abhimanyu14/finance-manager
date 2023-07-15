@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
@@ -81,6 +82,7 @@ fun MyScaffold(
         floatingActionButtonPosition = floatingActionButtonPosition,
         containerColor = backgroundColor,
         contentColor = contentColor,
+        contentWindowInsets = WindowInsets.statusBars,
     ) { innerPadding ->
         MyScaffoldContentWrapper(
             innerPadding = innerPadding,

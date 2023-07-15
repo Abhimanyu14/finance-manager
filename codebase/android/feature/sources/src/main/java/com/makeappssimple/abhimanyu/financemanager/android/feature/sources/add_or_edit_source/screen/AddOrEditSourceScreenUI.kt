@@ -25,6 +25,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.SourceType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.AmountCommaVisualTransformation
@@ -137,6 +138,7 @@ internal fun AddOrEditSourceScreenUI(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
+                .navigationBarLandscapeSpacer()
                 .verticalScroll(
                     state = rememberScrollState(),
                 ),

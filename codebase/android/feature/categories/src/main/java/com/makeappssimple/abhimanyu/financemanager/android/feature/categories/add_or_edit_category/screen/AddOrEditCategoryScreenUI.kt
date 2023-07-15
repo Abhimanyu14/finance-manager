@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
@@ -150,6 +151,7 @@ internal fun AddOrEditCategoryScreenUI(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
+                .navigationBarLandscapeSpacer()
                 .verticalScroll(
                     state = rememberScrollState(),
                 ),

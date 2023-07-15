@@ -1,21 +1,26 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.areNavigationBarsVisible
 import androidx.compose.foundation.layout.areStatusBarsVisible
 import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.ifTrue
 
 @Composable
 fun NonFillingVerticalSpacer(
@@ -50,24 +55,39 @@ fun NavigationBarSpacer() {
     )
 }
 
+fun Modifier.navigationBarLandscapeSpacer(): Modifier {
+    return composed {
+        Modifier
+            .fillMaxSize()
+            .ifTrue(
+                condition = LocalConfiguration.current.orientation == Configuration.ORIENTATION_LANDSCAPE,
+            ) {
+                this.navigationBarSpacer()
+            }
+    }
+}
+
 @OptIn(ExperimentalLayoutApi::class)
 fun Modifier.navigationBarSpacer(): Modifier {
     // return this
 
     //*
     return composed {
-        if (WindowInsets.areNavigationBarsVisible) {
-            this
-                .padding(
-                    bottom = navigationBarHeight(),
-                )
-
-//            Modifier.windowInsetsBottomHeight(
-//                insets = WindowInsets.safeDrawing,
-//            )
-        } else {
-            this
-        }
+        this.windowInsetsPadding(
+            insets = WindowInsets.navigationBars,
+        )
+//        if (WindowInsets.areNavigationBarsVisible) {
+//            this
+//                .padding(
+//                    bottom = navigationBarHeight(),
+//                )
+//
+////            Modifier.windowInsetsBottomHeight(
+////                insets = WindowInsets.safeDrawing,
+////            )
+//        } else {
+//            this
+//        }
     }
     // */
 }

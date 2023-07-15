@@ -29,6 +29,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
@@ -191,7 +192,8 @@ internal fun TransactionsScreenUI(
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .navigationBarLandscapeSpacer(),
         ) {
             AnimatedVisibility(
                 visible = uiState.isLoading,

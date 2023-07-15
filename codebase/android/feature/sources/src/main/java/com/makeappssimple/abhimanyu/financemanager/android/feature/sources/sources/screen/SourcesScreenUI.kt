@@ -9,12 +9,12 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
@@ -57,7 +57,6 @@ internal fun SourcesScreenUI(
     uiState: SourcesScreenUIState,
     state: CommonScreenUIState,
 ) {
-    val density = LocalDensity.current
     BottomSheetHandler(
         showModalBottomSheet = uiState.sourcesBottomSheetType != SourcesBottomSheetType.NONE,
         bottomSheetType = uiState.sourcesBottomSheetType,
@@ -135,6 +134,8 @@ internal fun SourcesScreenUI(
         onBackPress = uiState.resetBottomSheetType,
     ) {
         LazyColumn(
+            modifier = Modifier
+                .navigationBarLandscapeSpacer(),
             contentPadding = PaddingValues(
                 bottom = 80.dp,
             ),

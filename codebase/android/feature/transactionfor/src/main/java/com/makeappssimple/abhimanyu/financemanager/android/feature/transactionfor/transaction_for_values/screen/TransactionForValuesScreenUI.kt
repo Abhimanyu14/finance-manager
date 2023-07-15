@@ -14,6 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
@@ -135,7 +136,10 @@ internal fun TransactionForValuesScreenUI(
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
     ) {
-        LazyColumn {
+        LazyColumn(
+            modifier = Modifier
+                .navigationBarLandscapeSpacer(),
+        ) {
             itemsIndexed(
                 items = uiState.transactionForValues,
                 key = { _, listItem ->

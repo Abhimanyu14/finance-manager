@@ -13,9 +13,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.accompanist.pager.HorizontalPager
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabRow
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
@@ -200,7 +200,8 @@ internal fun CategoriesScreenUI(
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .navigationBarLandscapeSpacer(),
         ) {
             MyTabRow(
                 selectedTabIndex = uiState.selectedTabIndex,
@@ -245,7 +246,6 @@ internal fun CategoriesScreenUI(
                     },
                 )
             }
-            NavigationBarSpacer()
         }
     }
 }

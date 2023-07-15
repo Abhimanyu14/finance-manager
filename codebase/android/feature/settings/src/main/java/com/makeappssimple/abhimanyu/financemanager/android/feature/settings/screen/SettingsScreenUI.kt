@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AccountBalance
 import androidx.compose.material.icons.rounded.Backup
@@ -28,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
@@ -175,14 +174,12 @@ internal fun SettingsScreenUI(
         Column(
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .navigationBarSpacer(),
         ) {
             LazyColumn(
                 horizontalAlignment = Alignment.Start,
                 modifier = Modifier
-                    .verticalScroll(
-                        state = rememberScrollState(),
-                    )
                     .fillMaxWidth()
                     .weight(
                         weight = 1F,

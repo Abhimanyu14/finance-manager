@@ -20,6 +20,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
@@ -115,6 +116,7 @@ internal fun AddOrEditTransactionForScreenUI(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
                 .fillMaxSize()
+                .navigationBarLandscapeSpacer()
                 .verticalScroll(
                     state = rememberScrollState(),
                 ),

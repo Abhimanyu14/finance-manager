@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.onSizeChanged
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.ifTrue
 import kotlin.math.pow
 import kotlin.math.sqrt
 
@@ -68,15 +69,13 @@ fun Modifier.shimmer(
                 .background(
                     brush = brush,
                 )
-                .then(
-                    if (shape.isNotNull()) {
+                .ifTrue(shape.isNotNull()) {
+                    shape?.let {
                         this.clip(
-                            shape = shape,
+                            shape = it,
                         )
-                    } else {
-                        this
-                    }
-                ),
+                    } ?: this
+                },
         )
     }
 }

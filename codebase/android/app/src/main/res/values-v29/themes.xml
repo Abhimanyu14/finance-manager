@@ -15,7 +15,7 @@
         <item name="colorOnSecondary">@color/colorOnSecondary</item>
 
         <!-- Navigation bar color -->
-        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/transparent</item>
 
         <!-- Status bar color -->
         <item name="android:statusBarColor">@color/transparent</item>

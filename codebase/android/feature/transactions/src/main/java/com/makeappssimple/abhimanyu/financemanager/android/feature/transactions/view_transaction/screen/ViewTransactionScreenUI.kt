@@ -17,6 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
@@ -105,7 +106,8 @@ internal fun ViewTransactionScreenUI(
     ) {
         Column(
             modifier = Modifier
-                .fillMaxSize(),
+                .fillMaxSize()
+                .navigationBarLandscapeSpacer(),
         ) {
             AnimatedVisibility(
                 visible = uiState.transactionListItemData.isNull(),
