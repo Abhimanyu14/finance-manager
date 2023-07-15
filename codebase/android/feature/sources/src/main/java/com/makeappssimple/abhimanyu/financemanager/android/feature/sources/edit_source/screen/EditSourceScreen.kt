@@ -5,7 +5,6 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_or_edit_source.screen.AddOrEditSourceScreenUIData
@@ -28,11 +27,7 @@ fun EditSourceScreen(
         events = AddOrEditSourceScreenUIEvents(
             clearBalanceAmountValue = screenViewModel::clearBalanceAmountValue,
             clearName = screenViewModel::clearName,
-            navigateUp = {
-                screenViewModel.navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.NavigateUp
-                )
-            },
+            navigateUp = screenViewModel::navigateUp,
             onCtaButtonClick = screenViewModel::updateSource,
             updateBalanceAmountValue = screenViewModel::updateBalanceAmountValue,
             updateName = screenViewModel::updateName,

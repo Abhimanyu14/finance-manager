@@ -76,7 +76,6 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
     override val myLogger: MyLogger,
-    override val navigationManager: NavigationManager,
     private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
@@ -87,6 +86,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     private val getTransactionDataUseCase: GetTransactionDataUseCase,
     private val insertTransactionUseCase: InsertTransactionUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
+    private val navigationManager: NavigationManager,
     private val updateSourcesBalanceAmountUseCase: UpdateSourcesBalanceAmountUseCase,
     private val updateTransactionUseCase: UpdateTransactionUseCase,
 ) : AddOrEditTransactionScreenViewModel, ViewModel() {
@@ -711,6 +711,12 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             updatedAmount = uiState.value.amount.copy(
                 text = "",
             ),
+        )
+    }
+
+    override fun navigateUp() {
+        navigationManager.navigate(
+            MyNavigationDirections.NavigateUp
         )
     }
 

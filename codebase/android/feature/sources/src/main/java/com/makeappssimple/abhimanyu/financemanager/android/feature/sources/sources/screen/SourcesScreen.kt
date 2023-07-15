@@ -5,7 +5,6 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.viewmodel.SourcesScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.viewmodel.SourcesScreenViewModelImpl
@@ -22,33 +21,11 @@ fun SourcesScreen(
 
     SourcesScreenUI(
         events = SourcesScreenUIEvents(
-            deleteSource = { sourceId ->
-                screenViewModel.deleteSource(
-                    id = sourceId,
-                )
-            },
-            navigateToAddSourceScreen = {
-                screenViewModel.navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.AddSource
-                )
-            },
-            navigateToEditSourceScreen = {
-                screenViewModel.navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.EditSource(
-                        sourceId = it,
-                    )
-                )
-            },
-            navigateUp = {
-                screenViewModel.navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.NavigateUp
-                )
-            },
-            setDefaultSourceIdInDataStore = { clickedItemIdValue ->
-                screenViewModel.setDefaultSourceIdInDataStore(
-                    defaultSourceId = clickedItemIdValue,
-                )
-            },
+            deleteSource = screenViewModel::deleteSource,
+            navigateToAddSourceScreen = screenViewModel::navigateToAddSourceScreen,
+            navigateToEditSourceScreen = screenViewModel::navigateToEditSourceScreen,
+            navigateUp = screenViewModel::navigateUp,
+            setDefaultSourceIdInDataStore = screenViewModel::setDefaultSourceIdInDataStore,
         ),
         uiState = rememberSourcesScreenUIState(
             data = screenUIData,

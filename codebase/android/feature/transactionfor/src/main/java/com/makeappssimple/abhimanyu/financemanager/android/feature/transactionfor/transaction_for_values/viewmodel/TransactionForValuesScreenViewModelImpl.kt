@@ -12,6 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.screen.TransactionForValuesScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,10 +27,10 @@ import javax.inject.Inject
 internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
     getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
     override val myLogger: MyLogger,
-    override val navigationManager: NavigationManager,
     private val checkIfTransactionForIsUsedInTransactionsUseCase: CheckIfTransactionForIsUsedInTransactionsUseCase,
     private val deleteTransactionForUseCase: DeleteTransactionForUseCase,
     private val dispatcherProvider: DispatcherProvider,
+    private val navigationManager: NavigationManager,
 ) : TransactionForValuesScreenViewModel, ViewModel() {
     private val transactionForValues: StateFlow<List<TransactionFor>> =
         getAllTransactionForValuesFlowUseCase().defaultListStateIn(
@@ -79,5 +80,27 @@ internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
                 id = id,
             )
         }
+    }
+
+    override fun navigateToAddTransactionForScreen() {
+        navigationManager.navigate(
+            MyNavigationDirections.AddTransactionFor
+        )
+    }
+
+    override fun navigateToEditTransactionForScreen(
+        transactionForId: Int,
+    ) {
+        navigationManager.navigate(
+            MyNavigationDirections.EditTransactionFor(
+                transactionForId = transactionForId,
+            )
+        )
+    }
+
+    override fun navigateUp() {
+        navigationManager.navigate(
+            MyNavigationDirections.NavigateUp
+        )
     }
 }

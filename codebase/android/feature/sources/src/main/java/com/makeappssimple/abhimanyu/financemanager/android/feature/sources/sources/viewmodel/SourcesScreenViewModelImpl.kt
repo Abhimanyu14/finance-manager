@@ -14,6 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.sortOrder
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultSource
@@ -32,11 +33,11 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
     getAllSourcesFlowUseCase: GetAllSourcesFlowUseCase,
     getSourcesTotalBalanceAmountValueUseCase: GetSourcesTotalBalanceAmountValueUseCase,
     override val myLogger: MyLogger,
-    override val navigationManager: NavigationManager,
     private val checkIfSourceIsUsedInTransactionsUseCase: CheckIfSourceIsUsedInTransactionsUseCase,
     private val deleteSourceUseCase: DeleteSourceUseCase,
     private val dispatcherProvider: DispatcherProvider,
     private val myPreferencesRepository: MyPreferencesRepository,
+    private val navigationManager: NavigationManager,
 ) : SourcesScreenViewModel, ViewModel() {
     private val defaultSourceId: Flow<Int?> = myPreferencesRepository.getDefaultDataId().map {
         it?.source
@@ -111,6 +112,28 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
                 id = id,
             )
         }
+    }
+
+    override fun navigateToAddSourceScreen() {
+        navigationManager.navigate(
+            MyNavigationDirections.AddSource
+        )
+    }
+
+    override fun navigateToEditSourceScreen(
+        sourceId: Int,
+    ) {
+        navigationManager.navigate(
+            MyNavigationDirections.EditSource(
+                sourceId = sourceId,
+            )
+        )
+    }
+
+    override fun navigateUp() {
+        navigationManager.navigate(
+            MyNavigationDirections.NavigateUp
+        )
     }
 
     override fun setDefaultSourceIdInDataStore(

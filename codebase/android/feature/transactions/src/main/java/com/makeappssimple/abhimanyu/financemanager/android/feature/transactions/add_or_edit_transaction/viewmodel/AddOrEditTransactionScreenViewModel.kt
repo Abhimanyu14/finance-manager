@@ -5,7 +5,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUIData
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +13,6 @@ import java.time.LocalTime
 
 interface AddOrEditTransactionScreenViewModel : ScreenViewModel {
     val myLogger: MyLogger
-    val navigationManager: NavigationManager
     val screenUIData: StateFlow<MyResult<AddOrEditTransactionScreenUIData>?>
 
     fun insertTransaction()
@@ -42,6 +40,8 @@ interface AddOrEditTransactionScreenViewModel : ScreenViewModel {
     )
 
     fun clearAmount()
+
+    fun navigateUp()
 
     fun updateSourceFrom(
         updatedSourceFrom: Source?,

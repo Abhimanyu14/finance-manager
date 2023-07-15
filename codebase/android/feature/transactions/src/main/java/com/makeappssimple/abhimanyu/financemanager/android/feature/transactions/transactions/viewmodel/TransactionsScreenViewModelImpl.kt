@@ -18,6 +18,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
@@ -38,8 +39,8 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     dispatcherProvider: DispatcherProvider,
     getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
     override val myLogger: MyLogger,
-    override val navigationManager: NavigationManager,
     private val dateTimeUtil: DateTimeUtil,
+    private val navigationManager: NavigationManager,
 ) : TransactionsScreenViewModel, ViewModel() {
     private val allTransactionData: Flow<List<TransactionData>> =
         getAllTransactionDataFlowUseCase()
@@ -99,6 +100,28 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         value = SortOption.LATEST_FIRST,
     )
     // endregion
+
+    override fun navigateToAddTransactionScreen() {
+        navigationManager.navigate(
+            MyNavigationDirections.AddTransaction()
+        )
+    }
+
+    override fun navigateToViewTransactionScreen(
+        transactionId: Int,
+    ) {
+        navigationManager.navigate(
+            MyNavigationDirections.ViewTransaction(
+                transactionId = transactionId,
+            )
+        )
+    }
+
+    override fun navigateUp() {
+        navigationManager.navigate(
+            MyNavigationDirections.NavigateUp
+        )
+    }
 
     private val transactionTypes: List<TransactionType> = TransactionType.values().toList()
 

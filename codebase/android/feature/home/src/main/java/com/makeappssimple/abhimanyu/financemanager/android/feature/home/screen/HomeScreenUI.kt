@@ -62,7 +62,6 @@ internal data class HomeScreenUIEvents(
     val handleOverviewCardAction: (OverviewCardAction) -> Unit,
     val navigateToAddTransactionScreen: () -> Unit,
     val navigateToAnalysisScreen: () -> Unit,
-    val navigateToCategoriesScreen: () -> Unit,
     val navigateToSettingsScreen: () -> Unit,
     val navigateToSourcesScreen: () -> Unit,
     val navigateToTransactionsScreen: () -> Unit,

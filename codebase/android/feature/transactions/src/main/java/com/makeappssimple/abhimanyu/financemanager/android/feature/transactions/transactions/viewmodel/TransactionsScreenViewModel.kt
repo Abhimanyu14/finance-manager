@@ -4,20 +4,26 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen.TransactionsScreenUIData
 import kotlinx.coroutines.flow.StateFlow
 
 interface TransactionsScreenViewModel : ScreenViewModel {
     val myLogger: MyLogger
-    val navigationManager: NavigationManager
     val screenUIData: StateFlow<MyResult<TransactionsScreenUIData>?>
 
     val expenseCategories: StateFlow<List<Category>?>
     val incomeCategories: StateFlow<List<Category>?>
     val investmentCategories: StateFlow<List<Category>?>
     val sources: StateFlow<List<Source>?>
+
+    fun navigateToAddTransactionScreen()
+
+    fun navigateToViewTransactionScreen(
+        transactionId: Int,
+    )
+
+    fun navigateUp()
 
     fun updateSelectedFilter(
         updatedSelectedFilter: Filter,

@@ -48,7 +48,6 @@ internal const val defaultOverviewTabSelection = 1
 internal class HomeScreenViewModelImpl @Inject constructor(
     getSourcesTotalBalanceAmountValueUseCase: GetSourcesTotalBalanceAmountValueUseCase,
     override val myLogger: MyLogger,
-    override val navigationManager: NavigationManager,
     private val backupDataUseCase: BackupDataUseCase,
     private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
@@ -56,6 +55,7 @@ internal class HomeScreenViewModelImpl @Inject constructor(
     private val getTransactionsBetweenTimestampsUseCase: GetTransactionsBetweenTimestampsUseCase,
     private val getTransactionUseCase: GetTransactionUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
+    private val navigationManager: NavigationManager,
 ) : HomeScreenViewModel, ViewModel() {
     private val homeListItemViewData: Flow<List<TransactionListItemData>> =
         getHomeListItemViewDataFromData()
@@ -278,6 +278,36 @@ internal class HomeScreenViewModelImpl @Inject constructor(
                 }
             }
         }
+    }
+
+    override fun navigateToAnalysisScreen() {
+        navigationManager.navigate(
+            MyNavigationDirections.Analysis
+        )
+    }
+
+    override fun navigateToAddTransactionScreen() {
+        navigationManager.navigate(
+            MyNavigationDirections.AddTransaction()
+        )
+    }
+
+    override fun navigateToSettingsScreen() {
+        navigationManager.navigate(
+            MyNavigationDirections.Settings
+        )
+    }
+
+    override fun navigateToSourcesScreen() {
+        navigationManager.navigate(
+            MyNavigationDirections.Sources
+        )
+    }
+
+    override fun navigateToTransactionsScreen() {
+        navigationManager.navigate(
+            MyNavigationDirections.Transactions
+        )
     }
 
     override fun setOverviewTabSelectionIndex(

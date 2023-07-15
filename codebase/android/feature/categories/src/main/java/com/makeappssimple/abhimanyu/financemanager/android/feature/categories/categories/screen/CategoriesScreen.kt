@@ -5,8 +5,6 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.viewmodel.CategoriesScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.viewmodel.CategoriesScreenViewModelImpl
@@ -23,41 +21,12 @@ fun CategoriesScreen(
 
     CategoriesScreenUI(
         events = CategoriesScreenUIEvents(
-            deleteCategory = { categoryId ->
-                screenViewModel.deleteCategory(
-                    id = categoryId,
-                )
-            },
-            navigateToAddCategoryScreen = { transactionType ->
-                screenViewModel.navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.AddCategory(
-                        transactionType = transactionType,
-                    )
-                )
-            },
-            navigateToEditCategoryScreen = { categoryId ->
-                screenViewModel.navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.EditCategory(
-                        categoryId = categoryId,
-                    )
-                )
-            },
-            navigateUp = {
-                screenViewModel.navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.NavigateUp
-                )
-            },
-            setDefaultCategoryIdInDataStore = { defaultCategoryId: Int, transactionType: TransactionType ->
-                screenViewModel.setDefaultCategoryIdInDataStore(
-                    defaultCategoryId = defaultCategoryId,
-                    transactionType = transactionType,
-                )
-            },
-            updateSelectedTabIndex = { updatedSelectedTabIndex ->
-                screenViewModel.updateSelectedTabIndex(
-                    updatedSelectedTabIndex = updatedSelectedTabIndex,
-                )
-            },
+            deleteCategory = screenViewModel::deleteCategory,
+            navigateToAddCategoryScreen = screenViewModel::navigateToAddCategoryScreen,
+            navigateToEditCategoryScreen = screenViewModel::navigateToEditCategoryScreen,
+            navigateUp = screenViewModel::navigateUp,
+            setDefaultCategoryIdInDataStore = screenViewModel::setDefaultCategoryIdInDataStore,
+            updateSelectedTabIndex = screenViewModel::updateSelectedTabIndex,
         ),
         uiState = rememberCategoriesScreenUIState(
             data = screenUIData,

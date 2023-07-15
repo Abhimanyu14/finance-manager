@@ -38,9 +38,9 @@ import javax.inject.Inject
 internal class AnalysisScreenViewModelImpl @Inject constructor(
     getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
     override val myLogger: MyLogger,
-    override val navigationManager: NavigationManager,
     private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
+    private val navigationManager: NavigationManager,
 ) : AnalysisScreenViewModel, ViewModel() {
     private var allTransactionData: Flow<List<TransactionData>> = getAllTransactionDataFlowUseCase()
     private val validTransactionTypes = listOf(

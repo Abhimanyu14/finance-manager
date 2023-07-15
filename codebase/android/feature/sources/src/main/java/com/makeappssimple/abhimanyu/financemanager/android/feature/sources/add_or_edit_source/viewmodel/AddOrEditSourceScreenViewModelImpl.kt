@@ -48,13 +48,13 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
     override val myLogger: MyLogger,
-    override val navigationManager: NavigationManager,
     private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
     private val getAllSourcesUseCase: GetAllSourcesUseCase,
     private val getSourceUseCase: GetSourceUseCase,
     private val insertSourcesUseCase: InsertSourcesUseCase,
     private val insertTransactionsUseCase: InsertTransactionsUseCase,
+    private val navigationManager: NavigationManager,
     private val updateSourcesUseCase: UpdateSourcesUseCase,
 ) : AddOrEditSourceScreenViewModel, ViewModel() {
     private val addOrEditSourceScreenArgs: AddOrEditSourceScreenArgs = AddOrEditSourceScreenArgs(
@@ -229,6 +229,12 @@ internal class AddOrEditSourceScreenViewModelImpl @Inject constructor(
     override fun clearName() {
         updateName(
             updatedName = name.value.copy(""),
+        )
+    }
+
+    override fun navigateUp() {
+        navigationManager.navigate(
+            MyNavigationDirections.NavigateUp
         )
     }
 

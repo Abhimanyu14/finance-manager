@@ -47,12 +47,12 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
     override val myLogger: MyLogger,
-    override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val getAllEmojisUseCase: GetAllEmojisUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val insertCategoriesUseCase: InsertCategoriesUseCase,
+    private val navigationManager: NavigationManager,
     private val updateCategoriesUseCase: UpdateCategoriesUseCase,
 ) : AddOrEditCategoryScreenViewModel, ViewModel() {
     private val addOrEditCategoryScreenArgs: AddOrEditCategoryScreenArgs =
@@ -227,6 +227,12 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
             updatedTitle = title.value.copy(
                 text = "",
             ),
+        )
+    }
+
+    override fun navigateUp() {
+        navigationManager.navigate(
+            MyNavigationDirections.NavigateUp
         )
     }
 

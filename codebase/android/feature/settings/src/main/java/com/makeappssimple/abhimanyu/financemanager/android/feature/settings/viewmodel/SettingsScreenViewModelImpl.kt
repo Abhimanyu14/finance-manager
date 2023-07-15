@@ -25,9 +25,9 @@ import javax.inject.Inject
 internal class SettingsScreenViewModelImpl @Inject constructor(
     appVersionUtil: AppVersionUtil,
     override val myLogger: MyLogger,
-    override val navigationManager: NavigationManager,
     private val backupDataUseCase: BackupDataUseCase,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    private val navigationManager: NavigationManager,
     private val recalculateTotalUseCase: RecalculateTotalUseCase,
     private val restoreDataUseCase: RestoreDataUseCase,
 ) : SettingsScreenViewModel, ViewModel() {

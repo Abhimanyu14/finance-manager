@@ -7,7 +7,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.TransactionsScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.TransactionsScreenViewModelImpl
@@ -40,23 +39,9 @@ fun TransactionsScreen(
             getSources = {
                 sources.orEmpty()
             },
-            navigateToAddTransactionScreen = {
-                screenViewModel.navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.AddTransaction()
-                )
-            },
-            navigateToViewTransactionScreen = { transactionId ->
-                screenViewModel.navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.ViewTransaction(
-                        transactionId = transactionId,
-                    )
-                )
-            },
-            navigateUp = {
-                screenViewModel.navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.NavigateUp
-                )
-            },
+            navigateToAddTransactionScreen = screenViewModel::navigateToAddTransactionScreen,
+            navigateToViewTransactionScreen = screenViewModel::navigateToViewTransactionScreen,
+            navigateUp = screenViewModel::navigateUp,
             updateSearchText = screenViewModel::updateSearchText,
             updateSelectedFilter = screenViewModel::updateSelectedFilter,
             updateSelectedSortOption = screenViewModel::updateSelectedSortOption,

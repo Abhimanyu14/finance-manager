@@ -17,6 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
@@ -34,11 +35,11 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
     override val myLogger: MyLogger,
-    override val navigationManager: NavigationManager,
     private val dateTimeUtil: DateTimeUtil,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
     private val dispatcherProvider: DispatcherProvider,
     private val getTransactionDataUseCase: GetTransactionDataUseCase,
+    private val navigationManager: NavigationManager,
 ) : ViewTransactionScreenViewModel, ViewModel() {
     private var viewTransactionScreenArgs: ViewTransactionScreenArgs = ViewTransactionScreenArgs(
         savedStateHandle = savedStateHandle,
@@ -118,7 +119,34 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
             deleteTransactionUseCase(
                 id = id,
             )
+            navigateUp()
         }
+    }
+
+    override fun navigateToAddTransactionScreen(
+        transactionId: Int,
+    ) {
+        navigationManager.navigate(
+            MyNavigationDirections.AddTransaction(
+                transactionId = transactionId,
+            )
+        )
+    }
+
+    override fun navigateToEditTransactionScreen(
+        transactionId: Int,
+    ) {
+        navigationManager.navigate(
+            MyNavigationDirections.EditTransaction(
+                transactionId = transactionId,
+            )
+        )
+    }
+
+    override fun navigateUp() {
+        navigationManager.navigate(
+            MyNavigationDirections.NavigateUp
+        )
     }
 
     private fun getTransactionListItemData(

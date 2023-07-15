@@ -5,7 +5,6 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIData
@@ -27,11 +26,7 @@ fun EditTransactionForScreen(
     AddOrEditTransactionForScreenUI(
         events = AddOrEditTransactionForScreenUIEvents(
             clearTitle = screenViewModel::clearTitle,
-            navigateUp = {
-                screenViewModel.navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.NavigateUp
-                )
-            },
+            navigateUp = screenViewModel::navigateUp,
             onCtaButtonClick = screenViewModel::updateTransactionFor,
             updateTitle = screenViewModel::updateTitle,
         ),

@@ -6,7 +6,6 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.viewmodel.ViewTransactionScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.viewmodel.ViewTransactionScreenViewModelImpl
@@ -29,33 +28,10 @@ fun ViewTransactionScreen(
 
     ViewTransactionScreenUI(
         events = ViewTransactionScreenUIEvents(
-            deleteTransaction = { transactionId ->
-                screenViewModel.deleteTransaction(
-                    id = transactionId,
-                )
-                screenViewModel.navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.NavigateUp
-                )
-            },
-            navigateToAddTransactionScreen = { transactionId ->
-                screenViewModel.navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.AddTransaction(
-                        transactionId = transactionId,
-                    )
-                )
-            },
-            navigateToEditTransactionScreen = { transactionId ->
-                screenViewModel.navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.EditTransaction(
-                        transactionId = transactionId,
-                    )
-                )
-            },
-            navigateUp = {
-                screenViewModel.navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.NavigateUp
-                )
-            },
+            deleteTransaction = screenViewModel::deleteTransaction,
+            navigateToAddTransactionScreen = screenViewModel::navigateToAddTransactionScreen,
+            navigateToEditTransactionScreen = screenViewModel::navigateToEditTransactionScreen,
+            navigateUp = screenViewModel::navigateUp,
         ),
         uiState = rememberViewTransactionScreenUIState(
             data = screenUIData,

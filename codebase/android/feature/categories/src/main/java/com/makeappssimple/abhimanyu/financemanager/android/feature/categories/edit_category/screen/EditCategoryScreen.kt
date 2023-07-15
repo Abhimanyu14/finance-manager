@@ -7,7 +7,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUIData
@@ -43,11 +42,7 @@ fun EditCategoryScreen(
     AddOrEditCategoryScreenUI(
         events = AddOrEditCategoryScreenUIEvents(
             clearTitle = screenViewModel::clearTitle,
-            navigateUp = {
-                screenViewModel.navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.NavigateUp
-                )
-            },
+            navigateUp = screenViewModel::navigateUp,
             onCtaButtonClick = screenViewModel::updateCategory,
             updateEmoji = screenViewModel::updateEmoji,
             updateSearchText = screenViewModel::updateSearchText,

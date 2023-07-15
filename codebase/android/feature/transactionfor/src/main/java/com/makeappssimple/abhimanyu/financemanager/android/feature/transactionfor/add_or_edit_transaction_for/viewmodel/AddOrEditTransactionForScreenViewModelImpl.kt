@@ -35,11 +35,11 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
     override val myLogger: MyLogger,
-    override val navigationManager: NavigationManager,
     private val dispatcherProvider: DispatcherProvider,
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val getTransactionForUseCase: GetTransactionForUseCase,
     private val insertTransactionForUseCase: InsertTransactionForValuesUseCase,
+    private val navigationManager: NavigationManager,
     private val updateTransactionForValuesUseCase: UpdateTransactionForValuesUseCase,
 ) : AddOrEditTransactionForScreenViewModel, ViewModel() {
     private val addOrEditTransactionForScreenArgs: AddOrEditTransactionForScreenArgs =
@@ -143,6 +143,12 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
             updatedTitle = title.value.copy(
                 text = "",
             ),
+        )
+    }
+
+    override fun navigateUp() {
+        navigationManager.navigate(
+            MyNavigationDirections.NavigateUp
         )
     }
 

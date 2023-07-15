@@ -14,6 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid_item.CategoriesGridItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
@@ -33,11 +34,11 @@ import javax.inject.Inject
 internal class CategoriesScreenViewModelImpl @Inject constructor(
     getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
     override val myLogger: MyLogger,
-    override val navigationManager: NavigationManager,
     private val checkIfCategoryIsUsedInTransactionsUseCase: CheckIfCategoryIsUsedInTransactionsUseCase,
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
     private val dispatcherProvider: DispatcherProvider,
     private val myPreferencesRepository: MyPreferencesRepository,
+    private val navigationManager: NavigationManager,
 ) : CategoriesScreenViewModel, ViewModel() {
     private val selectedTabIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = 0,
@@ -163,6 +164,32 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
                 id = id,
             )
         }
+    }
+
+    override fun navigateToAddCategoryScreen(
+        transactionType: String,
+    ) {
+        navigationManager.navigate(
+            MyNavigationDirections.AddCategory(
+                transactionType = transactionType,
+            )
+        )
+    }
+
+    override fun navigateToEditCategoryScreen(
+        categoryId: Int,
+    ) {
+        navigationManager.navigate(
+            MyNavigationDirections.EditCategory(
+                categoryId = categoryId,
+            )
+        )
+    }
+
+    override fun navigateUp() {
+        navigationManager.navigate(
+            MyNavigationDirections.NavigateUp
+        )
     }
 
     override fun setDefaultCategoryIdInDataStore(

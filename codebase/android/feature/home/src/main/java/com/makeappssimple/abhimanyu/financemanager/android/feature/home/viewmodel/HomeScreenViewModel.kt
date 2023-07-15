@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmod
 import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardAction
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen.HomeScreenUIData
@@ -11,7 +10,6 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface HomeScreenViewModel : ScreenViewModel {
     val myLogger: MyLogger
-    val navigationManager: NavigationManager
     val screenUIData: StateFlow<MyResult<HomeScreenUIData>?>
 
     fun backupDataToDocument(
@@ -21,6 +19,16 @@ interface HomeScreenViewModel : ScreenViewModel {
     fun handleOverviewCardAction(
         overviewCardAction: OverviewCardAction,
     )
+
+    fun navigateToAnalysisScreen()
+
+    fun navigateToAddTransactionScreen()
+
+    fun navigateToSettingsScreen()
+
+    fun navigateToSourcesScreen()
+
+    fun navigateToTransactionsScreen()
 
     fun setOverviewTabSelectionIndex(
         updatedOverviewTabSelectionIndex: Int,
