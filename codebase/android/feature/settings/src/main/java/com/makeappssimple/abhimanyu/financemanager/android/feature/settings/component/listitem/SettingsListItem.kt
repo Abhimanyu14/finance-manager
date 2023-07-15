@@ -14,14 +14,15 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ext
 
 @Immutable
 data class SettingsListItemData(
-    val isLoading: Boolean,
-    val imageVector: ImageVector,
+    val isHeading: Boolean = false,
+    val isLoading: Boolean = false,
+    val imageVector: ImageVector? = null,
     @StringRes val textStringResourceId: Int,
 )
 
 @Immutable
 data class SettingsListItemEvents(
-    val onClick: () -> Unit,
+    val onClick: () -> Unit = {},
 )
 
 @Composable
@@ -30,32 +31,41 @@ internal fun SettingsListItem(
     data: SettingsListItemData,
     events: SettingsListItemEvents,
 ) {
-    ListItem(
-        leadingContent = {
-            Icon(
-                imageVector = data.imageVector,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.onBackground,
-            )
-        },
-        headlineContent = {
-            MyText(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                textStringResourceId = data.textStringResourceId,
-                style = MaterialTheme.typography.bodyLarge
-                    .copy(
-                        color = MaterialTheme.colorScheme.onBackground,
-                    ),
-            )
-        },
-        modifier = modifier
-            .conditionalClickable(
-                onClick = if (data.isLoading) {
-                    null
-                } else {
-                    events.onClick
-                },
-            ),
-    )
+    if (data.isHeading) {
+        SettingsHeadingListItem(
+            modifier = modifier,
+            data = data,
+        )
+    } else {
+        ListItem(
+            leadingContent = {
+                data.imageVector?.let {
+                    Icon(
+                        imageVector = data.imageVector,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onBackground,
+                    )
+                }
+            },
+            headlineContent = {
+                MyText(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    textStringResourceId = data.textStringResourceId,
+                    style = MaterialTheme.typography.bodyLarge
+                        .copy(
+                            color = MaterialTheme.colorScheme.onBackground,
+                        ),
+                )
+            },
+            modifier = modifier
+                .conditionalClickable(
+                    onClick = if (data.isLoading) {
+                        null
+                    } else {
+                        events.onClick
+                    },
+                ),
+        )
+    }
 }

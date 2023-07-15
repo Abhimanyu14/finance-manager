@@ -49,7 +49,7 @@ data class SettingsScreenUIData(
 @Immutable
 data class SettingsScreenListItemData(
     val data: SettingsListItemData,
-    val events: SettingsListItemEvents,
+    val events: SettingsListItemEvents = SettingsListItemEvents(),
 )
 
 @Immutable
@@ -70,6 +70,13 @@ internal fun SettingsScreenUI(
     state: CommonScreenUIState = rememberCommonScreenUIState(),
 ) {
     val listItemsData: List<SettingsScreenListItemData> = listOf(
+        SettingsScreenListItemData(
+            data = SettingsListItemData(
+                isHeading = true,
+                isLoading = uiState.isLoading,
+                textStringResourceId = R.string.screen_settings_data,
+            ),
+        ),
         SettingsScreenListItemData(
             data = SettingsListItemData(
                 isLoading = uiState.isLoading,
@@ -98,6 +105,13 @@ internal fun SettingsScreenUI(
             ),
             events = SettingsListItemEvents(
                 onClick = events.navigateToTransactionForValuesScreen,
+            ),
+        ),
+        SettingsScreenListItemData(
+            data = SettingsListItemData(
+                isHeading = true,
+                isLoading = uiState.isLoading,
+                textStringResourceId = R.string.screen_settings_backup_and_restore,
             ),
         ),
         SettingsScreenListItemData(
