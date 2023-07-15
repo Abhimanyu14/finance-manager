@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -175,7 +177,7 @@ internal fun SettingsScreenUI(
             modifier = Modifier
                 .fillMaxSize(),
         ) {
-            Column(
+            LazyColumn(
                 horizontalAlignment = Alignment.Start,
                 modifier = Modifier
                     .verticalScroll(
@@ -186,17 +188,24 @@ internal fun SettingsScreenUI(
                         weight = 1F,
                     ),
             ) {
-                AnimatedVisibility(
-                    visible = uiState.isLoading,
-                ) {
-                    MyLinearProgressIndicator(
-                        modifier = Modifier
-                            .testTag(
-                                tag = "linear_progress_indicator",
-                            ),
-                    )
+                item {
+                    AnimatedVisibility(
+                        visible = uiState.isLoading,
+                    ) {
+                        MyLinearProgressIndicator(
+                            modifier = Modifier
+                                .testTag(
+                                    tag = "linear_progress_indicator",
+                                ),
+                        )
+                    }
                 }
-                listItemsData.forEach {
+                items(
+                    items = listItemsData,
+                    key = { listItem ->
+                        listItem.hashCode()
+                    },
+                ) {
                     SettingsListItem(
                         data = it.data,
                         events = it.events,
@@ -225,4 +234,3 @@ internal fun SettingsScreenUI(
         }
     }
 }
-

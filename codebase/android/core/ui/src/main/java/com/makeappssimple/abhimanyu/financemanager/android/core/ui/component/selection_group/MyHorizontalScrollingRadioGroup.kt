@@ -37,7 +37,12 @@ fun MyHorizontalScrollingRadioGroup(
             .fadingEdge(),
     ) {
         if (data.isLoading) {
-            items(data.loadingItemSize) {
+            items(
+                count = data.loadingItemSize,
+                key = { listItem ->
+                    listItem.hashCode()
+                },
+            ) {
                 ChipUI(
                     data = ChipUIData(
                         isLoading = true,

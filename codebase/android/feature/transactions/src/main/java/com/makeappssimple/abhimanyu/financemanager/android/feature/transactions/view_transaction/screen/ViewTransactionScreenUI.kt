@@ -210,7 +210,12 @@ internal fun ViewTransactionScreenUI(
                                     ),
                             )
                         }
-                        items(uiState.refundTransactionListItemData) { transactionListItemData ->
+                        items(
+                            items = uiState.refundTransactionListItemData,
+                            key = { listItem ->
+                                listItem.hashCode()
+                            },
+                        ) { transactionListItemData ->
                             TransactionListItem(
                                 modifier = Modifier
                                     .padding(
