@@ -35,6 +35,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
@@ -83,6 +84,7 @@ internal data class TransactionsScreenUIEvents(
     val getIncomeCategories: () -> List<Category>,
     val getInvestmentCategories: () -> List<Category>,
     val getSources: () -> List<Source>,
+    val getTransactionForValues: () -> List<TransactionFor>,
     val navigateToAddTransactionScreen: () -> Unit,
     val navigateToViewTransactionScreen: (transactionId: Int) -> Unit,
     val navigateUp: () -> Unit,
@@ -125,6 +127,7 @@ internal fun TransactionsScreenUI(
                         incomeCategories = events.getIncomeCategories(),
                         investmentCategories = events.getInvestmentCategories(),
                         sources = events.getSources(),
+                        transactionForValues = events.getTransactionForValues(),
                         transactionTypes = uiState.transactionTypes,
                         defaultMinDate = uiState.oldestTransactionLocalDate,
                         defaultMaxDate = uiState.currentLocalDate,

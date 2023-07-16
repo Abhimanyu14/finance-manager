@@ -17,6 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -75,6 +76,13 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 transactionData.sourceFrom,
                 transactionData.sourceTo,
             )
+        }.distinct()
+    }.defaultObjectStateIn(
+        scope = viewModelScope,
+    )
+    override val transactionForValues: StateFlow<List<TransactionFor>?> = allTransactionData.map {
+        it.map { transactionData ->
+            transactionData.transactionFor
         }.distinct()
     }.defaultObjectStateIn(
         scope = viewModelScope,
@@ -141,6 +149,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             incomeCategories,
             investmentCategories,
             sources,
+            transactionForValues,
         ) { flows ->
             isLoading.value = true
 
@@ -150,14 +159,13 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             val selectedFilterValue: Filter = flows[2] as? Filter ?: Filter()
             val selectedSortOptionValue: SortOption =
                 flows[3] as? SortOption ?: SortOption.LATEST_FIRST
-            val expenseCategoriesValue: List<Category> =
-                flows[4] as? List<Category> ?: emptyList()
-            val incomeCategoriesValue: List<Category> =
-                flows[5] as? List<Category> ?: emptyList()
+            val expenseCategoriesValue: List<Category> = flows[4] as? List<Category> ?: emptyList()
+            val incomeCategoriesValue: List<Category> = flows[5] as? List<Category> ?: emptyList()
             val investmentCategoriesValue: List<Category> =
                 flows[6] as? List<Category> ?: emptyList()
-            val sourcesValue: List<Source> =
-                flows[7] as? List<Source> ?: emptyList()
+            val sourcesValue: List<Source> = flows[7] as? List<Source> ?: emptyList()
+            val transactionForValuesValue: List<TransactionFor> =
+                flows[8] as? List<TransactionFor> ?: emptyList()
 
             if (selectedFilterValue.fromDate.isNull()) {
                 oldestTransactionLocalDate.update {
@@ -183,9 +191,13 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                         fromDate = selectedFilterValue.fromDate,
                         toDate = selectedFilterValue.toDate,
                         transactionData = transactionData,
+                    ) && isAvailableAfterTransactionForFilter(
+                        selectedTransactionForValuesIndices = selectedFilterValue.selectedTransactionForValuesIndices,
+                        transactionData = transactionData,
+                        transactionForValuesValue = transactionForValuesValue,
                     ) && isAvailableAfterTransactionTypeFilter(
                         selectedTransactionTypesIndicesValue = selectedFilterValue.selectedTransactionTypeIndices,
-                        transactionData = transactionData
+                        transactionData = transactionData,
                     ) && isAvailableAfterSourceFilter(
                         selectedSourceIndicesValue = selectedFilterValue.selectedSourceIndices,
                         sourcesValue = sourcesValue,
@@ -405,6 +417,21 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             .atEndOfDay()
             .toEpochMilli()
         return transactionData.transaction.transactionTimestamp in (fromDateStartOfDayTimestamp) until toDateStartOfDayTimestamp
+    }
+
+    private fun isAvailableAfterTransactionForFilter(
+        selectedTransactionForValuesIndices: List<Int>,
+        transactionData: TransactionData,
+        transactionForValuesValue: List<TransactionFor>,
+    ): Boolean {
+        if (selectedTransactionForValuesIndices.isEmpty()) {
+            return true
+        }
+        return selectedTransactionForValuesIndices.contains(
+            element = transactionForValuesValue.indexOf(
+                element = transactionData.transactionFor,
+            ),
+        )
     }
 
     private fun isAvailableAfterTransactionTypeFilter(

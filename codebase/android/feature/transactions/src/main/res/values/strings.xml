@@ -57,6 +57,7 @@
     <string name="bottom_sheet_transactions_filter_income_categories">Income Categories</string>
     <string name="bottom_sheet_transactions_filter_investment_categories">Investment Categories</string>
     <string name="bottom_sheet_transactions_filter_sources">Sources</string>
+    <string name="bottom_sheet_transactions_filter_transaction_for_values">Transaction For</string>
     <string name="bottom_sheet_transactions_filter_transaction_types">Transaction Types</string>
     <string name="bottom_sheet_transactions_filter_transaction_date">Transaction Date</string>
     <string name="bottom_sheet_transactions_filter_from_date">From</string>

@@ -45,6 +45,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.statusBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePicker
@@ -86,6 +87,7 @@ internal fun TransactionsFiltersBottomSheetUI(
     incomeCategories: List<Category>,
     investmentCategories: List<Category>,
     sources: List<Source>,
+    transactionForValues: List<TransactionFor>,
     transactionTypes: List<TransactionType>,
     defaultMinDate: LocalDate,
     defaultMaxDate: LocalDate,
@@ -100,6 +102,7 @@ internal fun TransactionsFiltersBottomSheetUI(
             selectedFilter.selectedIncomeCategoryIndices.isNotEmpty(),
             selectedFilter.selectedInvestmentCategoryIndices.isNotEmpty(),
             selectedFilter.selectedSourceIndices.isNotEmpty(),
+            selectedFilter.selectedTransactionForValuesIndices.isNotEmpty(),
             selectedFilter.selectedTransactionTypeIndices.isNotEmpty(),
             selectedFilter.toDate.isNotNull(),
         )
@@ -123,6 +126,11 @@ internal fun TransactionsFiltersBottomSheetUI(
     val selectedSourceIndicesValue = remember {
         mutableStateListOf(
             elements = selectedFilter.selectedSourceIndices.toTypedArray(),
+        )
+    }
+    val selectedTransactionForValuesIndicesValue = remember {
+        mutableStateListOf(
+            elements = selectedFilter.selectedTransactionForValuesIndices.toTypedArray(),
         )
     }
     val selectedTransactionTypeIndicesValue = remember {
@@ -216,6 +224,26 @@ internal fun TransactionsFiltersBottomSheetUI(
                     events = TransactionFilterBottomSheetFilterGroupEvents(
                         onClearButtonClick = {
                             selectedSourceIndicesValue.clear()
+                        },
+                    ),
+                )
+            )
+        }
+        if (transactionForValues.isNotEmpty() && transactionForValues.size > 1) {
+            add(
+                TransactionsFiltersBottomSheetData(
+                    data = TransactionFilterBottomSheetFilterGroupData(
+                        headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_transaction_for_values,
+                        items = transactionForValues.map { transactionFor ->
+                            ChipUIData(
+                                text = transactionFor.titleToDisplay,
+                            )
+                        },
+                        selectedItemsIndices = selectedTransactionForValuesIndicesValue,
+                    ),
+                    events = TransactionFilterBottomSheetFilterGroupEvents(
+                        onClearButtonClick = {
+                            selectedTransactionForValuesIndicesValue.clear()
                         },
                     ),
                 )
@@ -328,6 +356,7 @@ internal fun TransactionsFiltersBottomSheetUI(
                     selectedIncomeCategoryIndicesValue.clear()
                     selectedInvestmentCategoryIndicesValue.clear()
                     selectedSourceIndicesValue.clear()
+                    selectedTransactionForValuesIndicesValue.clear()
                     selectedTransactionTypeIndicesValue.clear()
                     fromDate = defaultMinDate
                     toDate = defaultMaxDate
@@ -358,6 +387,7 @@ internal fun TransactionsFiltersBottomSheetUI(
                             selectedIncomeCategoryIndices = selectedIncomeCategoryIndicesValue,
                             selectedInvestmentCategoryIndices = selectedInvestmentCategoryIndicesValue,
                             selectedSourceIndices = selectedSourceIndicesValue,
+                            selectedTransactionForValuesIndices = selectedTransactionForValuesIndicesValue,
                             selectedTransactionTypeIndices = selectedTransactionTypeIndicesValue,
                             fromDate = fromDate,
                             toDate = if (isDateFilterCleared) {

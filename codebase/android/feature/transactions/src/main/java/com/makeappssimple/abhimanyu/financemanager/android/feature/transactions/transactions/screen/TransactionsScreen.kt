@@ -7,6 +7,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.TransactionsScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.TransactionsScreenViewModelImpl
@@ -24,6 +25,7 @@ fun TransactionsScreen(
     val incomeCategories: List<Category>? by screenViewModel.incomeCategories.collectAsStateWithLifecycle()
     val investmentCategories: List<Category>? by screenViewModel.investmentCategories.collectAsStateWithLifecycle()
     val sources: List<Source>? by screenViewModel.sources.collectAsStateWithLifecycle()
+    val transactionForValues: List<TransactionFor>? by screenViewModel.transactionForValues.collectAsStateWithLifecycle()
 
     TransactionsScreenUI(
         events = TransactionsScreenUIEvents(
@@ -38,6 +40,9 @@ fun TransactionsScreen(
             },
             getSources = {
                 sources.orEmpty()
+            },
+            getTransactionForValues = {
+                transactionForValues.orEmpty()
             },
             navigateToAddTransactionScreen = screenViewModel::navigateToAddTransactionScreen,
             navigateToViewTransactionScreen = screenViewModel::navigateToViewTransactionScreen,
