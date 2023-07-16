@@ -160,7 +160,7 @@ fun TransactionListItem(
                 Spacer(
                     modifier = Modifier
                         .height(
-                            height = 4.dp,
+                            height = 0.dp,
                         ),
                 )
                 MyText(
@@ -175,7 +175,7 @@ fun TransactionListItem(
                 Spacer(
                     modifier = Modifier
                         .height(
-                            height = 4.dp,
+                            height = 0.dp,
                         ),
                 )
                 Row(
@@ -206,6 +206,18 @@ fun TransactionListItem(
                                 color = MaterialTheme.colorScheme.onBackground,
                                 textAlign = TextAlign.End,
                             ),
+                    )
+                }
+                Spacer(
+                    modifier = Modifier
+                        .height(
+                            height = 2.dp,
+                        ),
+                )
+                if (!data.isExpanded) {
+                    Divider(
+                        color = MaterialTheme.colorScheme.outline,
+                        thickness = 0.5.dp,
                     )
                 }
             }
