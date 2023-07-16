@@ -1,6 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.viewmodel
 
+import android.net.Uri
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import app.cash.turbine.turbineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.fake.FakeAppVersionUtilImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtilImpl
@@ -27,6 +29,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.Res
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RestoreDataUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.fake.FakeMyLoggerImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.fake.FakeNavigationManagerImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.TestDispatcherProviderImpl
@@ -36,11 +39,14 @@ import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 class SettingsScreenViewModelImplTest {
+
+    @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
     private lateinit var appVersionUtil: AppVersionUtil
@@ -60,7 +66,6 @@ class SettingsScreenViewModelImplTest {
     fun setUp() {
         appVersionUtil = FakeAppVersionUtilImpl()
         myLogger = FakeMyLoggerImpl()
-        navigationManager = FakeNavigationManagerImpl()
         backupDataUseCase = BackupDataUseCaseImpl(
             dateTimeUtil = DateTimeUtilImpl(),
             dispatcherProvider = dispatcherProvider,
@@ -101,16 +106,6 @@ class SettingsScreenViewModelImplTest {
             myPreferencesRepository = FakeMyPreferencesRepositoryImpl(),
             transactionRepository = FakeTransactionRepositoryImpl(),
         )
-
-        settingsScreenViewModelImpl = SettingsScreenViewModelImpl(
-            appVersionUtil = appVersionUtil,
-            myLogger = myLogger,
-            navigationManager = navigationManager,
-            backupDataUseCase = backupDataUseCase,
-            ioDispatcher = UnconfinedTestDispatcher(),
-            recalculateTotalUseCase = recalculateTotalUseCase,
-            restoreDataUseCase = restoreDataUseCase,
-        )
     }
 
     @After
@@ -118,18 +113,174 @@ class SettingsScreenViewModelImplTest {
     }
 
     @Test
-    fun screenUIDataTest() = runTest {
-        Assert.assertEquals(1, 1)
-//        settingsScreenViewModelImpl.screenUIData.test {
-//            Assert.assertEquals(
-//                MyResult.Success(
-//                    data = SettingsScreenUIData(
-//                        appVersion = "versionName",
-//                    )
-//                ),
-//                awaitItem(),
-//            )
-//            // cancelAndIgnoreRemainingEvents()
-//        }
+    fun backupDataToDocumentTest() = runTest {
+        val testUri = Uri.EMPTY
+        navigationManager = FakeNavigationManagerImpl(
+            coroutineScope = this,
+        )
+        initViewModel()
+
+        turbineScope {
+            settingsScreenViewModelImpl.backupDataToDocument(
+                uri = testUri,
+            )
+
+            val receiver = settingsScreenViewModelImpl.navigationManager.command.testIn(
+                scope = backgroundScope,
+            )
+
+            Assert.assertEquals(
+                MyNavigationDirections.NavigateUp,
+                receiver.awaitItem(),
+            )
+            receiver.cancel()
+        }
+    }
+
+    @Test
+    fun navigateToCategoriesScreenTest() = runTest {
+        navigationManager = FakeNavigationManagerImpl(
+            coroutineScope = this,
+        )
+        initViewModel()
+
+        turbineScope {
+            settingsScreenViewModelImpl.navigateToCategoriesScreen()
+
+            val receiver = settingsScreenViewModelImpl.navigationManager.command.testIn(
+                scope = backgroundScope,
+            )
+
+            Assert.assertEquals(
+                MyNavigationDirections.Categories,
+                receiver.awaitItem(),
+            )
+            receiver.cancel()
+        }
+    }
+
+    @Test
+    fun navigateToSourcesScreenTest() = runTest {
+        navigationManager = FakeNavigationManagerImpl(
+            coroutineScope = this,
+        )
+        initViewModel()
+
+        turbineScope {
+            settingsScreenViewModelImpl.navigateToSourcesScreen()
+
+            val receiver = settingsScreenViewModelImpl.navigationManager.command.testIn(
+                scope = backgroundScope,
+            )
+
+            Assert.assertEquals(
+                MyNavigationDirections.Sources,
+                receiver.awaitItem(),
+            )
+            receiver.cancel()
+        }
+    }
+
+    @Test
+    fun navigateToTransactionForValuesScreenTest() = runTest {
+        navigationManager = FakeNavigationManagerImpl(
+            coroutineScope = this,
+        )
+        initViewModel()
+
+        turbineScope {
+            settingsScreenViewModelImpl.navigateToTransactionForValuesScreen()
+
+            val receiver = settingsScreenViewModelImpl.navigationManager.command.testIn(
+                scope = backgroundScope,
+            )
+
+            Assert.assertEquals(
+                MyNavigationDirections.TransactionForValues,
+                receiver.awaitItem(),
+            )
+            receiver.cancel()
+        }
+    }
+
+    @Test
+    fun navigateUpTest() = runTest {
+        navigationManager = FakeNavigationManagerImpl(
+            coroutineScope = this,
+        )
+        initViewModel()
+
+        turbineScope {
+            settingsScreenViewModelImpl.navigateUp()
+
+            val receiver = settingsScreenViewModelImpl.navigationManager.command.testIn(
+                scope = backgroundScope,
+            )
+
+            Assert.assertEquals(
+                MyNavigationDirections.NavigateUp,
+                receiver.awaitItem(),
+            )
+            receiver.cancel()
+        }
+    }
+
+    @Test
+    fun restoreDataFromDocumentTest() = runTest {
+        val testUri = Uri.EMPTY
+        navigationManager = FakeNavigationManagerImpl(
+            coroutineScope = this,
+        )
+        initViewModel()
+
+        turbineScope {
+            settingsScreenViewModelImpl.restoreDataFromDocument(
+                uri = testUri,
+            )
+
+            val receiver = settingsScreenViewModelImpl.navigationManager.command.testIn(
+                scope = backgroundScope,
+            )
+
+            Assert.assertEquals(
+                MyNavigationDirections.NavigateUp,
+                receiver.awaitItem(),
+            )
+            receiver.cancel()
+        }
+    }
+
+    @Test
+    fun recalculateTotalTest() = runTest {
+        navigationManager = FakeNavigationManagerImpl(
+            coroutineScope = this,
+        )
+        initViewModel()
+
+        turbineScope {
+            settingsScreenViewModelImpl.recalculateTotal()
+
+            val receiver = settingsScreenViewModelImpl.navigationManager.command.testIn(
+                scope = backgroundScope,
+            )
+
+            Assert.assertEquals(
+                MyNavigationDirections.NavigateUp,
+                receiver.awaitItem(),
+            )
+            receiver.cancel()
+        }
+    }
+
+    private fun initViewModel() {
+        settingsScreenViewModelImpl = SettingsScreenViewModelImpl(
+            appVersionUtil = appVersionUtil,
+            myLogger = myLogger,
+            navigationManager = navigationManager,
+            backupDataUseCase = backupDataUseCase,
+            ioDispatcher = dispatcherProvider.io,
+            recalculateTotalUseCase = recalculateTotalUseCase,
+            restoreDataUseCase = restoreDataUseCase,
+        )
     }
 }

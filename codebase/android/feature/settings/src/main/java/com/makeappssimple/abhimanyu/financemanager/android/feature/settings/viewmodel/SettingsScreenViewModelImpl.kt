@@ -19,6 +19,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,7 +28,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
     override val myLogger: MyLogger,
     private val backupDataUseCase: BackupDataUseCase,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
-    private val navigationManager: NavigationManager,
+    @VisibleForTesting internal val navigationManager: NavigationManager,
     private val recalculateTotalUseCase: RecalculateTotalUseCase,
     private val restoreDataUseCase: RestoreDataUseCase,
 ) : SettingsScreenViewModel, ViewModel() {
@@ -48,7 +49,9 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = ioDispatcher,
         ) {
-            launch {
+            launch(
+                context = ioDispatcher,
+            ) {
                 backupDataUseCase(
                     uri = uri,
                 )

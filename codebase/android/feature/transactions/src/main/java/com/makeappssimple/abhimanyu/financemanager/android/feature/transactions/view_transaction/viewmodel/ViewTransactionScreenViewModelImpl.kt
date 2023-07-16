@@ -28,6 +28,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,7 +40,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
     private val dispatcherProvider: DispatcherProvider,
     private val getTransactionDataUseCase: GetTransactionDataUseCase,
-    private val navigationManager: NavigationManager,
+    @VisibleForTesting internal val navigationManager: NavigationManager,
 ) : ViewTransactionScreenViewModel, ViewModel() {
     private var viewTransactionScreenArgs: ViewTransactionScreenArgs = ViewTransactionScreenArgs(
         savedStateHandle = savedStateHandle,

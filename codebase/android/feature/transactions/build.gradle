@@ -132,10 +132,15 @@ dependencies {
     androidTestImplementation "junit:junit:$rootProject.junitVersion"
 
     // Android X test
+    testImplementation "androidx.test:core-ktx:$rootProject.androidXTestCoreVersion"
     androidTestImplementation "androidx.test:core-ktx:$rootProject.androidXTestCoreVersion"
+    testImplementation "androidx.test.ext:junit:$rootProject.androidXTestExtensionJUnitVersion"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXTestExtensionJUnitVersion"
+    testImplementation "androidx.test.ext:truth:$rootProject.androidXTestExtensionTruthVersion"
     androidTestImplementation "androidx.test.ext:truth:$rootProject.androidXTestExtensionTruthVersion"
+    testImplementation "androidx.test:runner:$rootProject.androidXTestRunnerVersion"
     androidTestImplementation "androidx.test:runner:$rootProject.androidXTestRunnerVersion"
+    testImplementation "androidx.test:rules:$rootProject.androidXTestRulesVersion"
     androidTestImplementation "androidx.test:rules:$rootProject.androidXTestRulesVersion"
 
     // Mockito kotlin
@@ -145,6 +150,20 @@ dependencies {
     // Coroutines test
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
+
+    // AndroidX core test
+    testImplementation "androidx.arch.core:core-testing:$rootProject.androidXCoreTestingVersion"
+    androidTestImplementation "androidx.arch.core:core-testing:$rootProject.androidXCoreTestingVersion"
+
+    // Turbine
+    testImplementation "app.cash.turbine:turbine:$rootProject.turbineVersion"
+    androidTestImplementation "app.cash.turbine:turbine:$rootProject.turbineVersion"
+
+    // Hilt testing
+    testImplementation "com.google.dagger:hilt-android-testing:$rootProject.daggerHiltAndroidTesting"
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$rootProject.daggerHiltAndroidTesting"
+    kaptTest "com.google.dagger:hilt-android-compiler:$rootProject.daggerHiltAndroidCompiler"
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$rootProject.daggerHiltAndroidCompiler"
 
     // Jetpack compose UI tests
     androidTestImplementation "androidx.compose.ui:ui-test-junit4:$rootProject.jetpackComposeVersion"

@@ -151,9 +151,9 @@ dependencies {
     testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
 
-    // Coroutines test
-//    testImplementation "androidx.arch.core:core-testing:$rootProject.androidXCoreTestingVersion"
-//    androidTestImplementation "androidx.arch.core:core-testing:$rootProject.androidXCoreTestingVersion"
+    // AndroidX core test
+    testImplementation "androidx.arch.core:core-testing:$rootProject.androidXCoreTestingVersion"
+    androidTestImplementation "androidx.arch.core:core-testing:$rootProject.androidXCoreTestingVersion"
 
     // Turbine
     testImplementation "app.cash.turbine:turbine:$rootProject.turbineVersion"

@@ -182,7 +182,7 @@ buildscript {
         mockitoKotlinVersion = "4.0.0"
 
         // Coroutines
-        coroutinesVersion = "1.6.4"
+        coroutinesVersion = "1.7.1"
 
         // Coroutines test
         coroutinesTestVersion = "1.6.1"
