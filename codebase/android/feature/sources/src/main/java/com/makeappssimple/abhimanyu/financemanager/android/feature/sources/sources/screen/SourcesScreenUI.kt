@@ -175,7 +175,9 @@ internal fun SourcesScreenUI(
                             }
                         },
                         onEditClick = {
-                            events.navigateToEditSourceScreen(listItem.sourceId)
+                            listItem.sourceId?.let {
+                                events.navigateToEditSourceScreen(listItem.sourceId)
+                            }
                             uiState.setExpandedItemIndex(null)
                         },
                         onDeleteClick = {

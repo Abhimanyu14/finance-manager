@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
@@ -12,7 +13,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usec
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetSourcesTotalBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfSourceIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.SourceType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -55,36 +58,57 @@ internal class SourcesScreenViewModelImpl @Inject constructor(
             allSourcesFlow,
             sourcesTotalBalanceAmountValue,
         ->
-        val sourcesListItemDataList = allSourcesFlow
-            .sortedWith(
-                comparator = compareBy<Source> { source ->
-                    source.type.sortOrder
-                }.thenByDescending { source ->
-                    source.balanceAmount.value
-                }
-            ).map { source ->
-                val deleteEnabled = !checkIfSourceIsUsedInTransactionsUseCase(
-                    sourceId = source.id,
-                )
-                val isDefault = if (defaultSourceId.isNull()) {
-                    isDefaultSource(
-                        source = source.name,
-                    )
-                } else {
-                    defaultSourceId == source.id
-                }
-                SourcesListItemData(
-                    icon = source.type.icon,
-                    sourceId = source.id,
-                    balance = source.balanceAmount.toString(),
-                    name = source.name,
-                    isDefault = isDefault,
-                    isDeleteEnabled = !isDefaultSource(
-                        source = source.name,
-                    ) && deleteEnabled,
-                    isExpanded = false,
-                )
+        val sourceTypes = SourceType.values().sortedBy {
+            it.sortOrder
+        }
+        val groupedSources = allSourcesFlow.groupBy {
+            it.type
+        }
+        val sourcesListItemDataList = mutableListOf<SourcesListItemData>()
+        sourceTypes.forEach { sourceType ->
+            val sortedSources = groupedSources[sourceType]?.sortedByDescending { source ->
+                source.balanceAmount.value
             }
+            val totalBalanceAmount = Amount(
+                value = sortedSources?.sumOf {
+                    it.balanceAmount.value
+                }.orZero(),
+            )
+            sourcesListItemDataList.add(
+                SourcesListItemData(
+                    isHeading = true,
+                    balance = "", //totalBalanceAmount.toString(),
+                    name = sourceType.title,
+                )
+            )
+            sourcesListItemDataList.addAll(
+                groupedSources[sourceType]?.sortedByDescending { source ->
+                    source.balanceAmount.value
+                }?.map { source ->
+                    val deleteEnabled = !checkIfSourceIsUsedInTransactionsUseCase(
+                        sourceId = source.id,
+                    )
+                    val isDefault = if (defaultSourceId.isNull()) {
+                        isDefaultSource(
+                            source = source.name,
+                        )
+                    } else {
+                        defaultSourceId == source.id
+                    }
+                    SourcesListItemData(
+                        icon = source.type.icon,
+                        sourceId = source.id,
+                        balance = source.balanceAmount.toString(),
+                        name = source.name,
+                        isDefault = isDefault,
+                        isDeleteEnabled = !isDefaultSource(
+                            source = source.name,
+                        ) && deleteEnabled,
+                        isExpanded = false,
+                    )
+                }.orEmpty()
+            )
+        }
 
         if (
             sourcesListItemDataList.isNull()
