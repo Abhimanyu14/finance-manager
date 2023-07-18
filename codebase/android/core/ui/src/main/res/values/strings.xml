@@ -11,7 +11,7 @@
     <!-- endregion -->
 
     <!-- region bottom sheet select source -->
-    <string name="bottom_sheet_select_source_title">Select Source</string>
+    <string name="bottom_sheet_select_source_title">Select Account</string>
     <!-- endregion -->
 
     <!-- region bottom sheet select transaction for -->

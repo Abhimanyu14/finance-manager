@@ -4,7 +4,7 @@
     <string name="screen_settings_appbar_title">Settings</string>
     <string name="screen_settings_data">Data</string>
     <string name="screen_settings_categories">Categories</string>
-    <string name="screen_settings_sources">Sources</string>
+    <string name="screen_settings_sources">Accounts</string>
     <string name="screen_settings_transaction_for">Transaction For</string>
     <string name="screen_settings_backup_and_restore">Backup &amp; Restore</string>
     <string name="screen_settings_backup">Backup Data</string>

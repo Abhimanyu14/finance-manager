@@ -5,16 +5,16 @@
     <string name="screen_add_or_edit_source_clear_name">Clear Name</string>
     <string name="screen_add_or_edit_source_balance_amount_value">Balance Amount</string>
     <string name="screen_add_or_edit_source_clear_balance_amount_value">Clear Balance Amount</string>
-    <string name="screen_add_or_edit_source_error_source_exists">Source already exists</string>
+    <string name="screen_add_or_edit_source_error_source_exists">Account already exists</string>
     <!-- endregion -->
 
     <!-- region add source screen -->
-    <string name="screen_add_source_appbar_title">Enter Source Details</string>
+    <string name="screen_add_source_appbar_title">Enter Account Details</string>
     <string name="screen_add_source_floating_action_button_content_description">SAVE</string>
     <!-- endregion -->
 
     <!-- region edit source screen -->
-    <string name="screen_edit_source_appbar_title">Edit Source</string>
+    <string name="screen_edit_source_appbar_title">Edit Account</string>
     <string name="screen_edit_source_floating_action_button_content_description">UPDATE</string>
     <!-- endregion -->
 
@@ -24,15 +24,15 @@
     <!-- endregion -->
 
     <!-- region sources screen -->
-    <string name="screen_sources_appbar_title">Sources</string>
-    <string name="screen_sources_floating_action_button_content_description">Add Source</string>
-    <string name="screen_sources_bottom_sheet_set_as_default_title">Set as default Source</string>
+    <string name="screen_sources_appbar_title">Accounts</string>
+    <string name="screen_sources_floating_action_button_content_description">Add Account</string>
+    <string name="screen_sources_bottom_sheet_set_as_default_title">Set as default Account</string>
     <string name="screen_sources_bottom_sheet_set_as_default_message">
-        Are you sure you want to set this as default source?
+        Are you sure you want to set this as default account?
     </string>
     <string name="screen_sources_bottom_sheet_set_as_default_positive_button_text">Yes</string>
     <string name="screen_sources_bottom_sheet_set_as_default_negative_button_text">Cancel</string>
-    <string name="screen_sources_bottom_sheet_delete_title">Delete Source</string>
+    <string name="screen_sources_bottom_sheet_delete_title">Delete Account</string>
     <string name="screen_sources_bottom_sheet_delete_message">
         Are you sure you want to delete?
     </string>
