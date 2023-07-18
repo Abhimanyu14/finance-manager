@@ -40,7 +40,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Common
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.getMyTimePickerDialog
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_category.SelectCategoryBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_category.SelectCategoryBottomSheetData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_category.SelectCategoryBottomSheetEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_source.SelectSourceBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_source.SelectSourceBottomSheetData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_source.SelectSourceBottomSheetEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonEvents
@@ -152,32 +156,47 @@ internal fun AddOrEditTransactionScreenUI(
 
                 AddOrEditTransactionBottomSheetType.SELECT_CATEGORY -> {
                     SelectCategoryBottomSheet(
-                        filteredCategories = uiState.filteredCategories,
-                        selectedCategoryId = uiState.uiState.category?.id,
-                        resetBottomSheetType = uiState.resetBottomSheetType,
-                    ) { updatedCategory ->
-                        events.updateCategory(updatedCategory)
-                    }
+                        data = SelectCategoryBottomSheetData(
+                            filteredCategories = uiState.filteredCategories,
+                            selectedCategoryId = uiState.uiState.category?.id,
+                        ),
+                        events = SelectCategoryBottomSheetEvents(
+                            resetBottomSheetType = uiState.resetBottomSheetType,
+                            updateCategory = { updatedCategory ->
+                                events.updateCategory(updatedCategory)
+                            },
+                        ),
+                    )
                 }
 
                 AddOrEditTransactionBottomSheetType.SELECT_SOURCE_FROM -> {
                     SelectSourceBottomSheet(
-                        sources = uiState.sources,
-                        selectedSourceId = uiState.uiState.sourceFrom?.id,
-                        resetBottomSheetType = uiState.resetBottomSheetType
-                    ) { updatedSource ->
-                        events.updateSourceFrom(updatedSource)
-                    }
+                        data = SelectSourceBottomSheetData(
+                            sources = uiState.sources,
+                            selectedSourceId = uiState.uiState.sourceFrom?.id,
+                        ),
+                        events = SelectSourceBottomSheetEvents(
+                            resetBottomSheetType = uiState.resetBottomSheetType,
+                            updateSource = { updatedSource ->
+                                events.updateSourceFrom(updatedSource)
+                            },
+                        ),
+                    )
                 }
 
                 AddOrEditTransactionBottomSheetType.SELECT_SOURCE_TO -> {
                     SelectSourceBottomSheet(
-                        sources = uiState.sources,
-                        selectedSourceId = uiState.uiState.sourceTo?.id,
-                        resetBottomSheetType = uiState.resetBottomSheetType
-                    ) { updatedSource ->
-                        events.updateSourceTo(updatedSource)
-                    }
+                        data = SelectSourceBottomSheetData(
+                            sources = uiState.sources,
+                            selectedSourceId = uiState.uiState.sourceTo?.id,
+                        ),
+                        events = SelectSourceBottomSheetEvents(
+                            resetBottomSheetType = uiState.resetBottomSheetType,
+                            updateSource = { updatedSource ->
+                                events.updateSourceTo(updatedSource)
+                            },
+                        ),
+                    )
                 }
             }
         },

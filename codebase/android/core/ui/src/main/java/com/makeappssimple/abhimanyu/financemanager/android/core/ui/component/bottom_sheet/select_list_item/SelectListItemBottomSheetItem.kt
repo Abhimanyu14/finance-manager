@@ -1,12 +1,9 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_source
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_list_item
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material3.Icon
@@ -19,54 +16,19 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.MyBottomSheetTitle
 
 @Immutable
-internal data class SelectSourceBottomSheetItemData(
-    val isSelected: Boolean,
-    val icon: ImageVector,
+internal data class SelectListItemBottomSheetItemData(
+    val isSelected: Boolean = false,
+    val icon: ImageVector? = null,
     val text: String,
     val onClick: () -> Unit,
 )
 
 @Composable
-internal fun SelectSourceBottomSheetUI(
-    modifier: Modifier = Modifier,
-    items: List<SelectSourceBottomSheetItemData>,
-) {
-    LazyColumn(
-        modifier = modifier
-            .defaultMinSize(
-                minHeight = 24.dp,
-            ),
-    ) {
-        stickyHeader {
-            MyBottomSheetTitle(
-                textStringResourceId = R.string.bottom_sheet_select_source_title,
-            )
-        }
-        items(
-            items = items,
-            key = { listItem ->
-                listItem.hashCode()
-            },
-        ) { listItem ->
-            SelectSourceBottomSheetItem(
-                data = listItem,
-            )
-        }
-        item {
-            NavigationBarSpacer()
-        }
-    }
-}
-
-@Composable
-private fun SelectSourceBottomSheetItem(
-    data: SelectSourceBottomSheetItemData,
+internal fun SelectListItemBottomSheetItem(
+    data: SelectListItemBottomSheetItemData,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -82,15 +44,17 @@ private fun SelectSourceBottomSheetItem(
                 vertical = 8.dp,
             ),
     ) {
-        Icon(
-            imageVector = data.icon,
-            contentDescription = null,
-            tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier
-                .padding(
-                    end = 8.dp,
-                ),
-        )
+        data.icon?.let {
+            Icon(
+                imageVector = data.icon,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier
+                    .padding(
+                        end = 8.dp,
+                    ),
+            )
+        }
         MyText(
             modifier = Modifier,
             text = data.text,
