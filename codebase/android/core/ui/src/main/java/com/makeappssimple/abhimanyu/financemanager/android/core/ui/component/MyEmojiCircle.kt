@@ -19,7 +19,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
 
@@ -49,7 +48,7 @@ data class MyEmojiCircleData(
     val isLoading: Boolean = false,
     val backgroundColor: Color = Transparent,
     val emojiCircleSize: EmojiCircleSize = EmojiCircleSize.Small,
-    val emoji: String? = "",
+    val emoji: String = "",
 )
 
 @Immutable
@@ -91,14 +90,14 @@ fun MyEmojiCircle(
                 factory = { context ->
                     AppCompatTextView(context).apply {
                         setTextColor(Black.toArgb())
-                        text = data.emoji ?: EmojiConstants.WORRIED_FACE
+                        text = data.emoji
                         textSize = data.emojiCircleSize.textSize
                         textAlignment = View.TEXT_ALIGNMENT_CENTER
                     }
                 },
                 update = {
                     it.apply {
-                        text = data.emoji ?: EmojiConstants.WORRIED_FACE
+                        text = data.emoji
                     }
                 },
             )

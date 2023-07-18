@@ -1,17 +1,25 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet
 
+import android.util.Log
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.flowlayout.FlowRow
+import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
@@ -36,6 +44,21 @@ fun MyEmojiPickerBottomSheetUI(
     onEmojiLongClick: (emoji: Emoji) -> Unit,
     updateSearchText: (updatedSearchText: String) -> Unit,
 ) {
+    val density = LocalDensity.current
+    val textMeasurer = rememberTextMeasurer()
+    val firstEmoji = emojiGroups.values.firstOrNull()?.firstOrNull()?.character
+    val emojiCircleSize = EmojiCircleSize.Normal
+    val emojiWidth = density.run {
+        firstEmoji?.run {
+            textMeasurer.measure(
+                text = firstEmoji,
+                style = TextStyle(
+                    fontSize = emojiCircleSize.textSize.sp,
+                )
+            ).size.width.toDp()
+        }
+    }
+
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -57,39 +80,54 @@ fun MyEmojiPickerBottomSheetUI(
                 ),
             )
         }
-        LazyColumn(
+        BoxWithConstraints(
             modifier = Modifier
                 .fillMaxWidth(),
         ) {
-            emojiGroups.map { (group, emojis) ->
-                stickyHeader {
-                    EmojiGroupName(
-                        name = "$group (${emojis.size})"
-                    )
-                }
-                item {
-                    FlowRow {
-                        emojis.map { emoji ->
-                            MyEmojiCircle(
-                                data = MyEmojiCircleData(
-                                    emojiCircleSize = EmojiCircleSize.Normal,
-                                    emoji = emoji.character,
-                                ),
-                                events = MyEmojiCircleEvents(
-                                    onClick = {
-                                        onEmojiClick(emoji)
-                                    },
-                                    onLongClick = {
-                                        onEmojiLongClick(emoji)
-                                    },
-                                ),
-                            )
+            val columnCount =
+                (maxWidth / ((emojiWidth ?: maxWidth) + (emojiCircleSize.padding * 2))).toInt()
+            Log.e("Abhi", "columnCount $columnCount")
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxWidth(),
+            ) {
+                emojiGroups.map { (group, emojis) ->
+                    stickyHeader {
+                        EmojiGroupName(
+                            name = "$group (${emojis.size})"
+                        )
+                    }
+                    emojis.chunked(columnCount).map {
+                        item {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically,
+                            ) {
+                                it.forEach { emoji ->
+                                    MyEmojiCircle(
+                                        data = MyEmojiCircleData(
+                                            emojiCircleSize = emojiCircleSize,
+                                            emoji = emoji.character,
+                                        ),
+                                        events = MyEmojiCircleEvents(
+                                            onClick = {
+                                                onEmojiClick(emoji)
+                                            },
+                                            onLongClick = {
+                                                onEmojiLongClick(emoji)
+                                            },
+                                        ),
+                                    )
+                                }
+                            }
                         }
                     }
                 }
-            }
-            item {
-                NavigationBarSpacer()
+                item {
+                    NavigationBarSpacer()
+                }
             }
         }
     }
