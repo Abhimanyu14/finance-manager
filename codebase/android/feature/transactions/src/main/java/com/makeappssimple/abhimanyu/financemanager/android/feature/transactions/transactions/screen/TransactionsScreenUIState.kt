@@ -8,6 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orMin
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.Filter
@@ -19,7 +20,9 @@ import java.time.LocalDate
 @Stable
 class TransactionsScreenUIState(
     data: MyResult<TransactionsScreenUIData>?,
+    val isInSelectionMode: Boolean,
     val transactionsBottomSheetType: TransactionsBottomSheetType,
+    val setIsInSelectionMode: (Boolean) -> Unit,
     val setTransactionsBottomSheetType: (TransactionsBottomSheetType) -> Unit,
 ) {
     private val unwrappedData = when (data) {
@@ -34,7 +37,9 @@ class TransactionsScreenUIState(
 
     val isLoading: Boolean = unwrappedData.isNull() || unwrappedData.isLoading
     val selectedFilter: Filter = unwrappedData?.selectedFilter.orEmpty()
+    val selectedTransactions: List<Int> = unwrappedData?.selectedTransactions.orEmpty()
     val sortOptions: List<SortOption> = unwrappedData?.sortOptions.orEmpty()
+    val transactionForValues: List<TransactionFor> = unwrappedData?.transactionForValues.orEmpty()
     val transactionTypes: List<TransactionType> = unwrappedData?.transactionTypes.orEmpty()
     val oldestTransactionLocalDate: LocalDate = unwrappedData?.oldestTransactionLocalDate.orMin()
     val currentLocalDate: LocalDate = unwrappedData?.currentLocalDate.orMin()
@@ -52,6 +57,9 @@ class TransactionsScreenUIState(
 fun rememberTransactionsScreenUIState(
     data: MyResult<TransactionsScreenUIData>?,
 ): TransactionsScreenUIState {
+    val (isInSelectionMode: Boolean, setIsInSelectionMode: (Boolean) -> Unit) = remember {
+        mutableStateOf(false)
+    }
     val (transactionsBottomSheetType: TransactionsBottomSheetType, setTransactionsBottomSheetType: (TransactionsBottomSheetType) -> Unit) = remember {
         mutableStateOf(
             value = TransactionsBottomSheetType.NONE,
@@ -60,12 +68,16 @@ fun rememberTransactionsScreenUIState(
 
     return remember(
         data,
+        isInSelectionMode,
         transactionsBottomSheetType,
+        setIsInSelectionMode,
         setTransactionsBottomSheetType,
     ) {
         TransactionsScreenUIState(
             data = data,
+            isInSelectionMode = isInSelectionMode,
             transactionsBottomSheetType = transactionsBottomSheetType,
+            setIsInSelectionMode = setIsInSelectionMode,
             setTransactionsBottomSheetType = setTransactionsBottomSheetType,
         )
     }

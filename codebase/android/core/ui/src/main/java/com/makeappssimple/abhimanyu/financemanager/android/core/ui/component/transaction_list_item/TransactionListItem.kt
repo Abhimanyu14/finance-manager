@@ -8,10 +8,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.CheckCircle
 import androidx.compose.material.icons.rounded.CurrencyExchange
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.RadioButtonUnchecked
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -40,7 +43,9 @@ data class TransactionListItemData(
     val isDeleteButtonVisible: Boolean = false,
     val isEditButtonVisible: Boolean = false,
     val isExpanded: Boolean = false,
+    val isInSelectionMode: Boolean = false,
     val isRefundButtonVisible: Boolean = false,
+    val isSelected: Boolean = false,
     val transactionId: Int,
     val amountColor: MyColor,
     val amountText: String,
@@ -57,6 +62,7 @@ data class TransactionListItemEvents(
     val onClick: (() -> Unit)? = null,
     val onDeleteButtonClick: () -> Unit = {},
     val onEditButtonClick: () -> Unit = {},
+    val onLongClick: (Boolean) -> Unit = {},
     val onRefundButtonClick: () -> Unit = {},
 )
 
@@ -96,6 +102,9 @@ fun TransactionListItem(
                 )
                 .conditionalClickable(
                     onClick = events.onClick,
+                    onLongClick = {
+                        events.onLongClick(true)
+                    },
                 )
                 .padding(
                     start = 16.dp,
@@ -112,12 +121,30 @@ fun TransactionListItem(
                     },
                 ),
         ) {
-            MyEmojiCircle(
-                data = MyEmojiCircleData(
-                    backgroundColor = MaterialTheme.colorScheme.outline,
-                    emoji = data.emoji,
-                ),
-            )
+            if (data.isInSelectionMode) {
+                if (data.isSelected) {
+                    Icon(
+                        imageVector = Icons.Rounded.CheckCircle,
+                        // TODO(Abhi) - Add content description
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                    )
+                } else {
+                    Icon(
+                        imageVector = Icons.Rounded.RadioButtonUnchecked,
+                        // TODO(Abhi) - Add content description
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.outline,
+                    )
+                }
+            } else {
+                MyEmojiCircle(
+                    data = MyEmojiCircleData(
+                        backgroundColor = MaterialTheme.colorScheme.outline,
+                        emoji = data.emoji,
+                    ),
+                )
+            }
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -214,7 +241,9 @@ fun TransactionListItem(
                             height = 2.dp,
                         ),
                 )
-                if (!data.isExpanded) {
+                AnimatedVisibility(
+                    visible = data.isExpanded.not() && data.isInSelectionMode.not(),
+                ) {
                     Divider(
                         color = MaterialTheme.colorScheme.outline,
                         thickness = 0.5.dp,

@@ -157,6 +157,11 @@ interface TransactionDao {
         transaction: TransactionEntity,
     )
 
+    @Update
+    suspend fun updateTransactions(
+        vararg transactions: TransactionEntity,
+    ): Int
+
     @Query(
         value = "DELETE FROM transaction_table " +
                 "WHERE id = :id"

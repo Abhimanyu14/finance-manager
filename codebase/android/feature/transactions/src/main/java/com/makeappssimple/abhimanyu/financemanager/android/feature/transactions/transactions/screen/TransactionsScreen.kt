@@ -29,6 +29,8 @@ fun TransactionsScreen(
 
     TransactionsScreenUI(
         events = TransactionsScreenUIEvents(
+            addToSelectedTransactions = screenViewModel::addToSelectedTransactions,
+            clearSelectedTransactions = screenViewModel::clearSelectedTransactions,
             getExpenseCategories = {
                 expenseCategories.orEmpty()
             },
@@ -47,9 +49,12 @@ fun TransactionsScreen(
             navigateToAddTransactionScreen = screenViewModel::navigateToAddTransactionScreen,
             navigateToViewTransactionScreen = screenViewModel::navigateToViewTransactionScreen,
             navigateUp = screenViewModel::navigateUp,
+            removeFromSelectedTransactions = screenViewModel::removeFromSelectedTransactions,
+            toggleTransactionSelection = screenViewModel::toggleTransactionSelection,
             updateSearchText = screenViewModel::updateSearchText,
             updateSelectedFilter = screenViewModel::updateSelectedFilter,
             updateSelectedSortOption = screenViewModel::updateSelectedSortOption,
+            updateTransactionForValuesInTransactions = screenViewModel::updateTransactionForValuesInTransactions,
         ),
         uiState = rememberTransactionsScreenUIState(
             data = screenUIData,

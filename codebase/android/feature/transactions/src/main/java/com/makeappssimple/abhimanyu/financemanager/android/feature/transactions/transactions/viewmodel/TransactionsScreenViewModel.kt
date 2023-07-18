@@ -19,6 +19,12 @@ interface TransactionsScreenViewModel : ScreenViewModel {
     val sources: StateFlow<List<Source>?>
     val transactionForValues: StateFlow<List<TransactionFor>?>
 
+    fun addToSelectedTransactions(
+        transactionId: Int,
+    )
+
+    fun clearSelectedTransactions()
+
     fun navigateToAddTransactionScreen()
 
     fun navigateToViewTransactionScreen(
@@ -26,6 +32,14 @@ interface TransactionsScreenViewModel : ScreenViewModel {
     )
 
     fun navigateUp()
+
+    fun removeFromSelectedTransactions(
+        transactionId: Int,
+    )
+
+    fun toggleTransactionSelection(
+        transactionId: Int,
+    )
 
     fun updateSelectedFilter(
         updatedSelectedFilter: Filter,
@@ -37,5 +51,9 @@ interface TransactionsScreenViewModel : ScreenViewModel {
 
     fun updateSelectedSortOption(
         updatedSelectedSortOption: SortOption,
+    )
+
+    fun updateTransactionForValuesInTransactions(
+        transactionForId: Int,
     )
 }

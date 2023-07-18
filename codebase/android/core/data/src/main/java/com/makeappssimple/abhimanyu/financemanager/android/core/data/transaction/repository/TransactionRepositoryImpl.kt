@@ -171,6 +171,16 @@ class TransactionRepositoryImpl(
         )
     }
 
+    override suspend fun updateTransactions(
+        vararg transactions: Transaction,
+    ) {
+        transactionDao.updateTransactions(
+            transactions = transactions.map {
+                it.asEntity()
+            }.toTypedArray(),
+        )
+    }
+
     override suspend fun deleteTransaction(
         id: Int,
     ) {

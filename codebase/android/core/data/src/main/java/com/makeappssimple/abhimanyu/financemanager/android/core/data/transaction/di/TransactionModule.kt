@@ -41,6 +41,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.InsertTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.UpdateTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.UpdateTransactionUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.UpdateTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.UpdateTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.datasource.CommonDataSource
 import dagger.Module
@@ -227,6 +229,17 @@ class TransactionModule {
         transactionRepository: TransactionRepository,
     ): InsertTransactionsUseCase {
         return InsertTransactionsUseCaseImpl(
+            myPreferencesRepository = myPreferencesRepository,
+            transactionRepository = transactionRepository,
+        )
+    }
+
+    @Provides
+    fun providesUpdateTransactionsUseCase(
+        myPreferencesRepository: MyPreferencesRepository,
+        transactionRepository: TransactionRepository,
+    ): UpdateTransactionsUseCase {
+        return UpdateTransactionsUseCaseImpl(
             myPreferencesRepository = myPreferencesRepository,
             transactionRepository = transactionRepository,
         )

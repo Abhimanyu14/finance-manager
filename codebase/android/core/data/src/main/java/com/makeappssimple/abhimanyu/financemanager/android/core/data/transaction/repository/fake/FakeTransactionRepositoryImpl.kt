@@ -186,6 +186,12 @@ class FakeTransactionRepositoryImpl : TransactionRepository {
 //        )
     }
 
+    override suspend fun updateTransactions(
+        vararg transactions: Transaction,
+    ) {
+
+    }
+
     override suspend fun deleteTransaction(
         id: Int,
     ) {
