@@ -111,6 +111,7 @@ internal data class TransactionsScreenUIEvents(
     val navigateToViewTransactionScreen: (transactionId: Int) -> Unit,
     val navigateUp: () -> Unit,
     val removeFromSelectedTransactions: (Int) -> Unit,
+    val selectAllTransactions: () -> Unit,
     val toggleTransactionSelection: (Int) -> Unit,
     val updateSearchText: (String) -> Unit,
     val updateSelectedFilter: (Filter) -> Unit,
@@ -257,6 +258,19 @@ internal fun TransactionsScreenUI(
                                         uiState.setTransactionsBottomSheetType(
                                             TransactionsBottomSheetType.SELECT_TRANSACTION_FOR
                                         )
+                                    },
+                                )
+                                DropdownMenuItem(
+                                    text = {
+                                        Text(
+                                            text = stringResource(
+                                                id = R.string.screen_transactions_selection_mode_appbar_menu_select_all,
+                                            ),
+                                        )
+                                    },
+                                    onClick = {
+                                        isDropDownVisible = false
+                                        events.selectAllTransactions()
                                     },
                                 )
                             }

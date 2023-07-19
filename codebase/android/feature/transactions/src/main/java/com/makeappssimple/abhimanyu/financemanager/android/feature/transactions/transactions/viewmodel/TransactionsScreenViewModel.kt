@@ -37,6 +37,8 @@ interface TransactionsScreenViewModel : ScreenViewModel {
         transactionId: Int,
     )
 
+    fun selectAllTransactions()
+
     fun toggleTransactionSelection(
         transactionId: Int,
     )

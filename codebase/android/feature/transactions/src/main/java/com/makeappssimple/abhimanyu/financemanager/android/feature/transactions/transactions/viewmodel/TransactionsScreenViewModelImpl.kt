@@ -31,7 +31,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -128,7 +127,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
 
     private val sortOptions: List<SortOption> = SortOption.values().toList()
 
-    private val transactionDetailsListItemViewData: Flow<Map<String, List<TransactionListItemData>>> =
+    private val transactionDetailsListItemViewData: StateFlow<Map<String, List<TransactionListItemData>>?> =
         combine(
             allTransactionData,
             searchText,
@@ -300,8 +299,8 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 .also {
                     isLoading.value = false
                 }
-        }.flowOn(
-            context = dispatcherProvider.io,
+        }.defaultObjectStateIn(
+            scope = viewModelScope,
         )
 
     override val screenUIData: StateFlow<MyResult<TransactionsScreenUIData>?> = combine(
@@ -424,6 +423,16 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     ) {
         selectedTransactions.update {
             it - transactionId
+        }
+    }
+
+    override fun selectAllTransactions() {
+        selectedTransactions.update {
+            transactionDetailsListItemViewData.value?.values?.flatMap {
+                it.map { transactionListItemData ->
+                    transactionListItemData.transactionId
+                }
+            }.orEmpty()
         }
     }
 

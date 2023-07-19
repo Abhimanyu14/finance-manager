@@ -50,6 +50,7 @@ fun TransactionsScreen(
             navigateToViewTransactionScreen = screenViewModel::navigateToViewTransactionScreen,
             navigateUp = screenViewModel::navigateUp,
             removeFromSelectedTransactions = screenViewModel::removeFromSelectedTransactions,
+            selectAllTransactions = screenViewModel::selectAllTransactions,
             toggleTransactionSelection = screenViewModel::toggleTransactionSelection,
             updateSearchText = screenViewModel::updateSearchText,
             updateSelectedFilter = screenViewModel::updateSelectedFilter,
