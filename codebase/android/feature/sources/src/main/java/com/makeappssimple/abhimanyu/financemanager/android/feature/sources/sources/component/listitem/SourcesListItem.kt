@@ -59,7 +59,7 @@ internal fun SourcesListItem(
         )
     } else {
         MyExpandableItemUIWrapper(
-            expanded = data.isExpanded,
+            isExpanded = data.isExpanded,
             modifier = modifier,
         ) {
             Row(

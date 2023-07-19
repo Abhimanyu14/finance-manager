@@ -15,7 +15,8 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun MyExpandableItemUIWrapper(
     modifier: Modifier = Modifier,
-    expanded: Boolean,
+    isExpanded: Boolean = false,
+    isSelected: Boolean = false,
     content: @Composable ColumnScope.() -> Unit,
 ) {
     Column(
@@ -28,7 +29,7 @@ fun MyExpandableItemUIWrapper(
                 shape = MaterialTheme.shapes.large,
             )
             .background(
-                color = if (expanded) {
+                color = if (isExpanded || isSelected) {
                     MaterialTheme.colorScheme.primaryContainer
                 } else {
                     MaterialTheme.colorScheme.background

@@ -86,8 +86,12 @@ fun TransactionListItem(
     }
 
     MyExpandableItemUIWrapper(
-        expanded = data.isExpanded,
-        modifier = modifier,
+        isExpanded = data.isExpanded,
+        isSelected = data.isSelected,
+        modifier = modifier
+            .padding(
+                vertical = 4.dp,
+            ),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -112,12 +116,12 @@ fun TransactionListItem(
                     top = if (data.isExpanded) {
                         16.dp
                     } else {
-                        8.dp
+                        4.dp
                     },
                     bottom = if (data.isExpanded) {
                         16.dp
                     } else {
-                        8.dp
+                        4.dp
                     },
                 ),
         ) {
