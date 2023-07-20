@@ -70,7 +70,7 @@ class AccountsScreenViewModelTest {
 
     @Ignore
     @Test
-    fun deleteSource() {
+    fun deleteAccount() {
         getAllAccountsFlowUseCase.stub {
             onBlocking {
                 invoke()
@@ -81,7 +81,7 @@ class AccountsScreenViewModelTest {
             )
         }
 
-//        sourcesScreenViewModel.deleteSource(
+//        sourcesScreenViewModel.deleteAccount(
 //            source = source,
 //        )
     }

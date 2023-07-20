@@ -273,7 +273,7 @@ dependencies {
     implementation project(":feature:categories")
     implementation project(":feature:home")
     implementation project(":feature:settings")
-    implementation project(":feature:sources")
+    implementation project(':feature:accounts')
     implementation project(":feature:transactionfor")
     implementation project(":feature:transactions")
 

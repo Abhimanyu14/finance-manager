@@ -24,7 +24,7 @@ class CommonDataSourceImpl(
                     id = id,
                 )
 
-                val updatesSources = buildList {
+                val updatesAccounts = buildList {
                     transactionData?.sourceFrom?.let {
                         add(
                             it.updateBalanceAmount(
@@ -71,7 +71,7 @@ class CommonDataSourceImpl(
                     id = id,
                 )
                 sourceDao().updateAccounts(
-                    sources = updatesSources,
+                    sources = updatesAccounts,
                 )
             }
         }

@@ -101,7 +101,7 @@ internal fun TransactionsFiltersBottomSheetUI(
             selectedFilter.selectedExpenseCategoryIndices.isNotEmpty(),
             selectedFilter.selectedIncomeCategoryIndices.isNotEmpty(),
             selectedFilter.selectedInvestmentCategoryIndices.isNotEmpty(),
-            selectedFilter.selectedSourceIndices.isNotEmpty(),
+            selectedFilter.selectedAccountsIndices.isNotEmpty(),
             selectedFilter.selectedTransactionForValuesIndices.isNotEmpty(),
             selectedFilter.selectedTransactionTypeIndices.isNotEmpty(),
             selectedFilter.toDate.isNotNull(),
@@ -125,7 +125,7 @@ internal fun TransactionsFiltersBottomSheetUI(
     }
     val selectedAccountIndicesValue = remember {
         mutableStateListOf(
-            elements = selectedFilter.selectedSourceIndices.toTypedArray(),
+            elements = selectedFilter.selectedAccountsIndices.toTypedArray(),
         )
     }
     val selectedTransactionForValuesIndicesValue = remember {
@@ -386,7 +386,7 @@ internal fun TransactionsFiltersBottomSheetUI(
                             selectedExpenseCategoryIndices = selectedExpenseCategoryIndicesValue,
                             selectedIncomeCategoryIndices = selectedIncomeCategoryIndicesValue,
                             selectedInvestmentCategoryIndices = selectedInvestmentCategoryIndicesValue,
-                            selectedSourceIndices = selectedAccountIndicesValue,
+                            selectedAccountsIndices = selectedAccountIndicesValue,
                             selectedTransactionForValuesIndices = selectedTransactionForValuesIndicesValue,
                             selectedTransactionTypeIndices = selectedTransactionTypeIndicesValue,
                             fromDate = fromDate,

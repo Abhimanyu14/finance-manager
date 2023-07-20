@@ -177,8 +177,8 @@ internal fun AddOrEditTransactionScreenUI(
                         ),
                         events = SelectAccountBottomSheetEvents(
                             resetBottomSheetType = uiState.resetBottomSheetType,
-                            updateAccount = { updatedSource ->
-                                events.updateAccountFrom(updatedSource)
+                            updateAccount = { updatedAccount ->
+                                events.updateAccountFrom(updatedAccount)
                             },
                         ),
                     )

@@ -78,13 +78,13 @@ fun getTestEmojis(): Array<Emoji> {
     )
 }
 
-fun getTestSource(): SourceEntity {
+fun getTestAccount(): SourceEntity {
     return SourceEntity(
         name = "Axis",
     )
 }
 
-fun getTestSources(): Array<SourceEntity> {
+fun getTestAccounts(): Array<SourceEntity> {
     return arrayOf(
         SourceEntity(
             name = "Axis",

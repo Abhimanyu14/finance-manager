@@ -10,7 +10,7 @@ data class Filter(
     val selectedExpenseCategoryIndices: List<Int> = emptyList(),
     val selectedIncomeCategoryIndices: List<Int> = emptyList(),
     val selectedInvestmentCategoryIndices: List<Int> = emptyList(),
-    val selectedSourceIndices: List<Int> = emptyList(),
+    val selectedAccountsIndices: List<Int> = emptyList(),
     val selectedTransactionForValuesIndices: List<Int> = emptyList(),
     val selectedTransactionTypeIndices: List<Int> = emptyList(),
     val fromDate: LocalDate? = null,
@@ -20,7 +20,7 @@ data class Filter(
         return selectedExpenseCategoryIndices.isNotEmpty() ||
                 selectedIncomeCategoryIndices.isNotEmpty() ||
                 selectedInvestmentCategoryIndices.isNotEmpty() ||
-                selectedSourceIndices.isNotEmpty() ||
+                selectedAccountsIndices.isNotEmpty() ||
                 selectedTransactionForValuesIndices.isNotEmpty() ||
                 selectedTransactionTypeIndices.isNotEmpty() ||
                 toDate.isNotNull()

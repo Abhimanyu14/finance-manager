@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.model
 
+// TODO(Abhi) - Source to Account rename migration
 enum class SourceType(
     val title: String,
 ) {

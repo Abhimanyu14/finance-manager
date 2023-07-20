@@ -187,8 +187,8 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                         selectedTransactionTypesIndicesValue = selectedFilterValue.selectedTransactionTypeIndices,
                         transactionData = transactionData,
                     ) && isAvailableAfterAccountFilter(
-                        selectedSourceIndicesValue = selectedFilterValue.selectedSourceIndices,
-                        sourcesValue = sourcesValue,
+                        selectedAccountsIndicesValue = selectedFilterValue.selectedAccountsIndices,
+                        accountsValue = sourcesValue,
                         transactionData = transactionData,
                     ) && isAvailableAfterCategoryFilter(
                         selectedExpenseCategoryIndicesValue = selectedFilterValue.selectedExpenseCategoryIndices,
@@ -534,19 +534,19 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     }
 
     private fun isAvailableAfterAccountFilter(
-        selectedSourceIndicesValue: List<Int>,
-        sourcesValue: List<Source>,
+        selectedAccountsIndicesValue: List<Int>,
+        accountsValue: List<Source>,
         transactionData: TransactionData,
     ): Boolean {
-        if (selectedSourceIndicesValue.isEmpty()) {
+        if (selectedAccountsIndicesValue.isEmpty()) {
             return true
         }
-        return selectedSourceIndicesValue.contains(
-            element = sourcesValue.indexOf(
+        return selectedAccountsIndicesValue.contains(
+            element = accountsValue.indexOf(
                 element = transactionData.sourceFrom,
             ),
-        ) || selectedSourceIndicesValue.contains(
-            element = sourcesValue.indexOf(
+        ) || selectedAccountsIndicesValue.contains(
+            element = accountsValue.indexOf(
                 element = transactionData.sourceTo,
             ),
         )

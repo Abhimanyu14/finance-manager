@@ -75,7 +75,7 @@ fun getTestEmojis(): Array<EmojiEntity> {
     )
 }
 
-fun getTestSource(): SourceEntity {
+fun getTestAccount(): SourceEntity {
     return SourceEntity(
         name = "Axis",
     )

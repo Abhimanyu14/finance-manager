@@ -11,6 +11,7 @@ data class InitialDatabaseData @OptIn(ExperimentalSerializationApi::class) const
     @JsonNames("defaultCategories")
     val defaultCategories: Categories,
 
+    // TODO(Abhi) - Source to Account rename migration
     @SerialName("default_sources")
     @JsonNames("defaultSources")
     val defaultSources: List<SourceEntity>,

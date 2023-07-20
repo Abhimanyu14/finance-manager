@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.source.repository
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.getTestSources
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.getTestAccounts
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.AccountDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import kotlinx.coroutines.test.runTest
@@ -14,7 +14,7 @@ import org.mockito.kotlin.verify
 class AccountRepositoryTest {
     private val accountDao: AccountDao = mock()
     private val id: Int = 1
-    private val sources: Array<Source> = getTestSources()
+    private val sources: Array<Source> = getTestAccounts()
     private lateinit var accountRepository: AccountRepository
 
     @Before

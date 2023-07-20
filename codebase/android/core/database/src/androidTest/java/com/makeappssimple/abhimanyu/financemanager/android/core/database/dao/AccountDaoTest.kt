@@ -47,52 +47,52 @@ class AccountDaoTest {
     }
 
     @Test
-    fun getAllSources() = runTest {
+    fun getAllAccounts() = runTest {
         accountDao.insertAccounts(
-            sources = testSources.toTypedArray(),
+            sources = testAccounts.toTypedArray(),
         )
 
         val result = accountDao.getAllAccounts()
 
         // Note: Order of returned items will not match ordered of actual list
         Assert.assertEquals(
-            testSources.toSet(),
+            testAccounts.toSet(),
             result.toSet(),
         )
     }
 
     @Test
-    fun getAllSourcesFlow() = runTest {
+    fun getAllAccountsFlow() = runTest {
         accountDao.insertAccounts(
-            sources = testSources.toTypedArray(),
+            sources = testAccounts.toTypedArray(),
         )
 
         val result = accountDao.getAllAccountsFlow().first()
 
         Assert.assertEquals(
-            testSources.toSet(),
+            testAccounts.toSet(),
             result.toSet(),
         )
     }
 
     @Test
-    fun getAllSourcesCount() = runTest {
+    fun getAllAccountsCount() = runTest {
         accountDao.insertAccounts(
-            sources = testSources.toTypedArray(),
+            sources = testAccounts.toTypedArray(),
         )
 
         val result = accountDao.getAllAccountsCount()
 
         Assert.assertEquals(
-            testSources.size,
+            testAccounts.size,
             result,
         )
     }
 
     @Test
-    fun getSource_returnsDataForValidId() = runTest {
+    fun getAccount_returnsDataForValidId() = runTest {
         accountDao.insertAccounts(
-            sources = testSources.toTypedArray(),
+            sources = testAccounts.toTypedArray(),
         )
 
         val result = accountDao.getAccount(
@@ -100,15 +100,15 @@ class AccountDaoTest {
         )
 
         Assert.assertEquals(
-            testSources[1],
+            testAccounts[1],
             result,
         )
     }
 
     @Test
-    fun getSource_returnsNullForInvalidId() = runTest {
+    fun getAccount_returnsNullForInvalidId() = runTest {
         accountDao.insertAccounts(
-            sources = testSources.toTypedArray(),
+            sources = testAccounts.toTypedArray(),
         )
 
         val result = accountDao.getAccount(
@@ -119,9 +119,9 @@ class AccountDaoTest {
     }
 
     @Test
-    fun deleteSource_deleteDataOfGivenId() = runTest {
+    fun deleteAccount_deleteDataOfGivenId() = runTest {
         accountDao.insertAccounts(
-            sources = testSources.toTypedArray(),
+            sources = testAccounts.toTypedArray(),
         )
 
         accountDao.deleteAccount(
@@ -134,15 +134,15 @@ class AccountDaoTest {
             result.size,
         )
         Assert.assertEquals(
-            setOf(testSources[1], testSources[2]),
+            setOf(testAccounts[1], testAccounts[2]),
             result.toSet(),
         )
     }
 
     @Test
-    fun deleteSource_noDeletionForInvalidId() = runTest {
+    fun deleteAccount_noDeletionForInvalidId() = runTest {
         accountDao.insertAccounts(
-            sources = testSources.toTypedArray(),
+            sources = testAccounts.toTypedArray(),
         )
 
         accountDao.deleteAccount(
@@ -155,23 +155,23 @@ class AccountDaoTest {
             result.size,
         )
         Assert.assertEquals(
-            testSources.toSet(),
+            testAccounts.toSet(),
             result.toSet(),
         )
     }
 
     @Test
-    fun updateSources() = runTest {
+    fun updateAccounts() = runTest {
         accountDao.insertAccounts(
-            sources = testSources.toTypedArray(),
+            sources = testAccounts.toTypedArray(),
         )
 
         val testSourceName2 = "IOB"
         accountDao.updateAccounts(
-            testSources[1].copy(
+            testAccounts[1].copy(
                 name = testSourceName2,
             ),
-            testSources[2].copy(
+            testAccounts[2].copy(
                 id = 6342,
             ),
         )
@@ -182,11 +182,11 @@ class AccountDaoTest {
             result.size,
         )
         Assert.assertEquals(
-            testSources[0],
+            testAccounts[0],
             result[0],
         )
         Assert.assertEquals(
-            testSources[2],
+            testAccounts[2],
             result[2],
         )
         Assert.assertEquals(
@@ -196,16 +196,16 @@ class AccountDaoTest {
     }
 
     @Test
-    fun deleteSources() = runTest {
+    fun deleteAccounts() = runTest {
         accountDao.insertAccounts(
-            sources = testSources.toTypedArray(),
+            sources = testAccounts.toTypedArray(),
         )
 
         accountDao.deleteAccounts(
-            testSources[0].copy(
+            testAccounts[0].copy(
                 name = "Random", // Data mismatch
             ),
-            testSources[1].copy(
+            testAccounts[1].copy(
                 id = invalidId,
             ),
         )
@@ -216,7 +216,7 @@ class AccountDaoTest {
             result.size,
         )
         Assert.assertEquals(
-            setOf(testSources[1], testSources[2]),
+            setOf(testAccounts[1], testAccounts[2]),
             result.toSet(),
         )
     }
@@ -226,7 +226,7 @@ class AccountDaoTest {
         private const val testId2 = 234
         private const val testId3 = 345
         private const val invalidId = 987
-        private val testSources = listOf(
+        private val testAccounts = listOf(
             SourceEntity(
                 id = testId1,
                 balanceAmount = AmountEntity(

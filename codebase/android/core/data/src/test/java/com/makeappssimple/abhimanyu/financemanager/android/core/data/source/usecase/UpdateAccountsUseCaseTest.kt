@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.source.use
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.repository.AccountRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.getTestSources
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.getTestAccounts
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
@@ -25,7 +25,7 @@ class UpdateAccountsUseCaseTest {
 
     @Test
     fun invoke_defaultTest() = runTest {
-        val sources = getTestSources()
+        val sources = getTestAccounts()
         updateAccountsUseCase(
             *sources,
         )

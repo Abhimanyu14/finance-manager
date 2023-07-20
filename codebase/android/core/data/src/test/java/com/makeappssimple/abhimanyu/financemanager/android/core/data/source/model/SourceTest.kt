@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.source.model
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.getTestSource
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.getTestAccount
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.updateBalanceAmount
 import org.junit.Assert
@@ -12,7 +12,7 @@ class SourceTest {
 
     @Before
     fun setUp() {
-        source = getTestSource()
+        source = getTestAccount()
     }
 
     @Test

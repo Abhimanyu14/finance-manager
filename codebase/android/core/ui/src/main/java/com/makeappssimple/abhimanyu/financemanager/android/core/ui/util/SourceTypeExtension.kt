@@ -7,6 +7,7 @@ import androidx.compose.material.icons.rounded.AttachMoney
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.SourceType
 
+// TODO(Abhi) - Source to Account rename migration
 val SourceType.icon: ImageVector
     get() = when (this) {
         SourceType.BANK -> {

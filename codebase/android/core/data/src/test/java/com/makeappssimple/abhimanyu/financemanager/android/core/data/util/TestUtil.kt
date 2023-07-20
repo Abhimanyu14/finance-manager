@@ -75,13 +75,13 @@ fun getTestEmojis(): Array<Emoji> {
     )
 }
 
-fun getTestSource(): Source {
+fun getTestAccount(): Source {
     return Source(
         name = "Axis",
     )
 }
 
-fun getTestSources(): Array<Source> {
+fun getTestAccounts(): Array<Source> {
     return arrayOf(
         Source(
             name = "Axis",
