@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.accounts.screen
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,11 +24,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sca
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.bottomsheet.AccountsDeleteConfirmationBottomSheet
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.bottomsheet.AccountsSetAsDefaultConfirmationBottomSheet
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.AccountsListItem
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.AccountsListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.AccountsListItemEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.accounts.component.bottomsheet.AccountsDeleteConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.accounts.component.bottomsheet.AccountsSetAsDefaultConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.accounts.component.listitem.AccountsListItem
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.accounts.component.listitem.AccountsListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.accounts.component.listitem.AccountsListItemEvents
 
 enum class AccountsBottomSheetType : BottomSheetType {
     DELETE_CONFIRMATION,

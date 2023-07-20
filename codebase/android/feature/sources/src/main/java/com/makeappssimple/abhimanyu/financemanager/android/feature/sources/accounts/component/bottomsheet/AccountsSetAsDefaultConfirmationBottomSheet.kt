@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.bottomsheet
+package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.accounts.component.bottomsheet
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource

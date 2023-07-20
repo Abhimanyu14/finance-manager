@@ -8,9 +8,9 @@ import androidx.navigation.navDeepLink
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.DeeplinkUrl
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Screen
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.accounts.screen.AccountsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.add_account.screen.AddAccountScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.edit_account.screen.EditAccountScreen
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.screen.AccountsScreen
 
 fun NavGraphBuilder.accountsNavGraph() {
     composable(

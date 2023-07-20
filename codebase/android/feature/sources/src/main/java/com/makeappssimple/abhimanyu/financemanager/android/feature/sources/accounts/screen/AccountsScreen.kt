@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.accounts.screen
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -6,8 +6,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.viewmodel.AccountsScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.viewmodel.AccountsScreenViewModelImpl
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.accounts.viewmodel.AccountsScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.accounts.viewmodel.AccountsScreenViewModelImpl
 
 @Composable
 fun AccountsScreen(

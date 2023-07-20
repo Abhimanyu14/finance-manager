@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.viewmodel
+package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.accounts.viewmodel
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigUtilImpl

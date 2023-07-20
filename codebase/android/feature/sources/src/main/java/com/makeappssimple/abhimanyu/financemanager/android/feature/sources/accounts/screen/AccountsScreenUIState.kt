@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.accounts.screen
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -9,7 +9,7 @@ import androidx.compose.runtime.setValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.AccountsListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.accounts.component.listitem.AccountsListItemData
 
 @Stable
 class AccountsScreenUIState(

@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.viewmodel
+package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.accounts.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -19,8 +19,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNav
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem.AccountsListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.screen.AccountsScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.accounts.component.listitem.AccountsListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.accounts.screen.AccountsScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow

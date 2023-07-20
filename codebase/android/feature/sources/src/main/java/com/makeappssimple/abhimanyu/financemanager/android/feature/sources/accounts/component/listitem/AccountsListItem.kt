@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.sources.component.listitem
+package com.makeappssimple.abhimanyu.financemanager.android.feature.sources.accounts.component.listitem
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
