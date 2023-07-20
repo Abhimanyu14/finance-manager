@@ -3,8 +3,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.UpdateSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllAccountsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.UpdateAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
@@ -19,10 +19,10 @@ interface RecalculateTotalUseCase {
 
 class RecalculateTotalUseCaseImpl(
     private val dispatcherProvider: DispatcherProvider,
-    private val getAllSourcesUseCase: GetAllSourcesUseCase,
+    private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
-    private val updateSourcesUseCase: UpdateSourcesUseCase,
+    private val updateAccountsUseCase: UpdateAccountsUseCase,
 ) : RecalculateTotalUseCase {
     override suspend operator fun invoke() {
         coroutineScope {
@@ -30,7 +30,7 @@ class RecalculateTotalUseCaseImpl(
                 async(
                     context = dispatcherProvider.io,
                 ) {
-                    getAllSourcesUseCase()
+                    getAllAccountsUseCase()
                 },
                 async(
                     context = dispatcherProvider.io,
@@ -60,7 +60,7 @@ class RecalculateTotalUseCaseImpl(
                     updatedBalanceAmount = sourceBalances[it.id].orZero(),
                 )
             }
-            updateSourcesUseCase(
+            updateAccountsUseCase(
                 sources = updatesSources.toTypedArray(),
             )
         }

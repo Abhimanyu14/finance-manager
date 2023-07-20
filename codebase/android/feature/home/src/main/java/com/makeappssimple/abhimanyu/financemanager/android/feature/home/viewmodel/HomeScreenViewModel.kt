@@ -26,7 +26,7 @@ interface HomeScreenViewModel : ScreenViewModel {
 
     fun navigateToSettingsScreen()
 
-    fun navigateToSourcesScreen()
+    fun navigateToAccountsScreen()
 
     fun navigateToTransactionsScreen()
 

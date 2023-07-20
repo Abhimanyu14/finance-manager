@@ -68,9 +68,9 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun navigateToSourcesScreen() {
+    override fun navigateToAccountsScreen() {
         navigationManager.navigate(
-            MyNavigationDirections.Sources
+            MyNavigationDirections.Accounts
         )
     }
 

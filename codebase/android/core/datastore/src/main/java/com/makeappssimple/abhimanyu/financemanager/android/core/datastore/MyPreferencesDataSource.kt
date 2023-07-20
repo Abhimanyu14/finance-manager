@@ -44,7 +44,7 @@ class MyPreferencesDataSource(
                 expenseCategory = it[DEFAULT_EXPENSE_CATEGORY_ID].orZero(),
                 incomeCategory = it[DEFAULT_INCOME_CATEGORY_ID].orZero(),
                 investmentCategory = it[DEFAULT_INVESTMENT_CATEGORY_ID].orZero(),
-                source = it[DEFAULT_SOURCE_ID] ?: 0,
+                source = it[DEFAULT_ACCOUNT_ID] ?: 0,
             )
         }
     }
@@ -91,11 +91,11 @@ class MyPreferencesDataSource(
         }
     }
 
-    suspend fun setDefaultSourceId(
-        defaultSourceId: Int,
+    suspend fun setDefaultAccountId(
+        defaultAccountId: Int,
     ) {
         dataStore.edit {
-            it[DEFAULT_SOURCE_ID] = defaultSourceId
+            it[DEFAULT_ACCOUNT_ID] = defaultAccountId
         }
     }
 

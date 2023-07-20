@@ -14,7 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetSourcesTotalBalanceAmountValueUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAccountsTotalBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetRecentTransactionDataFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionsBetweenTimestampsUseCase
@@ -46,7 +46,7 @@ internal const val defaultOverviewTabSelection = 1
 
 @HiltViewModel
 internal class HomeScreenViewModelImpl @Inject constructor(
-    getSourcesTotalBalanceAmountValueUseCase: GetSourcesTotalBalanceAmountValueUseCase,
+    getAccountsTotalBalanceAmountValueUseCase: GetAccountsTotalBalanceAmountValueUseCase,
     override val myLogger: MyLogger,
     private val backupDataUseCase: BackupDataUseCase,
     private val dateTimeUtil: DateTimeUtil,
@@ -168,7 +168,7 @@ internal class HomeScreenViewModelImpl @Inject constructor(
     )
 
     private val sourcesTotalBalanceAmountValue: Flow<Long> =
-        getSourcesTotalBalanceAmountValueUseCase()
+        getAccountsTotalBalanceAmountValueUseCase()
 
     override val screenUIData: StateFlow<MyResult<HomeScreenUIData>?> = combine(
         isBackupCardVisible,
@@ -298,9 +298,9 @@ internal class HomeScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun navigateToSourcesScreen() {
+    override fun navigateToAccountsScreen() {
         navigationManager.navigate(
-            MyNavigationDirections.Sources
+            MyNavigationDirections.Accounts
         )
     }
 

@@ -70,7 +70,7 @@ class CommonDataSourceImpl(
                 transactionDao().deleteTransaction(
                     id = id,
                 )
-                sourceDao().updateSources(
+                sourceDao().updateAccounts(
                     sources = updatesSources,
                 )
             }
@@ -91,14 +91,14 @@ class CommonDataSourceImpl(
                     transaction = transaction,
                 )
                 sourceFrom?.let { sourceFromValue ->
-                    sourceDao().updateSources(
+                    sourceDao().updateAccounts(
                         sourceFromValue.updateBalanceAmount(
                             updatedBalanceAmount = sourceFromValue.balanceAmount.value - amountValue,
                         ),
                     )
                 }
                 sourceTo?.let { sourceToValue ->
-                    sourceDao().updateSources(
+                    sourceDao().updateAccounts(
                         sourceToValue.updateBalanceAmount(
                             updatedBalanceAmount = sourceToValue.balanceAmount.value + amountValue,
                         )
@@ -122,7 +122,7 @@ class CommonDataSourceImpl(
             withTransaction {
                 categoryDao().deleteAllCategories()
                 emojiDao().deleteAllEmojis()
-                sourceDao().deleteAllSources()
+                sourceDao().deleteAllAccounts()
                 transactionDao().deleteAllTransactions()
                 transactionForDao().deleteAllTransactionForValues()
 
@@ -132,7 +132,7 @@ class CommonDataSourceImpl(
                 emojiDao().insertEmojis(
                     emojis = emojis,
                 )
-                sourceDao().insertSources(
+                sourceDao().insertAccounts(
                     sources = sources,
                 )
                 transactionDao().insertTransactions(

@@ -55,8 +55,8 @@ class FakeMyPreferencesRepositoryImpl : MyPreferencesRepository {
 //        )
     }
 
-    override suspend fun setDefaultSourceId(
-        defaultSourceId: Int,
+    override suspend fun setDefaultAccountId(
+        defaultAccountId: Int,
     ) {
 //        return myPreferencesDataSource.setDefaultSourceId(
 //            defaultSourceId = defaultSourceId,

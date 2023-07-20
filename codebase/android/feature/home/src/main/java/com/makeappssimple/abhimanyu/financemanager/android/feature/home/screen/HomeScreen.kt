@@ -40,7 +40,7 @@ fun HomeScreen(
             navigateToAnalysisScreen = screenViewModel::navigateToAnalysisScreen,
             navigateToAddTransactionScreen = screenViewModel::navigateToAddTransactionScreen,
             navigateToSettingsScreen = screenViewModel::navigateToSettingsScreen,
-            navigateToSourcesScreen = screenViewModel::navigateToSourcesScreen,
+            navigateToAccountsScreen = screenViewModel::navigateToAccountsScreen,
             navigateToTransactionsScreen = screenViewModel::navigateToTransactionsScreen,
             onOverviewTabClick = screenViewModel::setOverviewTabSelectionIndex,
         ),

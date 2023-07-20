@@ -7,8 +7,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwrite
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.UpdateSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllAccountsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.UpdateAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionsUseCase
@@ -33,7 +33,7 @@ class UseCaseModule {
         dispatcherProvider: DispatcherProvider,
         getAllCategoriesUseCase: GetAllCategoriesUseCase,
         getAllEmojisUseCase: GetAllEmojisUseCase,
-        getAllSourcesUseCase: GetAllSourcesUseCase,
+        getAllAccountsUseCase: GetAllAccountsUseCase,
         getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
         getAllTransactionsUseCase: GetAllTransactionsUseCase,
         myJsonWriter: MyJsonWriter,
@@ -44,7 +44,7 @@ class UseCaseModule {
             dispatcherProvider = dispatcherProvider,
             getAllCategoriesUseCase = getAllCategoriesUseCase,
             getAllEmojisUseCase = getAllEmojisUseCase,
-            getAllSourcesUseCase = getAllSourcesUseCase,
+            getAllAccountsUseCase = getAllAccountsUseCase,
             getAllTransactionForValuesUseCase = getAllTransactionForValuesUseCase,
             getAllTransactionsUseCase = getAllTransactionsUseCase,
             myJsonWriter = myJsonWriter,
@@ -55,17 +55,17 @@ class UseCaseModule {
     @Provides
     fun providesRecalculateTotalUseCase(
         dispatcherProvider: DispatcherProvider,
-        getAllSourcesUseCase: GetAllSourcesUseCase,
+        getAllAccountsUseCase: GetAllAccountsUseCase,
         getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
         myPreferencesRepository: MyPreferencesRepository,
-        updateSourcesUseCase: UpdateSourcesUseCase,
+        updateAccountsUseCase: UpdateAccountsUseCase,
     ): RecalculateTotalUseCase {
         return RecalculateTotalUseCaseImpl(
             dispatcherProvider = dispatcherProvider,
-            getAllSourcesUseCase = getAllSourcesUseCase,
+            getAllAccountsUseCase = getAllAccountsUseCase,
             getAllTransactionDataUseCase = getAllTransactionDataUseCase,
             myPreferencesRepository = myPreferencesRepository,
-            updateSourcesUseCase = updateSourcesUseCase,
+            updateAccountsUseCase = updateAccountsUseCase,
         )
     }
 

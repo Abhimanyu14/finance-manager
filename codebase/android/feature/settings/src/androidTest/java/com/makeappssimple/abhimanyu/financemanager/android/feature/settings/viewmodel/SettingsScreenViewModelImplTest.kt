@@ -13,9 +13,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.us
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.repository.fake.FakeEmojiRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.fake.FakeMyPreferencesRepositoryImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.repository.fake.FakeSourceRepositoryImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.UpdateSourcesUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.repository.fake.FakeAccountRepositoryImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllAccountsUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.UpdateAccountsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.fake.FakeTransactionRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionDataUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionsUseCaseImpl
@@ -75,8 +75,8 @@ class SettingsScreenViewModelImplTest {
             getAllEmojisUseCase = GetAllEmojisUseCaseImpl(
                 emojiRepository = FakeEmojiRepositoryImpl(),
             ),
-            getAllSourcesUseCase = GetAllSourcesUseCaseImpl(
-                sourceRepository = FakeSourceRepositoryImpl(),
+            getAllAccountsUseCase = GetAllAccountsUseCaseImpl(
+                accountRepository = FakeAccountRepositoryImpl(),
             ),
             getAllTransactionForValuesUseCase = GetAllTransactionForValuesUseCaseImpl(
                 transactionForRepository = FakeTransactionForRepositoryImpl(),
@@ -89,16 +89,16 @@ class SettingsScreenViewModelImplTest {
         )
         recalculateTotalUseCase = RecalculateTotalUseCaseImpl(
             dispatcherProvider = dispatcherProvider,
-            getAllSourcesUseCase = GetAllSourcesUseCaseImpl(
-                sourceRepository = FakeSourceRepositoryImpl(),
+            getAllAccountsUseCase = GetAllAccountsUseCaseImpl(
+                accountRepository = FakeAccountRepositoryImpl(),
             ),
             getAllTransactionDataUseCase = GetAllTransactionDataUseCaseImpl(
                 transactionRepository = FakeTransactionRepositoryImpl(),
             ),
             myPreferencesRepository = FakeMyPreferencesRepositoryImpl(),
-            updateSourcesUseCase = UpdateSourcesUseCaseImpl(
+            updateAccountsUseCase = UpdateAccountsUseCaseImpl(
                 myPreferencesRepository = FakeMyPreferencesRepositoryImpl(),
-                sourceRepository = FakeSourceRepositoryImpl(),
+                accountRepository = FakeAccountRepositoryImpl(),
             ),
         )
         restoreDataUseCase = RestoreDataUseCaseImpl(
@@ -160,21 +160,21 @@ class SettingsScreenViewModelImplTest {
     }
 
     @Test
-    fun navigateToSourcesScreenTest() = runTest {
+    fun navigateToAccountsScreenTest() = runTest {
         navigationManager = FakeNavigationManagerImpl(
             coroutineScope = this,
         )
         initViewModel()
 
         turbineScope {
-            settingsScreenViewModelImpl.navigateToSourcesScreen()
+            settingsScreenViewModelImpl.navigateToAccountsScreen()
 
             val receiver = settingsScreenViewModelImpl.navigationManager.command.testIn(
                 scope = backgroundScope,
             )
 
             Assert.assertEquals(
-                MyNavigationDirections.Sources,
+                MyNavigationDirections.Accounts,
                 receiver.awaitItem(),
             )
             receiver.cancel()

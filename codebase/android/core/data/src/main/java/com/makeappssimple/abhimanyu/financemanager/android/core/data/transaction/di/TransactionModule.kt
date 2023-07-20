@@ -3,10 +3,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepositoryImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfAccountIsUsedInTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfAccountIsUsedInTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfCategoryIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfCategoryIsUsedInTransactionsUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfSourceIsUsedInTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfSourceIsUsedInTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfTransactionForIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfTransactionForIsUsedInTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.DeleteAllTransactionsUseCase
@@ -74,10 +74,10 @@ class TransactionModule {
     }
 
     @Provides
-    fun providesCheckIfSourceIsUsedInTransactionsUseCase(
+    fun providesCheckIfAccountIsUsedInTransactionsUseCase(
         transactionRepository: TransactionRepository,
-    ): CheckIfSourceIsUsedInTransactionsUseCase {
-        return CheckIfSourceIsUsedInTransactionsUseCaseImpl(
+    ): CheckIfAccountIsUsedInTransactionsUseCase {
+        return CheckIfAccountIsUsedInTransactionsUseCaseImpl(
             transactionRepository = transactionRepository,
         )
     }

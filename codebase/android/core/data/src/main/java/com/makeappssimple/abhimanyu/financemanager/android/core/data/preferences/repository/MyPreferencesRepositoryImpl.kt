@@ -54,11 +54,11 @@ class MyPreferencesRepositoryImpl @Inject constructor(
         )
     }
 
-    override suspend fun setDefaultSourceId(
-        defaultSourceId: Int,
+    override suspend fun setDefaultAccountId(
+        defaultAccountId: Int,
     ) {
-        return myPreferencesDataSource.setDefaultSourceId(
-            defaultSourceId = defaultSourceId,
+        return myPreferencesDataSource.setDefaultAccountId(
+            defaultAccountId = defaultAccountId,
         )
     }
 

@@ -70,7 +70,7 @@ class RestoreDataUseCaseImpl(
         transactionRepository.restoreData(
             categories = categories,
             emojis = emojis,
-            sources = sources,
+            accounts = sources,
             transactions = transactions,
             transactionForValues = transactionForValues,
         )
@@ -91,8 +91,8 @@ class RestoreDataUseCaseImpl(
                 setDefaultInvestmentCategoryId(
                     defaultInvestmentCategoryId = it.defaultDataId.investmentCategory,
                 )
-                setDefaultSourceId(
-                    defaultSourceId = it.defaultDataId.source,
+                setDefaultAccountId(
+                    defaultAccountId = it.defaultDataId.source,
                 )
                 setEmojiDataVersionNumber(
                     emojiDataVersionNumber = it.initialDataVersionNumber.emoji,

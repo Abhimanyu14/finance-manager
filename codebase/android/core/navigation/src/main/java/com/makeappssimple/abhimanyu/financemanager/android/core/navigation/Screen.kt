@@ -7,8 +7,8 @@ sealed class Screen(
         route = "add_category",
     )
 
-    object AddSource : Screen(
-        route = "add_source",
+    object AddAccount : Screen(
+        route = "add_account",
     )
 
     object AddTransaction : Screen(
@@ -31,8 +31,8 @@ sealed class Screen(
         route = "edit_category",
     )
 
-    object EditSource : Screen(
-        route = "edit_source",
+    object EditAccount : Screen(
+        route = "edit_account",
     )
 
     object EditTransaction : Screen(
@@ -51,8 +51,8 @@ sealed class Screen(
         route = "settings",
     )
 
-    object Sources : Screen(
-        route = "sources",
+    object Accounts : Screen(
+        route = "accounts",
     )
 
     object TransactionForValues : Screen(

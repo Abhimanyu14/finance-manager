@@ -10,8 +10,8 @@ sealed class AddOrEditTransactionScreenUiVisibilityState(
     val isCategoryTextFieldVisible: Boolean = false,
     val isTransactionForRadioGroupVisible: Boolean = false,
     val isTransactionTypesRadioGroupVisible: Boolean = false,
-    val isSourceFromTextFieldVisible: Boolean = false,
-    val isSourceToTextFieldVisible: Boolean = false,
+    val isAccountFromTextFieldVisible: Boolean = false,
+    val isAccountToTextFieldVisible: Boolean = false,
     val isTitleSuggestionsVisible: Boolean = false,
 ) {
     object Expense : AddOrEditTransactionScreenUiVisibilityState(
@@ -20,8 +20,8 @@ sealed class AddOrEditTransactionScreenUiVisibilityState(
         isCategoryTextFieldVisible = true,
         isTransactionForRadioGroupVisible = true,
         isTransactionTypesRadioGroupVisible = true,
-        isSourceFromTextFieldVisible = true,
-        isSourceToTextFieldVisible = false,
+        isAccountFromTextFieldVisible = true,
+        isAccountToTextFieldVisible = false,
         isTitleSuggestionsVisible = true,
     )
 
@@ -31,8 +31,8 @@ sealed class AddOrEditTransactionScreenUiVisibilityState(
         isCategoryTextFieldVisible = true,
         isTransactionForRadioGroupVisible = false,
         isTransactionTypesRadioGroupVisible = true,
-        isSourceFromTextFieldVisible = false,
-        isSourceToTextFieldVisible = true,
+        isAccountFromTextFieldVisible = false,
+        isAccountToTextFieldVisible = true,
         isTitleSuggestionsVisible = true,
     )
 
@@ -42,8 +42,8 @@ sealed class AddOrEditTransactionScreenUiVisibilityState(
         isCategoryTextFieldVisible = true,
         isTransactionForRadioGroupVisible = false,
         isTransactionTypesRadioGroupVisible = true,
-        isSourceFromTextFieldVisible = true,
-        isSourceToTextFieldVisible = false,
+        isAccountFromTextFieldVisible = true,
+        isAccountToTextFieldVisible = false,
         isTitleSuggestionsVisible = true,
     )
 
@@ -53,8 +53,8 @@ sealed class AddOrEditTransactionScreenUiVisibilityState(
         isCategoryTextFieldVisible = false,
         isTransactionForRadioGroupVisible = false,
         isTransactionTypesRadioGroupVisible = false,
-        isSourceFromTextFieldVisible = false,
-        isSourceToTextFieldVisible = true,
+        isAccountFromTextFieldVisible = false,
+        isAccountToTextFieldVisible = true,
         isTitleSuggestionsVisible = false,
     )
 
@@ -64,8 +64,8 @@ sealed class AddOrEditTransactionScreenUiVisibilityState(
         isCategoryTextFieldVisible = false,
         isTransactionForRadioGroupVisible = false,
         isTransactionTypesRadioGroupVisible = true,
-        isSourceFromTextFieldVisible = true,
-        isSourceToTextFieldVisible = true,
+        isAccountFromTextFieldVisible = true,
+        isAccountToTextFieldVisible = true,
         isTitleSuggestionsVisible = false,
     )
 }

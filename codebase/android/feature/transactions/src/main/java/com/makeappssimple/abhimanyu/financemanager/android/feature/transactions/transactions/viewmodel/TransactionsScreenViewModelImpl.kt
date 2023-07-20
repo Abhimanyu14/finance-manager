@@ -76,7 +76,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )
-    override val sources: StateFlow<List<Source>?> = allTransactionData.map {
+    override val accounts: StateFlow<List<Source>?> = allTransactionData.map {
         it.flatMap { transactionData ->
             listOfNotNull(
                 transactionData.sourceFrom,
@@ -136,7 +136,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             expenseCategories,
             incomeCategories,
             investmentCategories,
-            sources,
+            accounts,
             transactionForValues,
         ) { flows ->
             isLoading.value = true
@@ -186,7 +186,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                     ) && isAvailableAfterTransactionTypeFilter(
                         selectedTransactionTypesIndicesValue = selectedFilterValue.selectedTransactionTypeIndices,
                         transactionData = transactionData,
-                    ) && isAvailableAfterSourceFilter(
+                    ) && isAvailableAfterAccountFilter(
                         selectedSourceIndicesValue = selectedFilterValue.selectedSourceIndices,
                         sourcesValue = sourcesValue,
                         transactionData = transactionData,
@@ -533,7 +533,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         )
     }
 
-    private fun isAvailableAfterSourceFilter(
+    private fun isAvailableAfterAccountFilter(
         selectedSourceIndicesValue: List<Int>,
         sourcesValue: List<Source>,
         transactionData: TransactionData,

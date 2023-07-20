@@ -107,7 +107,7 @@ class TransactionRepositoryImpl(
         )
     }
 
-    override suspend fun checkIfSourceIsUsedInTransactions(
+    override suspend fun checkIfAccountIsUsedInTransactions(
         sourceId: Int,
     ): Boolean {
         return transactionDao.checkIfSourceIsUsedInTransactions(
@@ -141,14 +141,14 @@ class TransactionRepositoryImpl(
 
     override suspend fun insertTransaction(
         amountValue: Long,
-        sourceFrom: Source?,
-        sourceTo: Source?,
+        accountFrom: Source?,
+        accountTo: Source?,
         transaction: Transaction,
     ): Long {
         return commonDataSource.insertTransaction(
             amountValue = amountValue,
-            sourceFrom = sourceFrom?.asEntity(),
-            sourceTo = sourceTo?.asEntity(),
+            sourceFrom = accountFrom?.asEntity(),
+            sourceTo = accountTo?.asEntity(),
             transaction = transaction.asEntity(),
         )
     }
@@ -196,7 +196,7 @@ class TransactionRepositoryImpl(
     override suspend fun restoreData(
         categories: List<Category>,
         emojis: List<Emoji>,
-        sources: List<Source>,
+        accounts: List<Source>,
         transactions: List<Transaction>,
         transactionForValues: List<TransactionFor>,
     ) {
@@ -207,7 +207,7 @@ class TransactionRepositoryImpl(
             emojis = emojis.map {
                 it.asEntity()
             }.toTypedArray(),
-            sources = sources.map {
+            sources = accounts.map {
                 it.asEntity()
             }.toTypedArray(),
             transactions = transactions.map {

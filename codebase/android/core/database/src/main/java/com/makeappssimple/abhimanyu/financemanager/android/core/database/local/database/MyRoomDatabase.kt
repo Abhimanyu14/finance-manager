@@ -15,9 +15,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreade
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.AmountConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.CategoryConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.IntListConverter
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.AccountDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.CategoryDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.EmojiDao
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.SourceDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionForDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.AutoDatabaseMigrations
@@ -92,7 +92,7 @@ import java.util.concurrent.Executors
 abstract class MyRoomDatabase : RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
     abstract fun emojiDao(): EmojiDao
-    abstract fun sourceDao(): SourceDao
+    abstract fun sourceDao(): AccountDao
     abstract fun transactionDao(): TransactionDao
     abstract fun transactionForDao(): TransactionForDao
 
@@ -330,8 +330,8 @@ abstract class MyRoomDatabase : RoomDatabase() {
             myRoomDatabase: MyRoomDatabase,
         ) {
             val sourceDao = myRoomDatabase.sourceDao()
-            if (sourceDao.getAllSourcesCount() == 0) {
-                sourceDao.insertSources(
+            if (sourceDao.getAllAccountsCount() == 0) {
+                sourceDao.insertAccounts(
                     sources = initialDatabaseData.defaultSources.toTypedArray(),
                 )
             }

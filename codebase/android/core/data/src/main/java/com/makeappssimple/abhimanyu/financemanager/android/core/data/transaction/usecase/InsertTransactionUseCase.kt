@@ -8,8 +8,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 interface InsertTransactionUseCase {
     suspend operator fun invoke(
         amountValue: Long,
-        sourceFrom: Source?,
-        sourceTo: Source?,
+        accountFrom: Source?,
+        accountTo: Source?,
         transaction: Transaction,
     ): Long
 }
@@ -20,15 +20,15 @@ class InsertTransactionUseCaseImpl(
 ) : InsertTransactionUseCase {
     override suspend operator fun invoke(
         amountValue: Long,
-        sourceFrom: Source?,
-        sourceTo: Source?,
+        accountFrom: Source?,
+        accountTo: Source?,
         transaction: Transaction,
     ): Long {
         myPreferencesRepository.setLastDataChangeTimestamp()
         return transactionRepository.insertTransaction(
             amountValue = amountValue,
-            sourceFrom = sourceFrom,
-            sourceTo = sourceTo,
+            accountFrom = accountFrom,
+            accountTo = accountTo,
             transaction = transaction,
         )
     }

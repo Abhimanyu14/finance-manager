@@ -16,7 +16,7 @@ interface TransactionsScreenViewModel : ScreenViewModel {
     val expenseCategories: StateFlow<List<Category>?>
     val incomeCategories: StateFlow<List<Category>?>
     val investmentCategories: StateFlow<List<Category>?>
-    val sources: StateFlow<List<Source>?>
+    val accounts: StateFlow<List<Source>?>
     val transactionForValues: StateFlow<List<TransactionFor>?>
 
     fun addToSelectedTransactions(

@@ -42,9 +42,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyT
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_category.SelectCategoryBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_category.SelectCategoryBottomSheetData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_category.SelectCategoryBottomSheetEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_source.SelectSourceBottomSheet
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_source.SelectSourceBottomSheetData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_source.SelectSourceBottomSheetEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_source.SelectAccountBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_source.SelectAccountBottomSheetData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_source.SelectAccountBottomSheetEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonEvents
@@ -103,8 +103,8 @@ internal data class AddOrEditTransactionScreenUIEvents(
     val updateDescription: (updatedDescription: TextFieldValue) -> Unit,
     val updateSelectedTransactionForIndex: (updatedSelectedTransactionForIndex: Int) -> Unit,
     val updateSelectedTransactionTypeIndex: (updatedSelectedTransactionTypeIndex: Int) -> Unit,
-    val updateSourceFrom: (updatedSourceFrom: Source?) -> Unit,
-    val updateSourceTo: (updatedSourceTo: Source?) -> Unit,
+    val updateAccountFrom: (updatedAccountFrom: Source?) -> Unit,
+    val updateAccountTo: (updatedAccountTo: Source?) -> Unit,
     val updateTitle: (updatedTitle: TextFieldValue) -> Unit,
     val updateTransactionDate: (updatedTransactionDate: LocalDate) -> Unit,
     val updateTransactionTime: (updatedTransactionTime: LocalTime) -> Unit,
@@ -170,30 +170,30 @@ internal fun AddOrEditTransactionScreenUI(
                 }
 
                 AddOrEditTransactionBottomSheetType.SELECT_SOURCE_FROM -> {
-                    SelectSourceBottomSheet(
-                        data = SelectSourceBottomSheetData(
-                            sources = uiState.sources,
-                            selectedSourceId = uiState.uiState.sourceFrom?.id,
+                    SelectAccountBottomSheet(
+                        data = SelectAccountBottomSheetData(
+                            accounts = uiState.sources,
+                            selectedAccountId = uiState.uiState.sourceFrom?.id,
                         ),
-                        events = SelectSourceBottomSheetEvents(
+                        events = SelectAccountBottomSheetEvents(
                             resetBottomSheetType = uiState.resetBottomSheetType,
-                            updateSource = { updatedSource ->
-                                events.updateSourceFrom(updatedSource)
+                            updateAccount = { updatedSource ->
+                                events.updateAccountFrom(updatedSource)
                             },
                         ),
                     )
                 }
 
                 AddOrEditTransactionBottomSheetType.SELECT_SOURCE_TO -> {
-                    SelectSourceBottomSheet(
-                        data = SelectSourceBottomSheetData(
-                            sources = uiState.sources,
-                            selectedSourceId = uiState.uiState.sourceTo?.id,
+                    SelectAccountBottomSheet(
+                        data = SelectAccountBottomSheetData(
+                            accounts = uiState.sources,
+                            selectedAccountId = uiState.uiState.sourceTo?.id,
                         ),
-                        events = SelectSourceBottomSheetEvents(
+                        events = SelectAccountBottomSheetEvents(
                             resetBottomSheetType = uiState.resetBottomSheetType,
-                            updateSource = { updatedSource ->
-                                events.updateSourceTo(updatedSource)
+                            updateAccount = { updatedSource ->
+                                events.updateAccountTo(updatedSource)
                             },
                         ),
                     )
@@ -454,7 +454,7 @@ internal fun AddOrEditTransactionScreenUI(
                 )
             }
             AnimatedVisibility(
-                visible = uiState.uiVisibilityState.isSourceFromTextFieldVisible,
+                visible = uiState.uiVisibilityState.isAccountFromTextFieldVisible,
             ) {
                 MyReadOnlyTextField(
                     modifier = Modifier
@@ -479,7 +479,7 @@ internal fun AddOrEditTransactionScreenUI(
                 )
             }
             AnimatedVisibility(
-                visible = uiState.uiVisibilityState.isSourceToTextFieldVisible,
+                visible = uiState.uiVisibilityState.isAccountToTextFieldVisible,
             ) {
                 MyReadOnlyTextField(
                     modifier = Modifier

@@ -29,8 +29,8 @@ interface MyPreferencesRepository {
         defaultInvestmentCategoryId: Int,
     )
 
-    suspend fun setDefaultSourceId(
-        defaultSourceId: Int,
+    suspend fun setDefaultAccountId(
+        defaultAccountId: Int,
     )
 
     suspend fun setEmojiDataVersionNumber(

@@ -38,10 +38,10 @@ object MyNavigationDirections {
         override val screen = Screen.AddCategory.route
     }
 
-    object AddSource : NavigationCommand {
+    object AddAccount : NavigationCommand {
         override val command = Command.NAVIGATE
-        override val destination = Screen.AddSource.route
-        override val screen = Screen.AddSource.route
+        override val destination = Screen.AddAccount.route
+        override val screen = Screen.AddAccount.route
     }
 
     data class AddTransaction(
@@ -78,12 +78,12 @@ object MyNavigationDirections {
         override val screen = Screen.EditCategory.route
     }
 
-    data class EditSource(
+    data class EditAccount(
         private val sourceId: Int,
     ) : NavigationCommand {
         override val command = Command.NAVIGATE
-        override val destination = "${Screen.EditSource.route}/${sourceId}"
-        override val screen = Screen.EditSource.route
+        override val destination = "${Screen.EditAccount.route}/${sourceId}"
+        override val screen = Screen.EditAccount.route
     }
 
     data class EditTransaction(
@@ -114,10 +114,10 @@ object MyNavigationDirections {
         override val screen = Screen.Settings.route
     }
 
-    object Sources : NavigationCommand {
+    object Accounts : NavigationCommand {
         override val command = Command.NAVIGATE
-        override val destination = Screen.Sources.route
-        override val screen = Screen.Sources.route
+        override val destination = Screen.Accounts.route
+        override val screen = Screen.Accounts.route
     }
 
     object TransactionForValues : NavigationCommand {

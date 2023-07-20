@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.navi
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.navigation.categoriesNavGraph
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.navigation.homeNavGraph
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.navigation.settingsNavGraph
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.navigation.sourcesNavGraph
+import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.navigation.accountsNavGraph
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.navigation.transactionForNavGraph
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.navigation.transactionsNavGraph
 
@@ -74,7 +74,7 @@ internal fun MyNavGraph(
         categoriesNavGraph()
         homeNavGraph()
         settingsNavGraph()
-        sourcesNavGraph()
+        accountsNavGraph()
         transactionForNavGraph()
         transactionsNavGraph()
     }

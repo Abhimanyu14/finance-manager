@@ -27,9 +27,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defa
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesCountUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.UpdateSourcesBalanceAmountUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllAccountsCountUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllAccountsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.UpdateAccountsBalanceAmountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTitleSuggestionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.InsertTransactionUseCase
@@ -47,10 +47,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultSource
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.navigation.AddOrEditTransactionScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -79,15 +79,15 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
-    private val getAllSourcesCountUseCase: GetAllSourcesCountUseCase,
-    private val getAllSourcesUseCase: GetAllSourcesUseCase,
+    private val getAllAccountsCountUseCase: GetAllAccountsCountUseCase,
+    private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val getTitleSuggestionsUseCase: GetTitleSuggestionsUseCase,
     private val getTransactionDataUseCase: GetTransactionDataUseCase,
     private val insertTransactionUseCase: InsertTransactionUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigationManager: NavigationManager,
-    private val updateSourcesBalanceAmountUseCase: UpdateSourcesBalanceAmountUseCase,
+    private val updateAccountsBalanceAmountUseCase: UpdateAccountsBalanceAmountUseCase,
     private val updateTransactionUseCase: UpdateTransactionUseCase,
 ) : AddOrEditTransactionScreenViewModel, ViewModel() {
     private val addOrEditTransactionScreenArgs: AddOrEditTransactionScreenArgs =
@@ -106,7 +106,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
 
     // region Default data
     // Default data from data store
-    private var defaultSource: Source? = null
+    private var defaultAccount: Source? = null
     private var expenseDefaultCategory: Category? = null
     private var incomeDefaultCategory: Category? = null
     private var investmentDefaultCategory: Category? = null
@@ -459,12 +459,12 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     .toEpochMilli()
                 val id = insertTransactionUseCase(
                     amountValue = amountValue,
-                    sourceFrom = if (sourceFromId.isNotNull()) {
+                    accountFrom = if (sourceFromId.isNotNull()) {
                         uiStateValue.sourceFrom
                     } else {
                         null
                     },
-                    sourceTo = if (sourceToId.isNotNull()) {
+                    accountTo = if (sourceToId.isNotNull()) {
                         uiStateValue.sourceTo
                     } else {
                         null
@@ -667,7 +667,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                         sourceBalanceAmountChangeMap[sourceTo.id] =
                             sourceBalanceAmountChangeMap[sourceTo.id].orZero() + uiState.value.amount.text.toLongOrZero()
                     }
-                    updateSourcesBalanceAmountUseCase(
+                    updateAccountsBalanceAmountUseCase(
                         sourcesBalanceAmountChange = sourceBalanceAmountChangeMap.toList(),
                     )
                     // endregion
@@ -776,7 +776,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun updateSourceFrom(
+    override fun updateAccountFrom(
         updatedSourceFrom: Source?,
     ) {
         updateAddOrEditTransactionScreenUiState(
@@ -786,7 +786,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun updateSourceTo(
+    override fun updateAccountTo(
         updatedSourceTo: Source?,
     ) {
         updateAddOrEditTransactionScreenUiState(
@@ -846,7 +846,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     categories.value = getAllCategoriesUseCase()
                 },
                 async {
-                    sources.value = getAllSourcesUseCase().sortedBy { source ->
+                    sources.value = getAllAccountsUseCase().sortedBy { source ->
                         source.type.sortOrder
                     }
                 },
@@ -922,12 +922,12 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                             updatedCategory = updatedCategory,
                         )
 
-                        updateSourceFrom(
+                        updateAccountFrom(
                             updatedSourceFrom = null,
                         )
-                        updateSourceTo(
+                        updateAccountTo(
                             updatedSourceTo = originalTransactionData.value?.sourceTo
-                                ?: defaultSource,
+                                ?: defaultAccount,
                         )
                     }
 
@@ -943,23 +943,23 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                             updatedCategory = updatedCategory,
                         )
 
-                        updateSourceFrom(
+                        updateAccountFrom(
                             updatedSourceFrom = originalTransactionData.value?.sourceFrom
-                                ?: defaultSource,
+                                ?: defaultAccount,
                         )
-                        updateSourceTo(
+                        updateAccountTo(
                             updatedSourceTo = null,
                         )
                     }
 
                     TransactionType.TRANSFER -> {
-                        updateSourceFrom(
+                        updateAccountFrom(
                             updatedSourceFrom = originalTransactionData.value?.sourceFrom
-                                ?: defaultSource,
+                                ?: defaultAccount,
                         )
-                        updateSourceTo(
+                        updateAccountTo(
                             updatedSourceTo = originalTransactionData.value?.sourceTo
-                                ?: defaultSource,
+                                ?: defaultAccount,
                         )
                     }
 
@@ -977,11 +977,11 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                             updatedCategory = updatedCategory,
                         )
 
-                        updateSourceFrom(
+                        updateAccountFrom(
                             updatedSourceFrom = originalTransactionData.value?.sourceFrom
-                                ?: defaultSource,
+                                ?: defaultAccount,
                         )
-                        updateSourceTo(
+                        updateAccountTo(
                             updatedSourceTo = null,
                         )
                     }
@@ -1008,7 +1008,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     }
 
     private suspend fun getTransactionTypesForNewTransaction() {
-        val sourceCount = getAllSourcesCountUseCase()
+        val sourceCount = getAllAccountsCountUseCase()
         val excludedTransactionTypes = mutableSetOf(
             TransactionType.ADJUSTMENT,
             TransactionType.REFUND
@@ -1240,19 +1240,19 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     }
 
     private fun setDefaultSource() {
-        defaultSource = getSource(
+        defaultAccount = getSource(
             sourceId = defaultDataIdFromDataStore?.source,
         ) ?: sources.value?.firstOrNull { source ->
-            isDefaultSource(
+            isDefaultAccount(
                 source = source.name,
             )
         }
         if (addOrEditTransactionScreenArgs.isEdit != true) {
-            updateSourceFrom(
-                updatedSourceFrom = defaultSource,
+            updateAccountFrom(
+                updatedSourceFrom = defaultAccount,
             )
-            updateSourceTo(
-                updatedSourceTo = defaultSource,
+            updateAccountTo(
+                updatedSourceTo = defaultAccount,
             )
         }
     }

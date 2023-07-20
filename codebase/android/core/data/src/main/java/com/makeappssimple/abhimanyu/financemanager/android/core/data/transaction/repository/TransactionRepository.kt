@@ -44,7 +44,7 @@ interface TransactionRepository {
         categoryId: Int,
     ): Boolean
 
-    suspend fun checkIfSourceIsUsedInTransactions(
+    suspend fun checkIfAccountIsUsedInTransactions(
         sourceId: Int,
     ): Boolean
 
@@ -62,8 +62,8 @@ interface TransactionRepository {
 
     suspend fun insertTransaction(
         amountValue: Long,
-        sourceFrom: Source?,
-        sourceTo: Source?,
+        accountFrom: Source?,
+        accountTo: Source?,
         transaction: Transaction,
     ): Long
 
@@ -88,7 +88,7 @@ interface TransactionRepository {
     suspend fun restoreData(
         categories: List<Category>,
         emojis: List<Emoji>,
-        sources: List<Source>,
+        accounts: List<Source>,
         transactions: List<Transaction>,
         transactionForValues: List<TransactionFor>,
     )

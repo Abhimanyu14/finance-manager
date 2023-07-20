@@ -63,7 +63,7 @@ internal data class HomeScreenUIEvents(
     val navigateToAddTransactionScreen: () -> Unit,
     val navigateToAnalysisScreen: () -> Unit,
     val navigateToSettingsScreen: () -> Unit,
-    val navigateToSourcesScreen: () -> Unit,
+    val navigateToAccountsScreen: () -> Unit,
     val navigateToTransactionsScreen: () -> Unit,
     val onOverviewTabClick: (Int) -> Unit,
 )
@@ -134,7 +134,7 @@ internal fun HomeScreenUI(
                         totalBalanceAmount = uiState.sourcesTotalBalanceAmountValue,
                     ),
                     events = TotalBalanceCardEvents(
-                        onClick = events.navigateToSourcesScreen,
+                        onClick = events.navigateToAccountsScreen,
                     ),
                 )
             }

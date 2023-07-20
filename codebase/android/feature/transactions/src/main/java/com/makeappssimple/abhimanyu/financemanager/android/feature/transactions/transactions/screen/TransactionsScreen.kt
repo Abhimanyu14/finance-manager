@@ -24,7 +24,7 @@ fun TransactionsScreen(
     val expenseCategories: List<Category>? by screenViewModel.expenseCategories.collectAsStateWithLifecycle()
     val incomeCategories: List<Category>? by screenViewModel.incomeCategories.collectAsStateWithLifecycle()
     val investmentCategories: List<Category>? by screenViewModel.investmentCategories.collectAsStateWithLifecycle()
-    val sources: List<Source>? by screenViewModel.sources.collectAsStateWithLifecycle()
+    val accounts: List<Source>? by screenViewModel.accounts.collectAsStateWithLifecycle()
     val transactionForValues: List<TransactionFor>? by screenViewModel.transactionForValues.collectAsStateWithLifecycle()
 
     TransactionsScreenUI(
@@ -40,8 +40,8 @@ fun TransactionsScreen(
             getInvestmentCategories = {
                 investmentCategories.orEmpty()
             },
-            getSources = {
-                sources.orEmpty()
+            getAccounts = {
+                accounts.orEmpty()
             },
             getTransactionForValues = {
                 transactionForValues.orEmpty()

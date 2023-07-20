@@ -144,8 +144,8 @@ class MyPreferencesDataSourceTest {
 
     @Test
     fun setDefaultSourceIdInDataStore_defaultTest() = testCoroutineScope.runTest {
-        myPreferencesDataSource.setDefaultSourceId(
-            defaultSourceId = testId,
+        myPreferencesDataSource.setDefaultAccountId(
+            defaultAccountId = testId,
         )
 
         val result = myPreferencesDataSource.getDefaultDataId().first()?.source

@@ -17,7 +17,7 @@ class ScreenTest {
 
     @Test
     fun addSource() {
-        screen = Screen.AddSource
+        screen = Screen.AddAccount
         Assert.assertEquals(
             "add_source",
             screen.route,
@@ -53,7 +53,7 @@ class ScreenTest {
 
     @Test
     fun editSource() {
-        screen = Screen.EditSource
+        screen = Screen.EditAccount
         Assert.assertEquals(
             "edit_source",
             screen.route,
@@ -89,7 +89,7 @@ class ScreenTest {
 
     @Test
     fun sources() {
-        screen = Screen.Sources
+        screen = Screen.Accounts
         Assert.assertEquals(
             "sources",
             screen.route,

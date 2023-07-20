@@ -123,7 +123,7 @@ internal fun TransactionsFiltersBottomSheetUI(
             elements = selectedFilter.selectedInvestmentCategoryIndices.toTypedArray(),
         )
     }
-    val selectedSourceIndicesValue = remember {
+    val selectedAccountIndicesValue = remember {
         mutableStateListOf(
             elements = selectedFilter.selectedSourceIndices.toTypedArray(),
         )
@@ -219,11 +219,11 @@ internal fun TransactionsFiltersBottomSheetUI(
                                 text = source.name,
                             )
                         },
-                        selectedItemsIndices = selectedSourceIndicesValue,
+                        selectedItemsIndices = selectedAccountIndicesValue,
                     ),
                     events = TransactionFilterBottomSheetFilterGroupEvents(
                         onClearButtonClick = {
-                            selectedSourceIndicesValue.clear()
+                            selectedAccountIndicesValue.clear()
                         },
                     ),
                 )
@@ -355,7 +355,7 @@ internal fun TransactionsFiltersBottomSheetUI(
                     selectedExpenseCategoryIndicesValue.clear()
                     selectedIncomeCategoryIndicesValue.clear()
                     selectedInvestmentCategoryIndicesValue.clear()
-                    selectedSourceIndicesValue.clear()
+                    selectedAccountIndicesValue.clear()
                     selectedTransactionForValuesIndicesValue.clear()
                     selectedTransactionTypeIndicesValue.clear()
                     fromDate = defaultMinDate
@@ -386,7 +386,7 @@ internal fun TransactionsFiltersBottomSheetUI(
                             selectedExpenseCategoryIndices = selectedExpenseCategoryIndicesValue,
                             selectedIncomeCategoryIndices = selectedIncomeCategoryIndicesValue,
                             selectedInvestmentCategoryIndices = selectedInvestmentCategoryIndicesValue,
-                            selectedSourceIndices = selectedSourceIndicesValue,
+                            selectedSourceIndices = selectedAccountIndicesValue,
                             selectedTransactionForValuesIndices = selectedTransactionForValuesIndicesValue,
                             selectedTransactionTypeIndices = selectedTransactionTypeIndicesValue,
                             fromDate = fromDate,

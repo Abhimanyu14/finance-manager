@@ -32,7 +32,7 @@ fun isDefaultInvestmentCategory(
     )
 }
 
-fun isDefaultSource(
+fun isDefaultAccount(
     source: String,
 ): Boolean {
     return source.equalsIgnoringCase(

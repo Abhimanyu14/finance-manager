@@ -57,7 +57,7 @@ data class SettingsScreenListItemData(
 internal data class SettingsScreenUIEvents(
     val backupData: () -> Unit = {},
     val navigateToCategoriesScreen: () -> Unit = {},
-    val navigateToSourcesScreen: () -> Unit = {},
+    val navigateToAccountsScreen: () -> Unit = {},
     val navigateToTransactionForValuesScreen: () -> Unit = {},
     val navigateUp: () -> Unit = {},
     val recalculateTotal: () -> Unit = {},
@@ -95,7 +95,7 @@ internal fun SettingsScreenUI(
                 textStringResourceId = R.string.screen_settings_sources,
             ),
             events = SettingsListItemEvents(
-                onClick = events.navigateToSourcesScreen,
+                onClick = events.navigateToAccountsScreen,
             ),
         ),
         SettingsScreenListItemData(

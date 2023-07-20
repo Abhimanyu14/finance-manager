@@ -17,7 +17,7 @@ interface SettingsScreenViewModel : ScreenViewModel {
 
     fun navigateToCategoriesScreen()
 
-    fun navigateToSourcesScreen()
+    fun navigateToAccountsScreen()
 
     fun navigateToTransactionForValuesScreen()
 

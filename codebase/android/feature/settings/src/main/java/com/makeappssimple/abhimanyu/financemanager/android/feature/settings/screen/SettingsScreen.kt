@@ -59,7 +59,7 @@ fun SettingsScreen(
                 createDocumentResultLauncher.launch(MimeTypeConstants.JSON)
             },
             navigateToCategoriesScreen = screenViewModel::navigateToCategoriesScreen,
-            navigateToSourcesScreen = screenViewModel::navigateToSourcesScreen,
+            navigateToAccountsScreen = screenViewModel::navigateToAccountsScreen,
             navigateToTransactionForValuesScreen = screenViewModel::navigateToTransactionForValuesScreen,
             navigateUp = screenViewModel::navigateUp,
             recalculateTotal = {

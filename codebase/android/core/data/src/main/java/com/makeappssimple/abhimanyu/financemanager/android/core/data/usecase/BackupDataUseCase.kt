@@ -10,7 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.Backu
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.DatabaseData
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.DatastoreData
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllSourcesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
@@ -39,7 +39,7 @@ class BackupDataUseCaseImpl(
     private val dispatcherProvider: DispatcherProvider,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val getAllEmojisUseCase: GetAllEmojisUseCase,
-    private val getAllSourcesUseCase: GetAllSourcesUseCase,
+    private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val getAllTransactionsUseCase: GetAllTransactionsUseCase,
     private val myJsonWriter: MyJsonWriter,
@@ -64,7 +64,7 @@ class BackupDataUseCaseImpl(
                 async(
                     context = dispatcherProvider.io,
                 ) {
-                    getAllSourcesUseCase()
+                    getAllAccountsUseCase()
                 },
                 async(
                     context = dispatcherProvider.io,

@@ -16,7 +16,9 @@ val DEFAULT_INCOME_CATEGORY_ID: Preferences.Key<Int> = intPreferencesKey(
 val DEFAULT_INVESTMENT_CATEGORY_ID: Preferences.Key<Int> = intPreferencesKey(
     name = "default_investment_category_id",
 )
-val DEFAULT_SOURCE_ID: Preferences.Key<Int> = intPreferencesKey(
+
+// TODO(Abhi): Source to account rename migration
+val DEFAULT_ACCOUNT_ID: Preferences.Key<Int> = intPreferencesKey(
     name = "default_source_id",
 )
 val EMOJI_DATA_VERSION_NUMBER: Preferences.Key<Int> = intPreferencesKey(

@@ -43,11 +43,11 @@ interface AddOrEditTransactionScreenViewModel : ScreenViewModel {
 
     fun navigateUp()
 
-    fun updateSourceFrom(
+    fun updateAccountFrom(
         updatedSourceFrom: Source?,
     )
 
-    fun updateSourceTo(
+    fun updateAccountTo(
         updatedSourceTo: Source?,
     )
 

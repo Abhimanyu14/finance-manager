@@ -117,7 +117,7 @@ class FakeTransactionRepositoryImpl : TransactionRepository {
 //        )
     }
 
-    override suspend fun checkIfSourceIsUsedInTransactions(
+    override suspend fun checkIfAccountIsUsedInTransactions(
         sourceId: Int,
     ): Boolean {
         return false
@@ -155,8 +155,8 @@ class FakeTransactionRepositoryImpl : TransactionRepository {
 
     override suspend fun insertTransaction(
         amountValue: Long,
-        sourceFrom: Source?,
-        sourceTo: Source?,
+        accountFrom: Source?,
+        accountTo: Source?,
         transaction: Transaction,
     ): Long {
         return 0L
@@ -207,7 +207,7 @@ class FakeTransactionRepositoryImpl : TransactionRepository {
     override suspend fun restoreData(
         categories: List<Category>,
         emojis: List<Emoji>,
-        sources: List<Source>,
+        accounts: List<Source>,
         transactions: List<Transaction>,
         transactionForValues: List<TransactionFor>,
     ) {
