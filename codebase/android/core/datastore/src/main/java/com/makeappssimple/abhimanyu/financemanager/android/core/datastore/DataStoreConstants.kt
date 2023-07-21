@@ -17,7 +17,7 @@ val DEFAULT_INVESTMENT_CATEGORY_ID: Preferences.Key<Int> = intPreferencesKey(
     name = "default_investment_category_id",
 )
 
-// TODO(Abhi): Source to account rename migration
+// TODO(Abhi) - Source to account rename migration
 val DEFAULT_ACCOUNT_ID: Preferences.Key<Int> = intPreferencesKey(
     name = "default_source_id",
 )
@@ -31,7 +31,7 @@ val LAST_DATA_CHANGE_TIMESTAMP: Preferences.Key<Long> = longPreferencesKey(
     name = "last_data_change_timestamp",
 )
 
-// TODO(Abhi): Migrate to "transaction_data_version_number"
+// TODO(Abhi) - Migrate to "transaction_data_version_number"
 val TRANSACTIONS_DATA_VERSION_NUMBER: Preferences.Key<Int> = intPreferencesKey(
     name = "transactions_data_version_number",
 )
