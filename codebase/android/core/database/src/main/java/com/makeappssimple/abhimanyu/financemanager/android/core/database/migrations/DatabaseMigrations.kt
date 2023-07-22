@@ -3,6 +3,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.migrat
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
+// TODO(Abhi) - Move into a object
+
 /**
  * New Columns added
  *

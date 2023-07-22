@@ -4,6 +4,9 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 
+val DATASTORE_VERSION_NUMBER: Preferences.Key<Int> = intPreferencesKey(
+    name = "datastore_version_number",
+)
 val CATEGORY_DATA_VERSION_NUMBER: Preferences.Key<Int> = intPreferencesKey(
     name = "category_data_version_number",
 )
@@ -19,6 +22,9 @@ val DEFAULT_INVESTMENT_CATEGORY_ID: Preferences.Key<Int> = intPreferencesKey(
 
 // TODO(Abhi) - Source to account rename migration
 val DEFAULT_ACCOUNT_ID: Preferences.Key<Int> = intPreferencesKey(
+    name = "default_account_id",
+)
+val DEFAULT_SOURCE_ID: Preferences.Key<Int> = intPreferencesKey(
     name = "default_source_id",
 )
 val EMOJI_DATA_VERSION_NUMBER: Preferences.Key<Int> = intPreferencesKey(

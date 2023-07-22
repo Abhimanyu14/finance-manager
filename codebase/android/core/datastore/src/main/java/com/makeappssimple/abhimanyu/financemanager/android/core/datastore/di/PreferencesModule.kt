@@ -10,6 +10,7 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.AppConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyPreferencesDataSource
+import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.PreferencesDataMigration
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import dagger.Module
 import dagger.Provides
@@ -34,6 +35,9 @@ class PreferencesModule {
                 produceNewData = {
                     emptyPreferences()
                 }
+            ),
+            migrations = listOf(
+                PreferencesDataMigration.MIGRATION_1_TO_2,
             ),
             scope = CoroutineScope(
                 context = dispatcherProvider.io + SupervisorJob(),
