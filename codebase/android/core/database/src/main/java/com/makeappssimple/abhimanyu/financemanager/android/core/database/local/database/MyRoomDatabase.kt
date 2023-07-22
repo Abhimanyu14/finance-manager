@@ -20,20 +20,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.Cat
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.EmojiDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionForDao
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.AutoDatabaseMigrations
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_12_13
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_13_14
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_14_15
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_15_16
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_16_17
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_17_18
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_2_3
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_3_4
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_4_5
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_6_7
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_7_8
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_8_9
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.MIGRATION_9_10
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.AutoDatabaseMigration
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.DatabaseMigration
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.CategoryEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.InitialDatabaseData
@@ -64,22 +52,22 @@ import java.util.concurrent.Executors
         AutoMigration(
             from = 11,
             to = 12,
-            spec = AutoDatabaseMigrations.AutoMigration11to12::class,
+            spec = AutoDatabaseMigration.AutoMigration11to12::class,
         ),
         AutoMigration(
             from = 10,
             to = 11,
-            spec = AutoDatabaseMigrations.AutoMigration10to11::class,
+            spec = AutoDatabaseMigration.AutoMigration10to11::class,
         ),
         AutoMigration(
             from = 5,
             to = 6,
-            spec = AutoDatabaseMigrations.AutoMigration5to6::class,
+            spec = AutoDatabaseMigration.AutoMigration5to6::class,
         ),
         AutoMigration(
             from = 1,
             to = 2,
-            spec = AutoDatabaseMigrations.AutoMigration1to2::class,
+            spec = AutoDatabaseMigration.AutoMigration1to2::class,
         ),
     ],
     exportSchema = true,
@@ -144,19 +132,19 @@ abstract class MyRoomDatabase : RoomDatabase() {
                         name = AppConstants.DATABASE_NAME,
                     )
                     .addMigrations(
-                        MIGRATION_17_18,
-                        MIGRATION_16_17,
-                        MIGRATION_15_16,
-                        MIGRATION_14_15,
-                        MIGRATION_13_14,
-                        MIGRATION_12_13,
-                        MIGRATION_9_10,
-                        MIGRATION_8_9,
-                        MIGRATION_7_8,
-                        MIGRATION_6_7,
-                        MIGRATION_4_5,
-                        MIGRATION_3_4,
-                        MIGRATION_2_3,
+                        DatabaseMigration.MIGRATION_17_18,
+                        DatabaseMigration.MIGRATION_16_17,
+                        DatabaseMigration.MIGRATION_15_16,
+                        DatabaseMigration.MIGRATION_14_15,
+                        DatabaseMigration.MIGRATION_13_14,
+                        DatabaseMigration.MIGRATION_12_13,
+                        DatabaseMigration.MIGRATION_9_10,
+                        DatabaseMigration.MIGRATION_8_9,
+                        DatabaseMigration.MIGRATION_7_8,
+                        DatabaseMigration.MIGRATION_6_7,
+                        DatabaseMigration.MIGRATION_4_5,
+                        DatabaseMigration.MIGRATION_3_4,
+                        DatabaseMigration.MIGRATION_2_3,
                     )
                     .addCallback(
                         callback = roomDatabaseCallback,
