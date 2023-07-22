@@ -2,14 +2,14 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.transactio
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 
 interface InsertTransactionUseCase {
     suspend operator fun invoke(
         amountValue: Long,
-        accountFrom: Source?,
-        accountTo: Source?,
+        accountFrom: Account?,
+        accountTo: Account?,
         transaction: Transaction,
     ): Long
 }
@@ -20,8 +20,8 @@ class InsertTransactionUseCaseImpl(
 ) : InsertTransactionUseCase {
     override suspend operator fun invoke(
         amountValue: Long,
-        accountFrom: Source?,
-        accountTo: Source?,
+        accountFrom: Account?,
+        accountTo: Account?,
         transaction: Transaction,
     ): Long {
         myPreferencesRepository.setLastDataChangeTimestamp()

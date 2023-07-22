@@ -2,9 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.dataso
 
 import androidx.room.withTransaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AccountEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.CategoryEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiEntity
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.SourceEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionForEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.updateBalanceAmount
@@ -24,15 +24,15 @@ class CommonDataSourceImpl(
                     id = id,
                 )
 
-                val updatesAccounts = buildList {
-                    transactionData?.sourceFrom?.let {
+                val updatedAccounts = buildList {
+                    transactionData?.accountFrom?.let {
                         add(
                             it.updateBalanceAmount(
                                 updatedBalanceAmount = it.balanceAmount.value + transactionData.transaction.amount.value,
                             )
                         )
                     }
-                    transactionData?.sourceTo?.let {
+                    transactionData?.accountTo?.let {
                         add(
                             it.updateBalanceAmount(
                                 updatedBalanceAmount = it.balanceAmount.value - transactionData.transaction.amount.value,
@@ -70,8 +70,8 @@ class CommonDataSourceImpl(
                 transactionDao().deleteTransaction(
                     id = id,
                 )
-                sourceDao().updateAccounts(
-                    sources = updatesAccounts,
+                accountDao().updateAccounts(
+                    accounts = updatedAccounts,
                 )
             }
         }
@@ -79,8 +79,8 @@ class CommonDataSourceImpl(
 
     override suspend fun insertTransaction(
         amountValue: Long,
-        sourceFrom: SourceEntity?,
-        sourceTo: SourceEntity?,
+        accountFrom: AccountEntity?,
+        accountTo: AccountEntity?,
         transaction: TransactionEntity,
     ): Long {
         return with(
@@ -90,17 +90,17 @@ class CommonDataSourceImpl(
                 val id = transactionDao().insertTransaction(
                     transaction = transaction,
                 )
-                sourceFrom?.let { sourceFromValue ->
-                    sourceDao().updateAccounts(
-                        sourceFromValue.updateBalanceAmount(
-                            updatedBalanceAmount = sourceFromValue.balanceAmount.value - amountValue,
+                accountFrom?.let { accountFromValue ->
+                    accountDao().updateAccounts(
+                        accountFromValue.updateBalanceAmount(
+                            updatedBalanceAmount = accountFromValue.balanceAmount.value - amountValue,
                         ),
                     )
                 }
-                sourceTo?.let { sourceToValue ->
-                    sourceDao().updateAccounts(
-                        sourceToValue.updateBalanceAmount(
-                            updatedBalanceAmount = sourceToValue.balanceAmount.value + amountValue,
+                accountTo?.let { accountToValue ->
+                    accountDao().updateAccounts(
+                        accountToValue.updateBalanceAmount(
+                            updatedBalanceAmount = accountToValue.balanceAmount.value + amountValue,
                         )
                     )
                 }
@@ -112,7 +112,7 @@ class CommonDataSourceImpl(
     override suspend fun restoreData(
         categories: Array<CategoryEntity>,
         emojis: Array<EmojiEntity>,
-        sources: Array<SourceEntity>,
+        accounts: Array<AccountEntity>,
         transactions: Array<TransactionEntity>,
         transactionForValues: Array<TransactionForEntity>,
     ) {
@@ -122,7 +122,7 @@ class CommonDataSourceImpl(
             withTransaction {
                 categoryDao().deleteAllCategories()
                 emojiDao().deleteAllEmojis()
-                sourceDao().deleteAllAccounts()
+                accountDao().deleteAllAccounts()
                 transactionDao().deleteAllTransactions()
                 transactionForDao().deleteAllTransactionForValues()
 
@@ -132,8 +132,8 @@ class CommonDataSourceImpl(
                 emojiDao().insertEmojis(
                     emojis = emojis,
                 )
-                sourceDao().insertAccounts(
-                    sources = sources,
+                accountDao().insertAccounts(
+                    accounts = accounts,
                 )
                 transactionDao().insertTransactions(
                     transactions = transactions,

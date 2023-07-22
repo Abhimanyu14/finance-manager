@@ -4,9 +4,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEnt
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.datasource.CommonDataSource
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
@@ -108,10 +108,10 @@ class TransactionRepositoryImpl(
     }
 
     override suspend fun checkIfAccountIsUsedInTransactions(
-        sourceId: Int,
+        accountId: Int,
     ): Boolean {
-        return transactionDao.checkIfSourceIsUsedInTransactions(
-            sourceId = sourceId,
+        return transactionDao.checkIfAccountIsUsedInTransactions(
+            accountId = accountId,
         )
     }
 
@@ -141,14 +141,14 @@ class TransactionRepositoryImpl(
 
     override suspend fun insertTransaction(
         amountValue: Long,
-        accountFrom: Source?,
-        accountTo: Source?,
+        accountFrom: Account?,
+        accountTo: Account?,
         transaction: Transaction,
     ): Long {
         return commonDataSource.insertTransaction(
             amountValue = amountValue,
-            sourceFrom = accountFrom?.asEntity(),
-            sourceTo = accountTo?.asEntity(),
+            accountFrom = accountFrom?.asEntity(),
+            accountTo = accountTo?.asEntity(),
             transaction = transaction.asEntity(),
         )
     }
@@ -196,7 +196,7 @@ class TransactionRepositoryImpl(
     override suspend fun restoreData(
         categories: List<Category>,
         emojis: List<Emoji>,
-        accounts: List<Source>,
+        accounts: List<Account>,
         transactions: List<Transaction>,
         transactionForValues: List<TransactionFor>,
     ) {
@@ -207,7 +207,7 @@ class TransactionRepositoryImpl(
             emojis = emojis.map {
                 it.asEntity()
             }.toTypedArray(),
-            sources = accounts.map {
+            accounts = accounts.map {
                 it.asEntity()
             }.toTypedArray(),
             transactions = transactions.map {

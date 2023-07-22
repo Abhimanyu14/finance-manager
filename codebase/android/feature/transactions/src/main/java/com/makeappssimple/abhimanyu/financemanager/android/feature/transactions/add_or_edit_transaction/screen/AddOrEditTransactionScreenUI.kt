@@ -29,8 +29,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
@@ -39,12 +39,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Bottom
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.getMyTimePickerDialog
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_account.SelectAccountBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_account.SelectAccountBottomSheetData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_account.SelectAccountBottomSheetEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_category.SelectCategoryBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_category.SelectCategoryBottomSheetData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_category.SelectCategoryBottomSheetEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_source.SelectAccountBottomSheet
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_source.SelectAccountBottomSheetData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_source.SelectAccountBottomSheetEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonEvents
@@ -73,8 +73,8 @@ import java.time.LocalTime
 enum class AddOrEditTransactionBottomSheetType : BottomSheetType {
     NONE,
     SELECT_CATEGORY,
-    SELECT_SOURCE_FROM,
-    SELECT_SOURCE_TO,
+    SELECT_ACCOUNT_FROM,
+    SELECT_ACCOUNT_TO,
 }
 
 @Immutable
@@ -83,7 +83,7 @@ data class AddOrEditTransactionScreenUIData(
     val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState = AddOrEditTransactionScreenUiVisibilityState.Expense,
     val isCtaButtonEnabled: Boolean = false,
     val filteredCategories: List<Category> = emptyList(),
-    val sources: List<Source> = emptyList(),
+    val accounts: List<Account> = emptyList(),
     val titleSuggestions: List<String> = emptyList(),
     val transactionTypesForNewTransaction: List<TransactionType> = emptyList(),
     val transactionForValues: List<TransactionFor> = emptyList(),
@@ -103,8 +103,8 @@ internal data class AddOrEditTransactionScreenUIEvents(
     val updateDescription: (updatedDescription: TextFieldValue) -> Unit,
     val updateSelectedTransactionForIndex: (updatedSelectedTransactionForIndex: Int) -> Unit,
     val updateSelectedTransactionTypeIndex: (updatedSelectedTransactionTypeIndex: Int) -> Unit,
-    val updateAccountFrom: (updatedAccountFrom: Source?) -> Unit,
-    val updateAccountTo: (updatedAccountTo: Source?) -> Unit,
+    val updateAccountFrom: (updatedAccountFrom: Account?) -> Unit,
+    val updateAccountTo: (updatedAccountTo: Account?) -> Unit,
     val updateTitle: (updatedTitle: TextFieldValue) -> Unit,
     val updateTransactionDate: (updatedTransactionDate: LocalDate) -> Unit,
     val updateTransactionTime: (updatedTransactionTime: LocalTime) -> Unit,
@@ -169,11 +169,11 @@ internal fun AddOrEditTransactionScreenUI(
                     )
                 }
 
-                AddOrEditTransactionBottomSheetType.SELECT_SOURCE_FROM -> {
+                AddOrEditTransactionBottomSheetType.SELECT_ACCOUNT_FROM -> {
                     SelectAccountBottomSheet(
                         data = SelectAccountBottomSheetData(
-                            accounts = uiState.sources,
-                            selectedAccountId = uiState.uiState.sourceFrom?.id,
+                            accounts = uiState.accounts,
+                            selectedAccountId = uiState.uiState.accountFrom?.id,
                         ),
                         events = SelectAccountBottomSheetEvents(
                             resetBottomSheetType = uiState.resetBottomSheetType,
@@ -184,16 +184,16 @@ internal fun AddOrEditTransactionScreenUI(
                     )
                 }
 
-                AddOrEditTransactionBottomSheetType.SELECT_SOURCE_TO -> {
+                AddOrEditTransactionBottomSheetType.SELECT_ACCOUNT_TO -> {
                     SelectAccountBottomSheet(
                         data = SelectAccountBottomSheetData(
-                            accounts = uiState.sources,
-                            selectedAccountId = uiState.uiState.sourceTo?.id,
+                            accounts = uiState.accounts,
+                            selectedAccountId = uiState.uiState.accountTo?.id,
                         ),
                         events = SelectAccountBottomSheetEvents(
                             resetBottomSheetType = uiState.resetBottomSheetType,
-                            updateAccount = { updatedSource ->
-                                events.updateAccountTo(updatedSource)
+                            updateAccount = { updatedAccount ->
+                                events.updateAccountTo(updatedAccount)
                             },
                         ),
                     )
@@ -465,14 +465,14 @@ internal fun AddOrEditTransactionScreenUI(
                         ),
                     data = MyReadOnlyTextFieldData(
                         isLoading = uiState.isLoading,
-                        value = uiState.uiState.sourceFrom?.name.orEmpty(),
-                        labelTextStringResourceId = uiState.sourceFromTextFieldLabelTextStringResourceId,
+                        value = uiState.uiState.accountFrom?.name.orEmpty(),
+                        labelTextStringResourceId = uiState.accountFromTextFieldLabelTextStringResourceId,
                     ),
                     events = MyReadOnlyTextFieldEvents(
                         onClick = {
                             clearFocus()
                             uiState.setAddOrEditTransactionBottomSheetType(
-                                AddOrEditTransactionBottomSheetType.SELECT_SOURCE_FROM
+                                AddOrEditTransactionBottomSheetType.SELECT_ACCOUNT_FROM
                             )
                         },
                     ),
@@ -490,14 +490,14 @@ internal fun AddOrEditTransactionScreenUI(
                         ),
                     data = MyReadOnlyTextFieldData(
                         isLoading = uiState.isLoading,
-                        value = uiState.uiState.sourceTo?.name.orEmpty(),
-                        labelTextStringResourceId = uiState.sourceToTextFieldLabelTextStringResourceId,
+                        value = uiState.uiState.accountTo?.name.orEmpty(),
+                        labelTextStringResourceId = uiState.accountToTextFieldLabelTextStringResourceId,
                     ),
                     events = MyReadOnlyTextFieldEvents(
                         onClick = {
                             clearFocus()
                             uiState.setAddOrEditTransactionBottomSheetType(
-                                AddOrEditTransactionBottomSheetType.SELECT_SOURCE_TO
+                                AddOrEditTransactionBottomSheetType.SELECT_ACCOUNT_TO
                             )
                         },
                     ),

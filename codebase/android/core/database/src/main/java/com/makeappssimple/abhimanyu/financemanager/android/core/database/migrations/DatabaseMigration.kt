@@ -5,6 +5,88 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 object DatabaseMigration {
     /**
+     * Table migration
+     * Renaming columns
+     *
+     * 1. source_table to account_table
+     * 2. source_from_id to account_from_id
+     * 3. source_to_id to account_to_id
+     */
+    val MIGRATION_18_19 = object : Migration(18, 19) {
+        override fun migrate(
+            database: SupportSQLiteDatabase,
+        ) {
+            // region Move data from source_table to account_table
+
+            // Create the new table
+            database.execSQL(
+                """
+                CREATE TABLE IF NOT EXISTS `account_table` (
+                    `balance_amount` TEXT NOT NULL, 
+                    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+                    `type` TEXT NOT NULL, 
+                    `name` TEXT NOT NULL
+                 )
+            """.trimIndent()
+            )
+
+            // Copy the data
+            database.execSQL(
+                """
+                INSERT INTO account_table (balance_amount, id, type, name) 
+                SELECT balance_amount, id, type, name 
+                FROM source_table
+            """.trimIndent()
+            )
+
+            // Remove the old table
+            database.execSQL("DROP TABLE source_table")
+
+            // endregion
+
+            // region Update columns in transaction_table
+
+            // Create the new table
+            database.execSQL(
+                """
+                CREATE TABLE IF NOT EXISTS `transaction_table_new` (
+                    `amount` TEXT NOT NULL, 
+                    `category_id` INTEGER, 
+                    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+                    `original_transaction_id` INTEGER, 
+                    `account_from_id` INTEGER, 
+                    `account_to_id` INTEGER, 
+                    `transaction_for_id` INTEGER NOT NULL, 
+                    `refund_transaction_ids` TEXT, 
+                    `creation_timestamp` INTEGER NOT NULL, 
+                    `transaction_timestamp` INTEGER NOT NULL, 
+                    `description` TEXT NOT NULL, 
+                    `title` TEXT NOT NULL, 
+                    `transaction_type` TEXT NOT NULL
+                )
+            """.trimIndent()
+            )
+
+            // Copy the data
+            database.execSQL(
+                """
+                INSERT INTO transaction_table_new (amount, category_id, id, account_from_id, account_to_id, transaction_for_id, creation_timestamp, transaction_timestamp, description, title, transaction_type) 
+                SELECT amount, category_id, id, source_from_id, source_to_id, transaction_for_id, creation_timestamp, transaction_timestamp, description, title, transaction_type 
+                FROM transaction_table
+            """.trimIndent()
+            )
+
+            // Remove the old table
+            database.execSQL("DROP TABLE transaction_table")
+
+            // Change the table name to the correct one
+            database.execSQL("ALTER TABLE transaction_table_new RENAME TO transaction_table")
+
+            // endregion
+        }
+    }
+
+    /**
      * New Columns added
      *
      * 1. originalTransactionId: Int? = null

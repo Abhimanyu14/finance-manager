@@ -79,10 +79,10 @@ object MyNavigationDirections {
     }
 
     data class EditAccount(
-        private val sourceId: Int,
+        private val accountId: Int,
     ) : NavigationCommand {
         override val command = Command.NAVIGATE
-        override val destination = "${Screen.EditAccount.route}/${sourceId}"
+        override val destination = "${Screen.EditAccount.route}/${accountId}"
         override val screen = Screen.EditAccount.route
     }
 

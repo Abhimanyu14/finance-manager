@@ -15,11 +15,11 @@ data class Transaction(
     @SerialName(value = "original_transaction_id")
     val originalTransactionId: Int? = null,
 
-    @SerialName(value = "source_from_id")
-    val sourceFromId: Int? = null,
+    @SerialName(value = "account_from_id")
+    val accountFromId: Int? = null,
 
-    @SerialName(value = "source_to_id")
-    val sourceToId: Int? = null,
+    @SerialName(value = "account_to_id")
+    val accountToId: Int? = null,
 
     @SerialName(value = "transaction_for_id")
     val transactionForId: Int = 1,

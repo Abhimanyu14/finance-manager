@@ -2,8 +2,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import android.content.Context
 import androidx.compose.runtime.Composable
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.Filter
@@ -15,7 +15,7 @@ internal fun TransactionsFilterBottomSheet(
     expenseCategories: List<Category>,
     incomeCategories: List<Category>,
     investmentCategories: List<Category>,
-    sources: List<Source>,
+    accounts: List<Account>,
     transactionForValues: List<TransactionFor>,
     transactionTypes: List<TransactionType>,
     defaultMinDate: LocalDate,
@@ -30,7 +30,7 @@ internal fun TransactionsFilterBottomSheet(
         expenseCategories = expenseCategories,
         incomeCategories = incomeCategories,
         investmentCategories = investmentCategories,
-        sources = sources,
+        accounts = accounts,
         transactionForValues = transactionForValues,
         transactionTypes = transactionTypes,
         defaultMinDate = defaultMinDate,

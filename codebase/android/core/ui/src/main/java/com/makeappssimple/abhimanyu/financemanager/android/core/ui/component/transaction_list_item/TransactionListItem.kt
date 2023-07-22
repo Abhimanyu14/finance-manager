@@ -51,8 +51,8 @@ data class TransactionListItemData(
     val amountText: String,
     val dateAndTimeText: String,
     val emoji: String,
-    val sourceFromName: String?,
-    val sourceToName: String?,
+    val accountFromName: String?,
+    val accountToName: String?,
     val title: String,
     val transactionForText: String,
 )
@@ -72,17 +72,17 @@ fun TransactionListItem(
     data: TransactionListItemData,
     events: TransactionListItemEvents = TransactionListItemEvents(),
 ) {
-    val sourceText: String = if (
-        data.sourceFromName.isNotNull() &&
-        data.sourceToName.isNotNull()
+    val accountText: String = if (
+        data.accountFromName.isNotNull() &&
+        data.accountToName.isNotNull()
     ) {
         stringResource(
-            id = R.string.transaction_list_item_source,
-            data.sourceFromName,
-            data.sourceToName,
+            id = R.string.transaction_list_item_account,
+            data.accountFromName,
+            data.accountToName,
         )
     } else {
-        data.sourceFromName ?: data.sourceToName.orEmpty()
+        data.accountFromName ?: data.accountToName.orEmpty()
     }
 
     MyExpandableItemUIWrapper(
@@ -231,7 +231,7 @@ fun TransactionListItem(
                             .weight(
                                 weight = 1F,
                             ),
-                        text = sourceText,
+                        text = accountText,
                         style = MaterialTheme.typography.bodySmall
                             .copy(
                                 color = MaterialTheme.colorScheme.onBackground,

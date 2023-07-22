@@ -7,8 +7,8 @@ fun TransactionData.asEntity(): TransactionDataEntity {
     return TransactionDataEntity(
         transaction = transaction.asEntity(),
         category = category?.asEntity(),
-        sourceFrom = sourceFrom?.asEntity(),
-        sourceTo = sourceTo?.asEntity(),
+        accountFrom = accountFrom?.asEntity(),
+        accountTo = accountTo?.asEntity(),
         transactionFor = transactionFor.asEntity(),
     )
 }

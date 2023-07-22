@@ -169,8 +169,8 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
             transaction.transactionType == TransactionType.REFUND
         ) {
             transactionData.transaction.amount.toSignedString(
-                isPositive = transactionData.sourceTo.isNotNull(),
-                isNegative = transactionData.sourceFrom.isNotNull(),
+                isPositive = transactionData.accountTo.isNotNull(),
+                isNegative = transactionData.accountFrom.isNotNull(),
             )
         } else {
             transaction.amount.toString()
@@ -191,8 +191,8 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
                 transactionData.category?.emoji.orEmpty()
             }
         }
-        val sourceFromName = transactionData.sourceFrom?.name
-        val sourceToName = transactionData.sourceTo?.name
+        val accountFromName = transactionData.accountFrom?.name
+        val accountToName = transactionData.accountTo?.name
         val title: String = transaction.title
         val transactionForText: String = transactionData.transactionFor.titleToDisplay
 
@@ -207,8 +207,8 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
             amountText = amountText,
             dateAndTimeText = dateAndTimeText,
             emoji = emoji,
-            sourceFromName = sourceFromName,
-            sourceToName = sourceToName,
+            accountFromName = accountFromName,
+            accountToName = accountToName,
             title = title,
             transactionForText = transactionForText,
         )

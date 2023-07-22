@@ -2,11 +2,11 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.GetAllAccountsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.UpdateAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllAccountsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.UpdateAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.updateBalanceAmount
 import kotlinx.coroutines.async
@@ -39,29 +39,29 @@ class RecalculateTotalUseCaseImpl(
                 },
             )
 
-            val allSources: List<Source> = deferredList[0].filterIsInstance<Source>()
+            val allAccounts: List<Account> = deferredList[0].filterIsInstance<Account>()
             val allTransactionData: List<TransactionData> =
                 deferredList[1].filterIsInstance<TransactionData>()
 
             myPreferencesRepository.setLastDataChangeTimestamp()
-            val sourceBalances = hashMapOf<Int, Long>()
+            val accountBalances = hashMapOf<Int, Long>()
             allTransactionData.forEach { transactionData ->
-                transactionData.sourceFrom?.let {
-                    sourceBalances[it.id] =
-                        sourceBalances[it.id].orZero() - transactionData.transaction.amount.value
+                transactionData.accountFrom?.let {
+                    accountBalances[it.id] =
+                        accountBalances[it.id].orZero() - transactionData.transaction.amount.value
                 }
-                transactionData.sourceTo?.let {
-                    sourceBalances[it.id] =
-                        sourceBalances[it.id].orZero() + transactionData.transaction.amount.value
+                transactionData.accountTo?.let {
+                    accountBalances[it.id] =
+                        accountBalances[it.id].orZero() + transactionData.transaction.amount.value
                 }
             }
-            val updatesSources = allSources.map {
+            val updatedAccounts = allAccounts.map {
                 it.updateBalanceAmount(
-                    updatedBalanceAmount = sourceBalances[it.id].orZero(),
+                    updatedBalanceAmount = accountBalances[it.id].orZero(),
                 )
             }
             updateAccountsUseCase(
-                sources = updatesSources.toTypedArray(),
+                accounts = updatedAccounts.toTypedArray(),
             )
         }
     }

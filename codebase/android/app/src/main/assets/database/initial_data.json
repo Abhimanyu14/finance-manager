@@ -113,7 +113,7 @@
       }
     ]
   },
-  "default_sources": [
+  "default_accounts": [
     {
       "balance_amount": {
         "currency": "INR",

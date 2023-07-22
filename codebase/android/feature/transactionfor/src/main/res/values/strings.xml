@@ -1,6 +1,6 @@
 <resources>
 
-    <!-- region add or edit source screen -->
+    <!-- region add or edit account screen -->
     <string name="screen_add_or_edit_transaction_for_title">Title</string>
     <string name="screen_add_or_edit_transaction_for_clear_title">Clear Title</string>
     <!-- endregion -->

@@ -43,8 +43,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.statusBarSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
@@ -86,7 +86,7 @@ internal fun TransactionsFiltersBottomSheetUI(
     expenseCategories: List<Category>,
     incomeCategories: List<Category>,
     investmentCategories: List<Category>,
-    sources: List<Source>,
+    accounts: List<Account>,
     transactionForValues: List<TransactionFor>,
     transactionTypes: List<TransactionType>,
     defaultMinDate: LocalDate,
@@ -209,14 +209,14 @@ internal fun TransactionsFiltersBottomSheetUI(
                 )
             )
         }
-        if (sources.isNotEmpty() && sources.size > 1) {
+        if (accounts.isNotEmpty() && accounts.size > 1) {
             add(
                 TransactionsFiltersBottomSheetData(
                     data = TransactionFilterBottomSheetFilterGroupData(
-                        headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_sources,
-                        items = sources.map { source ->
+                        headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_accounts,
+                        items = accounts.map { account ->
                             ChipUIData(
-                                text = source.name,
+                                text = account.name,
                             )
                         },
                         selectedItemsIndices = selectedAccountIndicesValue,

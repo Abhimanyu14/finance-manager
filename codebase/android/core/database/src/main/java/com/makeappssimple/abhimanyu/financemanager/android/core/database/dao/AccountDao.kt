@@ -6,50 +6,50 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.SourceEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AccountEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface AccountDao {
-    @Query(value = "SELECT * from source_table ORDER BY id ASC")
-    fun getAllAccountsFlow(): Flow<List<SourceEntity>>
+    @Query(value = "SELECT * from account_table ORDER BY id ASC")
+    fun getAllAccountsFlow(): Flow<List<AccountEntity>>
 
-    @Query(value = "SELECT * from source_table ORDER BY id ASC")
-    suspend fun getAllAccounts(): List<SourceEntity>
+    @Query(value = "SELECT * from account_table ORDER BY id ASC")
+    suspend fun getAllAccounts(): List<AccountEntity>
 
-    @Query(value = "SELECT COUNT(*) FROM source_table")
+    @Query(value = "SELECT COUNT(*) FROM account_table")
     suspend fun getAllAccountsCount(): Int
 
-    @Query(value = "SELECT * from source_table WHERE id = :id")
+    @Query(value = "SELECT * from account_table WHERE id = :id")
     suspend fun getAccount(
         id: Int,
-    ): SourceEntity?
+    ): AccountEntity?
 
-    @Query(value = "SELECT * from source_table WHERE id IN (:ids)")
+    @Query(value = "SELECT * from account_table WHERE id IN (:ids)")
     suspend fun getAccounts(
         ids: List<Int>,
-    ): List<SourceEntity>
+    ): List<AccountEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertAccounts(
-        vararg sources: SourceEntity,
+        vararg accounts: AccountEntity,
     )
 
     @Update
     suspend fun updateAccounts(
-        vararg sources: SourceEntity,
+        vararg accounts: AccountEntity,
     )
 
-    @Query(value = "DELETE FROM source_table WHERE id = :id")
+    @Query(value = "DELETE FROM account_table WHERE id = :id")
     suspend fun deleteAccount(
         id: Int,
     )
 
     @Delete
     suspend fun deleteAccounts(
-        vararg sources: SourceEntity,
+        vararg accounts: AccountEntity,
     )
 
-    @Query(value = "DELETE FROM source_table")
+    @Query(value = "DELETE FROM account_table")
     suspend fun deleteAllAccounts()
 }

@@ -45,10 +45,10 @@ class RestoreDataUseCaseImpl(
         } else {
             backupData.databaseData.emojis
         }
-        val sources = if (backupData.databaseData.isNull()) {
-            backupData.sources.orEmpty()
+        val accounts = if (backupData.databaseData.isNull()) {
+            backupData.accounts.orEmpty()
         } else {
-            backupData.databaseData.sources
+            backupData.databaseData.accounts
         }
         val transactions = transactionsCleanUp(
             transactions = if (backupData.databaseData.isNull()) {
@@ -70,7 +70,7 @@ class RestoreDataUseCaseImpl(
         transactionRepository.restoreData(
             categories = categories,
             emojis = emojis,
-            accounts = sources,
+            accounts = accounts,
             transactions = transactions,
             transactionForValues = transactionForValues,
         )
@@ -92,7 +92,7 @@ class RestoreDataUseCaseImpl(
                     defaultInvestmentCategoryId = it.defaultDataId.investmentCategory,
                 )
                 setDefaultAccountId(
-                    defaultAccountId = it.defaultDataId.source,
+                    defaultAccountId = it.defaultDataId.account,
                 )
                 setEmojiDataVersionNumber(
                     emojiDataVersionNumber = it.initialDataVersionNumber.emoji,

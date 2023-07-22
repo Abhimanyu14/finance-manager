@@ -6,18 +6,14 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonNames
 
 @Serializable
-data class InitialDatabaseData @OptIn(ExperimentalSerializationApi::class) constructor(
+data class InitialDatabaseData(
     @SerialName("default_categories")
-    @JsonNames("defaultCategories")
     val defaultCategories: Categories,
 
-    // TODO(Abhi) - Source to Account rename migration
-    @SerialName("default_sources")
-    @JsonNames("defaultSources")
-    val defaultSources: List<SourceEntity>,
+    @SerialName("default_accounts")
+    val defaultAccounts: List<AccountEntity>,
 
     @SerialName("default_transaction_for_values")
-    @JsonNames("defaultTransactionForValues")
     val defaultTransactionForValues: List<TransactionForEntity>,
 
     val emojis: Emojis,

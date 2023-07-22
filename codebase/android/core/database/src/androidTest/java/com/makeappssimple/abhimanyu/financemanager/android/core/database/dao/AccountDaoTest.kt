@@ -6,9 +6,9 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AccountEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AmountEntity
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.SourceEntity
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.SourceType
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -38,7 +38,7 @@ class AccountDaoTest {
             )
             .allowMainThreadQueries()
             .build()
-        accountDao = myRoomDatabase.sourceDao()
+        accountDao = myRoomDatabase.accountDao()
     }
 
     @After
@@ -49,7 +49,7 @@ class AccountDaoTest {
     @Test
     fun getAllAccounts() = runTest {
         accountDao.insertAccounts(
-            sources = testAccounts.toTypedArray(),
+            accounts = testAccounts.toTypedArray(),
         )
 
         val result = accountDao.getAllAccounts()
@@ -64,7 +64,7 @@ class AccountDaoTest {
     @Test
     fun getAllAccountsFlow() = runTest {
         accountDao.insertAccounts(
-            sources = testAccounts.toTypedArray(),
+            accounts = testAccounts.toTypedArray(),
         )
 
         val result = accountDao.getAllAccountsFlow().first()
@@ -78,7 +78,7 @@ class AccountDaoTest {
     @Test
     fun getAllAccountsCount() = runTest {
         accountDao.insertAccounts(
-            sources = testAccounts.toTypedArray(),
+            accounts = testAccounts.toTypedArray(),
         )
 
         val result = accountDao.getAllAccountsCount()
@@ -92,7 +92,7 @@ class AccountDaoTest {
     @Test
     fun getAccount_returnsDataForValidId() = runTest {
         accountDao.insertAccounts(
-            sources = testAccounts.toTypedArray(),
+            accounts = testAccounts.toTypedArray(),
         )
 
         val result = accountDao.getAccount(
@@ -108,7 +108,7 @@ class AccountDaoTest {
     @Test
     fun getAccount_returnsNullForInvalidId() = runTest {
         accountDao.insertAccounts(
-            sources = testAccounts.toTypedArray(),
+            accounts = testAccounts.toTypedArray(),
         )
 
         val result = accountDao.getAccount(
@@ -121,7 +121,7 @@ class AccountDaoTest {
     @Test
     fun deleteAccount_deleteDataOfGivenId() = runTest {
         accountDao.insertAccounts(
-            sources = testAccounts.toTypedArray(),
+            accounts = testAccounts.toTypedArray(),
         )
 
         accountDao.deleteAccount(
@@ -142,7 +142,7 @@ class AccountDaoTest {
     @Test
     fun deleteAccount_noDeletionForInvalidId() = runTest {
         accountDao.insertAccounts(
-            sources = testAccounts.toTypedArray(),
+            accounts = testAccounts.toTypedArray(),
         )
 
         accountDao.deleteAccount(
@@ -163,13 +163,13 @@ class AccountDaoTest {
     @Test
     fun updateAccounts() = runTest {
         accountDao.insertAccounts(
-            sources = testAccounts.toTypedArray(),
+            accounts = testAccounts.toTypedArray(),
         )
 
-        val testSourceName2 = "IOB"
+        val testAccountName2 = "IOB"
         accountDao.updateAccounts(
             testAccounts[1].copy(
-                name = testSourceName2,
+                name = testAccountName2,
             ),
             testAccounts[2].copy(
                 id = 6342,
@@ -190,7 +190,7 @@ class AccountDaoTest {
             result[2],
         )
         Assert.assertEquals(
-            testSourceName2,
+            testAccountName2,
             result[1].name,
         )
     }
@@ -198,7 +198,7 @@ class AccountDaoTest {
     @Test
     fun deleteAccounts() = runTest {
         accountDao.insertAccounts(
-            sources = testAccounts.toTypedArray(),
+            accounts = testAccounts.toTypedArray(),
         )
 
         accountDao.deleteAccounts(
@@ -227,29 +227,29 @@ class AccountDaoTest {
         private const val testId3 = 345
         private const val invalidId = 987
         private val testAccounts = listOf(
-            SourceEntity(
+            AccountEntity(
                 id = testId1,
                 balanceAmount = AmountEntity(
                     value = testId1.toLong(),
                 ),
                 name = "Cash",
-                type = SourceType.CASH,
+                type = AccountType.CASH,
             ),
-            SourceEntity(
+            AccountEntity(
                 id = testId2,
                 balanceAmount = AmountEntity(
                     value = testId2.toLong(),
                 ),
                 name = "Axis",
-                type = SourceType.BANK,
+                type = AccountType.BANK,
             ),
-            SourceEntity(
+            AccountEntity(
                 id = testId3,
                 balanceAmount = AmountEntity(
                     value = testId3.toLong(),
                 ),
                 name = "Paytm",
-                type = SourceType.E_WALLET,
+                type = AccountType.E_WALLET,
             ),
         )
     }

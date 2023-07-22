@@ -11,9 +11,9 @@
     <string name="screen_add_or_edit_transaction_transaction_date">Transaction Date</string>
     <string name="screen_add_or_edit_transaction_transaction_time">Transaction Time</string>
     <string name="screen_add_or_edit_transaction_category">Category</string>
-    <string name="screen_add_or_edit_transaction_source">Account</string>
-    <string name="screen_add_or_edit_transaction_source_from">Account From</string>
-    <string name="screen_add_or_edit_transaction_source_to">Account To</string>
+    <string name="screen_add_or_edit_transaction_account">Account</string>
+    <string name="screen_add_or_edit_transaction_account_from">Account From</string>
+    <string name="screen_add_or_edit_transaction_account_to">Account To</string>
     <!-- endregion -->
 
     <!-- region add transaction screen -->
@@ -59,7 +59,7 @@
     <string name="bottom_sheet_transactions_filter_expense_categories">Expense Categories</string>
     <string name="bottom_sheet_transactions_filter_income_categories">Income Categories</string>
     <string name="bottom_sheet_transactions_filter_investment_categories">Investment Categories</string>
-    <string name="bottom_sheet_transactions_filter_sources">Accounts</string>
+    <string name="bottom_sheet_transactions_filter_accounts">Accounts</string>
     <string name="bottom_sheet_transactions_filter_transaction_for_values">Transaction For</string>
     <string name="bottom_sheet_transactions_filter_transaction_types">Transaction Types</string>
     <string name="bottom_sheet_transactions_filter_transaction_date">Transaction Date</string>

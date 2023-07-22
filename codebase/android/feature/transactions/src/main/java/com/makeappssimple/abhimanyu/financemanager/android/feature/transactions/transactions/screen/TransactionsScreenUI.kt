@@ -46,8 +46,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
@@ -105,7 +105,7 @@ internal data class TransactionsScreenUIEvents(
     val getExpenseCategories: () -> List<Category>,
     val getIncomeCategories: () -> List<Category>,
     val getInvestmentCategories: () -> List<Category>,
-    val getAccounts: () -> List<Source>,
+    val getAccounts: () -> List<Account>,
     val getTransactionForValues: () -> List<TransactionFor>,
     val navigateToAddTransactionScreen: () -> Unit,
     val navigateToViewTransactionScreen: (transactionId: Int) -> Unit,
@@ -160,7 +160,7 @@ internal fun TransactionsScreenUI(
                         expenseCategories = events.getExpenseCategories(),
                         incomeCategories = events.getIncomeCategories(),
                         investmentCategories = events.getInvestmentCategories(),
-                        sources = events.getAccounts(),
+                        accounts = events.getAccounts(),
                         transactionForValues = events.getTransactionForValues(),
                         transactionTypes = uiState.transactionTypes,
                         defaultMinDate = uiState.oldestTransactionLocalDate,

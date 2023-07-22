@@ -10,8 +10,8 @@
     <string name="bottom_sheet_select_category_title">Select Category</string>
     <!-- endregion -->
 
-    <!-- region bottom sheet select source -->
-    <string name="bottom_sheet_select_source_title">Select Account</string>
+    <!-- region bottom sheet select account -->
+    <string name="bottom_sheet_select_account_title">Select Account</string>
     <!-- endregion -->
 
     <!-- region bottom sheet select transaction for -->
@@ -32,7 +32,7 @@
     <!-- endregion -->
 
     <!-- region transactions list item -->
-    <string name="transaction_list_item_source">%1$s -> %2$s</string>
+    <string name="transaction_list_item_account">%1$s -> %2$s</string>
     <string name="transaction_list_item_edit">Edit</string>
     <string name="transaction_list_item_refund">Refund</string>
     <string name="transaction_list_item_delete">Delete</string>

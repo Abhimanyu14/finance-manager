@@ -1,43 +1,43 @@
 <resources>
 
-    <!-- region add or edit source screen -->
-    <string name="screen_add_or_edit_source_name">Name</string>
-    <string name="screen_add_or_edit_source_clear_name">Clear Name</string>
-    <string name="screen_add_or_edit_source_balance_amount_value">Balance Amount</string>
-    <string name="screen_add_or_edit_source_clear_balance_amount_value">Clear Balance Amount</string>
-    <string name="screen_add_or_edit_source_error_source_exists">Account already exists</string>
+    <!-- region add or edit account screen -->
+    <string name="screen_add_or_edit_account_name">Name</string>
+    <string name="screen_add_or_edit_account_clear_name">Clear Name</string>
+    <string name="screen_add_or_edit_account_balance_amount_value">Balance Amount</string>
+    <string name="screen_add_or_edit_account_clear_balance_amount_value">Clear Balance Amount</string>
+    <string name="screen_add_or_edit_account_error_account_exists">Account already exists</string>
     <!-- endregion -->
 
-    <!-- region add source screen -->
-    <string name="screen_add_source_appbar_title">Enter Account Details</string>
-    <string name="screen_add_source_floating_action_button_content_description">SAVE</string>
+    <!-- region add account screen -->
+    <string name="screen_add_account_appbar_title">Enter Account Details</string>
+    <string name="screen_add_account_floating_action_button_content_description">SAVE</string>
     <!-- endregion -->
 
-    <!-- region edit source screen -->
-    <string name="screen_edit_source_appbar_title">Edit Account</string>
-    <string name="screen_edit_source_floating_action_button_content_description">UPDATE</string>
+    <!-- region edit account screen -->
+    <string name="screen_edit_account_appbar_title">Edit Account</string>
+    <string name="screen_edit_account_floating_action_button_content_description">UPDATE</string>
     <!-- endregion -->
 
-    <!-- region sources list item -->
-    <string name="list_item_sources_edit">Edit</string>
-    <string name="list_item_sources_delete">Delete</string>
+    <!-- region accounts list item -->
+    <string name="list_item_accounts_edit">Edit</string>
+    <string name="list_item_accounts_delete">Delete</string>
     <!-- endregion -->
 
-    <!-- region sources screen -->
-    <string name="screen_sources_appbar_title">Accounts</string>
-    <string name="screen_sources_floating_action_button_content_description">Add Account</string>
-    <string name="screen_sources_bottom_sheet_set_as_default_title">Set as default Account</string>
-    <string name="screen_sources_bottom_sheet_set_as_default_message">
+    <!-- region accounts screen -->
+    <string name="screen_accounts_appbar_title">Accounts</string>
+    <string name="screen_accounts_floating_action_button_content_description">Add Account</string>
+    <string name="screen_accounts_bottom_sheet_set_as_default_title">Set as default Account</string>
+    <string name="screen_accounts_bottom_sheet_set_as_default_message">
         Are you sure you want to set this as default account?
     </string>
-    <string name="screen_sources_bottom_sheet_set_as_default_positive_button_text">Yes</string>
-    <string name="screen_sources_bottom_sheet_set_as_default_negative_button_text">Cancel</string>
-    <string name="screen_sources_bottom_sheet_delete_title">Delete Account</string>
-    <string name="screen_sources_bottom_sheet_delete_message">
+    <string name="screen_accounts_bottom_sheet_set_as_default_positive_button_text">Yes</string>
+    <string name="screen_accounts_bottom_sheet_set_as_default_negative_button_text">Cancel</string>
+    <string name="screen_accounts_bottom_sheet_delete_title">Delete Account</string>
+    <string name="screen_accounts_bottom_sheet_delete_message">
         Are you sure you want to delete?
     </string>
-    <string name="screen_sources_bottom_sheet_delete_positive_button_text">Yes</string>
-    <string name="screen_sources_bottom_sheet_delete_negative_button_text">Cancel</string>
+    <string name="screen_accounts_bottom_sheet_delete_positive_button_text">Yes</string>
+    <string name="screen_accounts_bottom_sheet_delete_negative_button_text">Cancel</string>
     <!-- endregion -->
 
 </resources>

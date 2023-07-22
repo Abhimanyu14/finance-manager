@@ -9,8 +9,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orMin
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
@@ -59,19 +59,19 @@ class AddOrEditTransactionScreenUIState(
     }
 
     @StringRes
-    val sourceFromTextFieldLabelTextStringResourceId: Int =
+    val accountFromTextFieldLabelTextStringResourceId: Int =
         if (unwrappedData?.selectedTransactionType == TransactionType.TRANSFER) {
-            R.string.screen_add_or_edit_transaction_source_from
+            R.string.screen_add_or_edit_transaction_account_from
         } else {
-            R.string.screen_add_or_edit_transaction_source
+            R.string.screen_add_or_edit_transaction_account
         }
 
     @StringRes
-    val sourceToTextFieldLabelTextStringResourceId: Int =
+    val accountToTextFieldLabelTextStringResourceId: Int =
         if (unwrappedData?.selectedTransactionType == TransactionType.TRANSFER) {
-            R.string.screen_add_or_edit_transaction_source_to
+            R.string.screen_add_or_edit_transaction_account_to
         } else {
-            R.string.screen_add_or_edit_transaction_source
+            R.string.screen_add_or_edit_transaction_account
         }
 
     val filteredCategories: List<Category> = unwrappedData?.filteredCategories.orEmpty()
@@ -87,7 +87,7 @@ class AddOrEditTransactionScreenUIState(
             text = title,
         )
     }
-    val sources: List<Source> = unwrappedData?.sources.orEmpty()
+    val accounts: List<Account> = unwrappedData?.accounts.orEmpty()
     val transactionForValuesChipUIData: List<ChipUIData> =
         unwrappedData?.transactionForValues?.map { transactionFor ->
             ChipUIData(

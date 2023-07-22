@@ -7,7 +7,7 @@ class MyRoomDatabaseTest {
     private lateinit var myRoomDatabase: MyRoomDatabase
     private lateinit var categoryDao: CategoryDao
     private lateinit var emojiDao: EmojiDao
-    private lateinit var sourceDao: SourceDao
+    private lateinit var accountDao: AccountDao
     private lateinit var transactionDao: TransactionDao
 
     @Before
@@ -21,7 +21,7 @@ class MyRoomDatabaseTest {
             .build()
         categoryDao = myRoomDatabase.categoryDao()
         emojiDao = myRoomDatabase.emojiDao()
-        sourceDao = myRoomDatabase.sourceDao()
+        accountDao = myRoomDatabase.accountDao()
         transactionDao = myRoomDatabase.transactionDao()
     }
 

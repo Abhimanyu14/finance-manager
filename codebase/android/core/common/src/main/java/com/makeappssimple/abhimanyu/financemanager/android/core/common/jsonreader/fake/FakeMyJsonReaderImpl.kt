@@ -6,12 +6,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreade
 class FakeMyJsonReaderImpl : MyJsonReader {
     private val assetsJson = """
         {
-          "source": "assets"
+          "account": "assets"
         }
     """.trimIndent()
     private val fileJson = """
         {
-          "source": "assets"
+          "account": "assets"
         }
     """.trimIndent()
 

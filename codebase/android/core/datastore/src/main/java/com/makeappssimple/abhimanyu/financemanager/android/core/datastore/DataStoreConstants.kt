@@ -23,7 +23,12 @@ val DEFAULT_INVESTMENT_CATEGORY_ID: Preferences.Key<Int> = intPreferencesKey(
     name = "default_investment_category_id",
 )
 
-@Deprecated("use DEFAULT_ACCOUNT_ID instead")
+@Deprecated(
+    message = "Maintained only for migration",
+    replaceWith = ReplaceWith(
+        expression = "DEFAULT_ACCOUNT_ID",
+    ),
+)
 val DEFAULT_SOURCE_ID: Preferences.Key<Int> = intPreferencesKey(
     name = "default_source_id",
 )

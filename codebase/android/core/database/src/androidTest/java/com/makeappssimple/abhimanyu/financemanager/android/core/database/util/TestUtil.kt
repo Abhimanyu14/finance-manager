@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.util
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AccountEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AmountEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.CategoryEntity
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.SourceEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
@@ -78,18 +78,18 @@ fun getTestEmojis(): Array<Emoji> {
     )
 }
 
-fun getTestAccount(): SourceEntity {
-    return SourceEntity(
+fun getTestAccount(): AccountEntity {
+    return AccountEntity(
         name = "Axis",
     )
 }
 
-fun getTestAccounts(): Array<SourceEntity> {
+fun getTestAccounts(): Array<AccountEntity> {
     return arrayOf(
-        SourceEntity(
+        AccountEntity(
             name = "Axis",
         ),
-        SourceEntity(
+        AccountEntity(
             name = "SBI",
         ),
     )

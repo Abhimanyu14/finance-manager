@@ -13,8 +13,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.toZonedDateTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.GetAccountsTotalBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAccountsTotalBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetRecentTransactionDataFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionsBetweenTimestampsUseCase
@@ -167,7 +167,7 @@ internal class HomeScreenViewModelImpl @Inject constructor(
         scope = viewModelScope,
     )
 
-    private val sourcesTotalBalanceAmountValue: Flow<Long> =
+    private val accountsTotalBalanceAmountValue: Flow<Long> =
         getAccountsTotalBalanceAmountValueUseCase()
 
     override val screenUIData: StateFlow<MyResult<HomeScreenUIData>?> = combine(
@@ -175,13 +175,13 @@ internal class HomeScreenViewModelImpl @Inject constructor(
         homeListItemViewData,
         overviewTabSelectionIndex,
         overviewCardData,
-        sourcesTotalBalanceAmountValue,
+        accountsTotalBalanceAmountValue,
     ) {
             isBackupCardVisible,
             homeListItemViewData,
             overviewTabSelectionIndex,
             overviewCardData,
-            sourcesTotalBalanceAmountValue,
+            accountsTotalBalanceAmountValue,
         ->
         if (homeListItemViewData.isNull()) {
             MyResult.Loading
@@ -191,7 +191,7 @@ internal class HomeScreenViewModelImpl @Inject constructor(
                     isBackupCardVisible = isBackupCardVisible,
                     overviewTabSelectionIndex = overviewTabSelectionIndex,
                     transactionListItemDataList = homeListItemViewData,
-                    sourcesTotalBalanceAmountValue = sourcesTotalBalanceAmountValue,
+                    accountsTotalBalanceAmountValue = accountsTotalBalanceAmountValue,
                     overviewCardData = overviewCardData,
                 ),
             )
@@ -327,8 +327,8 @@ internal class HomeScreenViewModelImpl @Inject constructor(
                         listItem.transaction.transactionType == TransactionType.REFUND
                     ) {
                         listItem.transaction.amount.toSignedString(
-                            isPositive = listItem.sourceTo.isNotNull(),
-                            isNegative = listItem.sourceFrom.isNotNull(),
+                            isPositive = listItem.accountTo.isNotNull(),
+                            isNegative = listItem.accountFrom.isNotNull(),
                         )
                     } else {
                         listItem.transaction.amount.toString()
@@ -349,8 +349,8 @@ internal class HomeScreenViewModelImpl @Inject constructor(
                         listItem.category?.emoji.orEmpty()
                     }
                 }
-                val sourceFromName = listItem.sourceFrom?.name
-                val sourceToName = listItem.sourceTo?.name
+                val accountFromName = listItem.accountFrom?.name
+                val accountToName = listItem.accountTo?.name
                 val title: String = listItem.transaction.title
                 val transactionForText: String =
                     listItem.transactionFor.titleToDisplay
@@ -361,8 +361,8 @@ internal class HomeScreenViewModelImpl @Inject constructor(
                     amountText = amountText,
                     dateAndTimeText = dateAndTimeText,
                     emoji = emoji,
-                    sourceFromName = sourceFromName,
-                    sourceToName = sourceToName,
+                    accountFromName = accountFromName,
+                    accountToName = accountToName,
                     title = title,
                     transactionForText = transactionForText,
                 )

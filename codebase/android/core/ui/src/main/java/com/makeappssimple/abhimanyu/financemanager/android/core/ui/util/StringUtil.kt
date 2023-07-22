@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 private const val DEFAULT_EXPENSE_CATEGORY = "Default"
 private const val DEFAULT_INCOME_CATEGORY = "Salary"
 private const val DEFAULT_INVESTMENT_CATEGORY = "Investment"
-private const val DEFAULT_SOURCE = "Cash"
+private const val DEFAULT_ACCOUNT = "Cash"
 private const val DEFAULT_TRANSACTION_FOR = "Self"
 
 fun isDefaultExpenseCategory(
@@ -33,10 +33,10 @@ fun isDefaultInvestmentCategory(
 }
 
 fun isDefaultAccount(
-    source: String,
+    account: String,
 ): Boolean {
-    return source.equalsIgnoringCase(
-        other = DEFAULT_SOURCE,
+    return account.equalsIgnoringCase(
+        other = DEFAULT_ACCOUNT,
     )
 }
 

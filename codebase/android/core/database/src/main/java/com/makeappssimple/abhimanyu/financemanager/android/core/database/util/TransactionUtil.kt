@@ -11,13 +11,13 @@ fun transactionsCleanUp(
         when (it.transactionType) {
             TransactionType.INCOME -> {
                 it.copy(
-                    sourceFromId = null,
+                    accountFromId = null,
                 )
             }
 
             TransactionType.EXPENSE -> {
                 it.copy(
-                    sourceToId = null,
+                    accountToId = null,
                     amount = it.amount.copy(
                         value = abs(it.amount.value),
                     ),
@@ -31,18 +31,18 @@ fun transactionsCleanUp(
             }
 
             TransactionType.ADJUSTMENT -> {
-                val sourceId = it.sourceToId
+                val accountId = it.accountToId
                 it.copy(
                     categoryId = null,
-                    sourceFromId = if (it.amount.value < 0) {
-                        sourceId
+                    accountFromId = if (it.amount.value < 0) {
+                        accountId
                     } else {
-                        it.sourceFromId
+                        it.accountFromId
                     },
-                    sourceToId = if (it.amount.value < 0) {
+                    accountToId = if (it.amount.value < 0) {
                         null
                     } else {
-                        it.sourceToId
+                        it.accountToId
                     },
                     amount = it.amount.copy(
                         value = abs(it.amount.value),
@@ -52,13 +52,13 @@ fun transactionsCleanUp(
 
             TransactionType.INVESTMENT -> {
                 it.copy(
-                    sourceToId = null,
+                    accountToId = null,
                 )
             }
 
             TransactionType.REFUND -> {
                 it.copy(
-                    sourceFromId = null,
+                    accountFromId = null,
                 )
             }
         }

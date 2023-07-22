@@ -16,8 +16,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defa
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionDataFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.UpdateTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
@@ -76,11 +76,11 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )
-    override val accounts: StateFlow<List<Source>?> = allTransactionData.map {
+    override val accounts: StateFlow<List<Account>?> = allTransactionData.map {
         it.flatMap { transactionData ->
             listOfNotNull(
-                transactionData.sourceFrom,
-                transactionData.sourceTo,
+                transactionData.accountFrom,
+                transactionData.accountTo,
             )
         }.distinct()
     }.defaultObjectStateIn(
@@ -151,7 +151,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             val incomeCategoriesValue: List<Category> = flows[5] as? List<Category> ?: emptyList()
             val investmentCategoriesValue: List<Category> =
                 flows[6] as? List<Category> ?: emptyList()
-            val sourcesValue: List<Source> = flows[7] as? List<Source> ?: emptyList()
+            val accountsValue: List<Account> = flows[7] as? List<Account> ?: emptyList()
             val transactionForValuesValue: List<TransactionFor> =
                 flows[8] as? List<TransactionFor> ?: emptyList()
 
@@ -188,7 +188,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                         transactionData = transactionData,
                     ) && isAvailableAfterAccountFilter(
                         selectedAccountsIndicesValue = selectedFilterValue.selectedAccountsIndices,
-                        accountsValue = sourcesValue,
+                        accountsValue = accountsValue,
                         transactionData = transactionData,
                     ) && isAvailableAfterCategoryFilter(
                         selectedExpenseCategoryIndicesValue = selectedFilterValue.selectedExpenseCategoryIndices,
@@ -250,8 +250,8 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                                 listItem.transaction.transactionType == TransactionType.REFUND
                             ) {
                                 listItem.transaction.amount.toSignedString(
-                                    isPositive = listItem.sourceTo.isNotNull(),
-                                    isNegative = listItem.sourceFrom.isNotNull(),
+                                    isPositive = listItem.accountTo.isNotNull(),
+                                    isNegative = listItem.accountFrom.isNotNull(),
                                 )
                             } else {
                                 listItem.transaction.amount.toString()
@@ -272,8 +272,8 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                                 listItem.category?.emoji
                             }
                         }.orEmpty()
-                        val sourceFromName = listItem.sourceFrom?.name
-                        val sourceToName = listItem.sourceTo?.name
+                        val accountFromName = listItem.accountFrom?.name
+                        val accountToName = listItem.accountTo?.name
                         val title = listItem.transaction.title
                         val transactionForText = listItem.transactionFor.titleToDisplay
 
@@ -288,8 +288,8 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                             amountText = amountText,
                             dateAndTimeText = dateAndTimeText,
                             emoji = emoji,
-                            sourceFromName = sourceFromName,
-                            sourceToName = sourceToName,
+                            accountFromName = accountFromName,
+                            accountToName = accountToName,
                             title = title,
                             transactionForText = transactionForText,
                         )
@@ -535,7 +535,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
 
     private fun isAvailableAfterAccountFilter(
         selectedAccountsIndicesValue: List<Int>,
-        accountsValue: List<Source>,
+        accountsValue: List<Account>,
         transactionData: TransactionData,
     ): Boolean {
         if (selectedAccountsIndicesValue.isEmpty()) {
@@ -543,11 +543,11 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         }
         return selectedAccountsIndicesValue.contains(
             element = accountsValue.indexOf(
-                element = transactionData.sourceFrom,
+                element = transactionData.accountFrom,
             ),
         ) || selectedAccountsIndicesValue.contains(
             element = accountsValue.indexOf(
-                element = transactionData.sourceTo,
+                element = transactionData.accountTo,
             ),
         )
     }

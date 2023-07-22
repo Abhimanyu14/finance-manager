@@ -3,14 +3,18 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.SourceType
 import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-// TODO(Abhi) - Source to Account rename migration
+@Deprecated(
+    message = "Maintained only for migration",
+    replaceWith = ReplaceWith(
+        expression = "AccountEntity",
+    ),
+)
 @Entity(tableName = "source_table")
 @Serializable
 data class SourceEntity @OptIn(ExperimentalSerializationApi::class) constructor(
@@ -30,22 +34,3 @@ data class SourceEntity @OptIn(ExperimentalSerializationApi::class) constructor(
 
     val name: String,
 )
-
-fun SourceEntity.updateBalanceAmount(
-    updatedBalanceAmount: Long,
-): SourceEntity {
-    return this.copy(
-        balanceAmount = this.balanceAmount.copy(
-            value = updatedBalanceAmount,
-        )
-    )
-}
-
-fun SourceEntity.asExternalModel(): Source {
-    return Source(
-        balanceAmount = balanceAmount.asExternalModel(),
-        id = id,
-        type = type,
-        name = name,
-    )
-}

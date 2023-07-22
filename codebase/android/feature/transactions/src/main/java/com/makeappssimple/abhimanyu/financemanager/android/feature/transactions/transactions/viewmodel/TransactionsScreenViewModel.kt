@@ -2,8 +2,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen.TransactionsScreenUIData
@@ -16,7 +16,7 @@ interface TransactionsScreenViewModel : ScreenViewModel {
     val expenseCategories: StateFlow<List<Category>?>
     val incomeCategories: StateFlow<List<Category>?>
     val investmentCategories: StateFlow<List<Category>?>
-    val accounts: StateFlow<List<Source>?>
+    val accounts: StateFlow<List<Account>?>
     val transactionForValues: StateFlow<List<TransactionFor>?>
 
     fun addToSelectedTransactions(

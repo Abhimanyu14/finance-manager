@@ -22,10 +22,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.Tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionForDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.AutoDatabaseMigration
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.DatabaseMigration
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AccountEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.CategoryEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.InitialDatabaseData
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.SourceEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionForEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.transactionsCleanUp
@@ -40,11 +40,11 @@ import kotlinx.serialization.json.Json
 import java.util.concurrent.Executors
 
 @Database(
-    version = 18,
+    version = AppConstants.DATABASE_CURRENT_VERSION_NUMBER,
     entities = [
+        AccountEntity::class,
         CategoryEntity::class,
         EmojiEntity::class,
-        SourceEntity::class,
         TransactionEntity::class,
         TransactionForEntity::class,
     ],
@@ -80,7 +80,7 @@ import java.util.concurrent.Executors
 abstract class MyRoomDatabase : RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
     abstract fun emojiDao(): EmojiDao
-    abstract fun sourceDao(): AccountDao
+    abstract fun accountDao(): AccountDao
     abstract fun transactionDao(): TransactionDao
     abstract fun transactionForDao(): TransactionForDao
 
@@ -132,6 +132,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                         name = AppConstants.DATABASE_NAME,
                     )
                     .addMigrations(
+                        DatabaseMigration.MIGRATION_18_19,
                         DatabaseMigration.MIGRATION_17_18,
                         DatabaseMigration.MIGRATION_16_17,
                         DatabaseMigration.MIGRATION_15_16,
@@ -203,7 +204,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                         )
                     }
                     launch {
-                        populateSourceData(
+                        populateAccountsData(
                             initialDatabaseData = initialDatabaseData,
                             myRoomDatabase = myRoomDatabase,
                         )
@@ -313,14 +314,14 @@ abstract class MyRoomDatabase : RoomDatabase() {
             }
         }
 
-        private suspend fun populateSourceData(
+        private suspend fun populateAccountsData(
             initialDatabaseData: InitialDatabaseData,
             myRoomDatabase: MyRoomDatabase,
         ) {
-            val sourceDao = myRoomDatabase.sourceDao()
-            if (sourceDao.getAllAccountsCount() == 0) {
-                sourceDao.insertAccounts(
-                    sources = initialDatabaseData.defaultSources.toTypedArray(),
+            val accountDao = myRoomDatabase.accountDao()
+            if (accountDao.getAllAccountsCount() == 0) {
+                accountDao.insertAccounts(
+                    accounts = initialDatabaseData.defaultAccounts.toTypedArray(),
                 )
             }
         }

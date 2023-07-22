@@ -3,8 +3,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUIData
 import kotlinx.coroutines.flow.StateFlow
@@ -44,11 +44,11 @@ interface AddOrEditTransactionScreenViewModel : ScreenViewModel {
     fun navigateUp()
 
     fun updateAccountFrom(
-        updatedAccountFrom: Source?,
+        updatedAccountFrom: Account?,
     )
 
     fun updateAccountTo(
-        updatedAccountTo: Source?,
+        updatedAccountTo: Account?,
     )
 
     fun updateCategory(

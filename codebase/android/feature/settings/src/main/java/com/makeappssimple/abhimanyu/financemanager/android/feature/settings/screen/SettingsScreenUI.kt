@@ -92,7 +92,7 @@ internal fun SettingsScreenUI(
             data = SettingsListItemData(
                 isLoading = uiState.isLoading,
                 imageVector = Icons.Rounded.AccountBalance,
-                textStringResourceId = R.string.screen_settings_sources,
+                textStringResourceId = R.string.screen_settings_accounts,
             ),
             events = SettingsListItemEvents(
                 onClick = events.navigateToAccountsScreen,

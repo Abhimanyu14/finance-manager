@@ -136,19 +136,19 @@ class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun getDefaultSourceIdFromDataStore_returnsNull() = testCoroutineScope.runTest {
-        val result = myPreferencesDataSource.getDefaultDataId().first()?.source
+    fun getDefaultAccountIdFromDataStore_returnsNull() = testCoroutineScope.runTest {
+        val result = myPreferencesDataSource.getDefaultDataId().first()?.account
 
         Assert.assertNull(result)
     }
 
     @Test
-    fun setDefaultSourceIdInDataStore_defaultTest() = testCoroutineScope.runTest {
+    fun setDefaultAccountIdInDataStore_defaultTest() = testCoroutineScope.runTest {
         myPreferencesDataSource.setDefaultAccountId(
             defaultAccountId = testId,
         )
 
-        val result = myPreferencesDataSource.getDefaultDataId().first()?.source
+        val result = myPreferencesDataSource.getDefaultDataId().first()?.account
 
         Assert.assertEquals(
             testId,

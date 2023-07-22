@@ -32,7 +32,7 @@ class DaosModule {
     fun providesSourceDao(
         myRoomDatabase: MyRoomDatabase,
     ): AccountDao {
-        return myRoomDatabase.sourceDao()
+        return myRoomDatabase.accountDao()
     }
 
     @Provides

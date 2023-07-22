@@ -15,16 +15,16 @@ data class TransactionDataEntity(
     val category: CategoryEntity?,
 
     @Relation(
-        parentColumn = "source_from_id",
+        parentColumn = "account_from_id",
         entityColumn = "id",
     )
-    val sourceFrom: SourceEntity?,
+    val accountFrom: AccountEntity?,
 
     @Relation(
-        parentColumn = "source_to_id",
+        parentColumn = "account_to_id",
         entityColumn = "id",
     )
-    val sourceTo: SourceEntity?,
+    val accountTo: AccountEntity?,
 
     @Relation(
         parentColumn = "transaction_for_id",
@@ -37,8 +37,8 @@ fun TransactionDataEntity.asExternalModel(): TransactionData {
     return TransactionData(
         transaction = transaction.asExternalModel(),
         category = category?.asExternalModel(),
-        sourceFrom = sourceFrom?.asExternalModel(),
-        sourceTo = sourceTo?.asExternalModel(),
+        accountFrom = accountFrom?.asExternalModel(),
+        accountTo = accountTo?.asExternalModel(),
         transactionFor = transactionFor.asExternalModel(),
     )
 }

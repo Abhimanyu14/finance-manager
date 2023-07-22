@@ -1,9 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.fake
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepository
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
@@ -118,11 +118,11 @@ class FakeTransactionRepositoryImpl : TransactionRepository {
     }
 
     override suspend fun checkIfAccountIsUsedInTransactions(
-        sourceId: Int,
+        accountId: Int,
     ): Boolean {
         return false
-//        return transactionDao.checkIfSourceIsUsedInTransactions(
-//            sourceId = sourceId,
+//        return transactionDao.checkIfAccountIsUsedInTransactions(
+//            accountId = accountId,
 //        )
     }
 
@@ -155,15 +155,15 @@ class FakeTransactionRepositoryImpl : TransactionRepository {
 
     override suspend fun insertTransaction(
         amountValue: Long,
-        accountFrom: Source?,
-        accountTo: Source?,
+        accountFrom: Account?,
+        accountTo: Account?,
         transaction: Transaction,
     ): Long {
         return 0L
-//        return commonDataSource.insertTransaction(
+//        return commonDataAccount.insertTransaction(
 //            amountValue = amountValue,
-//            sourceFrom = sourceFrom?.asEntity(),
-//            sourceTo = sourceTo?.asEntity(),
+//            accountFrom = AccountFrom?.asEntity(),
+//            AccountTo = AccountTo?.asEntity(),
 //            transaction = transaction.asEntity(),
 //        )
     }
@@ -195,7 +195,7 @@ class FakeTransactionRepositoryImpl : TransactionRepository {
     override suspend fun deleteTransaction(
         id: Int,
     ) {
-//        commonDataSource.deleteTransaction(
+//        commonDataAccount.deleteTransaction(
 //            id = id,
 //        )
     }
@@ -207,18 +207,18 @@ class FakeTransactionRepositoryImpl : TransactionRepository {
     override suspend fun restoreData(
         categories: List<Category>,
         emojis: List<Emoji>,
-        accounts: List<Source>,
+        accounts: List<Account>,
         transactions: List<Transaction>,
         transactionForValues: List<TransactionFor>,
     ) {
-//        commonDataSource.restoreData(
+//        commonDataAccount.restoreData(
 //            categories = categories.map {
 //                it.asEntity()
 //            }.toTypedArray(),
 //            emojis = emojis.map {
 //                it.asEntity()
 //            }.toTypedArray(),
-//            sources = sources.map {
+//            accounts = accounts.map {
 //                it.asEntity()
 //            }.toTypedArray(),
 //            transactions = transactions.map {

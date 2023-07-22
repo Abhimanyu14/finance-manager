@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
@@ -45,7 +45,7 @@ interface TransactionRepository {
     ): Boolean
 
     suspend fun checkIfAccountIsUsedInTransactions(
-        sourceId: Int,
+        accountId: Int,
     ): Boolean
 
     suspend fun checkIfTransactionForIsUsedInTransactions(
@@ -62,8 +62,8 @@ interface TransactionRepository {
 
     suspend fun insertTransaction(
         amountValue: Long,
-        accountFrom: Source?,
-        accountTo: Source?,
+        accountFrom: Account?,
+        accountTo: Account?,
         transaction: Transaction,
     ): Long
 
@@ -88,7 +88,7 @@ interface TransactionRepository {
     suspend fun restoreData(
         categories: List<Category>,
         emojis: List<Emoji>,
-        accounts: List<Source>,
+        accounts: List<Account>,
         transactions: List<Transaction>,
         transactionForValues: List<TransactionFor>,
     )

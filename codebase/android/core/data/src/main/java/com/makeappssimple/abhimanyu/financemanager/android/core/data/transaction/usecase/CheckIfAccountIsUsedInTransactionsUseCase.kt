@@ -4,7 +4,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction
 
 interface CheckIfAccountIsUsedInTransactionsUseCase {
     suspend operator fun invoke(
-        sourceId: Int,
+        accountId: Int,
     ): Boolean
 }
 
@@ -12,10 +12,10 @@ class CheckIfAccountIsUsedInTransactionsUseCaseImpl(
     private val transactionRepository: TransactionRepository,
 ) : CheckIfAccountIsUsedInTransactionsUseCase {
     override suspend operator fun invoke(
-        sourceId: Int,
+        accountId: Int,
     ): Boolean {
         return transactionRepository.checkIfAccountIsUsedInTransactions(
-            sourceId = sourceId,
+            accountId = accountId,
         )
     }
 }

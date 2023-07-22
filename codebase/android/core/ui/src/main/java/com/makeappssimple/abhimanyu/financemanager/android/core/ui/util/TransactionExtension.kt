@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 
 fun Transaction.getAmountTextColor(): MyColor {
     return this.transactionType.getAmountTextColor(
-        isBalanceReduced = this.sourceFromId.isNotNull(),
+        isBalanceReduced = this.accountFromId.isNotNull(),
     )
 }
 

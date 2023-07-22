@@ -1,6 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.model
 
-// TODO(Abhi) - Source to Account rename migration
+@Deprecated(
+    message = "Maintained only for migration",
+    replaceWith = ReplaceWith(
+        expression = "AccountType",
+    ),
+)
 enum class SourceType(
     val title: String,
 ) {
@@ -14,18 +19,3 @@ enum class SourceType(
         title = "E-Wallet",
     ),
 }
-
-val SourceType.sortOrder: Int
-    get() = when (this) {
-        SourceType.CASH -> {
-            1
-        }
-
-        SourceType.BANK -> {
-            2
-        }
-
-        SourceType.E_WALLET -> {
-            3
-        }
-    }

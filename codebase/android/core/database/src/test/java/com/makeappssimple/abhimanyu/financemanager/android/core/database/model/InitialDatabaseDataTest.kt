@@ -19,7 +19,7 @@ class InitialDatabaseDataTest {
         )
         initialDatabaseData = InitialDatabaseData(
             defaultCategories = categories,
-            defaultSources = emptyList(),
+            defaultAccounts = emptyList(),
             defaultTransactionForValues = emptyList(),
             emojis = emojis,
         )
@@ -30,7 +30,7 @@ class InitialDatabaseDataTest {
         )
         Assert.assertEquals(
             0,
-            initialDatabaseData.defaultSources.size,
+            initialDatabaseData.defaultAccounts.size,
         )
         Assert.assertEquals(
             0,

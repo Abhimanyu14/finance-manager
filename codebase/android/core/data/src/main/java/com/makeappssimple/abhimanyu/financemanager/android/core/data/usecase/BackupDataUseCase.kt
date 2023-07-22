@@ -4,21 +4,21 @@ import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.MyJsonWriter
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.GetAllAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.BackupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.DatabaseData
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.DatastoreData
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.source.usecase.GetAllAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transactionfor.usecase.GetAllTransactionForValuesUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DataTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import kotlinx.coroutines.async
@@ -81,7 +81,7 @@ class BackupDataUseCaseImpl(
             val categories: List<Category> = deferredDatabaseData[0].filterIsInstance<Category>()
             val emojis: List<Emoji> =
                 deferredDatabaseData[1].filterIsInstance<Emoji>()
-            val sources: List<Source> = deferredDatabaseData[2].filterIsInstance<Source>()
+            val accounts: List<Account> = deferredDatabaseData[2].filterIsInstance<Account>()
             val transactionForValues: List<TransactionFor> =
                 deferredDatabaseData[3].filterIsInstance<TransactionFor>()
             val transactions: List<Transaction> =
@@ -93,7 +93,7 @@ class BackupDataUseCaseImpl(
                 databaseData = DatabaseData(
                     categories = categories,
                     emojis = emojis,
-                    sources = sources,
+                    accounts = accounts,
                     transactionForValues = transactionForValues,
                     transactions = transactions,
                 ),

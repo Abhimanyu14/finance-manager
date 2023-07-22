@@ -26,13 +26,13 @@ data class TransactionEntity(
     @SerialName(value = "original_transaction_id")
     val originalTransactionId: Int? = null,
 
-    @ColumnInfo(name = "source_from_id")
-    @SerialName(value = "source_from_id")
-    val sourceFromId: Int? = null,
+    @ColumnInfo(name = "account_from_id")
+    @SerialName(value = "account_from_id")
+    val accountFromId: Int? = null,
 
-    @ColumnInfo(name = "source_to_id")
-    @SerialName(value = "source_to_id")
-    val sourceToId: Int? = null,
+    @ColumnInfo(name = "account_to_id")
+    @SerialName(value = "account_to_id")
+    val accountToId: Int? = null,
 
     @ColumnInfo(name = "transaction_for_id")
     @SerialName(value = "transaction_for_id")
@@ -66,8 +66,8 @@ fun TransactionEntity.asExternalModel(): Transaction {
         categoryId = categoryId,
         id = id,
         originalTransactionId = originalTransactionId,
-        sourceFromId = sourceFromId,
-        sourceToId = sourceToId,
+        accountFromId = accountFromId,
+        accountToId = accountToId,
         transactionForId = transactionForId,
         refundTransactionIds = refundTransactionIds,
         creationTimestamp = creationTimestamp,

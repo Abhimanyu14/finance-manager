@@ -3,8 +3,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Source
 import java.time.LocalDate
 import java.time.LocalTime
 
@@ -16,8 +16,8 @@ data class AddOrEditTransactionScreenUiStateData(
     val description: TextFieldValue = TextFieldValue(),
     val category: Category? = null,
     val selectedTransactionForIndex: Int = 0,
-    val sourceFrom: Source? = null,
-    val sourceTo: Source? = null,
+    val accountFrom: Account? = null,
+    val accountTo: Account? = null,
     val transactionDate: LocalDate = LocalDate.MIN,
     val transactionTime: LocalTime = LocalTime.MIN,
     val amountErrorText: String? = null,

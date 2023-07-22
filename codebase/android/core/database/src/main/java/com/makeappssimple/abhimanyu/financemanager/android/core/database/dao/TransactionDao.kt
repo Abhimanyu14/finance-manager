@@ -108,10 +108,10 @@ interface TransactionDao {
 
     @Query(
         value = "SELECT EXISTS(SELECT * FROM transaction_table " +
-                "WHERE source_from_id = :sourceId OR source_to_id = :sourceId)"
+                "WHERE account_from_id = :accountId OR account_to_id = :accountId)"
     )
-    suspend fun checkIfSourceIsUsedInTransactions(
-        sourceId: Int,
+    suspend fun checkIfAccountIsUsedInTransactions(
+        accountId: Int,
     ): Boolean
 
     @Query(
