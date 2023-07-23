@@ -104,20 +104,20 @@ internal fun ViewTransactionScreenUI(
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
     ) {
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .navigationBarLandscapeSpacer(),
         ) {
-            AnimatedVisibility(
-                visible = uiState.transactionListItemData.isNull(),
-            ) {
-                MyLinearProgressIndicator()
+            item {
+                AnimatedVisibility(
+                    visible = uiState.transactionListItemData.isNull(),
+                ) {
+                    MyLinearProgressIndicator()
+                }
             }
-            AnimatedVisibility(
-                visible = uiState.transactionListItemData.isNotNull(),
-            ) {
-                uiState.transactionListItemData?.let { transactionListItemData ->
+            item {
+                if (uiState.transactionListItemData.isNotNull()) {
                     TransactionListItem(
                         modifier = Modifier
                             .padding(
@@ -127,25 +127,23 @@ internal fun ViewTransactionScreenUI(
                         data = uiState.transactionListItemData,
                         events = TransactionListItemEvents(
                             onDeleteButtonClick = {
-                                uiState.setTransactionIdToDelete(transactionListItemData.transactionId)
+                                uiState.setTransactionIdToDelete(uiState.transactionListItemData.transactionId)
                                 uiState.setViewTransactionBottomSheetType(
                                     ViewTransactionBottomSheetType.DELETE_CONFIRMATION
                                 )
                             },
                             onEditButtonClick = {
-                                events.navigateToEditTransactionScreen(transactionListItemData.transactionId)
+                                events.navigateToEditTransactionScreen(uiState.transactionListItemData.transactionId)
                             },
                             onRefundButtonClick = {
-                                events.navigateToAddTransactionScreen(transactionListItemData.transactionId)
+                                events.navigateToAddTransactionScreen(uiState.transactionListItemData.transactionId)
                             },
                         ),
                     )
                 }
             }
-            AnimatedVisibility(
-                visible = uiState.originalTransactionListItemData.isNotNull(),
-            ) {
-                uiState.originalTransactionListItemData?.let { transactionListItemData ->
+            item {
+                if (uiState.originalTransactionListItemData.isNotNull()) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth(),
@@ -169,79 +167,75 @@ internal fun ViewTransactionScreenUI(
                                     top = 8.dp,
                                     bottom = 8.dp,
                                 ),
-                            data = transactionListItemData,
+                            data = uiState.originalTransactionListItemData,
                             events = TransactionListItemEvents(
                                 onDeleteButtonClick = {
-                                    uiState.setTransactionIdToDelete(transactionListItemData.transactionId)
+                                    uiState.setTransactionIdToDelete(uiState.originalTransactionListItemData.transactionId)
                                     uiState.setViewTransactionBottomSheetType(
                                         ViewTransactionBottomSheetType.DELETE_CONFIRMATION
                                     )
                                 },
                                 onEditButtonClick = {
-                                    events.navigateToEditTransactionScreen(transactionListItemData.transactionId)
+                                    events.navigateToEditTransactionScreen(
+                                        uiState.originalTransactionListItemData.transactionId
+                                    )
                                 },
                                 onRefundButtonClick = {
-                                    events.navigateToAddTransactionScreen(transactionListItemData.transactionId)
+                                    events.navigateToAddTransactionScreen(
+                                        uiState.originalTransactionListItemData.transactionId
+                                    )
                                 },
                             ),
                         )
                     }
                 }
             }
-            AnimatedVisibility(
-                visible = uiState.refundTransactionListItemData.isNotNull() &&
-                        uiState.refundTransactionListItemData.isNotEmpty(),
+            if (uiState.refundTransactionListItemData.isNotNull() &&
+                uiState.refundTransactionListItemData.isNotEmpty()
             ) {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                ) {
-                    uiState.refundTransactionListItemData?.let {
-                        item {
-                            MyText(
-                                modifier = Modifier
-                                    .padding(
-                                        top = 16.dp,
-                                        start = 16.dp,
-                                    )
-                                    .fillMaxWidth(),
-                                text = "Refund Transactions",
-                                style = MaterialTheme.typography.headlineMedium
-                                    .copy(
-                                        color = MaterialTheme.colorScheme.onBackground,
-                                    ),
+                item {
+                    MyText(
+                        modifier = Modifier
+                            .padding(
+                                top = 16.dp,
+                                start = 16.dp,
                             )
-                        }
-                        items(
-                            items = uiState.refundTransactionListItemData,
-                            key = { listItem ->
-                                listItem.hashCode()
+                            .fillMaxWidth(),
+                        text = "Refund Transactions",
+                        style = MaterialTheme.typography.headlineMedium
+                            .copy(
+                                color = MaterialTheme.colorScheme.onBackground,
+                            ),
+                    )
+                }
+                items(
+                    items = uiState.refundTransactionListItemData,
+                    key = { listItem ->
+                        listItem.hashCode()
+                    },
+                ) { transactionListItemData ->
+                    TransactionListItem(
+                        modifier = Modifier
+                            .padding(
+                                top = 8.dp,
+                                bottom = 8.dp,
+                            ),
+                        data = transactionListItemData,
+                        events = TransactionListItemEvents(
+                            onDeleteButtonClick = {
+                                uiState.setTransactionIdToDelete(transactionListItemData.transactionId)
+                                uiState.setViewTransactionBottomSheetType(
+                                    ViewTransactionBottomSheetType.DELETE_CONFIRMATION
+                                )
                             },
-                        ) { transactionListItemData ->
-                            TransactionListItem(
-                                modifier = Modifier
-                                    .padding(
-                                        top = 8.dp,
-                                        bottom = 8.dp,
-                                    ),
-                                data = transactionListItemData,
-                                events = TransactionListItemEvents(
-                                    onDeleteButtonClick = {
-                                        uiState.setTransactionIdToDelete(transactionListItemData.transactionId)
-                                        uiState.setViewTransactionBottomSheetType(
-                                            ViewTransactionBottomSheetType.DELETE_CONFIRMATION
-                                        )
-                                    },
-                                    onEditButtonClick = {
-                                        events.navigateToEditTransactionScreen(
-                                            transactionListItemData.transactionId
-                                        )
-                                    },
-                                    onRefundButtonClick = {},
-                                ),
-                            )
-                        }
-                    }
+                            onEditButtonClick = {
+                                events.navigateToEditTransactionScreen(
+                                    transactionListItemData.transactionId
+                                )
+                            },
+                            onRefundButtonClick = {},
+                        ),
+                    )
                 }
             }
         }
