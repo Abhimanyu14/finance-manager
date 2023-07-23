@@ -87,8 +87,8 @@ private object ManualDatabaseMigration {
             // Copy the data
             database.execSQL(
                 """
-                INSERT INTO transaction_table_new (amount, category_id, id, account_from_id, account_to_id, transaction_for_id, creation_timestamp, transaction_timestamp, description, title, transaction_type) 
-                SELECT amount, category_id, id, source_from_id, source_to_id, transaction_for_id, creation_timestamp, transaction_timestamp, description, title, transaction_type 
+                INSERT INTO transaction_table_new (amount, category_id, id, original_transaction_id, account_from_id, account_to_id, transaction_for_id, refund_transaction_ids, creation_timestamp, transaction_timestamp, description, title, transaction_type) 
+                SELECT amount, category_id, id, original_transaction_id, source_from_id, source_to_id, transaction_for_id, refund_transaction_ids, creation_timestamp, transaction_timestamp, description, title, transaction_type 
                 FROM transaction_table
             """.trimIndent()
             )
