@@ -3,6 +3,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.di
 import android.content.Context
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.MyJsonReader
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.InitialDatabasePopulator
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.InitialDatabasePopulatorImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyPreferencesDataSource
 import dagger.Module
@@ -15,19 +17,28 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 class RoomModule {
+    @Provides
+    fun providesInitialDatabasePopulator(
+        dispatcherProvider: DispatcherProvider,
+        myJsonReader: MyJsonReader,
+        myPreferencesDataSource: MyPreferencesDataSource,
+    ): InitialDatabasePopulator {
+        return InitialDatabasePopulatorImpl(
+            dispatcherProvider = dispatcherProvider,
+            myJsonReader = myJsonReader,
+            myPreferencesDataSource = myPreferencesDataSource,
+        )
+    }
+
     @Singleton
     @Provides
     fun providesMyRoomDatabase(
         @ApplicationContext context: Context,
-        dispatcherProvider: DispatcherProvider,
-        myJsonReader: MyJsonReader,
-        myPreferencesDataSource: MyPreferencesDataSource,
+        initialDatabasePopulator: InitialDatabasePopulator,
     ): MyRoomDatabase {
         return MyRoomDatabase.getDatabase(
             context = context,
-            dispatcherProvider = dispatcherProvider,
-            myJsonReader = myJsonReader,
-            myPreferencesDataSource = myPreferencesDataSource,
+            initialDatabasePopulator = initialDatabasePopulator,
         )
     }
 }

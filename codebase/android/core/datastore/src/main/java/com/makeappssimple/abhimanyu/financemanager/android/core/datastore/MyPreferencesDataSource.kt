@@ -52,10 +52,21 @@ class MyPreferencesDataSource(
     fun getInitialDataVersionNumber(): Flow<InitialDataVersionNumber?> {
         return preferences.map {
             InitialDataVersionNumber(
+                account = it[DataStoreConstants.InitialDataVersionNumber.ACCOUNT].orZero(),
                 category = it[DataStoreConstants.InitialDataVersionNumber.CATEGORY].orZero(),
                 emoji = it[DataStoreConstants.InitialDataVersionNumber.EMOJI].orZero(),
                 transaction = it[DataStoreConstants.InitialDataVersionNumber.TRANSACTIONS].orZero(),
+                transactionFor = it[DataStoreConstants.InitialDataVersionNumber.TRANSACTION_FOR].orZero(),
             )
+        }
+    }
+
+    suspend fun setAccountDataVersionNumber(
+        accountDataVersionNumber: Int,
+    ) {
+        dataStore.edit {
+            it[DataStoreConstants.InitialDataVersionNumber.ACCOUNT] =
+                accountDataVersionNumber
         }
     }
 
@@ -131,6 +142,15 @@ class MyPreferencesDataSource(
         dataStore.edit {
             it[DataStoreConstants.InitialDataVersionNumber.TRANSACTIONS] =
                 transactionsDataVersionNumber
+        }
+    }
+
+    suspend fun setTransactionForDataVersionNumber(
+        transactionForDataVersionNumber: Int,
+    ) {
+        dataStore.edit {
+            it[DataStoreConstants.InitialDataVersionNumber.TRANSACTION_FOR] =
+                transactionForDataVersionNumber
         }
     }
 }

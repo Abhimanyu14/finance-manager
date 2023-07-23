@@ -45,7 +45,6 @@ class BackupDataUseCaseImpl(
     private val myJsonWriter: MyJsonWriter,
     private val myPreferencesRepository: MyPreferencesRepository,
 ) : BackupDataUseCase {
-
     override suspend operator fun invoke(
         uri: Uri,
     ) {

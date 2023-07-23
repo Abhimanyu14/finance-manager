@@ -44,6 +44,9 @@ object DataStoreConstants {
     }
 
     object InitialDataVersionNumber {
+        val ACCOUNT: Preferences.Key<Int> = intPreferencesKey(
+            name = "account_data_version_number",
+        )
         val CATEGORY: Preferences.Key<Int> = intPreferencesKey(
             name = "category_data_version_number",
         )
@@ -54,6 +57,9 @@ object DataStoreConstants {
         // TODO(Abhi) - Migrate to "transaction_data_version_number"
         val TRANSACTIONS: Preferences.Key<Int> = intPreferencesKey(
             name = "transactions_data_version_number",
+        )
+        val TRANSACTION_FOR: Preferences.Key<Int> = intPreferencesKey(
+            name = "transaction_for_data_version_number",
         )
     }
 }

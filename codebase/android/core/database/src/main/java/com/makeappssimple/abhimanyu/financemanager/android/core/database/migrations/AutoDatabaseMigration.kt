@@ -7,7 +7,7 @@ import androidx.room.migration.AutoMigrationSpec
  * Room auto-migration
  * Source - https://developer.android.com/training/data-storage/room/migrating-db-versions#automigrationspec
  */
-object AutoDatabaseMigration {
+internal object AutoDatabaseMigration {
     @RenameColumn(
         tableName = "transaction_table",
         fromColumnName = "source_id",

@@ -3,7 +3,24 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.migrat
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
-object DatabaseMigration {
+internal val manualDatabaseMigrations = arrayOf(
+    ManualDatabaseMigration.MIGRATION_18_19,
+    ManualDatabaseMigration.MIGRATION_17_18,
+    ManualDatabaseMigration.MIGRATION_16_17,
+    ManualDatabaseMigration.MIGRATION_15_16,
+    ManualDatabaseMigration.MIGRATION_14_15,
+    ManualDatabaseMigration.MIGRATION_13_14,
+    ManualDatabaseMigration.MIGRATION_12_13,
+    ManualDatabaseMigration.MIGRATION_9_10,
+    ManualDatabaseMigration.MIGRATION_8_9,
+    ManualDatabaseMigration.MIGRATION_7_8,
+    ManualDatabaseMigration.MIGRATION_6_7,
+    ManualDatabaseMigration.MIGRATION_4_5,
+    ManualDatabaseMigration.MIGRATION_3_4,
+    ManualDatabaseMigration.MIGRATION_2_3,
+)
+
+private object ManualDatabaseMigration {
     /**
      * Table migration
      * Renaming columns

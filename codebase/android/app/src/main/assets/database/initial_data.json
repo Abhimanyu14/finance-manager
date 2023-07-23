@@ -1,10 +1,27 @@
 {
+  "default_accounts": {
+    "version_number": 1,
+    "versioned_accounts": [
+      {
+        "version_number": 1,
+        "accounts_data": {
+          "balance_amount": {
+            "currency": "INR",
+            "value": 0
+          },
+          "id": 1,
+          "type": "CASH",
+          "name": "Cash"
+        }
+      }
+    ]
+  },
   "default_categories": {
     "version_number": 4,
-    "categories_data": [
+    "versioned_categories": [
       {
         "version_number": 2,
-        "categories": [
+        "categories_data": [
           {
             "id": 1,
             "description": "",
@@ -79,7 +96,7 @@
       },
       {
         "version_number": 3,
-        "categories": [
+        "categories_data": [
           {
             "description": "",
             "emoji": "💵",
@@ -102,7 +119,7 @@
       },
       {
         "version_number": 4,
-        "categories": [
+        "categories_data": [
           {
             "description": "",
             "emoji": "💰",
@@ -113,23 +130,18 @@
       }
     ]
   },
-  "default_accounts": [
-    {
-      "balance_amount": {
-        "currency": "INR",
-        "value": 0
-      },
-      "id": 1,
-      "type": "CASH",
-      "name": "Cash"
-    }
-  ],
-  "default_transaction_for_values": [
-    {
-      "id": 1,
-      "title": "SELF"
-    }
-  ],
+  "default_transaction_for_values": {
+    "version_number": 1,
+    "versioned_transaction_for_values": [
+      {
+        "version_number": 1,
+        "transaction_for_values_data": {
+          "id": 1,
+          "title": "SELF"
+        }
+      }
+    ]
+  },
   "emojis": {
     "version_number": 3,
     "emojis_data": [
