@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.acc
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
@@ -64,13 +65,15 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
         }
         val accountsListItemDataList = mutableListOf<AccountsListItemData>()
         accountTypes.forEach { accountType ->
-            accountsListItemDataList.add(
-                AccountsListItemData(
-                    isHeading = true,
-                    balance = "",
-                    name = accountType.title,
+            if (groupedAccounts[accountType].isNotNull()) {
+                accountsListItemDataList.add(
+                    AccountsListItemData(
+                        isHeading = true,
+                        balance = "",
+                        name = accountType.title,
+                    )
                 )
-            )
+            }
             accountsListItemDataList.addAll(
                 groupedAccounts[accountType]?.sortedByDescending { account ->
                     account.balanceAmount.value
