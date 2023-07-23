@@ -171,7 +171,12 @@ internal fun HomeScreenUI(
             }
             item {
                 HomeRecentTransactionsUI(
-                    onClick = events.navigateToTransactionsScreen,
+                    isTrailingTextVisible = uiState.transactionListItemDataList.isNotEmpty(),
+                    onClick = if (uiState.transactionListItemDataList.isNotEmpty()) {
+                        events.navigateToTransactionsScreen
+                    } else {
+                        null
+                    },
                 )
             }
             items(

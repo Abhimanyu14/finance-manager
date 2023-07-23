@@ -17,7 +17,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 
 @Composable
 internal fun HomeRecentTransactionsUI(
-    onClick: () -> Unit,
+    isTrailingTextVisible: Boolean,
+    onClick: (() -> Unit)? = null,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -56,13 +57,15 @@ internal fun HomeRecentTransactionsUI(
                     color = MaterialTheme.colorScheme.onBackground,
                 ),
         )
-        MyText(
-            modifier = Modifier,
-            textStringResourceId = R.string.screen_home_view_all_transactions,
-            style = MaterialTheme.typography.headlineMedium
-                .copy(
-                    color = MaterialTheme.colorScheme.primary,
-                ),
-        )
+        if (isTrailingTextVisible) {
+            MyText(
+                modifier = Modifier,
+                textStringResourceId = R.string.screen_home_view_all_transactions,
+                style = MaterialTheme.typography.headlineMedium
+                    .copy(
+                        color = MaterialTheme.colorScheme.primary,
+                    ),
+            )
+        }
     }
 }
