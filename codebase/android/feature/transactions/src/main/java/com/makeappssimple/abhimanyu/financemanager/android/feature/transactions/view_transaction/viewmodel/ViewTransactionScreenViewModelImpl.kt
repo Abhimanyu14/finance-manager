@@ -144,6 +144,16 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
         )
     }
 
+    override fun navigateToViewTransactionScreen(
+        transactionId: Int,
+    ) {
+        navigationManager.navigate(
+            MyNavigationDirections.ViewTransaction(
+                transactionId = transactionId,
+            )
+        )
+    }
+
     override fun navigateUp() {
         navigationManager.navigate(
             MyNavigationDirections.NavigateUp

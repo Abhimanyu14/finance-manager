@@ -31,6 +31,7 @@ fun ViewTransactionScreen(
             deleteTransaction = screenViewModel::deleteTransaction,
             navigateToAddTransactionScreen = screenViewModel::navigateToAddTransactionScreen,
             navigateToEditTransactionScreen = screenViewModel::navigateToEditTransactionScreen,
+            navigateToViewTransactionScreen = screenViewModel::navigateToViewTransactionScreen,
             navigateUp = screenViewModel::navigateUp,
         ),
         uiState = rememberViewTransactionScreenUIState(

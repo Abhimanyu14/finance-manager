@@ -24,5 +24,9 @@ interface ViewTransactionScreenViewModel : ScreenViewModel {
         transactionId: Int,
     )
 
+    fun navigateToViewTransactionScreen(
+        transactionId: Int,
+    )
+
     fun navigateUp()
 }

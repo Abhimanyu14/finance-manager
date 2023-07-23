@@ -16,6 +16,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
@@ -46,6 +47,7 @@ internal data class ViewTransactionScreenUIEvents(
     val deleteTransaction: (transactionId: Int) -> Unit,
     val navigateToAddTransactionScreen: (transactionId: Int) -> Unit,
     val navigateToEditTransactionScreen: (transactionId: Int) -> Unit,
+    val navigateToViewTransactionScreen: (transactionId: Int) -> Unit,
     val navigateUp: () -> Unit,
 )
 
@@ -169,6 +171,11 @@ internal fun ViewTransactionScreenUI(
                                 ),
                             data = uiState.originalTransactionListItemData,
                             events = TransactionListItemEvents(
+                                onClick = {
+                                    events.navigateToViewTransactionScreen(
+                                        uiState.originalTransactionListItemData.transactionId
+                                    )
+                                },
                                 onDeleteButtonClick = {
                                     uiState.setTransactionIdToDelete(uiState.originalTransactionListItemData.transactionId)
                                     uiState.setViewTransactionBottomSheetType(
@@ -222,6 +229,11 @@ internal fun ViewTransactionScreenUI(
                             ),
                         data = transactionListItemData,
                         events = TransactionListItemEvents(
+                            onClick = {
+                                events.navigateToViewTransactionScreen(
+                                    transactionListItemData.transactionId
+                                )
+                            },
                             onDeleteButtonClick = {
                                 uiState.setTransactionIdToDelete(transactionListItemData.transactionId)
                                 uiState.setViewTransactionBottomSheetType(
@@ -237,6 +249,9 @@ internal fun ViewTransactionScreenUI(
                         ),
                     )
                 }
+            }
+            item {
+                NavigationBarSpacer()
             }
         }
     }
