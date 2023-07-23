@@ -44,7 +44,7 @@ class MyPreferencesDataSource(
                 expenseCategory = it[DataStoreConstants.DefaultId.EXPENSE_CATEGORY].orZero(),
                 incomeCategory = it[DataStoreConstants.DefaultId.INCOME_CATEGORY].orZero(),
                 investmentCategory = it[DataStoreConstants.DefaultId.INVESTMENT_CATEGORY].orZero(),
-                account = it[DataStoreConstants.DefaultId.ACCOUNT] ?: 0,
+                account = it[DataStoreConstants.DefaultId.ACCOUNT].orZero(),
             )
         }
     }

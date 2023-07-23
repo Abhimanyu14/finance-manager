@@ -16,8 +16,7 @@ private object PreferencesDataMigration {
         override suspend fun shouldMigrate(
             currentData: Preferences,
         ): Boolean {
-            return (currentData[DataStoreConstants.CURRENT_VERSION_NUMBER]
-                ?: 0) < AppConstants.DATASTORE_CURRENT_VERSION_NUMBER
+            return currentData[DataStoreConstants.CURRENT_VERSION_NUMBER].orZero() < AppConstants.DATASTORE_CURRENT_VERSION_NUMBER
         }
 
         override suspend fun migrate(
@@ -53,8 +52,7 @@ private object PreferencesDataMigration {
         override suspend fun shouldMigrate(
             currentData: Preferences,
         ): Boolean {
-            return (currentData[DataStoreConstants.CURRENT_VERSION_NUMBER]
-                ?: 0) < AppConstants.DATASTORE_CURRENT_VERSION_NUMBER
+            return currentData[DataStoreConstants.CURRENT_VERSION_NUMBER].orZero() < AppConstants.DATASTORE_CURRENT_VERSION_NUMBER
         }
 
         override suspend fun migrate(
@@ -68,7 +66,7 @@ private object PreferencesDataMigration {
             val currentMutablePrefs = currentData.toMutablePreferences()
 
             // Copy existing value
-            val newValue = currentData[defaultSourceIdPreferencesKey] ?: 0
+            val newValue = currentData[defaultSourceIdPreferencesKey].orZero()
 
             // Remove existing key
             currentMutablePrefs.remove(defaultSourceIdPreferencesKey)
