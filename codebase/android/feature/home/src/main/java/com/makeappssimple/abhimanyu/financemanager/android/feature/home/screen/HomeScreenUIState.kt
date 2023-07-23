@@ -56,7 +56,7 @@ class HomeScreenUIState(
                     color = MaterialTheme.colorScheme.tertiary,
                 ),
                 PieChartItemData(
-                    value = unwrappedData?.overviewCardData?.income.orZero(),
+                    value = unwrappedData?.overviewCardData?.expense.orZero(),
                     text = "Expense : ${totalExpenseAmount.toNonSignedString()}",
                     color = MaterialTheme.colorScheme.error,
                 ),
