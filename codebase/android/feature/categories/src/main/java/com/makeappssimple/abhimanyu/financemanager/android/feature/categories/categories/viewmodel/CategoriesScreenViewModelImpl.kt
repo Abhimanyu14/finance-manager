@@ -61,68 +61,80 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
                 defaultDataId,
             ->
             val expenseCategoriesGridItemDataList =
-                categoriesTransactionTypeMap[TransactionType.EXPENSE]?.map { category ->
-                    val isDefault =
-                        if (defaultDataId.isNull() || defaultDataId.expenseCategory == 0) {
-                            isDefaultExpenseCategory(
-                                category = category.title,
-                            )
-                        } else {
-                            defaultDataId.expenseCategory == category.id
-                        }
-                    val isUsedInTransactions = checkIfCategoryIsUsedInTransactionsUseCase(
-                        categoryId = category.id,
-                    )
-                    val isDeleteEnabled = !isDefault && !isUsedInTransactions
+                categoriesTransactionTypeMap[TransactionType.EXPENSE]
+                    ?.sortedBy {
+                        it.title
+                    }
+                    ?.map { category ->
+                        val isDefault =
+                            if (defaultDataId.isNull() || defaultDataId.expenseCategory == 0) {
+                                isDefaultExpenseCategory(
+                                    category = category.title,
+                                )
+                            } else {
+                                defaultDataId.expenseCategory == category.id
+                            }
+                        val isUsedInTransactions = checkIfCategoryIsUsedInTransactionsUseCase(
+                            categoryId = category.id,
+                        )
+                        val isDeleteEnabled = !isDefault && !isUsedInTransactions
 
-                    getCategoriesGridItemData(
-                        isDefault = isDefault,
-                        isDeleteEnabled = isDeleteEnabled,
-                        category = category,
-                    )
-                }.orEmpty()
+                        getCategoriesGridItemData(
+                            isDefault = isDefault,
+                            isDeleteEnabled = isDeleteEnabled,
+                            category = category,
+                        )
+                    }.orEmpty()
             val incomeCategoriesGridItemDataList =
-                categoriesTransactionTypeMap[TransactionType.INCOME]?.map { category ->
-                    val isDefault =
-                        if (defaultDataId.isNull() || defaultDataId.incomeCategory == 0) {
-                            isDefaultIncomeCategory(
-                                category = category.title,
-                            )
-                        } else {
-                            defaultDataId.incomeCategory == category.id
-                        }
-                    val isUsedInTransactions = checkIfCategoryIsUsedInTransactionsUseCase(
-                        categoryId = category.id,
-                    )
-                    val isDeleteEnabled = !isDefault && !isUsedInTransactions
+                categoriesTransactionTypeMap[TransactionType.INCOME]
+                    ?.sortedBy {
+                        it.title
+                    }
+                    ?.map { category ->
+                        val isDefault =
+                            if (defaultDataId.isNull() || defaultDataId.incomeCategory == 0) {
+                                isDefaultIncomeCategory(
+                                    category = category.title,
+                                )
+                            } else {
+                                defaultDataId.incomeCategory == category.id
+                            }
+                        val isUsedInTransactions = checkIfCategoryIsUsedInTransactionsUseCase(
+                            categoryId = category.id,
+                        )
+                        val isDeleteEnabled = !isDefault && !isUsedInTransactions
 
-                    getCategoriesGridItemData(
-                        isDefault = isDefault,
-                        isDeleteEnabled = isDeleteEnabled,
-                        category = category,
-                    )
-                }.orEmpty()
+                        getCategoriesGridItemData(
+                            isDefault = isDefault,
+                            isDeleteEnabled = isDeleteEnabled,
+                            category = category,
+                        )
+                    }.orEmpty()
             val investmentCategoriesGridItemDataList =
-                categoriesTransactionTypeMap[TransactionType.INVESTMENT]?.map { category ->
-                    val isDefault =
-                        if (defaultDataId.isNull() || defaultDataId.investmentCategory == 0) {
-                            isDefaultInvestmentCategory(
-                                category = category.title,
-                            )
-                        } else {
-                            defaultDataId.investmentCategory == category.id
-                        }
-                    val isUsedInTransactions = checkIfCategoryIsUsedInTransactionsUseCase(
-                        categoryId = category.id,
-                    )
-                    val isDeleteEnabled = !isDefault && !isUsedInTransactions
+                categoriesTransactionTypeMap[TransactionType.INVESTMENT]
+                    ?.sortedBy {
+                        it.title
+                    }
+                    ?.map { category ->
+                        val isDefault =
+                            if (defaultDataId.isNull() || defaultDataId.investmentCategory == 0) {
+                                isDefaultInvestmentCategory(
+                                    category = category.title,
+                                )
+                            } else {
+                                defaultDataId.investmentCategory == category.id
+                            }
+                        val isUsedInTransactions = checkIfCategoryIsUsedInTransactionsUseCase(
+                            categoryId = category.id,
+                        )
+                        val isDeleteEnabled = !isDefault && !isUsedInTransactions
 
-                    getCategoriesGridItemData(
-                        isDefault = isDefault,
-                        isDeleteEnabled = isDeleteEnabled,
-                        category = category,
-                    )
-                }.orEmpty()
+                        getCategoriesGridItemData(
+                            isDefault = isDefault,
+                            isDeleteEnabled = isDeleteEnabled,
+                            category = category,
+                        )
+                    }.orEmpty()
             mapOf(
                 TransactionType.EXPENSE to expenseCategoriesGridItemDataList,
                 TransactionType.INCOME to incomeCategoriesGridItemDataList,
