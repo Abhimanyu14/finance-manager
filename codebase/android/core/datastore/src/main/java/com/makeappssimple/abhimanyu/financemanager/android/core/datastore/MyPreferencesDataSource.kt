@@ -32,8 +32,8 @@ class MyPreferencesDataSource(
     fun getDataTimestamp(): Flow<DataTimestamp?> {
         return preferences.map {
             DataTimestamp(
-                lastBackup = it[LAST_DATA_BACKUP_TIMESTAMP].orZero(),
-                lastChange = it[LAST_DATA_CHANGE_TIMESTAMP].orZero(),
+                lastBackup = it[DataStoreConstants.DataTimestamp.LAST_DATA_BACKUP].orZero(),
+                lastChange = it[DataStoreConstants.DataTimestamp.LAST_DATA_CHANGE].orZero(),
             )
         }
     }
@@ -41,10 +41,10 @@ class MyPreferencesDataSource(
     fun getDefaultDataId(): Flow<DefaultDataId?> {
         return preferences.map {
             DefaultDataId(
-                expenseCategory = it[DEFAULT_EXPENSE_CATEGORY_ID].orZero(),
-                incomeCategory = it[DEFAULT_INCOME_CATEGORY_ID].orZero(),
-                investmentCategory = it[DEFAULT_INVESTMENT_CATEGORY_ID].orZero(),
-                account = it[DEFAULT_ACCOUNT_ID] ?: 0,
+                expenseCategory = it[DataStoreConstants.DefaultId.EXPENSE_CATEGORY].orZero(),
+                incomeCategory = it[DataStoreConstants.DefaultId.INCOME_CATEGORY].orZero(),
+                investmentCategory = it[DataStoreConstants.DefaultId.INVESTMENT_CATEGORY].orZero(),
+                account = it[DataStoreConstants.DefaultId.ACCOUNT] ?: 0,
             )
         }
     }
@@ -52,9 +52,9 @@ class MyPreferencesDataSource(
     fun getInitialDataVersionNumber(): Flow<InitialDataVersionNumber?> {
         return preferences.map {
             InitialDataVersionNumber(
-                category = it[CATEGORY_DATA_VERSION_NUMBER].orZero(),
-                emoji = it[EMOJI_DATA_VERSION_NUMBER].orZero(),
-                transaction = it[TRANSACTIONS_DATA_VERSION_NUMBER].orZero(),
+                category = it[DataStoreConstants.InitialDataVersionNumber.CATEGORY].orZero(),
+                emoji = it[DataStoreConstants.InitialDataVersionNumber.EMOJI].orZero(),
+                transaction = it[DataStoreConstants.InitialDataVersionNumber.TRANSACTIONS].orZero(),
             )
         }
     }
@@ -63,7 +63,8 @@ class MyPreferencesDataSource(
         categoryDataVersionNumber: Int,
     ) {
         dataStore.edit {
-            it[CATEGORY_DATA_VERSION_NUMBER] = categoryDataVersionNumber
+            it[DataStoreConstants.InitialDataVersionNumber.CATEGORY] =
+                categoryDataVersionNumber
         }
     }
 
@@ -71,7 +72,7 @@ class MyPreferencesDataSource(
         defaultExpenseCategoryId: Int,
     ) {
         dataStore.edit {
-            it[DEFAULT_EXPENSE_CATEGORY_ID] = defaultExpenseCategoryId
+            it[DataStoreConstants.DefaultId.EXPENSE_CATEGORY] = defaultExpenseCategoryId
         }
     }
 
@@ -79,7 +80,7 @@ class MyPreferencesDataSource(
         defaultIncomeCategoryId: Int,
     ) {
         dataStore.edit {
-            it[DEFAULT_INCOME_CATEGORY_ID] = defaultIncomeCategoryId
+            it[DataStoreConstants.DefaultId.INCOME_CATEGORY] = defaultIncomeCategoryId
         }
     }
 
@@ -87,7 +88,7 @@ class MyPreferencesDataSource(
         defaultInvestmentCategoryId: Int,
     ) {
         dataStore.edit {
-            it[DEFAULT_INVESTMENT_CATEGORY_ID] = defaultInvestmentCategoryId
+            it[DataStoreConstants.DefaultId.INVESTMENT_CATEGORY] = defaultInvestmentCategoryId
         }
     }
 
@@ -95,7 +96,7 @@ class MyPreferencesDataSource(
         defaultAccountId: Int,
     ) {
         dataStore.edit {
-            it[DEFAULT_ACCOUNT_ID] = defaultAccountId
+            it[DataStoreConstants.DefaultId.ACCOUNT] = defaultAccountId
         }
     }
 
@@ -103,7 +104,8 @@ class MyPreferencesDataSource(
         emojiDataVersionNumber: Int,
     ) {
         dataStore.edit {
-            it[EMOJI_DATA_VERSION_NUMBER] = emojiDataVersionNumber
+            it[DataStoreConstants.InitialDataVersionNumber.EMOJI] =
+                emojiDataVersionNumber
         }
     }
 
@@ -111,7 +113,7 @@ class MyPreferencesDataSource(
         lastDataBackupTimestamp: Long,
     ) {
         dataStore.edit {
-            it[LAST_DATA_BACKUP_TIMESTAMP] = lastDataBackupTimestamp
+            it[DataStoreConstants.DataTimestamp.LAST_DATA_BACKUP] = lastDataBackupTimestamp
         }
     }
 
@@ -119,7 +121,7 @@ class MyPreferencesDataSource(
         lastDataChangeTimestamp: Long,
     ) {
         dataStore.edit {
-            it[LAST_DATA_CHANGE_TIMESTAMP] = lastDataChangeTimestamp
+            it[DataStoreConstants.DataTimestamp.LAST_DATA_CHANGE] = lastDataChangeTimestamp
         }
     }
 
@@ -127,7 +129,8 @@ class MyPreferencesDataSource(
         transactionsDataVersionNumber: Int,
     ) {
         dataStore.edit {
-            it[TRANSACTIONS_DATA_VERSION_NUMBER] = transactionsDataVersionNumber
+            it[DataStoreConstants.InitialDataVersionNumber.TRANSACTIONS] =
+                transactionsDataVersionNumber
         }
     }
 }

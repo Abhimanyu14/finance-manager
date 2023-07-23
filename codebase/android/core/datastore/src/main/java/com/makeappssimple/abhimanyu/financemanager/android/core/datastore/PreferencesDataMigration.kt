@@ -9,7 +9,7 @@ object PreferencesDataMigration {
         override suspend fun shouldMigrate(
             currentData: Preferences,
         ): Boolean {
-            return (currentData[DATASTORE_VERSION_NUMBER]
+            return (currentData[DataStoreConstants.CURRENT_VERSION_NUMBER]
                 ?: 0) < AppConstants.DATASTORE_CURRENT_VERSION_NUMBER
         }
 
@@ -20,23 +20,21 @@ object PreferencesDataMigration {
             val currentMutablePrefs = currentData.toMutablePreferences()
 
             // Copy existing value
-            val newValue = currentData[DEFAULT_SOURCE_ID] ?: 0
+            val newValue = currentData[DataStoreConstants.DefaultId.SOURCE] ?: 0
 
             // Remove existing key
-            currentMutablePrefs.remove(DEFAULT_SOURCE_ID)
+            currentMutablePrefs.remove(DataStoreConstants.DefaultId.SOURCE)
 
             // Add existing value to new key
-            currentMutablePrefs[DEFAULT_ACCOUNT_ID] = newValue
+            currentMutablePrefs[DataStoreConstants.DefaultId.ACCOUNT] = newValue
 
             // Update data store version number
-            currentMutablePrefs[DATASTORE_VERSION_NUMBER] =
-                (currentData[DATASTORE_VERSION_NUMBER] ?: 0) + 1
+            currentMutablePrefs[DataStoreConstants.CURRENT_VERSION_NUMBER] =
+                (currentData[DataStoreConstants.CURRENT_VERSION_NUMBER] ?: 0) + 1
 
             return currentMutablePrefs.toPreferences()
         }
 
-        override suspend fun cleanUp() {
-            TODO("Not yet implemented")
-        }
+        override suspend fun cleanUp() {}
     }
 }
