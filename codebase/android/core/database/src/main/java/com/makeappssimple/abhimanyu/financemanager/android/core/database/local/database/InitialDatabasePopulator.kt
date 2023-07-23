@@ -187,8 +187,8 @@ class InitialDatabasePopulatorImpl @Inject constructor(
                     transactions = transactions,
                 ).toTypedArray()
             )
-            myPreferencesDataSource.setTransactionsDataVersionNumber(
-                transactionsDataVersionNumber = currentTransactionsDataVersion,
+            myPreferencesDataSource.setTransactionDataVersionNumber(
+                transactionDataVersionNumber = currentTransactionsDataVersion,
             )
         }
     }

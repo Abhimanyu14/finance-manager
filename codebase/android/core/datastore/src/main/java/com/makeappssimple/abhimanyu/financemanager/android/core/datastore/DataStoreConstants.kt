@@ -22,16 +22,6 @@ object DataStoreConstants {
         val INVESTMENT_CATEGORY: Preferences.Key<Int> = intPreferencesKey(
             name = "default_investment_category_id",
         )
-
-        @Deprecated(
-            message = "Maintained only for migration",
-            replaceWith = ReplaceWith(
-                expression = "DEFAULT_ACCOUNT_ID",
-            ),
-        )
-        val SOURCE: Preferences.Key<Int> = intPreferencesKey(
-            name = "default_source_id",
-        )
     }
 
     object DataTimestamp {
@@ -53,10 +43,8 @@ object DataStoreConstants {
         val EMOJI: Preferences.Key<Int> = intPreferencesKey(
             name = "emoji_data_version_number",
         )
-
-        // TODO(Abhi) - Migrate to "transaction_data_version_number"
-        val TRANSACTIONS: Preferences.Key<Int> = intPreferencesKey(
-            name = "transactions_data_version_number",
+        val TRANSACTION: Preferences.Key<Int> = intPreferencesKey(
+            name = "transaction_data_version_number",
         )
         val TRANSACTION_FOR: Preferences.Key<Int> = intPreferencesKey(
             name = "transaction_for_data_version_number",

@@ -89,8 +89,8 @@ class MyPreferencesRepositoryImpl @Inject constructor(
     override suspend fun setTransactionsDataVersionNumber(
         transactionsDataVersionNumber: Int,
     ) {
-        return myPreferencesDataSource.setTransactionsDataVersionNumber(
-            transactionsDataVersionNumber = transactionsDataVersionNumber,
+        return myPreferencesDataSource.setTransactionDataVersionNumber(
+            transactionDataVersionNumber = transactionsDataVersionNumber,
         )
     }
 }
