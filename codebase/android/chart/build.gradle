@@ -41,42 +41,43 @@ android {
 
 dependencies {
     implementation project(":core:designsystem")
+
     // Androidx core
-    implementation "androidx.core:core-ktx:$rootProject.androidXCoreVersion"
+    implementation libs.androidx.core
 
     // Appcompat
-    implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
+    implementation libs.androidx.appcompat
 
     // Jetpack compose
-    implementation "androidx.compose.ui:ui:$rootProject.jetpackComposeVersion"
-    implementation "androidx.compose.ui:ui-util:$rootProject.jetpackComposeVersion"
+    implementation libs.androidx.compose.ui
+    implementation libs.androidx.compose.util
 
     // Jetpack compose tooling support (Previews, etc.)
-    debugImplementation "androidx.compose.ui:ui-tooling:$rootProject.jetpackComposeVersion"
-    implementation "androidx.compose.ui:ui-tooling-preview:$rootProject.jetpackComposeVersion"
+    debugImplementation libs.androidx.compose.tooling
+    implementation libs.androidx.compose.preiew
 
     // Jetpack compose material icons
-    implementation "androidx.compose.material:material-icons-extended:$rootProject.jetpackComposeVersion"
+    implementation libs.androidx.compose.icons
 
     // Jetpack compose material design
-    implementation "androidx.compose.material3:material3:$rootProject.jetpackComposeMaterial3Version"
+    implementation libs.androidx.compose.material3
 
     // Testing
 
     // JUnit
-    testImplementation "junit:junit:$rootProject.junitVersion"
+    testImplementation libs.junit
 
     // Android X test
-    androidTestImplementation "androidx.test:core-ktx:$rootProject.androidXTestCoreVersion"
-    androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXTestExtensionJUnitVersion"
-    androidTestImplementation "androidx.test.ext:truth:$rootProject.androidXTestExtensionTruthVersion"
-    androidTestImplementation "androidx.test:runner:$rootProject.androidXTestRunnerVersion"
-    androidTestImplementation "androidx.test:rules:$rootProject.androidXTestRulesVersion"
+    androidTestImplementation libs.test.core.ktx
+    androidTestImplementation libs.test.ext
+    androidTestImplementation libs.test.truth
+    androidTestImplementation libs.test.runner
+    androidTestImplementation libs.test.rules
 
     // Mockito kotlin
-    testImplementation "org.mockito.kotlin:mockito-kotlin:$rootProject.mockitoKotlinVersion"
+    testImplementation libs.mockito.kotlin
 
     // Coroutines test
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
-    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
+    testImplementation libs.kotlinx.coroutines.test
+    androidTestImplementation libs.kotlinx.coroutines.test
 }

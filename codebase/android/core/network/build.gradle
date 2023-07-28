@@ -38,41 +38,41 @@ dependencies {
     implementation project(":core:common")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion")
+    implementation libs.coroutines
 
     // Hilt
-    implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
-    kapt "com.google.dagger:hilt-compiler:$rootProject.hiltVersion"
-    kapt "androidx.hilt:hilt-compiler:$rootProject.hiltCompilerVersion"
+    implementation libs.hilt.version
+    kapt libs.dagger.hilt.compiler
+    kapt libs.hilt.compiler
 
     // KSP
-    implementation "com.google.devtools.ksp:symbol-processing-api:$rootProject.kspVersion"
+    implementation libs.ksp
 
     // KotlinX serialization
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$rootProject.kotlinXSerializationVersion"
+    implementation libs.serialization
 
     // Okhttp logging interceptor
-    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpLoggingInterceptorVersion"
+    implementation libs.okhttp
 
     // Retrofit kotlinX serialization converter
-    implementation "com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:$rootProject.retrofitKotlinxSerializationConverterVersion"
+    implementation libs.retrofit.serialization.converter
 
     // Testing
 
     // JUnit
-    testImplementation "junit:junit:$rootProject.junitVersion"
+    testImplementation libs.junit
 
     // Android X test
-    androidTestImplementation "androidx.test:core-ktx:$rootProject.androidXTestCoreVersion"
-    androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXTestExtensionJUnitVersion"
-    androidTestImplementation "androidx.test.ext:truth:$rootProject.androidXTestExtensionTruthVersion"
-    androidTestImplementation "androidx.test:runner:$rootProject.androidXTestRunnerVersion"
-    androidTestImplementation "androidx.test:rules:$rootProject.androidXTestRulesVersion"
+    androidTestImplementation libs.test.core.ktx
+    androidTestImplementation libs.test.ext
+    androidTestImplementation libs.test.truth
+    androidTestImplementation libs.test.runner
+    androidTestImplementation libs.test.rules
 
     // Mockito kotlin
-    testImplementation "org.mockito.kotlin:mockito-kotlin:$rootProject.mockitoKotlinVersion"
+    testImplementation libs.mockito.kotlin
 
     // Coroutines test
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
-    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
+    testImplementation libs.kotlinx.coroutines.test
+    androidTestImplementation libs.kotlinx.coroutines.test
 }

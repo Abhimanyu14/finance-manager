@@ -65,30 +65,30 @@ dependencies {
     implementation project(":core:logger")
 
     // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion")
+    implementation libs.coroutines
 
     // Hilt
-    implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
-    kapt "com.google.dagger:hilt-compiler:$rootProject.hiltVersion"
-    kapt "androidx.hilt:hilt-compiler:$rootProject.hiltCompilerVersion"
+    implementation libs.hilt.version
+    kapt libs.dagger.hilt.compiler
+    kapt libs.hilt.compiler
 
     // Testing
 
     // JUnit
-    implementation "junit:junit:$rootProject.junitVersion"
+    implementation libs.junit
 
     // Android X test
-    implementation "androidx.test:core-ktx:$rootProject.androidXTestCoreVersion"
-    implementation "androidx.test.ext:junit:$rootProject.androidXTestExtensionJUnitVersion"
-    implementation "androidx.test.ext:truth:$rootProject.androidXTestExtensionTruthVersion"
-    implementation "androidx.test:runner:$rootProject.androidXTestRunnerVersion"
-    implementation "androidx.test:rules:$rootProject.androidXTestRulesVersion"
+    implementation libs.test.core.ktx
+    implementation libs.test.ext
+    implementation libs.test.truth
+    implementation libs.test.runner
+    implementation libs.test.rules
 
     // Mockito kotlin
-    implementation "org.mockito.kotlin:mockito-kotlin:$rootProject.mockitoKotlinVersion"
+    implementation libs.mockito.kotlin
 
     // Coroutines test
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
+    implementation libs.kotlinx.coroutines.test
 
     // Hilt testing
     implementation "com.google.dagger:hilt-android-testing:2.44.2"

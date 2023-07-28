@@ -100,45 +100,45 @@ dependencies {
 
 
     // Androidx core
-    implementation "androidx.core:core-ktx:$rootProject.androidXCoreVersion"
+    implementation libs.androidx.core
 
     // Lifecycle components
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$rootProject.lifecycleRuntimeVersion"
+    implementation libs.androidx.lifecycle.runtime
 
     // Jetpack compose
-    implementation "androidx.compose.ui:ui:$rootProject.jetpackComposeVersion"
-    implementation "androidx.compose.ui:ui-util:$rootProject.jetpackComposeVersion"
+    implementation libs.androidx.compose.ui
+    implementation libs.androidx.compose.util
 
     // Jetpack compose tooling support (Previews, etc.)
-    debugImplementation "androidx.compose.ui:ui-tooling:$rootProject.jetpackComposeVersion"
-    implementation "androidx.compose.ui:ui-tooling-preview:$rootProject.jetpackComposeVersion"
+    debugImplementation libs.androidx.compose.tooling
+    implementation libs.androidx.compose.preiew
 
     // Jetpack compose material design
-    implementation "androidx.compose.material3:material3:$rootProject.jetpackComposeMaterial3Version"
+    implementation libs.androidx.compose.material3
 
     // Jetpack compose material design adapter
-    implementation "com.google.android.material:compose-theme-adapter:$rootProject.jetpackComposeMaterialDesignAdapterVersion"
+    implementation libs.jetpack.compose.theme.adapter
 
     // Jetpack compose integration with activities
-    implementation "androidx.activity:activity-compose:$rootProject.jetpackComposeActivityIntegrationVersion"
+    implementation libs.androidx.activity.compose
 
     // Jetpack compose integration with view models
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$rootProject.jetpackComposeViewModelIntegrationVersion"
+    implementation libs.androidx.lifecycle.viewmodel.compose
 
     // Jetpack compose lifecycle runtime
-    implementation "androidx.lifecycle:lifecycle-runtime-compose:$rootProject.jetpackComposeLifecycleRuntimeVersion"
+    implementation libs.androidx.runtime.compose
 
     // Accompanist flow layout
-    implementation "com.google.accompanist:accompanist-flowlayout:$rootProject.accompanistVersion"
+    implementation libs.compose.accompanist.flowlayout
 
     // Accompanist pager
-    implementation "com.google.accompanist:accompanist-pager:$rootProject.accompanistVersion"
+    implementation libs.compose.accompanist.pager
 
     // Testing
 
     // Jetpack compose UI tests
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$rootProject.jetpackComposeVersion"
+    androidTestImplementation libs.compose.ui.test.junit4
 
     // Jetpack compose UI tests manifest - Needed for createComposeRule, but not createAndroidComposeRule
-    debugImplementation("androidx.compose.ui:ui-test-manifest:$rootProject.jetpackComposeVersion")
+    debugImplementation libs.compose.ui.test.manifest
 }

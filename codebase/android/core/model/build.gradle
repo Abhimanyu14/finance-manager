@@ -36,5 +36,5 @@ dependencies {
     implementation project(":core:common")
 
     // KotlinX serialization
-    implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:$rootProject.kotlinXSerializationVersion"
+    implementation libs.serialization
 }

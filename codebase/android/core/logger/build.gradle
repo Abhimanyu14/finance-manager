@@ -37,29 +37,29 @@ dependencies {
     implementation project(":core:common")
 
     // Androidx core
-    implementation "androidx.core:core-ktx:$rootProject.androidXCoreVersion"
+    implementation libs.androidx.core
 
     // Hilt
-    implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
-    kapt "com.google.dagger:hilt-compiler:$rootProject.hiltVersion"
-    kapt "androidx.hilt:hilt-compiler:$rootProject.hiltCompilerVersion"
+    implementation libs.hilt.version
+    kapt libs.dagger.hilt.compiler
+    kapt libs.hilt.compiler
 
     // Testing
 
     // JUnit
-    testImplementation "junit:junit:$rootProject.junitVersion"
+    testImplementation libs.junit
 
     // Android X test
-    androidTestImplementation "androidx.test:core-ktx:$rootProject.androidXTestCoreVersion"
-    androidTestImplementation "androidx.test.ext:junit:$rootProject.androidXTestExtensionJUnitVersion"
-    androidTestImplementation "androidx.test.ext:truth:$rootProject.androidXTestExtensionTruthVersion"
-    androidTestImplementation "androidx.test:runner:$rootProject.androidXTestRunnerVersion"
-    androidTestImplementation "androidx.test:rules:$rootProject.androidXTestRulesVersion"
+    androidTestImplementation libs.test.core.ktx
+    androidTestImplementation libs.test.ext
+    androidTestImplementation libs.test.truth
+    androidTestImplementation libs.test.runner
+    androidTestImplementation libs.test.rules
 
     // Mockito kotlin
-    testImplementation "org.mockito.kotlin:mockito-kotlin:$rootProject.mockitoKotlinVersion"
+    testImplementation libs.mockito.kotlin
 
     // Coroutines test
-    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
-    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$rootProject.coroutinesTestVersion"
+    testImplementation libs.kotlinx.coroutines.test
+    androidTestImplementation libs.kotlinx.coroutines.test
 }
