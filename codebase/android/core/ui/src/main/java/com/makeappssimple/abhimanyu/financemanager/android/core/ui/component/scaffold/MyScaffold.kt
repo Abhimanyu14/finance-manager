@@ -108,7 +108,8 @@ fun MyScaffold(
                 WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
 
             val bottomSheetModifier = if (sheetShape == BottomSheetExpandedShape) {
-                Modifier.fillMaxSize()
+                Modifier
+                    .fillMaxSize()
             } else {
                 Modifier
                     .heightIn(

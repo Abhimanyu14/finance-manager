@@ -51,7 +51,8 @@ fun HorizontalSpacer(
 @Composable
 fun NavigationBarSpacer() {
     Spacer(
-        modifier = Modifier.navigationBarSpacer(),
+        modifier = Modifier
+            .navigationBarSpacer(),
     )
 }
 
@@ -101,7 +102,8 @@ fun navigationBarHeight(): Dp {
 @Composable
 fun StatusBarSpacer() {
     Spacer(
-        modifier = Modifier.statusBarSpacer(),
+        modifier = Modifier
+            .statusBarSpacer(),
     )
 }
 

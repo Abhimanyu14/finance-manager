@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.BoxWithConstraints
@@ -34,6 +33,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarContainer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarEvents
+import kotlin.math.ceil
+import kotlin.math.floor
 
 @Composable
 fun MyEmojiPickerBottomSheetUI(
@@ -57,7 +58,7 @@ fun MyEmojiPickerBottomSheetUI(
                 )
             ).size.width.toDp()
         }
-    }
+    } ?: 100.dp
 
     Column(
         modifier = modifier
@@ -84,9 +85,12 @@ fun MyEmojiPickerBottomSheetUI(
             modifier = Modifier
                 .fillMaxWidth(),
         ) {
-            val columnCount =
-                (maxWidth / ((emojiWidth ?: maxWidth) + (emojiCircleSize.padding * 2))).toInt()
-            Log.e("Abhi", "columnCount $columnCount")
+            val emojiWidthWithPadding = emojiWidth + (emojiCircleSize.padding * 2)
+            val columnCount = (maxWidth / (emojiWidthWithPadding)).toInt()
+            val ceilEmojiWidth = ceil(emojiWidthWithPadding.value).dp
+            val itemPadding =
+                floor(((maxWidth - (ceilEmojiWidth * columnCount)) / (2 * columnCount)).value).dp
+
             LazyColumn(
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -102,11 +106,15 @@ fun MyEmojiPickerBottomSheetUI(
                             Row(
                                 modifier = Modifier
                                     .fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween,
+                                horizontalArrangement = Arrangement.Start,
                                 verticalAlignment = Alignment.CenterVertically,
                             ) {
                                 it.forEach { emoji ->
                                     MyEmojiCircle(
+                                        modifier = Modifier
+                                            .padding(
+                                                horizontal = itemPadding,
+                                            ),
                                         data = MyEmojiCircleData(
                                             emojiCircleSize = emojiCircleSize,
                                             emoji = emoji.character,
