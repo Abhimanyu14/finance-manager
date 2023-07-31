@@ -7,35 +7,11 @@ buildscript {
         // App version name
         appVersionName = "2023.07.23.2"
 
-        // Gradle build tools
-        gradleBuildToolsVersion = "7.3.1"
-
-        // Kotlin version
-        kotlinVersion = "1.8.10"
-
-        // Google services gradle plugin
-        googleServicesVersion = "4.3.14"
-
-        // Jacoco
-        jacocoVersion = "0.8.7"
-
-        // Detekt
-        detektVersion = "1.20.0"
-
         // Lint
         lintVersion = "30.2.1"
 
-        // Hilt plugin
-        hiltPluginVersion = "2.44.2"
-
-        // Open source software licenses plugin
-        ossPluginVersion = "0.10.4"
-
         // Compile SDK version
         compileSdkVersion = 34
-
-        // Build tools version
-        buildToolsVersion = "30.0.2"
 
         // Minimum SDK version
         minSdkVersion = 27
@@ -61,32 +37,30 @@ buildscript {
     dependencies {
 
         // Build tools
-        classpath "com.android.tools.build:gradle:$gradleBuildToolsVersion"
+        classpath libs.plugin.gradle.build.tools
 
         // Kotlin gradle plugin
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath libs.plugin.kotlin.gradle
 
         // Hilt
-        classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltPluginVersion"
+        classpath libs.plugin.hilt.android
 
         // Google services gradle plugin for Firebase
-        classpath "com.google.gms:google-services:$googleServicesVersion"
+        classpath libs.plugin.google.services
 
         // Jacoco
-        classpath "org.jacoco:org.jacoco.core:$jacocoVersion"
+        classpath libs.plugin.jacoco
 
         // Detekt
-        classpath "io.gitlab.arturbosch.detekt:detekt-gradle-plugin:$detektVersion"
+        classpath libs.plugin.detekt
     }
 }
 
 plugins {
-    // id "com.android.application" // version "7.2.2" apply false
-    id "org.jetbrains.kotlin.android" version "1.6.21" apply false
-    id "org.jetbrains.kotlinx.kover" version "0.6.1"
-    id "org.jetbrains.kotlin.jvm" version "1.7.20" apply false
-    id "org.jetbrains.kotlin.plugin.serialization" version "1.7.20" apply false
-    // id "io.gitlab.arturbosch.detekt"
+    alias libs.plugins.kotlin.android apply false
+    alias libs.plugins.kotlin.jvm apply false
+    alias libs.plugins.serialization apply false
+    alias libs.plugins.kover
 }
 
 apply plugin: "io.gitlab.arturbosch.detekt"

@@ -1,4 +1,11 @@
 [versions]
+plugin-gradle-build-tools = "7.3.1"
+plugin-kotlin-gradle = "1.8.10"
+plugin-hilt-android = "2.44.2"
+plugin-google-services = "4.3.14"
+plugin-jacoco = "0.8.7"
+plugin-detekt = "1.20.0"
+
 androidx-core-ktx = "1.11.0-beta02"
 androidx-lifecycle-runtime-ktx = "2.6.1"
 androidx-appcompat = "1.7.0-alpha02"
@@ -40,7 +47,21 @@ turbine = "1.0.0"
 hilt-android-testing = "2.44"
 hilt-android-compiler = "2.44.2"
 
+#plugins
+plugin-kotlin-android = "1.6.21"
+plugin-kotlin-jvm = "1.7.20"
+plugin-serialization = "1.7.20"
+plugin-kover = "0.6.1"
+
+
 [libraries]
+plugin-gradle-build-tools = { group = "com.android.tools.build", name = "gradle", version.ref = "plugin-gradle-build-tools" }
+plugin-kotlin-gradle = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "plugin-kotlin-gradle" }
+plugin-hilt-android = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "plugin-hilt-android" }
+plugin-google-services = { group = "com.google.gms", name = "google-services", version.ref = "plugin-google-services" }
+plugin-jacoco = { group = "org.jacoco", name = "org.jacoco.core", version.ref = "plugin-jacoco" }
+plugin-detekt = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gradle-plugin", version.ref = "plugin-detekt" }
+
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
 androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle-runtime-ktx" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "androidx-appcompat" }
@@ -94,9 +115,9 @@ firebase = { group = "com.google.firebase", name = "firebase-bom", version.ref =
 
 #tesing
 junit = { group = "junit", name = "junit", version.ref = "junit" }
-test-core-ktx = { group = "androidx.test:core-ktx", name = "core-ktx", version.ref = "test-core-ktx" }
+test-core-ktx = { group = "androidx.test", name = "core-ktx", version.ref = "test-core-ktx" }
 test-ext = { group = "androidx.test.ext", name = "junit", version.ref = "test-ext" }
-test-truth = { group = "androidx.test", name = "ext:truth", version.ref = "test-truth" }
+test-truth = { group = "androidx.test.ext", name = "truth", version.ref = "test-truth" }
 test-runner = { group = "androidx.test", name = "runner", version.ref = "test-runner" }
 test-rules = { group = "androidx.test", name = "rules", version.ref = "test-rules" }
 mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockito-kotlin" }
@@ -109,3 +130,7 @@ compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4
 compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest", version.ref = "jetpack-compose-version" }
 
 [plugins]
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "plugin-kotlin-android" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "plugin-kotlin-jvm" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "plugin-serialization" }
+kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "plugin-kover" }
