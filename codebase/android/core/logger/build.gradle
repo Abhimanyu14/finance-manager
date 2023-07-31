@@ -11,9 +11,6 @@ android {
     compileSdk rootProject.compileSdkVersion
 
     defaultConfig {
-        minSdk rootProject.minSdkVersion
-        targetSdk rootProject.targetSdkVersion
-
         testInstrumentationRunner "com.makeappssimple.abhimanyu.financemanager.android.core.testing.MyTestRunner"
     }
 
