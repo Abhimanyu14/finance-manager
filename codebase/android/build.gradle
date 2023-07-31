@@ -25,18 +25,6 @@ buildscript {
         // Lint
         lintVersion = "30.2.1"
 
-        // Navigation
-        navigationVersion = "2.4.0-beta01"
-
-        // Navigation gradle plugin
-        navigationPluginVersion = "2.4.0-alpha08"
-
-        // Crashlytics gradle plugin
-        crashlyticsPluginVersion = "2.5.2"
-
-        // Hilt
-        hiltVersion = "2.44.2"
-
         // Hilt plugin
         hiltPluginVersion = "2.44.2"
 
@@ -55,149 +43,14 @@ buildscript {
         // Target SDK version
         targetSdkVersion = 34
 
-        // Kotlin androidx core
-        androidXCoreVersion = "1.11.0-alpha01"
-
-        // Lifecycle runtime
-        lifecycleRuntimeVersion = "2.6.1"
-
-        // Appcompat
-        appCompatVersion = "1.7.0-alpha02"
-
-        // Jetpack compose
-        jetpackComposeVersion = "1.6.0-alpha01"
-
         // Jetpack compose compiler
         jetpackComposeCompilerVersion = "1.4.3"
-
-        // Jetpack compose material 3
-        jetpackComposeMaterial3Version = "1.2.0-alpha03"
-
-        // Jetpack compose material design adapter
-        jetpackComposeMaterialDesignAdapterVersion = "1.2.1"
-
-        // Jetpack compose integration with activities
-        jetpackComposeActivityIntegrationVersion = "1.7.2"
-
-        // Jetpack compose integration with view models
-        jetpackComposeViewModelIntegrationVersion = "2.6.1"
-
-        // Jetpack compose lifecycle runtime
-        jetpackComposeLifecycleRuntimeVersion = "2.6.1"
-
-        // Jetpack compose navigation
-        jetpackComposeNavigationVersion = "2.6.0"
-
-        // Jetpack compose navigation with hilt
-        jetpackComposeNavigationHiltVersion = "1.0.0"
-
-        // Jetpack compose paging
-        jetpackComposePagingVersion = "3.2.0-rc01"
-
-        // Accompanist
-        accompanistVersion = "0.27.0"
-
-        // Detekt formatting
-        detektFormattingVersion = "1.20.0"
-
-        // Detekt compose
-        detektComposeVersion = "1.0.0"
-
-        // Data store
-        datastorePreferencesVersion = "1.0.0"
-
-        // Room
-        roomVersion = "2.5.1"
 
         // Open source software licenses
         openSourceSoftwareLicensesVersion = "17.0.0"
 
-        // Material design
-        materialDesignVersion = "1.4.0"
-
-        // Paging
-        pagingVersion = "3.2.0-rc01"
-
-        // Dagger
-        daggerVersion = "2.29.1"
-
-        // Dagger support
-        daggerSupportVersion = "2.24"
-
-        // Dagger android
-        daggerAndroidVersion = "2.35.1"
-
-        // Hilt lifecycle view model
-        hiltLifecycleViewModelVersion = "1.0.0-alpha03"
-
-        // Hilt compiler
-        hiltCompilerVersion = "1.0.0"
-
-        // KSP
-        kspVersion = "1.8.20-1.0.11"
-
-        // JDK desugaring
-        jdkDesugaringVersion = "1.1.5"
-
-        // KotlinX Serialization
-        kotlinXSerializationVersion = "1.5.0"
-
-        // KotlinX Serialization
-        okhttpLoggingInterceptorVersion = "4.10.0"
-
-        // KotlinX Serialization
-        retrofitKotlinxSerializationConverterVersion = "1.0.0"
-
-        // Coil
-        coilVersion = "2.4.0"
-
-        // Room
-        roomVersion = "2.5.2"
-
         // Firebase BoM
         firebaseBomVersion = "29.1.0"
-
-        // AndroidX core testing
-        androidXCoreTestingVersion = "2.1.0"
-
-        // JUnit testing
-        junitVersion = "4.13.2"
-
-        // AndroidX test core
-        androidXTestCoreVersion = "1.5.0"
-
-        // AndroidX test extension JUnit
-        androidXTestExtensionJUnitVersion = "1.1.5"
-
-        // AndroidX test extension truth
-        androidXTestExtensionTruthVersion = "1.5.0"
-
-        // AndroidX test runner
-        androidXTestRunnerVersion = "1.5.2"
-
-        // AndroidX test rules
-        androidXTestRulesVersion = "1.5.0"
-
-        // Mockito kotlin
-        mockitoKotlinVersion = "4.0.0"
-
-        // Coroutines
-        coroutinesVersion = "1.7.1"
-
-        // Coroutines test
-        coroutinesTestVersion = "1.6.1"
-
-        // Turbine
-        turbineVersion = "1.0.0"
-
-        // Dagger hilt android testing
-        daggerHiltAndroidTesting = "2.44"
-
-        // Dagger hilt android compiler
-        daggerHiltAndroidCompiler = "2.44.2"
-
-        // AndroidX core testing
-        androidXCoreTestingVersion = "2.2.0"
     }
 
     repositories {
