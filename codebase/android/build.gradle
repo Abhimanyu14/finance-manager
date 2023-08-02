@@ -53,6 +53,9 @@ buildscript {
 
         // Detekt
         classpath libs.plugin.detekt
+
+        // OSS licenses
+        classpath libs.plugin.oss.licenses
     }
 }
 

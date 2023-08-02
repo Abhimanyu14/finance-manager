@@ -8,6 +8,7 @@ plugins {
     id "org.jetbrains.kotlinx.kover"
     id "io.gitlab.arturbosch.detekt"
     id "com.google.devtools.ksp" version "1.8.10-1.0.9"
+    id "com.google.android.gms.oss-licenses-plugin"
 }
 
 // Kover

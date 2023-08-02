@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 
 /**
  * Change Notes
- * 1. Any changes in this data class should also have corresponding changes in [initial.json]
+ * 1. Any changes in this data class should also have corresponding changes in [initial_data.json]
  * 2. There changes do NOT need migrations as
  * they will be bundled with the new APK when any changes are done
  */

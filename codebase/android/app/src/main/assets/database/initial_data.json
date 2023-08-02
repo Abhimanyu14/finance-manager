@@ -4,15 +4,17 @@
     "versioned_accounts": [
       {
         "version_number": 1,
-        "accounts_data": {
-          "balance_amount": {
-            "currency": "INR",
-            "value": 0
-          },
-          "id": 1,
-          "type": "CASH",
-          "name": "Cash"
-        }
+        "accounts_data": [
+          {
+            "balance_amount": {
+              "currency": "INR",
+              "value": 0
+            },
+            "id": 1,
+            "type": "CASH",
+            "name": "Cash"
+          }
+        ]
       }
     ]
   },
@@ -135,10 +137,12 @@
     "versioned_transaction_for_values": [
       {
         "version_number": 1,
-        "transaction_for_values_data": {
-          "id": 1,
-          "title": "SELF"
-        }
+        "transaction_for_values_data": [
+          {
+            "id": 1,
+            "title": "SELF"
+          }
+        ]
       }
     ]
   },
