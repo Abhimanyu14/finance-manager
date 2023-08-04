@@ -207,6 +207,27 @@ internal fun SettingsScreenUI(
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
     ) {
+//        LibrariesContainer(
+//            Modifier
+//                .fillMaxSize()
+//                .padding(),
+//            contentPadding = WindowInsets.navigationBars.asPaddingValues(),
+//            showAuthor = true,
+//            showVersion = true,
+//            showLicenseBadges = true,
+//            header = {
+//                stickyHeader {
+//                    Column(
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .padding(vertical = 25.dp),
+//                        horizontalAlignment = Alignment.CenterHorizontally,
+//                    ) {
+//                        Text("ExampleHeader")
+//                    }
+//                }
+//            }
+//        )
         LazyColumn(
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
