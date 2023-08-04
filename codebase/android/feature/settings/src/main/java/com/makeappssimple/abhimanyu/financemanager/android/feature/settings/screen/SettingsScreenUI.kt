@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.screen
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,19 +14,21 @@ import androidx.compose.material.icons.rounded.Calculate
 import androidx.compose.material.icons.rounded.Category
 import androidx.compose.material.icons.rounded.Groups
 import androidx.compose.material.icons.rounded.Restore
+import androidx.compose.material.icons.rounded.TextSnippet
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
@@ -70,6 +72,7 @@ internal fun SettingsScreenUI(
     uiState: SettingsScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
 ) {
+    val context = LocalContext.current
     val listItemsData: List<SettingsScreenListItemData> = listOf(
         SettingsScreenListItemData(
             data = SettingsListItemData(
@@ -100,6 +103,7 @@ internal fun SettingsScreenUI(
         ),
         SettingsScreenListItemData(
             data = SettingsListItemData(
+                hasDivider = true,
                 isLoading = uiState.isLoading,
                 imageVector = Icons.Rounded.Groups,
                 textStringResourceId = R.string.screen_settings_transaction_for,
@@ -137,12 +141,45 @@ internal fun SettingsScreenUI(
         ),
         SettingsScreenListItemData(
             data = SettingsListItemData(
+                hasDivider = true,
                 isLoading = uiState.isLoading,
                 imageVector = Icons.Rounded.Calculate,
                 textStringResourceId = R.string.screen_settings_recalculate_total,
             ),
             events = SettingsListItemEvents(
                 onClick = events.recalculateTotal,
+            ),
+        ),
+        SettingsScreenListItemData(
+            data = SettingsListItemData(
+                isHeading = true,
+                isLoading = uiState.isLoading,
+                textStringResourceId = R.string.screen_settings_about,
+            ),
+        ),
+        SettingsScreenListItemData(
+            data = SettingsListItemData(
+                isLoading = uiState.isLoading,
+                imageVector = Icons.Rounded.TextSnippet,
+                textStringResourceId = R.string.screen_settings_credits,
+            ),
+            events = SettingsListItemEvents(
+                onClick = {
+                    Toast.makeText(context, "Not Yet Implemented", Toast.LENGTH_SHORT).show()
+                },
+            ),
+        ),
+        SettingsScreenListItemData(
+            data = SettingsListItemData(
+                hasDivider = true,
+                isLoading = uiState.isLoading,
+                imageVector = Icons.Rounded.TextSnippet,
+                textStringResourceId = R.string.screen_settings_open_source_licenses,
+            ),
+            events = SettingsListItemEvents(
+                onClick = {
+                    Toast.makeText(context, "Not Yet Implemented", Toast.LENGTH_SHORT).show()
+                },
             ),
         ),
     )
@@ -170,63 +207,59 @@ internal fun SettingsScreenUI(
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
     ) {
-        // TODO(Abhi) - Change to LazyColumn using sticky footer
-        Column(
+        LazyColumn(
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
-                .fillMaxSize()
-                .navigationBarSpacer(),
+                .fillMaxWidth(),
         ) {
-            LazyColumn(
-                horizontalAlignment = Alignment.Start,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(
-                        weight = 1F,
-                    ),
-            ) {
-                item {
-                    AnimatedVisibility(
-                        visible = uiState.isLoading,
-                    ) {
-                        MyLinearProgressIndicator(
-                            modifier = Modifier
-                                .testTag(
-                                    tag = "linear_progress_indicator",
-                                ),
-                        )
-                    }
-                }
-                items(
-                    items = listItemsData,
-                    key = { listItem ->
-                        listItem.hashCode()
-                    },
+            item {
+                AnimatedVisibility(
+                    visible = uiState.isLoading,
                 ) {
-                    SettingsListItem(
-                        data = it.data,
-                        events = it.events,
+                    MyLinearProgressIndicator(
+                        modifier = Modifier
+                            .testTag(
+                                tag = "linear_progress_indicator",
+                            ),
                     )
                 }
             }
-            uiState.appVersion?.let {
-                MyText(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(
-                            horizontal = 16.dp,
-                            vertical = 8.dp,
-                        ),
-                    text = stringResource(
-                        id = R.string.screen_settings_app_version,
-                        it,
-                    ),
-                    style = MaterialTheme.typography.headlineLarge
-                        .copy(
-                            color = MaterialTheme.colorScheme.primary,
-                            textAlign = TextAlign.Center,
-                        ),
+            items(
+                items = listItemsData,
+                key = { listItem ->
+                    listItem.hashCode()
+                },
+            ) {
+                SettingsListItem(
+                    data = it.data,
+                    events = it.events,
                 )
+            }
+            item {
+                uiState.appVersion?.let {
+                    MyText(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                start = 16.dp,
+                                top = 16.dp,
+                                end = 16.dp,
+                                bottom = 8.dp,
+                            ),
+                        text = stringResource(
+                            id = R.string.screen_settings_app_version,
+                            it,
+                        ),
+                        style = MaterialTheme.typography.headlineLarge
+                            .copy(
+                                color = MaterialTheme.colorScheme.primary,
+                                textAlign = TextAlign.Center,
+                            ),
+                    )
+                }
+            }
+            item {
+                NavigationBarSpacer()
             }
         }
     }

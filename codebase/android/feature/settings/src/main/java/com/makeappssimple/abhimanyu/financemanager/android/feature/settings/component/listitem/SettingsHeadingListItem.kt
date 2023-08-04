@@ -17,7 +17,7 @@ internal fun SettingsHeadingListItem(
         modifier = modifier
             .padding(
                 start = 16.dp,
-                top = 16.dp,
+                top = 8.dp,
                 end = 16.dp,
             )
             .fillMaxWidth(),

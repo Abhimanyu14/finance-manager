@@ -10,6 +10,9 @@
     <string name="screen_settings_backup">Backup Data</string>
     <string name="screen_settings_restore">Restore Data</string>
     <string name="screen_settings_recalculate_total">Recalculate Total</string>
+    <string name="screen_settings_about">About</string>
+    <string name="screen_settings_credits">Credits</string>
+    <string name="screen_settings_open_source_licenses">Open Source Licenses</string>
     <string name="screen_settings_app_version">Version - %1$s</string>
     <!-- endregion -->
 

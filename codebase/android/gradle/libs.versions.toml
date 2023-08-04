@@ -5,7 +5,6 @@ plugin-hilt-android = "2.44.2"
 plugin-google-services = "4.3.15"
 plugin-jacoco = "0.8.7"
 plugin-detekt = "1.20.0"
-plugin-oss-licenses = "0.10.6"
 
 androidx-core-ktx = "1.11.0-beta02"
 androidx-lifecycle-runtime-ktx = "2.6.1"
@@ -35,7 +34,8 @@ paging = "3.2.0"
 datastore = "1.0.0"
 room = "2.5.2"
 firebase = "32.2.0"
-oss-licenses = "17.0.1"
+about-libraries = "10.8.3"
+oss-licenses = "10.8.3"
 junit = "4.13.2"
 test-core-ktx = "1.5.0"
 test-ext = "1.1.5"
@@ -63,7 +63,6 @@ plugin-hilt-android = { group = "com.google.dagger", name = "hilt-android-gradle
 plugin-google-services = { group = "com.google.gms", name = "google-services", version.ref = "plugin-google-services" }
 plugin-jacoco = { group = "org.jacoco", name = "org.jacoco.core", version.ref = "plugin-jacoco" }
 plugin-detekt = { group = "io.gitlab.arturbosch.detekt", name = "detekt-gradle-plugin", version.ref = "plugin-detekt" }
-plugin-oss-licenses = { group = "com.google.android.gms", name = "oss-licenses-plugin", version.ref = "plugin-oss-licenses" }
 
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
 androidx-lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "androidx-lifecycle-runtime-ktx" }
@@ -116,8 +115,9 @@ room-testing = { group = "androidx.room", name = "room-testing", version.ref = "
 #firebase
 firebase = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase" }
 
-#OSS
-oss-licenses = { group = "com.google.android.gms", name = "play-services-oss-licenses", version.ref = "oss-licenses" }
+#about libraries
+about-libraries-core = { group = "com.mikepenz", name = "aboutlibraries-core", version.ref = "about-libraries" }
+about-libraries-compose = { group = "com.mikepenz", name = "aboutlibraries-compose", version.ref = "about-libraries" }
 
 #tesing
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -140,3 +140,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "plugin-ko
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "plugin-kotlin-jvm" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "plugin-serialization" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "plugin-kover" }
+about-libraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "oss-licenses" }

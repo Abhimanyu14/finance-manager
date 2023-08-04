@@ -2,6 +2,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.com
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
@@ -9,11 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 
 @Immutable
 data class SettingsListItemData(
+    val hasDivider: Boolean = false,
     val isHeading: Boolean = false,
     val isLoading: Boolean = false,
     val imageVector: ImageVector? = null,
@@ -67,5 +71,15 @@ internal fun SettingsListItem(
                     },
                 ),
         )
+        if (data.hasDivider) {
+            HorizontalDivider(
+                modifier = Modifier
+                    .padding(
+                        bottom = 24.dp,
+                    ),
+                color = MaterialTheme.colorScheme.outline,
+                thickness = 1.dp,
+            )
+        }
     }
 }

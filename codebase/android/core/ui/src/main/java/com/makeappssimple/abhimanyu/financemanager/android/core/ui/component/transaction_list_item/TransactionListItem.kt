@@ -13,7 +13,7 @@ import androidx.compose.material.icons.rounded.CurrencyExchange
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material.icons.rounded.RadioButtonUnchecked
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -248,7 +248,7 @@ fun TransactionListItem(
                 AnimatedVisibility(
                     visible = data.isExpanded.not() && data.isInSelectionMode.not(),
                 ) {
-                    Divider(
+                    HorizontalDivider(
                         color = MaterialTheme.colorScheme.outline,
                         thickness = 0.5.dp,
                     )
@@ -258,7 +258,7 @@ fun TransactionListItem(
         AnimatedVisibility(
             visible = data.isExpanded,
         ) {
-            Divider(
+            HorizontalDivider(
                 color = MaterialTheme.colorScheme.outline,
                 thickness = 0.5.dp,
             )

@@ -122,8 +122,9 @@ dependencies {
     // Jetpack compose navigation with hilt
     implementation libs.androidx.hilt.navigation.compose
 
-    // OSS
-    implementation libs.oss.licenses
+    // About libraries
+    implementation libs.about.libraries.core
+    implementation libs.about.libraries.compose
 
     // Testing
 

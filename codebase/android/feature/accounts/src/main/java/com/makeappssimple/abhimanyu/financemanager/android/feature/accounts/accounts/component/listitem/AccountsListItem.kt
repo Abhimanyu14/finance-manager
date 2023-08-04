@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -132,7 +132,7 @@ internal fun AccountsListItem(
                 )
             }
             if (data.isExpanded) {
-                Divider(
+                HorizontalDivider(
                     color = MaterialTheme.colorScheme.outline,
                     thickness = 0.5.dp,
                 )
