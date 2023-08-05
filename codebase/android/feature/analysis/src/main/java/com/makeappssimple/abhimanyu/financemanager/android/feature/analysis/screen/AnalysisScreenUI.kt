@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -116,71 +115,68 @@ internal fun AnalysisScreenUI(
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
     ) {
-        Column(
+        LazyColumn(
+            horizontalAlignment = Alignment.Start,
             modifier = Modifier
                 .fillMaxSize()
                 .navigationBarLandscapeSpacer(),
         ) {
-            Row {
-                MyHorizontalScrollingRadioGroup(
-                    modifier = Modifier
-                        .weight(
-                            weight = 1F,
-                        )
-                        .padding(
-                            horizontal = 16.dp,
-                            vertical = 4.dp,
-                        ),
-                    data = MyHorizontalScrollingRadioGroupData(
-                        horizontalArrangement = Arrangement.Start,
-                        items = uiState.transactionTypesChipUIData,
-                        selectedItemIndex = uiState.selectedTransactionTypeIndex,
-                    ),
-                    events = MyHorizontalScrollingRadioGroupEvents(
-                        onSelectionChange = { updatedSelectedTransactionTypeIndex ->
-                            events.updateSelectedTransactionTypeIndex(
-                                updatedSelectedTransactionTypeIndex
+            stickyHeader {
+                Row {
+                    MyHorizontalScrollingRadioGroup(
+                        modifier = Modifier
+                            .weight(
+                                weight = 1F,
                             )
-                        },
-                    ),
-                )
-                ActionButton(
-                    data = ActionButtonData(
-                        isIndicatorVisible = uiState.selectedFilter.areFiltersSelected(),
-                        imageVector = Icons.Rounded.FilterAlt,
-                        contentDescriptionStringResourceId = R.string.screen_analysis_filter_button_content_description,
-                    ),
-                    events = ActionButtonEvents(
-                        onClick = {
-                            uiState.setAnalysisBottomSheetType(AnalysisBottomSheetType.FILTERS)
-                        },
-                    ),
-                    modifier = Modifier
-                        .padding(
-                            horizontal = 16.dp,
+                            .padding(
+                                horizontal = 16.dp,
+                                vertical = 4.dp,
+                            ),
+                        data = MyHorizontalScrollingRadioGroupData(
+                            horizontalArrangement = Arrangement.Start,
+                            items = uiState.transactionTypesChipUIData,
+                            selectedItemIndex = uiState.selectedTransactionTypeIndex,
                         ),
-                )
-            }
-            LazyColumn(
-                horizontalAlignment = Alignment.Start,
-                modifier = Modifier
-                    .fillMaxSize(),
-            ) {
-                items(
-                    items = uiState.transactionDataMappedByCategory,
-                    key = { listItem ->
-                        listItem.hashCode()
-                    },
-                ) { listItem ->
-                    AnalysisListItem(
-                        data = listItem.copy(
-                            maxEndTextWidth = uiState.maxAmountTextWidth,
+                        events = MyHorizontalScrollingRadioGroupEvents(
+                            onSelectionChange = { updatedSelectedTransactionTypeIndex ->
+                                events.updateSelectedTransactionTypeIndex(
+                                    updatedSelectedTransactionTypeIndex
+                                )
+                            },
                         ),
                     )
+                    ActionButton(
+                        data = ActionButtonData(
+                            isIndicatorVisible = uiState.selectedFilter.areFiltersSelected(),
+                            imageVector = Icons.Rounded.FilterAlt,
+                            contentDescriptionStringResourceId = R.string.screen_analysis_filter_button_content_description,
+                        ),
+                        events = ActionButtonEvents(
+                            onClick = {
+                                uiState.setAnalysisBottomSheetType(AnalysisBottomSheetType.FILTERS)
+                            },
+                        ),
+                        modifier = Modifier
+                            .padding(
+                                horizontal = 16.dp,
+                            ),
+                    )
                 }
-                item {
-                    NavigationBarSpacer()
-                }
+            }
+            items(
+                items = uiState.transactionDataMappedByCategory,
+                key = { listItem ->
+                    listItem.hashCode()
+                },
+            ) { listItem ->
+                AnalysisListItem(
+                    data = listItem.copy(
+                        maxEndTextWidth = uiState.maxAmountTextWidth,
+                    ),
+                )
+            }
+            item {
+                NavigationBarSpacer()
             }
         }
     }

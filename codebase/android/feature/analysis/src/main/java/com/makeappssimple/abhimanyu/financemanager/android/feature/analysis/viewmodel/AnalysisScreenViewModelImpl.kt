@@ -184,14 +184,15 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
             it.amountValue
         }
         return result.map {
+            val percentage = (it.amountValue.toDouble() / sum).toFloat()
             AnalysisListItemData(
                 amountText = Amount(
                     value = it.amountValue,
                 ).toString(),
                 emoji = it.category.emoji,
-                percentage = (it.amountValue.toDouble() / sum).toFloat(),
-                percentageText = "%.2f".format(it.percentage).let { percentage ->
-                    "$percentage%"
+                percentage = percentage,
+                percentageText = "%.2f".format((percentage * 100)).let { formattedPercentage ->
+                    "$formattedPercentage%"
                 },
                 title = it.category.title,
             )
