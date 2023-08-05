@@ -8,6 +8,7 @@ fun Account.asEntity(): AccountEntity {
         balanceAmount = balanceAmount.asEntity(),
         id = id,
         type = type,
+        minimumAccountBalanceAmount = minimumAccountBalanceAmount?.asEntity(),
         name = name,
     )
 }

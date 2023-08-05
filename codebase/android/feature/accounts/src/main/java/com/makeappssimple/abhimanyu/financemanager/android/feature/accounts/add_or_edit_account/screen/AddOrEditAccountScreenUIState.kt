@@ -12,6 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.icon
@@ -37,20 +38,6 @@ class AddOrEditAccountScreenUIState(
     }
 
     val isLoading: Boolean = unwrappedData.isNull()
-    val visibilityData = AddOrEditAccountScreenUIVisibilityData(
-        balanceAmountTextField = isEdit,
-        nameTextField = if (isEdit) {
-            unwrappedData?.accountIsNotCash.orFalse()
-        } else {
-            true
-        },
-        nameTextFieldErrorText = unwrappedData?.errorData?.nameTextField.isNotNull(),
-        accountTypesRadioGroup = if (isEdit) {
-            unwrappedData?.accountIsNotCash.orFalse()
-        } else {
-            true
-        },
-    )
     val isCtaButtonEnabled: Boolean = unwrappedData?.isValidAccountData.orFalse()
 
     @StringRes
@@ -72,6 +59,7 @@ class AddOrEditAccountScreenUIState(
         unwrappedData?.errorData?.nameTextField?.textStringResourceId
 
     val selectedAccountTypeIndex: Int = unwrappedData?.selectedAccountTypeIndex.orZero()
+    private val selectedAccount = unwrappedData?.accountTypes?.getOrNull(selectedAccountTypeIndex)
     val accountTypesChipUIDataList: List<ChipUIData> = unwrappedData?.accountTypes
         ?.map { accountType ->
             ChipUIData(
@@ -81,10 +69,28 @@ class AddOrEditAccountScreenUIState(
         }.orEmpty()
 
     val balanceAmountValue: TextFieldValue = unwrappedData?.balanceAmountValue.orEmpty()
+    val minimumBalanceAmountValue: TextFieldValue =
+        unwrappedData?.minimumBalanceAmountValue.orEmpty()
     val name: TextFieldValue = unwrappedData?.name.orEmpty()
     val resetBottomSheetType: () -> Unit = {
         setAddOrEditAccountBottomSheetType(AddOrEditAccountBottomSheetType.NONE)
     }
+
+    val visibilityData = AddOrEditAccountScreenUIVisibilityData(
+        balanceAmountTextField = isEdit,
+        minimumBalanceAmountTextField = selectedAccount == AccountType.BANK,
+        nameTextField = if (isEdit) {
+            unwrappedData?.accountIsNotCash.orFalse()
+        } else {
+            true
+        },
+        nameTextFieldErrorText = unwrappedData?.errorData?.nameTextField.isNotNull(),
+        accountTypesRadioGroup = if (isEdit) {
+            unwrappedData?.accountIsNotCash.orFalse()
+        } else {
+            true
+        },
+    )
 }
 
 @Composable

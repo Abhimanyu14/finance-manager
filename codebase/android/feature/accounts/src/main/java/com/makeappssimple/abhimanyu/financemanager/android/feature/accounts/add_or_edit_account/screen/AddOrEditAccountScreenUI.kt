@@ -58,6 +58,7 @@ enum class AddOrEditAccountScreenUIErrorText(
 @Immutable
 data class AddOrEditAccountScreenUIVisibilityData(
     val balanceAmountTextField: Boolean = false,
+    val minimumBalanceAmountTextField: Boolean = false,
     val nameTextField: Boolean = false,
     val nameTextFieldErrorText: Boolean = false,
     val accountTypesRadioGroup: Boolean = false,
@@ -77,16 +78,19 @@ data class AddOrEditAccountScreenUIData(
     val selectedAccountTypeIndex: Int = 0,
     val accountTypes: List<AccountType> = emptyList(),
     val balanceAmountValue: TextFieldValue = TextFieldValue(),
+    val minimumBalanceAmountValue: TextFieldValue = TextFieldValue(),
     val name: TextFieldValue = TextFieldValue(),
 )
 
 @Immutable
 internal data class AddOrEditAccountScreenUIEvents(
     val clearBalanceAmountValue: () -> Unit,
+    val clearMinimumAccountBalanceAmountValue: () -> Unit,
     val clearName: () -> Unit,
     val navigateUp: () -> Unit,
     val onCtaButtonClick: () -> Unit,
     val updateBalanceAmountValue: (updatedBalanceAmountValue: TextFieldValue) -> Unit,
+    val updateMinimumAccountBalanceAmountValue: (updatedMinimumAccountBalanceAmountValue: TextFieldValue) -> Unit,
     val updateName: (updatedName: TextFieldValue) -> Unit,
     val updateSelectedAccountTypeIndex: (updatedIndex: Int) -> Unit,
 )
@@ -202,10 +206,17 @@ internal fun AddOrEditAccountScreenUI(
                                     focusDirection = FocusDirection.Down,
                                 )
                             },
+                            onDone = {
+                                state.focusManager.clearFocus()
+                            },
                         ),
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.Text,
-                            imeAction = ImeAction.Next,
+                            imeAction = if (uiState.visibilityData.balanceAmountTextField) {
+                                ImeAction.Next
+                            } else {
+                                ImeAction.Done
+                            },
                         ),
                     ),
                     events = MyOutlinedTextFieldEvents(
@@ -249,6 +260,36 @@ internal fun AddOrEditAccountScreenUI(
                     events = MyOutlinedTextFieldEvents(
                         onClickTrailingIcon = events.clearBalanceAmountValue,
                         onValueChange = events.updateBalanceAmountValue,
+                    ),
+                )
+            }
+            if (uiState.visibilityData.minimumBalanceAmountTextField) {
+                MyOutlinedTextField(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(
+                            horizontal = 16.dp,
+                            vertical = 4.dp,
+                        ),
+                    data = MyOutlinedTextFieldData(
+                        isLoading = uiState.isLoading,
+                        textFieldValue = uiState.minimumBalanceAmountValue,
+                        labelTextStringResourceId = R.string.screen_add_or_edit_account_minimum_account_balance_amount_value,
+                        trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_account_clear_minimum_account_balance_amount_value,
+                        visualTransformation = AmountCommaVisualTransformation(),
+                        keyboardActions = KeyboardActions(
+                            onDone = {
+                                state.focusManager.clearFocus()
+                            },
+                        ),
+                        keyboardOptions = KeyboardOptions(
+                            keyboardType = KeyboardType.NumberPassword,
+                            imeAction = ImeAction.Done,
+                        ),
+                    ),
+                    events = MyOutlinedTextFieldEvents(
+                        onClickTrailingIcon = events.clearMinimumAccountBalanceAmountValue,
+                        onValueChange = events.updateMinimumAccountBalanceAmountValue,
                     ),
                 )
             }

@@ -14,6 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.GetAccountsTotalBalanceAmountValueUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.GetAccountsTotalMinimumBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetRecentTransactionDataFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetTransactionUseCase
@@ -47,6 +48,7 @@ internal const val defaultOverviewTabSelection = 1
 @HiltViewModel
 internal class HomeScreenViewModelImpl @Inject constructor(
     getAccountsTotalBalanceAmountValueUseCase: GetAccountsTotalBalanceAmountValueUseCase,
+    getAccountsTotalMinimumBalanceAmountValueUseCase: GetAccountsTotalMinimumBalanceAmountValueUseCase,
     override val myLogger: MyLogger,
     private val backupDataUseCase: BackupDataUseCase,
     private val dateTimeUtil: DateTimeUtil,
@@ -169,6 +171,8 @@ internal class HomeScreenViewModelImpl @Inject constructor(
 
     private val accountsTotalBalanceAmountValue: Flow<Long> =
         getAccountsTotalBalanceAmountValueUseCase()
+    private val accountsTotalMinimumBalanceAmountValue: Flow<Long> =
+        getAccountsTotalMinimumBalanceAmountValueUseCase()
 
     override val screenUIData: StateFlow<MyResult<HomeScreenUIData>?> = combine(
         isBackupCardVisible,
@@ -176,14 +180,22 @@ internal class HomeScreenViewModelImpl @Inject constructor(
         overviewTabSelectionIndex,
         overviewCardData,
         accountsTotalBalanceAmountValue,
-    ) {
-            isBackupCardVisible,
-            homeListItemViewData,
-            overviewTabSelectionIndex,
-            overviewCardData,
-            accountsTotalBalanceAmountValue,
-        ->
-        if (homeListItemViewData.isNull()) {
+        accountsTotalMinimumBalanceAmountValue,
+    ) { flows ->
+        val isBackupCardVisible = flows[0] as? Boolean
+        val homeListItemViewData = flows[1] as? List<TransactionListItemData>
+        val overviewTabSelectionIndex = flows[2] as? Int
+        val overviewCardData = flows[3] as? OverviewCardViewModelData
+        val accountsTotalBalanceAmountValue = flows[4] as? Long
+        val accountsTotalMinimumBalanceAmountValue = flows[5] as? Long
+
+        if (
+            isBackupCardVisible.isNull() ||
+            overviewTabSelectionIndex.isNull() ||
+            homeListItemViewData.isNull() ||
+            accountsTotalBalanceAmountValue.isNull() ||
+            accountsTotalMinimumBalanceAmountValue.isNull()
+        ) {
             MyResult.Loading
         } else {
             MyResult.Success(
@@ -192,6 +204,7 @@ internal class HomeScreenViewModelImpl @Inject constructor(
                     overviewTabSelectionIndex = overviewTabSelectionIndex,
                     transactionListItemDataList = homeListItemViewData,
                     accountsTotalBalanceAmountValue = accountsTotalBalanceAmountValue,
+                    accountsTotalMinimumBalanceAmountValue = accountsTotalMinimumBalanceAmountValue,
                     overviewCardData = overviewCardData,
                 ),
             )

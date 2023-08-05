@@ -4,6 +4,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 
 internal val manualDatabaseMigrations = arrayOf(
+    ManualDatabaseMigration.MIGRATION_19_20,
     ManualDatabaseMigration.MIGRATION_18_19,
     ManualDatabaseMigration.MIGRATION_17_18,
     ManualDatabaseMigration.MIGRATION_16_17,
@@ -21,6 +22,37 @@ internal val manualDatabaseMigrations = arrayOf(
 )
 
 private object ManualDatabaseMigration {
+    /**
+     * New Column added
+     * Adding a new column
+     *
+     * 1. In account_table -> minimum_account_balance_amount
+     */
+    val MIGRATION_19_20 = object : Migration(19, 20) {
+        override fun migrate(
+            database: SupportSQLiteDatabase,
+        ) {
+            // Add column with a default value
+            database.execSQL(
+                """
+                ALTER TABLE account_table 
+                ADD COLUMN `minimum_account_balance_amount` TEXT  DEFAULT NULL
+            """.trimIndent()
+            )
+
+            // Update data
+            database.execSQL(
+                """
+                UPDATE account_table 
+                SET `minimum_account_balance_amount` = CASE type 
+                WHEN 'BANK' THEN '{"currency":"INR","value":0}' 
+                ELSE NULL
+                END
+            """.trimIndent()
+            )
+        }
+    }
+
     /**
      * Table migration
      * Renaming columns

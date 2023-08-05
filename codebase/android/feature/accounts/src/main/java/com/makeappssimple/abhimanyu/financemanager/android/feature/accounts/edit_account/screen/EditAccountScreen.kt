@@ -26,10 +26,12 @@ fun EditAccountScreen(
     AddOrEditAccountScreenUI(
         events = AddOrEditAccountScreenUIEvents(
             clearBalanceAmountValue = screenViewModel::clearBalanceAmountValue,
+            clearMinimumAccountBalanceAmountValue = screenViewModel::clearMinimumAccountBalanceAmountValue,
             clearName = screenViewModel::clearName,
             navigateUp = screenViewModel::navigateUp,
             onCtaButtonClick = screenViewModel::updateAccount,
             updateBalanceAmountValue = screenViewModel::updateBalanceAmountValue,
+            updateMinimumAccountBalanceAmountValue = screenViewModel::updateMinimumAccountBalanceAmountValue,
             updateName = screenViewModel::updateName,
             updateSelectedAccountTypeIndex = screenViewModel::updateSelectedAccountTypeIndex,
         ),

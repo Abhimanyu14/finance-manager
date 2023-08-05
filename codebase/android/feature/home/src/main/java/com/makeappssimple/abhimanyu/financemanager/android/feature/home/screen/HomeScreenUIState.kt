@@ -46,6 +46,8 @@ class HomeScreenUIState(
         unwrappedData?.transactionListItemDataList.orEmpty()
     val accountsTotalBalanceAmountValue: Long =
         unwrappedData?.accountsTotalBalanceAmountValue.orZero()
+    val accountsTotalMinimumBalanceAmountValue: Long =
+        unwrappedData?.accountsTotalMinimumBalanceAmountValue.orZero()
     val overviewCardData: OverviewCardViewModelData = unwrappedData?.overviewCardData.orDefault()
     val pieChartData
         @Composable get() = PieChartData(

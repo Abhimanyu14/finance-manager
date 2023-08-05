@@ -19,6 +19,10 @@ data class Account @OptIn(ExperimentalSerializationApi::class) constructor(
     @EncodeDefault
     val type: AccountType = AccountType.CASH,
 
+    @EncodeDefault
+    @SerialName(value = "minimum_account_balance_amount")
+    val minimumAccountBalanceAmount: Amount? = null,
+
     val name: String,
 )
 

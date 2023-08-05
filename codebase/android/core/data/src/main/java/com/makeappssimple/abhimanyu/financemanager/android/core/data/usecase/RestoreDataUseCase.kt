@@ -8,7 +8,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEnt
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.transactionsCleanUp
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.sanitizeAccounts
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.sanitizeTransactions
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
@@ -45,12 +46,18 @@ class RestoreDataUseCaseImpl(
         } else {
             backupData.databaseData.emojis
         }
-        val accounts = if (backupData.databaseData.isNull()) {
-            backupData.accounts.orEmpty()
-        } else {
-            backupData.databaseData.accounts
+        val accounts = sanitizeAccounts(
+            accounts = if (backupData.databaseData.isNull()) {
+                backupData.accounts.orEmpty()
+            } else {
+                backupData.databaseData.accounts
+            }.map {
+                it.asEntity()
+            },
+        ).map {
+            it.asExternalModel()
         }
-        val transactions = transactionsCleanUp(
+        val transactions = sanitizeTransactions(
             transactions = if (backupData.databaseData.isNull()) {
                 backupData.transactions.orEmpty()
             } else {

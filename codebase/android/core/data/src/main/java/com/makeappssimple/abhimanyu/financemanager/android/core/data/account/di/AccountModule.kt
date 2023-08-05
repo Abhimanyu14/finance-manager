@@ -10,6 +10,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.use
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.GetAccountUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.GetAccountsTotalBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.GetAccountsTotalBalanceAmountValueUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.GetAccountsTotalMinimumBalanceAmountValueUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.GetAccountsTotalMinimumBalanceAmountValueUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.GetAllAccountsCountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.GetAllAccountsCountUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.GetAllAccountsFlowUseCase
@@ -77,6 +79,15 @@ class AccountModule {
         accountRepository: AccountRepository,
     ): GetAccountsTotalBalanceAmountValueUseCase {
         return GetAccountsTotalBalanceAmountValueUseCaseImpl(
+            accountRepository = accountRepository,
+        )
+    }
+
+    @Provides
+    fun providesGetAccountsTotalMinimumBalanceAmountValueUseCase(
+        accountRepository: AccountRepository,
+    ): GetAccountsTotalMinimumBalanceAmountValueUseCase {
+        return GetAccountsTotalMinimumBalanceAmountValueUseCaseImpl(
             accountRepository = accountRepository,
         )
     }

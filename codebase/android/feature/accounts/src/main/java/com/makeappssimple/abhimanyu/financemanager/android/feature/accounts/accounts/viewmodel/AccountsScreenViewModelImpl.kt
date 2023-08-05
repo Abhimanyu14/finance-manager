@@ -9,6 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.DeleteAccountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.GetAccountsTotalBalanceAmountValueUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.GetAccountsTotalMinimumBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.GetAllAccountsFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfAccountIsUsedInTransactionsUseCase
@@ -34,6 +35,7 @@ import javax.inject.Inject
 internal class AccountsScreenViewModelImpl @Inject constructor(
     getAllAccountsFlowUseCase: GetAllAccountsFlowUseCase,
     getAccountsTotalBalanceAmountValueUseCase: GetAccountsTotalBalanceAmountValueUseCase,
+    getAccountsTotalMinimumBalanceAmountValueUseCase: GetAccountsTotalMinimumBalanceAmountValueUseCase,
     override val myLogger: MyLogger,
     private val checkIfAccountIsUsedInTransactionsUseCase: CheckIfAccountIsUsedInTransactionsUseCase,
     private val deleteAccountUseCase: DeleteAccountUseCase,
@@ -47,15 +49,19 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
     private val allAccountsFlow: Flow<List<Account>> = getAllAccountsFlowUseCase()
     private val accountsTotalBalanceAmountValue: Flow<Long> =
         getAccountsTotalBalanceAmountValueUseCase()
+    private val accountsTotalMinimumBalanceAmountValue: Flow<Long> =
+        getAccountsTotalMinimumBalanceAmountValueUseCase()
 
     override val screenUIData: StateFlow<MyResult<AccountsScreenUIData>?> = combine(
         defaultAccountId,
         allAccountsFlow,
         accountsTotalBalanceAmountValue,
+        accountsTotalMinimumBalanceAmountValue,
     ) {
             defaultAccountId,
             allAccountsFlow,
             accountsTotalBalanceAmountValue,
+            accountsTotalMinimumBalanceAmountValue,
         ->
         val accountTypes = AccountType.values().sortedBy {
             it.sortOrder
@@ -104,7 +110,8 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
         }
 
         if (
-            accountsListItemDataList.isNull()
+            accountsListItemDataList.isNull() ||
+            accountsTotalMinimumBalanceAmountValue.isNull()
         ) {
             MyResult.Loading
         } else {
@@ -112,6 +119,7 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
                 data = AccountsScreenUIData(
                     accountsListItemDataList = accountsListItemDataList,
                     accountsTotalBalanceAmountValue = accountsTotalBalanceAmountValue,
+                    accountsTotalMinimumBalanceAmountValue = accountsTotalMinimumBalanceAmountValue,
                 ),
             )
         }

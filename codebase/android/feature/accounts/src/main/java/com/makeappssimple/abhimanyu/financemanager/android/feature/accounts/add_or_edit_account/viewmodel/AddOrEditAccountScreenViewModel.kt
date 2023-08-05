@@ -23,8 +23,14 @@ interface AddOrEditAccountScreenViewModel : ScreenViewModel {
 
     fun clearBalanceAmountValue()
 
+    fun clearMinimumAccountBalanceAmountValue()
+
     fun updateBalanceAmountValue(
         updatedBalanceAmountValue: TextFieldValue,
+    )
+
+    fun updateMinimumAccountBalanceAmountValue(
+        updatedMinimumAccountBalanceAmountValue: TextFieldValue,
     )
 
     fun updateSelectedAccountTypeIndex(

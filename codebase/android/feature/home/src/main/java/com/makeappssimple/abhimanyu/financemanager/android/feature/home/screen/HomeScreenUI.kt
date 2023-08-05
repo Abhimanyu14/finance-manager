@@ -53,6 +53,7 @@ data class HomeScreenUIData(
     val overviewTabSelectionIndex: Int = 0,
     val transactionListItemDataList: List<TransactionListItemData> = emptyList(),
     val accountsTotalBalanceAmountValue: Long = 0L,
+    val accountsTotalMinimumBalanceAmountValue: Long = 0L,
     val overviewCardData: OverviewCardViewModelData? = null,
 )
 
@@ -132,6 +133,7 @@ internal fun HomeScreenUI(
                     data = TotalBalanceCardData(
                         isLoading = uiState.isLoading,
                         totalBalanceAmount = uiState.accountsTotalBalanceAmountValue,
+                        totalMinimumBalanceAmount = uiState.accountsTotalMinimumBalanceAmountValue,
                     ),
                     events = TotalBalanceCardEvents(
                         onClick = events.navigateToAccountsScreen,

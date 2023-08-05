@@ -25,8 +25,17 @@ data class AccountEntity @OptIn(ExperimentalSerializationApi::class) constructor
     val id: Int = 0,
 
     @EncodeDefault
+    @ColumnInfo(name = "type")
+    @SerialName(value = "type")
     val type: AccountType = AccountType.CASH,
 
+    @EncodeDefault
+    @ColumnInfo(name = "minimum_account_balance_amount")
+    @SerialName(value = "minimum_account_balance_amount")
+    val minimumAccountBalanceAmount: AmountEntity? = null,
+
+    @ColumnInfo(name = "name")
+    @SerialName(value = "name")
     val name: String,
 )
 
@@ -45,6 +54,7 @@ fun AccountEntity.asExternalModel(): Account {
         balanceAmount = balanceAmount.asExternalModel(),
         id = id,
         type = type,
+        minimumAccountBalanceAmount = minimumAccountBalanceAmount?.asExternalModel(),
         name = name,
     )
 }

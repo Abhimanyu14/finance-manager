@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.MyJsonReader
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.InitialDatabaseData
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.transactionsCleanUp
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.sanitizeTransactions
 import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyPreferencesDataSource
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
 import kotlinx.coroutines.CoroutineScope
@@ -183,7 +183,7 @@ class InitialDatabasePopulatorImpl @Inject constructor(
             val transactions = transactionDao.getAllTransactionsFlow().first()
             transactionDao.deleteAllTransactions()
             transactionDao.insertTransactions(
-                *transactionsCleanUp(
+                *sanitizeTransactions(
                     transactions = transactions,
                 ).toTypedArray()
             )

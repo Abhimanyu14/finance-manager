@@ -40,6 +40,7 @@ enum class AccountsBottomSheetType : BottomSheetType {
 data class AccountsScreenUIData(
     val accountsListItemDataList: List<AccountsListItemData> = emptyList(),
     val accountsTotalBalanceAmountValue: Long = 0L,
+    val accountsTotalMinimumBalanceAmountValue: Long = 0L,
 )
 
 @Immutable
@@ -145,6 +146,7 @@ internal fun AccountsScreenUI(
                     data = TotalBalanceCardData(
                         isLoading = uiState.isLoading,
                         totalBalanceAmount = uiState.accountsTotalBalanceAmountValue,
+                        totalMinimumBalanceAmount = uiState.accountsTotalMinimumBalanceAmountValue,
                     ),
                 )
             }

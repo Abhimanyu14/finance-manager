@@ -87,6 +87,12 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
             text = "",
         ),
     )
+    private val minimumAccountBalanceAmountValue: MutableStateFlow<TextFieldValue> =
+        MutableStateFlow(
+            value = TextFieldValue(
+                text = "",
+            ),
+        )
 
     override val screenUIData: StateFlow<MyResult<AddOrEditAccountScreenUIData>?> = combine(
         errorData,
@@ -94,6 +100,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
         balanceAmountValue,
         name,
         originalAccount,
+        minimumAccountBalanceAmountValue,
     ) { flows ->
         val errorData = flows[0] as? AddOrEditAccountScreenUIErrorData
             ?: AddOrEditAccountScreenUIErrorData()
@@ -101,6 +108,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
         val balanceAmountValue = flows[2] as? TextFieldValue ?: TextFieldValue()
         val name = flows[3] as? TextFieldValue ?: TextFieldValue()
         val originalAccount = flows[4] as? Account
+        val minimumAccountBalanceAmountValue = flows[5] as? TextFieldValue ?: TextFieldValue()
 
         val accountIsNotCash = originalAccount?.type != AccountType.CASH
         val isValidAccountData = checkIfAccountDataIsValid(
@@ -126,6 +134,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
                     selectedAccountTypeIndex = selectedAccountTypeIndex,
                     accountTypes = validAccountTypes,
                     balanceAmountValue = balanceAmountValue,
+                    minimumBalanceAmountValue = minimumAccountBalanceAmountValue,
                     name = name,
                 ),
             )
@@ -151,17 +160,28 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
         val originalAccountValue = originalAccount.value ?: return
         val amountChangeValue =
             balanceAmountValue.value.text.toIntOrZero() - originalAccountValue.balanceAmount.value
+        val accountType = if (originalAccountValue.type != AccountType.CASH) {
+            validAccountTypes[selectedAccountTypeIndex.value]
+        } else {
+            originalAccountValue.type
+        }
+        val minimumAccountBalanceAmount = if (accountType == AccountType.BANK) {
+            (originalAccountValue.minimumAccountBalanceAmount ?: Amount(
+                value = 0L,
+            )).copy(
+                value = minimumAccountBalanceAmountValue.value.text.toLongOrZero(),
+            )
+        } else {
+            null
+        }
         val updatedAccount = originalAccountValue
             .copy(
                 balanceAmount = originalAccountValue.balanceAmount
                     .copy(
                         value = balanceAmountValue.value.text.toLongOrZero(),
                     ),
-                type = if (originalAccountValue.type != AccountType.CASH) {
-                    validAccountTypes[selectedAccountTypeIndex.value]
-                } else {
-                    originalAccountValue.type
-                },
+                type = accountType,
+                minimumAccountBalanceAmount = minimumAccountBalanceAmount,
                 name = name.value.text.ifBlank {
                     originalAccountValue.name
                 },
@@ -211,12 +231,22 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
+            val accountType = validAccountTypes[selectedAccountTypeIndex.value]
+            val minimumAccountBalanceAmount = if (accountType == AccountType.BANK) {
+                Amount(
+                    value = minimumAccountBalanceAmountValue.value.text.toLongOrZero(),
+                )
+
+            } else {
+                null
+            }
             insertAccountsUseCase(
                 Account(
                     balanceAmount = Amount(
                         value = 0L,
                     ),
-                    type = validAccountTypes[selectedAccountTypeIndex.value],
+                    type = accountType,
+                    minimumAccountBalanceAmount = minimumAccountBalanceAmount,
                     name = name.value.text,
                 ),
             )
@@ -254,12 +284,30 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
         )
     }
 
+    override fun clearMinimumAccountBalanceAmountValue() {
+        updateMinimumAccountBalanceAmountValue(
+            updatedMinimumAccountBalanceAmountValue = minimumAccountBalanceAmountValue.value.copy(
+                text = "",
+            ),
+        )
+    }
+
     override fun updateBalanceAmountValue(
         updatedBalanceAmountValue: TextFieldValue,
     ) {
         balanceAmountValue.update {
             updatedBalanceAmountValue.copy(
                 text = updatedBalanceAmountValue.text.filterDigits(),
+            )
+        }
+    }
+
+    override fun updateMinimumAccountBalanceAmountValue(
+        updatedMinimumAccountBalanceAmountValue: TextFieldValue,
+    ) {
+        minimumAccountBalanceAmountValue.update {
+            updatedMinimumAccountBalanceAmountValue.copy(
+                text = updatedMinimumAccountBalanceAmountValue.text.filterDigits(),
             )
         }
     }
@@ -317,6 +365,14 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
                 text = account.balanceAmount.value.toString(),
                 selection = TextRange(account.balanceAmount.value.toString().length),
             )
+        }
+        account.minimumAccountBalanceAmount?.let { minimumAccountBalanceAmount ->
+            minimumAccountBalanceAmountValue.update {
+                TextFieldValue(
+                    text = minimumAccountBalanceAmount.value.toString(),
+                    selection = TextRange(minimumAccountBalanceAmount.value.toString().length),
+                )
+            }
         }
     }
 
