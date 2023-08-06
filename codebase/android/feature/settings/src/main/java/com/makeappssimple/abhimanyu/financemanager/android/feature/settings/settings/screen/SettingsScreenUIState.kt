@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable

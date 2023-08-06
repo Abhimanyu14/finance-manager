@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen
 
 import android.net.Uri
 import androidx.activity.compose.ManagedActivityResultLauncher
@@ -15,8 +15,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.CreateJsonDocument
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.viewmodel.SettingsScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.viewmodel.SettingsScreenViewModelImpl
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.viewmodel.SettingsScreenViewModel
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.viewmodel.SettingsScreenViewModelImpl
 
 @Composable
 fun SettingsScreen(
@@ -60,6 +60,7 @@ fun SettingsScreen(
             },
             navigateToCategoriesScreen = screenViewModel::navigateToCategoriesScreen,
             navigateToAccountsScreen = screenViewModel::navigateToAccountsScreen,
+            navigateToOpenSourceLicensesScreen = screenViewModel::navigateToOpenSourceLicensesScreen,
             navigateToTransactionForValuesScreen = screenViewModel::navigateToTransactionForValuesScreen,
             navigateUp = screenViewModel::navigateUp,
             recalculateTotal = {

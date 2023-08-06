@@ -1,5 +1,9 @@
 <resources>
 
+    <!-- region open source licenses screen -->
+    <string name="screen_open_source_licenses_appbar_title">Open Source Licenses</string>
+    <!-- endregion -->
+
     <!-- region settings screen -->
     <string name="screen_settings_appbar_title">Settings</string>
     <string name="screen_settings_data">Data</string>

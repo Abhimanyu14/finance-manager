@@ -108,6 +108,12 @@ object MyNavigationDirections {
         override val screen = Screen.Home.route
     }
 
+    object OpenSourceLicenses : NavigationCommand {
+        override val command = Command.NAVIGATE
+        override val destination = Screen.OpenSourceLicenses.route
+        override val screen = Screen.OpenSourceLicenses.route
+    }
+
     object Settings : NavigationCommand {
         override val command = Command.NAVIGATE
         override val destination = Screen.Settings.route

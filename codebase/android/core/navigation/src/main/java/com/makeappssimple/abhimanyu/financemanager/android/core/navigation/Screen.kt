@@ -47,6 +47,10 @@ sealed class Screen(
         route = "home",
     )
 
+    object OpenSourceLicenses : Screen(
+        route = "open_source_licenses",
+    )
+
     object Settings : Screen(
         route = "settings",
     )

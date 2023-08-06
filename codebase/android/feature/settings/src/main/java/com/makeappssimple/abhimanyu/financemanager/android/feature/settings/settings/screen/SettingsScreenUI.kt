@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.screen
+package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen
 
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
@@ -35,9 +35,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememb
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.component.listitem.SettingsListItem
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.component.listitem.SettingsListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.component.listitem.SettingsListItemEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.component.listitem.SettingsListItem
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.component.listitem.SettingsListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.component.listitem.SettingsListItemEvents
 
 enum class SettingsBottomSheetType : BottomSheetType {
     NONE,
@@ -60,6 +60,7 @@ internal data class SettingsScreenUIEvents(
     val backupData: () -> Unit = {},
     val navigateToCategoriesScreen: () -> Unit = {},
     val navigateToAccountsScreen: () -> Unit = {},
+    val navigateToOpenSourceLicensesScreen: () -> Unit = {},
     val navigateToTransactionForValuesScreen: () -> Unit = {},
     val navigateUp: () -> Unit = {},
     val recalculateTotal: () -> Unit = {},
@@ -177,9 +178,7 @@ internal fun SettingsScreenUI(
                 textStringResourceId = R.string.screen_settings_open_source_licenses,
             ),
             events = SettingsListItemEvents(
-                onClick = {
-                    Toast.makeText(context, "Not Yet Implemented", Toast.LENGTH_SHORT).show()
-                },
+                onClick = events.navigateToOpenSourceLicensesScreen,
             ),
         ),
     )
@@ -207,27 +206,6 @@ internal fun SettingsScreenUI(
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
     ) {
-//        LibrariesContainer(
-//            Modifier
-//                .fillMaxSize()
-//                .padding(),
-//            contentPadding = WindowInsets.navigationBars.asPaddingValues(),
-//            showAuthor = true,
-//            showVersion = true,
-//            showLicenseBadges = true,
-//            header = {
-//                stickyHeader {
-//                    Column(
-//                        modifier = Modifier
-//                            .fillMaxWidth()
-//                            .padding(vertical = 25.dp),
-//                        horizontalAlignment = Alignment.CenterHorizontally,
-//                    ) {
-//                        Text("ExampleHeader")
-//                    }
-//                }
-//            }
-//        )
         LazyColumn(
             horizontalAlignment = Alignment.Start,
             modifier = Modifier

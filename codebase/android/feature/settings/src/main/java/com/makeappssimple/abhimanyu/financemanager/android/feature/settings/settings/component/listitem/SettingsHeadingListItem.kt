@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.component.listitem
+package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.component.listitem
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

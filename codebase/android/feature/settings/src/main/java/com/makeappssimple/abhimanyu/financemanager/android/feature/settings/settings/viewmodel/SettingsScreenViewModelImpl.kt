@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.viewmodel
+package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.viewmodel
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
@@ -13,7 +13,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.Res
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.screen.SettingsScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -71,6 +71,12 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
     override fun navigateToAccountsScreen() {
         navigationManager.navigate(
             MyNavigationDirections.Accounts
+        )
+    }
+
+    override fun navigateToOpenSourceLicensesScreen() {
+        navigationManager.navigate(
+            MyNavigationDirections.OpenSourceLicenses
         )
     }
 
