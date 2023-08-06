@@ -38,6 +38,7 @@ interface TransactionRepository {
     suspend fun getTitleSuggestions(
         categoryId: Int,
         numberOfSuggestions: Int,
+        enteredTitle: String,
     ): List<String>
 
     suspend fun checkIfCategoryIsUsedInTransactions(

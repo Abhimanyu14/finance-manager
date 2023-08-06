@@ -92,10 +92,12 @@ class TransactionRepositoryImpl(
     override suspend fun getTitleSuggestions(
         categoryId: Int,
         numberOfSuggestions: Int,
+        enteredTitle: String,
     ): List<String> {
         return transactionDao.getTitleSuggestions(
             categoryId = categoryId,
             numberOfSuggestions = numberOfSuggestions,
+            enteredTitle = enteredTitle,
         )
     }
 

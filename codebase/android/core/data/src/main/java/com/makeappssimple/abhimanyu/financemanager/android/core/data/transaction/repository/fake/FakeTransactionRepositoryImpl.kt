@@ -100,6 +100,7 @@ class FakeTransactionRepositoryImpl : TransactionRepository {
     override suspend fun getTitleSuggestions(
         categoryId: Int,
         numberOfSuggestions: Int,
+        enteredTitle: String,
     ): List<String> {
         return emptyList()
 //        return transactionDao.getTitleSuggestions(

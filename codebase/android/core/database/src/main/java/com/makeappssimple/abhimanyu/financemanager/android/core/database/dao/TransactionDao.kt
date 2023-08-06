@@ -89,6 +89,7 @@ interface TransactionDao {
     @Query(
         value = "SELECT title from transaction_table " +
                 "WHERE category_id = :categoryId " +
+                "AND title LIKE '%' || :enteredTitle || '%' " +
                 "GROUP BY title " +
                 "ORDER BY COUNT(title) DESC " +
                 "LIMIT :numberOfSuggestions"
@@ -96,6 +97,7 @@ interface TransactionDao {
     suspend fun getTitleSuggestions(
         categoryId: Int,
         numberOfSuggestions: Int,
+        enteredTitle: String,
     ): List<String>
 
     @Query(

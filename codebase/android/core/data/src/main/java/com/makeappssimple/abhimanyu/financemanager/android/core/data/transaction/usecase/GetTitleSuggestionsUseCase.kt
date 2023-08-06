@@ -6,6 +6,7 @@ interface GetTitleSuggestionsUseCase {
     suspend operator fun invoke(
         categoryId: Int,
         numberOfSuggestions: Int = 5,
+        enteredTitle: String,
     ): List<String>
 }
 
@@ -15,10 +16,12 @@ class GetTitleSuggestionsUseCaseImpl(
     override suspend operator fun invoke(
         categoryId: Int,
         numberOfSuggestions: Int,
+        enteredTitle: String,
     ): List<String> {
         return transactionRepository.getTitleSuggestions(
             categoryId = categoryId,
             numberOfSuggestions = numberOfSuggestions,
+            enteredTitle = enteredTitle,
         )
     }
 }

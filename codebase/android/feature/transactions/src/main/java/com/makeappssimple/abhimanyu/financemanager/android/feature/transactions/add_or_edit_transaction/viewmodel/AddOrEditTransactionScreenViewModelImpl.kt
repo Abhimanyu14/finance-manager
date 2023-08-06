@@ -996,11 +996,16 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         coroutineScope: CoroutineScope,
     ) {
         coroutineScope.launch {
-            selectedCategoryId.collectLatest { selectedCategoryIdValue ->
-                selectedCategoryIdValue ?: return@collectLatest
+            combine(
+                selectedCategoryId, uiState,
+            ) { selectedCategoryId, uiState ->
+                Pair(selectedCategoryId, uiState)
+            }.collectLatest { (selectedCategoryId, uiState) ->
+                selectedCategoryId ?: return@collectLatest
                 titleSuggestions.update {
                     getTitleSuggestionsUseCase(
-                        categoryId = selectedCategoryIdValue,
+                        categoryId = selectedCategoryId,
+                        enteredTitle = uiState.title.text,
                     )
                 }
             }
