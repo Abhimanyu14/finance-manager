@@ -4,6 +4,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DataTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
@@ -19,6 +20,11 @@ class FakeMyPreferencesRepositoryImpl : MyPreferencesRepository {
     }
 
     override fun getInitialDataVersionNumber(): Flow<InitialDataVersionNumber?> {
+        return emptyFlow()
+//        return myPreferencesDataSource.getInitialDataVersionNumber()
+    }
+
+    override fun getReminder(): Flow<Reminder?> {
         return emptyFlow()
 //        return myPreferencesDataSource.getInitialDataVersionNumber()
     }
@@ -71,6 +77,14 @@ class FakeMyPreferencesRepositoryImpl : MyPreferencesRepository {
 //        )
     }
 
+    override suspend fun setIsReminderEnabled(
+        isReminderEnabled: Boolean,
+    ) {
+//        return myPreferencesDataSource.setEmojiDataVersionNumber(
+//            emojiDataVersionNumber = emojiDataVersionNumber,
+//        )
+    }
+
     override suspend fun setLastDataBackupTimestamp(
         lastDataBackupTimestamp: Long,
     ) {
@@ -93,5 +107,11 @@ class FakeMyPreferencesRepositoryImpl : MyPreferencesRepository {
 //        return myPreferencesDataSource.setTransactionsDataVersionNumber(
 //            transactionsDataVersionNumber = transactionsDataVersionNumber,
 //        )
+    }
+
+    override suspend fun setReminderTime(
+        hour: Int,
+        min: Int,
+    ) {
     }
 }

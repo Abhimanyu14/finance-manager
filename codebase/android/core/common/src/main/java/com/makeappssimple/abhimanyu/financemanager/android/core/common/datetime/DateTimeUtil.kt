@@ -67,13 +67,19 @@ interface DateTimeUtil {
         zoneId: ZoneId = getSystemDefaultZoneId(),
     ): String
 
+    fun getTimestamp(
+        date: LocalDate = getLocalDate(),
+        time: LocalTime = getLocalTime(),
+        zoneId: ZoneId = getSystemDefaultZoneId(),
+    ): Long
+
     fun getLocalDate(
-        timestamp: Long,
+        timestamp: Long = getCurrentTimeMillis(),
         zoneId: ZoneId = getSystemDefaultZoneId(),
     ): LocalDate
 
     fun getLocalTime(
-        timestamp: Long,
+        timestamp: Long = getCurrentTimeMillis(),
         zoneId: ZoneId = getSystemDefaultZoneId(),
     ): LocalTime
 

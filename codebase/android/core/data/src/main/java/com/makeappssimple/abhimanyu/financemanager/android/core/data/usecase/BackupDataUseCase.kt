@@ -19,6 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.DataTimest
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import kotlinx.coroutines.async
@@ -104,6 +105,7 @@ class BackupDataUseCaseImpl(
                         ?: InitialDataVersionNumber(),
                     dataTimestamp = myPreferencesRepository.getDataTimestamp().first()
                         ?: DataTimestamp(),
+                    reminder = myPreferencesRepository.getReminder().first() ?: Reminder(),
                 )
             )
             val jsonString = Json.encodeToString(

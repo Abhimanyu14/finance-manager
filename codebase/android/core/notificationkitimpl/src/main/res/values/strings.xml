@@ -1,0 +1,7 @@
+<resources>
+
+    <!-- Notification -->
+    <string name="notification_title"> Reminder!</string>
+    <string name="notification_text">Don\'t forget to add your spending for today!</string>
+
+</resources>

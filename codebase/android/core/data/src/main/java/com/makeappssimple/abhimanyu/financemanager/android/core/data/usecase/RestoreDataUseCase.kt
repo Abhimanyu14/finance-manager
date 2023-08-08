@@ -104,6 +104,9 @@ class RestoreDataUseCaseImpl(
                 setEmojiDataVersionNumber(
                     emojiDataVersionNumber = it.initialDataVersionNumber.emoji,
                 )
+                setIsReminderEnabled(
+                    isReminderEnabled = it.reminder.isEnabled,
+                )
                 setTransactionsDataVersionNumber(
                     transactionsDataVersionNumber = it.initialDataVersionNumber.transaction,
                 )

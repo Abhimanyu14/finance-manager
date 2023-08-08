@@ -24,6 +24,7 @@ class SettingsScreenUIState(
     }
 
     val isLoading: Boolean = unwrappedData.isNull() || unwrappedData.isLoading
+    val isReminderEnabled: Boolean? = unwrappedData?.isReminderEnabled
     val appVersion: String? = unwrappedData?.appVersion
     val resetBottomSheetType: () -> Unit = {
         setSettingsBottomSheetType(SettingsBottomSheetType.NONE)

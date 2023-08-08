@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.preference
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DataTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import kotlinx.coroutines.flow.Flow
 import java.time.Instant
 
@@ -12,6 +13,8 @@ interface MyPreferencesRepository {
     fun getDefaultDataId(): Flow<DefaultDataId?>
 
     fun getInitialDataVersionNumber(): Flow<InitialDataVersionNumber?>
+
+    fun getReminder(): Flow<Reminder?>
 
     suspend fun setCategoryDataVersionNumber(
         categoryDataVersionNumber: Int,
@@ -37,6 +40,10 @@ interface MyPreferencesRepository {
         emojiDataVersionNumber: Int,
     )
 
+    suspend fun setIsReminderEnabled(
+        isReminderEnabled: Boolean,
+    )
+
     suspend fun setLastDataBackupTimestamp(
         lastDataBackupTimestamp: Long = getCurrentTimeMillis(),
     )
@@ -47,6 +54,11 @@ interface MyPreferencesRepository {
 
     suspend fun setTransactionsDataVersionNumber(
         transactionsDataVersionNumber: Int,
+    )
+
+    suspend fun setReminderTime(
+        hour: Int,
+        min: Int,
     )
 
     // TODO(Abhi): Figure out how to inject this

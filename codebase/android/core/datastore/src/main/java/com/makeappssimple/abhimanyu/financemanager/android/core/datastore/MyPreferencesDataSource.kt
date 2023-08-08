@@ -5,11 +5,15 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.DEFAULT_REMINDER_HOUR
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.DEFAULT_REMINDER_MIN
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DataTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -61,12 +65,21 @@ class MyPreferencesDataSource(
         }
     }
 
+    fun getReminder(): Flow<Reminder?> {
+        return preferences.map {
+            Reminder(
+                isEnabled = it[DataStoreConstants.Reminder.IS_REMINDER_ENABLED].orFalse(),
+                hour = it[DataStoreConstants.Reminder.HOUR] ?: DEFAULT_REMINDER_HOUR,
+                min = it[DataStoreConstants.Reminder.MIN] ?: DEFAULT_REMINDER_MIN,
+            )
+        }
+    }
+
     suspend fun setAccountDataVersionNumber(
         accountDataVersionNumber: Int,
     ) {
         dataStore.edit {
-            it[DataStoreConstants.InitialDataVersionNumber.ACCOUNT] =
-                accountDataVersionNumber
+            it[DataStoreConstants.InitialDataVersionNumber.ACCOUNT] = accountDataVersionNumber
         }
     }
 
@@ -74,8 +87,7 @@ class MyPreferencesDataSource(
         categoryDataVersionNumber: Int,
     ) {
         dataStore.edit {
-            it[DataStoreConstants.InitialDataVersionNumber.CATEGORY] =
-                categoryDataVersionNumber
+            it[DataStoreConstants.InitialDataVersionNumber.CATEGORY] = categoryDataVersionNumber
         }
     }
 
@@ -115,8 +127,15 @@ class MyPreferencesDataSource(
         emojiDataVersionNumber: Int,
     ) {
         dataStore.edit {
-            it[DataStoreConstants.InitialDataVersionNumber.EMOJI] =
-                emojiDataVersionNumber
+            it[DataStoreConstants.InitialDataVersionNumber.EMOJI] = emojiDataVersionNumber
+        }
+    }
+
+    suspend fun setIsReminderEnabled(
+        isReminderEnabled: Boolean,
+    ) {
+        dataStore.edit {
+            it[DataStoreConstants.Reminder.IS_REMINDER_ENABLED] = isReminderEnabled
         }
     }
 
@@ -133,6 +152,16 @@ class MyPreferencesDataSource(
     ) {
         dataStore.edit {
             it[DataStoreConstants.DataTimestamp.LAST_DATA_CHANGE] = lastDataChangeTimestamp
+        }
+    }
+
+    suspend fun setReminderTime(
+        hour: Int,
+        min: Int,
+    ) {
+        dataStore.edit {
+            it[DataStoreConstants.Reminder.HOUR] = hour
+            it[DataStoreConstants.Reminder.MIN] = min
         }
     }
 

@@ -7,8 +7,8 @@ class MyLoggerImpl(
     private val buildConfigUtil: BuildConfigUtil,
 ) : MyLogger {
     override fun logError(
-        tag: String,
         message: String,
+        tag: String,
     ) {
         if (buildConfigUtil.isDebugBuild()) {
             Log.e(tag, message)

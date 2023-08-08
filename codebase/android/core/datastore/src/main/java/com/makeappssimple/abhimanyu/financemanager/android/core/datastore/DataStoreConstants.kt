@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.datastore
 
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 
@@ -48,6 +49,18 @@ object DataStoreConstants {
         )
         val TRANSACTION_FOR: Preferences.Key<Int> = intPreferencesKey(
             name = "transaction_for_data_version_number",
+        )
+    }
+
+    object Reminder {
+        val IS_REMINDER_ENABLED: Preferences.Key<Boolean> = booleanPreferencesKey(
+            name = "is_reminder_enabled",
+        )
+        val HOUR: Preferences.Key<Int> = intPreferencesKey(
+            name = "hour",
+        )
+        val MIN: Preferences.Key<Int> = intPreferencesKey(
+            name = "min",
         )
     }
 }

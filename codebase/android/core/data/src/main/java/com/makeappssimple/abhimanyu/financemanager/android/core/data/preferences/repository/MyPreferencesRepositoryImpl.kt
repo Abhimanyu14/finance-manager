@@ -4,6 +4,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.datastore.MyPref
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DataTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -22,10 +23,14 @@ class MyPreferencesRepositoryImpl @Inject constructor(
         return myPreferencesDataSource.getInitialDataVersionNumber()
     }
 
+    override fun getReminder(): Flow<Reminder?> {
+        return myPreferencesDataSource.getReminder()
+    }
+
     override suspend fun setCategoryDataVersionNumber(
         categoryDataVersionNumber: Int,
     ) {
-        return myPreferencesDataSource.setCategoryDataVersionNumber(
+        myPreferencesDataSource.setCategoryDataVersionNumber(
             categoryDataVersionNumber = categoryDataVersionNumber,
         )
     }
@@ -33,7 +38,7 @@ class MyPreferencesRepositoryImpl @Inject constructor(
     override suspend fun setDefaultExpenseCategoryId(
         defaultExpenseCategoryId: Int,
     ) {
-        return myPreferencesDataSource.setDefaultExpenseCategoryId(
+        myPreferencesDataSource.setDefaultExpenseCategoryId(
             defaultExpenseCategoryId = defaultExpenseCategoryId,
         )
     }
@@ -49,7 +54,7 @@ class MyPreferencesRepositoryImpl @Inject constructor(
     override suspend fun setDefaultInvestmentCategoryId(
         defaultInvestmentCategoryId: Int,
     ) {
-        return myPreferencesDataSource.setDefaultInvestmentCategoryId(
+        myPreferencesDataSource.setDefaultInvestmentCategoryId(
             defaultInvestmentCategoryId = defaultInvestmentCategoryId,
         )
     }
@@ -57,7 +62,7 @@ class MyPreferencesRepositoryImpl @Inject constructor(
     override suspend fun setDefaultAccountId(
         defaultAccountId: Int,
     ) {
-        return myPreferencesDataSource.setDefaultAccountId(
+        myPreferencesDataSource.setDefaultAccountId(
             defaultAccountId = defaultAccountId,
         )
     }
@@ -65,15 +70,23 @@ class MyPreferencesRepositoryImpl @Inject constructor(
     override suspend fun setEmojiDataVersionNumber(
         emojiDataVersionNumber: Int,
     ) {
-        return myPreferencesDataSource.setEmojiDataVersionNumber(
+        myPreferencesDataSource.setEmojiDataVersionNumber(
             emojiDataVersionNumber = emojiDataVersionNumber,
+        )
+    }
+
+    override suspend fun setIsReminderEnabled(
+        isReminderEnabled: Boolean,
+    ) {
+        myPreferencesDataSource.setIsReminderEnabled(
+            isReminderEnabled = isReminderEnabled,
         )
     }
 
     override suspend fun setLastDataBackupTimestamp(
         lastDataBackupTimestamp: Long,
     ) {
-        return myPreferencesDataSource.setLastDataBackupTimestamp(
+        myPreferencesDataSource.setLastDataBackupTimestamp(
             lastDataBackupTimestamp = lastDataBackupTimestamp,
         )
     }
@@ -81,15 +94,25 @@ class MyPreferencesRepositoryImpl @Inject constructor(
     override suspend fun setLastDataChangeTimestamp(
         lastDataChangeTimestamp: Long,
     ) {
-        return myPreferencesDataSource.setLastDataChangeTimestamp(
+        myPreferencesDataSource.setLastDataChangeTimestamp(
             lastDataChangeTimestamp = lastDataChangeTimestamp,
+        )
+    }
+
+    override suspend fun setReminderTime(
+        hour: Int,
+        min: Int,
+    ) {
+        myPreferencesDataSource.setReminderTime(
+            hour = hour,
+            min = min,
         )
     }
 
     override suspend fun setTransactionsDataVersionNumber(
         transactionsDataVersionNumber: Int,
     ) {
-        return myPreferencesDataSource.setTransactionDataVersionNumber(
+        myPreferencesDataSource.setTransactionDataVersionNumber(
             transactionDataVersionNumber = transactionsDataVersionNumber,
         )
     }

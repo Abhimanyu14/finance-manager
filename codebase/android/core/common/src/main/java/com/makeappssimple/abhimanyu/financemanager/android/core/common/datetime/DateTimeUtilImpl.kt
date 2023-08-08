@@ -126,6 +126,16 @@ class DateTimeUtilImpl @Inject constructor() : DateTimeUtil {
             )
     }
 
+    override fun getTimestamp(
+        date: LocalDate,
+        time: LocalTime,
+        zoneId: ZoneId,
+    ): Long {
+        return date
+            .atTime(time)
+            .toEpochMilli()
+    }
+
     override fun getLocalDate(
         timestamp: Long,
         zoneId: ZoneId,

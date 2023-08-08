@@ -13,6 +13,7 @@ import androidx.compose.material.icons.rounded.Backup
 import androidx.compose.material.icons.rounded.Calculate
 import androidx.compose.material.icons.rounded.Category
 import androidx.compose.material.icons.rounded.Groups
+import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.Restore
 import androidx.compose.material.icons.rounded.TextSnippet
 import androidx.compose.material3.MaterialTheme
@@ -25,6 +26,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
@@ -45,6 +47,7 @@ enum class SettingsBottomSheetType : BottomSheetType {
 
 @Immutable
 data class SettingsScreenUIData(
+    val isReminderEnabled: Boolean = false,
     val isLoading: Boolean = false,
     val appVersion: String? = null,
 )
@@ -65,6 +68,7 @@ internal data class SettingsScreenUIEvents(
     val navigateUp: () -> Unit = {},
     val recalculateTotal: () -> Unit = {},
     val restoreData: () -> Unit = {},
+    val toggleReminder: () -> Unit = {},
 )
 
 @Composable
@@ -149,6 +153,30 @@ internal fun SettingsScreenUI(
             ),
             events = SettingsListItemEvents(
                 onClick = events.recalculateTotal,
+            ),
+        ),
+        SettingsScreenListItemData(
+            data = SettingsListItemData(
+                isHeading = true,
+                isLoading = uiState.isLoading,
+                textStringResourceId = R.string.screen_settings_notifications,
+            ),
+        ),
+        SettingsScreenListItemData(
+            data = SettingsListItemData(
+                hasDivider = true,
+                isChecked = uiState.isReminderEnabled.orFalse(),
+                isLoading = uiState.isLoading,
+                imageVector = Icons.Rounded.Notifications,
+                textStringResourceId = R.string.screen_settings_reminder,
+            ),
+            events = SettingsListItemEvents(
+                onClick = {
+                    events.toggleReminder()
+                },
+                onCheckedChange = {
+                    events.toggleReminder()
+                },
             ),
         ),
         SettingsScreenListItemData(

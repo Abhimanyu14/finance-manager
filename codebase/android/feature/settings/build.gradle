@@ -2,6 +2,7 @@ plugins {
     id "com.android.library"
     id "org.jetbrains.kotlin.android"
     id "kotlin-kapt"
+    id "dagger.hilt.android.plugin"
     id "org.jetbrains.kotlinx.kover"
 }
 
@@ -10,6 +11,8 @@ android {
     compileSdk rootProject.compileSdkVersion
 
     defaultConfig {
+        minSdk rootProject.minSdkVersion
+
         testInstrumentationRunner "com.makeappssimple.abhimanyu.financemanager.android.core.testing.MyTestRunner"
     }
 
@@ -65,12 +68,14 @@ android {
 }
 
 dependencies {
+    implementation project(":core:alarmkit")
     implementation project(":core:common")
     implementation project(":core:navigation")
     implementation project(":core:model")
     implementation project(":core:data")
     implementation project(":core:designsystem")
     implementation project(":core:logger")
+    implementation project(":core:notificationkit")
     implementation project(":core:ui")
     implementation project(":chart")
 
@@ -121,6 +126,9 @@ dependencies {
 
     // Jetpack compose navigation with hilt
     implementation libs.androidx.hilt.navigation.compose
+
+    // Work manager
+    implementation libs.work.manager
 
     // About libraries
     implementation libs.about.libraries.core

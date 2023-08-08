@@ -15,6 +15,10 @@ interface SettingsScreenViewModel : ScreenViewModel {
         uri: Uri,
     )
 
+    fun disableReminder()
+
+    fun enableReminder()
+
     fun navigateToCategoriesScreen()
 
     fun navigateToAccountsScreen()

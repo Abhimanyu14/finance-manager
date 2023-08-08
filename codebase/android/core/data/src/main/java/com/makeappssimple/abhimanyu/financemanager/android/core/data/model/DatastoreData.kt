@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.model
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DataTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -16,4 +17,7 @@ data class DatastoreData(
 
     @SerialName(value = "data_timestamp")
     val dataTimestamp: DataTimestamp = DataTimestamp(),
+
+    @SerialName(value = "reminder")
+    val reminder: Reminder = Reminder(),
 )
