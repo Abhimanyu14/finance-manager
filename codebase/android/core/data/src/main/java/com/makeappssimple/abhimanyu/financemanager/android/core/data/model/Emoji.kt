@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.model
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
+import com.makeappssimple.abhimanyu.financemanager.android.emoji.core.remote.NetworkEmoji
 
 fun Emoji.asEntity(): EmojiEntity {
     return EmojiEntity(
@@ -9,5 +10,14 @@ fun Emoji.asEntity(): EmojiEntity {
         group = group,
         character = character,
         unicodeName = unicodeName,
+    )
+}
+
+fun NetworkEmoji.asEmoji(): Emoji {
+    return Emoji(
+        character = this.character,
+        codePoint = this.codePoint,
+        group = this.group,
+        unicodeName = this.unicodeName,
     )
 }

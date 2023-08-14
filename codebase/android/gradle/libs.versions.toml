@@ -13,6 +13,7 @@ coroutines = "1.7.1"
 serialization = "1.5.0"
 okhttp = "4.10.0"
 retrofit-serialization-converter = "1.0.0"
+emoji2 = "1.4.0"
 jetpack-compose-version = "1.6.0-alpha02"
 jetpack-compose-material3 = "1.2.0-alpha04"
 jetpack-compose-theme-adapter = "1.2.1"
@@ -75,6 +76,7 @@ coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-andro
 serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
 okhttp = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 retrofit-serialization-converter = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofit-serialization-converter" }
+emoji2 = { group = "androidx.emoji2", name = "emoji2", version.ref = "emoji2" }
 
 #compose
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "jetpack-compose-version" }

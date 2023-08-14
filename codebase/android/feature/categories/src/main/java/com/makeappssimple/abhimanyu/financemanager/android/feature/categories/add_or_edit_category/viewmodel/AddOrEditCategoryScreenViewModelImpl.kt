@@ -37,7 +37,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -86,16 +85,21 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
             null
         },
     )
-    private val searchText = MutableStateFlow(
+    private val searchText: MutableStateFlow<String> = MutableStateFlow(
         value = "",
     )
-    private var emojis: List<Emoji> = emptyList()
-    private val emojiGroups: Flow<Map<String, List<Emoji>>> = searchText.map { searchTextValue ->
+    private var emojis: MutableStateFlow<List<Emoji>> = MutableStateFlow(
+        value = emptyList(),
+    )
+    private val emojiGroups: Flow<Map<String, List<Emoji>>> = combine(
+        searchText,
+        emojis,
+    ) { searchText, emojis ->
         emojis.filter { emoji ->
-            if (searchTextValue.isBlank()) {
+            if (searchText.isBlank()) {
                 true
             } else {
-                emoji.unicodeName.contains(searchTextValue)
+                emoji.unicodeName.contains(searchText)
             }
         }.groupBy { emoji ->
             emoji.group
@@ -105,6 +109,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     }.flowOn(
         context = dispatcherProvider.io,
     )
+
     private val isValidCategoryData = combine(
         title,
         category,
@@ -316,7 +321,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
                 async(
                     context = dispatcherProvider.io,
                 ) {
-                    emojis = getAllEmojisUseCase()
+                    emojis.value = getAllEmojisUseCase()
                 },
             )
         }

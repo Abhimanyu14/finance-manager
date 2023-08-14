@@ -1,0 +1,109 @@
+plugins {
+    id "com.android.library"
+    id "org.jetbrains.kotlin.android"
+    id "org.jetbrains.kotlinx.kover"
+    id "kotlinx-serialization"
+    id "kotlin-kapt"
+    id "com.google.devtools.ksp" version "1.8.10-1.0.9"
+}
+
+android {
+    namespace "com.makeappssimple.abhimanyu.financemanager.android.emoji.core.remote"
+    compileSdk rootProject.compileSdkVersion
+
+    defaultConfig {
+        minSdk rootProject.minSdkVersion
+        targetSdk rootProject.targetSdkVersion
+
+        testInstrumentationRunner "com.makeappssimple.abhimanyu.financemanager.android.core.testing.MyTestRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+
+    buildFeatures {
+        compose true
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion jetpackComposeCompilerVersion
+    }
+}
+
+dependencies {
+    implementation project(":core:designsystem")
+
+    // Androidx core
+    implementation libs.androidx.core
+
+    // Appcompat
+    implementation libs.androidx.appcompat
+
+    // Emoji2
+    implementation libs.emoji2
+
+    // Coroutines
+    implementation libs.coroutines
+
+    // Jetpack compose
+    implementation libs.androidx.compose.ui
+    implementation libs.androidx.compose.util
+
+    // Jetpack compose tooling support (Previews, etc.)
+    debugImplementation libs.androidx.compose.tooling
+    implementation libs.androidx.compose.preiew
+
+    // Jetpack compose material icons
+    implementation libs.androidx.compose.icons
+
+    // Jetpack compose material design
+    implementation libs.androidx.compose.material3
+
+    // Hilt
+    implementation libs.hilt.version
+    kapt libs.dagger.hilt.compiler
+    kapt libs.hilt.compiler
+
+    // KSP
+    implementation libs.ksp
+
+    // KotlinX serialization
+    implementation libs.serialization
+
+    // Okhttp logging interceptor
+    implementation libs.okhttp
+
+    // Retrofit kotlinX serialization converter
+    implementation libs.retrofit.serialization.converter
+
+    // Testing
+
+    // JUnit
+    testImplementation libs.junit
+
+    // Android X test
+    androidTestImplementation libs.test.core.ktx
+    androidTestImplementation libs.test.ext
+    androidTestImplementation libs.test.truth
+    androidTestImplementation libs.test.runner
+    androidTestImplementation libs.test.rules
+
+    // Mockito kotlin
+    testImplementation libs.mockito.kotlin
+
+    // Coroutines test
+    testImplementation libs.kotlinx.coroutines.test
+    androidTestImplementation libs.kotlinx.coroutines.test
+}

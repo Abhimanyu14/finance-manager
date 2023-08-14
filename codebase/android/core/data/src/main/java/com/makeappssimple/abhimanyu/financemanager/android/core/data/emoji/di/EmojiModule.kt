@@ -4,7 +4,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.repos
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.repository.EmojiRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.EmojiDao
+import com.makeappssimple.abhimanyu.financemanager.android.emoji.core.remote.EmojiDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -15,10 +15,10 @@ import dagger.hilt.components.SingletonComponent
 class EmojiModule {
     @Provides
     fun providesEmojiRepository(
-        emojiDao: EmojiDao,
+        emojiDataSource: EmojiDataSource,
     ): EmojiRepository {
         return EmojiRepositoryImpl(
-            emojiDao = emojiDao,
+            emojiDataSource = emojiDataSource,
         )
     }
 

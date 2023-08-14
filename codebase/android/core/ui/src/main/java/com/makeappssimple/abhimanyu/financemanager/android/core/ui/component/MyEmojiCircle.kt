@@ -1,24 +1,25 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component
 
-import android.view.View
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.Transparent
-import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.text.EmojiSupportMatch
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.unit.sp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
 
@@ -86,20 +87,15 @@ fun MyEmojiCircle(
                     all = data.emojiCircleSize.padding,
                 ),
         ) {
-            AndroidView(
-                factory = { context ->
-                    AppCompatTextView(context).apply {
-                        setTextColor(Black.toArgb())
-                        text = data.emoji
-                        textSize = data.emojiCircleSize.textSize
-                        textAlignment = View.TEXT_ALIGNMENT_CENTER
-                    }
-                },
-                update = {
-                    it.apply {
-                        text = data.emoji
-                    }
-                },
+            Text(
+                text = data.emoji,
+                style = TextStyle(
+                    fontSize = data.emojiCircleSize.textSize.sp,
+                    platformStyle = PlatformTextStyle(
+                        emojiSupportMatch = EmojiSupportMatch.None
+                    ),
+                    textAlign = TextAlign.Center,
+                )
             )
         }
     }
