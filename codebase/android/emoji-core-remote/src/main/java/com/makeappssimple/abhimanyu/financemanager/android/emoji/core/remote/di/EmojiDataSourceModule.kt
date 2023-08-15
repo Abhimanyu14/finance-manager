@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.emoji.core.remote.di
 
 import android.content.Context
-import com.makeappssimple.abhimanyu.financemanager.android.emoji.core.remote.EmojiDataSource
 import com.makeappssimple.abhimanyu.financemanager.android.emoji.core.remote.EmojiFetcher
+import com.makeappssimple.abhimanyu.financemanager.android.emoji.core.remote.datasource.EmojiDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

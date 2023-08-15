@@ -4,7 +4,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.repos
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.repository.EmojiRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.emoji.core.remote.EmojiDataSource
+import com.makeappssimple.abhimanyu.financemanager.android.emoji.core.remote.datasource.EmojiDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

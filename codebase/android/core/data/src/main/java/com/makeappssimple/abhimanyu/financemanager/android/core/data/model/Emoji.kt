@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.model
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
-import com.makeappssimple.abhimanyu.financemanager.android.emoji.core.remote.NetworkEmoji
+import com.makeappssimple.abhimanyu.financemanager.android.emoji.core.remote.model.NetworkEmoji
 
 fun Emoji.asEntity(): EmojiEntity {
     return EmojiEntity(

@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.emoji.core.remote
+package com.makeappssimple.abhimanyu.financemanager.android.emoji.core.remote.model
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

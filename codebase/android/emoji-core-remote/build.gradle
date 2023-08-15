@@ -4,7 +4,6 @@ plugins {
     id "org.jetbrains.kotlinx.kover"
     id "kotlinx-serialization"
     id "kotlin-kapt"
-    id "com.google.devtools.ksp" version "1.8.10-1.0.9"
 }
 
 android {
@@ -32,52 +31,17 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
-    buildFeatures {
-        compose true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion jetpackComposeCompilerVersion
-    }
 }
 
 dependencies {
-    implementation project(":core:designsystem")
-
-    // Androidx core
-    implementation libs.androidx.core
-
-    // Appcompat
-    implementation libs.androidx.appcompat
-
-    // Emoji2
-    implementation libs.emoji2
 
     // Coroutines
     implementation libs.coroutines
-
-    // Jetpack compose
-    implementation libs.androidx.compose.ui
-    implementation libs.androidx.compose.util
-
-    // Jetpack compose tooling support (Previews, etc.)
-    debugImplementation libs.androidx.compose.tooling
-    implementation libs.androidx.compose.preiew
-
-    // Jetpack compose material icons
-    implementation libs.androidx.compose.icons
-
-    // Jetpack compose material design
-    implementation libs.androidx.compose.material3
 
     // Hilt
     implementation libs.hilt.version
     kapt libs.dagger.hilt.compiler
     kapt libs.hilt.compiler
-
-    // KSP
-    implementation libs.ksp
 
     // KotlinX serialization
     implementation libs.serialization
@@ -85,20 +49,10 @@ dependencies {
     // Okhttp logging interceptor
     implementation libs.okhttp
 
-    // Retrofit kotlinX serialization converter
-    implementation libs.retrofit.serialization.converter
-
     // Testing
 
     // JUnit
     testImplementation libs.junit
-
-    // Android X test
-    androidTestImplementation libs.test.core.ktx
-    androidTestImplementation libs.test.ext
-    androidTestImplementation libs.test.truth
-    androidTestImplementation libs.test.runner
-    androidTestImplementation libs.test.rules
 
     // Mockito kotlin
     testImplementation libs.mockito.kotlin

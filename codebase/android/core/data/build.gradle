@@ -83,6 +83,9 @@ dependencies {
     // Coroutines
     implementation libs.coroutines
 
+    // Emoji2
+    implementation libs.emoji2
+
     // Hilt
     implementation libs.hilt.version
     kapt libs.dagger.hilt.compiler
