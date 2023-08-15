@@ -115,14 +115,7 @@ fun MyTimePicker(
                 timeSelectorUnselectedContentColor = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
-            MyAppTheme(
-                lightColorScheme = myLightColorScheme.copy(
-                    outline = MaterialTheme.colorScheme.onSurfaceVariant,
-                ),
-                darkColorScheme = myDarkColorScheme.copy(
-                    outline = MaterialTheme.colorScheme.onSurfaceVariant,
-                ),
-            ) {
+            TimePickerTheme {
                 if (showingPicker.value && configuration.screenHeightDp > 400) {
                     TimePicker(
                         state = state,
@@ -219,5 +212,21 @@ private fun TimePickerDialog(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun TimePickerTheme(
+    content: @Composable () -> Unit,
+) {
+    MyAppTheme(
+        lightColorScheme = myLightColorScheme.copy(
+            outline = MaterialTheme.colorScheme.onSurfaceVariant,
+        ),
+        darkColorScheme = myDarkColorScheme.copy(
+            outline = MaterialTheme.colorScheme.onSurfaceVariant,
+        ),
+    ) {
+        content()
     }
 }
