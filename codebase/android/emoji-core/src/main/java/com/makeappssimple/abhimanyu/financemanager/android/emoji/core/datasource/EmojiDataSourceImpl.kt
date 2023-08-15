@@ -1,17 +1,22 @@
-package com.makeappssimple.abhimanyu.financemanager.android.emoji.core.remote.datasource
+package com.makeappssimple.abhimanyu.financemanager.android.emoji.core.datasource
 
-import com.makeappssimple.abhimanyu.financemanager.android.emoji.core.remote.EmojiFetchCallback
-import com.makeappssimple.abhimanyu.financemanager.android.emoji.core.remote.EmojiFetcher
-import com.makeappssimple.abhimanyu.financemanager.android.emoji.core.remote.model.NetworkEmoji
+import com.makeappssimple.abhimanyu.financemanager.android.emoji.core.emojifetcher.EmojiFetchCallback
+import com.makeappssimple.abhimanyu.financemanager.android.emoji.core.emojifetcher.EmojiFetcher
+import com.makeappssimple.abhimanyu.financemanager.android.emoji.core.emojifetcher.EmojiFetcherImpl
+import com.makeappssimple.abhimanyu.financemanager.android.emoji.core.model.NetworkEmoji
+import java.io.File
 import java.io.IOException
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 import kotlin.coroutines.suspendCoroutine
 
-class EmojiDataSource(
-    private val emojiFetcher: EmojiFetcher,
-) {
-    suspend fun getAllEmojis(): List<NetworkEmoji> {
+class EmojiDataSourceImpl(
+    private val cacheFile: File,
+    private val emojiFetcher: EmojiFetcher = EmojiFetcherImpl(
+        cacheFile = cacheFile,
+    ),
+) : EmojiDataSource {
+    override suspend fun getAllEmojis(): List<NetworkEmoji> {
         return suspendCoroutine { continuation ->
             emojiFetcher.fetchEmojiData(
                 callback = object : EmojiFetchCallback {

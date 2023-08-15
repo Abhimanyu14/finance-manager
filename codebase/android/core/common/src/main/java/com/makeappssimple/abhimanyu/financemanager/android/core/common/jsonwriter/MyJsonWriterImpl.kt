@@ -3,9 +3,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwrit
 import android.content.Context
 import android.net.Uri
 import java.io.FileOutputStream
-import javax.inject.Inject
 
-class MyJsonWriterImpl @Inject constructor(
+class MyJsonWriterImpl(
     private val context: Context,
 ) : MyJsonWriter {
     override fun writeJsonToFile(

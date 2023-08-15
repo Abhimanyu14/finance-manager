@@ -1,6 +1,5 @@
-package com.makeappssimple.abhimanyu.financemanager.android.emoji.core.remote
+package com.makeappssimple.abhimanyu.financemanager.android.emoji.core.emojifetcher
 
-import android.content.Context
 import okhttp3.Cache
 import okhttp3.Call
 import okhttp3.Callback
@@ -10,20 +9,18 @@ import okhttp3.Response
 import java.io.File
 import java.io.IOException
 
-private const val UNICODE_EMOJIS_URL = "https://unicode.org/Public/emoji/15.0/emoji-test.txt"
-
-class EmojiFetcher(
-    private val context: Context,
-) {
-    fun fetchEmojiData(
+class EmojiFetcherImpl(
+    private val cacheFile: File,
+) : EmojiFetcher {
+    override fun fetchEmojiData(
         callback: EmojiFetchCallback,
-        url: String = UNICODE_EMOJIS_URL,
+        url: String,
     ) {
         val client = OkHttpClient()
             .newBuilder()
             .cache(
                 cache = Cache(
-                    directory = File(context.cacheDir, "http_cache"),
+                    directory = cacheFile,
                     maxSize = (5 * 1024 * 1024).toLong(),
                 ),
             )

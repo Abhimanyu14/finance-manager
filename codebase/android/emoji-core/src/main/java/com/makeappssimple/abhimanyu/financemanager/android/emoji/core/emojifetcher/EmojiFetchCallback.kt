@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.emoji.core.remote
+package com.makeappssimple.abhimanyu.financemanager.android.emoji.core.emojifetcher
 
 interface EmojiFetchCallback {
     fun onFetchSuccess(

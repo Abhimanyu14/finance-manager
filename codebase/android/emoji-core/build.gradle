@@ -1,0 +1,22 @@
+plugins {
+    id "java-library"
+    alias(libs.plugins.kotlin.jvm)
+    id "kotlinx-serialization"
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+dependencies {
+
+    // Coroutines
+    implementation libs.coroutines
+
+    // KotlinX serialization
+    implementation libs.serialization
+
+    // Okhttp logging interceptor
+    implementation libs.okhttp
+}

@@ -8,9 +8,8 @@ import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.nio.charset.Charset
-import javax.inject.Inject
 
-class MyJsonReaderImpl @Inject constructor(
+class MyJsonReaderImpl(
     private val context: Context,
 ) : MyJsonReader {
     override fun readJsonFromAssets(

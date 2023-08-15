@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import javax.inject.Inject
 
 interface InitialDatabasePopulator {
     fun populateInitialDatabaseData(
@@ -22,7 +21,7 @@ interface InitialDatabasePopulator {
     )
 }
 
-class InitialDatabasePopulatorImpl @Inject constructor(
+class InitialDatabasePopulatorImpl(
     private val dispatcherProvider: DispatcherProvider,
     private val myJsonReader: MyJsonReader,
     private val myPreferencesDataSource: MyPreferencesDataSource,

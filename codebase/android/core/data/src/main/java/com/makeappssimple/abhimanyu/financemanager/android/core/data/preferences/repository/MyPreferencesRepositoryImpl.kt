@@ -6,9 +6,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDat
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-class MyPreferencesRepositoryImpl @Inject constructor(
+class MyPreferencesRepositoryImpl(
     private val myPreferencesDataSource: MyPreferencesDataSource,
 ) : MyPreferencesRepository {
     override fun getDataTimestamp(): Flow<DataTimestamp?> {
