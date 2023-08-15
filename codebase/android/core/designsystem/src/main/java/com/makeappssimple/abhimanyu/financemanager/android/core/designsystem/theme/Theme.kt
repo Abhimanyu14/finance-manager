@@ -1,12 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 
-private val lightColorPalette = lightColorScheme(
+val myLightColorScheme = lightColorScheme(
     primary = Primary,
     onPrimary = OnPrimary,
     primaryContainer = PrimaryContainer,
@@ -35,7 +36,7 @@ private val lightColorPalette = lightColorScheme(
     outline = Outline,
 )
 
-private val darkColorPalette = darkColorScheme(
+val myDarkColorScheme = darkColorScheme(
     primary = Primary,
     onPrimary = OnPrimary,
     primaryContainer = PrimaryContainer,
@@ -67,12 +68,14 @@ private val darkColorPalette = darkColorScheme(
 @Composable
 internal fun Material3AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
+    darkColorScheme: ColorScheme,
+    lightColorScheme: ColorScheme,
     content: @Composable () -> Unit,
 ) {
     val colors = if (darkTheme) {
-        darkColorPalette
+        darkColorScheme
     } else {
-        lightColorPalette
+        lightColorScheme
     }
 
     MaterialTheme(
@@ -86,12 +89,14 @@ internal fun Material3AppTheme(
 @Composable
 fun MyAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
+    darkColorScheme: ColorScheme = myDarkColorScheme,
+    lightColorScheme: ColorScheme = myLightColorScheme,
     content: @Composable () -> Unit,
 ) {
     Material3AppTheme(
         darkTheme = darkTheme,
-        content = {
-            content()
-        },
+        darkColorScheme = darkColorScheme,
+        lightColorScheme = lightColorScheme,
+        content = content,
     )
 }

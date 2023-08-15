@@ -37,7 +37,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSh
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.AmountCommaVisualTransformation
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.getMyTimePickerDialog
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.MyTimePicker
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.MyTimePickerData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.MyTimePickerEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_account.SelectAccountBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_account.SelectAccountBottomSheetData
@@ -116,13 +118,6 @@ internal fun AddOrEditTransactionScreenUI(
     uiState: AddOrEditTransactionScreenUIState,
     state: CommonScreenUIState,
 ) {
-    val transactionTimePickerDialog = getMyTimePickerDialog(
-        context = state.context,
-        currentTime = uiState.uiState.transactionTime,
-        onTimeSetListener = {
-            events.updateTransactionTime(it)
-        },
-    )
     val clearFocus = {
         state.focusManager.clearFocus()
     }
@@ -222,14 +217,29 @@ internal fun AddOrEditTransactionScreenUI(
                 selectedLocalDate = uiState.uiState.transactionDate,
             ),
             events = MyDatePickerEvents(
+                onNegativeButtonClick = {
+                    uiState.setIsTransactionDatePickerDialogVisible(false)
+                },
                 onPositiveButtonClick = {
                     events.updateTransactionDate(it)
                     uiState.setIsTransactionDatePickerDialogVisible(false)
                 },
-                onNegativeButtonClick = {
-                    uiState.setIsTransactionDatePickerDialogVisible(false)
-                },
             )
+        )
+        MyTimePicker(
+            data = MyTimePickerData(
+                isVisible = uiState.isTransactionTimePickerDialogVisible,
+                selectedLocalDate = uiState.uiState.transactionTime,
+            ),
+            events = MyTimePickerEvents(
+                onNegativeButtonClick = {
+                    uiState.setIsTransactionTimePickerDialogVisible(false)
+                },
+                onPositiveButtonClick = {
+                    events.updateTransactionTime(it)
+                    uiState.setIsTransactionTimePickerDialogVisible(false)
+                },
+            ),
         )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -537,7 +547,7 @@ internal fun AddOrEditTransactionScreenUI(
                 events = MyReadOnlyTextFieldEvents(
                     onClick = {
                         clearFocus()
-                        transactionTimePickerDialog.show()
+                        uiState.setIsTransactionTimePickerDialogVisible(true)
                     },
                 ),
             )

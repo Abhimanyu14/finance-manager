@@ -25,8 +25,10 @@ class AddOrEditTransactionScreenUIState(
     isEdit: Boolean,
     val addOrEditTransactionBottomSheetType: AddOrEditTransactionBottomSheetType,
     val isTransactionDatePickerDialogVisible: Boolean,
+    val isTransactionTimePickerDialogVisible: Boolean,
     val setAddOrEditTransactionBottomSheetType: (AddOrEditTransactionBottomSheetType) -> Unit,
     val setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit,
+    val setIsTransactionTimePickerDialogVisible: (Boolean) -> Unit,
 ) {
     private val unwrappedData = when (data) {
         is MyResult.Success -> {
@@ -113,22 +115,29 @@ fun rememberAddOrEditTransactionScreenUIState(
     val (isTransactionDatePickerDialogVisible, setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit) = remember {
         mutableStateOf(false)
     }
+    val (isTransactionTimePickerDialogVisible, setIsTransactionTimePickerDialogVisible: (Boolean) -> Unit) = remember {
+        mutableStateOf(false)
+    }
 
     return remember(
         data,
         isEdit,
         addOrEditTransactionBottomSheetType,
         isTransactionDatePickerDialogVisible,
+        isTransactionTimePickerDialogVisible,
         setAddOrEditTransactionBottomSheetType,
         setIsTransactionDatePickerDialogVisible,
+        setIsTransactionTimePickerDialogVisible,
     ) {
         AddOrEditTransactionScreenUIState(
             data = data,
             isEdit = isEdit,
             addOrEditTransactionBottomSheetType = addOrEditTransactionBottomSheetType,
             isTransactionDatePickerDialogVisible = isTransactionDatePickerDialogVisible,
+            isTransactionTimePickerDialogVisible = isTransactionTimePickerDialogVisible,
             setAddOrEditTransactionBottomSheetType = setAddOrEditTransactionBottomSheetType,
             setIsTransactionDatePickerDialogVisible = setIsTransactionDatePickerDialogVisible,
+            setIsTransactionTimePickerDialogVisible = setIsTransactionTimePickerDialogVisible,
         )
     }
 }
