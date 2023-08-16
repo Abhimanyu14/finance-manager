@@ -5,13 +5,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.repos
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.repository.EmojiRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.emoji.core.datasource.EmojiDataSource
-import com.makeappssimple.abhimanyu.financemanager.android.emoji.core.datasource.EmojiDataSourceImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import emoji.core.datasource.EmojiDataSource
+import emoji.core.datasource.EmojiDataSourceImpl
 import java.io.File
 import javax.inject.Singleton
 

@@ -3,6 +3,9 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url "https://jitpack.io"
+        }
     }
 }
 rootProject.name = "Finance Manager"
@@ -27,7 +30,6 @@ include ":core:notificationkitimpl"
 include ":core:testing"
 include ":core:time"
 include ":core:ui"
-include ":emoji-core"
 include ":feature:accounts"
 include ":feature:analysis"
 include ":feature:categories"

@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.repo
 import androidx.emoji2.text.EmojiCompat
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEmoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
-import com.makeappssimple.abhimanyu.financemanager.android.emoji.core.datasource.EmojiDataSource
+import emoji.core.datasource.EmojiDataSource
 
 class EmojiRepositoryImpl(
     private val emojiDataSource: EmojiDataSource,

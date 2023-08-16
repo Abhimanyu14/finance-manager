@@ -67,7 +67,6 @@ dependencies {
     implementation project(":core:database")
     implementation project(":core:datastore")
     implementation project(":core:network")
-    implementation project(":emoji-core")
 
     testImplementation project(":core:testing")
 
@@ -108,6 +107,9 @@ dependencies {
     implementation libs.room.ktx
     ksp libs.room.compiler
     androidTestImplementation libs.room.testing
+
+    // Emoji core
+    implementation libs.emoji.core
 
     // Testing
 
