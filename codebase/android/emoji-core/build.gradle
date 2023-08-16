@@ -2,6 +2,7 @@ plugins {
     id "java-library"
     alias(libs.plugins.kotlin.jvm)
     id "kotlinx-serialization"
+    id "maven-publish"
 }
 
 java {
@@ -19,4 +20,22 @@ dependencies {
 
     // Okhttp logging interceptor
     implementation libs.okhttp
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                if (project.plugins.findPlugin("com.android.library")) {
+                    from components.release
+                } else {
+                    from components.java
+                }
+
+                groupId = "com.github.Abhimanyu14"
+                artifactId = "emoji-core"
+                version = "1.0.0"
+            }
+        }
+    }
 }

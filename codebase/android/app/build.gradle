@@ -277,6 +277,7 @@ dependencies {
     implementation project(":core:time")
     implementation project(":core:ui")
     implementation project(":chart")
+    implementation project(":emoji-core")
     implementation project(":feature:accounts")
     implementation project(":feature:analysis")
     implementation project(":feature:categories")
