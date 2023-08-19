@@ -130,6 +130,9 @@ dependencies {
     // Accompanist pager
     implementation libs.compose.accompanist.pager
 
+    // Compose emoji picker
+    implementation libs.compose.emoji.picker
+
     // Testing
 
     // JUnit

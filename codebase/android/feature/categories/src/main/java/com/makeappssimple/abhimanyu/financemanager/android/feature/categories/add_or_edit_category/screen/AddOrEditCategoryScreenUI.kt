@@ -111,7 +111,6 @@ internal fun AddOrEditCategoryScreenUI(
                 AddOrEditCategoryBottomSheetType.SELECT_EMOJI -> {
                     AddOrEditCategorySelectEmojiBottomSheet(
                         context = state.context,
-                        emojiGroups = uiState.emojiGroups,
                         searchText = uiState.searchText,
                         resetBottomSheetType = uiState.resetBottomSheetType,
                         updateEmoji = { updatedEmoji ->
