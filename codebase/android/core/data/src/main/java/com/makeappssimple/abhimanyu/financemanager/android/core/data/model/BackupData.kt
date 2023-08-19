@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.model
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -21,8 +20,6 @@ data class BackupData @OptIn(ExperimentalSerializationApi::class) constructor(
     val lastBackupTimestamp: String? = "", // TODO-Abhi: legacy support v69
 
     val categories: List<Category>? = emptyList(), // TODO-Abhi: legacy support v69
-
-    val emojis: List<Emoji>? = emptyList(), // TODO-Abhi: legacy support v69
 
     val accounts: List<Account>? = emptyList(), // TODO-Abhi: legacy support v69
 

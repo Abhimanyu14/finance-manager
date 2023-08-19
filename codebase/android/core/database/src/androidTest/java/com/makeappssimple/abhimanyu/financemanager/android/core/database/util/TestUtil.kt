@@ -4,7 +4,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.A
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AmountEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.CategoryEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionEntity
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import java.time.Instant
 import java.time.ZoneId
@@ -48,32 +47,6 @@ fun getTestCategories(): Array<CategoryEntity> {
             emoji = "emoji 1",
             title = "title 1",
             transactionType = TransactionType.INCOME,
-        ),
-    )
-}
-
-fun getTestEmoji(): Emoji {
-    return Emoji(
-        character = "character",
-        codePoint = "codePoint",
-        group = "group",
-        unicodeName = "unicodeName",
-    )
-}
-
-fun getTestEmojis(): Array<Emoji> {
-    return arrayOf(
-        Emoji(
-            character = "character",
-            codePoint = "codePoint",
-            group = "group",
-            unicodeName = "unicodeName",
-        ),
-        Emoji(
-            character = "character 1",
-            codePoint = "codePoint 1",
-            group = "group 1",
-            unicodeName = "unicodeName 1",
         ),
     )
 }

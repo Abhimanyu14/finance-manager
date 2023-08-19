@@ -69,20 +69,9 @@ class FakeMyPreferencesRepositoryImpl : MyPreferencesRepository {
 //        )
     }
 
-    override suspend fun setEmojiDataVersionNumber(
-        emojiDataVersionNumber: Int,
-    ) {
-//        return myPreferencesDataSource.setEmojiDataVersionNumber(
-//            emojiDataVersionNumber = emojiDataVersionNumber,
-//        )
-    }
-
     override suspend fun setIsReminderEnabled(
         isReminderEnabled: Boolean,
     ) {
-//        return myPreferencesDataSource.setEmojiDataVersionNumber(
-//            emojiDataVersionNumber = emojiDataVersionNumber,
-//        )
     }
 
     override suspend fun setLastDataBackupTimestamp(

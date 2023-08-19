@@ -19,9 +19,6 @@ internal data class InitialDatabaseData(
 
     @SerialName("default_transaction_for_values")
     val defaultTransactionForValues: TransactionForValues,
-
-    @SerialName("emojis")
-    val emojis: Emojis,
 )
 
 @Serializable
@@ -76,13 +73,4 @@ internal data class VersionedTransactionForValues(
 
     @SerialName("transaction_for_values_data")
     val transactionForValuesData: List<TransactionForEntity>,
-)
-
-@Serializable
-internal data class Emojis(
-    @SerialName("version_number")
-    val versionNumber: Int,
-
-    @SerialName("emojis_data")
-    val emojisData: List<EmojiEntity>,
 )

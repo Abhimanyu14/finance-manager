@@ -11,9 +11,6 @@ data class InitialDataVersionNumber(
     @SerialName(value = "category")
     val category: Int = 0,
 
-    @SerialName(value = "emoji")
-    val emoji: Int = 0,
-
     @SerialName(value = "transaction")
     val transaction: Int = 0,
 

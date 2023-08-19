@@ -66,14 +66,6 @@ class MyPreferencesRepositoryImpl(
         )
     }
 
-    override suspend fun setEmojiDataVersionNumber(
-        emojiDataVersionNumber: Int,
-    ) {
-        myPreferencesDataSource.setEmojiDataVersionNumber(
-            emojiDataVersionNumber = emojiDataVersionNumber,
-        )
-    }
-
     override suspend fun setIsReminderEnabled(
         isReminderEnabled: Boolean,
     ) {

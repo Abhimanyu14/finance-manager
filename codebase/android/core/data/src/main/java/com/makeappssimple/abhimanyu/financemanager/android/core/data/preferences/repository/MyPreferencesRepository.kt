@@ -36,10 +36,6 @@ interface MyPreferencesRepository {
         defaultAccountId: Int,
     )
 
-    suspend fun setEmojiDataVersionNumber(
-        emojiDataVersionNumber: Int,
-    )
-
     suspend fun setIsReminderEnabled(
         isReminderEnabled: Boolean,
     )

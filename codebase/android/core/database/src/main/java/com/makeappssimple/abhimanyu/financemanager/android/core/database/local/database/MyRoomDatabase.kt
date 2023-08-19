@@ -14,14 +14,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.convert
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.converters.IntListConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.AccountDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.CategoryDao
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.EmojiDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionForDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.AutoDatabaseMigration
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations.manualDatabaseMigrations
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AccountEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.CategoryEntity
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionForEntity
 import java.util.concurrent.Executors
@@ -31,11 +29,15 @@ import java.util.concurrent.Executors
     entities = [
         AccountEntity::class,
         CategoryEntity::class,
-        EmojiEntity::class,
         TransactionEntity::class,
         TransactionForEntity::class,
     ],
     autoMigrations = [
+        AutoMigration(
+            from = 20,
+            to = 21,
+            spec = AutoDatabaseMigration.AutoMigration20to21::class,
+        ),
         AutoMigration(
             from = 11,
             to = 12,
@@ -66,7 +68,6 @@ import java.util.concurrent.Executors
 )
 abstract class MyRoomDatabase : RoomDatabase() {
     abstract fun categoryDao(): CategoryDao
-    abstract fun emojiDao(): EmojiDao
     abstract fun accountDao(): AccountDao
     abstract fun transactionDao(): TransactionDao
     abstract fun transactionForDao(): TransactionForDao

@@ -6,7 +6,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.datasou
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
@@ -197,16 +196,12 @@ class TransactionRepositoryImpl(
 
     override suspend fun restoreData(
         categories: List<Category>,
-        emojis: List<Emoji>,
         accounts: List<Account>,
         transactions: List<Transaction>,
         transactionForValues: List<TransactionFor>,
     ) {
         commonDataSource.restoreData(
             categories = categories.map {
-                it.asEntity()
-            }.toTypedArray(),
-            emojis = emojis.map {
                 it.asEntity()
             }.toTypedArray(),
             accounts = accounts.map {

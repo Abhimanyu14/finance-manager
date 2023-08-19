@@ -7,11 +7,38 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 
 val preferencesDataMigrations = listOf(
-    PreferencesDataMigration.MIGRATION_1_TO_2,
+    PreferencesDataMigration.MIGRATION_3_TO_4,
     PreferencesDataMigration.MIGRATION_2_TO_3,
+    PreferencesDataMigration.MIGRATION_1_TO_2,
 )
 
 private object PreferencesDataMigration {
+    val MIGRATION_3_TO_4 = object : DataMigration<Preferences> {
+        override suspend fun shouldMigrate(
+            currentData: Preferences,
+        ): Boolean {
+            return currentData[DataStoreConstants.CURRENT_VERSION_NUMBER].orZero() < AppConstants.DATASTORE_CURRENT_VERSION_NUMBER
+        }
+
+        override suspend fun migrate(
+            currentData: Preferences,
+        ): Preferences {
+            val emojiDataVersionNumberPreferencesKey: Preferences.Key<Int> = intPreferencesKey(
+                name = "emoji_data_version_number",
+            )
+
+            // Get mutable preferences
+            val currentMutablePrefs = currentData.toMutablePreferences()
+
+            // Remove existing key
+            currentMutablePrefs.remove(emojiDataVersionNumberPreferencesKey)
+
+            return currentMutablePrefs.toPreferences()
+        }
+
+        override suspend fun cleanUp() {}
+    }
+
     val MIGRATION_2_TO_3 = object : DataMigration<Preferences> {
         override suspend fun shouldMigrate(
             currentData: Preferences,

@@ -4,7 +4,6 @@ import androidx.room.withTransaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AccountEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.CategoryEntity
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.EmojiEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionForEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.updateBalanceAmount
@@ -111,7 +110,6 @@ class CommonDataSourceImpl(
 
     override suspend fun restoreData(
         categories: Array<CategoryEntity>,
-        emojis: Array<EmojiEntity>,
         accounts: Array<AccountEntity>,
         transactions: Array<TransactionEntity>,
         transactionForValues: Array<TransactionForEntity>,
@@ -121,16 +119,12 @@ class CommonDataSourceImpl(
         ) {
             withTransaction {
                 categoryDao().deleteAllCategories()
-                emojiDao().deleteAllEmojis()
                 accountDao().deleteAllAccounts()
                 transactionDao().deleteAllTransactions()
                 transactionForDao().deleteAllTransactionForValues()
 
                 categoryDao().insertCategories(
                     categories = categories,
-                )
-                emojiDao().insertEmojis(
-                    emojis = emojis,
                 )
                 accountDao().insertAccounts(
                     accounts = accounts,

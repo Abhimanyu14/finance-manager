@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.di
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.AccountDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.CategoryDao
-import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.EmojiDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionForDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
@@ -19,13 +18,6 @@ class DaosModule {
         myRoomDatabase: MyRoomDatabase,
     ): CategoryDao {
         return myRoomDatabase.categoryDao()
-    }
-
-    @Provides
-    fun providesEmojiDao(
-        myRoomDatabase: MyRoomDatabase,
-    ): EmojiDao {
-        return myRoomDatabase.emojiDao()
     }
 
     @Provides

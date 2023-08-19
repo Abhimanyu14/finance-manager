@@ -7,7 +7,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwrite
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.GetAllAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.UpdateAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionDataUseCase
@@ -32,7 +31,6 @@ class UseCaseModule {
         dateTimeUtil: DateTimeUtil,
         dispatcherProvider: DispatcherProvider,
         getAllCategoriesUseCase: GetAllCategoriesUseCase,
-        getAllEmojisUseCase: GetAllEmojisUseCase,
         getAllAccountsUseCase: GetAllAccountsUseCase,
         getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
         getAllTransactionsUseCase: GetAllTransactionsUseCase,
@@ -43,7 +41,6 @@ class UseCaseModule {
             dateTimeUtil = dateTimeUtil,
             dispatcherProvider = dispatcherProvider,
             getAllCategoriesUseCase = getAllCategoriesUseCase,
-            getAllEmojisUseCase = getAllEmojisUseCase,
             getAllAccountsUseCase = getAllAccountsUseCase,
             getAllTransactionForValuesUseCase = getAllTransactionForValuesUseCase,
             getAllTransactionsUseCase = getAllTransactionsUseCase,

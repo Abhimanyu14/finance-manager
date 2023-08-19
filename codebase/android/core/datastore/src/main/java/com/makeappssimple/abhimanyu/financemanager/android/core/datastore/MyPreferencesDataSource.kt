@@ -58,7 +58,6 @@ class MyPreferencesDataSource(
             InitialDataVersionNumber(
                 account = it[DataStoreConstants.InitialDataVersionNumber.ACCOUNT].orZero(),
                 category = it[DataStoreConstants.InitialDataVersionNumber.CATEGORY].orZero(),
-                emoji = it[DataStoreConstants.InitialDataVersionNumber.EMOJI].orZero(),
                 transaction = it[DataStoreConstants.InitialDataVersionNumber.TRANSACTION].orZero(),
                 transactionFor = it[DataStoreConstants.InitialDataVersionNumber.TRANSACTION_FOR].orZero(),
             )
@@ -120,14 +119,6 @@ class MyPreferencesDataSource(
     ) {
         dataStore.edit {
             it[DataStoreConstants.DefaultId.ACCOUNT] = defaultAccountId
-        }
-    }
-
-    suspend fun setEmojiDataVersionNumber(
-        emojiDataVersionNumber: Int,
-    ) {
-        dataStore.edit {
-            it[DataStoreConstants.InitialDataVersionNumber.EMOJI] = emojiDataVersionNumber
         }
     }
 

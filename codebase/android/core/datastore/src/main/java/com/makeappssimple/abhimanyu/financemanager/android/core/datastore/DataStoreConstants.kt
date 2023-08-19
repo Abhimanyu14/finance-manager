@@ -41,9 +41,10 @@ object DataStoreConstants {
         val CATEGORY: Preferences.Key<Int> = intPreferencesKey(
             name = "category_data_version_number",
         )
-        val EMOJI: Preferences.Key<Int> = intPreferencesKey(
-            name = "emoji_data_version_number",
-        )
+
+        //        val EMOJI: Preferences.Key<Int> = intPreferencesKey(
+//            name = "emoji_data_version_number",
+//        )
         val TRANSACTION: Preferences.Key<Int> = intPreferencesKey(
             name = "transaction_data_version_number",
         )

@@ -13,8 +13,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.use
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.UpdateAccountsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.repository.fake.FakeCategoryRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesUseCaseImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.repository.fake.FakeEmojiRepositoryImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.fake.FakeMyPreferencesRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.fake.FakeTransactionRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.GetAllTransactionDataUseCaseImpl
@@ -72,9 +70,6 @@ class SettingsScreenViewModelImplTest {
             dispatcherProvider = dispatcherProvider,
             getAllCategoriesUseCase = GetAllCategoriesUseCaseImpl(
                 categoryRepository = FakeCategoryRepositoryImpl(),
-            ),
-            getAllEmojisUseCase = GetAllEmojisUseCaseImpl(
-                emojiRepository = FakeEmojiRepositoryImpl(),
             ),
             getAllAccountsUseCase = GetAllAccountsUseCaseImpl(
                 accountRepository = FakeAccountRepositoryImpl(),

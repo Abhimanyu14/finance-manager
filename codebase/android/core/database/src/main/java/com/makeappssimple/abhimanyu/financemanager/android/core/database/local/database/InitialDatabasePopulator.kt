@@ -52,7 +52,7 @@ class InitialDatabasePopulatorImpl(
                 launch {
                     populateAccountsData(
                         initialDatabaseData = initialDatabaseData,
-                        accountsInitialDataVersionNumber = initialDataVersionNumber?.category.orZero(),
+                        accountsInitialDataVersionNumber = initialDataVersionNumber?.account.orZero(),
                         myRoomDatabase = myRoomDatabase,
                     )
                 }
@@ -60,13 +60,6 @@ class InitialDatabasePopulatorImpl(
                     populateCategoriesData(
                         initialDatabaseData = initialDatabaseData,
                         categoriesInitialDataVersionNumber = initialDataVersionNumber?.category.orZero(),
-                        myRoomDatabase = myRoomDatabase,
-                    )
-                }
-                launch {
-                    populateEmojisData(
-                        initialDatabaseData = initialDatabaseData,
-                        emojisInitialDataVersionNumber = initialDataVersionNumber?.category.orZero(),
                         myRoomDatabase = myRoomDatabase,
                     )
                 }
@@ -127,25 +120,6 @@ class InitialDatabasePopulatorImpl(
                 }
             myPreferencesDataSource.setCategoryDataVersionNumber(
                 categoryDataVersionNumber = initialDatabaseData.defaultCategories.versionNumber,
-            )
-        }
-    }
-
-    private suspend fun populateEmojisData(
-        initialDatabaseData: InitialDatabaseData,
-        emojisInitialDataVersionNumber: Int,
-        myRoomDatabase: MyRoomDatabase,
-    ) {
-        if (emojisInitialDataVersionNumber < initialDatabaseData.emojis.versionNumber) {
-            val emojiDao = myRoomDatabase.emojiDao()
-            emojiDao.deleteAllEmojis()
-            initialDatabaseData.emojis.emojisData.forEach {
-                emojiDao.insertEmoji(
-                    emoji = it,
-                )
-            }
-            myPreferencesDataSource.setEmojiDataVersionNumber(
-                emojiDataVersionNumber = initialDatabaseData.emojis.versionNumber,
             )
         }
     }

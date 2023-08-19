@@ -41,11 +41,6 @@ class RestoreDataUseCaseImpl(
         } else {
             backupData.databaseData.categories
         }
-        val emojis = if (backupData.databaseData.isNull()) {
-            backupData.emojis.orEmpty()
-        } else {
-            backupData.databaseData.emojis
-        }
         val accounts = sanitizeAccounts(
             accounts = if (backupData.databaseData.isNull()) {
                 backupData.accounts.orEmpty()
@@ -76,7 +71,6 @@ class RestoreDataUseCaseImpl(
 
         transactionRepository.restoreData(
             categories = categories,
-            emojis = emojis,
             accounts = accounts,
             transactions = transactions,
             transactionForValues = transactionForValues,
@@ -100,9 +94,6 @@ class RestoreDataUseCaseImpl(
                 )
                 setDefaultAccountId(
                     defaultAccountId = it.defaultDataId.account,
-                )
-                setEmojiDataVersionNumber(
-                    emojiDataVersionNumber = it.initialDataVersionNumber.emoji,
                 )
                 setIsReminderEnabled(
                     isReminderEnabled = it.reminder.isEnabled,

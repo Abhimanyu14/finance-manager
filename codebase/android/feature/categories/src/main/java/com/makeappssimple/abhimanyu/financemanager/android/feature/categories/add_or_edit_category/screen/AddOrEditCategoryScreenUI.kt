@@ -26,7 +26,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
@@ -58,7 +57,6 @@ enum class AddOrEditCategoryBottomSheetType : BottomSheetType {
 data class AddOrEditCategoryScreenUIData(
     val isValidCategoryData: Boolean = false,
     val selectedTransactionTypeIndex: Int = 0,
-    val emojiGroups: Map<String, List<Emoji>> = emptyMap(),
     val transactionTypes: List<TransactionType> = emptyList(),
     val emoji: String = "",
     val searchText: String = "",

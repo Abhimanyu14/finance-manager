@@ -17,10 +17,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.us
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetCategoryUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.InsertCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.UpdateCategoriesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -32,7 +30,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.na
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
@@ -48,7 +45,6 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     override val myLogger: MyLogger,
     private val dispatcherProvider: DispatcherProvider,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
-    private val getAllEmojisUseCase: GetAllEmojisUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val insertCategoriesUseCase: InsertCategoriesUseCase,
     private val navigationManager: NavigationManager,
@@ -88,27 +84,6 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     private val searchText: MutableStateFlow<String> = MutableStateFlow(
         value = "",
     )
-    private var emojis: MutableStateFlow<List<Emoji>> = MutableStateFlow(
-        value = emptyList(),
-    )
-    private val emojiGroups: Flow<Map<String, List<Emoji>>> = combine(
-        searchText,
-        emojis,
-    ) { searchText, emojis ->
-        emojis.filter { emoji ->
-            if (searchText.isBlank()) {
-                true
-            } else {
-                emoji.unicodeName.contains(searchText)
-            }
-        }.groupBy { emoji ->
-            emoji.group
-        }.filter { (_, emojis) ->
-            emojis.isNotEmpty()
-        }
-    }.flowOn(
-        context = dispatcherProvider.io,
-    )
 
     private val isValidCategoryData = combine(
         title,
@@ -127,22 +102,19 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
 
     override val screenUIData: StateFlow<MyResult<AddOrEditCategoryScreenUIData>?> = combine(
         selectedTransactionTypeIndex,
-        emojiGroups,
         emoji,
         searchText,
         title,
         isValidCategoryData,
     ) { flows ->
         val selectedTransactionTypeIndex = flows[0] as? Int
-        val emojiGroups = flows[1] as? Map<String, List<Emoji>>
-        val emoji = flows[2] as? String
-        val searchText = flows[3] as? String
-        val title = flows[4] as? TextFieldValue
-        val isValidCategoryData = flows[5] as? Boolean
+        val emoji = flows[1] as? String
+        val searchText = flows[2] as? String
+        val title = flows[3] as? TextFieldValue
+        val isValidCategoryData = flows[4] as? Boolean
 
         if (
             selectedTransactionTypeIndex.isNull() ||
-            emojiGroups.isNull() ||
             emoji.isNull() ||
             searchText.isNull() ||
             title.isNull() ||
@@ -154,7 +126,6 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
                 data = AddOrEditCategoryScreenUIData(
                     isValidCategoryData = isValidCategoryData,
                     selectedTransactionTypeIndex = selectedTransactionTypeIndex,
-                    emojiGroups = emojiGroups,
                     transactionTypes = transactionTypes,
                     emoji = emoji,
                     searchText = searchText,
@@ -317,11 +288,6 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
                     context = dispatcherProvider.io,
                 ) {
                     categories = getAllCategoriesUseCase()
-                },
-                async(
-                    context = dispatcherProvider.io,
-                ) {
-                    emojis.value = getAllEmojisUseCase()
                 },
             )
         }

@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations
 
+import androidx.room.DeleteTable
 import androidx.room.RenameColumn
 import androidx.room.migration.AutoMigrationSpec
 
@@ -8,6 +9,11 @@ import androidx.room.migration.AutoMigrationSpec
  * Source - https://developer.android.com/training/data-storage/room/migrating-db-versions#automigrationspec
  */
 internal object AutoDatabaseMigration {
+    @DeleteTable(
+        tableName = "emoji_table",
+    )
+    class AutoMigration20to21 : AutoMigrationSpec
+
     @RenameColumn(
         tableName = "transaction_table",
         fromColumnName = "source_id",

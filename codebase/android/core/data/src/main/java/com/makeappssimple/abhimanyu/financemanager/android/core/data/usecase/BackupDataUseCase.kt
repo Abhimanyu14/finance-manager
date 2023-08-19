@@ -6,7 +6,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.MyJsonWriter
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.GetAllAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase.GetAllCategoriesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.emoji.usecase.GetAllEmojisUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.BackupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.DatabaseData
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.DatastoreData
@@ -17,7 +16,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DataTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Emoji
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
@@ -39,7 +37,6 @@ class BackupDataUseCaseImpl(
     private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
-    private val getAllEmojisUseCase: GetAllEmojisUseCase,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val getAllTransactionsUseCase: GetAllTransactionsUseCase,
@@ -59,11 +56,6 @@ class BackupDataUseCaseImpl(
                 async(
                     context = dispatcherProvider.io,
                 ) {
-                    getAllEmojisUseCase()
-                },
-                async(
-                    context = dispatcherProvider.io,
-                ) {
                     getAllAccountsUseCase()
                 },
                 async(
@@ -79,20 +71,17 @@ class BackupDataUseCaseImpl(
             )
 
             val categories: List<Category> = deferredDatabaseData[0].filterIsInstance<Category>()
-            val emojis: List<Emoji> =
-                deferredDatabaseData[1].filterIsInstance<Emoji>()
-            val accounts: List<Account> = deferredDatabaseData[2].filterIsInstance<Account>()
+            val accounts: List<Account> = deferredDatabaseData[1].filterIsInstance<Account>()
             val transactionForValues: List<TransactionFor> =
-                deferredDatabaseData[3].filterIsInstance<TransactionFor>()
+                deferredDatabaseData[2].filterIsInstance<TransactionFor>()
             val transactions: List<Transaction> =
-                deferredDatabaseData[4].filterIsInstance<Transaction>()
+                deferredDatabaseData[3].filterIsInstance<Transaction>()
 
             val backupData = BackupData(
                 lastBackupTime = dateTimeUtil.getReadableDateAndTime(),
                 lastBackupTimestamp = dateTimeUtil.getCurrentTimeMillis().toString(),
                 databaseData = DatabaseData(
                     categories = categories,
-                    emojis = emojis,
                     accounts = accounts,
                     transactionForValues = transactionForValues,
                     transactions = transactions,
