@@ -108,9 +108,6 @@ dependencies {
     ksp libs.room.compiler
     androidTestImplementation libs.room.testing
 
-    // Emoji core
-    implementation libs.emoji.core
-
     // Testing
 
     // JUnit

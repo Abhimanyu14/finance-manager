@@ -94,7 +94,10 @@ internal fun AddOrEditCategoryScreenUI(
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = uiState.resetBottomSheetType,
+        resetBottomSheetType = {
+            uiState.resetBottomSheetType()
+            events.updateSearchText("")
+        },
     )
 
     MyScaffold(
@@ -114,9 +117,10 @@ internal fun AddOrEditCategoryScreenUI(
                         updateEmoji = { updatedEmoji ->
                             events.updateEmoji(updatedEmoji)
                         },
-                    ) { updatedSearchText ->
-                        events.updateSearchText(updatedSearchText)
-                    }
+                        updateSearchText = { updatedSearchText ->
+                            events.updateSearchText(updatedSearchText)
+                        },
+                    )
                 }
             }
         },
