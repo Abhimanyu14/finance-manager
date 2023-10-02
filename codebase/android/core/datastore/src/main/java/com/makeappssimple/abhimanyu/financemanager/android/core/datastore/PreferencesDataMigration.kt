@@ -102,7 +102,8 @@ private object PreferencesDataMigration {
             currentMutablePrefs[DataStoreConstants.DefaultId.ACCOUNT] = newValue
 
             // Update data store version number
-            currentMutablePrefs[DataStoreConstants.CURRENT_VERSION_NUMBER] = 2
+            currentMutablePrefs[DataStoreConstants.CURRENT_VERSION_NUMBER] =
+                AppConstants.DATASTORE_CURRENT_VERSION_NUMBER
 
             return currentMutablePrefs.toPreferences()
         }
