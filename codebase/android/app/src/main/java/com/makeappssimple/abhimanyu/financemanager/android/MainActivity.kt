@@ -16,6 +16,7 @@ class MainActivity : ComponentActivity() {
 
         // Turn off the decor fitting system windows, which allows us to handle insets,
         // including IME animations
+        // TODO(Abhi): Change to edgeToEdge()
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         setContent {

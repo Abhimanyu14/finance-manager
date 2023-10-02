@@ -29,6 +29,8 @@ class InitialDatabasePopulatorImpl(
     override fun populateInitialDatabaseData(
         myRoomDatabase: MyRoomDatabase,
     ) {
+        // TODO(Abhi) - Change to use Work Manager
+        // Reference - https://github.com/android/sunflower/blob/d7df7cb74b82a0c12064bca31acc2332e78c7c73/app/src/main/java/com/google/samples/apps/sunflower/data/AppDatabase.kt#L38
         myRoomDatabase.runInTransaction {
             CoroutineScope(
                 context = dispatcherProvider.io + SupervisorJob(),

@@ -76,6 +76,10 @@ abstract class MyRoomDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: MyRoomDatabase? = null
 
+        /**
+         * Reference
+         * https://github.com/android/app-actions-samples/blob/fea0f48a6d7f1c43d47c3ad14bfd11ace4b5629c/fitness-biis/starter/app/src/main/java/com/devrel/android/fitactions/model/FitDatabase.kt#L34
+         */
         fun getDatabase(
             context: Context,
             initialDatabasePopulator: InitialDatabasePopulator? = null,
@@ -84,49 +88,54 @@ abstract class MyRoomDatabase : RoomDatabase() {
             if (tempInstance.isNotNull()) {
                 return tempInstance
             }
-            synchronized(
+            return INSTANCE ?: synchronized(
                 lock = this,
             ) {
-                val roomDatabaseCallback: Callback = object : Callback() {
-                    override fun onCreate(
-                        db: SupportSQLiteDatabase,
-                    ) {
-                        // do something after database has been created
-                    }
+                INSTANCE ?: buildDatabase(context, initialDatabasePopulator).also { INSTANCE = it }
+            }
+        }
 
-                    override fun onOpen(
-                        db: SupportSQLiteDatabase,
-                    ) {
-                        // do something every time database is open
-                        Executors
-                            .newSingleThreadScheduledExecutor()
-                            .execute {
-                                val myRoomDatabase = getDatabase(
-                                    context = context,
-                                )
-                                initialDatabasePopulator?.populateInitialDatabaseData(
-                                    myRoomDatabase = myRoomDatabase,
-                                )
-                            }
-                    }
+        private fun buildDatabase(
+            context: Context,
+            initialDatabasePopulator: InitialDatabasePopulator?,
+        ): MyRoomDatabase {
+            val roomDatabaseCallback: Callback = object : Callback() {
+                override fun onCreate(
+                    db: SupportSQLiteDatabase,
+                ) {
+                    // do something after database has been created
                 }
 
-                val instance = Room
-                    .databaseBuilder(
-                        context = context.applicationContext,
-                        klass = MyRoomDatabase::class.java,
-                        name = AppConstants.DATABASE_NAME,
-                    )
-                    .addMigrations(
-                        migrations = manualDatabaseMigrations,
-                    )
-                    .addCallback(
-                        callback = roomDatabaseCallback,
-                    )
-                    .build()
-                INSTANCE = instance
-                return instance
+                override fun onOpen(
+                    db: SupportSQLiteDatabase,
+                ) {
+                    // do something every time database is open
+                    Executors
+                        .newSingleThreadScheduledExecutor()
+                        .execute {
+                            val myRoomDatabase = getDatabase(
+                                context = context,
+                            )
+                            initialDatabasePopulator?.populateInitialDatabaseData(
+                                myRoomDatabase = myRoomDatabase,
+                            )
+                        }
+                }
             }
+
+            return Room
+                .databaseBuilder(
+                    context = context.applicationContext,
+                    klass = MyRoomDatabase::class.java,
+                    name = AppConstants.DATABASE_NAME,
+                )
+                .addMigrations(
+                    migrations = manualDatabaseMigrations,
+                )
+                .addCallback(
+                    callback = roomDatabaseCallback,
+                )
+                .build()
         }
     }
 }
