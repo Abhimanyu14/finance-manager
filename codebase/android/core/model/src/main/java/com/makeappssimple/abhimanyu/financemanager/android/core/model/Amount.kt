@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.model
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.CurrencyCodeConstants
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.currency.formattedCurrencyValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.serializer.CurrencySerializer
 import kotlinx.serialization.EncodeDefault
@@ -17,7 +18,7 @@ data class Amount @OptIn(ExperimentalSerializationApi::class) constructor(
 
     @EncodeDefault
     val value: Long = 0,
-) {
+) : Comparable<Amount> {
     fun toNonSignedString(): String {
         return toSignedString(
             isPositive = false,
@@ -68,5 +69,20 @@ data class Amount @OptIn(ExperimentalSerializationApi::class) constructor(
             currency = currency,
             value = value - amount.value,
         )
+    }
+
+
+    override fun compareTo(
+        other: Amount,
+    ): Int {
+        return (value - other.value).toInt()
+    }
+}
+
+fun Amount?.orEmpty(): Amount {
+    return if (this.isNull()) {
+        Amount()
+    } else {
+        this
     }
 }

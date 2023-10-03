@@ -28,14 +28,15 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 
 @Immutable
 data class AccountsListItemData(
+    val isDefault: Boolean = false,
+    val isDeleteEnabled: Boolean = false,
+    val isExpanded: Boolean = false,
     val isHeading: Boolean = false,
+    val isLowBalance: Boolean = false,
     val icon: ImageVector? = null,
     val accountId: Int? = null,
     val balance: String,
     val name: String,
-    val isDefault: Boolean = false,
-    val isDeleteEnabled: Boolean = false,
-    val isExpanded: Boolean = false,
 )
 
 @Immutable
@@ -127,7 +128,11 @@ internal fun AccountsListItem(
                     text = data.balance,
                     style = MaterialTheme.typography.headlineLarge
                         .copy(
-                            color = MaterialTheme.colorScheme.onBackground,
+                            color = if (data.isLowBalance) {
+                                MaterialTheme.colorScheme.error
+                            } else {
+                                MaterialTheme.colorScheme.onBackground
+                            },
                         ),
                 )
             }

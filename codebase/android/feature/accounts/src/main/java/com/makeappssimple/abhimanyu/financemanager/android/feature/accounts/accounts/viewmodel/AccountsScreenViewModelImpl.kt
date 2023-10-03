@@ -16,6 +16,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
@@ -94,16 +95,18 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
                     } else {
                         defaultAccountId == account.id
                     }
+
                     AccountsListItemData(
-                        icon = account.type.icon,
-                        accountId = account.id,
-                        balance = account.balanceAmount.toString(),
-                        name = account.name,
                         isDefault = isDefault,
                         isDeleteEnabled = !isDefaultAccount(
                             account = account.name,
                         ) && deleteEnabled,
                         isExpanded = false,
+                        isLowBalance = account.balanceAmount < account.minimumAccountBalanceAmount.orEmpty(),
+                        icon = account.type.icon,
+                        accountId = account.id,
+                        balance = account.balanceAmount.toString(),
+                        name = account.name,
                     )
                 }.orEmpty()
             )
