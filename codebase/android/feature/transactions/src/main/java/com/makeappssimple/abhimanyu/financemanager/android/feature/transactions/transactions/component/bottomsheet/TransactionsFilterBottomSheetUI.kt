@@ -425,7 +425,7 @@ private fun TransactionFilterBottomSheetFilterGroup(
         } else {
             0F
         },
-        label = "", // TODO-Abhi: Add label for animation inspection
+        label = "", // TODO(Abhi): Add label for animation inspection
     )
 
     Column(
@@ -537,7 +537,7 @@ fun TransactionFilterBottomSheetDateFilter(
         } else {
             0F
         },
-        label = "", // TODO-Abhi: Add label for animation inspection
+        label = "", // TODO(Abhi): Add label for animation inspection
     )
     var isFromDatePickerDialogVisible by remember {
         mutableStateOf(false)

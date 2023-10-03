@@ -29,7 +29,7 @@ class InsertTransactionForValuesUseCaseTest {
             *testTransactionForValues,
         )
 
-        // TODO-Abhi: Test `dataStore.updateLastDataChangeTimestamp()`
+        // TODO(Abhi): Test `dataStore.updateLastDataChangeTimestamp()`
         verify(
             mock = transactionForRepository,
         ).insertTransactionForValues(

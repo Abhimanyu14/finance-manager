@@ -50,7 +50,7 @@ enum class OverviewTabOption(
 ) {
     DAY("DAY"),
 
-    // TODO-Abhi: Enable week later
+    // TODO(Abhi): Enable week later
     // WEEK("Week"),
     MONTH("MONTH"),
     YEAR("YEAR"),
@@ -132,7 +132,7 @@ fun OverviewCard(
                         .fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    // TODO-Abhi: Disable the buttons conditionally
+                    // TODO(Abhi): Disable the buttons conditionally
                     IconButton(
                         onClick = {
                             events.handleOverviewCardAction(OverviewCardAction.PREV)
@@ -140,7 +140,7 @@ fun OverviewCard(
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.ChevronLeft,
-                            contentDescription = null, // TODO-Abhi: Change content description
+                            contentDescription = null, // TODO(Abhi): Change content description
                             tint = MaterialTheme.colorScheme.primary,
                         )
                     }
@@ -167,7 +167,7 @@ fun OverviewCard(
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.ChevronRight,
-                            contentDescription = null, // TODO-Abhi: Change content description
+                            contentDescription = null, // TODO(Abhi): Change content description
                             tint = MaterialTheme.colorScheme.primary,
                         )
                     }

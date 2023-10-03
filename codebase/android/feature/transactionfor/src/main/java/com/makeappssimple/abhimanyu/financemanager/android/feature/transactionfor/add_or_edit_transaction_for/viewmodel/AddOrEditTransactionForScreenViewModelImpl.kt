@@ -197,12 +197,12 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
         title: String,
         transactionFor: TransactionFor?,
     ): Boolean {
-        // TODO-Abhi: Error message - "Title can not be empty"
+        // TODO(Abhi): Error message - "Title can not be empty"
         if (title.isBlank()) {
             return false
         }
 
-        // TODO-Abhi: Error message - "Title already exists"
+        // TODO(Abhi): Error message - "Title already exists"
         return !(title != transactionFor?.title && transactionForValues.find {
             it.title.equalsIgnoringCase(
                 other = title,

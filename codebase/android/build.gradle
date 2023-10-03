@@ -63,7 +63,7 @@ plugins {
 
 apply plugin: "io.gitlab.arturbosch.detekt"
 
-// TODO-Abhi: Jacoco
+// TODO(Abhi): Jacoco
 //subprojects {
 //    configurations.all {
 //        resolutionStrategy {

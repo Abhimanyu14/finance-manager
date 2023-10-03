@@ -38,7 +38,7 @@ interface TransactionDao {
     suspend fun getAllTransactionData(): List<TransactionDataEntity>
 
     /**
-     * TODO-Abhi: To search amount properly, JSON1 extension is required which is not available in Android.
+     * TODO(Abhi): To search amount properly, JSON1 extension is required which is not available in Android.
      * For more info - https://stackoverflow.com/a/65104396/9636037
      *
      * The current code is a hacky solution, which does a simple text search of the JSON string.

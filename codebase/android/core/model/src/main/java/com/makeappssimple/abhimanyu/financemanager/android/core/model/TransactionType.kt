@@ -22,7 +22,7 @@ enum class TransactionType(
         title = "Refund",
     ),
     /*
-    // TODO-Abhi: Add Loans later
+    // TODO(Abhi): Add Loans later
     LOAN(
         title = "Loan",
     ),

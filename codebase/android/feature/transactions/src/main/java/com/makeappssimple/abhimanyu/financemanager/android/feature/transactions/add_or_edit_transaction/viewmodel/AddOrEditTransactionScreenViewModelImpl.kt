@@ -1164,7 +1164,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             updatedAddOrEditTransactionScreenUiStateData = initialAddOrEditTransactionScreenUiStateData,
         )
 
-        // TODO-Abhi: This is a better race condition, but still not reactive
+        // TODO(Abhi): This is a better race condition, but still not reactive
         setInitialSelectedTransactionType()
     }
 

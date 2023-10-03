@@ -297,12 +297,12 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         title: String,
         category: Category?,
     ): Boolean {
-        // TODO-Abhi: Error message - "Title can not be empty"
+        // TODO(Abhi): Error message - "Title can not be empty"
         if (title.isBlank()) {
             return false
         }
 
-        // TODO-Abhi: Error message - "Title already exists"
+        // TODO(Abhi): Error message - "Title already exists"
         if (isDefaultIncomeCategory(
                 category = title.trim(),
             )
@@ -310,7 +310,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
             return false
         }
 
-        // TODO-Abhi: Error message - "Title already exists"
+        // TODO(Abhi): Error message - "Title already exists"
         if (isDefaultExpenseCategory(
                 category = title.trim(),
             )
@@ -318,7 +318,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
             return false
         }
 
-        // TODO-Abhi: Error message - "Title already exists"
+        // TODO(Abhi): Error message - "Title already exists"
         if (isDefaultInvestmentCategory(
                 category = title.trim(),
             )
@@ -326,7 +326,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
             return false
         }
 
-        // TODO-Abhi: Error message - "Title already exists"
+        // TODO(Abhi): Error message - "Title already exists"
         return !(title.trim() != category?.title?.trim() && categories.find {
             it.title.equalsIgnoringCase(
                 other = title.trim(),
