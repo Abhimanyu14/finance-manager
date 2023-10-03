@@ -6,6 +6,7 @@ import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.IntrinsicSize
@@ -137,9 +138,15 @@ fun OverviewTab(
                         .clip(
                             shape = CircleShape,
                         )
-                        .clickable {
-                            events.onClick(index)
-                        }
+                        .clickable(
+                            interactionSource = remember {
+                                MutableInteractionSource()
+                            },
+                            indication = null,
+                            onClick = {
+                                events.onClick(index)
+                            },
+                        )
                         .padding(
                             horizontal = 12.dp,
                             vertical = 8.dp,
