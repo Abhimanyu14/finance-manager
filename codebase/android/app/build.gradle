@@ -1,13 +1,13 @@
 plugins {
     id "com.android.application"
+    id "com.google.gms.google-services"
     id "org.jetbrains.kotlin.android"
     id "org.jetbrains.kotlin.kapt"
     id "dagger.hilt.android.plugin"
-    id "com.google.gms.google-services"
     id "jacoco"
     id "org.jetbrains.kotlinx.kover"
     id "io.gitlab.arturbosch.detekt"
-    id "com.mikepenz.aboutlibraries.plugin"
+    alias libs.plugins.about.libraries
     id "com.google.devtools.ksp" version "1.8.10-1.0.9"
 }
 
@@ -410,6 +410,12 @@ dependencies {
 
     // Jetpack compose UI tests manifest - Needed for createComposeRule, but not createAndroidComposeRule
     debugImplementation libs.compose.ui.test.manifest
+}
+
+// Allow references to generated code
+// Source - https://developer.android.com/training/dependency-injection/hilt-android
+kapt {
+    correctErrorTypes true
 }
 
 kover {

@@ -165,7 +165,7 @@ com-android-library = { id = "com.android.library", version.ref = "agp" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics" }
 
-#gradle-build-tools = { id = "com.android.tools.build.gradle", version.ref = "plugin-gradle-build-tools" }
-#kotlin-gradle = { id = "org.jetbrains.kotlin.gradle.plugin", version.ref = "plugin-kotlin-gradle" }
-#hilt-android = { id = "com.google.dagger.hilt.android.gradle.plugin", version.ref = "plugin-hilt-android" }
-#jacoco = { id = "org.jacoco.core", version.ref = "plugin-jacoco" }
+gradle-build-tools = { id = "com.android.tools.build.gradle", version.ref = "plugin-gradle-build-tools" }
+kotlin-gradle = { id = "org.jetbrains.kotlin.gradle.plugin", version.ref = "plugin-kotlin-gradle" }
+hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "plugin-hilt-android" }
+jacoco = { id = "org.jacoco.core", version.ref = "plugin-jacoco" }

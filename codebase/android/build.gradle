@@ -36,9 +36,6 @@ buildscript {
         // Build tools
         classpath libs.plugin.gradle.build.tools
 
-        // Hilt
-        classpath libs.plugin.hilt.android
-
         // Google services gradle plugin for Firebase
         classpath libs.plugin.google.services
 
@@ -51,6 +48,7 @@ plugins {
     alias libs.plugins.kotlin.android apply false
     alias libs.plugins.kotlin.jvm apply false
     alias libs.plugins.serialization apply false
+    alias libs.plugins.hilt.android apply false
     alias libs.plugins.about.libraries apply false
     // alias libs.plugins.google.services apply false
     // alias libs.plugins.firebase.crashlytics apply false
@@ -62,12 +60,6 @@ plugins {
 //
 //    // Kotlin gradle plugin
 //    alias libs.plugin.kotlin.gradle
-//
-//    // Hilt
-//    alias libs.plugin.hilt.android
-//
-//    // Google services gradle plugin for Firebase
-//    alias libs.plugin.google.services
 //
 //    // Jacoco
 //    alias libs.plugin.jacoco

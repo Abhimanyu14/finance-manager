@@ -60,7 +60,6 @@ android {
 
 dependencies {
     implementation project(":core:common")
-//    implementation project(":core:model")
     implementation project(":core:logger")
 
     // Coroutines
@@ -90,6 +89,6 @@ dependencies {
     implementation libs.kotlinx.coroutines.test
 
     // Hilt testing
-    implementation "com.google.dagger:hilt-android-testing:2.44.2"
-    kapt "com.google.dagger:hilt-android-compiler:2.44.2"
+    implementation libs.hilt.android.testing
+    kapt libs.hilt.android.compiler
 }
