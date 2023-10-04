@@ -1,14 +1,15 @@
 plugins {
     id "com.android.application"
-    id "com.google.gms.google-services"
     id "org.jetbrains.kotlin.android"
     id "org.jetbrains.kotlin.kapt"
     id "dagger.hilt.android.plugin"
     id "jacoco"
-    id "org.jetbrains.kotlinx.kover"
-    id "io.gitlab.arturbosch.detekt"
-    alias libs.plugins.about.libraries
     id "com.google.devtools.ksp" version "1.8.10-1.0.9"
+    alias libs.plugins.google.services
+    alias libs.plugins.detekt
+    alias libs.plugins.kover
+    alias libs.plugins.about.libraries
+    alias libs.plugins.firebase.crashlytics
 }
 
 // Kover
