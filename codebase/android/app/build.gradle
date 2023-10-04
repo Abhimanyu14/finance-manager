@@ -1,15 +1,15 @@
 plugins {
     id "com.android.application"
-    id "kotlin-android"
-    id "kotlin-kapt"
+    id "org.jetbrains.kotlin.android"
+    id "org.jetbrains.kotlin.kapt"
     id "dagger.hilt.android.plugin"
     id "com.google.gms.google-services"
     id "jacoco"
     id "org.jetbrains.kotlinx.kover"
     id "io.gitlab.arturbosch.detekt"
+    id "com.mikepenz.aboutlibraries.plugin"
     id "com.google.devtools.ksp" version "1.8.10-1.0.9"
 }
-apply plugin: "com.mikepenz.aboutlibraries.plugin"
 
 // Kover
 //kover {
@@ -375,10 +375,13 @@ dependencies {
     implementation libs.work.manager
 
     // Firebase BoM
-    implementation platform("com.google.firebase:firebase-bom:$rootProject.firebaseBomVersion")
+    implementation platform(libs.firebase)
 
     // Firebase analytics
-    implementation "com.google.firebase:firebase-analytics-ktx"
+    implementation libs.firebase.analytics
+
+    // Firebase crashlytics
+    implementation libs.firebase.crashlytics
 
     // Testing
 

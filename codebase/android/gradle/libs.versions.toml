@@ -4,7 +4,7 @@ plugin-kotlin-gradle = "1.8.10"
 plugin-hilt-android = "2.44.2"
 plugin-google-services = "4.4.0"
 plugin-jacoco = "0.8.7"
-plugin-detekt = "1.20.0"
+plugin-detekt = "1.21.0"
 
 androidx-core-ktx = "1.12.0"
 androidx-lifecycle-runtime-ktx = "2.6.2"
@@ -58,6 +58,8 @@ plugin-kotlin-jvm = "1.7.20"
 plugin-serialization = "1.7.20"
 plugin-kover = "0.6.1"
 agp = "7.3.1"
+google-services = "4.3.15"
+firebase-crashlytics = "2.9.9"
 espresso-core = "3.5.1"
 material = "1.9.0"
 
@@ -127,6 +129,8 @@ work-manager = { group = "androidx.work", name = "work-runtime-ktx", version.ref
 
 #firebase
 firebase = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx" }
+firebase-crashlytics = { module = "com.google.firebase:firebase-crashlytics-ktx" }
 
 #about libraries
 about-libraries-core = { group = "com.mikepenz", name = "aboutlibraries-core", version.ref = "about-libraries" }
@@ -155,5 +159,13 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "plugin-ko
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "plugin-kotlin-jvm" }
 serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "plugin-serialization" }
 kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "plugin-kover" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "plugin-detekt" }
 about-libraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "oss-licenses" }
 com-android-library = { id = "com.android.library", version.ref = "agp" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google-services" }
+firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebase-crashlytics" }
+
+#gradle-build-tools = { id = "com.android.tools.build.gradle", version.ref = "plugin-gradle-build-tools" }
+#kotlin-gradle = { id = "org.jetbrains.kotlin.gradle.plugin", version.ref = "plugin-kotlin-gradle" }
+#hilt-android = { id = "com.google.dagger.hilt.android.gradle.plugin", version.ref = "plugin-hilt-android" }
+#jacoco = { id = "org.jacoco.core", version.ref = "plugin-jacoco" }

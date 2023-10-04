@@ -36,20 +36,14 @@ buildscript {
         // Build tools
         classpath libs.plugin.gradle.build.tools
 
-        // Kotlin gradle plugin
-        classpath libs.plugin.kotlin.gradle
-
         // Hilt
         classpath libs.plugin.hilt.android
 
         // Google services gradle plugin for Firebase
         classpath libs.plugin.google.services
 
-        // Jacoco
-        classpath libs.plugin.jacoco
-
-        // Detekt
-        classpath libs.plugin.detekt
+//        // Jacoco
+//        classpath libs.plugin.jacoco
     }
 }
 
@@ -57,11 +51,29 @@ plugins {
     alias libs.plugins.kotlin.android apply false
     alias libs.plugins.kotlin.jvm apply false
     alias libs.plugins.serialization apply false
+    alias libs.plugins.about.libraries apply false
+    // alias libs.plugins.google.services apply false
+    // alias libs.plugins.firebase.crashlytics apply false
     alias libs.plugins.kover
-    alias libs.plugins.about.libraries
+    alias libs.plugins.detekt
+
+//    // Build tools
+//    alias libs.plugin.gradle.build.tools
+//
+//    // Kotlin gradle plugin
+//    alias libs.plugin.kotlin.gradle
+//
+//    // Hilt
+//    alias libs.plugin.hilt.android
+//
+//    // Google services gradle plugin for Firebase
+//    alias libs.plugin.google.services
+//
+//    // Jacoco
+//    alias libs.plugin.jacoco
 }
 
-apply plugin: "io.gitlab.arturbosch.detekt"
+// apply plugin: "io.gitlab.arturbosch.detekt"
 
 // TODO(Abhi): Jacoco
 //subprojects {
