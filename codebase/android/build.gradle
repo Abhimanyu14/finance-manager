@@ -21,9 +21,6 @@ buildscript {
 
         // Jetpack compose compiler
         jetpackComposeCompilerVersion = "1.4.3"
-
-        // Firebase BoM
-        firebaseBomVersion = "29.1.0"
     }
 
     repositories {
@@ -34,9 +31,6 @@ buildscript {
     dependencies {
         // Build tools
         classpath libs.plugin.gradle.build.tools
-
-        // Google services gradle plugin for Firebase
-        // classpath libs.plugin.google.services
     }
 }
 
@@ -54,8 +48,6 @@ plugins {
     // alias libs.plugin.gradle.build.tools
     // alias libs.plugin.kotlin.gradle
 }
-
-// apply plugin: "io.gitlab.arturbosch.detekt"
 
 // TODO(Abhi): Jacoco
 //subprojects {
