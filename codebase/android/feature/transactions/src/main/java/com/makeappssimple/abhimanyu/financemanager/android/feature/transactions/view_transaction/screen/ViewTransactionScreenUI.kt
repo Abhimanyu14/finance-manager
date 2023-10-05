@@ -43,19 +43,31 @@ data class ViewTransactionScreenUIData(
 )
 
 @Immutable
-internal data class ViewTransactionScreenUIEvents(
-    val deleteTransaction: (transactionId: Int) -> Unit,
-    val navigateToAddTransactionScreen: (transactionId: Int) -> Unit,
-    val navigateToEditTransactionScreen: (transactionId: Int) -> Unit,
-    val navigateToViewTransactionScreen: (transactionId: Int) -> Unit,
-    val navigateUp: () -> Unit,
-)
+sealed class ViewTransactionScreenUIEvent {
+    object NavigateUp : ViewTransactionScreenUIEvent()
+
+    data class DeleteTransaction(
+        val transactionId: Int,
+    ) : ViewTransactionScreenUIEvent()
+
+    data class NavigateToAddTransactionScreen(
+        val transactionId: Int,
+    ) : ViewTransactionScreenUIEvent()
+
+    data class NavigateToEditTransactionScreen(
+        val transactionId: Int,
+    ) : ViewTransactionScreenUIEvent()
+
+    data class NavigateToViewTransactionScreen(
+        val transactionId: Int,
+    ) : ViewTransactionScreenUIEvent()
+}
 
 @Composable
 internal fun ViewTransactionScreenUI(
-    events: ViewTransactionScreenUIEvents,
     uiState: ViewTransactionScreenUIState,
     state: CommonScreenUIState,
+    handleUIEvents: (uiEvent: ViewTransactionScreenUIEvent) -> Unit,
 ) {
     BottomSheetHandler(
         showModalBottomSheet = uiState.viewTransactionBottomSheetType != ViewTransactionBottomSheetType.NONE,
@@ -80,7 +92,11 @@ internal fun ViewTransactionScreenUI(
                         },
                         deleteTransaction = {
                             uiState.transactionIdToDelete?.let { transactionIdToDeleteValue ->
-                                events.deleteTransaction(transactionIdToDeleteValue)
+                                handleUIEvents(
+                                    ViewTransactionScreenUIEvent.DeleteTransaction(
+                                        transactionId = transactionIdToDeleteValue,
+                                    )
+                                )
                             }
                         },
                     )
@@ -95,7 +111,9 @@ internal fun ViewTransactionScreenUI(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_view_transaction_appbar_title,
-                navigationAction = events.navigateUp,
+                navigationAction = {
+                    handleUIEvents(ViewTransactionScreenUIEvent.NavigateUp)
+                },
             )
         },
         onClick = {
@@ -135,10 +153,18 @@ internal fun ViewTransactionScreenUI(
                                 )
                             },
                             onEditButtonClick = {
-                                events.navigateToEditTransactionScreen(uiState.transactionListItemData.transactionId)
+                                handleUIEvents(
+                                    ViewTransactionScreenUIEvent.NavigateToEditTransactionScreen(
+                                        transactionId = uiState.transactionListItemData.transactionId,
+                                    )
+                                )
                             },
                             onRefundButtonClick = {
-                                events.navigateToAddTransactionScreen(uiState.transactionListItemData.transactionId)
+                                handleUIEvents(
+                                    ViewTransactionScreenUIEvent.NavigateToAddTransactionScreen(
+                                        transactionId = uiState.transactionListItemData.transactionId,
+                                    )
+                                )
                             },
                         ),
                     )
@@ -172,8 +198,10 @@ internal fun ViewTransactionScreenUI(
                             data = uiState.originalTransactionListItemData,
                             events = TransactionListItemEvents(
                                 onClick = {
-                                    events.navigateToViewTransactionScreen(
-                                        uiState.originalTransactionListItemData.transactionId
+                                    handleUIEvents(
+                                        ViewTransactionScreenUIEvent.NavigateToViewTransactionScreen(
+                                            transactionId = uiState.originalTransactionListItemData.transactionId,
+                                        )
                                     )
                                 },
                                 onDeleteButtonClick = {
@@ -183,13 +211,17 @@ internal fun ViewTransactionScreenUI(
                                     )
                                 },
                                 onEditButtonClick = {
-                                    events.navigateToEditTransactionScreen(
-                                        uiState.originalTransactionListItemData.transactionId
+                                    handleUIEvents(
+                                        ViewTransactionScreenUIEvent.NavigateToEditTransactionScreen(
+                                            transactionId = uiState.originalTransactionListItemData.transactionId,
+                                        )
                                     )
                                 },
                                 onRefundButtonClick = {
-                                    events.navigateToAddTransactionScreen(
-                                        uiState.originalTransactionListItemData.transactionId
+                                    handleUIEvents(
+                                        ViewTransactionScreenUIEvent.NavigateToAddTransactionScreen(
+                                            transactionId = uiState.originalTransactionListItemData.transactionId,
+                                        )
                                     )
                                 },
                             ),
@@ -230,8 +262,10 @@ internal fun ViewTransactionScreenUI(
                         data = transactionListItemData,
                         events = TransactionListItemEvents(
                             onClick = {
-                                events.navigateToViewTransactionScreen(
-                                    transactionListItemData.transactionId
+                                handleUIEvents(
+                                    ViewTransactionScreenUIEvent.NavigateToViewTransactionScreen(
+                                        transactionId = transactionListItemData.transactionId,
+                                    )
                                 )
                             },
                             onDeleteButtonClick = {
@@ -241,8 +275,10 @@ internal fun ViewTransactionScreenUI(
                                 )
                             },
                             onEditButtonClick = {
-                                events.navigateToEditTransactionScreen(
-                                    transactionListItemData.transactionId
+                                handleUIEvents(
+                                    ViewTransactionScreenUIEvent.NavigateToEditTransactionScreen(
+                                        transactionId = transactionListItemData.transactionId,
+                                    )
                                 )
                             },
                             onRefundButtonClick = {},

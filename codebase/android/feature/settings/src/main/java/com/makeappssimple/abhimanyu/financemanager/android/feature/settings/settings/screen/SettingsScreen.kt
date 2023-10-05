@@ -28,7 +28,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.sett
 fun SettingsScreen(
     screenViewModel: SettingsScreenViewModel = hiltViewModel<SettingsScreenViewModelImpl>(),
 ) {
-    screenViewModel.myLogger.logError(
+    val viewModel = remember {
+        screenViewModel
+    }
+    viewModel.myLogger.logError(
         message = "Inside SettingsScreen",
     )
 
@@ -42,7 +45,7 @@ fun SettingsScreen(
         ) { uri ->
             uri?.let {
                 isLoading = true
-                screenViewModel.backupDataToDocument(
+                viewModel.backupDataToDocument(
                     uri = it,
                 )
             }
@@ -53,7 +56,7 @@ fun SettingsScreen(
         ) { uri ->
             uri?.let {
                 isLoading = true
-                screenViewModel.restoreDataFromDocument(
+                viewModel.restoreDataFromDocument(
                     uri = it,
                 )
             }
@@ -63,49 +66,60 @@ fun SettingsScreen(
         onResult = { _ -> },
     )
 
-    val screenUIData: MyResult<SettingsScreenUIData>? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
+    val screenUIData: MyResult<SettingsScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
     val uiState = rememberSettingsScreenUIState(
         data = screenUIData,
     )
+    val handleUIEvents = remember(
+        key1 = viewModel,
+    ) {
+        { uiEvent: SettingsScreenUIEvent ->
+            when (uiEvent) {
+                SettingsScreenUIEvent.BackupData -> {
+                    createDocumentResultLauncher.launch(MimeTypeConstants.JSON)
+                }
 
-    SettingsScreenUI(
-        events = SettingsScreenUIEvents(
-            backupData = {
-                createDocumentResultLauncher.launch(MimeTypeConstants.JSON)
-            },
-            navigateToCategoriesScreen = screenViewModel::navigateToCategoriesScreen,
-            navigateToAccountsScreen = screenViewModel::navigateToAccountsScreen,
-            navigateToOpenSourceLicensesScreen = screenViewModel::navigateToOpenSourceLicensesScreen,
-            navigateToTransactionForValuesScreen = screenViewModel::navigateToTransactionForValuesScreen,
-            navigateUp = screenViewModel::navigateUp,
-            recalculateTotal = {
-                isLoading = true
-                screenViewModel.recalculateTotal()
-            },
-            restoreData = {
-                openDocumentResultLauncher.launch(arrayOf(MimeTypeConstants.JSON))
-            },
-            toggleReminder = {
-                if (uiState.isReminderEnabled.orFalse()) {
-                    screenViewModel.disableReminder()
-                } else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                        val hasNotificationPermission = ContextCompat.checkSelfPermission(
-                            context,
-                            Manifest.permission.POST_NOTIFICATIONS
-                        ) == PackageManager.PERMISSION_GRANTED
-                        if (!hasNotificationPermission) {
-                            notificationsPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                        } else {
-                            screenViewModel.enableReminder()
-                        }
+                SettingsScreenUIEvent.RecalculateTotal -> {
+                    isLoading = true
+                    viewModel.recalculateTotal()
+                }
+
+                SettingsScreenUIEvent.RestoreData -> {
+                    openDocumentResultLauncher.launch(arrayOf(MimeTypeConstants.JSON))
+                }
+
+                SettingsScreenUIEvent.ToggleReminder -> {
+                    if (uiState.isReminderEnabled.orFalse()) {
+                        viewModel.disableReminder()
                     } else {
-                        screenViewModel.enableReminder()
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                            val hasNotificationPermission = ContextCompat.checkSelfPermission(
+                                context,
+                                Manifest.permission.POST_NOTIFICATIONS
+                            ) == PackageManager.PERMISSION_GRANTED
+                            if (!hasNotificationPermission) {
+                                notificationsPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                            } else {
+                                viewModel.enableReminder()
+                            }
+                        } else {
+                            viewModel.enableReminder()
+                        }
                     }
                 }
-            },
-        ),
+
+                else -> {
+                    viewModel.handleUIEvents(
+                        uiEvent = uiEvent,
+                    )
+                }
+            }
+        }
+    }
+
+    SettingsScreenUI(
         uiState = uiState,
         state = rememberCommonScreenUIState(),
+        handleUIEvents = handleUIEvents,
     )
 }

@@ -48,18 +48,20 @@ data class AddOrEditTransactionForScreenUIData(
 )
 
 @Immutable
-internal data class AddOrEditTransactionForScreenUIEvents(
-    val clearTitle: () -> Unit,
-    val navigateUp: () -> Unit,
-    val onCtaButtonClick: () -> Unit,
-    val updateTitle: (updatedTitle: TextFieldValue) -> Unit,
-)
+sealed class AddOrEditTransactionForScreenUIEvent {
+    object ClearTitle : AddOrEditTransactionForScreenUIEvent()
+    object NavigateUp : AddOrEditTransactionForScreenUIEvent()
+    object OnCtaButtonClick : AddOrEditTransactionForScreenUIEvent()
+    data class UpdateTitle(
+        val updatedTitle: TextFieldValue,
+    ) : AddOrEditTransactionForScreenUIEvent()
+}
 
 @Composable
 internal fun AddOrEditTransactionForScreenUI(
-    events: AddOrEditTransactionForScreenUIEvents,
     uiState: AddOrEditTransactionForScreenUIState,
     state: CommonScreenUIState,
+    handleUIEvents: (uiEvent: AddOrEditTransactionForScreenUIEvent) -> Unit,
 ) {
     if (!uiState.isLoading) {
         LaunchedEffect(
@@ -101,7 +103,9 @@ internal fun AddOrEditTransactionForScreenUI(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
-                navigationAction = events.navigateUp,
+                navigationAction = {
+                    handleUIEvents(AddOrEditTransactionForScreenUIEvent.NavigateUp)
+                },
             )
         },
         onClick = {
@@ -138,8 +142,16 @@ internal fun AddOrEditTransactionForScreenUI(
                     ),
                 ),
                 events = MyOutlinedTextFieldEvents(
-                    onClickTrailingIcon = events.clearTitle,
-                    onValueChange = events.updateTitle,
+                    onClickTrailingIcon = {
+                        handleUIEvents(AddOrEditTransactionForScreenUIEvent.ClearTitle)
+                    },
+                    onValueChange = { updatedTitle ->
+                        handleUIEvents(
+                            AddOrEditTransactionForScreenUIEvent.UpdateTitle(
+                                updatedTitle = updatedTitle,
+                            )
+                        )
+                    },
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -158,7 +170,9 @@ internal fun AddOrEditTransactionForScreenUI(
                     textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
                 ),
                 events = SaveButtonEvents(
-                    onClick = events.onCtaButtonClick,
+                    onClick = {
+                        handleUIEvents(AddOrEditTransactionForScreenUIEvent.OnCtaButtonClick)
+                    },
                 ),
             )
         }

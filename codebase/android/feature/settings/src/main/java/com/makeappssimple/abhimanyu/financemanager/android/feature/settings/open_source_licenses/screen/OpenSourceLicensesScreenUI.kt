@@ -25,15 +25,15 @@ data class OpenSourceLicensesScreenUIData(
 )
 
 @Immutable
-internal data class OpenSourceLicensesScreenUIEvents(
-    val navigateUp: () -> Unit = {},
-)
+sealed class OpenSourceLicensesScreenUIEvent {
+    object NavigateUp : OpenSourceLicensesScreenUIEvent()
+}
 
 @Composable
 internal fun OpenSourceLicensesScreenUI(
-    events: OpenSourceLicensesScreenUIEvents,
     uiState: OpenSourceLicensesScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
+    handleUIEvents: (uiEvent: OpenSourceLicensesScreenUIEvent) -> Unit,
 ) {
     MyScaffold(
         modifier = Modifier
@@ -49,7 +49,9 @@ internal fun OpenSourceLicensesScreenUI(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_open_source_licenses_appbar_title,
-                navigationAction = events.navigateUp,
+                navigationAction = {
+                    handleUIEvents(OpenSourceLicensesScreenUIEvent.NavigateUp)
+                },
             )
         },
         onClick = {

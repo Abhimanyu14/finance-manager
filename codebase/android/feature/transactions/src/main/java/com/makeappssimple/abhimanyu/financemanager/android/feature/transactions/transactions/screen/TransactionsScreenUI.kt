@@ -86,6 +86,10 @@ enum class TransactionsBottomSheetType : BottomSheetType {
 data class TransactionsScreenUIData(
     val isLoading: Boolean = false,
     val selectedFilter: Filter = Filter(),
+    val accounts: List<Account> = emptyList(),
+    val expenseCategories: List<Category> = emptyList(),
+    val incomeCategories: List<Category> = emptyList(),
+    val investmentCategories: List<Category> = emptyList(),
     val selectedTransactions: List<Int> = emptyList(),
     val sortOptions: List<SortOption> = emptyList(),
     val transactionTypes: List<TransactionType> = emptyList(),
@@ -99,35 +103,54 @@ data class TransactionsScreenUIData(
 )
 
 @Immutable
-internal data class TransactionsScreenUIEvents(
-    val addToSelectedTransactions: (Int) -> Unit,
-    val clearSelectedTransactions: () -> Unit,
-    val getExpenseCategories: () -> List<Category>,
-    val getIncomeCategories: () -> List<Category>,
-    val getInvestmentCategories: () -> List<Category>,
-    val getAccounts: () -> List<Account>,
-    val getTransactionForValues: () -> List<TransactionFor>,
-    val navigateToAddTransactionScreen: () -> Unit,
-    val navigateToViewTransactionScreen: (transactionId: Int) -> Unit,
-    val navigateUp: () -> Unit,
-    val removeFromSelectedTransactions: (Int) -> Unit,
-    val selectAllTransactions: () -> Unit,
-    val toggleTransactionSelection: (Int) -> Unit,
-    val updateSearchText: (String) -> Unit,
-    val updateSelectedFilter: (Filter) -> Unit,
-    val updateSelectedSortOption: (SortOption) -> Unit,
-    val updateTransactionForValuesInTransactions: (Int) -> Unit,
-)
+sealed class TransactionsScreenUIEvent {
+    object ClearSelectedTransactions : TransactionsScreenUIEvent()
+    object NavigateToAddTransactionScreen : TransactionsScreenUIEvent()
+    object NavigateUp : TransactionsScreenUIEvent()
+    object SelectAllTransactions : TransactionsScreenUIEvent()
+
+    data class AddToSelectedTransactions(
+        val transactionId: Int,
+    ) : TransactionsScreenUIEvent()
+
+    data class NavigateToViewTransactionScreen(
+        val transactionId: Int,
+    ) : TransactionsScreenUIEvent()
+
+    data class RemoveFromSelectedTransactions(
+        val transactionId: Int,
+    ) : TransactionsScreenUIEvent()
+
+    data class ToggleTransactionSelection(
+        val transactionId: Int,
+    ) : TransactionsScreenUIEvent()
+
+    data class UpdateSearchText(
+        val updatedSearchText: String,
+    ) : TransactionsScreenUIEvent()
+
+    data class UpdateSelectedFilter(
+        val updatedSelectedFilter: Filter,
+    ) : TransactionsScreenUIEvent()
+
+    data class UpdateSelectedSortOption(
+        val updatedSelectedSortOption: SortOption,
+    ) : TransactionsScreenUIEvent()
+
+    data class UpdateTransactionForValuesInTransactions(
+        val updatedTransactionForValues: Int,
+    ) : TransactionsScreenUIEvent()
+}
 
 @Composable
 internal fun TransactionsScreenUI(
-    events: TransactionsScreenUIEvents,
     uiState: TransactionsScreenUIState,
     state: CommonScreenUIState,
+    handleUIEvents: (uiEvent: TransactionsScreenUIEvent) -> Unit,
 ) {
     val resetSelectionMode = {
         uiState.setIsInSelectionMode(false)
-        events.clearSelectedTransactions()
+        handleUIEvents(TransactionsScreenUIEvent.ClearSelectedTransactions)
     }
 
     BottomSheetHandler(
@@ -144,8 +167,16 @@ internal fun TransactionsScreenUI(
                 uiState.selectedFilter.areFiltersSelected() ||
                 uiState.isInSelectionMode,
     ) {
-        events.updateSearchText("")
-        events.updateSelectedFilter(Filter())
+        handleUIEvents(
+            TransactionsScreenUIEvent.UpdateSearchText(
+                updatedSearchText = "",
+            )
+        )
+        handleUIEvents(
+            TransactionsScreenUIEvent.UpdateSelectedFilter(
+                updatedSelectedFilter = Filter(),
+            )
+        )
         resetSelectionMode()
     }
 
@@ -157,18 +188,22 @@ internal fun TransactionsScreenUI(
                 TransactionsBottomSheetType.FILTERS -> {
                     TransactionsFilterBottomSheet(
                         context = state.context,
-                        expenseCategories = events.getExpenseCategories(),
-                        incomeCategories = events.getIncomeCategories(),
-                        investmentCategories = events.getInvestmentCategories(),
-                        accounts = events.getAccounts(),
-                        transactionForValues = events.getTransactionForValues(),
+                        expenseCategories = uiState.expenseCategories,
+                        incomeCategories = uiState.incomeCategories,
+                        investmentCategories = uiState.investmentCategories,
+                        accounts = uiState.accounts,
+                        transactionForValues = uiState.transactionForValues,
                         transactionTypes = uiState.transactionTypes,
                         defaultMinDate = uiState.oldestTransactionLocalDate,
                         defaultMaxDate = uiState.currentLocalDate,
                         currentTimeMillis = uiState.currentTimeMillis,
                         selectedFilter = uiState.selectedFilter,
                         updateSelectedFilter = { updatedSelectedFilter ->
-                            events.updateSelectedFilter(updatedSelectedFilter)
+                            handleUIEvents(
+                                TransactionsScreenUIEvent.UpdateSelectedFilter(
+                                    updatedSelectedFilter = updatedSelectedFilter,
+                                )
+                            )
                         },
                         resetBottomSheetType = uiState.resetBottomSheetType,
                     )
@@ -186,7 +221,11 @@ internal fun TransactionsScreenUI(
                         events = SelectTransactionForBottomSheetEvents(
                             onItemClick = {
                                 uiState.setIsInSelectionMode(false)
-                                events.updateTransactionForValuesInTransactions(it.id)
+                                handleUIEvents(
+                                    TransactionsScreenUIEvent.UpdateTransactionForValuesInTransactions(
+                                        updatedTransactionForValues = it.id,
+                                    )
+                                )
                                 uiState.resetBottomSheetType()
                             },
                         ),
@@ -199,7 +238,11 @@ internal fun TransactionsScreenUI(
                         sortOptions = uiState.sortOptions.toList(),
                         resetBottomSheetType = uiState.resetBottomSheetType,
                         updateSelectedSortOption = { index ->
-                            events.updateSelectedSortOption(uiState.sortOptions[index])
+                            handleUIEvents(
+                                TransactionsScreenUIEvent.UpdateSelectedSortOption(
+                                    updatedSelectedSortOption = uiState.sortOptions[index],
+                                )
+                            )
                         },
                     )
                 }
@@ -270,7 +313,7 @@ internal fun TransactionsScreenUI(
                                     },
                                     onClick = {
                                         isDropDownVisible = false
-                                        events.selectAllTransactions()
+                                        handleUIEvents(TransactionsScreenUIEvent.SelectAllTransactions)
                                     },
                                 )
                             }
@@ -293,7 +336,9 @@ internal fun TransactionsScreenUI(
             } else {
                 MyTopAppBar(
                     titleTextStringResourceId = R.string.screen_transactions_appbar_title,
-                    navigationAction = events.navigateUp,
+                    navigationAction = {
+                        handleUIEvents(TransactionsScreenUIEvent.NavigateUp)
+                    },
                 )
             }
         },
@@ -310,7 +355,9 @@ internal fun TransactionsScreenUI(
                     contentDescription = stringResource(
                         id = R.string.screen_transactions_floating_action_button_content_description,
                     ),
-                    onClick = events.navigateToAddTransactionScreen,
+                    onClick = {
+                        handleUIEvents(TransactionsScreenUIEvent.NavigateToAddTransactionScreen)
+                    },
                 )
             }
         },
@@ -373,7 +420,13 @@ internal fun TransactionsScreenUI(
                                 onSearch = {
                                     state.focusManager.clearFocus()
                                 },
-                                onValueChange = events.updateSearchText,
+                                onValueChange = { updatedSearchText ->
+                                    handleUIEvents(
+                                        TransactionsScreenUIEvent.UpdateSearchText(
+                                            updatedSearchText = updatedSearchText,
+                                        )
+                                    )
+                                },
                             ),
                         )
                     }
@@ -451,24 +504,48 @@ internal fun TransactionsScreenUI(
                                 onClick = {
                                     if (uiState.isInSelectionMode) {
                                         if (isSelected) {
-                                            events.removeFromSelectedTransactions(listItem.transactionId)
+                                            handleUIEvents(
+                                                TransactionsScreenUIEvent.RemoveFromSelectedTransactions(
+                                                    transactionId = listItem.transactionId,
+                                                )
+                                            )
                                         } else {
-                                            events.addToSelectedTransactions(listItem.transactionId)
+                                            handleUIEvents(
+                                                TransactionsScreenUIEvent.AddToSelectedTransactions(
+                                                    transactionId = listItem.transactionId,
+                                                )
+                                            )
                                         }
                                     } else {
-                                        events.navigateToViewTransactionScreen(listItem.transactionId)
+                                        handleUIEvents(
+                                            TransactionsScreenUIEvent.NavigateToViewTransactionScreen(
+                                                transactionId = listItem.transactionId,
+                                            )
+                                        )
                                     }
                                 },
                                 onLongClick = {
                                     if (uiState.isInSelectionMode) {
                                         if (isSelected) {
-                                            events.removeFromSelectedTransactions(listItem.transactionId)
+                                            handleUIEvents(
+                                                TransactionsScreenUIEvent.RemoveFromSelectedTransactions(
+                                                    transactionId = listItem.transactionId,
+                                                )
+                                            )
                                         } else {
-                                            events.addToSelectedTransactions(listItem.transactionId)
+                                            handleUIEvents(
+                                                TransactionsScreenUIEvent.AddToSelectedTransactions(
+                                                    transactionId = listItem.transactionId,
+                                                )
+                                            )
                                         }
                                     } else {
                                         uiState.setIsInSelectionMode(it)
-                                        events.addToSelectedTransactions(listItem.transactionId)
+                                        handleUIEvents(
+                                            TransactionsScreenUIEvent.AddToSelectedTransactions(
+                                                transactionId = listItem.transactionId,
+                                            )
+                                        )
                                     }
                                 },
                             ),

@@ -59,23 +59,23 @@ data class SettingsScreenListItemData(
 )
 
 @Immutable
-internal data class SettingsScreenUIEvents(
-    val backupData: () -> Unit = {},
-    val navigateToCategoriesScreen: () -> Unit = {},
-    val navigateToAccountsScreen: () -> Unit = {},
-    val navigateToOpenSourceLicensesScreen: () -> Unit = {},
-    val navigateToTransactionForValuesScreen: () -> Unit = {},
-    val navigateUp: () -> Unit = {},
-    val recalculateTotal: () -> Unit = {},
-    val restoreData: () -> Unit = {},
-    val toggleReminder: () -> Unit = {},
-)
+sealed class SettingsScreenUIEvent {
+    object BackupData : SettingsScreenUIEvent()
+    object NavigateToCategoriesScreen : SettingsScreenUIEvent()
+    object NavigateToAccountsScreen : SettingsScreenUIEvent()
+    object NavigateToOpenSourceLicensesScreen : SettingsScreenUIEvent()
+    object NavigateToTransactionForValuesScreen : SettingsScreenUIEvent()
+    object NavigateUp : SettingsScreenUIEvent()
+    object RecalculateTotal : SettingsScreenUIEvent()
+    object RestoreData : SettingsScreenUIEvent()
+    object ToggleReminder : SettingsScreenUIEvent()
+}
 
 @Composable
 internal fun SettingsScreenUI(
-    events: SettingsScreenUIEvents,
     uiState: SettingsScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
+    handleUIEvents: (uiEvent: SettingsScreenUIEvent) -> Unit,
 ) {
     val context = LocalContext.current
     val listItemsData: List<SettingsScreenListItemData> = listOf(
@@ -93,7 +93,9 @@ internal fun SettingsScreenUI(
                 textStringResourceId = R.string.screen_settings_categories,
             ),
             events = SettingsListItemEvents(
-                onClick = events.navigateToCategoriesScreen,
+                onClick = {
+                    handleUIEvents(SettingsScreenUIEvent.NavigateToCategoriesScreen)
+                },
             ),
         ),
         SettingsScreenListItemData(
@@ -103,7 +105,9 @@ internal fun SettingsScreenUI(
                 textStringResourceId = R.string.screen_settings_accounts,
             ),
             events = SettingsListItemEvents(
-                onClick = events.navigateToAccountsScreen,
+                onClick = {
+                    handleUIEvents(SettingsScreenUIEvent.NavigateToAccountsScreen)
+                },
             ),
         ),
         SettingsScreenListItemData(
@@ -114,7 +118,9 @@ internal fun SettingsScreenUI(
                 textStringResourceId = R.string.screen_settings_transaction_for,
             ),
             events = SettingsListItemEvents(
-                onClick = events.navigateToTransactionForValuesScreen,
+                onClick = {
+                    handleUIEvents(SettingsScreenUIEvent.NavigateToTransactionForValuesScreen)
+                },
             ),
         ),
         SettingsScreenListItemData(
@@ -131,7 +137,9 @@ internal fun SettingsScreenUI(
                 textStringResourceId = R.string.screen_settings_backup,
             ),
             events = SettingsListItemEvents(
-                onClick = events.backupData,
+                onClick = {
+                    handleUIEvents(SettingsScreenUIEvent.BackupData)
+                },
             ),
         ),
         SettingsScreenListItemData(
@@ -141,7 +149,9 @@ internal fun SettingsScreenUI(
                 textStringResourceId = R.string.screen_settings_restore,
             ),
             events = SettingsListItemEvents(
-                onClick = events.restoreData,
+                onClick = {
+                    handleUIEvents(SettingsScreenUIEvent.RestoreData)
+                },
             ),
         ),
         SettingsScreenListItemData(
@@ -152,7 +162,9 @@ internal fun SettingsScreenUI(
                 textStringResourceId = R.string.screen_settings_recalculate_total,
             ),
             events = SettingsListItemEvents(
-                onClick = events.recalculateTotal,
+                onClick = {
+                    handleUIEvents(SettingsScreenUIEvent.RecalculateTotal)
+                },
             ),
         ),
         SettingsScreenListItemData(
@@ -172,10 +184,11 @@ internal fun SettingsScreenUI(
             ),
             events = SettingsListItemEvents(
                 onClick = {
-                    events.toggleReminder()
+                    handleUIEvents(SettingsScreenUIEvent.ToggleReminder)
                 },
+
                 onCheckedChange = {
-                    events.toggleReminder()
+                    handleUIEvents(SettingsScreenUIEvent.ToggleReminder)
                 },
             ),
         ),
@@ -206,7 +219,9 @@ internal fun SettingsScreenUI(
                 textStringResourceId = R.string.screen_settings_open_source_licenses,
             ),
             events = SettingsListItemEvents(
-                onClick = events.navigateToOpenSourceLicensesScreen,
+                onClick = {
+                    handleUIEvents(SettingsScreenUIEvent.NavigateToOpenSourceLicensesScreen)
+                },
             ),
         ),
     )
@@ -225,7 +240,9 @@ internal fun SettingsScreenUI(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_settings_appbar_title,
-                navigationAction = events.navigateUp,
+                navigationAction = {
+                    handleUIEvents(SettingsScreenUIEvent.NavigateUp)
+                },
             )
         },
         onClick = {

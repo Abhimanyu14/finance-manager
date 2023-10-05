@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.acc
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
@@ -13,23 +14,33 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.acco
 fun AccountsScreen(
     screenViewModel: AccountsScreenViewModel = hiltViewModel<AccountsScreenViewModelImpl>(),
 ) {
-    screenViewModel.myLogger.logError(
+    val viewModel = remember {
+        screenViewModel
+    }
+    viewModel.myLogger.logError(
         message = "Inside AccountsScreen",
     )
 
-    val screenUIData: MyResult<AccountsScreenUIData>? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
+    val screenUIData: MyResult<AccountsScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    val handleUIEvents = remember(
+        key1 = viewModel,
+    ) {
+        { uiEvent: AccountsScreenUIEvent ->
+            when (uiEvent) {
+                else -> {
+                    viewModel.handleUIEvents(
+                        uiEvent = uiEvent,
+                    )
+                }
+            }
+        }
+    }
 
     AccountsScreenUI(
-        events = AccountsScreenUIEvents(
-            deleteAccount = screenViewModel::deleteAccount,
-            navigateToAddAccountScreen = screenViewModel::navigateToAddAccountScreen,
-            navigateToEditAccountScreen = screenViewModel::navigateToEditAccountScreen,
-            navigateUp = screenViewModel::navigateUp,
-            setDefaultAccountIdInDataStore = screenViewModel::setDefaultAccountIdInDataStore,
-        ),
         uiState = rememberAccountsScreenUIState(
             data = screenUIData,
         ),
         state = rememberCommonScreenUIState(),
+        handleUIEvents = handleUIEvents,
     )
 }

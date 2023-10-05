@@ -94,29 +94,59 @@ data class AddOrEditTransactionScreenUIData(
 )
 
 @Immutable
-internal data class AddOrEditTransactionScreenUIEvents(
-    val clearAmount: () -> Unit,
-    val clearDescription: () -> Unit,
-    val clearTitle: () -> Unit,
-    val navigateUp: () -> Unit,
-    val onCtaButtonClick: () -> Unit,
-    val updateAmount: (updatedAmount: TextFieldValue) -> Unit,
-    val updateCategory: (updatedCategory: Category?) -> Unit,
-    val updateDescription: (updatedDescription: TextFieldValue) -> Unit,
-    val updateSelectedTransactionForIndex: (updatedSelectedTransactionForIndex: Int) -> Unit,
-    val updateSelectedTransactionTypeIndex: (updatedSelectedTransactionTypeIndex: Int) -> Unit,
-    val updateAccountFrom: (updatedAccountFrom: Account?) -> Unit,
-    val updateAccountTo: (updatedAccountTo: Account?) -> Unit,
-    val updateTitle: (updatedTitle: TextFieldValue) -> Unit,
-    val updateTransactionDate: (updatedTransactionDate: LocalDate) -> Unit,
-    val updateTransactionTime: (updatedTransactionTime: LocalTime) -> Unit,
-)
+sealed class AddOrEditTransactionScreenUIEvent {
+    object ClearAmount : AddOrEditTransactionScreenUIEvent()
+    object ClearDescription : AddOrEditTransactionScreenUIEvent()
+    object ClearTitle : AddOrEditTransactionScreenUIEvent()
+    object NavigateUp : AddOrEditTransactionScreenUIEvent()
+    object OnCtaButtonClick : AddOrEditTransactionScreenUIEvent()
+
+    data class UpdateAmount(
+        val updatedAmount: TextFieldValue,
+    ) : AddOrEditTransactionScreenUIEvent()
+
+    data class UpdateCategory(
+        val updatedCategory: Category?,
+    ) : AddOrEditTransactionScreenUIEvent()
+
+    data class UpdateDescription(
+        val updatedDescription: TextFieldValue,
+    ) : AddOrEditTransactionScreenUIEvent()
+
+    data class UpdateSelectedTransactionForIndex(
+        val updatedSelectedTransactionForIndex: Int,
+    ) : AddOrEditTransactionScreenUIEvent()
+
+    data class UpdateSelectedTransactionTypeIndex(
+        val updatedSelectedTransactionTypeIndex: Int,
+    ) : AddOrEditTransactionScreenUIEvent()
+
+    data class UpdateAccountFrom(
+        val updatedAccountFrom: Account?,
+    ) : AddOrEditTransactionScreenUIEvent()
+
+    data class UpdateAccountTo(
+        val updatedAccountTo: Account?,
+    ) : AddOrEditTransactionScreenUIEvent()
+
+    data class UpdateTitle(
+        val updatedTitle: TextFieldValue,
+    ) : AddOrEditTransactionScreenUIEvent()
+
+    data class UpdateTransactionDate(
+        val updatedTransactionDate: LocalDate,
+    ) : AddOrEditTransactionScreenUIEvent()
+
+    data class UpdateTransactionTime(
+        val updatedTransactionTime: LocalTime,
+    ) : AddOrEditTransactionScreenUIEvent()
+}
 
 @Composable
 internal fun AddOrEditTransactionScreenUI(
-    events: AddOrEditTransactionScreenUIEvents,
     uiState: AddOrEditTransactionScreenUIState,
     state: CommonScreenUIState,
+    handleUIEvents: (uiEvent: AddOrEditTransactionScreenUIEvent) -> Unit,
 ) {
     val clearFocus = {
         state.focusManager.clearFocus()
@@ -158,7 +188,11 @@ internal fun AddOrEditTransactionScreenUI(
                         events = SelectCategoryBottomSheetEvents(
                             resetBottomSheetType = uiState.resetBottomSheetType,
                             updateCategory = { updatedCategory ->
-                                events.updateCategory(updatedCategory)
+                                handleUIEvents(
+                                    AddOrEditTransactionScreenUIEvent.UpdateCategory(
+                                        updatedCategory = updatedCategory,
+                                    )
+                                )
                             },
                         ),
                     )
@@ -173,7 +207,11 @@ internal fun AddOrEditTransactionScreenUI(
                         events = SelectAccountBottomSheetEvents(
                             resetBottomSheetType = uiState.resetBottomSheetType,
                             updateAccount = { updatedAccount ->
-                                events.updateAccountFrom(updatedAccount)
+                                handleUIEvents(
+                                    AddOrEditTransactionScreenUIEvent.UpdateAccountFrom(
+                                        updatedAccountFrom = updatedAccount,
+                                    )
+                                )
                             },
                         ),
                     )
@@ -188,7 +226,11 @@ internal fun AddOrEditTransactionScreenUI(
                         events = SelectAccountBottomSheetEvents(
                             resetBottomSheetType = uiState.resetBottomSheetType,
                             updateAccount = { updatedAccount ->
-                                events.updateAccountTo(updatedAccount)
+                                handleUIEvents(
+                                    AddOrEditTransactionScreenUIEvent.UpdateAccountTo(
+                                        updatedAccountTo = updatedAccount,
+                                    )
+                                )
                             },
                         ),
                     )
@@ -199,7 +241,9 @@ internal fun AddOrEditTransactionScreenUI(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
-                navigationAction = events.navigateUp,
+                navigationAction = {
+                    handleUIEvents(AddOrEditTransactionScreenUIEvent.NavigateUp)
+                },
             )
         },
         onClick = {
@@ -220,8 +264,12 @@ internal fun AddOrEditTransactionScreenUI(
                 onNegativeButtonClick = {
                     uiState.setIsTransactionDatePickerDialogVisible(false)
                 },
-                onPositiveButtonClick = {
-                    events.updateTransactionDate(it)
+                onPositiveButtonClick = { updatedTransactionDate ->
+                    handleUIEvents(
+                        AddOrEditTransactionScreenUIEvent.UpdateTransactionDate(
+                            updatedTransactionDate = updatedTransactionDate,
+                        )
+                    )
                     uiState.setIsTransactionDatePickerDialogVisible(false)
                 },
             )
@@ -235,8 +283,12 @@ internal fun AddOrEditTransactionScreenUI(
                 onNegativeButtonClick = {
                     uiState.setIsTransactionTimePickerDialogVisible(false)
                 },
-                onPositiveButtonClick = {
-                    events.updateTransactionTime(it)
+                onPositiveButtonClick = { updatedTransactionTime ->
+                    handleUIEvents(
+                        AddOrEditTransactionScreenUIEvent.UpdateTransactionTime(
+                            updatedTransactionTime = updatedTransactionTime,
+                        )
+                    )
                     uiState.setIsTransactionTimePickerDialogVisible(false)
                 },
             ),
@@ -266,8 +318,10 @@ internal fun AddOrEditTransactionScreenUI(
                     ),
                     events = MyHorizontalScrollingRadioGroupEvents(
                         onSelectionChange = { updatedSelectedTransactionTypeIndex ->
-                            events.updateSelectedTransactionTypeIndex(
-                                updatedSelectedTransactionTypeIndex
+                            handleUIEvents(
+                                AddOrEditTransactionScreenUIEvent.UpdateSelectedTransactionTypeIndex(
+                                    updatedSelectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex,
+                                )
                             )
                         },
                     ),
@@ -320,8 +374,16 @@ internal fun AddOrEditTransactionScreenUI(
                     ),
                 ),
                 events = MyOutlinedTextFieldEvents(
-                    onClickTrailingIcon = events.clearAmount,
-                    onValueChange = events.updateAmount,
+                    onClickTrailingIcon = {
+                        handleUIEvents(AddOrEditTransactionScreenUIEvent.ClearAmount)
+                    },
+                    onValueChange = { updatedAmount ->
+                        handleUIEvents(
+                            AddOrEditTransactionScreenUIEvent.UpdateAmount(
+                                updatedAmount = updatedAmount,
+                            )
+                        )
+                    },
                 ),
             )
             AnimatedVisibility(
@@ -375,8 +437,16 @@ internal fun AddOrEditTransactionScreenUI(
                         ),
                     ),
                     events = MyOutlinedTextFieldEvents(
-                        onClickTrailingIcon = events.clearTitle,
-                        onValueChange = events.updateTitle,
+                        onClickTrailingIcon = {
+                            handleUIEvents(AddOrEditTransactionScreenUIEvent.ClearTitle)
+                        },
+                        onValueChange = { updatedTitle ->
+                            handleUIEvents(
+                                AddOrEditTransactionScreenUIEvent.UpdateTitle(
+                                    updatedTitle = updatedTitle,
+                                ),
+                            )
+                        },
                     ),
                 )
             }
@@ -397,10 +467,12 @@ internal fun AddOrEditTransactionScreenUI(
                     events = MyHorizontalScrollingSelectionGroupEvents(
                         onSelectionChange = { index ->
                             clearFocus()
-                            events.updateTitle(
-                                uiState.uiState.title.copy(
-                                    text = uiState.titleSuggestions[index],
-                                )
+                            handleUIEvents(
+                                AddOrEditTransactionScreenUIEvent.UpdateTitle(
+                                    updatedTitle = uiState.uiState.title.copy(
+                                        text = uiState.titleSuggestions[index],
+                                    ),
+                                ),
                             )
                         },
                     ),
@@ -425,8 +497,10 @@ internal fun AddOrEditTransactionScreenUI(
                     events = MyHorizontalScrollingRadioGroupEvents(
                         onSelectionChange = { updatedSelectedTransactionForIndex ->
                             clearFocus()
-                            events.updateSelectedTransactionForIndex(
-                                updatedSelectedTransactionForIndex
+                            handleUIEvents(
+                                AddOrEditTransactionScreenUIEvent.UpdateSelectedTransactionForIndex(
+                                    updatedSelectedTransactionForIndex = updatedSelectedTransactionForIndex,
+                                )
                             )
                         },
                     ),
@@ -458,8 +532,16 @@ internal fun AddOrEditTransactionScreenUI(
                         ),
                     ),
                     events = MyOutlinedTextFieldEvents(
-                        onClickTrailingIcon = events.clearDescription,
-                        onValueChange = events.updateDescription,
+                        onClickTrailingIcon = {
+                            handleUIEvents(AddOrEditTransactionScreenUIEvent.ClearDescription)
+                        },
+                        onValueChange = { updatedDescription ->
+                            handleUIEvents(
+                                AddOrEditTransactionScreenUIEvent.UpdateDescription(
+                                    updatedDescription = updatedDescription,
+                                )
+                            )
+                        },
                     ),
                 )
             }
@@ -562,7 +644,9 @@ internal fun AddOrEditTransactionScreenUI(
                     textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
                 ),
                 events = SaveButtonEvents(
-                    onClick = events.onCtaButtonClick,
+                    onClick = {
+                        handleUIEvents(AddOrEditTransactionScreenUIEvent.OnCtaButtonClick)
+                    },
                 ),
             )
             NavigationBarSpacer()

@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
@@ -14,29 +15,39 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 fun ViewTransactionScreen(
     screenViewModel: ViewTransactionScreenViewModel = hiltViewModel<ViewTransactionScreenViewModelImpl>(),
 ) {
-    screenViewModel.myLogger.logError(
+    val viewModel = remember {
+        screenViewModel
+    }
+    viewModel.myLogger.logError(
         message = "Inside ViewTransactionScreen",
     )
 
-    val screenUIData: MyResult<ViewTransactionScreenUIData>? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
+    val screenUIData: MyResult<ViewTransactionScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    val handleUIEvents = remember(
+        key1 = viewModel,
+    ) {
+        { uiEvent: ViewTransactionScreenUIEvent ->
+            when (uiEvent) {
+                else -> {
+                    viewModel.handleUIEvents(
+                        uiEvent = uiEvent,
+                    )
+                }
+            }
+        }
+    }
 
     LaunchedEffect(
         key1 = Unit,
     ) {
-        screenViewModel.getTransactionData()
+        viewModel.getTransactionData()
     }
 
     ViewTransactionScreenUI(
-        events = ViewTransactionScreenUIEvents(
-            deleteTransaction = screenViewModel::deleteTransaction,
-            navigateToAddTransactionScreen = screenViewModel::navigateToAddTransactionScreen,
-            navigateToEditTransactionScreen = screenViewModel::navigateToEditTransactionScreen,
-            navigateToViewTransactionScreen = screenViewModel::navigateToViewTransactionScreen,
-            navigateUp = screenViewModel::navigateUp,
-        ),
         uiState = rememberViewTransactionScreenUIState(
             data = screenUIData,
         ),
         state = rememberCommonScreenUIState(),
+        handleUIEvents = handleUIEvents,
     )
 }

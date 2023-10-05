@@ -24,6 +24,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.component.listitem.AccountsListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.screen.AccountsScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.screen.AccountsScreenUIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -130,7 +131,39 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
         scope = viewModelScope,
     )
 
-    override fun deleteAccount(
+    override fun handleUIEvents(
+        uiEvent: AccountsScreenUIEvent,
+    ) {
+        when (uiEvent) {
+            is AccountsScreenUIEvent.DeleteAccount -> {
+                deleteAccount(
+                    id = uiEvent.accountId,
+                )
+            }
+
+            AccountsScreenUIEvent.NavigateToAddAccountScreen -> {
+                navigateToAddAccountScreen()
+            }
+
+            is AccountsScreenUIEvent.NavigateToEditAccountScreen -> {
+                navigateToEditAccountScreen(
+                    accountId = uiEvent.accountId,
+                )
+            }
+
+            AccountsScreenUIEvent.NavigateUp -> {
+                navigateUp()
+            }
+
+            is AccountsScreenUIEvent.SetDefaultAccountIdInDataStore -> {
+                setDefaultAccountIdInDataStore(
+                    defaultAccountId = uiEvent.defaultAccountId,
+                )
+            }
+        }
+    }
+
+    private fun deleteAccount(
         id: Int,
     ) {
         viewModelScope.launch(
@@ -142,13 +175,13 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun navigateToAddAccountScreen() {
+    private fun navigateToAddAccountScreen() {
         navigationManager.navigate(
             MyNavigationDirections.AddAccount
         )
     }
 
-    override fun navigateToEditAccountScreen(
+    private fun navigateToEditAccountScreen(
         accountId: Int,
     ) {
         navigationManager.navigate(
@@ -158,13 +191,13 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun navigateUp() {
+    private fun navigateUp() {
         navigationManager.navigate(
             MyNavigationDirections.NavigateUp
         )
     }
 
-    override fun setDefaultAccountIdInDataStore(
+    private fun setDefaultAccountIdInDataStore(
         defaultAccountId: Int,
     ) {
         viewModelScope.launch(

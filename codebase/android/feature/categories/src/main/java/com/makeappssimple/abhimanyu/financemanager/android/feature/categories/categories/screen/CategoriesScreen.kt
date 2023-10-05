@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
@@ -13,24 +14,33 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ca
 fun CategoriesScreen(
     screenViewModel: CategoriesScreenViewModel = hiltViewModel<CategoriesScreenViewModelImpl>(),
 ) {
-    screenViewModel.myLogger.logError(
+    val viewModel = remember {
+        screenViewModel
+    }
+    viewModel.myLogger.logError(
         message = "Inside CategoriesScreen",
     )
 
-    val screenUIData: MyResult<CategoriesScreenUIData>? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
+    val screenUIData: MyResult<CategoriesScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    val handleUIEvents = remember(
+        key1 = viewModel,
+    ) {
+        { uiEvent: CategoriesScreenUIEvent ->
+            when (uiEvent) {
+                else -> {
+                    viewModel.handleUIEvents(
+                        uiEvent = uiEvent,
+                    )
+                }
+            }
+        }
+    }
 
     CategoriesScreenUI(
-        events = CategoriesScreenUIEvents(
-            deleteCategory = screenViewModel::deleteCategory,
-            navigateToAddCategoryScreen = screenViewModel::navigateToAddCategoryScreen,
-            navigateToEditCategoryScreen = screenViewModel::navigateToEditCategoryScreen,
-            navigateUp = screenViewModel::navigateUp,
-            setDefaultCategoryIdInDataStore = screenViewModel::setDefaultCategoryIdInDataStore,
-            updateSelectedTabIndex = screenViewModel::updateSelectedTabIndex,
-        ),
         uiState = rememberCategoriesScreenUIState(
             data = screenUIData,
         ),
         state = rememberCommonScreenUIState(),
+        handleUIEvents = handleUIEvents,
     )
 }

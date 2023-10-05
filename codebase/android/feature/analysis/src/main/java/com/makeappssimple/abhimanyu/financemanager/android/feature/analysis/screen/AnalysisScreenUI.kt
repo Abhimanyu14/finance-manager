@@ -53,17 +53,23 @@ data class AnalysisScreenUIData(
 )
 
 @Immutable
-internal data class AnalysisScreenUIEvents(
-    val navigateUp: () -> Unit,
-    val updateSelectedFilter: (updatedSelectedFilter: Filter) -> Unit,
-    val updateSelectedTransactionTypeIndex: (updatedSelectedTransactionTypeIndex: Int) -> Unit,
-)
+sealed class AnalysisScreenUIEvent {
+    object NavigateUp : AnalysisScreenUIEvent()
+
+    data class UpdateSelectedFilter(
+        val updatedSelectedFilter: Filter,
+    ) : AnalysisScreenUIEvent()
+
+    data class UpdateSelectedTransactionTypeIndex(
+        val updatedSelectedTransactionTypeIndex: Int,
+    ) : AnalysisScreenUIEvent()
+}
 
 @Composable
 internal fun AnalysisScreenUI(
-    events: AnalysisScreenUIEvents,
     uiState: AnalysisScreenUIState,
     state: CommonScreenUIState,
+    handleUIEvents: (uiEvent: AnalysisScreenUIEvent) -> Unit,
 ) {
     BottomSheetHandler(
         showModalBottomSheet = uiState.analysisBottomSheetType != AnalysisBottomSheetType.NONE,
@@ -89,7 +95,11 @@ internal fun AnalysisScreenUI(
                         startOfYearLocalDate = uiState.startOfYearLocalDate,
                         onNegativeButtonClick = {},
                         onPositiveButtonClick = {
-                            events.updateSelectedFilter(it)
+                            handleUIEvents(
+                                AnalysisScreenUIEvent.UpdateSelectedFilter(
+                                    updatedSelectedFilter = it,
+                                )
+                            )
                             uiState.resetBottomSheetType()
                         },
                     )
@@ -104,7 +114,9 @@ internal fun AnalysisScreenUI(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_analysis_appbar_title,
-                navigationAction = events.navigateUp,
+                navigationAction = {
+                    handleUIEvents(AnalysisScreenUIEvent.NavigateUp)
+                },
             )
         },
         onClick = {
@@ -139,8 +151,10 @@ internal fun AnalysisScreenUI(
                         ),
                         events = MyHorizontalScrollingRadioGroupEvents(
                             onSelectionChange = { updatedSelectedTransactionTypeIndex ->
-                                events.updateSelectedTransactionTypeIndex(
-                                    updatedSelectedTransactionTypeIndex
+                                handleUIEvents(
+                                    AnalysisScreenUIEvent.UpdateSelectedTransactionTypeIndex(
+                                        updatedSelectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex,
+                                    )
                                 )
                             },
                         ),

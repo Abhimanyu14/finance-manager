@@ -5,8 +5,10 @@ import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.MimeTypeConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.CreateJsonDocument
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
@@ -17,7 +19,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmode
 fun HomeScreen(
     screenViewModel: HomeScreenViewModel = hiltViewModel<HomeScreenViewModelImpl>(),
 ) {
-    screenViewModel.myLogger.logError(
+    val viewModel = remember {
+        screenViewModel
+    }
+    viewModel.myLogger.logError(
         message = "Inside HomeScreen",
     )
     val createDocument: ManagedActivityResultLauncher<String, Uri?> =
@@ -25,28 +30,36 @@ fun HomeScreen(
             contract = CreateJsonDocument(),
         ) { uri ->
             uri?.let {
-                screenViewModel.backupDataToDocument(
+                viewModel.backupDataToDocument(
                     uri = it,
                 )
             }
         }
 
-    val screenUIData: MyResult<HomeScreenUIData>? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
+    val screenUIData: MyResult<HomeScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    val handleUIEvents = remember(
+        key1 = viewModel,
+    ) {
+        { uiEvent: HomeScreenUIEvent ->
+            when (uiEvent) {
+                is HomeScreenUIEvent.CreateDocument -> {
+                    createDocument.launch(MimeTypeConstants.JSON)
+                }
+
+                else -> {
+                    viewModel.handleUIEvents(
+                        uiEvent = uiEvent,
+                    )
+                }
+            }
+        }
+    }
 
     HomeScreenUI(
-        events = HomeScreenUIEvents(
-            createDocument = createDocument,
-            handleOverviewCardAction = screenViewModel::handleOverviewCardAction,
-            navigateToAnalysisScreen = screenViewModel::navigateToAnalysisScreen,
-            navigateToAddTransactionScreen = screenViewModel::navigateToAddTransactionScreen,
-            navigateToSettingsScreen = screenViewModel::navigateToSettingsScreen,
-            navigateToAccountsScreen = screenViewModel::navigateToAccountsScreen,
-            navigateToTransactionsScreen = screenViewModel::navigateToTransactionsScreen,
-            onOverviewTabClick = screenViewModel::setOverviewTabSelectionIndex,
-        ),
         uiState = rememberHomeScreenUIState(
             data = screenUIData,
         ),
         state = rememberCommonScreenUIState(),
+        handleUIEvents = handleUIEvents,
     )
 }

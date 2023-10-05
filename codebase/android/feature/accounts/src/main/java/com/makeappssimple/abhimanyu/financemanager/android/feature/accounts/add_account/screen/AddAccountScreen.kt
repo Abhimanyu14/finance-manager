@@ -2,13 +2,14 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.rememberAddOrEditAccountScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.viewmodel.AddOrEditAccountScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.viewmodel.AddOrEditAccountScreenViewModelImpl
@@ -17,28 +18,48 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_
 fun AddAccountScreen(
     screenViewModel: AddOrEditAccountScreenViewModel = hiltViewModel<AddOrEditAccountScreenViewModelImpl>(),
 ) {
-    screenViewModel.myLogger.logError(
+    val viewModel = remember {
+        screenViewModel
+    }
+    viewModel.myLogger.logError(
         message = "Inside AddAccountScreen",
     )
 
-    val screenUIData: MyResult<AddOrEditAccountScreenUIData>? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
+    val screenUIData: MyResult<AddOrEditAccountScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    val handleUIEvents = remember(
+        key1 = viewModel,
+    ) {
+        { uiEvent: AddOrEditAccountScreenUIEvent ->
+            when (uiEvent) {
+                AddOrEditAccountScreenUIEvent.OnCtaButtonClick -> {
+                    viewModel.insertAccount()
+                }
+
+                is AddOrEditAccountScreenUIEvent.UpdateBalanceAmountValue -> {
+
+                }
+
+                else -> {
+                    viewModel.handleUIEvents(
+                        uiEvent = uiEvent,
+                    )
+                }
+            }
+        }
+    }
 
     AddOrEditAccountScreenUI(
-        events = AddOrEditAccountScreenUIEvents(
-            clearBalanceAmountValue = {},
-            clearMinimumAccountBalanceAmountValue = screenViewModel::clearMinimumAccountBalanceAmountValue,
-            clearName = screenViewModel::clearName,
-            navigateUp = screenViewModel::navigateUp,
-            onCtaButtonClick = screenViewModel::insertAccount,
-            updateBalanceAmountValue = {},
-            updateMinimumAccountBalanceAmountValue = screenViewModel::updateMinimumAccountBalanceAmountValue,
-            updateName = screenViewModel::updateName,
-            updateSelectedAccountTypeIndex = screenViewModel::updateSelectedAccountTypeIndex,
-        ),
+//        events = AddOrEditAccountScreenUIEvent(
+//            updateBalanceAmountValue = {},
+//            updateMinimumAccountBalanceAmountValue = viewModel::updateMinimumAccountBalanceAmountValue,
+//            updateName = viewModel::updateName,
+//            updateSelectedAccountTypeIndex = viewModel::updateSelectedAccountTypeIndex,
+//        ),
         uiState = rememberAddOrEditAccountScreenUIState(
             data = screenUIData,
             isEdit = false,
         ),
         state = rememberCommonScreenUIState(),
+        handleUIEvents = handleUIEvents,
     )
 }

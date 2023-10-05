@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
@@ -13,22 +14,33 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 fun TransactionForValuesScreen(
     screenViewModel: TransactionForValuesScreenViewModel = hiltViewModel<TransactionForValuesScreenViewModelImpl>(),
 ) {
-    screenViewModel.myLogger.logError(
+    val viewModel = remember {
+        screenViewModel
+    }
+    viewModel.myLogger.logError(
         message = "Inside TransactionForValuesScreen",
     )
 
-    val screenUIData: MyResult<TransactionForValuesScreenUIData>? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
+    val screenUIData: MyResult<TransactionForValuesScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    val handleUIEvents = remember(
+        key1 = viewModel,
+    ) {
+        { uiEvent: TransactionForValuesScreenUIEvent ->
+            when (uiEvent) {
+                else -> {
+                    viewModel.handleUIEvents(
+                        uiEvent = uiEvent,
+                    )
+                }
+            }
+        }
+    }
 
     TransactionForValuesScreenUI(
-        events = TransactionForValuesScreenUIEvents(
-            deleteTransactionFor = screenViewModel::deleteTransactionFor,
-            navigateToAddTransactionForScreen = screenViewModel::navigateToAddTransactionForScreen,
-            navigateToEditTransactionForScreen = screenViewModel::navigateToEditTransactionForScreen,
-            navigateUp = screenViewModel::navigateUp,
-        ),
         uiState = rememberTransactionForValuesScreenUIState(
             data = screenUIData,
         ),
         state = rememberCommonScreenUIState(),
+        handleUIEvents = handleUIEvents,
     )
 }

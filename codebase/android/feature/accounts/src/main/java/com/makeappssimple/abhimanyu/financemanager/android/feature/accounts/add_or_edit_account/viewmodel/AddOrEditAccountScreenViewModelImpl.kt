@@ -33,6 +33,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIErrorData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIErrorText
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.navigation.AddOrEditAccountScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -156,6 +157,50 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
         }
     }
 
+    override fun handleUIEvents(
+        uiEvent: AddOrEditAccountScreenUIEvent,
+    ) {
+        when (uiEvent) {
+            AddOrEditAccountScreenUIEvent.ClearBalanceAmountValue -> {
+                clearBalanceAmountValue()
+            }
+
+            AddOrEditAccountScreenUIEvent.ClearMinimumAccountBalanceAmountValue -> {
+                clearMinimumAccountBalanceAmountValue()
+            }
+
+            AddOrEditAccountScreenUIEvent.ClearName -> {
+                clearName()
+            }
+
+            AddOrEditAccountScreenUIEvent.NavigateUp -> {
+                navigateUp()
+            }
+
+            is AddOrEditAccountScreenUIEvent.UpdateMinimumAccountBalanceAmountValue -> {
+                updateMinimumAccountBalanceAmountValue(
+                    updatedMinimumAccountBalanceAmountValue = uiEvent.updatedMinimumAccountBalanceAmountValue,
+                )
+            }
+
+            is AddOrEditAccountScreenUIEvent.UpdateName -> {
+                updateName(
+                    updatedName = uiEvent.updatedName,
+                )
+            }
+
+            is AddOrEditAccountScreenUIEvent.UpdateSelectedAccountTypeIndex -> {
+                updateSelectedAccountTypeIndex(
+                    updatedIndex = uiEvent.updatedIndex,
+                )
+            }
+
+            else -> {
+                // Noop, should have been handled in Screen composable or invalid event
+            }
+        }
+    }
+
     override fun updateAccount() {
         val originalAccountValue = originalAccount.value ?: return
         val amountChangeValue =
@@ -256,42 +301,6 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun clearName() {
-        updateName(
-            updatedName = name.value.copy(""),
-        )
-    }
-
-    override fun navigateUp() {
-        navigationManager.navigate(
-            MyNavigationDirections.NavigateUp
-        )
-    }
-
-    override fun updateName(
-        updatedName: TextFieldValue,
-    ) {
-        name.update {
-            updatedName
-        }
-    }
-
-    override fun clearBalanceAmountValue() {
-        updateBalanceAmountValue(
-            updatedBalanceAmountValue = balanceAmountValue.value.copy(
-                text = "",
-            ),
-        )
-    }
-
-    override fun clearMinimumAccountBalanceAmountValue() {
-        updateMinimumAccountBalanceAmountValue(
-            updatedMinimumAccountBalanceAmountValue = minimumAccountBalanceAmountValue.value.copy(
-                text = "",
-            ),
-        )
-    }
-
     override fun updateBalanceAmountValue(
         updatedBalanceAmountValue: TextFieldValue,
     ) {
@@ -302,7 +311,43 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun updateMinimumAccountBalanceAmountValue(
+    private fun clearName() {
+        updateName(
+            updatedName = name.value.copy(""),
+        )
+    }
+
+    private fun navigateUp() {
+        navigationManager.navigate(
+            MyNavigationDirections.NavigateUp
+        )
+    }
+
+    private fun updateName(
+        updatedName: TextFieldValue,
+    ) {
+        name.update {
+            updatedName
+        }
+    }
+
+    private fun clearBalanceAmountValue() {
+        updateBalanceAmountValue(
+            updatedBalanceAmountValue = balanceAmountValue.value.copy(
+                text = "",
+            ),
+        )
+    }
+
+    private fun clearMinimumAccountBalanceAmountValue() {
+        updateMinimumAccountBalanceAmountValue(
+            updatedMinimumAccountBalanceAmountValue = minimumAccountBalanceAmountValue.value.copy(
+                text = "",
+            ),
+        )
+    }
+
+    private fun updateMinimumAccountBalanceAmountValue(
         updatedMinimumAccountBalanceAmountValue: TextFieldValue,
     ) {
         minimumAccountBalanceAmountValue.update {
@@ -312,7 +357,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun updateSelectedAccountTypeIndex(
+    private fun updateSelectedAccountTypeIndex(
         updatedIndex: Int,
     ) {
         selectedAccountTypeIndex.update {

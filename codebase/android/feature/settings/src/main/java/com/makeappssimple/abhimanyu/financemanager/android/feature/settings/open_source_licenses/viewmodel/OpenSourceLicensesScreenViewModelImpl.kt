@@ -8,6 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.screen.OpenSourceLicensesScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.screen.OpenSourceLicensesScreenUIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,7 +29,17 @@ internal class OpenSourceLicensesScreenViewModelImpl @Inject constructor(
             scope = viewModelScope,
         )
 
-    override fun navigateUp() {
+    override fun handleUIEvents(
+        uiEvent: OpenSourceLicensesScreenUIEvent,
+    ) {
+        when (uiEvent) {
+            OpenSourceLicensesScreenUIEvent.NavigateUp -> {
+                navigateUp()
+            }
+        }
+    }
+
+    private fun navigateUp() {
         navigationManager.navigate(
             MyNavigationDirections.NavigateUp
         )

@@ -17,6 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.StateFlow
@@ -77,31 +78,61 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
         alarmKit.enableReminder()
     }
 
-    override fun navigateToCategoriesScreen() {
+    override fun handleUIEvents(
+        uiEvent: SettingsScreenUIEvent,
+    ) {
+        when (uiEvent) {
+            SettingsScreenUIEvent.NavigateToAccountsScreen -> {
+                navigateToAccountsScreen()
+            }
+
+            SettingsScreenUIEvent.NavigateToCategoriesScreen -> {
+                navigateToCategoriesScreen()
+            }
+
+            SettingsScreenUIEvent.NavigateToOpenSourceLicensesScreen -> {
+                navigateToOpenSourceLicensesScreen()
+            }
+
+            SettingsScreenUIEvent.NavigateToTransactionForValuesScreen -> {
+                navigateToTransactionForValuesScreen()
+            }
+
+            SettingsScreenUIEvent.NavigateUp -> {
+                navigateUp()
+            }
+
+            else -> {
+                // Noop, should have been handled in Screen composable or invalid event
+            }
+        }
+    }
+
+    private fun navigateToCategoriesScreen() {
         navigationManager.navigate(
             MyNavigationDirections.Categories
         )
     }
 
-    override fun navigateToAccountsScreen() {
+    private fun navigateToAccountsScreen() {
         navigationManager.navigate(
             MyNavigationDirections.Accounts
         )
     }
 
-    override fun navigateToOpenSourceLicensesScreen() {
+    private fun navigateToOpenSourceLicensesScreen() {
         navigationManager.navigate(
             MyNavigationDirections.OpenSourceLicenses
         )
     }
 
-    override fun navigateToTransactionForValuesScreen() {
+    private fun navigateToTransactionForValuesScreen() {
         navigationManager.navigate(
             MyNavigationDirections.TransactionForValues
         )
     }
 
-    override fun navigateUp() {
+    private fun navigateUp() {
         navigationManager.navigate(
             MyNavigationDirections.NavigateUp
         )

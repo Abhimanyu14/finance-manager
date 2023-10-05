@@ -26,6 +26,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen.TransactionsScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen.TransactionsScreenUIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -61,22 +62,22 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             }.toMap()
         }
 
-    override val expenseCategories: StateFlow<List<Category>?> = categoriesMap.map {
+    private val expenseCategories: StateFlow<List<Category>?> = categoriesMap.map {
         it[TransactionType.EXPENSE].orEmpty()
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )
-    override val incomeCategories: StateFlow<List<Category>?> = categoriesMap.map {
+    private val incomeCategories: StateFlow<List<Category>?> = categoriesMap.map {
         it[TransactionType.INCOME].orEmpty()
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )
-    override val investmentCategories: StateFlow<List<Category>?> = categoriesMap.map {
+    private val investmentCategories: StateFlow<List<Category>?> = categoriesMap.map {
         it[TransactionType.INVESTMENT].orEmpty()
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )
-    override val accounts: StateFlow<List<Account>?> = allTransactionData.map {
+    private val accounts: StateFlow<List<Account>?> = allTransactionData.map {
         it.flatMap { transactionData ->
             listOfNotNull(
                 transactionData.accountFrom,
@@ -86,7 +87,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )
-    override val transactionForValues: StateFlow<List<TransactionFor>?> = allTransactionData.map {
+    private val transactionForValues: StateFlow<List<TransactionFor>?> = allTransactionData.map {
         it.map { transactionData ->
             transactionData.transactionFor
         }.distinct()
@@ -312,6 +313,10 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         selectedSortOption,
         transactionForValues,
         selectedTransactions,
+        expenseCategories,
+        incomeCategories,
+        investmentCategories,
+        accounts,
     ) { flows ->
         val isLoading = flows[0] as? Boolean
         val selectedFilter = flows[1] as? Filter
@@ -322,8 +327,11 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         val selectedSortOption = flows[5] as? SortOption
         val transactionForValuesValue: List<TransactionFor> =
             flows[6] as? List<TransactionFor> ?: emptyList()
-        val selectedTransactionsValue: List<Int> =
-            flows[7] as? List<Int> ?: emptyList()
+        val selectedTransactionsValue: List<Int> = flows[7] as? List<Int> ?: emptyList()
+        val expenseCategoriesValue: List<Category> = flows[8] as? List<Category> ?: emptyList()
+        val incomeCategoriesValue: List<Category> = flows[9] as? List<Category> ?: emptyList()
+        val investmentCategoriesValue: List<Category> = flows[10] as? List<Category> ?: emptyList()
+        val accountsValue: List<Account> = flows[11] as? List<Account> ?: emptyList()
 
         if (
             isLoading.isNull() ||
@@ -339,6 +347,10 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 data = TransactionsScreenUIData(
                     isLoading = isLoading,
                     selectedFilter = selectedFilter,
+                    accounts = accountsValue,
+                    expenseCategories = expenseCategoriesValue,
+                    incomeCategories = incomeCategoriesValue,
+                    investmentCategories = investmentCategoriesValue,
                     selectedTransactions = selectedTransactionsValue,
                     sortOptions = sortOptions,
                     transactionTypes = transactionTypes,
@@ -357,7 +369,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     )
 
     // region Search
-    override fun updateSearchText(
+    private fun updateSearchText(
         updatedSearchText: String,
     ) {
         searchText.value = updatedSearchText
@@ -365,7 +377,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     // endregion
 
     // region Filter
-    override fun updateSelectedFilter(
+    private fun updateSelectedFilter(
         updatedSelectedFilter: Filter,
     ) {
         selectedFilter.update {
@@ -375,14 +387,84 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     // endregion
 
     // region Sort
-    override fun updateSelectedSortOption(
+    private fun updateSelectedSortOption(
         updatedSelectedSortOption: SortOption,
     ) {
         selectedSortOption.value = updatedSelectedSortOption
     }
     // endregion
 
-    override fun addToSelectedTransactions(
+    override fun handleUIEvents(
+        uiEvent: TransactionsScreenUIEvent,
+    ) {
+        when (uiEvent) {
+            is TransactionsScreenUIEvent.AddToSelectedTransactions -> {
+                addToSelectedTransactions(
+                    transactionId = uiEvent.transactionId,
+                )
+            }
+
+            TransactionsScreenUIEvent.ClearSelectedTransactions -> {
+                clearSelectedTransactions()
+            }
+
+            TransactionsScreenUIEvent.NavigateToAddTransactionScreen -> {
+                navigateToAddTransactionScreen()
+            }
+
+            is TransactionsScreenUIEvent.NavigateToViewTransactionScreen -> {
+                navigateToViewTransactionScreen(
+                    transactionId = uiEvent.transactionId,
+                )
+            }
+
+            TransactionsScreenUIEvent.NavigateUp -> {
+                navigateUp()
+            }
+
+            is TransactionsScreenUIEvent.RemoveFromSelectedTransactions -> {
+                removeFromSelectedTransactions(
+                    transactionId = uiEvent.transactionId,
+                )
+            }
+
+            TransactionsScreenUIEvent.SelectAllTransactions -> {
+                selectAllTransactions()
+            }
+
+            is TransactionsScreenUIEvent.ToggleTransactionSelection -> {
+                toggleTransactionSelection(
+                    transactionId = uiEvent.transactionId,
+                )
+            }
+
+            is TransactionsScreenUIEvent.UpdateSearchText -> {
+                updateSearchText(
+                    updatedSearchText = uiEvent.updatedSearchText,
+                )
+            }
+
+            is TransactionsScreenUIEvent.UpdateSelectedFilter -> {
+                updateSelectedFilter(
+                    updatedSelectedFilter = uiEvent.updatedSelectedFilter,
+                )
+            }
+
+            is TransactionsScreenUIEvent.UpdateSelectedSortOption -> {
+                updateSelectedSortOption(
+                    updatedSelectedSortOption = uiEvent.updatedSelectedSortOption,
+                )
+            }
+
+            is TransactionsScreenUIEvent.UpdateTransactionForValuesInTransactions -> {
+                updateTransactionForValuesInTransactions(
+                    transactionForId = uiEvent.updatedTransactionForValues,
+                )
+            }
+        }
+    }
+
+    private fun addToSelectedTransactions(
         transactionId: Int,
     ) {
         selectedTransactions.update {
@@ -390,19 +472,19 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun clearSelectedTransactions() {
+    private fun clearSelectedTransactions() {
         selectedTransactions.update {
             emptyList()
         }
     }
 
-    override fun navigateToAddTransactionScreen() {
+    private fun navigateToAddTransactionScreen() {
         navigationManager.navigate(
             MyNavigationDirections.AddTransaction()
         )
     }
 
-    override fun navigateToViewTransactionScreen(
+    private fun navigateToViewTransactionScreen(
         transactionId: Int,
     ) {
         navigationManager.navigate(
@@ -412,13 +494,13 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun navigateUp() {
+    private fun navigateUp() {
         navigationManager.navigate(
             MyNavigationDirections.NavigateUp
         )
     }
 
-    override fun removeFromSelectedTransactions(
+    private fun removeFromSelectedTransactions(
         transactionId: Int,
     ) {
         selectedTransactions.update {
@@ -426,7 +508,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun selectAllTransactions() {
+    private fun selectAllTransactions() {
         selectedTransactions.update {
             transactionDetailsListItemViewData.value?.values?.flatMap {
                 it.map { transactionListItemData ->
@@ -436,7 +518,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun toggleTransactionSelection(
+    private fun toggleTransactionSelection(
         transactionId: Int,
     ) {
         if (selectedTransactions.value.contains(transactionId)) {
@@ -450,7 +532,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun updateTransactionForValuesInTransactions(
+    private fun updateTransactionForValuesInTransactions(
         transactionForId: Int,
     ) {
         viewModelScope.launch(

@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIState
 import org.junit.Before
 import org.junit.Rule
@@ -56,7 +56,7 @@ class SettingsScreenViewTest {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
-                    events = SettingsScreenUIEvents(),
+                    events = SettingsScreenUIEvent(),
                     uiState = SettingsScreenUIState(
                         data = MyResult.Success(
                             data = testSettingsScreenViewData.copy(
@@ -89,7 +89,7 @@ class SettingsScreenViewTest {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
-                    events = SettingsScreenUIEvents(),
+                    events = SettingsScreenUIEvent(),
                     uiState = SettingsScreenUIState(
                         data = MyResult.Success(
                             data = testSettingsScreenViewData.copy(
@@ -122,7 +122,7 @@ class SettingsScreenViewTest {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
-                    events = SettingsScreenUIEvents(),
+                    events = SettingsScreenUIEvent(),
                     uiState = SettingsScreenUIState(
                         data = MyResult.Success(
                             data = testSettingsScreenViewData.copy(
@@ -143,7 +143,7 @@ class SettingsScreenViewTest {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
-                    events = SettingsScreenUIEvents(),
+                    events = SettingsScreenUIEvent(),
                     uiState = SettingsScreenUIState(
                         data = MyResult.Success(
                             data = testSettingsScreenViewData.copy(

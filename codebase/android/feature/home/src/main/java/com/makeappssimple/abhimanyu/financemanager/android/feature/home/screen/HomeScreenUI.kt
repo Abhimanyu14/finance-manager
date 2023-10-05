@@ -1,7 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen
 
-import android.net.Uri
-import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,7 +16,6 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.MimeTypeConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
@@ -58,22 +55,29 @@ data class HomeScreenUIData(
 )
 
 @Immutable
-internal data class HomeScreenUIEvents(
-    val createDocument: ManagedActivityResultLauncher<String, Uri?>,
-    val handleOverviewCardAction: (OverviewCardAction) -> Unit,
-    val navigateToAddTransactionScreen: () -> Unit,
-    val navigateToAnalysisScreen: () -> Unit,
-    val navigateToSettingsScreen: () -> Unit,
-    val navigateToAccountsScreen: () -> Unit,
-    val navigateToTransactionsScreen: () -> Unit,
-    val onOverviewTabClick: (Int) -> Unit,
-)
+sealed class HomeScreenUIEvent {
+    object CreateDocument : HomeScreenUIEvent()
+    object NavigateToAddTransactionScreen : HomeScreenUIEvent()
+    object NavigateToAnalysisScreen : HomeScreenUIEvent()
+    object NavigateToSettingsScreen : HomeScreenUIEvent()
+    object NavigateToAccountsScreen : HomeScreenUIEvent()
+
+    object NavigateToTransactionsScreen : HomeScreenUIEvent()
+
+    data class HandleOverviewCardAction(
+        val overviewCardAction: OverviewCardAction,
+    ) : HomeScreenUIEvent()
+
+    data class OnOverviewTabClick(
+        val index: Int,
+    ) : HomeScreenUIEvent()
+}
 
 @Composable
 internal fun HomeScreenUI(
-    events: HomeScreenUIEvents,
     uiState: HomeScreenUIState,
     state: CommonScreenUIState,
+    handleUIEvents: (uiEvent: HomeScreenUIEvent) -> Unit,
 ) {
     MyScaffold(
         modifier = Modifier
@@ -91,7 +95,9 @@ internal fun HomeScreenUI(
                 titleTextStringResourceId = R.string.screen_home_appbar_title,
                 appBarActions = {
                     IconButton(
-                        onClick = events.navigateToSettingsScreen,
+                        onClick = {
+                            handleUIEvents(HomeScreenUIEvent.NavigateToSettingsScreen)
+                        },
                     ) {
                         Icon(
                             imageVector = Icons.Rounded.Settings,
@@ -112,7 +118,9 @@ internal fun HomeScreenUI(
                 contentDescription = stringResource(
                     id = R.string.screen_home_floating_action_button_content_description,
                 ),
-                onClick = events.navigateToAddTransactionScreen,
+                onClick = {
+                    handleUIEvents(HomeScreenUIEvent.NavigateToAddTransactionScreen)
+                },
             )
         },
         onClick = {
@@ -136,7 +144,9 @@ internal fun HomeScreenUI(
                         totalMinimumBalanceAmount = uiState.accountsTotalMinimumBalanceAmountValue,
                     ),
                     events = TotalBalanceCardEvents(
-                        onClick = events.navigateToAccountsScreen,
+                        onClick = {
+                            handleUIEvents(HomeScreenUIEvent.NavigateToAccountsScreen)
+                        },
                     ),
                 )
             }
@@ -150,7 +160,7 @@ internal fun HomeScreenUI(
                         ),
                         events = BackupCardEvents(
                             onClick = {
-                                events.createDocument.launch(MimeTypeConstants.JSON)
+                                handleUIEvents(HomeScreenUIEvent.CreateDocument)
                             },
                         ),
                     )
@@ -165,9 +175,15 @@ internal fun HomeScreenUI(
                         title = uiState.overviewCardData.title,
                     ),
                     events = OverviewCardEvents(
-                        onClick = events.navigateToAnalysisScreen,
-                        onOverviewTabClick = events.onOverviewTabClick,
-                        handleOverviewCardAction = events.handleOverviewCardAction,
+                        onClick = {
+                            handleUIEvents(HomeScreenUIEvent.NavigateToAnalysisScreen)
+                        },
+                        onOverviewTabClick = {
+                            handleUIEvents(HomeScreenUIEvent.OnOverviewTabClick(it))
+                        },
+                        handleOverviewCardAction = {
+                            handleUIEvents(HomeScreenUIEvent.HandleOverviewCardAction(it))
+                        },
                     ),
                 )
             }
@@ -175,7 +191,7 @@ internal fun HomeScreenUI(
                 HomeRecentTransactionsUI(
                     isTrailingTextVisible = uiState.transactionListItemDataList.isNotEmpty(),
                     onClick = if (uiState.transactionListItemDataList.isNotEmpty()) {
-                        events.navigateToTransactionsScreen
+                        { handleUIEvents(HomeScreenUIEvent.NavigateToTransactionsScreen) }
                     } else {
                         null
                     },

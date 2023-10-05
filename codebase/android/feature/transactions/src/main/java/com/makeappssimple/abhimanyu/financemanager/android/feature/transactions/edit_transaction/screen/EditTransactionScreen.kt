@@ -2,13 +2,14 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUIData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUIEvents
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.rememberAddOrEditTransactionScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenViewModelImpl
@@ -17,34 +18,38 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 fun EditTransactionScreen(
     screenViewModel: AddOrEditTransactionScreenViewModel = hiltViewModel<AddOrEditTransactionScreenViewModelImpl>(),
 ) {
-    screenViewModel.myLogger.logError(
+    val viewModel = remember {
+        screenViewModel
+    }
+    viewModel.myLogger.logError(
         message = "Inside EditTransactionScreen",
     )
 
-    val screenUIData: MyResult<AddOrEditTransactionScreenUIData>? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
+    val screenUIData: MyResult<AddOrEditTransactionScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    val handleUIEvents = remember(
+        key1 = viewModel,
+    ) {
+        { uiEvent: AddOrEditTransactionScreenUIEvent ->
+            when (uiEvent) {
+                AddOrEditTransactionScreenUIEvent.OnCtaButtonClick -> {
+                    viewModel.updateTransaction()
+                }
+
+                else -> {
+                    viewModel.handleUIEvents(
+                        uiEvent = uiEvent,
+                    )
+                }
+            }
+        }
+    }
 
     AddOrEditTransactionScreenUI(
-        events = AddOrEditTransactionScreenUIEvents(
-            clearAmount = screenViewModel::clearAmount,
-            clearDescription = screenViewModel::clearDescription,
-            clearTitle = screenViewModel::clearTitle,
-            navigateUp = screenViewModel::navigateUp,
-            onCtaButtonClick = screenViewModel::updateTransaction,
-            updateAmount = screenViewModel::updateAmount,
-            updateCategory = screenViewModel::updateCategory,
-            updateDescription = screenViewModel::updateDescription,
-            updateSelectedTransactionForIndex = screenViewModel::updateSelectedTransactionForIndex,
-            updateSelectedTransactionTypeIndex = screenViewModel::updateSelectedTransactionTypeIndex,
-            updateAccountFrom = screenViewModel::updateAccountFrom,
-            updateAccountTo = screenViewModel::updateAccountTo,
-            updateTitle = screenViewModel::updateTitle,
-            updateTransactionDate = screenViewModel::updateTransactionDate,
-            updateTransactionTime = screenViewModel::updateTransactionTime,
-        ),
         uiState = rememberAddOrEditTransactionScreenUIState(
             data = screenUIData,
             isEdit = true,
         ),
         state = rememberCommonScreenUIState(),
+        handleUIEvents = handleUIEvents,
     )
 }

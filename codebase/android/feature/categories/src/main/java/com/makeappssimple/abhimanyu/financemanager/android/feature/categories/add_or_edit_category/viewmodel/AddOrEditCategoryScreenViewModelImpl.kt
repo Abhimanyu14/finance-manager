@@ -26,6 +26,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.navigation.AddOrEditCategoryScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
@@ -156,6 +157,48 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
                 )
             }
             fetchData()
+        }
+    }
+
+    override fun handleUIEvents(
+        uiEvent: AddOrEditCategoryScreenUIEvent,
+    ) {
+        when (uiEvent) {
+            AddOrEditCategoryScreenUIEvent.ClearTitle -> {
+                clearTitle()
+            }
+
+            AddOrEditCategoryScreenUIEvent.NavigateUp -> {
+                navigateUp()
+            }
+
+            is AddOrEditCategoryScreenUIEvent.UpdateEmoji -> {
+                updateEmoji(
+                    updatedEmoji = uiEvent.updatedEmoji,
+                )
+            }
+
+            is AddOrEditCategoryScreenUIEvent.UpdateSearchText -> {
+                updateSearchText(
+                    updatedSearchText = uiEvent.updatedSearchText,
+                )
+            }
+
+            is AddOrEditCategoryScreenUIEvent.UpdateSelectedTransactionTypeIndex -> {
+                updateSelectedTransactionTypeIndex(
+                    updatedIndex = uiEvent.updatedIndex,
+                )
+            }
+
+            is AddOrEditCategoryScreenUIEvent.UpdateTitle -> {
+                updateTitle(
+                    updatedTitle = uiEvent.updatedTitle,
+                )
+            }
+
+            else -> {
+                // Noop, should have been handled in Screen composable or invalid event
+            }
         }
     }
 

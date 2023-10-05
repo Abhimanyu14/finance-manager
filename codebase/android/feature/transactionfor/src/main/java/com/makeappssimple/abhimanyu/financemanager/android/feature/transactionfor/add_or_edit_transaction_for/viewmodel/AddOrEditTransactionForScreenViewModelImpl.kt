@@ -21,6 +21,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.navigation.AddOrEditTransactionForScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -107,19 +108,27 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun updateTransactionFor() {
-        val updatedTransactionFor = transactionFor.value?.copy(
-            title = title.value.text,
-        ) ?: return
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            updateTransactionForValuesUseCase(
-                updatedTransactionFor,
-            )
-            navigationManager.navigate(
-                navigationCommand = MyNavigationDirections.NavigateUp
-            )
+    override fun handleUIEvents(
+        uiEvent: AddOrEditTransactionForScreenUIEvent,
+    ) {
+        when (uiEvent) {
+            AddOrEditTransactionForScreenUIEvent.ClearTitle -> {
+                clearTitle()
+            }
+
+            AddOrEditTransactionForScreenUIEvent.NavigateUp -> {
+                navigateUp()
+            }
+
+            is AddOrEditTransactionForScreenUIEvent.UpdateTitle -> {
+                updateTitle(
+                    updatedTitle = uiEvent.updatedTitle,
+                )
+            }
+
+            else -> {
+                // Noop, should have been handled in Screen composable or invalid event
+            }
         }
     }
 
@@ -138,7 +147,23 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun clearTitle() {
+    override fun updateTransactionFor() {
+        val updatedTransactionFor = transactionFor.value?.copy(
+            title = title.value.text,
+        ) ?: return
+        viewModelScope.launch(
+            context = dispatcherProvider.io,
+        ) {
+            updateTransactionForValuesUseCase(
+                updatedTransactionFor,
+            )
+            navigationManager.navigate(
+                navigationCommand = MyNavigationDirections.NavigateUp
+            )
+        }
+    }
+
+    private fun clearTitle() {
         updateTitle(
             updatedTitle = title.value.copy(
                 text = "",
@@ -146,13 +171,13 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun navigateUp() {
+    private fun navigateUp() {
         navigationManager.navigate(
             MyNavigationDirections.NavigateUp
         )
     }
 
-    override fun updateTitle(
+    private fun updateTitle(
         updatedTitle: TextFieldValue,
     ) {
         title.update {

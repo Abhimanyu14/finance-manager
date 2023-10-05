@@ -15,6 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.screen.TransactionForValuesScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.screen.TransactionForValuesScreenUIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -70,7 +71,33 @@ internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
         scope = viewModelScope,
     )
 
-    override fun deleteTransactionFor(
+    override fun handleUIEvents(
+        uiEvent: TransactionForValuesScreenUIEvent,
+    ) {
+        when (uiEvent) {
+            is TransactionForValuesScreenUIEvent.DeleteTransactionFor -> {
+                deleteTransactionFor(
+                    id = uiEvent.transactionForId,
+                )
+            }
+
+            TransactionForValuesScreenUIEvent.NavigateToAddTransactionForScreen -> {
+                navigateToAddTransactionForScreen()
+            }
+
+            is TransactionForValuesScreenUIEvent.NavigateToEditTransactionForScreen -> {
+                navigateToEditTransactionForScreen(
+                    transactionForId = uiEvent.transactionForId,
+                )
+            }
+
+            TransactionForValuesScreenUIEvent.NavigateUp -> {
+                navigateUp()
+            }
+        }
+    }
+
+    private fun deleteTransactionFor(
         id: Int,
     ) {
         viewModelScope.launch(
@@ -82,13 +109,13 @@ internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun navigateToAddTransactionForScreen() {
+    private fun navigateToAddTransactionForScreen() {
         navigationManager.navigate(
             MyNavigationDirections.AddTransactionFor
         )
     }
 
-    override fun navigateToEditTransactionForScreen(
+    private fun navigateToEditTransactionForScreen(
         transactionForId: Int,
     ) {
         navigationManager.navigate(
@@ -98,7 +125,7 @@ internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun navigateUp() {
+    private fun navigateUp() {
         navigationManager.navigate(
             MyNavigationDirections.NavigateUp
         )

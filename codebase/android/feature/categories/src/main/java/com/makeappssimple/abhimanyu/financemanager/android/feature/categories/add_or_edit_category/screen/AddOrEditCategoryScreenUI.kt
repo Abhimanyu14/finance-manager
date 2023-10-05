@@ -64,21 +64,33 @@ data class AddOrEditCategoryScreenUIData(
 )
 
 @Immutable
-internal data class AddOrEditCategoryScreenUIEvents(
-    val clearTitle: () -> Unit,
-    val navigateUp: () -> Unit,
-    val onCtaButtonClick: () -> Unit,
-    val updateEmoji: (updatedEmoji: String) -> Unit,
-    val updateSearchText: (updatedSearchText: String) -> Unit,
-    val updateSelectedTransactionTypeIndex: (updatedIndex: Int) -> Unit,
-    val updateTitle: (updatedTitle: TextFieldValue) -> Unit,
-)
+sealed class AddOrEditCategoryScreenUIEvent {
+    object ClearTitle : AddOrEditCategoryScreenUIEvent()
+    object NavigateUp : AddOrEditCategoryScreenUIEvent()
+    object OnCtaButtonClick : AddOrEditCategoryScreenUIEvent()
+
+    data class UpdateEmoji(
+        val updatedEmoji: String,
+    ) : AddOrEditCategoryScreenUIEvent()
+
+    data class UpdateSearchText(
+        val updatedSearchText: String,
+    ) : AddOrEditCategoryScreenUIEvent()
+
+    data class UpdateSelectedTransactionTypeIndex(
+        val updatedIndex: Int,
+    ) : AddOrEditCategoryScreenUIEvent()
+
+    data class UpdateTitle(
+        val updatedTitle: TextFieldValue,
+    ) : AddOrEditCategoryScreenUIEvent()
+}
 
 @Composable
 internal fun AddOrEditCategoryScreenUI(
-    events: AddOrEditCategoryScreenUIEvents,
     uiState: AddOrEditCategoryScreenUIState,
     state: CommonScreenUIState,
+    handleUIEvents: (uiEvent: AddOrEditCategoryScreenUIEvent) -> Unit,
 ) {
     if (!uiState.isLoading) {
         LaunchedEffect(
@@ -96,7 +108,11 @@ internal fun AddOrEditCategoryScreenUI(
         modalBottomSheetState = state.modalBottomSheetState,
         resetBottomSheetType = {
             uiState.resetBottomSheetType()
-            events.updateSearchText("")
+            handleUIEvents(
+                AddOrEditCategoryScreenUIEvent.UpdateSearchText(
+                    updatedSearchText = "",
+                )
+            )
         },
     )
 
@@ -115,10 +131,18 @@ internal fun AddOrEditCategoryScreenUI(
                         searchText = uiState.searchText,
                         resetBottomSheetType = uiState.resetBottomSheetType,
                         updateEmoji = { updatedEmoji ->
-                            events.updateEmoji(updatedEmoji)
+                            handleUIEvents(
+                                AddOrEditCategoryScreenUIEvent.UpdateEmoji(
+                                    updatedEmoji = updatedEmoji,
+                                )
+                            )
                         },
                         updateSearchText = { updatedSearchText ->
-                            events.updateSearchText(updatedSearchText)
+                            handleUIEvents(
+                                AddOrEditCategoryScreenUIEvent.UpdateSearchText(
+                                    updatedSearchText = updatedSearchText,
+                                )
+                            )
                         },
                     )
                 }
@@ -137,7 +161,9 @@ internal fun AddOrEditCategoryScreenUI(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
-                navigationAction = events.navigateUp,
+                navigationAction = {
+                    handleUIEvents(AddOrEditCategoryScreenUIEvent.NavigateUp)
+                },
             )
         },
         onClick = {
@@ -164,7 +190,13 @@ internal fun AddOrEditCategoryScreenUI(
                     selectedItemIndex = uiState.selectedTransactionTypeIndex,
                 ),
                 events = MyRadioGroupEvents(
-                    onSelectionChange = events.updateSelectedTransactionTypeIndex,
+                    onSelectionChange = { updatedIndex ->
+                        handleUIEvents(
+                            AddOrEditCategoryScreenUIEvent.UpdateSelectedTransactionTypeIndex(
+                                updatedIndex = updatedIndex,
+                            )
+                        )
+                    },
                 ),
                 modifier = Modifier
                     .padding(
@@ -224,8 +256,16 @@ internal fun AddOrEditCategoryScreenUI(
                         ),
                     ),
                     events = MyOutlinedTextFieldEvents(
-                        onClickTrailingIcon = events.clearTitle,
-                        onValueChange = events.updateTitle,
+                        onClickTrailingIcon = {
+                            handleUIEvents(AddOrEditCategoryScreenUIEvent.ClearTitle)
+                        },
+                        onValueChange = { updatedTitle ->
+                            handleUIEvents(
+                                AddOrEditCategoryScreenUIEvent.UpdateTitle(
+                                    updatedTitle = updatedTitle,
+                                )
+                            )
+                        },
                     ),
                 )
             }
@@ -240,7 +280,9 @@ internal fun AddOrEditCategoryScreenUI(
                     textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
                 ),
                 events = SaveButtonEvents(
-                    onClick = events.onCtaButtonClick,
+                    onClick = {
+                        handleUIEvents(AddOrEditCategoryScreenUIEvent.OnCtaButtonClick)
+                    },
                 ),
             )
             NavigationBarSpacer()

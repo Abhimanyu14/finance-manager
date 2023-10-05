@@ -52,6 +52,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.navigation.AddOrEditTransactionScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -318,6 +319,92 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             context = dispatcherProvider.io,
         ) {
             fetchData()
+        }
+    }
+
+    override fun handleUIEvents(
+        uiEvent: AddOrEditTransactionScreenUIEvent,
+    ) {
+        when (uiEvent) {
+            AddOrEditTransactionScreenUIEvent.ClearAmount -> {
+                clearAmount()
+            }
+
+            AddOrEditTransactionScreenUIEvent.ClearDescription -> {
+                clearDescription()
+            }
+
+            AddOrEditTransactionScreenUIEvent.ClearTitle -> {
+                clearTitle()
+            }
+
+            AddOrEditTransactionScreenUIEvent.NavigateUp -> {
+                navigateUp()
+            }
+
+            is AddOrEditTransactionScreenUIEvent.UpdateAccountFrom -> {
+                updateAccountFrom(
+                    updatedAccountFrom = uiEvent.updatedAccountFrom,
+                )
+            }
+
+            is AddOrEditTransactionScreenUIEvent.UpdateAccountTo -> {
+                updateAccountTo(
+                    updatedAccountTo = uiEvent.updatedAccountTo,
+                )
+            }
+
+            is AddOrEditTransactionScreenUIEvent.UpdateAmount -> {
+                updateAmount(
+                    updatedAmount = uiEvent.updatedAmount,
+                )
+            }
+
+            is AddOrEditTransactionScreenUIEvent.UpdateCategory -> {
+                updateCategory(
+                    updatedCategory = uiEvent.updatedCategory,
+                )
+            }
+
+            is AddOrEditTransactionScreenUIEvent.UpdateDescription -> {
+                updateDescription(
+                    updatedDescription = uiEvent.updatedDescription,
+                )
+            }
+
+            is AddOrEditTransactionScreenUIEvent.UpdateSelectedTransactionForIndex -> {
+                updateSelectedTransactionForIndex(
+                    updatedSelectedTransactionForIndex = uiEvent.updatedSelectedTransactionForIndex,
+                )
+            }
+
+            is AddOrEditTransactionScreenUIEvent.UpdateSelectedTransactionTypeIndex -> {
+                updateSelectedTransactionTypeIndex(
+                    updatedSelectedTransactionTypeIndex = uiEvent.updatedSelectedTransactionTypeIndex,
+                )
+            }
+
+            is AddOrEditTransactionScreenUIEvent.UpdateTitle -> {
+                updateTitle(
+                    updatedTitle = uiEvent.updatedTitle,
+                )
+            }
+
+            is AddOrEditTransactionScreenUIEvent.UpdateTransactionDate -> {
+                updateTransactionDate(
+                    updatedTransactionDate = uiEvent.updatedTransactionDate,
+                )
+            }
+
+            is AddOrEditTransactionScreenUIEvent.UpdateTransactionTime -> {
+                updateTransactionTime(
+                    updatedTransactionTime = uiEvent.updatedTransactionTime,
+                )
+            }
+
+            else -> {
+                // Noop, should have been handled in Screen composable or invalid event
+            }
         }
     }
 
@@ -681,7 +768,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     }
 
     // region UI changes
-    override fun updateSelectedTransactionTypeIndex(
+    private fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
     ) {
         updateAddOrEditTransactionScreenUiState(
@@ -694,7 +781,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun updateAmount(
+    private fun updateAmount(
         updatedAmount: TextFieldValue,
     ) {
         updateAddOrEditTransactionScreenUiState(
@@ -706,7 +793,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun clearAmount() {
+    private fun clearAmount() {
         updateAmount(
             updatedAmount = uiState.value.amount.copy(
                 text = "",
@@ -714,13 +801,13 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun navigateUp() {
+    private fun navigateUp() {
         navigationManager.navigate(
             MyNavigationDirections.NavigateUp
         )
     }
 
-    override fun updateTitle(
+    private fun updateTitle(
         updatedTitle: TextFieldValue,
     ) {
         updateAddOrEditTransactionScreenUiState(
@@ -730,7 +817,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun clearTitle() {
+    private fun clearTitle() {
         updateTitle(
             updatedTitle = uiState.value.title.copy(
                 text = "",
@@ -738,7 +825,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun updateDescription(
+    private fun updateDescription(
         updatedDescription: TextFieldValue,
     ) {
         updateAddOrEditTransactionScreenUiState(
@@ -748,7 +835,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun clearDescription() {
+    private fun clearDescription() {
         updateDescription(
             updatedDescription = uiState.value.description.copy(
                 text = "",
@@ -756,7 +843,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun updateCategory(
+    private fun updateCategory(
         updatedCategory: Category?,
     ) {
         updateAddOrEditTransactionScreenUiState(
@@ -766,7 +853,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun updateSelectedTransactionForIndex(
+    private fun updateSelectedTransactionForIndex(
         updatedSelectedTransactionForIndex: Int,
     ) {
         updateAddOrEditTransactionScreenUiState(
@@ -776,7 +863,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun updateAccountFrom(
+    private fun updateAccountFrom(
         updatedAccountFrom: Account?,
     ) {
         updateAddOrEditTransactionScreenUiState(
@@ -786,7 +873,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun updateAccountTo(
+    private fun updateAccountTo(
         updatedAccountTo: Account?,
     ) {
         updateAddOrEditTransactionScreenUiState(
@@ -796,7 +883,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun updateTransactionDate(
+    private fun updateTransactionDate(
         updatedTransactionDate: LocalDate,
     ) {
         updateAddOrEditTransactionScreenUiState(
@@ -806,7 +893,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun updateTransactionTime(
+    private fun updateTransactionTime(
         updatedTransactionTime: LocalTime,
     ) {
         updateAddOrEditTransactionScreenUiState(

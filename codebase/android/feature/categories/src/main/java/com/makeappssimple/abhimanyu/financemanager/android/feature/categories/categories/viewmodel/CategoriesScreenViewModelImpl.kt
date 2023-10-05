@@ -21,6 +21,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.screen.CategoriesScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.screen.CategoriesScreenUIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -166,7 +167,48 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
         scope = viewModelScope,
     )
 
-    override fun deleteCategory(
+    override fun handleUIEvents(
+        uiEvent: CategoriesScreenUIEvent,
+    ) {
+        when (uiEvent) {
+            is CategoriesScreenUIEvent.DeleteCategory -> {
+                deleteCategory(
+                    id = uiEvent.categoryId,
+                )
+            }
+
+            is CategoriesScreenUIEvent.NavigateToAddCategoryScreen -> {
+                navigateToAddCategoryScreen(
+                    transactionType = uiEvent.transactionType,
+                )
+            }
+
+            is CategoriesScreenUIEvent.NavigateToEditCategoryScreen -> {
+                navigateToEditCategoryScreen(
+                    categoryId = uiEvent.categoryId,
+                )
+            }
+
+            CategoriesScreenUIEvent.NavigateUp -> {
+                navigateUp()
+            }
+
+            is CategoriesScreenUIEvent.SetDefaultCategoryIdInDataStore -> {
+                setDefaultCategoryIdInDataStore(
+                    defaultCategoryId = uiEvent.defaultCategoryId,
+                    transactionType = uiEvent.transactionType,
+                )
+            }
+
+            is CategoriesScreenUIEvent.UpdateSelectedTabIndex -> {
+                updateSelectedTabIndex(
+                    updatedSelectedTabIndex = uiEvent.updatedSelectedTabIndex,
+                )
+            }
+        }
+    }
+
+    private fun deleteCategory(
         id: Int,
     ) {
         viewModelScope.launch(
@@ -178,7 +220,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun navigateToAddCategoryScreen(
+    private fun navigateToAddCategoryScreen(
         transactionType: String,
     ) {
         navigationManager.navigate(
@@ -188,7 +230,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun navigateToEditCategoryScreen(
+    private fun navigateToEditCategoryScreen(
         categoryId: Int,
     ) {
         navigationManager.navigate(
@@ -198,13 +240,13 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun navigateUp() {
+    private fun navigateUp() {
         navigationManager.navigate(
             MyNavigationDirections.NavigateUp
         )
     }
 
-    override fun setDefaultCategoryIdInDataStore(
+    private fun setDefaultCategoryIdInDataStore(
         defaultCategoryId: Int,
         transactionType: TransactionType,
     ) {
@@ -239,7 +281,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun updateSelectedTabIndex(
+    private fun updateSelectedTabIndex(
         updatedSelectedTabIndex: Int,
     ) {
         selectedTabIndex.value = updatedSelectedTabIndex

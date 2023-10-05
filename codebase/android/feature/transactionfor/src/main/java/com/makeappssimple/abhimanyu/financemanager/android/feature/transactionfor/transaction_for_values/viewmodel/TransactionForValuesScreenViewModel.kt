@@ -4,21 +4,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.screen.TransactionForValuesScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.screen.TransactionForValuesScreenUIEvent
 import kotlinx.coroutines.flow.StateFlow
 
 interface TransactionForValuesScreenViewModel : ScreenViewModel {
     val myLogger: MyLogger
     val screenUIData: StateFlow<MyResult<TransactionForValuesScreenUIData>?>
 
-    fun deleteTransactionFor(
-        id: Int,
+    fun handleUIEvents(
+        uiEvent: TransactionForValuesScreenUIEvent,
     )
-
-    fun navigateToAddTransactionForScreen()
-
-    fun navigateToEditTransactionForScreen(
-        transactionForId: Int,
-    )
-
-    fun navigateUp()
 }

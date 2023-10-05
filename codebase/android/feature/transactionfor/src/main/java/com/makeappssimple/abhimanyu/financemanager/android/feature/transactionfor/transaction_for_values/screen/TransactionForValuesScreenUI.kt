@@ -47,18 +47,24 @@ data class TransactionForValuesScreenUIData(
 )
 
 @Immutable
-internal data class TransactionForValuesScreenUIEvents(
-    val deleteTransactionFor: (transactionForId: Int) -> Unit,
-    val navigateToAddTransactionForScreen: () -> Unit,
-    val navigateToEditTransactionForScreen: (transactionForId: Int) -> Unit,
-    val navigateUp: () -> Unit,
-)
+sealed class TransactionForValuesScreenUIEvent {
+    object NavigateToAddTransactionForScreen : TransactionForValuesScreenUIEvent()
+    object NavigateUp : TransactionForValuesScreenUIEvent()
+
+    data class DeleteTransactionFor(
+        val transactionForId: Int,
+    ) : TransactionForValuesScreenUIEvent()
+
+    data class NavigateToEditTransactionForScreen(
+        val transactionForId: Int,
+    ) : TransactionForValuesScreenUIEvent()
+}
 
 @Composable
 internal fun TransactionForValuesScreenUI(
-    events: TransactionForValuesScreenUIEvents,
     uiState: TransactionForValuesScreenUIState,
     state: CommonScreenUIState,
+    handleUIEvents: (uiEvent: TransactionForValuesScreenUIEvent) -> Unit,
 ) {
     BottomSheetHandler(
         showModalBottomSheet = uiState.transactionForValuesBottomSheetType != TransactionForValuesBottomSheetType.None,
@@ -83,7 +89,11 @@ internal fun TransactionForValuesScreenUI(
                         },
                     ) {
                         uiState.transactionForIdToDelete?.let { transactionForIdToDeleteValue ->
-                            events.deleteTransactionFor(transactionForIdToDeleteValue)
+                            handleUIEvents(
+                                TransactionForValuesScreenUIEvent.DeleteTransactionFor(
+                                    transactionForId = transactionForIdToDeleteValue,
+                                )
+                            )
                         }
                     }
                 }
@@ -98,7 +108,13 @@ internal fun TransactionForValuesScreenUI(
                     TransactionForValuesMenuBottomSheet(
                         isDeleteVisible = bottomSheetData.isDeleteVisible,
                         transactionForId = bottomSheetData.transactionForId,
-                        navigateToEditTransactionForScreen = events.navigateToEditTransactionForScreen,
+                        navigateToEditTransactionForScreen = { transactionForId ->
+                            handleUIEvents(
+                                TransactionForValuesScreenUIEvent.NavigateToEditTransactionForScreen(
+                                    transactionForId = transactionForId,
+                                )
+                            )
+                        },
                         onDeleteClick = {
                             uiState.setTransactionForIdToDelete(bottomSheetData.transactionForId)
                             uiState.setTransactionForValuesBottomSheetType(
@@ -114,7 +130,9 @@ internal fun TransactionForValuesScreenUI(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_transaction_for_values_appbar_title,
-                navigationAction = events.navigateUp,
+                navigationAction = {
+                    handleUIEvents(TransactionForValuesScreenUIEvent.NavigateUp)
+                },
             )
         },
         floatingActionButton = {
@@ -125,7 +143,9 @@ internal fun TransactionForValuesScreenUI(
                 contentDescription = stringResource(
                     id = R.string.screen_transaction_for_values_floating_action_button_content_description,
                 ),
-                onClick = events.navigateToAddTransactionForScreen,
+                onClick = {
+                    handleUIEvents(TransactionForValuesScreenUIEvent.NavigateToAddTransactionForScreen)
+                },
             )
         },
         onClick = {

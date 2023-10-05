@@ -23,6 +23,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.navigation.ViewTransactionScreenArgs
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.screen.ViewTransactionScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.screen.ViewTransactionScreenUIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -85,6 +86,32 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
         scope = viewModelScope,
     )
 
+    override fun handleUIEvents(
+        uiEvent: ViewTransactionScreenUIEvent,
+    ) {
+        when (uiEvent) {
+            is ViewTransactionScreenUIEvent.DeleteTransaction -> {
+                deleteTransaction(uiEvent.transactionId)
+            }
+
+            is ViewTransactionScreenUIEvent.NavigateToAddTransactionScreen -> {
+                navigateToAddTransactionScreen(uiEvent.transactionId)
+            }
+
+            is ViewTransactionScreenUIEvent.NavigateToEditTransactionScreen -> {
+                navigateToEditTransactionScreen(uiEvent.transactionId)
+            }
+
+            is ViewTransactionScreenUIEvent.NavigateToViewTransactionScreen -> {
+                navigateToViewTransactionScreen(uiEvent.transactionId)
+            }
+
+            ViewTransactionScreenUIEvent.NavigateUp -> {
+                navigateUp()
+            }
+        }
+    }
+
     override fun getTransactionData() {
         viewTransactionScreenArgs.originalTransactionId?.let { id ->
             viewModelScope.launch(
@@ -111,7 +138,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun deleteTransaction(
+    private fun deleteTransaction(
         id: Int,
     ) {
         viewModelScope.launch(
@@ -124,7 +151,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun navigateToAddTransactionScreen(
+    private fun navigateToAddTransactionScreen(
         transactionId: Int,
     ) {
         navigationManager.navigate(
@@ -134,7 +161,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun navigateToEditTransactionScreen(
+    private fun navigateToEditTransactionScreen(
         transactionId: Int,
     ) {
         navigationManager.navigate(
@@ -144,7 +171,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun navigateToViewTransactionScreen(
+    private fun navigateToViewTransactionScreen(
         transactionId: Int,
     ) {
         navigationManager.navigate(
@@ -154,7 +181,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun navigateUp() {
+    private fun navigateUp() {
         navigationManager.navigate(
             MyNavigationDirections.NavigateUp
         )

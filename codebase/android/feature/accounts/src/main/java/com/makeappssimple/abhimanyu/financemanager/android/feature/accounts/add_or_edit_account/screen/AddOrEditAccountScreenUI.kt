@@ -83,23 +83,35 @@ data class AddOrEditAccountScreenUIData(
 )
 
 @Immutable
-internal data class AddOrEditAccountScreenUIEvents(
-    val clearBalanceAmountValue: () -> Unit,
-    val clearMinimumAccountBalanceAmountValue: () -> Unit,
-    val clearName: () -> Unit,
-    val navigateUp: () -> Unit,
-    val onCtaButtonClick: () -> Unit,
-    val updateBalanceAmountValue: (updatedBalanceAmountValue: TextFieldValue) -> Unit,
-    val updateMinimumAccountBalanceAmountValue: (updatedMinimumAccountBalanceAmountValue: TextFieldValue) -> Unit,
-    val updateName: (updatedName: TextFieldValue) -> Unit,
-    val updateSelectedAccountTypeIndex: (updatedIndex: Int) -> Unit,
-)
+sealed class AddOrEditAccountScreenUIEvent {
+    object ClearBalanceAmountValue : AddOrEditAccountScreenUIEvent()
+    object ClearMinimumAccountBalanceAmountValue : AddOrEditAccountScreenUIEvent()
+    object ClearName : AddOrEditAccountScreenUIEvent()
+    object NavigateUp : AddOrEditAccountScreenUIEvent()
+    object OnCtaButtonClick : AddOrEditAccountScreenUIEvent()
+
+    data class UpdateBalanceAmountValue(
+        val updatedBalanceAmountValue: TextFieldValue,
+    ) : AddOrEditAccountScreenUIEvent()
+
+    data class UpdateMinimumAccountBalanceAmountValue(
+        val updatedMinimumAccountBalanceAmountValue: TextFieldValue,
+    ) : AddOrEditAccountScreenUIEvent()
+
+    data class UpdateName(
+        val updatedName: TextFieldValue,
+    ) : AddOrEditAccountScreenUIEvent()
+
+    data class UpdateSelectedAccountTypeIndex(
+        val updatedIndex: Int,
+    ) : AddOrEditAccountScreenUIEvent()
+}
 
 @Composable
 internal fun AddOrEditAccountScreenUI(
-    events: AddOrEditAccountScreenUIEvents,
     uiState: AddOrEditAccountScreenUIState,
     state: CommonScreenUIState,
+    handleUIEvents: (uiEvent: AddOrEditAccountScreenUIEvent) -> Unit,
 ) {
     if (!uiState.isLoading) {
         LaunchedEffect(
@@ -129,7 +141,9 @@ internal fun AddOrEditAccountScreenUI(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
-                navigationAction = events.navigateUp,
+                navigationAction = {
+                    handleUIEvents(AddOrEditAccountScreenUIEvent.NavigateUp)
+                },
             )
         },
         onClick = {
@@ -159,7 +173,13 @@ internal fun AddOrEditAccountScreenUI(
                         selectedItemIndex = uiState.selectedAccountTypeIndex,
                     ),
                     events = MyRadioGroupEvents(
-                        onSelectionChange = events.updateSelectedAccountTypeIndex,
+                        onSelectionChange = { updatedIndex ->
+                            handleUIEvents(
+                                AddOrEditAccountScreenUIEvent.UpdateSelectedAccountTypeIndex(
+                                    updatedIndex = updatedIndex,
+                                )
+                            )
+                        },
                     ),
                 )
             }
@@ -220,8 +240,16 @@ internal fun AddOrEditAccountScreenUI(
                         ),
                     ),
                     events = MyOutlinedTextFieldEvents(
-                        onClickTrailingIcon = events.clearName,
-                        onValueChange = events.updateName,
+                        onClickTrailingIcon = {
+                            handleUIEvents(AddOrEditAccountScreenUIEvent.ClearName)
+                        },
+                        onValueChange = { updatedName ->
+                            handleUIEvents(
+                                AddOrEditAccountScreenUIEvent.UpdateName(
+                                    updatedName = updatedName,
+                                )
+                            )
+                        },
                     ),
                 )
             }
@@ -258,8 +286,16 @@ internal fun AddOrEditAccountScreenUI(
                         ),
                     ),
                     events = MyOutlinedTextFieldEvents(
-                        onClickTrailingIcon = events.clearBalanceAmountValue,
-                        onValueChange = events.updateBalanceAmountValue,
+                        onClickTrailingIcon = {
+                            handleUIEvents(AddOrEditAccountScreenUIEvent.ClearBalanceAmountValue)
+                        },
+                        onValueChange = { updatedBalanceAmountValue ->
+                            handleUIEvents(
+                                AddOrEditAccountScreenUIEvent.UpdateBalanceAmountValue(
+                                    updatedBalanceAmountValue = updatedBalanceAmountValue,
+                                )
+                            )
+                        },
                     ),
                 )
             }
@@ -288,8 +324,16 @@ internal fun AddOrEditAccountScreenUI(
                         ),
                     ),
                     events = MyOutlinedTextFieldEvents(
-                        onClickTrailingIcon = events.clearMinimumAccountBalanceAmountValue,
-                        onValueChange = events.updateMinimumAccountBalanceAmountValue,
+                        onClickTrailingIcon = {
+                            handleUIEvents(AddOrEditAccountScreenUIEvent.ClearMinimumAccountBalanceAmountValue)
+                        },
+                        onValueChange = { updatedMinimumAccountBalanceAmountValue ->
+                            handleUIEvents(
+                                AddOrEditAccountScreenUIEvent.UpdateMinimumAccountBalanceAmountValue(
+                                    updatedMinimumAccountBalanceAmountValue = updatedMinimumAccountBalanceAmountValue,
+                                )
+                            )
+                        },
                     ),
                 )
             }
@@ -304,7 +348,9 @@ internal fun AddOrEditAccountScreenUI(
                     textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
                 ),
                 events = SaveButtonEvents(
-                    onClick = events.onCtaButtonClick,
+                    onClick = {
+                        handleUIEvents(AddOrEditAccountScreenUIEvent.OnCtaButtonClick)
+                    },
                 ),
             )
         }

@@ -52,28 +52,41 @@ data class CategoriesScreenUIData(
 )
 
 @Immutable
-internal data class CategoriesScreenUIEvents(
-    val deleteCategory: (categoryId: Int) -> Unit,
-    val navigateToAddCategoryScreen: (transactionType: String) -> Unit,
-    val navigateToEditCategoryScreen: (categoryId: Int) -> Unit,
-    val navigateUp: () -> Unit,
-    val setDefaultCategoryIdInDataStore: (
-        defaultCategoryId: Int,
-        transactionType: TransactionType,
-    ) -> Unit,
-    val updateSelectedTabIndex: (updatedSelectedTabIndex: Int) -> Unit,
-)
+sealed class CategoriesScreenUIEvent {
+    object NavigateUp : CategoriesScreenUIEvent()
+
+    data class DeleteCategory(
+        val categoryId: Int,
+    ) : CategoriesScreenUIEvent()
+
+    data class NavigateToAddCategoryScreen(
+        val transactionType: String,
+    ) : CategoriesScreenUIEvent()
+
+    data class NavigateToEditCategoryScreen(
+        val categoryId: Int,
+    ) : CategoriesScreenUIEvent()
+
+    data class SetDefaultCategoryIdInDataStore(
+        val defaultCategoryId: Int,
+        val transactionType: TransactionType,
+    ) : CategoriesScreenUIEvent()
+
+    data class UpdateSelectedTabIndex(
+        val updatedSelectedTabIndex: Int,
+    ) : CategoriesScreenUIEvent()
+}
 
 @Composable
 internal fun CategoriesScreenUI(
-    events: CategoriesScreenUIEvents,
     uiState: CategoriesScreenUIState,
     state: CommonScreenUIState,
+    handleUIEvents: (uiEvent: CategoriesScreenUIEvent) -> Unit,
 ) {
     LaunchedEffect(
         key1 = uiState.pagerState.currentPage,
     ) {
-        events.updateSelectedTabIndex(uiState.pagerState.currentPage)
+        handleUIEvents(CategoriesScreenUIEvent.UpdateSelectedTabIndex(uiState.pagerState.currentPage))
     }
 
     LaunchedEffect(
@@ -102,7 +115,11 @@ internal fun CategoriesScreenUI(
                     CategoriesDeleteConfirmationBottomSheet(
                         deleteCategory = {
                             uiState.categoryIdToDelete?.let { categoryIdToDeleteValue ->
-                                events.deleteCategory(categoryIdToDeleteValue)
+                                handleUIEvents(
+                                    CategoriesScreenUIEvent.DeleteCategory(
+                                        categoryId = categoryIdToDeleteValue,
+                                    )
+                                )
                             }
                         },
                         resetBottomSheetType = uiState.resetBottomSheetType,
@@ -124,9 +141,11 @@ internal fun CategoriesScreenUI(
                         },
                     ) {
                         uiState.clickedItemId?.let { clickedItemIdValue ->
-                            events.setDefaultCategoryIdInDataStore(
-                                clickedItemIdValue,
-                                uiState.validTransactionTypes[uiState.selectedTabIndex],
+                            handleUIEvents(
+                                CategoriesScreenUIEvent.SetDefaultCategoryIdInDataStore(
+                                    defaultCategoryId = clickedItemIdValue,
+                                    transactionType = uiState.validTransactionTypes[uiState.selectedTabIndex],
+                                )
                             )
                         }
                     }
@@ -146,7 +165,11 @@ internal fun CategoriesScreenUI(
                         },
                         onEditClick = {
                             uiState.resetBottomSheetType()
-                            events.navigateToEditCategoryScreen(bottomSheetData.categoryId)
+                            handleUIEvents(
+                                CategoriesScreenUIEvent.NavigateToEditCategoryScreen(
+                                    categoryId = bottomSheetData.categoryId,
+                                )
+                            )
                         },
                         onSetAsDefaultClick = {
                             uiState.setClickedItemId(bottomSheetData.categoryId)
@@ -160,7 +183,9 @@ internal fun CategoriesScreenUI(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_categories_appbar_title,
-                navigationAction = events.navigateUp,
+                navigationAction = {
+                    handleUIEvents(CategoriesScreenUIEvent.NavigateUp)
+                },
             )
         },
         floatingActionButton = {
@@ -172,20 +197,22 @@ internal fun CategoriesScreenUI(
                     id = R.string.screen_categories_floating_action_button_content_description,
                 ),
                 onClick = {
-                    events.navigateToAddCategoryScreen(
-                        when (uiState.selectedTabIndex) {
-                            0 -> {
-                                TransactionType.EXPENSE.title
-                            }
+                    handleUIEvents(
+                        CategoriesScreenUIEvent.NavigateToAddCategoryScreen(
+                            transactionType = when (uiState.selectedTabIndex) {
+                                0 -> {
+                                    TransactionType.EXPENSE.title
+                                }
 
-                            1 -> {
-                                TransactionType.INCOME.title
-                            }
+                                1 -> {
+                                    TransactionType.INCOME.title
+                                }
 
-                            else -> {
-                                TransactionType.INVESTMENT.title
-                            }
-                        }
+                                else -> {
+                                    TransactionType.INVESTMENT.title
+                                }
+                            },
+                        )
                     )
                 },
             )
@@ -205,7 +232,13 @@ internal fun CategoriesScreenUI(
         ) {
             MyTabRow(
                 selectedTabIndex = uiState.selectedTabIndex,
-                updateSelectedTabIndex = events.updateSelectedTabIndex,
+                updateSelectedTabIndex = { updatedSelectedTabIndex ->
+                    handleUIEvents(
+                        CategoriesScreenUIEvent.UpdateSelectedTabIndex(
+                            updatedSelectedTabIndex = updatedSelectedTabIndex,
+                        )
+                    )
+                },
                 tabData = uiState.tabData,
             )
             HorizontalPager(

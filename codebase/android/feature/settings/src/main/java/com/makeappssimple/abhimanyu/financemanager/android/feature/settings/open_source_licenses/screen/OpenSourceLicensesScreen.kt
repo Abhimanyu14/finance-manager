@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.ope
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
@@ -13,19 +14,33 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open
 fun OpenSourceLicensesScreen(
     screenViewModel: OpenSourceLicensesScreenViewModel = hiltViewModel<OpenSourceLicensesScreenViewModelImpl>(),
 ) {
-    screenViewModel.myLogger.logError(
+    val viewModel = remember {
+        screenViewModel
+    }
+    viewModel.myLogger.logError(
         message = "Inside OpenSourceLicensesScreen",
     )
 
-    val screenUIData: MyResult<OpenSourceLicensesScreenUIData>? by screenViewModel.screenUIData.collectAsStateWithLifecycle()
+    val screenUIData: MyResult<OpenSourceLicensesScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    val handleUIEvents = remember(
+        key1 = viewModel,
+    ) {
+        { uiEvent: OpenSourceLicensesScreenUIEvent ->
+            when (uiEvent) {
+                else -> {
+                    viewModel.handleUIEvents(
+                        uiEvent = uiEvent,
+                    )
+                }
+            }
+        }
+    }
 
     OpenSourceLicensesScreenUI(
-        events = OpenSourceLicensesScreenUIEvents(
-            navigateUp = screenViewModel::navigateUp,
-        ),
         uiState = rememberOpenSourceLicensesScreenUIState(
             data = screenUIData,
         ),
         state = rememberCommonScreenUIState(),
+        handleUIEvents = handleUIEvents,
     )
 }

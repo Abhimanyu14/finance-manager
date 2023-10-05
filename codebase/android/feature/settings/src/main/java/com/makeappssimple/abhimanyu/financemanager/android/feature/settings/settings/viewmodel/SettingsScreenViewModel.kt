@@ -5,6 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIEvent
 import kotlinx.coroutines.flow.StateFlow
 
 interface SettingsScreenViewModel : ScreenViewModel {
@@ -19,15 +20,9 @@ interface SettingsScreenViewModel : ScreenViewModel {
 
     fun enableReminder()
 
-    fun navigateToCategoriesScreen()
-
-    fun navigateToAccountsScreen()
-
-    fun navigateToOpenSourceLicensesScreen()
-
-    fun navigateToTransactionForValuesScreen()
-
-    fun navigateUp()
+    fun handleUIEvents(
+        uiEvent: SettingsScreenUIEvent,
+    )
 
     fun restoreDataFromDocument(
         uri: Uri,

@@ -44,19 +44,28 @@ data class AccountsScreenUIData(
 )
 
 @Immutable
-internal data class AccountsScreenUIEvents(
-    val deleteAccount: (accountId: Int) -> Unit,
-    val navigateToAddAccountScreen: () -> Unit,
-    val navigateToEditAccountScreen: (accountId: Int) -> Unit,
-    val navigateUp: () -> Unit,
-    val setDefaultAccountIdInDataStore: (defaultAccountId: Int) -> Unit,
-)
+sealed class AccountsScreenUIEvent {
+    object NavigateToAddAccountScreen : AccountsScreenUIEvent()
+    object NavigateUp : AccountsScreenUIEvent()
+
+    data class DeleteAccount(
+        val accountId: Int,
+    ) : AccountsScreenUIEvent()
+
+    data class NavigateToEditAccountScreen(
+        val accountId: Int,
+    ) : AccountsScreenUIEvent()
+
+    data class SetDefaultAccountIdInDataStore(
+        val defaultAccountId: Int,
+    ) : AccountsScreenUIEvent()
+}
 
 @Composable
 internal fun AccountsScreenUI(
-    events: AccountsScreenUIEvents,
     uiState: AccountsScreenUIState,
     state: CommonScreenUIState,
+    handleUIEvents: (uiEvent: AccountsScreenUIEvent) -> Unit,
 ) {
     BottomSheetHandler(
         showModalBottomSheet = uiState.accountsBottomSheetType != AccountsBottomSheetType.NONE,
@@ -84,7 +93,11 @@ internal fun AccountsScreenUI(
                         },
                     ) {
                         uiState.accountIdToDelete?.let { accountId ->
-                            events.deleteAccount(accountId)
+                            handleUIEvents(
+                                AccountsScreenUIEvent.DeleteAccount(
+                                    accountId = accountId,
+                                )
+                            )
                         }
                     }
                 }
@@ -102,7 +115,11 @@ internal fun AccountsScreenUI(
                         },
                     ) {
                         uiState.clickedItemId?.let { clickedItemIdValue ->
-                            events.setDefaultAccountIdInDataStore(clickedItemIdValue)
+                            handleUIEvents(
+                                AccountsScreenUIEvent.SetDefaultAccountIdInDataStore(
+                                    defaultAccountId = clickedItemIdValue,
+                                )
+                            )
                         }
                     }
                 }
@@ -112,7 +129,9 @@ internal fun AccountsScreenUI(
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_accounts_appbar_title,
-                navigationAction = events.navigateUp,
+                navigationAction = {
+                    handleUIEvents(AccountsScreenUIEvent.NavigateUp)
+                },
             )
         },
         floatingActionButton = {
@@ -123,7 +142,9 @@ internal fun AccountsScreenUI(
                 contentDescription = stringResource(
                     id = R.string.screen_accounts_floating_action_button_content_description,
                 ),
-                onClick = events.navigateToAddAccountScreen,
+                onClick = {
+                    handleUIEvents(AccountsScreenUIEvent.NavigateToAddAccountScreen)
+                },
             )
         },
         onClick = {
@@ -178,7 +199,11 @@ internal fun AccountsScreenUI(
                         },
                         onEditClick = {
                             listItem.accountId?.let {
-                                events.navigateToEditAccountScreen(listItem.accountId)
+                                handleUIEvents(
+                                    AccountsScreenUIEvent.NavigateToEditAccountScreen(
+                                        accountId = listItem.accountId,
+                                    )
+                                )
                             }
                             uiState.setExpandedItemIndex(null)
                         },

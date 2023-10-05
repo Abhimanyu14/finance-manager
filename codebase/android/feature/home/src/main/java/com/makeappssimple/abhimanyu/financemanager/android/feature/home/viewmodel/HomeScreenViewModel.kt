@@ -4,8 +4,8 @@ import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardAction
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen.HomeScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen.HomeScreenUIEvent
 import kotlinx.coroutines.flow.StateFlow
 
 interface HomeScreenViewModel : ScreenViewModel {
@@ -16,21 +16,7 @@ interface HomeScreenViewModel : ScreenViewModel {
         uri: Uri,
     )
 
-    fun handleOverviewCardAction(
-        overviewCardAction: OverviewCardAction,
-    )
-
-    fun navigateToAnalysisScreen()
-
-    fun navigateToAddTransactionScreen()
-
-    fun navigateToSettingsScreen()
-
-    fun navigateToAccountsScreen()
-
-    fun navigateToTransactionsScreen()
-
-    fun setOverviewTabSelectionIndex(
-        updatedOverviewTabSelectionIndex: Int,
+    fun handleUIEvents(
+        uiEvent: HomeScreenUIEvent,
     )
 }

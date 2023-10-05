@@ -4,11 +4,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.screen.OpenSourceLicensesScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.screen.OpenSourceLicensesScreenUIEvent
 import kotlinx.coroutines.flow.StateFlow
 
 interface OpenSourceLicensesScreenViewModel : ScreenViewModel {
     val myLogger: MyLogger
     val screenUIData: StateFlow<MyResult<OpenSourceLicensesScreenUIData>?>
 
-    fun navigateUp()
+    fun handleUIEvents(
+        uiEvent: OpenSourceLicensesScreenUIEvent,
+    )
 }
