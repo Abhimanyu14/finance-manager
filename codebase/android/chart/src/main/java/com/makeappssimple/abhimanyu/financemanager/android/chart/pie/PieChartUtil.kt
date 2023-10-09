@@ -6,6 +6,6 @@ internal object PieChartUtil {
         totalLength: Float,
         progress: Float,
     ): Float {
-        return 360.0f * (sliceLength * progress) / totalLength
+        return 360.0F * (sliceLength * progress) / totalLength
     }
 }

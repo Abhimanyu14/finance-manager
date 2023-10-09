@@ -23,7 +23,7 @@ fun PieChart(
     animation: AnimationSpec<Float> = simpleChartAnimation(),
     sliceDrawer: SliceDrawer = SimpleSliceDrawer(),
 ) {
-    val transitionProgress = remember(pieChartData.items) { Animatable(initialValue = 0f) }
+    val transitionProgress = remember(pieChartData.items) { Animatable(initialValue = 0F) }
 
     // When slices value changes we want to re-animated the chart.
     LaunchedEffect(
@@ -55,7 +55,7 @@ private fun DrawChart(
 
     Canvas(modifier = modifier) {
         drawIntoCanvas {
-            var startArc = 0f
+            var startArc = 0F
 
             slices.forEach { slice ->
                 val arc = calculateAngle(

@@ -55,7 +55,9 @@ fun MyReadOnlyTextField(
             Box(
                 modifier = Modifier
                     .matchParentSize()
-                    .alpha(0f)
+                    .alpha(
+                        alpha = 0F,
+                    )
                     .conditionalClickable(
                         onClick = events.onClick,
                     ),

@@ -10,7 +10,7 @@ import kotlin.math.sqrt
 import kotlin.math.tan
 
 private const val DEG2RAD = Math.PI / 180.0
-internal const val FDEG2RAD = Math.PI.toFloat() / 180f
+internal const val FDEG2RAD = Math.PI.toFloat() / 180F
 internal val FLOAT_EPSILON = Float.fromBits(1)
 
 internal fun PieChartData.createLegendEntries(): List<PieChartLegendItemData> {

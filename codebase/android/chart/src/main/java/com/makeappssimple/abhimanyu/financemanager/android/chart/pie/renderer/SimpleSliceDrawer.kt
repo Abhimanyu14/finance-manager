@@ -10,7 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.chart.pie.PieChartIte
 
 class SimpleSliceDrawer(private val sliceThickness: Float = 25f) : SliceDrawer {
     init {
-        require(sliceThickness in 10f..100f) {
+        require(sliceThickness in 10F..100F) {
             "Thickness of $sliceThickness must be between 10-100"
         }
     }
@@ -46,7 +46,7 @@ class SimpleSliceDrawer(private val sliceThickness: Float = 25f) : SliceDrawer {
     private fun calculateSectorThickness(area: Size): Float {
         val minSize = minOf(area.width, area.height)
 
-        return minSize * (sliceThickness / 200f)
+        return minSize * (sliceThickness / 200F)
     }
 
     private fun calculateDrawableArea(area: Size): Rect {
