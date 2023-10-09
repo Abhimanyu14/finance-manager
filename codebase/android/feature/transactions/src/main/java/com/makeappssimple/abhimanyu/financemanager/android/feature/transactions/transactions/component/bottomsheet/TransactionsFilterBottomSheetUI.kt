@@ -34,7 +34,7 @@ import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.addIfDoesNotContainItemElseRemove
@@ -461,9 +461,9 @@ private fun TransactionFilterBottomSheetFilterGroup(
                         tint = MaterialTheme.colorScheme.onBackground,
                         contentDescription = null,
                         modifier = Modifier
-                            .rotate(
-                                degrees = chevronDegrees,
-                            ),
+                            .graphicsLayer {
+                                rotationZ = chevronDegrees
+                            },
                     )
                 }
                 MyText(
@@ -613,9 +613,9 @@ fun TransactionFilterBottomSheetDateFilter(
                         tint = MaterialTheme.colorScheme.onBackground,
                         contentDescription = null,
                         modifier = Modifier
-                            .rotate(
-                                degrees = chevronDegrees,
-                            ),
+                            .graphicsLayer {
+                                rotationZ = chevronDegrees
+                            },
                     )
                 }
                 MyText(
