@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog
 
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
@@ -48,6 +50,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chi
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewTab
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewTabData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewTabEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewTabOption
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupEvents
@@ -146,10 +152,13 @@ private fun LazyListScope.componentsTabContent(
     context: Context,
     titleStyle: TextStyle,
 ) {
-    totalBalanceCardDemo(
+    overviewTabDemo(
         titleStyle = titleStyle,
     )
     overviewCardDemo(
+        titleStyle = titleStyle,
+    )
+    totalBalanceCardDemo(
         titleStyle = titleStyle,
     )
     selectionGroupDemo(
@@ -399,6 +408,57 @@ private fun LazyListScope.overviewCardDemo(
             OverviewCard(
                 data = OverviewCardData(
                     isLoading = true,
+                ),
+            )
+        }
+    }
+}
+
+private fun LazyListScope.overviewTabDemo(
+    titleStyle: TextStyle,
+) {
+    item {
+        MyText(
+            modifier = Modifier
+                .padding(
+                    top = 16.dp,
+                ),
+            text = "Overview Tab",
+            style = titleStyle,
+        )
+    }
+    item {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(
+                space = 8.dp,
+            ),
+            modifier = Modifier
+                .clip(
+                    shape = MaterialTheme.shapes.medium,
+                )
+                .background(
+                    color = MaterialTheme.colorScheme.primaryContainer,
+                )
+                .padding(
+                    all = 16.dp,
+                ),
+        ) {
+            var selectedIndex by remember {
+                mutableIntStateOf(0)
+            }
+            OverviewTab(
+                data = OverviewTabData(
+                    items = OverviewTabOption.values()
+                        .map {
+                            it.title
+                        },
+                    selectedItemIndex = selectedIndex,
+                ),
+                events = OverviewTabEvents(
+                    onClick = {
+                        selectedIndex = it
+                    },
                 ),
             )
         }
