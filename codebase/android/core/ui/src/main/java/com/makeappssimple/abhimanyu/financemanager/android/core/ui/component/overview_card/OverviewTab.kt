@@ -17,31 +17,37 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.text.BasicText
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.CompositingStrategy
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
+import androidx.compose.ui.unit.max
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
 
-private val overviewMinimumTabWidth = 64.dp
+private val overviewTabMinimumWidth = 64.dp
+private val overviewTextHorizontalPadding = 12.dp
+private val overviewTextVerticalPadding = 8.dp
 
 @Immutable
 data class OverviewTabData(
@@ -60,57 +66,7 @@ fun OverviewTab(
     data: OverviewTabData,
     events: OverviewTabEvents = OverviewTabEvents(),
 ) {
-    val density = LocalDensity.current
-    val tabWidths = remember {
-        mutableStateListOf<Dp>()
-    }
-    val indicatorWidthTargetValue = remember(
-        key1 = data.selectedItemIndex,
-    ) {
-        tabWidths.getOrElse(
-            index = data.selectedItemIndex,
-        ) {
-            overviewMinimumTabWidth
-        }
-    }
-    val indicatorOffsetTargetValue = remember(
-        key1 = tabWidths,
-        key2 = data.selectedItemIndex,
-    ) {
-        tabWidths.take(
-            n = data.selectedItemIndex,
-        ).fold(
-            initial = 0.dp,
-        ) { accumulator, result ->
-            accumulator + result
-        }
-    }
-    val indicatorWidth: Dp by animateDpAsState(
-        targetValue = tabWidths.getOrElse(
-            index = data.selectedItemIndex,
-        ) {
-            64.dp
-        },
-        animationSpec = tween(
-            durationMillis = 300,
-            easing = LinearEasing,
-        ),
-        label = "",
-    )
-    val indicatorOffset: Dp by animateDpAsState(
-        targetValue = tabWidths.take(
-            n = data.selectedItemIndex,
-        ).fold(
-            initial = 0.dp,
-        ) { accumulator, result ->
-            accumulator + result
-        },
-        animationSpec = tween(
-            durationMillis = 300,
-            easing = LinearEasing,
-        ),
-        label = "",
-    )
+    val textStyle = MaterialTheme.typography.labelLarge
 
     Box(
         modifier = modifier
@@ -125,8 +81,8 @@ fun OverviewTab(
             ),
     ) {
         OverviewTabIndicator(
-            indicatorWidth = indicatorWidth,
-            indicatorOffset = indicatorOffset,
+            data = data,
+            textStyle = textStyle,
         )
         Row(
             horizontalArrangement = Arrangement.Center,
@@ -136,50 +92,13 @@ fun OverviewTab(
                 ),
         ) {
             data.items.mapIndexed { index, text ->
-                val isSelected = index == data.selectedItemIndex
-                val tabTextColor: Color by animateColorAsState(
-                    targetValue = if (isSelected) {
-                        MaterialTheme.colorScheme.onPrimary
-                    } else {
-                        MaterialTheme.colorScheme.onBackground
-                    },
-                    animationSpec = tween(
-                        easing = LinearEasing,
-                    ),
-                    label = "",
-                )
-                MyText(
-                    modifier = Modifier
-                        .onGloballyPositioned {
-                            if (tabWidths.size < data.items.size) {
-                                tabWidths.add(index, density.run { it.size.width.toDp() })
-                            }
-                        }
-                        .widthIn(
-                            min = 64.dp,
-                        )
-                        .clip(
-                            shape = CircleShape,
-                        )
-                        .clickable(
-                            interactionSource = remember {
-                                MutableInteractionSource()
-                            },
-                            indication = null,
-                            onClick = {
-                                events.onClick(index)
-                            },
-                        )
-                        .padding(
-                            horizontal = 12.dp,
-                            vertical = 8.dp,
-                        ),
+                OverviewTabText(
                     text = text,
-                    style = MaterialTheme.typography.labelLarge
-                        .copy(
-                            color = tabTextColor,
-                            textAlign = TextAlign.Center,
-                        ),
+                    textStyle = textStyle,
+                    isSelected = index == data.selectedItemIndex,
+                    onClick = {
+                        events.onClick(index)
+                    },
                 )
             }
         }
@@ -187,31 +106,144 @@ fun OverviewTab(
 }
 
 @Composable
+fun OverviewTabText(
+    text: String,
+    textStyle: TextStyle,
+    isSelected: Boolean,
+    onClick: () -> Unit,
+) {
+    val defaultTextColor = MaterialTheme.colorScheme.onBackground
+    val selectedTextColor = MaterialTheme.colorScheme.onPrimary
+    val targetValue = remember(isSelected) {
+        if (isSelected) {
+            selectedTextColor
+        } else {
+            defaultTextColor
+        }
+    }
+
+    val tabTextColor by animateColorAsState(
+        targetValue = targetValue,
+        animationSpec = tween(
+            easing = LinearEasing,
+        ),
+        label = "tab_text_color",
+    )
+
+    BasicText(
+        modifier = Modifier
+            .widthIn(
+                min = overviewTabMinimumWidth,
+            )
+            .clip(
+                shape = CircleShape,
+            )
+            .clickable(
+                interactionSource = remember {
+                    MutableInteractionSource()
+                },
+                indication = null,
+                onClick = onClick,
+            )
+            .padding(
+                horizontal = overviewTextHorizontalPadding,
+                vertical = overviewTextVerticalPadding,
+            )
+            .graphicsLayer {
+                compositingStrategy = CompositingStrategy.Offscreen
+            }
+            .drawWithContent {
+                drawContent()
+
+                drawRect(
+                    color = tabTextColor,
+                    blendMode = BlendMode.SrcIn
+                )
+            },
+        text = text,
+        color = { tabTextColor },
+        style = textStyle
+            .copy(
+                textAlign = TextAlign.Center,
+            ),
+    )
+}
+
+@Composable
 private fun OverviewTabIndicator(
-    indicatorWidth: Dp,
-    indicatorOffset: Dp,
+    data: OverviewTabData,
+    textStyle: TextStyle,
 ) {
     val density = LocalDensity.current
-    val color = MaterialTheme.colorScheme.primary
-    val indicatorWidthInPx = with(density) {
-        indicatorWidth.toPx()
+    val textMeasurer = rememberTextMeasurer()
+    val indicatorColor = MaterialTheme.colorScheme.primary
+
+    val tabWidths = remember(
+        key1 = data.items,
+    ) {
+        data.items.map {
+            with(density) {
+                max(
+                    a = overviewTabMinimumWidth,
+                    b = textMeasurer.measure(
+                        text = it,
+                        style = textStyle,
+                    ).size.width.toDp() + (overviewTextHorizontalPadding * 2)
+                )
+            }
+        }
     }
-    val indicatorOffsetInPx = with(density) {
-        indicatorOffset.toPx()
+    val indicatorOffsetTargetMap = remember(
+        key1 = data.items,
+    ) {
+        var offsetSum = 0.dp
+        val map = mutableMapOf<Int, Dp>()
+        tabWidths.forEachIndexed { index, dp ->
+            map[index] = offsetSum
+            offsetSum += dp
+        }
+        map
     }
+    val indicatorWidth: Dp by animateDpAsState(
+        targetValue = tabWidths.getOrElse(
+            index = data.selectedItemIndex,
+        ) {
+            64.dp
+        },
+        animationSpec = tween(
+            durationMillis = 300,
+            easing = LinearEasing,
+        ),
+        label = "tab_indicator_width",
+    )
+    val indicatorOffset: Dp by animateDpAsState(
+        targetValue = indicatorOffsetTargetMap.getOrDefault(
+            key = data.selectedItemIndex,
+            defaultValue = overviewTabMinimumWidth,
+        ),
+        animationSpec = tween(
+            durationMillis = 300,
+            easing = LinearEasing,
+        ),
+        label = "tab_indicator_offset",
+    )
 
     Box(
         modifier = Modifier
             .fillMaxHeight()
             .drawBehind {
                 drawRoundRect(
-                    color = color,
+                    color = indicatorColor,
                     topLeft = Offset(
-                        x = indicatorOffsetInPx,
+                        x = with(density) {
+                            indicatorOffset.toPx()
+                        },
                         y = 0F,
                     ),
                     size = size.copy(
-                        width = indicatorWidthInPx,
+                        width = with(density) {
+                            indicatorWidth.toPx()
+                        },
                     ),
                     cornerRadius = CornerRadius(
                         x = size.height / 2,
