@@ -14,6 +14,7 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
 
 @Immutable
 internal data class TransactionForValuesMenuBottomSheetItemData(
@@ -32,7 +33,7 @@ internal fun TransactionForValuesMenuBottomSheetUI(
                 top = 16.dp,
             )
             .defaultMinSize(
-                minHeight = 24.dp,
+                minHeight = minimumBottomSheetHeight,
             ),
     ) {
         items(

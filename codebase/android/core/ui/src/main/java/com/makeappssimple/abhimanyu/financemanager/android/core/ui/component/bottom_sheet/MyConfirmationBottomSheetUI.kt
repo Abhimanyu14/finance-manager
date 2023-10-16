@@ -15,6 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
 
 @Composable
 fun MyConfirmationBottomSheetUI(
@@ -33,7 +34,7 @@ fun MyConfirmationBottomSheetUI(
                 top = 16.dp,
             )
             .defaultMinSize(
-                minHeight = 24.dp,
+                minHeight = minimumBottomSheetHeight,
             ),
     ) {
         MyText(

@@ -5,13 +5,13 @@ import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.MyBottomSheetTitle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid.CategoriesGrid
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid_item.CategoriesGridItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
 
 @Immutable
 internal data class SelectCategoryBottomSheetItemData(
@@ -28,7 +28,7 @@ internal fun SelectCategoryBottomSheetUI(
     Column(
         modifier = modifier
             .defaultMinSize(
-                minHeight = 24.dp,
+                minHeight = minimumBottomSheetHeight,
             ),
     ) {
         MyBottomSheetTitle(

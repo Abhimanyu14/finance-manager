@@ -57,6 +57,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextFieldEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.Filter
 import java.time.LocalDate
@@ -276,7 +277,7 @@ internal fun TransactionsFiltersBottomSheetUI(
             .fillMaxSize()
             .statusBarSpacer()
             .defaultMinSize(
-                minHeight = 24.dp,
+                minHeight = minimumBottomSheetHeight,
             ),
     ) {
         LazyColumn(

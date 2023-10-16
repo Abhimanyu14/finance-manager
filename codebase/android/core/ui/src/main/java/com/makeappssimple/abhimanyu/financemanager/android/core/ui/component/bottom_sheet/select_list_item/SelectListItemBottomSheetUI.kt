@@ -6,9 +6,9 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.MyBottomSheetTitle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
 
 @Immutable
 internal data class SelectListItemBottomSheetUIData(
@@ -24,7 +24,7 @@ internal fun SelectListItemBottomSheetUI(
     LazyColumn(
         modifier = modifier
             .defaultMinSize(
-                minHeight = 24.dp,
+                minHeight = minimumBottomSheetHeight,
             ),
     ) {
         stickyHeader {

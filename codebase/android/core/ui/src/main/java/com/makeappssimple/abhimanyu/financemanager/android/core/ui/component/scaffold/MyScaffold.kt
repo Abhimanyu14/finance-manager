@@ -30,6 +30,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
 import kotlinx.coroutines.CoroutineScope
 
+private val topAppBarHeight = 64.dp
+
 @Composable
 fun MyScaffold(
     modifier: Modifier = Modifier,
@@ -103,7 +105,6 @@ fun MyScaffold(
             windowInsets = WindowInsets(0),
         ) {
             val screenHeight = LocalConfiguration.current.screenHeightDp.dp
-            val topAppBarHeight = 64.dp
             val navigationBarsHeight =
                 WindowInsets.navigationBars.asPaddingValues().calculateBottomPadding()
 

@@ -40,6 +40,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tra
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.component.recenttransactions.HomeRecentTransactionsUI
 
+private val bottomContentPadding = 80.dp
+
 enum class HomeBottomSheetType : BottomSheetType {
     NONE,
 }
@@ -133,7 +135,7 @@ internal fun HomeScreenUI(
             modifier = Modifier
                 .navigationBarLandscapeSpacer(),
             contentPadding = PaddingValues(
-                bottom = 80.dp,
+                bottom = bottomContentPadding,
             ),
         ) {
             item {
