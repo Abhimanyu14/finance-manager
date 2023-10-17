@@ -50,8 +50,8 @@ mockito-kotlin = "4.0.0"
 kotlinx-coroutines-test = "1.7.3"
 core-testing = "2.2.0"
 turbine = "1.0.0"
-hilt-android-testing = "2.44.2"
-hilt-android-compiler = "2.44.2"
+hilt-android-testing = "2.47"
+hilt-android-compiler = "2.47"
 
 #plugins
 plugin-kotlin-android = "1.8.10"
