@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase
 
 import android.net.Uri
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.MyJsonReader
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.BackupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
@@ -27,81 +26,64 @@ class RestoreDataUseCaseImpl(
     override suspend operator fun invoke(
         uri: Uri,
     ) {
-        myPreferencesRepository.setLastDataChangeTimestamp()
-        myPreferencesRepository.setLastDataBackupTimestamp()
+        // TODO(Abhi): Return Error to show when restore fails
         val jsonString = myJsonReader.readJsonFromFile(
             uri = uri,
         ) ?: return
         val backupData = Json.decodeFromString<BackupData>(
             string = jsonString,
         )
-
-        val categories = if (backupData.databaseData.isNull()) {
-            backupData.categories.orEmpty()
-        } else {
-            backupData.databaseData.categories
-        }
+        // TODO(Abhi): Return Error to show when restore fails
+        val databaseData = backupData.databaseData ?: return
         val accounts = sanitizeAccounts(
-            accounts = if (backupData.databaseData.isNull()) {
-                backupData.accounts.orEmpty()
-            } else {
-                backupData.databaseData.accounts
-            }.map {
+            accounts = databaseData.accounts.map {
                 it.asEntity()
             },
         ).map {
             it.asExternalModel()
         }
         val transactions = sanitizeTransactions(
-            transactions = if (backupData.databaseData.isNull()) {
-                backupData.transactions.orEmpty()
-            } else {
-                backupData.databaseData.transactions
-            }.map {
+            transactions = databaseData.transactions.map {
                 it.asEntity()
             },
         ).map {
             it.asExternalModel()
         }
-        val transactionForValues = if (backupData.databaseData.isNull()) {
-            backupData.transactionForValues.orEmpty()
-        } else {
-            backupData.databaseData.transactionForValues
-        }
-
         transactionRepository.restoreData(
-            categories = categories,
+            categories = databaseData.categories,
             accounts = accounts,
             transactions = transactions,
-            transactionForValues = transactionForValues,
+            transactionForValues = databaseData.transactionForValues,
         )
 
-        backupData.datastoreData?.let {
-            with(
-                receiver = myPreferencesRepository,
-            ) {
-                setCategoryDataVersionNumber(
-                    categoryDataVersionNumber = it.initialDataVersionNumber.category,
-                )
-                setDefaultExpenseCategoryId(
-                    defaultExpenseCategoryId = it.defaultDataId.expenseCategory,
-                )
-                setDefaultIncomeCategoryId(
-                    defaultIncomeCategoryId = it.defaultDataId.incomeCategory,
-                )
-                setDefaultInvestmentCategoryId(
-                    defaultInvestmentCategoryId = it.defaultDataId.investmentCategory,
-                )
-                setDefaultAccountId(
-                    defaultAccountId = it.defaultDataId.account,
-                )
-                setIsReminderEnabled(
-                    isReminderEnabled = it.reminder.isEnabled,
-                )
-                setTransactionsDataVersionNumber(
-                    transactionsDataVersionNumber = it.initialDataVersionNumber.transaction,
-                )
-            }
+        // TODO(Abhi): Return Error to show when restore fails
+        val datastoreData = backupData.datastoreData ?: return
+        with(
+            receiver = myPreferencesRepository,
+        ) {
+            setCategoryDataVersionNumber(
+                categoryDataVersionNumber = datastoreData.initialDataVersionNumber.category,
+            )
+            setDefaultExpenseCategoryId(
+                defaultExpenseCategoryId = datastoreData.defaultDataId.expenseCategory,
+            )
+            setDefaultIncomeCategoryId(
+                defaultIncomeCategoryId = datastoreData.defaultDataId.incomeCategory,
+            )
+            setDefaultInvestmentCategoryId(
+                defaultInvestmentCategoryId = datastoreData.defaultDataId.investmentCategory,
+            )
+            setDefaultAccountId(
+                defaultAccountId = datastoreData.defaultDataId.account,
+            )
+            setIsReminderEnabled(
+                isReminderEnabled = datastoreData.reminder.isEnabled,
+            )
+            setTransactionsDataVersionNumber(
+                transactionsDataVersionNumber = datastoreData.initialDataVersionNumber.transaction,
+            )
+            setLastDataChangeTimestamp()
+            setLastDataBackupTimestamp()
         }
     }
 }
