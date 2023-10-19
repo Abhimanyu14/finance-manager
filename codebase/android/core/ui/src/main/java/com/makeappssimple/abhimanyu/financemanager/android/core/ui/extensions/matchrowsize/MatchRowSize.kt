@@ -4,6 +4,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.layout
 import androidx.compose.ui.unit.Constraints
 
+/**
+ * Source - https://stackoverflow.com/a/72428903/9636037
+ */
 fun Modifier.matchRowSize(): Modifier {
     return layout { measurable, constraints ->
         if (constraints.maxHeight == Constraints.Infinity) {
