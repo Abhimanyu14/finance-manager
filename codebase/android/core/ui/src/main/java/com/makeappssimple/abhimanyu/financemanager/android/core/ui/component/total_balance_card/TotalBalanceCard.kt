@@ -4,11 +4,11 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material3.Card
@@ -26,6 +26,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.matchrowsize.matchRowSize
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
 
 @Immutable
@@ -98,15 +99,16 @@ fun TotalBalanceCard(
                         ),
                 )
                 Row(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(IntrinsicSize.Min),
                     horizontalArrangement = Arrangement.End,
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
                         modifier = Modifier
-                            .size(
-                                size = 12.dp,
-                            ),
+                            .padding(4.dp)
+                            .matchRowSize(),
                         imageVector = Icons.Rounded.Lock,
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.onTertiary,
