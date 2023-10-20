@@ -426,7 +426,7 @@ private fun TransactionFilterBottomSheetFilterGroup(
         } else {
             0F
         },
-        label = "", // TODO(Abhi): Add label for animation inspection
+        label = "chevron_degrees",
     )
 
     Column(
@@ -538,7 +538,7 @@ fun TransactionFilterBottomSheetDateFilter(
         } else {
             0F
         },
-        label = "", // TODO(Abhi): Add label for animation inspection
+        label = "chevron_degrees",
     )
     var isFromDatePickerDialogVisible by remember {
         mutableStateOf(false)
