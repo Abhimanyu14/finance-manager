@@ -38,6 +38,9 @@ dependencies {
     // Androidx core
     implementation libs.androidx.core
 
+    // Jetpack compose lifecycle runtime
+    implementation libs.androidx.runtime.compose
+
     // Hilt
     implementation libs.hilt.version
     kapt libs.dagger.hilt.compiler

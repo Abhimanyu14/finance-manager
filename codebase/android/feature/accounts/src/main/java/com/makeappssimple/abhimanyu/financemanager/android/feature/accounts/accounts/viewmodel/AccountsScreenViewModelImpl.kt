@@ -13,7 +13,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.use
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.GetAllAccountsFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfAccountIsUsedInTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.orEmpty
@@ -38,7 +37,6 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
     getAllAccountsFlowUseCase: GetAllAccountsFlowUseCase,
     getAccountsTotalBalanceAmountValueUseCase: GetAccountsTotalBalanceAmountValueUseCase,
     getAccountsTotalMinimumBalanceAmountValueUseCase: GetAccountsTotalMinimumBalanceAmountValueUseCase,
-    override val myLogger: MyLogger,
     private val checkIfAccountIsUsedInTransactionsUseCase: CheckIfAccountIsUsedInTransactionsUseCase,
     private val deleteAccountUseCase: DeleteAccountUseCase,
     private val dispatcherProvider: DispatcherProvider,

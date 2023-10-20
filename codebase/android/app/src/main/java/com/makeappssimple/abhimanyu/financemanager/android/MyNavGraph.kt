@@ -6,6 +6,7 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Command
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Screen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.navigation.accountsNavGraph
@@ -20,7 +21,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 internal fun MyNavGraph(
     activityViewModel: MainActivityViewModel,
 ) {
-    activityViewModel.myLogger.logError(
+    val myLogger = LocalMyLogger.current
+    myLogger.logError(
         message = "Inside MyNavGraph",
     )
     val navHostController = rememberNavController()

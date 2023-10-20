@@ -13,7 +13,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RecalculateTotalUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RestoreDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIData
@@ -30,7 +29,6 @@ import javax.inject.Inject
 internal class SettingsScreenViewModelImpl @Inject constructor(
     appVersionUtil: AppVersionUtil,
     myPreferencesRepository: MyPreferencesRepository,
-    override val myLogger: MyLogger,
     private val alarmKit: AlarmKit,
     private val backupDataUseCase: BackupDataUseCase,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,

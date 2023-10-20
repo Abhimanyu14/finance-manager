@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer
 
-import android.util.Log
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -33,9 +32,7 @@ fun Modifier.shimmer(
     backgroundColor: Color? = null,
     shimmerColor: Color? = null,
 ): Modifier {
-    Log.e("Abhi", "shimmer")
     return composed {
-        Log.e("Abhi", "shimmer composed")
         var targetValue by remember {
             mutableFloatStateOf(0F)
         }
@@ -77,7 +74,6 @@ fun rememberShimmerBrush(
     backgroundColor: Color? = MaterialTheme.colorScheme.surfaceVariant,
     shimmerColor: Color? = MaterialTheme.colorScheme.primaryContainer,
 ): State<Brush> {
-    Log.e("Abhi", "shimmerBrush")
     val shimmerColors = listOf(
         (backgroundColor ?: MaterialTheme.colorScheme.surfaceVariant).copy(
             alpha = 0.4F,
