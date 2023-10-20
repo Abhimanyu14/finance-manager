@@ -67,12 +67,12 @@ android {
 }
 
 dependencies {
+    implementation project(":chart")
     implementation project(":core:common")
     implementation project(":core:navigation")
     implementation project(":core:model")
     implementation project(":core:data")
     implementation project(":core:designsystem")
-    implementation project(":chart")
 
     // Androidx core
     implementation libs.androidx.core

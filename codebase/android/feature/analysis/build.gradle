@@ -68,13 +68,12 @@ android {
 
 dependencies {
     implementation project(":core:common")
-    implementation project(":core:navigation")
-    implementation project(":core:model")
     implementation project(":core:data")
     implementation project(":core:designsystem")
     implementation project(":core:logger")
+    implementation project(":core:model")
+    implementation project(":core:navigation")
     implementation project(":core:ui")
-    implementation project(":chart")
 
     testImplementation project(":core:testing")
 
