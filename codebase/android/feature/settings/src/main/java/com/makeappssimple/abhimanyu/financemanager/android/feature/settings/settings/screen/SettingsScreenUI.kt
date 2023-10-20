@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.TextSnippet
 import androidx.compose.material.icons.rounded.AccountBalance
 import androidx.compose.material.icons.rounded.Backup
 import androidx.compose.material.icons.rounded.Calculate
@@ -15,7 +16,6 @@ import androidx.compose.material.icons.rounded.Category
 import androidx.compose.material.icons.rounded.Groups
 import androidx.compose.material.icons.rounded.Notifications
 import androidx.compose.material.icons.rounded.Restore
-import androidx.compose.material.icons.rounded.TextSnippet
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -202,7 +202,7 @@ internal fun SettingsScreenUI(
         SettingsScreenListItemData(
             data = SettingsListItemData(
                 isLoading = uiState.isLoading,
-                imageVector = Icons.Rounded.TextSnippet,
+                imageVector = Icons.AutoMirrored.Rounded.TextSnippet,
                 textStringResourceId = R.string.screen_settings_credits,
             ),
             events = SettingsListItemEvents(
@@ -215,7 +215,7 @@ internal fun SettingsScreenUI(
             data = SettingsListItemData(
                 hasDivider = true,
                 isLoading = uiState.isLoading,
-                imageVector = Icons.Rounded.TextSnippet,
+                imageVector = Icons.AutoMirrored.Rounded.TextSnippet,
                 textStringResourceId = R.string.screen_settings_open_source_licenses,
             ),
             events = SettingsListItemEvents(
