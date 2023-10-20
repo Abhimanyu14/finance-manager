@@ -122,8 +122,14 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
 
     private val transactionTypes: List<TransactionType> = TransactionType.values().toList()
 
-    private var oldestTransactionLocalDate: MutableStateFlow<LocalDate> = MutableStateFlow(
-        value = LocalDate.MIN,
+    private var oldestTransactionLocalDate: StateFlow<LocalDate?> = allTransactionData.map {
+        dateTimeUtil.getLocalDate(
+            timestamp = it.minOfOrNull { transactionData ->
+                transactionData.transaction.transactionTimestamp
+            }.orZero(),
+        )
+    }.defaultObjectStateIn(
+        scope = viewModelScope,
     )
 
     private val sortOptions: List<SortOption> = SortOption.values().toList()
@@ -139,6 +145,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             investmentCategories,
             accounts,
             transactionForValues,
+            oldestTransactionLocalDate,
         ) { flows ->
             isLoading.value = true
 
@@ -155,21 +162,13 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             val accountsValue: List<Account> = flows[7] as? List<Account> ?: emptyList()
             val transactionForValuesValue: List<TransactionFor> =
                 flows[8] as? List<TransactionFor> ?: emptyList()
+            val oldestTransactionLocalDateValue: LocalDate? = flows[9] as? LocalDate
 
-            if (selectedFilterValue.fromDate.isNull()) {
-                oldestTransactionLocalDate.update {
-                    dateTimeUtil.getLocalDate(
-                        timestamp = allTransactionDataValue.minOfOrNull { transactionData ->
-                            transactionData.transaction.transactionTimestamp
-                        }.orZero(),
-                    )
-                }
-                updateSelectedFilter(
-                    updatedSelectedFilter = selectedFilterValue.copy(
-                        fromDate = oldestTransactionLocalDate.value,
-                    ),
-                )
-            }
+            updateSelectedFilter(
+                updatedSelectedFilter = selectedFilterValue.copy(
+                    fromDate = oldestTransactionLocalDateValue,
+                ),
+            )
 
             allTransactionDataValue
                 .filter { transactionData ->

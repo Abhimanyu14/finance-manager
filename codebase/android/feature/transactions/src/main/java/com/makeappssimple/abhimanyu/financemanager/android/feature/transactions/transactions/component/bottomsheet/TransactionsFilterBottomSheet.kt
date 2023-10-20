@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.component.bottomsheet
 
-import android.content.Context
 import androidx.compose.runtime.Composable
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
@@ -11,7 +10,6 @@ import java.time.LocalDate
 
 @Composable
 internal fun TransactionsFilterBottomSheet(
-    context: Context,
     expenseCategories: List<Category>,
     incomeCategories: List<Category>,
     investmentCategories: List<Category>,
@@ -20,13 +18,11 @@ internal fun TransactionsFilterBottomSheet(
     transactionTypes: List<TransactionType>,
     defaultMinDate: LocalDate,
     defaultMaxDate: LocalDate,
-    currentTimeMillis: Long,
     selectedFilter: Filter,
     updateSelectedFilter: (updatedSelectedFilter: Filter) -> Unit,
     resetBottomSheetType: () -> Unit,
 ) {
     TransactionsFiltersBottomSheetUI(
-        context = context,
         expenseCategories = expenseCategories,
         incomeCategories = incomeCategories,
         investmentCategories = investmentCategories,
@@ -35,12 +31,10 @@ internal fun TransactionsFilterBottomSheet(
         transactionTypes = transactionTypes,
         defaultMinDate = defaultMinDate,
         defaultMaxDate = defaultMaxDate,
-        currentTimeMillis = currentTimeMillis,
         selectedFilter = selectedFilter,
         onPositiveButtonClick = {
             updateSelectedFilter(it)
             resetBottomSheetType()
         },
-        onNegativeButtonClick = {},
-    )
+    ) {}
 }

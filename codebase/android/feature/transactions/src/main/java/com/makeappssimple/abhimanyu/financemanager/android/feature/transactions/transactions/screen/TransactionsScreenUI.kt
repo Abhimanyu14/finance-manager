@@ -187,7 +187,6 @@ internal fun TransactionsScreenUI(
             when (uiState.transactionsBottomSheetType) {
                 TransactionsBottomSheetType.FILTERS -> {
                     TransactionsFilterBottomSheet(
-                        context = state.context,
                         expenseCategories = uiState.expenseCategories,
                         incomeCategories = uiState.incomeCategories,
                         investmentCategories = uiState.investmentCategories,
@@ -196,7 +195,6 @@ internal fun TransactionsScreenUI(
                         transactionTypes = uiState.transactionTypes,
                         defaultMinDate = uiState.oldestTransactionLocalDate,
                         defaultMaxDate = uiState.currentLocalDate,
-                        currentTimeMillis = uiState.currentTimeMillis,
                         selectedFilter = uiState.selectedFilter,
                         updateSelectedFilter = { updatedSelectedFilter ->
                             handleUIEvents(

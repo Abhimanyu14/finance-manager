@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.component.bottomsheet
 
-import android.content.Context
 import androidx.annotation.StringRes
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.animateFloatAsState
@@ -83,7 +82,6 @@ internal data class TransactionFilterBottomSheetFilterGroupEvents(
 @Composable
 internal fun TransactionsFiltersBottomSheetUI(
     modifier: Modifier = Modifier,
-    context: Context,
     expenseCategories: List<Category>,
     incomeCategories: List<Category>,
     investmentCategories: List<Category>,
@@ -92,7 +90,6 @@ internal fun TransactionsFiltersBottomSheetUI(
     transactionTypes: List<TransactionType>,
     defaultMinDate: LocalDate,
     defaultMaxDate: LocalDate,
-    currentTimeMillis: Long,
     selectedFilter: Filter,
     onPositiveButtonClick: (filter: Filter) -> Unit,
     onNegativeButtonClick: () -> Unit,
@@ -315,9 +312,7 @@ internal fun TransactionsFiltersBottomSheetUI(
             item {
                 TransactionFilterBottomSheetDateFilter(
                     expanded = expandedItemsIndices[filters.lastIndex + 1],
-                    context = context,
                     headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_transaction_date,
-                    currentTimeMillis = currentTimeMillis,
                     onClearButtonClick = {
                         fromDate = defaultMinDate
                         toDate = defaultMaxDate
@@ -333,10 +328,9 @@ internal fun TransactionsFiltersBottomSheetUI(
                     updateFromDate = {
                         fromDate = it
                     },
-                    updateToDate = {
-                        toDate = it
-                    },
-                )
+                ) {
+                    toDate = it
+                }
             }
         }
         Row(
@@ -520,9 +514,7 @@ private fun TransactionFilterBottomSheetFilterGroup(
 @Composable
 fun TransactionFilterBottomSheetDateFilter(
     expanded: Boolean,
-    context: Context,
     @StringRes headingTextStringResourceId: Int,
-    currentTimeMillis: Long,
     onClearButtonClick: () -> Unit,
     onExpandButtonClick: () -> Unit,
     minDate: LocalDate,
