@@ -157,7 +157,6 @@ internal fun AddOrEditTransactionScreenUI(
             key1 = Unit,
         ) {
             state.focusRequester.requestFocus()
-            state.keyboardController?.show()
         }
     }
 

@@ -68,7 +68,6 @@ fun MySearchBar(
             key1 = Unit,
         ) {
             focusRequester.requestFocus()
-            keyboardController?.show()
         }
     }
 
