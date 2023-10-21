@@ -2,10 +2,10 @@ buildscript {
 
     ext {
         // App version code
-        appVersionCode = 95
+        appVersionCode = 96
 
         // App version name
-        appVersionName = "2023.10.19.1"
+        appVersionName = "2023.10.22.0"
 
         // Lint
         lintVersion = "30.2.1"
