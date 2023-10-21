@@ -30,6 +30,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountTyp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.AmountCommaVisualTransformation
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonData
@@ -110,7 +111,7 @@ sealed class AddOrEditAccountScreenUIEvent {
 @Composable
 internal fun AddOrEditAccountScreenUI(
     uiState: AddOrEditAccountScreenUIState,
-    state: CommonScreenUIState,
+    state: CommonScreenUIState = rememberCommonScreenUIState(),
     handleUIEvents: (uiEvent: AddOrEditAccountScreenUIEvent) -> Unit,
 ) {
     if (!uiState.isLoading) {

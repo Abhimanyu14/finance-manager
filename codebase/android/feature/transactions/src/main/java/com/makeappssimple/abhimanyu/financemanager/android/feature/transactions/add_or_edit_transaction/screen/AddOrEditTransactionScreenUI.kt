@@ -40,6 +40,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Common
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.MyTimePicker
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.MyTimePickerData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.MyTimePickerEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_account.SelectAccountBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_account.SelectAccountBottomSheetData
@@ -145,7 +146,7 @@ sealed class AddOrEditTransactionScreenUIEvent {
 @Composable
 internal fun AddOrEditTransactionScreenUI(
     uiState: AddOrEditTransactionScreenUIState,
-    state: CommonScreenUIState,
+    state: CommonScreenUIState = rememberCommonScreenUIState(),
     handleUIEvents: (uiEvent: AddOrEditTransactionScreenUIEvent) -> Unit,
 ) {
     val clearFocus = {

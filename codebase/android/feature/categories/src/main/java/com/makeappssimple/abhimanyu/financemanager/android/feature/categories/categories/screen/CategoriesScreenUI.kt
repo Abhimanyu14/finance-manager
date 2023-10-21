@@ -21,6 +21,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid.CategoriesGrid
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid_item.CategoriesGridItemData
@@ -80,7 +81,7 @@ sealed class CategoriesScreenUIEvent {
 @Composable
 internal fun CategoriesScreenUI(
     uiState: CategoriesScreenUIState,
-    state: CommonScreenUIState,
+    state: CommonScreenUIState = rememberCommonScreenUIState(),
     handleUIEvents: (uiEvent: CategoriesScreenUIEvent) -> Unit,
 ) {
     LaunchedEffect(

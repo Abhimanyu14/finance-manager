@@ -22,6 +22,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItem
@@ -66,7 +67,7 @@ sealed class ViewTransactionScreenUIEvent {
 @Composable
 internal fun ViewTransactionScreenUI(
     uiState: ViewTransactionScreenUIState,
-    state: CommonScreenUIState,
+    state: CommonScreenUIState = rememberCommonScreenUIState(),
     handleUIEvents: (uiEvent: ViewTransactionScreenUIEvent) -> Unit,
 ) {
     BottomSheetHandler(

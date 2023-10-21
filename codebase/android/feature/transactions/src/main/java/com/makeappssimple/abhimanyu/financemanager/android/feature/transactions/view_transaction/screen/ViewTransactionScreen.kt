@@ -8,7 +8,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.viewmodel.ViewTransactionScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.viewmodel.ViewTransactionScreenViewModelImpl
 
@@ -49,7 +48,6 @@ fun ViewTransactionScreen(
         uiState = rememberViewTransactionScreenUIState(
             data = screenUIData,
         ),
-        state = rememberCommonScreenUIState(),
         handleUIEvents = handleUIEvents,
     )
 }

@@ -7,7 +7,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.viewmodel.OpenSourceLicensesScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.viewmodel.OpenSourceLicensesScreenViewModelImpl
 
@@ -42,7 +41,6 @@ fun OpenSourceLicensesScreen(
         uiState = rememberOpenSourceLicensesScreenUIState(
             data = screenUIData,
         ),
-        state = rememberCommonScreenUIState(),
         handleUIEvents = handleUIEvents,
     )
 }

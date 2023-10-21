@@ -24,6 +24,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.buttons.SaveButtonData
@@ -60,7 +61,7 @@ sealed class AddOrEditTransactionForScreenUIEvent {
 @Composable
 internal fun AddOrEditTransactionForScreenUI(
     uiState: AddOrEditTransactionForScreenUIState,
-    state: CommonScreenUIState,
+    state: CommonScreenUIState = rememberCommonScreenUIState(),
     handleUIEvents: (uiEvent: AddOrEditTransactionForScreenUIEvent) -> Unit,
 ) {
     if (!uiState.isLoading) {

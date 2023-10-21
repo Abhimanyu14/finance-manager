@@ -7,7 +7,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIEvent
@@ -53,17 +52,10 @@ fun EditAccountScreen(
     }
 
     AddOrEditAccountScreenUI(
-//        events = AddOrEditAccountScreenUIEvent(
-//            updateBalanceAmountValue = viewModel::updateBalanceAmountValue,
-//            updateMinimumAccountBalanceAmountValue = viewModel::updateMinimumAccountBalanceAmountValue,
-//            updateName = viewModel::updateName,
-//            updateSelectedAccountTypeIndex = viewModel::updateSelectedAccountTypeIndex,
-//        ),
         uiState = rememberAddOrEditAccountScreenUIState(
             data = screenUIData,
             isEdit = true,
         ),
-        state = rememberCommonScreenUIState(),
         handleUIEvents = handleUIEvents,
     )
 }

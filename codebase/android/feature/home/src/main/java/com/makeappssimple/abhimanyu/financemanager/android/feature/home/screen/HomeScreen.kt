@@ -12,7 +12,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.CreateJsonDocument
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmodel.HomeScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmodel.HomeScreenViewModelImpl
 
@@ -61,7 +60,6 @@ fun HomeScreen(
         uiState = rememberHomeScreenUIState(
             data = screenUIData,
         ),
-        state = rememberCommonScreenUIState(),
         handleUIEvents = handleUIEvents,
     )
 }

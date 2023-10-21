@@ -30,6 +30,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.EmojiCircleSize
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleData
@@ -89,7 +90,7 @@ sealed class AddOrEditCategoryScreenUIEvent {
 @Composable
 internal fun AddOrEditCategoryScreenUI(
     uiState: AddOrEditCategoryScreenUIState,
-    state: CommonScreenUIState,
+    state: CommonScreenUIState = rememberCommonScreenUIState(),
     handleUIEvents: (uiEvent: AddOrEditCategoryScreenUIEvent) -> Unit,
 ) {
     if (!uiState.isLoading) {
@@ -127,7 +128,6 @@ internal fun AddOrEditCategoryScreenUI(
 
                 AddOrEditCategoryBottomSheetType.SELECT_EMOJI -> {
                     AddOrEditCategorySelectEmojiBottomSheet(
-                        context = state.context,
                         searchText = uiState.searchText,
                         resetBottomSheetType = uiState.resetBottomSheetType,
                         updateEmoji = { updatedEmoji ->

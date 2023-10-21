@@ -22,6 +22,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarsSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCardData
@@ -78,7 +79,7 @@ sealed class HomeScreenUIEvent {
 @Composable
 internal fun HomeScreenUI(
     uiState: HomeScreenUIState,
-    state: CommonScreenUIState,
+    state: CommonScreenUIState = rememberCommonScreenUIState(),
     handleUIEvents: (uiEvent: HomeScreenUIEvent) -> Unit,
 ) {
     MyScaffold(

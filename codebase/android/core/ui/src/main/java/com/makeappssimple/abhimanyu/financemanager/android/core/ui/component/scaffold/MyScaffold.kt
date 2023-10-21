@@ -1,5 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold
 
+import androidx.compose.animation.animateContentSize
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.WindowInsets
@@ -122,10 +124,16 @@ fun MyScaffold(
                         max = screenHeight + navigationBarsHeight - topAppBarHeight,
                     )
             }
+
             Column(
                 modifier = bottomSheetModifier,
             ) {
-                sheetContent()
+                Box(
+                    modifier = bottomSheetModifier
+                        .animateContentSize(),
+                ) {
+                    this@Column.sheetContent()
+                }
             }
         }
     }
