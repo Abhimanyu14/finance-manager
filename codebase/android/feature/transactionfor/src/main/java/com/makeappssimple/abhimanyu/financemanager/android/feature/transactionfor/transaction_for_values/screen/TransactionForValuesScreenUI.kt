@@ -11,11 +11,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarsSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
@@ -138,7 +138,7 @@ internal fun TransactionForValuesScreenUI(
         floatingActionButton = {
             MyFloatingActionButton(
                 modifier = Modifier
-                    .navigationBarSpacer(),
+                    .navigationBarsSpacer(),
                 iconImageVector = Icons.Rounded.Add,
                 contentDescription = stringResource(
                     id = R.string.screen_transaction_for_values_floating_action_button_content_description,
@@ -189,7 +189,7 @@ internal fun TransactionForValuesScreenUI(
                 )
             }
             item {
-                NavigationBarSpacer()
+                NavigationBarsAndImeSpacer()
             }
         }
     }

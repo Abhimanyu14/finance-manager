@@ -39,11 +39,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarsSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
@@ -348,7 +348,7 @@ internal fun TransactionsScreenUI(
             ) {
                 MyFloatingActionButton(
                     modifier = Modifier
-                        .navigationBarSpacer(),
+                        .navigationBarsSpacer(),
                     iconImageVector = Icons.Rounded.Add,
                     contentDescription = stringResource(
                         id = R.string.screen_transactions_floating_action_button_content_description,
@@ -551,7 +551,7 @@ internal fun TransactionsScreenUI(
                     }
                 }
                 item {
-                    NavigationBarSpacer()
+                    NavigationBarsAndImeSpacer()
                 }
             }
         }
