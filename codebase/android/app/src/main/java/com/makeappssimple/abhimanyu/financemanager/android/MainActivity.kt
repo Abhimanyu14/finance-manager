@@ -27,6 +27,7 @@ import javax.inject.Inject
  * 12. Screenshot testing
  * 13. Linting
  * 14. Architecture structure rules
+ * 15. Groovy to Kotlin
  */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
