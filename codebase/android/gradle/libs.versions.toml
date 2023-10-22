@@ -24,7 +24,6 @@ androidx-runtime-compose = "2.6.2"
 androidx-navigation-compose = "2.7.4"
 androidx-hilt-navigation-compose = "1.0.0"
 androidx-paging-compose = "3.2.1"
-compose-accompanist = "0.27.0"
 detekt-formatting = "1.20.0"
 detekt-rules-compose = "1.0.0"
 hilt-version = "2.44.2"
@@ -96,10 +95,6 @@ androidx-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-run
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "androidx-navigation-compose" }
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "androidx-hilt-navigation-compose" }
 androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "androidx-paging-compose" }
-
-#accompanist
-compose-accompanist-flowlayout = { group = "com.google.accompanist", name = "accompanist-flowlayout", version.ref = "compose-accompanist" }
-compose-accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "compose-accompanist" }
 
 #detekt
 detekt-formatting = { group = "io.gitlab.arturbosch.detekt", name = "detekt-formatting", version.ref = "detekt-formatting" }
