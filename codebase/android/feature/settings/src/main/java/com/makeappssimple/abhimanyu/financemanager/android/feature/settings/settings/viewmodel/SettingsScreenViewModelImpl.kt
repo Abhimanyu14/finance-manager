@@ -20,10 +20,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.sett
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
@@ -41,13 +43,20 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
 ) : SettingsScreenViewModel, ViewModel() {
     private val appVersionName: String = appVersionUtil.getAppVersion()?.versionName.orEmpty()
     private val reminder = myPreferencesRepository.getReminder()
+    private val isLoading = MutableStateFlow(
+        value = false,
+    )
 
     private val _event: MutableSharedFlow<SettingsScreenEvent> = MutableSharedFlow()
     override val event: SharedFlow<SettingsScreenEvent> = _event
-    override val screenUIData: StateFlow<MyResult<SettingsScreenUIData>?> = reminder.map {
+    override val screenUIData: StateFlow<MyResult<SettingsScreenUIData>?> = combine(
+        isLoading,
+        reminder,
+    ) { isLoading, reminder ->
         MyResult.Success(
             data = SettingsScreenUIData(
-                isReminderEnabled = it?.isEnabled.orFalse(),
+                isReminderEnabled = reminder?.isEnabled.orFalse(),
+                isLoading = isLoading,
                 appVersion = appVersionName,
             ),
         )
@@ -61,6 +70,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = ioDispatcher,
         ) {
+            isLoading.value = true
             launch(
                 context = ioDispatcher,
             ) {
@@ -148,6 +158,8 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = ioDispatcher,
         ) {
+            isLoading.value = true
+            delay(5000)
             if (
                 restoreDataUseCase(
                     uri = uri,
@@ -157,6 +169,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
                     navigationCommand = MyNavigationDirections.NavigateUp
                 )
             } else {
+                isLoading.value = false
                 _event.emit(SettingsScreenEvent.RestoreDataFailed)
             }
         }
@@ -166,6 +179,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = ioDispatcher,
         ) {
+            isLoading.value = true
             recalculateTotalUseCase()
             navigationManager.navigate(
                 navigationCommand = MyNavigationDirections.NavigateUp

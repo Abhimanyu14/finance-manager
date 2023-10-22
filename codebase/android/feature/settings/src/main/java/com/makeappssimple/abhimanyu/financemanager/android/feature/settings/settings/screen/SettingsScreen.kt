@@ -11,10 +11,8 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.core.content.ContextCompat
@@ -30,7 +28,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.sett
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.viewmodel.SettingsScreenViewModelImpl
 import kotlinx.coroutines.launch
 
-// TODO(Abhi): Fix loading state for restore data, backup and recalculate
 @Composable
 fun SettingsScreen(
     screenViewModel: SettingsScreenViewModel = hiltViewModel<SettingsScreenViewModelImpl>(),
@@ -45,15 +42,11 @@ fun SettingsScreen(
 
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-    var isLoading by remember {
-        mutableStateOf(false)
-    }
     val createDocumentResultLauncher: ManagedActivityResultLauncher<String, Uri?> =
         rememberLauncherForActivityResult(
             contract = CreateJsonDocument(),
         ) { uri ->
             uri?.let {
-                isLoading = true
                 viewModel.backupDataToDocument(
                     uri = it,
                 )
@@ -64,7 +57,6 @@ fun SettingsScreen(
             contract = ActivityResultContracts.OpenDocument(),
         ) { uri ->
             uri?.let {
-                isLoading = true
                 viewModel.restoreDataFromDocument(
                     uri = it,
                 )
@@ -89,7 +81,6 @@ fun SettingsScreen(
                 }
 
                 SettingsScreenUIEvent.RecalculateTotal -> {
-                    isLoading = true
                     viewModel.recalculateTotal()
                 }
 

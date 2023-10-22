@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen
 
 import android.widget.Toast
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -85,14 +84,14 @@ internal fun SettingsScreenUI(
     val listItemsData: List<SettingsScreenListItemData> = listOf(
         SettingsScreenListItemData(
             data = SettingsListItemData(
+                isEnabled = uiState.isLoading,
                 isHeading = true,
-                isLoading = uiState.isLoading,
                 textStringResourceId = R.string.screen_settings_data,
             ),
         ),
         SettingsScreenListItemData(
             data = SettingsListItemData(
-                isLoading = uiState.isLoading,
+                isEnabled = uiState.isLoading,
                 imageVector = Icons.Rounded.Category,
                 textStringResourceId = R.string.screen_settings_categories,
             ),
@@ -104,7 +103,7 @@ internal fun SettingsScreenUI(
         ),
         SettingsScreenListItemData(
             data = SettingsListItemData(
-                isLoading = uiState.isLoading,
+                isEnabled = uiState.isLoading,
                 imageVector = Icons.Rounded.AccountBalance,
                 textStringResourceId = R.string.screen_settings_accounts,
             ),
@@ -117,7 +116,7 @@ internal fun SettingsScreenUI(
         SettingsScreenListItemData(
             data = SettingsListItemData(
                 hasDivider = true,
-                isLoading = uiState.isLoading,
+                isEnabled = uiState.isLoading,
                 imageVector = Icons.Rounded.Groups,
                 textStringResourceId = R.string.screen_settings_transaction_for,
             ),
@@ -129,14 +128,14 @@ internal fun SettingsScreenUI(
         ),
         SettingsScreenListItemData(
             data = SettingsListItemData(
+                isEnabled = uiState.isLoading,
                 isHeading = true,
-                isLoading = uiState.isLoading,
                 textStringResourceId = R.string.screen_settings_backup_and_restore,
             ),
         ),
         SettingsScreenListItemData(
             data = SettingsListItemData(
-                isLoading = uiState.isLoading,
+                isEnabled = uiState.isLoading,
                 imageVector = Icons.Rounded.Backup,
                 textStringResourceId = R.string.screen_settings_backup,
             ),
@@ -148,7 +147,7 @@ internal fun SettingsScreenUI(
         ),
         SettingsScreenListItemData(
             data = SettingsListItemData(
-                isLoading = uiState.isLoading,
+                isEnabled = uiState.isLoading,
                 imageVector = Icons.Rounded.Restore,
                 textStringResourceId = R.string.screen_settings_restore,
             ),
@@ -161,7 +160,7 @@ internal fun SettingsScreenUI(
         SettingsScreenListItemData(
             data = SettingsListItemData(
                 hasDivider = true,
-                isLoading = uiState.isLoading,
+                isEnabled = uiState.isLoading,
                 imageVector = Icons.Rounded.Calculate,
                 textStringResourceId = R.string.screen_settings_recalculate_total,
             ),
@@ -173,8 +172,8 @@ internal fun SettingsScreenUI(
         ),
         SettingsScreenListItemData(
             data = SettingsListItemData(
+                isEnabled = uiState.isLoading,
                 isHeading = true,
-                isLoading = uiState.isLoading,
                 textStringResourceId = R.string.screen_settings_notifications,
             ),
         ),
@@ -182,7 +181,7 @@ internal fun SettingsScreenUI(
             data = SettingsListItemData(
                 hasDivider = true,
                 isChecked = uiState.isReminderEnabled.orFalse(),
-                isLoading = uiState.isLoading,
+                isEnabled = uiState.isLoading,
                 imageVector = Icons.Rounded.Notifications,
                 textStringResourceId = R.string.screen_settings_reminder,
             ),
@@ -190,7 +189,6 @@ internal fun SettingsScreenUI(
                 onClick = {
                     handleUIEvents(SettingsScreenUIEvent.ToggleReminder)
                 },
-
                 onCheckedChange = {
                     handleUIEvents(SettingsScreenUIEvent.ToggleReminder)
                 },
@@ -198,14 +196,14 @@ internal fun SettingsScreenUI(
         ),
         SettingsScreenListItemData(
             data = SettingsListItemData(
+                isEnabled = uiState.isLoading,
                 isHeading = true,
-                isLoading = uiState.isLoading,
                 textStringResourceId = R.string.screen_settings_about,
             ),
         ),
         SettingsScreenListItemData(
             data = SettingsListItemData(
-                isLoading = uiState.isLoading,
+                isEnabled = uiState.isLoading,
                 imageVector = Icons.AutoMirrored.Rounded.TextSnippet,
                 textStringResourceId = R.string.screen_settings_credits,
             ),
@@ -218,7 +216,7 @@ internal fun SettingsScreenUI(
         SettingsScreenListItemData(
             data = SettingsListItemData(
                 hasDivider = true,
-                isLoading = uiState.isLoading,
+                isEnabled = uiState.isLoading,
                 imageVector = Icons.AutoMirrored.Rounded.TextSnippet,
                 textStringResourceId = R.string.screen_settings_open_source_licenses,
             ),
@@ -261,10 +259,9 @@ internal fun SettingsScreenUI(
             modifier = Modifier
                 .fillMaxWidth(),
         ) {
-            item {
-                AnimatedVisibility(
-                    visible = uiState.isLoading,
-                ) {
+            // TODO(Abhi): Check why AnimatedVisibility is not working
+            if (uiState.isLoading) {
+                item {
                     MyLinearProgressIndicator(
                         modifier = Modifier
                             .testTag(

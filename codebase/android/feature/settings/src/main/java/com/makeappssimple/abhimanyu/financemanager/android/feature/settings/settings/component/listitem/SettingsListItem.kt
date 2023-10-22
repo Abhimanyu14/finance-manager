@@ -26,8 +26,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ext
 data class SettingsListItemData(
     val hasDivider: Boolean = false,
     val isChecked: Boolean? = null,
+    val isEnabled: Boolean = false,
     val isHeading: Boolean = false,
-    val isLoading: Boolean = false,
     val imageVector: ImageVector? = null,
     @StringRes val textStringResourceId: Int,
 )
@@ -97,7 +97,7 @@ internal fun SettingsListItem(
             },
             modifier = modifier
                 .conditionalClickable(
-                    onClick = if (data.isLoading) {
+                    onClick = if (data.isEnabled) {
                         null
                     } else {
                         events.onClick
