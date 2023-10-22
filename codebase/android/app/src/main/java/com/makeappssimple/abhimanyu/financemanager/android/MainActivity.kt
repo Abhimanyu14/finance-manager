@@ -15,6 +15,18 @@ import javax.inject.Inject
  *
  * 1. Immutable collection
  * 2. Analytics
+ * 3. Android ViewModel to ViewModel
+ * 4. KMP
+ * 5. CMP
+ * 6. Throttle all clicks
+ * 7. Process death
+ * 8. Landscape and Tablet
+ * 9. Dark mode
+ * 10. Unit testing
+ * 11. UI Testing
+ * 12. Screenshot testing
+ * 13. Linting
+ * 14. Architecture structure rules
  */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

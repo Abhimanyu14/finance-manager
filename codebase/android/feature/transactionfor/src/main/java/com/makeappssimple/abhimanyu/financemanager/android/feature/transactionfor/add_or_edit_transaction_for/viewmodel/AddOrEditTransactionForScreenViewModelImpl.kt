@@ -20,6 +20,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.navigation.AddOrEditTransactionForScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -68,24 +69,28 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
             transactionFor = transactionFor,
         )
     }
+    private val titleTextFieldError: MutableStateFlow<AddOrEditTransactionForScreenUIError?> =
+        MutableStateFlow(
+            value = null,
+        )
 
     override val screenUIData: StateFlow<MyResult<AddOrEditTransactionForScreenUIData>?> = combine(
         title,
         isValidTransactionForData,
+        titleTextFieldError,
     ) {
             title,
             isValidTransactionForData,
+            titleTextFieldError,
         ->
-        if (
-            title.isNull() ||
-            isValidTransactionForData.isNull()
-        ) {
+        if (isValidTransactionForData.isNull()) {
             MyResult.Loading
         } else {
             MyResult.Success(
                 data = AddOrEditTransactionForScreenUIData(
                     isValidTransactionForData = isValidTransactionForData,
                     title = title,
+                    titleTextFieldError = titleTextFieldError,
                 ),
             )
         }
@@ -220,16 +225,24 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
         title: String,
         transactionFor: TransactionFor?,
     ): Boolean {
-        // TODO(Abhi): Error message - "Title can not be empty"
+        titleTextFieldError.update {
+            null
+        }
         if (title.isBlank()) {
             return false
         }
-
-        // TODO(Abhi): Error message - "Title already exists"
-        return !(title != transactionFor?.title && transactionForValues.find {
-            it.title.equalsIgnoringCase(
-                other = title,
-            )
-        }.isNotNull())
+        return if (title != transactionFor?.title && transactionForValues.find {
+                it.title.equalsIgnoringCase(
+                    other = title,
+                )
+            }.isNotNull()
+        ) {
+            titleTextFieldError.update {
+                AddOrEditTransactionForScreenUIError.EXISTS
+            }
+            false
+        } else {
+            true
+        }
     }
 }

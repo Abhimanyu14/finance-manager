@@ -45,6 +45,9 @@ class AddOrEditTransactionForScreenUIState(
     }
 
     val title: TextFieldValue? = unwrappedData?.title
+    val titleTextFieldErrorTextStringResourceId =
+        unwrappedData?.titleTextFieldError?.textStringResourceId
+
     val resetBottomSheetType: () -> Unit = {
         setAddOrEditTransactionForBottomSheetType(AddOrEditTransactionForBottomSheetType.NONE)
     }
