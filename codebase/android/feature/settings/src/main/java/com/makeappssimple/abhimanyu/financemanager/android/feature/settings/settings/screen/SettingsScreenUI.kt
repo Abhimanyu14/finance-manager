@@ -52,6 +52,10 @@ data class SettingsScreenUIData(
     val appVersion: String? = null,
 )
 
+sealed class SettingsScreenEvent {
+    object RestoreDataFailed : SettingsScreenEvent()
+}
+
 @Immutable
 data class SettingsScreenListItemData(
     val data: SettingsListItemData,
@@ -237,6 +241,7 @@ internal fun SettingsScreenUI(
             }
         },
         sheetState = state.modalBottomSheetState,
+        snackbarHostState = uiState.snackbarHostState,
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_settings_appbar_title,

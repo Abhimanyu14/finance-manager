@@ -8,7 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_list_item.SelectListItemBottomSheetItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_list_item.SelectListItemBottomSheetUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_list_item.SelectListItemBottomSheetUIData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.icon
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 
 @Immutable
 data class SelectAccountBottomSheetData(

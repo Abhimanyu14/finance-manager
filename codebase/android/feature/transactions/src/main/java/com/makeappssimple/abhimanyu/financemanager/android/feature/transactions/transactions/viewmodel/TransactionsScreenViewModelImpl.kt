@@ -23,7 +23,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen.TransactionsScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen.TransactionsScreenUIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel

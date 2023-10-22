@@ -7,12 +7,16 @@ import android.os.Build
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.core.content.ContextCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -21,9 +25,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.CreateJsonDocument
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.viewmodel.SettingsScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.viewmodel.SettingsScreenViewModelImpl
+import kotlinx.coroutines.launch
 
+// TODO(Abhi): Fix loading state for restore data, backup and recalculate
 @Composable
 fun SettingsScreen(
     screenViewModel: SettingsScreenViewModel = hiltViewModel<SettingsScreenViewModelImpl>(),
@@ -37,6 +44,7 @@ fun SettingsScreen(
     )
 
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
     var isLoading by remember {
         mutableStateOf(false)
     }
@@ -86,6 +94,7 @@ fun SettingsScreen(
                 }
 
                 SettingsScreenUIEvent.RestoreData -> {
+
                     openDocumentResultLauncher.launch(arrayOf(MimeTypeConstants.JSON))
                 }
 
@@ -113,6 +122,30 @@ fun SettingsScreen(
                     viewModel.handleUIEvents(
                         uiEvent = uiEvent,
                     )
+                }
+            }
+        }
+    }
+    val restoreErrorMessage = stringResource(
+        id = R.string.screen_settings_restore_error_message,
+    )
+
+    LaunchedEffect(
+        key1 = Unit,
+    ) {
+        viewModel.event.collect {
+            when (it) {
+                SettingsScreenEvent.RestoreDataFailed -> {
+                    coroutineScope.launch {
+                        val result = uiState.snackbarHostState
+                            .showSnackbar(
+                                message = restoreErrorMessage,
+                            )
+                        when (result) {
+                            SnackbarResult.ActionPerformed -> {}
+                            SnackbarResult.Dismissed -> {}
+                        }
+                    }
                 }
             }
         }

@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
@@ -11,6 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.My
 class SettingsScreenUIState(
     data: MyResult<SettingsScreenUIData>? = null,
     val settingsBottomSheetType: SettingsBottomSheetType = SettingsBottomSheetType.NONE,
+    val snackbarHostState: SnackbarHostState,
     val setSettingsBottomSheetType: (SettingsBottomSheetType) -> Unit = {},
 ) {
     private val unwrappedData = when (data) {
@@ -40,15 +42,20 @@ fun rememberSettingsScreenUIState(
             value = SettingsBottomSheetType.NONE,
         )
     }
+    val snackbarHostState: SnackbarHostState = remember {
+        SnackbarHostState()
+    }
 
     return remember(
         data,
         settingsBottomSheetType,
+        snackbarHostState,
         setSettingsBottomSheetType,
     ) {
         SettingsScreenUIState(
             data = data,
             settingsBottomSheetType = settingsBottomSheetType,
+            snackbarHostState = snackbarHostState,
             setSettingsBottomSheetType = setSettingsBottomSheetType,
         )
     }

@@ -14,8 +14,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.orEmpty
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.icon
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 
 @Stable

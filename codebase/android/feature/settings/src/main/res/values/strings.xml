@@ -20,6 +20,7 @@
     <string name="screen_settings_credits">Credits</string>
     <string name="screen_settings_open_source_licenses">Open Source Licenses</string>
     <string name="screen_settings_app_version">Version - %1$s</string>
+    <string name="screen_settings_restore_error_message">Error in Restoring Data 😕</string>
     <!-- endregion -->
 
 </resources>

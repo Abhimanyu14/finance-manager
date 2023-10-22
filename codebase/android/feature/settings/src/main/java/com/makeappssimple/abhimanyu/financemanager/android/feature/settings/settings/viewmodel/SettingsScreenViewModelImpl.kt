@@ -15,10 +15,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.Rec
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RestoreDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -38,6 +41,9 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
 ) : SettingsScreenViewModel, ViewModel() {
     private val appVersionName: String = appVersionUtil.getAppVersion()?.versionName.orEmpty()
     private val reminder = myPreferencesRepository.getReminder()
+
+    private val _event: MutableSharedFlow<SettingsScreenEvent> = MutableSharedFlow()
+    override val event: SharedFlow<SettingsScreenEvent> = _event
     override val screenUIData: StateFlow<MyResult<SettingsScreenUIData>?> = reminder.map {
         MyResult.Success(
             data = SettingsScreenUIData(
@@ -142,12 +148,17 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
         viewModelScope.launch(
             context = ioDispatcher,
         ) {
-            restoreDataUseCase(
-                uri = uri,
-            )
-            navigationManager.navigate(
-                navigationCommand = MyNavigationDirections.NavigateUp
-            )
+            if (
+                restoreDataUseCase(
+                    uri = uri,
+                )
+            ) {
+                navigationManager.navigate(
+                    navigationCommand = MyNavigationDirections.NavigateUp
+                )
+            } else {
+                _event.emit(SettingsScreenEvent.RestoreDataFailed)
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase
 
 import android.net.Uri
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.MyJsonReader
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.BackupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
@@ -9,32 +10,53 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.sanitizeAccounts
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.sanitizeTransactions
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 interface RestoreDataUseCase {
     suspend operator fun invoke(
         uri: Uri,
-    )
+    ): Boolean
 }
 
 class RestoreDataUseCaseImpl(
     private val myJsonReader: MyJsonReader,
+    private val myLogger: MyLogger,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val transactionRepository: TransactionRepository,
 ) : RestoreDataUseCase {
     override suspend operator fun invoke(
         uri: Uri,
-    ) {
-        // TODO(Abhi): Return Error to show when restore fails
+    ): Boolean {
         val jsonString = myJsonReader.readJsonFromFile(
             uri = uri,
-        ) ?: return
+        )
+        if (jsonString.isNull()) {
+            myLogger.logError(
+                message = "Restore Data: Error reading file",
+            )
+            return false
+        }
         val backupData = Json.decodeFromString<BackupData>(
             string = jsonString,
         )
-        // TODO(Abhi): Return Error to show when restore fails
-        val databaseData = backupData.databaseData ?: return
+        val databaseData = backupData.databaseData
+        if (databaseData.isNull()) {
+            myLogger.logError(
+                message = "Restore Data: Error in file database data",
+            )
+            return false
+        }
+        val datastoreData = backupData.datastoreData
+        if (datastoreData.isNull()) {
+            myLogger.logError(
+                message = "Restore Data: Error in file datastore data",
+            )
+            return false
+        }
+
+        // Restore database data
         val accounts = sanitizeAccounts(
             accounts = databaseData.accounts.map {
                 it.asEntity()
@@ -56,8 +78,7 @@ class RestoreDataUseCaseImpl(
             transactionForValues = databaseData.transactionForValues,
         )
 
-        // TODO(Abhi): Return Error to show when restore fails
-        val datastoreData = backupData.datastoreData ?: return
+        // Restore datastore data
         with(
             receiver = myPreferencesRepository,
         ) {
@@ -85,5 +106,6 @@ class RestoreDataUseCaseImpl(
             setLastDataChangeTimestamp()
             setLastDataBackupTimestamp()
         }
+        return true
     }
 }

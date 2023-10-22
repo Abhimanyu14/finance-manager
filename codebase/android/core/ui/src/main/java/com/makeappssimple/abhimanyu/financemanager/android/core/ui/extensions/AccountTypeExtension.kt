@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.util
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AccountBalance

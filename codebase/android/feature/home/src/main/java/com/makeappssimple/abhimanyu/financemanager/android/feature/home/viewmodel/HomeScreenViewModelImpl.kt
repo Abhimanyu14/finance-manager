@@ -28,7 +28,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ove
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewModelData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewTabOption
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.getAmountTextColor
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen.HomeScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen.HomeScreenUIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel

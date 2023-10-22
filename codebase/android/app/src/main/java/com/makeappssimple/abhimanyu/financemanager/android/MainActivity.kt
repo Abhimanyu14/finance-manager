@@ -10,6 +10,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+/**
+ * TODO(Abhi)
+ *
+ * 1. Immutable collection
+ * 2. Analytics
+ */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 

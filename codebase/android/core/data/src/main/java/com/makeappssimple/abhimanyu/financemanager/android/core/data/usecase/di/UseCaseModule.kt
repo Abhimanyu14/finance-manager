@@ -18,6 +18,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.Rec
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RecalculateTotalUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RestoreDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.RestoreDataUseCaseImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -69,11 +70,13 @@ class UseCaseModule {
     @Provides
     fun providesRestoreDataUseCase(
         myJsonReader: MyJsonReader,
+        myLogger: MyLogger,
         myPreferencesRepository: MyPreferencesRepository,
         transactionRepository: TransactionRepository,
     ): RestoreDataUseCase {
         return RestoreDataUseCaseImpl(
             myJsonReader = myJsonReader,
+            myLogger = myLogger,
             myPreferencesRepository = myPreferencesRepository,
             transactionRepository = transactionRepository,
         )

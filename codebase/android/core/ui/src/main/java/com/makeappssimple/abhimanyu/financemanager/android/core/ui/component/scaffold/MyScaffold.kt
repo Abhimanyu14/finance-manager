@@ -23,6 +23,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.contentColorFor
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
@@ -50,7 +51,7 @@ fun MyScaffold(
     scrimColor: Color = BottomSheetDefaults.ScrimColor,
 
     // Scaffold
-    snackbarHostState: SnackbarHostState = SnackbarHostState(),
+    snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     topBar: @Composable () -> Unit = {},
     bottomBar: @Composable () -> Unit = {},
     snackbarHost: @Composable () -> Unit = {
