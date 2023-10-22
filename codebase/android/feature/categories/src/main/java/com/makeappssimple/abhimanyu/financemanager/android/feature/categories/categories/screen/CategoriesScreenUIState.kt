@@ -1,13 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.screen
 
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.google.accompanist.pager.PagerState
-import com.google.accompanist.pager.rememberPagerState
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
@@ -75,7 +75,7 @@ fun rememberCategoriesScreenUIState(
         )
     }
     val pagerState: PagerState = rememberPagerState(
-        initialPage = 0,
+        pageCount = { 3 },
     )
     val setCategoriesBottomSheetType =
         { updatedCategoriesBottomSheetType: CategoriesBottomSheetType ->
