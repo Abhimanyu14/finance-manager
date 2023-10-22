@@ -1,9 +1,10 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group
 
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
-import com.google.accompanist.flowlayout.FlowRow
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIEvents
@@ -21,6 +22,7 @@ data class MyRadioGroupEvents(
     val onSelectionChange: (index: Int) -> Unit = {},
 )
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun MyRadioGroup(
     modifier: Modifier = Modifier,

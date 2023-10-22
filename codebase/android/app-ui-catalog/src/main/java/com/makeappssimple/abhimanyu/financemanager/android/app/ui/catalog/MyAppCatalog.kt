@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalLayoutApi::class)
+
 package com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog
 
 import android.content.Context
@@ -5,6 +7,8 @@ import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -28,8 +32,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.flowlayout.FlowCrossAxisAlignment
-import com.google.accompanist.flowlayout.FlowRow
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.addIfDoesNotContainItemElseRemove
@@ -215,8 +217,8 @@ private fun LazyListScope.navigationBackButtonDemo(
     }
     item {
         FlowRow(
-            mainAxisSpacing = 16.dp,
-            crossAxisAlignment = FlowCrossAxisAlignment.Center,
+            horizontalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             MyNavigationBackButton(
                 onClick = {},
@@ -240,8 +242,8 @@ private fun LazyListScope.myTopAppBarDemo(
     }
     item {
         FlowRow(
-            mainAxisSpacing = 16.dp,
-            crossAxisAlignment = FlowCrossAxisAlignment.Center,
+            horizontalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             MyTopAppBarUI(
                 isNavigationIconVisible = true,
@@ -282,8 +284,8 @@ private fun LazyListScope.mySearchBarDemo(
     }
     item {
         FlowRow(
-            mainAxisSpacing = 16.dp,
-            crossAxisAlignment = FlowCrossAxisAlignment.Center,
+            horizontalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             val (searchText, setSearchText) = remember {
                 mutableStateOf("")
@@ -319,8 +321,8 @@ private fun LazyListScope.searchBarDemo(
     }
     item {
         FlowRow(
-            mainAxisSpacing = 16.dp,
-            crossAxisAlignment = FlowCrossAxisAlignment.Center,
+            horizontalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             val (searchText, setSearchText) = remember {
                 mutableStateOf("")
@@ -352,8 +354,8 @@ private fun LazyListScope.defaultTagDemo(
     }
     item {
         FlowRow(
-            mainAxisSpacing = 16.dp,
-            crossAxisAlignment = FlowCrossAxisAlignment.Center,
+            horizontalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             MyDefaultTag()
         }
@@ -720,8 +722,8 @@ private fun LazyListScope.emojiCircleDemo(
     }
     item {
         FlowRow(
-            mainAxisSpacing = 16.dp,
-            crossAxisAlignment = FlowCrossAxisAlignment.Center,
+            horizontalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             MyEmojiCircle(
                 data = MyEmojiCircleData(
@@ -799,8 +801,8 @@ private fun LazyListScope.saveButtonDemo(
     }
     item {
         FlowRow(
-            mainAxisSpacing = 16.dp,
-            crossAxisAlignment = FlowCrossAxisAlignment.Center,
+            horizontalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             SaveButton(
                 modifier = Modifier,
@@ -852,8 +854,8 @@ private fun LazyListScope.myOutlinedTextFieldDemo(
     }
     item {
         FlowRow(
-            mainAxisSpacing = 16.dp,
-            crossAxisAlignment = FlowCrossAxisAlignment.Center,
+            horizontalArrangement = Arrangement.Center,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             MyOutlinedTextField(
                 modifier = Modifier
