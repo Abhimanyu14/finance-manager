@@ -3,6 +3,7 @@
     <!-- region add or edit category screen -->
     <string name="screen_add_or_edit_category_title">Title</string>
     <string name="screen_add_or_edit_category_clear_title">Clear Title</string>
+    <string name="screen_add_or_edit_category_error_category_exists">Category already exists</string>
     <!-- endregion -->
 
     <!-- region add category screen -->

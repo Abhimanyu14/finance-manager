@@ -31,17 +31,19 @@ class AddOrEditCategoryScreenUIState(
     }
 
     val isLoading: Boolean = unwrappedData.isNull()
-    val isValidCategoryData: Boolean = unwrappedData?.isValidCategoryData.orFalse()
+    val isCtaButtonEnabled: Boolean = unwrappedData?.isCtaButtonEnabled.orFalse()
     val selectedTransactionTypeIndex: Int? = unwrappedData?.selectedTransactionTypeIndex
     val transactionTypesChipUIData: List<ChipUIData> =
-        unwrappedData?.transactionTypes?.map { transactionType ->
+        unwrappedData?.validTransactionTypes?.map { transactionType ->
             ChipUIData(
                 text = transactionType.title,
             )
         }.orEmpty()
     val emoji: String = unwrappedData?.emoji.orEmpty()
-    val searchText: String = unwrappedData?.searchText.orEmpty()
+    val emojiSearchText: String = unwrappedData?.emojiSearchText.orEmpty()
     val title: TextFieldValue = unwrappedData?.title.orEmpty()
+    val titleTextFieldErrorTextStringResourceId =
+        unwrappedData?.titleTextFieldError?.textStringResourceId
 
     @StringRes
     val appBarTitleTextStringResourceId: Int = if (isEdit) {

@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen
 
 import androidx.annotation.StringRes
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -48,7 +47,7 @@ enum class AddOrEditAccountBottomSheetType : BottomSheetType {
     NONE,
 }
 
-enum class AddOrEditAccountScreenUIErrorText(
+enum class AddOrEditAccountScreenUIError(
     @StringRes val textStringResourceId: Int,
 ) {
     ACCOUNT_EXISTS(
@@ -67,8 +66,8 @@ data class AddOrEditAccountScreenUIVisibilityData(
 
 @Immutable
 data class AddOrEditAccountScreenUIErrorData(
-    val balanceAmountTextField: AddOrEditAccountScreenUIErrorText? = null,
-    val nameTextField: AddOrEditAccountScreenUIErrorText? = null,
+    val balanceAmountTextField: AddOrEditAccountScreenUIError? = null,
+    val nameTextField: AddOrEditAccountScreenUIError? = null,
 )
 
 @Immutable
@@ -203,20 +202,16 @@ internal fun AddOrEditAccountScreenUI(
                         trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_account_clear_name,
                         supportingText = if (uiState.visibilityData.nameTextFieldErrorText) {
                             {
-                                AnimatedVisibility(
-                                    visible = uiState.visibilityData.nameTextFieldErrorText,
-                                ) {
-                                    MyText(
-                                        text = uiState.nameTextFieldErrorTextStringResourceId?.run {
-                                            stringResource(
-                                                id = uiState.nameTextFieldErrorTextStringResourceId,
-                                            )
-                                        }.orEmpty(),
-                                        style = MaterialTheme.typography.bodySmall.copy(
-                                            color = MaterialTheme.colorScheme.error,
-                                        ),
-                                    )
-                                }
+                                MyText(
+                                    text = uiState.nameTextFieldErrorTextStringResourceId?.run {
+                                        stringResource(
+                                            id = uiState.nameTextFieldErrorTextStringResourceId,
+                                        )
+                                    }.orEmpty(),
+                                    style = MaterialTheme.typography.bodySmall.copy(
+                                        color = MaterialTheme.colorScheme.error,
+                                    ),
+                                )
                             }
                         } else {
                             null

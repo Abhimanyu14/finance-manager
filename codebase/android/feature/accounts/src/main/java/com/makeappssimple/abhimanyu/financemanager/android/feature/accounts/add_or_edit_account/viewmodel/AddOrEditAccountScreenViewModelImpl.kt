@@ -30,8 +30,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNav
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIErrorData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIErrorText
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.navigation.AddOrEditAccountScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -438,7 +438,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
         ) {
             errorData.update {
                 errorData.value.copy(
-                    nameTextField = AddOrEditAccountScreenUIErrorText.ACCOUNT_EXISTS
+                    nameTextField = AddOrEditAccountScreenUIError.ACCOUNT_EXISTS
                 )
             }
             return false
@@ -460,7 +460,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
                 AddOrEditAccountScreenUIErrorData()
             } else {
                 errorData.value.copy(
-                    nameTextField = AddOrEditAccountScreenUIErrorText.ACCOUNT_EXISTS
+                    nameTextField = AddOrEditAccountScreenUIError.ACCOUNT_EXISTS
                 )
             }
         }
