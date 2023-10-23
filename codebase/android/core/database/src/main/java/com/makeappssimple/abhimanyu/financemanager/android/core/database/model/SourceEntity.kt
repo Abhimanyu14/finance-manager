@@ -9,6 +9,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
+// TODO(Abhi): Clean up deprecated class
 @Deprecated(
     message = "Maintained only for migration",
     replaceWith = ReplaceWith(
