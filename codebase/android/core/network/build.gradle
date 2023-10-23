@@ -1,10 +1,10 @@
 plugins {
     id "com.android.library"
-    id "org.jetbrains.kotlin.android"
-    id "org.jetbrains.kotlinx.kover"
-    id "kotlinx-serialization"
     id "org.jetbrains.kotlin.kapt"
     id "com.google.devtools.ksp" version "1.8.10-1.0.9"
+    alias libs.plugins.kotlin.android
+    alias libs.plugins.kotlin.serialization
+    alias libs.plugins.kotlinx.kover
 }
 
 android {

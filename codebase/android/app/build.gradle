@@ -1,39 +1,42 @@
 plugins {
-    id "com.android.application"
-    id "org.jetbrains.kotlin.android"
+    alias libs.plugins.android.application
     id "org.jetbrains.kotlin.kapt"
     id "dagger.hilt.android.plugin"
     id "jacoco"
     id "com.google.devtools.ksp" version "1.8.10-1.0.9"
+    alias libs.plugins.kotlin.android
+    alias libs.plugins.kotlinx.kover
     alias libs.plugins.google.services
-    alias libs.plugins.detekt
-    alias libs.plugins.kover
-    alias libs.plugins.about.libraries
     alias libs.plugins.firebase.crashlytics
+    alias libs.plugins.detekt
+    alias libs.plugins.about.libraries
 }
 
+
+/*
 // Kover
-//kover {
-//    // true to disable instrumentation of all Kover tasks in this project
-//    isDisabled.set(false)
-//
-//    // change instrumentation agent and reporter
-//    coverageEngine.set(kotlinx.kover.api.CoverageEngine.INTELLIJ)
-//
-//    intellijEngineVersion.set("1.0.668")    // change version of IntelliJ agent and reporter
-//    jacocoEngineVersion.set("0.8.7")        // change version of JaCoCo agent and reporter
-//
-//    // false to do not execute `koverMergedReport` task before `check` task
-//    generateReportOnCheck = true
-//
-//    // ["project-name"] or [":project-name"] to disable coverage for project with path `:project-name` (`:` for the root project)
-//    disabledProjects = []
-//
-//    // true to instrument packages `android.*` and `com.android.*`
-//    instrumentAndroidPackage = false
-//
-//    // true to run all tests in all projects if `koverHtmlReport`, `koverXmlReport`, `koverReport`, `koverVerify` or `check` tasks executed on some project
-//}
+kover {
+    // true to disable instrumentation of all Kover tasks in this project
+    isDisabled.set(false)
+
+    // change instrumentation agent and reporter
+    coverageEngine.set(kotlinx.kover.api.CoverageEngine.INTELLIJ)
+
+    intellijEngineVersion.set("1.0.668")    // change version of IntelliJ agent and reporter
+    jacocoEngineVersion.set("0.8.7")        // change version of JaCoCo agent and reporter
+
+    // false to do not execute `koverMergedReport` task before `check` task
+    generateReportOnCheck = true
+
+    // ["project-name"] or [":project-name"] to disable coverage for project with path `:project-name` (`:` for the root project)
+    disabledProjects = []
+
+    // true to instrument packages `android.*` and `com.android.*`
+    instrumentAndroidPackage = false
+
+    // true to run all tests in all projects if `koverHtmlReport`, `koverXmlReport`, `koverReport`, `koverVerify` or `check` tasks executed on some project
+}
+*/
 
 tasks.koverHtmlReport {
     excludes = [
@@ -58,19 +61,21 @@ tasks.koverHtmlReport {
     ]
 }
 
+/*
 // TODO(Abhi): Jacoco
 // Jacoco
-//jacoco {
-//    toolVersion = "$jacocoVersion"
-//}
-//
-//tasks.withType(Test) {
-//    jacoco {
-//        includeNoLocationClasses = true
-//        excludes = ["jdk.internal.*"] // Allows it to run on Java 11
-//    }
-//}
-//
+jacoco {
+    toolVersion = "$jacocoVersion"
+}
+
+tasks.withType(Test) {
+    jacoco {
+        includeNoLocationClasses = true
+        excludes = ["jdk.internal.*"] // Allows it to run on Java 11
+    }
+}
+*/
+
 //task jacocoTestReport(type: JacocoReport, dependsOn: ["testDebugUnitTest", "createDebugCoverageReport"]) {
 //    reports {
 //        xml.enabled true

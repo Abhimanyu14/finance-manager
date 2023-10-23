@@ -37,30 +37,33 @@ buildscript {
 plugins {
     alias libs.plugins.android.application apply false
     alias libs.plugins.kotlin.android apply false
-    alias libs.plugins.kotlin.jvm apply false
-    alias libs.plugins.serialization apply false
     alias libs.plugins.hilt.android apply false
-    alias libs.plugins.about.libraries apply false
-    alias libs.plugins.kover
-    alias libs.plugins.detekt
+    alias libs.plugins.kotlin.jvm apply false
+    alias libs.plugins.kotlin.serialization apply false
+    alias libs.plugins.kotlinx.kover
     alias libs.plugins.google.services apply false
     alias libs.plugins.firebase.crashlytics apply false
+    alias libs.plugins.detekt
+    alias libs.plugins.about.libraries apply false
     // alias libs.plugin.gradle.build.tools
     // alias libs.plugin.kotlin.gradle
 }
 
+
+/*
 // TODO(Abhi): Jacoco
-//subprojects {
-//    configurations.all {
-//        resolutionStrategy {
-//            eachDependency { details ->
-//                if ("org.jacoco" == details.requested.group) {
-//                    details.useVersion "0.8.7"
-//                }
-//            }
-//        }
-//    }
-//}
+subprojects {
+    configurations.all {
+        resolutionStrategy {
+            eachDependency { details ->
+                if ("org.jacoco" == details.requested.group) {
+                    details.useVersion "0.8.7"
+                }
+            }
+        }
+    }
+}
+*/
 
 task clean(type: Delete) {
     delete rootProject.buildDir

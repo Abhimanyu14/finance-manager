@@ -2,7 +2,7 @@ plugins {
     id "java-library"
     id "org.jetbrains.kotlin.jvm"
     id "com.android.lint"
-    id "org.jetbrains.kotlinx.kover"
+    alias libs.plugins.kotlinx.kover
 }
 
 java {
