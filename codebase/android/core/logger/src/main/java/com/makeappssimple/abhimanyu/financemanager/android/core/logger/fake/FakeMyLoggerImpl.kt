@@ -5,8 +5,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 
 class FakeMyLoggerImpl : MyLogger {
     override fun logError(
-        tag: String,
         message: String,
+        tag: String,
     ) {
         Log.e(tag, message)
     }

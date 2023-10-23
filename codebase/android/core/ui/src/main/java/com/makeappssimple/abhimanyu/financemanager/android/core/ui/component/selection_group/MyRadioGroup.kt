@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group
 
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -22,7 +21,6 @@ data class MyRadioGroupEvents(
     val onSelectionChange: (index: Int) -> Unit = {},
 )
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun MyRadioGroup(
     modifier: Modifier = Modifier,

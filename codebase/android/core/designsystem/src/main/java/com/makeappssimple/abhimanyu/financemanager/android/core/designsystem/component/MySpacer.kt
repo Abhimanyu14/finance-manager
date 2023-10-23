@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.areStatusBarsVisible
@@ -109,7 +108,6 @@ fun Modifier.navigationBarLandscapeSpacer(): Modifier {
     }
 }
 
-@OptIn(ExperimentalLayoutApi::class)
 fun Modifier.statusBarSpacer(): Modifier {
     return composed {
         if (WindowInsets.areStatusBarsVisible) {

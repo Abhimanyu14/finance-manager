@@ -28,6 +28,8 @@ import javax.inject.Inject
  * 13. Linting
  * 14. Architecture structure rules
  * 15. Groovy to Kotlin
+ * 16. Proguard/R8
+ * 17. Minify resources
  */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

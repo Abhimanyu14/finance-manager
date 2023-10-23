@@ -6,13 +6,12 @@ import androidx.room.PrimaryKey
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import kotlinx.serialization.EncodeDefault
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Entity(tableName = "account_table")
 @Serializable
-data class AccountEntity @OptIn(ExperimentalSerializationApi::class) constructor(
+data class AccountEntity(
     @EncodeDefault
     @ColumnInfo(name = "balance_amount")
     @SerialName(value = "balance_amount")

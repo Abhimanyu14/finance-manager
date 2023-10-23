@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.screen
 
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.runtime.Composable
@@ -20,7 +19,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.viewmodel.AddOrEditAccountScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.viewmodel.AddOrEditAccountScreenViewModelImpl
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun AddAccountScreen(
     screenViewModel: AddOrEditAccountScreenViewModel = hiltViewModel<AddOrEditAccountScreenViewModelImpl>(),
@@ -40,7 +38,7 @@ fun AddAccountScreen(
         key1 = isKeyboardOpen,
     ) {
         myLogger.logError(
-            message = "isKeyboardOpen $isKeyboardOpen ${focusedView} ${focusedView.isFocused}",
+            message = "isKeyboardOpen $isKeyboardOpen $focusedView ${focusedView.isFocused}",
         )
     }
 

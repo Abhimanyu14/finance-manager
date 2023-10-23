@@ -1,13 +1,12 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.model
 
 import kotlinx.serialization.EncodeDefault
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonNames
 
 @Serializable
-data class Category @OptIn(ExperimentalSerializationApi::class) constructor(
+data class Category(
     @EncodeDefault
     val id: Int = 0,
 

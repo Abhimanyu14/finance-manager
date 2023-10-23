@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Indication
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.clickable
@@ -36,7 +35,6 @@ fun Modifier.conditionalClickable(
     }
 }
 
-@OptIn(ExperimentalFoundationApi::class)
 fun Modifier.conditionalClickable(
     indication: Indication?,
     interactionSource: MutableInteractionSource,

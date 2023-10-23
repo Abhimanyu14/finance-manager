@@ -5,13 +5,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.currency.formattedCurrencyValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.serializer.CurrencySerializer
 import kotlinx.serialization.EncodeDefault
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import java.util.Currency
 import kotlin.math.abs
 
 @Serializable
-data class Amount @OptIn(ExperimentalSerializationApi::class) constructor(
+data class Amount(
     @EncodeDefault
     @Serializable(CurrencySerializer::class)
     val currency: Currency = Currency.getInstance(CurrencyCodeConstants.INR),

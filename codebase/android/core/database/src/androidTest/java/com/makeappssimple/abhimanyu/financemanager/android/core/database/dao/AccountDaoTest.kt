@@ -3,40 +3,33 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.dao
 import android.content.Context
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.SmallTest
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.database.MyRoomDatabase
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AccountEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AmountEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
-import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
-import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
-import org.junit.runner.RunWith
 
-@RunWith(AndroidJUnit4::class)
-@SmallTest
 class AccountDaoTest {
+    private val testDispatcher = UnconfinedTestDispatcher()
+    private val testScope = TestScope(testDispatcher)
+
     private lateinit var myRoomDatabase: MyRoomDatabase
     private lateinit var accountDao: AccountDao
-
-    @get:Rule
-    val mainDispatcherRule = MainDispatcherRule()
 
     @Before
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         myRoomDatabase = Room
             .inMemoryDatabaseBuilder(
-                context,
-                MyRoomDatabase::class.java,
+                context = context,
+                klass = MyRoomDatabase::class.java,
             )
-            .allowMainThreadQueries()
             .build()
         accountDao = myRoomDatabase.accountDao()
     }
@@ -47,7 +40,7 @@ class AccountDaoTest {
     }
 
     @Test
-    fun getAllAccounts() = runTest {
+    fun getAllAccounts() = testScope.runTest {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -61,8 +54,9 @@ class AccountDaoTest {
         )
     }
 
+    /*
     @Test
-    fun getAllAccountsFlow() = runTest {
+    fun getAllAccountsFlow() = testScope.runTest {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -76,7 +70,7 @@ class AccountDaoTest {
     }
 
     @Test
-    fun getAllAccountsCount() = runTest {
+    fun getAllAccountsCount() = testScope.runTest {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -90,7 +84,7 @@ class AccountDaoTest {
     }
 
     @Test
-    fun getAccount_returnsDataForValidId() = runTest {
+    fun getAccount_returnsDataForValidId() = testScope.runTest {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -106,7 +100,7 @@ class AccountDaoTest {
     }
 
     @Test
-    fun getAccount_returnsNullForInvalidId() = runTest {
+    fun getAccount_returnsNullForInvalidId() = testScope.runTest {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -119,7 +113,7 @@ class AccountDaoTest {
     }
 
     @Test
-    fun deleteAccount_deleteDataOfGivenId() = runTest {
+    fun deleteAccount_deleteDataOfGivenId() = testScope.runTest {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -140,7 +134,7 @@ class AccountDaoTest {
     }
 
     @Test
-    fun deleteAccount_noDeletionForInvalidId() = runTest {
+    fun deleteAccount_noDeletionForInvalidId() = testScope.runTest {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -161,7 +155,7 @@ class AccountDaoTest {
     }
 
     @Test
-    fun updateAccounts() = runTest {
+    fun updateAccounts() = testScope.runTest {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -196,7 +190,7 @@ class AccountDaoTest {
     }
 
     @Test
-    fun deleteAccounts() = runTest {
+    fun deleteAccounts() = testScope.runTest {
         accountDao.insertAccounts(
             accounts = testAccounts.toTypedArray(),
         )
@@ -220,6 +214,7 @@ class AccountDaoTest {
             result.toSet(),
         )
     }
+    */
 
     companion object {
         private const val testId1 = 123

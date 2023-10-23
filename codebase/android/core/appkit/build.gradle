@@ -31,6 +31,7 @@ android {
         jvmTarget = "1.8"
 
         freeCompilerArgs += [
+                // Kotlin
                 "-opt-in=kotlin.RequiresOptIn",
                 "-opt-in=kotlin.contracts.ExperimentalContracts",
                 "-opt-in=kotlin.ExperimentalUnsignedTypes",
