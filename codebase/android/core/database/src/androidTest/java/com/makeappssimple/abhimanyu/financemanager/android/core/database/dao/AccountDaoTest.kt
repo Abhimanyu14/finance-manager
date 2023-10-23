@@ -7,6 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.d
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AccountEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AmountEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -54,7 +55,6 @@ class AccountDaoTest {
         )
     }
 
-    /*
     @Test
     fun getAllAccountsFlow() = testScope.runTest {
         accountDao.insertAccounts(
@@ -214,7 +214,21 @@ class AccountDaoTest {
             result.toSet(),
         )
     }
-    */
+
+    @Test
+    fun deleteAllAccounts() = testScope.runTest {
+        accountDao.insertAccounts(
+            accounts = testAccounts.toTypedArray(),
+        )
+
+        accountDao.deleteAllAccounts()
+        val result = accountDao.getAllAccounts()
+
+        Assert.assertEquals(
+            0,
+            result.size,
+        )
+    }
 
     companion object {
         private const val testId1 = 123
