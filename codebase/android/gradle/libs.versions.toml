@@ -55,12 +55,12 @@ plugin-kotlin-kapt = "1.8.10" # TODO(Abhi): Fix version
 plugin-kotlin-kover = "0.6.1"
 plugin-gradle-build-tools = "7.3.1"
 plugin-hilt-android = "2.44.2"
+dagger-hilt-android = "2.44.2" # TODO(Abhi): Fix version
 plugin-google-services = "4.4.0"
 plugin-firebase-crashlytics = "2.9.9"
 plugin-jacoco = "0.8.7"
 plugin-detekt = "1.21.0"
 plugin-about-libraries = "10.8.3"
-
 
 [libraries]
 plugin-gradle-build-tools = { group = "com.android.tools.build", name = "gradle", version.ref = "plugin-gradle-build-tools" }
@@ -152,6 +152,7 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "plugin-kotlin-k
 kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "plugin-kotlin-kover" }
 gradle-build-tools = { id = "com.android.tools.build.gradle", version.ref = "plugin-gradle-build-tools" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "plugin-hilt-android" }
+dagger-hilt = { id = "dagger.hilt.android.plugin", version.ref = "dagger-hilt-android" }
 google-services = { id = "com.google.gms.google-services", version.ref = "plugin-google-services" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "plugin-firebase-crashlytics" }
 jacoco = { id = "org.jacoco.core", version.ref = "plugin-jacoco" }
