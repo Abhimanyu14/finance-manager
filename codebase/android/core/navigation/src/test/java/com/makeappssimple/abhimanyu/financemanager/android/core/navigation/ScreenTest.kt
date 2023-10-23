@@ -7,19 +7,28 @@ class ScreenTest {
     private lateinit var screen: Screen
 
     @Test
-    fun addCategory() {
-        screen = Screen.AddCategory
+    fun accounts() {
+        screen = Screen.Accounts
         Assert.assertEquals(
-            "add_category",
+            "accounts",
             screen.route,
         )
     }
 
     @Test
-    fun addSource() {
+    fun addAccount() {
         screen = Screen.AddAccount
         Assert.assertEquals(
-            "add_source",
+            "add_account",
+            screen.route,
+        )
+    }
+
+    @Test
+    fun addCategory() {
+        screen = Screen.AddCategory
+        Assert.assertEquals(
+            "add_category",
             screen.route,
         )
     }
@@ -34,10 +43,37 @@ class ScreenTest {
     }
 
     @Test
+    fun addTransactionFor() {
+        screen = Screen.AddTransactionFor
+        Assert.assertEquals(
+            "add_transaction_for",
+            screen.route,
+        )
+    }
+
+    @Test
+    fun analysis() {
+        screen = Screen.Analysis
+        Assert.assertEquals(
+            "analysis",
+            screen.route,
+        )
+    }
+
+    @Test
     fun categories() {
         screen = Screen.Categories
         Assert.assertEquals(
             "categories",
+            screen.route,
+        )
+    }
+
+    @Test
+    fun editAccount() {
+        screen = Screen.EditAccount
+        Assert.assertEquals(
+            "edit_account",
             screen.route,
         )
     }
@@ -52,19 +88,19 @@ class ScreenTest {
     }
 
     @Test
-    fun editSource() {
-        screen = Screen.EditAccount
+    fun editTransaction() {
+        screen = Screen.EditTransaction
         Assert.assertEquals(
-            "edit_source",
+            "edit_transaction",
             screen.route,
         )
     }
 
     @Test
-    fun editTransaction() {
-        screen = Screen.EditTransaction
+    fun editTransactionFor() {
+        screen = Screen.EditTransactionFor
         Assert.assertEquals(
-            "edit_transaction",
+            "edit_transaction_for",
             screen.route,
         )
     }
@@ -79,6 +115,15 @@ class ScreenTest {
     }
 
     @Test
+    fun openSourceLicenses() {
+        screen = Screen.OpenSourceLicenses
+        Assert.assertEquals(
+            "open_source_licenses",
+            screen.route,
+        )
+    }
+
+    @Test
     fun settings() {
         screen = Screen.Settings
         Assert.assertEquals(
@@ -88,10 +133,10 @@ class ScreenTest {
     }
 
     @Test
-    fun sources() {
-        screen = Screen.Accounts
+    fun transactionForValues() {
+        screen = Screen.TransactionForValues
         Assert.assertEquals(
-            "sources",
+            "transaction_for_values",
             screen.route,
         )
     }
@@ -101,6 +146,15 @@ class ScreenTest {
         screen = Screen.Transactions
         Assert.assertEquals(
             "transactions",
+            screen.route,
+        )
+    }
+
+    @Test
+    fun viewTransaction() {
+        screen = Screen.ViewTransaction
+        Assert.assertEquals(
+            "view_transaction",
             screen.route,
         )
     }

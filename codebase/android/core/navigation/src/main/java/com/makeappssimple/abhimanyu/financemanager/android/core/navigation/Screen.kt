@@ -3,12 +3,16 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.navigation
 sealed class Screen(
     val route: String,
 ) {
-    object AddCategory : Screen(
-        route = "add_category",
+    object Accounts : Screen(
+        route = "accounts",
     )
 
     object AddAccount : Screen(
         route = "add_account",
+    )
+
+    object AddCategory : Screen(
+        route = "add_category",
     )
 
     object AddTransaction : Screen(
@@ -27,12 +31,12 @@ sealed class Screen(
         route = "categories",
     )
 
-    object EditCategory : Screen(
-        route = "edit_category",
-    )
-
     object EditAccount : Screen(
         route = "edit_account",
+    )
+
+    object EditCategory : Screen(
+        route = "edit_category",
     )
 
     object EditTransaction : Screen(
@@ -53,10 +57,6 @@ sealed class Screen(
 
     object Settings : Screen(
         route = "settings",
-    )
-
-    object Accounts : Screen(
-        route = "accounts",
     )
 
     object TransactionForValues : Screen(
