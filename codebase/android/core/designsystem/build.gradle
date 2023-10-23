@@ -39,10 +39,6 @@ android {
                 "-opt-in=kotlinx.coroutines.InternalCoroutinesApi",
                 "-opt-in=kotlinx.coroutines.ObsoleteCoroutinesApi",
 
-                "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
-
-                "-opt-in=androidx.lifecycle.compose.ExperimentalLifecycleComposeApi",
-
                 "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
                 "-opt-in=androidx.compose.animation.core.InternalAnimationApi",
                 "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",

@@ -39,17 +39,6 @@ android {
                 "-opt-in=kotlinx.coroutines.FlowPreview",
                 "-opt-in=kotlinx.coroutines.InternalCoroutinesApi",
                 "-opt-in=kotlinx.coroutines.ObsoleteCoroutinesApi",
-
-                "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
-
-                "-opt-in=androidx.lifecycle.compose.ExperimentalLifecycleComposeApi",
-
-                "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
-                "-opt-in=androidx.compose.animation.core.InternalAnimationApi",
-                "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
-                "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
-                "-opt-in=androidx.compose.runtime.ExperimentalComposeApi",
-                "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
         ]
     }
 }
