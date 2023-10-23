@@ -1,10 +1,10 @@
 plugins {
     alias libs.plugins.android.library
-    id "dagger.hilt.android.plugin"
     alias libs.plugins.kotlin.android
     alias libs.plugins.kotlin.serialization
     alias libs.plugins.kotlin.kapt
     alias libs.plugins.kotlinx.kover
+    alias libs.plugins.hilt.android
 }
 
 android {
@@ -44,12 +44,6 @@ android {
                 "-opt-in=kotlinx.coroutines.InternalCoroutinesApi",
                 "-opt-in=kotlinx.coroutines.ObsoleteCoroutinesApi",
                 "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
-
-                // Androidx lifecycle
-                "-opt-in=androidx.lifecycle.compose.ExperimentalLifecycleComposeApi",
-
-                // Compose
-                "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
         ]
     }
 }

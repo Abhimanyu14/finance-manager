@@ -1,11 +1,11 @@
 plugins {
     alias libs.plugins.android.application
-    id "dagger.hilt.android.plugin"
-    id "jacoco"
-    id "com.google.devtools.ksp" version "1.8.10-1.0.9"
+    id "jacoco" // TODO(Abhi): Change to version catalog
     alias libs.plugins.kotlin.android
     alias libs.plugins.kotlin.kapt
     alias libs.plugins.kotlinx.kover
+    alias libs.plugins.ksp
+    alias libs.plugins.hilt.android
     alias libs.plugins.google.services
     alias libs.plugins.firebase.crashlytics
     alias libs.plugins.detekt

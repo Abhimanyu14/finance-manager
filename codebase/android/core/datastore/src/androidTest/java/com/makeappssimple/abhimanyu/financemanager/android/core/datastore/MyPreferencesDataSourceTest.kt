@@ -7,9 +7,10 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStoreFile
 import androidx.test.core.app.ApplicationProvider
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.AppConstants
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.logger.fake.FakeMyLoggerImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
@@ -17,189 +18,190 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.TestScope
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import javax.inject.Inject
+import org.junit.runner.RunWith
 
 @HiltAndroidTest
+@RunWith(AndroidJUnit4::class)
 class MyPreferencesDataSourceTest {
+    private val testContext: Context = ApplicationProvider.getApplicationContext()
+    private val testDispatcher = UnconfinedTestDispatcher()
+    private val testScope = TestScope(testDispatcher + Job())
+
     @get:Rule(order = 0)
     var hiltRule = HiltAndroidRule(this)
 
     @get:Rule(order = 1)
     val mainDispatcherRule = MainDispatcherRule()
 
-    @Inject
-    lateinit var dispatcherProvider: DispatcherProvider
-
-    private val testCoroutineScope = TestScope(
-        context = dispatcherProvider.io + Job(),
-    )
-    private val testContext: Context = ApplicationProvider.getApplicationContext()
-    private val testDataStore: DataStore<Preferences> = PreferenceDataStoreFactory.create(
-        scope = testCoroutineScope,
-        produceFile = {
-            testContext.preferencesDataStoreFile(
-                name = AppConstants.APP_NAME,
-            )
-        },
-    )
-
-    @Inject
-    lateinit var myLogger: MyLogger
+    private lateinit var testDataStore: DataStore<Preferences>
+    private lateinit var testMyLogger: MyLogger
 
     private lateinit var myPreferencesDataSource: MyPreferencesDataSource
 
     @Before
     fun setUp() {
+        hiltRule.inject()
+
+        testDataStore = PreferenceDataStoreFactory.create(
+            scope = testScope,
+            produceFile = {
+                testContext.preferencesDataStoreFile(
+                    name = AppConstants.APP_NAME,
+                )
+            },
+        )
+        testMyLogger = FakeMyLoggerImpl()
         myPreferencesDataSource = MyPreferencesDataSource(
             dataStore = testDataStore,
-            myLogger = myLogger,
+            myLogger = testMyLogger,
         )
     }
 
     @After
     fun tearDown() {
-        testCoroutineScope.runTest {
+        testScope.runTest {
             testDataStore.edit {
                 it.clear()
             }
         }
-        testCoroutineScope.cancel()
+        testScope.cancel()
     }
 
     @Test
-    fun getDefaultExpenseCategoryIdFromDataStore_returnsNull() = testCoroutineScope.runTest {
+    fun getDefaultExpenseCategoryIdFromDataStore_returnsNull() = testScope.runTest {
         val result = myPreferencesDataSource.getDefaultDataId().first()?.expenseCategory
 
         Assert.assertNull(result)
     }
 
     @Test
-    fun setDefaultExpenseCategoryIdInDataStore_defaultTest() = testCoroutineScope.runTest {
+    fun setDefaultExpenseCategoryIdInDataStore_defaultTest() = testScope.runTest {
         myPreferencesDataSource.setDefaultExpenseCategoryId(
-            defaultExpenseCategoryId = testId,
+            defaultExpenseCategoryId = TEST_ID,
         )
 
         val result = myPreferencesDataSource.getDefaultDataId().first()?.expenseCategory
 
         Assert.assertEquals(
-            testId,
+            TEST_ID,
             result,
         )
     }
 
     @Test
-    fun getDefaultIncomeCategoryIdFromDataStore_returnsNull() = testCoroutineScope.runTest {
+    fun getDefaultIncomeCategoryIdFromDataStore_returnsNull() = testScope.runTest {
         val result = myPreferencesDataSource.getDefaultDataId().first()?.incomeCategory
 
         Assert.assertNull(result)
     }
 
     @Test
-    fun setDefaultIncomeCategoryIdInDataStore_defaultTest() = testCoroutineScope.runTest {
+    fun setDefaultIncomeCategoryIdInDataStore_defaultTest() = testScope.runTest {
         myPreferencesDataSource.setDefaultIncomeCategoryId(
-            defaultIncomeCategoryId = testId,
+            defaultIncomeCategoryId = TEST_ID,
         )
 
         val result = myPreferencesDataSource.getDefaultDataId().first()?.incomeCategory
 
         Assert.assertEquals(
-            testId,
+            TEST_ID,
             result,
         )
     }
 
     @Test
-    fun getDefaultInvestmentCategoryIdFromDataStore_returnsNull() = testCoroutineScope.runTest {
+    fun getDefaultInvestmentCategoryIdFromDataStore_returnsNull() = testScope.runTest {
         val result = myPreferencesDataSource.getDefaultDataId().first()?.investmentCategory
 
         Assert.assertNull(result)
     }
 
     @Test
-    fun setDefaultInvestmentCategoryIdInDataStore_defaultTest() = testCoroutineScope.runTest {
+    fun setDefaultInvestmentCategoryIdInDataStore_defaultTest() = testScope.runTest {
         myPreferencesDataSource.setDefaultInvestmentCategoryId(
-            defaultInvestmentCategoryId = testId,
+            defaultInvestmentCategoryId = TEST_ID,
         )
 
         val result = myPreferencesDataSource.getDefaultDataId().first()?.investmentCategory
 
         Assert.assertEquals(
-            testId,
+            TEST_ID,
             result,
         )
     }
 
     @Test
-    fun getDefaultAccountIdFromDataStore_returnsNull() = testCoroutineScope.runTest {
+    fun getDefaultAccountIdFromDataStore_returnsNull() = testScope.runTest {
         val result = myPreferencesDataSource.getDefaultDataId().first()?.account
 
         Assert.assertNull(result)
     }
 
     @Test
-    fun setDefaultAccountIdInDataStore_defaultTest() = testCoroutineScope.runTest {
+    fun setDefaultAccountIdInDataStore_defaultTest() = testScope.runTest {
         myPreferencesDataSource.setDefaultAccountId(
-            defaultAccountId = testId,
+            defaultAccountId = TEST_ID,
         )
 
         val result = myPreferencesDataSource.getDefaultDataId().first()?.account
 
         Assert.assertEquals(
-            testId,
+            TEST_ID,
             result,
         )
     }
 
     @Test
-    fun getLastDataBackupTimestamp_returnsNull() = testCoroutineScope.runTest {
+    fun getLastDataBackupTimestamp_returnsNull() = testScope.runTest {
         val result = myPreferencesDataSource.getDataTimestamp().first()?.lastBackup
 
         Assert.assertNull(result)
     }
 
     @Test
-    fun setLastDataBackupTimestamp_defaultTest() = testCoroutineScope.runTest {
+    fun setLastDataBackupTimestamp_defaultTest() = testScope.runTest {
         myPreferencesDataSource.setLastDataBackupTimestamp(
-            lastDataBackupTimestamp = testTimestamp,
+            lastDataBackupTimestamp = TEST_TIMESTAMP,
         )
 
         val result = myPreferencesDataSource.getDataTimestamp().first()?.lastBackup
 
         Assert.assertEquals(
-            testTimestamp,
+            TEST_TIMESTAMP,
             result,
         )
     }
 
     @Test
-    fun getLastDataChangeTimestamp_returnsNull() = testCoroutineScope.runTest {
+    fun getLastDataChangeTimestamp_returnsNull() = testScope.runTest {
         val result = myPreferencesDataSource.getDataTimestamp().first()?.lastChange
 
         Assert.assertNull(result)
     }
 
     @Test
-    fun setLastDataChangeTimestamp_defaultTest() = testCoroutineScope.runTest {
+    fun setLastDataChangeTimestamp_defaultTest() = testScope.runTest {
         myPreferencesDataSource.setLastDataChangeTimestamp(
-            lastDataChangeTimestamp = testTimestamp,
+            lastDataChangeTimestamp = TEST_TIMESTAMP,
         )
 
         val result = myPreferencesDataSource.getDataTimestamp().first()?.lastChange
 
         Assert.assertEquals(
-            testTimestamp,
+            TEST_TIMESTAMP,
             result,
         )
     }
 
     companion object {
-        const val testId = 34
-        const val testTimestamp = 32654L
+        const val TEST_ID = 34
+        const val TEST_TIMESTAMP = 32654L
     }
 }
