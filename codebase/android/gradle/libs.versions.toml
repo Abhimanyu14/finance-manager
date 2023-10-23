@@ -46,6 +46,7 @@ hilt-android-compiler = "2.47"
 
 #plugins
 agp = "7.3.1"
+plugin-android-library = "7.3.1"
 plugin-kotlin-android = "1.8.10"
 plugin-kotlin-jvm = "1.7.20"
 plugin-kotlin-serialization = "1.7.20"
@@ -142,7 +143,7 @@ compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-mani
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-android-library = { id = "com.android.library", version.ref = "agp" }
+android-library = { id = "com.android.library", version.ref = "plugin-android-library" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "plugin-kotlin-android" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "plugin-kotlin-jvm" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "plugin-kotlin-serialization" }
