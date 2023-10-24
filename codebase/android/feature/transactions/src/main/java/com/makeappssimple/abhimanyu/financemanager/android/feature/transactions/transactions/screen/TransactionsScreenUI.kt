@@ -147,7 +147,7 @@ sealed class TransactionsScreenUIEvent {
 internal fun TransactionsScreenUI(
     uiState: TransactionsScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: TransactionsScreenUIEvent) -> Unit,
+    handleUIEvents: (uiEvent: TransactionsScreenUIEvent) -> Unit = {},
 ) {
     val resetSelectionMode = {
         uiState.setIsInSelectionMode(false)

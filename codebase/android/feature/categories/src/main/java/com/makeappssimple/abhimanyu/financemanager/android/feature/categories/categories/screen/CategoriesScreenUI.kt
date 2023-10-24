@@ -82,7 +82,7 @@ sealed class CategoriesScreenUIEvent {
 internal fun CategoriesScreenUI(
     uiState: CategoriesScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: CategoriesScreenUIEvent) -> Unit,
+    handleUIEvents: (uiEvent: CategoriesScreenUIEvent) -> Unit = {},
 ) {
     LaunchedEffect(
         key1 = uiState.pagerState.currentPage,

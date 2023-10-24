@@ -76,7 +76,7 @@ sealed class AddOrEditTransactionForScreenUIEvent {
 internal fun AddOrEditTransactionForScreenUI(
     uiState: AddOrEditTransactionForScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: AddOrEditTransactionForScreenUIEvent) -> Unit,
+    handleUIEvents: (uiEvent: AddOrEditTransactionForScreenUIEvent) -> Unit = {},
 ) {
     if (!uiState.isLoading) {
         LaunchedEffect(

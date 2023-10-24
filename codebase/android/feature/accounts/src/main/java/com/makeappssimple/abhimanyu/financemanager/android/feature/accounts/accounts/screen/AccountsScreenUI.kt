@@ -66,7 +66,7 @@ sealed class AccountsScreenUIEvent {
 internal fun AccountsScreenUI(
     uiState: AccountsScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: AccountsScreenUIEvent) -> Unit,
+    handleUIEvents: (uiEvent: AccountsScreenUIEvent) -> Unit = {},
 ) {
     BottomSheetHandler(
         showModalBottomSheet = uiState.accountsBottomSheetType != AccountsBottomSheetType.NONE,

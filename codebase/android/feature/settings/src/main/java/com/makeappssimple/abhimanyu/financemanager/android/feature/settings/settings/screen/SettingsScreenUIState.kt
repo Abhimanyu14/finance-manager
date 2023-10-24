@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.My
 class SettingsScreenUIState(
     data: MyResult<SettingsScreenUIData>? = null,
     val settingsBottomSheetType: SettingsBottomSheetType = SettingsBottomSheetType.NONE,
-    val snackbarHostState: SnackbarHostState,
+    val snackbarHostState: SnackbarHostState = SnackbarHostState(),
     val setSettingsBottomSheetType: (SettingsBottomSheetType) -> Unit = {},
 ) {
     private val unwrappedData = when (data) {

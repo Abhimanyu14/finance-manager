@@ -78,7 +78,7 @@ sealed class SettingsScreenUIEvent {
 internal fun SettingsScreenUI(
     uiState: SettingsScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: SettingsScreenUIEvent) -> Unit,
+    handleUIEvents: (uiEvent: SettingsScreenUIEvent) -> Unit = {},
 ) {
     val context = LocalContext.current
     val listItemsData: List<SettingsScreenListItemData> = listOf(

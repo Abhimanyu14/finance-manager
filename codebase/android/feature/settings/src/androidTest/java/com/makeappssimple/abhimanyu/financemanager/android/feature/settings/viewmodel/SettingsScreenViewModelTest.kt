@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.viewmodel
 
 /*
-
 @HiltAndroidTest
 class SettingsScreenViewModelTest {
     @get:Rule(order = 0)

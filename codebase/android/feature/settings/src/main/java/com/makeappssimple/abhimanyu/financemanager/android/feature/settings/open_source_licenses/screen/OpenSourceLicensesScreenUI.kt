@@ -33,7 +33,7 @@ sealed class OpenSourceLicensesScreenUIEvent {
 internal fun OpenSourceLicensesScreenUI(
     uiState: OpenSourceLicensesScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: OpenSourceLicensesScreenUIEvent) -> Unit,
+    handleUIEvents: (uiEvent: OpenSourceLicensesScreenUIEvent) -> Unit = {},
 ) {
     MyScaffold(
         modifier = Modifier

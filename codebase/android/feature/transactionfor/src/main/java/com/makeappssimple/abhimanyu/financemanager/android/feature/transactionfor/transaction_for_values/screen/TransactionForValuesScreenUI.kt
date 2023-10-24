@@ -65,7 +65,7 @@ sealed class TransactionForValuesScreenUIEvent {
 internal fun TransactionForValuesScreenUI(
     uiState: TransactionForValuesScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: TransactionForValuesScreenUIEvent) -> Unit,
+    handleUIEvents: (uiEvent: TransactionForValuesScreenUIEvent) -> Unit = {},
 ) {
     BottomSheetHandler(
         showModalBottomSheet = uiState.transactionForValuesBottomSheetType != TransactionForValuesBottomSheetType.None,

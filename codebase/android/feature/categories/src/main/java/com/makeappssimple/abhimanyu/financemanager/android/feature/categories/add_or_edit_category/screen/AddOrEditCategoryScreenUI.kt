@@ -105,7 +105,7 @@ sealed class AddOrEditCategoryScreenUIEvent {
 internal fun AddOrEditCategoryScreenUI(
     uiState: AddOrEditCategoryScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: AddOrEditCategoryScreenUIEvent) -> Unit,
+    handleUIEvents: (uiEvent: AddOrEditCategoryScreenUIEvent) -> Unit = {},
 ) {
     if (!uiState.isLoading) {
         LaunchedEffect(

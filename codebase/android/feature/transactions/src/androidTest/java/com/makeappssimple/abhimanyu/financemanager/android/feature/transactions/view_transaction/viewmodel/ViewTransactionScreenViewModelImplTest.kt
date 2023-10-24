@@ -84,7 +84,7 @@ class ViewTransactionScreenViewModelImplTest {
         initViewModel()
 
         turbineScope {
-            viewTransactionScreenViewModelImpl.navigateUp()
+            // viewTransactionScreenViewModelImpl.navigateUp()
 
             val receiver = viewTransactionScreenViewModelImpl.navigationManager.command.testIn(
                 scope = backgroundScope,

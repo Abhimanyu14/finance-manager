@@ -68,7 +68,7 @@ sealed class ViewTransactionScreenUIEvent {
 internal fun ViewTransactionScreenUI(
     uiState: ViewTransactionScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: ViewTransactionScreenUIEvent) -> Unit,
+    handleUIEvents: (uiEvent: ViewTransactionScreenUIEvent) -> Unit = {},
 ) {
     BottomSheetHandler(
         showModalBottomSheet = uiState.viewTransactionBottomSheetType != ViewTransactionBottomSheetType.NONE,

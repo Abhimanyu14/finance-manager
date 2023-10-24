@@ -72,7 +72,7 @@ sealed class AnalysisScreenUIEvent {
 internal fun AnalysisScreenUI(
     uiState: AnalysisScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: AnalysisScreenUIEvent) -> Unit,
+    handleUIEvents: (uiEvent: AnalysisScreenUIEvent) -> Unit = {},
 ) {
     BottomSheetHandler(
         showModalBottomSheet = uiState.analysisBottomSheetType != AnalysisBottomSheetType.NONE,

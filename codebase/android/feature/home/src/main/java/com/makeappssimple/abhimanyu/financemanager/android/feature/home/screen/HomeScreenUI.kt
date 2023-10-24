@@ -80,7 +80,7 @@ sealed class HomeScreenUIEvent {
 internal fun HomeScreenUI(
     uiState: HomeScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: HomeScreenUIEvent) -> Unit,
+    handleUIEvents: (uiEvent: HomeScreenUIEvent) -> Unit = {},
 ) {
     MyScaffold(
         modifier = Modifier

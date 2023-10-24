@@ -11,7 +11,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIState
 import org.junit.Before
 import org.junit.Rule
@@ -56,7 +55,6 @@ class SettingsScreenViewTest {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
-                    events = SettingsScreenUIEvent(),
                     uiState = SettingsScreenUIState(
                         data = MyResult.Success(
                             data = testSettingsScreenViewData.copy(
@@ -89,7 +87,6 @@ class SettingsScreenViewTest {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
-                    events = SettingsScreenUIEvent(),
                     uiState = SettingsScreenUIState(
                         data = MyResult.Success(
                             data = testSettingsScreenViewData.copy(
@@ -122,11 +119,10 @@ class SettingsScreenViewTest {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
-                    events = SettingsScreenUIEvent(),
                     uiState = SettingsScreenUIState(
                         data = MyResult.Success(
                             data = testSettingsScreenViewData.copy(
-                                appVersion = testAppVersion,
+                                appVersion = TEST_APP_VERSION,
                             ),
                         ),
                     ),
@@ -134,7 +130,7 @@ class SettingsScreenViewTest {
             }
         }
 
-        // Assert that the progress indicator is not shown
+        linearProgressIndicator.assertDoesNotExist()
         appVersionText.assertIsDisplayed()
     }
 
@@ -143,7 +139,6 @@ class SettingsScreenViewTest {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
-                    events = SettingsScreenUIEvent(),
                     uiState = SettingsScreenUIState(
                         data = MyResult.Success(
                             data = testSettingsScreenViewData.copy(
@@ -155,15 +150,15 @@ class SettingsScreenViewTest {
             }
         }
 
-        // Assert that the progress indicator is not shown
+        linearProgressIndicator.assertDoesNotExist()
         appVersionText.assertDoesNotExist()
     }
 
     companion object {
-        private const val testAppVersion = "2023.04.07.1"
+        private const val TEST_APP_VERSION = "2023.04.07.1"
         private val testSettingsScreenViewData = SettingsScreenUIData(
             isLoading = false,
-            appVersion = testAppVersion,
+            appVersion = TEST_APP_VERSION,
         )
     }
 }

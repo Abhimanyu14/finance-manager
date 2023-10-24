@@ -1,15 +1,12 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.viewmodel
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigUtilImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.DeleteAccountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.GetAccountsTotalBalanceAmountValueUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.GetAccountsTotalMinimumBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase.GetAllAccountsFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase.CheckIfAccountIsUsedInTransactionsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
-import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLoggerImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManagerImpl
@@ -40,12 +37,10 @@ class AccountsScreenViewModelTest {
     private val getAllAccountsFlowUseCase: GetAllAccountsFlowUseCase = mock()
     private val getAccountsTotalBalanceAmountValueUseCase: GetAccountsTotalBalanceAmountValueUseCase =
         mock()
+    private val getAccountsTotalMinimumBalanceAmountValueUseCase: GetAccountsTotalMinimumBalanceAmountValueUseCase =
+        mock()
     private val navigationManager: NavigationManager = NavigationManagerImpl(
         coroutineScope = testCoroutineScope,
-    )
-    private var buildConfigUtil: BuildConfigUtil = BuildConfigUtilImpl()
-    private var myLogger: MyLogger = MyLoggerImpl(
-        buildConfigUtil = buildConfigUtil,
     )
     private val checkIfAccountIsUsedInTransactionsUseCase: CheckIfAccountIsUsedInTransactionsUseCase =
         mock()
@@ -59,11 +54,12 @@ class AccountsScreenViewModelTest {
         accountsScreenViewModel = AccountsScreenViewModelImpl(
             getAllAccountsFlowUseCase = getAllAccountsFlowUseCase,
             getAccountsTotalBalanceAmountValueUseCase = getAccountsTotalBalanceAmountValueUseCase,
-            navigationManager = navigationManager,
+            getAccountsTotalMinimumBalanceAmountValueUseCase = getAccountsTotalMinimumBalanceAmountValueUseCase,
             checkIfAccountIsUsedInTransactionsUseCase = checkIfAccountIsUsedInTransactionsUseCase,
             deleteAccountUseCase = deleteAccountUseCase,
             dispatcherProvider = dispatcherProvider,
             myPreferencesRepository = myPreferencesRepository,
+            navigationManager = navigationManager,
         )
     }
 

@@ -111,7 +111,7 @@ sealed class AddOrEditAccountScreenUIEvent {
 internal fun AddOrEditAccountScreenUI(
     uiState: AddOrEditAccountScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: AddOrEditAccountScreenUIEvent) -> Unit,
+    handleUIEvents: (uiEvent: AddOrEditAccountScreenUIEvent) -> Unit = {},
 ) {
     if (!uiState.isLoading) {
         LaunchedEffect(

@@ -147,7 +147,7 @@ sealed class AddOrEditTransactionScreenUIEvent {
 internal fun AddOrEditTransactionScreenUI(
     uiState: AddOrEditTransactionScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: AddOrEditTransactionScreenUIEvent) -> Unit,
+    handleUIEvents: (uiEvent: AddOrEditTransactionScreenUIEvent) -> Unit = {},
 ) {
     val clearFocus = {
         state.focusManager.clearFocus()
