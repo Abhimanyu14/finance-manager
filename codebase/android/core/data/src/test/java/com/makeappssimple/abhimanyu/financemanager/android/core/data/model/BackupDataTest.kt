@@ -10,13 +10,7 @@ class BackupDataTest {
     fun backupData_defaultValues() {
         backupData = BackupData()
 
-        Assert.assertEquals(
-            "",
-            backupData.lastBackupTime,
-        )
-        Assert.assertEquals(
-            "",
-            backupData.lastBackupTimestamp,
-        )
+        Assert.assertNull(backupData.lastBackupTime)
+        Assert.assertNull(backupData.lastBackupTimestamp)
     }
 }

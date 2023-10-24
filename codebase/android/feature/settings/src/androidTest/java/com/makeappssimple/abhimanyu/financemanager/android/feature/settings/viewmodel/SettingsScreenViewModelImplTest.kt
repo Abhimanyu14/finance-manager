@@ -271,7 +271,6 @@ class SettingsScreenViewModelImplTest {
     private fun initViewModel() {
         settingsScreenViewModelImpl = SettingsScreenViewModelImpl(
             appVersionUtil = appVersionUtil,
-            myLogger = myLogger,
             navigationManager = navigationManager,
             backupDataUseCase = backupDataUseCase,
             ioDispatcher = dispatcherProvider.io,

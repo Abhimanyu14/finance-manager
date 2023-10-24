@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Lock
-import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -19,12 +18,14 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
+import com.makeappssimple.abhimanyu.financemanager.android.core.testing.constants.TestTags
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.matchrowsize.matchRowSize
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
@@ -53,8 +54,9 @@ fun TotalBalanceCard(
             modifier = modifier,
         )
     } else {
-        Card(
+        Column(
             modifier = modifier
+                .testTag(TestTags.TOTAL_BALANCE_CARD)
                 .fillMaxWidth()
                 .padding(
                     horizontal = 32.dp,
@@ -63,68 +65,64 @@ fun TotalBalanceCard(
                 .clip(
                     MaterialTheme.shapes.medium,
                 )
+                .background(
+                    color = MaterialTheme.colorScheme.tertiary,
+                )
                 .conditionalClickable(
                     onClick = events.onClick,
+                )
+                .padding(
+                    all = 16.dp,
                 ),
         ) {
-            Column(
+            MyText(
                 modifier = Modifier
-                    .background(
-                        color = MaterialTheme.colorScheme.tertiary,
-                    )
-                    .padding(
-                        all = 16.dp,
+                    .fillMaxWidth(),
+                textStringResourceId = R.string.total_balance_card_title,
+                style = MaterialTheme.typography.displaySmall
+                    .copy(
+                        color = MaterialTheme.colorScheme.onTertiary,
+                        textAlign = TextAlign.Center,
                     ),
+            )
+            MyText(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                text = Amount(
+                    value = data.totalBalanceAmount,
+                ).toString(),
+                style = MaterialTheme.typography.displayLarge
+                    .copy(
+                        color = MaterialTheme.colorScheme.onTertiary,
+                        textAlign = TextAlign.Center,
+                    ),
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(IntrinsicSize.Min),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                MyText(
+                Icon(
                     modifier = Modifier
-                        .fillMaxWidth(),
-                    textStringResourceId = R.string.total_balance_card_title,
-                    style = MaterialTheme.typography.displaySmall
-                        .copy(
-                            color = MaterialTheme.colorScheme.onTertiary,
-                            textAlign = TextAlign.Center,
-                        ),
+                        .padding(2.dp)
+                        .matchRowSize(),
+                    imageVector = Icons.Rounded.Lock,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onTertiary,
                 )
                 MyText(
-                    modifier = Modifier
-                        .fillMaxWidth(),
                     text = Amount(
-                        value = data.totalBalanceAmount,
+                        value = data.totalMinimumBalanceAmount,
                     ).toString(),
-                    style = MaterialTheme.typography.displayLarge
+                    style = MaterialTheme.typography.bodySmall
                         .copy(
+                            fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onTertiary,
-                            textAlign = TextAlign.Center,
+                            textAlign = TextAlign.End,
                         ),
                 )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(IntrinsicSize.Min),
-                    horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Icon(
-                        modifier = Modifier
-                            .padding(4.dp)
-                            .matchRowSize(),
-                        imageVector = Icons.Rounded.Lock,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onTertiary,
-                    )
-                    MyText(
-                        text = Amount(
-                            value = data.totalMinimumBalanceAmount,
-                        ).toString(),
-                        style = MaterialTheme.typography.bodySmall
-                            .copy(
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onTertiary,
-                                textAlign = TextAlign.End,
-                            ),
-                    )
-                }
             }
         }
     }

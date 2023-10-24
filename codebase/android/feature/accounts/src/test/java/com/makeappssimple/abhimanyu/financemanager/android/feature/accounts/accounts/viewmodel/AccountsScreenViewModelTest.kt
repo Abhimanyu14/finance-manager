@@ -59,7 +59,6 @@ class AccountsScreenViewModelTest {
         accountsScreenViewModel = AccountsScreenViewModelImpl(
             getAllAccountsFlowUseCase = getAllAccountsFlowUseCase,
             getAccountsTotalBalanceAmountValueUseCase = getAccountsTotalBalanceAmountValueUseCase,
-            myLogger = myLogger,
             navigationManager = navigationManager,
             checkIfAccountIsUsedInTransactionsUseCase = checkIfAccountIsUsedInTransactionsUseCase,
             deleteAccountUseCase = deleteAccountUseCase,

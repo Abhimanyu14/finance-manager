@@ -102,7 +102,6 @@ class ViewTransactionScreenViewModelImplTest {
         viewTransactionScreenViewModelImpl = ViewTransactionScreenViewModelImpl(
             savedStateHandle = savedStateHandle,
             stringDecoder = stringDecoder,
-            myLogger = myLogger,
             dateTimeUtil = dateTimeUtil,
             deleteTransactionUseCase = deleteTransactionUseCase,
             dispatcherProvider = dispatcherProvider,
