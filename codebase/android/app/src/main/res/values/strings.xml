@@ -2,5 +2,6 @@
 
     <!-- App name -->
     <string name="app_name">Finance Manager</string>
+    <string name="title_activity_hilt_component">HiltComponentActivity</string>
 
 </resources>
