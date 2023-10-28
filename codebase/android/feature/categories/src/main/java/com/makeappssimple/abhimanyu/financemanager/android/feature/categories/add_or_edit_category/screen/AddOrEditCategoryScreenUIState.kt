@@ -9,6 +9,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
@@ -16,11 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 @Stable
 class AddOrEditCategoryScreenUIState(
     data: MyResult<AddOrEditCategoryScreenUIData>?,
-    isEdit: Boolean,
-    val addOrEditCategoryBottomSheetType: AddOrEditCategoryBottomSheetType,
-    val setAddOrEditCategoryBottomSheetType: (AddOrEditCategoryBottomSheetType) -> Unit,
-) {
-    private val unwrappedData = when (data) {
+    private val unwrappedData: AddOrEditCategoryScreenUIData? = when (data) {
         is MyResult.Success -> {
             data.data
         }
@@ -28,40 +25,40 @@ class AddOrEditCategoryScreenUIState(
         else -> {
             null
         }
-    }
-
-    val isLoading: Boolean = unwrappedData.isNull()
-    val isCtaButtonEnabled: Boolean = unwrappedData?.isCtaButtonEnabled.orFalse()
-    val selectedTransactionTypeIndex: Int? = unwrappedData?.selectedTransactionTypeIndex
+    },
+    isEdit: Boolean,
+    val addOrEditCategoryBottomSheetType: AddOrEditCategoryBottomSheetType,
+    val setAddOrEditCategoryBottomSheetType: (AddOrEditCategoryBottomSheetType) -> Unit,
+    val isLoading: Boolean = unwrappedData.isNull(),
+    val isCtaButtonEnabled: Boolean = unwrappedData?.isCtaButtonEnabled.orFalse(),
+    val selectedTransactionTypeIndex: Int? = unwrappedData?.selectedTransactionTypeIndex,
     val transactionTypesChipUIData: List<ChipUIData> =
         unwrappedData?.validTransactionTypes?.map { transactionType ->
             ChipUIData(
                 text = transactionType.title,
             )
-        }.orEmpty()
-    val emoji: String = unwrappedData?.emoji.orEmpty()
-    val emojiSearchText: String = unwrappedData?.emojiSearchText.orEmpty()
-    val title: TextFieldValue = unwrappedData?.title.orEmpty()
-    val titleTextFieldErrorTextStringResourceId =
-        unwrappedData?.titleTextFieldError?.textStringResourceId
-
+        }.orEmpty(),
+    val emoji: String = unwrappedData?.emoji.orEmpty(),
+    val emojiSearchText: String = unwrappedData?.emojiSearchText.orEmpty(),
+    val title: TextFieldValue = unwrappedData?.title.orEmpty(),
+    val titleTextFieldErrorTextStringResourceId: Int? =
+        unwrappedData?.titleTextFieldError?.textStringResourceId,
     @StringRes
     val appBarTitleTextStringResourceId: Int = if (isEdit) {
         R.string.screen_edit_category_appbar_title
     } else {
         R.string.screen_add_category_appbar_title
-    }
-
+    },
     @StringRes
     val ctaButtonLabelTextStringResourceId: Int = if (isEdit) {
         R.string.screen_edit_category_floating_action_button_content_description
     } else {
         R.string.screen_add_category_floating_action_button_content_description
-    }
+    },
     val resetBottomSheetType: () -> Unit = {
         setAddOrEditCategoryBottomSheetType(AddOrEditCategoryBottomSheetType.NONE)
-    }
-}
+    },
+) : ScreenUIState
 
 @Composable
 fun rememberAddOrEditCategoryScreenUIState(

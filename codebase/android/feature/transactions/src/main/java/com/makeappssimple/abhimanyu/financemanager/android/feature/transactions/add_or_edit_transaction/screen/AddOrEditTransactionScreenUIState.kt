@@ -12,6 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiStateData
@@ -22,15 +23,7 @@ import java.time.LocalDate
 @Stable
 class AddOrEditTransactionScreenUIState(
     data: MyResult<AddOrEditTransactionScreenUIData>?,
-    isEdit: Boolean,
-    val addOrEditTransactionBottomSheetType: AddOrEditTransactionBottomSheetType,
-    val isTransactionDatePickerDialogVisible: Boolean,
-    val isTransactionTimePickerDialogVisible: Boolean,
-    val setAddOrEditTransactionBottomSheetType: (AddOrEditTransactionBottomSheetType) -> Unit,
-    val setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit,
-    val setIsTransactionTimePickerDialogVisible: (Boolean) -> Unit,
-) {
-    private val unwrappedData = when (data) {
+    private val unwrappedData: AddOrEditTransactionScreenUIData? = when (data) {
         is MyResult.Success -> {
             data.data
         }
@@ -38,69 +31,70 @@ class AddOrEditTransactionScreenUIState(
         else -> {
             null
         }
-    }
-
-    val isLoading: Boolean = unwrappedData.isNull()
-    val uiState: AddOrEditTransactionScreenUiStateData = unwrappedData?.uiState.orDefault()
+    },
+    isEdit: Boolean,
+    val addOrEditTransactionBottomSheetType: AddOrEditTransactionBottomSheetType,
+    val isTransactionDatePickerDialogVisible: Boolean,
+    val isTransactionTimePickerDialogVisible: Boolean,
+    val setAddOrEditTransactionBottomSheetType: (AddOrEditTransactionBottomSheetType) -> Unit,
+    val setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit,
+    val setIsTransactionTimePickerDialogVisible: (Boolean) -> Unit,
+    val isLoading: Boolean = unwrappedData.isNull(),
+    val uiState: AddOrEditTransactionScreenUiStateData = unwrappedData?.uiState.orDefault(),
     val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState =
-        unwrappedData?.uiVisibilityState.orDefault()
-    val isCtaButtonEnabled: Boolean = unwrappedData?.isCtaButtonEnabled.orFalse()
-
+        unwrappedData?.uiVisibilityState.orDefault(),
+    val isCtaButtonEnabled: Boolean = unwrappedData?.isCtaButtonEnabled.orFalse(),
     @StringRes
     val appBarTitleTextStringResourceId: Int = if (isEdit) {
         R.string.screen_edit_transaction_appbar_title
     } else {
         R.string.screen_add_transaction_appbar_title
-    }
-
+    },
     @StringRes
     val ctaButtonLabelTextStringResourceId: Int = if (isEdit) {
         R.string.screen_edit_transaction_floating_action_button_content_description
     } else {
         R.string.screen_add_transaction_floating_action_button_content_description
-    }
-
+    },
     @StringRes
     val accountFromTextFieldLabelTextStringResourceId: Int =
         if (unwrappedData?.selectedTransactionType == TransactionType.TRANSFER) {
             R.string.screen_add_or_edit_transaction_account_from
         } else {
             R.string.screen_add_or_edit_transaction_account
-        }
-
+        },
     @StringRes
     val accountToTextFieldLabelTextStringResourceId: Int =
         if (unwrappedData?.selectedTransactionType == TransactionType.TRANSFER) {
             R.string.screen_add_or_edit_transaction_account_to
         } else {
             R.string.screen_add_or_edit_transaction_account
-        }
-
-    val filteredCategories: List<Category> = unwrappedData?.filteredCategories.orEmpty()
+        },
+    val filteredCategories: List<Category> = unwrappedData?.filteredCategories.orEmpty(),
     val transactionTypesForNewTransactionChipUIData: List<ChipUIData> =
         unwrappedData?.transactionTypesForNewTransaction?.map { transactionType ->
             ChipUIData(
                 text = transactionType.title,
             )
-        }.orEmpty()
-    val titleSuggestions: List<String> = unwrappedData?.titleSuggestions.orEmpty()
+        }.orEmpty(),
+    val titleSuggestions: List<String> = unwrappedData?.titleSuggestions.orEmpty(),
     val titleSuggestionsChipUIData: List<ChipUIData> = titleSuggestions.map { title ->
         ChipUIData(
             text = title,
         )
-    }
-    val accounts: List<Account> = unwrappedData?.accounts.orEmpty()
+    },
+    val accounts: List<Account> = unwrappedData?.accounts.orEmpty(),
     val transactionForValuesChipUIData: List<ChipUIData> =
         unwrappedData?.transactionForValues?.map { transactionFor ->
             ChipUIData(
                 text = transactionFor.titleToDisplay,
             )
-        }.orEmpty()
-    val currentLocalDate: LocalDate = unwrappedData?.currentLocalDate.orMin()
+        }.orEmpty(),
+    val currentLocalDate: LocalDate = unwrappedData?.currentLocalDate.orMin(),
     val resetBottomSheetType: () -> Unit = {
         setAddOrEditTransactionBottomSheetType(AddOrEditTransactionBottomSheetType.NONE)
-    }
-}
+    },
+) : ScreenUIState
 
 @Composable
 fun rememberAddOrEditTransactionScreenUIState(

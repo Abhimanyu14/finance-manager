@@ -13,6 +13,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.orEmpty
@@ -21,13 +22,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 @Stable
 class AddOrEditAccountScreenUIState(
     data: MyResult<AddOrEditAccountScreenUIData>?,
-    isEdit: Boolean,
-    setAddOrEditAccountBottomSheetType: (AddOrEditAccountBottomSheetType) -> Unit,
-    val addOrEditAccountBottomSheetType: AddOrEditAccountBottomSheetType,
-    val nameTextFieldFocusRequester: FocusRequester,
-    val balanceAmountTextFieldFocusRequester: FocusRequester,
-) {
-    private val unwrappedData = when (data) {
+    private val unwrappedData: AddOrEditAccountScreenUIData? = when (data) {
         is MyResult.Success -> {
             data.data
         }
@@ -35,48 +30,48 @@ class AddOrEditAccountScreenUIState(
         else -> {
             null
         }
-    }
-
-    val isLoading: Boolean = unwrappedData.isNull()
-    val isCtaButtonEnabled: Boolean = unwrappedData?.isValidAccountData.orFalse()
-
+    },
+    isEdit: Boolean,
+    setAddOrEditAccountBottomSheetType: (AddOrEditAccountBottomSheetType) -> Unit,
+    val addOrEditAccountBottomSheetType: AddOrEditAccountBottomSheetType,
+    val nameTextFieldFocusRequester: FocusRequester,
+    val balanceAmountTextFieldFocusRequester: FocusRequester,
+    val isLoading: Boolean = unwrappedData.isNull(),
+    val isCtaButtonEnabled: Boolean = unwrappedData?.isValidAccountData.orFalse(),
     @StringRes
     val appBarTitleTextStringResourceId: Int = if (isEdit) {
         R.string.screen_edit_account_appbar_title
     } else {
         R.string.screen_add_account_appbar_title
-    }
-
+    },
     @StringRes
     val ctaButtonLabelTextStringResourceId: Int = if (isEdit) {
         R.string.screen_edit_account_floating_action_button_content_description
     } else {
         R.string.screen_add_account_floating_action_button_content_description
-    }
-
+    },
     @StringRes
     val nameTextFieldErrorTextStringResourceId: Int? =
-        unwrappedData?.errorData?.nameTextField?.textStringResourceId
-
-    val selectedAccountTypeIndex: Int = unwrappedData?.selectedAccountTypeIndex.orZero()
-    private val selectedAccount = unwrappedData?.accountTypes?.getOrNull(selectedAccountTypeIndex)
+        unwrappedData?.errorData?.nameTextField?.textStringResourceId,
+    val selectedAccountTypeIndex: Int = unwrappedData?.selectedAccountTypeIndex.orZero(),
+    private val selectedAccount: AccountType? = unwrappedData?.accountTypes?.getOrNull(
+        selectedAccountTypeIndex
+    ),
     val accountTypesChipUIDataList: List<ChipUIData> = unwrappedData?.accountTypes
         ?.map { accountType ->
             ChipUIData(
                 text = accountType.title,
                 icon = accountType.icon,
             )
-        }.orEmpty()
-
-    val balanceAmountValue: TextFieldValue = unwrappedData?.balanceAmountValue.orEmpty()
+        }.orEmpty(),
+    val balanceAmountValue: TextFieldValue = unwrappedData?.balanceAmountValue.orEmpty(),
     val minimumBalanceAmountValue: TextFieldValue =
-        unwrappedData?.minimumBalanceAmountValue.orEmpty()
-    val name: TextFieldValue = unwrappedData?.name.orEmpty()
+        unwrappedData?.minimumBalanceAmountValue.orEmpty(),
+    val name: TextFieldValue = unwrappedData?.name.orEmpty(),
     val resetBottomSheetType: () -> Unit = {
         setAddOrEditAccountBottomSheetType(AddOrEditAccountBottomSheetType.NONE)
-    }
-
-    val visibilityData = AddOrEditAccountScreenUIVisibilityData(
+    },
+    val visibilityData: AddOrEditAccountScreenUIVisibilityData = AddOrEditAccountScreenUIVisibilityData(
         balanceAmountTextField = isEdit,
         minimumBalanceAmountTextField = selectedAccount == AccountType.BANK,
         nameTextField = if (isEdit) {
@@ -90,8 +85,8 @@ class AddOrEditAccountScreenUIState(
         } else {
             true
         },
-    )
-}
+    ),
+) : ScreenUIState
 
 @Composable
 fun rememberAddOrEditAccountScreenUIState(

@@ -68,7 +68,7 @@ fun ComposePieChart(
             sliceWidthPx = sliceWidthPx,
             sliceSpacingPx = sliceSpacingPx,
             fractions = fractions,
-            composeColors = entryColors,
+            entryColors = entryColors,
             animate = true,
         )
         PieChartLegend(

@@ -68,7 +68,7 @@ fun SettingsScreen(
     )
 
     val screenUIData: MyResult<SettingsScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
-    val uiState = rememberSettingsScreenUIState(
+    val uiState: SettingsScreenUIState = rememberSettingsScreenUIState(
         data = screenUIData,
     )
     val handleUIEvents = remember(
@@ -85,7 +85,6 @@ fun SettingsScreen(
                 }
 
                 SettingsScreenUIEvent.RestoreData -> {
-
                     openDocumentResultLauncher.launch(arrayOf(MimeTypeConstants.JSON))
                 }
 

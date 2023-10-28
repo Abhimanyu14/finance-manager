@@ -9,16 +9,12 @@ import androidx.compose.runtime.setValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 
 @Stable
 class TransactionForValuesScreenUIState(
     data: MyResult<TransactionForValuesScreenUIData>?,
-    val transactionForIdToDelete: Int?,
-    val transactionForValuesBottomSheetType: TransactionForValuesBottomSheetType,
-    val setTransactionForIdToDelete: (Int?) -> Unit,
-    val setTransactionForValuesBottomSheetType: (TransactionForValuesBottomSheetType) -> Unit,
-) {
-    private val unwrappedData = when (data) {
+    private val unwrappedData: TransactionForValuesScreenUIData? = when (data) {
         is MyResult.Success -> {
             data.data
         }
@@ -26,16 +22,19 @@ class TransactionForValuesScreenUIState(
         else -> {
             null
         }
-    }
-
-    val isLoading: Boolean = unwrappedData.isNull()
+    },
+    val transactionForIdToDelete: Int?,
+    val transactionForValuesBottomSheetType: TransactionForValuesBottomSheetType,
+    val setTransactionForIdToDelete: (Int?) -> Unit,
+    val setTransactionForValuesBottomSheetType: (TransactionForValuesBottomSheetType) -> Unit,
+    val isLoading: Boolean = unwrappedData.isNull(),
     val transactionForValuesIsUsedInTransactions: List<Boolean> =
-        unwrappedData?.transactionForValuesIsUsedInTransactions.orEmpty()
-    val transactionForValues: List<TransactionFor> = unwrappedData?.transactionForValues.orEmpty()
+        unwrappedData?.transactionForValuesIsUsedInTransactions.orEmpty(),
+    val transactionForValues: List<TransactionFor> = unwrappedData?.transactionForValues.orEmpty(),
     val resetBottomSheetType: () -> Unit = {
         setTransactionForValuesBottomSheetType(TransactionForValuesBottomSheetType.None)
-    }
-}
+    },
+) : ScreenUIState
 
 @Composable
 fun rememberTransactionForValuesScreenUIState(

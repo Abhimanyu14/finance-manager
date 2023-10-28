@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
@@ -11,7 +10,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewModelData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.orDefault
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
@@ -19,10 +20,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tra
 @Stable
 class HomeScreenUIState(
     data: MyResult<HomeScreenUIData>?,
-    val homeBottomSheetType: HomeBottomSheetType,
-    val setHomeBottomSheetType: (HomeBottomSheetType) -> Unit,
-) {
-    private val unwrappedData = when (data) {
+    private val unwrappedData: HomeScreenUIData? = when (data) {
         is MyResult.Success -> {
             data.data
         }
@@ -30,44 +28,43 @@ class HomeScreenUIState(
         else -> {
             null
         }
-    }
-
-    private val totalIncomeAmount = Amount(
+    },
+    val homeBottomSheetType: HomeBottomSheetType,
+    val setHomeBottomSheetType: (HomeBottomSheetType) -> Unit,
+    private val totalIncomeAmount: Amount = Amount(
         value = unwrappedData?.overviewCardData?.income?.toLong().orZero(),
-    )
-    private val totalExpenseAmount = Amount(
+    ),
+    private val totalExpenseAmount: Amount = Amount(
         value = unwrappedData?.overviewCardData?.expense?.toLong().orZero(),
-    )
-
-    val isLoading: Boolean = unwrappedData.isNull()
-    val isBackupCardVisible: Boolean = unwrappedData?.isBackupCardVisible.orFalse()
-    val overviewTabSelectionIndex: Int = unwrappedData?.overviewTabSelectionIndex.orZero()
+    ),
+    val isLoading: Boolean = unwrappedData.isNull(),
+    val isBackupCardVisible: Boolean = unwrappedData?.isBackupCardVisible.orFalse(),
+    val overviewTabSelectionIndex: Int = unwrappedData?.overviewTabSelectionIndex.orZero(),
     val transactionListItemDataList: List<TransactionListItemData> =
-        unwrappedData?.transactionListItemDataList.orEmpty()
+        unwrappedData?.transactionListItemDataList.orEmpty(),
     val accountsTotalBalanceAmountValue: Long =
-        unwrappedData?.accountsTotalBalanceAmountValue.orZero()
+        unwrappedData?.accountsTotalBalanceAmountValue.orZero(),
     val accountsTotalMinimumBalanceAmountValue: Long =
-        unwrappedData?.accountsTotalMinimumBalanceAmountValue.orZero()
-    val overviewCardData: OverviewCardViewModelData = unwrappedData?.overviewCardData.orDefault()
-    val pieChartData
-        @Composable get() = PieChartData(
-            items = listOf(
-                PieChartItemData(
-                    value = unwrappedData?.overviewCardData?.income.orZero(),
-                    text = "Income : $totalIncomeAmount",
-                    color = MaterialTheme.colorScheme.tertiary,
-                ),
-                PieChartItemData(
-                    value = unwrappedData?.overviewCardData?.expense.orZero(),
-                    text = "Expense : ${totalExpenseAmount.toNonSignedString()}",
-                    color = MaterialTheme.colorScheme.error,
-                ),
-            ),
-        )
+        unwrappedData?.accountsTotalMinimumBalanceAmountValue.orZero(),
+    val overviewCardData: OverviewCardViewModelData = unwrappedData?.overviewCardData.orDefault(),
     val resetBottomSheetType: () -> Unit = {
         setHomeBottomSheetType(HomeBottomSheetType.NONE)
-    }
-}
+    },
+    val pieChartData: PieChartData = PieChartData(
+        items = listOf(
+            PieChartItemData(
+                value = unwrappedData?.overviewCardData?.income.orZero(),
+                text = "Income : $totalIncomeAmount",
+                color = MyColor.TERTIARY,
+            ),
+            PieChartItemData(
+                value = unwrappedData?.overviewCardData?.expense.orZero(),
+                text = "Expense : ${totalExpenseAmount.toNonSignedString()}",
+                color = MyColor.ERROR,
+            ),
+        ),
+    ),
+) : ScreenUIState
 
 @Composable
 fun rememberHomeScreenUIState(

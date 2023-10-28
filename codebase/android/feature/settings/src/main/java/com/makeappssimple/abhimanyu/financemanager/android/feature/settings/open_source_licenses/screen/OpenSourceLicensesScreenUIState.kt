@@ -6,14 +6,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 
 @Stable
 class OpenSourceLicensesScreenUIState(
     data: MyResult<OpenSourceLicensesScreenUIData>? = null,
-    val openSourceLicensesBottomSheetType: OpenSourceLicensesBottomSheetType = OpenSourceLicensesBottomSheetType.NONE,
-    val setOpenSourceLicensesBottomSheetType: (OpenSourceLicensesBottomSheetType) -> Unit = {},
-) {
-    private val unwrappedData = when (data) {
+    private val unwrappedData: OpenSourceLicensesScreenUIData? = when (data) {
         is MyResult.Success -> {
             data.data
         }
@@ -21,13 +19,14 @@ class OpenSourceLicensesScreenUIState(
         else -> {
             null
         }
-    }
-
-    val isLoading: Boolean = unwrappedData.isNull() || unwrappedData.isLoading
+    },
+    val openSourceLicensesBottomSheetType: OpenSourceLicensesBottomSheetType = OpenSourceLicensesBottomSheetType.NONE,
+    val setOpenSourceLicensesBottomSheetType: (OpenSourceLicensesBottomSheetType) -> Unit = {},
+    val isLoading: Boolean = unwrappedData.isNull() || unwrappedData.isLoading,
     val resetBottomSheetType: () -> Unit = {
         setOpenSourceLicensesBottomSheetType(OpenSourceLicensesBottomSheetType.NONE)
-    }
-}
+    },
+) : ScreenUIState
 
 @Composable
 fun rememberOpenSourceLicensesScreenUIState(

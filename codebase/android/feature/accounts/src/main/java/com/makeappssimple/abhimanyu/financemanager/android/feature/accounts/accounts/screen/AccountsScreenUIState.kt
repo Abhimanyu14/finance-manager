@@ -9,11 +9,21 @@ import androidx.compose.runtime.setValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.component.listitem.AccountsListItemData
 
 @Stable
 class AccountsScreenUIState(
     data: MyResult<AccountsScreenUIData>?,
+    private val unwrappedData: AccountsScreenUIData? = when (data) {
+        is MyResult.Success -> {
+            data.data
+        }
+
+        else -> {
+            null
+        }
+    },
     val clickedItemId: Int?,
     val expandedItemIndex: Int?,
     val accountIdToDelete: Int?,
@@ -22,28 +32,17 @@ class AccountsScreenUIState(
     val setExpandedItemIndex: (Int?) -> Unit,
     val setAccountIdToDelete: (Int?) -> Unit,
     val setAccountsBottomSheetType: (AccountsBottomSheetType) -> Unit,
-) {
-    private val unwrappedData = when (data) {
-        is MyResult.Success -> {
-            data.data
-        }
-
-        else -> {
-            null
-        }
-    }
-
-    val isLoading: Boolean = unwrappedData.isNull()
+    val isLoading: Boolean = unwrappedData.isNull(),
     val accountsListItemDataList: List<AccountsListItemData> =
-        unwrappedData?.accountsListItemDataList.orEmpty()
+        unwrappedData?.accountsListItemDataList.orEmpty(),
     val accountsTotalBalanceAmountValue: Long =
-        unwrappedData?.accountsTotalBalanceAmountValue.orZero()
+        unwrappedData?.accountsTotalBalanceAmountValue.orZero(),
     val accountsTotalMinimumBalanceAmountValue: Long =
-        unwrappedData?.accountsTotalMinimumBalanceAmountValue.orZero()
+        unwrappedData?.accountsTotalMinimumBalanceAmountValue.orZero(),
     val resetBottomSheetType: () -> Unit = {
         setAccountsBottomSheetType(AccountsBottomSheetType.NONE)
-    }
-}
+    },
+) : ScreenUIState
 
 @Composable
 fun rememberAccountsScreenUIState(

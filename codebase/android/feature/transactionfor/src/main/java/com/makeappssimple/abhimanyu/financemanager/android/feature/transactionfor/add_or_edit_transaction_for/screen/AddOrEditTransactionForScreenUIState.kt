@@ -8,16 +8,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 
 @Stable
 class AddOrEditTransactionForScreenUIState(
     data: MyResult<AddOrEditTransactionForScreenUIData>?,
-    isEdit: Boolean,
-    setAddOrEditTransactionForBottomSheetType: (AddOrEditTransactionForBottomSheetType) -> Unit,
-    val addOrEditTransactionForBottomSheetType: AddOrEditTransactionForBottomSheetType,
-) {
-    private val unwrappedData = when (data) {
+    private val unwrappedData: AddOrEditTransactionForScreenUIData? = when (data) {
         is MyResult.Success -> {
             data.data
         }
@@ -25,33 +22,31 @@ class AddOrEditTransactionForScreenUIState(
         else -> {
             null
         }
-    }
-
-    val isLoading: Boolean = unwrappedData.isNull()
-    val isCtaButtonEnabled: Boolean? = unwrappedData?.isValidTransactionForData
-
+    },
+    isEdit: Boolean,
+    setAddOrEditTransactionForBottomSheetType: (AddOrEditTransactionForBottomSheetType) -> Unit,
+    val addOrEditTransactionForBottomSheetType: AddOrEditTransactionForBottomSheetType,
+    val isLoading: Boolean = unwrappedData.isNull(),
+    val isCtaButtonEnabled: Boolean? = unwrappedData?.isValidTransactionForData,
     @StringRes
     val appBarTitleTextStringResourceId: Int = if (isEdit) {
         R.string.screen_edit_transaction_for_appbar_title
     } else {
         R.string.screen_add_transaction_for_appbar_title
-    }
-
+    },
     @StringRes
     val ctaButtonLabelTextStringResourceId: Int = if (isEdit) {
         R.string.screen_edit_transaction_for_floating_action_button_content_description
     } else {
         R.string.screen_add_transaction_for_floating_action_button_content_description
-    }
-
-    val title: TextFieldValue? = unwrappedData?.title
-    val titleTextFieldErrorTextStringResourceId =
-        unwrappedData?.titleTextFieldError?.textStringResourceId
-
+    },
+    val title: TextFieldValue? = unwrappedData?.title,
+    val titleTextFieldErrorTextStringResourceId: Int? =
+        unwrappedData?.titleTextFieldError?.textStringResourceId,
     val resetBottomSheetType: () -> Unit = {
         setAddOrEditTransactionForBottomSheetType(AddOrEditTransactionForBottomSheetType.NONE)
-    }
-}
+    },
+) : ScreenUIState
 
 @Composable
 fun rememberAddOrEditTransactionForScreenUIState(

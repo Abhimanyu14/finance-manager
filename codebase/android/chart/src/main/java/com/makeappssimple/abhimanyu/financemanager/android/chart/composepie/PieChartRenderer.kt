@@ -13,9 +13,10 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Rect
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.util.fastForEachIndexed
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.getComposeColor
 import kotlin.math.absoluteValue
 import kotlin.math.cos
 import kotlin.math.max
@@ -30,7 +31,7 @@ internal fun PieChartRenderer(
     sliceWidthPx: Float,
     sliceSpacingPx: Float,
     fractions: List<Float>,
-    composeColors: List<Color>,
+    entryColors: List<MyColor>,
     animate: Boolean,
 ) {
     val emptyChartColor = MaterialTheme.colorScheme.surfaceVariant
@@ -67,6 +68,9 @@ internal fun PieChartRenderer(
         key2 = sliceWidthPx,
     ) {
         (chartSizePx - (sliceWidthPx * 2F)) / 2F
+    }
+    val colors = entryColors.map {
+        it.getComposeColor()
     }
 
     LaunchedEffect(
@@ -216,7 +220,7 @@ internal fun PieChartRenderer(
                 color = if (isTotalZero) {
                     emptyChartColor
                 } else {
-                    composeColors[index]
+                    colors[index]
                 },
             )
             angle += sliceAngle * phase
