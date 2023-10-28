@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -32,6 +33,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.testing.constants.TestTags.SCREEN_ADD_OR_EDIT_CATEGORY
+import com.makeappssimple.abhimanyu.financemanager.android.core.testing.constants.TestTags.SCREEN_CONTENT_ADD_OR_EDIT_CATEGORY
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
@@ -133,6 +136,7 @@ internal fun AddOrEditCategoryScreenUI(
 
     MyScaffold(
         modifier = Modifier
+            .testTag(SCREEN_ADD_OR_EDIT_CATEGORY)
             .fillMaxSize(),
         sheetContent = {
             when (uiState.addOrEditCategoryBottomSheetType) {
@@ -191,6 +195,7 @@ internal fun AddOrEditCategoryScreenUI(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
+                .testTag(SCREEN_CONTENT_ADD_OR_EDIT_CATEGORY)
                 .fillMaxSize()
                 .navigationBarLandscapeSpacer()
                 .verticalScroll(

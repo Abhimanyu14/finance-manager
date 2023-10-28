@@ -30,8 +30,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.testing.constants.TestTags.SCREEN_CONTENT_SETTINGS
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.constants.TestTags.SCREEN_SETTINGS
-import com.makeappssimple.abhimanyu.financemanager.android.core.testing.constants.TestTags.SCREEN_SETTINGS_CONTENT
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
@@ -260,7 +260,7 @@ internal fun SettingsScreenUI(
         LazyColumn(
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
-                .testTag(SCREEN_SETTINGS_CONTENT)
+                .testTag(SCREEN_CONTENT_SETTINGS)
                 .fillMaxWidth(),
         ) {
             // TODO(Abhi): Check why AnimatedVisibility is not working

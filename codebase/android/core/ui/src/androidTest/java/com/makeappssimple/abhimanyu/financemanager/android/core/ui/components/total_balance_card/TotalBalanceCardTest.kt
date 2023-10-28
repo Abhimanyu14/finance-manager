@@ -62,7 +62,7 @@ class TotalBalanceCardTest {
         }
 
         composeTestRule
-            .onNodeWithTag(TestTags.TOTAL_BALANCE_CARD)
+            .onNodeWithTag(TestTags.COMPONENT_TOTAL_BALANCE_CARD)
             .assertHasNoClickAction()
     }
 
@@ -82,7 +82,7 @@ class TotalBalanceCardTest {
         }
 
         composeTestRule
-            .onNodeWithTag(TestTags.TOTAL_BALANCE_CARD)
+            .onNodeWithTag(TestTags.COMPONENT_TOTAL_BALANCE_CARD)
             .assertHasClickAction()
     }
 

@@ -11,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
@@ -19,6 +20,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.testing.constants.TestTags.SCREEN_CONTENT_VIEW_TRANSACTION
+import com.makeappssimple.abhimanyu.financemanager.android.core.testing.constants.TestTags.SCREEN_VIEW_TRANSACTION
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
@@ -81,6 +84,7 @@ internal fun ViewTransactionScreenUI(
 
     MyScaffold(
         modifier = Modifier
+            .testTag(SCREEN_VIEW_TRANSACTION)
             .fillMaxSize(),
         sheetContent = {
             when (uiState.viewTransactionBottomSheetType) {
@@ -127,6 +131,7 @@ internal fun ViewTransactionScreenUI(
     ) {
         LazyColumn(
             modifier = Modifier
+                .testTag(SCREEN_CONTENT_VIEW_TRANSACTION)
                 .fillMaxSize()
                 .navigationBarLandscapeSpacer(),
         ) {

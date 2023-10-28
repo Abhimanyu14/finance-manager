@@ -17,6 +17,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -26,6 +27,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
+import com.makeappssimple.abhimanyu.financemanager.android.core.testing.constants.TestTags.SCREEN_ADD_OR_EDIT_ACCOUNT
+import com.makeappssimple.abhimanyu.financemanager.android.core.testing.constants.TestTags.SCREEN_CONTENT_ADD_OR_EDIT_ACCOUNT
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.AmountCommaVisualTransformation
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
@@ -129,6 +132,7 @@ internal fun AddOrEditAccountScreenUI(
 
     MyScaffold(
         modifier = Modifier
+            .testTag(SCREEN_ADD_OR_EDIT_ACCOUNT)
             .fillMaxSize(),
         sheetContent = {
             when (uiState.addOrEditAccountBottomSheetType) {
@@ -155,6 +159,7 @@ internal fun AddOrEditAccountScreenUI(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
+                .testTag(SCREEN_CONTENT_ADD_OR_EDIT_ACCOUNT)
                 .fillMaxSize()
                 .navigationBarLandscapeSpacer()
                 .verticalScroll(

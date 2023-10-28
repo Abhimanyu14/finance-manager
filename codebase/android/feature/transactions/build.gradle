@@ -72,6 +72,7 @@ dependencies {
     implementation project(":core:logger")
     implementation project(":core:model")
     implementation project(":core:navigation")
+    implementation project(":core:testing")
     implementation project(":core:ui")
 
     testImplementation project(":core:testing")

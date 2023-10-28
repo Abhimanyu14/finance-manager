@@ -8,6 +8,7 @@ import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.capitalizeWords
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
@@ -17,6 +18,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarsSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
+import com.makeappssimple.abhimanyu.financemanager.android.core.testing.constants.TestTags.SCREEN_CONTENT_TRANSACTION_FOR_VALUES
+import com.makeappssimple.abhimanyu.financemanager.android.core.testing.constants.TestTags.SCREEN_TRANSACTION_FOR_VALUES
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
@@ -78,6 +81,7 @@ internal fun TransactionForValuesScreenUI(
 
     MyScaffold(
         modifier = Modifier
+            .testTag(SCREEN_TRANSACTION_FOR_VALUES)
             .fillMaxSize(),
         sheetContent = {
             when (uiState.transactionForValuesBottomSheetType) {
@@ -159,6 +163,7 @@ internal fun TransactionForValuesScreenUI(
     ) {
         LazyColumn(
             modifier = Modifier
+                .testTag(SCREEN_CONTENT_TRANSACTION_FOR_VALUES)
                 .navigationBarLandscapeSpacer(),
         ) {
             itemsIndexed(

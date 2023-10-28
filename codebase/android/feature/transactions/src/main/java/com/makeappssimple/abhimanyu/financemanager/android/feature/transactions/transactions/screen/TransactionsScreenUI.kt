@@ -35,6 +35,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
@@ -50,6 +51,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.testing.constants.TestTags.SCREEN_CONTENT_TRANSACTIONS
+import com.makeappssimple.abhimanyu.financemanager.android.core.testing.constants.TestTags.SCREEN_TRANSACTIONS
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
@@ -183,6 +186,7 @@ internal fun TransactionsScreenUI(
 
     MyScaffold(
         modifier = Modifier
+            .testTag(SCREEN_TRANSACTIONS)
             .fillMaxSize(),
         sheetContent = {
             when (uiState.transactionsBottomSheetType) {
@@ -370,6 +374,7 @@ internal fun TransactionsScreenUI(
     ) {
         Column(
             modifier = Modifier
+                .testTag(SCREEN_CONTENT_TRANSACTIONS)
                 .fillMaxSize()
                 .navigationBarLandscapeSpacer(),
         ) {

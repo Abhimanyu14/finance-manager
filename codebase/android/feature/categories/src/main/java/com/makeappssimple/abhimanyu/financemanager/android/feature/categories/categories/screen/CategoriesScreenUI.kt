@@ -10,6 +10,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabRow
@@ -18,6 +19,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarsSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.testing.constants.TestTags.SCREEN_CATEGORIES
+import com.makeappssimple.abhimanyu.financemanager.android.core.testing.constants.TestTags.SCREEN_CONTENT_CATEGORIES
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
@@ -109,6 +112,7 @@ internal fun CategoriesScreenUI(
 
     MyScaffold(
         modifier = Modifier
+            .testTag(SCREEN_CATEGORIES)
             .fillMaxSize(),
         sheetContent = {
             when (uiState.categoriesBottomSheetType) {
@@ -228,6 +232,7 @@ internal fun CategoriesScreenUI(
     ) {
         Column(
             modifier = Modifier
+                .testTag(SCREEN_CONTENT_CATEGORIES)
                 .fillMaxSize()
                 .navigationBarLandscapeSpacer(),
         ) {

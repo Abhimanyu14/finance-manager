@@ -16,6 +16,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -26,6 +27,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.testing.constants.TestTags.SCREEN_ADD_OR_EDIT_TRANSACTION_FOR
+import com.makeappssimple.abhimanyu.financemanager.android.core.testing.constants.TestTags.SCREEN_CONTENT_ADD_OR_EDIT_TRANSACTION_FOR
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
@@ -97,6 +100,7 @@ internal fun AddOrEditTransactionForScreenUI(
 
     MyScaffold(
         modifier = Modifier
+            .testTag(SCREEN_ADD_OR_EDIT_TRANSACTION_FOR)
             .fillMaxSize(),
         sheetContent = {
             when (uiState.addOrEditTransactionForBottomSheetType) {
@@ -133,6 +137,7 @@ internal fun AddOrEditTransactionForScreenUI(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
+                .testTag(SCREEN_CONTENT_ADD_OR_EDIT_TRANSACTION_FOR)
                 .fillMaxSize()
                 .navigationBarLandscapeSpacer()
                 .verticalScroll(
