@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.TextSnippet
 import androidx.compose.material.icons.rounded.AccountBalance
@@ -269,18 +269,21 @@ internal fun SettingsScreenUI(
                     MyLinearProgressIndicator(
                         modifier = Modifier
                             .testTag(
-                                tag = "linear_progress_indicator",
+                                tag = stringResource(
+                                    id = R.string.screen_settings_linear_progress_indicator_test_tag,
+                                ),
                             ),
                     )
                 }
             }
-            items(
+            itemsIndexed(
                 items = listItemsData,
-                key = { listItem ->
+                key = { index, listItem ->
                     listItem.hashCode()
                 },
-            ) {
+            ) { index, it ->
                 SettingsListItem(
+                    Modifier.testTag("Item $index"),
                     data = it.data,
                     events = it.events,
                 )

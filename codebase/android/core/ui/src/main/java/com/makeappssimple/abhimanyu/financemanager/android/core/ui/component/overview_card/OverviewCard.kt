@@ -20,6 +20,7 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.ComposePieChart
@@ -28,6 +29,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
+import com.makeappssimple.abhimanyu.financemanager.android.core.testing.constants.TestTags.COMPONENT_OVERVIEW_CARD
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
 
 @Immutable
@@ -83,11 +85,13 @@ fun OverviewCard(
 ) {
     if (data.isLoading) {
         OverviewCardLoadingUI(
-            modifier = modifier,
+            modifier = modifier
+                .testTag(COMPONENT_OVERVIEW_CARD),
         )
     } else {
         ElevatedCard(
             modifier = modifier
+                .testTag(COMPONENT_OVERVIEW_CARD)
                 .fillMaxWidth()
                 .padding(
                     horizontal = 32.dp,

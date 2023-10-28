@@ -6,6 +6,7 @@
 
     <!-- region settings screen -->
     <string name="screen_settings_appbar_title">Settings</string>
+    <string name="screen_settings_linear_progress_indicator_test_tag">settings_linear_progress_indicator</string>
     <string name="screen_settings_data">Data</string>
     <string name="screen_settings_categories">Categories</string>
     <string name="screen_settings_accounts">Accounts</string>

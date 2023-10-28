@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.components.total_balance_card
 
+import android.content.Context
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertHasNoClickAction
@@ -8,8 +9,10 @@ import androidx.compose.ui.test.hasClickAction
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.test.core.app.ApplicationProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.constants.TestTags
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardEvents
@@ -21,12 +24,19 @@ class TotalBalanceCardTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    private lateinit var context: Context
+
     private lateinit var balanceAmount: SemanticsNodeInteraction
     private lateinit var title: SemanticsNodeInteraction
 
     @Before
     fun setup() {
+        context = ApplicationProvider.getApplicationContext()
 
+        balanceAmount = composeTestRule.onNodeWithText("₹1,23,456")
+        title = composeTestRule.onNodeWithText(
+            context.getString(R.string.total_balance_card_title)
+        )
     }
 
     @Test
@@ -40,8 +50,6 @@ class TotalBalanceCardTest {
                 )
             }
         }
-        balanceAmount = composeTestRule.onNodeWithText("₹1,23,456")
-        title = composeTestRule.onNodeWithText("TOTAL BALANCE")
 
         title.assertIsDisplayed()
         balanceAmount.assertIsDisplayed()

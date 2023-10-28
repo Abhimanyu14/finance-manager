@@ -36,5 +36,6 @@ object TestTags {
 
     // region Components
     const val COMPONENT_TOTAL_BALANCE_CARD = "component_total_balance_card"
+    const val COMPONENT_OVERVIEW_CARD = "component_overview_card"
     // endregion
 }

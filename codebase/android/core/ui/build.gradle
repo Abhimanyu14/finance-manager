@@ -144,6 +144,9 @@ dependencies {
     // Jetpack compose UI tests
     androidTestImplementation libs.compose.ui.test.junit4
 
+    // KakaoCup Compose
+    androidTestImplementation libs.kakaocup.compose
+
     // Jetpack compose UI tests manifest - Needed for createComposeRule, but not createAndroidComposeRule
     debugImplementation libs.compose.ui.test.manifest
 }
