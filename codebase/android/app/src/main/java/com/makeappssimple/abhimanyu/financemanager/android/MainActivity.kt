@@ -30,6 +30,11 @@ import javax.inject.Inject
  * 15. Groovy to Kotlin
  * 16. Proguard/R8
  * 17. Minify resources
+ * 18. Feedback
+ * 19. Public Issue Tracker
+ *
+ * Open Bugs
+ * 1. Navigation - Enter Amount to Home and clicking on FAB opens Add Account screen
  */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
