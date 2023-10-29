@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.screen
 
+import android.content.Context
 import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertHasNoClickAction
@@ -7,18 +8,27 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
+import androidx.test.core.app.ApplicationProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIState
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 
+@HiltAndroidTest
 class SettingsScreenViewTest {
-    @get:Rule
+    @get:Rule(order = 0)
+    var hiltRule = HiltAndroidRule(this)
+
+    @get:Rule(order = 1)
     val composeTestRule = createComposeRule()
+
+    private lateinit var context: Context
 
     private lateinit var linearProgressIndicator: SemanticsNodeInteraction
     private lateinit var backupDataListItem: SemanticsNodeInteraction
@@ -29,6 +39,8 @@ class SettingsScreenViewTest {
 
     @Before
     fun setup() {
+        context = ApplicationProvider.getApplicationContext()
+
         linearProgressIndicator = composeTestRule.onNodeWithTag(
             testTag = "linear_progress_indicator",
         )

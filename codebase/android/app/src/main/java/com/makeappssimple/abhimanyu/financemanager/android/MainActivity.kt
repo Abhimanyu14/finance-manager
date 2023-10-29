@@ -35,6 +35,12 @@ import javax.inject.Inject
  *
  * Open Bugs
  * 1. Navigation - Enter Amount to Home and clicking on FAB opens Add Account screen
+ *
+ * Libs
+ * 1. Emoji Picker
+ * 2. Compose UI Testing
+ * 3. Preference Explorer
+ * 4. DB Explorer
  */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

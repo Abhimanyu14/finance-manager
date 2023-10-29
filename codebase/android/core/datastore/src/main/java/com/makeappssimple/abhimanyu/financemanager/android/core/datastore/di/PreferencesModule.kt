@@ -34,7 +34,7 @@ class PreferencesModule {
             corruptionHandler = ReplaceFileCorruptionHandler(
                 produceNewData = {
                     emptyPreferences()
-                }
+                },
             ),
             migrations = preferencesDataMigrations,
             scope = CoroutineScope(
@@ -44,7 +44,7 @@ class PreferencesModule {
                 appContext.preferencesDataStoreFile(
                     name = AppConstants.APP_NAME,
                 )
-            }
+            },
         )
     }
 
