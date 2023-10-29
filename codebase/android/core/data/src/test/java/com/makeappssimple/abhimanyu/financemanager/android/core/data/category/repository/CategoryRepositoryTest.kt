@@ -1,6 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.category.repository
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.category.CategoryRepository
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.category.CategoryRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.getTestCategories
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.CategoryDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category

@@ -1,6 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.account.usecase
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.account.repository.AccountRepository
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.account.AccountRepository
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsCountUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsCountUseCaseImpl
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test

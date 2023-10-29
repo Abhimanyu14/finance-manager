@@ -1,7 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.usecase
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.transaction.repository.TransactionRepository
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.InsertTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.InsertTransactionsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.getTestTransactions
 import kotlinx.coroutines.test.runTest
 import org.junit.Before

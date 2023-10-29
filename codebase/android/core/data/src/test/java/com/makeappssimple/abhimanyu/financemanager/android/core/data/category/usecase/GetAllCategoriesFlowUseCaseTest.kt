@@ -1,6 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.repository.CategoryRepository
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.category.CategoryRepository
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.GetAllCategoriesFlowUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.GetAllCategoriesFlowUseCaseImpl
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test

@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.AlarmKi
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.MainDispatcher
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineDispatcher

@@ -1,7 +1,9 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.category.usecase
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.category.repository.CategoryRepository
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.preferences.repository.MyPreferencesRepository
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.category.CategoryRepository
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.DeleteCategoryUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.DeleteCategoryUseCaseImpl
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
