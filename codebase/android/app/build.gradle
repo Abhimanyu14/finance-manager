@@ -289,6 +289,7 @@ dependencies {
 
     testImplementation project(":core:testing")
 
+    androidTestImplementation project(":core:data-test")
     androidTestImplementation project(":core:testing")
 
     // Androidx core

@@ -75,7 +75,6 @@ dependencies {
     implementation project(":core:navigation")
     implementation project(":core:notificationkit")
     implementation project(":core:model")
-    implementation project(":core:testing")
     implementation project(":core:ui")
 
     testImplementation project(":core:testing")

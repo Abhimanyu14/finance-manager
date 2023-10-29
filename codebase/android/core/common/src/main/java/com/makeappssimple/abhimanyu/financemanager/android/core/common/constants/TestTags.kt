@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.testing.constants
+package com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 
 object TestTags {
     // region Screen

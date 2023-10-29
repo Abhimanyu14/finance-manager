@@ -1,10 +1,10 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.test
 
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.di.AppVersionUtilModule
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.account.AccountRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.account.fake.FakeAccountRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.category.CategoryRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.category.fake.FakeCategoryRepositoryImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.di.RepositoryModule
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.fake.FakeMyPreferencesRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
@@ -20,7 +20,7 @@ import javax.inject.Singleton
 @Module
 @TestInstallIn(
     components = [SingletonComponent::class],
-    replaces = [AppVersionUtilModule::class],
+    replaces = [RepositoryModule::class],
 )
 class TestRepositoryModule {
     @Singleton

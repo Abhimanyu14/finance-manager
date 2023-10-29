@@ -22,10 +22,10 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
-import com.makeappssimple.abhimanyu.financemanager.android.core.testing.constants.TestTags
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.matchrowsize.matchRowSize
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
@@ -51,7 +51,8 @@ fun TotalBalanceCard(
 ) {
     if (data.isLoading) {
         TotalBalanceCardLoadingUI(
-            modifier = modifier,
+            modifier = modifier
+                .testTag(TestTags.COMPONENT_TOTAL_BALANCE_CARD),
         )
     } else {
         Column(
