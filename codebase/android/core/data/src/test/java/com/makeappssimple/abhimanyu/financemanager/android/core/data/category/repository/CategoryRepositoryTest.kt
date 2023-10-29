@@ -21,10 +21,9 @@ class CategoryRepositoryTest {
 
     @Before
     fun setUp() {
-        categoryRepository =
-            CategoryRepositoryImpl(
-                categoryDao = categoryDao,
-            )
+        categoryRepository = CategoryRepositoryImpl(
+            categoryDao = categoryDao,
+        )
     }
 
     @Test
@@ -71,30 +70,26 @@ class CategoryRepositoryTest {
     @Test
     fun insertCategories() = runTest {
         categoryRepository.insertCategories(
-            *testCategories,
+            categories = testCategories,
         )
 
         verify(
             mock = categoryDao,
         ).insertCategories(
-            *testCategories.map {
-                it.asEntity()
-            }.toTypedArray(),
+            categories = testCategories.map(Category::asEntity).toTypedArray(),
         )
     }
 
     @Test
     fun updateCategories() = runTest {
         categoryRepository.updateCategories(
-            *testCategories,
+            categories = testCategories,
         )
 
         verify(
             mock = categoryDao,
         ).updateCategories(
-            *testCategories.map {
-                it.asEntity()
-            }.toTypedArray(),
+            categories = testCategories.map(Category::asEntity).toTypedArray(),
         )
     }
 
@@ -114,15 +109,13 @@ class CategoryRepositoryTest {
     @Test
     fun deleteCategories() = runTest {
         categoryRepository.deleteCategories(
-            *testCategories,
+            categories = testCategories,
         )
 
         verify(
             mock = categoryDao,
         ).deleteCategories(
-            *testCategories.map {
-                it.asEntity()
-            }.toTypedArray(),
+            categories = testCategories.map(Category::asEntity).toTypedArray(),
         )
     }
 }

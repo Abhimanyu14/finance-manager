@@ -158,7 +158,7 @@ class InitialDatabasePopulatorImpl(
             val transactions = transactionDao.getAllTransactionsFlow().first()
             transactionDao.deleteAllTransactions()
             transactionDao.insertTransactions(
-                *sanitizeTransactions(
+                transactions = sanitizeTransactions(
                     transactions = transactions,
                 ).toTypedArray()
             )

@@ -53,15 +53,13 @@ class TransactionRepositoryTest {
     @Test
     fun insertTransactions() = runTest {
         transactionRepository.insertTransactions(
-            *testTransactions,
+            transactions = testTransactions,
         )
 
         verify(
             mock = transactionDao,
         ).insertTransactions(
-            *testTransactions.map {
-                it.asEntity()
-            }.toTypedArray(),
+            transactions = testTransactions.map(Transaction::asEntity).toTypedArray(),
         )
     }
 

@@ -28,13 +28,13 @@ class InsertCategoriesUseCaseTest {
     fun invoke_defaultTest() = runTest {
         val categories = getTestCategories()
         insertCategoriesUseCase(
-            *categories,
+            categories = categories,
         )
 
         verify(
             mock = categoryRepository,
         ).insertCategories(
-            *categories,
+            categories = categories,
         )
     }
 }

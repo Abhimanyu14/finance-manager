@@ -28,13 +28,13 @@ class InsertTransactionsUseCaseTest {
     fun invoke_defaultTest() = runTest {
         val transactions = getTestTransactions()
         insertTransactionsUseCase(
-            *transactions,
+            transactions = transactions,
         )
 
         verify(
             mock = transactionRepository,
         ).insertTransactions(
-            *transactions,
+            transactions = transactions,
         )
     }
 }

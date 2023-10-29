@@ -27,15 +27,15 @@ class UpdateAccountsUseCaseTest {
 
     @Test
     fun invoke_defaultTest() = runTest {
-        val sources = getTestAccounts()
+        val accounts = getTestAccounts()
         updateAccountsUseCase(
-            *sources,
+            accounts = accounts,
         )
 
         verify(
             mock = accountRepository,
         ).updateAccounts(
-            *sources,
+            accounts = accounts,
         )
     }
 }

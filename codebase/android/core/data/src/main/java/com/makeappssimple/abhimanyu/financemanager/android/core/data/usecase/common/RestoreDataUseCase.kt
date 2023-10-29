@@ -7,10 +7,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.Backu
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AccountEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.sanitizeAccounts
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.sanitizeTransactions
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
@@ -58,19 +62,11 @@ class RestoreDataUseCaseImpl(
 
         // Restore database data
         val accounts = sanitizeAccounts(
-            accounts = databaseData.accounts.map {
-                it.asEntity()
-            },
-        ).map {
-            it.asExternalModel()
-        }
+            accounts = databaseData.accounts.map(Account::asEntity),
+        ).map(AccountEntity::asExternalModel)
         val transactions = sanitizeTransactions(
-            transactions = databaseData.transactions.map {
-                it.asEntity()
-            },
-        ).map {
-            it.asExternalModel()
-        }
+            transactions = databaseData.transactions.map(Transaction::asEntity),
+        ).map(TransactionEntity::asExternalModel)
         transactionRepository.restoreData(
             categories = databaseData.categories,
             accounts = accounts,

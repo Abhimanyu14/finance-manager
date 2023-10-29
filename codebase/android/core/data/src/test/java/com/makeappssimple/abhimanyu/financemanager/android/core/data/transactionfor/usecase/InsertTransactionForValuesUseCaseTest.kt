@@ -28,7 +28,7 @@ class InsertTransactionForValuesUseCaseTest {
     @Test
     fun invoke_defaultTest() = runTest {
         insertTransactionForValuesUseCase(
-            *testTransactionForValues,
+            transactionForValues = testTransactionForValues,
         )
 
         // TODO(Abhi): Test `dataStore.updateLastDataChangeTimestamp()`

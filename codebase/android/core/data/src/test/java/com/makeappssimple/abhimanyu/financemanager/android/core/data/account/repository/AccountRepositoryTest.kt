@@ -84,30 +84,26 @@ class AccountRepositoryTest {
     @Test
     fun insertAccounts() = runTest {
         accountRepository.insertAccounts(
-            *accounts,
+            accounts = accounts,
         )
 
         verify(
             mock = accountDao,
         ).insertAccounts(
-            *accounts.map {
-                it.asEntity()
-            }.toTypedArray(),
+            accounts = accounts.map(Account::asEntity).toTypedArray(),
         )
     }
 
     @Test
     fun updateAccounts() = runTest {
         accountRepository.updateAccounts(
-            *accounts,
+            accounts = accounts,
         )
 
         verify(
             mock = accountDao,
         ).updateAccounts(
-            *accounts.map {
-                it.asEntity()
-            }.toTypedArray(),
+            accounts = accounts.map(Account::asEntity).toTypedArray(),
         )
     }
 
@@ -127,15 +123,13 @@ class AccountRepositoryTest {
     @Test
     fun deleteAccounts() = runTest {
         accountRepository.deleteAccounts(
-            *accounts,
+            accounts = accounts,
         )
 
         verify(
             mock = accountDao,
         ).deleteAccounts(
-            *accounts.map {
-                it.asEntity()
-            }.toTypedArray(),
+            accounts = accounts.map(Account::asEntity).toTypedArray(),
         )
     }
 }

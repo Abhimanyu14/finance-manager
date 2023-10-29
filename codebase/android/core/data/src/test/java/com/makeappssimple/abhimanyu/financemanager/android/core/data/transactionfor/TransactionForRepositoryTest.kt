@@ -50,30 +50,28 @@ class TransactionForRepositoryTest {
     @Test
     fun insertTransactionForValues() = runTest {
         transactionForRepository.insertTransactionForValues(
-            *testTransactionForValues,
+            transactionForValues = testTransactionForValues,
         )
 
         verify(
             mock = transactionForDao,
         ).insertTransactionForValues(
-            *testTransactionForValues.map {
-                it.asEntity()
-            }.toTypedArray(),
+            transactionForValues = testTransactionForValues.map(TransactionFor::asEntity)
+                .toTypedArray(),
         )
     }
 
     @Test
     fun updateTransactionForValues() = runTest {
         transactionForRepository.updateTransactionForValues(
-            *testTransactionForValues,
+            transactionForValues = testTransactionForValues,
         )
 
         verify(
             mock = transactionForDao,
         ).updateTransactionForValues(
-            *testTransactionForValues.map {
-                it.asEntity()
-            }.toTypedArray(),
+            transactionForValues = testTransactionForValues.map(TransactionFor::asEntity)
+                .toTypedArray(),
         )
     }
 

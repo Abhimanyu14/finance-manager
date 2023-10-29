@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.repository
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionForDao
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionForEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import kotlinx.coroutines.flow.Flow
@@ -12,16 +13,13 @@ class TransactionForRepositoryImpl(
 ) : TransactionForRepository {
     override fun getAllTransactionForValuesFlow(): Flow<List<TransactionFor>> {
         return transactionForDao.getAllTransactionForValuesFlow().map {
-            it.map { transactionForEntity ->
-                transactionForEntity.asExternalModel()
-            }
+            it.map(TransactionForEntity::asExternalModel)
         }
     }
 
     override suspend fun getAllTransactionForValues(): List<TransactionFor> {
-        return transactionForDao.getAllTransactionForValues().map {
-            it.asExternalModel()
-        }
+        return transactionForDao.getAllTransactionForValues()
+            .map(TransactionForEntity::asExternalModel)
     }
 
     override suspend fun getTransactionFor(
@@ -36,9 +34,8 @@ class TransactionForRepositoryImpl(
         vararg transactionForValues: TransactionFor,
     ) {
         transactionForDao.insertTransactionForValues(
-            transactionForValues = transactionForValues.map {
-                it.asEntity()
-            }.toTypedArray(),
+            transactionForValues = transactionForValues.map(TransactionFor::asEntity)
+                .toTypedArray(),
         )
     }
 
@@ -46,9 +43,8 @@ class TransactionForRepositoryImpl(
         vararg transactionForValues: TransactionFor,
     ) {
         transactionForDao.updateTransactionForValues(
-            transactionForValues = transactionForValues.map {
-                it.asEntity()
-            }.toTypedArray(),
+            transactionForValues = transactionForValues.map(TransactionFor::asEntity)
+                .toTypedArray(),
         )
     }
 

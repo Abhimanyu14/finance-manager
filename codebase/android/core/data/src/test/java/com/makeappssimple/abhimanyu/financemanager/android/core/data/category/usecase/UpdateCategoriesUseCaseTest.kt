@@ -28,13 +28,13 @@ class UpdateCategoriesUseCaseTest {
     fun invoke_defaultTest() = runTest {
         val categories = getTestCategories()
         updateCategoriesUseCase(
-            *categories,
+            categories = categories,
         )
 
         verify(
             mock = categoryRepository,
         ).updateCategories(
-            *categories,
+            categories = categories,
         )
     }
 }

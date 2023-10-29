@@ -47,7 +47,7 @@ class TransactionForDaoTest {
     @Test
     fun getAllTransactionForValues() = runTest {
         transactionForDao.insertTransactionForValues(
-            *testTransactionForValues.toTypedArray(),
+            transactionForValues = testTransactionForValues.toTypedArray(),
         )
 
         val result = transactionForDao.getAllTransactionForValues()
@@ -65,7 +65,7 @@ class TransactionForDaoTest {
     @Test
     fun getAllTransactionForValuesFlow() = runTest {
         transactionForDao.insertTransactionForValues(
-            *testTransactionForValues.toTypedArray(),
+            transactionForValues = testTransactionForValues.toTypedArray(),
         )
 
         val result = transactionForDao.getAllTransactionForValuesFlow().first()
@@ -87,7 +87,7 @@ class TransactionForDaoTest {
     @Test
     fun getTransactionForValuesCount() = runTest {
         transactionForDao.insertTransactionForValues(
-            *testTransactionForValues.toTypedArray(),
+            transactionForValues = testTransactionForValues.toTypedArray(),
         )
 
         val result = transactionForDao.getTransactionForValuesCount()
@@ -101,7 +101,7 @@ class TransactionForDaoTest {
     @Test
     fun getTransactionFor_returnsDataForValidId() = runTest {
         transactionForDao.insertTransactionForValues(
-            *testTransactionForValues.toTypedArray(),
+            transactionForValues = testTransactionForValues.toTypedArray(),
         )
 
         val result = transactionForDao.getTransactionFor(
@@ -117,7 +117,7 @@ class TransactionForDaoTest {
     @Test
     fun getTransactionFor_returnsNullForInvalidId() = runTest {
         transactionForDao.insertTransactionForValues(
-            *testTransactionForValues.toTypedArray(),
+            transactionForValues = testTransactionForValues.toTypedArray(),
         )
 
         val result = transactionForDao.getTransactionFor(
@@ -130,7 +130,7 @@ class TransactionForDaoTest {
     @Test
     fun updateTransactionForValues() = runTest {
         transactionForDao.insertTransactionForValues(
-            *testTransactionForValues.toTypedArray(),
+            transactionForValues = testTransactionForValues.toTypedArray(),
         )
 
         val testTitle1 = "Tim"
@@ -160,7 +160,7 @@ class TransactionForDaoTest {
     @Test
     fun deleteTransactionFor_deleteDataOfGivenId() = runTest {
         transactionForDao.insertTransactionForValues(
-            *testTransactionForValues.toTypedArray(),
+            transactionForValues = testTransactionForValues.toTypedArray(),
         )
 
         transactionForDao.deleteTransactionFor(
@@ -181,7 +181,7 @@ class TransactionForDaoTest {
     @Test
     fun deleteTransactionFor_noDeletionForInvalidId() = runTest {
         transactionForDao.insertTransactionForValues(
-            *testTransactionForValues.toTypedArray(),
+            transactionForValues = testTransactionForValues.toTypedArray(),
         )
 
         transactionForDao.deleteTransactionFor(

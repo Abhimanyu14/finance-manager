@@ -14,28 +14,27 @@ import org.mockito.kotlin.verify
 class InsertAccountsUseCaseTest {
     private val myPreferencesRepository: MyPreferencesRepository = mock()
     private val accountRepository: AccountRepository = mock()
-    private lateinit var insertSourceUseCase: InsertAccountsUseCase
+    private lateinit var insertAccountsUseCase: InsertAccountsUseCase
 
     @Before
     fun setUp() {
-        insertSourceUseCase =
-            InsertAccountsUseCaseImpl(
-                myPreferencesRepository = myPreferencesRepository,
-                accountRepository = accountRepository,
-            )
+        insertAccountsUseCase = InsertAccountsUseCaseImpl(
+            myPreferencesRepository = myPreferencesRepository,
+            accountRepository = accountRepository,
+        )
     }
 
     @Test
     fun invoke_defaultTest() = runTest {
-        val sources = getTestAccounts()
-        insertSourceUseCase(
-            *sources,
+        val accounts = getTestAccounts()
+        insertAccountsUseCase(
+            accounts = accounts,
         )
 
         verify(
             mock = accountRepository,
         ).insertAccounts(
-            *sources,
+            accounts = accounts,
         )
     }
 }

@@ -19,17 +19,16 @@ class UpdateTransactionForValuesUseCaseTest {
 
     @Before
     fun setUp() {
-        updateTransactionForValuesUseCase =
-            UpdateTransactionForValuesUseCaseImpl(
-                myPreferencesRepository = myPreferencesRepository,
-                transactionForRepository = transactionForRepository,
-            )
+        updateTransactionForValuesUseCase = UpdateTransactionForValuesUseCaseImpl(
+            myPreferencesRepository = myPreferencesRepository,
+            transactionForRepository = transactionForRepository,
+        )
     }
 
     @Test
     fun invoke_defaultTest() = runTest {
         updateTransactionForValuesUseCase(
-            *testTransactionForValues,
+            transactionForValues = testTransactionForValues,
         )
 
         // TODO(Abhi): Test `dataStore.updateLastDataChangeTimestamp()`

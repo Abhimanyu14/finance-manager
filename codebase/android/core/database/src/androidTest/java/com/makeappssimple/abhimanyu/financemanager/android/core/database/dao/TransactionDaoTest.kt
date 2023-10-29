@@ -56,7 +56,7 @@ class TransactionDaoTest {
             frequency = THIRTY_DAYS,
         )
         dao.insertTransactions(
-            *transactions,
+            transactions = transactions,
         )
         val fetchedTransactions = dao.getAllTransactionsFlow().first().toTypedArray()
 
@@ -77,7 +77,7 @@ class TransactionDaoTest {
             frequency = ONE_HOUR,
         )
         dao.insertTransactions(
-            *transactions,
+            transactions = transactions,
         )
 
         val fetchedTransactions = dao.getTransactionsBetweenTimestampsFlow(

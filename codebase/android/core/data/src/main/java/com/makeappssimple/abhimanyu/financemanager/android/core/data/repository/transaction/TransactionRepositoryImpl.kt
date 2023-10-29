@@ -3,6 +3,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.repository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.datasource.CommonDataSource
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionDataEntity
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
@@ -17,23 +19,17 @@ class TransactionRepositoryImpl(
     private val transactionDao: TransactionDao,
 ) : TransactionRepository {
     override suspend fun getAllTransactions(): List<Transaction> {
-        return transactionDao.getAllTransactions().map {
-            it.asExternalModel()
-        }
+        return transactionDao.getAllTransactions().map(TransactionEntity::asExternalModel)
     }
 
     override fun getAllTransactionDataFlow(): Flow<List<TransactionData>> {
         return transactionDao.getAllTransactionDataFlow().map {
-            it.map { transactionDataEntity ->
-                transactionDataEntity.asExternalModel()
-            }
+            it.map(TransactionDataEntity::asExternalModel)
         }
     }
 
     override suspend fun getAllTransactionData(): List<TransactionData> {
-        return transactionDao.getAllTransactionData().map {
-            it.asExternalModel()
-        }
+        return transactionDao.getAllTransactionData().map(TransactionDataEntity::asExternalModel)
     }
 
     override suspend fun getSearchedTransactionData(
@@ -41,9 +37,7 @@ class TransactionRepositoryImpl(
     ): List<TransactionData> {
         return transactionDao.getSearchedTransactionData(
             searchText = searchText,
-        ).map {
-            it.asExternalModel()
-        }
+        ).map(TransactionDataEntity::asExternalModel)
     }
 
     override fun getRecentTransactionDataFlow(
@@ -52,9 +46,7 @@ class TransactionRepositoryImpl(
         return transactionDao.getRecentTransactionDataFlow(
             numberOfTransactions = numberOfTransactions,
         ).map {
-            it.map { transactionDataEntity ->
-                transactionDataEntity.asExternalModel()
-            }
+            it.map(TransactionDataEntity::asExternalModel)
         }
     }
 
@@ -66,9 +58,7 @@ class TransactionRepositoryImpl(
             startingTimestamp = startingTimestamp,
             endingTimestamp = endingTimestamp,
         ).map {
-            it.map { transactionEntity ->
-                transactionEntity.asExternalModel()
-            }
+            it.map(TransactionEntity::asExternalModel)
         }
     }
 
@@ -79,9 +69,7 @@ class TransactionRepositoryImpl(
         return transactionDao.getTransactionsBetweenTimestamps(
             startingTimestamp = startingTimestamp,
             endingTimestamp = endingTimestamp,
-        ).map {
-            it.asExternalModel()
-        }
+        ).map(TransactionEntity::asExternalModel)
     }
 
     override suspend fun getTransactionsCount(): Int {
@@ -158,9 +146,7 @@ class TransactionRepositoryImpl(
         vararg transactions: Transaction,
     ) {
         transactionDao.insertTransactions(
-            transactions = transactions.map {
-                it.asEntity()
-            }.toTypedArray(),
+            transactions = transactions.map(Transaction::asEntity).toTypedArray(),
         )
     }
 
@@ -176,9 +162,7 @@ class TransactionRepositoryImpl(
         vararg transactions: Transaction,
     ) {
         transactionDao.updateTransactions(
-            transactions = transactions.map {
-                it.asEntity()
-            }.toTypedArray(),
+            transactions = transactions.map(Transaction::asEntity).toTypedArray(),
         )
     }
 
@@ -201,18 +185,11 @@ class TransactionRepositoryImpl(
         transactionForValues: List<TransactionFor>,
     ) {
         commonDataSource.restoreData(
-            categories = categories.map {
-                it.asEntity()
-            }.toTypedArray(),
-            accounts = accounts.map {
-                it.asEntity()
-            }.toTypedArray(),
-            transactions = transactions.map {
-                it.asEntity()
-            }.toTypedArray(),
-            transactionForValues = transactionForValues.map {
-                it.asEntity()
-            }.toTypedArray(),
+            categories = categories.map(Category::asEntity).toTypedArray(),
+            accounts = accounts.map(Account::asEntity).toTypedArray(),
+            transactions = transactions.map(Transaction::asEntity).toTypedArray(),
+            transactionForValues = transactionForValues.map(TransactionFor::asEntity)
+                .toTypedArray(),
         )
     }
 }

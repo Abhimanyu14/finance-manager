@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.repository
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.AccountDao
+import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AccountEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.updateBalanceAmount
@@ -13,16 +14,12 @@ class AccountRepositoryImpl(
 ) : AccountRepository {
     override fun getAllAccountsFlow(): Flow<List<Account>> {
         return accountDao.getAllAccountsFlow().map {
-            it.map { accountEntity ->
-                accountEntity.asExternalModel()
-            }
+            it.map(AccountEntity::asExternalModel)
         }
     }
 
     override suspend fun getAllAccounts(): List<Account> {
-        return accountDao.getAllAccounts().map {
-            it.asExternalModel()
-        }
+        return accountDao.getAllAccounts().map(AccountEntity::asExternalModel)
     }
 
     override suspend fun getAllAccountsCount(): Int {
@@ -42,18 +39,14 @@ class AccountRepositoryImpl(
     ): List<Account> {
         return accountDao.getAccounts(
             ids = ids,
-        ).map {
-            it.asExternalModel()
-        }
+        ).map(AccountEntity::asExternalModel)
     }
 
     override suspend fun insertAccounts(
         vararg accounts: Account,
     ) {
         accountDao.insertAccounts(
-            accounts = accounts.map {
-                it.asEntity()
-            }.toTypedArray(),
+            accounts = accounts.map(Account::asEntity).toTypedArray(),
         )
     }
 
@@ -81,9 +74,7 @@ class AccountRepositoryImpl(
         vararg accounts: Account,
     ) {
         accountDao.updateAccounts(
-            accounts = accounts.map {
-                it.asEntity()
-            }.toTypedArray(),
+            accounts = accounts.map(Account::asEntity).toTypedArray(),
         )
     }
 
@@ -99,9 +90,7 @@ class AccountRepositoryImpl(
         vararg accounts: Account,
     ) {
         accountDao.deleteAccounts(
-            accounts = accounts.map {
-                it.asEntity()
-            }.toTypedArray(),
+            accounts = accounts.map(Account::asEntity).toTypedArray(),
         )
     }
 }
