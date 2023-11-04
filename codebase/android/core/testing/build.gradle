@@ -46,8 +46,11 @@ android {
 }
 
 dependencies {
+    implementation project(":core:alarmkit")
     implementation project(":core:common")
+    implementation project(":core:data")
     implementation project(":core:logger")
+    implementation project(":core:model")
 
     // Coroutines
     implementation libs.coroutines

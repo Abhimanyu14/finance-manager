@@ -190,8 +190,8 @@ internal class HomeScreenViewModelImpl @Inject constructor(
 
         if (
             isBackupCardVisible.isNull() ||
-            overviewTabSelectionIndex.isNull() ||
             homeListItemViewData.isNull() ||
+            overviewTabSelectionIndex.isNull() ||
             accountsTotalBalanceAmountValue.isNull() ||
             accountsTotalMinimumBalanceAmountValue.isNull()
         ) {
@@ -426,7 +426,7 @@ internal class HomeScreenViewModelImpl @Inject constructor(
 
     private fun getIsBackupCardVisibleFromData(): Flow<Boolean> {
         return myPreferencesRepository.getDataTimestamp().map {
-            it.isNotNull() && it.lastBackup < it.lastChange
+            it.isNotNull() && (it.lastBackup < it.lastChange)
         }
     }
 }
