@@ -152,8 +152,8 @@ kakaocup-compose = { group = "io.github.kakaocup", name = "compose", version.ref
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-android-library = { id = "com.android.library", version.ref = "plugin-android-library" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "plugin-kotlin-android" }
+android-library = { id = "com.android.library", version.ref = "plugin-android-library" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "plugin-kotlin-jvm" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "plugin-kotlin-serialization" }
 kotlin-gradle = { id = "org.jetbrains.kotlin.gradle.plugin", version.ref = "plugin-kotlin-gradle" }

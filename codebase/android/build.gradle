@@ -22,22 +22,12 @@ buildscript {
         // Jetpack compose compiler
         jetpackComposeCompilerVersion = "1.4.3"
     }
-
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        // Build tools
-        classpath libs.plugin.gradle.build.tools
-    }
 }
 
 plugins {
     alias libs.plugins.android.application apply false
-    alias libs.plugins.android.library apply false
     alias libs.plugins.kotlin.android apply false
+    alias libs.plugins.android.library apply false
     alias libs.plugins.hilt.android apply false
     alias libs.plugins.kotlin.jvm apply false
     alias libs.plugins.kotlin.serialization apply false
@@ -47,8 +37,6 @@ plugins {
     alias libs.plugins.firebase.crashlytics apply false
     alias libs.plugins.detekt
     alias libs.plugins.about.libraries apply false
-    // alias libs.plugin.gradle.build.tools
-    // alias libs.plugin.kotlin.gradle
 }
 
 /*
@@ -65,10 +53,6 @@ subprojects {
     }
 }
 */
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}
 
 koverMerged {
     enable()
