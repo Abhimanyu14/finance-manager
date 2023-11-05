@@ -46,21 +46,21 @@ dependencies {
     implementation libs.androidx.core
 
     // Appcompat
-    implementation libs.androidx.appcompat
+    implementation libs.appcompat
 
     // Jetpack compose
-    implementation libs.androidx.compose.ui
-    implementation libs.androidx.compose.util
+    implementation libs.compose.ui
+    implementation libs.compose.util
 
     // Jetpack compose tooling support (Previews, etc.)
-    debugImplementation libs.androidx.compose.tooling
-    implementation libs.androidx.compose.preiew
+    debugImplementation libs.compose.tooling
+    implementation libs.compose.preiew
 
     // Jetpack compose material icons
-    implementation libs.androidx.compose.icons
+    implementation libs.compose.icons
 
     // Jetpack compose material design
-    implementation libs.androidx.compose.material3
+    implementation libs.compose.material3
 
     // Testing
 
@@ -68,8 +68,8 @@ dependencies {
     testImplementation libs.junit
 
     // Android X test
-    androidTestImplementation libs.test.core.ktx
-    androidTestImplementation libs.test.ext
+    androidTestImplementation libs.test.core
+    androidTestImplementation libs.test.junit
     androidTestImplementation libs.test.truth
     androidTestImplementation libs.test.runner
     androidTestImplementation libs.test.rules
@@ -78,6 +78,6 @@ dependencies {
     testImplementation libs.mockito.kotlin
 
     // Coroutines test
-    testImplementation libs.kotlinx.coroutines.test
-    androidTestImplementation libs.kotlinx.coroutines.test
+    testImplementation libs.coroutines.test
+    androidTestImplementation libs.coroutines.test
 }

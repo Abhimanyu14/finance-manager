@@ -39,10 +39,10 @@ dependencies {
     implementation libs.androidx.core
 
     // Jetpack compose lifecycle runtime
-    implementation libs.androidx.runtime.compose
+    implementation libs.lifecycle.runtime.compose
 
     // Hilt
-    implementation libs.hilt.version
+    implementation libs.hilt.android
     kapt libs.dagger.hilt.compiler
     kapt libs.hilt.compiler
 
@@ -52,8 +52,8 @@ dependencies {
     testImplementation libs.junit
 
     // Android X test
-    androidTestImplementation libs.test.core.ktx
-    androidTestImplementation libs.test.ext
+    androidTestImplementation libs.test.core
+    androidTestImplementation libs.test.junit
     androidTestImplementation libs.test.truth
     androidTestImplementation libs.test.runner
     androidTestImplementation libs.test.rules
@@ -62,6 +62,6 @@ dependencies {
     testImplementation libs.mockito.kotlin
 
     // Coroutines test
-    testImplementation libs.kotlinx.coroutines.test
-    androidTestImplementation libs.kotlinx.coroutines.test
+    testImplementation libs.coroutines.test
+    androidTestImplementation libs.coroutines.test
 }

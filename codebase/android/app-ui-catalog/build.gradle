@@ -102,30 +102,30 @@ dependencies {
     implementation libs.androidx.core
 
     // Lifecycle components
-    implementation libs.androidx.lifecycle.runtime
+    implementation libs.lifecycle.runtime
 
     // Jetpack compose
-    implementation libs.androidx.compose.ui
-    implementation libs.androidx.compose.util
+    implementation libs.compose.ui
+    implementation libs.compose.util
 
     // Jetpack compose tooling support (Previews, etc.)
-    debugImplementation libs.androidx.compose.tooling
-    implementation libs.androidx.compose.preiew
+    debugImplementation libs.compose.tooling
+    implementation libs.compose.preiew
 
     // Jetpack compose material design
-    implementation libs.androidx.compose.material3
+    implementation libs.compose.material3
 
     // Jetpack compose material design adapter
-    implementation libs.jetpack.compose.theme.adapter
+    implementation libs.material.compose.theme.adapter
 
     // Jetpack compose integration with activities
-    implementation libs.androidx.activity.compose
+    implementation libs.activity.compose
 
     // Jetpack compose integration with view models
-    implementation libs.androidx.lifecycle.viewmodel.compose
+    implementation libs.lifecycle.viewmodel.compose
 
     // Jetpack compose lifecycle runtime
-    implementation libs.androidx.runtime.compose
+    implementation libs.lifecycle.runtime.compose
 
     // Testing
 

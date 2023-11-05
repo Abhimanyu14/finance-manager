@@ -50,5 +50,5 @@ dependencies {
     implementation libs.androidx.core
 
     // Appcompat
-    implementation libs.androidx.appcompat
+    implementation libs.appcompat
 }

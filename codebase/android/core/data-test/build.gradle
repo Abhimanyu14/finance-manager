@@ -60,7 +60,7 @@ dependencies {
     androidTestImplementation project(":core:testing")
 
     // Hilt
-    implementation libs.hilt.version
+    implementation libs.hilt.android
     kapt libs.dagger.hilt.compiler
     kapt libs.hilt.compiler
 
@@ -74,10 +74,10 @@ dependencies {
     androidTestImplementation libs.junit
 
     // Android X test
-    testImplementation libs.test.core.ktx
-    androidTestImplementation libs.test.core.ktx
-    testImplementation libs.test.ext
-    androidTestImplementation libs.test.ext
+    testImplementation libs.test.core
+    androidTestImplementation libs.test.core
+    testImplementation libs.test.junit
+    androidTestImplementation libs.test.junit
     testImplementation libs.test.truth
     androidTestImplementation libs.test.truth
     testImplementation libs.test.runner
@@ -90,8 +90,8 @@ dependencies {
     androidTestImplementation libs.mockito.kotlin
 
     // Coroutines test
-    testImplementation libs.kotlinx.coroutines.test
-    androidTestImplementation libs.kotlinx.coroutines.test
+    testImplementation libs.coroutines.test
+    androidTestImplementation libs.coroutines.test
 
     // AndroidX core test
     testImplementation libs.core.testing

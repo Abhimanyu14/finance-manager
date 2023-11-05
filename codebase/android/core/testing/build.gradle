@@ -56,7 +56,7 @@ dependencies {
     implementation libs.coroutines
 
     // Hilt
-    implementation libs.hilt.version
+    implementation libs.hilt.android
     kapt libs.dagger.hilt.compiler
     kapt libs.hilt.compiler
 
@@ -66,8 +66,8 @@ dependencies {
     implementation libs.junit
 
     // Android X test
-    implementation libs.test.core.ktx
-    implementation libs.test.ext
+    implementation libs.test.core
+    implementation libs.test.junit
     implementation libs.test.truth
     implementation libs.test.runner
     implementation libs.test.rules
@@ -76,7 +76,7 @@ dependencies {
     implementation libs.mockito.kotlin
 
     // Coroutines test
-    implementation libs.kotlinx.coroutines.test
+    implementation libs.coroutines.test
 
     // Hilt testing
     implementation libs.hilt.android.testing

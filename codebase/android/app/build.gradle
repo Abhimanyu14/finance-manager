@@ -296,42 +296,42 @@ dependencies {
     implementation libs.androidx.core
 
     // Lifecycle components
-    implementation libs.androidx.lifecycle.runtime
+    implementation libs.lifecycle.runtime
 
     // Appcompat
-    implementation libs.androidx.appcompat
+    implementation libs.appcompat
 
     // Jetpack compose
-    implementation libs.androidx.compose.ui
-    implementation libs.androidx.compose.util
+    implementation libs.compose.ui
+    implementation libs.compose.util
 
     // Jetpack compose tooling support (Previews, etc.)
-    debugImplementation libs.androidx.compose.tooling
-    implementation libs.androidx.compose.preiew
+    debugImplementation libs.compose.tooling
+    implementation libs.compose.preiew
 
     // Jetpack compose material design
-    implementation libs.androidx.compose.material3
+    implementation libs.compose.material3
 
     // Jetpack compose material design adapter
-    implementation libs.jetpack.compose.theme.adapter
+    implementation libs.material.compose.theme.adapter
 
     // Jetpack compose integration with activities
-    implementation libs.androidx.activity.compose
+    implementation libs.activity.compose
 
     // Jetpack compose integration with view models
-    implementation libs.androidx.lifecycle.viewmodel.compose
+    implementation libs.lifecycle.viewmodel.compose
 
     // Jetpack compose lifecycle runtime
-    implementation libs.androidx.runtime.compose
+    implementation libs.lifecycle.runtime.compose
 
     // Jetpack compose navigation
-    implementation libs.androidx.navigation.compose
+    implementation libs.navigation.compose
 
     // Jetpack compose navigation with hilt
-    implementation libs.androidx.hilt.navigation.compose
+    implementation libs.hilt.navigation.compose
 
     // Jetpack compose paging
-    implementation libs.androidx.paging.compose
+    implementation libs.paging.compose
 
     // Detekt formatting
     detektPlugins libs.detekt.formatting
@@ -340,7 +340,7 @@ dependencies {
     detektPlugins libs.detekt.rules.compose
 
     // Hilt
-    implementation libs.hilt.version
+    implementation libs.hilt.android
     kapt libs.dagger.hilt.compiler
     // ksp libs.dagger.hilt.compiler
     kapt libs.hilt.compiler
@@ -385,8 +385,8 @@ dependencies {
     testImplementation libs.junit
 
     // Android X test
-    androidTestImplementation libs.test.core.ktx
-    androidTestImplementation libs.test.ext
+    androidTestImplementation libs.test.core
+    androidTestImplementation libs.test.junit
     androidTestImplementation libs.test.truth
     androidTestImplementation libs.test.runner
     androidTestImplementation libs.test.rules
@@ -395,8 +395,8 @@ dependencies {
     testImplementation libs.mockito.kotlin
 
     // Coroutines test
-    testImplementation libs.kotlinx.coroutines.test
-    androidTestImplementation libs.kotlinx.coroutines.test
+    testImplementation libs.coroutines.test
+    androidTestImplementation libs.coroutines.test
 
     // Turbine
     testImplementation libs.turbine

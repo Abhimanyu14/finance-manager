@@ -56,10 +56,10 @@ dependencies {
     implementation libs.androidx.core
 
     // Appcompat
-    implementation libs.androidx.appcompat
+    implementation libs.appcompat
 
     // Hilt
-    implementation libs.hilt.version
+    implementation libs.hilt.android
     kapt libs.dagger.hilt.compiler
     kapt libs.hilt.compiler
 }

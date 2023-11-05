@@ -73,7 +73,7 @@ dependencies {
     implementation libs.coroutines
 
     // Hilt
-    implementation libs.hilt.version
+    implementation libs.hilt.android
     kapt libs.dagger.hilt.compiler
     kapt libs.hilt.compiler
 }
