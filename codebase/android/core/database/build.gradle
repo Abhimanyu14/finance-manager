@@ -63,6 +63,10 @@ android {
         ]
     }
 
+    buildFeatures {
+        buildConfig true
+    }
+
     // Room schema for testing
     sourceSets {
         androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
