@@ -39,6 +39,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabRow
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.EmojiCircleSize
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyDefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircle
@@ -390,12 +391,12 @@ private fun LazyListScope.overviewCardDemo(
                             PieChartItemData(
                                 value = 500F,
                                 text = "Income : ₹500",
-                                color = MaterialTheme.colorScheme.tertiary,
+                                color = MyColor.TERTIARY,
                             ),
                             PieChartItemData(
                                 value = 600F,
                                 text = "Expense : ₹600",
-                                color = MaterialTheme.colorScheme.error,
+                                color = MyColor.ERROR,
                             ),
                         ),
                     ),

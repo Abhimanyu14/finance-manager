@@ -31,8 +31,6 @@ android {
             minifyEnabled false
             shrinkResources false
 
-            // This should be true for Jacoco but false for compose testing
-            // Jacoco
             testCoverageEnabled false
         }
     }
@@ -57,10 +55,6 @@ android {
                 "-opt-in=kotlinx.coroutines.FlowPreview",
                 "-opt-in=kotlinx.coroutines.InternalCoroutinesApi",
                 "-opt-in=kotlinx.coroutines.ObsoleteCoroutinesApi",
-                "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
-
-                // Androidx lifecycle
-                "-opt-in=androidx.lifecycle.compose.ExperimentalLifecycleComposeApi",
 
                 // Compose
                 "-opt-in=androidx.compose.runtime.ExperimentalComposeApi",

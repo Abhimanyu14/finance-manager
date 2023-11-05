@@ -1,6 +1,5 @@
 plugins {
     alias libs.plugins.android.application
-    id "jacoco" // TODO(Abhi): Change to version catalog
     alias libs.plugins.kotlin.android
     alias libs.plugins.kotlin.kapt
     alias libs.plugins.kotlinx.kover
@@ -60,49 +59,6 @@ tasks.koverHtmlReport {
     ]
 }
 
-/*
-// TODO(Abhi): Jacoco
-// Jacoco
-jacoco {
-    toolVersion = "$jacocoVersion"
-}
-
-tasks.withType(Test) {
-    jacoco {
-        includeNoLocationClasses = true
-        excludes = ["jdk.internal.*"] // Allows it to run on Java 11
-    }
-}
-*/
-
-//task jacocoTestReport(type: JacocoReport, dependsOn: ["testDebugUnitTest", "createDebugCoverageReport"]) {
-//    reports {
-//        xml.enabled true
-//        html.enabled true
-//    }
-//    def fileFilter = [
-//            "**/R.class",
-//            "**/R$*.class",
-//            "**/BuildConfig.*",
-//            "**/Manifest*.*",
-//            "**/*Test*.*",
-//            "android/**/*.*",
-//            "**/*$[0-9].*"
-//    ]
-//    def mainSrc = "$project.projectDir/src/main/java"
-//    def javaDebugTree = fileTree(dir: "${buildDir}/intermediates/classes/debug", excludes: fileFilter)
-//    def kotlinDebugTree = fileTree(dir: "${buildDir}/tmp/kotlin-classes/debug", excludes: fileFilter)
-//
-//    sourceDirectories.from = files([mainSrc])
-//    classDirectories.from = files([javaDebugTree], [kotlinDebugTree])
-//    executionData.from = fileTree(dir: project.buildDir, includes: [
-//            "jacoco/testDebugUnitTest.exec",
-//            "outputs/code-coverage/connected/*coverage.ec",
-//            "outputs/code_coverage/debugAndroidTest/connected/**/*.ec"
-//    ])
-//}
-
-
 // API Key
 def apikeyPropertiesFile = rootProject.file("apikey.properties")
 def apikeyProperties = new Properties()
@@ -149,8 +105,6 @@ android {
             shrinkResources false
             proguardFiles getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
 
-            // This should be true for Jacoco but false for compose testing
-            // Jacoco
             testCoverageEnabled false
         }
     }
@@ -177,25 +131,6 @@ android {
             }
         }
     }
-
-    /*
-    // TODO(Abhi): Jacoco
-    // Jacoco
-    testOptions {
-        *//*execution "ANDROIDX_TEST_ORCHESTRATOR"*//*
-        animationsDisabled true
-
-        unitTests {
-            all {
-                jvmArgs "-noverify", "-ea"
-                jacoco {
-                    includeNoLocationClasses = true
-                }
-            }
-            includeAndroidResources = true
-        }
-    }
-    */
 
     compileOptions {
         // Flag to enable support for the new language APIs

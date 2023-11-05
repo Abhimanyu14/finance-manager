@@ -31,8 +31,6 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -58,7 +56,6 @@ fun MySearchBar(
     events: MySearchBarEvents = MySearchBarEvents(),
 ) {
     val focusManager = LocalFocusManager.current
-    val keyboardController: SoftwareKeyboardController? = LocalSoftwareKeyboardController.current
     val focusRequester: FocusRequester = remember {
         FocusRequester()
     }

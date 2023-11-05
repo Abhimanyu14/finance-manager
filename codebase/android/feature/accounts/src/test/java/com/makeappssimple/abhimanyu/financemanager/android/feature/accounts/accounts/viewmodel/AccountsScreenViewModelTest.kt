@@ -28,7 +28,7 @@ class AccountsScreenViewModelTest {
     val mainDispatcherRule = MainDispatcherRule()
 
     @Inject
-    private lateinit var dispatcherProvider: DispatcherProvider
+    lateinit var dispatcherProvider: DispatcherProvider
 
     private val testCoroutineScope = TestScope(
         context = dispatcherProvider.io + Job(),

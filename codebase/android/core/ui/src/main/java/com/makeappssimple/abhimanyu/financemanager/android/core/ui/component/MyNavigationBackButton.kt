@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component
 
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -26,7 +26,7 @@ fun MyNavigationBackButton(
 @Composable
 private fun NavigationArrowBackIcon() {
     Icon(
-        imageVector = Icons.Rounded.ArrowBack,
+        imageVector = Icons.AutoMirrored.Rounded.ArrowBack,
         contentDescription = stringResource(
             id = R.string.navigation_back_button_navigation_icon_content_description,
         ),
