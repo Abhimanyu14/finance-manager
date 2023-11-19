@@ -120,7 +120,12 @@ proguard/
 
 **/.idea/.name
 **/.idea/misc.xml
+
+# deployment
 **/.idea/deploymentTargetDropDown.xml
+
+# experimental ui
+**/.idea/render.experimental.xml
 
 # Kotlin plugin settings
 **/.idea/kotlinc.xml
@@ -147,6 +152,9 @@ proguard/
 # code style
 **/.idea/codeStyles/codeStyleConfig.xml
 **/.idea/codeStyles/Project.xml
+
+# App insights from developer console
+**/.idea/appInsightsSettings.xml
 
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
