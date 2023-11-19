@@ -8,7 +8,7 @@ import androidx.compose.ui.platform.testTag
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_CONTENT_OPEN_SOURCE_LICENSES
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_OPEN_SOURCE_LICENSES
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
@@ -17,7 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
 import com.mikepenz.aboutlibraries.ui.compose.LibrariesContainer
 import com.mikepenz.aboutlibraries.ui.compose.LibraryDefaults
 
-enum class OpenSourceLicensesBottomSheetType : BottomSheetType {
+enum class OpenSourceLicensesScreenBottomSheetType : ScreenBottomSheetType {
     NONE,
 }
 
@@ -33,7 +33,7 @@ internal fun OpenSourceLicensesScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.openSourceLicensesBottomSheetType) {
-                OpenSourceLicensesBottomSheetType.NONE -> {
+                OpenSourceLicensesScreenBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
             }

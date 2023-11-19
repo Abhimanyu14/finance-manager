@@ -24,9 +24,9 @@ class ViewTransactionScreenUIState(
         }
     },
     val transactionIdToDelete: Int?,
-    val viewTransactionBottomSheetType: ViewTransactionBottomSheetType,
+    val viewTransactionBottomSheetType: ViewTransactionScreenBottomSheetType,
     val setTransactionIdToDelete: (Int?) -> Unit,
-    val setViewTransactionBottomSheetType: (ViewTransactionBottomSheetType) -> Unit,
+    val setViewTransactionBottomSheetType: (ViewTransactionScreenBottomSheetType) -> Unit,
     val isLoading: Boolean = unwrappedData.isNull(),
     val originalTransactionListItemData: TransactionListItemData? =
         unwrappedData?.originalTransactionListItemData,
@@ -34,7 +34,7 @@ class ViewTransactionScreenUIState(
         unwrappedData?.refundTransactionListItemData,
     val transactionListItemData: TransactionListItemData? = unwrappedData?.transactionListItemData,
     val resetBottomSheetType: () -> Unit = {
-        setViewTransactionBottomSheetType(ViewTransactionBottomSheetType.NONE)
+        setViewTransactionBottomSheetType(ViewTransactionScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
@@ -44,7 +44,7 @@ fun rememberViewTransactionScreenUIState(
 ): ViewTransactionScreenUIState {
     val (viewTransactionBottomSheetType, setViewTransactionBottomSheetType) = remember {
         mutableStateOf(
-            value = ViewTransactionBottomSheetType.NONE,
+            value = ViewTransactionScreenBottomSheetType.NONE,
         )
     }
     var transactionIdToDelete: Int? by remember {

@@ -22,7 +22,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarsSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
@@ -42,7 +42,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.home.componen
 
 private val bottomContentPadding = 80.dp
 
-enum class HomeBottomSheetType : BottomSheetType {
+enum class HomeScreenBottomSheetType : ScreenBottomSheetType {
     NONE,
 }
 
@@ -58,7 +58,7 @@ internal fun HomeScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.homeBottomSheetType) {
-                HomeBottomSheetType.NONE -> {
+                HomeScreenBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
             }

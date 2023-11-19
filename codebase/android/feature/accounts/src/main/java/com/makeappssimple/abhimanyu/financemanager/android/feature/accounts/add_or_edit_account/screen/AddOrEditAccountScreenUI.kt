@@ -27,7 +27,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.AmountCommaVisualTransformation
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
@@ -44,7 +44,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 
-enum class AddOrEditAccountBottomSheetType : BottomSheetType {
+enum class AddOrEditAccountScreenBottomSheetType : ScreenBottomSheetType {
     NONE,
 }
 
@@ -97,7 +97,7 @@ internal fun AddOrEditAccountScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.addOrEditAccountBottomSheetType) {
-                AddOrEditAccountBottomSheetType.NONE -> {
+                AddOrEditAccountScreenBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
             }

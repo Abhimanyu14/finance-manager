@@ -24,8 +24,8 @@ class AddOrEditTransactionForScreenUIState(
         }
     },
     isEdit: Boolean,
-    setAddOrEditTransactionForBottomSheetType: (AddOrEditTransactionForBottomSheetType) -> Unit,
-    val addOrEditTransactionForBottomSheetType: AddOrEditTransactionForBottomSheetType,
+    setAddOrEditTransactionForBottomSheetType: (AddOrEditTransactionForScreenBottomSheetType) -> Unit,
+    val addOrEditTransactionForBottomSheetType: AddOrEditTransactionForScreenBottomSheetType,
     val isLoading: Boolean = unwrappedData.isNull(),
     val isCtaButtonEnabled: Boolean? = unwrappedData?.isValidTransactionForData,
     @StringRes
@@ -44,7 +44,7 @@ class AddOrEditTransactionForScreenUIState(
     val titleTextFieldErrorTextStringResourceId: Int? =
         unwrappedData?.titleTextFieldError?.textStringResourceId,
     val resetBottomSheetType: () -> Unit = {
-        setAddOrEditTransactionForBottomSheetType(AddOrEditTransactionForBottomSheetType.NONE)
+        setAddOrEditTransactionForBottomSheetType(AddOrEditTransactionForScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
@@ -55,7 +55,7 @@ fun rememberAddOrEditTransactionForScreenUIState(
 ): AddOrEditTransactionForScreenUIState {
     val (addOrEditTransactionForBottomSheetType, setAddOrEditTransactionForBottomSheetType) = remember {
         mutableStateOf(
-            value = AddOrEditTransactionForBottomSheetType.NONE,
+            value = AddOrEditTransactionForScreenBottomSheetType.NONE,
         )
     }
 

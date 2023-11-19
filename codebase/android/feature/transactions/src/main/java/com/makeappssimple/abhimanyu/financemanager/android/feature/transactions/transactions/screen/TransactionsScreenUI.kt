@@ -48,7 +48,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarsSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
@@ -71,7 +71,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.component.bottomsheet.TransactionsSortBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.Filter
 
-enum class TransactionsBottomSheetType : BottomSheetType {
+enum class TransactionsScreenBottomSheetType : ScreenBottomSheetType {
     FILTERS,
     NONE,
     SELECT_TRANSACTION_FOR,
@@ -90,8 +90,8 @@ internal fun TransactionsScreenUI(
     }
 
     BottomSheetHandler(
-        showModalBottomSheet = uiState.transactionsBottomSheetType != TransactionsBottomSheetType.NONE,
-        bottomSheetType = uiState.transactionsBottomSheetType,
+        showModalBottomSheet = uiState.transactionsBottomSheetType != TransactionsScreenBottomSheetType.NONE,
+        screenBottomSheetType = uiState.transactionsBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
@@ -122,7 +122,7 @@ internal fun TransactionsScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.transactionsBottomSheetType) {
-                TransactionsBottomSheetType.FILTERS -> {
+                TransactionsScreenBottomSheetType.FILTERS -> {
                     TransactionsFilterBottomSheet(
                         expenseCategories = uiState.expenseCategories,
                         incomeCategories = uiState.incomeCategories,
@@ -144,11 +144,11 @@ internal fun TransactionsScreenUI(
                     )
                 }
 
-                TransactionsBottomSheetType.NONE -> {
+                TransactionsScreenBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
 
-                TransactionsBottomSheetType.SELECT_TRANSACTION_FOR -> {
+                TransactionsScreenBottomSheetType.SELECT_TRANSACTION_FOR -> {
                     SelectTransactionForBottomSheet(
                         data = SelectTransactionForBottomSheetData(
                             transactionForValues = uiState.transactionForValues,
@@ -167,7 +167,7 @@ internal fun TransactionsScreenUI(
                     )
                 }
 
-                TransactionsBottomSheetType.SORT -> {
+                TransactionsScreenBottomSheetType.SORT -> {
                     TransactionsSortBottomSheet(
                         selectedSortOptionIndex = uiState.sortOptions.indexOf(uiState.selectedSortOption),
                         sortOptions = uiState.sortOptions.toList(),
@@ -185,14 +185,14 @@ internal fun TransactionsScreenUI(
         },
         sheetState = state.modalBottomSheetState,
         sheetShape = when (uiState.transactionsBottomSheetType) {
-            TransactionsBottomSheetType.NONE,
-            TransactionsBottomSheetType.SELECT_TRANSACTION_FOR,
-            TransactionsBottomSheetType.SORT,
+            TransactionsScreenBottomSheetType.NONE,
+            TransactionsScreenBottomSheetType.SELECT_TRANSACTION_FOR,
+            TransactionsScreenBottomSheetType.SORT,
             -> {
                 BottomSheetShape
             }
 
-            TransactionsBottomSheetType.FILTERS -> {
+            TransactionsScreenBottomSheetType.FILTERS -> {
                 BottomSheetExpandedShape
             }
         },
@@ -234,7 +234,7 @@ internal fun TransactionsScreenUI(
                                     onClick = {
                                         isDropDownVisible = false
                                         uiState.setTransactionsBottomSheetType(
-                                            TransactionsBottomSheetType.SELECT_TRANSACTION_FOR
+                                            TransactionsScreenBottomSheetType.SELECT_TRANSACTION_FOR
                                         )
                                     },
                                 )
@@ -299,8 +299,8 @@ internal fun TransactionsScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
-        isModalBottomSheetVisible = uiState.transactionsBottomSheetType != TransactionsBottomSheetType.NONE,
-        backHandlerEnabled = uiState.transactionsBottomSheetType != TransactionsBottomSheetType.NONE,
+        isModalBottomSheetVisible = uiState.transactionsBottomSheetType != TransactionsScreenBottomSheetType.NONE,
+        backHandlerEnabled = uiState.transactionsBottomSheetType != TransactionsScreenBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
     ) {
@@ -374,7 +374,7 @@ internal fun TransactionsScreenUI(
                         events = ActionButtonEvents(
                             onClick = {
                                 uiState.setTransactionsBottomSheetType(
-                                    TransactionsBottomSheetType.SORT
+                                    TransactionsScreenBottomSheetType.SORT
                                 )
                             },
                         ),
@@ -388,7 +388,7 @@ internal fun TransactionsScreenUI(
                         events = ActionButtonEvents(
                             onClick = {
                                 uiState.setTransactionsBottomSheetType(
-                                    TransactionsBottomSheetType.FILTERS
+                                    TransactionsScreenBottomSheetType.FILTERS
                                 )
                             },
                         ),

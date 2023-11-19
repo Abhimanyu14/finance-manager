@@ -28,11 +28,11 @@ class CategoriesScreenUIState(
             null
         }
     },
-    val categoriesBottomSheetType: CategoriesBottomSheetType,
+    val categoriesBottomSheetType: CategoriesScreenBottomSheetType,
     var categoryIdToDelete: Int?,
     var clickedItemId: Int?,
     val pagerState: PagerState,
-    val setCategoriesBottomSheetType: (CategoriesBottomSheetType) -> Unit,
+    val setCategoriesBottomSheetType: (CategoriesScreenBottomSheetType) -> Unit,
     val setCategoryIdToDelete: (Int?) -> Unit,
     val setClickedItemId: (Int?) -> Unit,
     val isLoading: Boolean = unwrappedData.isNull(),
@@ -50,7 +50,7 @@ class CategoriesScreenUIState(
     val categoriesGridItemDataMap: Map<TransactionType, List<CategoriesGridItemData>> =
         unwrappedData?.categoriesGridItemDataMap.orEmpty(),
     val resetBottomSheetType: () -> Unit = {
-        setCategoriesBottomSheetType(CategoriesBottomSheetType.None)
+        setCategoriesBottomSheetType(CategoriesScreenBottomSheetType.None)
     },
 ) : ScreenUIState
 
@@ -58,9 +58,9 @@ class CategoriesScreenUIState(
 fun rememberCategoriesScreenUIState(
     data: MyResult<CategoriesScreenUIData>?,
 ): CategoriesScreenUIState {
-    var categoriesBottomSheetType: CategoriesBottomSheetType by remember {
+    var categoriesBottomSheetType: CategoriesScreenBottomSheetType by remember {
         mutableStateOf(
-            value = CategoriesBottomSheetType.None,
+            value = CategoriesScreenBottomSheetType.None,
         )
     }
     var categoryIdToDelete: Int? by remember {
@@ -77,7 +77,7 @@ fun rememberCategoriesScreenUIState(
         pageCount = { 3 },
     )
     val setCategoriesBottomSheetType =
-        { updatedCategoriesBottomSheetType: CategoriesBottomSheetType ->
+        { updatedCategoriesBottomSheetType: CategoriesScreenBottomSheetType ->
             categoriesBottomSheetType = updatedCategoriesBottomSheetType
         }
     val setCategoryIdToDelete = { updatedCategoryIdToDelete: Int? ->

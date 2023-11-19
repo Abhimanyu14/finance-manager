@@ -20,7 +20,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
@@ -36,7 +36,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.bottomsheet.AnalysisFilterBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItem
 
-enum class AnalysisBottomSheetType : BottomSheetType {
+enum class AnalysisScreenBottomSheetType : ScreenBottomSheetType {
     FILTERS,
     NONE,
 }
@@ -48,8 +48,8 @@ internal fun AnalysisScreenUI(
     handleUIEvents: (uiEvent: AnalysisScreenUIEvent) -> Unit = {},
 ) {
     BottomSheetHandler(
-        showModalBottomSheet = uiState.analysisBottomSheetType != AnalysisBottomSheetType.NONE,
-        bottomSheetType = uiState.analysisBottomSheetType,
+        showModalBottomSheet = uiState.analysisBottomSheetType != AnalysisScreenBottomSheetType.NONE,
+        screenBottomSheetType = uiState.analysisBottomSheetType,
         coroutineScope = state.coroutineScope,
         modalBottomSheetState = state.modalBottomSheetState,
         keyboardController = state.keyboardController,
@@ -62,7 +62,7 @@ internal fun AnalysisScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.analysisBottomSheetType) {
-                AnalysisBottomSheetType.FILTERS -> {
+                AnalysisScreenBottomSheetType.FILTERS -> {
                     AnalysisFilterBottomSheet(
                         selectedFilter = uiState.selectedFilter,
                         headingTextStringResourceId = R.string.bottom_sheet_analysis_filter_transaction_date,
@@ -82,7 +82,7 @@ internal fun AnalysisScreenUI(
                     )
                 }
 
-                AnalysisBottomSheetType.NONE -> {
+                AnalysisScreenBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
             }
@@ -99,8 +99,8 @@ internal fun AnalysisScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
-        isModalBottomSheetVisible = uiState.analysisBottomSheetType != AnalysisBottomSheetType.NONE,
-        backHandlerEnabled = uiState.analysisBottomSheetType != AnalysisBottomSheetType.NONE,
+        isModalBottomSheetVisible = uiState.analysisBottomSheetType != AnalysisScreenBottomSheetType.NONE,
+        backHandlerEnabled = uiState.analysisBottomSheetType != AnalysisScreenBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
     ) {
@@ -150,7 +150,7 @@ internal fun AnalysisScreenUI(
                         ),
                         events = ActionButtonEvents(
                             onClick = {
-                                uiState.setAnalysisBottomSheetType(AnalysisBottomSheetType.FILTERS)
+                                uiState.setAnalysisBottomSheetType(AnalysisScreenBottomSheetType.FILTERS)
                             },
                         ),
                         modifier = Modifier

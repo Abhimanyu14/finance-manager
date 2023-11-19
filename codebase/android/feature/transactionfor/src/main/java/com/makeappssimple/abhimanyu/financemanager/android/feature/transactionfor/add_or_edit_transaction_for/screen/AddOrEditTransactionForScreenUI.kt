@@ -27,7 +27,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
@@ -42,7 +42,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 
-enum class AddOrEditTransactionForBottomSheetType : BottomSheetType {
+enum class AddOrEditTransactionForScreenBottomSheetType : ScreenBottomSheetType {
     DELETE,
     EDIT,
     NONE,
@@ -71,8 +71,8 @@ internal fun AddOrEditTransactionForScreenUI(
     }
 
     BottomSheetHandler(
-        showModalBottomSheet = uiState.addOrEditTransactionForBottomSheetType != AddOrEditTransactionForBottomSheetType.NONE,
-        bottomSheetType = uiState.addOrEditTransactionForBottomSheetType,
+        showModalBottomSheet = uiState.addOrEditTransactionForBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.NONE,
+        screenBottomSheetType = uiState.addOrEditTransactionForBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
@@ -85,15 +85,15 @@ internal fun AddOrEditTransactionForScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.addOrEditTransactionForBottomSheetType) {
-                AddOrEditTransactionForBottomSheetType.DELETE -> {
+                AddOrEditTransactionForScreenBottomSheetType.DELETE -> {
                     VerticalSpacer()
                 }
 
-                AddOrEditTransactionForBottomSheetType.EDIT -> {
+                AddOrEditTransactionForScreenBottomSheetType.EDIT -> {
                     VerticalSpacer()
                 }
 
-                AddOrEditTransactionForBottomSheetType.NONE -> {
+                AddOrEditTransactionForScreenBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
             }
@@ -110,8 +110,8 @@ internal fun AddOrEditTransactionForScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
-        isModalBottomSheetVisible = uiState.addOrEditTransactionForBottomSheetType != AddOrEditTransactionForBottomSheetType.NONE,
-        backHandlerEnabled = uiState.addOrEditTransactionForBottomSheetType != AddOrEditTransactionForBottomSheetType.NONE,
+        isModalBottomSheetVisible = uiState.addOrEditTransactionForBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.NONE,
+        backHandlerEnabled = uiState.addOrEditTransactionForBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
     ) {

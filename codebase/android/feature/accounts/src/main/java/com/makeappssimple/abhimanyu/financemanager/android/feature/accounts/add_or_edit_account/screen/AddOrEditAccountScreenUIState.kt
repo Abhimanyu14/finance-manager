@@ -32,8 +32,8 @@ class AddOrEditAccountScreenUIState(
         }
     },
     isEdit: Boolean,
-    setAddOrEditAccountBottomSheetType: (AddOrEditAccountBottomSheetType) -> Unit,
-    val addOrEditAccountBottomSheetType: AddOrEditAccountBottomSheetType,
+    setAddOrEditAccountBottomSheetType: (AddOrEditAccountScreenBottomSheetType) -> Unit,
+    val addOrEditAccountBottomSheetType: AddOrEditAccountScreenBottomSheetType,
     val nameTextFieldFocusRequester: FocusRequester,
     val balanceAmountTextFieldFocusRequester: FocusRequester,
     val isLoading: Boolean = unwrappedData.isNull(),
@@ -69,7 +69,7 @@ class AddOrEditAccountScreenUIState(
         unwrappedData?.minimumBalanceAmountValue.orEmpty(),
     val name: TextFieldValue = unwrappedData?.name.orEmpty(),
     val resetBottomSheetType: () -> Unit = {
-        setAddOrEditAccountBottomSheetType(AddOrEditAccountBottomSheetType.NONE)
+        setAddOrEditAccountBottomSheetType(AddOrEditAccountScreenBottomSheetType.NONE)
     },
     val visibilityData: AddOrEditAccountScreenUIVisibilityData = AddOrEditAccountScreenUIVisibilityData(
         balanceAmountTextField = isEdit,
@@ -95,7 +95,7 @@ fun rememberAddOrEditAccountScreenUIState(
 ): AddOrEditAccountScreenUIState {
     val (addOrEditAccountBottomSheetType, setAddOrEditAccountBottomSheetType) = remember {
         mutableStateOf(
-            value = AddOrEditAccountBottomSheetType.NONE,
+            value = AddOrEditAccountScreenBottomSheetType.NONE,
         )
     }
     val nameTextFieldFocusRequester = remember {

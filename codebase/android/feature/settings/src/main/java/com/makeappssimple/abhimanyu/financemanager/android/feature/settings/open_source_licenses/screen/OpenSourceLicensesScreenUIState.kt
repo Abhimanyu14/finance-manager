@@ -20,11 +20,11 @@ class OpenSourceLicensesScreenUIState(
             null
         }
     },
-    val openSourceLicensesBottomSheetType: OpenSourceLicensesBottomSheetType = OpenSourceLicensesBottomSheetType.NONE,
-    val setOpenSourceLicensesBottomSheetType: (OpenSourceLicensesBottomSheetType) -> Unit = {},
+    val openSourceLicensesBottomSheetType: OpenSourceLicensesScreenBottomSheetType = OpenSourceLicensesScreenBottomSheetType.NONE,
+    val setOpenSourceLicensesBottomSheetType: (OpenSourceLicensesScreenBottomSheetType) -> Unit = {},
     val isLoading: Boolean = unwrappedData.isNull() || unwrappedData.isLoading,
     val resetBottomSheetType: () -> Unit = {
-        setOpenSourceLicensesBottomSheetType(OpenSourceLicensesBottomSheetType.NONE)
+        setOpenSourceLicensesBottomSheetType(OpenSourceLicensesScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
@@ -32,9 +32,9 @@ class OpenSourceLicensesScreenUIState(
 fun rememberOpenSourceLicensesScreenUIState(
     data: MyResult<OpenSourceLicensesScreenUIData>?,
 ): OpenSourceLicensesScreenUIState {
-    val (openSourceLicensesBottomSheetType: OpenSourceLicensesBottomSheetType, setOpenSourceLicensesBottomSheetType: (OpenSourceLicensesBottomSheetType) -> Unit) = remember {
+    val (openSourceLicensesBottomSheetType: OpenSourceLicensesScreenBottomSheetType, setOpenSourceLicensesBottomSheetType: (OpenSourceLicensesScreenBottomSheetType) -> Unit) = remember {
         mutableStateOf(
-            value = OpenSourceLicensesBottomSheetType.NONE,
+            value = OpenSourceLicensesScreenBottomSheetType.NONE,
         )
     }
 

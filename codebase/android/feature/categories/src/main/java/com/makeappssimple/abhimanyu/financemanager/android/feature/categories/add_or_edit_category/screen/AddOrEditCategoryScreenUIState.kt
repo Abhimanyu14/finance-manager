@@ -27,8 +27,8 @@ class AddOrEditCategoryScreenUIState(
         }
     },
     isEdit: Boolean,
-    val addOrEditCategoryBottomSheetType: AddOrEditCategoryBottomSheetType,
-    val setAddOrEditCategoryBottomSheetType: (AddOrEditCategoryBottomSheetType) -> Unit,
+    val addOrEditCategoryBottomSheetType: AddOrEditCategoryScreenBottomSheetType,
+    val setAddOrEditCategoryBottomSheetType: (AddOrEditCategoryScreenBottomSheetType) -> Unit,
     val isLoading: Boolean = unwrappedData.isNull(),
     val isCtaButtonEnabled: Boolean = unwrappedData?.isCtaButtonEnabled.orFalse(),
     val selectedTransactionTypeIndex: Int? = unwrappedData?.selectedTransactionTypeIndex,
@@ -56,7 +56,7 @@ class AddOrEditCategoryScreenUIState(
         R.string.screen_add_category_floating_action_button_content_description
     },
     val resetBottomSheetType: () -> Unit = {
-        setAddOrEditCategoryBottomSheetType(AddOrEditCategoryBottomSheetType.NONE)
+        setAddOrEditCategoryBottomSheetType(AddOrEditCategoryScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
@@ -67,7 +67,7 @@ fun rememberAddOrEditCategoryScreenUIState(
 ): AddOrEditCategoryScreenUIState {
     val (addOrEditCategoryBottomSheetType, setAddOrEditCategoryBottomSheetType) = remember {
         mutableStateOf(
-            value = AddOrEditCategoryBottomSheetType.NONE,
+            value = AddOrEditCategoryScreenBottomSheetType.NONE,
         )
     }
 

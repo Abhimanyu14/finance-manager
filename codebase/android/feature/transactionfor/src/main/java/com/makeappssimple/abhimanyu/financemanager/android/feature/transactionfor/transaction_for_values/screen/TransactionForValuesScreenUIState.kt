@@ -24,15 +24,15 @@ class TransactionForValuesScreenUIState(
         }
     },
     val transactionForIdToDelete: Int?,
-    val transactionForValuesBottomSheetType: TransactionForValuesBottomSheetType,
+    val transactionForValuesBottomSheetType: TransactionForValuesScreenBottomSheetType,
     val setTransactionForIdToDelete: (Int?) -> Unit,
-    val setTransactionForValuesBottomSheetType: (TransactionForValuesBottomSheetType) -> Unit,
+    val setTransactionForValuesBottomSheetType: (TransactionForValuesScreenBottomSheetType) -> Unit,
     val isLoading: Boolean = unwrappedData.isNull(),
     val transactionForValuesIsUsedInTransactions: List<Boolean> =
         unwrappedData?.transactionForValuesIsUsedInTransactions.orEmpty(),
     val transactionForValues: List<TransactionFor> = unwrappedData?.transactionForValues.orEmpty(),
     val resetBottomSheetType: () -> Unit = {
-        setTransactionForValuesBottomSheetType(TransactionForValuesBottomSheetType.None)
+        setTransactionForValuesBottomSheetType(TransactionForValuesScreenBottomSheetType.None)
     },
 ) : ScreenUIState
 
@@ -45,16 +45,16 @@ fun rememberTransactionForValuesScreenUIState(
             value = null,
         )
     }
-    var transactionForValuesBottomSheetType: TransactionForValuesBottomSheetType by remember {
+    var transactionForValuesBottomSheetType: TransactionForValuesScreenBottomSheetType by remember {
         mutableStateOf(
-            value = TransactionForValuesBottomSheetType.None,
+            value = TransactionForValuesScreenBottomSheetType.None,
         )
     }
     val setTransactionForIdToDelete: (Int?) -> Unit = { updatedTransactionForIdToDelete: Int? ->
         transactionForIdToDelete = updatedTransactionForIdToDelete
     }
-    val setTransactionForValuesBottomSheetType: (TransactionForValuesBottomSheetType) -> Unit =
-        { updatedTransactionForValuesBottomSheetType: TransactionForValuesBottomSheetType ->
+    val setTransactionForValuesBottomSheetType: (TransactionForValuesScreenBottomSheetType) -> Unit =
+        { updatedTransactionForValuesBottomSheetType: TransactionForValuesScreenBottomSheetType ->
             transactionForValuesBottomSheetType = updatedTransactionForValuesBottomSheetType
         }
 

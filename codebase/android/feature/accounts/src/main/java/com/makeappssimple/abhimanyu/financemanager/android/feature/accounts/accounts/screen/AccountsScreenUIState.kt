@@ -27,11 +27,11 @@ class AccountsScreenUIState(
     val clickedItemId: Int?,
     val expandedItemIndex: Int?,
     val accountIdToDelete: Int?,
-    val accountsBottomSheetType: AccountsBottomSheetType,
+    val accountsBottomSheetType: AccountsScreenBottomSheetType,
     val setClickedItemId: (Int?) -> Unit,
     val setExpandedItemIndex: (Int?) -> Unit,
     val setAccountIdToDelete: (Int?) -> Unit,
-    val setAccountsBottomSheetType: (AccountsBottomSheetType) -> Unit,
+    val setAccountsBottomSheetType: (AccountsScreenBottomSheetType) -> Unit,
     val isLoading: Boolean = unwrappedData.isNull(),
     val accountsListItemDataList: List<AccountsListItemData> =
         unwrappedData?.accountsListItemDataList.orEmpty(),
@@ -40,7 +40,7 @@ class AccountsScreenUIState(
     val accountsTotalMinimumBalanceAmountValue: Long =
         unwrappedData?.accountsTotalMinimumBalanceAmountValue.orZero(),
     val resetBottomSheetType: () -> Unit = {
-        setAccountsBottomSheetType(AccountsBottomSheetType.NONE)
+        setAccountsBottomSheetType(AccountsScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
@@ -63,9 +63,9 @@ fun rememberAccountsScreenUIState(
             value = null,
         )
     }
-    val (accountsBottomSheetType: AccountsBottomSheetType, setAccountsBottomSheetType: (AccountsBottomSheetType) -> Unit) = remember {
+    val (accountsBottomSheetType: AccountsScreenBottomSheetType, setAccountsBottomSheetType: (AccountsScreenBottomSheetType) -> Unit) = remember {
         mutableStateOf(
-            value = AccountsBottomSheetType.NONE,
+            value = AccountsScreenBottomSheetType.NONE,
         )
     }
     val setClickedItemId = { updatedClickedItemId: Int? ->

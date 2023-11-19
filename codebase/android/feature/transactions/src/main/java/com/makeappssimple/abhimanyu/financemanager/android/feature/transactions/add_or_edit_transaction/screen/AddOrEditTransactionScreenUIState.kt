@@ -33,10 +33,10 @@ class AddOrEditTransactionScreenUIState(
         }
     },
     isEdit: Boolean,
-    val addOrEditTransactionBottomSheetType: AddOrEditTransactionBottomSheetType,
+    val addOrEditTransactionBottomSheetType: AddOrEditTransactionScreenBottomSheetType,
     val isTransactionDatePickerDialogVisible: Boolean,
     val isTransactionTimePickerDialogVisible: Boolean,
-    val setAddOrEditTransactionBottomSheetType: (AddOrEditTransactionBottomSheetType) -> Unit,
+    val setAddOrEditTransactionBottomSheetType: (AddOrEditTransactionScreenBottomSheetType) -> Unit,
     val setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit,
     val setIsTransactionTimePickerDialogVisible: (Boolean) -> Unit,
     val isLoading: Boolean = unwrappedData.isNull(),
@@ -92,7 +92,7 @@ class AddOrEditTransactionScreenUIState(
         }.orEmpty(),
     val currentLocalDate: LocalDate = unwrappedData?.currentLocalDate.orMin(),
     val resetBottomSheetType: () -> Unit = {
-        setAddOrEditTransactionBottomSheetType(AddOrEditTransactionBottomSheetType.NONE)
+        setAddOrEditTransactionBottomSheetType(AddOrEditTransactionScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
@@ -101,9 +101,9 @@ fun rememberAddOrEditTransactionScreenUIState(
     data: MyResult<AddOrEditTransactionScreenUIData>?,
     isEdit: Boolean,
 ): AddOrEditTransactionScreenUIState {
-    val (addOrEditTransactionBottomSheetType: AddOrEditTransactionBottomSheetType, setAddOrEditTransactionBottomSheetType: (AddOrEditTransactionBottomSheetType) -> Unit) = remember {
+    val (addOrEditTransactionBottomSheetType: AddOrEditTransactionScreenBottomSheetType, setAddOrEditTransactionBottomSheetType: (AddOrEditTransactionScreenBottomSheetType) -> Unit) = remember {
         mutableStateOf(
-            value = AddOrEditTransactionBottomSheetType.NONE,
+            value = AddOrEditTransactionScreenBottomSheetType.NONE,
         )
     }
     val (isTransactionDatePickerDialogVisible, setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit) = remember {

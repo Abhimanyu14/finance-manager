@@ -29,8 +29,8 @@ class AnalysisScreenUIState(
         }
     },
     textMeasurer: TextMeasurer,
-    val analysisBottomSheetType: AnalysisBottomSheetType,
-    val setAnalysisBottomSheetType: (AnalysisBottomSheetType) -> Unit,
+    val analysisBottomSheetType: AnalysisScreenBottomSheetType,
+    val setAnalysisBottomSheetType: (AnalysisScreenBottomSheetType) -> Unit,
     val isLoading: Boolean = unwrappedData.isNull(),
     val selectedFilter: Filter = unwrappedData?.selectedFilter.orEmpty(),
     val selectedTransactionTypeIndex: Int? = unwrappedData?.selectedTransactionTypeIndex,
@@ -50,7 +50,7 @@ class AnalysisScreenUIState(
         }
     },
     val resetBottomSheetType: () -> Unit = {
-        setAnalysisBottomSheetType(AnalysisBottomSheetType.NONE)
+        setAnalysisBottomSheetType(AnalysisScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
@@ -60,7 +60,7 @@ fun rememberAnalysisScreenUIState(
 ): AnalysisScreenUIState {
     val (analysisBottomSheetType, setAnalysisBottomSheetType) = remember {
         mutableStateOf(
-            value = AnalysisBottomSheetType.NONE,
+            value = AnalysisScreenBottomSheetType.NONE,
         )
     }
     val textMeasurer: TextMeasurer = rememberTextMeasurer()

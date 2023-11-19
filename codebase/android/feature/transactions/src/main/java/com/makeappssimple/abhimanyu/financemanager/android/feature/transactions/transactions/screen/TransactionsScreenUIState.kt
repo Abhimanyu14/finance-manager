@@ -33,9 +33,9 @@ class TransactionsScreenUIState(
         }
     },
     val isInSelectionMode: Boolean,
-    val transactionsBottomSheetType: TransactionsBottomSheetType,
+    val transactionsBottomSheetType: TransactionsScreenBottomSheetType,
     val setIsInSelectionMode: (Boolean) -> Unit,
-    val setTransactionsBottomSheetType: (TransactionsBottomSheetType) -> Unit,
+    val setTransactionsBottomSheetType: (TransactionsScreenBottomSheetType) -> Unit,
     val isLoading: Boolean = unwrappedData.isNull() || unwrappedData.isLoading,
     val selectedFilter: Filter = unwrappedData?.selectedFilter.orEmpty(),
     val selectedTransactions: List<Int> = unwrappedData?.selectedTransactions.orEmpty(),
@@ -54,7 +54,7 @@ class TransactionsScreenUIState(
     val searchText: String = unwrappedData?.searchText.orEmpty(),
     val selectedSortOption: SortOption = unwrappedData?.selectedSortOption.orDefault(),
     val resetBottomSheetType: () -> Unit = {
-        setTransactionsBottomSheetType(TransactionsBottomSheetType.NONE)
+        setTransactionsBottomSheetType(TransactionsScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
@@ -65,9 +65,9 @@ fun rememberTransactionsScreenUIState(
     val (isInSelectionMode: Boolean, setIsInSelectionMode: (Boolean) -> Unit) = remember {
         mutableStateOf(false)
     }
-    val (transactionsBottomSheetType: TransactionsBottomSheetType, setTransactionsBottomSheetType: (TransactionsBottomSheetType) -> Unit) = remember {
+    val (transactionsBottomSheetType: TransactionsScreenBottomSheetType, setTransactionsBottomSheetType: (TransactionsScreenBottomSheetType) -> Unit) = remember {
         mutableStateOf(
-            value = TransactionsBottomSheetType.NONE,
+            value = TransactionsScreenBottomSheetType.NONE,
         )
     }
 

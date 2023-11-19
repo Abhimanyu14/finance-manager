@@ -7,14 +7,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.SoftwareKeyboardController
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
 fun BottomSheetHandler(
     showModalBottomSheet: Boolean,
-    bottomSheetType: BottomSheetType,
+    screenBottomSheetType: ScreenBottomSheetType,
     coroutineScope: CoroutineScope,
     modalBottomSheetState: SheetState,
     keyboardController: SoftwareKeyboardController?,
@@ -27,7 +27,7 @@ fun BottomSheetHandler(
 
     BottomSheetTypeChangeHandler(
         showModalBottomSheet = showModalBottomSheet,
-        bottomSheetType = bottomSheetType,
+        screenBottomSheetType = screenBottomSheetType,
         coroutineScope = coroutineScope,
         modalBottomSheetState = modalBottomSheetState,
         keyboardController = keyboardController,
@@ -53,13 +53,13 @@ private fun BottomSheetDisposeHandler(
 @Composable
 private fun BottomSheetTypeChangeHandler(
     showModalBottomSheet: Boolean,
-    bottomSheetType: BottomSheetType,
+    screenBottomSheetType: ScreenBottomSheetType,
     coroutineScope: CoroutineScope,
     modalBottomSheetState: SheetState,
     keyboardController: SoftwareKeyboardController?,
 ) {
     LaunchedEffect(
-        key1 = bottomSheetType,
+        key1 = screenBottomSheetType,
     ) {
         if (showModalBottomSheet) {
             keyboardController?.hide()

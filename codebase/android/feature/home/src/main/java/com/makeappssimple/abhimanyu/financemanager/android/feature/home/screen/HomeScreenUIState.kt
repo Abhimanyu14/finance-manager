@@ -29,8 +29,8 @@ class HomeScreenUIState(
             null
         }
     },
-    val homeBottomSheetType: HomeBottomSheetType,
-    val setHomeBottomSheetType: (HomeBottomSheetType) -> Unit,
+    val homeBottomSheetType: HomeScreenBottomSheetType,
+    val setHomeBottomSheetType: (HomeScreenBottomSheetType) -> Unit,
     private val totalIncomeAmount: Amount = Amount(
         value = unwrappedData?.overviewCardData?.income?.toLong().orZero(),
     ),
@@ -48,7 +48,7 @@ class HomeScreenUIState(
         unwrappedData?.accountsTotalMinimumBalanceAmountValue.orZero(),
     val overviewCardData: OverviewCardViewModelData = unwrappedData?.overviewCardData.orDefault(),
     val resetBottomSheetType: () -> Unit = {
-        setHomeBottomSheetType(HomeBottomSheetType.NONE)
+        setHomeBottomSheetType(HomeScreenBottomSheetType.NONE)
     },
     val pieChartData: PieChartData = PieChartData(
         items = listOf(
@@ -70,9 +70,9 @@ class HomeScreenUIState(
 fun rememberHomeScreenUIState(
     data: MyResult<HomeScreenUIData>?,
 ): HomeScreenUIState {
-    val (homeBottomSheetType: HomeBottomSheetType, setHomeBottomSheetType: (HomeBottomSheetType) -> Unit) = remember {
+    val (homeBottomSheetType: HomeScreenBottomSheetType, setHomeBottomSheetType: (HomeScreenBottomSheetType) -> Unit) = remember {
         mutableStateOf(
-            value = HomeBottomSheetType.NONE,
+            value = HomeScreenBottomSheetType.NONE,
         )
     }
 

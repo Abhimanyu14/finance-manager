@@ -21,14 +21,14 @@ class SettingsScreenUIState(
             null
         }
     },
-    val settingsBottomSheetType: SettingsBottomSheetType = SettingsBottomSheetType.NONE,
+    val settingsBottomSheetType: SettingsScreenBottomSheetType = SettingsScreenBottomSheetType.NONE,
     val snackbarHostState: SnackbarHostState = SnackbarHostState(),
-    val setSettingsBottomSheetType: (SettingsBottomSheetType) -> Unit = {},
+    val setSettingsBottomSheetType: (SettingsScreenBottomSheetType) -> Unit = {},
     val isLoading: Boolean = unwrappedData.isNull() || unwrappedData.isLoading,
     val isReminderEnabled: Boolean? = unwrappedData?.isReminderEnabled,
     val appVersion: String? = unwrappedData?.appVersion,
     val resetBottomSheetType: () -> Unit = {
-        setSettingsBottomSheetType(SettingsBottomSheetType.NONE)
+        setSettingsBottomSheetType(SettingsScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
@@ -36,9 +36,9 @@ class SettingsScreenUIState(
 fun rememberSettingsScreenUIState(
     data: MyResult<SettingsScreenUIData>?,
 ): SettingsScreenUIState {
-    val (settingsBottomSheetType: SettingsBottomSheetType, setSettingsBottomSheetType: (SettingsBottomSheetType) -> Unit) = remember {
+    val (settingsBottomSheetType: SettingsScreenBottomSheetType, setSettingsBottomSheetType: (SettingsScreenBottomSheetType) -> Unit) = remember {
         mutableStateOf(
-            value = SettingsBottomSheetType.NONE,
+            value = SettingsScreenBottomSheetType.NONE,
         )
     }
     val snackbarHostState: SnackbarHostState = remember {

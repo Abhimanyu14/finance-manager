@@ -30,7 +30,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.AmountCommaVisualTransformation
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
@@ -66,7 +66,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextFieldEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 
-enum class AddOrEditTransactionBottomSheetType : BottomSheetType {
+enum class AddOrEditTransactionScreenBottomSheetType : ScreenBottomSheetType {
     NONE,
     SELECT_CATEGORY,
     SELECT_ACCOUNT_FROM,
@@ -92,8 +92,8 @@ internal fun AddOrEditTransactionScreenUI(
     }
 
     BottomSheetHandler(
-        showModalBottomSheet = uiState.addOrEditTransactionBottomSheetType != AddOrEditTransactionBottomSheetType.NONE,
-        bottomSheetType = uiState.addOrEditTransactionBottomSheetType,
+        showModalBottomSheet = uiState.addOrEditTransactionBottomSheetType != AddOrEditTransactionScreenBottomSheetType.NONE,
+        screenBottomSheetType = uiState.addOrEditTransactionBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
@@ -106,11 +106,11 @@ internal fun AddOrEditTransactionScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.addOrEditTransactionBottomSheetType) {
-                AddOrEditTransactionBottomSheetType.NONE -> {
+                AddOrEditTransactionScreenBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
 
-                AddOrEditTransactionBottomSheetType.SELECT_CATEGORY -> {
+                AddOrEditTransactionScreenBottomSheetType.SELECT_CATEGORY -> {
                     SelectCategoryBottomSheet(
                         data = SelectCategoryBottomSheetData(
                             filteredCategories = uiState.filteredCategories,
@@ -129,7 +129,7 @@ internal fun AddOrEditTransactionScreenUI(
                     )
                 }
 
-                AddOrEditTransactionBottomSheetType.SELECT_ACCOUNT_FROM -> {
+                AddOrEditTransactionScreenBottomSheetType.SELECT_ACCOUNT_FROM -> {
                     SelectAccountBottomSheet(
                         data = SelectAccountBottomSheetData(
                             accounts = uiState.accounts,
@@ -148,7 +148,7 @@ internal fun AddOrEditTransactionScreenUI(
                     )
                 }
 
-                AddOrEditTransactionBottomSheetType.SELECT_ACCOUNT_TO -> {
+                AddOrEditTransactionScreenBottomSheetType.SELECT_ACCOUNT_TO -> {
                     SelectAccountBottomSheet(
                         data = SelectAccountBottomSheetData(
                             accounts = uiState.accounts,
@@ -180,8 +180,8 @@ internal fun AddOrEditTransactionScreenUI(
         onClick = {
             clearFocus()
         },
-        isModalBottomSheetVisible = uiState.addOrEditTransactionBottomSheetType != AddOrEditTransactionBottomSheetType.NONE,
-        backHandlerEnabled = uiState.addOrEditTransactionBottomSheetType != AddOrEditTransactionBottomSheetType.NONE,
+        isModalBottomSheetVisible = uiState.addOrEditTransactionBottomSheetType != AddOrEditTransactionScreenBottomSheetType.NONE,
+        backHandlerEnabled = uiState.addOrEditTransactionBottomSheetType != AddOrEditTransactionScreenBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
     ) {
@@ -337,7 +337,7 @@ internal fun AddOrEditTransactionScreenUI(
                         onClick = {
                             clearFocus()
                             uiState.setAddOrEditTransactionBottomSheetType(
-                                AddOrEditTransactionBottomSheetType.SELECT_CATEGORY
+                                AddOrEditTransactionScreenBottomSheetType.SELECT_CATEGORY
                             )
                         },
                     ),
@@ -496,7 +496,7 @@ internal fun AddOrEditTransactionScreenUI(
                         onClick = {
                             clearFocus()
                             uiState.setAddOrEditTransactionBottomSheetType(
-                                AddOrEditTransactionBottomSheetType.SELECT_ACCOUNT_FROM
+                                AddOrEditTransactionScreenBottomSheetType.SELECT_ACCOUNT_FROM
                             )
                         },
                     ),
@@ -521,7 +521,7 @@ internal fun AddOrEditTransactionScreenUI(
                         onClick = {
                             clearFocus()
                             uiState.setAddOrEditTransactionBottomSheetType(
-                                AddOrEditTransactionBottomSheetType.SELECT_ACCOUNT_TO
+                                AddOrEditTransactionScreenBottomSheetType.SELECT_ACCOUNT_TO
                             )
                         },
                     ),

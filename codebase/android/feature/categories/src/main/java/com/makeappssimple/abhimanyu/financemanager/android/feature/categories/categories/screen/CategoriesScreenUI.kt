@@ -21,7 +21,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarsSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
@@ -36,17 +36,17 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ca
 import kotlinx.coroutines.launch
 
 @Immutable
-sealed class CategoriesBottomSheetType : BottomSheetType {
-    data object DeleteConfirmation : CategoriesBottomSheetType()
-    data object None : CategoriesBottomSheetType()
-    data object SetAsDefaultConfirmation : CategoriesBottomSheetType()
+sealed class CategoriesScreenBottomSheetType : ScreenBottomSheetType {
+    data object DeleteConfirmation : CategoriesScreenBottomSheetType()
+    data object None : CategoriesScreenBottomSheetType()
+    data object SetAsDefaultConfirmation : CategoriesScreenBottomSheetType()
 
     data class Menu(
         val isDeleteVisible: Boolean,
         val isEditVisible: Boolean,
         val isSetAsDefaultVisible: Boolean,
         val categoryId: Int,
-    ) : CategoriesBottomSheetType()
+    ) : CategoriesScreenBottomSheetType()
 }
 
 @Composable
@@ -70,8 +70,8 @@ internal fun CategoriesScreenUI(
     }
 
     BottomSheetHandler(
-        showModalBottomSheet = uiState.categoriesBottomSheetType != CategoriesBottomSheetType.None,
-        bottomSheetType = uiState.categoriesBottomSheetType,
+        showModalBottomSheet = uiState.categoriesBottomSheetType != CategoriesScreenBottomSheetType.None,
+        screenBottomSheetType = uiState.categoriesBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
@@ -84,7 +84,7 @@ internal fun CategoriesScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.categoriesBottomSheetType) {
-                is CategoriesBottomSheetType.DeleteConfirmation -> {
+                is CategoriesScreenBottomSheetType.DeleteConfirmation -> {
                     CategoriesDeleteConfirmationBottomSheet(
                         deleteCategory = {
                             uiState.categoryIdToDelete?.let { categoryIdToDeleteValue ->
@@ -101,11 +101,11 @@ internal fun CategoriesScreenUI(
                     }
                 }
 
-                is CategoriesBottomSheetType.None -> {
+                is CategoriesScreenBottomSheetType.None -> {
                     VerticalSpacer()
                 }
 
-                is CategoriesBottomSheetType.SetAsDefaultConfirmation -> {
+                is CategoriesScreenBottomSheetType.SetAsDefaultConfirmation -> {
                     CategoriesSetAsDefaultConfirmationBottomSheet(
                         transactionType = uiState.validTransactionTypes[uiState.selectedTabIndex],
                         resetBottomSheetType = uiState.resetBottomSheetType,
@@ -124,7 +124,7 @@ internal fun CategoriesScreenUI(
                     }
                 }
 
-                is CategoriesBottomSheetType.Menu -> {
+                is CategoriesScreenBottomSheetType.Menu -> {
                     val bottomSheetData =
                         uiState.categoriesBottomSheetType
 
@@ -134,7 +134,7 @@ internal fun CategoriesScreenUI(
                         isSetAsDefaultVisible = bottomSheetData.isSetAsDefaultVisible,
                         onDeleteClick = {
                             uiState.setCategoryIdToDelete(bottomSheetData.categoryId)
-                            uiState.setCategoriesBottomSheetType(CategoriesBottomSheetType.DeleteConfirmation)
+                            uiState.setCategoriesBottomSheetType(CategoriesScreenBottomSheetType.DeleteConfirmation)
                         },
                         onEditClick = {
                             uiState.resetBottomSheetType()
@@ -146,7 +146,7 @@ internal fun CategoriesScreenUI(
                         },
                         onSetAsDefaultClick = {
                             uiState.setClickedItemId(bottomSheetData.categoryId)
-                            uiState.setCategoriesBottomSheetType(CategoriesBottomSheetType.SetAsDefaultConfirmation)
+                            uiState.setCategoriesBottomSheetType(CategoriesScreenBottomSheetType.SetAsDefaultConfirmation)
                         },
                     )
                 }
@@ -193,8 +193,8 @@ internal fun CategoriesScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
-        isModalBottomSheetVisible = uiState.categoriesBottomSheetType != CategoriesBottomSheetType.None,
-        backHandlerEnabled = uiState.categoriesBottomSheetType != CategoriesBottomSheetType.None,
+        isModalBottomSheetVisible = uiState.categoriesBottomSheetType != CategoriesScreenBottomSheetType.None,
+        backHandlerEnabled = uiState.categoriesBottomSheetType != CategoriesScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetBottomSheetType,
     ) {
@@ -240,7 +240,7 @@ internal fun CategoriesScreenUI(
 
                         if (isEditVisible || isSetAsDefaultVisible || isDeleteVisible) {
                             uiState.setCategoriesBottomSheetType(
-                                CategoriesBottomSheetType.Menu(
+                                CategoriesScreenBottomSheetType.Menu(
                                     isDeleteVisible = isDeleteVisible,
                                     isEditVisible = isEditVisible,
                                     isSetAsDefaultVisible = isSetAsDefaultVisible,
