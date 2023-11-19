@@ -3,10 +3,11 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.nav
 import androidx.lifecycle.SavedStateHandle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavArgs
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenArgs
 
 internal class AddOrEditAccountScreenArgs(
     val originalAccountId: Int?,
-) {
+) : ScreenArgs {
     constructor(
         savedStateHandle: SavedStateHandle,
         stringDecoder: StringDecoder,

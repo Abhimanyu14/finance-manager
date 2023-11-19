@@ -50,11 +50,10 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     private val navigationManager: NavigationManager,
     private val updateCategoriesUseCase: UpdateCategoriesUseCase,
 ) : AddOrEditCategoryScreenViewModel, ViewModel() {
-    private val addOrEditCategoryScreenArgs: AddOrEditCategoryScreenArgs =
-        AddOrEditCategoryScreenArgs(
-            savedStateHandle = savedStateHandle,
-            stringDecoder = stringDecoder,
-        )
+    private val screenArgs = AddOrEditCategoryScreenArgs(
+        savedStateHandle = savedStateHandle,
+        stringDecoder = stringDecoder,
+    )
     private lateinit var categories: List<Category>
     private val category: MutableStateFlow<Category?> = MutableStateFlow(
         value = null,
@@ -79,7 +78,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         ),
     )
     private val emoji: MutableStateFlow<String?> = MutableStateFlow(
-        value = if (addOrEditCategoryScreenArgs.originalCategoryId.isNull()) {
+        value = if (screenArgs.originalCategoryId.isNull()) {
             EmojiConstants.GRINNING_FACE_WITH_BIG_EYES
         } else {
             null
@@ -153,7 +152,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
             context = dispatcherProvider.io,
         ) {
             getOriginalCategory()
-            addOrEditCategoryScreenArgs.originalTransactionType?.let { originalTransactionType ->
+            screenArgs.originalTransactionType?.let { originalTransactionType ->
                 updateSelectedTransactionTypeIndex(
                     updatedIndex = transactionTypes.indexOf(
                         element = TransactionType.values().find { transactionType ->
@@ -292,7 +291,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     }
 
     private fun getOriginalCategory() {
-        addOrEditCategoryScreenArgs.originalCategoryId?.let { id ->
+        screenArgs.originalCategoryId?.let { id ->
             viewModelScope.launch(
                 context = dispatcherProvider.io,
             ) {

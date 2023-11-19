@@ -56,7 +56,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
     private val navigationManager: NavigationManager,
     private val updateAccountsUseCase: UpdateAccountsUseCase,
 ) : AddOrEditAccountScreenViewModel, ViewModel() {
-    private val addOrEditAccountScreenArgs: AddOrEditAccountScreenArgs = AddOrEditAccountScreenArgs(
+    private val screenArgs = AddOrEditAccountScreenArgs(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,
     )
@@ -372,7 +372,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
     }
 
     private fun getOriginalAccount() {
-        addOrEditAccountScreenArgs.originalAccountId?.let { id ->
+        screenArgs.originalAccountId?.let { id ->
             viewModelScope.launch(
                 context = dispatcherProvider.io,
             ) {

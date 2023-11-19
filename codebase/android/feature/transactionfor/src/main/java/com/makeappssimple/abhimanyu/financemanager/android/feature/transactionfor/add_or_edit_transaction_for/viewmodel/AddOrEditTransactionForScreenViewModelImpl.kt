@@ -42,11 +42,10 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
     private val navigationManager: NavigationManager,
     private val updateTransactionForValuesUseCase: UpdateTransactionForValuesUseCase,
 ) : AddOrEditTransactionForScreenViewModel, ViewModel() {
-    private val addOrEditTransactionForScreenArgs: AddOrEditTransactionForScreenArgs =
-        AddOrEditTransactionForScreenArgs(
-            savedStateHandle = savedStateHandle,
-            stringDecoder = stringDecoder,
-        )
+    private val screenArgs = AddOrEditTransactionForScreenArgs(
+        savedStateHandle = savedStateHandle,
+        stringDecoder = stringDecoder,
+    )
 
     private lateinit var transactionForValues: List<TransactionFor>
     private val title: MutableStateFlow<TextFieldValue> = MutableStateFlow(
@@ -197,7 +196,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
     }
 
     private fun getOriginalTransactionFor() {
-        addOrEditTransactionForScreenArgs.originalTransactionForId?.let { id ->
+        screenArgs.originalTransactionForId?.let { id ->
             viewModelScope.launch(
                 context = dispatcherProvider.io,
             ) {

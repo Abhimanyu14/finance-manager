@@ -5,12 +5,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.exclude
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.systemBars
 import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.MaterialTheme
@@ -110,7 +113,7 @@ fun MyScaffold(
             dragHandle = {},
             scrimColor = scrimColor,
             onDismissRequest = onBackPress,
-            windowInsets = WindowInsets(0),
+            windowInsets = WindowInsets.systemBars.only(WindowInsetsSides.Bottom),
         ) {
             val screenHeight = LocalConfiguration.current.screenHeightDp.dp
             val navigationBarsHeight =

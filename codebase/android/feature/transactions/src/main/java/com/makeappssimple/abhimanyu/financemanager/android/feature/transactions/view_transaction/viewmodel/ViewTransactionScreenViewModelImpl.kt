@@ -41,7 +41,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     private val getTransactionDataUseCase: GetTransactionDataUseCase,
     @VisibleForTesting internal val navigationManager: NavigationManager,
 ) : ViewTransactionScreenViewModel, ViewModel() {
-    private var viewTransactionScreenArgs: ViewTransactionScreenArgs = ViewTransactionScreenArgs(
+    private var screenArgs = ViewTransactionScreenArgs(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,
     )
@@ -111,7 +111,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     }
 
     override fun getTransactionData() {
-        viewTransactionScreenArgs.originalTransactionId?.let { id ->
+        screenArgs.originalTransactionId?.let { id ->
             viewModelScope.launch(
                 context = dispatcherProvider.io,
             ) {
