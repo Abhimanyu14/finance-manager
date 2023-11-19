@@ -27,7 +27,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
@@ -41,12 +40,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyOutlinedTextFieldEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
-
-enum class AddOrEditTransactionForScreenBottomSheetType : ScreenBottomSheetType {
-    DELETE,
-    EDIT,
-    NONE,
-}
 
 enum class AddOrEditTransactionForScreenUIError(
     @StringRes val textStringResourceId: Int,

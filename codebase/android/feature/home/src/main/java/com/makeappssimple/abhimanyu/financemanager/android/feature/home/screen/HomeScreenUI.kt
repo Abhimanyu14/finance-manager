@@ -22,7 +22,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.button.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarsSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
@@ -41,10 +40,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.component.recenttransactions.HomeRecentTransactionsUI
 
 private val bottomContentPadding = 80.dp
-
-enum class HomeScreenBottomSheetType : ScreenBottomSheetType {
-    NONE,
-}
 
 @Composable
 internal fun HomeScreenUI(

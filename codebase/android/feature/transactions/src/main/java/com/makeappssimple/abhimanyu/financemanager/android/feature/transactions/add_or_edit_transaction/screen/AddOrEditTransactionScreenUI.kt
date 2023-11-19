@@ -30,7 +30,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.AmountCommaVisualTransformation
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
@@ -65,13 +64,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextFieldEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
-
-enum class AddOrEditTransactionScreenBottomSheetType : ScreenBottomSheetType {
-    NONE,
-    SELECT_CATEGORY,
-    SELECT_ACCOUNT_FROM,
-    SELECT_ACCOUNT_TO,
-}
 
 @Composable
 internal fun AddOrEditTransactionScreenUI(

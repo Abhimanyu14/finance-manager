@@ -18,7 +18,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.button.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarsSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
@@ -31,12 +30,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.acco
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.component.listitem.AccountsListItem
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.component.listitem.AccountsListItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
-
-enum class AccountsScreenBottomSheetType : ScreenBottomSheetType {
-    DELETE_CONFIRMATION,
-    NONE,
-    SET_AS_DEFAULT_CONFIRMATION,
-}
 
 @Composable
 internal fun AccountsScreenUI(

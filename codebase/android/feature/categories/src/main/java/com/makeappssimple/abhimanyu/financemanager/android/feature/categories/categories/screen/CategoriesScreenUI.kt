@@ -6,7 +6,6 @@ import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,7 +20,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarsSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
@@ -34,20 +32,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ca
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.component.bottomsheet.CategoriesSetAsDefaultConfirmationBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.component.bottomsheet.CategoryMenuBottomSheet
 import kotlinx.coroutines.launch
-
-@Immutable
-sealed class CategoriesScreenBottomSheetType : ScreenBottomSheetType {
-    data object DeleteConfirmation : CategoriesScreenBottomSheetType()
-    data object None : CategoriesScreenBottomSheetType()
-    data object SetAsDefaultConfirmation : CategoriesScreenBottomSheetType()
-
-    data class Menu(
-        val isDeleteVisible: Boolean,
-        val isEditVisible: Boolean,
-        val isSetAsDefaultVisible: Boolean,
-        val categoryId: Int,
-    ) : CategoriesScreenBottomSheetType()
-}
 
 @Composable
 internal fun CategoriesScreenUI(

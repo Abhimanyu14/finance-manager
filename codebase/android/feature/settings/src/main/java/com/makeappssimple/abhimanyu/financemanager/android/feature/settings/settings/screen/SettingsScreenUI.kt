@@ -32,7 +32,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
@@ -41,10 +40,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.component.listitem.SettingsListItem
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.component.listitem.SettingsListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.component.listitem.SettingsListItemEvents
-
-enum class SettingsScreenBottomSheetType : ScreenBottomSheetType {
-    NONE,
-}
 
 @Immutable
 data class SettingsScreenListItemData(
