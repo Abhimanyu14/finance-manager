@@ -20,11 +20,11 @@ class OpenSourceLicensesScreenUIState(
             null
         }
     },
-    val openSourceLicensesBottomSheetType: OpenSourceLicensesScreenBottomSheetType = OpenSourceLicensesScreenBottomSheetType.NONE,
-    val setOpenSourceLicensesBottomSheetType: (OpenSourceLicensesScreenBottomSheetType) -> Unit = {},
+    val screenBottomSheetType: OpenSourceLicensesScreenBottomSheetType = OpenSourceLicensesScreenBottomSheetType.NONE,
+    val setScreenBottomSheetType: (OpenSourceLicensesScreenBottomSheetType) -> Unit = {},
     val isLoading: Boolean = unwrappedData.isNull() || unwrappedData.isLoading,
-    val resetBottomSheetType: () -> Unit = {
-        setOpenSourceLicensesBottomSheetType(OpenSourceLicensesScreenBottomSheetType.NONE)
+    val resetScreenBottomSheetType: () -> Unit = {
+        setScreenBottomSheetType(OpenSourceLicensesScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
@@ -32,7 +32,7 @@ class OpenSourceLicensesScreenUIState(
 fun rememberOpenSourceLicensesScreenUIState(
     data: MyResult<OpenSourceLicensesScreenUIData>?,
 ): OpenSourceLicensesScreenUIState {
-    val (openSourceLicensesBottomSheetType: OpenSourceLicensesScreenBottomSheetType, setOpenSourceLicensesBottomSheetType: (OpenSourceLicensesScreenBottomSheetType) -> Unit) = remember {
+    val (screenBottomSheetType: OpenSourceLicensesScreenBottomSheetType, setScreenBottomSheetType: (OpenSourceLicensesScreenBottomSheetType) -> Unit) = remember {
         mutableStateOf(
             value = OpenSourceLicensesScreenBottomSheetType.NONE,
         )
@@ -40,13 +40,13 @@ fun rememberOpenSourceLicensesScreenUIState(
 
     return remember(
         data,
-        openSourceLicensesBottomSheetType,
-        setOpenSourceLicensesBottomSheetType,
+        screenBottomSheetType,
+        setScreenBottomSheetType,
     ) {
         OpenSourceLicensesScreenUIState(
             data = data,
-            openSourceLicensesBottomSheetType = openSourceLicensesBottomSheetType,
-            setOpenSourceLicensesBottomSheetType = setOpenSourceLicensesBottomSheetType,
+            screenBottomSheetType = screenBottomSheetType,
+            setScreenBottomSheetType = setScreenBottomSheetType,
         )
     }
 }

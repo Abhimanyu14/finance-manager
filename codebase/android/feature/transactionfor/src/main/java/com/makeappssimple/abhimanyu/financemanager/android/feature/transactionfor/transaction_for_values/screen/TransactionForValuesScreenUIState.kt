@@ -24,15 +24,15 @@ class TransactionForValuesScreenUIState(
         }
     },
     val transactionForIdToDelete: Int?,
-    val transactionForValuesBottomSheetType: TransactionForValuesScreenBottomSheetType,
+    val screenBottomSheetType: TransactionForValuesScreenBottomSheetType,
     val setTransactionForIdToDelete: (Int?) -> Unit,
-    val setTransactionForValuesBottomSheetType: (TransactionForValuesScreenBottomSheetType) -> Unit,
+    val setScreenBottomSheetType: (TransactionForValuesScreenBottomSheetType) -> Unit,
     val isLoading: Boolean = unwrappedData.isNull(),
     val transactionForValuesIsUsedInTransactions: List<Boolean> =
         unwrappedData?.transactionForValuesIsUsedInTransactions.orEmpty(),
     val transactionForValues: List<TransactionFor> = unwrappedData?.transactionForValues.orEmpty(),
-    val resetBottomSheetType: () -> Unit = {
-        setTransactionForValuesBottomSheetType(TransactionForValuesScreenBottomSheetType.None)
+    val resetScreenBottomSheetType: () -> Unit = {
+        setScreenBottomSheetType(TransactionForValuesScreenBottomSheetType.None)
     },
 ) : ScreenUIState
 
@@ -45,7 +45,7 @@ fun rememberTransactionForValuesScreenUIState(
             value = null,
         )
     }
-    var transactionForValuesBottomSheetType: TransactionForValuesScreenBottomSheetType by remember {
+    var screenBottomSheetType: TransactionForValuesScreenBottomSheetType by remember {
         mutableStateOf(
             value = TransactionForValuesScreenBottomSheetType.None,
         )
@@ -53,25 +53,25 @@ fun rememberTransactionForValuesScreenUIState(
     val setTransactionForIdToDelete: (Int?) -> Unit = { updatedTransactionForIdToDelete: Int? ->
         transactionForIdToDelete = updatedTransactionForIdToDelete
     }
-    val setTransactionForValuesBottomSheetType: (TransactionForValuesScreenBottomSheetType) -> Unit =
+    val setScreenBottomSheetType: (TransactionForValuesScreenBottomSheetType) -> Unit =
         { updatedTransactionForValuesBottomSheetType: TransactionForValuesScreenBottomSheetType ->
-            transactionForValuesBottomSheetType = updatedTransactionForValuesBottomSheetType
+            screenBottomSheetType = updatedTransactionForValuesBottomSheetType
         }
 
 
     return remember(
         data,
-        transactionForValuesBottomSheetType,
+        screenBottomSheetType,
         transactionForIdToDelete,
         setTransactionForIdToDelete,
-        setTransactionForValuesBottomSheetType,
+        setScreenBottomSheetType,
     ) {
         TransactionForValuesScreenUIState(
             data = data,
             transactionForIdToDelete = transactionForIdToDelete,
-            transactionForValuesBottomSheetType = transactionForValuesBottomSheetType,
+            screenBottomSheetType = screenBottomSheetType,
             setTransactionForIdToDelete = setTransactionForIdToDelete,
-            setTransactionForValuesBottomSheetType = setTransactionForValuesBottomSheetType,
+            setScreenBottomSheetType = setScreenBottomSheetType,
         )
     }
 }

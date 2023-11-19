@@ -29,8 +29,8 @@ class HomeScreenUIState(
             null
         }
     },
-    val homeBottomSheetType: HomeScreenBottomSheetType,
-    val setHomeBottomSheetType: (HomeScreenBottomSheetType) -> Unit,
+    val screenBottomSheetType: HomeScreenBottomSheetType,
+    val setScreenBottomSheetType: (HomeScreenBottomSheetType) -> Unit,
     private val totalIncomeAmount: Amount = Amount(
         value = unwrappedData?.overviewCardData?.income?.toLong().orZero(),
     ),
@@ -47,8 +47,8 @@ class HomeScreenUIState(
     val accountsTotalMinimumBalanceAmountValue: Long =
         unwrappedData?.accountsTotalMinimumBalanceAmountValue.orZero(),
     val overviewCardData: OverviewCardViewModelData = unwrappedData?.overviewCardData.orDefault(),
-    val resetBottomSheetType: () -> Unit = {
-        setHomeBottomSheetType(HomeScreenBottomSheetType.NONE)
+    val resetScreenBottomSheetType: () -> Unit = {
+        setScreenBottomSheetType(HomeScreenBottomSheetType.NONE)
     },
     val pieChartData: PieChartData = PieChartData(
         items = listOf(
@@ -70,7 +70,7 @@ class HomeScreenUIState(
 fun rememberHomeScreenUIState(
     data: MyResult<HomeScreenUIData>?,
 ): HomeScreenUIState {
-    val (homeBottomSheetType: HomeScreenBottomSheetType, setHomeBottomSheetType: (HomeScreenBottomSheetType) -> Unit) = remember {
+    val (screenBottomSheetType: HomeScreenBottomSheetType, setScreenBottomSheetType: (HomeScreenBottomSheetType) -> Unit) = remember {
         mutableStateOf(
             value = HomeScreenBottomSheetType.NONE,
         )
@@ -78,13 +78,13 @@ fun rememberHomeScreenUIState(
 
     return remember(
         data,
-        homeBottomSheetType,
-        setHomeBottomSheetType,
+        screenBottomSheetType,
+        setScreenBottomSheetType,
     ) {
         HomeScreenUIState(
             data = data,
-            homeBottomSheetType = homeBottomSheetType,
-            setHomeBottomSheetType = setHomeBottomSheetType,
+            screenBottomSheetType = screenBottomSheetType,
+            setScreenBottomSheetType = setScreenBottomSheetType,
         )
     }
 }

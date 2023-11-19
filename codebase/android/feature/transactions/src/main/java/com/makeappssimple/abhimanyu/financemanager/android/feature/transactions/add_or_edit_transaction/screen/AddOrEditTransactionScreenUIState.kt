@@ -33,10 +33,10 @@ class AddOrEditTransactionScreenUIState(
         }
     },
     isEdit: Boolean,
-    val addOrEditTransactionBottomSheetType: AddOrEditTransactionScreenBottomSheetType,
+    val screenBottomSheetType: AddOrEditTransactionScreenBottomSheetType,
     val isTransactionDatePickerDialogVisible: Boolean,
     val isTransactionTimePickerDialogVisible: Boolean,
-    val setAddOrEditTransactionBottomSheetType: (AddOrEditTransactionScreenBottomSheetType) -> Unit,
+    val setScreenBottomSheetType: (AddOrEditTransactionScreenBottomSheetType) -> Unit,
     val setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit,
     val setIsTransactionTimePickerDialogVisible: (Boolean) -> Unit,
     val isLoading: Boolean = unwrappedData.isNull(),
@@ -91,8 +91,8 @@ class AddOrEditTransactionScreenUIState(
             )
         }.orEmpty(),
     val currentLocalDate: LocalDate = unwrappedData?.currentLocalDate.orMin(),
-    val resetBottomSheetType: () -> Unit = {
-        setAddOrEditTransactionBottomSheetType(AddOrEditTransactionScreenBottomSheetType.NONE)
+    val resetScreenBottomSheetType: () -> Unit = {
+        setScreenBottomSheetType(AddOrEditTransactionScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
@@ -101,7 +101,7 @@ fun rememberAddOrEditTransactionScreenUIState(
     data: MyResult<AddOrEditTransactionScreenUIData>?,
     isEdit: Boolean,
 ): AddOrEditTransactionScreenUIState {
-    val (addOrEditTransactionBottomSheetType: AddOrEditTransactionScreenBottomSheetType, setAddOrEditTransactionBottomSheetType: (AddOrEditTransactionScreenBottomSheetType) -> Unit) = remember {
+    val (screenBottomSheetType: AddOrEditTransactionScreenBottomSheetType, setScreenBottomSheetType: (AddOrEditTransactionScreenBottomSheetType) -> Unit) = remember {
         mutableStateOf(
             value = AddOrEditTransactionScreenBottomSheetType.NONE,
         )
@@ -116,20 +116,20 @@ fun rememberAddOrEditTransactionScreenUIState(
     return remember(
         data,
         isEdit,
-        addOrEditTransactionBottomSheetType,
+        screenBottomSheetType,
         isTransactionDatePickerDialogVisible,
         isTransactionTimePickerDialogVisible,
-        setAddOrEditTransactionBottomSheetType,
+        setScreenBottomSheetType,
         setIsTransactionDatePickerDialogVisible,
         setIsTransactionTimePickerDialogVisible,
     ) {
         AddOrEditTransactionScreenUIState(
             data = data,
             isEdit = isEdit,
-            addOrEditTransactionBottomSheetType = addOrEditTransactionBottomSheetType,
+            screenBottomSheetType = screenBottomSheetType,
             isTransactionDatePickerDialogVisible = isTransactionDatePickerDialogVisible,
             isTransactionTimePickerDialogVisible = isTransactionTimePickerDialogVisible,
-            setAddOrEditTransactionBottomSheetType = setAddOrEditTransactionBottomSheetType,
+            setScreenBottomSheetType = setScreenBottomSheetType,
             setIsTransactionDatePickerDialogVisible = setIsTransactionDatePickerDialogVisible,
             setIsTransactionTimePickerDialogVisible = setIsTransactionTimePickerDialogVisible,
         )

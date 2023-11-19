@@ -54,12 +54,12 @@ internal fun CategoriesScreenUI(
     }
 
     BottomSheetHandler(
-        showModalBottomSheet = uiState.categoriesBottomSheetType != CategoriesScreenBottomSheetType.None,
-        screenBottomSheetType = uiState.categoriesBottomSheetType,
+        showModalBottomSheet = uiState.screenBottomSheetType != CategoriesScreenBottomSheetType.None,
+        screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = uiState.resetBottomSheetType,
+        resetBottomSheetType = uiState.resetScreenBottomSheetType,
     )
 
     MyScaffold(
@@ -67,7 +67,7 @@ internal fun CategoriesScreenUI(
             .testTag(SCREEN_CATEGORIES)
             .fillMaxSize(),
         sheetContent = {
-            when (uiState.categoriesBottomSheetType) {
+            when (uiState.screenBottomSheetType) {
                 is CategoriesScreenBottomSheetType.DeleteConfirmation -> {
                     CategoriesDeleteConfirmationBottomSheet(
                         deleteCategory = {
@@ -79,7 +79,7 @@ internal fun CategoriesScreenUI(
                                 )
                             }
                         },
-                        resetBottomSheetType = uiState.resetBottomSheetType,
+                        resetBottomSheetType = uiState.resetScreenBottomSheetType,
                     ) {
                         uiState.setCategoryIdToDelete(null)
                     }
@@ -92,7 +92,7 @@ internal fun CategoriesScreenUI(
                 is CategoriesScreenBottomSheetType.SetAsDefaultConfirmation -> {
                     CategoriesSetAsDefaultConfirmationBottomSheet(
                         transactionType = uiState.validTransactionTypes[uiState.selectedTabIndex],
-                        resetBottomSheetType = uiState.resetBottomSheetType,
+                        resetBottomSheetType = uiState.resetScreenBottomSheetType,
                         resetClickedItemId = {
                             uiState.setClickedItemId(null)
                         },
@@ -110,7 +110,7 @@ internal fun CategoriesScreenUI(
 
                 is CategoriesScreenBottomSheetType.Menu -> {
                     val bottomSheetData =
-                        uiState.categoriesBottomSheetType
+                        uiState.screenBottomSheetType
 
                     CategoryMenuBottomSheet(
                         isDeleteVisible = bottomSheetData.isDeleteVisible,
@@ -118,10 +118,10 @@ internal fun CategoriesScreenUI(
                         isSetAsDefaultVisible = bottomSheetData.isSetAsDefaultVisible,
                         onDeleteClick = {
                             uiState.setCategoryIdToDelete(bottomSheetData.categoryId)
-                            uiState.setCategoriesBottomSheetType(CategoriesScreenBottomSheetType.DeleteConfirmation)
+                            uiState.setScreenBottomSheetType(CategoriesScreenBottomSheetType.DeleteConfirmation)
                         },
                         onEditClick = {
-                            uiState.resetBottomSheetType()
+                            uiState.resetScreenBottomSheetType()
                             handleUIEvents(
                                 CategoriesScreenUIEvent.NavigateToEditCategoryScreen(
                                     categoryId = bottomSheetData.categoryId,
@@ -130,7 +130,7 @@ internal fun CategoriesScreenUI(
                         },
                         onSetAsDefaultClick = {
                             uiState.setClickedItemId(bottomSheetData.categoryId)
-                            uiState.setCategoriesBottomSheetType(CategoriesScreenBottomSheetType.SetAsDefaultConfirmation)
+                            uiState.setScreenBottomSheetType(CategoriesScreenBottomSheetType.SetAsDefaultConfirmation)
                         },
                     )
                 }
@@ -177,10 +177,10 @@ internal fun CategoriesScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
-        isModalBottomSheetVisible = uiState.categoriesBottomSheetType != CategoriesScreenBottomSheetType.None,
-        backHandlerEnabled = uiState.categoriesBottomSheetType != CategoriesScreenBottomSheetType.None,
+        isModalBottomSheetVisible = uiState.screenBottomSheetType != CategoriesScreenBottomSheetType.None,
+        backHandlerEnabled = uiState.screenBottomSheetType != CategoriesScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetBottomSheetType,
+        onBackPress = uiState.resetScreenBottomSheetType,
     ) {
         Column(
             modifier = Modifier
@@ -223,7 +223,7 @@ internal fun CategoriesScreenUI(
                             categoriesGridItemDataList[index].isSetAsDefaultVisible ?: false
 
                         if (isEditVisible || isSetAsDefaultVisible || isDeleteVisible) {
-                            uiState.setCategoriesBottomSheetType(
+                            uiState.setScreenBottomSheetType(
                                 CategoriesScreenBottomSheetType.Menu(
                                     isDeleteVisible = isDeleteVisible,
                                     isEditVisible = isEditVisible,

@@ -33,9 +33,9 @@ class TransactionsScreenUIState(
         }
     },
     val isInSelectionMode: Boolean,
-    val transactionsBottomSheetType: TransactionsScreenBottomSheetType,
+    val screenBottomSheetType: TransactionsScreenBottomSheetType,
     val setIsInSelectionMode: (Boolean) -> Unit,
-    val setTransactionsBottomSheetType: (TransactionsScreenBottomSheetType) -> Unit,
+    val setScreenBottomSheetType: (TransactionsScreenBottomSheetType) -> Unit,
     val isLoading: Boolean = unwrappedData.isNull() || unwrappedData.isLoading,
     val selectedFilter: Filter = unwrappedData?.selectedFilter.orEmpty(),
     val selectedTransactions: List<Int> = unwrappedData?.selectedTransactions.orEmpty(),
@@ -53,8 +53,8 @@ class TransactionsScreenUIState(
         unwrappedData?.transactionDetailsListItemViewData.orEmpty(),
     val searchText: String = unwrappedData?.searchText.orEmpty(),
     val selectedSortOption: SortOption = unwrappedData?.selectedSortOption.orDefault(),
-    val resetBottomSheetType: () -> Unit = {
-        setTransactionsBottomSheetType(TransactionsScreenBottomSheetType.NONE)
+    val resetScreenBottomSheetType: () -> Unit = {
+        setScreenBottomSheetType(TransactionsScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
@@ -65,7 +65,7 @@ fun rememberTransactionsScreenUIState(
     val (isInSelectionMode: Boolean, setIsInSelectionMode: (Boolean) -> Unit) = remember {
         mutableStateOf(false)
     }
-    val (transactionsBottomSheetType: TransactionsScreenBottomSheetType, setTransactionsBottomSheetType: (TransactionsScreenBottomSheetType) -> Unit) = remember {
+    val (screenBottomSheetType: TransactionsScreenBottomSheetType, setScreenBottomSheetType: (TransactionsScreenBottomSheetType) -> Unit) = remember {
         mutableStateOf(
             value = TransactionsScreenBottomSheetType.NONE,
         )
@@ -74,16 +74,16 @@ fun rememberTransactionsScreenUIState(
     return remember(
         data,
         isInSelectionMode,
-        transactionsBottomSheetType,
+        screenBottomSheetType,
         setIsInSelectionMode,
-        setTransactionsBottomSheetType,
+        setScreenBottomSheetType,
     ) {
         TransactionsScreenUIState(
             data = data,
             isInSelectionMode = isInSelectionMode,
-            transactionsBottomSheetType = transactionsBottomSheetType,
+            screenBottomSheetType = screenBottomSheetType,
             setIsInSelectionMode = setIsInSelectionMode,
-            setTransactionsBottomSheetType = setTransactionsBottomSheetType,
+            setScreenBottomSheetType = setScreenBottomSheetType,
         )
     }
 }

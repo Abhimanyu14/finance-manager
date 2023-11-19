@@ -28,11 +28,11 @@ class CategoriesScreenUIState(
             null
         }
     },
-    val categoriesBottomSheetType: CategoriesScreenBottomSheetType,
+    val screenBottomSheetType: CategoriesScreenBottomSheetType,
     var categoryIdToDelete: Int?,
     var clickedItemId: Int?,
     val pagerState: PagerState,
-    val setCategoriesBottomSheetType: (CategoriesScreenBottomSheetType) -> Unit,
+    val setScreenBottomSheetType: (CategoriesScreenBottomSheetType) -> Unit,
     val setCategoryIdToDelete: (Int?) -> Unit,
     val setClickedItemId: (Int?) -> Unit,
     val isLoading: Boolean = unwrappedData.isNull(),
@@ -49,8 +49,8 @@ class CategoriesScreenUIState(
     },
     val categoriesGridItemDataMap: Map<TransactionType, List<CategoriesGridItemData>> =
         unwrappedData?.categoriesGridItemDataMap.orEmpty(),
-    val resetBottomSheetType: () -> Unit = {
-        setCategoriesBottomSheetType(CategoriesScreenBottomSheetType.None)
+    val resetScreenBottomSheetType: () -> Unit = {
+        setScreenBottomSheetType(CategoriesScreenBottomSheetType.None)
     },
 ) : ScreenUIState
 
@@ -58,7 +58,7 @@ class CategoriesScreenUIState(
 fun rememberCategoriesScreenUIState(
     data: MyResult<CategoriesScreenUIData>?,
 ): CategoriesScreenUIState {
-    var categoriesBottomSheetType: CategoriesScreenBottomSheetType by remember {
+    var screenBottomSheetType: CategoriesScreenBottomSheetType by remember {
         mutableStateOf(
             value = CategoriesScreenBottomSheetType.None,
         )
@@ -76,9 +76,9 @@ fun rememberCategoriesScreenUIState(
     val pagerState: PagerState = rememberPagerState(
         pageCount = { 3 },
     )
-    val setCategoriesBottomSheetType =
+    val setScreenBottomSheetType =
         { updatedCategoriesBottomSheetType: CategoriesScreenBottomSheetType ->
-            categoriesBottomSheetType = updatedCategoriesBottomSheetType
+            screenBottomSheetType = updatedCategoriesBottomSheetType
         }
     val setCategoryIdToDelete = { updatedCategoryIdToDelete: Int? ->
         categoryIdToDelete = updatedCategoryIdToDelete
@@ -89,21 +89,21 @@ fun rememberCategoriesScreenUIState(
 
     return remember(
         data,
-        categoriesBottomSheetType,
+        screenBottomSheetType,
         categoryIdToDelete,
         clickedItemId,
         pagerState,
-        setCategoriesBottomSheetType,
+        setScreenBottomSheetType,
         setCategoryIdToDelete,
         setClickedItemId,
     ) {
         CategoriesScreenUIState(
             data = data,
-            categoriesBottomSheetType = categoriesBottomSheetType,
+            screenBottomSheetType = screenBottomSheetType,
             categoryIdToDelete = categoryIdToDelete,
             clickedItemId = clickedItemId,
             pagerState = pagerState,
-            setCategoriesBottomSheetType = setCategoriesBottomSheetType,
+            setScreenBottomSheetType = setScreenBottomSheetType,
             setCategoryIdToDelete = setCategoryIdToDelete,
             setClickedItemId = setClickedItemId,
         )

@@ -52,7 +52,7 @@ internal fun HomeScreenUI(
             .testTag(SCREEN_HOME)
             .fillMaxSize(),
         sheetContent = {
-            when (uiState.homeBottomSheetType) {
+            when (uiState.screenBottomSheetType) {
                 HomeScreenBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
@@ -96,7 +96,7 @@ internal fun HomeScreenUI(
             state.focusManager.clearFocus()
         },
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetBottomSheetType,
+        onBackPress = uiState.resetScreenBottomSheetType,
     ) {
         LazyColumn(
             modifier = Modifier

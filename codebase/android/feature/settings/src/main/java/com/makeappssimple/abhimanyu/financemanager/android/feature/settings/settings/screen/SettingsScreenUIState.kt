@@ -21,14 +21,14 @@ class SettingsScreenUIState(
             null
         }
     },
-    val settingsBottomSheetType: SettingsScreenBottomSheetType = SettingsScreenBottomSheetType.NONE,
+    val screenBottomSheetType: SettingsScreenBottomSheetType = SettingsScreenBottomSheetType.NONE,
     val snackbarHostState: SnackbarHostState = SnackbarHostState(),
-    val setSettingsBottomSheetType: (SettingsScreenBottomSheetType) -> Unit = {},
+    val setScreenBottomSheetType: (SettingsScreenBottomSheetType) -> Unit = {},
     val isLoading: Boolean = unwrappedData.isNull() || unwrappedData.isLoading,
     val isReminderEnabled: Boolean? = unwrappedData?.isReminderEnabled,
     val appVersion: String? = unwrappedData?.appVersion,
-    val resetBottomSheetType: () -> Unit = {
-        setSettingsBottomSheetType(SettingsScreenBottomSheetType.NONE)
+    val resetScreenBottomSheetType: () -> Unit = {
+        setScreenBottomSheetType(SettingsScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
@@ -36,7 +36,7 @@ class SettingsScreenUIState(
 fun rememberSettingsScreenUIState(
     data: MyResult<SettingsScreenUIData>?,
 ): SettingsScreenUIState {
-    val (settingsBottomSheetType: SettingsScreenBottomSheetType, setSettingsBottomSheetType: (SettingsScreenBottomSheetType) -> Unit) = remember {
+    val (screenBottomSheetType: SettingsScreenBottomSheetType, setScreenBottomSheetType: (SettingsScreenBottomSheetType) -> Unit) = remember {
         mutableStateOf(
             value = SettingsScreenBottomSheetType.NONE,
         )
@@ -47,15 +47,15 @@ fun rememberSettingsScreenUIState(
 
     return remember(
         data,
-        settingsBottomSheetType,
+        screenBottomSheetType,
         snackbarHostState,
-        setSettingsBottomSheetType,
+        setScreenBottomSheetType,
     ) {
         SettingsScreenUIState(
             data = data,
-            settingsBottomSheetType = settingsBottomSheetType,
+            screenBottomSheetType = screenBottomSheetType,
             snackbarHostState = snackbarHostState,
-            setSettingsBottomSheetType = setSettingsBottomSheetType,
+            setScreenBottomSheetType = setScreenBottomSheetType,
         )
     }
 }

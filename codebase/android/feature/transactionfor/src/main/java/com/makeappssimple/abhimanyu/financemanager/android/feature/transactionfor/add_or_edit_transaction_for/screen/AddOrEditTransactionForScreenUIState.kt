@@ -24,8 +24,8 @@ class AddOrEditTransactionForScreenUIState(
         }
     },
     isEdit: Boolean,
-    setAddOrEditTransactionForBottomSheetType: (AddOrEditTransactionForScreenBottomSheetType) -> Unit,
-    val addOrEditTransactionForBottomSheetType: AddOrEditTransactionForScreenBottomSheetType,
+    setScreenBottomSheetType: (AddOrEditTransactionForScreenBottomSheetType) -> Unit,
+    val screenBottomSheetType: AddOrEditTransactionForScreenBottomSheetType,
     val isLoading: Boolean = unwrappedData.isNull(),
     val isCtaButtonEnabled: Boolean? = unwrappedData?.isValidTransactionForData,
     @StringRes
@@ -43,8 +43,8 @@ class AddOrEditTransactionForScreenUIState(
     val title: TextFieldValue? = unwrappedData?.title,
     val titleTextFieldErrorTextStringResourceId: Int? =
         unwrappedData?.titleTextFieldError?.textStringResourceId,
-    val resetBottomSheetType: () -> Unit = {
-        setAddOrEditTransactionForBottomSheetType(AddOrEditTransactionForScreenBottomSheetType.NONE)
+    val resetScreenBottomSheetType: () -> Unit = {
+        setScreenBottomSheetType(AddOrEditTransactionForScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
@@ -53,7 +53,7 @@ fun rememberAddOrEditTransactionForScreenUIState(
     data: MyResult<AddOrEditTransactionForScreenUIData>?,
     isEdit: Boolean,
 ): AddOrEditTransactionForScreenUIState {
-    val (addOrEditTransactionForBottomSheetType, setAddOrEditTransactionForBottomSheetType) = remember {
+    val (screenBottomSheetType, setScreenBottomSheetType) = remember {
         mutableStateOf(
             value = AddOrEditTransactionForScreenBottomSheetType.NONE,
         )
@@ -62,13 +62,13 @@ fun rememberAddOrEditTransactionForScreenUIState(
     return remember(
         data,
         isEdit,
-        addOrEditTransactionForBottomSheetType,
+        screenBottomSheetType,
     ) {
         AddOrEditTransactionForScreenUIState(
             data = data,
             isEdit = isEdit,
-            addOrEditTransactionForBottomSheetType = addOrEditTransactionForBottomSheetType,
-            setAddOrEditTransactionForBottomSheetType = setAddOrEditTransactionForBottomSheetType,
+            screenBottomSheetType = screenBottomSheetType,
+            setScreenBottomSheetType = setScreenBottomSheetType,
         )
     }
 }

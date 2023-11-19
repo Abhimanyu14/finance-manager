@@ -38,12 +38,12 @@ internal fun AccountsScreenUI(
     handleUIEvents: (uiEvent: AccountsScreenUIEvent) -> Unit = {},
 ) {
     BottomSheetHandler(
-        showModalBottomSheet = uiState.accountsBottomSheetType != AccountsScreenBottomSheetType.NONE,
-        screenBottomSheetType = uiState.accountsBottomSheetType,
+        showModalBottomSheet = uiState.screenBottomSheetType != AccountsScreenBottomSheetType.NONE,
+        screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = uiState.resetBottomSheetType,
+        resetBottomSheetType = uiState.resetScreenBottomSheetType,
     )
 
     MyScaffold(
@@ -51,11 +51,11 @@ internal fun AccountsScreenUI(
             .testTag(SCREEN_ACCOUNTS)
             .fillMaxSize(),
         sheetContent = {
-            when (uiState.accountsBottomSheetType) {
+            when (uiState.screenBottomSheetType) {
                 AccountsScreenBottomSheetType.DELETE_CONFIRMATION -> {
                     AccountsDeleteConfirmationBottomSheet(
                         accountIdToDelete = uiState.accountIdToDelete,
-                        resetBottomSheetType = uiState.resetBottomSheetType,
+                        resetBottomSheetType = uiState.resetScreenBottomSheetType,
                         resetAccountIdToDelete = {
                             uiState.setAccountIdToDelete(null)
                         },
@@ -80,7 +80,7 @@ internal fun AccountsScreenUI(
                 AccountsScreenBottomSheetType.SET_AS_DEFAULT_CONFIRMATION -> {
                     AccountsSetAsDefaultConfirmationBottomSheet(
                         clickedItemId = uiState.clickedItemId,
-                        resetBottomSheetType = uiState.resetBottomSheetType,
+                        resetBottomSheetType = uiState.resetScreenBottomSheetType,
                         resetClickedItemId = {
                             uiState.setClickedItemId(null)
                         },
@@ -121,10 +121,10 @@ internal fun AccountsScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
-        isModalBottomSheetVisible = uiState.accountsBottomSheetType != AccountsScreenBottomSheetType.NONE,
-        backHandlerEnabled = uiState.accountsBottomSheetType != AccountsScreenBottomSheetType.NONE,
+        isModalBottomSheetVisible = uiState.screenBottomSheetType != AccountsScreenBottomSheetType.NONE,
+        backHandlerEnabled = uiState.screenBottomSheetType != AccountsScreenBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetBottomSheetType,
+        onBackPress = uiState.resetScreenBottomSheetType,
     ) {
         LazyColumn(
             modifier = Modifier
@@ -165,7 +165,7 @@ internal fun AccountsScreenUI(
                         },
                         onLongClick = {
                             if (!listItem.isDefault) {
-                                uiState.setAccountsBottomSheetType(AccountsScreenBottomSheetType.SET_AS_DEFAULT_CONFIRMATION)
+                                uiState.setScreenBottomSheetType(AccountsScreenBottomSheetType.SET_AS_DEFAULT_CONFIRMATION)
                                 uiState.setClickedItemId(listItem.accountId)
                             }
                         },
@@ -181,7 +181,7 @@ internal fun AccountsScreenUI(
                         },
                         onDeleteClick = {
                             uiState.setAccountIdToDelete(listItem.accountId)
-                            uiState.setAccountsBottomSheetType(AccountsScreenBottomSheetType.DELETE_CONFIRMATION)
+                            uiState.setScreenBottomSheetType(AccountsScreenBottomSheetType.DELETE_CONFIRMATION)
                         },
                     ),
                 )

@@ -38,12 +38,12 @@ internal fun TransactionForValuesScreenUI(
     handleUIEvents: (uiEvent: TransactionForValuesScreenUIEvent) -> Unit = {},
 ) {
     BottomSheetHandler(
-        showModalBottomSheet = uiState.transactionForValuesBottomSheetType != TransactionForValuesScreenBottomSheetType.None,
-        screenBottomSheetType = uiState.transactionForValuesBottomSheetType,
+        showModalBottomSheet = uiState.screenBottomSheetType != TransactionForValuesScreenBottomSheetType.None,
+        screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = uiState.resetBottomSheetType,
+        resetBottomSheetType = uiState.resetScreenBottomSheetType,
     )
 
     MyScaffold(
@@ -51,11 +51,11 @@ internal fun TransactionForValuesScreenUI(
             .testTag(SCREEN_TRANSACTION_FOR_VALUES)
             .fillMaxSize(),
         sheetContent = {
-            when (uiState.transactionForValuesBottomSheetType) {
+            when (uiState.screenBottomSheetType) {
                 is TransactionForValuesScreenBottomSheetType.DeleteConfirmation -> {
                     TransactionForValuesDeleteConfirmationBottomSheet(
                         transactionForIdToDelete = uiState.transactionForIdToDelete,
-                        resetBottomSheetType = uiState.resetBottomSheetType,
+                        resetBottomSheetType = uiState.resetScreenBottomSheetType,
                         resetTransactionForIdToDelete = {
                             uiState.setTransactionForIdToDelete(null)
                         },
@@ -76,7 +76,7 @@ internal fun TransactionForValuesScreenUI(
 
                 is TransactionForValuesScreenBottomSheetType.Menu -> {
                     val bottomSheetData =
-                        uiState.transactionForValuesBottomSheetType
+                        uiState.screenBottomSheetType
                     TransactionForValuesMenuBottomSheet(
                         isDeleteVisible = bottomSheetData.isDeleteVisible,
                         transactionForId = bottomSheetData.transactionForId,
@@ -89,11 +89,11 @@ internal fun TransactionForValuesScreenUI(
                         },
                         onDeleteClick = {
                             uiState.setTransactionForIdToDelete(bottomSheetData.transactionForId)
-                            uiState.setTransactionForValuesBottomSheetType(
+                            uiState.setScreenBottomSheetType(
                                 TransactionForValuesScreenBottomSheetType.DeleteConfirmation
                             )
                         },
-                        resetBottomSheetType = uiState.resetBottomSheetType,
+                        resetBottomSheetType = uiState.resetScreenBottomSheetType,
                     )
                 }
             }
@@ -123,10 +123,10 @@ internal fun TransactionForValuesScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
-        isModalBottomSheetVisible = uiState.transactionForValuesBottomSheetType != TransactionForValuesScreenBottomSheetType.None,
-        backHandlerEnabled = uiState.transactionForValuesBottomSheetType != TransactionForValuesScreenBottomSheetType.None,
+        isModalBottomSheetVisible = uiState.screenBottomSheetType != TransactionForValuesScreenBottomSheetType.None,
+        backHandlerEnabled = uiState.screenBottomSheetType != TransactionForValuesScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetBottomSheetType,
+        onBackPress = uiState.resetScreenBottomSheetType,
     ) {
         LazyColumn(
             modifier = Modifier
@@ -151,7 +151,7 @@ internal fun TransactionForValuesScreenUI(
                     ),
                     events = TransactionForListItemEvents(
                         onClick = {
-                            uiState.setTransactionForValuesBottomSheetType(
+                            uiState.setScreenBottomSheetType(
                                 TransactionForValuesScreenBottomSheetType.Menu(
                                     isDeleteVisible = isDeleteVisible,
                                     transactionForId = listItem.id,

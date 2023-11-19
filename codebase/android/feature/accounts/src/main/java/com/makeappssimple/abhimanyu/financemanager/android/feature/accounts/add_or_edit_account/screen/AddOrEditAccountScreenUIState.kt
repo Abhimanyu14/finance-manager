@@ -32,8 +32,8 @@ class AddOrEditAccountScreenUIState(
         }
     },
     isEdit: Boolean,
-    setAddOrEditAccountBottomSheetType: (AddOrEditAccountScreenBottomSheetType) -> Unit,
-    val addOrEditAccountBottomSheetType: AddOrEditAccountScreenBottomSheetType,
+    setScreenBottomSheetType: (AddOrEditAccountScreenBottomSheetType) -> Unit,
+    val screenBottomSheetType: AddOrEditAccountScreenBottomSheetType,
     val nameTextFieldFocusRequester: FocusRequester,
     val balanceAmountTextFieldFocusRequester: FocusRequester,
     val isLoading: Boolean = unwrappedData.isNull(),
@@ -68,8 +68,8 @@ class AddOrEditAccountScreenUIState(
     val minimumBalanceAmountValue: TextFieldValue =
         unwrappedData?.minimumBalanceAmountValue.orEmpty(),
     val name: TextFieldValue = unwrappedData?.name.orEmpty(),
-    val resetBottomSheetType: () -> Unit = {
-        setAddOrEditAccountBottomSheetType(AddOrEditAccountScreenBottomSheetType.NONE)
+    val resetScreenBottomSheetType: () -> Unit = {
+        setScreenBottomSheetType(AddOrEditAccountScreenBottomSheetType.NONE)
     },
     val visibilityData: AddOrEditAccountScreenUIVisibilityData = AddOrEditAccountScreenUIVisibilityData(
         balanceAmountTextField = isEdit,
@@ -93,7 +93,7 @@ fun rememberAddOrEditAccountScreenUIState(
     data: MyResult<AddOrEditAccountScreenUIData>?,
     isEdit: Boolean,
 ): AddOrEditAccountScreenUIState {
-    val (addOrEditAccountBottomSheetType, setAddOrEditAccountBottomSheetType) = remember {
+    val (screenBottomSheetType, setScreenBottomSheetType) = remember {
         mutableStateOf(
             value = AddOrEditAccountScreenBottomSheetType.NONE,
         )
@@ -108,17 +108,17 @@ fun rememberAddOrEditAccountScreenUIState(
     return remember(
         data,
         isEdit,
-        addOrEditAccountBottomSheetType,
+        screenBottomSheetType,
         nameTextFieldFocusRequester,
         balanceAmountTextFieldFocusRequester,
     ) {
         AddOrEditAccountScreenUIState(
             data = data,
             isEdit = isEdit,
-            addOrEditAccountBottomSheetType = addOrEditAccountBottomSheetType,
+            screenBottomSheetType = screenBottomSheetType,
             nameTextFieldFocusRequester = nameTextFieldFocusRequester,
             balanceAmountTextFieldFocusRequester = balanceAmountTextFieldFocusRequester,
-            setAddOrEditAccountBottomSheetType = setAddOrEditAccountBottomSheetType,
+            setScreenBottomSheetType = setScreenBottomSheetType,
         )
     }
 }

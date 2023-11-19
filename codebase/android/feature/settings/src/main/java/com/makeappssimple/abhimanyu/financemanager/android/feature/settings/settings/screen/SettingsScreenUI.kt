@@ -206,7 +206,7 @@ internal fun SettingsScreenUI(
             .testTag(SCREEN_SETTINGS)
             .fillMaxSize(),
         sheetContent = {
-            when (uiState.settingsBottomSheetType) {
+            when (uiState.screenBottomSheetType) {
                 SettingsScreenBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
@@ -226,7 +226,7 @@ internal fun SettingsScreenUI(
             state.focusManager.clearFocus()
         },
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetBottomSheetType,
+        onBackPress = uiState.resetScreenBottomSheetType,
     ) {
         LazyColumn(
             horizontalAlignment = Alignment.Start,

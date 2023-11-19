@@ -24,17 +24,17 @@ class ViewTransactionScreenUIState(
         }
     },
     val transactionIdToDelete: Int?,
-    val viewTransactionBottomSheetType: ViewTransactionScreenBottomSheetType,
+    val screenBottomSheetType: ViewTransactionScreenBottomSheetType,
     val setTransactionIdToDelete: (Int?) -> Unit,
-    val setViewTransactionBottomSheetType: (ViewTransactionScreenBottomSheetType) -> Unit,
+    val setScreenBottomSheetType: (ViewTransactionScreenBottomSheetType) -> Unit,
     val isLoading: Boolean = unwrappedData.isNull(),
     val originalTransactionListItemData: TransactionListItemData? =
         unwrappedData?.originalTransactionListItemData,
     val refundTransactionListItemData: List<TransactionListItemData>? =
         unwrappedData?.refundTransactionListItemData,
     val transactionListItemData: TransactionListItemData? = unwrappedData?.transactionListItemData,
-    val resetBottomSheetType: () -> Unit = {
-        setViewTransactionBottomSheetType(ViewTransactionScreenBottomSheetType.NONE)
+    val resetScreenBottomSheetType: () -> Unit = {
+        setScreenBottomSheetType(ViewTransactionScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
@@ -42,7 +42,7 @@ class ViewTransactionScreenUIState(
 fun rememberViewTransactionScreenUIState(
     data: MyResult<ViewTransactionScreenUIData>?,
 ): ViewTransactionScreenUIState {
-    val (viewTransactionBottomSheetType, setViewTransactionBottomSheetType) = remember {
+    val (screenBottomSheetType, setScreenBottomSheetType) = remember {
         mutableStateOf(
             value = ViewTransactionScreenBottomSheetType.NONE,
         )
@@ -59,16 +59,16 @@ fun rememberViewTransactionScreenUIState(
     return remember(
         data,
         transactionIdToDelete,
-        viewTransactionBottomSheetType,
+        screenBottomSheetType,
         setTransactionIdToDelete,
-        setViewTransactionBottomSheetType,
+        setScreenBottomSheetType,
     ) {
         ViewTransactionScreenUIState(
             data = data,
             transactionIdToDelete = transactionIdToDelete,
-            viewTransactionBottomSheetType = viewTransactionBottomSheetType,
+            screenBottomSheetType = screenBottomSheetType,
             setTransactionIdToDelete = setTransactionIdToDelete,
-            setViewTransactionBottomSheetType = setViewTransactionBottomSheetType,
+            setScreenBottomSheetType = setScreenBottomSheetType,
         )
     }
 }

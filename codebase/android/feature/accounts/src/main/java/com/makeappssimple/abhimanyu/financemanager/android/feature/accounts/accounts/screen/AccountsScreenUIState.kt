@@ -27,11 +27,11 @@ class AccountsScreenUIState(
     val clickedItemId: Int?,
     val expandedItemIndex: Int?,
     val accountIdToDelete: Int?,
-    val accountsBottomSheetType: AccountsScreenBottomSheetType,
+    val screenBottomSheetType: AccountsScreenBottomSheetType,
     val setClickedItemId: (Int?) -> Unit,
     val setExpandedItemIndex: (Int?) -> Unit,
     val setAccountIdToDelete: (Int?) -> Unit,
-    val setAccountsBottomSheetType: (AccountsScreenBottomSheetType) -> Unit,
+    val setScreenBottomSheetType: (AccountsScreenBottomSheetType) -> Unit,
     val isLoading: Boolean = unwrappedData.isNull(),
     val accountsListItemDataList: List<AccountsListItemData> =
         unwrappedData?.accountsListItemDataList.orEmpty(),
@@ -39,8 +39,8 @@ class AccountsScreenUIState(
         unwrappedData?.accountsTotalBalanceAmountValue.orZero(),
     val accountsTotalMinimumBalanceAmountValue: Long =
         unwrappedData?.accountsTotalMinimumBalanceAmountValue.orZero(),
-    val resetBottomSheetType: () -> Unit = {
-        setAccountsBottomSheetType(AccountsScreenBottomSheetType.NONE)
+    val resetScreenBottomSheetType: () -> Unit = {
+        setScreenBottomSheetType(AccountsScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
@@ -63,7 +63,7 @@ fun rememberAccountsScreenUIState(
             value = null,
         )
     }
-    val (accountsBottomSheetType: AccountsScreenBottomSheetType, setAccountsBottomSheetType: (AccountsScreenBottomSheetType) -> Unit) = remember {
+    val (screenBottomSheetType: AccountsScreenBottomSheetType, setScreenBottomSheetType: (AccountsScreenBottomSheetType) -> Unit) = remember {
         mutableStateOf(
             value = AccountsScreenBottomSheetType.NONE,
         )
@@ -83,19 +83,19 @@ fun rememberAccountsScreenUIState(
         clickedItemId,
         expandedItemIndex,
         accountIdToDelete,
-        accountsBottomSheetType,
+        screenBottomSheetType,
         setClickedItemId,
         setExpandedItemIndex,
         setAccountIdToDelete,
-        setAccountsBottomSheetType,
+        setScreenBottomSheetType,
     ) {
         AccountsScreenUIState(
             data = data,
-            accountsBottomSheetType = accountsBottomSheetType,
+            screenBottomSheetType = screenBottomSheetType,
             expandedItemIndex = expandedItemIndex,
             clickedItemId = clickedItemId,
             accountIdToDelete = accountIdToDelete,
-            setAccountsBottomSheetType = setAccountsBottomSheetType,
+            setScreenBottomSheetType = setScreenBottomSheetType,
             setExpandedItemIndex = setExpandedItemIndex,
             setClickedItemId = setClickedItemId,
             setAccountIdToDelete = setAccountIdToDelete,

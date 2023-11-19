@@ -42,12 +42,12 @@ internal fun AnalysisScreenUI(
     handleUIEvents: (uiEvent: AnalysisScreenUIEvent) -> Unit = {},
 ) {
     BottomSheetHandler(
-        showModalBottomSheet = uiState.analysisBottomSheetType != AnalysisScreenBottomSheetType.NONE,
-        screenBottomSheetType = uiState.analysisBottomSheetType,
+        showModalBottomSheet = uiState.screenBottomSheetType != AnalysisScreenBottomSheetType.NONE,
+        screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
         modalBottomSheetState = state.modalBottomSheetState,
         keyboardController = state.keyboardController,
-        resetBottomSheetType = uiState.resetBottomSheetType,
+        resetBottomSheetType = uiState.resetScreenBottomSheetType,
     )
 
     MyScaffold(
@@ -55,7 +55,7 @@ internal fun AnalysisScreenUI(
             .testTag(SCREEN_ANALYSIS)
             .fillMaxSize(),
         sheetContent = {
-            when (uiState.analysisBottomSheetType) {
+            when (uiState.screenBottomSheetType) {
                 AnalysisScreenBottomSheetType.FILTERS -> {
                     AnalysisFilterBottomSheet(
                         selectedFilter = uiState.selectedFilter,
@@ -71,7 +71,7 @@ internal fun AnalysisScreenUI(
                                     updatedSelectedFilter = it,
                                 )
                             )
-                            uiState.resetBottomSheetType()
+                            uiState.resetScreenBottomSheetType()
                         },
                     )
                 }
@@ -93,10 +93,10 @@ internal fun AnalysisScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
-        isModalBottomSheetVisible = uiState.analysisBottomSheetType != AnalysisScreenBottomSheetType.NONE,
-        backHandlerEnabled = uiState.analysisBottomSheetType != AnalysisScreenBottomSheetType.NONE,
+        isModalBottomSheetVisible = uiState.screenBottomSheetType != AnalysisScreenBottomSheetType.NONE,
+        backHandlerEnabled = uiState.screenBottomSheetType != AnalysisScreenBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetBottomSheetType,
+        onBackPress = uiState.resetScreenBottomSheetType,
     ) {
         LazyColumn(
             horizontalAlignment = Alignment.Start,
@@ -144,7 +144,7 @@ internal fun AnalysisScreenUI(
                         ),
                         events = ActionButtonEvents(
                             onClick = {
-                                uiState.setAnalysisBottomSheetType(AnalysisScreenBottomSheetType.FILTERS)
+                                uiState.setScreenBottomSheetType(AnalysisScreenBottomSheetType.FILTERS)
                             },
                         ),
                         modifier = Modifier

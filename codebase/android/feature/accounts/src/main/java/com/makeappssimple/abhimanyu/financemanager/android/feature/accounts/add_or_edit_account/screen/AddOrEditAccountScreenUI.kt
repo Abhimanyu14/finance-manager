@@ -91,7 +91,7 @@ internal fun AddOrEditAccountScreenUI(
             .testTag(SCREEN_ADD_OR_EDIT_ACCOUNT)
             .fillMaxSize(),
         sheetContent = {
-            when (uiState.addOrEditAccountBottomSheetType) {
+            when (uiState.screenBottomSheetType) {
                 AddOrEditAccountScreenBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
@@ -110,7 +110,7 @@ internal fun AddOrEditAccountScreenUI(
             state.focusManager.clearFocus()
         },
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetBottomSheetType,
+        onBackPress = uiState.resetScreenBottomSheetType,
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

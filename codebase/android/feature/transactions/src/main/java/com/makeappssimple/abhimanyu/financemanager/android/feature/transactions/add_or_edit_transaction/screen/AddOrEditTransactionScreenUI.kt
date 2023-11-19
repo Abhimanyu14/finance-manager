@@ -84,12 +84,12 @@ internal fun AddOrEditTransactionScreenUI(
     }
 
     BottomSheetHandler(
-        showModalBottomSheet = uiState.addOrEditTransactionBottomSheetType != AddOrEditTransactionScreenBottomSheetType.NONE,
-        screenBottomSheetType = uiState.addOrEditTransactionBottomSheetType,
+        showModalBottomSheet = uiState.screenBottomSheetType != AddOrEditTransactionScreenBottomSheetType.NONE,
+        screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = uiState.resetBottomSheetType,
+        resetBottomSheetType = uiState.resetScreenBottomSheetType,
     )
 
     MyScaffold(
@@ -97,7 +97,7 @@ internal fun AddOrEditTransactionScreenUI(
             .testTag(SCREEN_CONTENT_ADD_OR_EDIT_TRANSACTION)
             .fillMaxSize(),
         sheetContent = {
-            when (uiState.addOrEditTransactionBottomSheetType) {
+            when (uiState.screenBottomSheetType) {
                 AddOrEditTransactionScreenBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
@@ -109,7 +109,7 @@ internal fun AddOrEditTransactionScreenUI(
                             selectedCategoryId = uiState.uiState.category?.id,
                         ),
                         events = SelectCategoryBottomSheetEvents(
-                            resetBottomSheetType = uiState.resetBottomSheetType,
+                            resetBottomSheetType = uiState.resetScreenBottomSheetType,
                             updateCategory = { updatedCategory ->
                                 handleUIEvents(
                                     AddOrEditTransactionScreenUIEvent.UpdateCategory(
@@ -128,7 +128,7 @@ internal fun AddOrEditTransactionScreenUI(
                             selectedAccountId = uiState.uiState.accountFrom?.id,
                         ),
                         events = SelectAccountBottomSheetEvents(
-                            resetBottomSheetType = uiState.resetBottomSheetType,
+                            resetBottomSheetType = uiState.resetScreenBottomSheetType,
                             updateAccount = { updatedAccount ->
                                 handleUIEvents(
                                     AddOrEditTransactionScreenUIEvent.UpdateAccountFrom(
@@ -147,7 +147,7 @@ internal fun AddOrEditTransactionScreenUI(
                             selectedAccountId = uiState.uiState.accountTo?.id,
                         ),
                         events = SelectAccountBottomSheetEvents(
-                            resetBottomSheetType = uiState.resetBottomSheetType,
+                            resetBottomSheetType = uiState.resetScreenBottomSheetType,
                             updateAccount = { updatedAccount ->
                                 handleUIEvents(
                                     AddOrEditTransactionScreenUIEvent.UpdateAccountTo(
@@ -172,10 +172,10 @@ internal fun AddOrEditTransactionScreenUI(
         onClick = {
             clearFocus()
         },
-        isModalBottomSheetVisible = uiState.addOrEditTransactionBottomSheetType != AddOrEditTransactionScreenBottomSheetType.NONE,
-        backHandlerEnabled = uiState.addOrEditTransactionBottomSheetType != AddOrEditTransactionScreenBottomSheetType.NONE,
+        isModalBottomSheetVisible = uiState.screenBottomSheetType != AddOrEditTransactionScreenBottomSheetType.NONE,
+        backHandlerEnabled = uiState.screenBottomSheetType != AddOrEditTransactionScreenBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetBottomSheetType,
+        onBackPress = uiState.resetScreenBottomSheetType,
     ) {
         MyDatePicker(
             data = MyDatePickerData(
@@ -328,7 +328,7 @@ internal fun AddOrEditTransactionScreenUI(
                     events = MyReadOnlyTextFieldEvents(
                         onClick = {
                             clearFocus()
-                            uiState.setAddOrEditTransactionBottomSheetType(
+                            uiState.setScreenBottomSheetType(
                                 AddOrEditTransactionScreenBottomSheetType.SELECT_CATEGORY
                             )
                         },
@@ -487,7 +487,7 @@ internal fun AddOrEditTransactionScreenUI(
                     events = MyReadOnlyTextFieldEvents(
                         onClick = {
                             clearFocus()
-                            uiState.setAddOrEditTransactionBottomSheetType(
+                            uiState.setScreenBottomSheetType(
                                 AddOrEditTransactionScreenBottomSheetType.SELECT_ACCOUNT_FROM
                             )
                         },
@@ -512,7 +512,7 @@ internal fun AddOrEditTransactionScreenUI(
                     events = MyReadOnlyTextFieldEvents(
                         onClick = {
                             clearFocus()
-                            uiState.setAddOrEditTransactionBottomSheetType(
+                            uiState.setScreenBottomSheetType(
                                 AddOrEditTransactionScreenBottomSheetType.SELECT_ACCOUNT_TO
                             )
                         },

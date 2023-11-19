@@ -64,12 +64,12 @@ internal fun AddOrEditTransactionForScreenUI(
     }
 
     BottomSheetHandler(
-        showModalBottomSheet = uiState.addOrEditTransactionForBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.NONE,
-        screenBottomSheetType = uiState.addOrEditTransactionForBottomSheetType,
+        showModalBottomSheet = uiState.screenBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.NONE,
+        screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = uiState.resetBottomSheetType,
+        resetBottomSheetType = uiState.resetScreenBottomSheetType,
     )
 
     MyScaffold(
@@ -77,7 +77,7 @@ internal fun AddOrEditTransactionForScreenUI(
             .testTag(SCREEN_ADD_OR_EDIT_TRANSACTION_FOR)
             .fillMaxSize(),
         sheetContent = {
-            when (uiState.addOrEditTransactionForBottomSheetType) {
+            when (uiState.screenBottomSheetType) {
                 AddOrEditTransactionForScreenBottomSheetType.DELETE -> {
                     VerticalSpacer()
                 }
@@ -103,10 +103,10 @@ internal fun AddOrEditTransactionForScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
-        isModalBottomSheetVisible = uiState.addOrEditTransactionForBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.NONE,
-        backHandlerEnabled = uiState.addOrEditTransactionForBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.NONE,
+        isModalBottomSheetVisible = uiState.screenBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.NONE,
+        backHandlerEnabled = uiState.screenBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetBottomSheetType,
+        onBackPress = uiState.resetScreenBottomSheetType,
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

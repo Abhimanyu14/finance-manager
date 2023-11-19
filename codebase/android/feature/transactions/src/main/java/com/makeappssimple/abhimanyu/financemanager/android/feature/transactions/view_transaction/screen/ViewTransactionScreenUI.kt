@@ -38,12 +38,12 @@ internal fun ViewTransactionScreenUI(
     handleUIEvents: (uiEvent: ViewTransactionScreenUIEvent) -> Unit = {},
 ) {
     BottomSheetHandler(
-        showModalBottomSheet = uiState.viewTransactionBottomSheetType != ViewTransactionScreenBottomSheetType.NONE,
-        screenBottomSheetType = uiState.viewTransactionBottomSheetType,
+        showModalBottomSheet = uiState.screenBottomSheetType != ViewTransactionScreenBottomSheetType.NONE,
+        screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = uiState.resetBottomSheetType,
+        resetBottomSheetType = uiState.resetScreenBottomSheetType,
     )
 
     MyScaffold(
@@ -51,11 +51,11 @@ internal fun ViewTransactionScreenUI(
             .testTag(SCREEN_VIEW_TRANSACTION)
             .fillMaxSize(),
         sheetContent = {
-            when (uiState.viewTransactionBottomSheetType) {
+            when (uiState.screenBottomSheetType) {
                 ViewTransactionScreenBottomSheetType.DELETE_CONFIRMATION -> {
                     TransactionDeleteConfirmationBottomSheet(
                         transactionIdToDelete = uiState.transactionIdToDelete,
-                        resetBottomSheetType = uiState.resetBottomSheetType,
+                        resetBottomSheetType = uiState.resetScreenBottomSheetType,
                         resetTransactionIdToDelete = {
                             uiState.setTransactionIdToDelete(null)
                         },
@@ -88,10 +88,10 @@ internal fun ViewTransactionScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
-        isModalBottomSheetVisible = uiState.viewTransactionBottomSheetType != ViewTransactionScreenBottomSheetType.NONE,
-        backHandlerEnabled = uiState.viewTransactionBottomSheetType != ViewTransactionScreenBottomSheetType.NONE,
+        isModalBottomSheetVisible = uiState.screenBottomSheetType != ViewTransactionScreenBottomSheetType.NONE,
+        backHandlerEnabled = uiState.screenBottomSheetType != ViewTransactionScreenBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetBottomSheetType,
+        onBackPress = uiState.resetScreenBottomSheetType,
     ) {
         LazyColumn(
             modifier = Modifier
@@ -118,7 +118,7 @@ internal fun ViewTransactionScreenUI(
                         events = TransactionListItemEvents(
                             onDeleteButtonClick = {
                                 uiState.setTransactionIdToDelete(uiState.transactionListItemData.transactionId)
-                                uiState.setViewTransactionBottomSheetType(
+                                uiState.setScreenBottomSheetType(
                                     ViewTransactionScreenBottomSheetType.DELETE_CONFIRMATION
                                 )
                             },
@@ -176,7 +176,7 @@ internal fun ViewTransactionScreenUI(
                                 },
                                 onDeleteButtonClick = {
                                     uiState.setTransactionIdToDelete(uiState.originalTransactionListItemData.transactionId)
-                                    uiState.setViewTransactionBottomSheetType(
+                                    uiState.setScreenBottomSheetType(
                                         ViewTransactionScreenBottomSheetType.DELETE_CONFIRMATION
                                     )
                                 },
@@ -240,7 +240,7 @@ internal fun ViewTransactionScreenUI(
                             },
                             onDeleteButtonClick = {
                                 uiState.setTransactionIdToDelete(transactionListItemData.transactionId)
-                                uiState.setViewTransactionBottomSheetType(
+                                uiState.setScreenBottomSheetType(
                                     ViewTransactionScreenBottomSheetType.DELETE_CONFIRMATION
                                 )
                             },

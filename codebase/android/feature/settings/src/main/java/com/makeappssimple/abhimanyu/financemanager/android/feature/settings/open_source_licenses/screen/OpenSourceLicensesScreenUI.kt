@@ -27,7 +27,7 @@ internal fun OpenSourceLicensesScreenUI(
             .testTag(SCREEN_OPEN_SOURCE_LICENSES)
             .fillMaxSize(),
         sheetContent = {
-            when (uiState.openSourceLicensesBottomSheetType) {
+            when (uiState.screenBottomSheetType) {
                 OpenSourceLicensesScreenBottomSheetType.NONE -> {
                     VerticalSpacer()
                 }
@@ -46,7 +46,7 @@ internal fun OpenSourceLicensesScreenUI(
             state.focusManager.clearFocus()
         },
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetBottomSheetType,
+        onBackPress = uiState.resetScreenBottomSheetType,
     ) {
         LibrariesContainer(
             modifier = Modifier

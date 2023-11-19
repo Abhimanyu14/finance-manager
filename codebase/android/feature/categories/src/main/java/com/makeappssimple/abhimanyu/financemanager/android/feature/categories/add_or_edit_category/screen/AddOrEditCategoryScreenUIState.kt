@@ -27,8 +27,8 @@ class AddOrEditCategoryScreenUIState(
         }
     },
     isEdit: Boolean,
-    val addOrEditCategoryBottomSheetType: AddOrEditCategoryScreenBottomSheetType,
-    val setAddOrEditCategoryBottomSheetType: (AddOrEditCategoryScreenBottomSheetType) -> Unit,
+    val screenBottomSheetType: AddOrEditCategoryScreenBottomSheetType,
+    val setScreenBottomSheetType: (AddOrEditCategoryScreenBottomSheetType) -> Unit,
     val isLoading: Boolean = unwrappedData.isNull(),
     val isCtaButtonEnabled: Boolean = unwrappedData?.isCtaButtonEnabled.orFalse(),
     val selectedTransactionTypeIndex: Int? = unwrappedData?.selectedTransactionTypeIndex,
@@ -55,8 +55,8 @@ class AddOrEditCategoryScreenUIState(
     } else {
         R.string.screen_add_category_floating_action_button_content_description
     },
-    val resetBottomSheetType: () -> Unit = {
-        setAddOrEditCategoryBottomSheetType(AddOrEditCategoryScreenBottomSheetType.NONE)
+    val resetScreenBottomSheetType: () -> Unit = {
+        setScreenBottomSheetType(AddOrEditCategoryScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
@@ -65,7 +65,7 @@ fun rememberAddOrEditCategoryScreenUIState(
     data: MyResult<AddOrEditCategoryScreenUIData>?,
     isEdit: Boolean,
 ): AddOrEditCategoryScreenUIState {
-    val (addOrEditCategoryBottomSheetType, setAddOrEditCategoryBottomSheetType) = remember {
+    val (screenBottomSheetType, setScreenBottomSheetType) = remember {
         mutableStateOf(
             value = AddOrEditCategoryScreenBottomSheetType.NONE,
         )
@@ -74,14 +74,14 @@ fun rememberAddOrEditCategoryScreenUIState(
     return remember(
         data,
         isEdit,
-        addOrEditCategoryBottomSheetType,
-        setAddOrEditCategoryBottomSheetType,
+        screenBottomSheetType,
+        setScreenBottomSheetType,
     ) {
         AddOrEditCategoryScreenUIState(
             data = data,
             isEdit = isEdit,
-            addOrEditCategoryBottomSheetType = addOrEditCategoryBottomSheetType,
-            setAddOrEditCategoryBottomSheetType = setAddOrEditCategoryBottomSheetType,
+            screenBottomSheetType = screenBottomSheetType,
+            setScreenBottomSheetType = setScreenBottomSheetType,
         )
     }
 }

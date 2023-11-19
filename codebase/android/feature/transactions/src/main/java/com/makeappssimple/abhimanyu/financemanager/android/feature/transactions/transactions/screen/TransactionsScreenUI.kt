@@ -82,12 +82,12 @@ internal fun TransactionsScreenUI(
     }
 
     BottomSheetHandler(
-        showModalBottomSheet = uiState.transactionsBottomSheetType != TransactionsScreenBottomSheetType.NONE,
-        screenBottomSheetType = uiState.transactionsBottomSheetType,
+        showModalBottomSheet = uiState.screenBottomSheetType != TransactionsScreenBottomSheetType.NONE,
+        screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = uiState.resetBottomSheetType,
+        resetBottomSheetType = uiState.resetScreenBottomSheetType,
     )
 
     BackHandler(
@@ -113,7 +113,7 @@ internal fun TransactionsScreenUI(
             .testTag(SCREEN_TRANSACTIONS)
             .fillMaxSize(),
         sheetContent = {
-            when (uiState.transactionsBottomSheetType) {
+            when (uiState.screenBottomSheetType) {
                 TransactionsScreenBottomSheetType.FILTERS -> {
                     TransactionsFilterBottomSheet(
                         expenseCategories = uiState.expenseCategories,
@@ -132,7 +132,7 @@ internal fun TransactionsScreenUI(
                                 )
                             )
                         },
-                        resetBottomSheetType = uiState.resetBottomSheetType,
+                        resetBottomSheetType = uiState.resetScreenBottomSheetType,
                     )
                 }
 
@@ -153,7 +153,7 @@ internal fun TransactionsScreenUI(
                                         updatedTransactionForValues = it.id,
                                     )
                                 )
-                                uiState.resetBottomSheetType()
+                                uiState.resetScreenBottomSheetType()
                             },
                         ),
                     )
@@ -163,7 +163,7 @@ internal fun TransactionsScreenUI(
                     TransactionsSortBottomSheet(
                         selectedSortOptionIndex = uiState.sortOptions.indexOf(uiState.selectedSortOption),
                         sortOptions = uiState.sortOptions.toList(),
-                        resetBottomSheetType = uiState.resetBottomSheetType,
+                        resetBottomSheetType = uiState.resetScreenBottomSheetType,
                         updateSelectedSortOption = { index ->
                             handleUIEvents(
                                 TransactionsScreenUIEvent.UpdateSelectedSortOption(
@@ -176,7 +176,7 @@ internal fun TransactionsScreenUI(
             }
         },
         sheetState = state.modalBottomSheetState,
-        sheetShape = when (uiState.transactionsBottomSheetType) {
+        sheetShape = when (uiState.screenBottomSheetType) {
             TransactionsScreenBottomSheetType.NONE,
             TransactionsScreenBottomSheetType.SELECT_TRANSACTION_FOR,
             TransactionsScreenBottomSheetType.SORT,
@@ -225,7 +225,7 @@ internal fun TransactionsScreenUI(
                                     },
                                     onClick = {
                                         isDropDownVisible = false
-                                        uiState.setTransactionsBottomSheetType(
+                                        uiState.setScreenBottomSheetType(
                                             TransactionsScreenBottomSheetType.SELECT_TRANSACTION_FOR
                                         )
                                     },
@@ -291,10 +291,10 @@ internal fun TransactionsScreenUI(
         onClick = {
             state.focusManager.clearFocus()
         },
-        isModalBottomSheetVisible = uiState.transactionsBottomSheetType != TransactionsScreenBottomSheetType.NONE,
-        backHandlerEnabled = uiState.transactionsBottomSheetType != TransactionsScreenBottomSheetType.NONE,
+        isModalBottomSheetVisible = uiState.screenBottomSheetType != TransactionsScreenBottomSheetType.NONE,
+        backHandlerEnabled = uiState.screenBottomSheetType != TransactionsScreenBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetBottomSheetType,
+        onBackPress = uiState.resetScreenBottomSheetType,
     ) {
         Column(
             modifier = Modifier
@@ -365,7 +365,7 @@ internal fun TransactionsScreenUI(
                         ),
                         events = ActionButtonEvents(
                             onClick = {
-                                uiState.setTransactionsBottomSheetType(
+                                uiState.setScreenBottomSheetType(
                                     TransactionsScreenBottomSheetType.SORT
                                 )
                             },
@@ -379,7 +379,7 @@ internal fun TransactionsScreenUI(
                         ),
                         events = ActionButtonEvents(
                             onClick = {
-                                uiState.setTransactionsBottomSheetType(
+                                uiState.setScreenBottomSheetType(
                                     TransactionsScreenBottomSheetType.FILTERS
                                 )
                             },
