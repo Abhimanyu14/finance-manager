@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons
+package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.button
 
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.FloatingActionButton

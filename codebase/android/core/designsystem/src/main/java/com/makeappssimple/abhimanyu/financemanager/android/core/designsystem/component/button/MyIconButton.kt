@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons
+package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.button
 
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
