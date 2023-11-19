@@ -11,7 +11,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,7 +19,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_ADD_OR_EDIT_TRANSACTION_FOR
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_CONTENT_ADD_OR_EDIT_TRANSACTION_FOR
@@ -56,23 +54,6 @@ enum class AddOrEditTransactionForScreenUIError(
     EXISTS(
         textStringResourceId = R.string.screen_add_or_edit_transaction_for_error_exists,
     ),
-}
-
-@Immutable
-data class AddOrEditTransactionForScreenUIData(
-    val isValidTransactionForData: Boolean = false,
-    val title: TextFieldValue = TextFieldValue(),
-    val titleTextFieldError: AddOrEditTransactionForScreenUIError? = null,
-)
-
-@Immutable
-sealed class AddOrEditTransactionForScreenUIEvent {
-    object ClearTitle : AddOrEditTransactionForScreenUIEvent()
-    object NavigateUp : AddOrEditTransactionForScreenUIEvent()
-    object OnCtaButtonClick : AddOrEditTransactionForScreenUIEvent()
-    data class UpdateTitle(
-        val updatedTitle: TextFieldValue,
-    ) : AddOrEditTransactionForScreenUIEvent()
 }
 
 @Composable

@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.ope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_CONTENT_OPEN_SOURCE_LICENSES
@@ -20,16 +19,6 @@ import com.mikepenz.aboutlibraries.ui.compose.LibraryDefaults
 
 enum class OpenSourceLicensesBottomSheetType : BottomSheetType {
     NONE,
-}
-
-@Immutable
-data class OpenSourceLicensesScreenUIData(
-    val isLoading: Boolean = false,
-)
-
-@Immutable
-sealed class OpenSourceLicensesScreenUIEvent {
-    object NavigateUp : OpenSourceLicensesScreenUIEvent()
 }
 
 @Composable

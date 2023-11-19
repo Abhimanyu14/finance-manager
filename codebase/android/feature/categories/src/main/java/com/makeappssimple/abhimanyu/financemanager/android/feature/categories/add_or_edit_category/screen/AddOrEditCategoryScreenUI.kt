@@ -12,7 +12,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,7 +21,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_ADD_OR_EDIT_CATEGORY
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_CONTENT_ADD_OR_EDIT_CATEGORY
@@ -34,7 +32,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
@@ -68,40 +65,6 @@ enum class AddOrEditCategoryScreenUIError(
     CATEGORY_EXISTS(
         textStringResourceId = R.string.screen_add_or_edit_category_error_category_exists,
     ),
-}
-
-@Immutable
-data class AddOrEditCategoryScreenUIData(
-    val isCtaButtonEnabled: Boolean = false,
-    val selectedTransactionTypeIndex: Int = 0,
-    val validTransactionTypes: List<TransactionType> = emptyList(),
-    val emoji: String = "",
-    val emojiSearchText: String = "",
-    val title: TextFieldValue = TextFieldValue(),
-    val titleTextFieldError: AddOrEditCategoryScreenUIError? = null,
-)
-
-@Immutable
-sealed class AddOrEditCategoryScreenUIEvent {
-    object ClearTitle : AddOrEditCategoryScreenUIEvent()
-    object NavigateUp : AddOrEditCategoryScreenUIEvent()
-    object OnCtaButtonClick : AddOrEditCategoryScreenUIEvent()
-
-    data class UpdateEmoji(
-        val updatedEmoji: String,
-    ) : AddOrEditCategoryScreenUIEvent()
-
-    data class UpdateSearchText(
-        val updatedSearchText: String,
-    ) : AddOrEditCategoryScreenUIEvent()
-
-    data class UpdateSelectedTransactionTypeIndex(
-        val updatedIndex: Int,
-    ) : AddOrEditCategoryScreenUIEvent()
-
-    data class UpdateTitle(
-        val updatedTitle: TextFieldValue,
-    ) : AddOrEditCategoryScreenUIEvent()
 }
 
 @Composable

@@ -9,7 +9,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
@@ -29,7 +28,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememb
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItem
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.common.TransactionDeleteConfirmationBottomSheet
@@ -37,34 +35,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 enum class ViewTransactionBottomSheetType : BottomSheetType {
     DELETE_CONFIRMATION,
     NONE,
-}
-
-@Immutable
-data class ViewTransactionScreenUIData(
-    val originalTransactionListItemData: TransactionListItemData? = null,
-    val refundTransactionListItemData: List<TransactionListItemData>? = null,
-    val transactionListItemData: TransactionListItemData? = null,
-)
-
-@Immutable
-sealed class ViewTransactionScreenUIEvent {
-    object NavigateUp : ViewTransactionScreenUIEvent()
-
-    data class DeleteTransaction(
-        val transactionId: Int,
-    ) : ViewTransactionScreenUIEvent()
-
-    data class NavigateToAddTransactionScreen(
-        val transactionId: Int,
-    ) : ViewTransactionScreenUIEvent()
-
-    data class NavigateToEditTransactionScreen(
-        val transactionId: Int,
-    ) : ViewTransactionScreenUIEvent()
-
-    data class NavigateToViewTransactionScreen(
-        val transactionId: Int,
-    ) : ViewTransactionScreenUIEvent()
 }
 
 @Composable

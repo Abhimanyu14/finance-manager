@@ -28,7 +28,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,10 +48,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarsSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
@@ -70,80 +65,17 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MySearchBarEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItem
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.component.bottomsheet.TransactionsFilterBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.component.bottomsheet.TransactionsSortBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.Filter
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.SortOption
-import java.time.LocalDate
 
 enum class TransactionsBottomSheetType : BottomSheetType {
     FILTERS,
     NONE,
     SELECT_TRANSACTION_FOR,
     SORT,
-}
-
-@Immutable
-data class TransactionsScreenUIData(
-    val isLoading: Boolean = false,
-    val selectedFilter: Filter = Filter(),
-    val accounts: List<Account> = emptyList(),
-    val expenseCategories: List<Category> = emptyList(),
-    val incomeCategories: List<Category> = emptyList(),
-    val investmentCategories: List<Category> = emptyList(),
-    val selectedTransactions: List<Int> = emptyList(),
-    val sortOptions: List<SortOption> = emptyList(),
-    val transactionTypes: List<TransactionType> = emptyList(),
-    val transactionForValues: List<TransactionFor> = emptyList(),
-    val oldestTransactionLocalDate: LocalDate = LocalDate.MIN,
-    val currentLocalDate: LocalDate = LocalDate.MIN,
-    val currentTimeMillis: Long = 0L,
-    val transactionDetailsListItemViewData: Map<String, List<TransactionListItemData>> = emptyMap(),
-    val searchText: String = "",
-    val selectedSortOption: SortOption = SortOption.LATEST_FIRST,
-)
-
-@Immutable
-sealed class TransactionsScreenUIEvent {
-    object ClearSelectedTransactions : TransactionsScreenUIEvent()
-    object NavigateToAddTransactionScreen : TransactionsScreenUIEvent()
-    object NavigateUp : TransactionsScreenUIEvent()
-    object SelectAllTransactions : TransactionsScreenUIEvent()
-
-    data class AddToSelectedTransactions(
-        val transactionId: Int,
-    ) : TransactionsScreenUIEvent()
-
-    data class NavigateToViewTransactionScreen(
-        val transactionId: Int,
-    ) : TransactionsScreenUIEvent()
-
-    data class RemoveFromSelectedTransactions(
-        val transactionId: Int,
-    ) : TransactionsScreenUIEvent()
-
-    data class ToggleTransactionSelection(
-        val transactionId: Int,
-    ) : TransactionsScreenUIEvent()
-
-    data class UpdateSearchText(
-        val updatedSearchText: String,
-    ) : TransactionsScreenUIEvent()
-
-    data class UpdateSelectedFilter(
-        val updatedSelectedFilter: Filter,
-    ) : TransactionsScreenUIEvent()
-
-    data class UpdateSelectedSortOption(
-        val updatedSelectedSortOption: SortOption,
-    ) : TransactionsScreenUIEvent()
-
-    data class UpdateTransactionForValuesInTransactions(
-        val updatedTransactionForValues: Int,
-    ) : TransactionsScreenUIEvent()
 }
 
 @Composable

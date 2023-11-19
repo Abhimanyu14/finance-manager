@@ -21,14 +21,12 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_ADD_OR_EDIT_ACCOUNT
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_CONTENT_ADD_OR_EDIT_ACCOUNT
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.AmountCommaVisualTransformation
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
@@ -72,43 +70,6 @@ data class AddOrEditAccountScreenUIErrorData(
     val balanceAmountTextField: AddOrEditAccountScreenUIError? = null,
     val nameTextField: AddOrEditAccountScreenUIError? = null,
 )
-
-@Immutable
-data class AddOrEditAccountScreenUIData(
-    val errorData: AddOrEditAccountScreenUIErrorData = AddOrEditAccountScreenUIErrorData(),
-    val isValidAccountData: Boolean = false,
-    val accountIsNotCash: Boolean = false,
-    val selectedAccountTypeIndex: Int = 0,
-    val accountTypes: List<AccountType> = emptyList(),
-    val balanceAmountValue: TextFieldValue = TextFieldValue(),
-    val minimumBalanceAmountValue: TextFieldValue = TextFieldValue(),
-    val name: TextFieldValue = TextFieldValue(),
-)
-
-@Immutable
-sealed class AddOrEditAccountScreenUIEvent {
-    object ClearBalanceAmountValue : AddOrEditAccountScreenUIEvent()
-    object ClearMinimumAccountBalanceAmountValue : AddOrEditAccountScreenUIEvent()
-    object ClearName : AddOrEditAccountScreenUIEvent()
-    object NavigateUp : AddOrEditAccountScreenUIEvent()
-    object OnCtaButtonClick : AddOrEditAccountScreenUIEvent()
-
-    data class UpdateBalanceAmountValue(
-        val updatedBalanceAmountValue: TextFieldValue,
-    ) : AddOrEditAccountScreenUIEvent()
-
-    data class UpdateMinimumAccountBalanceAmountValue(
-        val updatedMinimumAccountBalanceAmountValue: TextFieldValue,
-    ) : AddOrEditAccountScreenUIEvent()
-
-    data class UpdateName(
-        val updatedName: TextFieldValue,
-    ) : AddOrEditAccountScreenUIEvent()
-
-    data class UpdateSelectedAccountTypeIndex(
-        val updatedIndex: Int,
-    ) : AddOrEditAccountScreenUIEvent()
-}
 
 @Composable
 internal fun AddOrEditAccountScreenUI(

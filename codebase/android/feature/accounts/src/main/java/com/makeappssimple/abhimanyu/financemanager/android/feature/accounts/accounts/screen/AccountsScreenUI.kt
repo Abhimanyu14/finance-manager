@@ -7,7 +7,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -30,7 +29,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tot
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.component.bottomsheet.AccountsDeleteConfirmationBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.component.bottomsheet.AccountsSetAsDefaultConfirmationBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.component.listitem.AccountsListItem
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.component.listitem.AccountsListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.component.listitem.AccountsListItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 
@@ -38,31 +36,6 @@ enum class AccountsBottomSheetType : BottomSheetType {
     DELETE_CONFIRMATION,
     NONE,
     SET_AS_DEFAULT_CONFIRMATION,
-}
-
-@Immutable
-data class AccountsScreenUIData(
-    val accountsListItemDataList: List<AccountsListItemData> = emptyList(),
-    val accountsTotalBalanceAmountValue: Long = 0L,
-    val accountsTotalMinimumBalanceAmountValue: Long = 0L,
-)
-
-@Immutable
-sealed class AccountsScreenUIEvent {
-    object NavigateToAddAccountScreen : AccountsScreenUIEvent()
-    object NavigateUp : AccountsScreenUIEvent()
-
-    data class DeleteAccount(
-        val accountId: Int,
-    ) : AccountsScreenUIEvent()
-
-    data class NavigateToEditAccountScreen(
-        val accountId: Int,
-    ) : AccountsScreenUIEvent()
-
-    data class SetDefaultAccountIdInDataStore(
-        val defaultAccountId: Int,
-    ) : AccountsScreenUIEvent()
 }
 
 @Composable

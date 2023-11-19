@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -19,7 +18,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.buttons.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarsSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
@@ -35,33 +33,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.component.listitem.TransactionForListItemEvents
 
 sealed class TransactionForValuesBottomSheetType : BottomSheetType {
-    object DeleteConfirmation : TransactionForValuesBottomSheetType()
-    object None : TransactionForValuesBottomSheetType()
+    data object DeleteConfirmation : TransactionForValuesBottomSheetType()
+    data object None : TransactionForValuesBottomSheetType()
 
     data class Menu(
         val isDeleteVisible: Boolean,
         val transactionForId: Int,
     ) : TransactionForValuesBottomSheetType()
-}
-
-@Immutable
-data class TransactionForValuesScreenUIData(
-    val transactionForValuesIsUsedInTransactions: List<Boolean> = emptyList(),
-    val transactionForValues: List<TransactionFor> = emptyList(),
-)
-
-@Immutable
-sealed class TransactionForValuesScreenUIEvent {
-    object NavigateToAddTransactionForScreen : TransactionForValuesScreenUIEvent()
-    object NavigateUp : TransactionForValuesScreenUIEvent()
-
-    data class DeleteTransactionFor(
-        val transactionForId: Int,
-    ) : TransactionForValuesScreenUIEvent()
-
-    data class NavigateToEditTransactionForScreen(
-        val transactionForId: Int,
-    ) : TransactionForValuesScreenUIEvent()
 }
 
 @Composable

@@ -12,7 +12,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -31,16 +30,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bac
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCardData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCardEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCard
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardAction
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewModelData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItem
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.component.recenttransactions.HomeRecentTransactionsUI
 
@@ -48,35 +44,6 @@ private val bottomContentPadding = 80.dp
 
 enum class HomeBottomSheetType : BottomSheetType {
     NONE,
-}
-
-@Immutable
-data class HomeScreenUIData(
-    val isBackupCardVisible: Boolean = false,
-    val overviewTabSelectionIndex: Int = 0,
-    val transactionListItemDataList: List<TransactionListItemData> = emptyList(),
-    val accountsTotalBalanceAmountValue: Long = 0L,
-    val accountsTotalMinimumBalanceAmountValue: Long = 0L,
-    val overviewCardData: OverviewCardViewModelData? = null,
-)
-
-@Immutable
-sealed class HomeScreenUIEvent {
-    object CreateDocument : HomeScreenUIEvent()
-    object NavigateToAddTransactionScreen : HomeScreenUIEvent()
-    object NavigateToAnalysisScreen : HomeScreenUIEvent()
-    object NavigateToSettingsScreen : HomeScreenUIEvent()
-    object NavigateToAccountsScreen : HomeScreenUIEvent()
-
-    object NavigateToTransactionsScreen : HomeScreenUIEvent()
-
-    data class HandleOverviewCardAction(
-        val overviewCardAction: OverviewCardAction,
-    ) : HomeScreenUIEvent()
-
-    data class OnOverviewTabClick(
-        val index: Int,
-    ) : HomeScreenUIEvent()
 }
 
 @Composable

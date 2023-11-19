@@ -11,7 +11,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -20,7 +19,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_ADD_OR_EDIT_TRANSACTION
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_CONTENT_ADD_OR_EDIT_TRANSACTION
@@ -32,10 +30,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.BottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.AmountCommaVisualTransformation
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
@@ -71,79 +65,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields.MyReadOnlyTextFieldEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiStateData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenUiVisibilityState
-import java.time.LocalDate
-import java.time.LocalTime
 
 enum class AddOrEditTransactionBottomSheetType : BottomSheetType {
     NONE,
     SELECT_CATEGORY,
     SELECT_ACCOUNT_FROM,
     SELECT_ACCOUNT_TO,
-}
-
-@Immutable
-data class AddOrEditTransactionScreenUIData(
-    val uiState: AddOrEditTransactionScreenUiStateData = AddOrEditTransactionScreenUiStateData(),
-    val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState = AddOrEditTransactionScreenUiVisibilityState.Expense,
-    val isCtaButtonEnabled: Boolean = false,
-    val filteredCategories: List<Category> = emptyList(),
-    val accounts: List<Account> = emptyList(),
-    val titleSuggestions: List<String> = emptyList(),
-    val transactionTypesForNewTransaction: List<TransactionType> = emptyList(),
-    val transactionForValues: List<TransactionFor> = emptyList(),
-    val currentLocalDate: LocalDate = LocalDate.MIN,
-    val selectedTransactionType: TransactionType? = null,
-)
-
-@Immutable
-sealed class AddOrEditTransactionScreenUIEvent {
-    object ClearAmount : AddOrEditTransactionScreenUIEvent()
-    object ClearDescription : AddOrEditTransactionScreenUIEvent()
-    object ClearTitle : AddOrEditTransactionScreenUIEvent()
-    object NavigateUp : AddOrEditTransactionScreenUIEvent()
-    object OnCtaButtonClick : AddOrEditTransactionScreenUIEvent()
-
-    data class UpdateAmount(
-        val updatedAmount: TextFieldValue,
-    ) : AddOrEditTransactionScreenUIEvent()
-
-    data class UpdateCategory(
-        val updatedCategory: Category?,
-    ) : AddOrEditTransactionScreenUIEvent()
-
-    data class UpdateDescription(
-        val updatedDescription: TextFieldValue,
-    ) : AddOrEditTransactionScreenUIEvent()
-
-    data class UpdateSelectedTransactionForIndex(
-        val updatedSelectedTransactionForIndex: Int,
-    ) : AddOrEditTransactionScreenUIEvent()
-
-    data class UpdateSelectedTransactionTypeIndex(
-        val updatedSelectedTransactionTypeIndex: Int,
-    ) : AddOrEditTransactionScreenUIEvent()
-
-    data class UpdateAccountFrom(
-        val updatedAccountFrom: Account?,
-    ) : AddOrEditTransactionScreenUIEvent()
-
-    data class UpdateAccountTo(
-        val updatedAccountTo: Account?,
-    ) : AddOrEditTransactionScreenUIEvent()
-
-    data class UpdateTitle(
-        val updatedTitle: TextFieldValue,
-    ) : AddOrEditTransactionScreenUIEvent()
-
-    data class UpdateTransactionDate(
-        val updatedTransactionDate: LocalDate,
-    ) : AddOrEditTransactionScreenUIEvent()
-
-    data class UpdateTransactionTime(
-        val updatedTransactionTime: LocalTime,
-    ) : AddOrEditTransactionScreenUIEvent()
 }
 
 @Composable

@@ -47,34 +47,10 @@ enum class SettingsBottomSheetType : BottomSheetType {
 }
 
 @Immutable
-data class SettingsScreenUIData(
-    val isReminderEnabled: Boolean = false,
-    val isLoading: Boolean = false,
-    val appVersion: String? = null,
-)
-
-sealed class SettingsScreenEvent {
-    object RestoreDataFailed : SettingsScreenEvent()
-}
-
-@Immutable
 data class SettingsScreenListItemData(
     val data: SettingsListItemData,
     val events: SettingsListItemEvents = SettingsListItemEvents(),
 )
-
-@Immutable
-sealed class SettingsScreenUIEvent {
-    object BackupData : SettingsScreenUIEvent()
-    object NavigateToCategoriesScreen : SettingsScreenUIEvent()
-    object NavigateToAccountsScreen : SettingsScreenUIEvent()
-    object NavigateToOpenSourceLicensesScreen : SettingsScreenUIEvent()
-    object NavigateToTransactionForValuesScreen : SettingsScreenUIEvent()
-    object NavigateUp : SettingsScreenUIEvent()
-    object RecalculateTotal : SettingsScreenUIEvent()
-    object RestoreData : SettingsScreenUIEvent()
-    object ToggleReminder : SettingsScreenUIEvent()
-}
 
 @Composable
 internal fun SettingsScreenUI(

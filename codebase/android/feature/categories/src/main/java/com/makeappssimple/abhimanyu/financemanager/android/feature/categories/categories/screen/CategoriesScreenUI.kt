@@ -37,9 +37,9 @@ import kotlinx.coroutines.launch
 
 @Immutable
 sealed class CategoriesBottomSheetType : BottomSheetType {
-    object DeleteConfirmation : CategoriesBottomSheetType()
-    object None : CategoriesBottomSheetType()
-    object SetAsDefaultConfirmation : CategoriesBottomSheetType()
+    data object DeleteConfirmation : CategoriesBottomSheetType()
+    data object None : CategoriesBottomSheetType()
+    data object SetAsDefaultConfirmation : CategoriesBottomSheetType()
 
     data class Menu(
         val isDeleteVisible: Boolean,
@@ -47,38 +47,6 @@ sealed class CategoriesBottomSheetType : BottomSheetType {
         val isSetAsDefaultVisible: Boolean,
         val categoryId: Int,
     ) : CategoriesBottomSheetType()
-}
-
-@Immutable
-data class CategoriesScreenUIData(
-    val selectedTabIndex: Int = 0,
-    val categoriesGridItemDataMap: Map<TransactionType, List<CategoriesGridItemData>> = emptyMap(),
-)
-
-@Immutable
-sealed class CategoriesScreenUIEvent {
-    object NavigateUp : CategoriesScreenUIEvent()
-
-    data class DeleteCategory(
-        val categoryId: Int,
-    ) : CategoriesScreenUIEvent()
-
-    data class NavigateToAddCategoryScreen(
-        val transactionType: String,
-    ) : CategoriesScreenUIEvent()
-
-    data class NavigateToEditCategoryScreen(
-        val categoryId: Int,
-    ) : CategoriesScreenUIEvent()
-
-    data class SetDefaultCategoryIdInDataStore(
-        val defaultCategoryId: Int,
-        val transactionType: TransactionType,
-    ) : CategoriesScreenUIEvent()
-
-    data class UpdateSelectedTabIndex(
-        val updatedSelectedTabIndex: Int,
-    ) : CategoriesScreenUIEvent()
 }
 
 @Composable

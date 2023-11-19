@@ -11,7 +11,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.FilterAlt
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -29,7 +28,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyT
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButtonData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButtonEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupData
@@ -37,38 +35,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.bottomsheet.AnalysisFilterBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItem
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.viewmodel.Filter
-import java.time.LocalDate
 
 enum class AnalysisBottomSheetType : BottomSheetType {
     FILTERS,
     NONE,
-}
-
-@Immutable
-data class AnalysisScreenUIData(
-    val selectedFilter: Filter = Filter(),
-    val selectedTransactionTypeIndex: Int = 0,
-    val transactionDataMappedByCategory: List<AnalysisListItemData> = emptyList(),
-    val transactionTypesChipUIData: List<ChipUIData> = emptyList(),
-    val currentLocalDate: LocalDate = LocalDate.MIN,
-    val oldestTransactionLocalDate: LocalDate = LocalDate.MIN,
-    val startOfMonthLocalDate: LocalDate = LocalDate.MIN,
-    val startOfYearLocalDate: LocalDate = LocalDate.MIN,
-)
-
-@Immutable
-sealed class AnalysisScreenUIEvent {
-    object NavigateUp : AnalysisScreenUIEvent()
-
-    data class UpdateSelectedFilter(
-        val updatedSelectedFilter: Filter,
-    ) : AnalysisScreenUIEvent()
-
-    data class UpdateSelectedTransactionTypeIndex(
-        val updatedSelectedTransactionTypeIndex: Int,
-    ) : AnalysisScreenUIEvent()
 }
 
 @Composable
