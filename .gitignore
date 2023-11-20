@@ -156,6 +156,9 @@ proguard/
 # App insights from developer console
 **/.idea/appInsightsSettings.xml
 
+# Project defaults
+**/.idea/inspectionProfiles/Project_Default.xml
+
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
 .cxx/
