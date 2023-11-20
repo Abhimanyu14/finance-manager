@@ -26,7 +26,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountTyp
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIData
@@ -264,9 +263,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
             updateAccountsUseCase(
                 updatedAccount,
             )
-            navigationManager.navigate(
-                navigationCommand = MyNavigationDirections.NavigateUp,
-            )
+            navigationManager.navigateUp()
         }
     }
 
@@ -293,9 +290,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
                     name = name.value.text,
                 ),
             )
-            navigationManager.navigate(
-                navigationCommand = MyNavigationDirections.NavigateUp,
-            )
+            navigationManager.navigateUp()
         }
     }
 
@@ -316,9 +311,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateUp() {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.NavigateUp,
-        )
+        navigationManager.navigateUp()
     }
 
     private fun updateName(

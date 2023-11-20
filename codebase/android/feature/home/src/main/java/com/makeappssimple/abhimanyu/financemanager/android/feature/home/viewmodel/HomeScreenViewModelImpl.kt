@@ -22,7 +22,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetTransactionsBetweenTimestampsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardAction
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewModelData
@@ -223,9 +222,7 @@ internal class HomeScreenViewModelImpl @Inject constructor(
                     uri = uri,
                 )
             }
-            navigationManager.navigate(
-                navigationCommand = MyNavigationDirections.NavigateUp,
-            )
+            navigationManager.navigateUp()
         }
     }
 
@@ -335,33 +332,23 @@ internal class HomeScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateToAnalysisScreen() {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.Analysis,
-        )
+        navigationManager.navigateToAnalysis()
     }
 
     private fun navigateToAddTransactionScreen() {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.AddTransaction(),
-        )
+        navigationManager.navigateToAddTransaction()
     }
 
     private fun navigateToSettingsScreen() {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.Settings,
-        )
+        navigationManager.navigateToSettings()
     }
 
     private fun navigateToAccountsScreen() {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.Accounts,
-        )
+        navigationManager.navigateToAccounts()
     }
 
     private fun navigateToTransactionsScreen() {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.Transactions,
-        )
+        navigationManager.navigateToTransactions()
     }
 
     private fun setOverviewTabSelectionIndex(

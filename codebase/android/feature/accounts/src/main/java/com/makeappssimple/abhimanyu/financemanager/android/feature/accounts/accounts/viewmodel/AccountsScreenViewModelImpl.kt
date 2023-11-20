@@ -17,7 +17,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.sortOrder
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
@@ -174,25 +173,19 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateToAddAccountScreen() {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.AddAccount,
-        )
+        navigationManager.navigateToAddAccount()
     }
 
     private fun navigateToEditAccountScreen(
         accountId: Int,
     ) {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.EditAccount(
-                accountId = accountId,
-            ),
+        navigationManager.navigateToEditAccount(
+            accountId = accountId,
         )
     }
 
     private fun navigateUp() {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.NavigateUp,
-        )
+        navigationManager.navigateUp()
     }
 
     private fun setDefaultAccountIdInDataStore(

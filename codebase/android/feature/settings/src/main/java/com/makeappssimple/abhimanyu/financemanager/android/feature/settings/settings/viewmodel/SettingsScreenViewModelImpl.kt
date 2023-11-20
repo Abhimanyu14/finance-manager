@@ -13,7 +13,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.RecalculateTotalUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.RestoreDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIData
@@ -78,9 +77,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
                     uri = uri,
                 )
             }
-            navigationManager.navigate(
-                navigationCommand = MyNavigationDirections.NavigateUp,
-            )
+            navigationManager.navigateUp()
         }
     }
 
@@ -123,33 +120,23 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateToCategoriesScreen() {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.Categories,
-        )
+        navigationManager.navigateToCategories()
     }
 
     private fun navigateToAccountsScreen() {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.Accounts,
-        )
+        navigationManager.navigateToAccounts()
     }
 
     private fun navigateToOpenSourceLicensesScreen() {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.OpenSourceLicenses,
-        )
+        navigationManager.navigateToOpenSourceLicenses()
     }
 
     private fun navigateToTransactionForValuesScreen() {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.TransactionForValues,
-        )
+        navigationManager.navigateToTransactionForValues()
     }
 
     private fun navigateUp() {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.NavigateUp,
-        )
+        navigationManager.navigateUp()
     }
 
     override fun restoreDataFromDocument(
@@ -165,9 +152,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
                     uri = uri,
                 )
             ) {
-                navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.NavigateUp,
-                )
+                navigationManager.navigateUp()
             } else {
                 isLoading.value = false
                 _event.emit(SettingsScreenEvent.RestoreDataFailed)
@@ -181,9 +166,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
         ) {
             isLoading.value = true
             recalculateTotalUseCase()
-            navigationManager.navigate(
-                navigationCommand = MyNavigationDirections.NavigateUp,
-            )
+            navigationManager.navigateUp()
         }
     }
 }

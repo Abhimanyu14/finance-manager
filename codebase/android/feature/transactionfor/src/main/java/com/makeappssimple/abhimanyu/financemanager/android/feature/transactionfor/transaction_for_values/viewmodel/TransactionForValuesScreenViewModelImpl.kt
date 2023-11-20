@@ -11,7 +11,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.DeleteTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetAllTransactionForValuesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.screen.TransactionForValuesScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.screen.TransactionForValuesScreenUIEvent
@@ -108,24 +107,18 @@ internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateToAddTransactionForScreen() {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.AddTransactionFor,
-        )
+        navigationManager.navigateToAddTransactionFor()
     }
 
     private fun navigateToEditTransactionForScreen(
         transactionForId: Int,
     ) {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.EditTransactionFor(
-                transactionForId = transactionForId,
-            ),
+        navigationManager.navigateToEditTransactionFor(
+            transactionForId = transactionForId,
         )
     }
 
     private fun navigateUp() {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.NavigateUp,
-        )
+        navigationManager.navigateUp()
     }
 }

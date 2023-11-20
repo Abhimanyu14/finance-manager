@@ -17,7 +17,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.InsertTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.UpdateTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIError
@@ -143,9 +142,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
                     title = title.value.text,
                 )
             )
-            navigationManager.navigate(
-                navigationCommand = MyNavigationDirections.NavigateUp,
-            )
+            navigationManager.navigateUp()
         }
     }
 
@@ -159,9 +156,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
             updateTransactionForValuesUseCase(
                 updatedTransactionFor,
             )
-            navigationManager.navigate(
-                navigationCommand = MyNavigationDirections.NavigateUp,
-            )
+            navigationManager.navigateUp()
         }
     }
 
@@ -174,9 +169,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateUp() {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.NavigateUp,
-        )
+        navigationManager.navigateUp()
     }
 
     private fun updateTitle(

@@ -44,7 +44,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.sortOrder
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
@@ -581,9 +580,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                         ),
                     )
                 }
-                navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.NavigateUp,
-                )
+                navigationManager.navigateUp()
             }
         }
     }
@@ -758,9 +755,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
 
                 }
             }
-            navigationManager.navigate(
-                navigationCommand = MyNavigationDirections.NavigateUp,
-            )
+            navigationManager.navigateUp()
         }
     }
 
@@ -799,9 +794,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateUp() {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.NavigateUp,
-        )
+        navigationManager.navigateUp()
     }
 
     private fun updateTitle(

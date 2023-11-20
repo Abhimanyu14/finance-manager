@@ -16,7 +16,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.getAmountTextColor
@@ -152,37 +151,29 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     private fun navigateToAddTransactionScreen(
         transactionId: Int,
     ) {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.AddTransaction(
-                transactionId = transactionId,
-            ),
+        navigationManager.navigateToAddTransaction(
+            transactionId = transactionId,
         )
     }
 
     private fun navigateToEditTransactionScreen(
         transactionId: Int,
     ) {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.EditTransaction(
-                transactionId = transactionId,
-            ),
+        navigationManager.navigateToEditTransaction(
+            transactionId = transactionId,
         )
     }
 
     private fun navigateToViewTransactionScreen(
         transactionId: Int,
     ) {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.ViewTransaction(
-                transactionId = transactionId,
-            ),
+        navigationManager.navigateToViewTransaction(
+            transactionId = transactionId,
         )
     }
 
     private fun navigateUp() {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.NavigateUp,
-        )
+        navigationManager.navigateUp()
     }
 
     private fun getTransactionListItemData(

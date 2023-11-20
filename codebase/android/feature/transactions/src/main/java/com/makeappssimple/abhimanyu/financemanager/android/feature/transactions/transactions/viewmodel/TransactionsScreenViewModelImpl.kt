@@ -20,7 +20,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.getAmountTextColor
@@ -476,25 +475,19 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateToAddTransactionScreen() {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.AddTransaction(),
-        )
+        navigationManager.navigateToAddTransaction()
     }
 
     private fun navigateToViewTransactionScreen(
         transactionId: Int,
     ) {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.ViewTransaction(
-                transactionId = transactionId,
-            ),
+        navigationManager.navigateToViewTransaction(
+            transactionId = transactionId,
         )
     }
 
     private fun navigateUp() {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.NavigateUp,
-        )
+        navigationManager.navigateUp()
     }
 
     private fun removeFromSelectedTransactions(

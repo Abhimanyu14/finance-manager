@@ -13,7 +13,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid_item.CategoriesGridItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
@@ -221,27 +220,21 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
     private fun navigateToAddCategoryScreen(
         transactionType: String,
     ) {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.AddCategory(
-                transactionType = transactionType,
-            ),
+        navigationManager.navigateToAddCategory(
+            transactionType = transactionType,
         )
     }
 
     private fun navigateToEditCategoryScreen(
         categoryId: Int,
     ) {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.EditCategory(
-                categoryId = categoryId,
-            ),
+        navigationManager.navigateToEditCategory(
+            categoryId = categoryId,
         )
     }
 
     private fun navigateUp() {
-        navigationManager.navigate(
-            navigationCommand = MyNavigationDirections.NavigateUp,
-        )
+        navigationManager.navigateUp()
     }
 
     private fun setDefaultCategoryIdInDataStore(
