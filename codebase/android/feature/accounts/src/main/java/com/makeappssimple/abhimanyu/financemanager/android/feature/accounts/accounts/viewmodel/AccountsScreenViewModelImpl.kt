@@ -175,7 +175,7 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
 
     private fun navigateToAddAccountScreen() {
         navigationManager.navigate(
-            MyNavigationDirections.AddAccount
+            navigationCommand = MyNavigationDirections.AddAccount,
         )
     }
 
@@ -183,15 +183,15 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
         accountId: Int,
     ) {
         navigationManager.navigate(
-            MyNavigationDirections.EditAccount(
+            navigationCommand = MyNavigationDirections.EditAccount(
                 accountId = accountId,
-            )
+            ),
         )
     }
 
     private fun navigateUp() {
         navigationManager.navigate(
-            MyNavigationDirections.NavigateUp
+            navigationCommand = MyNavigationDirections.NavigateUp,
         )
     }
 

@@ -265,7 +265,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
                 updatedAccount,
             )
             navigationManager.navigate(
-                navigationCommand = MyNavigationDirections.NavigateUp
+                navigationCommand = MyNavigationDirections.NavigateUp,
             )
         }
     }
@@ -294,7 +294,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
                 ),
             )
             navigationManager.navigate(
-                navigationCommand = MyNavigationDirections.NavigateUp
+                navigationCommand = MyNavigationDirections.NavigateUp,
             )
         }
     }
@@ -317,7 +317,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
 
     private fun navigateUp() {
         navigationManager.navigate(
-            MyNavigationDirections.NavigateUp
+            navigationCommand = MyNavigationDirections.NavigateUp,
         )
     }
 

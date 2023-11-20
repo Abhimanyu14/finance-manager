@@ -7,11 +7,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ove
 @Immutable
 sealed class HomeScreenUIEvent : ScreenUIEvent {
     data object CreateDocument : HomeScreenUIEvent()
+    data object NavigateToAccountsScreen : HomeScreenUIEvent()
     data object NavigateToAddTransactionScreen : HomeScreenUIEvent()
     data object NavigateToAnalysisScreen : HomeScreenUIEvent()
     data object NavigateToSettingsScreen : HomeScreenUIEvent()
-    data object NavigateToAccountsScreen : HomeScreenUIEvent()
-
     data object NavigateToTransactionsScreen : HomeScreenUIEvent()
 
     data class HandleOverviewCardAction(

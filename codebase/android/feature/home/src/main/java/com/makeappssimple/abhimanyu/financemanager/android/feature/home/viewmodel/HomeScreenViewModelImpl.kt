@@ -224,7 +224,7 @@ internal class HomeScreenViewModelImpl @Inject constructor(
                 )
             }
             navigationManager.navigate(
-                navigationCommand = MyNavigationDirections.NavigateUp
+                navigationCommand = MyNavigationDirections.NavigateUp,
             )
         }
     }
@@ -233,12 +233,6 @@ internal class HomeScreenViewModelImpl @Inject constructor(
         uiEvent: HomeScreenUIEvent,
     ) {
         when (uiEvent) {
-            is HomeScreenUIEvent.HandleOverviewCardAction -> {
-                handleOverviewCardAction(
-                    overviewCardAction = uiEvent.overviewCardAction,
-                )
-            }
-
             HomeScreenUIEvent.NavigateToAccountsScreen -> {
                 navigateToAccountsScreen()
             }
@@ -257,6 +251,12 @@ internal class HomeScreenViewModelImpl @Inject constructor(
 
             HomeScreenUIEvent.NavigateToTransactionsScreen -> {
                 navigateToTransactionsScreen()
+            }
+
+            is HomeScreenUIEvent.HandleOverviewCardAction -> {
+                handleOverviewCardAction(
+                    overviewCardAction = uiEvent.overviewCardAction,
+                )
             }
 
             is HomeScreenUIEvent.OnOverviewTabClick -> {
@@ -336,31 +336,31 @@ internal class HomeScreenViewModelImpl @Inject constructor(
 
     private fun navigateToAnalysisScreen() {
         navigationManager.navigate(
-            MyNavigationDirections.Analysis
+            navigationCommand = MyNavigationDirections.Analysis,
         )
     }
 
     private fun navigateToAddTransactionScreen() {
         navigationManager.navigate(
-            MyNavigationDirections.AddTransaction()
+            navigationCommand = MyNavigationDirections.AddTransaction(),
         )
     }
 
     private fun navigateToSettingsScreen() {
         navigationManager.navigate(
-            MyNavigationDirections.Settings
+            navigationCommand = MyNavigationDirections.Settings,
         )
     }
 
     private fun navigateToAccountsScreen() {
         navigationManager.navigate(
-            MyNavigationDirections.Accounts
+            navigationCommand = MyNavigationDirections.Accounts,
         )
     }
 
     private fun navigateToTransactionsScreen() {
         navigationManager.navigate(
-            MyNavigationDirections.Transactions
+            navigationCommand = MyNavigationDirections.Transactions,
         )
     }
 

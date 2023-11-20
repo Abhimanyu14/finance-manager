@@ -109,7 +109,7 @@ internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
 
     private fun navigateToAddTransactionForScreen() {
         navigationManager.navigate(
-            MyNavigationDirections.AddTransactionFor
+            navigationCommand = MyNavigationDirections.AddTransactionFor,
         )
     }
 
@@ -117,15 +117,15 @@ internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
         transactionForId: Int,
     ) {
         navigationManager.navigate(
-            MyNavigationDirections.EditTransactionFor(
+            navigationCommand = MyNavigationDirections.EditTransactionFor(
                 transactionForId = transactionForId,
-            )
+            ),
         )
     }
 
     private fun navigateUp() {
         navigationManager.navigate(
-            MyNavigationDirections.NavigateUp
+            navigationCommand = MyNavigationDirections.NavigateUp,
         )
     }
 }

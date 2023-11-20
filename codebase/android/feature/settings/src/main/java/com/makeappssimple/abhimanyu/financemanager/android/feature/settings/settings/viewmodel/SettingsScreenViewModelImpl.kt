@@ -79,7 +79,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
                 )
             }
             navigationManager.navigate(
-                navigationCommand = MyNavigationDirections.NavigateUp
+                navigationCommand = MyNavigationDirections.NavigateUp,
             )
         }
     }
@@ -124,31 +124,31 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
 
     private fun navigateToCategoriesScreen() {
         navigationManager.navigate(
-            MyNavigationDirections.Categories
+            navigationCommand = MyNavigationDirections.Categories,
         )
     }
 
     private fun navigateToAccountsScreen() {
         navigationManager.navigate(
-            MyNavigationDirections.Accounts
+            navigationCommand = MyNavigationDirections.Accounts,
         )
     }
 
     private fun navigateToOpenSourceLicensesScreen() {
         navigationManager.navigate(
-            MyNavigationDirections.OpenSourceLicenses
+            navigationCommand = MyNavigationDirections.OpenSourceLicenses,
         )
     }
 
     private fun navigateToTransactionForValuesScreen() {
         navigationManager.navigate(
-            MyNavigationDirections.TransactionForValues
+            navigationCommand = MyNavigationDirections.TransactionForValues,
         )
     }
 
     private fun navigateUp() {
         navigationManager.navigate(
-            MyNavigationDirections.NavigateUp
+            navigationCommand = MyNavigationDirections.NavigateUp,
         )
     }
 
@@ -166,7 +166,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
                 )
             ) {
                 navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.NavigateUp
+                    navigationCommand = MyNavigationDirections.NavigateUp,
                 )
             } else {
                 isLoading.value = false
@@ -182,7 +182,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
             isLoading.value = true
             recalculateTotalUseCase()
             navigationManager.navigate(
-                navigationCommand = MyNavigationDirections.NavigateUp
+                navigationCommand = MyNavigationDirections.NavigateUp,
             )
         }
     }

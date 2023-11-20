@@ -221,7 +221,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
             )
 
             navigationManager.navigate(
-                navigationCommand = MyNavigationDirections.NavigateUp
+                navigationCommand = MyNavigationDirections.NavigateUp,
             )
         }
     }
@@ -241,7 +241,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
                 updatedCategory,
             )
             navigationManager.navigate(
-                navigationCommand = MyNavigationDirections.NavigateUp
+                navigationCommand = MyNavigationDirections.NavigateUp,
             )
         }
     }
@@ -256,7 +256,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
 
     override fun navigateUp() {
         navigationManager.navigate(
-            MyNavigationDirections.NavigateUp
+            navigationCommand = MyNavigationDirections.NavigateUp,
         )
     }
 

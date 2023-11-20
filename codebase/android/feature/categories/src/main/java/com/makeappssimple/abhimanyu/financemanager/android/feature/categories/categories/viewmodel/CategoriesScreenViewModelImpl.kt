@@ -222,9 +222,9 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
         transactionType: String,
     ) {
         navigationManager.navigate(
-            MyNavigationDirections.AddCategory(
+            navigationCommand = MyNavigationDirections.AddCategory(
                 transactionType = transactionType,
-            )
+            ),
         )
     }
 
@@ -232,15 +232,15 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
         categoryId: Int,
     ) {
         navigationManager.navigate(
-            MyNavigationDirections.EditCategory(
+            navigationCommand = MyNavigationDirections.EditCategory(
                 categoryId = categoryId,
-            )
+            ),
         )
     }
 
     private fun navigateUp() {
         navigationManager.navigate(
-            MyNavigationDirections.NavigateUp
+            navigationCommand = MyNavigationDirections.NavigateUp,
         )
     }
 

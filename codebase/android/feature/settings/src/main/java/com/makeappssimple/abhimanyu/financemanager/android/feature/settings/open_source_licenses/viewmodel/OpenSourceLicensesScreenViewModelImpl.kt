@@ -39,7 +39,7 @@ internal class OpenSourceLicensesScreenViewModelImpl @Inject constructor(
 
     private fun navigateUp() {
         navigationManager.navigate(
-            MyNavigationDirections.NavigateUp
+            navigationCommand = MyNavigationDirections.NavigateUp,
         )
     }
 }

@@ -151,7 +151,7 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
 
     private fun navigateUp() {
         navigationManager.navigate(
-            MyNavigationDirections.NavigateUp
+            navigationCommand = MyNavigationDirections.NavigateUp,
         )
     }
 

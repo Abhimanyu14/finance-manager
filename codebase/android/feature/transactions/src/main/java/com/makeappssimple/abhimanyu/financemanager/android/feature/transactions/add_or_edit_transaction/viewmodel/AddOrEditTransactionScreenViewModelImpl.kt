@@ -582,7 +582,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     )
                 }
                 navigationManager.navigate(
-                    navigationCommand = MyNavigationDirections.NavigateUp
+                    navigationCommand = MyNavigationDirections.NavigateUp,
                 )
             }
         }
@@ -759,7 +759,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                 }
             }
             navigationManager.navigate(
-                navigationCommand = MyNavigationDirections.NavigateUp
+                navigationCommand = MyNavigationDirections.NavigateUp,
             )
         }
     }
@@ -800,7 +800,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
 
     private fun navigateUp() {
         navigationManager.navigate(
-            MyNavigationDirections.NavigateUp
+            navigationCommand = MyNavigationDirections.NavigateUp,
         )
     }
 
