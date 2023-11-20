@@ -332,23 +332,23 @@ internal class HomeScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateToAnalysisScreen() {
-        navigationManager.navigateToAnalysis()
+        navigationManager.navigateToAnalysisScreen()
     }
 
     private fun navigateToAddTransactionScreen() {
-        navigationManager.navigateToAddTransaction()
+        navigationManager.navigateToAddTransactionScreen()
     }
 
     private fun navigateToSettingsScreen() {
-        navigationManager.navigateToSettings()
+        navigationManager.navigateToSettingsScreen()
     }
 
     private fun navigateToAccountsScreen() {
-        navigationManager.navigateToAccounts()
+        navigationManager.navigateToAccountsScreen()
     }
 
     private fun navigateToTransactionsScreen() {
-        navigationManager.navigateToTransactions()
+        navigationManager.navigateToTransactionsScreen()
     }
 
     private fun setOverviewTabSelectionIndex(

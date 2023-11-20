@@ -30,18 +30,24 @@ object MyNavigationDirections {
     }
 
     // App specific
-    data class AddCategory(
-        private val transactionType: String,
-    ) : NavigationCommand {
+    object Accounts : NavigationCommand {
         override val command = Command.NAVIGATE
-        override val destination = "${Screen.AddCategory.route}/${transactionType}"
-        override val screen = Screen.AddCategory.route
+        override val destination = Screen.Accounts.route
+        override val screen = Screen.Accounts.route
     }
 
     object AddAccount : NavigationCommand {
         override val command = Command.NAVIGATE
         override val destination = Screen.AddAccount.route
         override val screen = Screen.AddAccount.route
+    }
+
+    data class AddCategory(
+        private val transactionType: String,
+    ) : NavigationCommand {
+        override val command = Command.NAVIGATE
+        override val destination = "${Screen.AddCategory.route}/${transactionType}"
+        override val screen = Screen.AddCategory.route
     }
 
     data class AddTransaction(
@@ -70,20 +76,20 @@ object MyNavigationDirections {
         override val screen = Screen.Categories.route
     }
 
-    data class EditCategory(
-        private val categoryId: Int,
-    ) : NavigationCommand {
-        override val command = Command.NAVIGATE
-        override val destination = "${Screen.EditCategory.route}/${categoryId}"
-        override val screen = Screen.EditCategory.route
-    }
-
     data class EditAccount(
         private val accountId: Int,
     ) : NavigationCommand {
         override val command = Command.NAVIGATE
         override val destination = "${Screen.EditAccount.route}/${accountId}"
         override val screen = Screen.EditAccount.route
+    }
+
+    data class EditCategory(
+        private val categoryId: Int,
+    ) : NavigationCommand {
+        override val command = Command.NAVIGATE
+        override val destination = "${Screen.EditCategory.route}/${categoryId}"
+        override val screen = Screen.EditCategory.route
     }
 
     data class EditTransaction(
@@ -118,12 +124,6 @@ object MyNavigationDirections {
         override val command = Command.NAVIGATE
         override val destination = Screen.Settings.route
         override val screen = Screen.Settings.route
-    }
-
-    object Accounts : NavigationCommand {
-        override val command = Command.NAVIGATE
-        override val destination = Screen.Accounts.route
-        override val screen = Screen.Accounts.route
     }
 
     object TransactionForValues : NavigationCommand {

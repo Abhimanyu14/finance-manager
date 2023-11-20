@@ -5,53 +5,53 @@ import kotlinx.coroutines.flow.SharedFlow
 interface NavigationManager {
     val command: SharedFlow<NavigationCommand>
 
-    fun navigateToAccounts()
+    fun navigateToAccountsScreen()
 
-    fun navigateToAddAccount()
+    fun navigateToAddAccountScreen()
 
-    fun navigateToAddCategory(
+    fun navigateToAddCategoryScreen(
         transactionType: String,
     )
 
-    fun navigateToAddTransaction(
+    fun navigateToAddTransactionScreen(
         transactionId: Int? = null,
     )
 
-    fun navigateToAddTransactionFor()
+    fun navigateToAddTransactionForScreen()
 
-    fun navigateToAnalysis()
+    fun navigateToAnalysisScreen()
 
-    fun navigateToCategories()
+    fun navigateToCategoriesScreen()
 
-    fun navigateToEditAccount(
+    fun navigateToEditAccountScreen(
         accountId: Int,
     )
 
-    fun navigateToEditCategory(
+    fun navigateToEditCategoryScreen(
         categoryId: Int,
     )
 
-    fun navigateToEditTransaction(
+    fun navigateToEditTransactionScreen(
         transactionId: Int,
     )
 
-    fun navigateToEditTransactionFor(
+    fun navigateToEditTransactionForScreen(
         transactionForId: Int,
     )
 
-    fun navigateToHome()
+    fun navigateToHomeScreen()
 
-    fun navigateUp()
+    fun navigateToOpenSourceLicensesScreen()
 
-    fun navigateToOpenSourceLicenses()
+    fun navigateToSettingsScreen()
 
-    fun navigateToSettings()
+    fun navigateToTransactionForValuesScreen()
 
-    fun navigateToTransactionForValues()
+    fun navigateToTransactionsScreen()
 
-    fun navigateToTransactions()
-
-    fun navigateToViewTransaction(
+    fun navigateToViewTransactionScreen(
         transactionId: Int,
     )
+
+    fun navigateUp()
 }

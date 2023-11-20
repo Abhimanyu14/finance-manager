@@ -120,19 +120,19 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateToCategoriesScreen() {
-        navigationManager.navigateToCategories()
+        navigationManager.navigateToCategoriesScreen()
     }
 
     private fun navigateToAccountsScreen() {
-        navigationManager.navigateToAccounts()
+        navigationManager.navigateToAccountsScreen()
     }
 
     private fun navigateToOpenSourceLicensesScreen() {
-        navigationManager.navigateToOpenSourceLicenses()
+        navigationManager.navigateToOpenSourceLicensesScreen()
     }
 
     private fun navigateToTransactionForValuesScreen() {
-        navigationManager.navigateToTransactionForValues()
+        navigationManager.navigateToTransactionForValuesScreen()
     }
 
     private fun navigateUp() {

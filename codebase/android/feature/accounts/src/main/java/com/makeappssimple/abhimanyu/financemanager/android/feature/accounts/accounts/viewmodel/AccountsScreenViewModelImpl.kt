@@ -173,13 +173,13 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateToAddAccountScreen() {
-        navigationManager.navigateToAddAccount()
+        navigationManager.navigateToAddAccountScreen()
     }
 
     private fun navigateToEditAccountScreen(
         accountId: Int,
     ) {
-        navigationManager.navigateToEditAccount(
+        navigationManager.navigateToEditAccountScreen(
             accountId = accountId,
         )
     }

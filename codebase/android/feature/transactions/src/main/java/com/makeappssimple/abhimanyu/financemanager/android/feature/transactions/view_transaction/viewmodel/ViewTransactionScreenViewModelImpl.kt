@@ -151,7 +151,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     private fun navigateToAddTransactionScreen(
         transactionId: Int,
     ) {
-        navigationManager.navigateToAddTransaction(
+        navigationManager.navigateToAddTransactionScreen(
             transactionId = transactionId,
         )
     }
@@ -159,7 +159,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     private fun navigateToEditTransactionScreen(
         transactionId: Int,
     ) {
-        navigationManager.navigateToEditTransaction(
+        navigationManager.navigateToEditTransactionScreen(
             transactionId = transactionId,
         )
     }
@@ -167,7 +167,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     private fun navigateToViewTransactionScreen(
         transactionId: Int,
     ) {
-        navigationManager.navigateToViewTransaction(
+        navigationManager.navigateToViewTransactionScreen(
             transactionId = transactionId,
         )
     }

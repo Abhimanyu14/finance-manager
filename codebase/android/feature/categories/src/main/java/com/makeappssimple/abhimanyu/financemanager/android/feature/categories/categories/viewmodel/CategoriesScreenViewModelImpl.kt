@@ -220,7 +220,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
     private fun navigateToAddCategoryScreen(
         transactionType: String,
     ) {
-        navigationManager.navigateToAddCategory(
+        navigationManager.navigateToAddCategoryScreen(
             transactionType = transactionType,
         )
     }
@@ -228,7 +228,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
     private fun navigateToEditCategoryScreen(
         categoryId: Int,
     ) {
-        navigationManager.navigateToEditCategory(
+        navigationManager.navigateToEditCategoryScreen(
             categoryId = categoryId,
         )
     }

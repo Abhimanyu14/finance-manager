@@ -475,13 +475,13 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateToAddTransactionScreen() {
-        navigationManager.navigateToAddTransaction()
+        navigationManager.navigateToAddTransactionScreen()
     }
 
     private fun navigateToViewTransactionScreen(
         transactionId: Int,
     ) {
-        navigationManager.navigateToViewTransaction(
+        navigationManager.navigateToViewTransactionScreen(
             transactionId = transactionId,
         )
     }

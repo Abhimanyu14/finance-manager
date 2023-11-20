@@ -107,13 +107,13 @@ internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateToAddTransactionForScreen() {
-        navigationManager.navigateToAddTransactionFor()
+        navigationManager.navigateToAddTransactionForScreen()
     }
 
     private fun navigateToEditTransactionForScreen(
         transactionForId: Int,
     ) {
-        navigationManager.navigateToEditTransactionFor(
+        navigationManager.navigateToEditTransactionForScreen(
             transactionForId = transactionForId,
         )
     }

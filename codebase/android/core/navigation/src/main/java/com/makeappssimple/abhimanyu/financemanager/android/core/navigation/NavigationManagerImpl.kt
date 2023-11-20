@@ -11,19 +11,19 @@ class NavigationManagerImpl(
     private val _command: MutableSharedFlow<NavigationCommand> = MutableSharedFlow()
     override val command: SharedFlow<NavigationCommand> = _command
 
-    override fun navigateToAccounts() {
+    override fun navigateToAccountsScreen() {
         navigate(
             navigationCommand = MyNavigationDirections.Accounts,
         )
     }
 
-    override fun navigateToAddAccount() {
+    override fun navigateToAddAccountScreen() {
         navigate(
             navigationCommand = MyNavigationDirections.AddAccount,
         )
     }
 
-    override fun navigateToAddCategory(
+    override fun navigateToAddCategoryScreen(
         transactionType: String,
     ) {
         navigate(
@@ -33,7 +33,7 @@ class NavigationManagerImpl(
         )
     }
 
-    override fun navigateToAddTransaction(
+    override fun navigateToAddTransactionScreen(
         transactionId: Int?,
     ) {
         navigate(
@@ -43,25 +43,25 @@ class NavigationManagerImpl(
         )
     }
 
-    override fun navigateToAddTransactionFor() {
+    override fun navigateToAddTransactionForScreen() {
         navigate(
             navigationCommand = MyNavigationDirections.AddTransactionFor,
         )
     }
 
-    override fun navigateToAnalysis() {
+    override fun navigateToAnalysisScreen() {
         navigate(
             navigationCommand = MyNavigationDirections.Analysis,
         )
     }
 
-    override fun navigateToCategories() {
+    override fun navigateToCategoriesScreen() {
         navigate(
             navigationCommand = MyNavigationDirections.Categories,
         )
     }
 
-    override fun navigateToEditAccount(
+    override fun navigateToEditAccountScreen(
         accountId: Int,
     ) {
         navigate(
@@ -71,7 +71,7 @@ class NavigationManagerImpl(
         )
     }
 
-    override fun navigateToEditCategory(
+    override fun navigateToEditCategoryScreen(
         categoryId: Int,
     ) {
         navigate(
@@ -81,7 +81,7 @@ class NavigationManagerImpl(
         )
     }
 
-    override fun navigateToEditTransaction(
+    override fun navigateToEditTransactionScreen(
         transactionId: Int,
     ) {
         navigate(
@@ -91,7 +91,7 @@ class NavigationManagerImpl(
         )
     }
 
-    override fun navigateToEditTransactionFor(
+    override fun navigateToEditTransactionForScreen(
         transactionForId: Int,
     ) {
         navigate(
@@ -101,49 +101,49 @@ class NavigationManagerImpl(
         )
     }
 
-    override fun navigateToHome() {
+    override fun navigateToHomeScreen() {
         navigate(
             navigationCommand = MyNavigationDirections.Home,
         )
     }
 
-    override fun navigateUp() {
-        navigate(
-            navigationCommand = MyNavigationDirections.NavigateUp,
-        )
-    }
-
-    override fun navigateToOpenSourceLicenses() {
+    override fun navigateToOpenSourceLicensesScreen() {
         navigate(
             navigationCommand = MyNavigationDirections.OpenSourceLicenses,
         )
     }
 
-    override fun navigateToSettings() {
+    override fun navigateToSettingsScreen() {
         navigate(
             navigationCommand = MyNavigationDirections.Settings,
         )
     }
 
-    override fun navigateToTransactionForValues() {
+    override fun navigateToTransactionForValuesScreen() {
         navigate(
             navigationCommand = MyNavigationDirections.TransactionForValues,
         )
     }
 
-    override fun navigateToTransactions() {
+    override fun navigateToTransactionsScreen() {
         navigate(
             navigationCommand = MyNavigationDirections.Transactions,
         )
     }
 
-    override fun navigateToViewTransaction(
+    override fun navigateToViewTransactionScreen(
         transactionId: Int,
     ) {
         navigate(
             navigationCommand = MyNavigationDirections.ViewTransaction(
                 transactionId = transactionId,
             ),
+        )
+    }
+
+    override fun navigateUp() {
+        navigate(
+            navigationCommand = MyNavigationDirections.NavigateUp,
         )
     }
 
