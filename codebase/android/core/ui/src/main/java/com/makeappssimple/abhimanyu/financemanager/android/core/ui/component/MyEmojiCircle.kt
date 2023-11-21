@@ -28,17 +28,17 @@ sealed class EmojiCircleSize(
     val padding: Dp,
     val textSize: Float,
 ) {
-    object Small : EmojiCircleSize(
+    data object Small : EmojiCircleSize(
         padding = 2.dp,
         textSize = 20F,
     )
 
-    object Normal : EmojiCircleSize(
+    data object Normal : EmojiCircleSize(
         padding = 4.dp,
         textSize = 28F,
     )
 
-    object Large : EmojiCircleSize(
+    data object Large : EmojiCircleSize(
         padding = 8.dp,
         textSize = 32F,
     )

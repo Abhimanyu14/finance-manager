@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 
 sealed interface MyResult<out T> {
-    object Loading : MyResult<Nothing>
+    data object Loading : MyResult<Nothing>
 
     data class Error(
         val exception: Throwable? = null,
