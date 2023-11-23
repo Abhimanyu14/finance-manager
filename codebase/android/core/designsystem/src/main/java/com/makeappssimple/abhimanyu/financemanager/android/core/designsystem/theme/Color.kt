@@ -63,13 +63,6 @@ internal val Gray10 = Color(0xFFEEEEEE)
 
 // Theme colors
 
-// region Material 2
-internal val PrimaryVariant = Blue900
-internal val SecondaryVariant = Blue900
-// endregion
-
-// region Material 3
-
 /**
  * Used
  */
@@ -120,4 +113,3 @@ internal val ErrorContainer = Error90
 internal val OnErrorContainer = Error10
 
 internal val Outline = LightGray
-// endregion
