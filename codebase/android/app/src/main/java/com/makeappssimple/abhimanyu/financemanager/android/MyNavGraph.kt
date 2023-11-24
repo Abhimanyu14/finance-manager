@@ -2,7 +2,10 @@ package com.makeappssimple.abhimanyu.financemanager.android
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
@@ -25,45 +28,50 @@ internal fun MyNavGraph(
     myLogger.logError(
         message = "Inside MyNavGraph",
     )
-    val navHostController = rememberNavController()
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
     val keyboardController = LocalSoftwareKeyboardController.current
+    val navHostController = rememberNavController()
 
     LaunchedEffect(
-        key1 = Unit,
+        key1 = lifecycle,
     ) {
-        activityViewModel.navigationManager.command.collect { command ->
-            keyboardController?.hide()
-            when (command.command) {
-                Command.NAVIGATE -> {
-                    navHostController.navigate(
-                        route = command.destination,
-                    )
-                }
+        lifecycle.repeatOnLifecycle(
+            state = Lifecycle.State.STARTED,
+        ) {
+            activityViewModel.navigationManager.command.collect { command ->
+                keyboardController?.hide()
+                when (command.command) {
+                    Command.NAVIGATE -> {
+                        navHostController.navigate(
+                            route = command.destination,
+                        )
+                    }
 
-                Command.NAVIGATE_UP -> {
-                    navHostController.navigateUp()
-                }
+                    Command.NAVIGATE_UP -> {
+                        navHostController.navigateUp()
+                    }
 
-                Command.CLEAR_BACKSTACK_AND_NAVIGATE -> {
-                    navHostController.navigate(
-                        route = command.destination,
-                    ) {
-                        popUpTo(
-                            id = navHostController.graph.findStartDestination().id,
+                    Command.CLEAR_BACKSTACK_AND_NAVIGATE -> {
+                        navHostController.navigate(
+                            route = command.destination,
                         ) {
-                            inclusive = true
+                            popUpTo(
+                                id = navHostController.graph.findStartDestination().id,
+                            ) {
+                                inclusive = true
+                            }
                         }
                     }
-                }
 
-                Command.CLEAR_TILL_ROOT -> {
-                    navHostController.popBackStack(
-                        destinationId = navHostController.graph.findStartDestination().id,
-                        inclusive = false,
-                    )
-                }
+                    Command.CLEAR_TILL_ROOT -> {
+                        navHostController.popBackStack(
+                            destinationId = navHostController.graph.findStartDestination().id,
+                            inclusive = false,
+                        )
+                    }
 
-                Command.NOOP -> {}
+                    Command.NOOP -> {}
+                }
             }
         }
     }
@@ -72,11 +80,11 @@ internal fun MyNavGraph(
         navController = navHostController,
         startDestination = Screen.Home.route,
     ) {
+        accountsNavGraph()
         analysisNavGraph()
         categoriesNavGraph()
         homeNavGraph()
         settingsNavGraph()
-        accountsNavGraph()
         transactionForNavGraph()
         transactionsNavGraph()
     }
