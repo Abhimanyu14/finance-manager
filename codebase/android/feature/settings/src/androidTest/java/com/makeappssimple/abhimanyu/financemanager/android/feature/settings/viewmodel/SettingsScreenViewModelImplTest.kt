@@ -29,8 +29,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetAllTransactionForValuesUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.fake.FakeNavigationManagerImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.fake.FakeNavigatorImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.TestDispatcherProviderImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.appversion.TestAppVersionUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.jsonreader.TestMyJsonReader
@@ -52,7 +52,7 @@ class SettingsScreenViewModelImplTest {
 
     private lateinit var appVersionUtil: AppVersionUtil
     private lateinit var myLogger: MyLogger
-    private lateinit var navigationManager: NavigationManager
+    private lateinit var navigator: Navigator
     private lateinit var backupDataUseCase: BackupDataUseCase
     private lateinit var recalculateTotalUseCase: RecalculateTotalUseCase
     private lateinit var restoreDataUseCase: RestoreDataUseCase
@@ -122,7 +122,7 @@ class SettingsScreenViewModelImplTest {
     @Test
     fun backupDataToDocumentTest() = runTest {
         val testUri = Uri.EMPTY
-        navigationManager = FakeNavigationManagerImpl(
+        navigator = FakeNavigatorImpl(
             coroutineScope = this,
         )
         initViewModel()
@@ -132,7 +132,7 @@ class SettingsScreenViewModelImplTest {
                 uri = testUri,
             )
 
-            val receiver = settingsScreenViewModelImpl.navigationManager.command.testIn(
+            val receiver = settingsScreenViewModelImpl.navigator.command.testIn(
                 scope = backgroundScope,
             )
 
@@ -288,7 +288,7 @@ class SettingsScreenViewModelImplTest {
             alarmKit = alarmKit,
             backupDataUseCase = backupDataUseCase,
             ioDispatcher = dispatcherProvider.io,
-            navigationManager = navigationManager,
+            navigator = navigator,
             recalculateTotalUseCase = recalculateTotalUseCase,
             restoreDataUseCase = restoreDataUseCase,
         )

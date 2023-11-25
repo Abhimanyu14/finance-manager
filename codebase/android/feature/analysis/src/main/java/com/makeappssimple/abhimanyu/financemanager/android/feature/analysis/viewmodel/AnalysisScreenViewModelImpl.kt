@@ -17,7 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionDataMappedByCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen.AnalysisScreenUIData
@@ -38,7 +38,7 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
     getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
     private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
-    private val navigationManager: NavigationManager,
+    private val navigator: Navigator,
 ) : AnalysisScreenViewModel, ViewModel() {
     private var allTransactionData: Flow<List<TransactionData>> = getAllTransactionDataFlowUseCase()
     private val validTransactionTypes = listOf(
@@ -149,7 +149,7 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateUp() {
-        navigationManager.navigateUp()
+        navigator.navigateUp()
     }
 
     private fun updateSelectedFilter(

@@ -8,8 +8,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.acc
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.CheckIfAccountIsUsedInTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManagerImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigatorImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.flow
@@ -39,7 +39,7 @@ class AccountsScreenViewModelTest {
         mock()
     private val getAccountsTotalMinimumBalanceAmountValueUseCase: GetAccountsTotalMinimumBalanceAmountValueUseCase =
         mock()
-    private val navigationManager: NavigationManager = NavigationManagerImpl(
+    private val navigator: Navigator = NavigatorImpl(
         coroutineScope = testCoroutineScope,
     )
     private val checkIfAccountIsUsedInTransactionsUseCase: CheckIfAccountIsUsedInTransactionsUseCase =
@@ -59,7 +59,7 @@ class AccountsScreenViewModelTest {
             deleteAccountUseCase = deleteAccountUseCase,
             dispatcherProvider = dispatcherProvider,
             myPreferencesRepository = myPreferencesRepository,
-            navigationManager = navigationManager,
+            navigator = navigator,
         )
     }
 

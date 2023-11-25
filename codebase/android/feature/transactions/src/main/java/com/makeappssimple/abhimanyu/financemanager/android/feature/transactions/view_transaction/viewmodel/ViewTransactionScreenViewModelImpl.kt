@@ -16,7 +16,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.navigation.ViewTransactionScreenArgs
@@ -38,7 +38,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
     private val dispatcherProvider: DispatcherProvider,
     private val getTransactionDataUseCase: GetTransactionDataUseCase,
-    @VisibleForTesting internal val navigationManager: NavigationManager,
+    @VisibleForTesting internal val navigator: Navigator,
 ) : ViewTransactionScreenViewModel, ViewModel() {
     private var screenArgs = ViewTransactionScreenArgs(
         savedStateHandle = savedStateHandle,
@@ -151,7 +151,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     private fun navigateToAddTransactionScreen(
         transactionId: Int,
     ) {
-        navigationManager.navigateToAddTransactionScreen(
+        navigator.navigateToAddTransactionScreen(
             transactionId = transactionId,
         )
     }
@@ -159,7 +159,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     private fun navigateToEditTransactionScreen(
         transactionId: Int,
     ) {
-        navigationManager.navigateToEditTransactionScreen(
+        navigator.navigateToEditTransactionScreen(
             transactionId = transactionId,
         )
     }
@@ -167,13 +167,13 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     private fun navigateToViewTransactionScreen(
         transactionId: Int,
     ) {
-        navigationManager.navigateToViewTransactionScreen(
+        navigator.navigateToViewTransactionScreen(
             transactionId = transactionId,
         )
     }
 
     private fun navigateUp() {
-        navigationManager.navigateUp()
+        navigator.navigateUp()
     }
 
     private fun getTransactionListItemData(

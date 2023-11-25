@@ -22,7 +22,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetTransactionsBetweenTimestampsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardAction
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewModelData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewTabOption
@@ -55,7 +55,7 @@ internal class HomeScreenViewModelImpl @Inject constructor(
     private val getTransactionsBetweenTimestampsUseCase: GetTransactionsBetweenTimestampsUseCase,
     private val getTransactionUseCase: GetTransactionUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
-    private val navigationManager: NavigationManager,
+    private val navigator: Navigator,
 ) : HomeScreenViewModel, ViewModel() {
     private val homeListItemViewData: Flow<List<TransactionListItemData>> =
         getHomeListItemViewDataFromData()
@@ -222,7 +222,7 @@ internal class HomeScreenViewModelImpl @Inject constructor(
                     uri = uri,
                 )
             }
-            navigationManager.navigateUp()
+            navigator.navigateUp()
         }
     }
 
@@ -332,23 +332,23 @@ internal class HomeScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateToAnalysisScreen() {
-        navigationManager.navigateToAnalysisScreen()
+        navigator.navigateToAnalysisScreen()
     }
 
     private fun navigateToAddTransactionScreen() {
-        navigationManager.navigateToAddTransactionScreen()
+        navigator.navigateToAddTransactionScreen()
     }
 
     private fun navigateToSettingsScreen() {
-        navigationManager.navigateToSettingsScreen()
+        navigator.navigateToSettingsScreen()
     }
 
     private fun navigateToAccountsScreen() {
-        navigationManager.navigateToAccountsScreen()
+        navigator.navigateToAccountsScreen()
     }
 
     private fun navigateToTransactionsScreen() {
-        navigationManager.navigateToTransactionsScreen()
+        navigator.navigateToTransactionsScreen()
     }
 
     private fun setOverviewTabSelectionIndex(

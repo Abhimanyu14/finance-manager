@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.DeleteTransactionForUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetAllTransactionForValuesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.screen.TransactionForValuesScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.screen.TransactionForValuesScreenUIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -28,7 +28,7 @@ internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
     private val checkIfTransactionForIsUsedInTransactionsUseCase: CheckIfTransactionForIsUsedInTransactionsUseCase,
     private val deleteTransactionForUseCase: DeleteTransactionForUseCase,
     private val dispatcherProvider: DispatcherProvider,
-    private val navigationManager: NavigationManager,
+    private val navigator: Navigator,
 ) : TransactionForValuesScreenViewModel, ViewModel() {
     private val transactionForValues: StateFlow<List<TransactionFor>> =
         getAllTransactionForValuesFlowUseCase().defaultListStateIn(
@@ -107,18 +107,18 @@ internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateToAddTransactionForScreen() {
-        navigationManager.navigateToAddTransactionForScreen()
+        navigator.navigateToAddTransactionForScreen()
     }
 
     private fun navigateToEditTransactionForScreen(
         transactionForId: Int,
     ) {
-        navigationManager.navigateToEditTransactionForScreen(
+        navigator.navigateToEditTransactionForScreen(
             transactionForId = transactionForId,
         )
     }
 
     private fun navigateUp() {
-        navigationManager.navigateUp()
+        navigator.navigateUp()
     }
 }

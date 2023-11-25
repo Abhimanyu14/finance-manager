@@ -17,7 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.sortOrder
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.component.listitem.AccountsListItemData
@@ -40,7 +40,7 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
     private val deleteAccountUseCase: DeleteAccountUseCase,
     private val dispatcherProvider: DispatcherProvider,
     private val myPreferencesRepository: MyPreferencesRepository,
-    private val navigationManager: NavigationManager,
+    private val navigator: Navigator,
 ) : AccountsScreenViewModel, ViewModel() {
     private val defaultAccountId: Flow<Int?> = myPreferencesRepository.getDefaultDataId().map {
         it?.account
@@ -173,19 +173,19 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateToAddAccountScreen() {
-        navigationManager.navigateToAddAccountScreen()
+        navigator.navigateToAddAccountScreen()
     }
 
     private fun navigateToEditAccountScreen(
         accountId: Int,
     ) {
-        navigationManager.navigateToEditAccountScreen(
+        navigator.navigateToEditAccountScreen(
             accountId = accountId,
         )
     }
 
     private fun navigateUp() {
-        navigationManager.navigateUp()
+        navigator.navigateUp()
     }
 
     private fun setDefaultAccountIdInDataStore(

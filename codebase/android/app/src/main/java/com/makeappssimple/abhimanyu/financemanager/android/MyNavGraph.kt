@@ -38,7 +38,7 @@ internal fun MyNavGraph(
         lifecycle.repeatOnLifecycle(
             state = Lifecycle.State.STARTED,
         ) {
-            activityViewModel.navigationManager.command.collect { command ->
+            activityViewModel.navigator.command.collect { command ->
                 keyboardController?.hide()
                 when (command.command) {
                     Command.NAVIGATE -> {

@@ -19,7 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.cat
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.UpdateCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
@@ -46,7 +46,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
     private val insertCategoriesUseCase: InsertCategoriesUseCase,
-    private val navigationManager: NavigationManager,
+    private val navigator: Navigator,
     private val updateCategoriesUseCase: UpdateCategoriesUseCase,
 ) : AddOrEditCategoryScreenViewModel, ViewModel() {
     private val screenArgs = AddOrEditCategoryScreenArgs(
@@ -219,7 +219,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
                 ),
             )
 
-            navigationManager.navigateUp()
+            navigator.navigateUp()
         }
     }
 
@@ -237,7 +237,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
             updateCategoriesUseCase(
                 updatedCategory,
             )
-            navigationManager.navigateUp()
+            navigator.navigateUp()
         }
     }
 
@@ -250,7 +250,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     }
 
     override fun navigateUp() {
-        navigationManager.navigateUp()
+        navigator.navigateUp()
     }
 
     override fun updateTitle(

@@ -44,7 +44,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.sortOrder
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
@@ -84,7 +84,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     private val getTransactionDataUseCase: GetTransactionDataUseCase,
     private val insertTransactionUseCase: InsertTransactionUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
-    private val navigationManager: NavigationManager,
+    private val navigator: Navigator,
     private val updateAccountsBalanceAmountUseCase: UpdateAccountsBalanceAmountUseCase,
     private val updateTransactionUseCase: UpdateTransactionUseCase,
 ) : AddOrEditTransactionScreenViewModel, ViewModel() {
@@ -580,7 +580,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                         ),
                     )
                 }
-                navigationManager.navigateUp()
+                navigator.navigateUp()
             }
         }
     }
@@ -755,7 +755,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
 
                 }
             }
-            navigationManager.navigateUp()
+            navigator.navigateUp()
         }
     }
 
@@ -794,7 +794,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateUp() {
-        navigationManager.navigateUp()
+        navigator.navigateUp()
     }
 
     private fun updateTitle(

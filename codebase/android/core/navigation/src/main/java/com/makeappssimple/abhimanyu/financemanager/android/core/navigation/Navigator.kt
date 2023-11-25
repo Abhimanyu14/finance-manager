@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.navigation
 
 import kotlinx.coroutines.flow.SharedFlow
 
-interface NavigationManager {
+interface Navigator {
     val command: SharedFlow<NavigationCommand>
 
     fun navigateToAccountsScreen()

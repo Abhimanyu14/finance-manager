@@ -26,7 +26,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountTyp
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIError
@@ -52,7 +52,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
     private val getAccountUseCase: GetAccountUseCase,
     private val insertAccountsUseCase: InsertAccountsUseCase,
     private val insertTransactionsUseCase: InsertTransactionsUseCase,
-    private val navigationManager: NavigationManager,
+    private val navigator: Navigator,
     private val updateAccountsUseCase: UpdateAccountsUseCase,
 ) : AddOrEditAccountScreenViewModel, ViewModel() {
     private val screenArgs = AddOrEditAccountScreenArgs(
@@ -263,7 +263,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
             updateAccountsUseCase(
                 updatedAccount,
             )
-            navigationManager.navigateUp()
+            navigator.navigateUp()
         }
     }
 
@@ -290,7 +290,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
                     name = name.value.text,
                 ),
             )
-            navigationManager.navigateUp()
+            navigator.navigateUp()
         }
     }
 
@@ -311,7 +311,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateUp() {
-        navigationManager.navigateUp()
+        navigator.navigateUp()
     }
 
     private fun updateName(

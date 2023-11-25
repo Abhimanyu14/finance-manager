@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.screen.OpenSourceLicensesScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.screen.OpenSourceLicensesScreenUIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class OpenSourceLicensesScreenViewModelImpl @Inject constructor(
-    @VisibleForTesting internal val navigationManager: NavigationManager,
+    @VisibleForTesting internal val navigator: Navigator,
 ) : OpenSourceLicensesScreenViewModel, ViewModel() {
     override val screenUIData: StateFlow<MyResult<OpenSourceLicensesScreenUIData>?> =
         MutableStateFlow(
@@ -37,6 +37,6 @@ internal class OpenSourceLicensesScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateUp() {
-        navigationManager.navigateUp()
+        navigator.navigateUp()
     }
 }

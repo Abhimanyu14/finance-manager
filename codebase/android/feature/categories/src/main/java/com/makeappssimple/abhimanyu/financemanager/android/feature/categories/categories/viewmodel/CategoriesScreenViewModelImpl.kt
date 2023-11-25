@@ -13,7 +13,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid_item.CategoriesGridItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
@@ -36,7 +36,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
     private val dispatcherProvider: DispatcherProvider,
     private val myPreferencesRepository: MyPreferencesRepository,
-    private val navigationManager: NavigationManager,
+    private val navigator: Navigator,
 ) : CategoriesScreenViewModel, ViewModel() {
     private val selectedTabIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = 0,
@@ -220,7 +220,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
     private fun navigateToAddCategoryScreen(
         transactionType: String,
     ) {
-        navigationManager.navigateToAddCategoryScreen(
+        navigator.navigateToAddCategoryScreen(
             transactionType = transactionType,
         )
     }
@@ -228,13 +228,13 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
     private fun navigateToEditCategoryScreen(
         categoryId: Int,
     ) {
-        navigationManager.navigateToEditCategoryScreen(
+        navigator.navigateToEditCategoryScreen(
             categoryId = categoryId,
         )
     }
 
     private fun navigateUp() {
-        navigationManager.navigateUp()
+        navigator.navigateUp()
     }
 
     private fun setDefaultCategoryIdInDataStore(

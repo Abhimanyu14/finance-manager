@@ -20,7 +20,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen.TransactionsScreenUIData
@@ -41,7 +41,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
     private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
-    private val navigationManager: NavigationManager,
+    private val navigator: Navigator,
     private val updateTransactionsUseCase: UpdateTransactionsUseCase,
 ) : TransactionsScreenViewModel, ViewModel() {
     private val allTransactionData: StateFlow<List<TransactionData>> =
@@ -475,19 +475,19 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateToAddTransactionScreen() {
-        navigationManager.navigateToAddTransactionScreen()
+        navigator.navigateToAddTransactionScreen()
     }
 
     private fun navigateToViewTransactionScreen(
         transactionId: Int,
     ) {
-        navigationManager.navigateToViewTransactionScreen(
+        navigator.navigateToViewTransactionScreen(
             transactionId = transactionId,
         )
     }
 
     private fun navigateUp() {
-        navigationManager.navigateUp()
+        navigator.navigateUp()
     }
 
     private fun removeFromSelectedTransactions(

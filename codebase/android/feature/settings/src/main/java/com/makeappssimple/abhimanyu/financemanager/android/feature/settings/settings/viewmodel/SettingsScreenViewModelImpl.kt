@@ -13,7 +13,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.BackupDataUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.RecalculateTotalUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.common.RestoreDataUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIEvent
@@ -36,7 +36,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
     private val alarmKit: AlarmKit,
     private val backupDataUseCase: BackupDataUseCase,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
-    @VisibleForTesting internal val navigationManager: NavigationManager,
+    @VisibleForTesting internal val navigator: Navigator,
     private val recalculateTotalUseCase: RecalculateTotalUseCase,
     private val restoreDataUseCase: RestoreDataUseCase,
 ) : SettingsScreenViewModel, ViewModel() {
@@ -77,7 +77,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
                     uri = uri,
                 )
             }
-            navigationManager.navigateUp()
+            navigator.navigateUp()
         }
     }
 
@@ -120,23 +120,23 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateToCategoriesScreen() {
-        navigationManager.navigateToCategoriesScreen()
+        navigator.navigateToCategoriesScreen()
     }
 
     private fun navigateToAccountsScreen() {
-        navigationManager.navigateToAccountsScreen()
+        navigator.navigateToAccountsScreen()
     }
 
     private fun navigateToOpenSourceLicensesScreen() {
-        navigationManager.navigateToOpenSourceLicensesScreen()
+        navigator.navigateToOpenSourceLicensesScreen()
     }
 
     private fun navigateToTransactionForValuesScreen() {
-        navigationManager.navigateToTransactionForValuesScreen()
+        navigator.navigateToTransactionForValuesScreen()
     }
 
     private fun navigateUp() {
-        navigationManager.navigateUp()
+        navigator.navigateUp()
     }
 
     override fun restoreDataFromDocument(
@@ -152,7 +152,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
                     uri = uri,
                 )
             ) {
-                navigationManager.navigateUp()
+                navigator.navigateUp()
             } else {
                 isLoading.value = false
                 _event.emit(SettingsScreenEvent.RestoreDataFailed)
@@ -166,7 +166,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
         ) {
             isLoading.value = true
             recalculateTotalUseCase()
-            navigationManager.navigateUp()
+            navigator.navigateUp()
         }
     }
 }

@@ -17,7 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.InsertTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.UpdateTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIEvent
@@ -38,7 +38,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val getTransactionForUseCase: GetTransactionForUseCase,
     private val insertTransactionForUseCase: InsertTransactionForValuesUseCase,
-    private val navigationManager: NavigationManager,
+    private val navigator: Navigator,
     private val updateTransactionForValuesUseCase: UpdateTransactionForValuesUseCase,
 ) : AddOrEditTransactionForScreenViewModel, ViewModel() {
     private val screenArgs = AddOrEditTransactionForScreenArgs(
@@ -142,7 +142,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
                     title = title.value.text,
                 )
             )
-            navigationManager.navigateUp()
+            navigator.navigateUp()
         }
     }
 
@@ -156,7 +156,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
             updateTransactionForValuesUseCase(
                 updatedTransactionFor,
             )
-            navigationManager.navigateUp()
+            navigator.navigateUp()
         }
     }
 
@@ -169,7 +169,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
     }
 
     private fun navigateUp() {
-        navigationManager.navigateUp()
+        navigator.navigateUp()
     }
 
     private fun updateTitle(

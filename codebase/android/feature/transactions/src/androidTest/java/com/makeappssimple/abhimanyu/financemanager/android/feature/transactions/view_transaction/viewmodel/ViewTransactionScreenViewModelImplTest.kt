@@ -16,8 +16,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.fake.FakeMyLoggerImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.MyNavigationDirections
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.NavigationManager
-import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.fake.FakeNavigationManagerImpl
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.fake.FakeNavigatorImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.TestDispatcherProviderImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
@@ -38,7 +38,7 @@ class ViewTransactionScreenViewModelImplTest {
     private lateinit var savedStateHandle: SavedStateHandle
     private lateinit var stringDecoder: StringDecoder
     private lateinit var myLogger: MyLogger
-    private lateinit var navigationManager: NavigationManager
+    private lateinit var navigator: Navigator
     private lateinit var dateTimeUtil: DateTimeUtil
     private lateinit var deleteTransactionUseCase: DeleteTransactionUseCase
     private lateinit var getTransactionDataUseCase: GetTransactionDataUseCase
@@ -78,7 +78,7 @@ class ViewTransactionScreenViewModelImplTest {
 
     @Test
     fun navigateUpTest() = runTest {
-        navigationManager = FakeNavigationManagerImpl(
+        navigator = FakeNavigatorImpl(
             coroutineScope = this,
         )
         initViewModel()
@@ -86,7 +86,7 @@ class ViewTransactionScreenViewModelImplTest {
         turbineScope {
             // viewTransactionScreenViewModelImpl.navigateUp()
 
-            val receiver = viewTransactionScreenViewModelImpl.navigationManager.command.testIn(
+            val receiver = viewTransactionScreenViewModelImpl.navigator.command.testIn(
                 scope = backgroundScope,
             )
 
@@ -106,7 +106,7 @@ class ViewTransactionScreenViewModelImplTest {
             deleteTransactionUseCase = deleteTransactionUseCase,
             dispatcherProvider = dispatcherProvider,
             getTransactionDataUseCase = getTransactionDataUseCase,
-            navigationManager = navigationManager,
+            navigator = navigator,
         )
     }
 }
