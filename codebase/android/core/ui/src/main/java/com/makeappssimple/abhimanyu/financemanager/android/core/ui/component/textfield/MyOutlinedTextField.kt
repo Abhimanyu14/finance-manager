@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfields
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield
 
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
