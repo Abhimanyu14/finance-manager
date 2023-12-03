@@ -64,6 +64,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
+import kotlinx.coroutines.delay
 
 @Composable
 internal fun AddOrEditTransactionScreenUI(
@@ -79,6 +80,7 @@ internal fun AddOrEditTransactionScreenUI(
         LaunchedEffect(
             key1 = Unit,
         ) {
+            delay(300) // Source - https://stackoverflow.com/a/72783456/9636037
             state.focusRequester.requestFocus()
         }
     }

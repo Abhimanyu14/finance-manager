@@ -52,6 +52,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.component.bottomsheet.AddOrEditCategorySelectEmojiBottomSheet
+import kotlinx.coroutines.delay
 
 enum class AddOrEditCategoryScreenUIError(
     @StringRes val textStringResourceId: Int,
@@ -71,6 +72,7 @@ internal fun AddOrEditCategoryScreenUI(
         LaunchedEffect(
             key1 = Unit,
         ) {
+            delay(300) // Source - https://stackoverflow.com/a/72783456/9636037
             state.focusRequester.requestFocus()
         }
     }

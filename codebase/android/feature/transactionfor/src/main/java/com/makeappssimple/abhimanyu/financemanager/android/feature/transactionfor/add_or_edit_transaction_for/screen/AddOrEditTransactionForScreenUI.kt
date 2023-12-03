@@ -40,6 +40,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
+import kotlinx.coroutines.delay
 
 enum class AddOrEditTransactionForScreenUIError(
     @StringRes val textStringResourceId: Int,
@@ -59,6 +60,7 @@ internal fun AddOrEditTransactionForScreenUI(
         LaunchedEffect(
             key1 = Unit,
         ) {
+            delay(300) // Source - https://stackoverflow.com/a/72783456/9636037
             state.focusRequester.requestFocus()
         }
     }
