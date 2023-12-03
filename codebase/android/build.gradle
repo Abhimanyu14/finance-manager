@@ -20,7 +20,7 @@ buildscript {
         targetSdkVersion = 34
 
         // Jetpack compose compiler
-        jetpackComposeCompilerVersion = "1.5.3"
+        jetpackComposeCompilerVersion = "1.5.5"
     }
 }
 
