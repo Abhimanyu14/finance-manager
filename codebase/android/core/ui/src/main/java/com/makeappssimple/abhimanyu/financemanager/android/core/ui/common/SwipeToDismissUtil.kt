@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.common
 
-import androidx.compose.material3.DismissState
-import androidx.compose.material3.DismissValue
-import androidx.compose.material3.rememberDismissState
+import androidx.compose.material3.SwipeToDismissState
+import androidx.compose.material3.SwipeToDismissValue
+import androidx.compose.material3.rememberSwipeToDismissState
 import androidx.compose.runtime.Composable
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 
@@ -11,11 +11,11 @@ fun getDismissState(
     dismissedToEndAction: (() -> Unit)? = null,
     dismissedToStart: (() -> Unit)? = null,
     defaultAction: (() -> Unit)? = null,
-): DismissState {
-    return rememberDismissState(
+): SwipeToDismissState {
+    return rememberSwipeToDismissState(
         confirmValueChange = { dismissValue ->
             when (dismissValue) {
-                DismissValue.DismissedToEnd -> {
+                SwipeToDismissValue.StartToEnd -> {
                     if (dismissedToEndAction.isNotNull()) {
                         dismissedToEndAction()
                         true
@@ -24,7 +24,7 @@ fun getDismissState(
                     }
                 }
 
-                DismissValue.DismissedToStart -> {
+                SwipeToDismissValue.EndToStart -> {
                     if (dismissedToStart.isNotNull()) {
                         dismissedToStart()
                         true
@@ -33,7 +33,7 @@ fun getDismissState(
                     }
                 }
 
-                DismissValue.Default -> {
+                SwipeToDismissValue.Settled -> {
                     if (defaultAction.isNotNull()) {
                         defaultAction()
                         true
