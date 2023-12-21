@@ -22,7 +22,6 @@ A finance manager app to track and analyse income and expenses
 | Preferences             | Jetpack Data Store             |
 | Dependency Injection    | Hilt                           |
 | Networking              | Retrofit                       |
-| JSON Serialization      | Kotlin Serialization           |
 | Unit Testing            | JUnit, Fake and Turbine        |
 | UI Testing              | Compose tests                  |
 | Design System           | Material 3                     |
