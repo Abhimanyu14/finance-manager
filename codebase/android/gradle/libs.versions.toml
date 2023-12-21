@@ -8,7 +8,6 @@ okhttp = "4.11.0"
 retrofit-serialization-converter = "1.0.0"
 emoji2 = "1.4.0"
 compose-version = "1.6.0-beta02"
-# compose-compiler-version = "1.5.3"
 compose-material3 = "1.2.0-alpha12"
 compose-theme-adapter = "1.2.1"
 activity-compose = "1.8.1"
@@ -51,22 +50,16 @@ plugin-android-library = "7.4.2"
 plugin-kotlin-android = "1.9.20"
 plugin-kotlin-jvm = "1.9.10"
 plugin-kotlin-serialization = "1.9.10"
-# plugin-kotlin-gradle = "1.8.10"
-plugin-kotlin-kapt = "1.8.10" # TODO(Abhi): Fix version
+plugin-kotlin-kapt = "1.8.10"
 plugin-kotlin-kover = "0.6.1"
-# plugin-gradle-build-tools = "7.3.1"
 plugin-ksp = "1.9.10-1.0.13"
 plugin-hilt-android = "2.48.1"
-# dagger-hilt-android = "2.44.2" # TODO(Abhi): Fix version
 plugin-google-services = "4.4.0"
 plugin-firebase-crashlytics = "2.9.9"
-# plugin-jacoco = "0.8.7"
 plugin-detekt = "1.21.0"
 plugin-about-libraries = "10.8.3"
 
 [libraries]
-# plugin-gradle-build-tools = { group = "com.android.tools.build", name = "gradle", version.ref = "plugin-gradle-build-tools" }
-
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core" }
 
 lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle-runtime" }
@@ -156,14 +149,11 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "plugin-ko
 android-library = { id = "com.android.library", version.ref = "plugin-android-library" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "plugin-kotlin-jvm" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "plugin-kotlin-serialization" }
-# kotlin-gradle = { id = "org.jetbrains.kotlin.gradle.plugin", version.ref = "plugin-kotlin-gradle" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "plugin-kotlin-kapt" }
 kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "plugin-kotlin-kover" }
-# gradle-build-tools = { id = "com.android.tools.build.gradle", version.ref = "plugin-gradle-build-tools" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "plugin-ksp" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "plugin-hilt-android" }
 google-services = { id = "com.google.gms.google-services", version.ref = "plugin-google-services" }
 firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "plugin-firebase-crashlytics" }
-# jacoco = { id = "org.jacoco.core", version.ref = "plugin-jacoco" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "plugin-detekt" }
 about-libraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "plugin-about-libraries" }
