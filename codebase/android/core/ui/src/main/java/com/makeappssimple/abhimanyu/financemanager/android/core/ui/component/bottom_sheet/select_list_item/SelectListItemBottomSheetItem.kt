@@ -22,7 +22,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ext
 internal data class SelectListItemBottomSheetItemData(
     val isSelected: Boolean = false,
     val icon: ImageVector? = null,
-    val text: String,
+    val primaryText: String,
+    val secondaryText: String? = null,
     val onClick: () -> Unit,
 )
 
@@ -35,7 +36,7 @@ internal fun SelectListItemBottomSheetItem(
         modifier = Modifier
             .fillMaxWidth()
             .conditionalClickable(
-                onClickLabel = data.text,
+                onClickLabel = data.primaryText,
                 role = Role.Button,
                 onClick = data.onClick,
             )
@@ -57,7 +58,7 @@ internal fun SelectListItemBottomSheetItem(
         }
         MyText(
             modifier = Modifier,
-            text = data.text,
+            text = data.primaryText,
             style = MaterialTheme.typography.headlineMedium
                 .copy(
                     color = if (data.isSelected) {
@@ -73,11 +74,18 @@ internal fun SelectListItemBottomSheetItem(
                     weight = 1F,
                 ),
         )
-        if (data.isSelected) {
-            Icon(
-                imageVector = Icons.Rounded.Done,
-                contentDescription = null,
-                tint = MaterialTheme.colorScheme.primary,
+        data.secondaryText?.let {
+            MyText(
+                modifier = Modifier,
+                text = data.secondaryText,
+                style = MaterialTheme.typography.headlineMedium
+                    .copy(
+                        color = if (data.isSelected) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            MaterialTheme.colorScheme.onBackground
+                        },
+                    ),
             )
         }
     }

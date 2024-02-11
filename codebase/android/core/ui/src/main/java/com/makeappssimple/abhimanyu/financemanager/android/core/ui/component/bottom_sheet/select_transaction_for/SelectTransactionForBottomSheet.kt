@@ -32,7 +32,7 @@ fun SelectTransactionForBottomSheet(
             items = data.transactionForValues
                 .map { transactionFor ->
                     SelectListItemBottomSheetItemData(
-                        text = transactionFor.titleToDisplay,
+                        primaryText = transactionFor.titleToDisplay,
                         onClick = {
                             events.onItemClick(transactionFor)
                         },

@@ -37,7 +37,8 @@ fun SelectAccountBottomSheet(
                     SelectListItemBottomSheetItemData(
                         isSelected = account.id == data.selectedAccountId,
                         icon = account.type.icon,
-                        text = account.name,
+                        primaryText = account.name,
+                        secondaryText = account.balanceAmount.toSignedString(),
                         onClick = {
                             events.updateAccount(account)
                             events.resetBottomSheetType()
