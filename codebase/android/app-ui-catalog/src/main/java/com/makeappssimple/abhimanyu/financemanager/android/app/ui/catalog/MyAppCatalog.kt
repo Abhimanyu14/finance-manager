@@ -203,6 +203,7 @@ private fun LazyListScope.componentsTabContent(
     )
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 private fun LazyListScope.navigationBackButtonDemo(
     titleStyle: TextStyle,
 ) {

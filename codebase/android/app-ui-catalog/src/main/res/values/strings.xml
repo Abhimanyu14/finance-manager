@@ -3,6 +3,8 @@
     <!-- App name -->
     <string name="app_name">UI Catalog</string>
 
+    <string name="common_empty_string" />
+
     <!-- my outlined text field -->
     <string name="my_outlined_text_field_label">Label</string>
 
