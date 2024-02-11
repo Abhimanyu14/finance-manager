@@ -159,6 +159,9 @@ proguard/
 # Project defaults
 **/.idea/inspectionProfiles/Project_Default.xml
 
+# Deployment config
+**/.idea/deploymentTargetSelector.xml
+
 # External native build folder generated in Android Studio 2.2 and later
 .externalNativeBuild
 .cxx/
