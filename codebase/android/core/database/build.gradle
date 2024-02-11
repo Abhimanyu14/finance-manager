@@ -8,11 +8,6 @@ plugins {
     alias libs.plugins.hilt.android
 }
 
-// API Key
-def apikeyPropertiesFile = rootProject.file("apikey.properties")
-def apikeyProperties = new Properties()
-apikeyProperties.load(new FileInputStream(apikeyPropertiesFile))
-
 android {
     namespace "com.makeappssimple.abhimanyu.financemanager.android.core.database"
     compileSdk rootProject.compileSdkVersion
@@ -28,9 +23,6 @@ android {
                 arguments += ["room.schemaLocation": "$projectDir/schemas".toString()]
             }
         }
-
-        // should correspond to key/value pairs inside the file
-        buildConfigField("String", "OPEN_EMOJI_KEY", apikeyProperties["OPEN_EMOJI_KEY"])
     }
 
     buildTypes {
