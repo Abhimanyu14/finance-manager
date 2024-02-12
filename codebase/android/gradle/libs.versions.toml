@@ -45,7 +45,7 @@ hilt-android-compiler = "2.48.1"
 kakaocup-compose = "0.2.3"
 
 #plugins
-agp = "8.0.2"
+agp = "8.2.2"
 plugin-android-library = "7.4.2"
 plugin-kotlin-android = "1.9.20"
 plugin-kotlin-jvm = "1.9.22"
