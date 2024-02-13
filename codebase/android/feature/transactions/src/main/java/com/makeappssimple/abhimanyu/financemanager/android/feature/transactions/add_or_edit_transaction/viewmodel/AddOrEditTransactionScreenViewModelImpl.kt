@@ -923,9 +923,14 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     categories.value = getAllCategoriesUseCase()
                 },
                 async {
-                    accounts.value = getAllAccountsUseCase().sortedBy { account ->
-                        account.type.sortOrder
-                    }
+                    accounts.value = getAllAccountsUseCase()
+                        .sortedWith(
+                            comparator = compareBy<Account> {
+                                it.type.sortOrder
+                            }.thenByDescending {
+                                it.balanceAmount.value
+                            }
+                        )
                 },
                 async {
                     transactionForValues.value = getAllTransactionForValuesUseCase()
