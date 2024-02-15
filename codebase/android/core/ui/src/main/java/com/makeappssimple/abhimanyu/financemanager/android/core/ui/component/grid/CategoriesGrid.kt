@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid_item.CategoriesGridItem
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid_item.CategoriesGridItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
 
 @Composable
 fun CategoriesGrid(

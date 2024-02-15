@@ -14,7 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid_item.CategoriesGridItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
 
 @Stable
 class CategoriesScreenUIState(

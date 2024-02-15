@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background

@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid_item
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

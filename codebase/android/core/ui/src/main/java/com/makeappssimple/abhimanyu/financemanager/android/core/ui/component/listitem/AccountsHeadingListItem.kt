@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.component.listitem
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 @Composable
-internal fun AccountsHeadingListItem(
+fun AccountsHeadingListItem(
     modifier: Modifier = Modifier,
     data: AccountsListItemData,
 ) {
@@ -48,12 +48,14 @@ internal fun AccountsHeadingListItem(
                     weight = 1F,
                 ),
         )
-        MyText(
-            text = data.balance,
-            style = MaterialTheme.typography.headlineMedium
-                .copy(
-                    color = MaterialTheme.colorScheme.onBackground,
-                ),
-        )
+        data.balance?.let {
+            MyText(
+                text = data.balance,
+                style = MaterialTheme.typography.headlineMedium
+                    .copy(
+                        color = MaterialTheme.colorScheme.onBackground,
+                    ),
+            )
+        }
     }
 }

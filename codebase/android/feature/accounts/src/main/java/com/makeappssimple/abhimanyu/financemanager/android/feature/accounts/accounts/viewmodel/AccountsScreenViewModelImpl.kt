@@ -20,7 +20,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.component.listitem.AccountsListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.AccountsListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.screen.AccountsScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.screen.AccountsScreenUIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel

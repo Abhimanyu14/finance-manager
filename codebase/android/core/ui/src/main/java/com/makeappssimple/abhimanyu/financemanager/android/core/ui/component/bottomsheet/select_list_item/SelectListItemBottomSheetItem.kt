@@ -1,11 +1,9 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_list_item
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.select_list_item
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -17,9 +15,11 @@ import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyDefaultTag
 
 @Immutable
 internal data class SelectListItemBottomSheetItemData(
+    val isDefault: Boolean = false,
     val isSelected: Boolean = false,
     val icon: ImageVector? = null,
     val primaryText: String,
@@ -68,6 +68,9 @@ internal fun SelectListItemBottomSheetItem(
                     },
                 ),
         )
+        if (data.isDefault) {
+            MyDefaultTag()
+        }
         Spacer(
             modifier = Modifier
                 .weight(

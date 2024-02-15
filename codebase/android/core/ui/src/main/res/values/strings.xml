@@ -27,6 +27,11 @@
     <string name="date_picker_positive_button">OK</string>
     <!-- endregion -->
 
+    <!-- region list item -->
+    <string name="list_item_accounts_edit">Edit</string>
+    <string name="list_item_accounts_delete">Delete</string>
+    <!-- endregion -->
+
     <!-- region total balance card -->
     <string name="total_balance_card_title">TOTAL BALANCE</string>
     <!-- endregion -->

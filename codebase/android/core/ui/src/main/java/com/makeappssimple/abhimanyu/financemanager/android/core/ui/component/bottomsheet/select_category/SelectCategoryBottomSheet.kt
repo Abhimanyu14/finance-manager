@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_category
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.select_category
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable

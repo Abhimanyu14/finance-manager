@@ -14,7 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid_item.CategoriesGridItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultExpenseCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory

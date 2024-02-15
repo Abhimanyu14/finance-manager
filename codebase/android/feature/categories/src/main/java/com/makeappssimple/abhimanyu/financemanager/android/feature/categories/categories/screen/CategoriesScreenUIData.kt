@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid_item.CategoriesGridItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
 
 @Immutable
 data class CategoriesScreenUIData(

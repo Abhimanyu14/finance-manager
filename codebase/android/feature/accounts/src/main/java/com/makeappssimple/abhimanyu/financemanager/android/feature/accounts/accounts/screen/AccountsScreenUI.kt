@@ -27,8 +27,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tot
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.component.bottomsheet.AccountsDeleteConfirmationBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.component.bottomsheet.AccountsSetAsDefaultConfirmationBottomSheet
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.component.listitem.AccountsListItem
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.component.listitem.AccountsListItemEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.AccountsHeadingListItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.AccountsListItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.AccountsListItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 
 @Composable
@@ -149,42 +150,48 @@ internal fun AccountsScreenUI(
                     listItem.hashCode()
                 },
             ) { index, listItem ->
-                AccountsListItem(
-                    data = listItem.copy(
-                        isExpanded = index == uiState.expandedItemIndex
-                    ),
-                    events = AccountsListItemEvents(
-                        onClick = {
-                            uiState.setExpandedItemIndex(
-                                if (index == uiState.expandedItemIndex) {
-                                    null
-                                } else {
-                                    index
-                                }
-                            )
-                        },
-                        onLongClick = {
-                            if (!listItem.isDefault) {
-                                uiState.setScreenBottomSheetType(AccountsScreenBottomSheetType.SET_AS_DEFAULT_CONFIRMATION)
-                                uiState.setClickedItemId(listItem.accountId)
-                            }
-                        },
-                        onEditClick = {
-                            listItem.accountId?.let {
-                                handleUIEvents(
-                                    AccountsScreenUIEvent.NavigateToEditAccountScreen(
-                                        accountId = listItem.accountId,
-                                    )
+                if (listItem.isHeading) {
+                    AccountsHeadingListItem(
+                        data = listItem,
+                    )
+                } else {
+                    AccountsListItem(
+                        data = listItem.copy(
+                            isExpanded = index == uiState.expandedItemIndex
+                        ),
+                        events = AccountsListItemEvents(
+                            onClick = {
+                                uiState.setExpandedItemIndex(
+                                    if (index == uiState.expandedItemIndex) {
+                                        null
+                                    } else {
+                                        index
+                                    }
                                 )
-                            }
-                            uiState.setExpandedItemIndex(null)
-                        },
-                        onDeleteClick = {
-                            uiState.setAccountIdToDelete(listItem.accountId)
-                            uiState.setScreenBottomSheetType(AccountsScreenBottomSheetType.DELETE_CONFIRMATION)
-                        },
-                    ),
-                )
+                            },
+                            onLongClick = {
+                                if (!listItem.isDefault) {
+                                    uiState.setScreenBottomSheetType(AccountsScreenBottomSheetType.SET_AS_DEFAULT_CONFIRMATION)
+                                    uiState.setClickedItemId(listItem.accountId)
+                                }
+                            },
+                            onEditClick = {
+                                listItem.accountId?.let {
+                                    handleUIEvents(
+                                        AccountsScreenUIEvent.NavigateToEditAccountScreen(
+                                            accountId = it,
+                                        )
+                                    )
+                                }
+                                uiState.setExpandedItemIndex(null)
+                            },
+                            onDeleteClick = {
+                                uiState.setAccountIdToDelete(listItem.accountId)
+                                uiState.setScreenBottomSheetType(AccountsScreenBottomSheetType.DELETE_CONFIRMATION)
+                            },
+                        ),
+                    )
+                }
             }
             item {
                 NavigationBarsAndImeSpacer()

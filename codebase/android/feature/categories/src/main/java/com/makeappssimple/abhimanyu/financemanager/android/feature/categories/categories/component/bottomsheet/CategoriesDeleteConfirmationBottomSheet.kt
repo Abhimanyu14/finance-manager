@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.MyConfirmationBottomSheetUI
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.MyConfirmationBottomSheetUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 
 @Composable

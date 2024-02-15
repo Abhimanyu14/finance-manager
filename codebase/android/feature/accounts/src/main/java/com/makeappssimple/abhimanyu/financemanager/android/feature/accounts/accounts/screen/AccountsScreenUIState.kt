@@ -10,7 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.component.listitem.AccountsListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.AccountsListItemData
 
 @Stable
 class AccountsScreenUIState(

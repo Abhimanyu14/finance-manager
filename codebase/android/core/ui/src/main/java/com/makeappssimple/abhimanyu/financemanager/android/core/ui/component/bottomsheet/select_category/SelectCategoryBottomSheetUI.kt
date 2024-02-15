@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.select_category
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.select_category
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
@@ -8,9 +8,9 @@ import androidx.compose.ui.Modifier
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.MyBottomSheetTitle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.MyBottomSheetTitle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid.CategoriesGrid
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid_item.CategoriesGridItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
 
 @Immutable

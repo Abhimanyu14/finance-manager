@@ -25,7 +25,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Common
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid.CategoriesGrid
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid_item.CategoriesGridItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.component.bottomsheet.CategoriesDeleteConfirmationBottomSheet

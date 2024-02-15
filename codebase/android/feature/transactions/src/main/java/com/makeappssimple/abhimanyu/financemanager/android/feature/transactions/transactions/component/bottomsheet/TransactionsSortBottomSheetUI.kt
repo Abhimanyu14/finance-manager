@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottom_sheet.MyBottomSheetTitle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.MyBottomSheetTitle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.SortOption

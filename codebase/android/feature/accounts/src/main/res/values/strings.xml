@@ -20,11 +20,6 @@
     <string name="screen_edit_account_floating_action_button_content_description">UPDATE</string>
     <!-- endregion -->
 
-    <!-- region accounts list item -->
-    <string name="list_item_accounts_edit">Edit</string>
-    <string name="list_item_accounts_delete">Delete</string>
-    <!-- endregion -->
-
     <!-- region accounts screen -->
     <string name="screen_accounts_appbar_title">Accounts</string>
     <string name="screen_accounts_floating_action_button_content_description">Add Account</string>
