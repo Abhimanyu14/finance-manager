@@ -5,8 +5,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -17,6 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_HOME
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.button.MyFloatingActionButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.button.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarsSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
@@ -61,19 +60,16 @@ internal fun HomeScreenUI(
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_home_appbar_title,
                 appBarActions = {
-                    IconButton(
+                    MyIconButton(
+                        tint = MaterialTheme.colorScheme.onBackground,
+                        imageVector = MyIcons.Settings,
+                        contentDescription = stringResource(
+                            id = R.string.screen_home_appbar_settings,
+                        ),
                         onClick = {
                             handleUIEvents(HomeScreenUIEvent.NavigateToSettingsScreen)
                         },
-                    ) {
-                        Icon(
-                            imageVector = MyIcons.Settings,
-                            contentDescription = stringResource(
-                                id = R.string.screen_home_appbar_settings,
-                            ),
-                            tint = MaterialTheme.colorScheme.onBackground,
-                        )
-                    }
+                    )
                 },
             )
         },

@@ -18,8 +18,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,6 +37,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.button.MyFloatingActionButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.button.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarsSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
@@ -194,17 +193,14 @@ internal fun TransactionsScreenUI(
                         Box(
                             modifier = Modifier,
                         ) {
-                            IconButton(
+                            MyIconButton(
+                                tint = MaterialTheme.colorScheme.onBackground,
+                                imageVector = MyIcons.MoreVert,
+                                contentDescription = "", // TODO-Abhi: Add content description
                                 onClick = {
                                     isDropDownVisible = true
                                 },
-                            ) {
-                                Icon(
-                                    imageVector = MyIcons.MoreVert,
-                                    contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.onBackground,
-                                )
-                            }
+                            )
                             DropdownMenu(
                                 expanded = isDropDownVisible,
                                 onDismissRequest = {

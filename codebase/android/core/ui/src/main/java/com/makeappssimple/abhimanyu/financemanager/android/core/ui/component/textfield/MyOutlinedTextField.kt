@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.Composable
@@ -75,7 +74,9 @@ fun MyOutlinedTextField(
                         exit = fadeOut(),
                     ) {
                         MyIconButton(
-                            onClickLabel = stringResource(
+                            tint = MaterialTheme.colorScheme.onBackground,
+                            imageVector = MyIcons.Clear,
+                            contentDescription = stringResource(
                                 id = data.trailingIconContentDescriptionTextStringResourceId,
                             ),
                             onClick = events.onClickTrailingIcon,
@@ -83,15 +84,7 @@ fun MyOutlinedTextField(
                                 .padding(
                                     end = 4.dp,
                                 ),
-                        ) {
-                            Icon(
-                                imageVector = MyIcons.Clear,
-                                tint = MaterialTheme.colorScheme.onBackground,
-                                contentDescription = stringResource(
-                                    id = data.trailingIconContentDescriptionTextStringResourceId,
-                                ),
-                            )
-                        }
+                        )
                     }
                 },
                 onValueChange = events.onValueChange,
