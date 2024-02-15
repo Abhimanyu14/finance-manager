@@ -15,7 +15,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.sa
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 
 interface RestoreDataUseCase {

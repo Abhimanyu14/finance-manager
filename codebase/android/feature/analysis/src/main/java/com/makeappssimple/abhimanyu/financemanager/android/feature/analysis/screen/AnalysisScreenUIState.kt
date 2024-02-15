@@ -9,11 +9,11 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orMin
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.analysis.Filter
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.analysis.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.viewmodel.Filter
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.viewmodel.orEmpty
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.AnalysisListItemData
 import java.time.LocalDate
 
 @Stable

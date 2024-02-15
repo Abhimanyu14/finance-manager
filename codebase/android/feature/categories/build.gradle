@@ -118,9 +118,6 @@ dependencies {
     // Jetpack compose navigation with hilt
     implementation libs.hilt.navigation.compose
 
-    // Compose emoji picker
-    implementation libs.compose.emoji.picker
-
     // Testing
 
     // JUnit

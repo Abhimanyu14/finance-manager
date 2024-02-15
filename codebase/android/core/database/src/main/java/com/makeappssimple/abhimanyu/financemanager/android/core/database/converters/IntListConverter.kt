@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.conver
 
 import androidx.room.TypeConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 

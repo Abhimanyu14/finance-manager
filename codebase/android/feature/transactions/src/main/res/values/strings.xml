@@ -40,35 +40,10 @@
     <string name="screen_transactions_search_button_content_description">Search</string>
     <string name="screen_transactions_sort_button_content_description">Sort</string>
     <string name="screen_transactions_filter_button_content_description">Filter</string>
-    <string name="screen_transactions_bottom_sheet_delete_title">Delete Transaction</string>
-    <string name="screen_transactions_bottom_sheet_delete_message">
-        Are you sure you want to delete?
-    </string>
-    <string name="screen_transactions_bottom_sheet_delete_positive_button_text">Yes</string>
-    <string name="screen_transactions_bottom_sheet_delete_negative_button_text">Cancel</string>
     <!-- endregion -->
 
     <!-- region view transaction screen -->
     <string name="screen_view_transaction_appbar_title">Transaction Details</string>
-    <!-- endregion -->
-
-    <!-- region transactions filter bottom sheet -->
-    <string name="bottom_sheet_transactions_filter_clear">Clear</string>
-    <string name="bottom_sheet_transactions_filter_reset">Reset</string>
-    <string name="bottom_sheet_transactions_filter_apply">Apply</string>
-    <string name="bottom_sheet_transactions_filter_expense_categories">Expense Categories</string>
-    <string name="bottom_sheet_transactions_filter_income_categories">Income Categories</string>
-    <string name="bottom_sheet_transactions_filter_investment_categories">Investment Categories</string>
-    <string name="bottom_sheet_transactions_filter_accounts">Accounts</string>
-    <string name="bottom_sheet_transactions_filter_transaction_for_values">Transaction For</string>
-    <string name="bottom_sheet_transactions_filter_transaction_types">Transaction Types</string>
-    <string name="bottom_sheet_transactions_filter_transaction_date">Transaction Date</string>
-    <string name="bottom_sheet_transactions_filter_from_date">From</string>
-    <string name="bottom_sheet_transactions_filter_to_date">To</string>
-    <!-- endregion -->
-
-    <!-- region transactions sort bottom sheet -->
-    <string name="bottom_sheet_transactions_sort_title">Sort</string>
     <!-- endregion -->
 
 </resources>

@@ -35,11 +35,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.SettingsListItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.SettingsListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.SettingsListItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.component.listitem.SettingsListItem
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.component.listitem.SettingsListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.component.listitem.SettingsListItemEvents
 
 @Immutable
 data class SettingsScreenListItemData(

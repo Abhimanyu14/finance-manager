@@ -1,8 +1,8 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen
 
 import androidx.compose.runtime.Immutable
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.analysis.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEvent
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.viewmodel.Filter
 
 @Immutable
 sealed class AnalysisScreenUIEvent : ScreenUIEvent {

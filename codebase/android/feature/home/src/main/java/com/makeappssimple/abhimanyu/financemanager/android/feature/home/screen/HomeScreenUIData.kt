@@ -2,8 +2,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen
 
 import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewModelData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.transaction_list_item.TransactionListItemData
 
 @Immutable
 data class HomeScreenUIData(

@@ -117,6 +117,9 @@ dependencies {
     kapt libs.dagger.hilt.compiler
     kapt libs.hilt.compiler
 
+    // Compose emoji picker
+    implementation libs.compose.emoji.picker
+
     // Testing
 
     // JUnit

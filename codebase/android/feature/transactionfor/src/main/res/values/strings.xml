@@ -23,18 +23,4 @@
     </string>
     <!-- endregion -->
 
-    <!-- region transaction for values menu bottom sheet -->
-    <string name="bottom_sheet_transaction_for_values_menu_edit">Edit</string>
-    <string name="bottom_sheet_transaction_for_values_menu_delete">Delete</string>
-    <!-- endregion -->
-
-    <!-- region transaction for values delete confirmation bottom sheet -->
-    <string name="bottom_sheet_transaction_for_values_menu_delete_title">Delete Transaction For</string>
-    <string name="bottom_sheet_transaction_for_values_menu_message">
-        Are you sure you want to delete?
-    </string>
-    <string name="bottom_sheet_transaction_for_values_menu_positive_button_text">Yes</string>
-    <string name="bottom_sheet_transaction_for_values_menu_negative_button_text">Cancel</string>
-    <!-- endregion -->
-
 </resources>

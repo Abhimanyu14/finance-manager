@@ -1,10 +1,10 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen
 
 import androidx.compose.runtime.Immutable
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.analysis.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.component.listitem.AnalysisListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.viewmodel.Filter
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.AnalysisListItemData
 import java.time.LocalDate
 
 @Immutable

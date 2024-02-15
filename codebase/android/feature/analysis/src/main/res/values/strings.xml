@@ -7,12 +7,7 @@
     <!-- endregion -->
 
     <!-- region analysis filter bottom sheet -->
-    <string name="bottom_sheet_analysis_filter_clear">Clear</string>
-    <string name="bottom_sheet_analysis_filter_reset">Reset</string>
-    <string name="bottom_sheet_analysis_filter_apply">Apply</string>
     <string name="bottom_sheet_analysis_filter_transaction_date">Transaction Date</string>
-    <string name="bottom_sheet_analysis_filter_from_date">From</string>
-    <string name="bottom_sheet_analysis_filter_to_date">To</string>
     <!-- endregion -->
 
 </resources>

@@ -23,18 +23,6 @@
     <!-- region accounts screen -->
     <string name="screen_accounts_appbar_title">Accounts</string>
     <string name="screen_accounts_floating_action_button_content_description">Add Account</string>
-    <string name="screen_accounts_bottom_sheet_set_as_default_title">Set as default Account</string>
-    <string name="screen_accounts_bottom_sheet_set_as_default_message">
-        Are you sure you want to set this as default account?
-    </string>
-    <string name="screen_accounts_bottom_sheet_set_as_default_positive_button_text">Yes</string>
-    <string name="screen_accounts_bottom_sheet_set_as_default_negative_button_text">Cancel</string>
-    <string name="screen_accounts_bottom_sheet_delete_title">Delete Account</string>
-    <string name="screen_accounts_bottom_sheet_delete_message">
-        Are you sure you want to delete?
-    </string>
-    <string name="screen_accounts_bottom_sheet_delete_positive_button_text">Yes</string>
-    <string name="screen_accounts_bottom_sheet_delete_negative_button_text">Cancel</string>
     <!-- endregion -->
 
 </resources>

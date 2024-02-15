@@ -22,14 +22,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Bottom
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.component.bottomsheet.AccountsDeleteConfirmationBottomSheet
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.component.bottomsheet.AccountsSetAsDefaultConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account.AccountsDeleteConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account.AccountsSetAsDefaultConfirmationBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.AccountsHeadingListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.AccountsListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.AccountsListItemEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
 
 @Composable
