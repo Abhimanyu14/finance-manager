@@ -16,11 +16,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.FilterAlt
-import androidx.compose.material.icons.rounded.MoreVert
-import androidx.compose.material.icons.rounded.SwapVert
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -68,6 +63,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sca
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MySearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MySearchBarData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MySearchBarEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 
 @Composable
@@ -204,7 +200,7 @@ internal fun TransactionsScreenUI(
                                 },
                             ) {
                                 Icon(
-                                    imageVector = Icons.Rounded.MoreVert,
+                                    imageVector = MyIcons.MoreVert,
                                     contentDescription = null,
                                     tint = MaterialTheme.colorScheme.onBackground,
                                 )
@@ -278,7 +274,7 @@ internal fun TransactionsScreenUI(
                 MyFloatingActionButton(
                     modifier = Modifier
                         .navigationBarsSpacer(),
-                    iconImageVector = Icons.Rounded.Add,
+                    iconImageVector = MyIcons.Add,
                     contentDescription = stringResource(
                         id = R.string.screen_transactions_floating_action_button_content_description,
                     ),
@@ -360,7 +356,7 @@ internal fun TransactionsScreenUI(
                     }
                     ActionButton(
                         data = ActionButtonData(
-                            imageVector = Icons.Rounded.SwapVert,
+                            imageVector = MyIcons.SwapVert,
                             contentDescriptionStringResourceId = R.string.screen_transactions_sort_button_content_description,
                         ),
                         events = ActionButtonEvents(
@@ -374,7 +370,7 @@ internal fun TransactionsScreenUI(
                     ActionButton(
                         data = ActionButtonData(
                             isIndicatorVisible = uiState.selectedFilter.areFiltersSelected(),
-                            imageVector = Icons.Rounded.FilterAlt,
+                            imageVector = MyIcons.FilterAlt,
                             contentDescriptionStringResourceId = R.string.screen_transactions_filter_button_content_description,
                         ),
                         events = ActionButtonEvents(

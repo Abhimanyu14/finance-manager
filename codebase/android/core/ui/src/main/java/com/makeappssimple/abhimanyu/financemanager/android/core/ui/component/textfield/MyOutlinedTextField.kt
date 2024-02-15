@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -28,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.button.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
 
 @Immutable
 data class MyOutlinedTextFieldData(
@@ -86,7 +85,7 @@ fun MyOutlinedTextField(
                                 ),
                         ) {
                             Icon(
-                                imageVector = Icons.Rounded.Clear,
+                                imageVector = MyIcons.Clear,
                                 tint = MaterialTheme.colorScheme.onBackground,
                                 contentDescription = stringResource(
                                     id = data.trailingIconContentDescriptionTextStringResourceId,

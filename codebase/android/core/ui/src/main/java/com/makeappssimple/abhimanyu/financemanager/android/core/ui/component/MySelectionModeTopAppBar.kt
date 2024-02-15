@@ -1,8 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component
 
 import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -12,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
 
 @Composable
 fun MySelectionModeTopAppBar(
@@ -42,7 +41,7 @@ fun MySelectionModeTopAppBarUI(
                 onClick = navigationAction,
             ) {
                 Icon(
-                    imageVector = Icons.Rounded.Close,
+                    imageVector = MyIcons.Close,
                     contentDescription = stringResource(
                         id = R.string.navigation_close_button_navigation_icon_content_description,
                     ),

@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -29,6 +27,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.matchrowsize.matchRowSize
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
 
 @Immutable
 data class TotalBalanceCardData(
@@ -109,7 +108,7 @@ fun TotalBalanceCard(
                     modifier = Modifier
                         .padding(2.dp)
                         .matchRowSize(),
-                    imageVector = Icons.Rounded.Lock,
+                    imageVector = MyIcons.Lock,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.onTertiary,
                 )

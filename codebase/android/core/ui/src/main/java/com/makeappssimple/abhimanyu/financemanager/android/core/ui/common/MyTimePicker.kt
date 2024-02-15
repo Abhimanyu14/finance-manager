@@ -9,9 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Keyboard
-import androidx.compose.material.icons.outlined.Schedule
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -36,6 +33,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.myDarkColorScheme
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.myLightColorScheme
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
 import java.time.LocalTime
 
 @Immutable
@@ -86,9 +84,9 @@ fun MyTimePicker(
                     ) {
                         Icon(
                             imageVector = if (showingPicker.value) {
-                                Icons.Outlined.Keyboard
+                                MyIcons.Keyboard
                             } else {
-                                Icons.Outlined.Schedule
+                                MyIcons.Schedule
                             },
                             contentDescription = if (showingPicker.value) {
                                 "Switch to Text Input"

@@ -4,9 +4,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.Edit
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -25,6 +22,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyDefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemUIWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
 
 @Immutable
 data class AccountsListItemDataAndEvents(
@@ -85,7 +83,7 @@ fun AccountsListItem(
                     ),
             ) {
                 MyExpandableItemIconButton(
-                    iconImageVector = Icons.Rounded.Edit,
+                    iconImageVector = MyIcons.Edit,
                     labelText = stringResource(
                         id = R.string.list_item_accounts_edit,
                     ),
@@ -97,7 +95,7 @@ fun AccountsListItem(
                         ),
                 )
                 MyExpandableItemIconButton(
-                    iconImageVector = Icons.Rounded.Delete,
+                    iconImageVector = MyIcons.Delete,
                     labelText = stringResource(
                         id = R.string.list_item_accounts_delete,
                     ),

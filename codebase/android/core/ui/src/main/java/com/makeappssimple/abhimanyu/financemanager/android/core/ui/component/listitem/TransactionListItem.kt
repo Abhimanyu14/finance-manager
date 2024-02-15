@@ -7,12 +7,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.CheckCircle
-import androidx.compose.material.icons.rounded.CurrencyExchange
-import androidx.compose.material.icons.rounded.Delete
-import androidx.compose.material.icons.rounded.Edit
-import androidx.compose.material.icons.rounded.RadioButtonUnchecked
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -36,6 +30,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyE
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemUIWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
 
 @Immutable
 data class TransactionListItemData(
@@ -128,14 +123,14 @@ fun TransactionListItem(
             if (data.isInSelectionMode) {
                 if (data.isSelected) {
                     Icon(
-                        imageVector = Icons.Rounded.CheckCircle,
+                        imageVector = MyIcons.CheckCircle,
                         // TODO(Abhi) - Add content description
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary,
                     )
                 } else {
                     Icon(
-                        imageVector = Icons.Rounded.RadioButtonUnchecked,
+                        imageVector = MyIcons.RadioButtonUnchecked,
                         // TODO(Abhi) - Add content description
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.outline,
@@ -275,7 +270,7 @@ fun TransactionListItem(
             ) {
                 if (data.isEditButtonVisible) {
                     MyExpandableItemIconButton(
-                        iconImageVector = Icons.Rounded.Edit,
+                        iconImageVector = MyIcons.Edit,
                         modifier = Modifier
                             .weight(
                                 weight = 1F,
@@ -289,7 +284,7 @@ fun TransactionListItem(
                 }
                 if (data.isRefundButtonVisible) {
                     MyExpandableItemIconButton(
-                        iconImageVector = Icons.Rounded.CurrencyExchange,
+                        iconImageVector = MyIcons.CurrencyExchange,
                         modifier = Modifier
                             .weight(
                                 weight = 1F,
@@ -307,7 +302,7 @@ fun TransactionListItem(
                             .weight(
                                 weight = 1F,
                             ),
-                        iconImageVector = Icons.Rounded.Delete,
+                        iconImageVector = MyIcons.Delete,
                         labelText = stringResource(
                             id = R.string.transaction_list_item_delete,
                         ),

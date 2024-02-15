@@ -6,15 +6,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.rounded.TextSnippet
-import androidx.compose.material.icons.rounded.AccountBalance
-import androidx.compose.material.icons.rounded.Backup
-import androidx.compose.material.icons.rounded.Calculate
-import androidx.compose.material.icons.rounded.Category
-import androidx.compose.material.icons.rounded.Groups
-import androidx.compose.material.icons.rounded.Notifications
-import androidx.compose.material.icons.rounded.Restore
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -39,6 +30,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.SettingsListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.SettingsListItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
 
 @Immutable
@@ -65,7 +57,7 @@ internal fun SettingsScreenUI(
         SettingsScreenListItemData(
             data = SettingsListItemData(
                 isEnabled = uiState.isLoading,
-                imageVector = Icons.Rounded.Category,
+                imageVector = MyIcons.Category,
                 textStringResourceId = R.string.screen_settings_categories,
             ),
             events = SettingsListItemEvents(
@@ -77,7 +69,7 @@ internal fun SettingsScreenUI(
         SettingsScreenListItemData(
             data = SettingsListItemData(
                 isEnabled = uiState.isLoading,
-                imageVector = Icons.Rounded.AccountBalance,
+                imageVector = MyIcons.AccountBalance,
                 textStringResourceId = R.string.screen_settings_accounts,
             ),
             events = SettingsListItemEvents(
@@ -90,7 +82,7 @@ internal fun SettingsScreenUI(
             data = SettingsListItemData(
                 hasDivider = true,
                 isEnabled = uiState.isLoading,
-                imageVector = Icons.Rounded.Groups,
+                imageVector = MyIcons.Groups,
                 textStringResourceId = R.string.screen_settings_transaction_for,
             ),
             events = SettingsListItemEvents(
@@ -109,7 +101,7 @@ internal fun SettingsScreenUI(
         SettingsScreenListItemData(
             data = SettingsListItemData(
                 isEnabled = uiState.isLoading,
-                imageVector = Icons.Rounded.Backup,
+                imageVector = MyIcons.Backup,
                 textStringResourceId = R.string.screen_settings_backup,
             ),
             events = SettingsListItemEvents(
@@ -121,7 +113,7 @@ internal fun SettingsScreenUI(
         SettingsScreenListItemData(
             data = SettingsListItemData(
                 isEnabled = uiState.isLoading,
-                imageVector = Icons.Rounded.Restore,
+                imageVector = MyIcons.Restore,
                 textStringResourceId = R.string.screen_settings_restore,
             ),
             events = SettingsListItemEvents(
@@ -134,7 +126,7 @@ internal fun SettingsScreenUI(
             data = SettingsListItemData(
                 hasDivider = true,
                 isEnabled = uiState.isLoading,
-                imageVector = Icons.Rounded.Calculate,
+                imageVector = MyIcons.Calculate,
                 textStringResourceId = R.string.screen_settings_recalculate_total,
             ),
             events = SettingsListItemEvents(
@@ -155,7 +147,7 @@ internal fun SettingsScreenUI(
                 hasDivider = true,
                 isChecked = uiState.isReminderEnabled.orFalse(),
                 isEnabled = uiState.isLoading,
-                imageVector = Icons.Rounded.Notifications,
+                imageVector = MyIcons.Notifications,
                 textStringResourceId = R.string.screen_settings_reminder,
             ),
             events = SettingsListItemEvents(
@@ -177,7 +169,7 @@ internal fun SettingsScreenUI(
         SettingsScreenListItemData(
             data = SettingsListItemData(
                 isEnabled = uiState.isLoading,
-                imageVector = Icons.AutoMirrored.Rounded.TextSnippet,
+                imageVector = MyIcons.TextSnippet,
                 textStringResourceId = R.string.screen_settings_credits,
             ),
             events = SettingsListItemEvents(
@@ -190,7 +182,7 @@ internal fun SettingsScreenUI(
             data = SettingsListItemData(
                 hasDivider = true,
                 isEnabled = uiState.isLoading,
-                imageVector = Icons.AutoMirrored.Rounded.TextSnippet,
+                imageVector = MyIcons.TextSnippet,
                 textStringResourceId = R.string.screen_settings_open_source_licenses,
             ),
             events = SettingsListItemEvents(

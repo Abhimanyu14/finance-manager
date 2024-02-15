@@ -13,9 +13,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Close
-import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TextField
@@ -35,6 +32,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
 
 @Immutable
 data class MySearchBarData(
@@ -114,7 +112,7 @@ fun MySearchBar(
                 },
                 leadingIcon = {
                     Icon(
-                        imageVector = Icons.Rounded.Search,
+                        imageVector = MyIcons.Search,
                         contentDescription = null,
                         modifier = Modifier
                             .padding(
@@ -128,7 +126,7 @@ fun MySearchBar(
                 trailingIcon = if (data.searchText.isNotBlank()) {
                     {
                         Icon(
-                            imageVector = Icons.Rounded.Close,
+                            imageVector = MyIcons.Close,
                             contentDescription = null,
                             modifier = Modifier
                                 .clip(
@@ -228,14 +226,14 @@ fun SearchBar(
         ),
         leadingIcon = {
             Icon(
-                imageVector = Icons.Rounded.Search,
+                imageVector = MyIcons.Search,
                 contentDescription = null,
             )
         },
         trailingIcon = if (searchText.isNotBlank()) {
             {
                 Icon(
-                    imageVector = Icons.Rounded.Close,
+                    imageVector = MyIcons.Close,
                     contentDescription = null,
                     modifier = Modifier
                         .clip(

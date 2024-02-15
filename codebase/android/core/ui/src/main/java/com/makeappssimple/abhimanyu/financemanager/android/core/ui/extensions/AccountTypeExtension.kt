@@ -1,23 +1,20 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions
 
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AccountBalance
-import androidx.compose.material.icons.rounded.AccountBalanceWallet
-import androidx.compose.material.icons.rounded.AttachMoney
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
 
 val AccountType.icon: ImageVector
     get() = when (this) {
         AccountType.BANK -> {
-            Icons.Rounded.AccountBalance
+            MyIcons.AccountBalance
         }
 
         AccountType.CASH -> {
-            Icons.Rounded.AttachMoney
+            MyIcons.AttachMoney
         }
 
         AccountType.E_WALLET -> {
-            Icons.Rounded.AccountBalanceWallet
+            MyIcons.AccountBalanceWallet
         }
     }

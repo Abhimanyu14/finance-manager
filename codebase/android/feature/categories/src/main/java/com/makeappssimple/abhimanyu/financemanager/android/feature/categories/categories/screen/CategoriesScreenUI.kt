@@ -3,8 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -30,6 +28,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bot
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid.CategoriesGrid
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import kotlinx.coroutines.launch
 
@@ -149,7 +148,7 @@ internal fun CategoriesScreenUI(
             MyFloatingActionButton(
                 modifier = Modifier
                     .navigationBarsSpacer(),
-                iconImageVector = Icons.Rounded.Add,
+                iconImageVector = MyIcons.Add,
                 contentDescription = stringResource(
                     id = R.string.screen_categories_floating_action_button_content_description,
                 ),

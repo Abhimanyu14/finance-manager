@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -23,6 +21,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ext
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.SortOption
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetTitle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
 
 @Immutable
@@ -117,7 +116,7 @@ private fun TransactionsSortBottomSheetItem(
         )
         if (data.isSelected) {
             Icon(
-                imageVector = Icons.Rounded.Done,
+                imageVector = MyIcons.Done,
                 contentDescription = null,
                 tint = MaterialTheme.colorScheme.primary,
             )

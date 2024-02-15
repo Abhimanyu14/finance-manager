@@ -8,9 +8,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ChevronLeft
-import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material3.ElevatedCard
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -31,6 +28,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
 
 @Immutable
 data class OverviewCardData(
@@ -143,7 +141,7 @@ fun OverviewCard(
                         },
                     ) {
                         Icon(
-                            imageVector = Icons.Rounded.ChevronLeft,
+                            imageVector = MyIcons.ChevronLeft,
                             contentDescription = null, // TODO(Abhi): Change content description
                             tint = MaterialTheme.colorScheme.primary,
                         )
@@ -170,7 +168,7 @@ fun OverviewCard(
                         },
                     ) {
                         Icon(
-                            imageVector = Icons.Rounded.ChevronRight,
+                            imageVector = MyIcons.ChevronRight,
                             contentDescription = null, // TODO(Abhi): Change content description
                             tint = MaterialTheme.colorScheme.primary,
                         )

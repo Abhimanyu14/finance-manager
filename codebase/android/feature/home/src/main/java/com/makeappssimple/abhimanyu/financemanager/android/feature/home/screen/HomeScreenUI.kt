@@ -5,9 +5,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
-import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -37,6 +34,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sca
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 
 private val bottomContentPadding = 80.dp
@@ -69,7 +67,7 @@ internal fun HomeScreenUI(
                         },
                     ) {
                         Icon(
-                            imageVector = Icons.Rounded.Settings,
+                            imageVector = MyIcons.Settings,
                             contentDescription = stringResource(
                                 id = R.string.screen_home_appbar_settings,
                             ),
@@ -83,7 +81,7 @@ internal fun HomeScreenUI(
             MyFloatingActionButton(
                 modifier = Modifier
                     .navigationBarsSpacer(),
-                iconImageVector = Icons.Rounded.Add,
+                iconImageVector = MyIcons.Add,
                 contentDescription = stringResource(
                     id = R.string.screen_home_floating_action_button_content_description,
                 ),

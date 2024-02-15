@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.FilterAlt
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -33,6 +31,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sca
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.R
 
 @Composable
@@ -139,7 +138,7 @@ internal fun AnalysisScreenUI(
                     ActionButton(
                         data = ActionButtonData(
                             isIndicatorVisible = uiState.selectedFilter.areFiltersSelected(),
-                            imageVector = Icons.Rounded.FilterAlt,
+                            imageVector = MyIcons.FilterAlt,
                             contentDescriptionStringResourceId = R.string.screen_analysis_filter_button_content_description,
                         ),
                         events = ActionButtonEvents(

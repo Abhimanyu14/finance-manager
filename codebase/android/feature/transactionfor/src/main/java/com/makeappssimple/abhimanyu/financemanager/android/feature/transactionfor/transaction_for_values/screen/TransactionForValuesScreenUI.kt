@@ -3,8 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -28,6 +26,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.TransactionForListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.TransactionForListItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultTransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 
@@ -111,7 +110,7 @@ internal fun TransactionForValuesScreenUI(
             MyFloatingActionButton(
                 modifier = Modifier
                     .navigationBarsSpacer(),
-                iconImageVector = Icons.Rounded.Add,
+                iconImageVector = MyIcons.Add,
                 contentDescription = stringResource(
                     id = R.string.screen_transaction_for_values_floating_action_button_content_description,
                 ),

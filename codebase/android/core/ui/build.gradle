@@ -92,7 +92,7 @@ dependencies {
     implementation libs.compose.preiew
 
     // Jetpack compose material icons
-    implementation libs.compose.icons
+    // implementation libs.compose.icons
 
     // Jetpack compose material design
     implementation libs.compose.material3

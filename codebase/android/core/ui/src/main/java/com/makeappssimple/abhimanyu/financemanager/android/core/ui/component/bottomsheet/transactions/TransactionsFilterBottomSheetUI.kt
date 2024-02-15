@@ -14,8 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -58,6 +56,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
 import java.time.LocalDate
 
@@ -452,7 +451,7 @@ private fun TransactionFilterBottomSheetFilterGroup(
                     },
                 ) {
                     Icon(
-                        imageVector = Icons.Rounded.ChevronRight,
+                        imageVector = MyIcons.ChevronRight,
                         tint = MaterialTheme.colorScheme.onBackground,
                         contentDescription = null,
                         modifier = Modifier
@@ -602,7 +601,7 @@ fun TransactionFilterBottomSheetDateFilter(
                     },
                 ) {
                     Icon(
-                        imageVector = Icons.Rounded.ChevronRight,
+                        imageVector = MyIcons.ChevronRight,
                         tint = MaterialTheme.colorScheme.onBackground,
                         contentDescription = null,
                         modifier = Modifier
