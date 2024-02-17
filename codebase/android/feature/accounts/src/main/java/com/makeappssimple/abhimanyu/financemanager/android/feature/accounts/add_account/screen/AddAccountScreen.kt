@@ -31,7 +31,6 @@ fun AddAccountScreen(
         message = "Inside AddAccountScreen",
     )
 
-    val focusRequester = remember { FocusRequester() }
     val focusedView = LocalView.current
     val isKeyboardOpen = WindowInsets.isImeVisible
     LaunchedEffect(
