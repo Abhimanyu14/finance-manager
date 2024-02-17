@@ -51,7 +51,6 @@ plugin-android-library = "8.2.2"
 plugin-kotlin-android = "1.9.20"
 plugin-kotlin-jvm = "1.9.22"
 plugin-kotlin-serialization = "1.9.21"
-plugin-kotlin-kapt = "1.8.10"
 plugin-kotlin-kover = "0.6.1"
 plugin-ksp = "1.9.22-1.0.17"
 plugin-hilt-android = "2.50"
@@ -153,7 +152,6 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "plugin-ko
 android-library = { id = "com.android.library", version.ref = "plugin-android-library" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "plugin-kotlin-jvm" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "plugin-kotlin-serialization" }
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "plugin-kotlin-kapt" }
 kotlinx-kover = { id = "org.jetbrains.kotlinx.kover", version.ref = "plugin-kotlin-kover" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "plugin-ksp" }
 hilt-android = { id = "com.google.dagger.hilt.android", version.ref = "plugin-hilt-android" }

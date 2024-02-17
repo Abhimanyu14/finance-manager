@@ -1,7 +1,6 @@
 plugins {
     alias libs.plugins.android.library
     alias libs.plugins.kotlin.android
-    alias libs.plugins.kotlin.kapt
     alias libs.plugins.kotlinx.kover
     alias libs.plugins.ksp
     alias libs.plugins.hilt.android
@@ -95,8 +94,6 @@ dependencies {
 
     // Hilt
     implementation libs.hilt.dagger
-    // kapt libs.dagger.hilt.compiler
-    // kapt libs.hilt.compiler
     ksp libs.dagger.hilt.compiler
     ksp libs.hilt.compiler
 
@@ -167,8 +164,8 @@ dependencies {
     // Hilt testing
     testImplementation libs.hilt.android.testing
     androidTestImplementation libs.hilt.android.testing
-    kaptTest libs.hilt.android.compiler
-    kaptAndroidTest libs.hilt.android.compiler
+    kspTest libs.hilt.android.compiler
+    kspAndroidTest libs.hilt.android.compiler
 
     // Jetpack compose UI tests
     androidTestImplementation libs.compose.ui.test.junit4
