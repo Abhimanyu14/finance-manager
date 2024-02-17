@@ -96,10 +96,10 @@ dependencies {
     implementation libs.androidx.core
 
     // Lifecycle components
-    implementation libs.lifecycle.runtime
+    implementation libs.lifecycle.runtime.ktx
 
     // Jetpack compose
-    implementation libs.compose.ui
+    implementation libs.compose.ui.androidx
     implementation libs.compose.util
 
     // Jetpack compose tooling support (Previews, etc.)

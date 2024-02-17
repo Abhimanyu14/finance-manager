@@ -74,7 +74,7 @@ dependencies {
     implementation libs.appcompat
 
     // Jetpack compose
-    implementation libs.compose.ui
+    implementation libs.compose.ui.androidx
     implementation libs.compose.util
 
     // Jetpack compose tooling support (Previews, etc.)

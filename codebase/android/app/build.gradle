@@ -225,13 +225,13 @@ dependencies {
     implementation libs.androidx.core
 
     // Lifecycle components
-    implementation libs.lifecycle.runtime
+    implementation libs.lifecycle.runtime.ktx
 
     // Appcompat
     implementation libs.appcompat
 
     // Jetpack compose
-    implementation libs.compose.ui
+    implementation libs.compose.ui.androidx
     implementation libs.compose.util
 
     // Jetpack compose tooling support (Previews, etc.)
@@ -269,7 +269,7 @@ dependencies {
     detektPlugins libs.detekt.rules.compose
 
     // Hilt
-    implementation libs.hilt.android
+    implementation libs.hilt.dagger
     kapt libs.dagger.hilt.compiler
     // ksp libs.dagger.hilt.compiler
     kapt libs.hilt.compiler
@@ -285,7 +285,7 @@ dependencies {
     implementation libs.coil
 
     // Paging
-    implementation libs.paging
+    implementation libs.paging.ktx
 
     // Data store
     implementation libs.datastore

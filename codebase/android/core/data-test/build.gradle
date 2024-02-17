@@ -59,7 +59,7 @@ dependencies {
     androidTestImplementation project(":core:testing")
 
     // Hilt
-    implementation libs.hilt.android
+    implementation libs.hilt.dagger
     kapt libs.dagger.hilt.compiler
     kapt libs.hilt.compiler
 

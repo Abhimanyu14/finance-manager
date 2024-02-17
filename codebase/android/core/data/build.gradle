@@ -69,13 +69,13 @@ dependencies {
     implementation libs.appcompat
 
     // Coroutines
-    implementation libs.coroutines
+    implementation libs.coroutines.android
 
     // Emoji2
     implementation libs.emoji2
 
     // Hilt
-    implementation libs.hilt.android
+    implementation libs.hilt.dagger
     kapt libs.dagger.hilt.compiler
     kapt libs.hilt.compiler
 
@@ -86,7 +86,7 @@ dependencies {
     implementation libs.serialization
 
     // Paging
-    implementation libs.paging
+    implementation libs.paging.ktx
 
     // Data store
     implementation libs.datastore

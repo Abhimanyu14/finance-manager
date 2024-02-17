@@ -8,7 +8,6 @@ import com.android.tools.lint.detector.api.CURRENT_API
  * An issue registry that checks for incorrect usages of Compose Material APIs over equivalents in
  * the project design system module.
  */
-@Suppress("UnstableApiUsage")
 class DesignSystemIssueRegistry : IssueRegistry() {
     override val issues = listOf(DesignSystemDetector.ISSUE)
 

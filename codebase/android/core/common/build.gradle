@@ -62,13 +62,13 @@ dependencies {
     implementation libs.appcompat
 
     // Coroutines
-    implementation libs.coroutines
+    implementation libs.coroutines.android
 
     // Jetpack compose lifecycle runtime
     implementation libs.lifecycle.runtime.compose
 
     // Hilt
-    implementation libs.hilt.android
+    implementation libs.hilt.dagger
     kapt libs.dagger.hilt.compiler
     kapt libs.hilt.compiler
 

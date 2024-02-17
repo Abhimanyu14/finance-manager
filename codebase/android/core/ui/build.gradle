@@ -78,13 +78,13 @@ dependencies {
     implementation libs.androidx.core
 
     // Lifecycle components
-    implementation libs.lifecycle.runtime
+    implementation libs.lifecycle.runtime.ktx
 
     // Appcompat
     implementation libs.appcompat
 
     // Jetpack compose
-    implementation libs.compose.ui
+    implementation libs.compose.ui.androidx
     implementation libs.compose.util
 
     // Jetpack compose tooling support (Previews, etc.)
@@ -113,7 +113,7 @@ dependencies {
     implementation libs.hilt.navigation.compose
 
     // Hilt
-    implementation libs.hilt.android
+    implementation libs.hilt.dagger
     kapt libs.dagger.hilt.compiler
     kapt libs.hilt.compiler
 

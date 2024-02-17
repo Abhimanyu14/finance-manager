@@ -60,7 +60,7 @@ dependencies {
     implementation libs.appcompat
 
     // Hilt
-    implementation libs.hilt.android
+    implementation libs.hilt.dagger
     kapt libs.dagger.hilt.compiler
     kapt libs.hilt.compiler
 }

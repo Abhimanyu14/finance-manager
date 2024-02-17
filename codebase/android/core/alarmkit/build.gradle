@@ -51,10 +51,10 @@ android {
 dependencies {
 
     // Coroutines
-    implementation libs.coroutines
+    implementation libs.coroutines.android
 
     // Hilt
-    implementation libs.hilt.android
+    implementation libs.hilt.dagger
     kapt libs.dagger.hilt.compiler
     kapt libs.hilt.compiler
 }
