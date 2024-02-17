@@ -43,6 +43,7 @@ turbine = "1.0.0"
 hilt-android-testing = "2.48.1"
 hilt-android-compiler = "2.48.1"
 kakaocup-compose = "0.2.3"
+lint = "30.2.1"
 
 #plugins
 agp = "8.2.2"
@@ -104,6 +105,9 @@ hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref =
 hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
 hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt-android-testing" }
 hilt-android-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt-android-compiler" }
+
+lint-api = { group = "com.android.tools.lint", name = "lint-api", version.ref = "lint" }
+lint-checks = { group = "com.android.tools.lint", name = "lint-checks", version.ref = "lint" }
 
 ksp = { group = "com.google.devtools.ksp", name = "symbol-processing-api", version.ref = "ksp" }
 

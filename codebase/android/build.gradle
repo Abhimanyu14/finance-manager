@@ -7,9 +7,6 @@ buildscript {
         // App version name
         appVersionName = "2024.02.15.0"
 
-        // Lint
-        lintVersion = "30.2.1"
-
         // Compile SDK version
         compileSdkVersion = 34
 
