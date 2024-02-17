@@ -43,7 +43,7 @@ turbine = "1.0.0"
 hilt-android-testing = "2.50"
 hilt-android-compiler = "2.48.1"
 kakaocup-compose = "0.2.3"
-lint = "26.0.0"
+lint = "31.2.2"
 
 #plugins
 agp = "8.2.2"

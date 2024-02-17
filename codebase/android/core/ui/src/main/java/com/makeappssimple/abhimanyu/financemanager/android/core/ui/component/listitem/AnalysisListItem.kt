@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -69,7 +70,7 @@ fun AnalysisListItem(
                 emoji = data.emoji,
             ),
         )
-        BoxWithConstraints(
+        Box(
             modifier = Modifier
                 .fillMaxWidth(),
         ) {
