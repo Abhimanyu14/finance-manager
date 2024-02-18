@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -14,7 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumB
 
 @Immutable
 internal data class SelectListItemBottomSheetUIData(
-    val titleTextStringResourceId: Int = 0,
+    @StringRes val titleTextStringResourceId: Int = 0,
     val data: List<AccountsListItemDataAndEvents> = emptyList(),
 )
 

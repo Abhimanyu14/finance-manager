@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.analysis
 
+import androidx.annotation.StringRes
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -34,7 +35,7 @@ fun AnalysisFilterBottomSheetUI(
     modifier: Modifier = Modifier,
     isFromDatePickerDialogVisible: Boolean,
     isToDatePickerDialogVisible: Boolean,
-    headingTextStringResourceId: Int,
+    @StringRes headingTextStringResourceId: Int,
     fromDatePickerEndLocalDate: LocalDate,
     fromDatePickerSelectedLocalDate: LocalDate,
     fromDatePickerStartLocalDate: LocalDate,

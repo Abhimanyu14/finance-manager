@@ -41,6 +41,7 @@ class AddOrEditTransactionForScreenUIState(
         R.string.screen_add_transaction_for_floating_action_button_content_description
     },
     val title: TextFieldValue? = unwrappedData?.title,
+    @StringRes
     val titleTextFieldErrorTextStringResourceId: Int? =
         unwrappedData?.titleTextFieldError?.textStringResourceId,
     val resetScreenBottomSheetType: () -> Unit = {

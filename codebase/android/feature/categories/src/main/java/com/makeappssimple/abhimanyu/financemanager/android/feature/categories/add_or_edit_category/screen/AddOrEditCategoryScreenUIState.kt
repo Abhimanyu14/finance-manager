@@ -41,6 +41,7 @@ class AddOrEditCategoryScreenUIState(
     val emoji: String = unwrappedData?.emoji.orEmpty(),
     val emojiSearchText: String = unwrappedData?.emojiSearchText.orEmpty(),
     val title: TextFieldValue = unwrappedData?.title.orEmpty(),
+    @StringRes
     val titleTextFieldErrorTextStringResourceId: Int? =
         unwrappedData?.titleTextFieldError?.textStringResourceId,
     @StringRes
