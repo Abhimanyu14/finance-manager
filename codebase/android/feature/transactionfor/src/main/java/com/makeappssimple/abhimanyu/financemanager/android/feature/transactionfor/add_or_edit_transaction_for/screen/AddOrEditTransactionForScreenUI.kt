@@ -76,7 +76,9 @@ internal fun AddOrEditTransactionForScreenUI(
 
     MyScaffold(
         modifier = Modifier
-            .testTag(SCREEN_ADD_OR_EDIT_TRANSACTION_FOR)
+            .testTag(
+                tag = SCREEN_ADD_OR_EDIT_TRANSACTION_FOR,
+            )
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
@@ -113,7 +115,9 @@ internal fun AddOrEditTransactionForScreenUI(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .testTag(SCREEN_CONTENT_ADD_OR_EDIT_TRANSACTION_FOR)
+                .testTag(
+                    tag = SCREEN_CONTENT_ADD_OR_EDIT_TRANSACTION_FOR,
+                )
                 .fillMaxSize()
                 .navigationBarLandscapeSpacer()
                 .verticalScroll(

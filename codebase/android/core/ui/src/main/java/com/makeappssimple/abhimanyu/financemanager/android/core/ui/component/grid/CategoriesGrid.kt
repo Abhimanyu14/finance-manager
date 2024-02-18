@@ -31,7 +31,7 @@ fun CategoriesGrid(
         itemsIndexed(
             items = categoriesGridItemDataList,
             key = { _, listItem ->
-                listItem.hashCode()
+                listItem.category.id
             },
         ) { index, listItem ->
             CategoriesGridItem(

@@ -63,7 +63,9 @@ internal fun CategoriesScreenUI(
 
     MyScaffold(
         modifier = Modifier
-            .testTag(SCREEN_CATEGORIES)
+            .testTag(
+                tag = SCREEN_CATEGORIES,
+            )
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
@@ -183,7 +185,9 @@ internal fun CategoriesScreenUI(
     ) {
         Column(
             modifier = Modifier
-                .testTag(SCREEN_CONTENT_CATEGORIES)
+                .testTag(
+                    tag = SCREEN_CONTENT_CATEGORIES,
+                )
                 .fillMaxSize()
                 .navigationBarLandscapeSpacer(),
         ) {

@@ -48,7 +48,9 @@ internal fun AccountsScreenUI(
 
     MyScaffold(
         modifier = Modifier
-            .testTag(SCREEN_ACCOUNTS)
+            .testTag(
+                tag = SCREEN_ACCOUNTS,
+            )
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
@@ -128,7 +130,9 @@ internal fun AccountsScreenUI(
     ) {
         LazyColumn(
             modifier = Modifier
-                .testTag(SCREEN_CONTENT_ACCOUNTS)
+                .testTag(
+                    tag = SCREEN_CONTENT_ACCOUNTS,
+                )
                 .navigationBarLandscapeSpacer(),
             contentPadding = PaddingValues(
                 bottom = 80.dp,

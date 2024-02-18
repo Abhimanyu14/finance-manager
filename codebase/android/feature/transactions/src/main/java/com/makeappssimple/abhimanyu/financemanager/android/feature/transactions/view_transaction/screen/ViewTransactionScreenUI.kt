@@ -48,7 +48,9 @@ internal fun ViewTransactionScreenUI(
 
     MyScaffold(
         modifier = Modifier
-            .testTag(SCREEN_VIEW_TRANSACTION)
+            .testTag(
+                tag = SCREEN_VIEW_TRANSACTION,
+            )
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
@@ -95,7 +97,9 @@ internal fun ViewTransactionScreenUI(
     ) {
         LazyColumn(
             modifier = Modifier
-                .testTag(SCREEN_CONTENT_VIEW_TRANSACTION)
+                .testTag(
+                    tag = SCREEN_CONTENT_VIEW_TRANSACTION,
+                )
                 .fillMaxSize()
                 .navigationBarLandscapeSpacer(),
         ) {

@@ -95,7 +95,9 @@ internal fun AddOrEditCategoryScreenUI(
 
     MyScaffold(
         modifier = Modifier
-            .testTag(SCREEN_ADD_OR_EDIT_CATEGORY)
+            .testTag(
+                tag = SCREEN_ADD_OR_EDIT_CATEGORY,
+            )
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
@@ -154,7 +156,9 @@ internal fun AddOrEditCategoryScreenUI(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .testTag(SCREEN_CONTENT_ADD_OR_EDIT_CATEGORY)
+                .testTag(
+                    tag = SCREEN_CONTENT_ADD_OR_EDIT_CATEGORY,
+                )
                 .fillMaxSize()
                 .navigationBarLandscapeSpacer()
                 .verticalScroll(

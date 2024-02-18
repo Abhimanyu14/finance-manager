@@ -105,7 +105,9 @@ internal fun TransactionsScreenUI(
 
     MyScaffold(
         modifier = Modifier
-            .testTag(SCREEN_TRANSACTIONS)
+            .testTag(
+                tag = SCREEN_TRANSACTIONS,
+            )
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
@@ -290,7 +292,9 @@ internal fun TransactionsScreenUI(
     ) {
         Column(
             modifier = Modifier
-                .testTag(SCREEN_CONTENT_TRANSACTIONS)
+                .testTag(
+                    tag = SCREEN_CONTENT_TRANSACTIONS,
+                )
                 .fillMaxSize()
                 .navigationBarLandscapeSpacer(),
         ) {
@@ -410,7 +414,7 @@ internal fun TransactionsScreenUI(
                     itemsIndexed(
                         items = listItemData,
                         key = { _, listItem ->
-                            listItem.hashCode()
+                            listItem.transactionId
                         },
                     ) { _, listItem ->
                         val isSelected =

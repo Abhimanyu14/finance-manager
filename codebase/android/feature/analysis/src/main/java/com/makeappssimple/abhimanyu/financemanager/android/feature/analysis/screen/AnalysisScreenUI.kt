@@ -51,7 +51,9 @@ internal fun AnalysisScreenUI(
 
     MyScaffold(
         modifier = Modifier
-            .testTag(SCREEN_ANALYSIS)
+            .testTag(
+                tag = SCREEN_ANALYSIS,
+            )
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
@@ -100,7 +102,9 @@ internal fun AnalysisScreenUI(
         LazyColumn(
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
-                .testTag(SCREEN_CONTENT_ANALYSIS)
+                .testTag(
+                    tag = SCREEN_CONTENT_ANALYSIS,
+                )
                 .fillMaxSize()
                 .navigationBarLandscapeSpacer(),
         ) {

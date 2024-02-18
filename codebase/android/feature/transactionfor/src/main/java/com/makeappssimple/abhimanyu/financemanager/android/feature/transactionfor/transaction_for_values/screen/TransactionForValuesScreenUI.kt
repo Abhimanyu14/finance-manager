@@ -47,7 +47,9 @@ internal fun TransactionForValuesScreenUI(
 
     MyScaffold(
         modifier = Modifier
-            .testTag(SCREEN_TRANSACTION_FOR_VALUES)
+            .testTag(
+                tag = SCREEN_TRANSACTION_FOR_VALUES,
+            )
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
@@ -129,13 +131,15 @@ internal fun TransactionForValuesScreenUI(
     ) {
         LazyColumn(
             modifier = Modifier
-                .testTag(SCREEN_CONTENT_TRANSACTION_FOR_VALUES)
+                .testTag(
+                    tag = SCREEN_CONTENT_TRANSACTION_FOR_VALUES,
+                )
                 .navigationBarLandscapeSpacer(),
         ) {
             itemsIndexed(
                 items = uiState.transactionForValues,
                 key = { _, listItem ->
-                    listItem.hashCode()
+                    listItem.id
                 },
             ) { index, listItem ->
                 val isDeleteVisible = !isDefaultTransactionFor(

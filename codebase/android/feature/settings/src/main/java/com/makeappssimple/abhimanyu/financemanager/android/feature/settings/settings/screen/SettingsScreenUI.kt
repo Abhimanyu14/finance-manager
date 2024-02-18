@@ -195,7 +195,9 @@ internal fun SettingsScreenUI(
 
     MyScaffold(
         modifier = Modifier
-            .testTag(SCREEN_SETTINGS)
+            .testTag(
+                tag = SCREEN_SETTINGS,
+            )
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
@@ -223,7 +225,9 @@ internal fun SettingsScreenUI(
         LazyColumn(
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
-                .testTag(SCREEN_CONTENT_SETTINGS)
+                .testTag(
+                    tag = SCREEN_CONTENT_SETTINGS,
+                )
                 .fillMaxWidth(),
         ) {
             // TODO(Abhi): Check why AnimatedVisibility is not working
@@ -241,12 +245,15 @@ internal fun SettingsScreenUI(
             }
             itemsIndexed(
                 items = listItemsData,
-                key = { index, listItem ->
+                key = { _, listItem ->
                     listItem.hashCode()
                 },
             ) { index, it ->
                 SettingsListItem(
-                    Modifier.testTag("Item $index"),
+                    modifier = Modifier
+                        .testTag(
+                            tag = "Item $index",
+                        ),
                     data = it.data,
                     events = it.events,
                 )

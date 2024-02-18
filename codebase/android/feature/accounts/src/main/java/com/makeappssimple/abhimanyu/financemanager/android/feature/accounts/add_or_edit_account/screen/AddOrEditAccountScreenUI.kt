@@ -88,7 +88,9 @@ internal fun AddOrEditAccountScreenUI(
 
     MyScaffold(
         modifier = Modifier
-            .testTag(SCREEN_ADD_OR_EDIT_ACCOUNT)
+            .testTag(
+                tag = SCREEN_ADD_OR_EDIT_ACCOUNT,
+            )
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
@@ -115,7 +117,9 @@ internal fun AddOrEditAccountScreenUI(
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier
-                .testTag(SCREEN_CONTENT_ADD_OR_EDIT_ACCOUNT)
+                .testTag(
+                    tag = SCREEN_CONTENT_ADD_OR_EDIT_ACCOUNT,
+                )
                 .fillMaxSize()
                 .navigationBarLandscapeSpacer()
                 .verticalScroll(

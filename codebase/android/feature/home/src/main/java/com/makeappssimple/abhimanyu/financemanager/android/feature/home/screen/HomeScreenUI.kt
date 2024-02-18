@@ -46,7 +46,9 @@ internal fun HomeScreenUI(
 ) {
     MyScaffold(
         modifier = Modifier
-            .testTag(SCREEN_HOME)
+            .testTag(
+                tag = SCREEN_HOME,
+            )
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
@@ -94,7 +96,9 @@ internal fun HomeScreenUI(
     ) {
         LazyColumn(
             modifier = Modifier
-                .testTag(SCREEN_CONTENT_HOME)
+                .testTag(
+                    tag = SCREEN_CONTENT_HOME,
+                )
                 .navigationBarLandscapeSpacer(),
             contentPadding = PaddingValues(
                 bottom = bottomContentPadding,
@@ -164,7 +168,7 @@ internal fun HomeScreenUI(
             items(
                 items = uiState.transactionListItemDataList,
                 key = { listItem ->
-                    listItem.hashCode()
+                    listItem.transactionId
                 },
             ) { listItem ->
                 TransactionListItem(

@@ -51,12 +51,16 @@ fun TotalBalanceCard(
     if (data.isLoading) {
         TotalBalanceCardLoadingUI(
             modifier = modifier
-                .testTag(TestTags.COMPONENT_TOTAL_BALANCE_CARD),
+                .testTag(
+                    tag = TestTags.COMPONENT_TOTAL_BALANCE_CARD,
+                ),
         )
     } else {
         Column(
             modifier = modifier
-                .testTag(TestTags.COMPONENT_TOTAL_BALANCE_CARD)
+                .testTag(
+                    tag = TestTags.COMPONENT_TOTAL_BALANCE_CARD,
+                )
                 .fillMaxWidth()
                 .padding(
                     horizontal = 32.dp,

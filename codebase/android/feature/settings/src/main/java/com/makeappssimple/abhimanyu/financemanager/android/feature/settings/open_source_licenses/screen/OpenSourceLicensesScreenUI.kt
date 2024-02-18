@@ -24,7 +24,9 @@ internal fun OpenSourceLicensesScreenUI(
 ) {
     MyScaffold(
         modifier = Modifier
-            .testTag(SCREEN_OPEN_SOURCE_LICENSES)
+            .testTag(
+                tag = SCREEN_OPEN_SOURCE_LICENSES,
+            )
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
@@ -50,7 +52,9 @@ internal fun OpenSourceLicensesScreenUI(
     ) {
         LibrariesContainer(
             modifier = Modifier
-                .testTag(SCREEN_CONTENT_OPEN_SOURCE_LICENSES)
+                .testTag(
+                    tag = SCREEN_CONTENT_OPEN_SOURCE_LICENSES,
+                )
                 .fillMaxSize(),
             showAuthor = true,
             showVersion = true,

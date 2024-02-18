@@ -84,12 +84,16 @@ fun OverviewCard(
     if (data.isLoading) {
         OverviewCardLoadingUI(
             modifier = modifier
-                .testTag(COMPONENT_OVERVIEW_CARD),
+                .testTag(
+                    tag = COMPONENT_OVERVIEW_CARD,
+                ),
         )
     } else {
         ElevatedCard(
             modifier = modifier
-                .testTag(COMPONENT_OVERVIEW_CARD)
+                .testTag(
+                    tag = COMPONENT_OVERVIEW_CARD,
+                )
                 .fillMaxWidth()
                 .padding(
                     horizontal = 32.dp,
