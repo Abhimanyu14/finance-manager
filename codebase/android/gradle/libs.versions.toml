@@ -3,6 +3,7 @@ androidx-core = "1.12.0"
 lifecycle-runtime = "2.7.0"
 appcompat = "1.7.0-alpha03"
 coroutines = "1.7.3"
+# manifest-merger = "26.0.1"
 serialization = "1.6.0"
 okhttp = "4.12.0"
 retrofit-serialization-converter = "1.0.0"
@@ -43,7 +44,7 @@ turbine = "1.0.0"
 hilt-android-testing = "2.50"
 hilt-android-compiler = "2.48.1"
 kakaocup-compose = "0.2.3"
-lint = "31.2.2"
+lint = "26.0.1"
 
 #plugins
 agp = "8.2.2"
@@ -69,6 +70,7 @@ lifecycle-runtime-compose = { group = "androidx.lifecycle", name = "lifecycle-ru
 coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines-test" }
 
+# manifest-merger = { module = "com.android.tools.build:manifest-merger", version.ref = "manifest-merger" }
 serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
 
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }

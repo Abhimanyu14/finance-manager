@@ -127,12 +127,21 @@ android {
         // Flag to enable support for the new language APIs
         coreLibraryDesugaringEnabled = true
 
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    kotlin {
+        jvmToolchain(17)
+    }
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
 
         // Removed in Kotlin 1.7
         // Reference - https://stackoverflow.com/a/72864142/9636037
@@ -214,11 +223,15 @@ dependencies {
     implementation project(":feature:settings")
     implementation project(":feature:transactionfor")
     implementation project(":feature:transactions")
+    implementation project(":lint")
 
     testImplementation project(":core:testing")
 
     androidTestImplementation project(":core:data-test")
     androidTestImplementation project(":core:testing")
+
+    lintChecks project(":lint")
+    lintPublish project(":lint")
 
     // Androidx core
     implementation libs.androidx.core
@@ -304,6 +317,8 @@ dependencies {
 
     // Firebase crashlytics
     implementation libs.firebase.crashlytics
+
+    // implementation libs.manifest.merger
 
     // Testing
 

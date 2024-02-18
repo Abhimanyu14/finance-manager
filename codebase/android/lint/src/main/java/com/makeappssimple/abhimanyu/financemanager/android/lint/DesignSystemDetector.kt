@@ -12,6 +12,7 @@ import org.jetbrains.uast.UCallExpression
 import org.jetbrains.uast.UElement
 import org.jetbrains.uast.UQualifiedReferenceExpression
 
+@Suppress("UnstableApiUsage")
 class DesignSystemDetector : Detector(), Detector.UastScanner {
     override fun getApplicableUastTypes(): List<Class<out UElement>> {
         return listOf(
@@ -39,14 +40,14 @@ class DesignSystemDetector : Detector(), Detector.UastScanner {
     companion object {
         @JvmField
         val ISSUE: Issue = Issue.create(
-            id = "DesignSystem",
-            briefDescription = "Design system",
-            explanation = "This check highlights calls in code that use Compose Material " +
+            "DesignSystem",
+            "Design system",
+            "This check highlights calls in code that use Compose Material " +
                     "Composables instead of equivalents from the project design system  module.",
-            category = Category.CUSTOM_LINT_CHECKS,
-            priority = 7,
-            severity = Severity.ERROR,
-            implementation = Implementation(
+            Category.LINT,
+            7,
+            Severity.ERROR,
+            Implementation(
                 DesignSystemDetector::class.java,
                 Scope.JAVA_FILE_SCOPE
             )
