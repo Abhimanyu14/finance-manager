@@ -15,7 +15,6 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -177,92 +176,5 @@ fun MySearchBar(
                 },
             )
         },
-    )
-}
-
-@Deprecated("Use MySearchBar instead of this")
-@Composable
-fun SearchBar(
-    modifier: Modifier = Modifier,
-    autoFocus: Boolean = true,
-    searchText: String,
-    placeholderText: String,
-    onValueChange: (updatedSearchText: String) -> Unit,
-    onSearch: (() -> Unit)? = null,
-) {
-    val focusRequester: FocusRequester = remember {
-        FocusRequester()
-    }
-
-    if (autoFocus) {
-        LaunchedEffect(
-            key1 = Unit,
-        ) {
-            focusRequester.requestFocus()
-        }
-    }
-
-    TextField(
-        value = searchText,
-        onValueChange = {
-            onValueChange(it)
-        },
-        keyboardActions = KeyboardActions(
-            onSearch = {
-                onSearch?.invoke()
-            },
-        ),
-        keyboardOptions = KeyboardOptions(
-            imeAction = ImeAction.Search,
-        ),
-        shape = CircleShape,
-        singleLine = true,
-        colors = TextFieldDefaults.colors(
-            focusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-            unfocusedContainerColor = MaterialTheme.colorScheme.primaryContainer,
-            disabledContainerColor = MaterialTheme.colorScheme.primaryContainer,
-            focusedIndicatorColor = Transparent,
-            unfocusedIndicatorColor = Transparent,
-        ),
-        leadingIcon = {
-            Icon(
-                imageVector = MyIcons.Search,
-                contentDescription = null,
-            )
-        },
-        trailingIcon = if (searchText.isNotBlank()) {
-            {
-                Icon(
-                    imageVector = MyIcons.Close,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .clip(
-                            shape = CircleShape,
-                        )
-                        .clickable {
-                            onValueChange("")
-                        }
-                        .padding(
-                            all = 8.dp,
-                        ),
-                )
-            }
-        } else {
-            null
-        },
-        placeholder = {
-            MyText(
-                text = placeholderText,
-                style = MaterialTheme.typography.headlineLarge
-                    .copy(
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    ),
-            )
-        },
-        modifier = modifier
-            .focusRequester(
-                focusRequester = focusRequester,
-            )
-            .fillMaxWidth(),
     )
 }

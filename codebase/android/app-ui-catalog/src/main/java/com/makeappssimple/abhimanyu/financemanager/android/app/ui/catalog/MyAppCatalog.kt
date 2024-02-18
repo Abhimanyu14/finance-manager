@@ -75,7 +75,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MySearchBarContainer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MySearchBarData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MySearchBarEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.SearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardData
 
@@ -189,9 +188,6 @@ private fun LazyListScope.componentsTabContent(
     defaultTagDemo(
         titleStyle = titleStyle,
     )
-    searchBarDemo(
-        titleStyle = titleStyle,
-    )
     mySearchBarDemo(
         titleStyle = titleStyle,
     )
@@ -302,39 +298,6 @@ private fun LazyListScope.mySearchBarDemo(
                     events = MySearchBarEvents(
                         onValueChange = setSearchText,
                     ),
-                )
-            }
-        }
-    }
-}
-
-private fun LazyListScope.searchBarDemo(
-    titleStyle: TextStyle,
-) {
-    item {
-        MyText(
-            modifier = Modifier
-                .padding(
-                    top = 16.dp,
-                ),
-            text = "Search Bar",
-            style = titleStyle,
-        )
-    }
-    item {
-        FlowRow(
-            horizontalArrangement = Arrangement.Center,
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            val (searchText, setSearchText) = remember {
-                mutableStateOf("")
-            }
-            MySearchBarContainer {
-                SearchBar(
-                    autoFocus = false,
-                    searchText = searchText,
-                    placeholderText = "Placeholder",
-                    onValueChange = setSearchText,
                 )
             }
         }
