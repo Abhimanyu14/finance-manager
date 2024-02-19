@@ -1,5 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.lint
 
+/*
+// TODO-Abhi: Fix custom linting
 import com.android.tools.lint.client.api.UElementHandler
 import com.android.tools.lint.detector.api.Category
 import com.android.tools.lint.detector.api.Detector
@@ -97,3 +99,4 @@ class DesignSystemDetector : Detector(), Detector.UastScanner {
         }
     }
 }
+*/

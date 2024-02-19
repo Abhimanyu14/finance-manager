@@ -87,9 +87,7 @@ internal fun ViewTransactionScreenUI(
                 },
             )
         },
-        onClick = {
-            state.focusManager.clearFocus()
-        },
+        onClick = state.focusManager::clearFocus,
         isModalBottomSheetVisible = uiState.screenBottomSheetType != ViewTransactionScreenBottomSheetType.NONE,
         backHandlerEnabled = uiState.screenBottomSheetType != ViewTransactionScreenBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,

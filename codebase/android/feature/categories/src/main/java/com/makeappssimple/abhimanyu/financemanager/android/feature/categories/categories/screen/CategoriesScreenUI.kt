@@ -175,9 +175,7 @@ internal fun CategoriesScreenUI(
                 },
             )
         },
-        onClick = {
-            state.focusManager.clearFocus()
-        },
+        onClick = state.focusManager::clearFocus,
         isModalBottomSheetVisible = uiState.screenBottomSheetType != CategoriesScreenBottomSheetType.None,
         backHandlerEnabled = uiState.screenBottomSheetType != CategoriesScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,

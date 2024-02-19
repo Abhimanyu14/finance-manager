@@ -104,9 +104,7 @@ internal fun AddOrEditTransactionForScreenUI(
                 },
             )
         },
-        onClick = {
-            state.focusManager.clearFocus()
-        },
+        onClick = state.focusManager::clearFocus,
         isModalBottomSheetVisible = uiState.screenBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.NONE,
         backHandlerEnabled = uiState.screenBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,

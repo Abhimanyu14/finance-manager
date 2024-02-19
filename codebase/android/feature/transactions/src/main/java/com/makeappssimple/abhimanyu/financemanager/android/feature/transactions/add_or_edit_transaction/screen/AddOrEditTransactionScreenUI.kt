@@ -173,9 +173,7 @@ internal fun AddOrEditTransactionScreenUI(
                 },
             )
         },
-        onClick = {
-            clearFocus()
-        },
+        onClick = state.focusManager::clearFocus,
         isModalBottomSheetVisible = uiState.screenBottomSheetType != AddOrEditTransactionScreenBottomSheetType.NONE,
         backHandlerEnabled = uiState.screenBottomSheetType != AddOrEditTransactionScreenBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,

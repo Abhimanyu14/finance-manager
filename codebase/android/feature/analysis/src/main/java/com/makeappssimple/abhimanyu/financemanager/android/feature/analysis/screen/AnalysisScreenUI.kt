@@ -91,9 +91,7 @@ internal fun AnalysisScreenUI(
                 },
             )
         },
-        onClick = {
-            state.focusManager.clearFocus()
-        },
+        onClick = state.focusManager::clearFocus,
         isModalBottomSheetVisible = uiState.screenBottomSheetType != AnalysisScreenBottomSheetType.NONE,
         backHandlerEnabled = uiState.screenBottomSheetType != AnalysisScreenBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,

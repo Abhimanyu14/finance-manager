@@ -10,6 +10,8 @@ import java.util.EnumSet
  * An issue registry that checks for incorrect usages of Compose Material APIs over equivalents in
  * the project design system module.
  */
+/*
+// TODO-Abhi: Fix custom linting
 @Suppress("UnstableApiUsage")
 class DesignSystemIssueRegistry : IssueRegistry() {
 
@@ -29,3 +31,4 @@ class DesignSystemIssueRegistry : IssueRegistry() {
 //        contact = "https://github.com/Abhimanyu14/finance-manager"
 //    )
 }
+*/

@@ -120,9 +120,7 @@ internal fun AccountsScreenUI(
                 },
             )
         },
-        onClick = {
-            state.focusManager.clearFocus()
-        },
+        onClick = state.focusManager::clearFocus,
         isModalBottomSheetVisible = uiState.screenBottomSheetType != AccountsScreenBottomSheetType.NONE,
         backHandlerEnabled = uiState.screenBottomSheetType != AccountsScreenBottomSheetType.NONE,
         coroutineScope = state.coroutineScope,

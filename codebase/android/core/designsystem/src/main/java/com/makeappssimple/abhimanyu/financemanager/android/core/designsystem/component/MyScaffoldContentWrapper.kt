@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.co
 import androidx.compose.foundation.background
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -17,7 +18,7 @@ fun MyScaffoldContentWrapper(
     modifier: Modifier = Modifier,
     innerPadding: PaddingValues,
     onClick: () -> Unit,
-    content: @Composable () -> Unit,
+    content: @Composable BoxScope.() -> Unit,
 ) {
     Box(
         modifier = modifier
@@ -30,13 +31,11 @@ fun MyScaffoldContentWrapper(
                 interactionSource = remember {
                     MutableInteractionSource()
                 },
-            ) {
-                onClick()
-            }
+                onClick = onClick,
+            )
             .padding(
                 paddingValues = innerPadding,
             ),
-    ) {
-        content()
-    }
+        content = content,
+    )
 }
