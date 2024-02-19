@@ -13,6 +13,10 @@ sealed class HomeScreenUIEvent : ScreenUIEvent {
     data object NavigateToSettingsScreen : HomeScreenUIEvent()
     data object NavigateToTransactionsScreen : HomeScreenUIEvent()
 
+    data class NavigateToViewTransactionScreen(
+        val transactionId: Int,
+    ) : HomeScreenUIEvent()
+
     data class HandleOverviewCardAction(
         val overviewCardAction: OverviewCardAction,
     ) : HomeScreenUIEvent()

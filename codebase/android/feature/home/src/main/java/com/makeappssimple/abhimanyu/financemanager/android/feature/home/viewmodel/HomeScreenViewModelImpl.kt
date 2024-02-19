@@ -250,6 +250,12 @@ internal class HomeScreenViewModelImpl @Inject constructor(
                 navigateToTransactionsScreen()
             }
 
+            is HomeScreenUIEvent.NavigateToViewTransactionScreen -> {
+                navigateToViewTransactionScreen(
+                    transactionId = uiEvent.transactionId,
+                )
+            }
+
             is HomeScreenUIEvent.HandleOverviewCardAction -> {
                 handleOverviewCardAction(
                     overviewCardAction = uiEvent.overviewCardAction,
@@ -349,6 +355,14 @@ internal class HomeScreenViewModelImpl @Inject constructor(
 
     private fun navigateToTransactionsScreen() {
         navigator.navigateToTransactionsScreen()
+    }
+
+    private fun navigateToViewTransactionScreen(
+        transactionId: Int,
+    ) {
+        navigator.navigateToViewTransactionScreen(
+            transactionId = transactionId,
+        )
     }
 
     private fun setOverviewTabSelectionIndex(

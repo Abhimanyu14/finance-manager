@@ -25,6 +25,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bac
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCardData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCardEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.TransactionListItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.TransactionListItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardEvents
@@ -171,6 +172,15 @@ internal fun HomeScreenUI(
             ) { listItem ->
                 TransactionListItem(
                     data = listItem,
+                    events = TransactionListItemEvents(
+                        onClick = {
+                            handleUIEvents(
+                                HomeScreenUIEvent.NavigateToViewTransactionScreen(
+                                    transactionId = listItem.transactionId,
+                                )
+                            )
+                        },
+                    ),
                 )
             }
         }
