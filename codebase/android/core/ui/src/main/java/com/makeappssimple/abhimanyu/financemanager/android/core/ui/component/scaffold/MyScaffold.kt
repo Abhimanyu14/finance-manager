@@ -75,7 +75,7 @@ fun MyScaffold(
     coroutineScope: CoroutineScope,
     onBackPress: () -> Unit,
 
-    content: @Composable BoxScope.() -> Unit,
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     BottomSheetBackHandler(
         enabled = backHandlerEnabled,
