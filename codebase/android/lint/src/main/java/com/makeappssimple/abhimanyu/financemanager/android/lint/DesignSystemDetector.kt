@@ -1,7 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.lint
 
-/*
-// TODO-Abhi: Fix custom linting
 import com.android.tools.lint.client.api.UElementHandler
 import com.android.tools.lint.detector.api.Category
 import com.android.tools.lint.detector.api.Detector
@@ -12,12 +10,14 @@ import com.android.tools.lint.detector.api.Scope
 import com.android.tools.lint.detector.api.Severity
 import org.jetbrains.uast.UCallExpression
 import org.jetbrains.uast.UElement
+import org.jetbrains.uast.ULiteralExpression
 import org.jetbrains.uast.UQualifiedReferenceExpression
+import org.jetbrains.uast.evaluateString
 
-@Suppress("UnstableApiUsage")
 class DesignSystemDetector : Detector(), Detector.UastScanner {
     override fun getApplicableUastTypes(): List<Class<out UElement>> {
         return listOf(
+            ULiteralExpression::class.java,
             UCallExpression::class.java,
             UQualifiedReferenceExpression::class.java
         )
@@ -42,17 +42,17 @@ class DesignSystemDetector : Detector(), Detector.UastScanner {
     companion object {
         @JvmField
         val ISSUE: Issue = Issue.create(
-            "DesignSystem",
-            "Design system",
-            "This check highlights calls in code that use Compose Material " +
+            id = "DesignSystem",
+            briefDescription = "Design system",
+            explanation = "This check highlights calls in code that use Compose Material " +
                     "Composables instead of equivalents from the project design system  module.",
-            Category.LINT,
-            7,
-            Severity.ERROR,
-            Implementation(
+            category = Category.CORRECTNESS,
+            priority = 7,
+            severity = Severity.ERROR,
+            implementation = Implementation(
                 DesignSystemDetector::class.java,
                 Scope.JAVA_FILE_SCOPE
-            )
+            ),
         )
 
         // Unfortunately :lint is a Java module and thus can't depend on the :core-designsystem
@@ -93,10 +93,11 @@ class DesignSystemDetector : Detector(), Detector.UastScanner {
             preferredName: String,
         ) {
             context.report(
-                ISSUE, node, context.getLocation(node),
+                ISSUE,
+                node,
+                context.getLocation(node),
                 "Using $name instead of $preferredName"
             )
         }
     }
 }
-*/

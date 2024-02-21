@@ -223,7 +223,6 @@ dependencies {
     implementation project(":feature:settings")
     implementation project(":feature:transactionfor")
     implementation project(":feature:transactions")
-    implementation project(":lint")
 
     testImplementation project(":core:testing")
 
@@ -231,7 +230,6 @@ dependencies {
     androidTestImplementation project(":core:testing")
 
     lintChecks project(":lint")
-    lintPublish project(":lint")
 
     // Androidx core
     implementation libs.androidx.core

@@ -2,12 +2,19 @@ plugins {
     id "java-library"
     id "com.android.lint"
     alias libs.plugins.kotlin.jvm
-    alias libs.plugins.kotlinx.kover
 }
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+}
+
+lint {
+    htmlReport = true
+    htmlOutput = file("lint-report.html")
+    textReport = true
+    absolutePaths = false
+    ignoreTestSources = true
 }
 
 dependencies {
