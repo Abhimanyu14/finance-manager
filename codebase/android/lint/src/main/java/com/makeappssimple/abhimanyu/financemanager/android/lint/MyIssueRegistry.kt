@@ -11,7 +11,7 @@ import com.android.tools.lint.detector.api.CURRENT_API
 class MyIssueRegistry : IssueRegistry() {
     override val issues = listOf(
         DesignSystemDetector.ISSUE,
-        SampleCodeDetector.ISSUE,
+        LintStringDetector.ISSUE,
     )
 
     override val api: Int = CURRENT_API

@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -39,16 +38,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 
 private val bottomContentPadding = 80.dp
-
-// TODO(Abhi): Lint Test
-private class LintTest {
-    // We have a custom lint check bundled with :library
-    // that this module depends on. The lint check looks
-    // for mentions of "lint", which should trigger an
-    // error
-    val s = "lint"
-    fun lint() { }
-}
 
 @Composable
 internal fun HomeScreenUI(
