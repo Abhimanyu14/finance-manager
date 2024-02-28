@@ -11,7 +11,7 @@ java {
 
 lint {
     htmlReport = true
-    htmlOutput = file("lint-report.html")
+    htmlOutput = file("lint/outputs/lint-report.html")
     textReport = true
     absolutePaths = false
     ignoreTestSources = true

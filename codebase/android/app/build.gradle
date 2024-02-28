@@ -159,7 +159,7 @@ android {
                 "-opt-in=kotlinx.coroutines.FlowPreview",
                 "-opt-in=kotlinx.coroutines.InternalCoroutinesApi",
                 "-opt-in=kotlinx.coroutines.ObsoleteCoroutinesApi",
-                "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
+                // "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
 
                 // Compose
                 "-opt-in=androidx.compose.runtime.ExperimentalComposeApi",

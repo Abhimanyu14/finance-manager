@@ -26,7 +26,6 @@ import com.android.tools.lint.detector.api.Scope
 import com.android.tools.lint.detector.api.Severity
 import org.jetbrains.uast.UElement
 import org.jetbrains.uast.ULiteralExpression
-import org.jetbrains.uast.UMethod
 import org.jetbrains.uast.evaluateString
 
 /**
@@ -58,7 +57,11 @@ class SampleCodeDetector : Detector(), UastScanner {
 //                )
 //            }
 
-            override fun visitLiteralExpression(node: ULiteralExpression) {
+            override fun visitLiteralExpression(
+                node: ULiteralExpression,
+            ) {
+                super.visitLiteralExpression(node)
+
                 val string = node.evaluateString() ?: return
                 if (string.contains("lint") && string.matches(Regex(".*\\blint\\b.*"))) {
                     context.report(
@@ -72,8 +75,7 @@ class SampleCodeDetector : Detector(), UastScanner {
 
     companion object {
         /**
-         * Issue describing the problem and pointing to the detector
-         * implementation.
+         * Issue describing the problem and pointing to the detector implementation.
          */
         @JvmField
         val ISSUE: Issue = Issue.create(
