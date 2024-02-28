@@ -321,16 +321,45 @@ And the core parts of the app are inside the module named `core`.
 
 ---
 
-**Commonly Used Commands**
+# Commands
 
-1. Screen mirroring
+## Gradle Commands
 
-`scrcpy -m1024`
+1. To build the project
 
-2. Clean build
+```
+./gradlew :app:assembleDebug
+```
 
-`./gradlew clean :app:assembleDebug`
+2. To clean and build the project
 
-3. Unit Test
+```
+./gradlew clean :app:assembleDebug
+```
 
-`./gradlew testDebugUnitTest `
+3. To run all the unit tests
+
+```
+./gradlew test
+./gradlew testDebugUnitTest
+```
+
+4. To run the lint checks
+
+```
+./gradlew lint
+```
+
+5. To run all the android UI tests
+
+```
+
+```
+
+## Scrcpy commands
+
+1. To start screen mirroring for physical devices
+
+```
+scrcpy -m1024
+```
