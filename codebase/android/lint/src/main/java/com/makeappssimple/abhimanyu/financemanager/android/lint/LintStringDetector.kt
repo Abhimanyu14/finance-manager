@@ -53,8 +53,10 @@ class LintStringDetector : Detector(), UastScanner {
                 val string = node.evaluateString() ?: return
                 if (string.contains("lint") && string.matches(Regex(".*\\blint\\b.*"))) {
                     context.report(
-                        ISSUE, node, context.getLocation(node),
-                        "This code mentions `lint`: **Congratulations**"
+                        issue = ISSUE_LINT_STRING,
+                        scope = node,
+                        location = context.getLocation(node),
+                        message = "This code mentions `lint` string",
                     )
                 }
             }
@@ -66,7 +68,7 @@ class LintStringDetector : Detector(), UastScanner {
          * Issue describing the problem and pointing to the detector implementation.
          */
         @JvmField
-        val ISSUE: Issue = Issue.create(
+        val ISSUE_LINT_STRING: Issue = Issue.create(
             // ID: used in @SuppressLint warnings etc
             id = "SampleId",
             // Title -- shown in the IDE's preference dialog, as category headers in the

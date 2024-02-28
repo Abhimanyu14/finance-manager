@@ -60,24 +60,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            // TODO(Abhi): Lint Test
-            MaterialTheme {
-
-            }
-
             CompositionLocalProvider(LocalMyLogger provides myLogger) {
                 MyApp()
             }
         }
     }
-}
-
-// TODO(Abhi): Lint Test
-private class LintTest {
-    // We have a custom lint check bundled with :library
-    // that this module depends on. The lint check looks
-    // for mentions of "lint", which should trigger an
-    // error
-    val s = "lint"
-    fun lint() {}
 }

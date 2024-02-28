@@ -5,13 +5,13 @@ import com.android.tools.lint.client.api.Vendor
 import com.android.tools.lint.detector.api.CURRENT_API
 
 /**
- * An issue registry that checks for incorrect usages of Compose Material APIs over equivalents in
- * the project design system module.
+ * An issue registry that checks for custom issues.
  */
 class MyIssueRegistry : IssueRegistry() {
     override val issues = listOf(
-        DesignSystemDetector.ISSUE,
-        LintStringDetector.ISSUE,
+        DesignSystemDetector.ISSUE_DESIGN_SYSTEM,
+        LintStringDetector.ISSUE_LINT_STRING,
+        TrailingLambdaDetector.ISSUE_TRAILING_LAMBDA,
     )
 
     override val api: Int = CURRENT_API

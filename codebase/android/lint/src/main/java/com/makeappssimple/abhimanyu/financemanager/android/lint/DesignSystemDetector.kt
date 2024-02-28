@@ -11,16 +11,14 @@ import com.android.tools.lint.detector.api.Severity
 import org.jetbrains.uast.UCallExpression
 import org.jetbrains.uast.UElement
 import org.jetbrains.uast.ULiteralExpression
-import org.jetbrains.uast.UMethod
 import org.jetbrains.uast.UQualifiedReferenceExpression
-import org.jetbrains.uast.evaluateString
 
 class DesignSystemDetector : Detector(), Detector.UastScanner {
     override fun getApplicableUastTypes(): List<Class<out UElement?>> {
         return listOf(
             ULiteralExpression::class.java,
             UCallExpression::class.java,
-            UQualifiedReferenceExpression::class.java
+            UQualifiedReferenceExpression::class.java,
         )
     }
 
@@ -58,7 +56,7 @@ class DesignSystemDetector : Detector(), Detector.UastScanner {
 
     companion object {
         @JvmField
-        val ISSUE: Issue = Issue.create(
+        val ISSUE_DESIGN_SYSTEM: Issue = Issue.create(
             id = "DesignSystem",
             briefDescription = "Design system",
             explanation = "This check highlights calls in code that use Compose Material " +
@@ -111,7 +109,7 @@ class DesignSystemDetector : Detector(), Detector.UastScanner {
             preferredName: String,
         ) {
             context.report(
-                issue = ISSUE,
+                issue = ISSUE_DESIGN_SYSTEM,
                 scope = node,
                 location = context.getLocation(node),
                 message = "Using $name instead of $preferredName",
