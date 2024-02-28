@@ -110,7 +110,9 @@ fun AnalysisListItem(
                             ),
                     )
                     LinearProgressIndicator(
-                        progress = data.percentage,
+                        progress = {
+                            data.percentage
+                        },
                         color = MaterialTheme.colorScheme.primary,
                         trackColor = MaterialTheme.colorScheme.surfaceVariant,
                         strokeCap = StrokeCap.Round,
