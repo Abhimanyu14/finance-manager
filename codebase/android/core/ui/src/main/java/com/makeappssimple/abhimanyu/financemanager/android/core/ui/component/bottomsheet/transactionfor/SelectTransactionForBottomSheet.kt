@@ -33,7 +33,7 @@ fun SelectTransactionForBottomSheet(
             titleTextStringResourceId = R.string.bottom_sheet_select_transaction_for_title,
             data = data.transactionForValues
                 .map { transactionFor ->
-                    // TODO-Abhi: Create a separate list item for transaction for
+                    // TODO(Abhi): Create a separate list item for transaction for
                     AccountsListItemDataAndEvents(
                         data = AccountsListItemData(
                             name = transactionFor.titleToDisplay,

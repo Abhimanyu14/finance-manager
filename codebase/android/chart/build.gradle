@@ -51,6 +51,8 @@ android {
 dependencies {
     implementation project(":core:designsystem")
 
+    lintChecks project(":lint")
+
     // Androidx core
     implementation libs.androidx.core
 

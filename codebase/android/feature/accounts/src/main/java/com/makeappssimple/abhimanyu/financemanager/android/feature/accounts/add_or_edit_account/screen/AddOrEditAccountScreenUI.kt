@@ -41,7 +41,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldEvents
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 
 enum class AddOrEditAccountScreenUIError(
     @StringRes val textStringResourceId: Int,

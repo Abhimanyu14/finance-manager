@@ -26,13 +26,13 @@ import com.android.tools.lint.detector.api.Scope
 import com.android.tools.lint.detector.api.Severity
 import org.jetbrains.uast.UElement
 import org.jetbrains.uast.ULiteralExpression
+import org.jetbrains.uast.UMethod
 import org.jetbrains.uast.evaluateString
 
 /**
  * Sample detector showing how to analyze Kotlin/Java code. This example
  * flags all string literals in the code that contain the word "lint".
  */
-@Suppress("UnstableApiUsage")
 class SampleCodeDetector : Detector(), UastScanner {
     override fun getApplicableUastTypes(): List<Class<out UElement?>> {
         return listOf(ULiteralExpression::class.java)
@@ -48,6 +48,16 @@ class SampleCodeDetector : Detector(), UastScanner {
         // Also be aware of context.getJavaEvaluator() which provides a lot of
         // utility functionality.
         return object : UElementHandler() {
+//            override fun visitMethod(node: UMethod) {
+//                super.visitMethod(node)
+//
+//                val name = node.name
+//                context.report(
+//                    ISSUE, node, context.getLocation(node),
+//                    "This Method has a warning"
+//                )
+//            }
+
             override fun visitLiteralExpression(node: ULiteralExpression) {
                 val string = node.evaluateString() ?: return
                 if (string.contains("lint") && string.matches(Regex(".*\\blint\\b.*"))) {
@@ -82,7 +92,7 @@ class SampleCodeDetector : Detector(), UastScanner {
                     """, // no need to .trimIndent(), lint does that automatically
             category = Category.CORRECTNESS,
             priority = 6,
-            severity = Severity.WARNING,
+            severity = Severity.ERROR,
             implementation = Implementation(
                 SampleCodeDetector::class.java,
                 Scope.JAVA_FILE_SCOPE

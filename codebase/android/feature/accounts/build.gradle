@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace "com.makeappssimple.abhimanyu.financemanager.android.feature.sources"
+    namespace "com.makeappssimple.abhimanyu.financemanager.android.feature.accounts"
     compileSdk rootProject.compileSdkVersion
 
     defaultConfig {
@@ -84,6 +84,7 @@ dependencies {
 
     androidTestImplementation project(":core:testing")
 
+    lintChecks project(":lint")
 
     // Androidx core
     implementation libs.androidx.core

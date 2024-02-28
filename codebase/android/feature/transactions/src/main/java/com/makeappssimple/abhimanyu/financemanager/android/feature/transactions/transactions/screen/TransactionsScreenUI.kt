@@ -198,7 +198,7 @@ internal fun TransactionsScreenUI(
                             MyIconButton(
                                 tint = MaterialTheme.colorScheme.onBackground,
                                 imageVector = MyIcons.MoreVert,
-                                contentDescription = "", // TODO-Abhi: Add content description
+                                contentDescription = "", // TODO(Abhi): Add content description
                                 onClick = {
                                     isDropDownVisible = true
                                 },

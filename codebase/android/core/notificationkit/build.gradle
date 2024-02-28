@@ -54,7 +54,6 @@ android {
 }
 
 dependencies {
-
     // Androidx core
     implementation libs.androidx.core
 

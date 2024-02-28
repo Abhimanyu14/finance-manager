@@ -11,11 +11,12 @@ import com.android.tools.lint.detector.api.Severity
 import org.jetbrains.uast.UCallExpression
 import org.jetbrains.uast.UElement
 import org.jetbrains.uast.ULiteralExpression
+import org.jetbrains.uast.UMethod
 import org.jetbrains.uast.UQualifiedReferenceExpression
 import org.jetbrains.uast.evaluateString
 
 class DesignSystemDetector : Detector(), Detector.UastScanner {
-    override fun getApplicableUastTypes(): List<Class<out UElement>> {
+    override fun getApplicableUastTypes(): List<Class<out UElement?>> {
         return listOf(
             ULiteralExpression::class.java,
             UCallExpression::class.java,
@@ -23,18 +24,34 @@ class DesignSystemDetector : Detector(), Detector.UastScanner {
         )
     }
 
-    override fun createUastHandler(context: JavaContext): UElementHandler {
+    override fun createUastHandler(
+        context: JavaContext,
+    ): UElementHandler {
         return object : UElementHandler() {
-            override fun visitCallExpression(node: UCallExpression) {
+            override fun visitCallExpression(
+                node: UCallExpression,
+            ) {
                 val name = node.methodName ?: return
                 val preferredName = METHOD_NAMES[name] ?: return
-                reportIssue(context, node, name, preferredName)
+                reportIssue(
+                    context = context,
+                    node = node,
+                    name = name,
+                    preferredName = preferredName,
+                )
             }
 
-            override fun visitQualifiedReferenceExpression(node: UQualifiedReferenceExpression) {
+            override fun visitQualifiedReferenceExpression(
+                node: UQualifiedReferenceExpression,
+            ) {
                 val name = node.receiver.asRenderString()
                 val preferredName = RECEIVER_NAMES[name] ?: return
-                reportIssue(context, node, name, preferredName)
+                reportIssue(
+                    context = context,
+                    node = node,
+                    name = name,
+                    preferredName = preferredName,
+                )
             }
         }
     }
@@ -45,13 +62,13 @@ class DesignSystemDetector : Detector(), Detector.UastScanner {
             id = "DesignSystem",
             briefDescription = "Design system",
             explanation = "This check highlights calls in code that use Compose Material " +
-                    "Composables instead of equivalents from the project design system  module.",
-            category = Category.CORRECTNESS,
+                    "composables instead of equivalents from the project design system.",
+            category = Category.CUSTOM_LINT_CHECKS,
             priority = 7,
             severity = Severity.ERROR,
             implementation = Implementation(
                 DesignSystemDetector::class.java,
-                Scope.JAVA_FILE_SCOPE
+                Scope.JAVA_FILE_SCOPE,
             ),
         )
 
@@ -61,6 +78,7 @@ class DesignSystemDetector : Detector(), Detector.UastScanner {
         val METHOD_NAMES = mapOf(
             "MaterialTheme" to "MyTheme",
             "Text" to "MyText",
+            "IconButton" to "MyIconButton",
             "Button" to "MyFilledButton",
             "OutlinedButton" to "MyOutlinedButton",
             "TextButton" to "MyTextButton",
@@ -93,10 +111,10 @@ class DesignSystemDetector : Detector(), Detector.UastScanner {
             preferredName: String,
         ) {
             context.report(
-                ISSUE,
-                node,
-                context.getLocation(node),
-                "Using $name instead of $preferredName"
+                issue = ISSUE,
+                scope = node,
+                location = context.getLocation(node),
+                message = "Using $name instead of $preferredName",
             )
         }
     }

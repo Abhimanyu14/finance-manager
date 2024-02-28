@@ -69,7 +69,6 @@ dependencies {
 
     androidTestImplementation project(":core:testing")
 
-
     // Androidx core
     implementation libs.androidx.core
 

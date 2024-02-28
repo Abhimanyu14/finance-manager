@@ -84,6 +84,7 @@ dependencies {
 
     androidTestImplementation project(":core:testing")
 
+    lintChecks project(":lint")
 
     // Androidx core
     implementation libs.androidx.core

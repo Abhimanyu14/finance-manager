@@ -17,7 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.orEmpty
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 
 @Stable
 class AddOrEditAccountScreenUIState(

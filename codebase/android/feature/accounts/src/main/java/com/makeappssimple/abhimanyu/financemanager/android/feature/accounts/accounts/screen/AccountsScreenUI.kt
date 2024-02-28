@@ -29,7 +29,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sca
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
-import com.makeappssimple.abhimanyu.financemanager.android.feature.sources.R
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 
 @Composable
 internal fun AccountsScreenUI(
