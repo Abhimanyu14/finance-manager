@@ -143,9 +143,6 @@ proguard/
 # Comment next line if keeping position of elements in Navigation Editor is relevant for you
 **/.idea/navEditor.xml
 
-# path to your modules .iml file
-**/.idea/inspectionProfiles/Project_Default.xml
-
 # android test user preferences
 **/.idea/androidTestResultsUserPreferences.xml
 
@@ -161,6 +158,12 @@ proguard/
 
 # Deployment config
 **/.idea/deploymentTargetSelector.xml
+
+# Project migrations
+**/.idea/migrations.xml
+
+# Detekt
+**/.idea/detekt.xml
 
 # Device selection config
 **/.idea/other.xml
