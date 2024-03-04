@@ -1,14 +1,15 @@
 # Features
 
-1. Loans
-2. Split Payment
-3. Analytics
-4. Dark mode
-5. Landscape and Tablet support
-6. Feedback
-7. Public Issue Tracker
-8. KMP
-9. CMP
+1. Archive accounts
+2. Loans
+3. Split Payment
+4. Analytics
+5. Dark mode
+6. Landscape and Tablet support
+7. Feedback
+8. Public Issue Tracker
+9. KMP
+10. CMP
 
 # Tech debt
 
@@ -29,7 +30,7 @@
 
 1. Navigation - Enter Amount to Home and clicking on FAB opens Add Account screen
 
-# Parallel projects
+# Parallel Projects
 
 1. Emoji Picker
 2. Compose UI Testing

@@ -5,12 +5,14 @@ A finance manager app to track and analyse income, expenses and investments.
 # Features
 
 1. Transactions - Create, Read, Update and Delete (CRUD)
-2. Sources - CRUD
+2. Accounts - CRUD
 3. Categories - CRUD
 4. TransactionFor - CRUD
 5. Overview
-6. Export to JSON
-7. Import from JSON
+6. Analysis
+7. Export to JSON
+8. Import from JSON
+9. Reminder notifications
 
 # Tech Stack
 
@@ -308,7 +310,7 @@ scrcpy -m1024
 
 # Backlog
 
-## Backlog of feature and changes in queue to be implemented can be found [here](https://github.com/Abhimanyu14/finance-manager/blob/main/LICENSE)
+## Backlog of feature and changes in queue to be implemented can be found [here](https://github.com/Abhimanyu14/finance-manager/blob/main/BACKLOG.md)
 
 # Database
 
