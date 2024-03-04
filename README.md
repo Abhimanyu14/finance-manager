@@ -1,8 +1,8 @@
-# Finance Manager
+# Overview
 
-A finance manager app to track and analyse income and expenses
+A finance manager app to track and analyse income, expenses and investments.
 
-## Features
+# Features
 
 1. Transactions - Create, Read, Update and Delete (CRUD)
 2. Sources - CRUD
@@ -253,7 +253,64 @@ And the core parts of the app are inside the module named `core`.
 6. `transactionfor`
 7. `transactions`
 
-## Database
+--
+
+# Commands
+
+## Gradle Commands
+
+1. To build the project
+
+```
+./gradlew :app:assembleDebug
+```
+
+2. To clean and build the project
+
+```
+./gradlew clean :app:assembleDebug
+```
+
+3. To run all the unit tests
+
+```
+./gradlew test
+./gradlew testDebugUnitTest
+```
+
+4. To run the lint checks
+
+```
+./gradlew lint
+```
+
+5. To run all the android UI tests
+
+```
+
+```
+
+6. To generate Kover Unit test coverage HTML Report
+
+```
+./gradlew koverMergedHtmlReport
+```
+
+## Scrcpy commands
+
+1. To start screen mirroring for physical devices
+
+```
+scrcpy -m1024
+```
+
+--
+
+# Backlog
+
+## Backlog of feature and changes in queue to be implemented can be found [here](https://github.com/Abhimanyu14/finance-manager/blob/main/LICENSE)
+
+# Database
 
 ### Tables
 
@@ -262,7 +319,7 @@ And the core parts of the app are inside the module named `core`.
 3. Categories - Income, Expense and Investment
 4. TransactionFor
 
-### Data Structure
+## Data Structure
 
 **Amount**
 
@@ -312,54 +369,8 @@ And the core parts of the app are inside the module named `core`.
   - INR
   - USD
 
----
+--
 
-## Unit Testing
+# License
 
-**To generate Kover Unit test coverage HTML Report**
-`./gradlew koverMergedHtmlReport`
-
----
-
-# Commands
-
-## Gradle Commands
-
-1. To build the project
-
-```
-./gradlew :app:assembleDebug
-```
-
-2. To clean and build the project
-
-```
-./gradlew clean :app:assembleDebug
-```
-
-3. To run all the unit tests
-
-```
-./gradlew test
-./gradlew testDebugUnitTest
-```
-
-4. To run the lint checks
-
-```
-./gradlew lint
-```
-
-5. To run all the android UI tests
-
-```
-
-```
-
-## Scrcpy commands
-
-1. To start screen mirroring for physical devices
-
-```
-scrcpy -m1024
-```
+**Finance Manager** is distributed under the terms of the Apache License (Version 2.0). See the [license](https://github.com/Abhimanyu14/finance-manager/blob/main/LICENSE) for more information.
