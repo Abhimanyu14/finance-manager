@@ -23,6 +23,9 @@ fun AnalysisScreen(
     )
 
     val screenUIData: MyResult<AnalysisScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    val uiState = rememberAnalysisScreenUIState(
+        data = screenUIData,
+    )
     val handleUIEvents = remember(
         key1 = viewModel,
     ) {
@@ -38,9 +41,7 @@ fun AnalysisScreen(
     }
 
     AnalysisScreenUI(
-        uiState = rememberAnalysisScreenUIState(
-            data = screenUIData,
-        ),
+        uiState = uiState,
         handleUIEvents = handleUIEvents,
     )
 }

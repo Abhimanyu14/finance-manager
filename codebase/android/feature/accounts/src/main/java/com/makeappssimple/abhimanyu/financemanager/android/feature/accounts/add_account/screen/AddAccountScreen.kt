@@ -32,15 +32,12 @@ fun AddAccountScreen(
 
     val focusedView = LocalView.current
     val isKeyboardOpen = WindowInsets.isImeVisible
-    LaunchedEffect(
-        key1 = isKeyboardOpen,
-    ) {
-        myLogger.logError(
-            message = "isKeyboardOpen $isKeyboardOpen $focusedView ${focusedView.isFocused}",
-        )
-    }
 
     val screenUIData: MyResult<AddOrEditAccountScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    val uiState = rememberAddOrEditAccountScreenUIState(
+        data = screenUIData,
+        isEdit = false,
+    )
     val handleUIEvents = remember(
         key1 = viewModel,
     ) {
@@ -63,11 +60,16 @@ fun AddAccountScreen(
         }
     }
 
+    LaunchedEffect(
+        key1 = isKeyboardOpen,
+    ) {
+        myLogger.logError(
+            message = "isKeyboardOpen $isKeyboardOpen $focusedView ${focusedView.isFocused}",
+        )
+    }
+
     AddOrEditAccountScreenUI(
-        uiState = rememberAddOrEditAccountScreenUIState(
-            data = screenUIData,
-            isEdit = false,
-        ),
+        uiState = uiState,
         handleUIEvents = handleUIEvents,
     )
 }

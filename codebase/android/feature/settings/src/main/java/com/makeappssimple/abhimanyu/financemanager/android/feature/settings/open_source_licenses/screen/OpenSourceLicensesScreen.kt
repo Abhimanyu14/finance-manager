@@ -23,6 +23,9 @@ fun OpenSourceLicensesScreen(
     )
 
     val screenUIData: MyResult<OpenSourceLicensesScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    val uiState = rememberOpenSourceLicensesScreenUIState(
+        data = screenUIData,
+    )
     val handleUIEvents = remember(
         key1 = viewModel,
     ) {
@@ -38,9 +41,7 @@ fun OpenSourceLicensesScreen(
     }
 
     OpenSourceLicensesScreenUI(
-        uiState = rememberOpenSourceLicensesScreenUIState(
-            data = screenUIData,
-        ),
+        uiState = uiState,
         handleUIEvents = handleUIEvents,
     )
 }

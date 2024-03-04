@@ -27,6 +27,10 @@ fun EditAccountScreen(
     )
 
     val screenUIData: MyResult<AddOrEditAccountScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    val uiState = rememberAddOrEditAccountScreenUIState(
+        data = screenUIData,
+        isEdit = true,
+    )
     val handleUIEvents = remember(
         key1 = viewModel,
     ) {
@@ -52,10 +56,7 @@ fun EditAccountScreen(
     }
 
     AddOrEditAccountScreenUI(
-        uiState = rememberAddOrEditAccountScreenUIState(
-            data = screenUIData,
-            isEdit = true,
-        ),
+        uiState = uiState,
         handleUIEvents = handleUIEvents,
     )
 }

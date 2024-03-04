@@ -27,6 +27,10 @@ fun EditCategoryScreen(
     )
 
     val screenUIData: MyResult<AddOrEditCategoryScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    val uiState = rememberAddOrEditCategoryScreenUIState(
+        data = screenUIData,
+        isEdit = true,
+    )
     val handleUIEvents = remember(
         key1 = viewModel,
     ) {
@@ -46,10 +50,7 @@ fun EditCategoryScreen(
     }
 
     AddOrEditCategoryScreenUI(
-        uiState = rememberAddOrEditCategoryScreenUIState(
-            data = screenUIData,
-            isEdit = true,
-        ),
+        uiState = uiState,
         handleUIEvents = handleUIEvents,
     )
 }

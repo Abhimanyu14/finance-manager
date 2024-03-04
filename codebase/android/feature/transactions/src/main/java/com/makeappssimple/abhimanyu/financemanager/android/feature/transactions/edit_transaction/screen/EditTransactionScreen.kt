@@ -27,6 +27,10 @@ fun EditTransactionScreen(
     )
 
     val screenUIData: MyResult<AddOrEditTransactionScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    val uiState = rememberAddOrEditTransactionScreenUIState(
+        data = screenUIData,
+        isEdit = true,
+    )
     val handleUIEvents = remember(
         key1 = viewModel,
     ) {
@@ -46,10 +50,7 @@ fun EditTransactionScreen(
     }
 
     AddOrEditTransactionScreenUI(
-        uiState = rememberAddOrEditTransactionScreenUIState(
-            data = screenUIData,
-            isEdit = true,
-        ),
+        uiState = uiState,
         handleUIEvents = handleUIEvents,
     )
 }

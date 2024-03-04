@@ -23,6 +23,9 @@ fun CategoriesScreen(
     )
 
     val screenUIData: MyResult<CategoriesScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    val uiState = rememberCategoriesScreenUIState(
+        data = screenUIData,
+    )
     val handleUIEvents = remember(
         key1 = viewModel,
     ) {
@@ -38,9 +41,7 @@ fun CategoriesScreen(
     }
 
     CategoriesScreenUI(
-        uiState = rememberCategoriesScreenUIState(
-            data = screenUIData,
-        ),
+        uiState = uiState,
         handleUIEvents = handleUIEvents,
     )
 }

@@ -38,8 +38,12 @@ fun HomeScreen(
         }
 
     val screenUIData: MyResult<HomeScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    val uiState = rememberHomeScreenUIState(
+        data = screenUIData,
+    )
     val handleUIEvents = remember(
         key1 = viewModel,
+        key2 = createDocument,
     ) {
         { uiEvent: HomeScreenUIEvent ->
             when (uiEvent) {
@@ -57,9 +61,7 @@ fun HomeScreen(
     }
 
     HomeScreenUI(
-        uiState = rememberHomeScreenUIState(
-            data = screenUIData,
-        ),
+        uiState = uiState,
         handleUIEvents = handleUIEvents,
     )
 }

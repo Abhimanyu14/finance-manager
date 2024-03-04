@@ -23,6 +23,9 @@ fun TransactionsScreen(
     )
 
     val screenUIData: MyResult<TransactionsScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
+    val uiState = rememberTransactionsScreenUIState(
+        data = screenUIData,
+    )
     val handleUIEvents = remember(
         key1 = viewModel,
     ) {
@@ -38,9 +41,7 @@ fun TransactionsScreen(
     }
 
     TransactionsScreenUI(
-        uiState = rememberTransactionsScreenUIState(
-            data = screenUIData,
-        ),
+        uiState = uiState,
         handleUIEvents = handleUIEvents,
     )
 }

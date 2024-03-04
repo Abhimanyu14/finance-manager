@@ -64,15 +64,23 @@ fun SettingsScreen(
         }
     val notificationsPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission(),
-        onResult = { _ -> },
+        onResult = { isPermissionGranted ->
+            if (isPermissionGranted) {
+                viewModel.enableReminder()
+            }
+        },
     )
 
     val screenUIData: MyResult<SettingsScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
-    val uiState: SettingsScreenUIState = rememberSettingsScreenUIState(
+    val uiState = rememberSettingsScreenUIState(
         data = screenUIData,
     )
     val handleUIEvents = remember(
-        key1 = viewModel,
+        viewModel,
+        uiState,
+        createDocumentResultLauncher,
+        openDocumentResultLauncher,
+        notificationsPermissionLauncher,
     ) {
         { uiEvent: SettingsScreenUIEvent ->
             when (uiEvent) {
