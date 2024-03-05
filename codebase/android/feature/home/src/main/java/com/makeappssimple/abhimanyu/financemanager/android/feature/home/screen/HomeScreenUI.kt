@@ -106,6 +106,7 @@ internal fun HomeScreenUI(
             item {
                 TotalBalanceCard(
                     data = TotalBalanceCardData(
+                        isBalanceVisible = uiState.isBalanceVisible,
                         isLoading = uiState.isLoading,
                         totalBalanceAmount = uiState.accountsTotalBalanceAmountValue,
                         totalMinimumBalanceAmount = uiState.accountsTotalMinimumBalanceAmountValue,
@@ -113,6 +114,9 @@ internal fun HomeScreenUI(
                     events = TotalBalanceCardEvents(
                         onClick = {
                             handleUIEvents(HomeScreenUIEvent.NavigateToAccountsScreen)
+                        },
+                        onViewBalanceClick = {
+                            uiState.setBalanceVisible(true)
                         },
                     ),
                 )

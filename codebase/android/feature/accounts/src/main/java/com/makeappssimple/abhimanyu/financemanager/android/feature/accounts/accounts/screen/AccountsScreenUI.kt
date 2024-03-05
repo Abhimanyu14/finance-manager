@@ -139,6 +139,7 @@ internal fun AccountsScreenUI(
             item {
                 TotalBalanceCard(
                     data = TotalBalanceCardData(
+                        isBalanceVisible = true,
                         isLoading = uiState.isLoading,
                         totalBalanceAmount = uiState.accountsTotalBalanceAmountValue,
                         totalMinimumBalanceAmount = uiState.accountsTotalMinimumBalanceAmountValue,

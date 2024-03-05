@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
@@ -25,13 +26,15 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.sh
 @Immutable
 data class ChipUIData(
     val isLoading: Boolean = false,
+    val borderColor: Color? = null,
+    val textColor: Color? = null,
     val text: String = "",
     val icon: ImageVector? = null,
 )
 
 @Immutable
 data class ChipUIEvents(
-    val onSelectionChange: () -> Unit = {},
+    val onClick: () -> Unit = {},
 )
 
 @Composable
@@ -39,7 +42,7 @@ fun ChipUI(
     modifier: Modifier = Modifier,
     data: ChipUIData,
     events: ChipUIEvents = ChipUIEvents(),
-    isSelected: Boolean,
+    isSelected: Boolean = false,
 ) {
     val shape = CircleShape
 
@@ -60,7 +63,9 @@ fun ChipUI(
                 )
                 .border(
                     width = 1.dp,
-                    color = if (isSelected) {
+                    color = if (data.borderColor != null) {
+                        data.borderColor
+                    } else if (isSelected) {
                         MaterialTheme.colorScheme.primary
                     } else {
                         MaterialTheme.colorScheme.outline
@@ -68,13 +73,13 @@ fun ChipUI(
                     shape = shape,
                 )
                 .conditionalClickable(
-                    onClick = events.onSelectionChange,
+                    onClick = events.onClick,
                 )
                 .background(
                     if (isSelected) {
                         MaterialTheme.colorScheme.primary
                     } else {
-                        MaterialTheme.colorScheme.background
+                        Color.Transparent
                     }
                 ),
         ) {
@@ -114,7 +119,9 @@ fun ChipUI(
                 text = data.text,
                 style = MaterialTheme.typography.labelMedium
                     .copy(
-                        color = if (isSelected) {
+                        color = if (data.textColor != null) {
+                            data.textColor
+                        } else if (isSelected) {
                             MaterialTheme.colorScheme.onPrimary
                         } else {
                             MaterialTheme.colorScheme.onBackground

@@ -60,7 +60,7 @@ fun MyHorizontalScrollingRadioGroup(
                 ChipUI(
                     data = chipUIData,
                     events = ChipUIEvents(
-                        onSelectionChange = {
+                        onClick = {
                             events.onSelectionChange(index)
                         }
                     ),

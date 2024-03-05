@@ -58,7 +58,7 @@ fun MyHorizontalScrollingSelectionGroup(
                 ChipUI(
                     data = data,
                     events = ChipUIEvents(
-                        onSelectionChange = {
+                        onClick = {
                             events.onSelectionChange(index)
                         }
                     ),

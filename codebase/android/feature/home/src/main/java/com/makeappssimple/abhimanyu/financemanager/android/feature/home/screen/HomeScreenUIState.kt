@@ -29,6 +29,7 @@ class HomeScreenUIState(
             null
         }
     },
+    val isBalanceVisible: Boolean,
     val screenBottomSheetType: HomeScreenBottomSheetType,
     val setScreenBottomSheetType: (HomeScreenBottomSheetType) -> Unit,
     private val totalIncomeAmount: Amount = Amount(
@@ -50,6 +51,7 @@ class HomeScreenUIState(
     val resetScreenBottomSheetType: () -> Unit = {
         setScreenBottomSheetType(HomeScreenBottomSheetType.NONE)
     },
+    val setBalanceVisible: (Boolean) -> Unit,
     val pieChartData: PieChartData = PieChartData(
         items = listOf(
             PieChartItemData(
@@ -70,6 +72,11 @@ class HomeScreenUIState(
 fun rememberHomeScreenUIState(
     data: MyResult<HomeScreenUIData>?,
 ): HomeScreenUIState {
+    val (isBalanceVisible: Boolean, setBalanceVisible: (Boolean) -> Unit) = remember {
+        mutableStateOf(
+            value = false,
+        )
+    }
     val (screenBottomSheetType: HomeScreenBottomSheetType, setScreenBottomSheetType: (HomeScreenBottomSheetType) -> Unit) = remember {
         mutableStateOf(
             value = HomeScreenBottomSheetType.NONE,
@@ -78,13 +85,17 @@ fun rememberHomeScreenUIState(
 
     return remember(
         data,
+        isBalanceVisible,
         screenBottomSheetType,
+        setBalanceVisible,
         setScreenBottomSheetType,
     ) {
         HomeScreenUIState(
             data = data,
+            isBalanceVisible = isBalanceVisible,
             screenBottomSheetType = screenBottomSheetType,
             setScreenBottomSheetType = setScreenBottomSheetType,
+            setBalanceVisible = setBalanceVisible,
         )
     }
 }

@@ -17,20 +17,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUI
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.matchrowsize.matchRowSize
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
 
 @Immutable
 data class TotalBalanceCardData(
+    val isBalanceVisible: Boolean = false,
     val isLoading: Boolean = false,
     val totalBalanceAmount: Long = 0L,
     val totalMinimumBalanceAmount: Long = 0L,
@@ -40,6 +46,7 @@ data class TotalBalanceCardData(
 data class TotalBalanceCardEvents(
     val onClick: (() -> Unit)? = null,
     val onLongClick: (() -> Unit)? = null,
+    val onViewBalanceClick: (() -> Unit)? = null,
 )
 
 @Composable
@@ -57,6 +64,7 @@ fun TotalBalanceCard(
         )
     } else {
         Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
                 .testTag(
                     tag = TestTags.COMPONENT_TOTAL_BALANCE_CARD,
@@ -79,53 +87,69 @@ fun TotalBalanceCard(
                     all = 16.dp,
                 ),
         ) {
-            MyText(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                textStringResourceId = R.string.total_balance_card_title,
-                style = MaterialTheme.typography.displaySmall
-                    .copy(
-                        color = MaterialTheme.colorScheme.onTertiary,
-                        textAlign = TextAlign.Center,
-                    ),
-            )
-            MyText(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                text = Amount(
-                    value = data.totalBalanceAmount,
-                ).toString(),
-                style = MaterialTheme.typography.displayLarge
-                    .copy(
-                        color = MaterialTheme.colorScheme.onTertiary,
-                        textAlign = TextAlign.Center,
-                    ),
-            )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(IntrinsicSize.Min),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Icon(
+            if (data.isBalanceVisible) {
+                MyText(
                     modifier = Modifier
-                        .padding(2.dp)
-                        .matchRowSize(),
-                    imageVector = MyIcons.Lock,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onTertiary,
+                        .fillMaxWidth(),
+                    textStringResourceId = R.string.total_balance_card_title,
+                    style = MaterialTheme.typography.displaySmall
+                        .copy(
+                            color = MaterialTheme.colorScheme.onTertiary,
+                            textAlign = TextAlign.Center,
+                        ),
                 )
                 MyText(
+                    modifier = Modifier
+                        .fillMaxWidth(),
                     text = Amount(
-                        value = data.totalMinimumBalanceAmount,
+                        value = data.totalBalanceAmount,
                     ).toString(),
-                    style = MaterialTheme.typography.bodySmall
+                    style = MaterialTheme.typography.displayLarge
                         .copy(
-                            fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onTertiary,
-                            textAlign = TextAlign.End,
+                            textAlign = TextAlign.Center,
                         ),
+                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(IntrinsicSize.Min),
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    Icon(
+                        modifier = Modifier
+                            .padding(2.dp)
+                            .matchRowSize(),
+                        imageVector = MyIcons.Lock,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.onTertiary,
+                    )
+                    MyText(
+                        text = Amount(
+                            value = data.totalMinimumBalanceAmount,
+                        ).toString(),
+                        style = MaterialTheme.typography.bodySmall
+                            .copy(
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onTertiary,
+                                textAlign = TextAlign.End,
+                            ),
+                    )
+                }
+            } else {
+                ChipUI(
+                    modifier = Modifier,
+                    data = ChipUIData(
+                        borderColor = MaterialTheme.colorScheme.onTertiary,
+                        textColor = MaterialTheme.colorScheme.onTertiary,
+                        text = stringResource(
+                            id = R.string.total_balance_card_view_balance,
+                        ),
+                    ),
+                    events = ChipUIEvents(
+                        onClick = events.onViewBalanceClick.orEmpty(),
+                    ),
                 )
             }
         }

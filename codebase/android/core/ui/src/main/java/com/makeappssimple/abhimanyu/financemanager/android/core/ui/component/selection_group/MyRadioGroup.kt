@@ -39,7 +39,7 @@ fun MyRadioGroup(
                 ChipUI(
                     data = chipUIData,
                     events = ChipUIEvents(
-                        onSelectionChange = {
+                        onClick = {
                             events.onSelectionChange(index)
                         }
                     ),

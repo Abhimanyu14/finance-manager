@@ -141,6 +141,7 @@
 
     <!-- region total balance card -->
     <string name="total_balance_card_title">TOTAL BALANCE</string>
+    <string name="total_balance_card_view_balance">View Balance</string>
     <!-- endregion -->
 
     <!-- region transactions list item -->
