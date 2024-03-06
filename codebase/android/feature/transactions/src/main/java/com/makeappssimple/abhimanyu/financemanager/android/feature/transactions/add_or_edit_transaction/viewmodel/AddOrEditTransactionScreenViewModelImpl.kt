@@ -280,7 +280,6 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             isCtaButtonEnabled.isNull() ||
             filteredCategories.isNull() ||
             accounts.isNull() ||
-            titleSuggestions.isNull() ||
             transactionTypesForNewTransaction.isNull() ||
             transactionForValues.isNull() ||
             selectedTransactionType.isNull()
@@ -294,7 +293,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                     isCtaButtonEnabled = isCtaButtonEnabled,
                     filteredCategories = filteredCategories,
                     accounts = accounts,
-                    titleSuggestions = titleSuggestions,
+                    titleSuggestions = titleSuggestions.orEmpty(),
                     transactionTypesForNewTransaction = transactionTypesForNewTransaction,
                     transactionForValues = transactionForValues,
                     currentLocalDate = dateTimeUtil.getCurrentLocalDate(),
