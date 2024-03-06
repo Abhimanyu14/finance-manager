@@ -44,6 +44,8 @@
 
     <!-- region view transaction screen -->
     <string name="screen_view_transaction_appbar_title">Transaction Details</string>
+    <string name="screen_view_transaction_refund_transactions">Refund Transactions</string>
+    <string name="screen_view_transaction_original_transaction">Original Transaction</string>
     <!-- endregion -->
 
 </resources>

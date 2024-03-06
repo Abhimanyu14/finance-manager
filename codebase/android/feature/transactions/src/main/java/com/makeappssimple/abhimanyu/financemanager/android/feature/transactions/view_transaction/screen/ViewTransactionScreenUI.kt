@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.screen
 
+import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -108,8 +108,8 @@ internal fun ViewTransactionScreenUI(
                     MyLinearProgressIndicator()
                 }
             }
-            item {
-                if (uiState.transactionListItemData.isNotNull()) {
+            if (uiState.transactionListItemData.isNotNull()) {
+                item {
                     TransactionListItem(
                         modifier = Modifier
                             .padding(
@@ -142,81 +142,58 @@ internal fun ViewTransactionScreenUI(
                     )
                 }
             }
-            item {
-                if (uiState.originalTransactionListItemData.isNotNull()) {
-                    Column(
+            if (uiState.originalTransactionListItemData.isNotNull()) {
+                item {
+                    ViewTransactionSectionHeader(
+                        textStringResourceId = R.string.screen_view_transaction_original_transaction,
+                    )
+                }
+                item {
+                    TransactionListItem(
                         modifier = Modifier
-                            .fillMaxWidth(),
-                    ) {
-                        MyText(
-                            modifier = Modifier
-                                .padding(
-                                    top = 16.dp,
-                                    start = 16.dp,
-                                )
-                                .fillMaxWidth(),
-                            text = "Original Transaction",
-                            style = MaterialTheme.typography.headlineMedium
-                                .copy(
-                                    color = MaterialTheme.colorScheme.onBackground,
-                                ),
-                        )
-                        TransactionListItem(
-                            modifier = Modifier
-                                .padding(
-                                    top = 8.dp,
-                                    bottom = 8.dp,
-                                ),
-                            data = uiState.originalTransactionListItemData,
-                            events = TransactionListItemEvents(
-                                onClick = {
-                                    handleUIEvents(
-                                        ViewTransactionScreenUIEvent.NavigateToViewTransactionScreen(
-                                            transactionId = uiState.originalTransactionListItemData.transactionId,
-                                        )
-                                    )
-                                },
-                                onDeleteButtonClick = {
-                                    uiState.setTransactionIdToDelete(uiState.originalTransactionListItemData.transactionId)
-                                    uiState.setScreenBottomSheetType(
-                                        ViewTransactionScreenBottomSheetType.DELETE_CONFIRMATION
-                                    )
-                                },
-                                onEditButtonClick = {
-                                    handleUIEvents(
-                                        ViewTransactionScreenUIEvent.NavigateToEditTransactionScreen(
-                                            transactionId = uiState.originalTransactionListItemData.transactionId,
-                                        )
-                                    )
-                                },
-                                onRefundButtonClick = {
-                                    handleUIEvents(
-                                        ViewTransactionScreenUIEvent.NavigateToAddTransactionScreen(
-                                            transactionId = uiState.originalTransactionListItemData.transactionId,
-                                        )
-                                    )
-                                },
+                            .padding(
+                                top = 8.dp,
+                                bottom = 8.dp,
                             ),
-                        )
-                    }
+                        data = uiState.originalTransactionListItemData,
+                        events = TransactionListItemEvents(
+                            onClick = {
+                                handleUIEvents(
+                                    ViewTransactionScreenUIEvent.NavigateToViewTransactionScreen(
+                                        transactionId = uiState.originalTransactionListItemData.transactionId,
+                                    )
+                                )
+                            },
+                            onDeleteButtonClick = {
+                                uiState.setTransactionIdToDelete(uiState.originalTransactionListItemData.transactionId)
+                                uiState.setScreenBottomSheetType(
+                                    ViewTransactionScreenBottomSheetType.DELETE_CONFIRMATION
+                                )
+                            },
+                            onEditButtonClick = {
+                                handleUIEvents(
+                                    ViewTransactionScreenUIEvent.NavigateToEditTransactionScreen(
+                                        transactionId = uiState.originalTransactionListItemData.transactionId,
+                                    )
+                                )
+                            },
+                            onRefundButtonClick = {
+                                handleUIEvents(
+                                    ViewTransactionScreenUIEvent.NavigateToAddTransactionScreen(
+                                        transactionId = uiState.originalTransactionListItemData.transactionId,
+                                    )
+                                )
+                            },
+                        ),
+                    )
                 }
             }
             if (uiState.refundTransactionListItemData.isNotNull() &&
                 uiState.refundTransactionListItemData.isNotEmpty()
             ) {
                 item {
-                    MyText(
-                        modifier = Modifier
-                            .padding(
-                                top = 16.dp,
-                                start = 16.dp,
-                            )
-                            .fillMaxWidth(),
-                        text = "Refund Transactions",
-                        style = MaterialTheme.typography.headlineMedium
-                            .copy(
-                                color = MaterialTheme.colorScheme.onBackground,
-                            ),
+                    ViewTransactionSectionHeader(
+                        textStringResourceId = R.string.screen_view_transaction_refund_transactions,
                     )
                 }
                 items(
@@ -263,4 +240,24 @@ internal fun ViewTransactionScreenUI(
             }
         }
     }
+}
+
+@Composable
+private fun ViewTransactionSectionHeader(
+    modifier: Modifier = Modifier,
+    @StringRes textStringResourceId: Int,
+) {
+    MyText(
+        modifier = modifier
+            .padding(
+                top = 16.dp,
+                start = 16.dp,
+            )
+            .fillMaxWidth(),
+        textStringResourceId = textStringResourceId,
+        style = MaterialTheme.typography.headlineMedium
+            .copy(
+                color = MaterialTheme.colorScheme.onBackground,
+            ),
+    )
 }
