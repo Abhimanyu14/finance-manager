@@ -22,8 +22,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Common
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactions.TransactionDeleteConfirmationBottomSheet
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.TransactionListItem
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.TransactionListItemEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.view_transaction_section_header.ViewTransactionSectionHeader
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R

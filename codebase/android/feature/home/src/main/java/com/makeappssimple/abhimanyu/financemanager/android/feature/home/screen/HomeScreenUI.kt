@@ -27,8 +27,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bac
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.home_recent_transactions.HomeRecentTransactions
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.home_recent_transactions.HomeRecentTransactionsData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.home_recent_transactions.HomeRecentTransactionsEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.TransactionListItem
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.TransactionListItemEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardEvents

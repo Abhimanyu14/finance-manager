@@ -17,7 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.So
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.orDefault
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.TransactionListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 import java.time.LocalDate
 
 @Stable

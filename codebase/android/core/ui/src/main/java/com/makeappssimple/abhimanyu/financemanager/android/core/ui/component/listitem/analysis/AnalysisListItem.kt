@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.analysis
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -77,7 +77,7 @@ fun AnalysisListItem(
             val endTextWidth = with(
                 receiver = density,
             ) {
-                data.maxEndTextWidth.toDp() + 8.dp
+                data.maxEndTextWidth.toDp() + 24.dp
             }
             Row(
                 modifier = Modifier

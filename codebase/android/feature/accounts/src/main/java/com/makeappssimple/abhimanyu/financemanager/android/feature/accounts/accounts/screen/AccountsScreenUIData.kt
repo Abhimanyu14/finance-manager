@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.acc
 
 import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.AccountsListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemData
 
 @Immutable
 data class AccountsScreenUIData(

@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.TransactionListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 
 @Immutable
 data class ViewTransactionScreenUIData(

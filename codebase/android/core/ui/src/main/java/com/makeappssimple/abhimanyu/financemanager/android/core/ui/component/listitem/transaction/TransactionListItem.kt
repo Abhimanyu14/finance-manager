@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Column

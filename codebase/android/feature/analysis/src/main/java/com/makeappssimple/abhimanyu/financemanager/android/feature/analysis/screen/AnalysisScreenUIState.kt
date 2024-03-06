@@ -13,7 +13,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.an
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.analysis.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.AnalysisListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.analysis.AnalysisListItemData
 import java.time.LocalDate
 
 @Stable

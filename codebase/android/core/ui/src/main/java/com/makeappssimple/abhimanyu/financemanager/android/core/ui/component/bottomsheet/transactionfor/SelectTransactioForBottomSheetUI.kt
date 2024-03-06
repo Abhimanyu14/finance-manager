@@ -9,8 +9,8 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetTitle
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.TransactionForListItem
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.TransactionForListItemDataAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transactionfor.TransactionForListItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transactionfor.TransactionForListItemDataAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
 
 @Immutable
