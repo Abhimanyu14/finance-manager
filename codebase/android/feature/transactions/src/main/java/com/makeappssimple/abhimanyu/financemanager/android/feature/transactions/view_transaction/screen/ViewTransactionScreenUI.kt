@@ -1,13 +1,10 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.screen
 
-import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -17,7 +14,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
@@ -29,6 +25,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bot
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.TransactionListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.TransactionListItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.view_transaction_section_header.ViewTransactionSectionHeader
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 
 @Composable
@@ -240,24 +237,4 @@ internal fun ViewTransactionScreenUI(
             }
         }
     }
-}
-
-@Composable
-private fun ViewTransactionSectionHeader(
-    modifier: Modifier = Modifier,
-    @StringRes textStringResourceId: Int,
-) {
-    MyText(
-        modifier = modifier
-            .padding(
-                top = 16.dp,
-                start = 16.dp,
-            )
-            .fillMaxWidth(),
-        textStringResourceId = textStringResourceId,
-        style = MaterialTheme.typography.headlineMedium
-            .copy(
-                color = MaterialTheme.colorScheme.onBackground,
-            ),
-    )
 }
