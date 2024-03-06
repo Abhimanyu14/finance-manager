@@ -5,11 +5,9 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account.SelectAccountBottomSheetUI
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account.SelectListItemBottomSheetUIData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.AccountsListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.AccountsListItemDataAndEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.AccountsListItemEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.TransactionForListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.TransactionForListItemDataAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.TransactionForListItemEvents
 
 @Immutable
 data class SelectTransactionForBottomSheetData(
@@ -27,24 +25,22 @@ fun SelectTransactionForBottomSheet(
     data: SelectTransactionForBottomSheetData,
     events: SelectTransactionForBottomSheetEvents,
 ) {
-    SelectAccountBottomSheetUI(
+    SelectTransactionForBottomSheetUI(
         modifier = modifier,
-        data = SelectListItemBottomSheetUIData(
+        data = SelectTransactionForListItemBottomSheetUIData(
             titleTextStringResourceId = R.string.bottom_sheet_select_transaction_for_title,
             data = data.transactionForValues
                 .map { transactionFor ->
-                    // TODO(Abhi): Create a separate list item for transaction for
-                    AccountsListItemDataAndEvents(
-                        data = AccountsListItemData(
-                            name = transactionFor.titleToDisplay,
+                    TransactionForListItemDataAndEvents(
+                        data = TransactionForListItemData(
+                            title = transactionFor.titleToDisplay,
                         ),
-                        events = AccountsListItemEvents(
+                        events = TransactionForListItemEvents(
                             onClick = {
                                 events.onItemClick(transactionFor)
                             },
                         ),
                     )
-
                 }
                 .toList(),
         ),

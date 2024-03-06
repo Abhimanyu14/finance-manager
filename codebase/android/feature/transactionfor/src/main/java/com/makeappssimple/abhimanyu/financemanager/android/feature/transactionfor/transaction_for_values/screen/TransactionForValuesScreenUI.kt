@@ -148,7 +148,6 @@ internal fun TransactionForValuesScreenUI(
                 TransactionForListItem(
                     data = TransactionForListItemData(
                         title = listItem.title.capitalizeWords(),
-                        isDeleteVisible = isDeleteVisible,
                     ),
                     events = TransactionForListItemEvents(
                         onClick = {

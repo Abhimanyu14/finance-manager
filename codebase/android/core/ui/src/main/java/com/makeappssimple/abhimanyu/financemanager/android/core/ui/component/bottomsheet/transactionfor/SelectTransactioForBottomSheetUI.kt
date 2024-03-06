@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactionfor
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.defaultMinSize
@@ -9,20 +9,20 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetTitle
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.AccountsListItem
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.AccountsListItemDataAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.TransactionForListItem
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.TransactionForListItemDataAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
 
 @Immutable
-internal data class SelectAccountListItemBottomSheetUIData(
+internal data class SelectTransactionForListItemBottomSheetUIData(
     @StringRes val titleTextStringResourceId: Int = 0,
-    val data: List<AccountsListItemDataAndEvents> = emptyList(),
+    val data: List<TransactionForListItemDataAndEvents> = emptyList(),
 )
 
 @Composable
-internal fun SelectAccountBottomSheetUI(
+internal fun SelectTransactionForBottomSheetUI(
     modifier: Modifier = Modifier,
-    data: SelectAccountListItemBottomSheetUIData,
+    data: SelectTransactionForListItemBottomSheetUIData,
 ) {
     LazyColumn(
         modifier = modifier
@@ -41,7 +41,7 @@ internal fun SelectAccountBottomSheetUI(
                 listItem.hashCode()
             },
         ) { listItem ->
-            AccountsListItem(
+            TransactionForListItem(
                 data = listItem.data,
                 events = listItem.events,
             )

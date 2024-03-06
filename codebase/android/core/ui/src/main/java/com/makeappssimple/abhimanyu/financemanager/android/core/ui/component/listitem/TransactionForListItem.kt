@@ -12,8 +12,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 
 @Immutable
+data class TransactionForListItemDataAndEvents(
+    val data: TransactionForListItemData,
+    val events: TransactionForListItemEvents,
+)
+
+@Immutable
 data class TransactionForListItemData(
-    val isDeleteVisible: Boolean,
     val title: String,
 )
 
