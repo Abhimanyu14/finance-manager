@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.edit_transaction.screen
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -47,6 +48,12 @@ fun EditTransactionScreen(
                 }
             }
         }
+    }
+
+    LaunchedEffect(
+        key1 = Unit,
+    ) {
+        viewModel.initViewModel()
     }
 
     AddOrEditTransactionScreenUI(

@@ -26,5 +26,5 @@ private class LintTest {
     // for mentions of "lint", which should trigger an
     // error
     val s = "lint"
-    fun lint() { }
+    fun lint() {}
 }

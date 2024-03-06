@@ -68,6 +68,12 @@ fun AddAccountScreen(
         )
     }
 
+    LaunchedEffect(
+        key1 = Unit,
+    ) {
+        viewModel.initViewModel()
+    }
+
     AddOrEditAccountScreenUI(
         uiState = uiState,
         handleUIEvents = handleUIEvents,

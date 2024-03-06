@@ -44,7 +44,7 @@ fun ViewTransactionScreen(
     LaunchedEffect(
         key1 = Unit,
     ) {
-        viewModel.getTransactionData()
+        viewModel.initViewModel()
     }
 
     ViewTransactionScreenUI(

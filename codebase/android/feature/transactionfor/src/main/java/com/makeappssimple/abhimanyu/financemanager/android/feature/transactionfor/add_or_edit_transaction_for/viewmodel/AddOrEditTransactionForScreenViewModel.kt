@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.StateFlow
 interface AddOrEditTransactionForScreenViewModel : ScreenViewModel {
     val screenUIData: StateFlow<MyResult<AddOrEditTransactionForScreenUIData>?>
 
+    fun initViewModel()
+
     fun handleUIEvents(
         uiEvent: AddOrEditTransactionForScreenUIEvent,
     )

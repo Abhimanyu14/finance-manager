@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 data class SettingsListItemMenuSectionTitleData(
     override val contentType: SettingsListItemContentType = SettingsListItemContentType.MENU_SECTION_TITLE,
     @StringRes val textStringResourceId: Int,
-): SettingsListItemData
+) : SettingsListItemData
 
 @Composable
 fun SettingsListItemMenuSectionTitle(

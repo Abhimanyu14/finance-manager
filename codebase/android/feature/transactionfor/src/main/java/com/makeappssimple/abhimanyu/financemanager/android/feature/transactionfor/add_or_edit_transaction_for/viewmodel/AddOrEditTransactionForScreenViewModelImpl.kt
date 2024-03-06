@@ -96,11 +96,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
         scope = viewModelScope,
     )
 
-    init {
-        initViewModel()
-    }
-
-    private fun initViewModel() {
+    override fun initViewModel() {
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {

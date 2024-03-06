@@ -142,11 +142,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         scope = viewModelScope,
     )
 
-    init {
-        initViewModel()
-    }
-
-    private fun initViewModel() {
+    override fun initViewModel() {
         viewModelScope.launch(
             context = dispatcherProvider.io,
         ) {
@@ -241,7 +237,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun clearTitle() {
+    private fun clearTitle() {
         updateTitle(
             updatedTitle = title.value.copy(
                 text = "",
@@ -249,11 +245,11 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         )
     }
 
-    override fun navigateUp() {
+    private fun navigateUp() {
         navigator.navigateUp()
     }
 
-    override fun updateTitle(
+    private fun updateTitle(
         updatedTitle: TextFieldValue,
     ) {
         viewModelScope.launch(
@@ -265,19 +261,19 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun updateSelectedTransactionTypeIndex(
+    private fun updateSelectedTransactionTypeIndex(
         updatedIndex: Int,
     ) {
         selectedTransactionTypeIndex.value = updatedIndex
     }
 
-    override fun updateEmoji(
+    private fun updateEmoji(
         updatedEmoji: String,
     ) {
         emoji.value = updatedEmoji
     }
 
-    override fun updateSearchText(
+    private fun updateSearchText(
         updatedSearchText: String,
     ) {
         searchText.value = updatedSearchText

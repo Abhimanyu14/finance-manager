@@ -109,7 +109,11 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun getTransactionData() {
+    override fun initViewModel() {
+        getTransactionData()
+    }
+
+    private fun getTransactionData() {
         screenArgs.originalTransactionId?.let { id ->
             viewModelScope.launch(
                 context = dispatcherProvider.io,

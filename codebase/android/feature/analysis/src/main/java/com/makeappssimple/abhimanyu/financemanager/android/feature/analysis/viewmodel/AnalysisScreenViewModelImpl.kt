@@ -30,7 +30,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import java.time.LocalDate
 import javax.inject.Inject
 
@@ -114,18 +113,6 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
     }.defaultObjectStateIn(
         scope = viewModelScope,
     )
-
-    init {
-        initViewModel()
-    }
-
-    private fun initViewModel() {
-        viewModelScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-
-        }
-    }
 
     override fun handleUIEvents(
         uiEvent: AnalysisScreenUIEvent,
