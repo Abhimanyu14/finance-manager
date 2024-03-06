@@ -56,12 +56,12 @@ class HomeScreenUIState(
         items = listOf(
             PieChartItemData(
                 value = unwrappedData?.overviewCardData?.income.orZero(),
-                text = "Income : $totalIncomeAmount",
+                text = "Income : $totalIncomeAmount", // TODO(Abhi): Move to string resources
                 color = MyColor.TERTIARY,
             ),
             PieChartItemData(
                 value = unwrappedData?.overviewCardData?.expense.orZero(),
-                text = "Expense : ${totalExpenseAmount.toNonSignedString()}",
+                text = "Expense : ${totalExpenseAmount.toNonSignedString()}", // TODO(Abhi): Move to string resources
                 color = MyColor.ERROR,
             ),
         ),

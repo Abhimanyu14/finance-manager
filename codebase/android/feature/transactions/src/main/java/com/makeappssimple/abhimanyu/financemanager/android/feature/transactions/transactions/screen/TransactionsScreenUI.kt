@@ -16,10 +16,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,6 +29,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_CONTENT_TRANSACTIONS
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_TRANSACTIONS
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyDropdownMenu
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyDropdownMenuData
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyDropdownMenuEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyDropdownMenuItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyDropdownMenuItemDataAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyDropdownMenuItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
@@ -192,57 +195,58 @@ internal fun TransactionsScreenUI(
                         var isDropDownVisible by remember {
                             mutableStateOf(false)
                         }
-                        Box(
-                            modifier = Modifier,
-                        ) {
+                        Box {
                             MyIconButton(
                                 tint = MaterialTheme.colorScheme.onBackground,
                                 imageVector = MyIcons.MoreVert,
-                                contentDescription = "", // TODO(Abhi): Add content description
+                                contentDescription = stringResource(
+                                    id = R.string.screen_transactions_selection_mode_appbar_menu_more_options,
+                                ),
                                 onClick = {
                                     isDropDownVisible = true
                                 },
                             )
-                            DropdownMenu(
-                                expanded = isDropDownVisible,
-                                onDismissRequest = {
-                                    isDropDownVisible = false
-                                }
-                            ) {
-                                DropdownMenuItem(
-                                    text = {
-                                        Text(
-                                            text = stringResource(
-                                                id = R.string.screen_transactions_selection_mode_appbar_menu_update_transaction_for,
+                            MyDropdownMenu(
+                                data = MyDropdownMenuData(
+                                    isExpanded = isDropDownVisible,
+                                    menuItemsDataAndEvents = listOf(
+                                        MyDropdownMenuItemDataAndEvents(
+                                            data = MyDropdownMenuItemData(
+                                                textStringResourceId = R.string.screen_transactions_selection_mode_appbar_menu_update_transaction_for,
                                             ),
-                                        )
-                                    },
-                                    onClick = {
-                                        isDropDownVisible = false
-                                        uiState.setScreenBottomSheetType(
-                                            TransactionsScreenBottomSheetType.SELECT_TRANSACTION_FOR
-                                        )
-                                    },
-                                )
-                                DropdownMenuItem(
-                                    text = {
-                                        Text(
-                                            text = stringResource(
-                                                id = R.string.screen_transactions_selection_mode_appbar_menu_select_all,
+                                            events = MyDropdownMenuItemEvents(
+                                                onClick = {
+                                                    isDropDownVisible = false
+                                                    uiState.setScreenBottomSheetType(
+                                                        TransactionsScreenBottomSheetType.SELECT_TRANSACTION_FOR
+                                                    )
+                                                },
                                             ),
-                                        )
-                                    },
-                                    onClick = {
+                                        ),
+                                        MyDropdownMenuItemDataAndEvents(
+                                            data = MyDropdownMenuItemData(
+                                                textStringResourceId = R.string.screen_transactions_selection_mode_appbar_menu_select_all,
+                                            ),
+                                            events = MyDropdownMenuItemEvents(
+                                                onClick = {
+                                                    isDropDownVisible = false
+                                                    handleUIEvents(TransactionsScreenUIEvent.SelectAllTransactions)
+                                                },
+                                            ),
+                                        ),
+                                    ),
+                                ),
+                                events = MyDropdownMenuEvents(
+                                    onDismissRequest = {
                                         isDropDownVisible = false
-                                        handleUIEvents(TransactionsScreenUIEvent.SelectAllTransactions)
                                     },
-                                )
-                            }
+                                ),
+                            )
                         }
                     },
                     navigationAction = resetSelectionMode,
                     title = {
-                        Text(
+                        MyText(
                             text = stringResource(
                                 id = R.string.screen_transactions_selection_mode_appbar_title,
                                 uiState.selectedTransactions.size,

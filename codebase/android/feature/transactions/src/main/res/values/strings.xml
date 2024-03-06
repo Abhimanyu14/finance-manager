@@ -31,6 +31,7 @@
     <!-- region transactions screen -->
     <string name="screen_transactions_appbar_title">Transactions</string>
     <string name="screen_transactions_selection_mode_appbar_title">%1$d selected</string>
+    <string name="screen_transactions_selection_mode_appbar_menu_more_options">More Options</string>
     <string name="screen_transactions_selection_mode_appbar_menu_update_transaction_for">Update Transaction For</string>
     <string name="screen_transactions_selection_mode_appbar_menu_select_all">Select All</string>
     <string name="screen_transactions_searchbar_placeholder">Search Transactions</string>
