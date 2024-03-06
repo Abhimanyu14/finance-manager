@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.recenttransactions
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.home_recent_transactions
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -15,14 +16,25 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 
+@Immutable
+data class HomeRecentTransactionsData(
+    val isTrailingTextVisible: Boolean,
+)
+
+@Immutable
+data class HomeRecentTransactionsEvents(
+    val onClick: (() -> Unit)? = null,
+)
+
 @Composable
-fun HomeRecentTransactionsUI(
-    isTrailingTextVisible: Boolean,
-    onClick: (() -> Unit)? = null,
+fun HomeRecentTransactions(
+    modifier: Modifier = Modifier,
+    data: HomeRecentTransactionsData,
+    events: HomeRecentTransactionsEvents = HomeRecentTransactionsEvents(),
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(
                 start = 8.dp,
@@ -37,7 +49,7 @@ fun HomeRecentTransactionsUI(
                 onClickLabel = stringResource(
                     id = R.string.screen_home_view_all_transactions,
                 ),
-                onClick = onClick,
+                onClick = events.onClick,
             )
             .padding(
                 top = 12.dp,
@@ -57,7 +69,7 @@ fun HomeRecentTransactionsUI(
                     color = MaterialTheme.colorScheme.onBackground,
                 ),
         )
-        if (isTrailingTextVisible) {
+        if (data.isTrailingTextVisible) {
             MyText(
                 modifier = Modifier,
                 textStringResourceId = R.string.screen_home_view_all_transactions,

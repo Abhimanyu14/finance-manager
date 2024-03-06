@@ -24,12 +24,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyT
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCardData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCardEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.home_recent_transactions.HomeRecentTransactions
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.home_recent_transactions.HomeRecentTransactionsData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.home_recent_transactions.HomeRecentTransactionsEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.TransactionListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.TransactionListItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.recenttransactions.HomeRecentTransactionsUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardData
@@ -159,13 +161,17 @@ internal fun HomeScreenUI(
                 )
             }
             item {
-                HomeRecentTransactionsUI(
-                    isTrailingTextVisible = uiState.transactionListItemDataList.isNotEmpty(),
-                    onClick = if (uiState.transactionListItemDataList.isNotEmpty()) {
-                        { handleUIEvents(HomeScreenUIEvent.NavigateToTransactionsScreen) }
-                    } else {
-                        null
-                    },
+                HomeRecentTransactions(
+                    data = HomeRecentTransactionsData(
+                        isTrailingTextVisible = uiState.transactionListItemDataList.isNotEmpty(),
+                    ),
+                    events = HomeRecentTransactionsEvents(
+                        onClick = if (uiState.transactionListItemDataList.isNotEmpty()) {
+                            { handleUIEvents(HomeScreenUIEvent.NavigateToTransactionsScreen) }
+                        } else {
+                            null
+                        },
+                    ),
                 )
             }
             items(

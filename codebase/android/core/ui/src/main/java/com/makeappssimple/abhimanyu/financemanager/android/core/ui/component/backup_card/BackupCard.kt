@@ -44,50 +44,61 @@ fun BackupCard(
             modifier = modifier,
         )
     } else {
-        Card(
-            modifier = modifier
+        BackupCardUI(
+            modifier = modifier,
+            events = events,
+        )
+    }
+}
+
+@Composable
+private fun BackupCardUI(
+    modifier: Modifier,
+    events: BackupCardEvents
+) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(
+                horizontal = 32.dp,
+                vertical = 4.dp,
+            )
+            .clip(
+                MaterialTheme.shapes.medium,
+            )
+            .conditionalClickable(
+                onClick = events.onClick,
+            ),
+    ) {
+        Row(
+            modifier = Modifier
                 .fillMaxWidth()
+                .background(
+                    color = MaterialTheme.colorScheme.primaryContainer,
+                )
                 .padding(
-                    horizontal = 32.dp,
-                    vertical = 4.dp,
-                )
-                .clip(
-                    MaterialTheme.shapes.medium,
-                )
-                .conditionalClickable(
-                    onClick = events.onClick,
+                    all = 16.dp,
                 ),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
-            Row(
+            Icon(
+                imageVector = MyIcons.Backup,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onBackground,
+            )
+            MyText(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .background(
-                        color = MaterialTheme.colorScheme.primaryContainer,
-                    )
                     .padding(
-                        all = 16.dp,
+                        horizontal = 16.dp,
+                    )
+                    .fillMaxWidth(),
+                textStringResourceId = R.string.backup_card,
+                style = MaterialTheme.typography.bodyLarge
+                    .copy(
+                        color = MaterialTheme.colorScheme.onBackground,
+                        fontWeight = FontWeight.Bold,
                     ),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Icon(
-                    imageVector = MyIcons.Backup,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.onBackground,
-                )
-                MyText(
-                    modifier = Modifier
-                        .padding(
-                            horizontal = 16.dp,
-                        )
-                        .fillMaxWidth(),
-                    textStringResourceId = R.string.backup_card,
-                    style = MaterialTheme.typography.bodyLarge
-                        .copy(
-                            color = MaterialTheme.colorScheme.onBackground,
-                            fontWeight = FontWeight.Bold,
-                        ),
-                )
-            }
+            )
         }
     }
 }

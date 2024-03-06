@@ -21,7 +21,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.COMPONENT_TOTAL_BALANCE_CARD
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
@@ -55,103 +55,114 @@ fun TotalBalanceCard(
     data: TotalBalanceCardData,
     events: TotalBalanceCardEvents = TotalBalanceCardEvents(),
 ) {
+    val modifierWithTestTag = modifier
+        .testTag(
+            tag = COMPONENT_TOTAL_BALANCE_CARD,
+        )
     if (data.isLoading) {
         TotalBalanceCardLoadingUI(
-            modifier = modifier
-                .testTag(
-                    tag = TestTags.COMPONENT_TOTAL_BALANCE_CARD,
-                ),
+            modifier = modifierWithTestTag,
         )
     } else {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = modifier
-                .testTag(
-                    tag = TestTags.COMPONENT_TOTAL_BALANCE_CARD,
-                )
-                .fillMaxWidth()
-                .padding(
-                    horizontal = 32.dp,
-                    vertical = 16.dp,
-                )
-                .clip(
-                    MaterialTheme.shapes.medium,
-                )
-                .background(
-                    color = MaterialTheme.colorScheme.tertiary,
-                )
-                .conditionalClickable(
-                    onClick = events.onClick,
-                )
-                .padding(
-                    all = 16.dp,
-                ),
-        ) {
-            if (data.isBalanceVisible) {
-                MyText(
+        TotalBalanceCardUI(
+            modifier = modifierWithTestTag,
+            data = data,
+            events = events,
+        )
+    }
+}
+
+@Composable
+private fun TotalBalanceCardUI(
+    modifier: Modifier,
+    events: TotalBalanceCardEvents,
+    data: TotalBalanceCardData
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(
+                horizontal = 32.dp,
+                vertical = 16.dp,
+            )
+            .clip(
+                MaterialTheme.shapes.medium,
+            )
+            .background(
+                color = MaterialTheme.colorScheme.tertiary,
+            )
+            .conditionalClickable(
+                onClick = events.onClick,
+            )
+            .padding(
+                all = 16.dp,
+            ),
+    ) {
+        if (data.isBalanceVisible) {
+            MyText(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                textStringResourceId = R.string.total_balance_card_title,
+                style = MaterialTheme.typography.displaySmall
+                    .copy(
+                        color = MaterialTheme.colorScheme.onTertiary,
+                        textAlign = TextAlign.Center,
+                    ),
+            )
+            MyText(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                text = Amount(
+                    value = data.totalBalanceAmount,
+                ).toString(),
+                style = MaterialTheme.typography.displayLarge
+                    .copy(
+                        color = MaterialTheme.colorScheme.onTertiary,
+                        textAlign = TextAlign.Center,
+                    ),
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(IntrinsicSize.Min),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(
                     modifier = Modifier
-                        .fillMaxWidth(),
-                    textStringResourceId = R.string.total_balance_card_title,
-                    style = MaterialTheme.typography.displaySmall
-                        .copy(
-                            color = MaterialTheme.colorScheme.onTertiary,
-                            textAlign = TextAlign.Center,
-                        ),
+                        .padding(2.dp)
+                        .matchRowSize(),
+                    imageVector = MyIcons.Lock,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.onTertiary,
                 )
                 MyText(
-                    modifier = Modifier
-                        .fillMaxWidth(),
                     text = Amount(
-                        value = data.totalBalanceAmount,
+                        value = data.totalMinimumBalanceAmount,
                     ).toString(),
-                    style = MaterialTheme.typography.displayLarge
+                    style = MaterialTheme.typography.bodySmall
                         .copy(
+                            fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onTertiary,
-                            textAlign = TextAlign.Center,
+                            textAlign = TextAlign.End,
                         ),
-                )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(IntrinsicSize.Min),
-                    horizontalArrangement = Arrangement.End,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    Icon(
-                        modifier = Modifier
-                            .padding(2.dp)
-                            .matchRowSize(),
-                        imageVector = MyIcons.Lock,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.onTertiary,
-                    )
-                    MyText(
-                        text = Amount(
-                            value = data.totalMinimumBalanceAmount,
-                        ).toString(),
-                        style = MaterialTheme.typography.bodySmall
-                            .copy(
-                                fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onTertiary,
-                                textAlign = TextAlign.End,
-                            ),
-                    )
-                }
-            } else {
-                ChipUI(
-                    modifier = Modifier,
-                    data = ChipUIData(
-                        borderColor = MaterialTheme.colorScheme.onTertiary,
-                        textColor = MaterialTheme.colorScheme.onTertiary,
-                        text = stringResource(
-                            id = R.string.total_balance_card_view_balance,
-                        ),
-                    ),
-                    events = ChipUIEvents(
-                        onClick = events.onViewBalanceClick.orEmpty(),
-                    ),
                 )
             }
+        } else {
+            ChipUI(
+                modifier = Modifier,
+                data = ChipUIData(
+                    borderColor = MaterialTheme.colorScheme.onTertiary,
+                    textColor = MaterialTheme.colorScheme.onTertiary,
+                    text = stringResource(
+                        id = R.string.total_balance_card_view_balance,
+                    ),
+                ),
+                events = ChipUIEvents(
+                    onClick = events.onViewBalanceClick.orEmpty(),
+                ),
+            )
         }
     }
 }

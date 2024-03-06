@@ -81,111 +81,122 @@ fun OverviewCard(
     data: OverviewCardData,
     events: OverviewCardEvents = OverviewCardEvents(),
 ) {
+    val modifierWithTestTag = modifier
+        .testTag(
+            tag = COMPONENT_OVERVIEW_CARD,
+        )
     if (data.isLoading) {
         OverviewCardLoadingUI(
-            modifier = modifier
-                .testTag(
-                    tag = COMPONENT_OVERVIEW_CARD,
-                ),
+            modifier = modifierWithTestTag,
         )
     } else {
-        ElevatedCard(
-            modifier = modifier
-                .testTag(
-                    tag = COMPONENT_OVERVIEW_CARD,
-                )
+        OverviewCardUI(
+            modifier = modifierWithTestTag,
+            events = events,
+            data = data,
+        )
+    }
+}
+
+@Composable
+private fun OverviewCardUI(
+    modifier: Modifier,
+    events: OverviewCardEvents,
+    data: OverviewCardData,
+) {
+    ElevatedCard(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(
+                horizontal = 32.dp,
+                vertical = 16.dp,
+            )
+            .clip(
+                shape = MaterialTheme.shapes.medium,
+            )
+            .conditionalClickable(
+                onClick = events.onClick,
+            ),
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
                 .fillMaxWidth()
+                .background(
+                    color = MaterialTheme.colorScheme.primaryContainer,
+                )
                 .padding(
-                    horizontal = 32.dp,
-                    vertical = 16.dp,
+                    all = 12.dp,
                 )
-                .clip(
-                    shape = MaterialTheme.shapes.medium,
-                )
-                .conditionalClickable(
-                    onClick = events.onClick,
-                ),
+                .animateContentSize(),
         ) {
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
+            OverviewTab(
+                data = OverviewTabData(
+                    items = OverviewTabOption.entries
+                        .map {
+                            it.title
+                        },
+                    selectedItemIndex = data.overviewTabSelectionIndex,
+                ),
+                events = OverviewTabEvents(
+                    onClick = events.onOverviewTabClick,
+                ),
+            )
+            VerticalSpacer(
+                height = 8.dp,
+            )
+            Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .background(
-                        color = MaterialTheme.colorScheme.primaryContainer,
-                    )
-                    .padding(
-                        all = 12.dp,
-                    )
-                    .animateContentSize(),
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
-                OverviewTab(
-                    data = OverviewTabData(
-                        items = OverviewTabOption.values()
-                            .map {
-                                it.title
-                            },
-                        selectedItemIndex = data.overviewTabSelectionIndex,
-                    ),
-                    events = OverviewTabEvents(
-                        onClick = events.onOverviewTabClick,
-                    ),
-                )
-                VerticalSpacer(
-                    height = 8.dp,
-                )
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
+                // TODO(Abhi): Disable the buttons conditionally
+                IconButton(
+                    onClick = {
+                        events.handleOverviewCardAction(OverviewCardAction.PREV)
+                    },
                 ) {
-                    // TODO(Abhi): Disable the buttons conditionally
-                    IconButton(
-                        onClick = {
-                            events.handleOverviewCardAction(OverviewCardAction.PREV)
-                        },
-                    ) {
-                        Icon(
-                            imageVector = MyIcons.ChevronLeft,
-                            contentDescription = null, // TODO(Abhi): Change content description
-                            tint = MaterialTheme.colorScheme.primary,
-                        )
-                    }
-                    MyText(
-                        modifier = Modifier
-                            .padding(
-                                horizontal = 8.dp,
-                                vertical = 8.dp,
-                            )
-                            .weight(
-                                weight = 1F,
-                            ),
-                        text = data.title,
-                        style = MaterialTheme.typography.labelLarge
-                            .copy(
-                                color = MaterialTheme.colorScheme.onBackground,
-                                textAlign = TextAlign.Center,
-                            ),
+                    Icon(
+                        imageVector = MyIcons.ChevronLeft,
+                        contentDescription = null, // TODO(Abhi): Change content description
+                        tint = MaterialTheme.colorScheme.primary,
                     )
-                    IconButton(
-                        onClick = {
-                            events.handleOverviewCardAction(OverviewCardAction.NEXT)
-                        },
-                    ) {
-                        Icon(
-                            imageVector = MyIcons.ChevronRight,
-                            contentDescription = null, // TODO(Abhi): Change content description
-                            tint = MaterialTheme.colorScheme.primary,
-                        )
-                    }
                 }
-                VerticalSpacer(
-                    height = 8.dp,
+                MyText(
+                    modifier = Modifier
+                        .padding(
+                            horizontal = 8.dp,
+                            vertical = 8.dp,
+                        )
+                        .weight(
+                            weight = 1F,
+                        ),
+                    text = data.title,
+                    style = MaterialTheme.typography.labelLarge
+                        .copy(
+                            color = MaterialTheme.colorScheme.onBackground,
+                            textAlign = TextAlign.Center,
+                        ),
                 )
-                data.pieChartData?.let { pieChartDataValue ->
-                    ComposePieChart(
-                        data = pieChartDataValue,
+                IconButton(
+                    onClick = {
+                        events.handleOverviewCardAction(OverviewCardAction.NEXT)
+                    },
+                ) {
+                    Icon(
+                        imageVector = MyIcons.ChevronRight,
+                        contentDescription = null, // TODO(Abhi): Change content description
+                        tint = MaterialTheme.colorScheme.primary,
                     )
                 }
+            }
+            VerticalSpacer(
+                height = 8.dp,
+            )
+            data.pieChartData?.let { pieChartDataValue ->
+                ComposePieChart(
+                    data = pieChartDataValue,
+                )
             }
         }
     }
