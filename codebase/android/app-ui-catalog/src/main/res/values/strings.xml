@@ -11,4 +11,12 @@
     <!-- save button -->
     <string name="save_button">SAVE</string>
 
+    <!-- top appbar title -->
+    <string name="top_appbar_title">UI Catalog</string>
+
+    <!-- tab -->
+    <string name="tab_components">Components</string>
+    <string name="tab_text">Text</string>
+    <string name="tab_color">Color</string>
+
 </resources>

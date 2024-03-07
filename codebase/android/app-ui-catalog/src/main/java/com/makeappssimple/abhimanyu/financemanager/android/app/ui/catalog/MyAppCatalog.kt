@@ -24,12 +24,14 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData
@@ -45,6 +47,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyD
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyNavigationBackButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyTopAppBarUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.button.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.button.SaveButtonData
@@ -57,6 +60,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ove
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewTabData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewTabEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewTabOption
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupEvents
@@ -81,44 +85,50 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tot
 @Composable
 fun MyAppCatalog() {
     MyAppTheme {
-        Surface {
-            CatalogContent()
-        }
+        CatalogContent()
     }
 }
 
 @Composable
 private fun CatalogContent() {
     val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
     val titleStyle = MaterialTheme.typography.titleLarge
 
     val tabData = listOf(
         MyTabData(
-            title = "Components",
+            title = stringResource(
+                id = R.string.tab_components,
+            ),
         ),
         MyTabData(
-            title = "Text",
+            title = stringResource(
+                id = R.string.tab_text,
+            ),
         ),
         MyTabData(
-            title = "Color",
+            title = stringResource(
+                id = R.string.tab_color,
+            ),
         ),
     )
     val (selectedTabIndex, setSelectedTabIndex) = remember {
         mutableIntStateOf(0)
     }
 
-    Column(
+    MyScaffold(
+        sheetContent = {},
+        onClick = { },
+        coroutineScope = coroutineScope,
+        onBackPress = { },
+        topBar = {
+            MyTopAppBar(
+                titleTextStringResourceId = R.string.top_appbar_title,
+            )
+        },
         modifier = Modifier
             .fillMaxSize(),
     ) {
-        MyText(
-            text = "UI Catalog",
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier
-                .padding(
-                    all = 16.dp,
-                ),
-        )
         MyTabRow(
             selectedTabIndex = selectedTabIndex,
             updateSelectedTabIndex = setSelectedTabIndex,
