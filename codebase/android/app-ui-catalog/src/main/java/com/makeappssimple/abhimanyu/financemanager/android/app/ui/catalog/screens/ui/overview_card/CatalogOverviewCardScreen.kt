@@ -12,14 +12,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.R
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 
 @Composable
-fun OverviewCardScreen(
+fun CatalogOverviewCardScreen(
     navigateUp: () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()

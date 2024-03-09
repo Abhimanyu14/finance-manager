@@ -4,23 +4,23 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.foundation.color.ColorScreen
-import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.foundation.text.TextScreen
-import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.home.HomeScreen
-import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.default_tag.DefaultTagScreen
-import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.emoji_circle.EmojiCircleScreen
-import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.navigation_back_button.NavigationBackButtonScreen
-import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.outlined_text_field.OutlinedTextFieldScreen
-import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.overview_card.OverviewCardScreen
-import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.overview_tab.OverviewTabScreen
-import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.save_button.SaveButtonScreen
-import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.search_bar.SearchBarScreen
-import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.selection_group.SelectionGroupScreen
-import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.top_app_bar.TopAppBarScreen
-import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.total_balance_card.TotalBalanceCardScreen
+import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.foundation.color.CatalogColorScreen
+import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.foundation.text.CatalogTextScreen
+import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.home.CatalogHomeScreen
+import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.default_tag.CatalogDefaultTagScreen
+import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.emoji_circle.CatalogEmojiCircleScreen
+import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.navigation_back_button.CatalogNavigationBackButtonScreen
+import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.outlined_text_field.CatalogOutlinedTextFieldScreen
+import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.overview_card.CatalogOverviewCardScreen
+import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.overview_tab.CatalogOverviewTabScreen
+import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.save_button.CatalogSaveButtonScreen
+import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.search_bar.CatalogSearchBarScreen
+import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.selection_group.CatalogSelectionGroupScreen
+import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.top_app_bar.CatalogTopAppBarScreen
+import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.total_balance_card.CatalogTotalBalanceCardScreen
 
 @Composable
-internal fun MyNavGraph() {
+internal fun CatalogNavGraph() {
     val navHostController = rememberNavController()
     val navigateTo = { route: String ->
         navHostController.navigate(route)
@@ -36,98 +36,98 @@ internal fun MyNavGraph() {
         composable(
             route = CatalogScreen.Color.route,
         ) {
-            ColorScreen(
+            CatalogColorScreen(
                 navigateUp = navigateUp,
             )
         }
         composable(
             route = CatalogScreen.DefaultTag.route,
         ) {
-            DefaultTagScreen(
+            CatalogDefaultTagScreen(
                 navigateUp = navigateUp,
             )
         }
         composable(
             route = CatalogScreen.EmojiCircle.route,
         ) {
-            EmojiCircleScreen(
+            CatalogEmojiCircleScreen(
                 navigateUp = navigateUp,
             )
         }
         composable(
             route = CatalogScreen.Home.route,
         ) {
-            HomeScreen(
+            CatalogHomeScreen(
                 navigateTo = navigateTo,
             )
         }
         composable(
             route = CatalogScreen.NavigationBackButton.route,
         ) {
-            NavigationBackButtonScreen(
+            CatalogNavigationBackButtonScreen(
                 navigateUp = navigateUp,
             )
         }
         composable(
             route = CatalogScreen.OutlinedTextField.route,
         ) {
-            OutlinedTextFieldScreen(
+            CatalogOutlinedTextFieldScreen(
                 navigateUp = navigateUp,
             )
         }
         composable(
             route = CatalogScreen.OverviewCard.route,
         ) {
-            OverviewCardScreen(
+            CatalogOverviewCardScreen(
                 navigateUp = navigateUp,
             )
         }
         composable(
             route = CatalogScreen.OverviewTab.route,
         ) {
-            OverviewTabScreen(
+            CatalogOverviewTabScreen(
                 navigateUp = navigateUp,
             )
         }
         composable(
             route = CatalogScreen.SaveButton.route,
         ) {
-            SaveButtonScreen(
+            CatalogSaveButtonScreen(
                 navigateUp = navigateUp,
             )
         }
         composable(
             route = CatalogScreen.SearchBar.route,
         ) {
-            SearchBarScreen(
+            CatalogSearchBarScreen(
                 navigateUp = navigateUp,
             )
         }
         composable(
             route = CatalogScreen.SelectionGroup.route,
         ) {
-            SelectionGroupScreen(
+            CatalogSelectionGroupScreen(
                 navigateUp = navigateUp,
             )
         }
         composable(
             route = CatalogScreen.Text.route,
         ) {
-            TextScreen(
+            CatalogTextScreen(
                 navigateUp = navigateUp,
             )
         }
         composable(
             route = CatalogScreen.TopAppBar.route,
         ) {
-            TopAppBarScreen(
+            CatalogTopAppBarScreen(
                 navigateUp = navigateUp,
             )
         }
         composable(
             route = CatalogScreen.TotalBalanceCard.route,
         ) {
-            TotalBalanceCardScreen(
+            CatalogTotalBalanceCardScreen(
                 navigateUp = navigateUp,
             )
         }

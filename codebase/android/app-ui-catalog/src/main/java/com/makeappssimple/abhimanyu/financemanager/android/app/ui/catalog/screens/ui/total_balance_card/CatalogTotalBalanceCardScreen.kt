@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.default_tag
+package com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.screens.ui.total_balance_card
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,12 +9,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.R
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.default_tag.MyDefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardData
 
 @Composable
-fun DefaultTagScreen(
+fun CatalogTotalBalanceCardScreen(
     navigateUp: () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -25,7 +26,7 @@ fun DefaultTagScreen(
         onBackPress = { },
         topBar = {
             MyTopAppBar(
-                titleTextStringResourceId = R.string.screen_default_tag,
+                titleTextStringResourceId = R.string.screen_total_balance_card,
                 navigationAction = navigateUp,
             )
         },
@@ -33,15 +34,23 @@ fun DefaultTagScreen(
             .fillMaxSize(),
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement
                 .spacedBy(
                     space = 8.dp,
                 ),
         ) {
-            MyDefaultTag()
+            TotalBalanceCard(
+                data = TotalBalanceCardData(
+                    totalBalanceAmount = 1234567890,
+                ),
+            )
+            TotalBalanceCard(
+                data = TotalBalanceCardData(
+                    isLoading = true,
+                    totalBalanceAmount = 1234567890,
+                ),
+            )
         }
     }
 }

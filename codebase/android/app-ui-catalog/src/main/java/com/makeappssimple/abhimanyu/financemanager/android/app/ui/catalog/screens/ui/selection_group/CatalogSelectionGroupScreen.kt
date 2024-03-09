@@ -34,7 +34,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 
 @Composable
-fun SelectionGroupScreen(
+fun CatalogSelectionGroupScreen(
     navigateUp: () -> Unit,
 ) {
     val context = LocalContext.current

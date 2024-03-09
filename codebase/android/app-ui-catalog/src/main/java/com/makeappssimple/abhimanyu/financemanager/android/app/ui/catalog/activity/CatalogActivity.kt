@@ -14,7 +14,7 @@ class CatalogActivity : ComponentActivity() {
         setDarkStatusBarIcons()
 
         setContent {
-            MyAppCatalog()
+            CatalogApp()
         }
     }
 }

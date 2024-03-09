@@ -9,14 +9,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.R
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButtonData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButtonEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 
 @Composable
-fun SaveButtonScreen(
+fun CatalogSaveButtonScreen(
     navigateUp: () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()

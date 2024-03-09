@@ -20,7 +20,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sca
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 
 @Composable
-fun HomeScreen(
+fun CatalogHomeScreen(
     navigateTo: (String) -> Unit,
 ) {
     val context = LocalContext.current
