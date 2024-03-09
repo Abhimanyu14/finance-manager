@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -18,12 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tot
 fun CatalogTotalBalanceCardScreen(
     navigateUp: () -> Unit,
 ) {
-    val coroutineScope = rememberCoroutineScope()
     MyScaffold(
-        sheetContent = {},
-        onClick = { },
-        coroutineScope = coroutineScope,
-        onBackPress = { },
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_total_balance_card,
@@ -42,6 +36,12 @@ fun CatalogTotalBalanceCardScreen(
         ) {
             TotalBalanceCard(
                 data = TotalBalanceCardData(
+                    totalBalanceAmount = 1234567890,
+                ),
+            )
+            TotalBalanceCard(
+                data = TotalBalanceCardData(
+                    isBalanceVisible = true,
                     totalBalanceAmount = 1234567890,
                 ),
             )

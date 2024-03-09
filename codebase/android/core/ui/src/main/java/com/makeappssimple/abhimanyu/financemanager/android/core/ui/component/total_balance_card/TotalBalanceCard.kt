@@ -34,6 +34,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.ma
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
 
+private object TotalBalanceCardConstants {
+    val loadingUIHeight = 96.dp
+    val loadingUIHorizontalPadding = 32.dp
+    val loadingUIVerticalPadding = 16.dp
+}
+
 @Immutable
 data class TotalBalanceCardData(
     val isBalanceVisible: Boolean = false,
@@ -49,6 +55,9 @@ data class TotalBalanceCardEvents(
     val onViewBalanceClick: (() -> Unit)? = null,
 )
 
+/**
+ * This is coupled with [Amount]
+ */
 @Composable
 fun TotalBalanceCard(
     modifier: Modifier = Modifier,
@@ -74,9 +83,9 @@ fun TotalBalanceCard(
 
 @Composable
 private fun TotalBalanceCardUI(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
+    data: TotalBalanceCardData,
     events: TotalBalanceCardEvents,
-    data: TotalBalanceCardData
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -175,11 +184,11 @@ private fun TotalBalanceCardLoadingUI(
         modifier = modifier
             .fillMaxWidth()
             .height(
-                height = 96.dp,
+                height = TotalBalanceCardConstants.loadingUIHeight,
             )
             .padding(
-                horizontal = 32.dp,
-                vertical = 16.dp,
+                horizontal = TotalBalanceCardConstants.loadingUIHorizontalPadding,
+                vertical = TotalBalanceCardConstants.loadingUIVerticalPadding,
             )
             .clip(
                 shape = MaterialTheme.shapes.medium,

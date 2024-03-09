@@ -27,6 +27,7 @@ import androidx.compose.material3.contentColorFor
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
@@ -45,7 +46,7 @@ fun MyScaffold(
     modifier: Modifier = Modifier,
 
     // ModalBottomSheetLayout
-    sheetContent: @Composable ColumnScope.() -> Unit,
+    sheetContent: @Composable ColumnScope.() -> Unit = {},
     sheetState: SheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
     ),
@@ -66,13 +67,13 @@ fun MyScaffold(
     contentColor: Color = contentColorFor(backgroundColor),
 
     // MyScaffoldContentWrapper
-    onClick: () -> Unit,
+    onClick: () -> Unit = {},
 
     // BottomSheetBackHandler
     isModalBottomSheetVisible: Boolean = false,
     backHandlerEnabled: Boolean = false,
-    coroutineScope: CoroutineScope,
-    onBackPress: () -> Unit,
+    coroutineScope: CoroutineScope = rememberCoroutineScope(),
+    onBackPress: () -> Unit = {},
 
     content: @Composable ColumnScope.() -> Unit,
 ) {
