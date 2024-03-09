@@ -3,11 +3,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.scree
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.R
 import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.navigation.CatalogScreen
@@ -23,9 +21,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top
 fun CatalogHomeScreen(
     navigateTo: (String) -> Unit,
 ) {
-    val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
-    val titleStyle = MaterialTheme.typography.titleLarge
 
     MyScaffold(
         sheetContent = {},
@@ -57,11 +53,11 @@ fun CatalogHomeScreen(
             item {
                 MyListItem(
                     data = MyListItemData(
-                        textStringResourceId = R.string.screen_text,
+                        textStringResourceId = R.string.screen_color,
                     ),
                     events = MyListItemEvents(
                         onClick = {
-                            navigateTo(CatalogScreen.Text.route)
+                            navigateTo(CatalogScreen.Color.route)
                         },
                     )
                 )
@@ -69,11 +65,11 @@ fun CatalogHomeScreen(
             item {
                 MyListItem(
                     data = MyListItemData(
-                        textStringResourceId = R.string.screen_color,
+                        textStringResourceId = R.string.screen_text,
                     ),
                     events = MyListItemEvents(
                         onClick = {
-                            navigateTo(CatalogScreen.Color.route)
+                            navigateTo(CatalogScreen.Text.route)
                         },
                     )
                 )
@@ -88,71 +84,11 @@ fun CatalogHomeScreen(
             item {
                 MyListItem(
                     data = MyListItemData(
-                        textStringResourceId = R.string.screen_overview_tab,
-                    ),
-                    events = MyListItemEvents(
-                        onClick = {
-                            navigateTo(CatalogScreen.OverviewTab.route)
-                        },
-                    )
-                )
-            }
-            item {
-                MyListItem(
-                    data = MyListItemData(
-                        textStringResourceId = R.string.screen_overview_card,
-                    ),
-                    events = MyListItemEvents(
-                        onClick = {
-                            navigateTo(CatalogScreen.OverviewCard.route)
-                        },
-                    )
-                )
-            }
-            item {
-                MyListItem(
-                    data = MyListItemData(
-                        textStringResourceId = R.string.screen_total_balance_card,
-                    ),
-                    events = MyListItemEvents(
-                        onClick = {
-                            navigateTo(CatalogScreen.TotalBalanceCard.route)
-                        },
-                    )
-                )
-            }
-            item {
-                MyListItem(
-                    data = MyListItemData(
-                        textStringResourceId = R.string.screen_save_button,
-                    ),
-                    events = MyListItemEvents(
-                        onClick = {
-                            navigateTo(CatalogScreen.SaveButton.route)
-                        },
-                    )
-                )
-            }
-            item {
-                MyListItem(
-                    data = MyListItemData(
                         textStringResourceId = R.string.screen_default_tag,
                     ),
                     events = MyListItemEvents(
                         onClick = {
                             navigateTo(CatalogScreen.DefaultTag.route)
-                        },
-                    )
-                )
-            }
-            item {
-                MyListItem(
-                    data = MyListItemData(
-                        textStringResourceId = R.string.screen_outlined_text_field,
-                    ),
-                    events = MyListItemEvents(
-                        onClick = {
-                            navigateTo(CatalogScreen.OutlinedTextField.route)
                         },
                     )
                 )
@@ -184,11 +120,71 @@ fun CatalogHomeScreen(
             item {
                 MyListItem(
                     data = MyListItemData(
+                        textStringResourceId = R.string.screen_outlined_text_field,
+                    ),
+                    events = MyListItemEvents(
+                        onClick = {
+                            navigateTo(CatalogScreen.OutlinedTextField.route)
+                        },
+                    )
+                )
+            }
+            item {
+                MyListItem(
+                    data = MyListItemData(
+                        textStringResourceId = R.string.screen_overview_card,
+                    ),
+                    events = MyListItemEvents(
+                        onClick = {
+                            navigateTo(CatalogScreen.OverviewCard.route)
+                        },
+                    )
+                )
+            }
+            item {
+                MyListItem(
+                    data = MyListItemData(
+                        textStringResourceId = R.string.screen_overview_tab,
+                    ),
+                    events = MyListItemEvents(
+                        onClick = {
+                            navigateTo(CatalogScreen.OverviewTab.route)
+                        },
+                    )
+                )
+            }
+            item {
+                MyListItem(
+                    data = MyListItemData(
+                        textStringResourceId = R.string.screen_save_button,
+                    ),
+                    events = MyListItemEvents(
+                        onClick = {
+                            navigateTo(CatalogScreen.SaveButton.route)
+                        },
+                    )
+                )
+            }
+            item {
+                MyListItem(
+                    data = MyListItemData(
                         textStringResourceId = R.string.screen_search_bar,
                     ),
                     events = MyListItemEvents(
                         onClick = {
                             navigateTo(CatalogScreen.SearchBar.route)
+                        },
+                    )
+                )
+            }
+            item {
+                MyListItem(
+                    data = MyListItemData(
+                        textStringResourceId = R.string.screen_selection_group,
+                    ),
+                    events = MyListItemEvents(
+                        onClick = {
+                            navigateTo(CatalogScreen.SelectionGroup.route)
                         },
                     )
                 )
@@ -208,23 +204,11 @@ fun CatalogHomeScreen(
             item {
                 MyListItem(
                     data = MyListItemData(
-                        textStringResourceId = R.string.screen_navigation_back_button,
+                        textStringResourceId = R.string.screen_total_balance_card,
                     ),
                     events = MyListItemEvents(
                         onClick = {
-                            navigateTo(CatalogScreen.NavigationBackButton.route)
-                        },
-                    )
-                )
-            }
-            item {
-                MyListItem(
-                    data = MyListItemData(
-                        textStringResourceId = R.string.screen_selection_group,
-                    ),
-                    events = MyListItemEvents(
-                        onClick = {
-                            navigateTo(CatalogScreen.SelectionGroup.route)
+                            navigateTo(CatalogScreen.TotalBalanceCard.route)
                         },
                     )
                 )
