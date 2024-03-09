@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar
 
 import androidx.annotation.StringRes
 import androidx.compose.material3.CenterAlignedTopAppBar
@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyNavigationBackButton
 
 @Composable
 fun MyTopAppBar(

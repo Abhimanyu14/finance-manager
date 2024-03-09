@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.button
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.Box

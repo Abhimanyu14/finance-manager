@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.Icon

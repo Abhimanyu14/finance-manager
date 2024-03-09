@@ -16,9 +16,9 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.EmojiCircleSize
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircle
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.EmojiCircleSize
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircleData
 
 data class CategoriesGridItemData(
     val isDeleteVisible: Boolean? = null,

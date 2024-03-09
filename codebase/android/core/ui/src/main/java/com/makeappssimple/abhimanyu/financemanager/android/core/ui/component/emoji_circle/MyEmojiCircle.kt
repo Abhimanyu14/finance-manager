@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

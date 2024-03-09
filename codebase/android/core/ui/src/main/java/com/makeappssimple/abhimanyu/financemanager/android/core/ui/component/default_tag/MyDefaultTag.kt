@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component
+package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.default_tag
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding

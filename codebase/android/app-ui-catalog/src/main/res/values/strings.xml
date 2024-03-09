@@ -1,22 +1,69 @@
 <resources>
 
-    <!-- App name -->
+    <!-- region app name -->
     <string name="app_name">UI Catalog</string>
+    <!-- endregion -->
 
+    <!-- region common -->
     <string name="common_empty_string" />
+    <!-- endregion -->
 
-    <!-- my outlined text field -->
-    <string name="my_outlined_text_field_label">Label</string>
+    <!-- region color screen -->
+    <string name="screen_color">Color</string>
+    <!-- endregion -->
 
-    <!-- save button -->
-    <string name="save_button">SAVE</string>
+    <!-- region default tag screen -->
+    <string name="screen_default_tag">Default Tag</string>
+    <!-- endregion -->
 
-    <!-- top appbar title -->
-    <string name="top_appbar_title">UI Catalog</string>
+    <!-- region emoji circle screen -->
+    <string name="screen_emoji_circle">Emoji Circle</string>
+    <!-- endregion -->
 
-    <!-- tab -->
-    <string name="tab_components">Components</string>
-    <string name="tab_text">Text</string>
-    <string name="tab_color">Color</string>
+    <!-- region home screen -->
+    <string name="screen_home_appbar_title">UI Catalog</string>
+    <!-- endregion -->
+
+    <!-- region navigation back button screen -->
+    <string name="screen_navigation_back_button">Navigation Back Button</string>">
+    <!-- endregion -->
+
+    <!-- region outlined text field screen -->
+    <string name="screen_outlined_text_field">Outlined Text Field</string>
+    <string name="screen_outlined_text_field_label">Label</string>
+    <!-- endregion -->
+
+    <!-- region overview card screen -->
+    <string name="screen_overview_card">Overview Card</string>
+    <!-- endregion -->
+
+    <!-- region overview tab screen -->
+    <string name="screen_overview_tab">Overview Tab</string>
+    <!-- endregion -->
+
+    <!-- region save button screen -->
+    <string name="screen_save_button">Save Button</string>
+    <string name="screen_save_button_label">SAVE</string>
+    <!-- endregion -->
+
+    <!-- region search bar screen -->
+    <string name="screen_search_bar">Search Bar</string>">
+    <!-- endregion -->
+
+    <!-- region selection group screen -->
+    <string name="screen_selection_group">Selection Group</string>">
+    <!-- endregion -->
+
+    <!-- region text screen -->
+    <string name="screen_text">Text</string>
+    <!-- endregion -->
+
+    <!-- region top app bar screen -->
+    <string name="screen_top_app_bar">Top App Bar</string>">
+    <!-- endregion -->
+
+    <!-- region total balance card screen -->
+    <string name="screen_total_balance_card">Total Balance Card</string>
+    <!-- endregion -->
 
 </resources>

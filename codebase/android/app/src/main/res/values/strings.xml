@@ -1,6 +1,7 @@
 <resources>
 
-    <!-- App name -->
+    <!-- region app name -->
     <string name="app_name">Finance Manager</string>
+    <!-- endregion -->
 
 </resources>

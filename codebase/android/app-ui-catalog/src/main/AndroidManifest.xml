@@ -10,7 +10,7 @@
         android:theme="@style/Theme.MyApp">
 
         <activity
-            android:name=".CatalogActivity"
+            android:name=".activity.CatalogActivity"
             android:exported="true"
             android:theme="@style/Theme.MyApp.NoActionBar"
             android:windowSoftInputMode="adjustResize">

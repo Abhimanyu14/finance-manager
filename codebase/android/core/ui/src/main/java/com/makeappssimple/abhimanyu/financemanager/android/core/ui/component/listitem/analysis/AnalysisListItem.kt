@@ -22,8 +22,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircle
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyEmojiCircleData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircleData
 
 @Immutable
 data class AnalysisListItemData(

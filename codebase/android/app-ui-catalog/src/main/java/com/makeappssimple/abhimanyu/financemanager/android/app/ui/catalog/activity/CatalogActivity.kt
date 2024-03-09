@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog
+package com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.activity
 
 import android.app.Activity
 import android.os.Bundle

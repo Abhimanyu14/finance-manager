@@ -19,9 +19,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.ExpandedListItemShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyDefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemUIWrapper
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.default_tag.MyDefaultTag
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
 
 @Immutable

@@ -1,6 +1,8 @@
 <resources>
 
+    <!-- region common -->
     <string name="common_empty_string" />
+    <!-- endregion -->
 
     <!-- region backup card -->
     <string name="backup_card">Backup data</string>
