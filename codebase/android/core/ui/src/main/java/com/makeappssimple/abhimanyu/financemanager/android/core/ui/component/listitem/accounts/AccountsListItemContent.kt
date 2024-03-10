@@ -25,13 +25,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.def
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
 
 @Immutable
-data class AccountsListItemDataAndEvents(
-    val data: AccountsListItemData,
-    val events: AccountsListItemEvents,
+data class AccountsListItemContentDataAndEvents(
+    val data: AccountsListItemContentData,
+    val events: AccountsListItemContentEvents,
 )
 
 @Immutable
-data class AccountsListItemData(
+data class AccountsListItemContentData(
+    override val type: AccountsListItemType = AccountsListItemType.CONTENT,
     val isDefault: Boolean = false,
     val isDeleteEnabled: Boolean = false,
     val isExpanded: Boolean = false,
@@ -42,10 +43,10 @@ data class AccountsListItemData(
     val accountId: Int? = null,
     val balance: String? = null,
     val name: String,
-)
+) : AccountsListItemData
 
 @Immutable
-data class AccountsListItemEvents(
+data class AccountsListItemContentEvents(
     val onClick: () -> Unit,
     val onLongClick: () -> Unit = {},
     val onEditClick: () -> Unit = {},
@@ -53,10 +54,10 @@ data class AccountsListItemEvents(
 )
 
 @Composable
-fun AccountsListItem(
+fun AccountsListItemContent(
     modifier: Modifier = Modifier,
-    data: AccountsListItemData,
-    events: AccountsListItemEvents,
+    data: AccountsListItemContentData,
+    events: AccountsListItemContentEvents,
 ) {
     MyExpandableItemUIWrapper(
         isExpanded = data.isExpanded,
@@ -113,8 +114,8 @@ fun AccountsListItem(
 
 @Composable
 internal fun AccountsListItemCollapsed(
-    data: AccountsListItemData,
-    events: AccountsListItemEvents,
+    data: AccountsListItemContentData,
+    events: AccountsListItemContentEvents,
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,

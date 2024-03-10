@@ -20,8 +20,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 
 @Immutable
-data class SettingsListItemMenuData(
-    override val contentType: SettingsListItemContentType = SettingsListItemContentType.MENU,
+data class SettingsListItemContentData(
+    override val type: SettingsListItemType = SettingsListItemType.CONTENT,
     val isChecked: Boolean? = null,
     val isEnabled: Boolean = false,
     val imageVector: ImageVector? = null,
@@ -29,16 +29,16 @@ data class SettingsListItemMenuData(
 ) : SettingsListItemData
 
 @Immutable
-data class SettingsListItemMenuEvents(
+data class SettingsListItemContentEvents(
     val onClick: () -> Unit = {},
     val onCheckedChange: ((Boolean) -> Unit)? = null,
 )
 
 @Composable
-fun SettingsListItemMenu(
+fun SettingsListItemContent(
     modifier: Modifier = Modifier,
-    data: SettingsListItemMenuData,
-    events: SettingsListItemMenuEvents,
+    data: SettingsListItemContentData,
+    events: SettingsListItemContentEvents,
 ) {
     ListItem(
         leadingContent = {

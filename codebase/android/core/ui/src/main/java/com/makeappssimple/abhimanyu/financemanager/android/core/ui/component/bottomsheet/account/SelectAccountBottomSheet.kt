@@ -6,9 +6,9 @@ import androidx.compose.ui.Modifier
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemDataAndEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentDataAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 
 @Immutable
@@ -35,8 +35,8 @@ fun SelectAccountBottomSheet(
             titleTextStringResourceId = R.string.bottom_sheet_select_account_title,
             data = data.accounts
                 .map { account ->
-                    AccountsListItemDataAndEvents(
-                        data = AccountsListItemData(
+                    AccountsListItemContentDataAndEvents(
+                        data = AccountsListItemContentData(
                             isLowBalance = account.balanceAmount < account.minimumAccountBalanceAmount.orEmpty(),
                             isSelected = account.id == data.selectedAccountId,
                             icon = account.type.icon,
@@ -44,7 +44,7 @@ fun SelectAccountBottomSheet(
                             balance = account.balanceAmount.toString(),
                             name = account.name,
                         ),
-                        events = AccountsListItemEvents(
+                        events = AccountsListItemContentEvents(
                             onClick = {
                                 events.updateAccount(account)
                                 events.resetBottomSheetType()

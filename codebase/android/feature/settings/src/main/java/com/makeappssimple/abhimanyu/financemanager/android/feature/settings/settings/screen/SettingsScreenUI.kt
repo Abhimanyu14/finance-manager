@@ -22,14 +22,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Common
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemAppVersion
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemAppVersionData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemContent
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemContentData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemContentEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemDivider
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemDividerData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemMenu
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemMenuData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemMenuEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemMenuSectionTitle
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemMenuSectionTitleData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemHeader
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemHeaderData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
@@ -38,7 +38,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
 @Immutable
 data class SettingsScreenListItemData(
     val data: SettingsListItemData,
-    val events: SettingsListItemMenuEvents = SettingsListItemMenuEvents(),
+    val events: SettingsListItemContentEvents = SettingsListItemContentEvents(),
 )
 
 @Composable
@@ -50,41 +50,41 @@ internal fun SettingsScreenUI(
     val context = LocalContext.current
     val listItemsData: List<SettingsScreenListItemData> = listOf(
         SettingsScreenListItemData(
-            data = SettingsListItemMenuSectionTitleData(
+            data = SettingsListItemHeaderData(
                 textStringResourceId = R.string.screen_settings_data,
             ),
         ),
         SettingsScreenListItemData(
-            data = SettingsListItemMenuData(
+            data = SettingsListItemContentData(
                 isEnabled = uiState.isLoading,
                 imageVector = MyIcons.Category,
                 textStringResourceId = R.string.screen_settings_categories,
             ),
-            events = SettingsListItemMenuEvents(
+            events = SettingsListItemContentEvents(
                 onClick = {
                     handleUIEvents(SettingsScreenUIEvent.NavigateToCategoriesScreen)
                 },
             ),
         ),
         SettingsScreenListItemData(
-            data = SettingsListItemMenuData(
+            data = SettingsListItemContentData(
                 isEnabled = uiState.isLoading,
                 imageVector = MyIcons.AccountBalance,
                 textStringResourceId = R.string.screen_settings_accounts,
             ),
-            events = SettingsListItemMenuEvents(
+            events = SettingsListItemContentEvents(
                 onClick = {
                     handleUIEvents(SettingsScreenUIEvent.NavigateToAccountsScreen)
                 },
             ),
         ),
         SettingsScreenListItemData(
-            data = SettingsListItemMenuData(
+            data = SettingsListItemContentData(
                 isEnabled = uiState.isLoading,
                 imageVector = MyIcons.Groups,
                 textStringResourceId = R.string.screen_settings_transaction_for,
             ),
-            events = SettingsListItemMenuEvents(
+            events = SettingsListItemContentEvents(
                 onClick = {
                     handleUIEvents(SettingsScreenUIEvent.NavigateToTransactionForValuesScreen)
                 },
@@ -94,41 +94,41 @@ internal fun SettingsScreenUI(
             data = SettingsListItemDividerData(),
         ),
         SettingsScreenListItemData(
-            data = SettingsListItemMenuSectionTitleData(
+            data = SettingsListItemHeaderData(
                 textStringResourceId = R.string.screen_settings_backup_and_restore,
             ),
         ),
         SettingsScreenListItemData(
-            data = SettingsListItemMenuData(
+            data = SettingsListItemContentData(
                 isEnabled = uiState.isLoading,
                 imageVector = MyIcons.Backup,
                 textStringResourceId = R.string.screen_settings_backup,
             ),
-            events = SettingsListItemMenuEvents(
+            events = SettingsListItemContentEvents(
                 onClick = {
                     handleUIEvents(SettingsScreenUIEvent.BackupData)
                 },
             ),
         ),
         SettingsScreenListItemData(
-            data = SettingsListItemMenuData(
+            data = SettingsListItemContentData(
                 isEnabled = uiState.isLoading,
                 imageVector = MyIcons.Restore,
                 textStringResourceId = R.string.screen_settings_restore,
             ),
-            events = SettingsListItemMenuEvents(
+            events = SettingsListItemContentEvents(
                 onClick = {
                     handleUIEvents(SettingsScreenUIEvent.RestoreData)
                 },
             ),
         ),
         SettingsScreenListItemData(
-            data = SettingsListItemMenuData(
+            data = SettingsListItemContentData(
                 isEnabled = uiState.isLoading,
                 imageVector = MyIcons.Calculate,
                 textStringResourceId = R.string.screen_settings_recalculate_total,
             ),
-            events = SettingsListItemMenuEvents(
+            events = SettingsListItemContentEvents(
                 onClick = {
                     handleUIEvents(SettingsScreenUIEvent.RecalculateTotal)
                 },
@@ -138,18 +138,18 @@ internal fun SettingsScreenUI(
             data = SettingsListItemDividerData(),
         ),
         SettingsScreenListItemData(
-            data = SettingsListItemMenuSectionTitleData(
+            data = SettingsListItemHeaderData(
                 textStringResourceId = R.string.screen_settings_notifications,
             ),
         ),
         SettingsScreenListItemData(
-            data = SettingsListItemMenuData(
+            data = SettingsListItemContentData(
                 isChecked = uiState.isReminderEnabled.orFalse(),
                 isEnabled = uiState.isLoading,
                 imageVector = MyIcons.Notifications,
                 textStringResourceId = R.string.screen_settings_reminder,
             ),
-            events = SettingsListItemMenuEvents(
+            events = SettingsListItemContentEvents(
                 onClick = {
                     handleUIEvents(SettingsScreenUIEvent.ToggleReminder)
                 },
@@ -162,29 +162,29 @@ internal fun SettingsScreenUI(
             data = SettingsListItemDividerData(),
         ),
         SettingsScreenListItemData(
-            data = SettingsListItemMenuSectionTitleData(
+            data = SettingsListItemHeaderData(
                 textStringResourceId = R.string.screen_settings_about,
             ),
         ),
         SettingsScreenListItemData(
-            data = SettingsListItemMenuData(
+            data = SettingsListItemContentData(
                 isEnabled = uiState.isLoading,
                 imageVector = MyIcons.TextSnippet,
                 textStringResourceId = R.string.screen_settings_credits,
             ),
-            events = SettingsListItemMenuEvents(
+            events = SettingsListItemContentEvents(
                 onClick = {
                     Toast.makeText(context, "Not Yet Implemented", Toast.LENGTH_SHORT).show()
                 },
             ),
         ),
         SettingsScreenListItemData(
-            data = SettingsListItemMenuData(
+            data = SettingsListItemContentData(
                 isEnabled = uiState.isLoading,
                 imageVector = MyIcons.TextSnippet,
                 textStringResourceId = R.string.screen_settings_open_source_licenses,
             ),
-            events = SettingsListItemMenuEvents(
+            events = SettingsListItemContentEvents(
                 onClick = {
                     handleUIEvents(SettingsScreenUIEvent.NavigateToOpenSourceLicensesScreen)
                 },
@@ -256,18 +256,18 @@ internal fun SettingsScreenUI(
                 key = { index, listItem ->
                     when (listItem.data) {
                         is SettingsListItemAppVersionData -> {
-                            "${listItem.data.contentType.title}_$index"
+                            "${listItem.data.type.title}_$index"
                         }
 
                         is SettingsListItemDividerData -> {
-                            "${listItem.data.contentType.title}_$index"
+                            "${listItem.data.type.title}_$index"
                         }
 
-                        is SettingsListItemMenuData -> {
+                        is SettingsListItemContentData -> {
                             "${listItem.data.textStringResourceId}"
                         }
 
-                        is SettingsListItemMenuSectionTitleData -> {
+                        is SettingsListItemHeaderData -> {
                             "${listItem.data.textStringResourceId}"
                         }
                     }
@@ -296,8 +296,8 @@ internal fun SettingsScreenUI(
                         )
                     }
 
-                    is SettingsListItemMenuData -> {
-                        SettingsListItemMenu(
+                    is SettingsListItemContentData -> {
+                        SettingsListItemContent(
                             modifier = Modifier
                                 .testTag(
                                     tag = "Item $index",
@@ -307,8 +307,8 @@ internal fun SettingsScreenUI(
                         )
                     }
 
-                    is SettingsListItemMenuSectionTitleData -> {
-                        SettingsListItemMenuSectionTitle(
+                    is SettingsListItemHeaderData -> {
+                        SettingsListItemHeader(
                             modifier = Modifier
                                 .testTag(
                                     tag = "Item $index",

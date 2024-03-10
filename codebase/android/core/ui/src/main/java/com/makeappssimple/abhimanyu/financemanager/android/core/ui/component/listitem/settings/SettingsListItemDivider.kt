@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 
 @Immutable
 data class SettingsListItemDividerData(
-    override val contentType: SettingsListItemContentType = SettingsListItemContentType.DIVIDER,
+    override val type: SettingsListItemType = SettingsListItemType.DIVIDER,
 ) : SettingsListItemData
 
 @Composable

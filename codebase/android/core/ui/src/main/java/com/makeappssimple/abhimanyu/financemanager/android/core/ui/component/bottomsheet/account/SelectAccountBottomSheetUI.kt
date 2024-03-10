@@ -9,14 +9,14 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetTitle
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItem
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemDataAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContent
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentDataAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
 
 @Immutable
 internal data class SelectAccountListItemBottomSheetUIData(
     @StringRes val titleTextStringResourceId: Int = 0,
-    val data: List<AccountsListItemDataAndEvents> = emptyList(),
+    val data: List<AccountsListItemContentDataAndEvents> = emptyList(),
 )
 
 @Composable
@@ -41,7 +41,7 @@ internal fun SelectAccountBottomSheetUI(
                 listItem.hashCode()
             },
         ) { listItem ->
-            AccountsListItem(
+            AccountsListItemContent(
                 data = listItem.data,
                 events = listItem.events,
             )

@@ -21,9 +21,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Common
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account.AccountsDeleteConfirmationBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account.AccountsSetAsDefaultConfirmationBottomSheet
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsHeadingListItem
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItem
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContent
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemHeader
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemHeaderData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
@@ -152,47 +154,53 @@ internal fun AccountsScreenUI(
                     listItem.hashCode()
                 },
             ) { index, listItem ->
-                if (listItem.isHeading) {
-                    AccountsHeadingListItem(
-                        data = listItem,
-                    )
-                } else {
-                    AccountsListItem(
-                        data = listItem.copy(
-                            isExpanded = index == uiState.expandedItemIndex
-                        ),
-                        events = AccountsListItemEvents(
-                            onClick = {
-                                uiState.setExpandedItemIndex(
-                                    if (index == uiState.expandedItemIndex) {
-                                        null
-                                    } else {
-                                        index
-                                    }
-                                )
-                            },
-                            onLongClick = {
-                                if (!listItem.isDefault) {
-                                    uiState.setScreenBottomSheetType(AccountsScreenBottomSheetType.SET_AS_DEFAULT_CONFIRMATION)
-                                    uiState.setClickedItemId(listItem.accountId)
-                                }
-                            },
-                            onEditClick = {
-                                listItem.accountId?.let {
-                                    handleUIEvents(
-                                        AccountsScreenUIEvent.NavigateToEditAccountScreen(
-                                            accountId = it,
-                                        )
+                when (listItem) {
+                    is AccountsListItemContentData -> {
+                        AccountsListItemContent(
+                            data = listItem.copy(
+                                isExpanded = index == uiState.expandedItemIndex
+                            ),
+                            events = AccountsListItemContentEvents(
+                                onClick = {
+                                    uiState.setExpandedItemIndex(
+                                        if (index == uiState.expandedItemIndex) {
+                                            null
+                                        } else {
+                                            index
+                                        }
                                     )
-                                }
-                                uiState.setExpandedItemIndex(null)
-                            },
-                            onDeleteClick = {
-                                uiState.setAccountIdToDelete(listItem.accountId)
-                                uiState.setScreenBottomSheetType(AccountsScreenBottomSheetType.DELETE_CONFIRMATION)
-                            },
-                        ),
-                    )
+                                },
+                                onLongClick = {
+                                    if (!listItem.isDefault) {
+                                        uiState.setScreenBottomSheetType(
+                                            AccountsScreenBottomSheetType.SET_AS_DEFAULT_CONFIRMATION
+                                        )
+                                        uiState.setClickedItemId(listItem.accountId)
+                                    }
+                                },
+                                onEditClick = {
+                                    listItem.accountId?.let {
+                                        handleUIEvents(
+                                            AccountsScreenUIEvent.NavigateToEditAccountScreen(
+                                                accountId = it,
+                                            )
+                                        )
+                                    }
+                                    uiState.setExpandedItemIndex(null)
+                                },
+                                onDeleteClick = {
+                                    uiState.setAccountIdToDelete(listItem.accountId)
+                                    uiState.setScreenBottomSheetType(AccountsScreenBottomSheetType.DELETE_CONFIRMATION)
+                                },
+                            ),
+                        )
+                    }
+
+                    is AccountsListItemHeaderData -> {
+                        AccountsListItemHeader(
+                            data = listItem,
+                        )
+                    }
                 }
             }
             item {

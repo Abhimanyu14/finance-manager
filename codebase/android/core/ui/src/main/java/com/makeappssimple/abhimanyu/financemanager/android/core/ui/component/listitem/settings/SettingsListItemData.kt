@@ -1,22 +1,22 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings
 
 sealed interface SettingsListItemData {
-    val contentType: SettingsListItemContentType
+    val type: SettingsListItemType
 }
 
-enum class SettingsListItemContentType(
+enum class SettingsListItemType(
     val title: String,
 ) {
     APP_VERSION(
         title = "App Version"
     ),
+    CONTENT(
+        title = "Content"
+    ),
     DIVIDER(
         title = "Divider"
     ),
-    MENU(
-        title = "Menu"
-    ),
-    MENU_SECTION_TITLE(
-        title = "Menu Section Title"
+    HEADER(
+        title = "Header"
     ),
 }

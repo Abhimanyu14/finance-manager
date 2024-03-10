@@ -9,15 +9,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
-data class SettingsListItemMenuSectionTitleData(
-    override val contentType: SettingsListItemContentType = SettingsListItemContentType.MENU_SECTION_TITLE,
+data class SettingsListItemHeaderData(
+    override val type: SettingsListItemType = SettingsListItemType.HEADER,
     @StringRes val textStringResourceId: Int,
 ) : SettingsListItemData
 
 @Composable
-fun SettingsListItemMenuSectionTitle(
+fun SettingsListItemHeader(
     modifier: Modifier = Modifier,
-    data: SettingsListItemMenuSectionTitleData,
+    data: SettingsListItemHeaderData,
 ) {
     MyText(
         modifier = modifier

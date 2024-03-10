@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 
 @Immutable
 data class SettingsListItemAppVersionData(
-    override val contentType: SettingsListItemContentType = SettingsListItemContentType.APP_VERSION,
+    override val type: SettingsListItemType = SettingsListItemType.APP_VERSION,
     val appVersionText: String,
 ) : SettingsListItemData
 

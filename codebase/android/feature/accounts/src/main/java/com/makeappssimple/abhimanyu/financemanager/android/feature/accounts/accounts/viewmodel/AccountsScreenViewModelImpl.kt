@@ -18,7 +18,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountTyp
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemHeaderData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.screen.AccountsScreenUIData
@@ -72,7 +74,7 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
         accountTypes.forEach { accountType ->
             if (groupedAccounts[accountType].isNotNull()) {
                 accountsListItemDataList.add(
-                    AccountsListItemData(
+                    AccountsListItemHeaderData(
                         isHeading = true,
                         balance = "",
                         name = accountType.title,
@@ -94,7 +96,7 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
                         defaultAccountId == account.id
                     }
 
-                    AccountsListItemData(
+                    AccountsListItemContentData(
                         isDefault = isDefault,
                         isDeleteEnabled = !isDefaultAccount(
                             account = account.name,
