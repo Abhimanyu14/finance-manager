@@ -64,7 +64,7 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
             accountsTotalBalanceAmountValue,
             accountsTotalMinimumBalanceAmountValue,
         ->
-        val accountTypes = AccountType.values().sortedBy {
+        val accountTypes = AccountType.entries.sortedBy {
             it.sortOrder
         }
         val groupedAccounts = allAccountsFlow.groupBy {

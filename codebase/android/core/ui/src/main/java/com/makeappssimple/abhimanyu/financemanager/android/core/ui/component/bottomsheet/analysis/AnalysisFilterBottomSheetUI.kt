@@ -176,7 +176,7 @@ fun AnalysisFilterBottomSheetUI(
                     vertical = 4.dp,
                 ),
             data = MyHorizontalScrollingSelectionGroupData(
-                items = DateRangeOptions.values().map {
+                items = DateRangeOptions.entries.map {
                     ChipUIData(
                         text = it.title,
                     )
@@ -184,7 +184,7 @@ fun AnalysisFilterBottomSheetUI(
             ),
             events = MyHorizontalScrollingSelectionGroupEvents(
                 onSelectionChange = { index ->
-                    onDateRangeOptionClick(DateRangeOptions.values()[index])
+                    onDateRangeOptionClick(DateRangeOptions.entries[index])
                 },
             ),
         )

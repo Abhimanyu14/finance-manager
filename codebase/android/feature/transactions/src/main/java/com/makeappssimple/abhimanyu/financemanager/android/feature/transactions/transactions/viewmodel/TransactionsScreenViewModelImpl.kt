@@ -119,7 +119,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         value = emptyList(),
     )
 
-    private val transactionTypes: List<TransactionType> = TransactionType.values().toList()
+    private val transactionTypes: List<TransactionType> = TransactionType.entries
 
     private var oldestTransactionLocalDate: StateFlow<LocalDate?> = allTransactionData.map {
         dateTimeUtil.getLocalDate(
@@ -131,7 +131,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         scope = viewModelScope,
     )
 
-    private val sortOptions: List<SortOption> = SortOption.values().toList()
+    private val sortOptions: List<SortOption> = SortOption.entries
 
     private val transactionDetailsListItemViewData: StateFlow<Map<String, List<TransactionListItemData>>?> =
         combine(

@@ -73,7 +73,7 @@ internal class HomeScreenViewModelImpl @Inject constructor(
         flow = overviewTabSelectionIndex,
         flow2 = timestamp,
     ) { overviewTabSelectionIndex, timestamp ->
-        val overviewTabOption = OverviewTabOption.values()[overviewTabSelectionIndex]
+        val overviewTabOption = OverviewTabOption.entries[overviewTabSelectionIndex]
         val transactions = getTransactionsBetweenTimestampsUseCase(
             startingTimestamp = when (overviewTabOption) {
                 OverviewTabOption.DAY -> {
@@ -277,7 +277,7 @@ internal class HomeScreenViewModelImpl @Inject constructor(
     private fun handleOverviewCardAction(
         overviewCardAction: OverviewCardAction,
     ) {
-        val overviewTabOption = OverviewTabOption.values()[overviewTabSelectionIndex.value]
+        val overviewTabOption = OverviewTabOption.entries[overviewTabSelectionIndex.value]
         when (overviewCardAction) {
             OverviewCardAction.NEXT -> {
                 when (overviewTabOption) {

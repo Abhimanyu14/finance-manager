@@ -150,7 +150,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
             screenArgs.originalTransactionType?.let { originalTransactionType ->
                 updateSelectedTransactionTypeIndex(
                     updatedIndex = transactionTypes.indexOf(
-                        element = TransactionType.values().find { transactionType ->
+                        element = TransactionType.entries.find { transactionType ->
                             transactionType.title == originalTransactionType
                         },
                     )

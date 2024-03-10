@@ -64,7 +64,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
     private val originalAccount: MutableStateFlow<Account?> = MutableStateFlow(
         value = null,
     )
-    private val validAccountTypes: List<AccountType> = AccountType.values().filter {
+    private val validAccountTypes: List<AccountType> = AccountType.entries.filter {
         it != AccountType.CASH
     }
     private val errorData: MutableStateFlow<AddOrEditAccountScreenUIErrorData> = MutableStateFlow(

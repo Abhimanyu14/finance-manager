@@ -1101,7 +1101,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             excludedTransactionTypes.add(TransactionType.TRANSFER)
         }
         val transactionTypesForNewTransaction =
-            (TransactionType.values().toSet() - excludedTransactionTypes).toList()
+            (TransactionType.entries.toSet() - excludedTransactionTypes).toList()
         this.transactionTypesForNewTransaction.value = transactionTypesForNewTransaction
 
         if (screenArgs.isEdit.isFalse() &&

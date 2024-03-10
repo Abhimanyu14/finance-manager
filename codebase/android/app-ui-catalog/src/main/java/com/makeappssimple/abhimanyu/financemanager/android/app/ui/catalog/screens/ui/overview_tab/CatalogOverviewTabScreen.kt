@@ -69,7 +69,7 @@ fun CatalogOverviewTabScreen(
             }
             OverviewTab(
                 data = OverviewTabData(
-                    items = OverviewTabOption.values()
+                    items = OverviewTabOption.entries
                         .map {
                             it.title
                         },
