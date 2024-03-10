@@ -181,7 +181,7 @@ internal class HomeScreenViewModelImpl @Inject constructor(
         accountsTotalMinimumBalanceAmountValue,
     ) { flows ->
         val isBackupCardVisible = flows[0] as? Boolean
-        val homeListItemViewData = flows[1] as? List<TransactionListItemData>
+        val homeListItemViewData = (flows[1] as? List<*>)?.filterIsInstance<TransactionListItemData>()
         val overviewTabSelectionIndex = flows[2] as? Int
         val overviewCardData = flows[3] as? OverviewCardViewModelData
         val accountsTotalBalanceAmountValue = flows[4] as? Long

@@ -267,11 +267,13 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         val uiState = flows[0] as? AddOrEditTransactionScreenUiStateData
         val uiVisibilityState = flows[1] as? AddOrEditTransactionScreenUiVisibilityState
         val isCtaButtonEnabled = flows[2] as? Boolean
-        val filteredCategories = flows[3] as? List<Category>
-        val accounts = flows[4] as? List<Account>
-        val titleSuggestions = flows[5] as? List<String>
-        val transactionTypesForNewTransaction = flows[6] as? List<TransactionType>
-        val transactionForValues = flows[7] as? List<TransactionFor>
+        val filteredCategories = (flows[3] as? List<*>)?.filterIsInstance<Category>()
+        val accounts = (flows[4] as? List<*>)?.filterIsInstance<Account>()
+        val titleSuggestions = (flows[5] as? List<*>)?.filterIsInstance<String>()
+        val transactionTypesForNewTransaction =
+            (flows[6] as? List<*>)?.filterIsInstance<TransactionType>()
+        val transactionForValues =
+            (flows[7] as? List<*>)?.filterIsInstance<TransactionFor>()
         val selectedTransactionType = flows[8] as? TransactionType
 
         if (

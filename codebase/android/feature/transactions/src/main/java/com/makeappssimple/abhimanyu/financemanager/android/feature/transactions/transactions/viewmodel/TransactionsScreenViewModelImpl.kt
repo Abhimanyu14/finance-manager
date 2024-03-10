@@ -149,18 +149,21 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             isLoading.value = true
 
             val allTransactionDataValue: List<TransactionData> =
-                flows[0] as? List<TransactionData> ?: emptyList()
+                (flows[0] as? List<*>)?.filterIsInstance<TransactionData>().orEmpty()
             val searchTextValue: String = flows[1] as String
             val selectedFilterValue: Filter = flows[2] as? Filter ?: Filter()
             val selectedSortOptionValue: SortOption =
                 flows[3] as? SortOption ?: SortOption.LATEST_FIRST
-            val expenseCategoriesValue: List<Category> = flows[4] as? List<Category> ?: emptyList()
-            val incomeCategoriesValue: List<Category> = flows[5] as? List<Category> ?: emptyList()
+            val expenseCategoriesValue: List<Category> =
+                (flows[4] as? List<*>)?.filterIsInstance<Category>().orEmpty()
+            val incomeCategoriesValue: List<Category> =
+                (flows[5] as? List<*>)?.filterIsInstance<Category>().orEmpty()
             val investmentCategoriesValue: List<Category> =
-                flows[6] as? List<Category> ?: emptyList()
-            val accountsValue: List<Account> = flows[7] as? List<Account> ?: emptyList()
+                (flows[6] as? List<*>)?.filterIsInstance<Category>().orEmpty()
+            val accountsValue: List<Account> =
+                (flows[7] as? List<*>)?.filterIsInstance<Account>().orEmpty()
             val transactionForValuesValue: List<TransactionFor> =
-                flows[8] as? List<TransactionFor> ?: emptyList()
+                (flows[8] as? List<*>)?.filterIsInstance<TransactionFor>().orEmpty()
             val oldestTransactionLocalDateValue: LocalDate? = flows[9] as? LocalDate
 
             updateSelectedFilter(
@@ -319,17 +322,29 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         val isLoading = flows[0] as? Boolean
         val selectedFilter = flows[1] as? Filter
         val oldestTransactionLocalDate = flows[2] as? LocalDate
-        val transactionDetailsListItemViewData =
-            flows[3] as? Map<String, List<TransactionListItemData>>
+        // TODO-Abhi: Write a helper function to type cast map
+        val transactionDetailsListItemViewData = (flows[3] as? Map<*, *>)
+            ?.mapKeys {
+                it.key as String
+            }
+            ?.mapValues {
+                (it.value as List<*>).filterIsInstance<TransactionListItemData>()
+            }
         val searchText = flows[4] as? String
         val selectedSortOption = flows[5] as? SortOption
+        // TODO-Abhi: Write a helper function to type cast list
         val transactionForValuesValue: List<TransactionFor> =
-            flows[6] as? List<TransactionFor> ?: emptyList()
-        val selectedTransactionsValue: List<Int> = flows[7] as? List<Int> ?: emptyList()
-        val expenseCategoriesValue: List<Category> = flows[8] as? List<Category> ?: emptyList()
-        val incomeCategoriesValue: List<Category> = flows[9] as? List<Category> ?: emptyList()
-        val investmentCategoriesValue: List<Category> = flows[10] as? List<Category> ?: emptyList()
-        val accountsValue: List<Account> = flows[11] as? List<Account> ?: emptyList()
+            (flows[6] as? List<*>)?.filterIsInstance<TransactionFor>().orEmpty()
+        val selectedTransactionsValue: List<Int> =
+            (flows[7] as? List<*>)?.filterIsInstance<Int>().orEmpty()
+        val expenseCategoriesValue: List<Category> =
+            (flows[8] as? List<*>)?.filterIsInstance<Category>().orEmpty()
+        val incomeCategoriesValue: List<Category> =
+            (flows[9] as? List<*>)?.filterIsInstance<Category>().orEmpty()
+        val investmentCategoriesValue: List<Category> =
+            (flows[10] as? List<*>)?.filterIsInstance<Category>().orEmpty()
+        val accountsValue: List<Account> =
+            (flows[11] as? List<*>)?.filterIsInstance<Account>().orEmpty()
 
         if (
             isLoading.isNull() ||
