@@ -80,36 +80,36 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
                         name = accountType.title,
                     )
                 )
-            }
-            accountsListItemDataList.addAll(
-                groupedAccounts[accountType]?.sortedByDescending { account ->
-                    account.balanceAmount.value
-                }?.map { account ->
-                    val deleteEnabled = !checkIfAccountIsUsedInTransactionsUseCase(
-                        accountId = account.id,
-                    )
-                    val isDefault = if (defaultAccountId.isNull()) {
-                        isDefaultAccount(
-                            account = account.name,
+                accountsListItemDataList.addAll(
+                    groupedAccounts[accountType]?.sortedByDescending { account ->
+                        account.balanceAmount.value
+                    }?.map { account ->
+                        val deleteEnabled = !checkIfAccountIsUsedInTransactionsUseCase(
+                            accountId = account.id,
                         )
-                    } else {
-                        defaultAccountId == account.id
-                    }
+                        val isDefault = if (defaultAccountId.isNull()) {
+                            isDefaultAccount(
+                                account = account.name,
+                            )
+                        } else {
+                            defaultAccountId == account.id
+                        }
 
-                    AccountsListItemContentData(
-                        isDefault = isDefault,
-                        isDeleteEnabled = !isDefaultAccount(
-                            account = account.name,
-                        ) && deleteEnabled,
-                        isExpanded = false,
-                        isLowBalance = account.balanceAmount < account.minimumAccountBalanceAmount.orEmpty(),
-                        icon = account.type.icon,
-                        accountId = account.id,
-                        balance = account.balanceAmount.toString(),
-                        name = account.name,
-                    )
-                }.orEmpty()
-            )
+                        AccountsListItemContentData(
+                            isDefault = isDefault,
+                            isDeleteEnabled = !isDefaultAccount(
+                                account = account.name,
+                            ) && deleteEnabled,
+                            isExpanded = false,
+                            isLowBalance = account.balanceAmount < account.minimumAccountBalanceAmount.orEmpty(),
+                            icon = account.type.icon,
+                            accountId = account.id,
+                            balance = account.balanceAmount.toString(),
+                            name = account.name,
+                        )
+                    }.orEmpty()
+                )
+            }
         }
 
         if (
