@@ -9,6 +9,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typealiases.ComposableContent
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typealiases.NullableComposableContent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.navigation_back_button.MyNavigationBackButton
 
 @Composable
@@ -16,7 +18,7 @@ fun MyTopAppBar(
     modifier: Modifier = Modifier,
     @StringRes titleTextStringResourceId: Int,
     navigationAction: (() -> Unit)? = null,
-    appBarActions: @Composable (() -> Unit)? = null,
+    appBarActions: NullableComposableContent = null,
 ) {
     MyTopAppBarUI(
         isNavigationIconVisible = navigationAction.isNotNull(),
@@ -40,8 +42,8 @@ fun MyTopAppBarUI(
     modifier: Modifier = Modifier,
     isNavigationIconVisible: Boolean,
     titleText: String,
-    appBarActions: @Composable (() -> Unit)?,
-    navigationBackButton: @Composable () -> Unit,
+    appBarActions: NullableComposableContent,
+    navigationBackButton: ComposableContent,
 ) {
     CenterAlignedTopAppBar(
         title = {

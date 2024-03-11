@@ -6,6 +6,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typealiases.ComposableContent
 
 val myLightColorScheme = lightColorScheme(
     primary = Primary,
@@ -70,7 +71,7 @@ internal fun Material3AppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     darkColorScheme: ColorScheme,
     lightColorScheme: ColorScheme,
-    content: @Composable () -> Unit,
+    content: ComposableContent,
 ) {
     val colors = if (darkTheme) {
         darkColorScheme
@@ -91,7 +92,7 @@ fun MyAppTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     darkColorScheme: ColorScheme = myDarkColorScheme,
     lightColorScheme: ColorScheme = myLightColorScheme,
-    content: @Composable () -> Unit,
+    content: ComposableContent,
 ) {
     Material3AppTheme(
         darkTheme = darkTheme,

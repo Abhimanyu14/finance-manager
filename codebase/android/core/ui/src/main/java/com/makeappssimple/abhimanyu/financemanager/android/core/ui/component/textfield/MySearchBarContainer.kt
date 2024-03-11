@@ -8,11 +8,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typealiases.BoxScopedComposableContent
 
 @Composable
 fun MySearchBarContainer(
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit,
+    content: BoxScopedComposableContent,
 ) {
     Box(
         modifier = modifier
@@ -24,7 +25,6 @@ fun MySearchBarContainer(
                 horizontal = 16.dp,
                 vertical = 8.dp,
             ),
-    ) {
-        content()
-    }
+        content = content,
+    )
 }

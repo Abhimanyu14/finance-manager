@@ -5,19 +5,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typealiases.BoxScopedComposableContent
 
 @Composable
 fun CenterBox(
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit,
+    content: BoxScopedComposableContent,
 ) {
     Box(
         contentAlignment = Alignment.Center,
         modifier = modifier
             .fillMaxSize(),
-    ) {
-        content()
-    }
+        content = content,
+    )
 }
 
 private class LintTest {

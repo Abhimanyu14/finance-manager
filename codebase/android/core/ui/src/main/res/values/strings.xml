@@ -79,6 +79,8 @@
     <string name="bottom_sheet_transactions_filter_clear">Clear</string>
     <string name="bottom_sheet_transactions_filter_reset">Reset</string>
     <string name="bottom_sheet_transactions_filter_apply">Apply</string>
+    <string name="bottom_sheet_transactions_filter_expand_group">Expand Group</string>
+    <string name="bottom_sheet_transactions_filter_collapse_group">Collapse Group</string>
     <string name="bottom_sheet_transactions_filter_expense_categories">Expense Categories</string>
     <string name="bottom_sheet_transactions_filter_income_categories">Income Categories</string>
     <string name="bottom_sheet_transactions_filter_investment_categories">Investment Categories</string>
@@ -151,6 +153,15 @@
     <string name="transaction_list_item_edit">Edit</string>
     <string name="transaction_list_item_refund">Refund</string>
     <string name="transaction_list_item_delete">Delete</string>
+    <!-- endregion -->
+
+    <!-- region time picker -->
+    <string name="time_picker_negative_button_text">Cancel</string>
+    <string name="time_picker_positive_button_text">OK</string>
+    <string name="time_picker_text_input_title">Enter Time</string>
+    <string name="time_picker_touch_input_title">Select Time</string>
+    <string name="time_picker_text_input_switch_icon_button_content_description">Switch to Touch Input</string>
+    <string name="time_picker_touch_input_switch_icon_button_content_description">Switch to Text Input</string>
     <!-- endregion -->
 
 </resources>

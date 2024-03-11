@@ -30,7 +30,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyE
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemUIWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircleData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 
 @Immutable
 data class TransactionListItemData(

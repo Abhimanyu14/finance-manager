@@ -31,7 +31,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 
 @Immutable
 data class MySearchBarData(

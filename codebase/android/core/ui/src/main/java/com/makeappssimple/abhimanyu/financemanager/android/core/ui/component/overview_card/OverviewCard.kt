@@ -28,7 +28,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 
 @Immutable
 data class OverviewCardData(

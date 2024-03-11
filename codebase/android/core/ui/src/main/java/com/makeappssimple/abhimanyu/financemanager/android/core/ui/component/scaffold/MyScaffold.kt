@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sc
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.asPaddingValues
@@ -36,6 +35,8 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typealiases.ColumnScopedComposableContent
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typealiases.ComposableContent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetBackHandler
 import kotlinx.coroutines.CoroutineScope
 
@@ -46,7 +47,7 @@ fun MyScaffold(
     modifier: Modifier = Modifier,
 
     // ModalBottomSheetLayout
-    sheetContent: @Composable ColumnScope.() -> Unit = {},
+    sheetContent: ColumnScopedComposableContent = {},
     sheetState: SheetState = rememberModalBottomSheetState(
         skipPartiallyExpanded = true,
     ),
@@ -56,12 +57,12 @@ fun MyScaffold(
 
     // Scaffold
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
-    topBar: @Composable () -> Unit = {},
-    bottomBar: @Composable () -> Unit = {},
-    snackbarHost: @Composable () -> Unit = {
+    topBar: ComposableContent = {},
+    bottomBar: ComposableContent = {},
+    snackbarHost: ComposableContent = {
         SnackbarHost(snackbarHostState)
     },
-    floatingActionButton: @Composable () -> Unit = {},
+    floatingActionButton: ComposableContent = {},
     floatingActionButtonPosition: FabPosition = FabPosition.End,
     backgroundColor: Color = MaterialTheme.colorScheme.background,
     contentColor: Color = contentColorFor(backgroundColor),
@@ -75,7 +76,7 @@ fun MyScaffold(
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     onBackPress: () -> Unit = {},
 
-    content: @Composable ColumnScope.() -> Unit,
+    content: ColumnScopedComposableContent,
 ) {
     BottomSheetBackHandler(
         enabled = backHandlerEnabled,

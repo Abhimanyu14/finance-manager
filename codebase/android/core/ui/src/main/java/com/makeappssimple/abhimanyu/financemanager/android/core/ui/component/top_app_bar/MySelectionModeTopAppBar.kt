@@ -1,23 +1,22 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar
 
-import androidx.compose.foundation.layout.RowScope
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.button.MyIconButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typealiases.ComposableContent
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typealiases.RowScopedComposableContent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 
 @Composable
 fun MySelectionModeTopAppBar(
     modifier: Modifier = Modifier,
-    appBarActions: @Composable RowScope.() -> Unit = {},
+    appBarActions: RowScopedComposableContent = {},
     navigationAction: () -> Unit = {},
-    title: @Composable () -> Unit = {},
+    title: ComposableContent = {},
 ) {
     MySelectionModeTopAppBarUI(
         modifier = modifier,
@@ -30,24 +29,19 @@ fun MySelectionModeTopAppBar(
 @Composable
 fun MySelectionModeTopAppBarUI(
     modifier: Modifier = Modifier,
-    appBarActions: @Composable RowScope.() -> Unit,
+    appBarActions: RowScopedComposableContent,
     navigationAction: () -> Unit,
-    title: @Composable () -> Unit,
+    title: ComposableContent,
 ) {
     TopAppBar(
         title = title,
         navigationIcon = {
-            IconButton(
+            MyIconButton(
+                tint = MaterialTheme.colorScheme.onBackground,
+                imageVector = MyIcons.Close,
+                contentDescriptionStringResourceId = R.string.navigation_close_button_navigation_icon_content_description,
                 onClick = navigationAction,
-            ) {
-                Icon(
-                    imageVector = MyIcons.Close,
-                    contentDescription = stringResource(
-                        id = R.string.navigation_close_button_navigation_icon_content_description,
-                    ),
-                    tint = MaterialTheme.colorScheme.onBackground,
-                )
-            }
+            )
         },
         actions = appBarActions,
         colors = TopAppBarDefaults.topAppBarColors(

@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -11,13 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typealiases.ColumnScopedComposableContent
 
 @Composable
 fun MyExpandableItemUIWrapper(
     modifier: Modifier = Modifier,
     isExpanded: Boolean = false,
     isSelected: Boolean = false,
-    content: @Composable ColumnScope.() -> Unit,
+    content: ColumnScopedComposableContent,
 ) {
     Column(
         modifier = modifier
@@ -36,15 +36,14 @@ fun MyExpandableItemUIWrapper(
                 },
             )
             .animateContentSize(),
-    ) {
-        content()
-    }
+        content = content,
+    )
 }
 
 @Composable
 fun MyItemViewWrapper(
     modifier: Modifier = Modifier,
-    content: @Composable ColumnScope.() -> Unit,
+    content: ColumnScopedComposableContent,
 ) {
     Column(
         modifier = modifier
@@ -59,7 +58,6 @@ fun MyItemViewWrapper(
                 color = MaterialTheme.colorScheme.background,
             )
             .animateContentSize(),
-    ) {
-        content()
-    }
+        content = content,
+    )
 }

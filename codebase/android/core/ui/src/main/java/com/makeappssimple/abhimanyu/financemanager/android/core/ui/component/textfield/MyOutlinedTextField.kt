@@ -18,14 +18,14 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNullOrBlank
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.button.MyIconButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typealiases.NullableComposableContent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 
 @Immutable
 data class MyOutlinedTextFieldData(
@@ -37,7 +37,7 @@ data class MyOutlinedTextFieldData(
     val keyboardOptions: KeyboardOptions = KeyboardOptions(),
     val textFieldValue: TextFieldValue = TextFieldValue(),
     val visualTransformation: VisualTransformation = VisualTransformation.None,
-    val supportingText: @Composable (() -> Unit)? = null,
+    val supportingText: NullableComposableContent = null,
 )
 
 @Immutable
@@ -76,9 +76,7 @@ fun MyOutlinedTextField(
                         MyIconButton(
                             tint = MaterialTheme.colorScheme.onBackground,
                             imageVector = MyIcons.Clear,
-                            contentDescription = stringResource(
-                                id = data.trailingIconContentDescriptionTextStringResourceId,
-                            ),
+                            contentDescriptionStringResourceId = data.trailingIconContentDescriptionTextStringResourceId,
                             onClick = events.onClickTrailingIcon,
                             modifier = Modifier
                                 .padding(

@@ -11,6 +11,7 @@ import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.button.MyIconButton
 
 @Composable
 fun MyText(
@@ -22,30 +23,24 @@ fun MyText(
     onTextLayout: (TextLayoutResult) -> Unit = {},
     style: TextStyle = LocalTextStyle.current,
 ) {
-    Text(
+    MyText(
+        modifier = modifier,
         text = stringResource(
             id = textStringResourceId,
         ),
-        modifier = modifier,
-        color = Unspecified,
-        fontSize = TextUnit.Unspecified,
-        fontStyle = null,
-        fontWeight = null,
-        fontFamily = null,
-        letterSpacing = TextUnit.Unspecified,
-        textDecoration = null,
-        textAlign = null,
-        lineHeight = TextUnit.Unspecified,
         overflow = overflow,
         softWrap = softWrap,
         maxLines = maxLines,
         onTextLayout = onTextLayout,
-        style = LocalTextStyle.current.merge(
-            style
-        ),
+        style = style,
     )
 }
 
+/**
+ * Avoid using this unless absolutely unavoidable.
+ *
+ * Recommended to use [MyText] with [textStringResourceId] over this.
+ */
 @Composable
 fun MyText(
     modifier: Modifier = Modifier,

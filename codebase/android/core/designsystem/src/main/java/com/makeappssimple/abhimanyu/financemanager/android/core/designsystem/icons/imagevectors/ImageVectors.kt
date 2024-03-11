@@ -1,4 +1,4 @@
-package com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.imagevectors
+package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.imagevectors
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.materialIcon

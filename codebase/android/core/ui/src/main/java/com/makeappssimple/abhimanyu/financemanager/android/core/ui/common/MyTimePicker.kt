@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -26,14 +24,19 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.button.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.myDarkColorScheme
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.myLightColorScheme
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typealiases.ComposableContent
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import java.time.LocalTime
 
 @Immutable
@@ -65,11 +68,13 @@ fun MyTimePicker(
     if (data.isVisible) {
         TimePickerDialog(
             modifier = modifier,
-            title = if (showingPicker.value) {
-                "Select Time "
-            } else {
-                "Enter Time"
-            },
+            title = stringResource(
+                id = if (showingPicker.value) {
+                    R.string.time_picker_touch_input_title
+                } else {
+                    R.string.time_picker_text_input_title
+                }
+            ),
             onCancel = events.onNegativeButtonClick,
             onConfirm = {
                 val localTime = LocalTime.of(state.hour, state.minute)
@@ -77,24 +82,21 @@ fun MyTimePicker(
             },
             toggle = {
                 if (configuration.screenHeightDp > 400) {
-                    IconButton(
+                    MyIconButton(
+                        imageVector = if (showingPicker.value) {
+                            MyIcons.Keyboard
+                        } else {
+                            MyIcons.Schedule
+                        },
+                        contentDescriptionStringResourceId = if (showingPicker.value) {
+                            R.string.time_picker_touch_input_switch_icon_button_content_description
+                        } else {
+                            R.string.time_picker_text_input_switch_icon_button_content_description
+                        },
                         onClick = {
                             showingPicker.value = !showingPicker.value
                         }
-                    ) {
-                        Icon(
-                            imageVector = if (showingPicker.value) {
-                                MyIcons.Keyboard
-                            } else {
-                                MyIcons.Schedule
-                            },
-                            contentDescription = if (showingPicker.value) {
-                                "Switch to Text Input"
-                            } else {
-                                "Switch to Touch Input"
-                            },
-                        )
-                    }
+                    )
                 }
             }
         ) {
@@ -136,8 +138,8 @@ private fun TimePickerDialog(
     title: String,
     onCancel: () -> Unit,
     onConfirm: () -> Unit,
-    toggle: @Composable () -> Unit = {},
-    content: @Composable () -> Unit,
+    toggle: ComposableContent = {},
+    content: ComposableContent,
 ) {
     Dialog(
         onDismissRequest = onCancel,
@@ -193,18 +195,19 @@ private fun TimePickerDialog(
                                 weight = 1F,
                             ),
                     )
+                    // TODO(Abhi): Create a wrapper for [TextButton]
                     TextButton(
                         onClick = onCancel,
                     ) {
-                        Text(
-                            text = "Cancel",
+                        MyText(
+                            textStringResourceId = R.string.time_picker_negative_button_text,
                         )
                     }
                     TextButton(
                         onClick = onConfirm,
                     ) {
-                        Text(
-                            text = "OK",
+                        MyText(
+                            textStringResourceId = R.string.time_picker_positive_button_text,
                         )
                     }
                 }
@@ -215,7 +218,7 @@ private fun TimePickerDialog(
 
 @Composable
 private fun TimePickerTheme(
-    content: @Composable () -> Unit,
+    content: ComposableContent,
 ) {
     MyAppTheme(
         lightColorScheme = myLightColorScheme.copy(
@@ -224,7 +227,6 @@ private fun TimePickerTheme(
         darkColorScheme = myDarkColorScheme.copy(
             outline = MaterialTheme.colorScheme.onSurfaceVariant,
         ),
-    ) {
-        content()
-    }
+        content = content,
+    )
 }

@@ -5,6 +5,9 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.runtime.Composable
 
-typealias BoxScopedComposable = @Composable BoxScope.() -> Unit
-typealias ColumnScopedComposable = @Composable ColumnScope.() -> Unit
-typealias RowScopedComposable = @Composable RowScope.() -> Unit
+typealias ComposableContent = @Composable () -> Unit
+typealias NullableComposableContent = @Composable (() -> Unit)?
+
+typealias BoxScopedComposableContent = @Composable BoxScope.() -> Unit
+typealias ColumnScopedComposableContent = @Composable ColumnScope.() -> Unit
+typealias RowScopedComposableContent = @Composable RowScope.() -> Unit

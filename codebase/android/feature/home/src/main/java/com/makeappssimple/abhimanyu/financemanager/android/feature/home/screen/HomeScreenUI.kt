@@ -36,7 +36,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 
 private val bottomContentPadding = 80.dp
@@ -68,9 +68,7 @@ internal fun HomeScreenUI(
                     MyIconButton(
                         tint = MaterialTheme.colorScheme.onBackground,
                         imageVector = MyIcons.Settings,
-                        contentDescription = stringResource(
-                            id = R.string.screen_home_appbar_settings,
-                        ),
+                        contentDescriptionStringResourceId = R.string.screen_home_appbar_settings,
                         onClick = {
                             handleUIEvents(HomeScreenUIEvent.NavigateToSettingsScreen)
                         },

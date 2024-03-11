@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.semantics
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typealiases.ComposableContent
 
 @Composable
 fun MyFloatingActionButton(
@@ -36,7 +37,7 @@ fun MyFloatingActionButton(
     modifier: Modifier = Modifier,
     onClickLabel: String,
     onClick: () -> Unit,
-    content: @Composable () -> Unit,
+    content: ComposableContent,
 ) {
     FloatingActionButton(
         onClick = onClick,

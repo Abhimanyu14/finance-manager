@@ -65,7 +65,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MySearchBarEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MySelectionModeTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.icons.MyIcons
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 
 @Composable
@@ -199,9 +199,7 @@ internal fun TransactionsScreenUI(
                             MyIconButton(
                                 tint = MaterialTheme.colorScheme.onBackground,
                                 imageVector = MyIcons.MoreVert,
-                                contentDescription = stringResource(
-                                    id = R.string.screen_transactions_selection_mode_appbar_menu_more_options,
-                                ),
+                                contentDescriptionStringResourceId = R.string.screen_transactions_selection_mode_appbar_menu_more_options,
                                 onClick = {
                                     isDropDownVisible = true
                                 },
