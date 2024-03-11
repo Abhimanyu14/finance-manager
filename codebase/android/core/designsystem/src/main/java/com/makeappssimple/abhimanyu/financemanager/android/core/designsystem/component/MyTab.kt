@@ -16,7 +16,7 @@ data class MyTabData(
 fun MyTabRow(
     modifier: Modifier = Modifier,
     selectedTabIndex: Int,
-    tabData: List<MyTabData>,
+    tabDataList: List<MyTabData>,
     updateSelectedTabIndex: (updatedSelectedTabIndex: Int) -> Unit,
 ) {
     TabRow(
@@ -25,12 +25,12 @@ fun MyTabRow(
         containerColor = MaterialTheme.colorScheme.background,
         contentColor = MaterialTheme.colorScheme.primary,
     ) {
-        tabData.mapIndexed { index, categoriesTabData ->
+        tabDataList.mapIndexed { index, tabData ->
             val isSelected = selectedTabIndex == index
             Tab(
                 text = {
                     MyTabText(
-                        title = categoriesTabData.title,
+                        title = tabData.title,
                         isSelected = isSelected,
                     )
                 },

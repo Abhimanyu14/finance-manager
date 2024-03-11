@@ -17,6 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.button.MyFloatingActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarLandscapeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.navigationBarsSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
@@ -28,7 +29,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.gri
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import kotlinx.coroutines.launch
 
@@ -191,6 +191,7 @@ internal fun CategoriesScreenUI(
         ) {
             MyTabRow(
                 selectedTabIndex = uiState.selectedTabIndex,
+                tabDataList = uiState.tabData,
                 updateSelectedTabIndex = { updatedSelectedTabIndex ->
                     handleUIEvents(
                         CategoriesScreenUIEvent.UpdateSelectedTabIndex(
@@ -198,7 +199,6 @@ internal fun CategoriesScreenUI(
                         )
                     )
                 },
-                tabData = uiState.tabData,
             )
             HorizontalPager(
                 state = uiState.pagerState,
