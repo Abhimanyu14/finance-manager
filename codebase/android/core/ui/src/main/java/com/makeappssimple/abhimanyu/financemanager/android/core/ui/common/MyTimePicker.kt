@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TimeInput
 import androidx.compose.material3.TimePicker
@@ -169,7 +168,7 @@ private fun TimePickerDialog(
                     ),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Text(
+                MyText(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(

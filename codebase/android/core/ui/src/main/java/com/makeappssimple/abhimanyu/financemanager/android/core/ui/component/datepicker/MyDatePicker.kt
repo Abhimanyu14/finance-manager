@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.da
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.SelectableDates
-import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
@@ -11,13 +10,13 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.AppConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.getLocalDate
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.getTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orMin
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import java.time.LocalDate
 import java.time.ZoneId
@@ -97,10 +96,8 @@ fun MyDatePicker(
                     },
                     enabled = confirmEnabled.value,
                 ) {
-                    Text(
-                        text = stringResource(
-                            id = R.string.date_picker_positive_button,
-                        ),
+                    MyText(
+                        textStringResourceId = R.string.date_picker_positive_button,
                     )
                 }
             },
@@ -108,10 +105,8 @@ fun MyDatePicker(
                 TextButton(
                     onClick = events.onNegativeButtonClick,
                 ) {
-                    Text(
-                        text = stringResource(
-                            id = R.string.date_picker_negative_button,
-                        ),
+                    MyText(
+                        textStringResourceId = R.string.date_picker_negative_button,
                     )
                 }
             }

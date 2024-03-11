@@ -11,7 +11,6 @@ import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.button.MyIconButton
 
 @Composable
 fun MyText(
