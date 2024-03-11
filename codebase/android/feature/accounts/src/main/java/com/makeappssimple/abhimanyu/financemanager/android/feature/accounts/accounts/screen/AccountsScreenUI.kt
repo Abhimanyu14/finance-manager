@@ -66,15 +66,16 @@ internal fun AccountsScreenUI(
                         resetExpandedItemIndex = {
                             uiState.setExpandedItemIndex(null)
                         },
-                    ) {
-                        uiState.accountIdToDelete?.let { accountId ->
-                            handleUIEvents(
-                                AccountsScreenUIEvent.DeleteAccount(
-                                    accountId = accountId,
+                        deleteAccount = {
+                            uiState.accountIdToDelete?.let { accountId ->
+                                handleUIEvents(
+                                    AccountsScreenUIEvent.DeleteAccount(
+                                        accountId = accountId,
+                                    )
                                 )
-                            )
-                        }
-                    }
+                            }
+                        },
+                    )
                 }
 
                 AccountsScreenBottomSheetType.NONE -> {
@@ -88,15 +89,16 @@ internal fun AccountsScreenUI(
                         resetClickedItemId = {
                             uiState.setClickedItemId(null)
                         },
-                    ) {
-                        uiState.clickedItemId?.let { clickedItemIdValue ->
-                            handleUIEvents(
-                                AccountsScreenUIEvent.SetDefaultAccountIdInDataStore(
-                                    defaultAccountId = clickedItemIdValue,
+                        setDefaultAccountIdInDataStore = {
+                            uiState.clickedItemId?.let { clickedItemIdValue ->
+                                handleUIEvents(
+                                    AccountsScreenUIEvent.SetDefaultAccountIdInDataStore(
+                                        defaultAccountId = clickedItemIdValue,
+                                    )
                                 )
-                            )
-                        }
-                    }
+                            }
+                        },
+                    )
                 }
             }
         },

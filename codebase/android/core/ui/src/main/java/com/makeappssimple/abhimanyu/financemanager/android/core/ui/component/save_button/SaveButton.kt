@@ -40,28 +40,41 @@ fun SaveButton(
             modifier = modifier,
         )
     } else {
-        ElevatedButton(
+        SaveButtonUI(
             modifier = modifier,
-            onClick = events.onClick,
-            enabled = data.isEnabled,
-            colors = ButtonDefaults
-                .buttonColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    contentColor = MaterialTheme.colorScheme.onPrimary,
+            data = data,
+            events = events,
+        )
+    }
+}
+
+@Composable
+private fun SaveButtonUI(
+    modifier: Modifier,
+    data: SaveButtonData,
+    events: SaveButtonEvents,
+) {
+    ElevatedButton(
+        modifier = modifier,
+        onClick = events.onClick,
+        enabled = data.isEnabled,
+        colors = ButtonDefaults
+            .buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary,
+            ),
+    ) {
+        MyText(
+            modifier = Modifier
+                .defaultMinSize(
+                    minWidth = 80.dp,
                 ),
-        ) {
-            MyText(
-                modifier = Modifier
-                    .defaultMinSize(
-                        minWidth = 80.dp,
-                    ),
-                textStringResourceId = data.textStringResourceId,
-                style = MaterialTheme.typography.labelLarge
-                    .copy(
-                        textAlign = TextAlign.Center,
-                    ),
-            )
-        }
+            textStringResourceId = data.textStringResourceId,
+            style = MaterialTheme.typography.labelLarge
+                .copy(
+                    textAlign = TextAlign.Center,
+                ),
+        )
     }
 }
 

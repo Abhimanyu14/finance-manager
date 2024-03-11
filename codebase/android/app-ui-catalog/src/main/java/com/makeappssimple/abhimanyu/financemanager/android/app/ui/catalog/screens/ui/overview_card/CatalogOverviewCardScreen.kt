@@ -62,11 +62,7 @@ fun CatalogOverviewCardScreen(
                     ),
                     title = "2023",
                 ),
-                events = OverviewCardEvents(
-                    onClick = {},
-                    onOverviewTabClick = {},
-                    handleOverviewCardAction = {},
-                ),
+                events = OverviewCardEvents(),
             )
             OverviewCard(
                 data = OverviewCardData(

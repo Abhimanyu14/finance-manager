@@ -48,12 +48,19 @@ data class OverviewCardEvents(
 enum class OverviewTabOption(
     val title: String,
 ) {
-    DAY("DAY"),
+    DAY(
+        title = "DAY",
+    ),
 
     // TODO(Abhi): Enable week later
     // WEEK("Week"),
-    MONTH("MONTH"),
-    YEAR("YEAR"),
+
+    MONTH(
+        title = "MONTH",
+    ),
+    YEAR(
+        title = "YEAR",
+    ),
 }
 
 enum class OverviewCardAction {
