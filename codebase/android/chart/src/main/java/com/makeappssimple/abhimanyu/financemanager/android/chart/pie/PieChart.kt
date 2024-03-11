@@ -46,8 +46,8 @@ fun PieChart(
 
 @Composable
 private fun DrawChart(
-    pieChartData: PieChartData,
     modifier: Modifier = Modifier,
+    pieChartData: PieChartData,
     progress: Float,
     sliceDrawer: SliceDrawer,
 ) {
