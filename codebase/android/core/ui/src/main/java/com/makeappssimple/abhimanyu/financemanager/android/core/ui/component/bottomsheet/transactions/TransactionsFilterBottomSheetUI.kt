@@ -15,8 +15,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.TextButton
@@ -41,6 +39,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.button.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.statusBarSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
@@ -57,7 +56,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
 import java.time.LocalDate
 
@@ -595,21 +593,22 @@ fun TransactionFilterBottomSheetDateFilter(
                         weight = 1F,
                     ),
             ) {
-                IconButton(
+                MyIconButton(
+                    modifier = Modifier
+                        .graphicsLayer {
+                            rotationZ = chevronDegrees
+                        },
+                    tint = MaterialTheme.colorScheme.onBackground,
+                    imageVector = MyIcons.ChevronRight,
+                    contentDescriptionStringResourceId = if (expanded) {
+                        R.string.bottom_sheet_transactions_filter_collapse_group
+                    } else {
+                        R.string.bottom_sheet_transactions_filter_expand_group
+                    },
                     onClick = {
                         onExpandButtonClick()
                     },
-                ) {
-                    Icon(
-                        imageVector = MyIcons.ChevronRight,
-                        tint = MaterialTheme.colorScheme.onBackground,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .graphicsLayer {
-                                rotationZ = chevronDegrees
-                            },
-                    )
-                }
+                )
                 MyText(
                     modifier = Modifier
                         .weight(

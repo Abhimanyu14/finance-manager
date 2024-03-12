@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -26,9 +24,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.button.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
 
 @Immutable
 data class OverviewCardData(
@@ -158,17 +158,14 @@ private fun OverviewCardUI(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 // TODO(Abhi): Disable the buttons conditionally
-                IconButton(
+                MyIconButton(
+                    tint = MaterialTheme.colorScheme.primary,
+                    imageVector = MyIcons.ChevronLeft,
+                    contentDescriptionStringResourceId = R.string.overview_card_previous_button_content_description,
                     onClick = {
                         events.handleOverviewCardAction(OverviewCardAction.PREV)
                     },
-                ) {
-                    Icon(
-                        imageVector = MyIcons.ChevronLeft,
-                        contentDescription = null, // TODO(Abhi): Change content description
-                        tint = MaterialTheme.colorScheme.primary,
-                    )
-                }
+                )
                 MyText(
                     modifier = Modifier
                         .padding(
@@ -185,17 +182,14 @@ private fun OverviewCardUI(
                             textAlign = TextAlign.Center,
                         ),
                 )
-                IconButton(
+                MyIconButton(
+                    tint = MaterialTheme.colorScheme.primary,
+                    imageVector = MyIcons.ChevronRight,
+                    contentDescriptionStringResourceId = R.string.overview_card_next_button_content_description,
                     onClick = {
                         events.handleOverviewCardAction(OverviewCardAction.NEXT)
                     },
-                ) {
-                    Icon(
-                        imageVector = MyIcons.ChevronRight,
-                        contentDescription = null, // TODO(Abhi): Change content description
-                        tint = MaterialTheme.colorScheme.primary,
-                    )
-                }
+                )
             }
             VerticalSpacer(
                 height = 8.dp,

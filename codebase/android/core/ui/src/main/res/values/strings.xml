@@ -4,26 +4,6 @@
     <string name="common_empty_string" />
     <!-- endregion -->
 
-    <!-- region backup card -->
-    <string name="backup_card">Backup data</string>
-    <!-- endregion -->
-
-    <!-- region bottom sheet emoji picker -->
-    <string name="emoji_picker_bottom_sheet_placeholder_text">Search Emojis</string>
-    <!-- endregion -->
-
-    <!-- region bottom sheet select category -->
-    <string name="bottom_sheet_select_category_title">Select Category</string>
-    <!-- endregion -->
-
-    <!-- region bottom sheet select account -->
-    <string name="bottom_sheet_select_account_title">Select Account</string>
-    <!-- endregion -->
-
-    <!-- region bottom sheet select transaction for -->
-    <string name="bottom_sheet_select_transaction_for_title">Select Transaction For</string>
-    <!-- endregion -->
-
     <!-- region accounts delete confirmation bottom sheet -->
     <string name="screen_accounts_bottom_sheet_delete_title">Delete Account</string>
     <string name="screen_accounts_bottom_sheet_delete_message">
@@ -51,6 +31,32 @@
     <string name="bottom_sheet_analysis_filter_to_date">To</string>
     <!-- endregion -->
 
+    <!-- region backup card -->
+    <string name="backup_card">Backup data</string>
+    <!-- endregion -->
+
+    <!-- region bottom sheet category menu -->
+    <string name="bottom_sheet_category_menu_edit">Edit</string>
+    <string name="bottom_sheet_category_menu_set_as_default_category">Set as default Category</string>
+    <string name="bottom_sheet_category_menu_delete">Delete</string>
+    <!-- endregion -->
+
+    <!-- region bottom sheet emoji picker -->
+    <string name="emoji_picker_bottom_sheet_placeholder_text">Search Emojis</string>
+    <!-- endregion -->
+
+    <!-- region bottom sheet select account -->
+    <string name="bottom_sheet_select_account_title">Select Account</string>
+    <!-- endregion -->
+
+    <!-- region bottom sheet select category -->
+    <string name="bottom_sheet_select_category_title">Select Category</string>
+    <!-- endregion -->
+
+    <!-- region bottom sheet select transaction for -->
+    <string name="bottom_sheet_select_transaction_for_title">Select Transaction For</string>
+    <!-- endregion -->
+
     <!-- region categories delete confirmation bottom sheet -->
     <string name="screen_categories_bottom_sheet_delete_title">Delete Category</string>
     <string name="screen_categories_bottom_sheet_delete_message">
@@ -69,10 +75,47 @@
     <string name="screen_categories_bottom_sheet_set_as_default_negative_button_text">Cancel</string>
     <!-- endregion -->
 
-    <!-- region bottom sheet category menu -->
-    <string name="bottom_sheet_category_menu_edit">Edit</string>
-    <string name="bottom_sheet_category_menu_set_as_default_category">Set as default Category</string>
-    <string name="bottom_sheet_category_menu_delete">Delete</string>
+    <!-- region date picker -->
+    <string name="date_picker_negative_button">Cancel</string>
+    <string name="date_picker_positive_button">OK</string>
+    <!-- endregion -->
+
+    <!-- region default tag -->
+    <string name="default_tag">DEFAULT</string>
+    <!-- endregion -->
+
+    <!-- region list item -->
+    <string name="list_item_accounts_edit">Edit</string>
+    <string name="list_item_accounts_delete">Delete</string>
+    <!-- endregion -->
+
+    <!-- region navigation back button -->
+    <string name="navigation_back_button_navigation_icon_content_description">Navigate Back</string>
+    <string name="navigation_close_button_navigation_icon_content_description">Close</string>
+    <!-- endregion -->
+
+    <!-- region overview card -->
+    <string name="overview_card_previous_button_content_description">Previous</string>
+    <string name="overview_card_next_button_content_description">Next</string>
+    <!-- endregion -->
+
+    <!-- region recent transactions -->
+    <string name="screen_home_recent_transactions">Recent Transactions</string>
+    <string name="screen_home_view_all_transactions">VIEW ALL</string>
+    <!-- endregion -->
+
+    <!-- region time picker -->
+    <string name="time_picker_negative_button_text">Cancel</string>
+    <string name="time_picker_positive_button_text">OK</string>
+    <string name="time_picker_text_input_title">Enter Time</string>
+    <string name="time_picker_touch_input_title">Select Time</string>
+    <string name="time_picker_text_input_switch_icon_button_content_description">Switch to Touch Input</string>
+    <string name="time_picker_touch_input_switch_icon_button_content_description">Switch to Text Input</string>
+    <!-- endregion -->
+
+    <!-- region total balance card -->
+    <string name="total_balance_card_title">TOTAL BALANCE</string>
+    <string name="total_balance_card_view_balance">View Balance</string>
     <!-- endregion -->
 
     <!-- region transactions filter bottom sheet -->
@@ -119,49 +162,11 @@
     <string name="bottom_sheet_transaction_for_values_menu_negative_button_text">Cancel</string>
     <!-- endregion -->
 
-    <!-- region date picker -->
-    <string name="date_picker_negative_button">Cancel</string>
-    <string name="date_picker_positive_button">OK</string>
-    <!-- endregion -->
-
-    <!-- region default tag -->
-    <string name="default_tag">DEFAULT</string>
-    <!-- endregion -->
-
-    <!-- region list item -->
-    <string name="list_item_accounts_edit">Edit</string>
-    <string name="list_item_accounts_delete">Delete</string>
-    <!-- endregion -->
-
-    <!-- region navigation back button -->
-    <string name="navigation_back_button_navigation_icon_content_description">Navigate Back</string>
-    <string name="navigation_close_button_navigation_icon_content_description">Close</string>
-    <!-- endregion -->
-
-    <!-- region recent transactions -->
-    <string name="screen_home_recent_transactions">Recent Transactions</string>
-    <string name="screen_home_view_all_transactions">VIEW ALL</string>
-    <!-- endregion -->
-
-    <!-- region total balance card -->
-    <string name="total_balance_card_title">TOTAL BALANCE</string>
-    <string name="total_balance_card_view_balance">View Balance</string>
-    <!-- endregion -->
-
     <!-- region transactions list item -->
     <string name="transaction_list_item_account">%1$s -> %2$s</string>
     <string name="transaction_list_item_edit">Edit</string>
     <string name="transaction_list_item_refund">Refund</string>
     <string name="transaction_list_item_delete">Delete</string>
-    <!-- endregion -->
-
-    <!-- region time picker -->
-    <string name="time_picker_negative_button_text">Cancel</string>
-    <string name="time_picker_positive_button_text">OK</string>
-    <string name="time_picker_text_input_title">Enter Time</string>
-    <string name="time_picker_touch_input_title">Select Time</string>
-    <string name="time_picker_text_input_switch_icon_button_content_description">Switch to Touch Input</string>
-    <string name="time_picker_touch_input_switch_icon_button_content_description">Switch to Text Input</string>
     <!-- endregion -->
 
 </resources>
