@@ -26,7 +26,9 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
-            CompositionLocalProvider(LocalMyLogger provides myLogger) {
+            CompositionLocalProvider(
+                value = LocalMyLogger provides myLogger,
+            ) {
                 MyApp()
             }
         }
