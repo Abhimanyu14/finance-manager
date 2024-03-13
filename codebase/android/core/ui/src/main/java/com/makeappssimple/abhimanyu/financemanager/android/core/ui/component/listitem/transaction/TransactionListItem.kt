@@ -241,6 +241,7 @@ fun TransactionListItem(
                         ),
                 )
                 AnimatedVisibility(
+                    // TODO(Abhi): Move logic to UI state
                     visible = data.isExpanded.not() && data.isInSelectionMode.not(),
                 ) {
                     HorizontalDivider(

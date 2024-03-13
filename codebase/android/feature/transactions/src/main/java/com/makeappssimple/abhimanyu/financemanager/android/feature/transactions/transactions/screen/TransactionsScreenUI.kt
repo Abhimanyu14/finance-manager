@@ -304,6 +304,7 @@ internal fun TransactionsScreenUI(
                 MyLinearProgressIndicator()
             }
             AnimatedVisibility(
+                // TODO(Abhi): Move logic to UI state
                 visible = uiState.isInSelectionMode.not() && (
                         uiState.transactionDetailsListItemViewData.isNotEmpty() ||
                                 uiState.searchText.isNotEmpty() ||
