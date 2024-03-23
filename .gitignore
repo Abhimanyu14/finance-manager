@@ -183,6 +183,12 @@ proguard/
 # Google Services (e.g. APIs or Firebase)
 google-services.json
 
+# Firebase
+firebase.json
+.firebaserc
+firebase-debug.log
+.firebase
+
 # Freeline
 freeline.py
 freeline/
