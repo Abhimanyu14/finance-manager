@@ -42,7 +42,7 @@ coroutines-test = "1.8.0"
 core-testing = "2.2.0"
 turbine = "1.0.0"
 hilt-android-testing = "2.50"
-hilt-android-compiler = "2.50"
+hilt-android-compiler = "2.51"
 kakaocup-compose = "0.2.3"
 lint = "31.3.1"
 
