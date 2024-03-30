@@ -43,7 +43,7 @@ core-testing = "2.2.0"
 turbine = "1.1.0"
 hilt-android-testing = "2.51.1"
 hilt-android-compiler = "2.50"
-kakaocup-compose = "0.2.3"
+kakaocup-compose = "0.3.0"
 lint = "31.3.1"
 
 #plugins
