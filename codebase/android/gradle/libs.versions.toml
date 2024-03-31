@@ -58,7 +58,7 @@ plugin-hilt-android = "2.51.1"
 plugin-google-services = "4.4.1"
 plugin-firebase-crashlytics = "2.9.9"
 plugin-detekt = "1.23.6"
-plugin-about-libraries = "10.10.0"
+plugin-about-libraries = "11.1.1"
 
 [libraries]
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core" }
