@@ -1,3 +1,5 @@
+<a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
+
 # Overview
 
 A finance manager app to track and analyse income, expenses and investments.
@@ -255,8 +257,6 @@ And the core parts of the app are inside the module named `core`.
 6. `transactionfor`
 7. `transactions`
 
---
-
 # Commands
 
 ## Gradle Commands
@@ -306,11 +306,9 @@ And the core parts of the app are inside the module named `core`.
 scrcpy -m1024
 ```
 
---
-
 # Backlog
 
-## Backlog of feature and changes in queue to be implemented can be found [here](https://github.com/Abhimanyu14/finance-manager/blob/main/BACKLOG.md)
+Backlog of feature and changes in queue to be implemented can be found [here](https://github.com/Abhimanyu14/finance-manager/blob/main/BACKLOG.md)
 
 # Database
 
@@ -318,61 +316,33 @@ scrcpy -m1024
 
 1. Transactions
 2. Sources
-3. Categories - Income, Expense and Investment
+3. Categories
 4. TransactionFor
 
-## Data Structure
+# Issues
 
-**Amount**
+Please do create new issues if there are any bugs or feature requests. </br>
+You can also directly reach out to me via [LinkedIn](https://www.linkedin.com/in/abhimanyu-n/)
 
-- value: Double = 0.0
-- unit: Unit = Unit.INR
+## Find this repository useful? ♥️
 
-**Category**
-
-- id: Int
-- title: String
-- description: String = ""
-- children: List<Category>? = null
-
-**MyTransaction**
-
-- id: Int
-- title: String = ""
-- description: String = ""
-- amount: Amount
-- category: Category
-- creationTimestamp: Timestamp
-- transactionTimestamp: Timestamp
-
-**Source**
-
-- id: Int
-- id: Int
-- name: String
-- type: SourceType = SourceType.CASH
-- balanceAmount: Amount
-
-**SourceType**
-
-- enum
-  - CASH
-  - BANK
-  - E_WALLET
-
-**Timestamp**
-
-- date: String
-- time: String
-
-**Unit**
-
-- enum
-  - INR
-  - USD
-
---
+Support it by joining **[stargazers](https://github.com/Abhimanyu14/finance-manager/stargazers)** for this repository. 🌟  
+Also **[follow me](https://github.com/Abhimanyu14)** for my next creations! 🤗
 
 # License
 
-**Finance Manager** is distributed under the terms of the Apache License (Version 2.0). See the [license](https://github.com/Abhimanyu14/finance-manager/blob/main/LICENSE) for more information.
+```
+Copyright 2024 Abhimanyu
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```

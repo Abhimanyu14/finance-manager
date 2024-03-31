@@ -11,7 +11,7 @@
 9. KMP
 10. CMP
 
-# Tech debt
+# Tech Debt
 
 1. Immutable collection
 2. Android ViewModel to ViewModel
