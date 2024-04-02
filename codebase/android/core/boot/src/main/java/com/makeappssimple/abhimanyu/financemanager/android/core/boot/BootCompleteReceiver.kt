@@ -4,13 +4,12 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.AlarmKit
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.MainDispatcher
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -23,8 +22,7 @@ class BootCompleteReceiver : BroadcastReceiver() {
     lateinit var alarmKit: AlarmKit
 
     @Inject
-    @MainDispatcher
-    lateinit var mainDispatcher: CoroutineDispatcher
+    lateinit var dispatcherProvider: DispatcherProvider
 
     @Inject
     lateinit var dateTimeUtil: DateTimeUtil
@@ -38,7 +36,7 @@ class BootCompleteReceiver : BroadcastReceiver() {
     ) {
         if (intent?.action == "android.intent.action.BOOT_COMPLETED") {
             CoroutineScope(
-                context = mainDispatcher,
+                context = dispatcherProvider.main,
             ).launch {
                 val reminder = myPreferencesRepository.getReminder().first() ?: Reminder()
                 if (reminder.isEnabled.orFalse()) {

@@ -8,12 +8,12 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.AlarmKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.boot.BootCompleteReceiver
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import com.makeappssimple.abhimanyu.financemanager.android.core.time.TimeChangedReceiver
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -21,7 +21,7 @@ import java.time.LocalTime
 
 class AlarmKitImpl(
     private val context: Context,
-    private val ioDispatcher: CoroutineDispatcher,
+    private val dispatcherProvider: DispatcherProvider,
     private val dateTimeUtil: DateTimeUtil,
     private val myLogger: MyLogger,
     private val myPreferencesRepository: MyPreferencesRepository,
@@ -29,7 +29,7 @@ class AlarmKitImpl(
     // TODO(Abhi): Return status of alarm
     override fun enableReminder() {
         CoroutineScope(
-            context = ioDispatcher,
+            context = dispatcherProvider.io,
         ).launch {
             val reminder = myPreferencesRepository.getReminder().first() ?: Reminder()
             val initialAlarmTimestamp = dateTimeUtil.getTimestamp(
@@ -79,7 +79,7 @@ class AlarmKitImpl(
         disableBroadcastReceivers()
 
         CoroutineScope(
-            context = ioDispatcher,
+            context = dispatcherProvider.io,
         ).launch {
             myPreferencesRepository.setIsReminderEnabled(
                 isReminderEnabled = false,

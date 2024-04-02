@@ -6,18 +6,25 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.CoroutineDispatcher
 
 @Module
 @InstallIn(SingletonComponent::class)
 object DispatcherProviderModule {
     @Provides
     fun providesDispatcherProvider(
-//        @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
-//        @IoDispatcher ioDispatcher: CoroutineDispatcher,
-//        @MainDispatcher mainDispatcher: CoroutineDispatcher,
-//        @MainImmediateDispatcher mainImmediateDispatcher: CoroutineDispatcher,
-//        @UnconfinedDispatcher unconfinedDispatcher: CoroutineDispatcher,
+        @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
+        @MainDispatcher mainDispatcher: CoroutineDispatcher,
+        @MainImmediateDispatcher mainImmediateDispatcher: CoroutineDispatcher,
+        @UnconfinedDispatcher unconfinedDispatcher: CoroutineDispatcher,
     ): DispatcherProvider {
-        return DispatcherProviderImpl()
+        return DispatcherProviderImpl(
+            defaultDispatcher = defaultDispatcher,
+            ioDispatcher = ioDispatcher,
+            mainDispatcher = mainDispatcher,
+            mainImmediateDispatcher = mainImmediateDispatcher,
+            unconfinedDispatcher = unconfinedDispatcher,
+        )
     }
 }

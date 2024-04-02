@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.alarmkitimpl.di
 import android.content.Context
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.AlarmKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkitimpl.AlarmKitImpl
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.IoDispatcher
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
@@ -12,7 +12,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
 
 @Module
@@ -22,14 +21,14 @@ class AlarmKitModule {
     @Provides
     fun providesAlarmKit(
         @ApplicationContext context: Context,
-        @IoDispatcher ioDispatcher: CoroutineDispatcher,
+        dispatcherProvider: DispatcherProvider,
         dateTimeUtil: DateTimeUtil,
         myLogger: MyLogger,
         myPreferencesRepository: MyPreferencesRepository,
     ): AlarmKit {
         return AlarmKitImpl(
             context = context,
-            ioDispatcher = ioDispatcher,
+            dispatcherProvider = dispatcherProvider,
             dateTimeUtil = dateTimeUtil,
             myLogger = myLogger,
             myPreferencesRepository = myPreferencesRepository,

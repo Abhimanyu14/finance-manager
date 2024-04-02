@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.AlarmKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.IoDispatcher
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
@@ -18,7 +18,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.sett
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,7 +34,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
     myPreferencesRepository: MyPreferencesRepository,
     private val alarmKit: AlarmKit,
     private val backupDataUseCase: BackupDataUseCase,
-    @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
+    private val dispatcherProvider: DispatcherProvider,
     @VisibleForTesting internal val navigator: Navigator,
     private val recalculateTotalUseCase: RecalculateTotalUseCase,
     private val restoreDataUseCase: RestoreDataUseCase,
@@ -67,11 +66,11 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
         uri: Uri,
     ) {
         viewModelScope.launch(
-            context = ioDispatcher,
+            context = dispatcherProvider.io,
         ) {
             isLoading.value = true
             launch(
-                context = ioDispatcher,
+                context = dispatcherProvider.io,
             ) {
                 backupDataUseCase(
                     uri = uri,
@@ -143,7 +142,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
         uri: Uri,
     ) {
         viewModelScope.launch(
-            context = ioDispatcher,
+            context = dispatcherProvider.io,
         ) {
             isLoading.value = true
             delay(5000)
@@ -162,7 +161,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
 
     override fun recalculateTotal() {
         viewModelScope.launch(
-            context = ioDispatcher,
+            context = dispatcherProvider.io,
         ) {
             isLoading.value = true
             recalculateTotalUseCase()
