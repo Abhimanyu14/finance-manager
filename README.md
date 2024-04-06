@@ -1,6 +1,7 @@
-<a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
-[![GitHub Repo Stars](https://img.shields.io/github/stars/Abhimanyu14/finance-manager?style=social)](https://github.com/Abhimanyu14/finance-manager/stargazers)
-[![Fork Repo](https://img.shields.io/github/forks/Abhimanyu14/finance-manager?logo=github&style=social)](https://github.com/Abhimanyu14/finance-manager/fork)
+<a href="https://opensource.org/licenses/Apache-2.0" target="_blank"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"/></a>
+<a href="https://github.com/Abhimanyu14/finance-manager/stargazers" target="_blank"><img alt="License" src="https://img.shields.io/github/stars/Abhimanyu14/finance-manager?style=social"/></a>
+<a href="https://github.com/Abhimanyu14/finance-manager/fork" target="_blank"><img alt="License" src="https://img.shields.io/github/forks/Abhimanyu14/finance-manager?logo=github&style=social"/></a>
+
 
 # Overview
 
