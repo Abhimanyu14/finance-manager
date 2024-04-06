@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
@@ -25,7 +24,7 @@ internal class OpenSourceLicensesScreenViewModelImpl @Inject constructor(
                 data = OpenSourceLicensesScreenUIData(),
             )
         ).defaultObjectStateIn(
-            scope = viewModelScope,
+            scope = closeableCoroutineScope,
         )
 
     override fun handleUIEvents(

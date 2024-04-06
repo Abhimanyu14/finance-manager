@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
@@ -32,9 +31,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class CategoriesScreenViewModelImpl @Inject constructor(
-    closeableCoroutineScope: CloseableCoroutineScope,
     getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
     private val checkIfCategoryIsUsedInTransactionsUseCase: CheckIfCategoryIsUsedInTransactionsUseCase,
+    private val closeableCoroutineScope: CloseableCoroutineScope,
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
     private val dispatcherProvider: DispatcherProvider,
     private val myPreferencesRepository: MyPreferencesRepository,
@@ -163,7 +162,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
             )
         }
     }.defaultObjectStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
 
     override fun handleUIEvents(
@@ -210,7 +209,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
     private fun deleteCategory(
         id: Int,
     ) {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             deleteCategoryUseCase(
@@ -243,7 +242,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
         defaultCategoryId: Int,
         transactionType: TransactionType,
     ) {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             when (transactionType) {

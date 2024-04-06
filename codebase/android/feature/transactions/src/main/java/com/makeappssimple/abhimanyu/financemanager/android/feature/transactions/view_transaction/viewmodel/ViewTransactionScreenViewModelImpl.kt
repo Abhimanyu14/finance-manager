@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
@@ -33,9 +32,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class ViewTransactionScreenViewModelImpl @Inject constructor(
-    closeableCoroutineScope: CloseableCoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
+    private val closeableCoroutineScope: CloseableCoroutineScope,
     private val dateTimeUtil: DateTimeUtil,
     private val deleteTransactionUseCase: DeleteTransactionUseCase,
     private val dispatcherProvider: DispatcherProvider,
@@ -82,7 +81,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
             )
         }
     }.defaultObjectStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
 
     override fun handleUIEvents(
@@ -117,7 +116,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
 
     private fun getTransactionData() {
         screenArgs.originalTransactionId?.let { id ->
-            viewModelScope.launch(
+            closeableCoroutineScope.launch(
                 context = dispatcherProvider.io,
             ) {
                 getTransactionDataUseCase(
@@ -144,7 +143,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     private fun deleteTransaction(
         id: Int,
     ) {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             deleteTransactionUseCase(
@@ -249,7 +248,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     private fun updateOriginalTransactionData(
         transactionId: Int,
     ) {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             getTransactionDataUseCase(
@@ -265,7 +264,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     private fun updateRefundTransactionData(
         ids: List<Int>,
     ) {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             refundTransactionListItemData.value = buildList {

@@ -4,7 +4,6 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
@@ -45,9 +44,9 @@ import kotlin.math.abs
 
 @HiltViewModel
 internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
-    closeableCoroutineScope: CloseableCoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
+    private val closeableCoroutineScope: CloseableCoroutineScope,
     private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
@@ -140,11 +139,11 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
             )
         }
     }.defaultObjectStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
 
     override fun initViewModel() {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             getAllAccounts()
@@ -227,7 +226,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
                 },
             )
 
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             val accountFromId = if (amountChangeValue < 0L) {
@@ -266,7 +265,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
     }
 
     override fun insertAccount() {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             val accountType = validAccountTypes[selectedAccountTypeIndex.value]
@@ -355,7 +354,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
     }
 
     private fun getAllAccounts() {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             accounts = getAllAccountsUseCase()
@@ -364,7 +363,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
 
     private fun getOriginalAccount() {
         screenArgs.originalAccountId?.let { id ->
-            viewModelScope.launch(
+            closeableCoroutineScope.launch(
                 context = dispatcherProvider.io,
             ) {
                 getAccountUseCase(

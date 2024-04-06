@@ -3,7 +3,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmod
 import android.net.Uri
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
@@ -47,10 +46,10 @@ internal const val defaultOverviewTabSelection = 1
 
 @HiltViewModel
 internal class HomeScreenViewModelImpl @Inject constructor(
-    closeableCoroutineScope: CloseableCoroutineScope,
     getAccountsTotalBalanceAmountValueUseCase: GetAccountsTotalBalanceAmountValueUseCase,
     getAccountsTotalMinimumBalanceAmountValueUseCase: GetAccountsTotalMinimumBalanceAmountValueUseCase,
     private val backupDataUseCase: BackupDataUseCase,
+    private val closeableCoroutineScope: CloseableCoroutineScope,
     private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
     private val getRecentTransactionDataFlowUseCase: GetRecentTransactionDataFlowUseCase,
@@ -166,7 +165,7 @@ internal class HomeScreenViewModelImpl @Inject constructor(
             title = title,
         )
     }.defaultObjectStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
 
     private val accountsTotalBalanceAmountValue: Flow<Long> =
@@ -211,13 +210,13 @@ internal class HomeScreenViewModelImpl @Inject constructor(
             )
         }
     }.defaultObjectStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
 
     override fun backupDataToDocument(
         uri: Uri,
     ) {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             launch {

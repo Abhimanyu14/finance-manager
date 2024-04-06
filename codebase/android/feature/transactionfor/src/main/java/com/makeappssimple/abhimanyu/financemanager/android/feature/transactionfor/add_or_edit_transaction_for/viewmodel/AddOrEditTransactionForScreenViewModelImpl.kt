@@ -4,7 +4,6 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
@@ -33,9 +32,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
-    closeableCoroutineScope: CloseableCoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
+    private val closeableCoroutineScope: CloseableCoroutineScope,
     private val dispatcherProvider: DispatcherProvider,
     private val getAllTransactionForValuesUseCase: GetAllTransactionForValuesUseCase,
     private val getTransactionForUseCase: GetTransactionForUseCase,
@@ -95,11 +94,11 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
             )
         }
     }.defaultObjectStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
 
     override fun initViewModel() {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             getAllTransactionForValues()
@@ -132,7 +131,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
     }
 
     override fun insertTransactionFor() {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             insertTransactionForUseCase(
@@ -148,7 +147,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
         val updatedTransactionFor = transactionFor.value?.copy(
             title = title.value.text,
         ) ?: return
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             updateTransactionForValuesUseCase(
@@ -179,7 +178,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
     }
 
     private fun getAllTransactionForValues() {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             transactionForValues = getAllTransactionForValuesUseCase()
@@ -188,7 +187,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
 
     private fun getOriginalTransactionFor() {
         screenArgs.originalTransactionForId?.let { id ->
-            viewModelScope.launch(
+            closeableCoroutineScope.launch(
                 context = dispatcherProvider.io,
             ) {
                 transactionFor.update {

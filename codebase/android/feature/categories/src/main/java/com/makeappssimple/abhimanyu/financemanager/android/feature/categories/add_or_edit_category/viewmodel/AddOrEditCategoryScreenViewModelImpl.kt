@@ -4,7 +4,6 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
@@ -41,9 +40,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
-    closeableCoroutineScope: CloseableCoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
+    private val closeableCoroutineScope: CloseableCoroutineScope,
     private val dispatcherProvider: DispatcherProvider,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
     private val getCategoryUseCase: GetCategoryUseCase,
@@ -141,11 +140,11 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
             )
         }
     }.defaultObjectStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
 
     override fun initViewModel() {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             getOriginalCategory()
@@ -206,7 +205,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
 
     override fun insertCategory() {
         val emojiValue = emoji.value ?: return
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             insertCategoriesUseCase(
@@ -229,7 +228,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
             title = title.value.text,
             transactionType = transactionTypes[selectedTransactionTypeIndex.value],
         )
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             updateCategoriesUseCase(
@@ -254,7 +253,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     private fun updateTitle(
         updatedTitle: TextFieldValue,
     ) {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.main
         ) {
             title.update {
@@ -283,7 +282,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
 
     private fun getOriginalCategory() {
         screenArgs.originalCategoryId?.let { id ->
-            viewModelScope.launch(
+            closeableCoroutineScope.launch(
                 context = dispatcherProvider.io,
             ) {
                 category.update {
@@ -303,7 +302,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
                 element = category.transactionType,
             ),
         )
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.main
         ) {
             title.update {
@@ -319,7 +318,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     }
 
     private fun fetchData() {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             awaitAll(

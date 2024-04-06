@@ -2,7 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.set
 
 import android.net.Uri
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.AlarmKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
@@ -31,11 +30,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class SettingsScreenViewModelImpl @Inject constructor(
-    closeableCoroutineScope: CloseableCoroutineScope,
     appVersionUtil: AppVersionUtil,
     myPreferencesRepository: MyPreferencesRepository,
     private val alarmKit: AlarmKit,
     private val backupDataUseCase: BackupDataUseCase,
+    private val closeableCoroutineScope: CloseableCoroutineScope,
     private val dispatcherProvider: DispatcherProvider,
     @VisibleForTesting internal val navigator: Navigator,
     private val recalculateTotalUseCase: RecalculateTotalUseCase,
@@ -61,13 +60,13 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
             ),
         )
     }.defaultObjectStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
 
     override fun backupDataToDocument(
         uri: Uri,
     ) {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             isLoading.value = true
@@ -143,7 +142,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
     override fun restoreDataFromDocument(
         uri: Uri,
     ) {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             isLoading.value = true
@@ -162,7 +161,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
     }
 
     override fun recalculateTotal() {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             isLoading.value = true

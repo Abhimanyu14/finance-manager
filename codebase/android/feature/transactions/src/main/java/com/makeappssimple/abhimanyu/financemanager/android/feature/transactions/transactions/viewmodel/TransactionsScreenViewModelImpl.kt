@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
@@ -41,8 +40,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class TransactionsScreenViewModelImpl @Inject constructor(
-    closeableCoroutineScope: CloseableCoroutineScope,
     getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
+    private val closeableCoroutineScope: CloseableCoroutineScope,
     private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
     private val navigator: Navigator,
@@ -50,7 +49,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
 ) : TransactionsScreenViewModel, ViewModel(closeableCoroutineScope) {
     private val allTransactionData: StateFlow<List<TransactionData>> =
         getAllTransactionDataFlowUseCase().defaultListStateIn(
-            scope = viewModelScope,
+            scope = closeableCoroutineScope,
         )
     private val categoriesMap: Flow<Map<TransactionType, List<Category>>> =
         allTransactionData.map {
@@ -66,17 +65,17 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     private val expenseCategories: StateFlow<List<Category>?> = categoriesMap.map {
         it[TransactionType.EXPENSE].orEmpty()
     }.defaultObjectStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
     private val incomeCategories: StateFlow<List<Category>?> = categoriesMap.map {
         it[TransactionType.INCOME].orEmpty()
     }.defaultObjectStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
     private val investmentCategories: StateFlow<List<Category>?> = categoriesMap.map {
         it[TransactionType.INVESTMENT].orEmpty()
     }.defaultObjectStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
     private val accounts: StateFlow<List<Account>?> = allTransactionData.map {
         it.flatMap { transactionData ->
@@ -86,14 +85,14 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             )
         }.distinct()
     }.defaultObjectStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
     private val transactionForValues: StateFlow<List<TransactionFor>?> = allTransactionData.map {
         it.map { transactionData ->
             transactionData.transactionFor
         }.distinct()
     }.defaultObjectStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
 
     // region Search
@@ -130,7 +129,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             }.orZero(),
         )
     }.defaultObjectStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
 
     private val sortOptions: List<SortOption> = SortOption.entries
@@ -304,7 +303,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                     isLoading.value = false
                 }
         }.defaultObjectStateIn(
-            scope = viewModelScope,
+            scope = closeableCoroutineScope,
         )
 
     override val screenUIData: StateFlow<MyResult<TransactionsScreenUIData>?> = combine(
@@ -380,7 +379,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
             )
         }
     }.defaultObjectStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
 
     // region Search
@@ -544,7 +543,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     private fun updateTransactionForValuesInTransactions(
         transactionForId: Int,
     ) {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             val updatedTransactions = allTransactionData.value.map { transactionData ->

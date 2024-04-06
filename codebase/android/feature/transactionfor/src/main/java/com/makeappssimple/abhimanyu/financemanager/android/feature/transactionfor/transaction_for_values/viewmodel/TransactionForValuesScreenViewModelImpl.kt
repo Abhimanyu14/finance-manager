@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
@@ -25,16 +24,16 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
-    closeableCoroutineScope: CloseableCoroutineScope,
     getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
     private val checkIfTransactionForIsUsedInTransactionsUseCase: CheckIfTransactionForIsUsedInTransactionsUseCase,
+    private val closeableCoroutineScope: CloseableCoroutineScope,
     private val deleteTransactionForUseCase: DeleteTransactionForUseCase,
     private val dispatcherProvider: DispatcherProvider,
     private val navigator: Navigator,
 ) : TransactionForValuesScreenViewModel, ViewModel(closeableCoroutineScope) {
     private val transactionForValues: StateFlow<List<TransactionFor>> =
         getAllTransactionForValuesFlowUseCase().defaultListStateIn(
-            scope = viewModelScope,
+            scope = closeableCoroutineScope,
         )
     private val transactionForValuesIsUsedInTransactions: Flow<List<Boolean>> =
         transactionForValues
@@ -67,7 +66,7 @@ internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
             )
         }
     }.defaultObjectStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
 
     override fun handleUIEvents(
@@ -99,7 +98,7 @@ internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
     private fun deleteTransactionFor(
         id: Int,
     ) {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             deleteTransactionForUseCase(

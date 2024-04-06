@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
@@ -64,7 +63,7 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
             }.orZero(),
         )
     }.defaultObjectStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
 
     private val transactionDataMappedByCategory: StateFlow<List<AnalysisListItemData>> = combine(
@@ -78,7 +77,7 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
             allTransactionDataValue = allTransactionDataValue
         )
     }.defaultListStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
 
     override val screenUIData: StateFlow<MyResult<AnalysisScreenUIData>?> = combine(
@@ -111,7 +110,7 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
             )
         }
     }.defaultObjectStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
 
     override fun handleUIEvents(

@@ -4,7 +4,6 @@ import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
@@ -73,9 +72,9 @@ import kotlin.math.abs
 
 @HiltViewModel
 internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
-    closeableCoroutineScope: CloseableCoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
+    private val closeableCoroutineScope: CloseableCoroutineScope,
     private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
@@ -171,13 +170,13 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             category.transactionType == selectedTransactionType
         }.orEmpty()
     }.defaultListStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
 
     private val selectedCategoryId: StateFlow<Int?> = uiState.map {
         it.category?.id
     }.defaultObjectStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
 
     private val isCtaButtonEnabled: StateFlow<Boolean> = combine(
@@ -252,7 +251,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             }
         }
     }.defaultBooleanStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
 
     override val screenUIData: StateFlow<MyResult<AddOrEditTransactionScreenUIData>?> = combine(
@@ -306,11 +305,11 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
             )
         }
     }.defaultObjectStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
 
     override fun initViewModel() {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             fetchData()
@@ -404,7 +403,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     }
 
     override fun insertTransaction() {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             val uiStateValue = uiState.value
@@ -585,7 +584,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     }
 
     override fun updateTransaction() {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             val selectedTransactionTypeValue = selectedTransactionType.value
@@ -908,7 +907,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
     // endregion
 
     private fun fetchData() {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             // Initial data setup

@@ -1,7 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
@@ -36,11 +35,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class AccountsScreenViewModelImpl @Inject constructor(
-    closeableCoroutineScope: CloseableCoroutineScope,
     getAllAccountsFlowUseCase: GetAllAccountsFlowUseCase,
     getAccountsTotalBalanceAmountValueUseCase: GetAccountsTotalBalanceAmountValueUseCase,
     getAccountsTotalMinimumBalanceAmountValueUseCase: GetAccountsTotalMinimumBalanceAmountValueUseCase,
     private val checkIfAccountIsUsedInTransactionsUseCase: CheckIfAccountIsUsedInTransactionsUseCase,
+    private val closeableCoroutineScope: CloseableCoroutineScope,
     private val deleteAccountUseCase: DeleteAccountUseCase,
     private val dispatcherProvider: DispatcherProvider,
     private val myPreferencesRepository: MyPreferencesRepository,
@@ -129,7 +128,7 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
             )
         }
     }.defaultObjectStateIn(
-        scope = viewModelScope,
+        scope = closeableCoroutineScope,
     )
 
     override fun handleUIEvents(
@@ -167,7 +166,7 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
     private fun deleteAccount(
         id: Int,
     ) {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             deleteAccountUseCase(
@@ -195,7 +194,7 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
     private fun setDefaultAccountIdInDataStore(
         defaultAccountId: Int,
     ) {
-        viewModelScope.launch(
+        closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             myPreferencesRepository.setDefaultAccountId(
