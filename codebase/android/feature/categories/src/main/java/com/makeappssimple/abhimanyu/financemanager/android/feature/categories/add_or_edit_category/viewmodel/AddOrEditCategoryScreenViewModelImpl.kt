@@ -6,6 +6,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
@@ -40,6 +41,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
+    closeableCoroutineScope: CloseableCoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
     private val dispatcherProvider: DispatcherProvider,
@@ -48,7 +50,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
     private val insertCategoriesUseCase: InsertCategoriesUseCase,
     private val navigator: Navigator,
     private val updateCategoriesUseCase: UpdateCategoriesUseCase,
-) : AddOrEditCategoryScreenViewModel, ViewModel() {
+) : AddOrEditCategoryScreenViewModel, ViewModel(closeableCoroutineScope) {
     private val screenArgs = AddOrEditCategoryScreenArgs(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,

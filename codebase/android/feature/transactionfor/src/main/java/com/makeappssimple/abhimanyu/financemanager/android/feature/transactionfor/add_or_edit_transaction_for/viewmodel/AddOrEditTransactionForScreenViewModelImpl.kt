@@ -5,6 +5,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
@@ -32,6 +33,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
+    closeableCoroutineScope: CloseableCoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
     private val dispatcherProvider: DispatcherProvider,
@@ -40,7 +42,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
     private val insertTransactionForUseCase: InsertTransactionForValuesUseCase,
     private val navigator: Navigator,
     private val updateTransactionForValuesUseCase: UpdateTransactionForValuesUseCase,
-) : AddOrEditTransactionForScreenViewModel, ViewModel() {
+) : AddOrEditTransactionForScreenViewModel, ViewModel(closeableCoroutineScope) {
     private val screenArgs = AddOrEditTransactionForScreenArgs(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,

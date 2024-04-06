@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.vie
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
@@ -35,11 +35,11 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class AnalysisScreenViewModelImpl @Inject constructor(
+    closeableCoroutineScope: CloseableCoroutineScope,
     getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
     private val dateTimeUtil: DateTimeUtil,
-    private val dispatcherProvider: DispatcherProvider,
     private val navigator: Navigator,
-) : AnalysisScreenViewModel, ViewModel() {
+) : AnalysisScreenViewModel, ViewModel(closeableCoroutineScope) {
     private var allTransactionData: Flow<List<TransactionData>> = getAllTransactionDataFlowUseCase()
     private val validTransactionTypes = listOf(
         TransactionType.EXPENSE,

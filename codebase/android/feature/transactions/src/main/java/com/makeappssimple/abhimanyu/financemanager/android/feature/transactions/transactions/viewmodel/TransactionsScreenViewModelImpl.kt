@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.atEndOfDay
@@ -40,12 +41,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class TransactionsScreenViewModelImpl @Inject constructor(
+    closeableCoroutineScope: CloseableCoroutineScope,
     getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
     private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
     private val navigator: Navigator,
     private val updateTransactionsUseCase: UpdateTransactionsUseCase,
-) : TransactionsScreenViewModel, ViewModel() {
+) : TransactionsScreenViewModel, ViewModel(closeableCoroutineScope) {
     private val allTransactionData: StateFlow<List<TransactionData>> =
         getAllTransactionDataFlowUseCase().defaultListStateIn(
             scope = viewModelScope,

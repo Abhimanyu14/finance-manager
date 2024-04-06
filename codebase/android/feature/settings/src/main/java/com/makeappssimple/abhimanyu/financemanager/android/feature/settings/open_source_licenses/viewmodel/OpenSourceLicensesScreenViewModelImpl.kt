@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.ope
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
@@ -15,8 +16,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class OpenSourceLicensesScreenViewModelImpl @Inject constructor(
+    closeableCoroutineScope: CloseableCoroutineScope,
     @VisibleForTesting internal val navigator: Navigator,
-) : OpenSourceLicensesScreenViewModel, ViewModel() {
+) : OpenSourceLicensesScreenViewModel, ViewModel(closeableCoroutineScope) {
     override val screenUIData: StateFlow<MyResult<OpenSourceLicensesScreenUIData>?> =
         MutableStateFlow(
             value = MyResult.Success(

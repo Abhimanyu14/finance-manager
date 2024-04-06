@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.c
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
@@ -31,13 +32,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class CategoriesScreenViewModelImpl @Inject constructor(
+    closeableCoroutineScope: CloseableCoroutineScope,
     getAllCategoriesFlowUseCase: GetAllCategoriesFlowUseCase,
     private val checkIfCategoryIsUsedInTransactionsUseCase: CheckIfCategoryIsUsedInTransactionsUseCase,
     private val deleteCategoryUseCase: DeleteCategoryUseCase,
     private val dispatcherProvider: DispatcherProvider,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
-) : CategoriesScreenViewModel, ViewModel() {
+) : CategoriesScreenViewModel, ViewModel(closeableCoroutineScope) {
     private val selectedTabIndex: MutableStateFlow<Int> = MutableStateFlow(
         value = 0,
     )

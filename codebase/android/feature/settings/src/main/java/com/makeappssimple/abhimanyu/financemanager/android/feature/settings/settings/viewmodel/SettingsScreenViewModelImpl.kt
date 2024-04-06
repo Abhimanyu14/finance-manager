@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.AlarmKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
@@ -30,6 +31,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class SettingsScreenViewModelImpl @Inject constructor(
+    closeableCoroutineScope: CloseableCoroutineScope,
     appVersionUtil: AppVersionUtil,
     myPreferencesRepository: MyPreferencesRepository,
     private val alarmKit: AlarmKit,
@@ -38,7 +40,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
     @VisibleForTesting internal val navigator: Navigator,
     private val recalculateTotalUseCase: RecalculateTotalUseCase,
     private val restoreDataUseCase: RestoreDataUseCase,
-) : SettingsScreenViewModel, ViewModel() {
+) : SettingsScreenViewModel, ViewModel(closeableCoroutineScope) {
     private val appVersionName: String = appVersionUtil.getAppVersion()?.versionName.orEmpty()
     private val reminder = myPreferencesRepository.getReminder()
     private val isLoading = MutableStateFlow(

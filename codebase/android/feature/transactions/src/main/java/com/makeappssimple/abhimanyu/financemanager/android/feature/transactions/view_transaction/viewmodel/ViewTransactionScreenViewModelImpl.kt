@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
@@ -32,6 +33,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class ViewTransactionScreenViewModelImpl @Inject constructor(
+    closeableCoroutineScope: CloseableCoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
     private val dateTimeUtil: DateTimeUtil,
@@ -39,7 +41,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val getTransactionDataUseCase: GetTransactionDataUseCase,
     @VisibleForTesting internal val navigator: Navigator,
-) : ViewTransactionScreenViewModel, ViewModel() {
+) : ViewTransactionScreenViewModel, ViewModel(closeableCoroutineScope) {
     private var screenArgs = ViewTransactionScreenArgs(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,

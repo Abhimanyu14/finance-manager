@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
@@ -24,12 +25,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
+    closeableCoroutineScope: CloseableCoroutineScope,
     getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
     private val checkIfTransactionForIsUsedInTransactionsUseCase: CheckIfTransactionForIsUsedInTransactionsUseCase,
     private val deleteTransactionForUseCase: DeleteTransactionForUseCase,
     private val dispatcherProvider: DispatcherProvider,
     private val navigator: Navigator,
-) : TransactionForValuesScreenViewModel, ViewModel() {
+) : TransactionForValuesScreenViewModel, ViewModel(closeableCoroutineScope) {
     private val transactionForValues: StateFlow<List<TransactionFor>> =
         getAllTransactionForValuesFlowUseCase().defaultListStateIn(
             scope = viewModelScope,

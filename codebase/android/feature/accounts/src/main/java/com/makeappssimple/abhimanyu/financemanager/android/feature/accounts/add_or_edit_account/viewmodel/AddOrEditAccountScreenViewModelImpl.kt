@@ -5,6 +5,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.equalsIgnoringCase
@@ -44,6 +45,7 @@ import kotlin.math.abs
 
 @HiltViewModel
 internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
+    closeableCoroutineScope: CloseableCoroutineScope,
     savedStateHandle: SavedStateHandle,
     stringDecoder: StringDecoder,
     private val dateTimeUtil: DateTimeUtil,
@@ -54,7 +56,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
     private val insertTransactionsUseCase: InsertTransactionsUseCase,
     private val navigator: Navigator,
     private val updateAccountsUseCase: UpdateAccountsUseCase,
-) : AddOrEditAccountScreenViewModel, ViewModel() {
+) : AddOrEditAccountScreenViewModel, ViewModel(closeableCoroutineScope) {
     private val screenArgs = AddOrEditAccountScreenArgs(
         savedStateHandle = savedStateHandle,
         stringDecoder = stringDecoder,

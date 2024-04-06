@@ -18,6 +18,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemAppVersion
@@ -32,7 +33,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemHeaderData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
 
 @Immutable

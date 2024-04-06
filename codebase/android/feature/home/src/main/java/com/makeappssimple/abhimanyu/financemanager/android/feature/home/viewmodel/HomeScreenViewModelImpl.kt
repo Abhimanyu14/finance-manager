@@ -5,6 +5,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.EmojiConstants
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
@@ -46,6 +47,7 @@ internal const val defaultOverviewTabSelection = 1
 
 @HiltViewModel
 internal class HomeScreenViewModelImpl @Inject constructor(
+    closeableCoroutineScope: CloseableCoroutineScope,
     getAccountsTotalBalanceAmountValueUseCase: GetAccountsTotalBalanceAmountValueUseCase,
     getAccountsTotalMinimumBalanceAmountValueUseCase: GetAccountsTotalMinimumBalanceAmountValueUseCase,
     private val backupDataUseCase: BackupDataUseCase,
@@ -56,7 +58,7 @@ internal class HomeScreenViewModelImpl @Inject constructor(
     private val getTransactionUseCase: GetTransactionUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
-) : HomeScreenViewModel, ViewModel() {
+) : HomeScreenViewModel, ViewModel(closeableCoroutineScope) {
     private val homeListItemViewData: Flow<List<TransactionListItemData>> =
         getHomeListItemViewDataFromData()
     private val isBackupCardVisible: Flow<Boolean> = getIsBackupCardVisibleFromData()

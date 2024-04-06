@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.acc
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
@@ -35,6 +36,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 internal class AccountsScreenViewModelImpl @Inject constructor(
+    closeableCoroutineScope: CloseableCoroutineScope,
     getAllAccountsFlowUseCase: GetAllAccountsFlowUseCase,
     getAccountsTotalBalanceAmountValueUseCase: GetAccountsTotalBalanceAmountValueUseCase,
     getAccountsTotalMinimumBalanceAmountValueUseCase: GetAccountsTotalMinimumBalanceAmountValueUseCase,
@@ -43,7 +45,7 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
-) : AccountsScreenViewModel, ViewModel() {
+) : AccountsScreenViewModel, ViewModel(closeableCoroutineScope) {
     private val defaultAccountId: Flow<Int?> = myPreferencesRepository.getDefaultDataId().map {
         it?.account
     }
