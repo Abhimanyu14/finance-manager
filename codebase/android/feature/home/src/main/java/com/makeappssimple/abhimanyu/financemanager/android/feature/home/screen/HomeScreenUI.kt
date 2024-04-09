@@ -1,10 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -39,7 +40,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tot
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 
-private val bottomContentPadding = 80.dp
+private val bottomContentPadding = 100.dp
 
 @Composable
 internal fun HomeScreenUI(
@@ -93,91 +94,81 @@ internal fun HomeScreenUI(
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetScreenBottomSheetType,
     ) {
-        LazyColumn(
+        Column(
             modifier = Modifier
+                .verticalScroll(
+                    state = rememberScrollState(),
+                )
                 .testTag(
                     tag = SCREEN_CONTENT_HOME,
                 )
-                .navigationBarLandscapeSpacer(),
-            contentPadding = PaddingValues(
-                bottom = bottomContentPadding,
-            ),
+                .navigationBarLandscapeSpacer()
+                .padding(
+                    bottom = bottomContentPadding,
+                ),
         ) {
-            item {
-                TotalBalanceCard(
-                    data = TotalBalanceCardData(
-                        isBalanceVisible = uiState.isBalanceVisible,
+            TotalBalanceCard(
+                data = TotalBalanceCardData(
+                    isBalanceVisible = uiState.isBalanceVisible,
+                    isLoading = uiState.isLoading,
+                    totalBalanceAmount = uiState.accountsTotalBalanceAmountValue,
+                    totalMinimumBalanceAmount = uiState.accountsTotalMinimumBalanceAmountValue,
+                ),
+                events = TotalBalanceCardEvents(
+                    onClick = {
+                        handleUIEvents(HomeScreenUIEvent.NavigateToAccountsScreen)
+                    },
+                    onViewBalanceClick = {
+                        uiState.setBalanceVisible(true)
+                    },
+                ),
+            )
+            AnimatedVisibility(
+                visible = uiState.isBackupCardVisible,
+            ) {
+                BackupCard(
+                    data = BackupCardData(
                         isLoading = uiState.isLoading,
-                        totalBalanceAmount = uiState.accountsTotalBalanceAmountValue,
-                        totalMinimumBalanceAmount = uiState.accountsTotalMinimumBalanceAmountValue,
                     ),
-                    events = TotalBalanceCardEvents(
+                    events = BackupCardEvents(
                         onClick = {
-                            handleUIEvents(HomeScreenUIEvent.NavigateToAccountsScreen)
-                        },
-                        onViewBalanceClick = {
-                            uiState.setBalanceVisible(true)
+                            handleUIEvents(HomeScreenUIEvent.CreateDocument)
                         },
                     ),
                 )
             }
-            item {
-                AnimatedVisibility(
-                    visible = uiState.isBackupCardVisible,
-                ) {
-                    BackupCard(
-                        data = BackupCardData(
-                            isLoading = uiState.isLoading,
-                        ),
-                        events = BackupCardEvents(
-                            onClick = {
-                                handleUIEvents(HomeScreenUIEvent.CreateDocument)
-                            },
-                        ),
-                    )
-                }
-            }
-            item {
-                OverviewCard(
-                    data = OverviewCardData(
-                        isLoading = uiState.isLoading,
-                        overviewTabSelectionIndex = uiState.overviewTabSelectionIndex,
-                        pieChartData = uiState.pieChartData,
-                        title = uiState.overviewCardData.title,
-                    ),
-                    events = OverviewCardEvents(
-                        onClick = {
-                            handleUIEvents(HomeScreenUIEvent.NavigateToAnalysisScreen)
-                        },
-                        onOverviewTabClick = {
-                            handleUIEvents(HomeScreenUIEvent.OnOverviewTabClick(it))
-                        },
-                        handleOverviewCardAction = {
-                            handleUIEvents(HomeScreenUIEvent.HandleOverviewCardAction(it))
-                        },
-                    ),
-                )
-            }
-            item {
-                HomeRecentTransactions(
-                    data = HomeRecentTransactionsData(
-                        isTrailingTextVisible = uiState.transactionListItemDataList.isNotEmpty(),
-                    ),
-                    events = HomeRecentTransactionsEvents(
-                        onClick = if (uiState.transactionListItemDataList.isNotEmpty()) {
-                            { handleUIEvents(HomeScreenUIEvent.NavigateToTransactionsScreen) }
-                        } else {
-                            null
-                        },
-                    ),
-                )
-            }
-            items(
-                items = uiState.transactionListItemDataList,
-                key = { listItem ->
-                    listItem.transactionId
-                },
-            ) { listItem ->
+            OverviewCard(
+                data = OverviewCardData(
+                    isLoading = uiState.isLoading,
+                    overviewTabSelectionIndex = uiState.overviewTabSelectionIndex,
+                    pieChartData = uiState.pieChartData,
+                    title = uiState.overviewCardData.title,
+                ),
+                events = OverviewCardEvents(
+                    onClick = {
+                        handleUIEvents(HomeScreenUIEvent.NavigateToAnalysisScreen)
+                    },
+                    onOverviewTabClick = {
+                        handleUIEvents(HomeScreenUIEvent.OnOverviewTabClick(it))
+                    },
+                    handleOverviewCardAction = {
+                        handleUIEvents(HomeScreenUIEvent.HandleOverviewCardAction(it))
+                    },
+                ),
+            )
+            HomeRecentTransactions(
+                data = HomeRecentTransactionsData(
+                    isTrailingTextVisible = uiState.transactionListItemDataList.isNotEmpty(),
+                ),
+                events = HomeRecentTransactionsEvents(
+                    onClick = if (uiState.transactionListItemDataList.isNotEmpty()) {
+                        { handleUIEvents(HomeScreenUIEvent.NavigateToTransactionsScreen) }
+                    } else {
+                        null
+                    },
+                ),
+            )
+            uiState.transactionListItemDataList.map { listItem ->
                 TransactionListItem(
                     data = listItem,
                     events = TransactionListItemEvents(

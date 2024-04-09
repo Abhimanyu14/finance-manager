@@ -8,7 +8,7 @@ plugins {
 }
 
 android {
-    namespace "com.makeappssimple.abhimanyu.financemanager.android.core.data.test"
+    namespace "com.makeappssimple.abhimanyu.financemanager.android.core.database.test"
     compileSdk rootProject.compileSdkVersion
 
     defaultConfig {
@@ -58,7 +58,7 @@ android {
 
 dependencies {
     implementation project(":core:common")
-    implementation project(":core:data")
+    implementation project(":core:database")
     implementation project(":core:logger")
     implementation project(":core:model")
 

@@ -221,9 +221,12 @@ dependencies {
     implementation project(":feature:transactionfor")
     implementation project(":feature:transactions")
 
+    testImplementation project(":core:data-test")
+    testImplementation project(":core:database-test")
     testImplementation project(":core:testing")
 
     androidTestImplementation project(":core:data-test")
+    androidTestImplementation project(":core:database-test")
     androidTestImplementation project(":core:testing")
 
     lintChecks project(":lint")

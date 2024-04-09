@@ -21,7 +21,7 @@ class DaosModule {
     }
 
     @Provides
-    fun providesSourceDao(
+    fun providesAccountDao(
         myRoomDatabase: MyRoomDatabase,
     ): AccountDao {
         return myRoomDatabase.accountDao()
