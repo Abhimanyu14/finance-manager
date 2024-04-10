@@ -520,7 +520,7 @@ class ComposeNavigationTest {
         composeTestRule.onRoot().printToLog("Abhi")
     }
 
-    fun NavController.assertCurrentRouteName(
+    private fun NavController.assertCurrentRouteName(
         expectedRouteName: String,
     ) = runTest {
         assertEquals(
