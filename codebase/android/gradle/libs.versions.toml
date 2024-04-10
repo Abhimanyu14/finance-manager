@@ -47,7 +47,7 @@ kakaocup-compose = "0.3.0"
 lint = "31.3.1"
 
 #plugins
-agp = "8.3.1"
+agp = "8.3.2"
 plugin-android-library = "8.3.1"
 plugin-kotlin-android = "1.9.23"
 plugin-kotlin-jvm = "1.9.23"
