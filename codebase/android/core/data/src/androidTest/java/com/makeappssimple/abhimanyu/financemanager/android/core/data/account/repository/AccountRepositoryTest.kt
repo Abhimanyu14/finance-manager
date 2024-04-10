@@ -1,28 +1,41 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.account.repository
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.account.AccountRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.account.AccountRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.getTestAccounts
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.AccountDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Ignore
+import org.junit.Rule
 import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
+import javax.inject.Inject
 
+@HiltAndroidTest
 class AccountRepositoryTest {
+    @get:Rule(order = 0)
+    var hiltRule = HiltAndroidRule(this)
+
     private val accountDao: AccountDao = mock()
     private val id: Int = 1
     private val accounts: Array<Account> = getTestAccounts()
     private lateinit var accountRepository: AccountRepository
 
+    @Inject
+    lateinit var dispatcherProvider: DispatcherProvider
+
     @Before
     fun setUp() {
         accountRepository = AccountRepositoryImpl(
             accountDao = accountDao,
+            dispatcherProvider = dispatcherProvider,
         )
     }
 
@@ -90,7 +103,9 @@ class AccountRepositoryTest {
         verify(
             mock = accountDao,
         ).insertAccounts(
-            accounts = accounts.map(Account::asEntity).toTypedArray(),
+            accounts = accounts.map(
+                transform = Account::asEntity,
+            ).toTypedArray(),
         )
     }
 
@@ -103,7 +118,9 @@ class AccountRepositoryTest {
         verify(
             mock = accountDao,
         ).updateAccounts(
-            accounts = accounts.map(Account::asEntity).toTypedArray(),
+            accounts = accounts.map(
+                transform = Account::asEntity,
+            ).toTypedArray(),
         )
     }
 
@@ -129,7 +146,9 @@ class AccountRepositoryTest {
         verify(
             mock = accountDao,
         ).deleteAccounts(
-            accounts = accounts.map(Account::asEntity).toTypedArray(),
+            accounts = accounts.map(
+                transform = Account::asEntity,
+            ).toTypedArray(),
         )
     }
 }

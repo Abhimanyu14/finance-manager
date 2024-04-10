@@ -61,11 +61,19 @@ class RestoreDataUseCaseImpl(
 
         // Restore database data
         val accounts = sanitizeAccounts(
-            accounts = databaseData.accounts.map(Account::asEntity),
-        ).map(AccountEntity::asExternalModel)
+            accounts = databaseData.accounts.map(
+                transform = Account::asEntity,
+            ),
+        ).map(
+            transform = AccountEntity::asExternalModel,
+        )
         val transactions = sanitizeTransactions(
-            transactions = databaseData.transactions.map(Transaction::asEntity),
-        ).map(TransactionEntity::asExternalModel)
+            transactions = databaseData.transactions.map(
+                transform = Transaction::asEntity,
+            ),
+        ).map(
+            transform = TransactionEntity::asExternalModel,
+        )
         transactionRepository.restoreData(
             categories = databaseData.categories,
             accounts = accounts,
