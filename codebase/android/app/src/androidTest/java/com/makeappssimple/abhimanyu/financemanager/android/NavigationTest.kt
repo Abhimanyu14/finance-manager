@@ -394,15 +394,14 @@ class NavigationTest {
 
     @Test
     fun homeScreenTest() {
+        printToLog()
         homeScreen.assertIsDisplayed()
-
-        composeTestRule.onRoot().printToLog("Abhi")
         homeScreenContent.assertIsDisplayed()
-//        homeTotalBalanceCard.assertIsDisplayed()
-//        homeOverviewCard.assertIsDisplayed()
-//        homeRecentTransactions.assertIsDisplayed()
-//        homeFloatingActionButton.assertIsDisplayed()
-//        homeAppbarSettings.assertIsDisplayed()
+        // homeTotalBalanceCard.assertIsDisplayed()
+        // homeOverviewCard.assertIsDisplayed()
+        homeRecentTransactions.assertIsDisplayed()
+        homeFloatingActionButton.assertIsDisplayed()
+        homeAppbarSettings.assertIsDisplayed()
     }
 
     @Test
@@ -471,5 +470,9 @@ class NavigationTest {
 
         viewTransactionScreen.assertIsDisplayed()
         viewTransactionScreenContent.assertIsDisplayed()
+    }
+
+    private fun printToLog() {
+        composeTestRule.onRoot().printToLog("Abhi")
     }
 }

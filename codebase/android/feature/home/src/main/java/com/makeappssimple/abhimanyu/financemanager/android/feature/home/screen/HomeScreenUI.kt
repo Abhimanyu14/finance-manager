@@ -91,6 +91,7 @@ internal fun HomeScreenUI(
             )
         },
         onClick = state.focusManager::clearFocus,
+        contentTestTag = SCREEN_CONTENT_HOME,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetScreenBottomSheetType,
     ) {
@@ -98,9 +99,6 @@ internal fun HomeScreenUI(
             modifier = Modifier
                 .verticalScroll(
                     state = rememberScrollState(),
-                )
-                .testTag(
-                    tag = SCREEN_CONTENT_HOME,
                 )
                 .navigationBarLandscapeSpacer()
                 .padding(

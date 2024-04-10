@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyScaffoldContentWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
@@ -70,6 +71,8 @@ fun MyScaffold(
     // MyScaffoldContentWrapper
     onClick: () -> Unit = {},
 
+    contentTestTag: String = "",
+
     // BottomSheetBackHandler
     isModalBottomSheetVisible: Boolean = false,
     backHandlerEnabled: Boolean = false,
@@ -99,11 +102,18 @@ fun MyScaffold(
             .exclude(WindowInsets.navigationBars)
             .exclude(WindowInsets.ime),
     ) { innerPadding ->
-        MyScaffoldContentWrapper(
-            innerPadding = innerPadding,
-            onClick = onClick,
-            content = content,
-        )
+        Box(
+            modifier = Modifier
+                .testTag(
+                    tag = contentTestTag,
+                ),
+        ) {
+            MyScaffoldContentWrapper(
+                innerPadding = innerPadding,
+                onClick = onClick,
+                content = content,
+            )
+        }
     }
     if (isModalBottomSheetVisible) {
         ModalBottomSheet(
