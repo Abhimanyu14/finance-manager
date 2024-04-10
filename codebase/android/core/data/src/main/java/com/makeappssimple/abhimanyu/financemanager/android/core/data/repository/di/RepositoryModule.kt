@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.di
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.account.AccountRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.account.AccountRepositoryImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.category.CategoryRepository
@@ -27,26 +28,32 @@ class RepositoryModule {
     @Provides
     fun providesAccountRepository(
         accountDao: AccountDao,
+        dispatcherProvider: DispatcherProvider,
     ): AccountRepository {
         return AccountRepositoryImpl(
             accountDao = accountDao,
+            dispatcherProvider = dispatcherProvider,
         )
     }
 
     @Provides
     fun providesCategoryRepository(
         categoryDao: CategoryDao,
+        dispatcherProvider: DispatcherProvider,
     ): CategoryRepository {
         return CategoryRepositoryImpl(
             categoryDao = categoryDao,
+            dispatcherProvider = dispatcherProvider,
         )
     }
 
     @Provides
     fun providesMyPreferencesRepository(
+        dispatcherProvider: DispatcherProvider,
         myPreferencesDataSource: MyPreferencesDataSource,
     ): MyPreferencesRepository {
         return MyPreferencesRepositoryImpl(
+            dispatcherProvider = dispatcherProvider,
             myPreferencesDataSource = myPreferencesDataSource,
         )
     }
@@ -54,19 +61,23 @@ class RepositoryModule {
     @Provides
     fun providesTransactionRepository(
         commonDataSource: CommonDataSource,
+        dispatcherProvider: DispatcherProvider,
         transactionDao: TransactionDao,
     ): TransactionRepository {
         return TransactionRepositoryImpl(
             commonDataSource = commonDataSource,
+            dispatcherProvider = dispatcherProvider,
             transactionDao = transactionDao,
         )
     }
 
     @Provides
     fun providesTransactionForRepository(
+        dispatcherProvider: DispatcherProvider,
         transactionForDao: TransactionForDao,
     ): TransactionForRepository {
         return TransactionForRepositoryImpl(
+            dispatcherProvider = dispatcherProvider,
             transactionForDao = transactionForDao,
         )
     }

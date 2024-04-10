@@ -1,5 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction
 
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.model.asEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.TransactionDao
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.datasource.CommonDataSource
@@ -13,31 +14,53 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.withContext
 
 class TransactionRepositoryImpl(
     private val commonDataSource: CommonDataSource,
+    private val dispatcherProvider: DispatcherProvider,
     private val transactionDao: TransactionDao,
 ) : TransactionRepository {
     override suspend fun getAllTransactions(): List<Transaction> {
-        return transactionDao.getAllTransactions().map(TransactionEntity::asExternalModel)
+        return withContext(
+            context = dispatcherProvider.io,
+        ) {
+            transactionDao.getAllTransactions().map(
+                transform = TransactionEntity::asExternalModel,
+            )
+        }
     }
 
     override fun getAllTransactionDataFlow(): Flow<List<TransactionData>> {
         return transactionDao.getAllTransactionDataFlow().map {
-            it.map(TransactionDataEntity::asExternalModel)
+            it.map(
+                transform = TransactionDataEntity::asExternalModel,
+            )
         }
     }
 
     override suspend fun getAllTransactionData(): List<TransactionData> {
-        return transactionDao.getAllTransactionData().map(TransactionDataEntity::asExternalModel)
+        return withContext(
+            context = dispatcherProvider.io,
+        ) {
+            transactionDao.getAllTransactionData().map(
+                transform = TransactionDataEntity::asExternalModel,
+            )
+        }
     }
 
     override suspend fun getSearchedTransactionData(
         searchText: String,
     ): List<TransactionData> {
-        return transactionDao.getSearchedTransactionData(
-            searchText = searchText,
-        ).map(TransactionDataEntity::asExternalModel)
+        return withContext(
+            context = dispatcherProvider.io,
+        ) {
+            transactionDao.getSearchedTransactionData(
+                searchText = searchText,
+            ).map(
+                transform = TransactionDataEntity::asExternalModel,
+            )
+        }
     }
 
     override fun getRecentTransactionDataFlow(
@@ -46,7 +69,9 @@ class TransactionRepositoryImpl(
         return transactionDao.getRecentTransactionDataFlow(
             numberOfTransactions = numberOfTransactions,
         ).map {
-            it.map(TransactionDataEntity::asExternalModel)
+            it.map(
+                transform = TransactionDataEntity::asExternalModel,
+            )
         }
     }
 
@@ -58,7 +83,9 @@ class TransactionRepositoryImpl(
             startingTimestamp = startingTimestamp,
             endingTimestamp = endingTimestamp,
         ).map {
-            it.map(TransactionEntity::asExternalModel)
+            it.map(
+                transform = TransactionEntity::asExternalModel,
+            )
         }
     }
 
@@ -66,14 +93,24 @@ class TransactionRepositoryImpl(
         startingTimestamp: Long,
         endingTimestamp: Long,
     ): List<Transaction> {
-        return transactionDao.getTransactionsBetweenTimestamps(
-            startingTimestamp = startingTimestamp,
-            endingTimestamp = endingTimestamp,
-        ).map(TransactionEntity::asExternalModel)
+        return withContext(
+            context = dispatcherProvider.io,
+        ) {
+            transactionDao.getTransactionsBetweenTimestamps(
+                startingTimestamp = startingTimestamp,
+                endingTimestamp = endingTimestamp,
+            ).map(
+                transform = TransactionEntity::asExternalModel,
+            )
+        }
     }
 
     override suspend fun getTransactionsCount(): Int {
-        return transactionDao.getTransactionsCount()
+        return withContext(
+            context = dispatcherProvider.io,
+        ) {
+            transactionDao.getTransactionsCount()
+        }
     }
 
     override suspend fun getTitleSuggestions(
@@ -81,51 +118,75 @@ class TransactionRepositoryImpl(
         numberOfSuggestions: Int,
         enteredTitle: String,
     ): List<String> {
-        return transactionDao.getTitleSuggestions(
-            categoryId = categoryId,
-            numberOfSuggestions = numberOfSuggestions,
-            enteredTitle = enteredTitle,
-        )
+        return withContext(
+            context = dispatcherProvider.io,
+        ) {
+            transactionDao.getTitleSuggestions(
+                categoryId = categoryId,
+                numberOfSuggestions = numberOfSuggestions,
+                enteredTitle = enteredTitle,
+            )
+        }
     }
 
     override suspend fun checkIfCategoryIsUsedInTransactions(
         categoryId: Int,
     ): Boolean {
-        return transactionDao.checkIfCategoryIsUsedInTransactions(
-            categoryId = categoryId,
-        )
+        return withContext(
+            context = dispatcherProvider.io,
+        ) {
+            transactionDao.checkIfCategoryIsUsedInTransactions(
+                categoryId = categoryId,
+            )
+        }
     }
 
     override suspend fun checkIfAccountIsUsedInTransactions(
         accountId: Int,
     ): Boolean {
-        return transactionDao.checkIfAccountIsUsedInTransactions(
-            accountId = accountId,
-        )
+        return withContext(
+            context = dispatcherProvider.io,
+        ) {
+            transactionDao.checkIfAccountIsUsedInTransactions(
+                accountId = accountId,
+            )
+        }
     }
 
     override suspend fun checkIfTransactionForIsUsedInTransactions(
         transactionForId: Int,
     ): Boolean {
-        return transactionDao.checkIfTransactionForIsUsedInTransactions(
-            transactionForId = transactionForId,
-        )
+        return withContext(
+            context = dispatcherProvider.io,
+        ) {
+            transactionDao.checkIfTransactionForIsUsedInTransactions(
+                transactionForId = transactionForId,
+            )
+        }
     }
 
     override suspend fun getTransaction(
         id: Int,
     ): Transaction? {
-        return transactionDao.getTransaction(
-            id = id,
-        )?.asExternalModel()
+        return withContext(
+            context = dispatcherProvider.io,
+        ) {
+            transactionDao.getTransaction(
+                id = id,
+            )?.asExternalModel()
+        }
     }
 
     override suspend fun getTransactionData(
         id: Int,
     ): TransactionData? {
-        return transactionDao.getTransactionData(
-            id = id,
-        )?.asExternalModel()
+        return withContext(
+            context = dispatcherProvider.io,
+        ) {
+            transactionDao.getTransactionData(
+                id = id,
+            )?.asExternalModel()
+        }
     }
 
     override suspend fun insertTransaction(
@@ -134,48 +195,76 @@ class TransactionRepositoryImpl(
         accountTo: Account?,
         transaction: Transaction,
     ): Long {
-        return commonDataSource.insertTransaction(
-            amountValue = amountValue,
-            accountFrom = accountFrom?.asEntity(),
-            accountTo = accountTo?.asEntity(),
-            transaction = transaction.asEntity(),
-        )
+        return withContext(
+            context = dispatcherProvider.io,
+        ) {
+            commonDataSource.insertTransaction(
+                amountValue = amountValue,
+                accountFrom = accountFrom?.asEntity(),
+                accountTo = accountTo?.asEntity(),
+                transaction = transaction.asEntity(),
+            )
+        }
     }
 
     override suspend fun insertTransactions(
         vararg transactions: Transaction,
     ) {
-        transactionDao.insertTransactions(
-            transactions = transactions.map(Transaction::asEntity).toTypedArray(),
-        )
+        return withContext(
+            context = dispatcherProvider.io,
+        ) {
+            transactionDao.insertTransactions(
+                transactions = transactions.map(
+                    transform = Transaction::asEntity,
+                ).toTypedArray(),
+            )
+        }
     }
 
     override suspend fun updateTransaction(
         transaction: Transaction,
     ) {
-        transactionDao.updateTransaction(
-            transaction = transaction.asEntity(),
-        )
+        return withContext(
+            context = dispatcherProvider.io,
+        ) {
+            transactionDao.updateTransaction(
+                transaction = transaction.asEntity(),
+            )
+        }
     }
 
     override suspend fun updateTransactions(
         vararg transactions: Transaction,
     ) {
-        transactionDao.updateTransactions(
-            transactions = transactions.map(Transaction::asEntity).toTypedArray(),
-        )
+        return withContext(
+            context = dispatcherProvider.io,
+        ) {
+            transactionDao.updateTransactions(
+                transactions = transactions.map(
+                    transform = Transaction::asEntity,
+                ).toTypedArray(),
+            )
+        }
     }
 
     override suspend fun deleteTransaction(
         id: Int,
     ) {
-        commonDataSource.deleteTransaction(
-            id = id,
-        )
+        return withContext(
+            context = dispatcherProvider.io,
+        ) {
+            commonDataSource.deleteTransaction(
+                id = id,
+            )
+        }
     }
 
     override suspend fun deleteAllTransactions() {
-        transactionDao.deleteAllTransactions()
+        return withContext(
+            context = dispatcherProvider.io,
+        ) {
+            transactionDao.deleteAllTransactions()
+        }
     }
 
     override suspend fun restoreData(
@@ -184,12 +273,23 @@ class TransactionRepositoryImpl(
         transactions: List<Transaction>,
         transactionForValues: List<TransactionFor>,
     ) {
-        commonDataSource.restoreData(
-            categories = categories.map(Category::asEntity).toTypedArray(),
-            accounts = accounts.map(Account::asEntity).toTypedArray(),
-            transactions = transactions.map(Transaction::asEntity).toTypedArray(),
-            transactionForValues = transactionForValues.map(TransactionFor::asEntity)
-                .toTypedArray(),
-        )
+        return withContext(
+            context = dispatcherProvider.io,
+        ) {
+            commonDataSource.restoreData(
+                categories = categories.map(
+                    transform = Category::asEntity,
+                ).toTypedArray(),
+                accounts = accounts.map(
+                    transform = Account::asEntity,
+                ).toTypedArray(),
+                transactions = transactions.map(
+                    transform = Transaction::asEntity,
+                ).toTypedArray(),
+                transactionForValues = transactionForValues.map(
+                    transform = TransactionFor::asEntity,
+                ).toTypedArray(),
+            )
+        }
     }
 }
