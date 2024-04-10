@@ -15,6 +15,7 @@ activity-compose = "1.8.2"
 lifecycle-viewmodel-compose = "2.7.0"
 lifecycle-runtime-compose = "2.7.0"
 navigation-compose = "2.7.7"
+navigation-testing-compose = "2.7.7"
 hilt-navigation-compose = "1.2.0"
 paging-compose = "3.2.1"
 detekt-formatting = "1.23.6"
@@ -93,6 +94,7 @@ emoji2 = { group = "androidx.emoji2", name = "emoji2", version.ref = "emoji2" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
 
 navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose" }
+navigation-testing-compose = { group = "androidx.navigation", name = "navigation-testing", version.ref = "navigation-testing-compose" }
 
 paging-ktx = { group = "androidx.paging", name = "paging-runtime-ktx", version.ref = "paging" }
 paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging-compose" }

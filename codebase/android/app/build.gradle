@@ -221,6 +221,8 @@ dependencies {
     implementation project(":feature:transactionfor")
     implementation project(":feature:transactions")
 
+    debugImplementation project(":ui-test-hilt-manifest")
+
     testImplementation project(":core:data-test")
     testImplementation project(":core:database-test")
     testImplementation project(":core:testing")
@@ -228,6 +230,7 @@ dependencies {
     androidTestImplementation project(":core:data-test")
     androidTestImplementation project(":core:database-test")
     androidTestImplementation project(":core:testing")
+    androidTestImplementation project(":ui-test-hilt-manifest")
 
     lintChecks project(":lint")
 
@@ -354,6 +357,9 @@ dependencies {
 
     // Jetpack compose UI tests manifest - Needed for createComposeRule, but not createAndroidComposeRule
     debugImplementation libs.compose.ui.test.manifest
+
+    // Jetpack compose navigation testing
+    implementation libs.navigation.testing.compose
 }
 
 kover {
