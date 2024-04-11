@@ -7,7 +7,8 @@ class FakeMyJsonWriterImpl : MyJsonWriter {
     override fun writeJsonToFile(
         jsonString: String,
         uri: Uri,
-    ) {
+    ): Boolean {
         // No action required
+        return false
     }
 }

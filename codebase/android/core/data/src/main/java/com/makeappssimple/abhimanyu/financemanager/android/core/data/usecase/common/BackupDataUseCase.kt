@@ -30,7 +30,7 @@ import kotlinx.serialization.json.Json
 interface BackupDataUseCase {
     suspend operator fun invoke(
         uri: Uri,
-    )
+    ): Boolean
 }
 
 class BackupDataUseCaseImpl(
@@ -45,8 +45,8 @@ class BackupDataUseCaseImpl(
 ) : BackupDataUseCase {
     override suspend operator fun invoke(
         uri: Uri,
-    ) {
-        coroutineScope {
+    ): Boolean {
+        return coroutineScope {
             val deferredDatabaseData = awaitAll(
                 async(
                     context = dispatcherProvider.io,
@@ -70,32 +70,13 @@ class BackupDataUseCaseImpl(
                 },
             )
 
-            val categories: List<Category> = deferredDatabaseData[0].filterIsInstance<Category>()
-            val accounts: List<Account> = deferredDatabaseData[1].filterIsInstance<Account>()
-            val transactionForValues: List<TransactionFor> =
-                deferredDatabaseData[2].filterIsInstance<TransactionFor>()
-            val transactions: List<Transaction> =
-                deferredDatabaseData[3].filterIsInstance<Transaction>()
-
             val backupData = BackupData(
                 lastBackupTime = dateTimeUtil.getReadableDateAndTime(),
                 lastBackupTimestamp = dateTimeUtil.getCurrentTimeMillis().toString(),
-                databaseData = DatabaseData(
-                    categories = categories,
-                    accounts = accounts,
-                    transactionForValues = transactionForValues,
-                    transactions = transactions,
+                databaseData = getDatabaseData(
+                    deferredDatabaseData = deferredDatabaseData,
                 ),
-                datastoreData = DatastoreData(
-                    defaultDataId = myPreferencesRepository.getDefaultDataId().first()
-                        ?: DefaultDataId(),
-                    initialDataVersionNumber = myPreferencesRepository.getInitialDataVersionNumber()
-                        .first()
-                        ?: InitialDataVersionNumber(),
-                    dataTimestamp = myPreferencesRepository.getDataTimestamp().first()
-                        ?: DataTimestamp(),
-                    reminder = myPreferencesRepository.getReminder().first() ?: Reminder(),
-                )
+                datastoreData = getDatastoreData(),
             )
             val jsonString = Json.encodeToString(
                 value = backupData,
@@ -106,5 +87,33 @@ class BackupDataUseCaseImpl(
                 jsonString = jsonString,
             )
         }
+    }
+
+    private fun getDatabaseData(
+        deferredDatabaseData: List<List<Any>>,
+    ): DatabaseData {
+        val categories: List<Category> = deferredDatabaseData[0].filterIsInstance<Category>()
+        val accounts: List<Account> = deferredDatabaseData[1].filterIsInstance<Account>()
+        val transactionForValues: List<TransactionFor> =
+            deferredDatabaseData[2].filterIsInstance<TransactionFor>()
+        val transactions: List<Transaction> =
+            deferredDatabaseData[3].filterIsInstance<Transaction>()
+        val databaseData = DatabaseData(
+            categories = categories,
+            accounts = accounts,
+            transactionForValues = transactionForValues,
+            transactions = transactions,
+        )
+        return databaseData
+    }
+
+    private suspend fun getDatastoreData(): DatastoreData {
+        return DatastoreData(
+            defaultDataId = myPreferencesRepository.getDefaultDataId().first() ?: DefaultDataId(),
+            initialDataVersionNumber = myPreferencesRepository.getInitialDataVersionNumber().first()
+                ?: InitialDataVersionNumber(),
+            dataTimestamp = myPreferencesRepository.getDataTimestamp().first() ?: DataTimestamp(),
+            reminder = myPreferencesRepository.getReminder().first() ?: Reminder(),
+        )
     }
 }

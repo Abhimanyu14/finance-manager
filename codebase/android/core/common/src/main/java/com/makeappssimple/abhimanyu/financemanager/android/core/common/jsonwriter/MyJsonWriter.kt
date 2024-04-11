@@ -6,5 +6,5 @@ interface MyJsonWriter {
     fun writeJsonToFile(
         jsonString: String,
         uri: Uri,
-    )
+    ): Boolean
 }

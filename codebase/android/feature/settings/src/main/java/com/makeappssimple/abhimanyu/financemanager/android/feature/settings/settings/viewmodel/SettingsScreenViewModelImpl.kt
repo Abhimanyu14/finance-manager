@@ -1,6 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.viewmodel
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.AlarmKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
@@ -18,6 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.sett
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -70,13 +72,15 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
             context = dispatcherProvider.io,
         ) {
             isLoading.value = true
-            launch(
+            val isBackupSuccessful = async(
                 context = dispatcherProvider.io,
             ) {
                 backupDataUseCase(
                     uri = uri,
                 )
-            }
+            }.await()
+            Log.e("Abhi", "$isBackupSuccessful")
+            // TODO(Abhi): use the result to show snackbar to the user
             navigator.navigateUp()
         }
     }
@@ -147,15 +151,16 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
         ) {
             isLoading.value = true
             delay(5000)
-            if (
-                restoreDataUseCase(
+            if (restoreDataUseCase(
                     uri = uri,
                 )
             ) {
                 navigator.navigateUp()
             } else {
                 isLoading.value = false
-                _event.emit(SettingsScreenEvent.RestoreDataFailed)
+                _event.emit(
+                    value = SettingsScreenEvent.RestoreDataFailed,
+                )
             }
         }
     }

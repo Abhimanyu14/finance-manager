@@ -151,7 +151,9 @@ class NavigatorImpl(
         navigationCommand: NavigationCommand,
     ) {
         coroutineScope.launch {
-            _command.emit(navigationCommand)
+            _command.emit(
+                value = navigationCommand,
+            )
         }
     }
 }

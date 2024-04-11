@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 import androidx.lifecycle.SavedStateHandle
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.turbineScope
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtil
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtilImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.stringdecoder.StringDecoder
@@ -20,6 +21,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.fake.FakeNavigatorImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.TestDispatcherProviderImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
+import dagger.hilt.android.testing.HiltAndroidRule
+import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -28,11 +31,15 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
+@HiltAndroidTest
 class ViewTransactionScreenViewModelImplTest {
+    @get:Rule(order = 0)
+    var hiltRule = HiltAndroidRule(this)
 
-    @get:Rule
+    @get:Rule(order = 1)
     val mainDispatcherRule = MainDispatcherRule()
 
     private lateinit var savedStateHandle: SavedStateHandle
@@ -46,6 +53,9 @@ class ViewTransactionScreenViewModelImplTest {
     private val dispatcherProvider = TestDispatcherProviderImpl(
         testDispatcher = UnconfinedTestDispatcher(),
     )
+
+    @Inject
+    lateinit var closeableCoroutineScope: CloseableCoroutineScope
 
     private lateinit var viewTransactionScreenViewModelImpl: ViewTransactionScreenViewModelImpl
 
@@ -102,6 +112,7 @@ class ViewTransactionScreenViewModelImplTest {
         viewTransactionScreenViewModelImpl = ViewTransactionScreenViewModelImpl(
             savedStateHandle = savedStateHandle,
             stringDecoder = stringDecoder,
+            closeableCoroutineScope = closeableCoroutineScope,
             dateTimeUtil = dateTimeUtil,
             deleteTransactionUseCase = deleteTransactionUseCase,
             dispatcherProvider = dispatcherProvider,

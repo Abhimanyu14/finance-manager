@@ -5,6 +5,7 @@ import app.cash.turbine.turbineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.AlarmKit
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.fake.FakeAlarmKitImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.CloseableCoroutineScope
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.datetime.DateTimeUtilImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.MyJsonReader
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwriter.fake.FakeMyJsonWriterImpl
@@ -45,6 +46,7 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import javax.inject.Inject
 
 class SettingsScreenViewModelImplTest {
     @get:Rule
@@ -64,6 +66,9 @@ class SettingsScreenViewModelImplTest {
     private val dispatcherProvider = TestDispatcherProviderImpl(
         testDispatcher = UnconfinedTestDispatcher(),
     )
+
+    @Inject
+    lateinit var closeableCoroutineScope: CloseableCoroutineScope
 
     private lateinit var settingsScreenViewModelImpl: SettingsScreenViewModelImpl
 
@@ -287,7 +292,8 @@ class SettingsScreenViewModelImplTest {
             myPreferencesRepository = myPreferencesRepository,
             alarmKit = alarmKit,
             backupDataUseCase = backupDataUseCase,
-            ioDispatcher = dispatcherProvider.io,
+            closeableCoroutineScope = closeableCoroutineScope,
+            dispatcherProvider = dispatcherProvider,
             navigator = navigator,
             recalculateTotalUseCase = recalculateTotalUseCase,
             restoreDataUseCase = restoreDataUseCase,

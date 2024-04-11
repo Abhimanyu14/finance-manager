@@ -4,24 +4,26 @@ import android.content.Context
 import android.net.Uri
 import java.io.FileOutputStream
 
+private const val writeMode = "w"
+
 class MyJsonWriterImpl(
     private val context: Context,
 ) : MyJsonWriter {
     override fun writeJsonToFile(
         jsonString: String,
         uri: Uri,
-    ) {
-        try {
-            val contentResolver = context.contentResolver
-            contentResolver.openFileDescriptor(uri, "w")?.use {
+    ): Boolean {
+        return try {
+            context.contentResolver.openFileDescriptor(uri, writeMode)?.use {
                 FileOutputStream(it.fileDescriptor).use { fileOutputStream ->
                     fileOutputStream.write(jsonString.toByteArray())
                 }
-            }
+            } ?: return false
+            true
         } catch (
-            exception: Exception,
-        ) {
+            exception: Exception, ) {
             exception.printStackTrace()
+            false
         }
     }
 }
