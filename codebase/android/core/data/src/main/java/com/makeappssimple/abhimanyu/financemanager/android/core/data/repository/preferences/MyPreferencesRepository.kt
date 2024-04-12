@@ -18,44 +18,44 @@ interface MyPreferencesRepository {
 
     suspend fun setCategoryDataVersionNumber(
         categoryDataVersionNumber: Int,
-    )
+    ): Boolean
 
     suspend fun setDefaultExpenseCategoryId(
         defaultExpenseCategoryId: Int,
-    )
+    ): Boolean
 
     suspend fun setDefaultIncomeCategoryId(
         defaultIncomeCategoryId: Int,
-    )
+    ): Boolean
 
     suspend fun setDefaultInvestmentCategoryId(
         defaultInvestmentCategoryId: Int,
-    )
+    ): Boolean
 
     suspend fun setDefaultAccountId(
         defaultAccountId: Int,
-    )
+    ): Boolean
 
     suspend fun setIsReminderEnabled(
         isReminderEnabled: Boolean,
-    )
+    ): Boolean
 
     suspend fun setLastDataBackupTimestamp(
         lastDataBackupTimestamp: Long = getCurrentTimeMillis(),
-    )
+    ): Boolean
 
     suspend fun setLastDataChangeTimestamp(
         lastDataChangeTimestamp: Long = getCurrentTimeMillis(),
-    )
+    ): Boolean
 
     suspend fun setTransactionsDataVersionNumber(
         transactionsDataVersionNumber: Int,
-    )
+    ): Boolean
 
     suspend fun setReminderTime(
         hour: Int,
         min: Int,
-    )
+    ): Boolean
 
     // TODO(Abhi): Figure out how to inject this
     private fun getCurrentTimeMillis(): Long {

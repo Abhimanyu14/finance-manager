@@ -6,6 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.DataTimest
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
@@ -31,10 +32,8 @@ class MyPreferencesRepositoryImpl(
 
     override suspend fun setCategoryDataVersionNumber(
         categoryDataVersionNumber: Int,
-    ) {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+    ): Boolean {
+        return executeOnIoDispatcher {
             myPreferencesDataSource.setCategoryDataVersionNumber(
                 categoryDataVersionNumber = categoryDataVersionNumber,
             )
@@ -43,10 +42,8 @@ class MyPreferencesRepositoryImpl(
 
     override suspend fun setDefaultExpenseCategoryId(
         defaultExpenseCategoryId: Int,
-    ) {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+    ): Boolean {
+        return executeOnIoDispatcher {
             myPreferencesDataSource.setDefaultExpenseCategoryId(
                 defaultExpenseCategoryId = defaultExpenseCategoryId,
             )
@@ -55,10 +52,8 @@ class MyPreferencesRepositoryImpl(
 
     override suspend fun setDefaultIncomeCategoryId(
         defaultIncomeCategoryId: Int,
-    ) {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+    ): Boolean {
+        return executeOnIoDispatcher {
             myPreferencesDataSource.setDefaultIncomeCategoryId(
                 defaultIncomeCategoryId = defaultIncomeCategoryId,
             )
@@ -67,10 +62,8 @@ class MyPreferencesRepositoryImpl(
 
     override suspend fun setDefaultInvestmentCategoryId(
         defaultInvestmentCategoryId: Int,
-    ) {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+    ): Boolean {
+        return executeOnIoDispatcher {
             myPreferencesDataSource.setDefaultInvestmentCategoryId(
                 defaultInvestmentCategoryId = defaultInvestmentCategoryId,
             )
@@ -79,10 +72,8 @@ class MyPreferencesRepositoryImpl(
 
     override suspend fun setDefaultAccountId(
         defaultAccountId: Int,
-    ) {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+    ): Boolean {
+        return executeOnIoDispatcher {
             myPreferencesDataSource.setDefaultAccountId(
                 defaultAccountId = defaultAccountId,
             )
@@ -91,10 +82,8 @@ class MyPreferencesRepositoryImpl(
 
     override suspend fun setIsReminderEnabled(
         isReminderEnabled: Boolean,
-    ) {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+    ): Boolean {
+        return executeOnIoDispatcher {
             myPreferencesDataSource.setIsReminderEnabled(
                 isReminderEnabled = isReminderEnabled,
             )
@@ -103,10 +92,8 @@ class MyPreferencesRepositoryImpl(
 
     override suspend fun setLastDataBackupTimestamp(
         lastDataBackupTimestamp: Long,
-    ) {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+    ): Boolean {
+        return executeOnIoDispatcher {
             myPreferencesDataSource.setLastDataBackupTimestamp(
                 lastDataBackupTimestamp = lastDataBackupTimestamp,
             )
@@ -115,10 +102,8 @@ class MyPreferencesRepositoryImpl(
 
     override suspend fun setLastDataChangeTimestamp(
         lastDataChangeTimestamp: Long,
-    ) {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+    ): Boolean {
+        return executeOnIoDispatcher {
             myPreferencesDataSource.setLastDataChangeTimestamp(
                 lastDataChangeTimestamp = lastDataChangeTimestamp,
             )
@@ -128,10 +113,8 @@ class MyPreferencesRepositoryImpl(
     override suspend fun setReminderTime(
         hour: Int,
         min: Int,
-    ) {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+    ): Boolean {
+        return executeOnIoDispatcher {
             myPreferencesDataSource.setReminderTime(
                 hour = hour,
                 min = min,
@@ -141,13 +124,20 @@ class MyPreferencesRepositoryImpl(
 
     override suspend fun setTransactionsDataVersionNumber(
         transactionsDataVersionNumber: Int,
-    ) {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+    ): Boolean {
+        return executeOnIoDispatcher {
             myPreferencesDataSource.setTransactionDataVersionNumber(
                 transactionDataVersionNumber = transactionsDataVersionNumber,
             )
         }
+    }
+
+    private suspend fun executeOnIoDispatcher(
+        block: suspend CoroutineScope.() -> Boolean,
+    ): Boolean {
+        return withContext(
+            context = dispatcherProvider.io,
+            block = block,
+        )
     }
 }

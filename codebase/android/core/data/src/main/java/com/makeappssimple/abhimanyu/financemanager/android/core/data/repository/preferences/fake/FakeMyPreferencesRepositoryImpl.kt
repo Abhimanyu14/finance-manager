@@ -27,52 +27,62 @@ class FakeMyPreferencesRepositoryImpl : MyPreferencesRepository {
 
     override suspend fun setCategoryDataVersionNumber(
         categoryDataVersionNumber: Int,
-    ) {
+    ): Boolean {
+        return true
     }
 
     override suspend fun setDefaultExpenseCategoryId(
         defaultExpenseCategoryId: Int,
-    ) {
+    ): Boolean {
+        return true
     }
 
     override suspend fun setDefaultIncomeCategoryId(
         defaultIncomeCategoryId: Int,
-    ) {
+    ): Boolean {
+        return true
     }
 
     override suspend fun setDefaultInvestmentCategoryId(
         defaultInvestmentCategoryId: Int,
-    ) {
+    ): Boolean {
+        return true
     }
 
     override suspend fun setDefaultAccountId(
         defaultAccountId: Int,
-    ) {
+    ): Boolean {
+        return true
     }
 
     override suspend fun setIsReminderEnabled(
         isReminderEnabled: Boolean,
-    ) {
+    ): Boolean {
+        return true
     }
 
     override suspend fun setLastDataBackupTimestamp(
         lastDataBackupTimestamp: Long,
-    ) {
+    ): Boolean {
+        return true
     }
 
     override suspend fun setLastDataChangeTimestamp(
         lastDataChangeTimestamp: Long,
-    ) {
+    ): Boolean {
+        return true
     }
 
     override suspend fun setTransactionsDataVersionNumber(
         transactionsDataVersionNumber: Int,
-    ) {
+    ): Boolean {
+        return true
     }
 
     override suspend fun setReminderTime(
         hour: Int,
         min: Int,
-    ) {
+    ): Boolean {
+        return true
     }
 }

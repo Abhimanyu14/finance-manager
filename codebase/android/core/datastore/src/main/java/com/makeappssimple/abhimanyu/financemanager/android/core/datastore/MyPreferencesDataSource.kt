@@ -200,12 +200,14 @@ class MyPreferencesDataSource(
     }
 
     private suspend fun tryDataStoreEdit(
-        transform: suspend () -> Unit,
+        block: suspend () -> Unit,
     ): Boolean {
         return try {
-            transform()
+            block()
             true
-        } catch (ioException: IOException) {
+        } catch (
+            ioException: IOException,
+        ) {
             false
         }
     }
