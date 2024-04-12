@@ -197,9 +197,10 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
         closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
-            myPreferencesRepository.setDefaultAccountId(
+            val result = myPreferencesRepository.setDefaultAccountId(
                 defaultAccountId = defaultAccountId,
             )
+            // TODO(Abhi): Use the result to show snackbar
         }
     }
 }

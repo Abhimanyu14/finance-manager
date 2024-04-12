@@ -245,7 +245,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
         closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
-            when (transactionType) {
+            val result = when (transactionType) {
                 TransactionType.EXPENSE -> {
                     myPreferencesRepository.setDefaultExpenseCategoryId(
                         defaultExpenseCategoryId = defaultCategoryId,
@@ -264,12 +264,19 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
                     )
                 }
 
-                TransactionType.TRANSFER -> {}
+                TransactionType.TRANSFER -> {
+                    false
+                }
 
-                TransactionType.ADJUSTMENT -> {}
+                TransactionType.ADJUSTMENT -> {
+                    false
+                }
 
-                TransactionType.REFUND -> {}
+                TransactionType.REFUND -> {
+                    false
+                }
             }
+            // TODO(Abhi): Use the result to show snackbar
         }
     }
 
