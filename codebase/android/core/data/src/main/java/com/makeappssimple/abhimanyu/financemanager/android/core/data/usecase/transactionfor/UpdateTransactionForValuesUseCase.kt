@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 interface UpdateTransactionForValuesUseCase {
     suspend operator fun invoke(
         vararg transactionForValues: TransactionFor,
-    )
+    ): Boolean
 }
 
 class UpdateTransactionForValuesUseCaseImpl(
@@ -16,7 +16,7 @@ class UpdateTransactionForValuesUseCaseImpl(
 ) : UpdateTransactionForValuesUseCase {
     override suspend operator fun invoke(
         vararg transactionForValues: TransactionFor,
-    ) {
+    ): Boolean {
         myPreferencesRepository.setLastDataChangeTimestamp()
         return transactionForRepository.updateTransactionForValues(
             transactionForValues = transactionForValues,

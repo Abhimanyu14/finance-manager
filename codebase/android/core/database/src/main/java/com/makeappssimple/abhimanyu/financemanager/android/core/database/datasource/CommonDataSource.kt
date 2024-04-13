@@ -8,7 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.T
 interface CommonDataSource {
     suspend fun deleteTransaction(
         id: Int,
-    )
+    ): Boolean
 
     suspend fun insertTransaction(
         amountValue: Long,
@@ -22,5 +22,5 @@ interface CommonDataSource {
         accounts: Array<AccountEntity>,
         transactions: Array<TransactionEntity>,
         transactionForValues: Array<TransactionForEntity>,
-    )
+    ): Boolean
 }

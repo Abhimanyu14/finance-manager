@@ -16,17 +16,17 @@ interface CategoryRepository {
 
     suspend fun insertCategories(
         vararg categories: Category,
-    )
+    ): List<Long>
 
     suspend fun updateCategories(
         vararg categories: Category,
-    )
+    ): Boolean
 
     suspend fun deleteCategory(
         id: Int,
-    )
+    ): Boolean
 
     suspend fun deleteCategories(
         vararg categories: Category,
-    )
+    ): Boolean
 }

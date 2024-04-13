@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 interface InsertTransactionForValuesUseCase {
     suspend operator fun invoke(
         vararg transactionForValues: TransactionFor,
-    )
+    ): List<Long>
 }
 
 class InsertTransactionForValuesUseCaseImpl(
@@ -16,7 +16,7 @@ class InsertTransactionForValuesUseCaseImpl(
 ) : InsertTransactionForValuesUseCase {
     override suspend operator fun invoke(
         vararg transactionForValues: TransactionFor,
-    ) {
+    ): List<Long> {
         myPreferencesRepository.setLastDataChangeTimestamp()
         return transactionForRepository.insertTransactionForValues(
             transactionForValues = transactionForValues,

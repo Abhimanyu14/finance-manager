@@ -24,16 +24,19 @@ class FakeTransactionForRepositoryImpl : TransactionForRepository {
 
     override suspend fun insertTransactionForValues(
         vararg transactionForValues: TransactionFor,
-    ) {
+    ): List<Long> {
+        return emptyList()
     }
 
     override suspend fun updateTransactionForValues(
         vararg transactionForValues: TransactionFor,
-    ) {
+    ): Boolean {
+        return false
     }
 
     override suspend fun deleteTransactionFor(
         id: Int,
-    ) {
+    ): Boolean {
+        return false
     }
 }

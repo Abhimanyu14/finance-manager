@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 interface DeleteAccountsUseCase {
     suspend operator fun invoke(
         vararg accounts: Account,
-    )
+    ): Boolean
 }
 
 class DeleteAccountsUseCaseImpl(
@@ -16,7 +16,7 @@ class DeleteAccountsUseCaseImpl(
 ) : DeleteAccountsUseCase {
     override suspend operator fun invoke(
         vararg accounts: Account,
-    ) {
+    ): Boolean {
         myPreferencesRepository.setLastDataChangeTimestamp()
         return accountRepository.deleteAccounts(
             accounts = accounts,

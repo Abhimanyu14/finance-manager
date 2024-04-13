@@ -28,23 +28,23 @@ interface CategoryDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertCategories(
         vararg categories: CategoryEntity,
-    )
+    ): List<Long>
 
     @Update
     suspend fun updateCategories(
         vararg categories: CategoryEntity,
-    )
+    ): Int
 
     @Query(value = "DELETE FROM category_table WHERE id = :id")
     suspend fun deleteCategory(
         id: Int,
-    )
+    ): Int
 
     @Delete
     suspend fun deleteCategories(
         vararg categories: CategoryEntity,
-    )
+    ): Int
 
     @Query(value = "DELETE FROM category_table")
-    suspend fun deleteAllCategories()
+    suspend fun deleteAllCategories(): Int
 }

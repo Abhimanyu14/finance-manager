@@ -24,19 +24,23 @@ class FakeTransactionForDaoImpl : TransactionForDao {
 
     override suspend fun insertTransactionForValues(
         vararg transactionForValues: TransactionForEntity,
-    ) {
+    ): List<Long> {
+        return emptyList()
     }
 
     override suspend fun updateTransactionForValues(
         vararg transactionForValues: TransactionForEntity,
-    ) {
+    ): Int {
+        return 0
     }
 
     override suspend fun deleteTransactionFor(
         id: Int,
-    ) {
+    ): Int {
+        return 0
     }
 
-    override suspend fun deleteAllTransactionForValues() {
+    override suspend fun deleteAllTransactionForValues(): Int {
+        return 0
     }
 }

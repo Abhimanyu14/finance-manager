@@ -147,7 +147,7 @@ interface TransactionDao {
     ): List<Long>
 
     @Query(value = "DELETE FROM transaction_table")
-    suspend fun deleteAllTransactions()
+    suspend fun deleteAllTransactions(): Int
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTransaction(
@@ -157,7 +157,7 @@ interface TransactionDao {
     @Update
     suspend fun updateTransaction(
         transaction: TransactionEntity,
-    )
+    ): Int
 
     @Update
     suspend fun updateTransactions(
@@ -170,5 +170,5 @@ interface TransactionDao {
     )
     suspend fun deleteTransaction(
         id: Int,
-    )
+    ): Int
 }

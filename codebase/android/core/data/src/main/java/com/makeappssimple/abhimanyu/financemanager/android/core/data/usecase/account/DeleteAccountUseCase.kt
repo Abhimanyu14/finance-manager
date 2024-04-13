@@ -6,7 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 interface DeleteAccountUseCase {
     suspend operator fun invoke(
         id: Int,
-    )
+    ): Boolean
 }
 
 class DeleteAccountUseCaseImpl(
@@ -15,7 +15,7 @@ class DeleteAccountUseCaseImpl(
 ) : DeleteAccountUseCase {
     override suspend operator fun invoke(
         id: Int,
-    ) {
+    ): Boolean {
         myPreferencesRepository.setLastDataChangeTimestamp()
         return accountRepository.deleteAccount(
             id = id,

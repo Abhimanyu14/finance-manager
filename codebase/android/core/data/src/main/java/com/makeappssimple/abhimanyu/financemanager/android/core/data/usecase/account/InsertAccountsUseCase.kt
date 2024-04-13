@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 interface InsertAccountsUseCase {
     suspend operator fun invoke(
         vararg accounts: Account,
-    )
+    ): List<Long>
 }
 
 class InsertAccountsUseCaseImpl(
@@ -16,7 +16,7 @@ class InsertAccountsUseCaseImpl(
 ) : InsertAccountsUseCase {
     override suspend operator fun invoke(
         vararg accounts: Account,
-    ) {
+    ): List<Long> {
         myPreferencesRepository.setLastDataChangeTimestamp()
         return accountRepository.insertAccounts(
             accounts = accounts,

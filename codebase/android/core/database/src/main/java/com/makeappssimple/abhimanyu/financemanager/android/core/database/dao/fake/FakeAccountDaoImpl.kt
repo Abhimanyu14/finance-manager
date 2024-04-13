@@ -32,24 +32,29 @@ class FakeAccountDaoImpl : AccountDao {
 
     override suspend fun insertAccounts(
         vararg accounts: AccountEntity,
-    ) {
+    ): List<Long> {
+        return emptyList()
     }
 
     override suspend fun updateAccounts(
         vararg accounts: AccountEntity,
-    ) {
+    ): Int {
+        return 0
     }
 
     override suspend fun deleteAccount(
         id: Int,
-    ) {
+    ): Int {
+        return 0
     }
 
     override suspend fun deleteAccounts(
         vararg accounts: AccountEntity,
-    ) {
+    ): Int {
+        return 0
     }
 
-    override suspend fun deleteAllAccounts() {
+    override suspend fun deleteAllAccounts(): Int {
+        return 0
     }
 }

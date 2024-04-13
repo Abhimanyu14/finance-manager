@@ -28,21 +28,25 @@ class FakeCategoryRepositoryImpl : CategoryRepository {
 
     override suspend fun insertCategories(
         vararg categories: Category,
-    ) {
+    ): List<Long> {
+        return emptyList()
     }
 
     override suspend fun updateCategories(
         vararg categories: Category,
-    ) {
+    ): Boolean {
+        return false
     }
 
     override suspend fun deleteCategory(
         id: Int,
-    ) {
+    ): Boolean {
+        return false
     }
 
     override suspend fun deleteCategories(
         vararg categories: Category,
-    ) {
+    ): Boolean {
+        return false
     }
 }

@@ -14,8 +14,8 @@ class CommonDataSourceImpl(
 ) : CommonDataSource {
     override suspend fun deleteTransaction(
         id: Int,
-    ) {
-        with(
+    ): Boolean {
+        return with(
             receiver = myRoomDatabase,
         ) {
             withTransaction {
@@ -73,6 +73,7 @@ class CommonDataSourceImpl(
                     accounts = updatedAccounts,
                 )
             }
+            true
         }
     }
 
@@ -113,8 +114,8 @@ class CommonDataSourceImpl(
         accounts: Array<AccountEntity>,
         transactions: Array<TransactionEntity>,
         transactionForValues: Array<TransactionForEntity>,
-    ) {
-        with(
+    ): Boolean {
+        return with(
             receiver = myRoomDatabase,
         ) {
             withTransaction {
@@ -136,6 +137,7 @@ class CommonDataSourceImpl(
                     transactionForValues = transactionForValues,
                 )
             }
+            true
         }
     }
 }

@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 interface UpdateAccountsUseCase {
     suspend operator fun invoke(
         vararg accounts: Account,
-    )
+    ): Boolean
 }
 
 class UpdateAccountsUseCaseImpl(
@@ -16,7 +16,7 @@ class UpdateAccountsUseCaseImpl(
 ) : UpdateAccountsUseCase {
     override suspend operator fun invoke(
         vararg accounts: Account,
-    ) {
+    ): Boolean {
         myPreferencesRepository.setLastDataChangeTimestamp()
         return accountRepository.updateAccounts(
             accounts = accounts,

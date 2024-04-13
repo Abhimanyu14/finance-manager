@@ -34,27 +34,32 @@ class FakeAccountRepositoryImpl : AccountRepository {
 
     override suspend fun insertAccounts(
         vararg accounts: Account,
-    ) {
+    ): List<Long> {
+        return emptyList()
     }
 
     @androidx.room.Transaction
     override suspend fun updateAccountBalanceAmount(
         accountsBalanceAmountChange: List<Pair<Int, Long>>,
-    ) {
+    ): Boolean {
+        return false
     }
 
     override suspend fun updateAccounts(
         vararg accounts: Account,
-    ) {
+    ): Boolean {
+        return false
     }
 
     override suspend fun deleteAccount(
         id: Int,
-    ) {
+    ): Boolean {
+        return false
     }
 
     override suspend fun deleteAccounts(
         vararg accounts: Account,
-    ) {
+    ): Boolean {
+        return false
     }
 }

@@ -26,24 +26,29 @@ class FakeCategoryDaoImpl : CategoryDao {
 
     override suspend fun insertCategories(
         vararg categories: CategoryEntity,
-    ) {
+    ): List<Long> {
+        return emptyList()
     }
 
     override suspend fun updateCategories(
         vararg categories: CategoryEntity,
-    ) {
+    ): Int {
+        return 0
     }
 
     override suspend fun deleteCategory(
         id: Int,
-    ) {
+    ): Int {
+        return 0
     }
 
     override suspend fun deleteCategories(
         vararg categories: CategoryEntity,
-    ) {
+    ): Int {
+        return 0
     }
 
-    override suspend fun deleteAllCategories() {
+    override suspend fun deleteAllCategories(): Int {
+        return 0
     }
 }

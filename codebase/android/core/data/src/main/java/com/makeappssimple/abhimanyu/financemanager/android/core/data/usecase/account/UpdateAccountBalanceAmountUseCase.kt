@@ -6,7 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 interface UpdateAccountsBalanceAmountUseCase {
     suspend operator fun invoke(
         accountsBalanceAmountChange: List<Pair<Int, Long>>,
-    )
+    ): Boolean
 }
 
 class UpdateAccountsBalanceAmountUseCaseImpl(
@@ -15,7 +15,7 @@ class UpdateAccountsBalanceAmountUseCaseImpl(
 ) : UpdateAccountsBalanceAmountUseCase {
     override suspend operator fun invoke(
         accountsBalanceAmountChange: List<Pair<Int, Long>>,
-    ) {
+    ): Boolean {
         myPreferencesRepository.setLastDataChangeTimestamp()
         return accountRepository.updateAccountBalanceAmount(
             accountsBalanceAmountChange = accountsBalanceAmountChange,

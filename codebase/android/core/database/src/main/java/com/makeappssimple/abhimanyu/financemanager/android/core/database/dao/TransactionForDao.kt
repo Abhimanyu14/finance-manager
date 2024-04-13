@@ -27,18 +27,18 @@ interface TransactionForDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertTransactionForValues(
         vararg transactionForValues: TransactionForEntity,
-    )
+    ): List<Long>
 
     @Update
     suspend fun updateTransactionForValues(
         vararg transactionForValues: TransactionForEntity,
-    )
+    ): Int
 
     @Query(value = "DELETE FROM transaction_for_table WHERE id = :id")
     suspend fun deleteTransactionFor(
         id: Int,
-    )
+    ): Int
 
     @Query(value = "DELETE FROM transaction_for_table")
-    suspend fun deleteAllTransactionForValues()
+    suspend fun deleteAllTransactionForValues(): Int
 }

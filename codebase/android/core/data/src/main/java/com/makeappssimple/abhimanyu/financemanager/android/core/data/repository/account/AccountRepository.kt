@@ -20,21 +20,21 @@ interface AccountRepository {
 
     suspend fun insertAccounts(
         vararg accounts: Account,
-    )
+    ): List<Long>
 
     suspend fun updateAccountBalanceAmount(
         accountsBalanceAmountChange: List<Pair<Int, Long>>,
-    )
+    ): Boolean
 
     suspend fun updateAccounts(
         vararg accounts: Account,
-    )
+    ): Boolean
 
     suspend fun deleteAccount(
         id: Int,
-    )
+    ): Boolean
 
     suspend fun deleteAccounts(
         vararg accounts: Account,
-    )
+    ): Boolean
 }

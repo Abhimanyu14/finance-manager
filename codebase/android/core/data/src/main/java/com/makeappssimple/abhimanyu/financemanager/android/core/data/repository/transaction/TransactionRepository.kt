@@ -69,26 +69,26 @@ interface TransactionRepository {
 
     suspend fun insertTransactions(
         vararg transactions: Transaction,
-    )
+    ): List<Long>
 
     suspend fun updateTransaction(
         transaction: Transaction,
-    )
+    ): Boolean
 
     suspend fun updateTransactions(
         vararg transactions: Transaction,
-    )
+    ): Boolean
 
     suspend fun deleteTransaction(
         id: Int,
-    )
+    ): Boolean
 
-    suspend fun deleteAllTransactions()
+    suspend fun deleteAllTransactions(): Boolean
 
     suspend fun restoreData(
         categories: List<Category>,
         accounts: List<Account>,
         transactions: List<Transaction>,
         transactionForValues: List<TransactionFor>,
-    )
+    ): Boolean
 }

@@ -6,6 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.Tra
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionForEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -26,10 +27,9 @@ class TransactionForRepositoryImpl(
         return withContext(
             context = dispatcherProvider.io,
         ) {
-            transactionForDao.getAllTransactionForValues()
-                .map(
-                    transform = TransactionForEntity::asExternalModel,
-                )
+            transactionForDao.getAllTransactionForValues().map(
+                transform = TransactionForEntity::asExternalModel,
+            )
         }
     }
 
@@ -47,7 +47,7 @@ class TransactionForRepositoryImpl(
 
     override suspend fun insertTransactionForValues(
         vararg transactionForValues: TransactionFor,
-    ) {
+    ): List<Long> {
         return withContext(
             context = dispatcherProvider.io,
         ) {
@@ -61,7 +61,7 @@ class TransactionForRepositoryImpl(
 
     override suspend fun updateTransactionForValues(
         vararg transactionForValues: TransactionFor,
-    ) {
+    ): Boolean {
         return withContext(
             context = dispatcherProvider.io,
         ) {
@@ -69,19 +69,28 @@ class TransactionForRepositoryImpl(
                 transactionForValues = transactionForValues.map(
                     transform = TransactionFor::asEntity,
                 ).toTypedArray(),
-            )
+            ) == transactionForValues.size
         }
     }
 
     override suspend fun deleteTransactionFor(
         id: Int,
-    ) {
+    ): Boolean {
         return withContext(
             context = dispatcherProvider.io,
         ) {
             transactionForDao.deleteTransactionFor(
                 id = id,
-            )
+            ) == 1
         }
+    }
+
+    private suspend fun <T> executeOnIoDispatcher(
+        block: suspend CoroutineScope.() -> T,
+    ): T {
+        return withContext(
+            context = dispatcherProvider.io,
+            block = block,
+        )
     }
 }

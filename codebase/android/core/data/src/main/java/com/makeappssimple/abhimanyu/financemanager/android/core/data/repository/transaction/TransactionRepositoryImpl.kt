@@ -12,6 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -22,9 +23,7 @@ class TransactionRepositoryImpl(
     private val transactionDao: TransactionDao,
 ) : TransactionRepository {
     override suspend fun getAllTransactions(): List<Transaction> {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+        return executeOnIoDispatcher {
             transactionDao.getAllTransactions().map(
                 transform = TransactionEntity::asExternalModel,
             )
@@ -40,9 +39,7 @@ class TransactionRepositoryImpl(
     }
 
     override suspend fun getAllTransactionData(): List<TransactionData> {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+        return executeOnIoDispatcher {
             transactionDao.getAllTransactionData().map(
                 transform = TransactionDataEntity::asExternalModel,
             )
@@ -52,9 +49,7 @@ class TransactionRepositoryImpl(
     override suspend fun getSearchedTransactionData(
         searchText: String,
     ): List<TransactionData> {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+        return executeOnIoDispatcher {
             transactionDao.getSearchedTransactionData(
                 searchText = searchText,
             ).map(
@@ -93,9 +88,7 @@ class TransactionRepositoryImpl(
         startingTimestamp: Long,
         endingTimestamp: Long,
     ): List<Transaction> {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+        return executeOnIoDispatcher {
             transactionDao.getTransactionsBetweenTimestamps(
                 startingTimestamp = startingTimestamp,
                 endingTimestamp = endingTimestamp,
@@ -106,9 +99,7 @@ class TransactionRepositoryImpl(
     }
 
     override suspend fun getTransactionsCount(): Int {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+        return executeOnIoDispatcher {
             transactionDao.getTransactionsCount()
         }
     }
@@ -118,9 +109,7 @@ class TransactionRepositoryImpl(
         numberOfSuggestions: Int,
         enteredTitle: String,
     ): List<String> {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+        return executeOnIoDispatcher {
             transactionDao.getTitleSuggestions(
                 categoryId = categoryId,
                 numberOfSuggestions = numberOfSuggestions,
@@ -132,9 +121,7 @@ class TransactionRepositoryImpl(
     override suspend fun checkIfCategoryIsUsedInTransactions(
         categoryId: Int,
     ): Boolean {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+        return executeOnIoDispatcher {
             transactionDao.checkIfCategoryIsUsedInTransactions(
                 categoryId = categoryId,
             )
@@ -144,9 +131,7 @@ class TransactionRepositoryImpl(
     override suspend fun checkIfAccountIsUsedInTransactions(
         accountId: Int,
     ): Boolean {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+        return executeOnIoDispatcher {
             transactionDao.checkIfAccountIsUsedInTransactions(
                 accountId = accountId,
             )
@@ -156,9 +141,7 @@ class TransactionRepositoryImpl(
     override suspend fun checkIfTransactionForIsUsedInTransactions(
         transactionForId: Int,
     ): Boolean {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+        return executeOnIoDispatcher {
             transactionDao.checkIfTransactionForIsUsedInTransactions(
                 transactionForId = transactionForId,
             )
@@ -168,9 +151,7 @@ class TransactionRepositoryImpl(
     override suspend fun getTransaction(
         id: Int,
     ): Transaction? {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+        return executeOnIoDispatcher {
             transactionDao.getTransaction(
                 id = id,
             )?.asExternalModel()
@@ -180,9 +161,7 @@ class TransactionRepositoryImpl(
     override suspend fun getTransactionData(
         id: Int,
     ): TransactionData? {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+        return executeOnIoDispatcher {
             transactionDao.getTransactionData(
                 id = id,
             )?.asExternalModel()
@@ -195,9 +174,7 @@ class TransactionRepositoryImpl(
         accountTo: Account?,
         transaction: Transaction,
     ): Long {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+        return executeOnIoDispatcher {
             commonDataSource.insertTransaction(
                 amountValue = amountValue,
                 accountFrom = accountFrom?.asEntity(),
@@ -209,10 +186,8 @@ class TransactionRepositoryImpl(
 
     override suspend fun insertTransactions(
         vararg transactions: Transaction,
-    ) {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+    ): List<Long> {
+        return executeOnIoDispatcher {
             transactionDao.insertTransactions(
                 transactions = transactions.map(
                     transform = Transaction::asEntity,
@@ -223,47 +198,39 @@ class TransactionRepositoryImpl(
 
     override suspend fun updateTransaction(
         transaction: Transaction,
-    ) {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+    ): Boolean {
+        return executeOnIoDispatcher {
             transactionDao.updateTransaction(
                 transaction = transaction.asEntity(),
-            )
+            ) == 1
         }
     }
 
     override suspend fun updateTransactions(
         vararg transactions: Transaction,
-    ) {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+    ): Boolean {
+        return executeOnIoDispatcher {
             transactionDao.updateTransactions(
                 transactions = transactions.map(
                     transform = Transaction::asEntity,
                 ).toTypedArray(),
-            )
+            ) == transactions.size
         }
     }
 
     override suspend fun deleteTransaction(
         id: Int,
-    ) {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+    ): Boolean {
+        return executeOnIoDispatcher {
             commonDataSource.deleteTransaction(
                 id = id,
             )
         }
     }
 
-    override suspend fun deleteAllTransactions() {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
-            transactionDao.deleteAllTransactions()
+    override suspend fun deleteAllTransactions(): Boolean {
+        return executeOnIoDispatcher {
+            transactionDao.deleteAllTransactions() > 0
         }
     }
 
@@ -272,10 +239,8 @@ class TransactionRepositoryImpl(
         accounts: List<Account>,
         transactions: List<Transaction>,
         transactionForValues: List<TransactionFor>,
-    ) {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+    ): Boolean {
+        return executeOnIoDispatcher {
             commonDataSource.restoreData(
                 categories = categories.map(
                     transform = Category::asEntity,
@@ -291,5 +256,14 @@ class TransactionRepositoryImpl(
                 ).toTypedArray(),
             )
         }
+    }
+
+    private suspend fun <T> executeOnIoDispatcher(
+        block: suspend CoroutineScope.() -> T,
+    ): T {
+        return withContext(
+            context = dispatcherProvider.io,
+            block = block,
+        )
     }
 }

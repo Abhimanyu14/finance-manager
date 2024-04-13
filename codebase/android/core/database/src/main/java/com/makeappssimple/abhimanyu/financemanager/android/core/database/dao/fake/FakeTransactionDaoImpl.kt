@@ -97,7 +97,8 @@ class FakeTransactionDaoImpl : TransactionDao {
         return emptyList()
     }
 
-    override suspend fun deleteAllTransactions() {
+    override suspend fun deleteAllTransactions(): Int {
+        return 0
     }
 
     override suspend fun insertTransaction(
@@ -108,7 +109,8 @@ class FakeTransactionDaoImpl : TransactionDao {
 
     override suspend fun updateTransaction(
         transaction: TransactionEntity,
-    ) {
+    ): Int {
+        return 0
     }
 
     override suspend fun updateTransactions(
@@ -119,6 +121,7 @@ class FakeTransactionDaoImpl : TransactionDao {
 
     override suspend fun deleteTransaction(
         id: Int,
-    ) {
+    ): Int {
+        return 0
     }
 }

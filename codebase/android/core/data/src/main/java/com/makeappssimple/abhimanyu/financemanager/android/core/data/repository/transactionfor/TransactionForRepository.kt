@@ -14,13 +14,13 @@ interface TransactionForRepository {
 
     suspend fun insertTransactionForValues(
         vararg transactionForValues: TransactionFor,
-    )
+    ): List<Long>
 
     suspend fun updateTransactionForValues(
         vararg transactionForValues: TransactionFor,
-    )
+    ): Boolean
 
     suspend fun deleteTransactionFor(
         id: Int,
-    )
+    ): Boolean
 }

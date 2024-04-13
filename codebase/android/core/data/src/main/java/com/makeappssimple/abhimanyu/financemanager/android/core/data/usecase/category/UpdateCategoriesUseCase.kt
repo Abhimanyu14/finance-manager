@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 interface UpdateCategoriesUseCase {
     suspend operator fun invoke(
         vararg categories: Category,
-    )
+    ): Boolean
 }
 
 class UpdateCategoriesUseCaseImpl(
@@ -16,7 +16,7 @@ class UpdateCategoriesUseCaseImpl(
 ) : UpdateCategoriesUseCase {
     override suspend operator fun invoke(
         vararg categories: Category,
-    ) {
+    ): Boolean {
         myPreferencesRepository.setLastDataChangeTimestamp()
         return categoryRepository.updateCategories(
             categories = categories,

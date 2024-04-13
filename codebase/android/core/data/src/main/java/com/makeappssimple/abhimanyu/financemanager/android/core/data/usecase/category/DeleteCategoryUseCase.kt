@@ -6,7 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 interface DeleteCategoryUseCase {
     suspend operator fun invoke(
         id: Int,
-    )
+    ): Boolean
 }
 
 class DeleteCategoryUseCaseImpl(
@@ -15,7 +15,7 @@ class DeleteCategoryUseCaseImpl(
 ) : DeleteCategoryUseCase {
     override suspend operator fun invoke(
         id: Int,
-    ) {
+    ): Boolean {
         myPreferencesRepository.setLastDataChangeTimestamp()
         return categoryRepository.deleteCategory(
             id = id,

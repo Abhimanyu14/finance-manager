@@ -6,6 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.Cat
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.CategoryEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.asExternalModel
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
@@ -23,9 +24,7 @@ class CategoryRepositoryImpl(
     }
 
     override suspend fun getAllCategories(): List<Category> {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+        return executeOnIoDispatcher {
             categoryDao.getAllCategories().map(
                 transform = CategoryEntity::asExternalModel,
             )
@@ -33,9 +32,7 @@ class CategoryRepositoryImpl(
     }
 
     override suspend fun getAllCategoriesCount(): Int {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+        return executeOnIoDispatcher {
             categoryDao.getAllCategoriesCount()
         }
     }
@@ -43,9 +40,7 @@ class CategoryRepositoryImpl(
     override suspend fun getCategory(
         id: Int,
     ): Category? {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+        return executeOnIoDispatcher {
             categoryDao.getCategory(
                 id = id,
             )?.asExternalModel()
@@ -54,10 +49,8 @@ class CategoryRepositoryImpl(
 
     override suspend fun insertCategories(
         vararg categories: Category,
-    ) {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+    ): List<Long> {
+        return executeOnIoDispatcher {
             categoryDao.insertCategories(
                 categories = categories.map(
                     transform = Category::asEntity,
@@ -68,41 +61,44 @@ class CategoryRepositoryImpl(
 
     override suspend fun updateCategories(
         vararg categories: Category,
-    ) {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+    ): Boolean {
+        return executeOnIoDispatcher {
             categoryDao.updateCategories(
                 categories = categories.map(
                     transform = Category::asEntity,
                 ).toTypedArray(),
-            )
+            ) == categories.size
         }
     }
 
     override suspend fun deleteCategory(
         id: Int,
-    ) {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+    ): Boolean {
+        return executeOnIoDispatcher {
             categoryDao.deleteCategory(
                 id = id,
-            )
+            ) == 1
         }
     }
 
     override suspend fun deleteCategories(
         vararg categories: Category,
-    ) {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+    ): Boolean {
+        return executeOnIoDispatcher {
             categoryDao.deleteCategories(
                 categories = categories.map(
                     transform = Category::asEntity,
                 ).toTypedArray(),
-            )
+            ) == categories.size
         }
+    }
+
+    private suspend fun <T> executeOnIoDispatcher(
+        block: suspend CoroutineScope.() -> T,
+    ): T {
+        return withContext(
+            context = dispatcherProvider.io,
+            block = block,
+        )
     }
 }

@@ -4,14 +4,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
 
 interface DeleteAllTransactionsUseCase {
-    suspend operator fun invoke()
+    suspend operator fun invoke(): Boolean
 }
 
 class DeleteAllTransactionsUseCaseImpl(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val transactionRepository: TransactionRepository,
 ) : DeleteAllTransactionsUseCase {
-    override suspend operator fun invoke() {
+    override suspend operator fun invoke(): Boolean {
         myPreferencesRepository.setLastDataChangeTimestamp()
         return transactionRepository.deleteAllTransactions()
     }

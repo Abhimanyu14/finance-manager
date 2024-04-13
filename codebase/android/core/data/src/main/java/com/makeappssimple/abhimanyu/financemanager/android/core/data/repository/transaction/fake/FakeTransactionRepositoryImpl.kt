@@ -107,26 +107,30 @@ class FakeTransactionRepositoryImpl : TransactionRepository {
 
     override suspend fun insertTransactions(
         vararg transactions: Transaction,
-    ) {
+    ): List<Long> {
+        return emptyList()
     }
 
     override suspend fun updateTransaction(
         transaction: Transaction,
-    ) {
+    ): Boolean {
+        return false
     }
 
     override suspend fun updateTransactions(
         vararg transactions: Transaction,
-    ) {
-
+    ): Boolean {
+        return false
     }
 
     override suspend fun deleteTransaction(
         id: Int,
-    ) {
+    ): Boolean {
+        return false
     }
 
-    override suspend fun deleteAllTransactions() {
+    override suspend fun deleteAllTransactions(): Boolean {
+        return false
     }
 
     override suspend fun restoreData(
@@ -134,6 +138,7 @@ class FakeTransactionRepositoryImpl : TransactionRepository {
         accounts: List<Account>,
         transactions: List<Transaction>,
         transactionForValues: List<TransactionFor>,
-    ) {
+    ): Boolean {
+        return false
     }
 }
