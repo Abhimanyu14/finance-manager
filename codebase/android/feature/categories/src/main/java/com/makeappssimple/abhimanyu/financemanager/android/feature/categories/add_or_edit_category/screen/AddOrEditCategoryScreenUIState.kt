@@ -15,7 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.or
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 
 @Stable
-class AddOrEditCategoryScreenUIState(
+public class AddOrEditCategoryScreenUIState(
     data: MyResult<AddOrEditCategoryScreenUIData>?,
     private val unwrappedData: AddOrEditCategoryScreenUIData? = when (data) {
         is MyResult.Success -> {
@@ -27,42 +27,42 @@ class AddOrEditCategoryScreenUIState(
         }
     },
     isEdit: Boolean,
-    val screenBottomSheetType: AddOrEditCategoryScreenBottomSheetType,
-    val setScreenBottomSheetType: (AddOrEditCategoryScreenBottomSheetType) -> Unit,
-    val isLoading: Boolean = unwrappedData.isNull(),
-    val isCtaButtonEnabled: Boolean = unwrappedData?.isCtaButtonEnabled.orFalse(),
-    val selectedTransactionTypeIndex: Int? = unwrappedData?.selectedTransactionTypeIndex,
-    val transactionTypesChipUIData: List<ChipUIData> =
+    public val screenBottomSheetType: AddOrEditCategoryScreenBottomSheetType,
+    public val setScreenBottomSheetType: (AddOrEditCategoryScreenBottomSheetType) -> Unit,
+    public val isLoading: Boolean = unwrappedData.isNull(),
+    public val isCtaButtonEnabled: Boolean = unwrappedData?.isCtaButtonEnabled.orFalse(),
+    public val selectedTransactionTypeIndex: Int? = unwrappedData?.selectedTransactionTypeIndex,
+    public val transactionTypesChipUIData: List<ChipUIData> =
         unwrappedData?.validTransactionTypes?.map { transactionType ->
             ChipUIData(
                 text = transactionType.title,
             )
         }.orEmpty(),
-    val emoji: String = unwrappedData?.emoji.orEmpty(),
-    val emojiSearchText: String = unwrappedData?.emojiSearchText.orEmpty(),
-    val title: TextFieldValue = unwrappedData?.title.orEmpty(),
+    public val emoji: String = unwrappedData?.emoji.orEmpty(),
+    public val emojiSearchText: String = unwrappedData?.emojiSearchText.orEmpty(),
+    public val title: TextFieldValue = unwrappedData?.title.orEmpty(),
     @StringRes
-    val titleTextFieldErrorTextStringResourceId: Int? =
+    public val titleTextFieldErrorTextStringResourceId: Int? =
         unwrappedData?.titleTextFieldError?.textStringResourceId,
     @StringRes
-    val appBarTitleTextStringResourceId: Int = if (isEdit) {
+    public val appBarTitleTextStringResourceId: Int = if (isEdit) {
         R.string.screen_edit_category_appbar_title
     } else {
         R.string.screen_add_category_appbar_title
     },
     @StringRes
-    val ctaButtonLabelTextStringResourceId: Int = if (isEdit) {
+    public val ctaButtonLabelTextStringResourceId: Int = if (isEdit) {
         R.string.screen_edit_category_floating_action_button_content_description
     } else {
         R.string.screen_add_category_floating_action_button_content_description
     },
-    val resetScreenBottomSheetType: () -> Unit = {
+    public val resetScreenBottomSheetType: () -> Unit = {
         setScreenBottomSheetType(AddOrEditCategoryScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
 @Composable
-fun rememberAddOrEditCategoryScreenUIState(
+public fun rememberAddOrEditCategoryScreenUIState(
     data: MyResult<AddOrEditCategoryScreenUIData>?,
     isEdit: Boolean,
 ): AddOrEditCategoryScreenUIState {

@@ -50,18 +50,18 @@ private val overviewTextHorizontalPadding = 12.dp
 private val overviewTextVerticalPadding = 8.dp
 
 @Immutable
-data class OverviewTabData(
+public data class OverviewTabData(
     val items: List<String>,
     val selectedItemIndex: Int,
 )
 
 @Immutable
-data class OverviewTabEvents(
+public data class OverviewTabEvents(
     val onClick: (index: Int) -> Unit = {},
 )
 
 @Composable
-fun OverviewTab(
+public fun OverviewTab(
     modifier: Modifier = Modifier,
     data: OverviewTabData,
     events: OverviewTabEvents = OverviewTabEvents(),
@@ -106,7 +106,7 @@ fun OverviewTab(
 }
 
 @Composable
-fun OverviewTabText(
+public fun OverviewTabText(
     text: String,
     textStyle: TextStyle,
     isSelected: Boolean,

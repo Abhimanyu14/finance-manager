@@ -22,13 +22,13 @@ import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.serialization.json.Json
 
-interface RestoreDataUseCase {
-    suspend operator fun invoke(
+public interface RestoreDataUseCase {
+    public suspend operator fun invoke(
         uri: Uri,
     ): Boolean
 }
 
-class RestoreDataUseCaseImpl(
+public class RestoreDataUseCaseImpl(
     private val myJsonReader: MyJsonReader,
     private val myLogger: MyLogger,
     private val myPreferencesRepository: MyPreferencesRepository,

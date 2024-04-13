@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 
-class MyPreferencesDataSource(
+public class MyPreferencesDataSource(
     private val dataStore: DataStore<Preferences>,
     private val myLogger: MyLogger,
 ) {
@@ -34,7 +34,7 @@ class MyPreferencesDataSource(
             )
         }
 
-    fun getDataTimestamp(): Flow<DataTimestamp?> {
+    public fun getDataTimestamp(): Flow<DataTimestamp?> {
         return preferences.map {
             DataTimestamp(
                 lastBackup = it[DataStoreConstants.DataTimestamp.LAST_DATA_BACKUP].orZero(),
@@ -43,7 +43,7 @@ class MyPreferencesDataSource(
         }
     }
 
-    fun getDefaultDataId(): Flow<DefaultDataId?> {
+    public fun getDefaultDataId(): Flow<DefaultDataId?> {
         return preferences.map {
             DefaultDataId(
                 expenseCategory = it[DataStoreConstants.DefaultId.EXPENSE_CATEGORY].orZero(),
@@ -54,7 +54,7 @@ class MyPreferencesDataSource(
         }
     }
 
-    fun getInitialDataVersionNumber(): Flow<InitialDataVersionNumber?> {
+    public fun getInitialDataVersionNumber(): Flow<InitialDataVersionNumber?> {
         return preferences.map {
             InitialDataVersionNumber(
                 account = it[DataStoreConstants.InitialDataVersionNumber.ACCOUNT].orZero(),
@@ -65,7 +65,7 @@ class MyPreferencesDataSource(
         }
     }
 
-    fun getReminder(): Flow<Reminder?> {
+    public fun getReminder(): Flow<Reminder?> {
         return preferences.map {
             Reminder(
                 isEnabled = it[DataStoreConstants.Reminder.IS_REMINDER_ENABLED].orFalse(),
@@ -75,7 +75,7 @@ class MyPreferencesDataSource(
         }
     }
 
-    suspend fun setAccountDataVersionNumber(
+    public suspend fun setAccountDataVersionNumber(
         accountDataVersionNumber: Int,
     ): Boolean {
         return tryDataStoreEdit {
@@ -85,7 +85,7 @@ class MyPreferencesDataSource(
         }
     }
 
-    suspend fun setCategoryDataVersionNumber(
+    public suspend fun setCategoryDataVersionNumber(
         categoryDataVersionNumber: Int,
     ): Boolean {
         return tryDataStoreEdit {
@@ -95,7 +95,7 @@ class MyPreferencesDataSource(
         }
     }
 
-    suspend fun setDefaultExpenseCategoryId(
+    public suspend fun setDefaultExpenseCategoryId(
         defaultExpenseCategoryId: Int,
     ): Boolean {
         return tryDataStoreEdit {
@@ -105,7 +105,7 @@ class MyPreferencesDataSource(
         }
     }
 
-    suspend fun setDefaultIncomeCategoryId(
+    public suspend fun setDefaultIncomeCategoryId(
         defaultIncomeCategoryId: Int,
     ): Boolean {
         return tryDataStoreEdit {
@@ -115,7 +115,7 @@ class MyPreferencesDataSource(
         }
     }
 
-    suspend fun setDefaultInvestmentCategoryId(
+    public suspend fun setDefaultInvestmentCategoryId(
         defaultInvestmentCategoryId: Int,
     ): Boolean {
         return tryDataStoreEdit {
@@ -125,7 +125,7 @@ class MyPreferencesDataSource(
         }
     }
 
-    suspend fun setDefaultAccountId(
+    public suspend fun setDefaultAccountId(
         defaultAccountId: Int,
     ): Boolean {
         return tryDataStoreEdit {
@@ -135,7 +135,7 @@ class MyPreferencesDataSource(
         }
     }
 
-    suspend fun setIsReminderEnabled(
+    public suspend fun setIsReminderEnabled(
         isReminderEnabled: Boolean,
     ): Boolean {
         return tryDataStoreEdit {
@@ -145,7 +145,7 @@ class MyPreferencesDataSource(
         }
     }
 
-    suspend fun setLastDataBackupTimestamp(
+    public suspend fun setLastDataBackupTimestamp(
         lastDataBackupTimestamp: Long,
     ): Boolean {
         return tryDataStoreEdit {
@@ -155,7 +155,7 @@ class MyPreferencesDataSource(
         }
     }
 
-    suspend fun setLastDataChangeTimestamp(
+    public suspend fun setLastDataChangeTimestamp(
         lastDataChangeTimestamp: Long,
     ): Boolean {
         return tryDataStoreEdit {
@@ -165,7 +165,7 @@ class MyPreferencesDataSource(
         }
     }
 
-    suspend fun setReminderTime(
+    public suspend fun setReminderTime(
         hour: Int,
         min: Int,
     ): Boolean {
@@ -177,7 +177,7 @@ class MyPreferencesDataSource(
         }
     }
 
-    suspend fun setTransactionDataVersionNumber(
+    public suspend fun setTransactionDataVersionNumber(
         transactionDataVersionNumber: Int,
     ): Boolean {
         return tryDataStoreEdit {
@@ -188,7 +188,7 @@ class MyPreferencesDataSource(
         }
     }
 
-    suspend fun setTransactionForDataVersionNumber(
+    public suspend fun setTransactionForDataVersionNumber(
         transactionForDataVersionNumber: Int,
     ): Boolean {
         return tryDataStoreEdit {

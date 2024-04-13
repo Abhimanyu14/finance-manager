@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Account(
+public data class Account(
     @EncodeDefault
     @SerialName(value = "balance_amount")
     val balanceAmount: Amount = Amount(
@@ -25,7 +25,7 @@ data class Account(
     val name: String,
 )
 
-fun Account.updateBalanceAmount(
+public fun Account.updateBalanceAmount(
     updatedBalanceAmount: Long,
 ): Account {
     return this.copy(

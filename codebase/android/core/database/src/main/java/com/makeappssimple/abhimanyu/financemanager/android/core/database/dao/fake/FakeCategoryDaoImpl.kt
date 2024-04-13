@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.C
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
-class FakeCategoryDaoImpl : CategoryDao {
+public class FakeCategoryDaoImpl : CategoryDao {
     override fun getAllCategoriesFlow(): Flow<List<CategoryEntity>> {
         return emptyFlow()
     }

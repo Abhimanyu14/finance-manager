@@ -5,7 +5,7 @@ import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 
 @Composable
-fun CategoryMenuBottomSheet(
+public fun CategoryMenuBottomSheet(
     isDeleteVisible: Boolean,
     isEditVisible: Boolean,
     isSetAsDefaultVisible: Boolean,

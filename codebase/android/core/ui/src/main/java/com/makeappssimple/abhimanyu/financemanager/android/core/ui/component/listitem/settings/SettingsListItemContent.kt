@@ -19,7 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ext
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 
 @Immutable
-data class SettingsListItemContentData(
+public data class SettingsListItemContentData(
     override val type: SettingsListItemType = SettingsListItemType.CONTENT,
     val isChecked: Boolean? = null,
     val isEnabled: Boolean = false,
@@ -28,13 +28,13 @@ data class SettingsListItemContentData(
 ) : SettingsListItemData
 
 @Immutable
-data class SettingsListItemContentEvents(
+public data class SettingsListItemContentEvents(
     val onClick: () -> Unit = {},
     val onCheckedChange: ((Boolean) -> Unit)? = null,
 )
 
 @Composable
-fun SettingsListItemContent(
+public fun SettingsListItemContent(
     modifier: Modifier = Modifier,
     data: SettingsListItemContentData,
     events: SettingsListItemContentEvents,

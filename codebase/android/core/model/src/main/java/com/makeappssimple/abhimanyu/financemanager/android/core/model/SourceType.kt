@@ -7,8 +7,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.model
         expression = "AccountType",
     ),
 )
-enum class SourceType(
-    val title: String,
+public enum class SourceType(
+    public val title: String,
 ) {
     BANK(
         title = "Bank",

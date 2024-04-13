@@ -1,3 +1,3 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.base
 
-interface ScreenBottomSheetType
+public interface ScreenBottomSheetType

@@ -4,12 +4,12 @@ import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 
 @Immutable
-sealed class CategoriesScreenBottomSheetType : ScreenBottomSheetType {
-    data object DeleteConfirmation : CategoriesScreenBottomSheetType()
-    data object None : CategoriesScreenBottomSheetType()
-    data object SetAsDefaultConfirmation : CategoriesScreenBottomSheetType()
+public sealed class CategoriesScreenBottomSheetType : ScreenBottomSheetType {
+    public data object DeleteConfirmation : CategoriesScreenBottomSheetType()
+    public data object None : CategoriesScreenBottomSheetType()
+    public data object SetAsDefaultConfirmation : CategoriesScreenBottomSheetType()
 
-    data class Menu(
+    public data class Menu(
         val isDeleteVisible: Boolean,
         val isEditVisible: Boolean,
         val isSetAsDefaultVisible: Boolean,

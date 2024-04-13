@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 
 @Stable
-class AddOrEditTransactionForScreenUIState(
+public class AddOrEditTransactionForScreenUIState(
     data: MyResult<AddOrEditTransactionForScreenUIData>?,
     private val unwrappedData: AddOrEditTransactionForScreenUIData? = when (data) {
         is MyResult.Success -> {
@@ -25,32 +25,32 @@ class AddOrEditTransactionForScreenUIState(
     },
     isEdit: Boolean,
     setScreenBottomSheetType: (AddOrEditTransactionForScreenBottomSheetType) -> Unit,
-    val screenBottomSheetType: AddOrEditTransactionForScreenBottomSheetType,
-    val isLoading: Boolean = unwrappedData.isNull(),
-    val isCtaButtonEnabled: Boolean? = unwrappedData?.isValidTransactionForData,
+    public val screenBottomSheetType: AddOrEditTransactionForScreenBottomSheetType,
+    public val isLoading: Boolean = unwrappedData.isNull(),
+    public val isCtaButtonEnabled: Boolean? = unwrappedData?.isValidTransactionForData,
     @StringRes
-    val appBarTitleTextStringResourceId: Int = if (isEdit) {
+    public val appBarTitleTextStringResourceId: Int = if (isEdit) {
         R.string.screen_edit_transaction_for_appbar_title
     } else {
         R.string.screen_add_transaction_for_appbar_title
     },
     @StringRes
-    val ctaButtonLabelTextStringResourceId: Int = if (isEdit) {
+    public val ctaButtonLabelTextStringResourceId: Int = if (isEdit) {
         R.string.screen_edit_transaction_for_floating_action_button_content_description
     } else {
         R.string.screen_add_transaction_for_floating_action_button_content_description
     },
-    val title: TextFieldValue? = unwrappedData?.title,
+    public val title: TextFieldValue? = unwrappedData?.title,
     @StringRes
-    val titleTextFieldErrorTextStringResourceId: Int? =
+    public val titleTextFieldErrorTextStringResourceId: Int? =
         unwrappedData?.titleTextFieldError?.textStringResourceId,
-    val resetScreenBottomSheetType: () -> Unit = {
+    public val resetScreenBottomSheetType: () -> Unit = {
         setScreenBottomSheetType(AddOrEditTransactionForScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
 @Composable
-fun rememberAddOrEditTransactionForScreenUIState(
+public fun rememberAddOrEditTransactionForScreenUIState(
     data: MyResult<AddOrEditTransactionForScreenUIData>?,
     isEdit: Boolean,
 ): AddOrEditTransactionForScreenUIState {

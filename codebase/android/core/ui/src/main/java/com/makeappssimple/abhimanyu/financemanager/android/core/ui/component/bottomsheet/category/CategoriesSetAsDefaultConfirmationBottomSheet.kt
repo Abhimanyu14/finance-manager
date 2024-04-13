@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyConfirmationBottomSheetUI
 
 @Composable
-fun CategoriesSetAsDefaultConfirmationBottomSheet(
+public fun CategoriesSetAsDefaultConfirmationBottomSheet(
     transactionType: TransactionType,
     resetBottomSheetType: () -> Unit,
     resetClickedItemId: () -> Unit,

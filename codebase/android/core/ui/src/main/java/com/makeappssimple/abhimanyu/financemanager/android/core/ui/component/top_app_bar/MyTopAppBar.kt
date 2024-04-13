@@ -14,7 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typ
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.navigation_back_button.MyNavigationBackButton
 
 @Composable
-fun MyTopAppBar(
+public fun MyTopAppBar(
     modifier: Modifier = Modifier,
     @StringRes titleTextStringResourceId: Int,
     navigationAction: (() -> Unit)? = null,
@@ -38,7 +38,7 @@ fun MyTopAppBar(
 }
 
 @Composable
-fun MyTopAppBarUI(
+public fun MyTopAppBarUI(
     modifier: Modifier = Modifier,
     isNavigationIconVisible: Boolean,
     titleText: String,

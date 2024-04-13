@@ -4,7 +4,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
-enum class MyColor {
+public enum class MyColor {
     PRIMARY,
     ON_PRIMARY,
     PRIMARY_CONTAINER,
@@ -43,7 +43,7 @@ enum class MyColor {
 }
 
 @Composable
-fun MyColor.getComposeColor(): Color {
+public fun MyColor.getComposeColor(): Color {
     return when (this) {
         MyColor.PRIMARY -> {
             MaterialTheme.colorScheme.primary

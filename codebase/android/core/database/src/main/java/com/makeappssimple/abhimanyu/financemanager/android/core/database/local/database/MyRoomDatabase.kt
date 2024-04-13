@@ -66,13 +66,13 @@ import java.util.concurrent.Executors
     IntListConverter::class,
     CategoryConverter::class,
 )
-abstract class MyRoomDatabase : RoomDatabase() {
-    abstract fun categoryDao(): CategoryDao
-    abstract fun accountDao(): AccountDao
-    abstract fun transactionDao(): TransactionDao
-    abstract fun transactionForDao(): TransactionForDao
+public abstract class MyRoomDatabase : RoomDatabase() {
+    public abstract fun categoryDao(): CategoryDao
+    public abstract fun accountDao(): AccountDao
+    public abstract fun transactionDao(): TransactionDao
+    public abstract fun transactionForDao(): TransactionForDao
 
-    companion object {
+    public companion object {
         @Volatile
         private var INSTANCE: MyRoomDatabase? = null
 
@@ -80,7 +80,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
          * Reference
          * https://github.com/android/app-actions-samples/blob/fea0f48a6d7f1c43d47c3ad14bfd11ace4b5629c/fitness-biis/starter/app/src/main/java/com/devrel/android/fitactions/model/FitDatabase.kt#L34
          */
-        fun getDatabase(
+        public fun getDatabase(
             context: Context,
             initialDatabasePopulator: InitialDatabasePopulator? = null,
         ): MyRoomDatabase {

@@ -9,6 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.dao.Acc
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Ignore
@@ -19,9 +20,9 @@ import org.mockito.kotlin.verify
 import javax.inject.Inject
 
 @HiltAndroidTest
-class AccountRepositoryTest {
+public class AccountRepositoryTest {
     @get:Rule(order = 0)
-    var hiltRule = HiltAndroidRule(this)
+    public var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
 
     private val accountDao: AccountDao = mock()
     private val id: Int = 1
@@ -29,10 +30,10 @@ class AccountRepositoryTest {
     private lateinit var accountRepository: AccountRepository
 
     @Inject
-    lateinit var dispatcherProvider: DispatcherProvider
+    public lateinit var dispatcherProvider: DispatcherProvider
 
     @Before
-    fun setUp() {
+    public fun setUp() {
         accountRepository = AccountRepositoryImpl(
             accountDao = accountDao,
             dispatcherProvider = dispatcherProvider,
@@ -40,7 +41,7 @@ class AccountRepositoryTest {
     }
 
     @Test
-    fun getAllAccountsFlow() {
+    public fun getAllAccountsFlow() {
         accountRepository.getAllAccountsFlow()
 
         verify(
@@ -50,7 +51,7 @@ class AccountRepositoryTest {
 
     @Ignore("Fix this test")
     @Test
-    fun getAllAccounts() = runTest {
+    public fun getAllAccounts(): TestResult = runTest {
         accountRepository.getAllAccounts()
 
         verify(
@@ -59,7 +60,7 @@ class AccountRepositoryTest {
     }
 
     @Test
-    fun getAllAccountsCount() = runTest {
+    public fun getAllAccountsCount(): TestResult = runTest {
         accountRepository.getAllAccountsCount()
 
         verify(
@@ -68,7 +69,7 @@ class AccountRepositoryTest {
     }
 
     @Test
-    fun getAccount() = runTest {
+    public fun getAccount(): TestResult = runTest {
         accountRepository.getAccount(
             id = id,
         )
@@ -82,7 +83,7 @@ class AccountRepositoryTest {
 
     @Ignore("Fix this test")
     @Test
-    fun getAccounts() = runTest {
+    public fun getAccounts(): TestResult = runTest {
         accountRepository.getAccounts(
             ids = listOf(id),
         )
@@ -95,7 +96,7 @@ class AccountRepositoryTest {
     }
 
     @Test
-    fun insertAccounts() = runTest {
+    public fun insertAccounts(): TestResult = runTest {
         accountRepository.insertAccounts(
             accounts = accounts,
         )
@@ -110,7 +111,7 @@ class AccountRepositoryTest {
     }
 
     @Test
-    fun updateAccounts() = runTest {
+    public fun updateAccounts(): TestResult = runTest {
         accountRepository.updateAccounts(
             accounts = accounts,
         )
@@ -125,7 +126,7 @@ class AccountRepositoryTest {
     }
 
     @Test
-    fun deleteAccount() = runTest {
+    public fun deleteAccount(): TestResult = runTest {
         accountRepository.deleteAccount(
             id = id,
         )
@@ -138,7 +139,7 @@ class AccountRepositoryTest {
     }
 
     @Test
-    fun deleteAccounts() = runTest {
+    public fun deleteAccounts(): TestResult = runTest {
         accountRepository.deleteAccounts(
             accounts = accounts,
         )

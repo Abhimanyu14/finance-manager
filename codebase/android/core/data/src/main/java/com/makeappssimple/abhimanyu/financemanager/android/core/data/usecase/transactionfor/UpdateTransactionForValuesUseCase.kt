@@ -4,13 +4,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transactionfor.TransactionForRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 
-interface UpdateTransactionForValuesUseCase {
-    suspend operator fun invoke(
+public interface UpdateTransactionForValuesUseCase {
+    public suspend operator fun invoke(
         vararg transactionForValues: TransactionFor,
     ): Boolean
 }
 
-class UpdateTransactionForValuesUseCaseImpl(
+public class UpdateTransactionForValuesUseCaseImpl(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val transactionForRepository: TransactionForRepository,
 ) : UpdateTransactionForValuesUseCase {

@@ -10,7 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 
 @Stable
-class SettingsScreenUIState(
+public class SettingsScreenUIState(
     data: MyResult<SettingsScreenUIData>? = null,
     private val unwrappedData: SettingsScreenUIData? = when (data) {
         is MyResult.Success -> {
@@ -21,19 +21,19 @@ class SettingsScreenUIState(
             null
         }
     },
-    val screenBottomSheetType: SettingsScreenBottomSheetType = SettingsScreenBottomSheetType.NONE,
-    val snackbarHostState: SnackbarHostState = SnackbarHostState(),
-    val setScreenBottomSheetType: (SettingsScreenBottomSheetType) -> Unit = {},
-    val isLoading: Boolean = unwrappedData.isNull() || unwrappedData.isLoading,
-    val isReminderEnabled: Boolean? = unwrappedData?.isReminderEnabled,
-    val appVersion: String? = unwrappedData?.appVersion,
-    val resetScreenBottomSheetType: () -> Unit = {
+    public val screenBottomSheetType: SettingsScreenBottomSheetType = SettingsScreenBottomSheetType.NONE,
+    public val snackbarHostState: SnackbarHostState = SnackbarHostState(),
+    public val setScreenBottomSheetType: (SettingsScreenBottomSheetType) -> Unit = {},
+    public val isLoading: Boolean = unwrappedData.isNull() || unwrappedData.isLoading,
+    public val isReminderEnabled: Boolean? = unwrappedData?.isReminderEnabled,
+    public val appVersion: String? = unwrappedData?.appVersion,
+    public val resetScreenBottomSheetType: () -> Unit = {
         setScreenBottomSheetType(SettingsScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
 @Composable
-fun rememberSettingsScreenUIState(
+public fun rememberSettingsScreenUIState(
     data: MyResult<SettingsScreenUIData>?,
 ): SettingsScreenUIState {
     val (screenBottomSheetType: SettingsScreenBottomSheetType, setScreenBottomSheetType: (SettingsScreenBottomSheetType) -> Unit) = remember {

@@ -17,19 +17,19 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ext
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
 
 @Immutable
-data class MyReadOnlyTextFieldData(
+public data class MyReadOnlyTextFieldData(
     val isLoading: Boolean = false,
     val value: String,
     @StringRes val labelTextStringResourceId: Int,
 )
 
 @Immutable
-data class MyReadOnlyTextFieldEvents(
+public data class MyReadOnlyTextFieldEvents(
     val onClick: () -> Unit = {},
 )
 
 @Composable
-fun MyReadOnlyTextField(
+public fun MyReadOnlyTextField(
     modifier: Modifier = Modifier,
     data: MyReadOnlyTextFieldData,
     events: MyReadOnlyTextFieldEvents = MyReadOnlyTextFieldEvents(),

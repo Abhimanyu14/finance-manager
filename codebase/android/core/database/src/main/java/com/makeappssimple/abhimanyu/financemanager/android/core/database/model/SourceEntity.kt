@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.model
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.SourceType
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -17,7 +17,7 @@ import kotlinx.serialization.Serializable
 )
 @Entity(tableName = "source_table")
 @Serializable
-data class SourceEntity(
+public data class SourceEntity(
     @EncodeDefault
     @ColumnInfo(name = "balance_amount")
     @SerialName(value = "balance_amount")
@@ -30,7 +30,7 @@ data class SourceEntity(
     val id: Int = 0,
 
     @EncodeDefault
-    val type: SourceType = SourceType.CASH,
+    val type: AccountType = AccountType.CASH,
 
     val name: String,
 )

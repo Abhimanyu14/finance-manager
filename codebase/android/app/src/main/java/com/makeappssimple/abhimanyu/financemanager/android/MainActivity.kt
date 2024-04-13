@@ -11,10 +11,10 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+public class MainActivity : ComponentActivity() {
 
     @Inject
-    lateinit var myLogger: MyLogger
+    public lateinit var myLogger: MyLogger
 
     override fun onCreate(
         savedInstanceState: Bundle?,

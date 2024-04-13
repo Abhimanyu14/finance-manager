@@ -39,19 +39,19 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import java.time.LocalTime
 
 @Immutable
-data class MyTimePickerData(
+public data class MyTimePickerData(
     val isVisible: Boolean = false,
     val selectedLocalDate: LocalTime? = null,
 )
 
 @Immutable
-data class MyTimePickerEvents(
+public data class MyTimePickerEvents(
     val onNegativeButtonClick: () -> Unit = {},
     val onPositiveButtonClick: (LocalTime) -> Unit = {},
 )
 
 @Composable
-fun MyTimePicker(
+public fun MyTimePicker(
     modifier: Modifier = Modifier,
     data: MyTimePickerData,
     events: MyTimePickerEvents = MyTimePickerEvents(),

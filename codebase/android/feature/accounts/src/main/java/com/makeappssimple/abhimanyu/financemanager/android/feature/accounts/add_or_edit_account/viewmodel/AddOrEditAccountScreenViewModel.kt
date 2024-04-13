@@ -7,20 +7,20 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIEvent
 import kotlinx.coroutines.flow.StateFlow
 
-interface AddOrEditAccountScreenViewModel : ScreenViewModel {
-    val screenUIData: StateFlow<MyResult<AddOrEditAccountScreenUIData>?>
+public interface AddOrEditAccountScreenViewModel : ScreenViewModel {
+    public val screenUIData: StateFlow<MyResult<AddOrEditAccountScreenUIData>?>
 
-    fun initViewModel()
+    public fun initViewModel()
 
-    fun handleUIEvents(
+    public fun handleUIEvents(
         uiEvent: AddOrEditAccountScreenUIEvent,
     )
 
-    fun insertAccount()
+    public fun insertAccount()
 
-    fun updateBalanceAmountValue(
+    public fun updateBalanceAmountValue(
         updatedBalanceAmountValue: TextFieldValue,
     )
 
-    fun updateAccount()
+    public fun updateAccount()
 }

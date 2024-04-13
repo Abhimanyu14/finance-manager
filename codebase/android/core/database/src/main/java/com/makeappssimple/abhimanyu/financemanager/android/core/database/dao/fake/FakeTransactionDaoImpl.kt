@@ -6,7 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.T
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
-class FakeTransactionDaoImpl : TransactionDao {
+public class FakeTransactionDaoImpl : TransactionDao {
     override fun getAllTransactionsFlow(): Flow<List<TransactionEntity>> {
         return emptyFlow()
     }

@@ -43,8 +43,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 
-enum class AddOrEditAccountScreenUIError(
-    @StringRes val textStringResourceId: Int,
+public enum class AddOrEditAccountScreenUIError(
+    @StringRes public val textStringResourceId: Int,
 ) {
     ACCOUNT_EXISTS(
         textStringResourceId = R.string.screen_add_or_edit_account_error_account_exists,
@@ -52,7 +52,7 @@ enum class AddOrEditAccountScreenUIError(
 }
 
 @Immutable
-data class AddOrEditAccountScreenUIVisibilityData(
+public data class AddOrEditAccountScreenUIVisibilityData(
     val balanceAmountTextField: Boolean = false,
     val minimumBalanceAmountTextField: Boolean = false,
     val nameTextField: Boolean = false,
@@ -61,7 +61,7 @@ data class AddOrEditAccountScreenUIVisibilityData(
 )
 
 @Immutable
-data class AddOrEditAccountScreenUIErrorData(
+public data class AddOrEditAccountScreenUIErrorData(
     val balanceAmountTextField: AddOrEditAccountScreenUIError? = null,
     val nameTextField: AddOrEditAccountScreenUIError? = null,
 )

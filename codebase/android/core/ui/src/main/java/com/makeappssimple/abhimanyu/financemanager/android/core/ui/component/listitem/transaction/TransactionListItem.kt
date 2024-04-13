@@ -33,7 +33,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emo
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircleData
 
 @Immutable
-data class TransactionListItemData(
+public data class TransactionListItemData(
     val isDeleteButtonEnabled: Boolean = false,
     val isDeleteButtonVisible: Boolean = false,
     val isEditButtonVisible: Boolean = false,
@@ -53,7 +53,7 @@ data class TransactionListItemData(
 )
 
 @Immutable
-data class TransactionListItemEvents(
+public data class TransactionListItemEvents(
     val onClick: (() -> Unit)? = null,
     val onDeleteButtonClick: () -> Unit = {},
     val onEditButtonClick: () -> Unit = {},
@@ -62,7 +62,7 @@ data class TransactionListItemEvents(
 )
 
 @Composable
-fun TransactionListItem(
+public fun TransactionListItem(
     modifier: Modifier = Modifier,
     data: TransactionListItemData,
     events: TransactionListItemEvents = TransactionListItemEvents(),

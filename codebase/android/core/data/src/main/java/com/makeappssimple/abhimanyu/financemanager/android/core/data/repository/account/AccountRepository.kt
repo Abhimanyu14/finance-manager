@@ -3,38 +3,38 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.repository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import kotlinx.coroutines.flow.Flow
 
-interface AccountRepository {
-    fun getAllAccountsFlow(): Flow<List<Account>>
+public interface AccountRepository {
+    public fun getAllAccountsFlow(): Flow<List<Account>>
 
-    suspend fun getAllAccounts(): List<Account>
+    public suspend fun getAllAccounts(): List<Account>
 
-    suspend fun getAllAccountsCount(): Int
+    public suspend fun getAllAccountsCount(): Int
 
-    suspend fun getAccount(
+    public suspend fun getAccount(
         id: Int,
     ): Account?
 
-    suspend fun getAccounts(
+    public suspend fun getAccounts(
         ids: List<Int>,
     ): List<Account>?
 
-    suspend fun insertAccounts(
+    public suspend fun insertAccounts(
         vararg accounts: Account,
     ): List<Long>
 
-    suspend fun updateAccountBalanceAmount(
+    public suspend fun updateAccountBalanceAmount(
         accountsBalanceAmountChange: List<Pair<Int, Long>>,
     ): Boolean
 
-    suspend fun updateAccounts(
+    public suspend fun updateAccounts(
         vararg accounts: Account,
     ): Boolean
 
-    suspend fun deleteAccount(
+    public suspend fun deleteAccount(
         id: Int,
     ): Boolean
 
-    suspend fun deleteAccounts(
+    public suspend fun deleteAccounts(
         vararg accounts: Account,
     ): Boolean
 }

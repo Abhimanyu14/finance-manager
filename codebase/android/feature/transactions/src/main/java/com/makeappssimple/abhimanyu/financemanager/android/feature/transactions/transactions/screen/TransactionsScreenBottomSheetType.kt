@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 
-enum class TransactionsScreenBottomSheetType : ScreenBottomSheetType {
+public enum class TransactionsScreenBottomSheetType : ScreenBottomSheetType {
     FILTERS,
     NONE,
     SELECT_TRANSACTION_FOR,

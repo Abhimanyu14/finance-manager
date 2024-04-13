@@ -7,52 +7,52 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import kotlinx.coroutines.flow.Flow
 import java.time.Instant
 
-interface MyPreferencesRepository {
-    fun getDataTimestamp(): Flow<DataTimestamp?>
+public interface MyPreferencesRepository {
+    public fun getDataTimestamp(): Flow<DataTimestamp?>
 
-    fun getDefaultDataId(): Flow<DefaultDataId?>
+    public fun getDefaultDataId(): Flow<DefaultDataId?>
 
-    fun getInitialDataVersionNumber(): Flow<InitialDataVersionNumber?>
+    public fun getInitialDataVersionNumber(): Flow<InitialDataVersionNumber?>
 
-    fun getReminder(): Flow<Reminder?>
+    public fun getReminder(): Flow<Reminder?>
 
-    suspend fun setCategoryDataVersionNumber(
+    public suspend fun setCategoryDataVersionNumber(
         categoryDataVersionNumber: Int,
     ): Boolean
 
-    suspend fun setDefaultExpenseCategoryId(
+    public suspend fun setDefaultExpenseCategoryId(
         defaultExpenseCategoryId: Int,
     ): Boolean
 
-    suspend fun setDefaultIncomeCategoryId(
+    public suspend fun setDefaultIncomeCategoryId(
         defaultIncomeCategoryId: Int,
     ): Boolean
 
-    suspend fun setDefaultInvestmentCategoryId(
+    public suspend fun setDefaultInvestmentCategoryId(
         defaultInvestmentCategoryId: Int,
     ): Boolean
 
-    suspend fun setDefaultAccountId(
+    public suspend fun setDefaultAccountId(
         defaultAccountId: Int,
     ): Boolean
 
-    suspend fun setIsReminderEnabled(
+    public suspend fun setIsReminderEnabled(
         isReminderEnabled: Boolean,
     ): Boolean
 
-    suspend fun setLastDataBackupTimestamp(
+    public suspend fun setLastDataBackupTimestamp(
         lastDataBackupTimestamp: Long = getCurrentTimeMillis(),
     ): Boolean
 
-    suspend fun setLastDataChangeTimestamp(
+    public suspend fun setLastDataChangeTimestamp(
         lastDataChangeTimestamp: Long = getCurrentTimeMillis(),
     ): Boolean
 
-    suspend fun setTransactionsDataVersionNumber(
+    public suspend fun setTransactionsDataVersionNumber(
         transactionsDataVersionNumber: Int,
     ): Boolean
 
-    suspend fun setReminderTime(
+    public suspend fun setReminderTime(
         hour: Int,
         min: Int,
     ): Boolean

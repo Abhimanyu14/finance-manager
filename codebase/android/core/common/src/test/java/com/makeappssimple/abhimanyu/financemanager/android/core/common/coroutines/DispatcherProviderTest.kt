@@ -12,7 +12,7 @@ import org.junit.Before
 import org.junit.Test
 import javax.inject.Inject
 
-class DispatcherProviderTest {
+public class DispatcherProviderTest {
     @Inject
     @DefaultDispatcher
     private lateinit var defaultDispatcher: CoroutineDispatcher
@@ -36,7 +36,7 @@ class DispatcherProviderTest {
     private lateinit var dispatcherProvider: DispatcherProvider
 
     @Before
-    fun setUp() {
+    public fun setUp() {
         dispatcherProvider = DispatcherProviderImpl(
             defaultDispatcher = defaultDispatcher,
             ioDispatcher = ioDispatcher,
@@ -47,7 +47,7 @@ class DispatcherProviderTest {
     }
 
     @Test
-    fun getDefault() {
+    public fun getDefault() {
         Assert.assertEquals(
             Dispatchers.Default,
             dispatcherProvider.default,
@@ -55,7 +55,7 @@ class DispatcherProviderTest {
     }
 
     @Test
-    fun getIo() {
+    public fun getIo() {
         Assert.assertEquals(
             Dispatchers.IO,
             dispatcherProvider.io,
@@ -63,7 +63,7 @@ class DispatcherProviderTest {
     }
 
     @Test
-    fun getMain() {
+    public fun getMain() {
         Assert.assertEquals(
             Dispatchers.Main,
             dispatcherProvider.main,
@@ -71,7 +71,7 @@ class DispatcherProviderTest {
     }
 
     @Test
-    fun getMainImmediate() {
+    public fun getMainImmediate() {
         Assert.assertEquals(
             Dispatchers.Main.immediate,
             dispatcherProvider.mainImmediate,
@@ -79,7 +79,7 @@ class DispatcherProviderTest {
     }
 
     @Test
-    fun getUnconfined() {
+    public fun getUnconfined() {
         Assert.assertEquals(
             Dispatchers.Unconfined,
             dispatcherProvider.unconfined,

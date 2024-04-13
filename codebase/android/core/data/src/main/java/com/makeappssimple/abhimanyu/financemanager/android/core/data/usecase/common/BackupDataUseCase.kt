@@ -27,13 +27,13 @@ import kotlinx.coroutines.flow.first
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-interface BackupDataUseCase {
-    suspend operator fun invoke(
+public interface BackupDataUseCase {
+    public suspend operator fun invoke(
         uri: Uri,
     ): Boolean
 }
 
-class BackupDataUseCaseImpl(
+public class BackupDataUseCaseImpl(
     private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,

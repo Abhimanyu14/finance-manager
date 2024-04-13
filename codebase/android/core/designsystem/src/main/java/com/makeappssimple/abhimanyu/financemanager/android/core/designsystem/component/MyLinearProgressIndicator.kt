@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun MyLinearProgressIndicator(
+public fun MyLinearProgressIndicator(
     modifier: Modifier = Modifier,
 ) {
     LinearProgressIndicator(

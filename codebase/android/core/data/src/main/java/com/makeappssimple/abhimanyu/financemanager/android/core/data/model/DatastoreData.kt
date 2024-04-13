@@ -8,7 +8,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class DatastoreData(
+public data class DatastoreData(
     @SerialName(value = "default_data_id")
     val defaultDataId: DefaultDataId = DefaultDataId(),
 

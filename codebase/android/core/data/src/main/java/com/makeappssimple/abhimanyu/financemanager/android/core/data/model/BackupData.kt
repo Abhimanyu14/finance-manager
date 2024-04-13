@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class BackupData(
+public data class BackupData(
     @SerialName(value = "last_backup_time")
     val lastBackupTime: String? = null,
 

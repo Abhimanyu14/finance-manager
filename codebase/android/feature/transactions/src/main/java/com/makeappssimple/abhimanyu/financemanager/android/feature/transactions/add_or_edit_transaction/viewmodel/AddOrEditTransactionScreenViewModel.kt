@@ -6,16 +6,16 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUIEvent
 import kotlinx.coroutines.flow.StateFlow
 
-interface AddOrEditTransactionScreenViewModel : ScreenViewModel {
-    val screenUIData: StateFlow<MyResult<AddOrEditTransactionScreenUIData>?>
+public interface AddOrEditTransactionScreenViewModel : ScreenViewModel {
+    public val screenUIData: StateFlow<MyResult<AddOrEditTransactionScreenUIData>?>
 
-    fun initViewModel()
+    public fun initViewModel()
 
-    fun handleUIEvents(
+    public fun handleUIEvents(
         uiEvent: AddOrEditTransactionScreenUIEvent,
     )
 
-    fun insertTransaction()
+    public fun insertTransaction()
 
-    fun updateTransaction()
+    public fun updateTransaction()
 }

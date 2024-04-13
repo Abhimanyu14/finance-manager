@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typ
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 
 @Composable
-fun MySelectionModeTopAppBar(
+public fun MySelectionModeTopAppBar(
     modifier: Modifier = Modifier,
     appBarActions: RowScopedComposableContent = {},
     navigationAction: () -> Unit = {},
@@ -27,7 +27,7 @@ fun MySelectionModeTopAppBar(
 }
 
 @Composable
-fun MySelectionModeTopAppBarUI(
+public fun MySelectionModeTopAppBarUI(
     modifier: Modifier = Modifier,
     appBarActions: RowScopedComposableContent,
     navigationAction: () -> Unit,

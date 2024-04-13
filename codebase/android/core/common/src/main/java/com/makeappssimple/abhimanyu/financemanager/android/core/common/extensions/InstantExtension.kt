@@ -94,7 +94,7 @@ internal fun Instant.formattedTime(
 /**
  * [Instant] to [ZonedDateTime]
  */
-fun Instant.toZonedDateTime(
+public fun Instant.toZonedDateTime(
     zoneId: ZoneId = getSystemDefaultZoneId(),
 ): ZonedDateTime {
     return this.atZone(zoneId)
@@ -118,7 +118,7 @@ internal fun Instant.atStartOfDay(
 /**
  * [Instant] to [Instant]
  */
-fun Instant.atEndOfDay(
+public fun Instant.atEndOfDay(
     zoneId: ZoneId = getSystemDefaultZoneId(),
 ): Instant {
     return this

@@ -31,9 +31,9 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AccountUseCaseModule {
+public class AccountUseCaseModule {
     @Provides
-    fun providesDeleteAccountsUseCase(
+    public fun providesDeleteAccountsUseCase(
         myPreferencesRepository: MyPreferencesRepository,
         accountRepository: AccountRepository,
     ): DeleteAccountsUseCase {
@@ -44,7 +44,7 @@ class AccountUseCaseModule {
     }
 
     @Provides
-    fun providesDeleteAccountUseCase(
+    public fun providesDeleteAccountUseCase(
         myPreferencesRepository: MyPreferencesRepository,
         accountRepository: AccountRepository,
     ): DeleteAccountUseCase {
@@ -55,7 +55,7 @@ class AccountUseCaseModule {
     }
 
     @Provides
-    fun providesGetAllAccountsCountUseCase(
+    public fun providesGetAllAccountsCountUseCase(
         accountRepository: AccountRepository,
     ): GetAllAccountsCountUseCase {
         return GetAllAccountsCountUseCaseImpl(
@@ -64,7 +64,7 @@ class AccountUseCaseModule {
     }
 
     @Provides
-    fun providesGetAccountsTotalBalanceAmountValueUseCase(
+    public fun providesGetAccountsTotalBalanceAmountValueUseCase(
         accountRepository: AccountRepository,
     ): GetAccountsTotalBalanceAmountValueUseCase {
         return GetAccountsTotalBalanceAmountValueUseCaseImpl(
@@ -73,7 +73,7 @@ class AccountUseCaseModule {
     }
 
     @Provides
-    fun providesGetAccountsTotalMinimumBalanceAmountValueUseCase(
+    public fun providesGetAccountsTotalMinimumBalanceAmountValueUseCase(
         accountRepository: AccountRepository,
     ): GetAccountsTotalMinimumBalanceAmountValueUseCase {
         return GetAccountsTotalMinimumBalanceAmountValueUseCaseImpl(
@@ -82,7 +82,7 @@ class AccountUseCaseModule {
     }
 
     @Provides
-    fun providesGetAllAccountsFlowUseCase(
+    public fun providesGetAllAccountsFlowUseCase(
         accountRepository: AccountRepository,
     ): GetAllAccountsFlowUseCase {
         return GetAllAccountsFlowUseCaseImpl(
@@ -91,7 +91,7 @@ class AccountUseCaseModule {
     }
 
     @Provides
-    fun providesGetAllAccountsUseCase(
+    public fun providesGetAllAccountsUseCase(
         accountRepository: AccountRepository,
     ): GetAllAccountsUseCase {
         return GetAllAccountsUseCaseImpl(
@@ -100,7 +100,7 @@ class AccountUseCaseModule {
     }
 
     @Provides
-    fun providesGetAccountUseCase(
+    public fun providesGetAccountUseCase(
         accountRepository: AccountRepository,
     ): GetAccountUseCase {
         return GetAccountUseCaseImpl(
@@ -109,7 +109,7 @@ class AccountUseCaseModule {
     }
 
     @Provides
-    fun providesInsertAccountsUseCase(
+    public fun providesInsertAccountsUseCase(
         myPreferencesRepository: MyPreferencesRepository,
         accountRepository: AccountRepository,
     ): InsertAccountsUseCase {
@@ -120,7 +120,7 @@ class AccountUseCaseModule {
     }
 
     @Provides
-    fun providesUpdateAccountsBalanceAmountUseCase(
+    public fun providesUpdateAccountsBalanceAmountUseCase(
         myPreferencesRepository: MyPreferencesRepository,
         accountRepository: AccountRepository,
     ): UpdateAccountsBalanceAmountUseCase {
@@ -131,7 +131,7 @@ class AccountUseCaseModule {
     }
 
     @Provides
-    fun providesUpdateAccountsUseCase(
+    public fun providesUpdateAccountsUseCase(
         myPreferencesRepository: MyPreferencesRepository,
         accountRepository: AccountRepository,
     ): UpdateAccountsUseCase {

@@ -6,16 +6,16 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ad
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUIEvent
 import kotlinx.coroutines.flow.StateFlow
 
-interface AddOrEditCategoryScreenViewModel : ScreenViewModel {
-    val screenUIData: StateFlow<MyResult<AddOrEditCategoryScreenUIData>?>
+public interface AddOrEditCategoryScreenViewModel : ScreenViewModel {
+    public val screenUIData: StateFlow<MyResult<AddOrEditCategoryScreenUIData>?>
 
-    fun initViewModel()
+    public fun initViewModel()
 
-    fun handleUIEvents(
+    public fun handleUIEvents(
         uiEvent: AddOrEditCategoryScreenUIEvent,
     )
 
-    fun insertCategory()
+    public fun insertCategory()
 
-    fun updateCategory()
+    public fun updateCategory()
 }

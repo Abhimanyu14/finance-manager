@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Deepl
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Screen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen.AnalysisScreen
 
-fun NavGraphBuilder.analysisNavGraph() {
+public fun NavGraphBuilder.analysisNavGraph() {
     composable(
         route = Screen.Analysis.route,
         deepLinks = listOf(

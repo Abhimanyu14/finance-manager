@@ -1,11 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts
 
-sealed interface AccountsListItemData {
-    val type: AccountsListItemType
+public sealed interface AccountsListItemData {
+    public val type: AccountsListItemType
 }
 
-enum class AccountsListItemType(
-    val title: String,
+public enum class AccountsListItemType(
+    public val title: String,
 ) {
     CONTENT(
         title = "Content"

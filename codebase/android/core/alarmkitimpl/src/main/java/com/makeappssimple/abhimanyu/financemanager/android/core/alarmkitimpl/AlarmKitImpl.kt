@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import java.time.LocalTime
 
-class AlarmKitImpl(
+public class AlarmKitImpl(
     private val context: Context,
     private val dispatcherProvider: DispatcherProvider,
     private val dateTimeUtil: DateTimeUtil,

@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotZero
 
-fun Modifier.fadingEdge(
+public fun Modifier.fadingEdge(
     start: Dp = 8.dp,
     end: Dp = 8.dp,
 ): Modifier {

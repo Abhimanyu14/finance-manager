@@ -21,7 +21,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import java.time.LocalDate
 
 @Stable
-class TransactionsScreenUIState(
+public class TransactionsScreenUIState(
     data: MyResult<TransactionsScreenUIData>?,
     private val unwrappedData: TransactionsScreenUIData? = when (data) {
         is MyResult.Success -> {
@@ -32,34 +32,34 @@ class TransactionsScreenUIState(
             null
         }
     },
-    val isInSelectionMode: Boolean,
-    val screenBottomSheetType: TransactionsScreenBottomSheetType,
-    val setIsInSelectionMode: (Boolean) -> Unit,
-    val setScreenBottomSheetType: (TransactionsScreenBottomSheetType) -> Unit,
-    val isLoading: Boolean = unwrappedData.isNull() || unwrappedData.isLoading,
-    val selectedFilter: Filter = unwrappedData?.selectedFilter.orEmpty(),
-    val selectedTransactions: List<Int> = unwrappedData?.selectedTransactions.orEmpty(),
-    val sortOptions: List<SortOption> = unwrappedData?.sortOptions.orEmpty(),
-    val transactionForValues: List<TransactionFor> = unwrappedData?.transactionForValues.orEmpty(),
-    val accounts: List<Account> = unwrappedData?.accounts.orEmpty(),
-    val expenseCategories: List<Category> = unwrappedData?.expenseCategories.orEmpty(),
-    val incomeCategories: List<Category> = unwrappedData?.incomeCategories.orEmpty(),
-    val investmentCategories: List<Category> = unwrappedData?.investmentCategories.orEmpty(),
-    val transactionTypes: List<TransactionType> = unwrappedData?.transactionTypes.orEmpty(),
-    val oldestTransactionLocalDate: LocalDate = unwrappedData?.oldestTransactionLocalDate.orMin(),
-    val currentLocalDate: LocalDate = unwrappedData?.currentLocalDate.orMin(),
-    val currentTimeMillis: Long = unwrappedData?.currentTimeMillis.orZero(),
-    val transactionDetailsListItemViewData: Map<String, List<TransactionListItemData>> =
+    public val isInSelectionMode: Boolean,
+    public val screenBottomSheetType: TransactionsScreenBottomSheetType,
+    public val setIsInSelectionMode: (Boolean) -> Unit,
+    public val setScreenBottomSheetType: (TransactionsScreenBottomSheetType) -> Unit,
+    public val isLoading: Boolean = unwrappedData.isNull() || unwrappedData.isLoading,
+    public val selectedFilter: Filter = unwrappedData?.selectedFilter.orEmpty(),
+    public val selectedTransactions: List<Int> = unwrappedData?.selectedTransactions.orEmpty(),
+    public val sortOptions: List<SortOption> = unwrappedData?.sortOptions.orEmpty(),
+    public val transactionForValues: List<TransactionFor> = unwrappedData?.transactionForValues.orEmpty(),
+    public val accounts: List<Account> = unwrappedData?.accounts.orEmpty(),
+    public val expenseCategories: List<Category> = unwrappedData?.expenseCategories.orEmpty(),
+    public val incomeCategories: List<Category> = unwrappedData?.incomeCategories.orEmpty(),
+    public val investmentCategories: List<Category> = unwrappedData?.investmentCategories.orEmpty(),
+    public val transactionTypes: List<TransactionType> = unwrappedData?.transactionTypes.orEmpty(),
+    public val oldestTransactionLocalDate: LocalDate = unwrappedData?.oldestTransactionLocalDate.orMin(),
+    public val currentLocalDate: LocalDate = unwrappedData?.currentLocalDate.orMin(),
+    public val currentTimeMillis: Long = unwrappedData?.currentTimeMillis.orZero(),
+    public val transactionDetailsListItemViewData: Map<String, List<TransactionListItemData>> =
         unwrappedData?.transactionDetailsListItemViewData.orEmpty(),
-    val searchText: String = unwrappedData?.searchText.orEmpty(),
-    val selectedSortOption: SortOption = unwrappedData?.selectedSortOption.orDefault(),
-    val resetScreenBottomSheetType: () -> Unit = {
+    public val searchText: String = unwrappedData?.searchText.orEmpty(),
+    public val selectedSortOption: SortOption = unwrappedData?.selectedSortOption.orDefault(),
+    public val resetScreenBottomSheetType: () -> Unit = {
         setScreenBottomSheetType(TransactionsScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
 @Composable
-fun rememberTransactionsScreenUIState(
+public fun rememberTransactionsScreenUIState(
     data: MyResult<TransactionsScreenUIData>?,
 ): TransactionsScreenUIState {
     val (isInSelectionMode: Boolean, setIsInSelectionMode: (Boolean) -> Unit) = remember {

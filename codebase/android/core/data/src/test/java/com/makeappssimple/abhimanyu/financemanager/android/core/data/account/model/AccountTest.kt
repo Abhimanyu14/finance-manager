@@ -7,16 +7,16 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-class AccountTest {
+public class AccountTest {
     private lateinit var account: Account
 
     @Before
-    fun setUp() {
+    public fun setUp() {
         account = getTestAccount()
     }
 
     @Test
-    fun updateBalanceAmount_defaultTest() {
+    public fun updateBalanceAmount_defaultTest() {
         Assert.assertEquals(
             0L,
             account.balanceAmount.value,

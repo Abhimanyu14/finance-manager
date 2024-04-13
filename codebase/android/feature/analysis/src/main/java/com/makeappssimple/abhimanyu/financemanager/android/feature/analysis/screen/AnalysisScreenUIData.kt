@@ -8,7 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import java.time.LocalDate
 
 @Immutable
-data class AnalysisScreenUIData(
+public data class AnalysisScreenUIData(
     val selectedFilter: Filter = Filter(),
     val selectedTransactionTypeIndex: Int = 0,
     val transactionDataMappedByCategory: List<AnalysisListItemData> = emptyList(),

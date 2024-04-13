@@ -11,10 +11,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-object LoggerModule {
+public object LoggerModule {
     @Singleton
     @Provides
-    fun providesLogger(
+    public fun providesLogger(
         buildConfigUtil: BuildConfigUtil,
     ): MyLogger {
         return MyLoggerImpl(

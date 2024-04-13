@@ -3,11 +3,11 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.extensio
 import org.junit.Assert
 import org.junit.Test
 
-class LongExtensionTest {
+public class LongExtensionTest {
 
     // region orZero tests
     @Test
-    fun orZero_longIsNull() {
+    public fun orZero_longIsNull() {
         val input: Long? = null
 
         Assert.assertEquals(
@@ -17,7 +17,7 @@ class LongExtensionTest {
     }
 
     @Test
-    fun orZero_longIsNotNull() {
+    public fun orZero_longIsNotNull() {
         val input = 5L
 
         Assert.assertEquals(

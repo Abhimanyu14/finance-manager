@@ -12,10 +12,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class JsonWriterModule {
+public class JsonWriterModule {
     @Singleton
     @Provides
-    fun providesJsonWriter(
+    public fun providesJsonWriter(
         @ApplicationContext context: Context,
     ): MyJsonWriter {
         return MyJsonWriterImpl(

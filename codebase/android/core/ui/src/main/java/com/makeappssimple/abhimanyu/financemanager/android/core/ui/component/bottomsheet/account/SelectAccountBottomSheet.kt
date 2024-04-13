@@ -12,19 +12,19 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 
 @Immutable
-data class SelectAccountBottomSheetData(
+public data class SelectAccountBottomSheetData(
     val accounts: List<Account> = emptyList(),
     val selectedAccountId: Int? = null,
 )
 
 @Immutable
-data class SelectAccountBottomSheetEvents(
+public data class SelectAccountBottomSheetEvents(
     val resetBottomSheetType: () -> Unit = {},
     val updateAccount: (Account?) -> Unit = {},
 )
 
 @Composable
-fun SelectAccountBottomSheet(
+public fun SelectAccountBottomSheet(
     modifier: Modifier = Modifier,
     data: SelectAccountBottomSheetData,
     events: SelectAccountBottomSheetEvents,

@@ -28,7 +28,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typ
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
 
 @Immutable
-data class MyOutlinedTextFieldData(
+public data class MyOutlinedTextFieldData(
     val isError: Boolean = false,
     val isLoading: Boolean = false,
     @StringRes val labelTextStringResourceId: Int,
@@ -41,13 +41,13 @@ data class MyOutlinedTextFieldData(
 )
 
 @Immutable
-data class MyOutlinedTextFieldEvents(
+public data class MyOutlinedTextFieldEvents(
     val onClickTrailingIcon: () -> Unit = {},
     val onValueChange: (updatedValue: TextFieldValue) -> Unit = {},
 )
 
 @Composable
-fun MyOutlinedTextField(
+public fun MyOutlinedTextField(
     modifier: Modifier = Modifier,
     data: MyOutlinedTextFieldData,
     events: MyOutlinedTextFieldEvents = MyOutlinedTextFieldEvents(),

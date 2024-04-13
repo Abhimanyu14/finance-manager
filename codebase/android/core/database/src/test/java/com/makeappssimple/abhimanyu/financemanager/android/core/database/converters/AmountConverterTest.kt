@@ -6,18 +6,18 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-class AmountConverterTest {
+public class AmountConverterTest {
     private lateinit var amountConverter: AmountConverter
     private val testAmount = getTestAmount()
     private val testAmountString = """{"currency":"INR","value":45}"""
 
     @Before
-    fun setUp() {
+    public fun setUp() {
         amountConverter = AmountConverter()
     }
 
     @Test
-    fun stringToAmount() {
+    public fun stringToAmount() {
         val result: AmountEntity? = amountConverter.stringToAmount(
             value = testAmountString,
         )
@@ -34,7 +34,7 @@ class AmountConverterTest {
     }
 
     @Test
-    fun stringToAmount_valueIsNull() {
+    public fun stringToAmount_valueIsNull() {
         val result: AmountEntity? = amountConverter.stringToAmount(
             value = null,
         )
@@ -43,7 +43,7 @@ class AmountConverterTest {
     }
 
     @Test
-    fun stringToAmount_valueIsInvalidString() {
+    public fun stringToAmount_valueIsInvalidString() {
         val result: AmountEntity? = amountConverter.stringToAmount(
             value = "23.45",
         )
@@ -52,7 +52,7 @@ class AmountConverterTest {
     }
 
     @Test
-    fun amountToString() {
+    public fun amountToString() {
         val result: String = amountConverter.amountToString(
             amount = testAmount,
         )
@@ -64,7 +64,7 @@ class AmountConverterTest {
     }
 
     @Test
-    fun amountToString_amountIsNull() {
+    public fun amountToString_amountIsNull() {
         val result: String = amountConverter.amountToString(
             amount = null,
         )

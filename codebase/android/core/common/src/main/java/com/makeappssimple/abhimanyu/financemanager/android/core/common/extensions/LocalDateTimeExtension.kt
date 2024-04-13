@@ -19,7 +19,7 @@ internal fun LocalDateTime.toInstant(
 /**
  * [LocalDateTime] to [Long]
  */
-fun LocalDateTime.toEpochMilli(
+public fun LocalDateTime.toEpochMilli(
     zoneId: ZoneId = getSystemDefaultZoneId(),
 ): Long {
     return this

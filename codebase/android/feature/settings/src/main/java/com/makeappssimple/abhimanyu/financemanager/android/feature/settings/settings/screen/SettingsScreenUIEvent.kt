@@ -4,14 +4,14 @@ import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEvent
 
 @Immutable
-sealed class SettingsScreenUIEvent : ScreenUIEvent {
-    data object BackupData : SettingsScreenUIEvent()
-    data object NavigateToCategoriesScreen : SettingsScreenUIEvent()
-    data object NavigateToAccountsScreen : SettingsScreenUIEvent()
-    data object NavigateToOpenSourceLicensesScreen : SettingsScreenUIEvent()
-    data object NavigateToTransactionForValuesScreen : SettingsScreenUIEvent()
-    data object NavigateUp : SettingsScreenUIEvent()
-    data object RecalculateTotal : SettingsScreenUIEvent()
-    data object RestoreData : SettingsScreenUIEvent()
-    data object ToggleReminder : SettingsScreenUIEvent()
+public sealed class SettingsScreenUIEvent : ScreenUIEvent {
+    public data object BackupData : SettingsScreenUIEvent()
+    public data object NavigateToCategoriesScreen : SettingsScreenUIEvent()
+    public data object NavigateToAccountsScreen : SettingsScreenUIEvent()
+    public data object NavigateToOpenSourceLicensesScreen : SettingsScreenUIEvent()
+    public data object NavigateToTransactionForValuesScreen : SettingsScreenUIEvent()
+    public data object NavigateUp : SettingsScreenUIEvent()
+    public data object RecalculateTotal : SettingsScreenUIEvent()
+    public data object RestoreData : SettingsScreenUIEvent()
+    public data object ToggleReminder : SettingsScreenUIEvent()
 }

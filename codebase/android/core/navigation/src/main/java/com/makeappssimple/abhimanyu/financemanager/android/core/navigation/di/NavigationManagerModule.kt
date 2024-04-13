@@ -12,10 +12,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class NavigatorModule {
+public class NavigatorModule {
     @Singleton
     @Provides
-    fun providesNavigator(
+    public fun providesNavigator(
         @ApplicationScope coroutineScope: CoroutineScope,
     ): Navigator {
         return NavigatorImpl(

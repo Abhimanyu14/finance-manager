@@ -4,7 +4,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.T
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import kotlin.math.abs
 
-fun sanitizeTransactions(
+public fun sanitizeTransactions(
     transactions: List<TransactionEntity>,
 ): List<TransactionEntity> {
     return transactions.map {

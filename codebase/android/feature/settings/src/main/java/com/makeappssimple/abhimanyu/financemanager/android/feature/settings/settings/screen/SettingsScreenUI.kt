@@ -36,7 +36,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
 
 @Immutable
-data class SettingsScreenListItemData(
+public data class SettingsScreenListItemData(
     val data: SettingsListItemData,
     val events: SettingsListItemContentEvents = SettingsListItemContentEvents(),
 )

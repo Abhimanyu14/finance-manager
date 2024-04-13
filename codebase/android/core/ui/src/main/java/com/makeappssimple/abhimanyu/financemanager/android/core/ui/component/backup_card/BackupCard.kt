@@ -24,17 +24,17 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
 
 @Immutable
-data class BackupCardData(
+public data class BackupCardData(
     val isLoading: Boolean = false,
 )
 
 @Immutable
-data class BackupCardEvents(
+public data class BackupCardEvents(
     val onClick: () -> Unit = {},
 )
 
 @Composable
-fun BackupCard(
+public fun BackupCard(
     modifier: Modifier = Modifier,
     data: BackupCardData,
     events: BackupCardEvents = BackupCardEvents(),

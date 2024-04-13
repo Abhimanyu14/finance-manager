@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 
 @Stable
-class OpenSourceLicensesScreenUIState(
+public class OpenSourceLicensesScreenUIState(
     data: MyResult<OpenSourceLicensesScreenUIData>? = null,
     private val unwrappedData: OpenSourceLicensesScreenUIData? = when (data) {
         is MyResult.Success -> {
@@ -20,16 +20,16 @@ class OpenSourceLicensesScreenUIState(
             null
         }
     },
-    val screenBottomSheetType: OpenSourceLicensesScreenBottomSheetType = OpenSourceLicensesScreenBottomSheetType.NONE,
-    val setScreenBottomSheetType: (OpenSourceLicensesScreenBottomSheetType) -> Unit = {},
-    val isLoading: Boolean = unwrappedData.isNull() || unwrappedData.isLoading,
-    val resetScreenBottomSheetType: () -> Unit = {
+    public val screenBottomSheetType: OpenSourceLicensesScreenBottomSheetType = OpenSourceLicensesScreenBottomSheetType.NONE,
+    public val setScreenBottomSheetType: (OpenSourceLicensesScreenBottomSheetType) -> Unit = {},
+    public val isLoading: Boolean = unwrappedData.isNull() || unwrappedData.isLoading,
+    public val resetScreenBottomSheetType: () -> Unit = {
         setScreenBottomSheetType(OpenSourceLicensesScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
 @Composable
-fun rememberOpenSourceLicensesScreenUIState(
+public fun rememberOpenSourceLicensesScreenUIState(
     data: MyResult<OpenSourceLicensesScreenUIData>?,
 ): OpenSourceLicensesScreenUIState {
     val (screenBottomSheetType: OpenSourceLicensesScreenBottomSheetType, setScreenBottomSheetType: (OpenSourceLicensesScreenBottomSheetType) -> Unit) = remember {

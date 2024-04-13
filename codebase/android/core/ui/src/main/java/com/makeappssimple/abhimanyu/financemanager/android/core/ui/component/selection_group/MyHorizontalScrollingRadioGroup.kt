@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chi
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.fadingedge.fadingEdge
 
 @Immutable
-data class MyHorizontalScrollingRadioGroupData(
+public data class MyHorizontalScrollingRadioGroupData(
     val horizontalArrangement: Arrangement.Horizontal = Arrangement.SpaceBetween,
     val isLoading: Boolean = false,
     val loadingItemSize: Int = 3,
@@ -21,12 +21,12 @@ data class MyHorizontalScrollingRadioGroupData(
 )
 
 @Immutable
-data class MyHorizontalScrollingRadioGroupEvents(
+public data class MyHorizontalScrollingRadioGroupEvents(
     val onSelectionChange: (index: Int) -> Unit,
 )
 
 @Composable
-fun MyHorizontalScrollingRadioGroup(
+public fun MyHorizontalScrollingRadioGroup(
     modifier: Modifier = Modifier,
     data: MyHorizontalScrollingRadioGroupData,
     events: MyHorizontalScrollingRadioGroupEvents,

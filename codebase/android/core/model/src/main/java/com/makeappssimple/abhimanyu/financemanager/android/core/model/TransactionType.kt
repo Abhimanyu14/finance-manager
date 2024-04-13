@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.model
 
-enum class TransactionType(
-    val title: String,
+public enum class TransactionType(
+    public val title: String,
 ) {
     INCOME(
         title = "Income",

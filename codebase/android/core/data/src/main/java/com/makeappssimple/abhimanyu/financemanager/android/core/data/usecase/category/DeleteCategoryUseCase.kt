@@ -3,13 +3,13 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.ca
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.category.CategoryRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 
-interface DeleteCategoryUseCase {
-    suspend operator fun invoke(
+public interface DeleteCategoryUseCase {
+    public suspend operator fun invoke(
         id: Int,
     ): Boolean
 }
 
-class DeleteCategoryUseCaseImpl(
+public class DeleteCategoryUseCaseImpl(
     private val categoryRepository: CategoryRepository,
     private val myPreferencesRepository: MyPreferencesRepository,
 ) : DeleteCategoryUseCase {

@@ -31,7 +31,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
 
 @Immutable
-data class OverviewCardData(
+public data class OverviewCardData(
     val isLoading: Boolean = false,
     val overviewTabSelectionIndex: Int = 0,
     val title: String = "",
@@ -39,14 +39,14 @@ data class OverviewCardData(
 )
 
 @Immutable
-data class OverviewCardEvents(
+public data class OverviewCardEvents(
     val onClick: (() -> Unit)? = null,
     val onOverviewTabClick: (index: Int) -> Unit = {},
     val handleOverviewCardAction: (overviewCardAction: OverviewCardAction) -> Unit = {},
 )
 
-enum class OverviewTabOption(
-    val title: String,
+public enum class OverviewTabOption(
+    public val title: String,
 ) {
     DAY(
         title = "DAY",
@@ -63,18 +63,18 @@ enum class OverviewTabOption(
     ),
 }
 
-enum class OverviewCardAction {
+public enum class OverviewCardAction {
     NEXT,
     PREV,
 }
 
-data class OverviewCardViewModelData(
+public data class OverviewCardViewModelData(
     val income: Float = 0F,
     val expense: Float = 0F,
     val title: String = "",
 )
 
-fun OverviewCardViewModelData?.orDefault(): OverviewCardViewModelData {
+public fun OverviewCardViewModelData?.orDefault(): OverviewCardViewModelData {
     return if (this.isNull()) {
         OverviewCardViewModelData()
     } else {
@@ -83,7 +83,7 @@ fun OverviewCardViewModelData?.orDefault(): OverviewCardViewModelData {
 }
 
 @Composable
-fun OverviewCard(
+public fun OverviewCard(
     modifier: Modifier = Modifier,
     data: OverviewCardData,
     events: OverviewCardEvents = OverviewCardEvents(),

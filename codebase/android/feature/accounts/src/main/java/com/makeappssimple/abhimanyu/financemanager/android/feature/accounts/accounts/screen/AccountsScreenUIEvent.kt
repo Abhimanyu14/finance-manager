@@ -4,19 +4,19 @@ import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEvent
 
 @Immutable
-sealed class AccountsScreenUIEvent : ScreenUIEvent {
-    data object NavigateToAddAccountScreen : AccountsScreenUIEvent()
-    data object NavigateUp : AccountsScreenUIEvent()
+public sealed class AccountsScreenUIEvent : ScreenUIEvent {
+    public data object NavigateToAddAccountScreen : AccountsScreenUIEvent()
+    public data object NavigateUp : AccountsScreenUIEvent()
 
-    data class DeleteAccount(
+    public data class DeleteAccount(
         val accountId: Int,
     ) : AccountsScreenUIEvent()
 
-    data class NavigateToEditAccountScreen(
+    public data class NavigateToEditAccountScreen(
         val accountId: Int,
     ) : AccountsScreenUIEvent()
 
-    data class SetDefaultAccountIdInDataStore(
+    public data class SetDefaultAccountIdInDataStore(
         val defaultAccountId: Int,
     ) : AccountsScreenUIEvent()
 }

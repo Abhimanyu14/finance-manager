@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.T
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.updateBalanceAmount
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 
-class CommonDataSourceImpl(
+public class CommonDataSourceImpl(
     private val myRoomDatabase: MyRoomDatabase,
 ) : CommonDataSource {
     override suspend fun deleteTransaction(

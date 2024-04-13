@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.naviga
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
 
 @Composable
-fun CatalogApp() {
+public fun CatalogApp() {
     MyAppTheme {
         CatalogNavGraph()
     }

@@ -14,7 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 
 @Composable
-fun MyExpandableItemIconButton(
+public fun MyExpandableItemIconButton(
     modifier: Modifier = Modifier,
     iconImageVector: ImageVector,
     labelText: String,

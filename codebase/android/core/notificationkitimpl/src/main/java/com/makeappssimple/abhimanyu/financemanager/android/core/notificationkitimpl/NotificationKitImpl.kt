@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.MyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.core.notificationkit.NotificationConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.notificationkit.NotificationKit
 
-class NotificationKitImpl(
+public class NotificationKitImpl(
     private val appKit: AppKit,
     private val context: Context,
     private val myLogger: MyLogger,

@@ -10,32 +10,32 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.T
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface TransactionDao {
+public interface TransactionDao {
     @Query(
         value = "SELECT * from transaction_table " +
                 "ORDER BY transaction_timestamp DESC"
     )
-    fun getAllTransactionsFlow(): Flow<List<TransactionEntity>>
+    public fun getAllTransactionsFlow(): Flow<List<TransactionEntity>>
 
     @Query(
         value = "SELECT * from transaction_table " +
                 "ORDER BY transaction_timestamp DESC"
     )
-    suspend fun getAllTransactions(): List<TransactionEntity>
+    public suspend fun getAllTransactions(): List<TransactionEntity>
 
     @androidx.room.Transaction
     @Query(
         value = "SELECT * FROM transaction_table " +
                 "ORDER BY transaction_timestamp DESC"
     )
-    fun getAllTransactionDataFlow(): Flow<List<TransactionDataEntity>>
+    public fun getAllTransactionDataFlow(): Flow<List<TransactionDataEntity>>
 
     @androidx.room.Transaction
     @Query(
         value = "SELECT * FROM transaction_table " +
                 "ORDER BY transaction_timestamp DESC"
     )
-    suspend fun getAllTransactionData(): List<TransactionDataEntity>
+    public suspend fun getAllTransactionData(): List<TransactionDataEntity>
 
     /**
      * TODO(Abhi): To search amount properly, JSON1 extension is required which is not available in Android.
@@ -49,7 +49,7 @@ interface TransactionDao {
                 "WHERE instr(lower(title), lower(:searchText)) > 0 OR instr(lower(amount), lower(:searchText)) > 0 " +
                 "ORDER BY transaction_timestamp DESC"
     )
-    suspend fun getSearchedTransactionData(
+    public suspend fun getSearchedTransactionData(
         searchText: String,
     ): List<TransactionDataEntity>
 
@@ -58,7 +58,7 @@ interface TransactionDao {
                 "WHERE transaction_timestamp BETWEEN :startingTimestamp AND :endingTimestamp " +
                 "ORDER BY transaction_timestamp DESC"
     )
-    fun getTransactionsBetweenTimestampsFlow(
+    public fun getTransactionsBetweenTimestampsFlow(
         startingTimestamp: Long,
         endingTimestamp: Long,
     ): Flow<List<TransactionEntity>>
@@ -68,7 +68,7 @@ interface TransactionDao {
                 "WHERE transaction_timestamp BETWEEN :startingTimestamp AND :endingTimestamp " +
                 "ORDER BY transaction_timestamp DESC"
     )
-    suspend fun getTransactionsBetweenTimestamps(
+    public suspend fun getTransactionsBetweenTimestamps(
         startingTimestamp: Long,
         endingTimestamp: Long,
     ): List<TransactionEntity>
@@ -79,12 +79,12 @@ interface TransactionDao {
                 "ORDER BY transaction_timestamp DESC " +
                 "LIMIT :numberOfTransactions"
     )
-    fun getRecentTransactionDataFlow(
+    public fun getRecentTransactionDataFlow(
         numberOfTransactions: Int,
     ): Flow<List<TransactionDataEntity>>
 
     @Query(value = "SELECT COUNT(*) FROM transaction_table")
-    suspend fun getTransactionsCount(): Int
+    public suspend fun getTransactionsCount(): Int
 
     @Query(
         value = "SELECT title from transaction_table " +
@@ -94,7 +94,7 @@ interface TransactionDao {
                 "ORDER BY COUNT(title) DESC " +
                 "LIMIT :numberOfSuggestions"
     )
-    suspend fun getTitleSuggestions(
+    public suspend fun getTitleSuggestions(
         categoryId: Int,
         numberOfSuggestions: Int,
         enteredTitle: String,
@@ -104,7 +104,7 @@ interface TransactionDao {
         value = "SELECT EXISTS(SELECT * FROM transaction_table " +
                 "WHERE category_id = :categoryId)"
     )
-    suspend fun checkIfCategoryIsUsedInTransactions(
+    public suspend fun checkIfCategoryIsUsedInTransactions(
         categoryId: Int,
     ): Boolean
 
@@ -112,7 +112,7 @@ interface TransactionDao {
         value = "SELECT EXISTS(SELECT * FROM transaction_table " +
                 "WHERE account_from_id = :accountId OR account_to_id = :accountId)"
     )
-    suspend fun checkIfAccountIsUsedInTransactions(
+    public suspend fun checkIfAccountIsUsedInTransactions(
         accountId: Int,
     ): Boolean
 
@@ -120,7 +120,7 @@ interface TransactionDao {
         value = "SELECT EXISTS(SELECT * FROM transaction_table " +
                 "WHERE transaction_for_id = :transactionForId)"
     )
-    suspend fun checkIfTransactionForIsUsedInTransactions(
+    public suspend fun checkIfTransactionForIsUsedInTransactions(
         transactionForId: Int,
     ): Boolean
 
@@ -128,7 +128,7 @@ interface TransactionDao {
         value = "SELECT * FROM transaction_table " +
                 "WHERE id = :id"
     )
-    suspend fun getTransaction(
+    public suspend fun getTransaction(
         id: Int,
     ): TransactionEntity?
 
@@ -137,30 +137,30 @@ interface TransactionDao {
         value = "SELECT * FROM transaction_table " +
                 "WHERE id = :id"
     )
-    suspend fun getTransactionData(
+    public suspend fun getTransactionData(
         id: Int,
     ): TransactionDataEntity?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertTransactions(
+    public suspend fun insertTransactions(
         vararg transactions: TransactionEntity,
     ): List<Long>
 
     @Query(value = "DELETE FROM transaction_table")
-    suspend fun deleteAllTransactions(): Int
+    public suspend fun deleteAllTransactions(): Int
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertTransaction(
+    public suspend fun insertTransaction(
         transaction: TransactionEntity,
     ): Long
 
     @Update
-    suspend fun updateTransaction(
+    public suspend fun updateTransaction(
         transaction: TransactionEntity,
     ): Int
 
     @Update
-    suspend fun updateTransactions(
+    public suspend fun updateTransactions(
         vararg transactions: TransactionEntity,
     ): Int
 
@@ -168,7 +168,7 @@ interface TransactionDao {
         value = "DELETE FROM transaction_table " +
                 "WHERE id = :id"
     )
-    suspend fun deleteTransaction(
+    public suspend fun deleteTransaction(
         id: Int,
     ): Int
 }

@@ -10,10 +10,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface BuildConfigUtilModule {
+public interface BuildConfigUtilModule {
     @Singleton
     @Binds
-    fun bindBuildConfigUtil(
+    public fun bindBuildConfigUtil(
         buildConfigUtilImpl: BuildConfigUtilImpl,
     ): BuildConfigUtil
 }

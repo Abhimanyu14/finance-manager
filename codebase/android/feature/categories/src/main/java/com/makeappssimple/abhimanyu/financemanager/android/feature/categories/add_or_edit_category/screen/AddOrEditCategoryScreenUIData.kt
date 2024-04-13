@@ -6,7 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIData
 
 @Immutable
-data class AddOrEditCategoryScreenUIData(
+public data class AddOrEditCategoryScreenUIData(
     val isCtaButtonEnabled: Boolean = false,
     val selectedTransactionTypeIndex: Int = 0,
     val validTransactionTypes: List<TransactionType> = emptyList(),

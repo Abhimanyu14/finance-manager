@@ -2,13 +2,13 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tr
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
 
-interface CheckIfCategoryIsUsedInTransactionsUseCase {
-    suspend operator fun invoke(
+public interface CheckIfCategoryIsUsedInTransactionsUseCase {
+    public suspend operator fun invoke(
         categoryId: Int,
     ): Boolean
 }
 
-class CheckIfCategoryIsUsedInTransactionsUseCaseImpl(
+public class CheckIfCategoryIsUsedInTransactionsUseCaseImpl(
     private val transactionRepository: TransactionRepository,
 ) : CheckIfCategoryIsUsedInTransactionsUseCase {
     override suspend operator fun invoke(

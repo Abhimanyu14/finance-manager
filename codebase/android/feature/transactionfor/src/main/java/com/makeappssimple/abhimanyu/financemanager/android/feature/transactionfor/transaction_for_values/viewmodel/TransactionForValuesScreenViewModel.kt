@@ -6,10 +6,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.screen.TransactionForValuesScreenUIEvent
 import kotlinx.coroutines.flow.StateFlow
 
-interface TransactionForValuesScreenViewModel : ScreenViewModel {
-    val screenUIData: StateFlow<MyResult<TransactionForValuesScreenUIData>?>
+public interface TransactionForValuesScreenViewModel : ScreenViewModel {
+    public val screenUIData: StateFlow<MyResult<TransactionForValuesScreenUIData>?>
 
-    fun handleUIEvents(
+    public fun handleUIEvents(
         uiEvent: TransactionForValuesScreenUIEvent,
     )
 }

@@ -7,7 +7,7 @@ import androidx.compose.runtime.Composable
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 
 @Composable
-fun getDismissState(
+public fun getDismissState(
     dismissedToEndAction: (() -> Unit)? = null,
     dismissedToStart: (() -> Unit)? = null,
     defaultAction: (() -> Unit)? = null,

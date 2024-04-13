@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 
-fun Flow<Boolean>.defaultBooleanStateIn(
+public fun Flow<Boolean>.defaultBooleanStateIn(
     scope: CoroutineScope,
     started: SharingStarted = SharingStarted.WhileSubscribed(
         stopTimeoutMillis = 5000,
@@ -19,7 +19,7 @@ fun Flow<Boolean>.defaultBooleanStateIn(
     )
 }
 
-fun <T> Flow<List<T>>.defaultListStateIn(
+public fun <T> Flow<List<T>>.defaultListStateIn(
     scope: CoroutineScope,
     started: SharingStarted = SharingStarted.WhileSubscribed(
         stopTimeoutMillis = 5000,
@@ -32,7 +32,7 @@ fun <T> Flow<List<T>>.defaultListStateIn(
     )
 }
 
-fun <T> Flow<T>.defaultObjectStateIn(
+public fun <T> Flow<T>.defaultObjectStateIn(
     scope: CoroutineScope,
     started: SharingStarted = SharingStarted.WhileSubscribed(
         stopTimeoutMillis = 5000,

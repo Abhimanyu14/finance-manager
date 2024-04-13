@@ -17,7 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import java.time.LocalDate
 
 @Stable
-class AnalysisScreenUIState(
+public class AnalysisScreenUIState(
     data: MyResult<AnalysisScreenUIData>?,
     private val unwrappedData: AnalysisScreenUIData? = when (data) {
         is MyResult.Success -> {
@@ -29,33 +29,33 @@ class AnalysisScreenUIState(
         }
     },
     textMeasurer: TextMeasurer,
-    val screenBottomSheetType: AnalysisScreenBottomSheetType,
-    val setScreenBottomSheetType: (AnalysisScreenBottomSheetType) -> Unit,
-    val isLoading: Boolean = unwrappedData.isNull(),
-    val selectedFilter: Filter = unwrappedData?.selectedFilter.orEmpty(),
-    val selectedTransactionTypeIndex: Int? = unwrappedData?.selectedTransactionTypeIndex,
-    val transactionDataMappedByCategory: List<AnalysisListItemData> =
+    public val screenBottomSheetType: AnalysisScreenBottomSheetType,
+    public val setScreenBottomSheetType: (AnalysisScreenBottomSheetType) -> Unit,
+    public val isLoading: Boolean = unwrappedData.isNull(),
+    public val selectedFilter: Filter = unwrappedData?.selectedFilter.orEmpty(),
+    public val selectedTransactionTypeIndex: Int? = unwrappedData?.selectedTransactionTypeIndex,
+    public val transactionDataMappedByCategory: List<AnalysisListItemData> =
         unwrappedData?.transactionDataMappedByCategory.orEmpty(),
-    val transactionTypesChipUIData: List<ChipUIData> =
+    public val transactionTypesChipUIData: List<ChipUIData> =
         unwrappedData?.transactionTypesChipUIData.orEmpty(),
-    val defaultStartLocalDate: LocalDate = unwrappedData?.oldestTransactionLocalDate.orMin(),
-    val defaultEndLocalDate: LocalDate = unwrappedData?.currentLocalDate.orMin(),
-    val startOfMonthLocalDate: LocalDate = unwrappedData?.startOfMonthLocalDate.orMin(),
-    val startOfYearLocalDate: LocalDate = unwrappedData?.startOfYearLocalDate.orMin(),
-    val maxAmountTextWidth: Int = if (transactionDataMappedByCategory.isEmpty()) {
+    public val defaultStartLocalDate: LocalDate = unwrappedData?.oldestTransactionLocalDate.orMin(),
+    public val defaultEndLocalDate: LocalDate = unwrappedData?.currentLocalDate.orMin(),
+    public val startOfMonthLocalDate: LocalDate = unwrappedData?.startOfMonthLocalDate.orMin(),
+    public val startOfYearLocalDate: LocalDate = unwrappedData?.startOfYearLocalDate.orMin(),
+    public val maxAmountTextWidth: Int = if (transactionDataMappedByCategory.isEmpty()) {
         0
     } else {
         transactionDataMappedByCategory.maxOf {
             textMeasurer.measure(it.amountText).size.width
         }
     },
-    val resetScreenBottomSheetType: () -> Unit = {
+    public val resetScreenBottomSheetType: () -> Unit = {
         setScreenBottomSheetType(AnalysisScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
 @Composable
-fun rememberAnalysisScreenUIState(
+public fun rememberAnalysisScreenUIState(
     data: MyResult<AnalysisScreenUIData>?,
 ): AnalysisScreenUIState {
     val (screenBottomSheetType, setScreenBottomSheetType) = remember {

@@ -6,23 +6,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 
 @Immutable
-data class MyDropdownMenuItemDataAndEvents(
+public data class MyDropdownMenuItemDataAndEvents(
     val data: MyDropdownMenuItemData,
     val events: MyDropdownMenuItemEvents,
 )
 
 @Immutable
-data class MyDropdownMenuItemData(
+public data class MyDropdownMenuItemData(
     @StringRes val textStringResourceId: Int,
 )
 
 @Immutable
-data class MyDropdownMenuItemEvents(
+public data class MyDropdownMenuItemEvents(
     val onClick: () -> Unit,
 )
 
 @Composable
-fun MyDropdownMenuItem(
+public fun MyDropdownMenuItem(
     data: MyDropdownMenuItemData,
     events: MyDropdownMenuItemEvents,
 ) {

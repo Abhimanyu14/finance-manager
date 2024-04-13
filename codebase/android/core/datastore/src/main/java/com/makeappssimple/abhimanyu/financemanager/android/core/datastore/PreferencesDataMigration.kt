@@ -6,7 +6,7 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.AppConstants
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 
-val preferencesDataMigrations = listOf(
+public val preferencesDataMigrations: List<DataMigration<Preferences>> = listOf(
     PreferencesDataMigration.MIGRATION_3_TO_4,
     PreferencesDataMigration.MIGRATION_2_TO_3,
     PreferencesDataMigration.MIGRATION_1_TO_2,

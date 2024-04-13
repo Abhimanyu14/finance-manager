@@ -6,9 +6,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.A
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-class AmountConverter {
+public class AmountConverter {
     @TypeConverter
-    fun stringToAmount(
+    public fun stringToAmount(
         value: String?,
     ): AmountEntity? {
         if (value.isNullOrBlank()) {
@@ -27,7 +27,7 @@ class AmountConverter {
     }
 
     @TypeConverter
-    fun amountToString(
+    public fun amountToString(
         amount: AmountEntity?,
     ): String {
         if (amount.isNull()) {

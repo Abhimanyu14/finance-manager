@@ -41,6 +41,9 @@ android {
         jvmTarget = "17"
 
         freeCompilerArgs += [
+                // Explicit API mode
+                "-Xexplicit-api=strict",
+
                 // Kotlin
                 "-opt-in=kotlin.RequiresOptIn",
                 "-opt-in=kotlin.contracts.ExperimentalContracts",

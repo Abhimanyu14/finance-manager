@@ -12,10 +12,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AppKitModule {
+public class AppKitModule {
     @Singleton
     @Provides
-    fun providesAppKit(
+    public fun providesAppKit(
         @ApplicationContext context: Context,
     ): AppKit {
         return AppKitImpl(

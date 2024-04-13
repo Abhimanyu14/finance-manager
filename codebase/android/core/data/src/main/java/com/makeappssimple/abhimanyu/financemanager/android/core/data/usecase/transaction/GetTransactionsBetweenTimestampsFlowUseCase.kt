@@ -4,14 +4,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import kotlinx.coroutines.flow.Flow
 
-interface GetTransactionsBetweenTimestampsFlowUseCase {
-    operator fun invoke(
+public interface GetTransactionsBetweenTimestampsFlowUseCase {
+    public operator fun invoke(
         startingTimestamp: Long,
         endingTimestamp: Long,
     ): Flow<List<Transaction>>
 }
 
-class GetTransactionsBetweenTimestampsFlowUseCaseImpl(
+public class GetTransactionsBetweenTimestampsFlowUseCaseImpl(
     private val transactionRepository: TransactionRepository,
 ) : GetTransactionsBetweenTimestampsFlowUseCase {
     override operator fun invoke(

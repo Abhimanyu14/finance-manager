@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.gri
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
 
 @Composable
-fun CategoriesGrid(
+public fun CategoriesGrid(
     bottomPadding: Dp = 0.dp,
     topPadding: Dp = 0.dp,
     categoriesGridItemDataList: List<CategoriesGridItemData>,

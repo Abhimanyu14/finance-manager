@@ -14,10 +14,10 @@ import javax.inject.Singleton
     components = [SingletonComponent::class],
     replaces = [AppVersionUtilModule::class],
 )
-class TestAppVersionUtilModule {
+public class TestAppVersionUtilModule {
     @Singleton
     @Provides
-    fun providesAppVersionUtil(): AppVersionUtil {
+    public fun providesAppVersionUtil(): AppVersionUtil {
         return FakeAppVersionUtilImpl()
     }
 }

@@ -18,7 +18,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.getComposeColor
 
 @Composable
-fun PieChartLegend(
+public fun PieChartLegend(
     modifier: Modifier = Modifier,
     items: List<PieChartLegendItemData>,
 ) {

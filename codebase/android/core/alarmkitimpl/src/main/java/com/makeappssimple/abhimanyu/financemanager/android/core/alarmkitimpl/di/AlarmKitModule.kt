@@ -16,10 +16,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AlarmKitModule {
+public class AlarmKitModule {
     @Singleton
     @Provides
-    fun providesAlarmKit(
+    public fun providesAlarmKit(
         @ApplicationContext context: Context,
         dispatcherProvider: DispatcherProvider,
         dateTimeUtil: DateTimeUtil,

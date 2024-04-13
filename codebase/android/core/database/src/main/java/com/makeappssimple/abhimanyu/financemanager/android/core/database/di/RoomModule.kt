@@ -16,9 +16,9 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class RoomModule {
+public class RoomModule {
     @Provides
-    fun providesInitialDatabasePopulator(
+    public fun providesInitialDatabasePopulator(
         dispatcherProvider: DispatcherProvider,
         myJsonReader: MyJsonReader,
         myPreferencesDataSource: MyPreferencesDataSource,
@@ -32,7 +32,7 @@ class RoomModule {
 
     @Singleton
     @Provides
-    fun providesMyRoomDatabase(
+    public fun providesMyRoomDatabase(
         @ApplicationContext context: Context,
         initialDatabasePopulator: InitialDatabasePopulator,
     ): MyRoomDatabase {

@@ -2,12 +2,12 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonread
 
 import android.net.Uri
 
-interface MyJsonReader {
-    fun readJsonFromAssets(
+public interface MyJsonReader {
+    public fun readJsonFromAssets(
         fileName: String,
     ): String?
 
-    fun readJsonFromFile(
+    public fun readJsonFromFile(
         uri: Uri,
     ): String?
 }

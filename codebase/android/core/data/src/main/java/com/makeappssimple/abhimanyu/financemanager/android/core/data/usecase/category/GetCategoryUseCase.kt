@@ -3,13 +3,13 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.ca
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.category.CategoryRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 
-interface GetCategoryUseCase {
-    suspend operator fun invoke(
+public interface GetCategoryUseCase {
+    public suspend operator fun invoke(
         id: Int,
     ): Category?
 }
 
-class GetCategoryUseCaseImpl(
+public class GetCategoryUseCaseImpl(
     private val categoryRepository: CategoryRepository,
 ) : GetCategoryUseCase {
     override suspend operator fun invoke(

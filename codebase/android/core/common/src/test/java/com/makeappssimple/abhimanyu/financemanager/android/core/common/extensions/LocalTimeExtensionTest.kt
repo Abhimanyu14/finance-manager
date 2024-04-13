@@ -5,12 +5,12 @@ import org.junit.Test
 import java.time.LocalTime
 import java.time.ZoneId
 
-class LocalTimeExtensionTest {
+public class LocalTimeExtensionTest {
     private val testLocalTime = LocalTime.of(8, 24)
     private val testZoneId = ZoneId.of("Asia/Kolkata")
 
     @Test
-    fun formattedTime() {
+    public fun formattedTime() {
         Assert.assertEquals(
             "08:24 AM",
             testLocalTime.formattedTime(

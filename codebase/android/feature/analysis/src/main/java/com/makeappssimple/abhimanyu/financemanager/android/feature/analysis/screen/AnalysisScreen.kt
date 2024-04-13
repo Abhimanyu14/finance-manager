@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.view
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.viewmodel.AnalysisScreenViewModelImpl
 
 @Composable
-fun AnalysisScreen(
+public fun AnalysisScreen(
     screenViewModel: AnalysisScreenViewModel = hiltViewModel<AnalysisScreenViewModelImpl>(),
 ) {
     val viewModel = remember {

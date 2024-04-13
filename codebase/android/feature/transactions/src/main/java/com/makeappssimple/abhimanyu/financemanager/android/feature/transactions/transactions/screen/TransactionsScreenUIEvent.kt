@@ -6,41 +6,41 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.So
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEvent
 
 @Immutable
-sealed class TransactionsScreenUIEvent : ScreenUIEvent {
-    data object ClearSelectedTransactions : TransactionsScreenUIEvent()
-    data object NavigateToAddTransactionScreen : TransactionsScreenUIEvent()
-    data object NavigateUp : TransactionsScreenUIEvent()
-    data object SelectAllTransactions : TransactionsScreenUIEvent()
+public sealed class TransactionsScreenUIEvent : ScreenUIEvent {
+    public data object ClearSelectedTransactions : TransactionsScreenUIEvent()
+    public data object NavigateToAddTransactionScreen : TransactionsScreenUIEvent()
+    public data object NavigateUp : TransactionsScreenUIEvent()
+    public data object SelectAllTransactions : TransactionsScreenUIEvent()
 
-    data class AddToSelectedTransactions(
+    public data class AddToSelectedTransactions(
         val transactionId: Int,
     ) : TransactionsScreenUIEvent()
 
-    data class NavigateToViewTransactionScreen(
+    public data class NavigateToViewTransactionScreen(
         val transactionId: Int,
     ) : TransactionsScreenUIEvent()
 
-    data class RemoveFromSelectedTransactions(
+    public data class RemoveFromSelectedTransactions(
         val transactionId: Int,
     ) : TransactionsScreenUIEvent()
 
-    data class ToggleTransactionSelection(
+    public data class ToggleTransactionSelection(
         val transactionId: Int,
     ) : TransactionsScreenUIEvent()
 
-    data class UpdateSearchText(
+    public data class UpdateSearchText(
         val updatedSearchText: String,
     ) : TransactionsScreenUIEvent()
 
-    data class UpdateSelectedFilter(
+    public data class UpdateSelectedFilter(
         val updatedSelectedFilter: Filter,
     ) : TransactionsScreenUIEvent()
 
-    data class UpdateSelectedSortOption(
+    public data class UpdateSelectedSortOption(
         val updatedSelectedSortOption: SortOption,
     ) : TransactionsScreenUIEvent()
 
-    data class UpdateTransactionForValuesInTransactions(
+    public data class UpdateTransactionForValuesInTransactions(
         val updatedTransactionForValues: Int,
     ) : TransactionsScreenUIEvent()
 }

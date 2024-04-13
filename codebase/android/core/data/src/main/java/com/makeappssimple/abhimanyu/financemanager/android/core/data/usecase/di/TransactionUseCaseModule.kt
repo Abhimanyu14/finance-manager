@@ -49,9 +49,9 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-class TransactionUseCaseModule {
+public class TransactionUseCaseModule {
     @Provides
-    fun providesCheckIfCategoryIsUsedInTransactionsUseCase(
+    public fun providesCheckIfCategoryIsUsedInTransactionsUseCase(
         transactionRepository: TransactionRepository,
     ): CheckIfCategoryIsUsedInTransactionsUseCase {
         return CheckIfCategoryIsUsedInTransactionsUseCaseImpl(
@@ -60,7 +60,7 @@ class TransactionUseCaseModule {
     }
 
     @Provides
-    fun providesCheckIfAccountIsUsedInTransactionsUseCase(
+    public fun providesCheckIfAccountIsUsedInTransactionsUseCase(
         transactionRepository: TransactionRepository,
     ): CheckIfAccountIsUsedInTransactionsUseCase {
         return CheckIfAccountIsUsedInTransactionsUseCaseImpl(
@@ -69,7 +69,7 @@ class TransactionUseCaseModule {
     }
 
     @Provides
-    fun providesCheckIfTransactionForIsUsedInTransactionsUseCase(
+    public fun providesCheckIfTransactionForIsUsedInTransactionsUseCase(
         transactionRepository: TransactionRepository,
     ): CheckIfTransactionForIsUsedInTransactionsUseCase {
         return CheckIfTransactionForIsUsedInTransactionsUseCaseImpl(
@@ -78,7 +78,7 @@ class TransactionUseCaseModule {
     }
 
     @Provides
-    fun providesDeleteAllTransactionsUseCase(
+    public fun providesDeleteAllTransactionsUseCase(
         myPreferencesRepository: MyPreferencesRepository,
         transactionRepository: TransactionRepository,
     ): DeleteAllTransactionsUseCase {
@@ -89,7 +89,7 @@ class TransactionUseCaseModule {
     }
 
     @Provides
-    fun providesDeleteTransactionUseCase(
+    public fun providesDeleteTransactionUseCase(
         myPreferencesRepository: MyPreferencesRepository,
         transactionRepository: TransactionRepository,
     ): DeleteTransactionUseCase {
@@ -100,7 +100,7 @@ class TransactionUseCaseModule {
     }
 
     @Provides
-    fun providesGetRecentTransactionDataFlowUseCase(
+    public fun providesGetRecentTransactionDataFlowUseCase(
         transactionRepository: TransactionRepository,
     ): GetRecentTransactionDataFlowUseCase {
         return GetRecentTransactionDataFlowUseCaseImpl(
@@ -109,7 +109,7 @@ class TransactionUseCaseModule {
     }
 
     @Provides
-    fun providesGetTitleSuggestionsUseCase(
+    public fun providesGetTitleSuggestionsUseCase(
         transactionRepository: TransactionRepository,
     ): GetTitleSuggestionsUseCase {
         return GetTitleSuggestionsUseCaseImpl(
@@ -118,7 +118,7 @@ class TransactionUseCaseModule {
     }
 
     @Provides
-    fun providesGetTransactionDataMappedByCategoryUseCase(
+    public fun providesGetTransactionDataMappedByCategoryUseCase(
         transactionRepository: TransactionRepository,
     ): GetTransactionDataMappedByCategoryUseCase {
         return GetTransactionDataMappedByCategoryUseCaseImpl(
@@ -127,7 +127,7 @@ class TransactionUseCaseModule {
     }
 
     @Provides
-    fun providesGetTransactionsBetweenTimestampsFlowUseCase(
+    public fun providesGetTransactionsBetweenTimestampsFlowUseCase(
         transactionRepository: TransactionRepository,
     ): GetTransactionsBetweenTimestampsFlowUseCase {
         return GetTransactionsBetweenTimestampsFlowUseCaseImpl(
@@ -136,7 +136,7 @@ class TransactionUseCaseModule {
     }
 
     @Provides
-    fun providesGetTransactionsBetweenTimestampsUseCase(
+    public fun providesGetTransactionsBetweenTimestampsUseCase(
         transactionRepository: TransactionRepository,
     ): GetTransactionsBetweenTimestampsUseCase {
         return GetTransactionsBetweenTimestampsUseCaseImpl(
@@ -145,7 +145,7 @@ class TransactionUseCaseModule {
     }
 
     @Provides
-    fun providesGetAllTransactionDataFlowUseCase(
+    public fun providesGetAllTransactionDataFlowUseCase(
         transactionRepository: TransactionRepository,
     ): GetAllTransactionDataFlowUseCase {
         return GetAllTransactionDataFlowUseCaseImpl(
@@ -154,7 +154,7 @@ class TransactionUseCaseModule {
     }
 
     @Provides
-    fun providesGetAllTransactionDataUseCase(
+    public fun providesGetAllTransactionDataUseCase(
         transactionRepository: TransactionRepository,
     ): GetAllTransactionDataUseCase {
         return GetAllTransactionDataUseCaseImpl(
@@ -163,7 +163,7 @@ class TransactionUseCaseModule {
     }
 
     @Provides
-    fun providesGetSearchedTransactionDataUseCase(
+    public fun providesGetSearchedTransactionDataUseCase(
         transactionRepository: TransactionRepository,
     ): GetSearchedTransactionDataUseCase {
         return GetSearchedTransactionDataUseCaseImpl(
@@ -172,7 +172,7 @@ class TransactionUseCaseModule {
     }
 
     @Provides
-    fun providesGetAllTransactionsUseCase(
+    public fun providesGetAllTransactionsUseCase(
         transactionRepository: TransactionRepository,
     ): GetAllTransactionsUseCase {
         return GetAllTransactionsUseCaseImpl(
@@ -181,7 +181,7 @@ class TransactionUseCaseModule {
     }
 
     @Provides
-    fun providesGetTransactionUseCase(
+    public fun providesGetTransactionUseCase(
         transactionRepository: TransactionRepository,
     ): GetTransactionUseCase {
         return GetTransactionUseCaseImpl(
@@ -190,7 +190,7 @@ class TransactionUseCaseModule {
     }
 
     @Provides
-    fun providesGetTransactionDataUseCase(
+    public fun providesGetTransactionDataUseCase(
         transactionRepository: TransactionRepository,
     ): GetTransactionDataUseCase {
         return GetTransactionDataUseCaseImpl(
@@ -199,7 +199,7 @@ class TransactionUseCaseModule {
     }
 
     @Provides
-    fun providesInsertTransactionUseCase(
+    public fun providesInsertTransactionUseCase(
         myPreferencesRepository: MyPreferencesRepository,
         transactionRepository: TransactionRepository,
     ): InsertTransactionUseCase {
@@ -210,7 +210,7 @@ class TransactionUseCaseModule {
     }
 
     @Provides
-    fun providesInsertTransactionsUseCase(
+    public fun providesInsertTransactionsUseCase(
         myPreferencesRepository: MyPreferencesRepository,
         transactionRepository: TransactionRepository,
     ): InsertTransactionsUseCase {
@@ -221,7 +221,7 @@ class TransactionUseCaseModule {
     }
 
     @Provides
-    fun providesUpdateTransactionsUseCase(
+    public fun providesUpdateTransactionsUseCase(
         myPreferencesRepository: MyPreferencesRepository,
         transactionRepository: TransactionRepository,
     ): UpdateTransactionsUseCase {
@@ -232,7 +232,7 @@ class TransactionUseCaseModule {
     }
 
     @Provides
-    fun providesUpdateTransactionUseCase(
+    public fun providesUpdateTransactionUseCase(
         myPreferencesRepository: MyPreferencesRepository,
         transactionRepository: TransactionRepository,
     ): UpdateTransactionUseCase {

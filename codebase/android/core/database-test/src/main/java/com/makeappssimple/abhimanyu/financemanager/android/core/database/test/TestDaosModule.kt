@@ -19,24 +19,24 @@ import dagger.hilt.testing.TestInstallIn
     components = [SingletonComponent::class],
     replaces = [DaosModule::class],
 )
-class TestDaosModule {
+public class TestDaosModule {
     @Provides
-    fun providesCategoryDao(): CategoryDao {
+    public fun providesCategoryDao(): CategoryDao {
         return FakeCategoryDaoImpl()
     }
 
     @Provides
-    fun providesAccountDao(): AccountDao {
+    public fun providesAccountDao(): AccountDao {
         return FakeAccountDaoImpl()
     }
 
     @Provides
-    fun providesTransactionDao(): TransactionDao {
+    public fun providesTransactionDao(): TransactionDao {
         return FakeTransactionDaoImpl()
     }
 
     @Provides
-    fun providesTransactionForDao(): TransactionForDao {
+    public fun providesTransactionForDao(): TransactionForDao {
         return FakeTransactionForDaoImpl()
     }
 }

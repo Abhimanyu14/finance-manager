@@ -26,7 +26,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emo
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircleData
 
 @Immutable
-data class AnalysisListItemData(
+public data class AnalysisListItemData(
     val maxEndTextWidth: Int = 0,
     val amountText: String,
     val emoji: String,
@@ -36,12 +36,12 @@ data class AnalysisListItemData(
 )
 
 @Immutable
-data class AnalysisListItemEvents(
+public data class AnalysisListItemEvents(
     val onClick: (() -> Unit)? = null,
 )
 
 @Composable
-fun AnalysisListItem(
+public fun AnalysisListItem(
     modifier: Modifier = Modifier,
     data: AnalysisListItemData,
     events: AnalysisListItemEvents = AnalysisListItemEvents(),

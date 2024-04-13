@@ -19,7 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
 
 @Composable
-fun MyConfirmationBottomSheetUI(
+public fun MyConfirmationBottomSheetUI(
     modifier: Modifier = Modifier,
     title: String,
     message: String,

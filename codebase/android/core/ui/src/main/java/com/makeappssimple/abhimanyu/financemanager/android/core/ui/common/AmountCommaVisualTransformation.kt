@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.curr
  *
  * Example: 1234567899 => 123,456,789,9
  * */
-class AmountCommaVisualTransformation : VisualTransformation {
+public class AmountCommaVisualTransformation : VisualTransformation {
     override fun filter(
         text: AnnotatedString,
     ): TransformedText {

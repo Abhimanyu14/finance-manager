@@ -4,13 +4,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 
-interface InsertCategoriesUseCase {
-    suspend operator fun invoke(
+public interface InsertCategoriesUseCase {
+    public suspend operator fun invoke(
         vararg categories: Category,
     ): List<Long>
 }
 
-class InsertCategoriesUseCaseImpl(
+public class InsertCategoriesUseCaseImpl(
     private val categoryRepository: CategoryRepository,
     private val myPreferencesRepository: MyPreferencesRepository,
 ) : InsertCategoriesUseCase {

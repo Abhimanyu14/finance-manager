@@ -7,14 +7,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen.H
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen.HomeScreenUIEvent
 import kotlinx.coroutines.flow.StateFlow
 
-interface HomeScreenViewModel : ScreenViewModel {
-    val screenUIData: StateFlow<MyResult<HomeScreenUIData>?>
+public interface HomeScreenViewModel : ScreenViewModel {
+    public val screenUIData: StateFlow<MyResult<HomeScreenUIData>?>
 
-    fun backupDataToDocument(
+    public fun backupDataToDocument(
         uri: Uri,
     )
 
-    fun handleUIEvents(
+    public fun handleUIEvents(
         uiEvent: HomeScreenUIEvent,
     )
 }

@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 
 @Composable
-fun MyFloatingActionButton(
+public fun MyFloatingActionButton(
     modifier: Modifier = Modifier,
     iconImageVector: ImageVector,
     contentDescription: String,

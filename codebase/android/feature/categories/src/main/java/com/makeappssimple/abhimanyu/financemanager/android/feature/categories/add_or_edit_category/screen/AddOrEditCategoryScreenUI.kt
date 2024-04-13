@@ -54,8 +54,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import kotlinx.coroutines.delay
 
-enum class AddOrEditCategoryScreenUIError(
-    @StringRes val textStringResourceId: Int,
+public enum class AddOrEditCategoryScreenUIError(
+    @StringRes public val textStringResourceId: Int,
 ) {
     CATEGORY_EXISTS(
         textStringResourceId = R.string.screen_add_or_edit_category_error_category_exists,

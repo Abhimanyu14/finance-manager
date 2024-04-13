@@ -10,10 +10,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface StringEncoderModule {
+public interface StringEncoderModule {
     @Singleton
     @Binds
-    fun bindStringEncoder(
+    public fun bindStringEncoder(
         stringEncoderImpl: StringEncoderImpl,
     ): StringEncoder
 }

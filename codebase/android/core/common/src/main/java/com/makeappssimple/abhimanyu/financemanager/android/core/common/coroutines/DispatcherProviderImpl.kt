@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutine
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.di.UnconfinedDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 
-class DispatcherProviderImpl(
+public class DispatcherProviderImpl(
     @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
     @IoDispatcher ioDispatcher: CoroutineDispatcher,
     @MainDispatcher mainDispatcher: CoroutineDispatcher,

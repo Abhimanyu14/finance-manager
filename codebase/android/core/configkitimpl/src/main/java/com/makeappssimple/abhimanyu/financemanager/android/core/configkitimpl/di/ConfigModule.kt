@@ -13,10 +13,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class ConfigModule {
+public class ConfigModule {
     @Singleton
     @Provides
-    fun provideFirebaseRemoteConfigSettings(): FirebaseRemoteConfigSettings {
+    public fun provideFirebaseRemoteConfigSettings(): FirebaseRemoteConfigSettings {
         /*
         // TODO(Abhi): Use this after adding dependency on debug build checks
         val remoteConfigFetchInterval: Long = if (isDebugBuild()) {
@@ -33,7 +33,7 @@ class ConfigModule {
 
     @Singleton
     @Provides
-    fun provideFirebaseRemoteConfig(
+    public fun provideFirebaseRemoteConfig(
         firebaseRemoteConfigSettings: FirebaseRemoteConfigSettings,
     ): FirebaseRemoteConfig {
         val firebaseRemoteConfig = Firebase.remoteConfig

@@ -4,18 +4,18 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-class IntListConverterTest {
+public class IntListConverterTest {
     private lateinit var intListConverter: IntListConverter
     private val testIntList = listOf(1, 2, 3)
     private val testIntListString = """[1,2,3]"""
 
     @Before
-    fun setUp() {
+    public fun setUp() {
         intListConverter = IntListConverter()
     }
 
     @Test
-    fun stringToIntList() {
+    public fun stringToIntList() {
         val result: List<Int>? = intListConverter.stringToIntList(
             value = testIntListString,
         )
@@ -28,7 +28,7 @@ class IntListConverterTest {
     }
 
     @Test
-    fun stringToIntList_valueIsNull() {
+    public fun stringToIntList_valueIsNull() {
         val result: List<Int>? = intListConverter.stringToIntList(
             value = null,
         )
@@ -37,7 +37,7 @@ class IntListConverterTest {
     }
 
     @Test
-    fun stringToIntList_valueIsInvalidString() {
+    public fun stringToIntList_valueIsInvalidString() {
         val result: List<Int>? = intListConverter.stringToIntList(
             value = "invalid string",
         )
@@ -46,7 +46,7 @@ class IntListConverterTest {
     }
 
     @Test
-    fun intListToString() {
+    public fun intListToString() {
         val result: String = intListConverter.intListToString(
             intList = testIntList,
         )
@@ -58,7 +58,7 @@ class IntListConverterTest {
     }
 
     @Test
-    fun intListToString_intListIsNull() {
+    public fun intListToString_intListIsNull() {
         val result: String = intListConverter.intListToString(
             intList = null,
         )

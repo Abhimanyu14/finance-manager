@@ -15,9 +15,9 @@ import kotlinx.coroutines.CoroutineDispatcher
     components = [SingletonComponent::class],
     replaces = [DispatcherProviderModule::class],
 )
-object TestDispatcherProviderModule {
+public object TestDispatcherProviderModule {
     @Provides
-    fun providesDispatcherProvider(
+    public fun providesDispatcherProvider(
         @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
     ): DispatcherProvider {
         return TestDispatcherProviderImpl(

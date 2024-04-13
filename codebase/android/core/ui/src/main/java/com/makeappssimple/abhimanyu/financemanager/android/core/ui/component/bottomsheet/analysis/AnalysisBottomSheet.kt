@@ -11,8 +11,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.analysis.Filter
 import java.time.LocalDate
 
-enum class DateRangeOptions(
-    val title: String,
+public enum class DateRangeOptions(
+    public val title: String,
 ) {
     THIS_MONTH(
         title = "This Month",
@@ -23,7 +23,7 @@ enum class DateRangeOptions(
 }
 
 @Composable
-fun AnalysisFilterBottomSheet(
+public fun AnalysisFilterBottomSheet(
     selectedFilter: Filter,
     @StringRes headingTextStringResourceId: Int,
     endLocalDate: LocalDate,

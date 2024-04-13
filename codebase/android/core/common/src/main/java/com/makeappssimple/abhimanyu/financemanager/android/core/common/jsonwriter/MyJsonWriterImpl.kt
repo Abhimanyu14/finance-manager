@@ -6,7 +6,7 @@ import java.io.FileOutputStream
 
 private const val writeMode = "w"
 
-class MyJsonWriterImpl(
+public class MyJsonWriterImpl(
     private val context: Context,
 ) : MyJsonWriter {
     override fun writeJsonToFile(

@@ -18,19 +18,19 @@ import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.lege
 
 
 @Immutable
-data class ActionButtonData(
+public data class ActionButtonData(
     val isIndicatorVisible: Boolean = false,
     val imageVector: ImageVector,
     @StringRes val contentDescriptionStringResourceId: Int,
 )
 
 @Immutable
-data class ActionButtonEvents(
+public data class ActionButtonEvents(
     val onClick: () -> Unit = {},
 )
 
 @Composable
-fun ActionButton(
+public fun ActionButton(
     modifier: Modifier = Modifier,
     data: ActionButtonData,
     events: ActionButtonEvents = ActionButtonEvents(),

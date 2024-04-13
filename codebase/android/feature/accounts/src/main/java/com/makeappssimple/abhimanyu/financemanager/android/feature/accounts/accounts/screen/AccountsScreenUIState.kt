@@ -13,7 +13,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemData
 
 @Stable
-class AccountsScreenUIState(
+public class AccountsScreenUIState(
     data: MyResult<AccountsScreenUIData>?,
     private val unwrappedData: AccountsScreenUIData? = when (data) {
         is MyResult.Success -> {
@@ -24,28 +24,28 @@ class AccountsScreenUIState(
             null
         }
     },
-    val clickedItemId: Int?,
-    val expandedItemIndex: Int?,
-    val accountIdToDelete: Int?,
-    val screenBottomSheetType: AccountsScreenBottomSheetType,
-    val setClickedItemId: (Int?) -> Unit,
-    val setExpandedItemIndex: (Int?) -> Unit,
-    val setAccountIdToDelete: (Int?) -> Unit,
-    val setScreenBottomSheetType: (AccountsScreenBottomSheetType) -> Unit,
-    val isLoading: Boolean = unwrappedData.isNull(),
-    val accountsListItemDataList: List<AccountsListItemData> =
+    public val clickedItemId: Int?,
+    public val expandedItemIndex: Int?,
+    public val accountIdToDelete: Int?,
+    public val screenBottomSheetType: AccountsScreenBottomSheetType,
+    public val setClickedItemId: (Int?) -> Unit,
+    public val setExpandedItemIndex: (Int?) -> Unit,
+    public val setAccountIdToDelete: (Int?) -> Unit,
+    public val setScreenBottomSheetType: (AccountsScreenBottomSheetType) -> Unit,
+    public val isLoading: Boolean = unwrappedData.isNull(),
+    public val accountsListItemDataList: List<AccountsListItemData> =
         unwrappedData?.accountsListItemDataList.orEmpty(),
-    val accountsTotalBalanceAmountValue: Long =
+    public val accountsTotalBalanceAmountValue: Long =
         unwrappedData?.accountsTotalBalanceAmountValue.orZero(),
-    val accountsTotalMinimumBalanceAmountValue: Long =
+    public val accountsTotalMinimumBalanceAmountValue: Long =
         unwrappedData?.accountsTotalMinimumBalanceAmountValue.orZero(),
-    val resetScreenBottomSheetType: () -> Unit = {
+    public val resetScreenBottomSheetType: () -> Unit = {
         setScreenBottomSheetType(AccountsScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
 @Composable
-fun rememberAccountsScreenUIState(
+public fun rememberAccountsScreenUIState(
     data: MyResult<AccountsScreenUIData>?,
 ): AccountsScreenUIState {
     var clickedItemId: Int? by remember {

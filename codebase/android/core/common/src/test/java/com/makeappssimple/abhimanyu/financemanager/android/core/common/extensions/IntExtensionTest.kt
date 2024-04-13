@@ -3,23 +3,23 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.extensio
 import org.junit.Assert
 import org.junit.Test
 
-class IntExtensionTest {
+public class IntExtensionTest {
 
     // region isNotZero tests
     @Test
-    fun isNotZero_positiveInteger() {
+    public fun isNotZero_positiveInteger() {
         val input = 1
         Assert.assertTrue(input.isNotZero())
     }
 
     @Test
-    fun isNotZero_negativeInteger() {
+    public fun isNotZero_negativeInteger() {
         val input = -1
         Assert.assertTrue(input.isNotZero())
     }
 
     @Test
-    fun isNotZero_zero() {
+    public fun isNotZero_zero() {
         val input = 0
         Assert.assertFalse(input.isNotZero())
     }

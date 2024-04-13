@@ -4,19 +4,20 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.DeleteTransactionUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.DeleteTransactionUseCaseImpl
+import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
-class DeleteTransactionUseCaseTest {
+public class DeleteTransactionUseCaseTest {
     private val myPreferencesRepository: MyPreferencesRepository = mock()
     private val transactionRepository: TransactionRepository = mock()
     private lateinit var deleteTransactionUseCase: DeleteTransactionUseCase
 
     @Before
-    fun setUp() {
+    public fun setUp() {
         deleteTransactionUseCase = DeleteTransactionUseCaseImpl(
             myPreferencesRepository = myPreferencesRepository,
             transactionRepository = transactionRepository,
@@ -24,7 +25,7 @@ class DeleteTransactionUseCaseTest {
     }
 
     @Test
-    fun invoke_defaultTest() = runTest {
+    public fun invoke_defaultTest(): TestResult = runTest {
         val id = 3
         deleteTransactionUseCase(
             id = id,

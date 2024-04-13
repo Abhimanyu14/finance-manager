@@ -14,7 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ext
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typealiases.ColumnScopedComposableContent
 
 @Composable
-fun MyScaffoldContentWrapper(
+public fun MyScaffoldContentWrapper(
     modifier: Modifier = Modifier,
     innerPadding: PaddingValues,
     onClick: () -> Unit,

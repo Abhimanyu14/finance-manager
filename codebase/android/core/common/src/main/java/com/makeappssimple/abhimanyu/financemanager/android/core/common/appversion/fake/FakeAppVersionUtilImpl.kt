@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.appversi
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersion
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
 
-class FakeAppVersionUtilImpl : AppVersionUtil {
+public class FakeAppVersionUtilImpl : AppVersionUtil {
     override fun getAppVersion(): AppVersion {
         return AppVersion(
             versionName = "versionName",

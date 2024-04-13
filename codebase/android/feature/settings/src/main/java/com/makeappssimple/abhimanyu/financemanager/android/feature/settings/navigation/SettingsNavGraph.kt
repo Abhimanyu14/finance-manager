@@ -8,7 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Scree
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.screen.OpenSourceLicensesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreen
 
-fun NavGraphBuilder.settingsNavGraph() {
+public fun NavGraphBuilder.settingsNavGraph() {
     composable(
         route = Screen.OpenSourceLicenses.route,
         deepLinks = listOf(

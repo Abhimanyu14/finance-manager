@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter
 /**
  * Sample format - 08:24 AM
  */
-fun LocalTime.formattedTime(
+public fun LocalTime.formattedTime(
     zoneId: ZoneId = getSystemDefaultZoneId(),
 ): String {
     return DateTimeFormatter

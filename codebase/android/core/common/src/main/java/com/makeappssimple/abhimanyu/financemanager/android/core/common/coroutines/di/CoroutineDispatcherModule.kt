@@ -9,34 +9,34 @@ import kotlinx.coroutines.Dispatchers
 
 @Module
 @InstallIn(SingletonComponent::class)
-object CoroutineDispatcherModule {
+public object CoroutineDispatcherModule {
     @DefaultDispatcher
     @Provides
-    fun providesDefaultDispatcher(): CoroutineDispatcher {
+    public fun providesDefaultDispatcher(): CoroutineDispatcher {
         return Dispatchers.Default
     }
 
     @IoDispatcher
     @Provides
-    fun providesIoDispatcher(): CoroutineDispatcher {
+    public fun providesIoDispatcher(): CoroutineDispatcher {
         return Dispatchers.IO
     }
 
     @MainDispatcher
     @Provides
-    fun providesMainDispatcher(): CoroutineDispatcher {
+    public fun providesMainDispatcher(): CoroutineDispatcher {
         return Dispatchers.Main
     }
 
     @MainImmediateDispatcher
     @Provides
-    fun providesMainImmediateDispatcher(): CoroutineDispatcher {
+    public fun providesMainImmediateDispatcher(): CoroutineDispatcher {
         return Dispatchers.Main.immediate
     }
 
     @UnconfinedDispatcher
     @Provides
-    fun providesUnconfinedDispatcher(): CoroutineDispatcher {
+    public fun providesUnconfinedDispatcher(): CoroutineDispatcher {
         return Dispatchers.Unconfined
     }
 }

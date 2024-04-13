@@ -10,7 +10,7 @@ import java.util.Currency
 import kotlin.math.abs
 
 @Serializable
-data class Amount(
+public data class Amount(
     @EncodeDefault
     @Serializable(CurrencySerializer::class)
     val currency: Currency = Currency.getInstance(CurrencyCodeConstants.INR),
@@ -18,14 +18,14 @@ data class Amount(
     @EncodeDefault
     val value: Long = 0,
 ) : Comparable<Amount> {
-    fun toNonSignedString(): String {
+    public fun toNonSignedString(): String {
         return toSignedString(
             isPositive = false,
             isNegative = false
         )
     }
 
-    fun toSignedString(
+    public fun toSignedString(
         isPositive: Boolean = false,
         isNegative: Boolean = false,
     ): String {
@@ -52,7 +52,7 @@ data class Amount(
         }
     }
 
-    operator fun plus(
+    public operator fun plus(
         amount: Amount,
     ): Amount {
         return Amount(
@@ -61,7 +61,7 @@ data class Amount(
         )
     }
 
-    operator fun minus(
+    public operator fun minus(
         amount: Amount,
     ): Amount {
         return Amount(
@@ -78,7 +78,7 @@ data class Amount(
     }
 }
 
-fun Amount?.orEmpty(): Amount {
+public fun Amount?.orEmpty(): Amount {
     return if (this.isNull()) {
         Amount()
     } else {

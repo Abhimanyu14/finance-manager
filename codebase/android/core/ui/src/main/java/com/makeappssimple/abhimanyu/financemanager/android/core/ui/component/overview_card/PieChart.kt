@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 
 private const val SLICE_THICKNESS = 30F
 /*
-val pieChartData = PieChartData(
+public val pieChartData = PieChartData(
     items = listOf(
         PieChartItemData(
             value = 10F,
@@ -25,7 +25,7 @@ val pieChartData = PieChartData(
 */
 
 @Composable
-fun PieChart(
+public fun PieChart(
     pieChartData: com.makeappssimple.abhimanyu.financemanager.android.chart.pie.PieChartData,
 ) {
     Row(

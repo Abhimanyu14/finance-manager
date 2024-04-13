@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.acco
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_account.screen.AddAccountScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.edit_account.screen.EditAccountScreen
 
-fun NavGraphBuilder.accountsNavGraph() {
+public fun NavGraphBuilder.accountsNavGraph() {
     composable(
         route = Screen.AddAccount.route,
         deepLinks = listOf(

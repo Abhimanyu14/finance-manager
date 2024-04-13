@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 
-enum class AddOrEditTransactionForScreenBottomSheetType : ScreenBottomSheetType {
+public enum class AddOrEditTransactionForScreenBottomSheetType : ScreenBottomSheetType {
     DELETE,
     EDIT,
     NONE,

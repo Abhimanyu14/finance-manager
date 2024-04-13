@@ -5,19 +5,20 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.DeleteAccountsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.DeleteAccountsUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.getTestAccounts
+import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
-class DeleteAccountsUseCaseTest {
+public class DeleteAccountsUseCaseTest {
     private val myPreferencesRepository: MyPreferencesRepository = mock()
     private val accountRepository: AccountRepository = mock()
     private lateinit var deleteAccountsUseCase: DeleteAccountsUseCase
 
     @Before
-    fun setUp() {
+    public fun setUp() {
         deleteAccountsUseCase =
             DeleteAccountsUseCaseImpl(
                 myPreferencesRepository = myPreferencesRepository,
@@ -26,7 +27,7 @@ class DeleteAccountsUseCaseTest {
     }
 
     @Test
-    fun invoke_defaultTest() = runTest {
+    public fun invoke_defaultTest(): TestResult = runTest {
         val account = getTestAccounts().first()
         deleteAccountsUseCase(
             account,

@@ -8,7 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 
-class FakeMyPreferencesRepositoryImpl : MyPreferencesRepository {
+public class FakeMyPreferencesRepositoryImpl : MyPreferencesRepository {
     override fun getDataTimestamp(): Flow<DataTimestamp?> {
         return emptyFlow()
     }

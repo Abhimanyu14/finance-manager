@@ -4,9 +4,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 import org.junit.Assert
 import org.junit.Test
 
-class AmountTest {
+public class AmountTest {
     @Test
-    fun toNonSignedString_valueIsPositive() {
+    public fun toNonSignedString_valueIsPositive() {
         val result = testAmount1.toNonSignedString()
 
         Assert.assertEquals(
@@ -16,7 +16,7 @@ class AmountTest {
     }
 
     @Test
-    fun toNonSignedString_valueIsNegative() {
+    public fun toNonSignedString_valueIsNegative() {
         val result = testAmount3.toNonSignedString()
 
         Assert.assertEquals(
@@ -26,7 +26,7 @@ class AmountTest {
     }
 
     @Test
-    fun toNonSignedString_valueIsZero() {
+    public fun toNonSignedString_valueIsZero() {
         val result = testAmount4.toNonSignedString()
 
         Assert.assertEquals(
@@ -36,7 +36,7 @@ class AmountTest {
     }
 
     @Test
-    fun toSignedString_valueIsPositive() {
+    public fun toSignedString_valueIsPositive() {
         val result = testAmount1.toSignedString(
             isPositive = true,
         )
@@ -48,7 +48,7 @@ class AmountTest {
     }
 
     @Test
-    fun toSignedString_valueIsNegative() {
+    public fun toSignedString_valueIsNegative() {
         val result = testAmount3.toSignedString(
             isNegative = true,
         )
@@ -60,7 +60,7 @@ class AmountTest {
     }
 
     @Test
-    fun toSignedString_valueIsZero() {
+    public fun toSignedString_valueIsZero() {
         val result = testAmount4.toSignedString()
 
         Assert.assertEquals(
@@ -70,7 +70,7 @@ class AmountTest {
     }
 
     @Test
-    fun toString_valueIsNonNegative() {
+    public fun toString_valueIsNonNegative() {
         val result = testAmount1.toString()
 
         Assert.assertEquals(
@@ -80,7 +80,7 @@ class AmountTest {
     }
 
     @Test
-    fun toString_valueIsNegative() {
+    public fun toString_valueIsNegative() {
         val result = testAmount3.toString()
 
         Assert.assertEquals(
@@ -90,7 +90,7 @@ class AmountTest {
     }
 
     @Test
-    fun plus() {
+    public fun plus() {
         val result = testAmount1 + testAmount2
 
         Assert.assertEquals(
@@ -104,7 +104,7 @@ class AmountTest {
     }
 
     @Test
-    fun minus() {
+    public fun minus() {
         val result = testAmount1 - testAmount2
 
         Assert.assertEquals(
@@ -117,7 +117,7 @@ class AmountTest {
         )
     }
 
-    companion object {
+    public companion object {
         private var testAmount1: AmountEntity = AmountEntity(
             value = 23,
         )

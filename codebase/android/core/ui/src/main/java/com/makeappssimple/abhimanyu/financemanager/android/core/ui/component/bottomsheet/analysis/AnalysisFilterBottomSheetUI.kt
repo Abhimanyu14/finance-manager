@@ -31,7 +31,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import java.time.LocalDate
 
 @Composable
-fun AnalysisFilterBottomSheetUI(
+public fun AnalysisFilterBottomSheetUI(
     modifier: Modifier = Modifier,
     isFromDatePickerDialogVisible: Boolean,
     isToDatePickerDialogVisible: Boolean,

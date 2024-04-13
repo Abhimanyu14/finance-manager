@@ -13,7 +13,7 @@ import androidx.compose.ui.semantics.onClick
 import androidx.compose.ui.semantics.semantics
 
 @Composable
-fun MyIconButton(
+public fun MyIconButton(
     modifier: Modifier = Modifier,
     tint: Color = LocalContentColor.current,
     imageVector: ImageVector,
@@ -37,7 +37,7 @@ fun MyIconButton(
  * Recommended to use [MyIconButton] with [contentDescriptionStringResourceId] over this.
  */
 @Composable
-fun MyIconButton(
+public fun MyIconButton(
     modifier: Modifier = Modifier,
     tint: Color = LocalContentColor.current,
     imageVector: ImageVector,

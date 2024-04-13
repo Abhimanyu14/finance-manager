@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.BuildConf
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig.BuildConfigUtil
 import javax.inject.Inject
 
-class FakeBuildConfigUtilImpl @Inject constructor() : BuildConfigUtil {
+public class FakeBuildConfigUtilImpl @Inject constructor() : BuildConfigUtil {
     override fun isDebugBuild(): Boolean {
         return BuildConfig.DEBUG
     }

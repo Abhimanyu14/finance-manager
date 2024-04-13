@@ -3,25 +3,25 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmod
 import org.junit.Before
 import org.junit.Test
 
-class HomeScreenViewModelTest {
+public class HomeScreenViewModelTest {
 
     @Before
-    fun setUp() {
+    public fun setUp() {
     }
 
     @Test
-    fun getHomeListItemViewData() {
+    public fun getHomeListItemViewData() {
     }
 
     @Test
-    fun getShowBackupCard() {
+    public fun getShowBackupCard() {
     }
 
     @Test
-    fun backupDataToDocument() {
+    public fun backupDataToDocument() {
     }
 
     @Test
-    fun getNavigationManager() {
+    public fun getNavigationManager() {
     }
 }

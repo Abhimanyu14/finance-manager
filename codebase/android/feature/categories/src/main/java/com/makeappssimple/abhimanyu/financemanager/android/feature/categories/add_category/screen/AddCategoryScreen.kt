@@ -16,7 +16,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ad
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.viewmodel.AddOrEditCategoryScreenViewModelImpl
 
 @Composable
-fun AddCategoryScreen(
+public fun AddCategoryScreen(
     screenViewModel: AddOrEditCategoryScreenViewModel = hiltViewModel<AddOrEditCategoryScreenViewModelImpl>(),
 ) {
     val viewModel = remember {

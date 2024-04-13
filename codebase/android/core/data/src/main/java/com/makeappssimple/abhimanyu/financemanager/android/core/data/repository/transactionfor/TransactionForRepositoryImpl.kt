@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
-class TransactionForRepositoryImpl(
+public class TransactionForRepositoryImpl(
     private val dispatcherProvider: DispatcherProvider,
     private val transactionForDao: TransactionForDao,
 ) : TransactionForRepository {

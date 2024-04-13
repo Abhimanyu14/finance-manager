@@ -1,11 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.buildconfig
 
-interface BuildConfigUtil {
-    fun isDebugBuild(): Boolean
+public interface BuildConfigUtil {
+    public fun isDebugBuild(): Boolean
 
-    fun getBuildVersion(): Int
+    public fun getBuildVersion(): Int
 
-    fun isAndroidApiEqualToOrAbove(
+    public fun isAndroidApiEqualToOrAbove(
         buildVersionNumber: Int,
     ): Boolean
 }

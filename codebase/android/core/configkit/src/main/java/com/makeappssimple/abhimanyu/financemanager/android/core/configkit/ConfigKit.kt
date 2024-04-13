@@ -1,5 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.configkit
 
-interface ConfigKit {
-    fun isEnabled(): Boolean
+public interface ConfigKit {
+    public fun isEnabled(): Boolean
 }

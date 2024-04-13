@@ -2,8 +2,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.model.feature
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 
-enum class SortOption(
-    val title: String,
+public enum class SortOption(
+    public val title: String,
 ) {
     AMOUNT_ASC(
         title = "Amount Asc",
@@ -19,7 +19,7 @@ enum class SortOption(
     ),
 }
 
-fun SortOption?.orDefault(): SortOption {
+public fun SortOption?.orDefault(): SortOption {
     return if (this.isNull()) {
         SortOption.LATEST_FIRST
     } else {

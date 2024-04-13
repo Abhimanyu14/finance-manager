@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.edit_transaction_for.screen.EditTransactionForScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.screen.TransactionForValuesScreen
 
-fun NavGraphBuilder.transactionForNavGraph() {
+public fun NavGraphBuilder.transactionForNavGraph() {
     composable(
         route = Screen.AddTransactionFor.route,
         deepLinks = listOf(

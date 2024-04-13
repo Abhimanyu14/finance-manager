@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.util.cur
 
 import java.text.DecimalFormat
 
-fun formattedCurrencyValue(
+public fun formattedCurrencyValue(
     value: Long,
 ): String {
     // return NumberFormat.getCurrencyInstance(Locale("en", "in")).format(value)

@@ -5,14 +5,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.an
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEvent
 
 @Immutable
-sealed class AnalysisScreenUIEvent : ScreenUIEvent {
-    data object NavigateUp : AnalysisScreenUIEvent()
+public sealed class AnalysisScreenUIEvent : ScreenUIEvent {
+    public data object NavigateUp : AnalysisScreenUIEvent()
 
-    data class UpdateSelectedFilter(
+    public data class UpdateSelectedFilter(
         val updatedSelectedFilter: Filter,
     ) : AnalysisScreenUIEvent()
 
-    data class UpdateSelectedTransactionTypeIndex(
+    public data class UpdateSelectedTransactionTypeIndex(
         val updatedSelectedTransactionTypeIndex: Int,
     ) : AnalysisScreenUIEvent()
 }

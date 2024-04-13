@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class FakeTransactionRepositoryImpl : TransactionRepository {
+public class FakeTransactionRepositoryImpl : TransactionRepository {
     override suspend fun getAllTransactions(): List<Transaction> {
         return emptyList()
     }

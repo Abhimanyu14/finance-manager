@@ -13,11 +13,11 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 
-interface RecalculateTotalUseCase {
-    suspend operator fun invoke()
+public interface RecalculateTotalUseCase {
+    public suspend operator fun invoke()
 }
 
-class RecalculateTotalUseCaseImpl(
+public class RecalculateTotalUseCaseImpl(
     private val dispatcherProvider: DispatcherProvider,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val getAllTransactionDataUseCase: GetAllTransactionDataUseCase,

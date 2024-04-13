@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class FakeAccountRepositoryImpl : AccountRepository {
+public class FakeAccountRepositoryImpl : AccountRepository {
     override fun getAllAccountsFlow(): Flow<List<Account>> {
         return flow {
             emptyList<Account>()

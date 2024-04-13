@@ -9,18 +9,18 @@ import org.junit.Rule
 import javax.inject.Inject
 
 @HiltAndroidTest
-class SettingsScreenViewModelTest {
+public class SettingsScreenViewModelTest {
     @get:Rule(order = 0)
-    var hiltRule = HiltAndroidRule(this)
+    public var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
 
     @Inject
-    lateinit var settingsScreenViewModel: SettingsScreenViewModel
+    public lateinit var settingsScreenViewModel: SettingsScreenViewModel
 
     @Before
-    fun setUp() {
+    public fun setUp() {
     }
 
     @After
-    fun tearDown() {
+    public fun tearDown() {
     }
 }

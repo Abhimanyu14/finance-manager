@@ -10,7 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun Dot(
+public fun Dot(
     modifier: Modifier = Modifier,
     color: Color,
 ) {

@@ -11,7 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typealiases.BoxScopedComposableContent
 
 @Composable
-fun MySearchBarContainer(
+public fun MySearchBarContainer(
     modifier: Modifier = Modifier,
     content: BoxScopedComposableContent,
 ) {

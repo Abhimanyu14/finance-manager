@@ -1,5 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion
 
-interface AppVersionUtil {
-    fun getAppVersion(): AppVersion?
+public interface AppVersionUtil {
+    public fun getAppVersion(): AppVersion?
 }

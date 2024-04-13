@@ -25,13 +25,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyE
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.default_tag.MyDefaultTag
 
 @Immutable
-data class AccountsListItemContentDataAndEvents(
+public data class AccountsListItemContentDataAndEvents(
     val data: AccountsListItemContentData,
     val events: AccountsListItemContentEvents,
 )
 
 @Immutable
-data class AccountsListItemContentData(
+public data class AccountsListItemContentData(
     override val type: AccountsListItemType = AccountsListItemType.CONTENT,
     val isDefault: Boolean = false,
     val isDeleteEnabled: Boolean = false,
@@ -46,7 +46,7 @@ data class AccountsListItemContentData(
 ) : AccountsListItemData
 
 @Immutable
-data class AccountsListItemContentEvents(
+public data class AccountsListItemContentEvents(
     val onClick: () -> Unit,
     val onLongClick: () -> Unit = {},
     val onEditClick: () -> Unit = {},
@@ -54,7 +54,7 @@ data class AccountsListItemContentEvents(
 )
 
 @Composable
-fun AccountsListItemContent(
+public fun AccountsListItemContent(
     modifier: Modifier = Modifier,
     data: AccountsListItemContentData,
     events: AccountsListItemContentEvents,

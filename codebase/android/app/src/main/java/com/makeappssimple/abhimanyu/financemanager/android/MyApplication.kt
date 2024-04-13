@@ -8,7 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.notificationkit.
 import dagger.hilt.android.HiltAndroidApp
 
 @HiltAndroidApp
-class MyApplication : Application() {
+public class MyApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()

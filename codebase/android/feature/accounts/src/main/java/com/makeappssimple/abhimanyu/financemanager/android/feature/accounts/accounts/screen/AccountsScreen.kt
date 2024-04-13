@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.acco
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.viewmodel.AccountsScreenViewModelImpl
 
 @Composable
-fun AccountsScreen(
+public fun AccountsScreen(
     screenViewModel: AccountsScreenViewModel = hiltViewModel<AccountsScreenViewModelImpl>(),
 ) {
     val viewModel = remember {

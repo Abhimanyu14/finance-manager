@@ -2,38 +2,38 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.util
 
 import java.time.ZoneId
 
-class DateTimeUtilTest {
+public class DateTimeUtilTest {
     private val testTimestamp = 1680144857890
     private val testZoneId = ZoneId.of("Asia/Kolkata")
 
     /*
     // TODO(Abhi): Fix tests
     @Test
-    fun getCurrentLocalDate() {
+    public fun getCurrentLocalDate() {
     }
 
     @Test
-    fun getCurrentLocalTime() {
+    public fun getCurrentLocalTime() {
     }
 
     @Test
-    fun getCurrentLocalDateTime() {
+    public fun getCurrentLocalDateTime() {
     }
 
     @Test
-    fun getCurrentInstant() {
+    public fun getCurrentInstant() {
     }
 
     @Test
-    fun getCurrentTimeMillis() {
+    public fun getCurrentTimeMillis() {
     }
 
     @Test
-    fun getSystemDefaultZoneId() {
+    public fun getSystemDefaultZoneId() {
     }
 
     @Test
-    fun getFormattedDateTest() {
+    public fun getFormattedDateTest() {
         Assert.assertEquals(
             "30 Mar, 2023",
             getFormattedDate(
@@ -44,7 +44,7 @@ class DateTimeUtilTest {
     }
 
     @Test
-    fun getFormattedDay() {
+    public fun getFormattedDay() {
         Assert.assertEquals(
             "30 Mar",
             com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getFormattedDay(
@@ -55,7 +55,7 @@ class DateTimeUtilTest {
     }
 
     @Test
-    fun getFormattedMonth() {
+    public fun getFormattedMonth() {
         Assert.assertEquals(
             "March, 2023",
             com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getFormattedMonth(
@@ -66,7 +66,7 @@ class DateTimeUtilTest {
     }
 
     @Test
-    fun getFormattedYear() {
+    public fun getFormattedYear() {
         Assert.assertEquals(
             "2023",
             com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getFormattedYear(
@@ -77,7 +77,7 @@ class DateTimeUtilTest {
     }
 
     @Test
-    fun getFormattedDateAndTime() {
+    public fun getFormattedDateAndTime() {
         Assert.assertEquals(
             "2023-Mar-30, 08-24 AM",
             com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getFormattedDateAndTime(
@@ -88,7 +88,7 @@ class DateTimeUtilTest {
     }
 
     @Test
-    fun getReadableDateAndTime() {
+    public fun getReadableDateAndTime() {
         Assert.assertEquals(
             "30 Mar, 2023 at 08:24 AM",
             com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getReadableDateAndTime(
@@ -99,7 +99,7 @@ class DateTimeUtilTest {
     }
 
     @Test
-    fun getLocalDate() {
+    public fun getLocalDate() {
         val result =
             com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getLocalDate(
                 timestamp = testTimestamp,
@@ -121,7 +121,7 @@ class DateTimeUtilTest {
     }
 
     @Test
-    fun getLocalTime() {
+    public fun getLocalTime() {
         val result =
             com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getLocalTime(
                 timestamp = testTimestamp,
@@ -139,7 +139,7 @@ class DateTimeUtilTest {
     }
 
     @Test
-    fun getLocalDateTime() {
+    public fun getLocalDateTime() {
         val result =
             com.makeappssimple.abhimanyu.financemanager.android.core.common.util.datetime.getLocalDateTime(
                 timestamp = testTimestamp,
@@ -169,7 +169,7 @@ class DateTimeUtilTest {
     }
 
     @Test
-    fun getStartOfDayTimestamp_defaultTest() {
+    public fun getStartOfDayTimestamp_defaultTest() {
         val result = getStartOfDayTimestamp(
             timestamp = testTimestamp,
             zoneId = testZoneId,
@@ -182,7 +182,7 @@ class DateTimeUtilTest {
     }
 
     @Test
-    fun getEndOfDayTimestamp_defaultTest() {
+    public fun getEndOfDayTimestamp_defaultTest() {
         val result = getEndOfDayTimestamp(
             timestamp = testTimestamp,
             zoneId = testZoneId,
@@ -195,7 +195,7 @@ class DateTimeUtilTest {
     }
 
     @Test
-    fun getStartOfMonthTimestamp_defaultTest() {
+    public fun getStartOfMonthTimestamp_defaultTest() {
         val result = getStartOfMonthTimestamp(
             timestamp = testTimestamp,
             zoneId = testZoneId,
@@ -208,7 +208,7 @@ class DateTimeUtilTest {
     }
 
     @Test
-    fun getEndOfMonthTimestamp_defaultTest() {
+    public fun getEndOfMonthTimestamp_defaultTest() {
         val result = getEndOfMonthTimestamp(
             timestamp = testTimestamp,
             zoneId = testZoneId,
@@ -221,7 +221,7 @@ class DateTimeUtilTest {
     }
 
     @Test
-    fun getStartOfYearTimestamp_defaultTest() {
+    public fun getStartOfYearTimestamp_defaultTest() {
         val result = getStartOfYearTimestamp(
             timestamp = testTimestamp,
             zoneId = testZoneId,
@@ -234,7 +234,7 @@ class DateTimeUtilTest {
     }
 
     @Test
-    fun getEndOfYearTimestamp_defaultTest() {
+    public fun getEndOfYearTimestamp_defaultTest() {
         val result = getEndOfYearTimestamp(
             timestamp = testTimestamp,
             zoneId = testZoneId,

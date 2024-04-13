@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ico
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 
 @Composable
-fun MyNavigationBackButton(
+public fun MyNavigationBackButton(
     modifier: Modifier = Modifier,
     onClick: () -> Unit,
 ) {

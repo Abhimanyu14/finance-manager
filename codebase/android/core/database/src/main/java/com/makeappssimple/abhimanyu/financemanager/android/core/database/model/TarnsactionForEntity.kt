@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 @Entity(tableName = "transaction_for_table")
-data class TransactionForEntity(
+public data class TransactionForEntity(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
 
@@ -18,7 +18,7 @@ data class TransactionForEntity(
         get() = title.capitalizeWords()
 }
 
-fun TransactionForEntity.asExternalModel(): TransactionFor {
+public fun TransactionForEntity.asExternalModel(): TransactionFor {
     return TransactionFor(
         id = id,
         title = title,

@@ -9,13 +9,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
-data class SettingsListItemHeaderData(
+public data class SettingsListItemHeaderData(
     override val type: SettingsListItemType = SettingsListItemType.HEADER,
     @StringRes val textStringResourceId: Int,
 ) : SettingsListItemData
 
 @Composable
-fun SettingsListItemHeader(
+public fun SettingsListItemHeader(
     modifier: Modifier = Modifier,
     data: SettingsListItemHeaderData,
 ) {

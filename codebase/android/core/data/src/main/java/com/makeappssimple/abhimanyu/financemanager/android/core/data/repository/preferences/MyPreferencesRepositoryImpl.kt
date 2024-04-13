@@ -10,7 +10,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 
-class MyPreferencesRepositoryImpl(
+public class MyPreferencesRepositoryImpl(
     private val dispatcherProvider: DispatcherProvider,
     private val myPreferencesDataSource: MyPreferencesDataSource,
 ) : MyPreferencesRepository {

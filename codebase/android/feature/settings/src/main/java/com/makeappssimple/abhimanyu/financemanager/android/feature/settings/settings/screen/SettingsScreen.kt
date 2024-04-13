@@ -29,7 +29,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.sett
 import kotlinx.coroutines.launch
 
 @Composable
-fun SettingsScreen(
+public fun SettingsScreen(
     screenViewModel: SettingsScreenViewModel = hiltViewModel<SettingsScreenViewModelImpl>(),
 ) {
     val viewModel = remember {

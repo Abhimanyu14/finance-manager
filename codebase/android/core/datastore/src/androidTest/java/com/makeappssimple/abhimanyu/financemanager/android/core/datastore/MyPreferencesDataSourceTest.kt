@@ -20,6 +20,7 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
@@ -32,16 +33,16 @@ import org.junit.runner.RunWith
 
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
-class MyPreferencesDataSourceTest {
+public class MyPreferencesDataSourceTest {
     private val testContext: Context = ApplicationProvider.getApplicationContext()
     private val testDispatcher = UnconfinedTestDispatcher()
     private val testScope = TestScope(testDispatcher + Job())
 
     @get:Rule(order = 0)
-    var hiltRule = HiltAndroidRule(this)
+    public var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
 
     @get:Rule(order = 1)
-    val mainDispatcherRule = MainDispatcherRule()
+    public val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
 
     private lateinit var testDataStore: DataStore<Preferences>
     private lateinit var testMyLogger: MyLogger
@@ -49,7 +50,7 @@ class MyPreferencesDataSourceTest {
     private lateinit var myPreferencesDataSource: MyPreferencesDataSource
 
     @Before
-    fun setUp() {
+    public fun setUp() {
         hiltRule.inject()
 
         testDataStore = PreferenceDataStoreFactory.create(
@@ -68,12 +69,12 @@ class MyPreferencesDataSourceTest {
     }
 
     @After
-    fun tearDown() {
+    public fun tearDown() {
         testScope.cancel()
     }
 
     @Test
-    fun getDataTimestampLastBackup_returnsZero() = runTestAndClearDataStore {
+    public fun getDataTimestampLastBackup_returnsZero(): TestResult = runTestAndClearDataStore {
         val result = myPreferencesDataSource.getDataTimestamp().first()?.lastBackup
 
         Assert.assertEquals(
@@ -83,7 +84,7 @@ class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun getDataTimestampLastChange_returnsZero() = runTestAndClearDataStore {
+    public fun getDataTimestampLastChange_returnsZero(): TestResult = runTestAndClearDataStore {
         val result = myPreferencesDataSource.getDataTimestamp().first()?.lastChange
 
         Assert.assertEquals(
@@ -93,7 +94,7 @@ class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun setLastDataBackupTimestamp_defaultTest() = runTestAndClearDataStore {
+    public fun setLastDataBackupTimestamp_defaultTest(): TestResult = runTestAndClearDataStore {
         myPreferencesDataSource.setLastDataBackupTimestamp(
             lastDataBackupTimestamp = TEST_TIMESTAMP,
         )
@@ -107,7 +108,7 @@ class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun setLastDataChangeTimestamp_defaultTest() = runTestAndClearDataStore {
+    public fun setLastDataChangeTimestamp_defaultTest(): TestResult = runTestAndClearDataStore {
         myPreferencesDataSource.setLastDataChangeTimestamp(
             lastDataChangeTimestamp = TEST_TIMESTAMP,
         )
@@ -121,17 +122,18 @@ class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun getDefaultDataIdExpenseCategory_returnsZero() = runTestAndClearDataStore {
-        val result = myPreferencesDataSource.getDefaultDataId().first()?.expenseCategory
+    public fun getDefaultDataIdExpenseCategory_returnsZero(): TestResult =
+        runTestAndClearDataStore {
+            val result = myPreferencesDataSource.getDefaultDataId().first()?.expenseCategory
 
-        Assert.assertEquals(
-            0,
-            result,
-        )
-    }
+            Assert.assertEquals(
+                0,
+                result,
+            )
+        }
 
     @Test
-    fun getDefaultDataIdIncomeCategory_returnsZero() = runTestAndClearDataStore {
+    public fun getDefaultDataIdIncomeCategory_returnsZero(): TestResult = runTestAndClearDataStore {
         val result = myPreferencesDataSource.getDefaultDataId().first()?.incomeCategory
 
         Assert.assertEquals(
@@ -141,17 +143,18 @@ class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun getDefaultDataIdInvestmentCategory_returnsZero() = runTestAndClearDataStore {
-        val result = myPreferencesDataSource.getDefaultDataId().first()?.investmentCategory
+    public fun getDefaultDataIdInvestmentCategory_returnsZero(): TestResult =
+        runTestAndClearDataStore {
+            val result = myPreferencesDataSource.getDefaultDataId().first()?.investmentCategory
 
-        Assert.assertEquals(
-            0,
-            result,
-        )
-    }
+            Assert.assertEquals(
+                0,
+                result,
+            )
+        }
 
     @Test
-    fun getDefaultDataIdAccount_returnsZero() = runTestAndClearDataStore {
+    public fun getDefaultDataIdAccount_returnsZero(): TestResult = runTestAndClearDataStore {
         val result = myPreferencesDataSource.getDefaultDataId().first()?.account
 
         Assert.assertEquals(
@@ -161,7 +164,7 @@ class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun setDefaultExpenseCategoryId_defaultTest() = runTestAndClearDataStore {
+    public fun setDefaultExpenseCategoryId_defaultTest(): TestResult = runTestAndClearDataStore {
         myPreferencesDataSource.setDefaultExpenseCategoryId(
             defaultExpenseCategoryId = TEST_ID,
         )
@@ -175,7 +178,7 @@ class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun setDefaultIncomeCategoryId_defaultTest() = runTestAndClearDataStore {
+    public fun setDefaultIncomeCategoryId_defaultTest(): TestResult = runTestAndClearDataStore {
         myPreferencesDataSource.setDefaultIncomeCategoryId(
             defaultIncomeCategoryId = TEST_ID,
         )
@@ -189,7 +192,7 @@ class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun setDefaultInvestmentCategoryId_defaultTest() = runTestAndClearDataStore {
+    public fun setDefaultInvestmentCategoryId_defaultTest(): TestResult = runTestAndClearDataStore {
         myPreferencesDataSource.setDefaultInvestmentCategoryId(
             defaultInvestmentCategoryId = TEST_ID,
         )
@@ -203,7 +206,7 @@ class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun setDefaultAccountId_defaultTest() = runTestAndClearDataStore {
+    public fun setDefaultAccountId_defaultTest(): TestResult = runTestAndClearDataStore {
         myPreferencesDataSource.setDefaultAccountId(
             defaultAccountId = TEST_ID,
         )
@@ -217,47 +220,52 @@ class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun getInitialDataVersionNumberAccount_returnsZero() = runTestAndClearDataStore {
-        val result = myPreferencesDataSource.getInitialDataVersionNumber().first()?.account
+    public fun getInitialDataVersionNumberAccount_returnsZero(): TestResult =
+        runTestAndClearDataStore {
+            val result = myPreferencesDataSource.getInitialDataVersionNumber().first()?.account
 
-        Assert.assertEquals(
-            0,
-            result,
-        )
-    }
-
-    @Test
-    fun getInitialDataVersionNumberCategory_returnsZero() = runTestAndClearDataStore {
-        val result = myPreferencesDataSource.getInitialDataVersionNumber().first()?.category
-
-        Assert.assertEquals(
-            0,
-            result,
-        )
-    }
+            Assert.assertEquals(
+                0,
+                result,
+            )
+        }
 
     @Test
-    fun getInitialDataVersionNumberTransaction_returnsZero() = runTestAndClearDataStore {
-        val result = myPreferencesDataSource.getInitialDataVersionNumber().first()?.transaction
+    public fun getInitialDataVersionNumberCategory_returnsZero(): TestResult =
+        runTestAndClearDataStore {
+            val result = myPreferencesDataSource.getInitialDataVersionNumber().first()?.category
 
-        Assert.assertEquals(
-            0,
-            result,
-        )
-    }
-
-    @Test
-    fun getInitialDataVersionNumberTransactionFor_returnsZero() = runTestAndClearDataStore {
-        val result = myPreferencesDataSource.getInitialDataVersionNumber().first()?.transactionFor
-
-        Assert.assertEquals(
-            0,
-            result,
-        )
-    }
+            Assert.assertEquals(
+                0,
+                result,
+            )
+        }
 
     @Test
-    fun setAccountDataVersionNumber_defaultTest() = runTestAndClearDataStore {
+    public fun getInitialDataVersionNumberTransaction_returnsZero(): TestResult =
+        runTestAndClearDataStore {
+            val result = myPreferencesDataSource.getInitialDataVersionNumber().first()?.transaction
+
+            Assert.assertEquals(
+                0,
+                result,
+            )
+        }
+
+    @Test
+    public fun getInitialDataVersionNumberTransactionFor_returnsZero(): TestResult =
+        runTestAndClearDataStore {
+            val result =
+                myPreferencesDataSource.getInitialDataVersionNumber().first()?.transactionFor
+
+            Assert.assertEquals(
+                0,
+                result,
+            )
+        }
+
+    @Test
+    public fun setAccountDataVersionNumber_defaultTest(): TestResult = runTestAndClearDataStore {
         myPreferencesDataSource.setAccountDataVersionNumber(
             accountDataVersionNumber = TEST_ID,
         )
@@ -271,7 +279,7 @@ class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun setCategoryDataVersionNumber_defaultTest() = runTestAndClearDataStore {
+    public fun setCategoryDataVersionNumber_defaultTest(): TestResult = runTestAndClearDataStore {
         myPreferencesDataSource.setCategoryDataVersionNumber(
             categoryDataVersionNumber = TEST_ID,
         )
@@ -285,42 +293,45 @@ class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun setTransactionDataVersionNumber_defaultTest() = runTestAndClearDataStore {
-        myPreferencesDataSource.setTransactionDataVersionNumber(
-            transactionDataVersionNumber = TEST_ID,
-        )
+    public fun setTransactionDataVersionNumber_defaultTest(): TestResult =
+        runTestAndClearDataStore {
+            myPreferencesDataSource.setTransactionDataVersionNumber(
+                transactionDataVersionNumber = TEST_ID,
+            )
 
-        val result = myPreferencesDataSource.getInitialDataVersionNumber().first()?.transaction
+            val result = myPreferencesDataSource.getInitialDataVersionNumber().first()?.transaction
 
-        Assert.assertEquals(
-            TEST_ID,
-            result,
-        )
-    }
-
-    @Test
-    fun setTransactionForDataVersionNumber_defaultTest() = runTestAndClearDataStore {
-        myPreferencesDataSource.setTransactionForDataVersionNumber(
-            transactionForDataVersionNumber = TEST_ID,
-        )
-
-        val result = myPreferencesDataSource.getInitialDataVersionNumber().first()?.transactionFor
-
-        Assert.assertEquals(
-            TEST_ID,
-            result,
-        )
-    }
+            Assert.assertEquals(
+                TEST_ID,
+                result,
+            )
+        }
 
     @Test
-    fun getReminderIsEnabled_returnsFalse() = runTestAndClearDataStore {
+    public fun setTransactionForDataVersionNumber_defaultTest(): TestResult =
+        runTestAndClearDataStore {
+            myPreferencesDataSource.setTransactionForDataVersionNumber(
+                transactionForDataVersionNumber = TEST_ID,
+            )
+
+            val result =
+                myPreferencesDataSource.getInitialDataVersionNumber().first()?.transactionFor
+
+            Assert.assertEquals(
+                TEST_ID,
+                result,
+            )
+        }
+
+    @Test
+    public fun getReminderIsEnabled_returnsFalse(): TestResult = runTestAndClearDataStore {
         val result = myPreferencesDataSource.getReminder().first()?.isEnabled
 
         Assert.assertFalse(result.orFalse())
     }
 
     @Test
-    fun getReminderHour_returnsDefaultValue() = runTestAndClearDataStore {
+    public fun getReminderHour_returnsDefaultValue(): TestResult = runTestAndClearDataStore {
         val result = myPreferencesDataSource.getReminder().first()?.hour
 
         Assert.assertEquals(
@@ -330,7 +341,7 @@ class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun getReminderMin_returnsDefaultValue() = runTestAndClearDataStore {
+    public fun getReminderMin_returnsDefaultValue(): TestResult = runTestAndClearDataStore {
         val result = myPreferencesDataSource.getReminder().first()?.min
 
         Assert.assertEquals(
@@ -340,7 +351,7 @@ class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun setIsReminderEnabled_defaultTest() = runTestAndClearDataStore {
+    public fun setIsReminderEnabled_defaultTest(): TestResult = runTestAndClearDataStore {
         val testValue = true
         myPreferencesDataSource.setIsReminderEnabled(
             isReminderEnabled = testValue,
@@ -355,7 +366,7 @@ class MyPreferencesDataSourceTest {
     }
 
     @Test
-    fun setReminderTime_defaultTest() = runTestAndClearDataStore {
+    public fun setReminderTime_defaultTest(): TestResult = runTestAndClearDataStore {
         val testHourValue = 10
         val testMinValue = 12
         myPreferencesDataSource.setReminderTime(
@@ -384,8 +395,8 @@ class MyPreferencesDataSourceTest {
         }
     }
 
-    companion object {
-        const val TEST_ID = 34
-        const val TEST_TIMESTAMP = 32654L
+    public companion object {
+        public const val TEST_ID: Int = 34
+        public const val TEST_TIMESTAMP: Long = 32654L
     }
 }

@@ -1,6 +1,6 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.navigation
 
-enum class Command {
+public enum class Command {
     CLEAR_BACKSTACK_AND_NAVIGATE,
     CLEAR_TILL_ROOT,
     NAVIGATE,
@@ -8,8 +8,8 @@ enum class Command {
     NOOP,
 }
 
-interface NavigationCommand {
-    val command: Command
-    val destination: String
-    val screen: String
+public interface NavigationCommand {
+    public val command: Command
+    public val destination: String
+    public val screen: String
 }

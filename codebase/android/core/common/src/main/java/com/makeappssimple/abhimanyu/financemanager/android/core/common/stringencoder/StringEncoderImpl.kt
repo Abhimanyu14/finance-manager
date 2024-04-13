@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.stringen
 import android.net.Uri
 import javax.inject.Inject
 
-class StringEncoderImpl @Inject constructor() : StringEncoder {
+public class StringEncoderImpl @Inject constructor() : StringEncoder {
     override fun encodeString(
         string: String,
     ): String {

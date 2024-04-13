@@ -1,5 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.constants
 
-object CurrencyCodeConstants {
-    const val INR = "INR"
+public object CurrencyCodeConstants {
+    public const val INR: String = "INR"
 }

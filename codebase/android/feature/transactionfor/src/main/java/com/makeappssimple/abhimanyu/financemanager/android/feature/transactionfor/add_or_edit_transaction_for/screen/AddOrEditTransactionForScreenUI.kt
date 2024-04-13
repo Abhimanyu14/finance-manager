@@ -42,8 +42,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.or
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 import kotlinx.coroutines.delay
 
-enum class AddOrEditTransactionForScreenUIError(
-    @StringRes val textStringResourceId: Int,
+public enum class AddOrEditTransactionForScreenUIError(
+    @StringRes public val textStringResourceId: Int,
 ) {
     EXISTS(
         textStringResourceId = R.string.screen_add_or_edit_transaction_for_error_exists,

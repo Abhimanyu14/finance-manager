@@ -25,24 +25,24 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bot
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
 
 @Immutable
-data class TransactionsSortBottomSheetData(
+public data class TransactionsSortBottomSheetData(
     val data: TransactionsSortBottomSheetItemData,
     val events: TransactionsSortBottomSheetItemEvents,
 )
 
 @Immutable
-data class TransactionsSortBottomSheetItemData(
+public data class TransactionsSortBottomSheetItemData(
     val sortOption: SortOption,
     val isSelected: Boolean,
 )
 
 @Immutable
-data class TransactionsSortBottomSheetItemEvents(
+public data class TransactionsSortBottomSheetItemEvents(
     val onClick: () -> Unit,
 )
 
 @Composable
-fun TransactionsSortBottomSheetUI(
+public fun TransactionsSortBottomSheetUI(
     modifier: Modifier = Modifier,
     data: List<TransactionsSortBottomSheetData>,
 ) {

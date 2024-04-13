@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.launch
 
-class NavigatorImpl(
+public class NavigatorImpl(
     private val coroutineScope: CoroutineScope,
 ) : Navigator {
     private val _command: MutableSharedFlow<NavigationCommand> = MutableSharedFlow()

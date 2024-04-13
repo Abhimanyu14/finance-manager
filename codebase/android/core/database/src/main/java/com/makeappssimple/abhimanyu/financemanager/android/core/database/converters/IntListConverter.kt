@@ -5,9 +5,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-class IntListConverter {
+public class IntListConverter {
     @TypeConverter
-    fun stringToIntList(
+    public fun stringToIntList(
         value: String?,
     ): List<Int>? {
         if (value.isNullOrBlank()) {
@@ -26,7 +26,7 @@ class IntListConverter {
     }
 
     @TypeConverter
-    fun intListToString(
+    public fun intListToString(
         intList: List<Int>?,
     ): String {
         if (intList.isNull()) {

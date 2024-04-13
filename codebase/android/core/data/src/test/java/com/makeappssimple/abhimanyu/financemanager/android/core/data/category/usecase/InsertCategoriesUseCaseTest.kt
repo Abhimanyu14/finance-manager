@@ -5,19 +5,20 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.InsertCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.InsertCategoriesUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.getTestCategories
+import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
-class InsertCategoriesUseCaseTest {
+public class InsertCategoriesUseCaseTest {
     private val categoryRepository: CategoryRepository = mock()
     private val myPreferencesRepository: MyPreferencesRepository = mock()
     private lateinit var insertCategoriesUseCase: InsertCategoriesUseCase
 
     @Before
-    fun setUp() {
+    public fun setUp() {
         insertCategoriesUseCase = InsertCategoriesUseCaseImpl(
             categoryRepository = categoryRepository,
             myPreferencesRepository = myPreferencesRepository,
@@ -25,7 +26,7 @@ class InsertCategoriesUseCaseTest {
     }
 
     @Test
-    fun invoke_defaultTest() = runTest {
+    public fun invoke_defaultTest(): TestResult = runTest {
         val categories = getTestCategories()
         insertCategoriesUseCase(
             categories = categories,

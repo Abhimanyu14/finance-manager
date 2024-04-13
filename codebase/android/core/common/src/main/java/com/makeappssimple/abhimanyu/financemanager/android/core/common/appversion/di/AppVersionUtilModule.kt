@@ -12,10 +12,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class AppVersionUtilModule {
+public class AppVersionUtilModule {
     @Singleton
     @Provides
-    fun providesAppVersionUtil(
+    public fun providesAppVersionUtil(
         @ApplicationContext context: Context,
     ): AppVersionUtil {
         return AppVersionUtilImpl(

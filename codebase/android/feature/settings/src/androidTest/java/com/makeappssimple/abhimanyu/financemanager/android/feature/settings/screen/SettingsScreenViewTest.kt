@@ -5,6 +5,7 @@ import androidx.compose.ui.test.SemanticsNodeInteraction
 import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertHasNoClickAction
 import androidx.compose.ui.test.assertIsDisplayed
+import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -21,12 +22,12 @@ import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
-class SettingsScreenViewTest {
+public class SettingsScreenViewTest {
     @get:Rule(order = 0)
-    var hiltRule = HiltAndroidRule(this)
+    public var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
 
     @get:Rule(order = 1)
-    val composeTestRule = createComposeRule()
+    public val composeTestRule: ComposeContentTestRule = createComposeRule()
 
     private lateinit var context: Context
 
@@ -38,7 +39,7 @@ class SettingsScreenViewTest {
     private lateinit var appVersionText: SemanticsNodeInteraction
 
     @Before
-    fun setup() {
+    public fun setup() {
         context = ApplicationProvider.getApplicationContext()
 
         linearProgressIndicator = composeTestRule.onNodeWithTag(
@@ -63,7 +64,7 @@ class SettingsScreenViewTest {
     }
 
     @Test
-    fun isLoading_isTrue() {
+    public fun isLoading_isTrue() {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
@@ -95,7 +96,7 @@ class SettingsScreenViewTest {
     }
 
     @Test
-    fun isLoading_isFalse() {
+    public fun isLoading_isFalse() {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
@@ -127,7 +128,7 @@ class SettingsScreenViewTest {
     }
 
     @Test
-    fun appVersion_isShown() {
+    public fun appVersion_isShown() {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
@@ -147,7 +148,7 @@ class SettingsScreenViewTest {
     }
 
     @Test
-    fun appVersion_isNotShown() {
+    public fun appVersion_isNotShown() {
         composeTestRule.setContent {
             MyAppTheme {
                 SettingsScreenUI(
@@ -166,7 +167,7 @@ class SettingsScreenViewTest {
         appVersionText.assertDoesNotExist()
     }
 
-    companion object {
+    public companion object {
         private const val TEST_APP_VERSION = "2023.04.07.1"
         private val testSettingsScreenViewData = SettingsScreenUIData(
             isLoading = false,

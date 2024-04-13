@@ -16,7 +16,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmode
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmodel.HomeScreenViewModelImpl
 
 @Composable
-fun HomeScreen(
+public fun HomeScreen(
     screenViewModel: HomeScreenViewModel = hiltViewModel<HomeScreenViewModelImpl>(),
 ) {
     val viewModel = remember {

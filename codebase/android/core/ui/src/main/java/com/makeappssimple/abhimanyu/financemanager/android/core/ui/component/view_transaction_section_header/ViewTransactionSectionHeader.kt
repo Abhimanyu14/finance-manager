@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 @Composable
-fun ViewTransactionSectionHeader(
+public fun ViewTransactionSectionHeader(
     modifier: Modifier = Modifier,
     @StringRes textStringResourceId: Int,
 ) {

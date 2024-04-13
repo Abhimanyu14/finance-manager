@@ -9,12 +9,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Immutable
-data class SettingsListItemDividerData(
+public data class SettingsListItemDividerData(
     override val type: SettingsListItemType = SettingsListItemType.DIVIDER,
 ) : SettingsListItemData
 
 @Composable
-fun SettingsListItemDivider(
+public fun SettingsListItemDivider(
     modifier: Modifier = Modifier,
     // data: SettingsListItemDividerData,
 ) {

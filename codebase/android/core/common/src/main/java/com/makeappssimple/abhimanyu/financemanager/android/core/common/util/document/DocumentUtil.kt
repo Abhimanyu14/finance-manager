@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import java.time.Instant
 import java.time.ZoneId
 
-class CreateJsonDocument : ActivityResultContracts.CreateDocument(
+public class CreateJsonDocument : ActivityResultContracts.CreateDocument(
     mimeType = MimeTypeConstants.JSON,
 ) {
     override fun createIntent(

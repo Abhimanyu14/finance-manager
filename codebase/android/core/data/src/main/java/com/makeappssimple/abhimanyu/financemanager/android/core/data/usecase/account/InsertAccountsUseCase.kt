@@ -4,13 +4,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 
-interface InsertAccountsUseCase {
-    suspend operator fun invoke(
+public interface InsertAccountsUseCase {
+    public suspend operator fun invoke(
         vararg accounts: Account,
     ): List<Long>
 }
 
-class InsertAccountsUseCaseImpl(
+public class InsertAccountsUseCaseImpl(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val accountRepository: AccountRepository,
 ) : InsertAccountsUseCase {

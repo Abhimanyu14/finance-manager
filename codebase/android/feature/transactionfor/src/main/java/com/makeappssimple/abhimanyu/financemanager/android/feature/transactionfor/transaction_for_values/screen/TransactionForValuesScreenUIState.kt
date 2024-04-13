@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 
 @Stable
-class TransactionForValuesScreenUIState(
+public class TransactionForValuesScreenUIState(
     data: MyResult<TransactionForValuesScreenUIData>?,
     private val unwrappedData: TransactionForValuesScreenUIData? = when (data) {
         is MyResult.Success -> {
@@ -23,21 +23,21 @@ class TransactionForValuesScreenUIState(
             null
         }
     },
-    val transactionForIdToDelete: Int?,
-    val screenBottomSheetType: TransactionForValuesScreenBottomSheetType,
-    val setTransactionForIdToDelete: (Int?) -> Unit,
-    val setScreenBottomSheetType: (TransactionForValuesScreenBottomSheetType) -> Unit,
-    val isLoading: Boolean = unwrappedData.isNull(),
-    val transactionForValuesIsUsedInTransactions: List<Boolean> =
+    public val transactionForIdToDelete: Int?,
+    public val screenBottomSheetType: TransactionForValuesScreenBottomSheetType,
+    public val setTransactionForIdToDelete: (Int?) -> Unit,
+    public val setScreenBottomSheetType: (TransactionForValuesScreenBottomSheetType) -> Unit,
+    public val isLoading: Boolean = unwrappedData.isNull(),
+    public val transactionForValuesIsUsedInTransactions: List<Boolean> =
         unwrappedData?.transactionForValuesIsUsedInTransactions.orEmpty(),
-    val transactionForValues: List<TransactionFor> = unwrappedData?.transactionForValues.orEmpty(),
-    val resetScreenBottomSheetType: () -> Unit = {
+    public val transactionForValues: List<TransactionFor> = unwrappedData?.transactionForValues.orEmpty(),
+    public val resetScreenBottomSheetType: () -> Unit = {
         setScreenBottomSheetType(TransactionForValuesScreenBottomSheetType.None)
     },
 ) : ScreenUIState
 
 @Composable
-fun rememberTransactionForValuesScreenUIState(
+public fun rememberTransactionForValuesScreenUIState(
     data: MyResult<TransactionForValuesScreenUIData>?,
 ): TransactionForValuesScreenUIState {
     var transactionForIdToDelete: Int? by remember {

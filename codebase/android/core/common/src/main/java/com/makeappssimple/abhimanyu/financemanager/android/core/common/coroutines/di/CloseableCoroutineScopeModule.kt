@@ -9,9 +9,9 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-object CloseableCoroutineScopeModule {
+public object CloseableCoroutineScopeModule {
     @Provides
-    fun providesCloseableCoroutineScope(
+    public fun providesCloseableCoroutineScope(
         dispatcherProvider: DispatcherProvider,
     ): CloseableCoroutineScope {
         return CloseableCoroutineScope(

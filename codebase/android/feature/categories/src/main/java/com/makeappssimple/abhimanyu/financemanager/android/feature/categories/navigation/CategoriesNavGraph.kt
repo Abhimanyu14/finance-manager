@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ad
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.screen.CategoriesScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.edit_category.screen.EditCategoryScreen
 
-fun NavGraphBuilder.categoriesNavGraph() {
+public fun NavGraphBuilder.categoriesNavGraph() {
     composable(
         route = "${Screen.AddCategory.route}/{${NavArgs.TRANSACTION_TYPE}}",
         arguments = listOf(

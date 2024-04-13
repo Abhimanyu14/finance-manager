@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chi
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIEvents
 
 @Immutable
-data class MyRadioGroupData(
+public data class MyRadioGroupData(
     val isLoading: Boolean = false,
     val loadingItemSize: Int = 3,
     val items: List<ChipUIData>,
@@ -17,12 +17,12 @@ data class MyRadioGroupData(
 )
 
 @Immutable
-data class MyRadioGroupEvents(
+public data class MyRadioGroupEvents(
     val onSelectionChange: (index: Int) -> Unit = {},
 )
 
 @Composable
-fun MyRadioGroup(
+public fun MyRadioGroup(
     modifier: Modifier = Modifier,
     data: MyRadioGroupData,
     events: MyRadioGroupEvents = MyRadioGroupEvents(),

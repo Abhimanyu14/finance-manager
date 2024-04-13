@@ -3,29 +3,29 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.extensio
 import org.junit.Assert
 import org.junit.Test
 
-class StringExtensionTest {
+public class StringExtensionTest {
 
     // region isNotNullOrBlank tests
     @Test
-    fun isNotNullOrBlank_stringIsNull_returnsFalse() {
+    public fun isNotNullOrBlank_stringIsNull_returnsFalse() {
         val input: String? = null
         Assert.assertFalse(input.isNotNullOrBlank())
     }
 
     @Test
-    fun isNotNullOrBlank_stringIsEmpty_returnsFalse() {
+    public fun isNotNullOrBlank_stringIsEmpty_returnsFalse() {
         val input = ""
         Assert.assertFalse(input.isNotNullOrBlank())
     }
 
     @Test
-    fun isNotNullOrBlank_stringIsBlank_returnsFalse() {
+    public fun isNotNullOrBlank_stringIsBlank_returnsFalse() {
         val input = "  "
         Assert.assertFalse(input.isNotNullOrBlank())
     }
 
     @Test
-    fun isNotNullOrBlank_stringIsNotBlank_returnsTrue() {
+    public fun isNotNullOrBlank_stringIsNotBlank_returnsTrue() {
         val input = "input"
         Assert.assertTrue(input.isNotNullOrBlank())
     }
@@ -33,7 +33,7 @@ class StringExtensionTest {
 
     // region padStartWithZero tests
     @Test
-    fun padStartWithZero_lengthIsGreaterThanStringLength() {
+    public fun padStartWithZero_lengthIsGreaterThanStringLength() {
         val input = "23"
         Assert.assertEquals(
             "023",
@@ -44,7 +44,7 @@ class StringExtensionTest {
     }
 
     @Test
-    fun padStartWithZero_lengthIsEqualToStringLength() {
+    public fun padStartWithZero_lengthIsEqualToStringLength() {
         val input = "23"
         Assert.assertEquals(
             "23",
@@ -55,7 +55,7 @@ class StringExtensionTest {
     }
 
     @Test
-    fun padStartWithZero_lengthIsLesserThanStringLength() {
+    public fun padStartWithZero_lengthIsLesserThanStringLength() {
         val input = "23"
         Assert.assertEquals(
             "23",
@@ -66,7 +66,7 @@ class StringExtensionTest {
     }
 
     @Test
-    fun padStartWithZero_lengthIsZero() {
+    public fun padStartWithZero_lengthIsZero() {
         val input = "23"
         Assert.assertEquals(
             "23",
@@ -77,7 +77,7 @@ class StringExtensionTest {
     }
 
     @Test
-    fun padStartWithZero_lengthIsNegative() {
+    public fun padStartWithZero_lengthIsNegative() {
         val input = "23"
         Assert.assertEquals(
             "23",
@@ -90,7 +90,7 @@ class StringExtensionTest {
 
     // region capitalizeWords tests
     @Test
-    fun capitalizeWords_singleWordAllSmallLetters() {
+    public fun capitalizeWords_singleWordAllSmallLetters() {
         val input = "test"
         Assert.assertEquals(
             "Test",
@@ -99,7 +99,7 @@ class StringExtensionTest {
     }
 
     @Test
-    fun capitalizeWords_singleWordAllCapitalLetters() {
+    public fun capitalizeWords_singleWordAllCapitalLetters() {
         val input = "TEST"
         Assert.assertEquals(
             "Test",
@@ -108,7 +108,7 @@ class StringExtensionTest {
     }
 
     @Test
-    fun capitalizeWords_singleWordRandomCaseLetters() {
+    public fun capitalizeWords_singleWordRandomCaseLetters() {
         val input = "tEsT"
         Assert.assertEquals(
             "Test",
@@ -117,7 +117,7 @@ class StringExtensionTest {
     }
 
     @Test
-    fun capitalizeWords_multipleWordsAllSmallLetters() {
+    public fun capitalizeWords_multipleWordsAllSmallLetters() {
         val input = "test words"
         Assert.assertEquals(
             "Test Words",
@@ -128,7 +128,7 @@ class StringExtensionTest {
 
     // region toIntOrZero
     @Test
-    fun toIntOrZero_zero() {
+    public fun toIntOrZero_zero() {
         val input = "0"
         Assert.assertEquals(
             0,
@@ -137,7 +137,7 @@ class StringExtensionTest {
     }
 
     @Test
-    fun toIntOrZero_negative() {
+    public fun toIntOrZero_negative() {
         val input = "-45"
         Assert.assertEquals(
             -45,
@@ -146,7 +146,7 @@ class StringExtensionTest {
     }
 
     @Test
-    fun toIntOrZero_positive() {
+    public fun toIntOrZero_positive() {
         val input = "45"
         Assert.assertEquals(
             45,
@@ -155,7 +155,7 @@ class StringExtensionTest {
     }
 
     @Test
-    fun toIntOrZero_notNumber() {
+    public fun toIntOrZero_notNumber() {
         val input = "string"
         Assert.assertEquals(
             0,
@@ -164,7 +164,7 @@ class StringExtensionTest {
     }
 
     @Test
-    fun toIntOrZero_stringWithNumber() {
+    public fun toIntOrZero_stringWithNumber() {
         val input = "string 123"
         Assert.assertEquals(
             0,
@@ -175,7 +175,7 @@ class StringExtensionTest {
 
     // region toLongOrZero
     @Test
-    fun toLongOrZero_zero() {
+    public fun toLongOrZero_zero() {
         val input = "0"
         Assert.assertEquals(
             0L,
@@ -184,7 +184,7 @@ class StringExtensionTest {
     }
 
     @Test
-    fun toLongOrZero_negative() {
+    public fun toLongOrZero_negative() {
         val input = "-45"
         Assert.assertEquals(
             -45L,
@@ -193,7 +193,7 @@ class StringExtensionTest {
     }
 
     @Test
-    fun toLongOrZero_positive() {
+    public fun toLongOrZero_positive() {
         val input = "45"
         Assert.assertEquals(
             45L,
@@ -202,7 +202,7 @@ class StringExtensionTest {
     }
 
     @Test
-    fun toLongOrZero_notNumber() {
+    public fun toLongOrZero_notNumber() {
         val input = "string"
         Assert.assertEquals(
             0L,
@@ -211,7 +211,7 @@ class StringExtensionTest {
     }
 
     @Test
-    fun toLongOrZero_stringWithNumber() {
+    public fun toLongOrZero_stringWithNumber() {
         val input = "string 123"
         Assert.assertEquals(
             0L,

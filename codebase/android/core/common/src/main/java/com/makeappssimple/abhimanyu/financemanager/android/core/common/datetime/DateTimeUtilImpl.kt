@@ -17,7 +17,7 @@ import java.time.YearMonth
 import java.time.ZoneId
 import javax.inject.Inject
 
-class DateTimeUtilImpl @Inject constructor() : DateTimeUtil {
+public class DateTimeUtilImpl @Inject constructor() : DateTimeUtil {
     override fun getCurrentLocalDate(): LocalDate {
         return LocalDate.now()
     }
@@ -308,7 +308,7 @@ class DateTimeUtilImpl @Inject constructor() : DateTimeUtil {
     }
 }
 
-fun getLocalDate(
+public fun getLocalDate(
     timestamp: Long,
     zoneId: ZoneId = getSystemDefaultZoneId(),
 ): LocalDate {
@@ -320,7 +320,7 @@ fun getLocalDate(
         .toLocalDate()
 }
 
-fun getTimestamp(
+public fun getTimestamp(
     localDate: LocalDate,
     zoneId: ZoneId = getSystemDefaultZoneId(),
 ): Long {
@@ -329,6 +329,6 @@ fun getTimestamp(
         .toEpochMilli()
 }
 
-fun getSystemDefaultZoneId(): ZoneId {
+public fun getSystemDefaultZoneId(): ZoneId {
     return ZoneId.systemDefault()
 }

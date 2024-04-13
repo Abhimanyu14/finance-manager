@@ -20,7 +20,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.or
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 
 @Stable
-class AddOrEditAccountScreenUIState(
+public class AddOrEditAccountScreenUIState(
     data: MyResult<AddOrEditAccountScreenUIData>?,
     private val unwrappedData: AddOrEditAccountScreenUIData? = when (data) {
         is MyResult.Success -> {
@@ -33,45 +33,45 @@ class AddOrEditAccountScreenUIState(
     },
     isEdit: Boolean,
     setScreenBottomSheetType: (AddOrEditAccountScreenBottomSheetType) -> Unit,
-    val screenBottomSheetType: AddOrEditAccountScreenBottomSheetType,
-    val nameTextFieldFocusRequester: FocusRequester,
-    val balanceAmountTextFieldFocusRequester: FocusRequester,
-    val isLoading: Boolean = unwrappedData.isNull(),
-    val isCtaButtonEnabled: Boolean = unwrappedData?.isValidAccountData.orFalse(),
+    public val screenBottomSheetType: AddOrEditAccountScreenBottomSheetType,
+    public val nameTextFieldFocusRequester: FocusRequester,
+    public val balanceAmountTextFieldFocusRequester: FocusRequester,
+    public val isLoading: Boolean = unwrappedData.isNull(),
+    public val isCtaButtonEnabled: Boolean = unwrappedData?.isValidAccountData.orFalse(),
     @StringRes
-    val appBarTitleTextStringResourceId: Int = if (isEdit) {
+    public val appBarTitleTextStringResourceId: Int = if (isEdit) {
         R.string.screen_edit_account_appbar_title
     } else {
         R.string.screen_add_account_appbar_title
     },
     @StringRes
-    val ctaButtonLabelTextStringResourceId: Int = if (isEdit) {
+    public val ctaButtonLabelTextStringResourceId: Int = if (isEdit) {
         R.string.screen_edit_account_floating_action_button_content_description
     } else {
         R.string.screen_add_account_floating_action_button_content_description
     },
     @StringRes
-    val nameTextFieldErrorTextStringResourceId: Int? =
+    public val nameTextFieldErrorTextStringResourceId: Int? =
         unwrappedData?.errorData?.nameTextField?.textStringResourceId,
-    val selectedAccountTypeIndex: Int = unwrappedData?.selectedAccountTypeIndex.orZero(),
+    public val selectedAccountTypeIndex: Int = unwrappedData?.selectedAccountTypeIndex.orZero(),
     private val selectedAccount: AccountType? = unwrappedData?.accountTypes?.getOrNull(
         selectedAccountTypeIndex
     ),
-    val accountTypesChipUIDataList: List<ChipUIData> = unwrappedData?.accountTypes
+    public val accountTypesChipUIDataList: List<ChipUIData> = unwrappedData?.accountTypes
         ?.map { accountType ->
             ChipUIData(
                 text = accountType.title,
                 icon = accountType.icon,
             )
         }.orEmpty(),
-    val balanceAmountValue: TextFieldValue = unwrappedData?.balanceAmountValue.orEmpty(),
-    val minimumBalanceAmountValue: TextFieldValue =
+    public val balanceAmountValue: TextFieldValue = unwrappedData?.balanceAmountValue.orEmpty(),
+    public val minimumBalanceAmountValue: TextFieldValue =
         unwrappedData?.minimumBalanceAmountValue.orEmpty(),
-    val name: TextFieldValue = unwrappedData?.name.orEmpty(),
-    val resetScreenBottomSheetType: () -> Unit = {
+    public val name: TextFieldValue = unwrappedData?.name.orEmpty(),
+    public val resetScreenBottomSheetType: () -> Unit = {
         setScreenBottomSheetType(AddOrEditAccountScreenBottomSheetType.NONE)
     },
-    val visibilityData: AddOrEditAccountScreenUIVisibilityData = AddOrEditAccountScreenUIVisibilityData(
+    public val visibilityData: AddOrEditAccountScreenUIVisibilityData = AddOrEditAccountScreenUIVisibilityData(
         balanceAmountTextField = isEdit,
         minimumBalanceAmountTextField = selectedAccount == AccountType.BANK,
         nameTextField = if (isEdit) {
@@ -89,7 +89,7 @@ class AddOrEditAccountScreenUIState(
 ) : ScreenUIState
 
 @Composable
-fun rememberAddOrEditAccountScreenUIState(
+public fun rememberAddOrEditAccountScreenUIState(
     data: MyResult<AddOrEditAccountScreenUIData>?,
     isEdit: Boolean,
 ): AddOrEditAccountScreenUIState {

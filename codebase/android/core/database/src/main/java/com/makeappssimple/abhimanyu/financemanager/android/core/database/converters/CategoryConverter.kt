@@ -6,9 +6,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.C
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-class CategoryConverter {
+public class CategoryConverter {
     @TypeConverter
-    fun stringToCategory(
+    public fun stringToCategory(
         value: String?,
     ): CategoryEntity? {
         if (value.isNullOrBlank()) {
@@ -27,7 +27,7 @@ class CategoryConverter {
     }
 
     @TypeConverter
-    fun categoryToString(
+    public fun categoryToString(
         categoryEntity: CategoryEntity?,
     ): String {
         if (categoryEntity.isNull()) {

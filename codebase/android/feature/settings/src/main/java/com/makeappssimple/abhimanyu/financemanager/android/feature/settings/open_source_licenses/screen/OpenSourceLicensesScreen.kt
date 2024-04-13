@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.viewmodel.OpenSourceLicensesScreenViewModelImpl
 
 @Composable
-fun OpenSourceLicensesScreen(
+public fun OpenSourceLicensesScreen(
     screenViewModel: OpenSourceLicensesScreenViewModel = hiltViewModel<OpenSourceLicensesScreenViewModelImpl>(),
 ) {
     val viewModel = remember {

@@ -17,17 +17,17 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ext
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 
 @Immutable
-data class HomeRecentTransactionsData(
+public data class HomeRecentTransactionsData(
     val isTrailingTextVisible: Boolean,
 )
 
 @Immutable
-data class HomeRecentTransactionsEvents(
+public data class HomeRecentTransactionsEvents(
     val onClick: (() -> Unit)? = null,
 )
 
 @Composable
-fun HomeRecentTransactions(
+public fun HomeRecentTransactions(
     modifier: Modifier = Modifier,
     data: HomeRecentTransactionsData,
     events: HomeRecentTransactionsEvents = HomeRecentTransactionsEvents(),

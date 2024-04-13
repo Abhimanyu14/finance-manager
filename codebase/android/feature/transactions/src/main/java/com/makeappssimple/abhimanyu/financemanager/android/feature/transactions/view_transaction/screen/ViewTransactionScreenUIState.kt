@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 
 @Stable
-class ViewTransactionScreenUIState(
+public class ViewTransactionScreenUIState(
     data: MyResult<ViewTransactionScreenUIData>?,
     private val unwrappedData: ViewTransactionScreenUIData? = when (data) {
         is MyResult.Success -> {
@@ -23,23 +23,23 @@ class ViewTransactionScreenUIState(
             null
         }
     },
-    val transactionIdToDelete: Int?,
-    val screenBottomSheetType: ViewTransactionScreenBottomSheetType,
-    val setTransactionIdToDelete: (Int?) -> Unit,
-    val setScreenBottomSheetType: (ViewTransactionScreenBottomSheetType) -> Unit,
-    val isLoading: Boolean = unwrappedData.isNull(),
-    val originalTransactionListItemData: TransactionListItemData? =
+    public val transactionIdToDelete: Int?,
+    public val screenBottomSheetType: ViewTransactionScreenBottomSheetType,
+    public val setTransactionIdToDelete: (Int?) -> Unit,
+    public val setScreenBottomSheetType: (ViewTransactionScreenBottomSheetType) -> Unit,
+    public val isLoading: Boolean = unwrappedData.isNull(),
+    public val originalTransactionListItemData: TransactionListItemData? =
         unwrappedData?.originalTransactionListItemData,
-    val refundTransactionListItemData: List<TransactionListItemData>? =
+    public val refundTransactionListItemData: List<TransactionListItemData>? =
         unwrappedData?.refundTransactionListItemData,
-    val transactionListItemData: TransactionListItemData? = unwrappedData?.transactionListItemData,
-    val resetScreenBottomSheetType: () -> Unit = {
+    public val transactionListItemData: TransactionListItemData? = unwrappedData?.transactionListItemData,
+    public val resetScreenBottomSheetType: () -> Unit = {
         setScreenBottomSheetType(ViewTransactionScreenBottomSheetType.NONE)
     },
 ) : ScreenUIState
 
 @Composable
-fun rememberViewTransactionScreenUIState(
+public fun rememberViewTransactionScreenUIState(
     data: MyResult<ViewTransactionScreenUIData>?,
 ): ViewTransactionScreenUIState {
     val (screenBottomSheetType, setScreenBottomSheetType) = remember {

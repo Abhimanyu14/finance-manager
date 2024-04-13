@@ -5,27 +5,27 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEvent
 
 @Immutable
-sealed class CategoriesScreenUIEvent : ScreenUIEvent {
-    data object NavigateUp : CategoriesScreenUIEvent()
+public sealed class CategoriesScreenUIEvent : ScreenUIEvent {
+    public data object NavigateUp : CategoriesScreenUIEvent()
 
-    data class DeleteCategory(
+    public data class DeleteCategory(
         val categoryId: Int,
     ) : CategoriesScreenUIEvent()
 
-    data class NavigateToAddCategoryScreen(
+    public data class NavigateToAddCategoryScreen(
         val transactionType: String,
     ) : CategoriesScreenUIEvent()
 
-    data class NavigateToEditCategoryScreen(
+    public data class NavigateToEditCategoryScreen(
         val categoryId: Int,
     ) : CategoriesScreenUIEvent()
 
-    data class SetDefaultCategoryIdInDataStore(
+    public data class SetDefaultCategoryIdInDataStore(
         val defaultCategoryId: Int,
         val transactionType: TransactionType,
     ) : CategoriesScreenUIEvent()
 
-    data class UpdateSelectedTabIndex(
+    public data class UpdateSelectedTabIndex(
         val updatedSelectedTabIndex: Int,
     ) : CategoriesScreenUIEvent()
 }

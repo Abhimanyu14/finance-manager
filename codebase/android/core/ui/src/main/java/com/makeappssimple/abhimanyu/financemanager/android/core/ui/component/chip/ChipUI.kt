@@ -25,7 +25,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ext
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
 
 @Immutable
-data class ChipUIData(
+public data class ChipUIData(
     val isLoading: Boolean = false,
     val borderColor: Color? = null,
     val textColor: Color? = null,
@@ -34,12 +34,12 @@ data class ChipUIData(
 )
 
 @Immutable
-data class ChipUIEvents(
+public data class ChipUIEvents(
     val onClick: () -> Unit = {},
 )
 
 @Composable
-fun ChipUI(
+public fun ChipUI(
     modifier: Modifier = Modifier,
     data: ChipUIData,
     events: ChipUIEvents = ChipUIEvents(),
@@ -134,7 +134,7 @@ fun ChipUI(
 }
 
 @Composable
-fun ChipLoadingUI(
+public fun ChipLoadingUI(
     modifier: Modifier = Modifier,
 ) {
     Box(

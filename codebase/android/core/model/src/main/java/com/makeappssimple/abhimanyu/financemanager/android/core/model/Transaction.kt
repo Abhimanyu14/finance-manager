@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Transaction(
+public data class Transaction(
     val amount: Amount,
 
     @SerialName(value = "category_id")

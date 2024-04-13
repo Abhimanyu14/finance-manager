@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.Fi
 import java.time.LocalDate
 
 @Composable
-fun TransactionsFilterBottomSheet(
+public fun TransactionsFilterBottomSheet(
     expenseCategories: List<Category>,
     incomeCategories: List<Category>,
     investmentCategories: List<Category>,

@@ -41,7 +41,7 @@ private object TotalBalanceCardConstants {
 }
 
 @Immutable
-data class TotalBalanceCardData(
+public data class TotalBalanceCardData(
     val isBalanceVisible: Boolean = false,
     val isLoading: Boolean = false,
     val totalBalanceAmount: Long = 0L,
@@ -49,7 +49,7 @@ data class TotalBalanceCardData(
 )
 
 @Immutable
-data class TotalBalanceCardEvents(
+public data class TotalBalanceCardEvents(
     val onClick: (() -> Unit)? = null,
     val onLongClick: (() -> Unit)? = null,
     val onViewBalanceClick: (() -> Unit)? = null,
@@ -59,7 +59,7 @@ data class TotalBalanceCardEvents(
  * This is coupled with [Amount]
  */
 @Composable
-fun TotalBalanceCard(
+public fun TotalBalanceCard(
     modifier: Modifier = Modifier,
     data: TotalBalanceCardData,
     events: TotalBalanceCardEvents = TotalBalanceCardEvents(),

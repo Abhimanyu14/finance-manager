@@ -6,10 +6,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ca
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.screen.CategoriesScreenUIEvent
 import kotlinx.coroutines.flow.StateFlow
 
-interface CategoriesScreenViewModel : ScreenViewModel {
-    val screenUIData: StateFlow<MyResult<CategoriesScreenUIData>?>
+public interface CategoriesScreenViewModel : ScreenViewModel {
+    public val screenUIData: StateFlow<MyResult<CategoriesScreenUIData>?>
 
-    fun handleUIEvents(
+    public fun handleUIEvents(
         uiEvent: CategoriesScreenUIEvent,
     )
 }

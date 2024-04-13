@@ -9,36 +9,36 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.T
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface TransactionForDao {
+public interface TransactionForDao {
     @Query(value = "SELECT * from transaction_for_table ORDER BY id ASC")
-    fun getAllTransactionForValuesFlow(): Flow<List<TransactionForEntity>>
+    public fun getAllTransactionForValuesFlow(): Flow<List<TransactionForEntity>>
 
     @Query(value = "SELECT * from transaction_for_table ORDER BY id ASC")
-    suspend fun getAllTransactionForValues(): List<TransactionForEntity>
+    public suspend fun getAllTransactionForValues(): List<TransactionForEntity>
 
     @Query(value = "SELECT COUNT(*) FROM transaction_for_table")
-    suspend fun getTransactionForValuesCount(): Int
+    public suspend fun getTransactionForValuesCount(): Int
 
     @Query(value = "SELECT * from transaction_for_table WHERE id = :id")
-    suspend fun getTransactionFor(
+    public suspend fun getTransactionFor(
         id: Int,
     ): TransactionForEntity?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertTransactionForValues(
+    public suspend fun insertTransactionForValues(
         vararg transactionForValues: TransactionForEntity,
     ): List<Long>
 
     @Update
-    suspend fun updateTransactionForValues(
+    public suspend fun updateTransactionForValues(
         vararg transactionForValues: TransactionForEntity,
     ): Int
 
     @Query(value = "DELETE FROM transaction_for_table WHERE id = :id")
-    suspend fun deleteTransactionFor(
+    public suspend fun deleteTransactionFor(
         id: Int,
     ): Int
 
     @Query(value = "DELETE FROM transaction_for_table")
-    suspend fun deleteAllTransactionForValues(): Int
+    public suspend fun deleteAllTransactionForValues(): Int
 }

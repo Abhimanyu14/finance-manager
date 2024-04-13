@@ -5,24 +5,24 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEvent
 
 @Immutable
-sealed class AddOrEditCategoryScreenUIEvent : ScreenUIEvent {
-    data object ClearTitle : AddOrEditCategoryScreenUIEvent()
-    data object NavigateUp : AddOrEditCategoryScreenUIEvent()
-    data object OnCtaButtonClick : AddOrEditCategoryScreenUIEvent()
+public sealed class AddOrEditCategoryScreenUIEvent : ScreenUIEvent {
+    public data object ClearTitle : AddOrEditCategoryScreenUIEvent()
+    public data object NavigateUp : AddOrEditCategoryScreenUIEvent()
+    public data object OnCtaButtonClick : AddOrEditCategoryScreenUIEvent()
 
-    data class UpdateEmoji(
+    public data class UpdateEmoji(
         val updatedEmoji: String,
     ) : AddOrEditCategoryScreenUIEvent()
 
-    data class UpdateSearchText(
+    public data class UpdateSearchText(
         val updatedSearchText: String,
     ) : AddOrEditCategoryScreenUIEvent()
 
-    data class UpdateSelectedTransactionTypeIndex(
+    public data class UpdateSelectedTransactionTypeIndex(
         val updatedIndex: Int,
     ) : AddOrEditCategoryScreenUIEvent()
 
-    data class UpdateTitle(
+    public data class UpdateTitle(
         val updatedTitle: TextFieldValue,
     ) : AddOrEditCategoryScreenUIEvent()
 }

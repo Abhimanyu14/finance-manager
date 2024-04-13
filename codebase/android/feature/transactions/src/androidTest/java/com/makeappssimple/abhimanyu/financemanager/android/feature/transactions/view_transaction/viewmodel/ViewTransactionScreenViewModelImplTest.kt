@@ -23,6 +23,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.testing.TestDisp
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
+import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -35,12 +36,12 @@ import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-class ViewTransactionScreenViewModelImplTest {
+public class ViewTransactionScreenViewModelImplTest {
     @get:Rule(order = 0)
-    var hiltRule = HiltAndroidRule(this)
+    public var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
 
     @get:Rule(order = 1)
-    val mainDispatcherRule = MainDispatcherRule()
+    public val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
 
     private lateinit var savedStateHandle: SavedStateHandle
     private lateinit var stringDecoder: StringDecoder
@@ -55,12 +56,12 @@ class ViewTransactionScreenViewModelImplTest {
     )
 
     @Inject
-    lateinit var closeableCoroutineScope: CloseableCoroutineScope
+    public lateinit var closeableCoroutineScope: CloseableCoroutineScope
 
     private lateinit var viewTransactionScreenViewModelImpl: ViewTransactionScreenViewModelImpl
 
     @Before
-    fun setUp() {
+    public fun setUp() {
         savedStateHandle = SavedStateHandle()
         stringDecoder = StringDecoderImpl()
         myLogger = FakeMyLoggerImpl()
@@ -75,19 +76,19 @@ class ViewTransactionScreenViewModelImplTest {
     }
 
     @After
-    fun tearDown() {
+    public fun tearDown() {
     }
 
     @Test
-    fun navigateToAddTransactionScreenTest() {
+    public fun navigateToAddTransactionScreenTest() {
     }
 
     @Test
-    fun navigateToEditTransactionScreenTest() {
+    public fun navigateToEditTransactionScreenTest() {
     }
 
     @Test
-    fun navigateUpTest() = runTest {
+    public fun navigateUpTest(): TestResult = runTest {
         navigator = FakeNavigatorImpl(
             coroutineScope = this,
         )

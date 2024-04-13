@@ -18,19 +18,19 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
 
 @Immutable
-data class SaveButtonData(
+public data class SaveButtonData(
     val isEnabled: Boolean,
     val isLoading: Boolean = false,
     @StringRes val textStringResourceId: Int,
 )
 
 @Immutable
-data class SaveButtonEvents(
+public data class SaveButtonEvents(
     val onClick: () -> Unit = {},
 )
 
 @Composable
-fun SaveButton(
+public fun SaveButton(
     modifier: Modifier = Modifier,
     data: SaveButtonData,
     events: SaveButtonEvents = SaveButtonEvents(),

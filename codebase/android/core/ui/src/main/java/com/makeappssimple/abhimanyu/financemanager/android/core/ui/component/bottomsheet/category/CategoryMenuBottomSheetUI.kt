@@ -19,13 +19,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ext
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
 
 @Immutable
-data class CategoryMenuBottomSheetItemData(
+public data class CategoryMenuBottomSheetItemData(
     val text: String,
     val onClick: () -> Unit,
 )
 
 @Composable
-fun CategoryMenuBottomSheetUI(
+public fun CategoryMenuBottomSheetUI(
     modifier: Modifier = Modifier,
     items: List<CategoryMenuBottomSheetItemData>,
 ) {

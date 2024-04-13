@@ -4,22 +4,22 @@ import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEvent
 
 @Immutable
-sealed class ViewTransactionScreenUIEvent : ScreenUIEvent {
-    data object NavigateUp : ViewTransactionScreenUIEvent()
+public sealed class ViewTransactionScreenUIEvent : ScreenUIEvent {
+    public data object NavigateUp : ViewTransactionScreenUIEvent()
 
-    data class DeleteTransaction(
+    public data class DeleteTransaction(
         val transactionId: Int,
     ) : ViewTransactionScreenUIEvent()
 
-    data class NavigateToAddTransactionScreen(
+    public data class NavigateToAddTransactionScreen(
         val transactionId: Int,
     ) : ViewTransactionScreenUIEvent()
 
-    data class NavigateToEditTransactionScreen(
+    public data class NavigateToEditTransactionScreen(
         val transactionId: Int,
     ) : ViewTransactionScreenUIEvent()
 
-    data class NavigateToViewTransactionScreen(
+    public data class NavigateToViewTransactionScreen(
         val transactionId: Int,
     ) : ViewTransactionScreenUIEvent()
 }

@@ -7,9 +7,9 @@ import org.junit.Assert
 import org.junit.Test
 import java.util.Currency
 
-class CurrencySerializerTest {
+public class CurrencySerializerTest {
     @Test
-    fun deserialize_defaultTest() {
+    public fun deserialize_defaultTest() {
         val result = Json.decodeFromString(
             deserializer = CurrencySerializer,
             string = testJson,
@@ -21,7 +21,7 @@ class CurrencySerializerTest {
     }
 
     @Test
-    fun serialize_defaultTest() {
+    public fun serialize_defaultTest() {
         val result = Json.encodeToString(
             serializer = CurrencySerializer,
             value = Currency.getInstance(CurrencyCodeConstants.INR),
@@ -32,7 +32,7 @@ class CurrencySerializerTest {
         )
     }
 
-    companion object {
+    public companion object {
         private const val testJson = "\"${CurrencyCodeConstants.INR}\""
     }
 }

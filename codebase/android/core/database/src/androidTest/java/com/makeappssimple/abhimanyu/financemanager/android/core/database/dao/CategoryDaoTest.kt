@@ -10,6 +10,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.C
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert
@@ -20,15 +21,15 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
-class CategoryDaoTest {
+public class CategoryDaoTest {
     private lateinit var myRoomDatabase: MyRoomDatabase
     private lateinit var categoryDao: CategoryDao
 
     @get:Rule
-    val mainDispatcherRule = MainDispatcherRule()
+    public val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
 
     @Before
-    fun setUp() {
+    public fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         myRoomDatabase = Room
             .inMemoryDatabaseBuilder(
@@ -41,12 +42,12 @@ class CategoryDaoTest {
     }
 
     @After
-    fun tearDown() {
+    public fun tearDown() {
         myRoomDatabase.close()
     }
 
     @Test
-    fun getAllCategories() = runTest {
+    public fun getAllCategories(): TestResult = runTest {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
@@ -60,7 +61,7 @@ class CategoryDaoTest {
     }
 
     @Test
-    fun getAllCategoriesFlow() = runTest {
+    public fun getAllCategoriesFlow(): TestResult = runTest {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
@@ -74,7 +75,7 @@ class CategoryDaoTest {
     }
 
     @Test
-    fun getAllCategoriesCount() = runTest {
+    public fun getAllCategoriesCount(): TestResult = runTest {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
@@ -88,7 +89,7 @@ class CategoryDaoTest {
     }
 
     @Test
-    fun getCategory_returnsDataForValidId() = runTest {
+    public fun getCategory_returnsDataForValidId(): TestResult = runTest {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
@@ -104,7 +105,7 @@ class CategoryDaoTest {
     }
 
     @Test
-    fun getCategory_returnsNullForInvalidId() = runTest {
+    public fun getCategory_returnsNullForInvalidId(): TestResult = runTest {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
@@ -117,7 +118,7 @@ class CategoryDaoTest {
     }
 
     @Test
-    fun deleteCategory_deleteDataOfGivenId() = runTest {
+    public fun deleteCategory_deleteDataOfGivenId(): TestResult = runTest {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
@@ -138,7 +139,7 @@ class CategoryDaoTest {
     }
 
     @Test
-    fun deleteCategory_noDeletionForInvalidId() = runTest {
+    public fun deleteCategory_noDeletionForInvalidId(): TestResult = runTest {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
@@ -159,7 +160,7 @@ class CategoryDaoTest {
     }
 
     @Test
-    fun updateCategories() = runTest {
+    public fun updateCategories(): TestResult = runTest {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
@@ -196,7 +197,7 @@ class CategoryDaoTest {
     }
 
     @Test
-    fun deleteCategories() = runTest {
+    public fun deleteCategories(): TestResult = runTest {
         categoryDao.insertCategories(
             categories = testCategories.toTypedArray(),
         )
@@ -222,7 +223,7 @@ class CategoryDaoTest {
         )
     }
 
-    companion object {
+    public companion object {
         private const val testId1 = 123
         private const val testId2 = 234
         private const val invalidId = 987

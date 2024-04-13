@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonNames
 
 @Serializable
-data class Category(
+public data class Category(
     @EncodeDefault
     val id: Int = 0,
 

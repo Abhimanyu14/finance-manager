@@ -14,13 +14,13 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.serialization.json.Json
 
-interface InitialDatabasePopulator {
-    fun populateInitialDatabaseData(
+public interface InitialDatabasePopulator {
+    public fun populateInitialDatabaseData(
         myRoomDatabase: MyRoomDatabase,
     )
 }
 
-class InitialDatabasePopulatorImpl(
+public class InitialDatabasePopulatorImpl(
     private val dispatcherProvider: DispatcherProvider,
     private val myJsonReader: MyJsonReader,
     private val myPreferencesDataSource: MyPreferencesDataSource,

@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.model
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 
-fun Transaction.asEntity(): TransactionEntity {
+public fun Transaction.asEntity(): TransactionEntity {
     return TransactionEntity(
         amount = amount.asEntity(),
         categoryId = categoryId,

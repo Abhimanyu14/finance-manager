@@ -4,7 +4,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class TransactionFor(
+public data class TransactionFor(
     val id: Int = 0,
 
     val title: String,

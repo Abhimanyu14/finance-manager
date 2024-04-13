@@ -26,9 +26,9 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-class CommonUseCaseModule {
+public class CommonUseCaseModule {
     @Provides
-    fun providesBackupDataUseCase(
+    public fun providesBackupDataUseCase(
         dateTimeUtil: DateTimeUtil,
         dispatcherProvider: DispatcherProvider,
         getAllCategoriesUseCase: GetAllCategoriesUseCase,
@@ -51,7 +51,7 @@ class CommonUseCaseModule {
     }
 
     @Provides
-    fun providesRecalculateTotalUseCase(
+    public fun providesRecalculateTotalUseCase(
         dispatcherProvider: DispatcherProvider,
         getAllAccountsUseCase: GetAllAccountsUseCase,
         getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
@@ -68,7 +68,7 @@ class CommonUseCaseModule {
     }
 
     @Provides
-    fun providesRestoreDataUseCase(
+    public fun providesRestoreDataUseCase(
         myJsonReader: MyJsonReader,
         myLogger: MyLogger,
         myPreferencesRepository: MyPreferencesRepository,

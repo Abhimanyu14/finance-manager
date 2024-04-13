@@ -4,7 +4,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import java.time.LocalDate
 
-data class Filter(
+public data class Filter(
     val selectedExpenseCategoryIndices: List<Int> = emptyList(),
     val selectedIncomeCategoryIndices: List<Int> = emptyList(),
     val selectedInvestmentCategoryIndices: List<Int> = emptyList(),
@@ -14,7 +14,7 @@ data class Filter(
     val fromDate: LocalDate? = null,
     val toDate: LocalDate? = null,
 ) {
-    fun areFiltersSelected(): Boolean {
+    public fun areFiltersSelected(): Boolean {
         return selectedExpenseCategoryIndices.isNotEmpty() ||
                 selectedIncomeCategoryIndices.isNotEmpty() ||
                 selectedInvestmentCategoryIndices.isNotEmpty() ||
@@ -25,7 +25,7 @@ data class Filter(
     }
 }
 
-fun Filter?.orEmpty(): Filter {
+public fun Filter?.orEmpty(): Filter {
     return if (this.isNull()) {
         Filter()
     } else {

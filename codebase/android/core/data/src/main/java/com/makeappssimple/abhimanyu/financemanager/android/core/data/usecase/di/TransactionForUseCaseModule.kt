@@ -21,9 +21,9 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-class TransactionForUseCaseModule {
+public class TransactionForUseCaseModule {
     @Provides
-    fun providesDeleteTransactionForUseCase(
+    public fun providesDeleteTransactionForUseCase(
         myPreferencesRepository: MyPreferencesRepository,
         transactionForRepository: TransactionForRepository,
     ): DeleteTransactionForUseCase {
@@ -34,7 +34,7 @@ class TransactionForUseCaseModule {
     }
 
     @Provides
-    fun providesGetTransactionForUseCase(
+    public fun providesGetTransactionForUseCase(
         transactionForRepository: TransactionForRepository,
     ): GetTransactionForUseCase {
         return GetTransactionForUseCaseImpl(
@@ -43,7 +43,7 @@ class TransactionForUseCaseModule {
     }
 
     @Provides
-    fun providesGetAllTransactionForValuesFlowUseCase(
+    public fun providesGetAllTransactionForValuesFlowUseCase(
         transactionForRepository: TransactionForRepository,
     ): GetAllTransactionForValuesFlowUseCase {
         return GetAllTransactionForValuesFlowUseCaseImpl(
@@ -52,7 +52,7 @@ class TransactionForUseCaseModule {
     }
 
     @Provides
-    fun providesGetAllTransactionForValuesUseCase(
+    public fun providesGetAllTransactionForValuesUseCase(
         transactionForRepository: TransactionForRepository,
     ): GetAllTransactionForValuesUseCase {
         return GetAllTransactionForValuesUseCaseImpl(
@@ -61,7 +61,7 @@ class TransactionForUseCaseModule {
     }
 
     @Provides
-    fun providesInsertTransactionForValuesUseCase(
+    public fun providesInsertTransactionForValuesUseCase(
         myPreferencesRepository: MyPreferencesRepository,
         transactionForRepository: TransactionForRepository,
     ): InsertTransactionForValuesUseCase {
@@ -72,7 +72,7 @@ class TransactionForUseCaseModule {
     }
 
     @Provides
-    fun providesUpdateTransactionForValuesUseCase(
+    public fun providesUpdateTransactionForValuesUseCase(
         myPreferencesRepository: MyPreferencesRepository,
         transactionForRepository: TransactionForRepository,
     ): UpdateTransactionForValuesUseCase {

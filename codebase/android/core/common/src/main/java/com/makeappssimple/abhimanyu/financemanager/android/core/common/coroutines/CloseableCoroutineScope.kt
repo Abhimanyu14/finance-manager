@@ -6,7 +6,7 @@ import kotlinx.coroutines.cancel
 import java.io.Closeable
 import kotlin.coroutines.CoroutineContext
 
-class CloseableCoroutineScope(
+public class CloseableCoroutineScope(
     private val dispatcherProvider: DispatcherProvider,
     context: CoroutineContext = SupervisorJob() + dispatcherProvider.mainImmediate,
 ) : Closeable, CoroutineScope {

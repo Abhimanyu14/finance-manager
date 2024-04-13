@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class FakeTransactionForRepositoryImpl : TransactionForRepository {
+public class FakeTransactionForRepositoryImpl : TransactionForRepository {
     override fun getAllTransactionForValuesFlow(): Flow<List<TransactionFor>> {
         return flow {
             emptyList<TransactionFor>()

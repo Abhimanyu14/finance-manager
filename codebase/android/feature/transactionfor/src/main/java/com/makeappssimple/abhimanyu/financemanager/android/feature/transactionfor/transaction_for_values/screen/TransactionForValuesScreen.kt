@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.viewmodel.TransactionForValuesScreenViewModelImpl
 
 @Composable
-fun TransactionForValuesScreen(
+public fun TransactionForValuesScreen(
     screenViewModel: TransactionForValuesScreenViewModel = hiltViewModel<TransactionForValuesScreenViewModelImpl>(),
 ) {
     val viewModel = remember {

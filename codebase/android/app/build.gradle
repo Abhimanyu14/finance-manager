@@ -148,6 +148,9 @@ android {
         // useIR = true
 
         freeCompilerArgs += [
+                // Explicit API mode
+                "-Xexplicit-api=strict",
+
                 // Kotlin
                 "-opt-in=kotlin.RequiresOptIn",
                 "-opt-in=kotlin.contracts.ExperimentalContracts",

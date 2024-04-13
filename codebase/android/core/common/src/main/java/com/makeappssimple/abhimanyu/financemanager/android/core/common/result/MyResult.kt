@@ -5,19 +5,19 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onStart
 
-sealed interface MyResult<out T> {
-    data object Loading : MyResult<Nothing>
+public sealed interface MyResult<out T> {
+    public data object Loading : MyResult<Nothing>
 
-    data class Error(
+    public data class Error(
         val exception: Throwable? = null,
     ) : MyResult<Nothing>
 
-    data class Success<T>(
+    public data class Success<T>(
         val data: T,
     ) : MyResult<T>
 }
 
-fun <T> Flow<T>.asResult(): Flow<MyResult<T>> {
+public fun <T> Flow<T>.asResult(): Flow<MyResult<T>> {
     return this
         .map<T, MyResult<T>> {
             MyResult.Success(it)

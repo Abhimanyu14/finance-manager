@@ -4,17 +4,17 @@ import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 
 @Immutable
-sealed class AddOrEditTransactionScreenUiVisibilityState(
-    val isTitleTextFieldVisible: Boolean = false,
-    val isDescriptionTextFieldVisible: Boolean = false,
-    val isCategoryTextFieldVisible: Boolean = false,
-    val isTransactionForRadioGroupVisible: Boolean = false,
-    val isTransactionTypesRadioGroupVisible: Boolean = false,
-    val isAccountFromTextFieldVisible: Boolean = false,
-    val isAccountToTextFieldVisible: Boolean = false,
-    val isTitleSuggestionsVisible: Boolean = false,
+public sealed class AddOrEditTransactionScreenUiVisibilityState(
+    public val isTitleTextFieldVisible: Boolean = false,
+    public val isDescriptionTextFieldVisible: Boolean = false,
+    public val isCategoryTextFieldVisible: Boolean = false,
+    public val isTransactionForRadioGroupVisible: Boolean = false,
+    public val isTransactionTypesRadioGroupVisible: Boolean = false,
+    public val isAccountFromTextFieldVisible: Boolean = false,
+    public val isAccountToTextFieldVisible: Boolean = false,
+    public val isTitleSuggestionsVisible: Boolean = false,
 ) {
-    object Expense : AddOrEditTransactionScreenUiVisibilityState(
+    public data object Expense : AddOrEditTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = true,
         isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = true,
@@ -25,7 +25,7 @@ sealed class AddOrEditTransactionScreenUiVisibilityState(
         isTitleSuggestionsVisible = true,
     )
 
-    object Income : AddOrEditTransactionScreenUiVisibilityState(
+    public data object Income : AddOrEditTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = true,
         isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = true,
@@ -36,7 +36,7 @@ sealed class AddOrEditTransactionScreenUiVisibilityState(
         isTitleSuggestionsVisible = true,
     )
 
-    object Investment : AddOrEditTransactionScreenUiVisibilityState(
+    public data object Investment : AddOrEditTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = true,
         isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = true,
@@ -47,7 +47,7 @@ sealed class AddOrEditTransactionScreenUiVisibilityState(
         isTitleSuggestionsVisible = true,
     )
 
-    object Refund : AddOrEditTransactionScreenUiVisibilityState(
+    public data object Refund : AddOrEditTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = false,
         isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = false,
@@ -58,7 +58,7 @@ sealed class AddOrEditTransactionScreenUiVisibilityState(
         isTitleSuggestionsVisible = false,
     )
 
-    object Transfer : AddOrEditTransactionScreenUiVisibilityState(
+    public data object Transfer : AddOrEditTransactionScreenUiVisibilityState(
         isTitleTextFieldVisible = false,
         isDescriptionTextFieldVisible = false,
         isCategoryTextFieldVisible = false,
@@ -70,7 +70,7 @@ sealed class AddOrEditTransactionScreenUiVisibilityState(
     )
 }
 
-fun AddOrEditTransactionScreenUiVisibilityState?.orDefault(): AddOrEditTransactionScreenUiVisibilityState {
+public fun AddOrEditTransactionScreenUiVisibilityState?.orDefault(): AddOrEditTransactionScreenUiVisibilityState {
     return if (this.isNull()) {
         AddOrEditTransactionScreenUiVisibilityState.Expense
     } else {

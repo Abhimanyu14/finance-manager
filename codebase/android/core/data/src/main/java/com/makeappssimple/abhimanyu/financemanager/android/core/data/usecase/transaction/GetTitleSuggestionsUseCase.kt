@@ -2,15 +2,15 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tr
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
 
-interface GetTitleSuggestionsUseCase {
-    suspend operator fun invoke(
+public interface GetTitleSuggestionsUseCase {
+    public suspend operator fun invoke(
         categoryId: Int,
         numberOfSuggestions: Int = 5,
         enteredTitle: String,
     ): List<String>
 }
 
-class GetTitleSuggestionsUseCaseImpl(
+public class GetTitleSuggestionsUseCaseImpl(
     private val transactionRepository: TransactionRepository,
 ) : GetTitleSuggestionsUseCase {
     override suspend operator fun invoke(

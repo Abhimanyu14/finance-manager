@@ -8,7 +8,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class DatabaseData(
+public data class DatabaseData(
     val categories: List<Category> = emptyList(),
 
     val accounts: List<Account> = emptyList(),

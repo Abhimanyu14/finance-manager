@@ -8,7 +8,7 @@ import kotlinx.serialization.encoding.Decoder
 import kotlinx.serialization.encoding.Encoder
 import java.util.Currency
 
-object CurrencySerializer : KSerializer<Currency> {
+public object CurrencySerializer : KSerializer<Currency> {
     override val descriptor: SerialDescriptor = PrimitiveSerialDescriptor(
         serialName = "Currency",
         kind = STRING

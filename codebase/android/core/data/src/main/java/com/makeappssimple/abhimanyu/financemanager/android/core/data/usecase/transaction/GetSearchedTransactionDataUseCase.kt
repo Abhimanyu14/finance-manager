@@ -3,13 +3,13 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tr
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 
-interface GetSearchedTransactionDataUseCase {
-    suspend operator fun invoke(
+public interface GetSearchedTransactionDataUseCase {
+    public suspend operator fun invoke(
         searchText: String,
     ): List<TransactionData>
 }
 
-class GetSearchedTransactionDataUseCaseImpl(
+public class GetSearchedTransactionDataUseCaseImpl(
     private val transactionRepository: TransactionRepository,
 ) : GetSearchedTransactionDataUseCase {
     override suspend operator fun invoke(

@@ -4,6 +4,6 @@ import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIData
 
 @Immutable
-data class OpenSourceLicensesScreenUIData(
+public data class OpenSourceLicensesScreenUIData(
     val isLoading: Boolean = false,
 ) : ScreenUIData

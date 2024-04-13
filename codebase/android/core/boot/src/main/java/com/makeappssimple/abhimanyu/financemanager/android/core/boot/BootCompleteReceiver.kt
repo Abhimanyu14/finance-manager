@@ -16,19 +16,19 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class BootCompleteReceiver : BroadcastReceiver() {
+public class BootCompleteReceiver : BroadcastReceiver() {
 
     @Inject
-    lateinit var alarmKit: AlarmKit
+    public lateinit var alarmKit: AlarmKit
 
     @Inject
-    lateinit var dispatcherProvider: DispatcherProvider
+    public lateinit var dispatcherProvider: DispatcherProvider
 
     @Inject
-    lateinit var dateTimeUtil: DateTimeUtil
+    public lateinit var dateTimeUtil: DateTimeUtil
 
     @Inject
-    lateinit var myPreferencesRepository: MyPreferencesRepository
+    public lateinit var myPreferencesRepository: MyPreferencesRepository
 
     override fun onReceive(
         context: Context?,

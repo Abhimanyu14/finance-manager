@@ -4,18 +4,19 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAccountsTotalBalanceAmountValueUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAccountsTotalBalanceAmountValueUseCaseImpl
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
-class GetAccountsTotalBalanceAmountValueUseCaseTest {
+public class GetAccountsTotalBalanceAmountValueUseCaseTest {
     private val accountRepository: AccountRepository = mock()
     private lateinit var getAccountsTotalBalanceAmountValueUseCase: GetAccountsTotalBalanceAmountValueUseCase
 
     @Before
-    fun setUp() {
+    public fun setUp() {
         getAccountsTotalBalanceAmountValueUseCase =
             GetAccountsTotalBalanceAmountValueUseCaseImpl(
                 accountRepository = accountRepository,
@@ -23,7 +24,7 @@ class GetAccountsTotalBalanceAmountValueUseCaseTest {
     }
 
     @Test
-    fun invoke_defaultTest() = runTest {
+    public fun invoke_defaultTest(): TestResult = runTest {
         getAccountsTotalBalanceAmountValueUseCase()
 
         verify(

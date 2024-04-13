@@ -8,12 +8,12 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 
 @Immutable
-data class MyTabData(
+public data class MyTabData(
     val title: String,
 )
 
 @Composable
-fun MyTabRow(
+public fun MyTabRow(
     modifier: Modifier = Modifier,
     selectedTabIndex: Int,
     tabDataList: List<MyTabData>,

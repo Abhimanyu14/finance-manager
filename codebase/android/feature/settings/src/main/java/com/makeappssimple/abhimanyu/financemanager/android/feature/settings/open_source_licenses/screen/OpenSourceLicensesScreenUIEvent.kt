@@ -4,6 +4,6 @@ import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEvent
 
 @Immutable
-sealed class OpenSourceLicensesScreenUIEvent : ScreenUIEvent {
-    data object NavigateUp : OpenSourceLicensesScreenUIEvent()
+public sealed class OpenSourceLicensesScreenUIEvent : ScreenUIEvent {
+    public data object NavigateUp : OpenSourceLicensesScreenUIEvent()
 }

@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.th
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Shapes
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.unit.dp
 
 internal val Shapes = Shapes(
@@ -23,12 +24,12 @@ internal val Shapes = Shapes(
     ),
 )
 
-val BottomSheetExpandedShape = RectangleShape
-val BottomSheetShape = RoundedCornerShape(
+public val BottomSheetExpandedShape: Shape = RectangleShape
+public val BottomSheetShape: RoundedCornerShape = RoundedCornerShape(
     topStart = 16.dp,
     topEnd = 16.dp,
 )
-val ExpandedListItemShape = RoundedCornerShape(
+public val ExpandedListItemShape: RoundedCornerShape = RoundedCornerShape(
     topStart = 24.dp,
     topEnd = 24.dp,
 )

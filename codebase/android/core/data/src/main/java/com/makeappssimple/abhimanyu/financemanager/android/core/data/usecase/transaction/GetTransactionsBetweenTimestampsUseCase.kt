@@ -3,14 +3,14 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tr
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 
-interface GetTransactionsBetweenTimestampsUseCase {
-    suspend operator fun invoke(
+public interface GetTransactionsBetweenTimestampsUseCase {
+    public suspend operator fun invoke(
         startingTimestamp: Long,
         endingTimestamp: Long,
     ): List<Transaction>
 }
 
-class GetTransactionsBetweenTimestampsUseCaseImpl(
+public class GetTransactionsBetweenTimestampsUseCaseImpl(
     private val transactionRepository: TransactionRepository,
 ) : GetTransactionsBetweenTimestampsUseCase {
     override suspend operator fun invoke(

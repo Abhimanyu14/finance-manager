@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class FakeCategoryRepositoryImpl : CategoryRepository {
+public class FakeCategoryRepositoryImpl : CategoryRepository {
     override fun getAllCategoriesFlow(): Flow<List<Category>> {
         return flow {
             emptyList<Category>()

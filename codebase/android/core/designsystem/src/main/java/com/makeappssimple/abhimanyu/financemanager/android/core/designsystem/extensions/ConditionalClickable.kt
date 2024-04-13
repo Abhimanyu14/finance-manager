@@ -11,7 +11,7 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.semantics.Role
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 
-fun Modifier.conditionalClickable(
+public fun Modifier.conditionalClickable(
     role: Role? = null,
     onClickLabel: String? = null,
     onLongClickLabel: String? = null,
@@ -35,7 +35,7 @@ fun Modifier.conditionalClickable(
     }
 }
 
-fun Modifier.conditionalClickable(
+public fun Modifier.conditionalClickable(
     indication: Indication?,
     interactionSource: MutableInteractionSource,
     role: Role? = null,

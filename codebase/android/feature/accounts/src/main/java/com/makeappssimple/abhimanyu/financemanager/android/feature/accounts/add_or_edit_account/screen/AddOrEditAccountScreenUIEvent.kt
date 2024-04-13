@@ -5,26 +5,26 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIEvent
 
 @Immutable
-sealed class AddOrEditAccountScreenUIEvent : ScreenUIEvent {
-    data object ClearBalanceAmountValue : AddOrEditAccountScreenUIEvent()
-    data object ClearMinimumAccountBalanceAmountValue : AddOrEditAccountScreenUIEvent()
-    data object ClearName : AddOrEditAccountScreenUIEvent()
-    data object NavigateUp : AddOrEditAccountScreenUIEvent()
-    data object OnCtaButtonClick : AddOrEditAccountScreenUIEvent()
+public sealed class AddOrEditAccountScreenUIEvent : ScreenUIEvent {
+    public data object ClearBalanceAmountValue : AddOrEditAccountScreenUIEvent()
+    public data object ClearMinimumAccountBalanceAmountValue : AddOrEditAccountScreenUIEvent()
+    public data object ClearName : AddOrEditAccountScreenUIEvent()
+    public data object NavigateUp : AddOrEditAccountScreenUIEvent()
+    public data object OnCtaButtonClick : AddOrEditAccountScreenUIEvent()
 
-    data class UpdateBalanceAmountValue(
+    public data class UpdateBalanceAmountValue(
         val updatedBalanceAmountValue: TextFieldValue,
     ) : AddOrEditAccountScreenUIEvent()
 
-    data class UpdateMinimumAccountBalanceAmountValue(
+    public data class UpdateMinimumAccountBalanceAmountValue(
         val updatedMinimumAccountBalanceAmountValue: TextFieldValue,
     ) : AddOrEditAccountScreenUIEvent()
 
-    data class UpdateName(
+    public data class UpdateName(
         val updatedName: TextFieldValue,
     ) : AddOrEditAccountScreenUIEvent()
 
-    data class UpdateSelectedAccountTypeIndex(
+    public data class UpdateSelectedAccountTypeIndex(
         val updatedIndex: Int,
     ) : AddOrEditAccountScreenUIEvent()
 }

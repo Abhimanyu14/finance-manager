@@ -17,13 +17,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ext
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
 
 @Immutable
-data class TransactionForValuesMenuBottomSheetItemData(
+public data class TransactionForValuesMenuBottomSheetItemData(
     val text: String,
     val onClick: () -> Unit,
 )
 
 @Composable
-fun TransactionForValuesMenuBottomSheetUI(
+public fun TransactionForValuesMenuBottomSheetUI(
     modifier: Modifier = Modifier,
     items: List<TransactionForValuesMenuBottomSheetItemData>,
 ) {

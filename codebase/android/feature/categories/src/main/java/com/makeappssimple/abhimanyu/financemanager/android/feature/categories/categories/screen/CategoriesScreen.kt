@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ca
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.categories.viewmodel.CategoriesScreenViewModelImpl
 
 @Composable
-fun CategoriesScreen(
+public fun CategoriesScreen(
     screenViewModel: CategoriesScreenViewModel = hiltViewModel<CategoriesScreenViewModelImpl>(),
 ) {
     val viewModel = remember {

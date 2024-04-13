@@ -22,7 +22,7 @@ import java.time.LocalDate
 import java.time.ZoneId
 
 @Immutable
-data class MyDatePickerData(
+public data class MyDatePickerData(
     val isVisible: Boolean = false,
     val endLocalDate: LocalDate? = null,
     val selectedLocalDate: LocalDate? = null,
@@ -30,13 +30,13 @@ data class MyDatePickerData(
 )
 
 @Immutable
-data class MyDatePickerEvents(
+public data class MyDatePickerEvents(
     val onNegativeButtonClick: () -> Unit = {},
     val onPositiveButtonClick: (LocalDate) -> Unit = {},
 )
 
 @Composable
-fun MyDatePicker(
+public fun MyDatePicker(
     modifier: Modifier = Modifier,
     data: MyDatePickerData,
     events: MyDatePickerEvents = MyDatePickerEvents(),

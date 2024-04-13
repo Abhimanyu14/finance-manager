@@ -2,11 +2,11 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.ca
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.category.CategoryRepository
 
-interface GetAllCategoriesCountUseCase {
-    suspend operator fun invoke(): Int
+public interface GetAllCategoriesCountUseCase {
+    public suspend operator fun invoke(): Int
 }
 
-class GetAllCategoriesCountUseCaseImpl(
+public class GetAllCategoriesCountUseCaseImpl(
     private val categoryRepository: CategoryRepository,
 ) : GetAllCategoriesCountUseCase {
     override suspend operator fun invoke(): Int {

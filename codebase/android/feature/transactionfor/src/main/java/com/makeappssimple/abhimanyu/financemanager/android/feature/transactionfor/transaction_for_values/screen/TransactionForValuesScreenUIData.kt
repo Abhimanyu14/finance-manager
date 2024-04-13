@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIData
 
 @Immutable
-data class TransactionForValuesScreenUIData(
+public data class TransactionForValuesScreenUIData(
     val transactionForValuesIsUsedInTransactions: List<Boolean> = emptyList(),
     val transactionForValues: List<TransactionFor> = emptyList(),
 ) : ScreenUIData

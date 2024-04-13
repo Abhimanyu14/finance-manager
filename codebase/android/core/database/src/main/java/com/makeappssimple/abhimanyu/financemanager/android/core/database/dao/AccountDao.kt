@@ -10,46 +10,46 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.A
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface AccountDao {
+public interface AccountDao {
     @Query(value = "SELECT * from account_table ORDER BY id ASC")
-    fun getAllAccountsFlow(): Flow<List<AccountEntity>>
+    public fun getAllAccountsFlow(): Flow<List<AccountEntity>>
 
     @Query(value = "SELECT * from account_table ORDER BY id ASC")
-    suspend fun getAllAccounts(): List<AccountEntity>
+    public suspend fun getAllAccounts(): List<AccountEntity>
 
     @Query(value = "SELECT COUNT(*) FROM account_table")
-    suspend fun getAllAccountsCount(): Int
+    public suspend fun getAllAccountsCount(): Int
 
     @Query(value = "SELECT * from account_table WHERE id = :id")
-    suspend fun getAccount(
+    public suspend fun getAccount(
         id: Int,
     ): AccountEntity?
 
     @Query(value = "SELECT * from account_table WHERE id IN (:ids)")
-    suspend fun getAccounts(
+    public suspend fun getAccounts(
         ids: List<Int>,
     ): List<AccountEntity>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insertAccounts(
+    public suspend fun insertAccounts(
         vararg accounts: AccountEntity,
     ): List<Long>
 
     @Update
-    suspend fun updateAccounts(
+    public suspend fun updateAccounts(
         vararg accounts: AccountEntity,
     ): Int
 
     @Query(value = "DELETE FROM account_table WHERE id = :id")
-    suspend fun deleteAccount(
+    public suspend fun deleteAccount(
         id: Int,
     ): Int
 
     @Delete
-    suspend fun deleteAccounts(
+    public suspend fun deleteAccounts(
         vararg accounts: AccountEntity,
     ): Int
 
     @Query(value = "DELETE FROM account_table")
-    suspend fun deleteAllAccounts(): Int
+    public suspend fun deleteAllAccounts(): Int
 }

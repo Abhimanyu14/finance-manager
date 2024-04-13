@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
-class AccountRepositoryImpl(
+public class AccountRepositoryImpl(
     private val accountDao: AccountDao,
     private val dispatcherProvider: DispatcherProvider,
 ) : AccountRepository {

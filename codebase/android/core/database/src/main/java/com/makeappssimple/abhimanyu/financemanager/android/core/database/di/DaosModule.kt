@@ -12,30 +12,30 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-class DaosModule {
+public class DaosModule {
     @Provides
-    fun providesCategoryDao(
+    public fun providesCategoryDao(
         myRoomDatabase: MyRoomDatabase,
     ): CategoryDao {
         return myRoomDatabase.categoryDao()
     }
 
     @Provides
-    fun providesAccountDao(
+    public fun providesAccountDao(
         myRoomDatabase: MyRoomDatabase,
     ): AccountDao {
         return myRoomDatabase.accountDao()
     }
 
     @Provides
-    fun providesTransactionDao(
+    public fun providesTransactionDao(
         myRoomDatabase: MyRoomDatabase,
     ): TransactionDao {
         return myRoomDatabase.transactionDao()
     }
 
     @Provides
-    fun providesTransactionForDao(
+    public fun providesTransactionForDao(
         myRoomDatabase: MyRoomDatabase,
     ): TransactionForDao {
         return myRoomDatabase.transactionForDao()

@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.scr
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 
-enum class AnalysisScreenBottomSheetType : ScreenBottomSheetType {
+public enum class AnalysisScreenBottomSheetType : ScreenBottomSheetType {
     FILTERS,
     NONE,
 }

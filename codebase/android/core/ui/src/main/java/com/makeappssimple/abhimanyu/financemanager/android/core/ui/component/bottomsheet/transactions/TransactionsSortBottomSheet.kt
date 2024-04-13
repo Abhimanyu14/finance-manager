@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.SortOption
 
 @Composable
-fun TransactionsSortBottomSheet(
+public fun TransactionsSortBottomSheet(
     selectedSortOptionIndex: Int,
     sortOptions: List<SortOption>,
     resetBottomSheetType: () -> Unit,

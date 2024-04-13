@@ -12,10 +12,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class JsonReaderModule {
+public class JsonReaderModule {
     @Singleton
     @Provides
-    fun providesJsonReader(
+    public fun providesJsonReader(
         @ApplicationContext context: Context,
     ): MyJsonReader {
         return MyJsonReaderImpl(

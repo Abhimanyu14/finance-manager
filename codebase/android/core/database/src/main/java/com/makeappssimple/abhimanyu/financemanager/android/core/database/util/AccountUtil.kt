@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.A
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.AmountEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountType
 
-fun sanitizeAccounts(
+public fun sanitizeAccounts(
     accounts: List<AccountEntity>,
 ): List<AccountEntity> {
     return accounts.map {

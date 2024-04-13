@@ -12,23 +12,23 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 
 @Immutable
-data class TransactionForListItemDataAndEvents(
+public data class TransactionForListItemDataAndEvents(
     val data: TransactionForListItemData,
     val events: TransactionForListItemEvents,
 )
 
 @Immutable
-data class TransactionForListItemData(
+public data class TransactionForListItemData(
     val title: String,
 )
 
 @Immutable
-data class TransactionForListItemEvents(
+public data class TransactionForListItemEvents(
     val onClick: () -> Unit,
 )
 
 @Composable
-fun TransactionForListItem(
+public fun TransactionForListItem(
     modifier: Modifier = Modifier,
     data: TransactionForListItemData,
     events: TransactionForListItemEvents,

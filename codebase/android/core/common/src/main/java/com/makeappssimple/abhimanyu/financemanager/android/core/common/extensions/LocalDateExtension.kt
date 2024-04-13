@@ -7,7 +7,7 @@ import java.time.LocalTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-fun LocalDate?.orMin(): LocalDate {
+public fun LocalDate?.orMin(): LocalDate {
     return this ?: LocalDate.MIN
 }
 
@@ -15,14 +15,14 @@ fun LocalDate?.orMin(): LocalDate {
  * [LocalDate] to [LocalDateTime]
  * Time: 23:59:59
  */
-fun LocalDate.atEndOfDay(): LocalDateTime {
+public fun LocalDate.atEndOfDay(): LocalDateTime {
     return this.atTime(LocalTime.MAX)
 }
 
 /**
  * Sample format - 30 Mar, 2023
  */
-fun LocalDate.formattedDate(
+public fun LocalDate.formattedDate(
     zoneId: ZoneId = getSystemDefaultZoneId(),
 ): String {
     return DateTimeFormatter

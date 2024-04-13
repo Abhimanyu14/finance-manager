@@ -9,6 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.local.d
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionForEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert
@@ -19,15 +20,15 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
-class TransactionForDaoTest {
+public class TransactionForDaoTest {
     private lateinit var myRoomDatabase: MyRoomDatabase
     private lateinit var transactionForDao: TransactionForDao
 
     @get:Rule
-    val mainDispatcherRule = MainDispatcherRule()
+    public val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
 
     @Before
-    fun setUp() {
+    public fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         myRoomDatabase = Room
             .inMemoryDatabaseBuilder(
@@ -40,12 +41,12 @@ class TransactionForDaoTest {
     }
 
     @After
-    fun tearDown() {
+    public fun tearDown() {
         myRoomDatabase.close()
     }
 
     @Test
-    fun getAllTransactionForValues() = runTest {
+    public fun getAllTransactionForValues(): TestResult = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -63,7 +64,7 @@ class TransactionForDaoTest {
     }
 
     @Test
-    fun getAllTransactionForValuesFlow() = runTest {
+    public fun getAllTransactionForValuesFlow(): TestResult = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -85,7 +86,7 @@ class TransactionForDaoTest {
     }
 
     @Test
-    fun getTransactionForValuesCount() = runTest {
+    public fun getTransactionForValuesCount(): TestResult = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -99,7 +100,7 @@ class TransactionForDaoTest {
     }
 
     @Test
-    fun getTransactionFor_returnsDataForValidId() = runTest {
+    public fun getTransactionFor_returnsDataForValidId(): TestResult = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -115,7 +116,7 @@ class TransactionForDaoTest {
     }
 
     @Test
-    fun getTransactionFor_returnsNullForInvalidId() = runTest {
+    public fun getTransactionFor_returnsNullForInvalidId(): TestResult = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -128,7 +129,7 @@ class TransactionForDaoTest {
     }
 
     @Test
-    fun updateTransactionForValues() = runTest {
+    public fun updateTransactionForValues(): TestResult = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -158,7 +159,7 @@ class TransactionForDaoTest {
     }
 
     @Test
-    fun deleteTransactionFor_deleteDataOfGivenId() = runTest {
+    public fun deleteTransactionFor_deleteDataOfGivenId(): TestResult = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -179,7 +180,7 @@ class TransactionForDaoTest {
     }
 
     @Test
-    fun deleteTransactionFor_noDeletionForInvalidId() = runTest {
+    public fun deleteTransactionFor_noDeletionForInvalidId(): TestResult = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -199,7 +200,7 @@ class TransactionForDaoTest {
         )
     }
 
-    companion object {
+    public companion object {
         private const val testId1 = 123
         private const val testId2 = 234
         private const val invalidId = 987

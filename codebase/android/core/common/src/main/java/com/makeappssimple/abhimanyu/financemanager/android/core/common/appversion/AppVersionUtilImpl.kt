@@ -5,7 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import androidx.core.content.pm.PackageInfoCompat
 
-class AppVersionUtilImpl(
+public class AppVersionUtilImpl(
     private val context: Context,
 ) : AppVersionUtil {
     override fun getAppVersion(): AppVersion? {

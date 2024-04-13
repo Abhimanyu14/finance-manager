@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.TransactionsScreenViewModelImpl
 
 @Composable
-fun TransactionsScreen(
+public fun TransactionsScreen(
     screenViewModel: TransactionsScreenViewModel = hiltViewModel<TransactionsScreenViewModelImpl>(),
 ) {
     val viewModel = remember {

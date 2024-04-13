@@ -9,25 +9,25 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.sett
 import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 
-interface SettingsScreenViewModel : ScreenViewModel {
-    val event: SharedFlow<SettingsScreenEvent>
-    val screenUIData: StateFlow<MyResult<SettingsScreenUIData>?>
+public interface SettingsScreenViewModel : ScreenViewModel {
+    public val event: SharedFlow<SettingsScreenEvent>
+    public val screenUIData: StateFlow<MyResult<SettingsScreenUIData>?>
 
-    fun backupDataToDocument(
+    public fun backupDataToDocument(
         uri: Uri,
     )
 
-    fun disableReminder()
+    public fun disableReminder()
 
-    fun enableReminder()
+    public fun enableReminder()
 
-    fun handleUIEvents(
+    public fun handleUIEvents(
         uiEvent: SettingsScreenUIEvent,
     )
 
-    fun restoreDataFromDocument(
+    public fun restoreDataFromDocument(
         uri: Uri,
     )
 
-    fun recalculateTotal()
+    public fun recalculateTotal()
 }

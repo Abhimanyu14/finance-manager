@@ -13,7 +13,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen.TransactionsScreen
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.view_transaction.screen.ViewTransactionScreen
 
-fun NavGraphBuilder.transactionsNavGraph() {
+public fun NavGraphBuilder.transactionsNavGraph() {
     composable(
         route = "${Screen.AddTransaction.route}/{${NavArgs.TRANSACTION_ID}}?${NavArgs.EDIT}={${NavArgs.EDIT}}",
         arguments = listOf(

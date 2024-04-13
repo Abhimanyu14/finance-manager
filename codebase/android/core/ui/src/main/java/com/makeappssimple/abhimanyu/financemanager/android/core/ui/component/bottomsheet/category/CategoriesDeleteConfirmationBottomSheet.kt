@@ -6,7 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyConfirmationBottomSheetUI
 
 @Composable
-fun CategoriesDeleteConfirmationBottomSheet(
+public fun CategoriesDeleteConfirmationBottomSheet(
     deleteCategory: () -> Unit,
     resetBottomSheetType: () -> Unit,
     resetCategoryIdToDelete: () -> Unit,

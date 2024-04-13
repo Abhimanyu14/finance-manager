@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
-class CategoryRepositoryImpl(
+public class CategoryRepositoryImpl(
     private val categoryDao: CategoryDao,
     private val dispatcherProvider: DispatcherProvider,
 ) : CategoryRepository {

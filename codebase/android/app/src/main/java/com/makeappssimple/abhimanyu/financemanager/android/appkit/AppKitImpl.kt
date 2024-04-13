@@ -5,7 +5,7 @@ import android.content.Intent
 import com.makeappssimple.abhimanyu.financemanager.android.MainActivity
 import com.makeappssimple.abhimanyu.financemanager.android.core.appkit.AppKit
 
-class AppKitImpl(
+public class AppKitImpl(
     private val context: Context,
 ) : AppKit {
     override fun getMainActivityIntent(): Intent {

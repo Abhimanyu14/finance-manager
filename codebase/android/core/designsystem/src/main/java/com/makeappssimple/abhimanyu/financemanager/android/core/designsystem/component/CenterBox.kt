@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typealiases.BoxScopedComposableContent
 
 @Composable
-fun CenterBox(
+public fun CenterBox(
     modifier: Modifier = Modifier,
     content: BoxScopedComposableContent,
 ) {

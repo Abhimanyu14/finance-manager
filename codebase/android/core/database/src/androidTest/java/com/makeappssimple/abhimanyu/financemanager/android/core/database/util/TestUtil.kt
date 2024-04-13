@@ -9,26 +9,26 @@ import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-const val timeInMillis_01_JUN_2022 = 1654021800000
-const val timeInMillis_01_JAN_2022_00_00_00 = 1640975400000 // 01-01-2022 00:00:00 IST
-const val timeInMillis_01_JUN_2022_00_00_00 = 1654021800000 // 01-06-2022 00:00:00 IST
-const val timeInMillis_01_JUN_2022_23_59_59 = 1654108199000 // 01-06-2022 23:59:59 IST
-const val timeInMillis_02_JUN_2022_00_00_00 = 1654108200000 // 02-06-2022 00:00:00 IST
-const val timeInMillis_02_JUN_2022_23_59_59 = 1654194599000 // 02-06-2022 23:59:59 IST
-const val timeInMillis_30_JUN_2022_23_59_59 = 1656613799000 // 30-06-2022 23:59:59 IST
-const val timeInMillis_31_DEC_2022_23_59_59 = 1672511399000 // 31-12-2022 23:59:59 IST
-const val ONE_HOUR = 60L * 60 * 1000
-const val ONE_DAY = ONE_HOUR * 24
-const val SEVEN_DAYS = ONE_HOUR * 24
-const val THIRTY_DAYS = ONE_DAY * 30
+public const val timeInMillis_01_JUN_2022: Long = 1654021800000
+public const val timeInMillis_01_JAN_2022_00_00_00: Long = 1640975400000 // 01-01-2022 00:00:00 IST
+public const val timeInMillis_01_JUN_2022_00_00_00: Long = 1654021800000 // 01-06-2022 00:00:00 IST
+public const val timeInMillis_01_JUN_2022_23_59_59: Long = 1654108199000 // 01-06-2022 23:59:59 IST
+public const val timeInMillis_02_JUN_2022_00_00_00: Long = 1654108200000 // 02-06-2022 00:00:00 IST
+public const val timeInMillis_02_JUN_2022_23_59_59: Long = 1654194599000 // 02-06-2022 23:59:59 IST
+public const val timeInMillis_30_JUN_2022_23_59_59: Long = 1656613799000 // 30-06-2022 23:59:59 IST
+public const val timeInMillis_31_DEC_2022_23_59_59: Long = 1672511399000 // 31-12-2022 23:59:59 IST
+public const val ONE_HOUR: Long = 60L * 60 * 1000
+public const val ONE_DAY: Long = ONE_HOUR * 24
+public const val SEVEN_DAYS: Long = ONE_HOUR * 24
+public const val THIRTY_DAYS: Long = ONE_DAY * 30
 
-fun getTestAmount(): AmountEntity {
+public fun getTestAmount(): AmountEntity {
     return AmountEntity(
         value = 45,
     )
 }
 
-fun getTestCategory(): CategoryEntity {
+public fun getTestCategory(): CategoryEntity {
     return CategoryEntity(
         emoji = "emoji",
         title = "title",
@@ -36,7 +36,7 @@ fun getTestCategory(): CategoryEntity {
     )
 }
 
-fun getTestCategories(): Array<CategoryEntity> {
+public fun getTestCategories(): Array<CategoryEntity> {
     return arrayOf(
         CategoryEntity(
             emoji = "emoji",
@@ -51,13 +51,13 @@ fun getTestCategories(): Array<CategoryEntity> {
     )
 }
 
-fun getTestAccount(): AccountEntity {
+public fun getTestAccount(): AccountEntity {
     return AccountEntity(
         name = "Axis",
     )
 }
 
-fun getTestAccounts(): Array<AccountEntity> {
+public fun getTestAccounts(): Array<AccountEntity> {
     return arrayOf(
         AccountEntity(
             name = "Axis",
@@ -68,7 +68,7 @@ fun getTestAccounts(): Array<AccountEntity> {
     )
 }
 
-fun getTestTransaction(): TransactionEntity {
+public fun getTestTransaction(): TransactionEntity {
     return TransactionEntity(
         amount = getTestAmount(),
         title = "title",
@@ -77,7 +77,7 @@ fun getTestTransaction(): TransactionEntity {
     )
 }
 
-fun getTestTransactions(): Array<TransactionEntity> {
+public fun getTestTransactions(): Array<TransactionEntity> {
     return arrayOf(
         TransactionEntity(
             amount = getTestAmount(),
@@ -94,7 +94,7 @@ fun getTestTransactions(): Array<TransactionEntity> {
     )
 }
 
-fun getTestTransactions(
+public fun getTestTransactions(
     size: Int = 2,
     frequency: Long,
 ): Array<TransactionEntity> {
@@ -110,7 +110,7 @@ fun getTestTransactions(
     return result
 }
 
-fun getReadableDateAndTime(
+public fun getReadableDateAndTime(
     timestamp: Long,
     zoneId: ZoneId = ZoneId.systemDefault(),
 ): String {
@@ -121,13 +121,13 @@ fun getReadableDateAndTime(
         )
 }
 
-fun Instant.formattedReadableDateAndTime(
+public fun Instant.formattedReadableDateAndTime(
     zoneId: ZoneId = ZoneId.systemDefault(),
 ): String {
     return "${formattedDate(zoneId)} at ${formattedTime(zoneId)}"
 }
 
-fun Instant.formattedDate(
+public fun Instant.formattedDate(
     zoneId: ZoneId = ZoneId.systemDefault(),
 ): String {
     return DateTimeFormatter
@@ -136,7 +136,7 @@ fun Instant.formattedDate(
         .format(this)
 }
 
-fun Instant.formattedTime(
+public fun Instant.formattedTime(
     zoneId: ZoneId = ZoneId.systemDefault(),
 ): String {
     return DateTimeFormatter

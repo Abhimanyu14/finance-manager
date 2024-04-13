@@ -15,13 +15,13 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 @Immutable
-data class AccountsListItemHeaderDataAndEvents(
+public data class AccountsListItemHeaderDataAndEvents(
     val data: AccountsListItemHeaderData,
     val events: AccountsListItemHeaderEvents,
 )
 
 @Immutable
-data class AccountsListItemHeaderData(
+public data class AccountsListItemHeaderData(
     override val type: AccountsListItemType = AccountsListItemType.HEADER,
     val isDefault: Boolean = false,
     val isDeleteEnabled: Boolean = false,
@@ -36,7 +36,7 @@ data class AccountsListItemHeaderData(
 ) : AccountsListItemData
 
 @Immutable
-data class AccountsListItemHeaderEvents(
+public data class AccountsListItemHeaderEvents(
     val onClick: () -> Unit,
     val onLongClick: () -> Unit = {},
     val onEditClick: () -> Unit = {},
@@ -44,7 +44,7 @@ data class AccountsListItemHeaderEvents(
 )
 
 @Composable
-fun AccountsListItemHeader(
+public fun AccountsListItemHeader(
     modifier: Modifier = Modifier,
     data: AccountsListItemHeaderData,
 ) {

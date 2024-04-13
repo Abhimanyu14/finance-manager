@@ -24,28 +24,28 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ext
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
 
 @Immutable
-sealed class EmojiCircleSize(
-    val padding: Dp,
-    val textSize: Float,
+public sealed class EmojiCircleSize(
+    public val padding: Dp,
+    public val textSize: Float,
 ) {
-    data object Small : EmojiCircleSize(
+    public data object Small : EmojiCircleSize(
         padding = 2.dp,
         textSize = 20F,
     )
 
-    data object Normal : EmojiCircleSize(
+    public data object Normal : EmojiCircleSize(
         padding = 4.dp,
         textSize = 28F,
     )
 
-    data object Large : EmojiCircleSize(
+    public data object Large : EmojiCircleSize(
         padding = 8.dp,
         textSize = 32F,
     )
 }
 
 @Immutable
-data class MyEmojiCircleData(
+public data class MyEmojiCircleData(
     val isLoading: Boolean = false,
     val backgroundColor: Color = Transparent,
     val emojiCircleSize: EmojiCircleSize = EmojiCircleSize.Small,
@@ -53,13 +53,13 @@ data class MyEmojiCircleData(
 )
 
 @Immutable
-data class MyEmojiCircleEvents(
+public data class MyEmojiCircleEvents(
     val onClick: (() -> Unit)? = null,
     val onLongClick: (() -> Unit)? = null,
 )
 
 @Composable
-fun MyEmojiCircle(
+public fun MyEmojiCircle(
     modifier: Modifier = Modifier,
     data: MyEmojiCircleData,
     events: MyEmojiCircleEvents = MyEmojiCircleEvents(),

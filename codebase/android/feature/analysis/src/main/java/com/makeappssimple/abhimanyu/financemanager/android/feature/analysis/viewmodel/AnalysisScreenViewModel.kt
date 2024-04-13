@@ -6,10 +6,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.scre
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen.AnalysisScreenUIEvent
 import kotlinx.coroutines.flow.StateFlow
 
-interface AnalysisScreenViewModel : ScreenViewModel {
-    val screenUIData: StateFlow<MyResult<AnalysisScreenUIData>?>
+public interface AnalysisScreenViewModel : ScreenViewModel {
+    public val screenUIData: StateFlow<MyResult<AnalysisScreenUIData>?>
 
-    fun handleUIEvents(
+    public fun handleUIEvents(
         uiEvent: AnalysisScreenUIEvent,
     )
 }

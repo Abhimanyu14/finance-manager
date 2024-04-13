@@ -13,7 +13,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.TextUnit
 
 @Composable
-fun MyText(
+public fun MyText(
     modifier: Modifier = Modifier,
     @StringRes textStringResourceId: Int,
     overflow: TextOverflow = TextOverflow.Clip,
@@ -41,7 +41,7 @@ fun MyText(
  * Recommended to use [MyText] with [textStringResourceId] over this.
  */
 @Composable
-fun MyText(
+public fun MyText(
     modifier: Modifier = Modifier,
     text: String,
     overflow: TextOverflow = TextOverflow.Clip,

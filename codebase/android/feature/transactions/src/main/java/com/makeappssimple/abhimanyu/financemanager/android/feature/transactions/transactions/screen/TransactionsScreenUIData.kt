@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import java.time.LocalDate
 
 @Immutable
-data class TransactionsScreenUIData(
+public data class TransactionsScreenUIData(
     val isLoading: Boolean = false,
     val selectedFilter: Filter = Filter(),
     val accounts: List<Account> = emptyList(),

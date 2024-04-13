@@ -3,30 +3,30 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.repository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import kotlinx.coroutines.flow.Flow
 
-interface CategoryRepository {
-    fun getAllCategoriesFlow(): Flow<List<Category>>
+public interface CategoryRepository {
+    public fun getAllCategoriesFlow(): Flow<List<Category>>
 
-    suspend fun getAllCategories(): List<Category>
+    public suspend fun getAllCategories(): List<Category>
 
-    suspend fun getAllCategoriesCount(): Int
+    public suspend fun getAllCategoriesCount(): Int
 
-    suspend fun getCategory(
+    public suspend fun getCategory(
         id: Int,
     ): Category?
 
-    suspend fun insertCategories(
+    public suspend fun insertCategories(
         vararg categories: Category,
     ): List<Long>
 
-    suspend fun updateCategories(
+    public suspend fun updateCategories(
         vararg categories: Category,
     ): Boolean
 
-    suspend fun deleteCategory(
+    public suspend fun deleteCategory(
         id: Int,
     ): Boolean
 
-    suspend fun deleteCategories(
+    public suspend fun deleteCategories(
         vararg categories: Category,
     ): Boolean
 }

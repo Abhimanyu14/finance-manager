@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.extensio
 
 import androidx.compose.runtime.snapshots.SnapshotStateList
 
-fun <T> SnapshotStateList<T>.addIfDoesNotContainItemElseRemove(
+public fun <T> SnapshotStateList<T>.addIfDoesNotContainItemElseRemove(
     item: T,
 ) {
     if (this.contains(item)) {

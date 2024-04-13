@@ -1,73 +1,73 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.navigation
 
-sealed class Screen(
-    val route: String,
+public sealed class Screen(
+    public val route: String,
 ) {
-    data object Accounts : Screen(
+    public data object Accounts : Screen(
         route = "accounts",
     )
 
-    data object AddAccount : Screen(
+    public data object AddAccount : Screen(
         route = "add_account",
     )
 
-    data object AddCategory : Screen(
+    public data object AddCategory : Screen(
         route = "add_category",
     )
 
-    data object AddTransaction : Screen(
+    public data object AddTransaction : Screen(
         route = "add_transaction",
     )
 
-    data object AddTransactionFor : Screen(
+    public data object AddTransactionFor : Screen(
         route = "add_transaction_for",
     )
 
-    data object Analysis : Screen(
+    public data object Analysis : Screen(
         route = "analysis",
     )
 
-    data object Categories : Screen(
+    public data object Categories : Screen(
         route = "categories",
     )
 
-    data object EditAccount : Screen(
+    public data object EditAccount : Screen(
         route = "edit_account",
     )
 
-    data object EditCategory : Screen(
+    public data object EditCategory : Screen(
         route = "edit_category",
     )
 
-    data object EditTransaction : Screen(
+    public data object EditTransaction : Screen(
         route = "edit_transaction",
     )
 
-    data object EditTransactionFor : Screen(
+    public data object EditTransactionFor : Screen(
         route = "edit_transaction_for",
     )
 
-    data object Home : Screen(
+    public data object Home : Screen(
         route = "home",
     )
 
-    data object OpenSourceLicenses : Screen(
+    public data object OpenSourceLicenses : Screen(
         route = "open_source_licenses",
     )
 
-    data object Settings : Screen(
+    public data object Settings : Screen(
         route = "settings",
     )
 
-    data object TransactionForValues : Screen(
+    public data object TransactionForValues : Screen(
         route = "transaction_for_values",
     )
 
-    data object Transactions : Screen(
+    public data object Transactions : Screen(
         route = "transactions",
     )
 
-    data object ViewTransaction : Screen(
+    public data object ViewTransaction : Screen(
         route = "view_transaction",
     )
 }

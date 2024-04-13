@@ -6,7 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.AccountTyp
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIData
 
 @Immutable
-data class AddOrEditAccountScreenUIData(
+public data class AddOrEditAccountScreenUIData(
     val errorData: AddOrEditAccountScreenUIErrorData = AddOrEditAccountScreenUIErrorData(),
     val isValidAccountData: Boolean = false,
     val accountIsNotCash: Boolean = false,

@@ -3,18 +3,19 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.account.us
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.account.AccountRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsFlowUseCaseImpl
+import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
-class GetAllAccountsFlowUseCaseTest {
+public class GetAllAccountsFlowUseCaseTest {
     private val accountRepository: AccountRepository = mock()
     private lateinit var getAllAccountsFlowUseCase: GetAllAccountsFlowUseCase
 
     @Before
-    fun setUp() {
+    public fun setUp() {
         getAllAccountsFlowUseCase =
             GetAllAccountsFlowUseCaseImpl(
                 accountRepository = accountRepository,
@@ -22,7 +23,7 @@ class GetAllAccountsFlowUseCaseTest {
     }
 
     @Test
-    fun invoke_defaultTest() = runTest {
+    public fun invoke_defaultTest(): TestResult = runTest {
         getAllAccountsFlowUseCase()
 
         verify(

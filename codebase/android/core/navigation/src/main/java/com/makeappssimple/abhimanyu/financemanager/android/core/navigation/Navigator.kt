@@ -2,56 +2,56 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.navigation
 
 import kotlinx.coroutines.flow.SharedFlow
 
-interface Navigator {
-    val command: SharedFlow<NavigationCommand>
+public interface Navigator {
+    public val command: SharedFlow<NavigationCommand>
 
-    fun navigateToAccountsScreen()
+    public fun navigateToAccountsScreen()
 
-    fun navigateToAddAccountScreen()
+    public fun navigateToAddAccountScreen()
 
-    fun navigateToAddCategoryScreen(
+    public fun navigateToAddCategoryScreen(
         transactionType: String,
     )
 
-    fun navigateToAddTransactionScreen(
+    public fun navigateToAddTransactionScreen(
         transactionId: Int? = null,
     )
 
-    fun navigateToAddTransactionForScreen()
+    public fun navigateToAddTransactionForScreen()
 
-    fun navigateToAnalysisScreen()
+    public fun navigateToAnalysisScreen()
 
-    fun navigateToCategoriesScreen()
+    public fun navigateToCategoriesScreen()
 
-    fun navigateToEditAccountScreen(
+    public fun navigateToEditAccountScreen(
         accountId: Int,
     )
 
-    fun navigateToEditCategoryScreen(
+    public fun navigateToEditCategoryScreen(
         categoryId: Int,
     )
 
-    fun navigateToEditTransactionScreen(
+    public fun navigateToEditTransactionScreen(
         transactionId: Int,
     )
 
-    fun navigateToEditTransactionForScreen(
+    public fun navigateToEditTransactionForScreen(
         transactionForId: Int,
     )
 
-    fun navigateToHomeScreen()
+    public fun navigateToHomeScreen()
 
-    fun navigateToOpenSourceLicensesScreen()
+    public fun navigateToOpenSourceLicensesScreen()
 
-    fun navigateToSettingsScreen()
+    public fun navigateToSettingsScreen()
 
-    fun navigateToTransactionForValuesScreen()
+    public fun navigateToTransactionForValuesScreen()
 
-    fun navigateToTransactionsScreen()
+    public fun navigateToTransactionsScreen()
 
-    fun navigateToViewTransactionScreen(
+    public fun navigateToViewTransactionScreen(
         transactionId: Int,
     )
 
-    fun navigateUp()
+    public fun navigateUp()
 }

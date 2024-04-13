@@ -5,11 +5,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-interface GetAccountsTotalMinimumBalanceAmountValueUseCase {
-    operator fun invoke(): Flow<Long>
+public interface GetAccountsTotalMinimumBalanceAmountValueUseCase {
+    public operator fun invoke(): Flow<Long>
 }
 
-class GetAccountsTotalMinimumBalanceAmountValueUseCaseImpl(
+public class GetAccountsTotalMinimumBalanceAmountValueUseCaseImpl(
     private val accountRepository: AccountRepository,
 ) : GetAccountsTotalMinimumBalanceAmountValueUseCase {
     override operator fun invoke(): Flow<Long> {

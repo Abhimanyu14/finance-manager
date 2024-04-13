@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ex
 
 import androidx.compose.ui.Modifier
 
-fun Modifier.ifTrue(
+public fun Modifier.ifTrue(
     condition: Boolean,
     getModifier: () -> Modifier,
 ): Modifier {

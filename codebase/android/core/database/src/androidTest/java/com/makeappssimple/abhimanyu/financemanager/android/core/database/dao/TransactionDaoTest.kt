@@ -14,6 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.ge
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.util.timeInMillis_01_JUN_2022
 import com.makeappssimple.abhimanyu.financemanager.android.core.testing.util.MainDispatcherRule
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert
@@ -24,15 +25,15 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
-class TransactionDaoTest {
+public class TransactionDaoTest {
     private lateinit var database: MyRoomDatabase
     private lateinit var dao: TransactionDao
 
     @get:Rule
-    val mainDispatcherRule = MainDispatcherRule()
+    public val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
 
     @Before
-    fun setUp() {
+    public fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         database = Room
             .inMemoryDatabaseBuilder(
@@ -45,12 +46,12 @@ class TransactionDaoTest {
     }
 
     @After
-    fun tearDown() {
+    public fun tearDown() {
         database.close()
     }
 
     @Test
-    fun insertTransactions() = runTest {
+    public fun insertTransactions(): TestResult = runTest {
         val transactions = getTestTransactions(
             size = 10,
             frequency = THIRTY_DAYS,
@@ -71,7 +72,7 @@ class TransactionDaoTest {
     }
 
     @Test
-    fun getTransactionsBetweenTimestampsFlow() = runTest {
+    public fun getTransactionsBetweenTimestampsFlow(): TestResult = runTest {
         val transactions = getTestTransactions(
             size = 100,
             frequency = ONE_HOUR,

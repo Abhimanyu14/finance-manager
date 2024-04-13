@@ -2,11 +2,11 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 
-sealed class TransactionForValuesScreenBottomSheetType : ScreenBottomSheetType {
-    data object DeleteConfirmation : TransactionForValuesScreenBottomSheetType()
-    data object None : TransactionForValuesScreenBottomSheetType()
+public sealed class TransactionForValuesScreenBottomSheetType : ScreenBottomSheetType {
+    public data object DeleteConfirmation : TransactionForValuesScreenBottomSheetType()
+    public data object None : TransactionForValuesScreenBottomSheetType()
 
-    data class Menu(
+    public data class Menu(
         val isDeleteVisible: Boolean,
         val transactionForId: Int,
     ) : TransactionForValuesScreenBottomSheetType()

@@ -1,7 +1,7 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.model
 
-enum class AccountType(
-    val title: String,
+public enum class AccountType(
+    public val title: String,
 ) {
     BANK(
         title = "Bank",
@@ -14,7 +14,7 @@ enum class AccountType(
     ),
 }
 
-val AccountType.sortOrder: Int
+public val AccountType.sortOrder: Int
     get() = when (this) {
         AccountType.CASH -> {
             1

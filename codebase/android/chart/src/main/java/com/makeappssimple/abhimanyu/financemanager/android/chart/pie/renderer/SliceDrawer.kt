@@ -5,8 +5,8 @@ import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import com.makeappssimple.abhimanyu.financemanager.android.chart.pie.PieChartItemData
 
-interface SliceDrawer {
-    fun drawSlice(
+public interface SliceDrawer {
+    public fun drawSlice(
         drawScope: DrawScope,
         canvas: Canvas,
         area: Size,

@@ -4,13 +4,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionDataMappedByCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
 
-interface GetTransactionDataMappedByCategoryUseCase {
-    suspend operator fun invoke(
+public interface GetTransactionDataMappedByCategoryUseCase {
+    public suspend operator fun invoke(
         transactionType: TransactionType,
     ): List<TransactionDataMappedByCategory>
 }
 
-class GetTransactionDataMappedByCategoryUseCaseImpl(
+public class GetTransactionDataMappedByCategoryUseCaseImpl(
     private val transactionRepository: TransactionRepository,
 ) : GetTransactionDataMappedByCategoryUseCase {
     override suspend operator fun invoke(

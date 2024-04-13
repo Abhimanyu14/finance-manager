@@ -44,7 +44,7 @@ import kotlinx.coroutines.CoroutineScope
 private val topAppBarHeight = 64.dp
 
 @Composable
-fun MyScaffold(
+public fun MyScaffold(
     modifier: Modifier = Modifier,
 
     // ModalBottomSheetLayout

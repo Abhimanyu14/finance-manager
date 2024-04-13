@@ -3,11 +3,11 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.extensio
 import org.junit.Assert
 import org.junit.Test
 
-class FloatExtensionTest {
+public class FloatExtensionTest {
 
     // region orZero tests
     @Test
-    fun orZero_floatIsNull() {
+    public fun orZero_floatIsNull() {
         val input: Float? = null
 
         Assert.assertEquals(
@@ -17,7 +17,7 @@ class FloatExtensionTest {
     }
 
     @Test
-    fun orZero_floatIsNotNull() {
+    public fun orZero_floatIsNotNull() {
         val input = 5F
 
         Assert.assertEquals(

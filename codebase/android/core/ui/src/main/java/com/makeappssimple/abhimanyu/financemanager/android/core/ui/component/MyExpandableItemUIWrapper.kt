@@ -13,7 +13,7 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typealiases.ColumnScopedComposableContent
 
 @Composable
-fun MyExpandableItemUIWrapper(
+public fun MyExpandableItemUIWrapper(
     modifier: Modifier = Modifier,
     isExpanded: Boolean = false,
     isSelected: Boolean = false,
@@ -41,7 +41,7 @@ fun MyExpandableItemUIWrapper(
 }
 
 @Composable
-fun MyItemViewWrapper(
+public fun MyItemViewWrapper(
     modifier: Modifier = Modifier,
     content: ColumnScopedComposableContent,
 ) {

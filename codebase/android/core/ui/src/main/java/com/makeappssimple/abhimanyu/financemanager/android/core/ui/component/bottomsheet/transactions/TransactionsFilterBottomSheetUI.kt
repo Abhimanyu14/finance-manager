@@ -78,7 +78,7 @@ internal data class TransactionFilterBottomSheetFilterGroupEvents(
 )
 
 @Composable
-fun TransactionsFiltersBottomSheetUI(
+public fun TransactionsFiltersBottomSheetUI(
     modifier: Modifier = Modifier,
     expenseCategories: List<Category>,
     incomeCategories: List<Category>,
@@ -509,7 +509,7 @@ private fun TransactionFilterBottomSheetFilterGroup(
 }
 
 @Composable
-fun TransactionFilterBottomSheetDateFilter(
+public fun TransactionFilterBottomSheetDateFilter(
     expanded: Boolean,
     @StringRes headingTextStringResourceId: Int,
     onClearButtonClick: () -> Unit,

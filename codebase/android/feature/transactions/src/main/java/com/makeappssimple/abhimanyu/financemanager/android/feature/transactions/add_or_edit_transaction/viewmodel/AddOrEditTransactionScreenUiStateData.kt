@@ -9,7 +9,7 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 @Immutable
-data class AddOrEditTransactionScreenUiStateData(
+public data class AddOrEditTransactionScreenUiStateData(
     val selectedTransactionTypeIndex: Int? = null,
     val amount: TextFieldValue = TextFieldValue(),
     val title: TextFieldValue = TextFieldValue(),
@@ -23,7 +23,7 @@ data class AddOrEditTransactionScreenUiStateData(
     val amountErrorText: String? = null,
 )
 
-fun AddOrEditTransactionScreenUiStateData?.orDefault(): AddOrEditTransactionScreenUiStateData {
+public fun AddOrEditTransactionScreenUiStateData?.orDefault(): AddOrEditTransactionScreenUiStateData {
     return if (this.isNull()) {
         AddOrEditTransactionScreenUiStateData()
     } else {

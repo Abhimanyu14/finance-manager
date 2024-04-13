@@ -6,7 +6,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.SharedFlow
 
-class FakeNavigatorImpl(
+public class FakeNavigatorImpl(
     private val coroutineScope: CoroutineScope,
 ) : Navigator {
     private val _command: MutableSharedFlow<NavigationCommand> = MutableSharedFlow()

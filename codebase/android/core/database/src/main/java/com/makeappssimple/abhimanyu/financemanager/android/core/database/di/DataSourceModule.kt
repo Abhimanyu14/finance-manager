@@ -10,9 +10,9 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-class DataSourceModule {
+public class DataSourceModule {
     @Provides
-    fun providesTransactionDataSource(
+    public fun providesTransactionDataSource(
         myRoomDatabase: MyRoomDatabase,
     ): CommonDataSource {
         return CommonDataSourceImpl(

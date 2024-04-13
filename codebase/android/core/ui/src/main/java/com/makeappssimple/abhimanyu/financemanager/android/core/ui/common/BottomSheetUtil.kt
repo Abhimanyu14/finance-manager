@@ -12,7 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 @Composable
-fun BottomSheetHandler(
+public fun BottomSheetHandler(
     showModalBottomSheet: Boolean,
     screenBottomSheetType: ScreenBottomSheetType,
     coroutineScope: CoroutineScope,

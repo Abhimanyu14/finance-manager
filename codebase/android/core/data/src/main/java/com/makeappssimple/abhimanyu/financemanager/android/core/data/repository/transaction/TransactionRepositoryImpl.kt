@@ -17,7 +17,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
-class TransactionRepositoryImpl(
+public class TransactionRepositoryImpl(
     private val commonDataSource: CommonDataSource,
     private val dispatcherProvider: DispatcherProvider,
     private val transactionDao: TransactionDao,

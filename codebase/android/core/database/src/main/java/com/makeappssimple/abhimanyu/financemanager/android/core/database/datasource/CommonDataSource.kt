@@ -5,19 +5,19 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.C
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionEntity
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.TransactionForEntity
 
-interface CommonDataSource {
-    suspend fun deleteTransaction(
+public interface CommonDataSource {
+    public suspend fun deleteTransaction(
         id: Int,
     ): Boolean
 
-    suspend fun insertTransaction(
+    public suspend fun insertTransaction(
         amountValue: Long,
         accountFrom: AccountEntity?,
         accountTo: AccountEntity?,
         transaction: TransactionEntity,
     ): Long
 
-    suspend fun restoreData(
+    public suspend fun restoreData(
         categories: Array<CategoryEntity>,
         accounts: Array<AccountEntity>,
         transactions: Array<TransactionEntity>,

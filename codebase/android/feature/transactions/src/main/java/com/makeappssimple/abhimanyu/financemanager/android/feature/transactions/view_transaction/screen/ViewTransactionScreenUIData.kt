@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 
 @Immutable
-data class ViewTransactionScreenUIData(
+public data class ViewTransactionScreenUIData(
     val originalTransactionListItemData: TransactionListItemData? = null,
     val refundTransactionListItemData: List<TransactionListItemData>? = null,
     val transactionListItemData: TransactionListItemData? = null,

@@ -6,19 +6,19 @@ import androidx.compose.ui.Modifier
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 
 @Immutable
-data class SelectCategoryBottomSheetData(
+public data class SelectCategoryBottomSheetData(
     val filteredCategories: List<Category> = emptyList(),
     val selectedCategoryId: Int? = null,
 )
 
 @Immutable
-data class SelectCategoryBottomSheetEvents(
+public data class SelectCategoryBottomSheetEvents(
     val resetBottomSheetType: () -> Unit = {},
     val updateCategory: (Category?) -> Unit = {},
 )
 
 @Composable
-fun SelectCategoryBottomSheet(
+public fun SelectCategoryBottomSheet(
     modifier: Modifier = Modifier,
     data: SelectCategoryBottomSheetData,
     events: SelectCategoryBottomSheetEvents,

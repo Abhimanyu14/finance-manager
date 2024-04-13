@@ -14,7 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBarUI
 
 @Composable
-fun CatalogTopAppBarScreen(
+public fun CatalogTopAppBarScreen(
     navigateUp: () -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()

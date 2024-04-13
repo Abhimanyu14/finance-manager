@@ -10,17 +10,17 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transactionfor.TransactionForListItemEvents
 
 @Immutable
-data class SelectTransactionForBottomSheetData(
+public data class SelectTransactionForBottomSheetData(
     val transactionForValues: List<TransactionFor> = emptyList(),
 )
 
 @Immutable
-data class SelectTransactionForBottomSheetEvents(
+public data class SelectTransactionForBottomSheetEvents(
     val onItemClick: (TransactionFor) -> Unit = {},
 )
 
 @Composable
-fun SelectTransactionForBottomSheet(
+public fun SelectTransactionForBottomSheet(
     modifier: Modifier = Modifier,
     data: SelectTransactionForBottomSheetData,
     events: SelectTransactionForBottomSheetEvents,

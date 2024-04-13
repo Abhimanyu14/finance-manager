@@ -14,10 +14,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class NotificationKitModule {
+public class NotificationKitModule {
     @Singleton
     @Provides
-    fun providesNotificationKit(
+    public fun providesNotificationKit(
         appKit: AppKit,
         @ApplicationContext context: Context,
         myLogger: MyLogger,

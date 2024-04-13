@@ -6,19 +6,19 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-class CategoryConverterTest {
+public class CategoryConverterTest {
     private lateinit var categoryConverter: CategoryConverter
     private val testCategory = getTestCategory()
     private val testCategoryString =
         """{"id":0,"description":"","emoji":"emoji","title":"title","transaction_type":"EXPENSE"}"""
 
     @Before
-    fun setUp() {
+    public fun setUp() {
         categoryConverter = CategoryConverter()
     }
 
     @Test
-    fun stringToCategory() {
+    public fun stringToCategory() {
         val result: CategoryEntity? = categoryConverter.stringToCategory(
             value = testCategoryString,
         )
@@ -55,7 +55,7 @@ class CategoryConverterTest {
     }
 
     @Test
-    fun stringToCategory_valueIsNull() {
+    public fun stringToCategory_valueIsNull() {
         val result: CategoryEntity? = categoryConverter.stringToCategory(
             value = null,
         )
@@ -64,7 +64,7 @@ class CategoryConverterTest {
     }
 
     @Test
-    fun stringToCategory_valueIsInvalidString() {
+    public fun stringToCategory_valueIsInvalidString() {
         val result: CategoryEntity? = categoryConverter.stringToCategory(
             value = "invalid string",
         )
@@ -73,7 +73,7 @@ class CategoryConverterTest {
     }
 
     @Test
-    fun categoryToString() {
+    public fun categoryToString() {
         val result: String = categoryConverter.categoryToString(
             categoryEntity = testCategory,
         )
@@ -85,7 +85,7 @@ class CategoryConverterTest {
     }
 
     @Test
-    fun categoryToString_categoryIsNull() {
+    public fun categoryToString_categoryIsNull() {
         val result: String = categoryConverter.categoryToString(
             categoryEntity = null,
         )

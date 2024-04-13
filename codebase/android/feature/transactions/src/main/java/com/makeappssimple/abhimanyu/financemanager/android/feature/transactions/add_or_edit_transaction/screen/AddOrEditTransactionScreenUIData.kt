@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import java.time.LocalDate
 
 @Immutable
-data class AddOrEditTransactionScreenUIData(
+public data class AddOrEditTransactionScreenUIData(
     val uiState: AddOrEditTransactionScreenUiStateData = AddOrEditTransactionScreenUiStateData(),
     val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState = AddOrEditTransactionScreenUiVisibilityState.Expense,
     val isCtaButtonEnabled: Boolean = false,

@@ -20,7 +20,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.lege
  * Source - https://github.com/humawork/compose-charts
  */
 @Composable
-fun ComposePieChart(
+public fun ComposePieChart(
     data: PieChartData,
 ) {
     val fractions = remember(

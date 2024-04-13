@@ -6,7 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardViewModelData
 
 @Immutable
-data class HomeScreenUIData(
+public data class HomeScreenUIData(
     val isBackupCardVisible: Boolean = false,
     val overviewTabSelectionIndex: Int = 0,
     val transactionListItemDataList: List<TransactionListItemData> = emptyList(),

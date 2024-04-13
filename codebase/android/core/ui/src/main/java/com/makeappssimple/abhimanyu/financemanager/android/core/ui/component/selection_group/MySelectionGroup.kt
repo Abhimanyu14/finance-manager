@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chi
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIEvents
 
 @Immutable
-data class MySelectionGroupData(
+public data class MySelectionGroupData(
     val isLoading: Boolean = false,
     val loadingItemSize: Int = 3,
     val items: List<ChipUIData>,
@@ -17,12 +17,12 @@ data class MySelectionGroupData(
 )
 
 @Immutable
-data class MySelectionGroupEvents(
+public data class MySelectionGroupEvents(
     val onSelectionChange: (index: Int) -> Unit = {},
 )
 
 @Composable
-fun MySelectionGroup(
+public fun MySelectionGroup(
     modifier: Modifier = Modifier,
     data: MySelectionGroupData,
     events: MySelectionGroupEvents = MySelectionGroupEvents(),

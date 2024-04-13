@@ -6,6 +6,7 @@ import androidx.compose.ui.test.assertHasClickAction
 import androidx.compose.ui.test.assertHasNoClickAction
 import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.hasClickAction
+import androidx.compose.ui.test.junit4.ComposeContentTestRule
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.onNodeWithText
@@ -23,12 +24,12 @@ import org.junit.Rule
 import org.junit.Test
 
 @HiltAndroidTest
-class TotalBalanceCardTest {
+public class TotalBalanceCardTest {
     @get:Rule(order = 0)
-    var hiltRule = HiltAndroidRule(this)
+    public var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
 
     @get:Rule(order = 1)
-    val composeTestRule = createComposeRule()
+    public val composeTestRule: ComposeContentTestRule = createComposeRule()
 
     private lateinit var context: Context
 
@@ -36,7 +37,7 @@ class TotalBalanceCardTest {
     private lateinit var title: SemanticsNodeInteraction
 
     @Before
-    fun setup() {
+    public fun setup() {
         context = ApplicationProvider.getApplicationContext()
 
         balanceAmount = composeTestRule.onNodeWithText("₹1,23,456")
@@ -46,7 +47,7 @@ class TotalBalanceCardTest {
     }
 
     @Test
-    fun defaultTest() {
+    public fun defaultTest() {
         composeTestRule.setContent {
             MyAppTheme {
                 TotalBalanceCard(
@@ -64,7 +65,7 @@ class TotalBalanceCardTest {
     }
 
     @Test
-    fun hasClick_hasNoClickActionWhenEventIsNull() {
+    public fun hasClick_hasNoClickActionWhenEventIsNull() {
         composeTestRule.setContent {
             MyAppTheme {
                 TotalBalanceCard(
@@ -81,7 +82,7 @@ class TotalBalanceCardTest {
     }
 
     @Test
-    fun hasClick_hasClickActionWhenEventIsNotNull() {
+    public fun hasClick_hasClickActionWhenEventIsNotNull() {
         composeTestRule.setContent {
             MyAppTheme {
                 TotalBalanceCard(
@@ -100,7 +101,7 @@ class TotalBalanceCardTest {
             .assertHasClickAction()
     }
 
-    companion object {
+    public companion object {
         private const val TEST_TOTAL_BALANCE_AMOUNT = 123456L
     }
 }

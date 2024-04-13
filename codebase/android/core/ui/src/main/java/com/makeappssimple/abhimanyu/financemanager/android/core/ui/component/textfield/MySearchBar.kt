@@ -34,20 +34,20 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 
 @Immutable
-data class MySearchBarData(
+public data class MySearchBarData(
     val autoFocus: Boolean = true,
     val placeholderText: String,
     val searchText: String,
 )
 
 @Immutable
-data class MySearchBarEvents(
+public data class MySearchBarEvents(
     val onSearch: (() -> Unit)? = null,
     val onValueChange: (updatedSearchText: String) -> Unit = {},
 )
 
 @Composable
-fun MySearchBar(
+public fun MySearchBar(
     modifier: Modifier = Modifier,
     data: MySearchBarData,
     events: MySearchBarEvents = MySearchBarEvents(),

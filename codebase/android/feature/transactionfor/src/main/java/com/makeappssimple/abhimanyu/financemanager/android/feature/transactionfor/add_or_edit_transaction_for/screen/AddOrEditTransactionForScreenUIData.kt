@@ -5,7 +5,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIData
 
 @Immutable
-data class AddOrEditTransactionForScreenUIData(
+public data class AddOrEditTransactionForScreenUIData(
     val isValidTransactionForData: Boolean = false,
     val title: TextFieldValue = TextFieldValue(),
     val titleTextFieldError: AddOrEditTransactionForScreenUIError? = null,

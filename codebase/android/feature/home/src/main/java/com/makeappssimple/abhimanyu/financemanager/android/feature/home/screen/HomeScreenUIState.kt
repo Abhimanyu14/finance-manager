@@ -18,7 +18,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ove
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.orDefault
 
 @Stable
-class HomeScreenUIState(
+public class HomeScreenUIState(
     data: MyResult<HomeScreenUIData>?,
     private val unwrappedData: HomeScreenUIData? = when (data) {
         is MyResult.Success -> {
@@ -29,30 +29,30 @@ class HomeScreenUIState(
             null
         }
     },
-    val isBalanceVisible: Boolean,
-    val screenBottomSheetType: HomeScreenBottomSheetType,
-    val setScreenBottomSheetType: (HomeScreenBottomSheetType) -> Unit,
+    public val isBalanceVisible: Boolean,
+    public val screenBottomSheetType: HomeScreenBottomSheetType,
+    public val setScreenBottomSheetType: (HomeScreenBottomSheetType) -> Unit,
     private val totalIncomeAmount: Amount = Amount(
         value = unwrappedData?.overviewCardData?.income?.toLong().orZero(),
     ),
     private val totalExpenseAmount: Amount = Amount(
         value = unwrappedData?.overviewCardData?.expense?.toLong().orZero(),
     ),
-    val isLoading: Boolean = unwrappedData.isNull(),
-    val isBackupCardVisible: Boolean = unwrappedData?.isBackupCardVisible.orFalse(),
-    val overviewTabSelectionIndex: Int = unwrappedData?.overviewTabSelectionIndex.orZero(),
-    val transactionListItemDataList: List<TransactionListItemData> =
+    public val isLoading: Boolean = unwrappedData.isNull(),
+    public val isBackupCardVisible: Boolean = unwrappedData?.isBackupCardVisible.orFalse(),
+    public val overviewTabSelectionIndex: Int = unwrappedData?.overviewTabSelectionIndex.orZero(),
+    public val transactionListItemDataList: List<TransactionListItemData> =
         unwrappedData?.transactionListItemDataList.orEmpty(),
-    val accountsTotalBalanceAmountValue: Long =
+    public val accountsTotalBalanceAmountValue: Long =
         unwrappedData?.accountsTotalBalanceAmountValue.orZero(),
-    val accountsTotalMinimumBalanceAmountValue: Long =
+    public val accountsTotalMinimumBalanceAmountValue: Long =
         unwrappedData?.accountsTotalMinimumBalanceAmountValue.orZero(),
-    val overviewCardData: OverviewCardViewModelData = unwrappedData?.overviewCardData.orDefault(),
-    val resetScreenBottomSheetType: () -> Unit = {
+    public val overviewCardData: OverviewCardViewModelData = unwrappedData?.overviewCardData.orDefault(),
+    public val resetScreenBottomSheetType: () -> Unit = {
         setScreenBottomSheetType(HomeScreenBottomSheetType.NONE)
     },
-    val setBalanceVisible: (Boolean) -> Unit,
-    val pieChartData: PieChartData = PieChartData(
+    public val setBalanceVisible: (Boolean) -> Unit,
+    public val pieChartData: PieChartData = PieChartData(
         items = listOf(
             PieChartItemData(
                 value = unwrappedData?.overviewCardData?.income.orZero(),
@@ -69,7 +69,7 @@ class HomeScreenUIState(
 ) : ScreenUIState
 
 @Composable
-fun rememberHomeScreenUIState(
+public fun rememberHomeScreenUIState(
     data: MyResult<HomeScreenUIData>?,
 ): HomeScreenUIState {
     val (isBalanceVisible: Boolean, setBalanceVisible: (Boolean) -> Unit) = remember {

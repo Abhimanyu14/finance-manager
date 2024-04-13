@@ -3,13 +3,13 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.ac
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.account.AccountRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 
-interface UpdateAccountsBalanceAmountUseCase {
-    suspend operator fun invoke(
+public interface UpdateAccountsBalanceAmountUseCase {
+    public suspend operator fun invoke(
         accountsBalanceAmountChange: List<Pair<Int, Long>>,
     ): Boolean
 }
 
-class UpdateAccountsBalanceAmountUseCaseImpl(
+public class UpdateAccountsBalanceAmountUseCaseImpl(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val accountRepository: AccountRepository,
 ) : UpdateAccountsBalanceAmountUseCase {

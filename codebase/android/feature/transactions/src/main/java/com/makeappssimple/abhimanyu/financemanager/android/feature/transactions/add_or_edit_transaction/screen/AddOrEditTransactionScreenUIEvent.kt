@@ -9,50 +9,50 @@ import java.time.LocalDate
 import java.time.LocalTime
 
 @Immutable
-sealed class AddOrEditTransactionScreenUIEvent : ScreenUIEvent {
-    data object ClearAmount : AddOrEditTransactionScreenUIEvent()
-    data object ClearDescription : AddOrEditTransactionScreenUIEvent()
-    data object ClearTitle : AddOrEditTransactionScreenUIEvent()
-    data object NavigateUp : AddOrEditTransactionScreenUIEvent()
-    data object OnCtaButtonClick : AddOrEditTransactionScreenUIEvent()
+public sealed class AddOrEditTransactionScreenUIEvent : ScreenUIEvent {
+    public data object ClearAmount : AddOrEditTransactionScreenUIEvent()
+    public data object ClearDescription : AddOrEditTransactionScreenUIEvent()
+    public data object ClearTitle : AddOrEditTransactionScreenUIEvent()
+    public data object NavigateUp : AddOrEditTransactionScreenUIEvent()
+    public data object OnCtaButtonClick : AddOrEditTransactionScreenUIEvent()
 
-    data class UpdateAmount(
+    public data class UpdateAmount(
         val updatedAmount: TextFieldValue,
     ) : AddOrEditTransactionScreenUIEvent()
 
-    data class UpdateCategory(
+    public data class UpdateCategory(
         val updatedCategory: Category?,
     ) : AddOrEditTransactionScreenUIEvent()
 
-    data class UpdateDescription(
+    public data class UpdateDescription(
         val updatedDescription: TextFieldValue,
     ) : AddOrEditTransactionScreenUIEvent()
 
-    data class UpdateSelectedTransactionForIndex(
+    public data class UpdateSelectedTransactionForIndex(
         val updatedSelectedTransactionForIndex: Int,
     ) : AddOrEditTransactionScreenUIEvent()
 
-    data class UpdateSelectedTransactionTypeIndex(
+    public data class UpdateSelectedTransactionTypeIndex(
         val updatedSelectedTransactionTypeIndex: Int,
     ) : AddOrEditTransactionScreenUIEvent()
 
-    data class UpdateAccountFrom(
+    public data class UpdateAccountFrom(
         val updatedAccountFrom: Account?,
     ) : AddOrEditTransactionScreenUIEvent()
 
-    data class UpdateAccountTo(
+    public data class UpdateAccountTo(
         val updatedAccountTo: Account?,
     ) : AddOrEditTransactionScreenUIEvent()
 
-    data class UpdateTitle(
+    public data class UpdateTitle(
         val updatedTitle: TextFieldValue,
     ) : AddOrEditTransactionScreenUIEvent()
 
-    data class UpdateTransactionDate(
+    public data class UpdateTransactionDate(
         val updatedTransactionDate: LocalDate,
     ) : AddOrEditTransactionScreenUIEvent()
 
-    data class UpdateTransactionTime(
+    public data class UpdateTransactionTime(
         val updatedTransactionTime: LocalTime,
     ) : AddOrEditTransactionScreenUIEvent()
 }

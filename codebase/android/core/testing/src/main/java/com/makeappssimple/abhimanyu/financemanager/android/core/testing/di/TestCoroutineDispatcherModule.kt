@@ -19,15 +19,15 @@ import kotlinx.coroutines.test.UnconfinedTestDispatcher
     components = [SingletonComponent::class],
     replaces = [CoroutineDispatcherModule::class],
 )
-object TestCoroutineDispatcherModule {
+public object TestCoroutineDispatcherModule {
     @Provides
-    fun providesTestDispatcher(): TestDispatcher {
+    public fun providesTestDispatcher(): TestDispatcher {
         return UnconfinedTestDispatcher()
     }
 
     @DefaultDispatcher
     @Provides
-    fun providesDefaultDispatcher(
+    public fun providesDefaultDispatcher(
         testDispatcher: TestDispatcher,
     ): CoroutineDispatcher {
         return testDispatcher
@@ -35,7 +35,7 @@ object TestCoroutineDispatcherModule {
 
     @IoDispatcher
     @Provides
-    fun providesIoDispatcher(
+    public fun providesIoDispatcher(
         testDispatcher: TestDispatcher,
     ): CoroutineDispatcher {
         return testDispatcher
@@ -43,7 +43,7 @@ object TestCoroutineDispatcherModule {
 
     @MainDispatcher
     @Provides
-    fun providesMainDispatcher(
+    public fun providesMainDispatcher(
         testDispatcher: TestDispatcher,
     ): CoroutineDispatcher {
         return testDispatcher
@@ -51,7 +51,7 @@ object TestCoroutineDispatcherModule {
 
     @MainImmediateDispatcher
     @Provides
-    fun providesMainImmediateDispatcher(
+    public fun providesMainImmediateDispatcher(
         testDispatcher: TestDispatcher,
     ): CoroutineDispatcher {
         return testDispatcher
@@ -59,7 +59,7 @@ object TestCoroutineDispatcherModule {
 
     @UnconfinedDispatcher
     @Provides
-    fun providesUnconfinedDispatcher(
+    public fun providesUnconfinedDispatcher(
         testDispatcher: TestDispatcher,
     ): CoroutineDispatcher {
         return testDispatcher

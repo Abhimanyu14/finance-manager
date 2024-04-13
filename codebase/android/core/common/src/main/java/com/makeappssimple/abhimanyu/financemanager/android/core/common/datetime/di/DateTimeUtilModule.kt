@@ -10,10 +10,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface DateTimeUtilModule {
+public interface DateTimeUtilModule {
     @Singleton
     @Binds
-    fun bindDateTimeUtil(
+    public fun bindDateTimeUtil(
         dateTimeUtilImpl: DateTimeUtilImpl,
     ): DateTimeUtil
 }

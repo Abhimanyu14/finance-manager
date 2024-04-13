@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemData
 
 @Immutable
-data class AccountsScreenUIData(
+public data class AccountsScreenUIData(
     val accountsListItemDataList: List<AccountsListItemData> = emptyList(),
     val accountsTotalBalanceAmountValue: Long = 0L,
     val accountsTotalMinimumBalanceAmountValue: Long = 0L,

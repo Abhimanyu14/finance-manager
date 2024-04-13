@@ -4,7 +4,7 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 
-data class TransactionDataEntity(
+public data class TransactionDataEntity(
     @Embedded
     val transaction: TransactionEntity,
 
@@ -33,7 +33,7 @@ data class TransactionDataEntity(
     val transactionFor: TransactionForEntity,
 )
 
-fun TransactionDataEntity.asExternalModel(): TransactionData {
+public fun TransactionDataEntity.asExternalModel(): TransactionData {
     return TransactionData(
         transaction = transaction.asExternalModel(),
         category = category?.asExternalModel(),

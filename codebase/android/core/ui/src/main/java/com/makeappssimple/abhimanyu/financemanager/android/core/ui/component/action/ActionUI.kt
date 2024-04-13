@@ -20,7 +20,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ext
 
 
 @Composable
-fun ActionUI(
+public fun ActionUI(
     modifier: Modifier = Modifier,
     imageVector: ImageVector,
     @StringRes textStringResourceId: Int,

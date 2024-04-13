@@ -11,13 +11,13 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 @Immutable
-data class SettingsListItemAppVersionData(
+public data class SettingsListItemAppVersionData(
     override val type: SettingsListItemType = SettingsListItemType.APP_VERSION,
     val appVersionText: String,
 ) : SettingsListItemData
 
 @Composable
-fun SettingsListItemAppVersion(
+public fun SettingsListItemAppVersion(
     modifier: Modifier = Modifier,
     data: SettingsListItemAppVersionData,
 ) {

@@ -23,10 +23,10 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class PreferencesModule {
+public class PreferencesModule {
     @Singleton
     @Provides
-    fun provideDataStorePreferencesDataStore(
+    public fun provideDataStorePreferencesDataStore(
         @ApplicationContext appContext: Context,
         dispatcherProvider: DispatcherProvider,
     ): DataStore<Preferences> {
@@ -49,7 +49,7 @@ class PreferencesModule {
     }
 
     @Provides
-    fun providesMyPreferencesDataSource(
+    public fun providesMyPreferencesDataSource(
         dataStore: DataStore<Preferences>,
         myLogger: MyLogger,
     ): MyPreferencesDataSource {

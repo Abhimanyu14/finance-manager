@@ -5,7 +5,7 @@ import java.io.Serializable
 /**
  * Expanding [Pair] and [Triple]
  */
-data class Quadruple<out A, out B, out C, out D>(
+public data class Quadruple<out A, out B, out C, out D>(
     val first: A,
     val second: B,
     val third: C,
@@ -24,6 +24,6 @@ data class Quadruple<out A, out B, out C, out D>(
 /**
  * Converts this quadruple into a list.
  */
-fun <T> Quadruple<T, T, T, T>.toList(): List<T> {
+public fun <T> Quadruple<T, T, T, T>.toList(): List<T> {
     return listOf(first, second, third, fourth)
 }

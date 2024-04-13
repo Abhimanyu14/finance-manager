@@ -4,7 +4,7 @@ import androidx.compose.runtime.Immutable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIData
 
 @Immutable
-data class SettingsScreenUIData(
+public data class SettingsScreenUIData(
     val isReminderEnabled: Boolean = false,
     val isLoading: Boolean = false,
     val appVersion: String? = null,

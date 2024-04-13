@@ -8,7 +8,7 @@ private const val DEFAULT_INVESTMENT_CATEGORY = "Investment"
 private const val DEFAULT_ACCOUNT = "Cash"
 private const val DEFAULT_TRANSACTION_FOR = "Self"
 
-fun isDefaultExpenseCategory(
+public fun isDefaultExpenseCategory(
     category: String,
 ): Boolean {
     return category.equalsIgnoringCase(
@@ -16,7 +16,7 @@ fun isDefaultExpenseCategory(
     )
 }
 
-fun isDefaultIncomeCategory(
+public fun isDefaultIncomeCategory(
     category: String,
 ): Boolean {
     return category.equalsIgnoringCase(
@@ -24,7 +24,7 @@ fun isDefaultIncomeCategory(
     )
 }
 
-fun isDefaultInvestmentCategory(
+public fun isDefaultInvestmentCategory(
     category: String,
 ): Boolean {
     return category.equalsIgnoringCase(
@@ -32,7 +32,7 @@ fun isDefaultInvestmentCategory(
     )
 }
 
-fun isDefaultAccount(
+public fun isDefaultAccount(
     account: String,
 ): Boolean {
     return account.equalsIgnoringCase(
@@ -40,7 +40,7 @@ fun isDefaultAccount(
     )
 }
 
-fun isDefaultTransactionFor(
+public fun isDefaultTransactionFor(
     transactionFor: String,
 ): Boolean {
     return transactionFor.equalsIgnoringCase(

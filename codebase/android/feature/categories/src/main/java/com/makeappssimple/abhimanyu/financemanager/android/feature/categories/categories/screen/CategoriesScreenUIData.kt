@@ -6,7 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
 
 @Immutable
-data class CategoriesScreenUIData(
+public data class CategoriesScreenUIData(
     val selectedTabIndex: Int = 0,
     val categoriesGridItemDataMap: Map<TransactionType, List<CategoriesGridItemData>> = emptyMap(),
 ) : ScreenUIData

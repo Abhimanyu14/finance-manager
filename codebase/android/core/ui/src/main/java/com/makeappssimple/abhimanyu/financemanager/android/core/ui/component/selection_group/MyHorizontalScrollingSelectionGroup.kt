@@ -12,19 +12,19 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chi
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.fadingedge.fadingEdge
 
 @Immutable
-data class MyHorizontalScrollingSelectionGroupData(
+public data class MyHorizontalScrollingSelectionGroupData(
     val isLoading: Boolean = false,
     val loadingItemSize: Int = 3,
     val items: List<ChipUIData>,
 )
 
 @Immutable
-data class MyHorizontalScrollingSelectionGroupEvents(
+public data class MyHorizontalScrollingSelectionGroupEvents(
     val onSelectionChange: (index: Int) -> Unit,
 )
 
 @Composable
-fun MyHorizontalScrollingSelectionGroup(
+public fun MyHorizontalScrollingSelectionGroup(
     modifier: Modifier = Modifier,
     data: MyHorizontalScrollingSelectionGroupData,
     events: MyHorizontalScrollingSelectionGroupEvents,

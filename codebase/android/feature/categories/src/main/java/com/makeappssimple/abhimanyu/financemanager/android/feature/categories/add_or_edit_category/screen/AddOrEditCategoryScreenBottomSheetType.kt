@@ -2,7 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.a
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 
-enum class AddOrEditCategoryScreenBottomSheetType : ScreenBottomSheetType {
+public enum class AddOrEditCategoryScreenBottomSheetType : ScreenBottomSheetType {
     NONE,
     SELECT_EMOJI,
 }

@@ -9,13 +9,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class AlarmReceiver : BroadcastReceiver() {
+public class AlarmReceiver : BroadcastReceiver() {
 
     @Inject
-    lateinit var myLogger: MyLogger
+    public lateinit var myLogger: MyLogger
 
     @Inject
-    lateinit var notificationKit: NotificationKit
+    public lateinit var notificationKit: NotificationKit
 
     override fun onReceive(
         context: Context,

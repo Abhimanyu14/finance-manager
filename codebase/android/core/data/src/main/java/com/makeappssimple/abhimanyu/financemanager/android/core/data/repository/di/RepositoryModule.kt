@@ -24,9 +24,9 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-class RepositoryModule {
+public class RepositoryModule {
     @Provides
-    fun providesAccountRepository(
+    public fun providesAccountRepository(
         accountDao: AccountDao,
         dispatcherProvider: DispatcherProvider,
     ): AccountRepository {
@@ -37,7 +37,7 @@ class RepositoryModule {
     }
 
     @Provides
-    fun providesCategoryRepository(
+    public fun providesCategoryRepository(
         categoryDao: CategoryDao,
         dispatcherProvider: DispatcherProvider,
     ): CategoryRepository {
@@ -48,7 +48,7 @@ class RepositoryModule {
     }
 
     @Provides
-    fun providesMyPreferencesRepository(
+    public fun providesMyPreferencesRepository(
         dispatcherProvider: DispatcherProvider,
         myPreferencesDataSource: MyPreferencesDataSource,
     ): MyPreferencesRepository {
@@ -59,7 +59,7 @@ class RepositoryModule {
     }
 
     @Provides
-    fun providesTransactionRepository(
+    public fun providesTransactionRepository(
         commonDataSource: CommonDataSource,
         dispatcherProvider: DispatcherProvider,
         transactionDao: TransactionDao,
@@ -72,7 +72,7 @@ class RepositoryModule {
     }
 
     @Provides
-    fun providesTransactionForRepository(
+    public fun providesTransactionForRepository(
         dispatcherProvider: DispatcherProvider,
         transactionForDao: TransactionForDao,
     ): TransactionForRepository {

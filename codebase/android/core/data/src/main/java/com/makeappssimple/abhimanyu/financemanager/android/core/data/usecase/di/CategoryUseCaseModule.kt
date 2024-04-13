@@ -21,9 +21,9 @@ import dagger.hilt.components.SingletonComponent
 
 @Module
 @InstallIn(SingletonComponent::class)
-class CategoryUseCaseModule {
+public class CategoryUseCaseModule {
     @Provides
-    fun providesDeleteCategoryUseCase(
+    public fun providesDeleteCategoryUseCase(
         categoryRepository: CategoryRepository,
         myPreferencesRepository: MyPreferencesRepository,
     ): DeleteCategoryUseCase {
@@ -34,7 +34,7 @@ class CategoryUseCaseModule {
     }
 
     @Provides
-    fun providesGetAllCategoriesFlowUseCase(
+    public fun providesGetAllCategoriesFlowUseCase(
         categoryRepository: CategoryRepository,
     ): GetAllCategoriesFlowUseCase {
         return GetAllCategoriesFlowUseCaseImpl(
@@ -43,7 +43,7 @@ class CategoryUseCaseModule {
     }
 
     @Provides
-    fun providesGetAllCategoriesUseCase(
+    public fun providesGetAllCategoriesUseCase(
         categoryRepository: CategoryRepository,
     ): GetAllCategoriesUseCase {
         return GetAllCategoriesUseCaseImpl(
@@ -52,7 +52,7 @@ class CategoryUseCaseModule {
     }
 
     @Provides
-    fun providesGetCategoryUseCase(
+    public fun providesGetCategoryUseCase(
         categoryRepository: CategoryRepository,
     ): GetCategoryUseCase {
         return GetCategoryUseCaseImpl(
@@ -61,7 +61,7 @@ class CategoryUseCaseModule {
     }
 
     @Provides
-    fun providesInsertCategoriesUseCase(
+    public fun providesInsertCategoriesUseCase(
         categoryRepository: CategoryRepository,
         myPreferencesRepository: MyPreferencesRepository,
     ): InsertCategoriesUseCase {
@@ -72,7 +72,7 @@ class CategoryUseCaseModule {
     }
 
     @Provides
-    fun providesUpdateCategoriesUseCase(
+    public fun providesUpdateCategoriesUseCase(
         categoryRepository: CategoryRepository,
         myPreferencesRepository: MyPreferencesRepository,
     ): UpdateCategoriesUseCase {

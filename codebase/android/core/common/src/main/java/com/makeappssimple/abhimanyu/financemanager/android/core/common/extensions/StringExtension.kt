@@ -2,14 +2,14 @@
 
 import kotlin.contracts.contract
 
-fun String?.isNotNullOrBlank(): Boolean {
+public fun String?.isNotNullOrBlank(): Boolean {
     contract {
         returns(true) implies (this@isNotNullOrBlank != null)
     }
     return !this.isNullOrBlank()
 }
 
-fun Any.padStartWithZero(
+public fun Any.padStartWithZero(
     length: Int,
 ): String {
     if (length > 0) {
@@ -21,7 +21,7 @@ fun Any.padStartWithZero(
     return this.toString()
 }
 
-fun String.capitalizeWords(): String {
+public fun String.capitalizeWords(): String {
     return this
         .split(' ')
         .joinToString(" ") { word ->
@@ -31,7 +31,7 @@ fun String.capitalizeWords(): String {
         }
 }
 
-fun String.equalsIgnoringCase(
+public fun String.equalsIgnoringCase(
     other: String,
 ): Boolean {
     return this.equals(
@@ -40,13 +40,13 @@ fun String.equalsIgnoringCase(
     )
 }
 
-fun String.filterDigits(): String {
+public fun String.filterDigits(): String {
     return this.filter {
         it.isDigit()
     }
 }
 
-fun String.toIntOrZero(): Int {
+public fun String.toIntOrZero(): Int {
     return try {
         this.toInt()
     } catch (
@@ -56,7 +56,7 @@ fun String.toIntOrZero(): Int {
     }
 }
 
-fun String.toLongOrZero(): Long {
+public fun String.toLongOrZero(): Long {
     return try {
         this.toLong()
     } catch (

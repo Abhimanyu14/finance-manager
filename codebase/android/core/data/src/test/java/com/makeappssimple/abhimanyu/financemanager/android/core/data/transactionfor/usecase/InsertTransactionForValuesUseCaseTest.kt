@@ -5,20 +5,21 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.InsertTransactionForValuesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.InsertTransactionForValuesUseCaseImpl
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.util.getTestTransactionForValues
+import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
-class InsertTransactionForValuesUseCaseTest {
+public class InsertTransactionForValuesUseCaseTest {
     private val myPreferencesRepository: MyPreferencesRepository = mock()
     private val transactionForRepository: TransactionForRepository = mock()
     private val testTransactionForValues = getTestTransactionForValues()
     private lateinit var insertTransactionForValuesUseCase: InsertTransactionForValuesUseCase
 
     @Before
-    fun setUp() {
+    public fun setUp() {
         insertTransactionForValuesUseCase = InsertTransactionForValuesUseCaseImpl(
             myPreferencesRepository = myPreferencesRepository,
             transactionForRepository = transactionForRepository,
@@ -26,7 +27,7 @@ class InsertTransactionForValuesUseCaseTest {
     }
 
     @Test
-    fun invoke_defaultTest() = runTest {
+    public fun invoke_defaultTest(): TestResult = runTest {
         insertTransactionForValuesUseCase(
             transactionForValues = testTransactionForValues,
         )

@@ -14,10 +14,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.chart.pie.PieChartUti
 import com.makeappssimple.abhimanyu.financemanager.android.chart.pie.renderer.SimpleSliceDrawer
 import com.makeappssimple.abhimanyu.financemanager.android.chart.pie.renderer.SliceDrawer
 
-fun simpleChartAnimation() = TweenSpec<Float>(durationMillis = 500)
+public fun simpleChartAnimation(): TweenSpec<Float> = TweenSpec<Float>(durationMillis = 500)
 
 @Composable
-fun PieChart(
+public fun PieChart(
     modifier: Modifier = Modifier,
     pieChartData: PieChartData,
     animation: AnimationSpec<Float> = simpleChartAnimation(),

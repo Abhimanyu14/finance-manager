@@ -6,10 +6,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.open_source_licenses.screen.OpenSourceLicensesScreenUIEvent
 import kotlinx.coroutines.flow.StateFlow
 
-interface OpenSourceLicensesScreenViewModel : ScreenViewModel {
-    val screenUIData: StateFlow<MyResult<OpenSourceLicensesScreenUIData>?>
+public interface OpenSourceLicensesScreenViewModel : ScreenViewModel {
+    public val screenUIData: StateFlow<MyResult<OpenSourceLicensesScreenUIData>?>
 
-    fun handleUIEvents(
+    public fun handleUIEvents(
         uiEvent: OpenSourceLicensesScreenUIEvent,
     )
 }
