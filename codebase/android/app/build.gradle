@@ -370,3 +370,17 @@ kover {
         excludeTasks.add "testReleaseUnitTest"
     }
 }
+
+/*
+// Detekt
+// TODO(Abhi): Check how to enable
+tasks.withType(Detekt).configureEach {
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+        txt.required.set(false)
+        sarif.required.set(false)
+        md.required.set(false)
+    }
+}
+*/
