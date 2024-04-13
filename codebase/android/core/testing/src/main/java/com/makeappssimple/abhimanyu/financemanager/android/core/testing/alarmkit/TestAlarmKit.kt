@@ -2,12 +2,8 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.testing.alarmki
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.alarmkit.AlarmKit
 
-class TestAlarmKit : AlarmKit {
-    override fun disableReminder() {
+public class TestAlarmKit : AlarmKit {
+    override fun disableReminder() {}
 
-    }
-
-    override fun enableReminder() {
-
-    }
+    override fun enableReminder() {}
 }

@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.testing.appvers
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersion
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.appversion.AppVersionUtil
 
-class TestAppVersionUtil : AppVersionUtil {
+public class TestAppVersionUtil : AppVersionUtil {
     private var appVersion: AppVersion? = AppVersion(
         versionName = "versionName",
         versionNumber = 1L,
@@ -13,7 +13,7 @@ class TestAppVersionUtil : AppVersionUtil {
         return appVersion
     }
 
-    fun setAppVersion(
+    public fun setAppVersion(
         updatedAppVersion: AppVersion?,
     ) {
         appVersion = updatedAppVersion

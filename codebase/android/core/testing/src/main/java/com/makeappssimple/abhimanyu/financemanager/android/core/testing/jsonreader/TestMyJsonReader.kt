@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.testing.jsonrea
 import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonreader.MyJsonReader
 
-class TestMyJsonReader : MyJsonReader {
+public class TestMyJsonReader : MyJsonReader {
     override fun readJsonFromAssets(
         fileName: String,
     ): String? {

@@ -3,7 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.testing
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.coroutines.DispatcherProvider
 import kotlinx.coroutines.CoroutineDispatcher
 
-class TestDispatcherProviderImpl(
+public class TestDispatcherProviderImpl(
     testDispatcher: CoroutineDispatcher,
 ) : DispatcherProvider {
     override val default: CoroutineDispatcher = testDispatcher

@@ -13,7 +13,7 @@ import org.junit.runner.Description
  * A JUnit [TestRule] that sets the Main dispatcher to [testDispatcher]
  * for the duration of the test.
  */
-class MainDispatcherRule(
+public class MainDispatcherRule(
     private val testDispatcher: TestDispatcher = UnconfinedTestDispatcher(),
 ) : TestWatcher() {
     override fun starting(
