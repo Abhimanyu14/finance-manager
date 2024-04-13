@@ -3,28 +3,28 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.extensio
 import org.junit.Assert
 import org.junit.Test
 
-public class AnyExtensionTest {
-
+@Suppress("KotlinConstantConditions")
+internal class AnyExtensionTest {
     @Test
-    public fun isNull_valueIsNull_returnsTrue() {
+    fun isNull_valueIsNull_returnsTrue() {
         val test: String? = null
         Assert.assertTrue(test.isNull())
     }
 
     @Test
-    public fun isNull_valueIsNotNull_returnsFalse() {
+    fun isNull_valueIsNotNull_returnsFalse() {
         val test = "Test"
         Assert.assertFalse(test.isNull())
     }
 
     @Test
-    public fun isNotNull_valueIsNull_returnsTrue() {
+    fun isNotNull_valueIsNull_returnsTrue() {
         val test: String? = null
         Assert.assertFalse(test.isNotNull())
     }
 
     @Test
-    public fun isNotNull_valueIsNotNull_returnsFalse() {
+    fun isNotNull_valueIsNotNull_returnsFalse() {
         val test = "Test"
         Assert.assertTrue(test.isNotNull())
     }

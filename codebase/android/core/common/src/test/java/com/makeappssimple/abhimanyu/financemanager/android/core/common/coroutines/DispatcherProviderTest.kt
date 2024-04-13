@@ -15,23 +15,23 @@ import javax.inject.Inject
 public class DispatcherProviderTest {
     @Inject
     @DefaultDispatcher
-    private lateinit var defaultDispatcher: CoroutineDispatcher
+    public lateinit var defaultDispatcher: CoroutineDispatcher
 
     @Inject
     @IoDispatcher
-    private lateinit var ioDispatcher: CoroutineDispatcher
+    public lateinit var ioDispatcher: CoroutineDispatcher
 
     @Inject
     @MainDispatcher
-    private lateinit var mainDispatcher: CoroutineDispatcher
+    public lateinit var mainDispatcher: CoroutineDispatcher
 
     @Inject
     @MainImmediateDispatcher
-    private lateinit var mainImmediateDispatcher: CoroutineDispatcher
+    public lateinit var mainImmediateDispatcher: CoroutineDispatcher
 
     @Inject
     @UnconfinedDispatcher
-    private lateinit var unconfinedDispatcher: CoroutineDispatcher
+    public lateinit var unconfinedDispatcher: CoroutineDispatcher
 
     private lateinit var dispatcherProvider: DispatcherProvider
 

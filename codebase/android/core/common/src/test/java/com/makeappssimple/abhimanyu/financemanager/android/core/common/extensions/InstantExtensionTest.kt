@@ -5,12 +5,12 @@ import org.junit.Test
 import java.time.Instant
 import java.time.ZoneId
 
-public class InstantExtensionTest {
+internal class InstantExtensionTest {
     private val testInstant = Instant.ofEpochMilli(1680144857890)
     private val testZoneId = ZoneId.of("Asia/Kolkata")
 
     @Test
-    public fun formattedDate() {
+    fun formattedDate() {
         Assert.assertEquals(
             "30 Mar, 2023",
             testInstant.formattedDate(
@@ -20,7 +20,7 @@ public class InstantExtensionTest {
     }
 
     @Test
-    public fun formattedDay() {
+    fun formattedDay() {
         Assert.assertEquals(
             "30 Mar",
             testInstant.formattedDay(
@@ -30,7 +30,7 @@ public class InstantExtensionTest {
     }
 
     @Test
-    public fun formattedMonth() {
+    fun formattedMonth() {
         Assert.assertEquals(
             "March, 2023",
             testInstant.formattedMonth(
@@ -40,7 +40,7 @@ public class InstantExtensionTest {
     }
 
     @Test
-    public fun formattedYear() {
+    fun formattedYear() {
         Assert.assertEquals(
             "2023",
             testInstant.formattedYear(
@@ -50,7 +50,7 @@ public class InstantExtensionTest {
     }
 
     @Test
-    public fun formattedTime() {
+    fun formattedTime() {
         Assert.assertEquals(
             "08:24 AM",
             testInstant.formattedTime(
@@ -60,7 +60,7 @@ public class InstantExtensionTest {
     }
 
     @Test
-    public fun formattedDateAndTime() {
+    fun formattedDateAndTime() {
         Assert.assertEquals(
             "2023-Mar-30, 08-24 AM",
             testInstant.formattedDateAndTime(
@@ -70,7 +70,7 @@ public class InstantExtensionTest {
     }
 
     @Test
-    public fun formattedReadableDateAndTime() {
+    fun formattedReadableDateAndTime() {
         Assert.assertEquals(
             "30 Mar, 2023 at 08:24 AM",
             testInstant.formattedReadableDateAndTime(
@@ -80,7 +80,7 @@ public class InstantExtensionTest {
     }
 
     @Test
-    public fun toZonedDateTime() {
+    fun toZonedDateTime() {
         val result = testInstant.toZonedDateTime(
             zoneId = testZoneId,
         )
@@ -92,7 +92,7 @@ public class InstantExtensionTest {
     }
 
     @Test
-    public fun atStartOfDay() {
+    fun atStartOfDay() {
         val result = testInstant.atStartOfDay(
             zoneId = testZoneId,
         )
@@ -104,7 +104,7 @@ public class InstantExtensionTest {
     }
 
     @Test
-    public fun atEndOfDay() {
+    fun atEndOfDay() {
         val result = testInstant.atEndOfDay(
             zoneId = testZoneId,
         )

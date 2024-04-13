@@ -5,12 +5,12 @@ import org.junit.Test
 import java.time.LocalDateTime
 import java.time.ZoneId
 
-public class LocalDateTimeExtensionTest {
+internal class LocalDateTimeExtensionTest {
     private val testLocalDateTime = LocalDateTime.of(2023, 3, 30, 8, 24)
     private val testZoneId = ZoneId.of("Asia/Kolkata")
 
     @Test
-    public fun toInstant() {
+    fun toInstant() {
         val result = testLocalDateTime.toInstant(
             zoneId = testZoneId,
         )
@@ -22,7 +22,7 @@ public class LocalDateTimeExtensionTest {
     }
 
     @Test
-    public fun toEpochMilli() {
+    fun toEpochMilli() {
         val result = testLocalDateTime.toEpochMilli(
             zoneId = testZoneId,
         )

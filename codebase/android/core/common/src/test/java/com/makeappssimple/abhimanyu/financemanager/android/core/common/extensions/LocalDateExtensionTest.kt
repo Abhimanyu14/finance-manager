@@ -5,12 +5,12 @@ import org.junit.Test
 import java.time.LocalDate
 import java.time.ZoneId
 
-public class LocalDateExtensionTest {
+internal class LocalDateExtensionTest {
     private val testLocalDate = LocalDate.of(2023, 3, 30)
     private val testZoneId = ZoneId.of("Asia/Kolkata")
 
     @Test
-    public fun atEndOfDay() {
+    fun atEndOfDay() {
         val result = testLocalDate.atEndOfDay()
         Assert.assertEquals(
             23,
@@ -27,7 +27,7 @@ public class LocalDateExtensionTest {
     }
 
     @Test
-    public fun formattedDate() {
+    fun formattedDate() {
         Assert.assertEquals(
             "30 Mar, 2023",
             testLocalDate.formattedDate(
