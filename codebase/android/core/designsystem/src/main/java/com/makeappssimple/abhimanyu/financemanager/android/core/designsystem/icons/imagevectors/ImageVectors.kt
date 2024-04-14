@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.imagevectors
 
 import androidx.compose.material.icons.Icons

@@ -1,3 +1,5 @@
+@file:Suppress("MagicNumber")
+
 package com.makeappssimple.abhimanyu.financemanager.android.core.database.migrations
 
 import androidx.room.migration.Migration
@@ -119,8 +121,34 @@ private object ManualDatabaseMigration {
             // Copy the data
             db.execSQL(
                 """
-                INSERT INTO transaction_table_new (amount, category_id, id, original_transaction_id, account_from_id, account_to_id, transaction_for_id, refund_transaction_ids, creation_timestamp, transaction_timestamp, description, title, transaction_type) 
-                SELECT amount, category_id, id, original_transaction_id, source_from_id, source_to_id, transaction_for_id, refund_transaction_ids, creation_timestamp, transaction_timestamp, description, title, transaction_type 
+                INSERT INTO transaction_table_new (
+                    amount, 
+                    category_id, 
+                    id, 
+                    original_transaction_id, 
+                    account_from_id, 
+                    account_to_id, 
+                    transaction_for_id, 
+                    refund_transaction_ids, 
+                    creation_timestamp, 
+                    transaction_timestamp, 
+                    description, 
+                    title, 
+                    transaction_type
+                ) 
+                SELECT amount, 
+                    category_id, 
+                    id, 
+                    original_transaction_id, 
+                    source_from_id, 
+                    source_to_id, 
+                    transaction_for_id, 
+                    refund_transaction_ids, 
+                    creation_timestamp, 
+                    transaction_timestamp, 
+                    description, 
+                    title, 
+                    transaction_type 
                 FROM transaction_table
             """.trimIndent()
             )
@@ -146,10 +174,33 @@ private object ManualDatabaseMigration {
             db: SupportSQLiteDatabase,
         ) {
             // Create the new table
-            db.execSQL("CREATE TABLE IF NOT EXISTS `transaction_table_new` (`amount` TEXT NOT NULL, `category_id` INTEGER, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `original_transaction_id` INTEGER, `source_from_id` INTEGER, `source_to_id` INTEGER, `transaction_for_id` INTEGER NOT NULL, `refund_transaction_ids` TEXT, `creation_timestamp` INTEGER NOT NULL, `transaction_timestamp` INTEGER NOT NULL, `description` TEXT NOT NULL, `title` TEXT NOT NULL, `transaction_type` TEXT NOT NULL)")
+            db.execSQL(
+                """
+                CREATE TABLE IF NOT EXISTS `transaction_table_new` (
+                    `amount` TEXT NOT NULL, 
+                    `category_id` INTEGER, 
+                    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+                    `original_transaction_id` INTEGER, 
+                    `source_from_id` INTEGER, 
+                    `source_to_id` INTEGER, 
+                    `transaction_for_id` INTEGER NOT NULL, 
+                    `refund_transaction_ids` TEXT, 
+                    `creation_timestamp` INTEGER NOT NULL, 
+                    `transaction_timestamp` INTEGER NOT NULL, 
+                    `description` TEXT NOT NULL, 
+                    `title` TEXT NOT NULL, 
+                    `transaction_type` TEXT NOT NULL
+                )
+            """.trimIndent()
+            )
 
             // Copy the data
-            db.execSQL("INSERT INTO transaction_table_new (amount, category_id, id, source_from_id, source_to_id, transaction_for_id, creation_timestamp, transaction_timestamp, description, title, transaction_type) SELECT amount, category_id, id, source_from_id, source_to_id, transaction_for_id, creation_timestamp, transaction_timestamp, description, title, transaction_type FROM transaction_table")
+            db.execSQL(
+                """
+                INSERT INTO transaction_table_new (
+                    amount, category_id, id, source_from_id, source_to_id, transaction_for_id, creation_timestamp, transaction_timestamp, description, title, transaction_type) SELECT amount, category_id, id, source_from_id, source_to_id, transaction_for_id, creation_timestamp, transaction_timestamp, description, title, transaction_type FROM transaction_table
+            """.trimIndent()
+            )
 
             // Remove the old table
             db.execSQL("DROP TABLE transaction_table")
@@ -364,7 +415,17 @@ private object ManualDatabaseMigration {
         override fun migrate(
             db: SupportSQLiteDatabase,
         ) {
-            db.execSQL("CREATE TABLE IF NOT EXISTS `category_table` (`parent_category` TEXT, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sub_categories` TEXT, `description` TEXT NOT NULL, `title` TEXT NOT NULL)")
+            db.execSQL(
+                """
+                CREATE TABLE IF NOT EXISTS `category_table` (
+                    `parent_category` TEXT, 
+                    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+                    `sub_categories` TEXT, 
+                    `description` TEXT NOT NULL, 
+                    `title` TEXT NOT NULL
+                )
+            """.trimIndent()
+            )
         }
     }
 }

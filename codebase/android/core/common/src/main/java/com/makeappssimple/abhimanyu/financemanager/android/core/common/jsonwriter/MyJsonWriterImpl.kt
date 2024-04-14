@@ -21,7 +21,8 @@ public class MyJsonWriterImpl(
             } ?: return false
             true
         } catch (
-            exception: Exception, ) {
+            exception: Exception,
+        ) {
             exception.printStackTrace()
             false
         }

@@ -50,7 +50,7 @@ public fun String.toIntOrZero(): Int {
     return try {
         this.toInt()
     } catch (
-        exception: Exception,
+        numberFormatException: NumberFormatException,
     ) {
         0
     }
@@ -60,7 +60,7 @@ public fun String.toLongOrZero(): Long {
     return try {
         this.toLong()
     } catch (
-        exception: Exception,
+        numberFormatException: NumberFormatException,
     ) {
         0L
     }

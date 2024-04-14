@@ -11,13 +11,16 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import javax.inject.Singleton
 
+private object ConfigModuleConstants {
+    const val SECONDS_IN_AN_HOUR = 3600L
+}
+
 @Module
 @InstallIn(SingletonComponent::class)
 public class ConfigModule {
     @Singleton
     @Provides
-    public fun provideFirebaseRemoteConfigSettings(): FirebaseRemoteConfigSettings {
-        /*
+    public fun provideFirebaseRemoteConfigSettings(): FirebaseRemoteConfigSettings {/*
         // TODO(Abhi): Use this after adding dependency on debug build checks
         val remoteConfigFetchInterval: Long = if (isDebugBuild()) {
             0L
@@ -25,7 +28,7 @@ public class ConfigModule {
             3600L
         }
         */
-        val remoteConfigFetchInterval = 3600L
+        val remoteConfigFetchInterval = ConfigModuleConstants.SECONDS_IN_AN_HOUR
         return FirebaseRemoteConfigSettings.Builder()
             .setMinimumFetchIntervalInSeconds(remoteConfigFetchInterval)
             .build()
