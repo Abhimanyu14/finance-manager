@@ -24,9 +24,7 @@ public class TransactionForRepositoryImpl(
     }
 
     override suspend fun getAllTransactionForValues(): List<TransactionFor> {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+        return executeOnIoDispatcher {
             transactionForDao.getAllTransactionForValues().map(
                 transform = TransactionForEntity::asExternalModel,
             )
@@ -36,9 +34,7 @@ public class TransactionForRepositoryImpl(
     override suspend fun getTransactionFor(
         id: Int,
     ): TransactionFor? {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+        return executeOnIoDispatcher {
             transactionForDao.getTransactionFor(
                 id = id,
             )?.asExternalModel()
@@ -48,9 +44,7 @@ public class TransactionForRepositoryImpl(
     override suspend fun insertTransactionForValues(
         vararg transactionForValues: TransactionFor,
     ): List<Long> {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+        return executeOnIoDispatcher {
             transactionForDao.insertTransactionForValues(
                 transactionForValues = transactionForValues.map(
                     transform = TransactionFor::asEntity,
@@ -62,9 +56,7 @@ public class TransactionForRepositoryImpl(
     override suspend fun updateTransactionForValues(
         vararg transactionForValues: TransactionFor,
     ): Boolean {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+        return executeOnIoDispatcher {
             transactionForDao.updateTransactionForValues(
                 transactionForValues = transactionForValues.map(
                     transform = TransactionFor::asEntity,
@@ -76,9 +68,7 @@ public class TransactionForRepositoryImpl(
     override suspend fun deleteTransactionFor(
         id: Int,
     ): Boolean {
-        return withContext(
-            context = dispatcherProvider.io,
-        ) {
+        return executeOnIoDispatcher {
             transactionForDao.deleteTransactionFor(
                 id = id,
             ) == 1

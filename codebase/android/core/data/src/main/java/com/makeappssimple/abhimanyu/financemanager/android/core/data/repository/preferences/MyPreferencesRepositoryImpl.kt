@@ -132,9 +132,9 @@ public class MyPreferencesRepositoryImpl(
         }
     }
 
-    private suspend fun executeOnIoDispatcher(
-        block: suspend CoroutineScope.() -> Boolean,
-    ): Boolean {
+    private suspend fun <T> executeOnIoDispatcher(
+        block: suspend CoroutineScope.() -> T,
+    ): T {
         return withContext(
             context = dispatcherProvider.io,
             block = block,
