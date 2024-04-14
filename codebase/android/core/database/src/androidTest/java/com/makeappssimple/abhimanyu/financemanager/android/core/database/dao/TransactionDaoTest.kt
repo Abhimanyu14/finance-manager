@@ -25,15 +25,15 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
-public class TransactionDaoTest {
+internal class TransactionDaoTest {
     private lateinit var database: MyRoomDatabase
     private lateinit var dao: TransactionDao
 
     @get:Rule
-    public val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
+    val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
 
     @Before
-    public fun setUp() {
+    fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         database = Room
             .inMemoryDatabaseBuilder(
@@ -46,12 +46,12 @@ public class TransactionDaoTest {
     }
 
     @After
-    public fun tearDown() {
+    fun tearDown() {
         database.close()
     }
 
     @Test
-    public fun insertTransactions(): TestResult = runTest {
+    fun insertTransactions(): TestResult = runTest {
         val transactions = getTestTransactions(
             size = 10,
             frequency = THIRTY_DAYS,
@@ -72,7 +72,7 @@ public class TransactionDaoTest {
     }
 
     @Test
-    public fun getTransactionsBetweenTimestampsFlow(): TestResult = runTest {
+    fun getTransactionsBetweenTimestampsFlow(): TestResult = runTest {
         val transactions = getTestTransactions(
             size = 100,
             frequency = ONE_HOUR,

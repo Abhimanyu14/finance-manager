@@ -20,15 +20,15 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
-public class TransactionForDaoTest {
+internal class TransactionForDaoTest {
     private lateinit var myRoomDatabase: MyRoomDatabase
     private lateinit var transactionForDao: TransactionForDao
 
     @get:Rule
-    public val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
+    val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
 
     @Before
-    public fun setUp() {
+    fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         myRoomDatabase = Room
             .inMemoryDatabaseBuilder(
@@ -41,12 +41,12 @@ public class TransactionForDaoTest {
     }
 
     @After
-    public fun tearDown() {
+    fun tearDown() {
         myRoomDatabase.close()
     }
 
     @Test
-    public fun getAllTransactionForValues(): TestResult = runTest {
+    fun getAllTransactionForValues(): TestResult = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -64,7 +64,7 @@ public class TransactionForDaoTest {
     }
 
     @Test
-    public fun getAllTransactionForValuesFlow(): TestResult = runTest {
+    fun getAllTransactionForValuesFlow(): TestResult = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -86,7 +86,7 @@ public class TransactionForDaoTest {
     }
 
     @Test
-    public fun getTransactionForValuesCount(): TestResult = runTest {
+    fun getTransactionForValuesCount(): TestResult = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -100,7 +100,7 @@ public class TransactionForDaoTest {
     }
 
     @Test
-    public fun getTransactionFor_returnsDataForValidId(): TestResult = runTest {
+    fun getTransactionFor_returnsDataForValidId(): TestResult = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -116,7 +116,7 @@ public class TransactionForDaoTest {
     }
 
     @Test
-    public fun getTransactionFor_returnsNullForInvalidId(): TestResult = runTest {
+    fun getTransactionFor_returnsNullForInvalidId(): TestResult = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -129,7 +129,7 @@ public class TransactionForDaoTest {
     }
 
     @Test
-    public fun updateTransactionForValues(): TestResult = runTest {
+    fun updateTransactionForValues(): TestResult = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -159,7 +159,7 @@ public class TransactionForDaoTest {
     }
 
     @Test
-    public fun deleteTransactionFor_deleteDataOfGivenId(): TestResult = runTest {
+    fun deleteTransactionFor_deleteDataOfGivenId(): TestResult = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -180,7 +180,7 @@ public class TransactionForDaoTest {
     }
 
     @Test
-    public fun deleteTransactionFor_noDeletionForInvalidId(): TestResult = runTest {
+    fun deleteTransactionFor_noDeletionForInvalidId(): TestResult = runTest {
         transactionForDao.insertTransactionForValues(
             transactionForValues = testTransactionForValues.toTypedArray(),
         )
@@ -200,7 +200,7 @@ public class TransactionForDaoTest {
         )
     }
 
-    public companion object {
+    companion object {
         private const val testId1 = 123
         private const val testId2 = 234
         private const val invalidId = 987

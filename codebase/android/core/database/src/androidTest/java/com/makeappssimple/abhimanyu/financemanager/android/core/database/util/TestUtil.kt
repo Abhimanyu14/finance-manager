@@ -9,26 +9,33 @@ import java.time.Instant
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-public const val timeInMillis_01_JUN_2022: Long = 1654021800000
-public const val timeInMillis_01_JAN_2022_00_00_00: Long = 1640975400000 // 01-01-2022 00:00:00 IST
-public const val timeInMillis_01_JUN_2022_00_00_00: Long = 1654021800000 // 01-06-2022 00:00:00 IST
-public const val timeInMillis_01_JUN_2022_23_59_59: Long = 1654108199000 // 01-06-2022 23:59:59 IST
-public const val timeInMillis_02_JUN_2022_00_00_00: Long = 1654108200000 // 02-06-2022 00:00:00 IST
-public const val timeInMillis_02_JUN_2022_23_59_59: Long = 1654194599000 // 02-06-2022 23:59:59 IST
-public const val timeInMillis_30_JUN_2022_23_59_59: Long = 1656613799000 // 30-06-2022 23:59:59 IST
-public const val timeInMillis_31_DEC_2022_23_59_59: Long = 1672511399000 // 31-12-2022 23:59:59 IST
-public const val ONE_HOUR: Long = 60L * 60 * 1000
-public const val ONE_DAY: Long = ONE_HOUR * 24
-public const val SEVEN_DAYS: Long = ONE_HOUR * 24
-public const val THIRTY_DAYS: Long = ONE_DAY * 30
+internal const val timeInMillis_01_JUN_2022: Long = 1654021800000
+internal const val timeInMillis_01_JAN_2022_00_00_00: Long =
+    1640975400000 // 01-01-2022 00:00:00 IST
+internal const val timeInMillis_01_JUN_2022_00_00_00: Long =
+    1654021800000 // 01-06-2022 00:00:00 IST
+internal const val timeInMillis_01_JUN_2022_23_59_59: Long =
+    1654108199000 // 01-06-2022 23:59:59 IST
+internal const val timeInMillis_02_JUN_2022_00_00_00: Long =
+    1654108200000 // 02-06-2022 00:00:00 IST
+internal const val timeInMillis_02_JUN_2022_23_59_59: Long =
+    1654194599000 // 02-06-2022 23:59:59 IST
+internal const val timeInMillis_30_JUN_2022_23_59_59: Long =
+    1656613799000 // 30-06-2022 23:59:59 IST
+internal const val timeInMillis_31_DEC_2022_23_59_59: Long =
+    1672511399000 // 31-12-2022 23:59:59 IST
+internal const val ONE_HOUR: Long = 60L * 60 * 1000
+internal const val ONE_DAY: Long = ONE_HOUR * 24
+internal const val SEVEN_DAYS: Long = ONE_HOUR * 24
+internal const val THIRTY_DAYS: Long = ONE_DAY * 30
 
-public fun getTestAmount(): AmountEntity {
+internal fun getTestAmount(): AmountEntity {
     return AmountEntity(
         value = 45,
     )
 }
 
-public fun getTestCategory(): CategoryEntity {
+internal fun getTestCategory(): CategoryEntity {
     return CategoryEntity(
         emoji = "emoji",
         title = "title",
@@ -36,7 +43,7 @@ public fun getTestCategory(): CategoryEntity {
     )
 }
 
-public fun getTestCategories(): Array<CategoryEntity> {
+internal fun getTestCategories(): Array<CategoryEntity> {
     return arrayOf(
         CategoryEntity(
             emoji = "emoji",
@@ -51,13 +58,13 @@ public fun getTestCategories(): Array<CategoryEntity> {
     )
 }
 
-public fun getTestAccount(): AccountEntity {
+internal fun getTestAccount(): AccountEntity {
     return AccountEntity(
         name = "Axis",
     )
 }
 
-public fun getTestAccounts(): Array<AccountEntity> {
+internal fun getTestAccounts(): Array<AccountEntity> {
     return arrayOf(
         AccountEntity(
             name = "Axis",
@@ -68,7 +75,7 @@ public fun getTestAccounts(): Array<AccountEntity> {
     )
 }
 
-public fun getTestTransaction(): TransactionEntity {
+internal fun getTestTransaction(): TransactionEntity {
     return TransactionEntity(
         amount = getTestAmount(),
         title = "title",
@@ -77,7 +84,7 @@ public fun getTestTransaction(): TransactionEntity {
     )
 }
 
-public fun getTestTransactions(): Array<TransactionEntity> {
+internal fun getTestTransactions(): Array<TransactionEntity> {
     return arrayOf(
         TransactionEntity(
             amount = getTestAmount(),
@@ -94,7 +101,7 @@ public fun getTestTransactions(): Array<TransactionEntity> {
     )
 }
 
-public fun getTestTransactions(
+internal fun getTestTransactions(
     size: Int = 2,
     frequency: Long,
 ): Array<TransactionEntity> {
@@ -110,7 +117,7 @@ public fun getTestTransactions(
     return result
 }
 
-public fun getReadableDateAndTime(
+internal fun getReadableDateAndTime(
     timestamp: Long,
     zoneId: ZoneId = ZoneId.systemDefault(),
 ): String {
@@ -121,13 +128,13 @@ public fun getReadableDateAndTime(
         )
 }
 
-public fun Instant.formattedReadableDateAndTime(
+internal fun Instant.formattedReadableDateAndTime(
     zoneId: ZoneId = ZoneId.systemDefault(),
 ): String {
     return "${formattedDate(zoneId)} at ${formattedTime(zoneId)}"
 }
 
-public fun Instant.formattedDate(
+internal fun Instant.formattedDate(
     zoneId: ZoneId = ZoneId.systemDefault(),
 ): String {
     return DateTimeFormatter
@@ -136,7 +143,7 @@ public fun Instant.formattedDate(
         .format(this)
 }
 
-public fun Instant.formattedTime(
+internal fun Instant.formattedTime(
     zoneId: ZoneId = ZoneId.systemDefault(),
 ): String {
     return DateTimeFormatter
