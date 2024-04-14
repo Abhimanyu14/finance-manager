@@ -89,9 +89,7 @@ public class ViewTransactionScreenViewModelImplTest {
 
     @Test
     public fun navigateUpTest(): TestResult = runTest {
-        navigator = FakeNavigatorImpl(
-            coroutineScope = this,
-        )
+        navigator = FakeNavigatorImpl()
         initViewModel()
 
         turbineScope {

@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import java.io.BufferedReader
+import java.io.FileNotFoundException
 import java.io.IOException
 import java.io.InputStream
 import java.io.InputStreamReader
@@ -51,9 +52,14 @@ public class MyJsonReaderImpl(
             }
             return stringBuilder.toString()
         } catch (
-            exception: Exception,
+            fileNotFoundException: FileNotFoundException,
         ) {
-            exception.printStackTrace()
+            fileNotFoundException.printStackTrace()
+            return null
+        } catch (
+            ioException: IOException,
+        ) {
+            ioException.printStackTrace()
             return null
         }
     }

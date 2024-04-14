@@ -12,6 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 
 public interface InitialDatabasePopulator {
@@ -42,9 +43,14 @@ public class InitialDatabasePopulatorImpl(
                         string = jsonString,
                     )
                 } catch (
-                    exception: Exception,
+                    serializationException: SerializationException,
                 ) {
-                    exception.printStackTrace()
+                    serializationException.printStackTrace()
+                    return@launch
+                } catch (
+                    illegalArgumentException: IllegalArgumentException,
+                ) {
+                    illegalArgumentException.printStackTrace()
                     return@launch
                 }
                 val initialDataVersionNumber: InitialDataVersionNumber? =

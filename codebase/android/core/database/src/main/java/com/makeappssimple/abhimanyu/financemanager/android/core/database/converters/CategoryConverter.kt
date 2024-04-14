@@ -3,6 +3,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.database.conver
 import androidx.room.TypeConverter
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.database.model.CategoryEntity
+import kotlinx.serialization.SerializationException
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
@@ -19,9 +20,14 @@ public class CategoryConverter {
                 string = value,
             )
         } catch (
-            exception: Exception,
+            serializationException: SerializationException,
         ) {
-            exception.printStackTrace()
+            serializationException.printStackTrace()
+            null
+        } catch (
+            illegalArgumentException: IllegalArgumentException,
+        ) {
+            illegalArgumentException.printStackTrace()
             null
         }
     }
@@ -38,9 +44,14 @@ public class CategoryConverter {
                 value = categoryEntity,
             )
         } catch (
-            exception: Exception,
+            serializationException: SerializationException,
         ) {
-            exception.printStackTrace()
+            serializationException.printStackTrace()
+            ""
+        } catch (
+            illegalArgumentException: IllegalArgumentException,
+        ) {
+            illegalArgumentException.printStackTrace()
             ""
         }
     }

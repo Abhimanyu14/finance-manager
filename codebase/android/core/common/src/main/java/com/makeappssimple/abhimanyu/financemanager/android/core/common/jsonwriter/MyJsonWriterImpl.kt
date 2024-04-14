@@ -2,7 +2,9 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.jsonwrit
 
 import android.content.Context
 import android.net.Uri
+import java.io.FileNotFoundException
 import java.io.FileOutputStream
+import java.io.IOException
 
 private const val writeMode = "w"
 
@@ -21,9 +23,14 @@ public class MyJsonWriterImpl(
             } ?: return false
             true
         } catch (
-            exception: Exception,
+            fileNotFoundException: FileNotFoundException,
         ) {
-            exception.printStackTrace()
+            fileNotFoundException.printStackTrace()
+            false
+        } catch (
+            ioException: IOException,
+        ) {
+            ioException.printStackTrace()
             false
         }
     }

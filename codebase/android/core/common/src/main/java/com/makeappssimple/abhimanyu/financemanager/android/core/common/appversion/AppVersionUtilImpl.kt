@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.common.appversi
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.pm.PackageManager.NameNotFoundException
 import android.os.Build
 import androidx.core.content.pm.PackageInfoCompat
 
@@ -22,9 +23,14 @@ public class AppVersionUtilImpl(
                 versionNumber = PackageInfoCompat.getLongVersionCode(packageInfo),
             )
         } catch (
-            exception: Exception,
+            nameNotFoundException: NameNotFoundException,
         ) {
-            exception.printStackTrace()
+            nameNotFoundException.printStackTrace()
+            null
+        } catch (
+            unsupportedOperationException: UnsupportedOperationException,
+        ) {
+            unsupportedOperationException.printStackTrace()
             null
         }
     }

@@ -128,9 +128,7 @@ public class SettingsScreenViewModelImplTest {
     @Test
     public fun backupDataToDocumentTest(): TestResult = runTest {
         val testUri = Uri.EMPTY
-        navigator = FakeNavigatorImpl(
-            coroutineScope = this,
-        )
+        navigator = FakeNavigatorImpl()
         initViewModel()
 
         turbineScope {
