@@ -40,7 +40,7 @@ public class AccountsScreenUIState(
     public val accountsTotalMinimumBalanceAmountValue: Long =
         unwrappedData?.accountsTotalMinimumBalanceAmountValue.orZero(),
     public val resetScreenBottomSheetType: () -> Unit = {
-        setScreenBottomSheetType(AccountsScreenBottomSheetType.NONE)
+        setScreenBottomSheetType(AccountsScreenBottomSheetType.None)
     },
 ) : ScreenUIState
 
@@ -63,9 +63,9 @@ public fun rememberAccountsScreenUIState(
             value = null,
         )
     }
-    val (screenBottomSheetType: AccountsScreenBottomSheetType, setScreenBottomSheetType: (AccountsScreenBottomSheetType) -> Unit) = remember {
+    var screenBottomSheetType: AccountsScreenBottomSheetType by remember {
         mutableStateOf(
-            value = AccountsScreenBottomSheetType.NONE,
+            value = AccountsScreenBottomSheetType.None,
         )
     }
     val setClickedItemId = { updatedClickedItemId: Int? ->
@@ -77,6 +77,10 @@ public fun rememberAccountsScreenUIState(
     val setAccountIdToDelete = { updatedAccountIdToDelete: Int? ->
         accountIdToDelete = updatedAccountIdToDelete
     }
+    val setScreenBottomSheetType =
+        { updatedAccountsBottomSheetType: AccountsScreenBottomSheetType ->
+            screenBottomSheetType = updatedAccountsBottomSheetType
+        }
 
     return remember(
         data,

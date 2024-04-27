@@ -35,6 +35,12 @@
     <string name="backup_card">Backup data</string>
     <!-- endregion -->
 
+    <!-- region bottom sheet accounts menu -->
+    <string name="bottom_sheet_accounts_menu_edit">Edit</string>
+    <string name="bottom_sheet_accounts_menu_set_as_default_account">Set as default Account</string>
+    <string name="bottom_sheet_accounts_menu_delete">Delete</string>
+    <!-- endregion -->
+
     <!-- region bottom sheet category menu -->
     <string name="bottom_sheet_category_menu_edit">Edit</string>
     <string name="bottom_sheet_category_menu_set_as_default_category">Set as default Category</string>

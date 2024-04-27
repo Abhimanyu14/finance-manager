@@ -21,6 +21,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Bottom
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account.AccountsDeleteConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account.AccountsMenuBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account.AccountsSetAsDefaultConfirmationBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentData
@@ -40,7 +41,7 @@ internal fun AccountsScreenUI(
     handleUIEvents: (uiEvent: AccountsScreenUIEvent) -> Unit = {},
 ) {
     BottomSheetHandler(
-        showModalBottomSheet = uiState.screenBottomSheetType != AccountsScreenBottomSheetType.NONE,
+        showModalBottomSheet = uiState.screenBottomSheetType != AccountsScreenBottomSheetType.None,
         screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
@@ -56,7 +57,7 @@ internal fun AccountsScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
-                AccountsScreenBottomSheetType.DELETE_CONFIRMATION -> {
+                is AccountsScreenBottomSheetType.DeleteConfirmation -> {
                     AccountsDeleteConfirmationBottomSheet(
                         accountIdToDelete = uiState.accountIdToDelete,
                         resetBottomSheetType = uiState.resetScreenBottomSheetType,
@@ -78,11 +79,11 @@ internal fun AccountsScreenUI(
                     )
                 }
 
-                AccountsScreenBottomSheetType.NONE -> {
+                is AccountsScreenBottomSheetType.None -> {
                     VerticalSpacer()
                 }
 
-                AccountsScreenBottomSheetType.SET_AS_DEFAULT_CONFIRMATION -> {
+                is AccountsScreenBottomSheetType.SetAsDefaultConfirmation -> {
                     AccountsSetAsDefaultConfirmationBottomSheet(
                         clickedItemId = uiState.clickedItemId,
                         resetBottomSheetType = uiState.resetScreenBottomSheetType,
@@ -97,6 +98,33 @@ internal fun AccountsScreenUI(
                                     )
                                 )
                             }
+                        },
+                    )
+                }
+
+                is AccountsScreenBottomSheetType.Menu -> {
+                    val bottomSheetData =
+                        uiState.screenBottomSheetType
+
+                    AccountsMenuBottomSheet(
+                        isDeleteVisible = bottomSheetData.isDeleteVisible,
+                        isEditVisible = bottomSheetData.isEditVisible,
+                        isSetAsDefaultVisible = bottomSheetData.isSetAsDefaultVisible,
+                        onDeleteClick = {
+                            uiState.setAccountIdToDelete(bottomSheetData.accountId)
+                            uiState.setScreenBottomSheetType(AccountsScreenBottomSheetType.DeleteConfirmation)
+                        },
+                        onEditClick = {
+                            uiState.resetScreenBottomSheetType()
+                            handleUIEvents(
+                                AccountsScreenUIEvent.NavigateToEditAccountScreen(
+                                    accountId = bottomSheetData.accountId,
+                                )
+                            )
+                        },
+                        onSetAsDefaultClick = {
+                            uiState.setClickedItemId(bottomSheetData.accountId)
+                            uiState.setScreenBottomSheetType(AccountsScreenBottomSheetType.SetAsDefaultConfirmation)
                         },
                     )
                 }
@@ -125,8 +153,8 @@ internal fun AccountsScreenUI(
             )
         },
         onClick = state.focusManager::clearFocus,
-        isModalBottomSheetVisible = uiState.screenBottomSheetType != AccountsScreenBottomSheetType.NONE,
-        backHandlerEnabled = uiState.screenBottomSheetType != AccountsScreenBottomSheetType.NONE,
+        isModalBottomSheetVisible = uiState.screenBottomSheetType != AccountsScreenBottomSheetType.None,
+        backHandlerEnabled = uiState.screenBottomSheetType != AccountsScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetScreenBottomSheetType,
     ) {
@@ -173,12 +201,17 @@ internal fun AccountsScreenUI(
                                     )
                                 },
                                 onLongClick = {
-                                    if (!listItem.isDefault) {
+                                    listItem.accountId?.let { accountId ->
                                         uiState.setScreenBottomSheetType(
-                                            AccountsScreenBottomSheetType.SET_AS_DEFAULT_CONFIRMATION
+                                            AccountsScreenBottomSheetType.Menu(
+                                                isDeleteVisible = listItem.isDeleteEnabled,
+                                                isEditVisible = true,
+                                                isSetAsDefaultVisible = !listItem.isDefault,
+                                                accountId = accountId,
+                                            )
                                         )
-                                        uiState.setClickedItemId(listItem.accountId)
                                     }
+                                    uiState.setClickedItemId(listItem.accountId)
                                 },
                                 onEditClick = {
                                     listItem.accountId?.let {
@@ -192,7 +225,7 @@ internal fun AccountsScreenUI(
                                 },
                                 onDeleteClick = {
                                     uiState.setAccountIdToDelete(listItem.accountId)
-                                    uiState.setScreenBottomSheetType(AccountsScreenBottomSheetType.DELETE_CONFIRMATION)
+                                    uiState.setScreenBottomSheetType(AccountsScreenBottomSheetType.DeleteConfirmation)
                                 },
                             ),
                         )
