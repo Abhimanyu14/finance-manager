@@ -67,7 +67,8 @@ private fun AccountsMenuBottomSheetItem(
                 onClick = data.onClick,
             )
             .padding(
-                all = 16.dp,
+                horizontal = 16.dp,
+                vertical = 12.dp,
             ),
     ) {
         MyText(
