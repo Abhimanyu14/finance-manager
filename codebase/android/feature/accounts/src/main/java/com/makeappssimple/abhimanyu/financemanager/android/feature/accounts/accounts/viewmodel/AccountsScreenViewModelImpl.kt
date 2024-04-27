@@ -101,7 +101,6 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
                             isDeleteEnabled = !isDefaultAccount(
                                 account = account.name,
                             ) && deleteEnabled,
-                            isExpanded = false,
                             isLowBalance = account.balanceAmount < account.minimumAccountBalanceAmount.orEmpty(),
                             icon = account.type.icon,
                             accountId = account.id,

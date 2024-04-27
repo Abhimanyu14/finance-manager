@@ -187,9 +187,7 @@ internal fun AccountsScreenUI(
                 when (listItem) {
                     is AccountsListItemContentData -> {
                         AccountsListItemContent(
-                            data = listItem.copy(
-                                isExpanded = index == uiState.expandedItemIndex
-                            ),
+                            data = listItem,
                             events = AccountsListItemContentEvents(
                                 onClick = {
                                     uiState.setExpandedItemIndex(

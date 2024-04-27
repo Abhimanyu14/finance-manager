@@ -4,24 +4,16 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.ExpandedListItemShape
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemIconButton
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemUIWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.default_tag.MyDefaultTag
 
 @Immutable
@@ -35,7 +27,6 @@ public data class AccountsListItemContentData(
     override val type: AccountsListItemType = AccountsListItemType.CONTENT,
     val isDefault: Boolean = false,
     val isDeleteEnabled: Boolean = false,
-    val isExpanded: Boolean = false,
     val isHeading: Boolean = false,
     val isLowBalance: Boolean = false,
     val isSelected: Boolean = false,
@@ -59,75 +50,10 @@ public fun AccountsListItemContent(
     data: AccountsListItemContentData,
     events: AccountsListItemContentEvents,
 ) {
-    MyExpandableItemUIWrapper(
-        isExpanded = data.isExpanded,
-        modifier = modifier,
-    ) {
-        AccountsListItemCollapsed(
-            data = data,
-            events = events,
-        )
-        if (data.isExpanded) {
-            HorizontalDivider(
-                color = MaterialTheme.colorScheme.outline,
-                thickness = 0.5.dp,
-            )
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        start = 16.dp,
-                        end = 16.dp,
-                        top = 8.dp,
-                        bottom = 8.dp,
-                    ),
-            ) {
-                MyExpandableItemIconButton(
-                    iconImageVector = MyIcons.Edit,
-                    labelText = stringResource(
-                        id = R.string.list_item_accounts_edit,
-                    ),
-                    enabled = true,
-                    onClick = events.onEditClick,
-                    modifier = Modifier
-                        .weight(
-                            weight = 1F,
-                        ),
-                )
-                MyExpandableItemIconButton(
-                    iconImageVector = MyIcons.Delete,
-                    labelText = stringResource(
-                        id = R.string.list_item_accounts_delete,
-                    ),
-                    enabled = data.isDeleteEnabled,
-                    onClick = events.onDeleteClick,
-                    modifier = Modifier
-                        .weight(
-                            weight = 1F,
-                        ),
-                )
-            }
-        }
-    }
-}
-
-@Composable
-internal fun AccountsListItemCollapsed(
-    data: AccountsListItemContentData,
-    events: AccountsListItemContentEvents,
-) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .clip(
-                shape = if (data.isExpanded) {
-                    ExpandedListItemShape
-                } else {
-                    MaterialTheme.shapes.large
-                },
-            )
             .conditionalClickable(
                 onClick = events.onClick,
                 onLongClick = events.onLongClick,
@@ -135,16 +61,8 @@ internal fun AccountsListItemCollapsed(
             .padding(
                 start = 16.dp,
                 end = 16.dp,
-                top = if (data.isExpanded) {
-                    16.dp
-                } else {
-                    8.dp
-                },
-                bottom = if (data.isExpanded) {
-                    16.dp
-                } else {
-                    8.dp
-                },
+                top = 8.dp,
+                bottom = 8.dp,
             ),
     ) {
         data.icon?.let {
