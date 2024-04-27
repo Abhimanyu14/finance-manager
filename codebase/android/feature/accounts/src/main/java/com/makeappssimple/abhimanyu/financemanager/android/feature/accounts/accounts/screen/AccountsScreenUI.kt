@@ -64,9 +64,6 @@ internal fun AccountsScreenUI(
                         resetAccountIdToDelete = {
                             uiState.setAccountIdToDelete(null)
                         },
-                        resetExpandedItemIndex = {
-                            uiState.setExpandedItemIndex(null)
-                        },
                         deleteAccount = {
                             uiState.accountIdToDelete?.let { accountId ->
                                 handleUIEvents(
@@ -183,20 +180,24 @@ internal fun AccountsScreenUI(
                 key = { _, listItem ->
                     listItem.hashCode()
                 },
-            ) { index, listItem ->
+            ) { _, listItem ->
                 when (listItem) {
                     is AccountsListItemContentData -> {
                         AccountsListItemContent(
                             data = listItem,
                             events = AccountsListItemContentEvents(
                                 onClick = {
-                                    uiState.setExpandedItemIndex(
-                                        if (index == uiState.expandedItemIndex) {
-                                            null
-                                        } else {
-                                            index
-                                        }
-                                    )
+                                    listItem.accountId?.let { accountId ->
+                                        uiState.setScreenBottomSheetType(
+                                            AccountsScreenBottomSheetType.Menu(
+                                                isDeleteVisible = listItem.isDeleteEnabled,
+                                                isEditVisible = true,
+                                                isSetAsDefaultVisible = !listItem.isDefault,
+                                                accountId = accountId,
+                                            )
+                                        )
+                                    }
+                                    uiState.setClickedItemId(listItem.accountId)
                                 },
                                 onLongClick = {
                                     listItem.accountId?.let { accountId ->
@@ -219,7 +220,6 @@ internal fun AccountsScreenUI(
                                             )
                                         )
                                     }
-                                    uiState.setExpandedItemIndex(null)
                                 },
                                 onDeleteClick = {
                                     uiState.setAccountIdToDelete(listItem.accountId)

@@ -25,11 +25,9 @@ public class AccountsScreenUIState(
         }
     },
     public val clickedItemId: Int?,
-    public val expandedItemIndex: Int?,
     public val accountIdToDelete: Int?,
     public val screenBottomSheetType: AccountsScreenBottomSheetType,
     public val setClickedItemId: (Int?) -> Unit,
-    public val setExpandedItemIndex: (Int?) -> Unit,
     public val setAccountIdToDelete: (Int?) -> Unit,
     public val setScreenBottomSheetType: (AccountsScreenBottomSheetType) -> Unit,
     public val isLoading: Boolean = unwrappedData.isNull(),
@@ -53,11 +51,6 @@ public fun rememberAccountsScreenUIState(
             value = null,
         )
     }
-    var expandedItemIndex: Int? by remember {
-        mutableStateOf(
-            value = null,
-        )
-    }
     var accountIdToDelete: Int? by remember {
         mutableStateOf(
             value = null,
@@ -71,9 +64,6 @@ public fun rememberAccountsScreenUIState(
     val setClickedItemId = { updatedClickedItemId: Int? ->
         clickedItemId = updatedClickedItemId
     }
-    val setExpandedItemIndex = { updatedExpandedItemIndex: Int? ->
-        expandedItemIndex = updatedExpandedItemIndex
-    }
     val setAccountIdToDelete = { updatedAccountIdToDelete: Int? ->
         accountIdToDelete = updatedAccountIdToDelete
     }
@@ -85,22 +75,18 @@ public fun rememberAccountsScreenUIState(
     return remember(
         data,
         clickedItemId,
-        expandedItemIndex,
         accountIdToDelete,
         screenBottomSheetType,
         setClickedItemId,
-        setExpandedItemIndex,
         setAccountIdToDelete,
         setScreenBottomSheetType,
     ) {
         AccountsScreenUIState(
             data = data,
             screenBottomSheetType = screenBottomSheetType,
-            expandedItemIndex = expandedItemIndex,
             clickedItemId = clickedItemId,
             accountIdToDelete = accountIdToDelete,
             setScreenBottomSheetType = setScreenBottomSheetType,
-            setExpandedItemIndex = setExpandedItemIndex,
             setClickedItemId = setClickedItemId,
             setAccountIdToDelete = setAccountIdToDelete,
         )

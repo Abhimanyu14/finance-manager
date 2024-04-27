@@ -10,7 +10,6 @@ public fun AccountsDeleteConfirmationBottomSheet(
     accountIdToDelete: Int?,
     resetBottomSheetType: () -> Unit,
     resetAccountIdToDelete: () -> Unit,
-    resetExpandedItemIndex: () -> Unit,
     deleteAccount: () -> Unit,
 ) {
     MyConfirmationBottomSheetUI(
@@ -30,7 +29,6 @@ public fun AccountsDeleteConfirmationBottomSheet(
             accountIdToDelete?.let {
                 deleteAccount()
                 resetAccountIdToDelete()
-                resetExpandedItemIndex()
             }
             resetBottomSheetType()
         },
