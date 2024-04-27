@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.li
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
@@ -42,6 +43,9 @@ public fun TransactionForListItem(
     Row(
         modifier = modifier
             .fillMaxWidth()
+            .defaultMinSize(
+                minHeight = 48.dp,
+            )
             .conditionalClickable(
                 onClick = events.onClick,
             )
