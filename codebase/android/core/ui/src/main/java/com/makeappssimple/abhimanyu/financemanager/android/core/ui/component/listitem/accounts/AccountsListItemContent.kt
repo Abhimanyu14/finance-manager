@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.li
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
@@ -58,6 +59,9 @@ public fun AccountsListItemContent(
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
             .fillMaxWidth()
+            .defaultMinSize(
+                minHeight = 48.dp,
+            )
             .conditionalClickable(
                 onClick = events.onClick,
                 onLongClick = events.onLongClick,
