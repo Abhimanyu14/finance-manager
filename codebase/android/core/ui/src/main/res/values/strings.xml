@@ -169,4 +169,8 @@
     <string name="transaction_list_item_delete">Delete</string>
     <!-- endregion -->
 
+    <!-- region transactions for list item -->
+    <string name="transaction_for_list_item_more_options_content_description">More Options</string>
+    <!-- endregion -->
+
 </resources>

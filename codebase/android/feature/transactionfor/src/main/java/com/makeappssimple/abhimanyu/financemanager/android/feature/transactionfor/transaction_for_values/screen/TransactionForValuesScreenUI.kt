@@ -158,6 +158,14 @@ internal fun TransactionForValuesScreenUI(
                                 )
                             )
                         },
+                        onMoreOptionsIconButtonClick = {
+                            uiState.setScreenBottomSheetType(
+                                TransactionForValuesScreenBottomSheetType.Menu(
+                                    isDeleteVisible = isDeleteVisible,
+                                    transactionForId = listItem.id,
+                                )
+                            )
+                        },
                     ),
                 )
             }
