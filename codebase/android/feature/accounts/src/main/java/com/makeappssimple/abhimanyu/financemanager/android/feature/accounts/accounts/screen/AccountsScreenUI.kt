@@ -225,6 +225,19 @@ internal fun AccountsScreenUI(
                                     uiState.setAccountIdToDelete(listItem.accountId)
                                     uiState.setScreenBottomSheetType(AccountsScreenBottomSheetType.DeleteConfirmation)
                                 },
+                                onMoreOptionsIconButtonClick = {
+                                    listItem.accountId?.let { accountId ->
+                                        uiState.setScreenBottomSheetType(
+                                            AccountsScreenBottomSheetType.Menu(
+                                                isDeleteVisible = listItem.isDeleteEnabled,
+                                                isEditVisible = true,
+                                                isSetAsDefaultVisible = !listItem.isDefault,
+                                                accountId = accountId,
+                                            )
+                                        )
+                                    }
+                                    uiState.setClickedItemId(listItem.accountId)
+                                },
                             ),
                         )
                     }

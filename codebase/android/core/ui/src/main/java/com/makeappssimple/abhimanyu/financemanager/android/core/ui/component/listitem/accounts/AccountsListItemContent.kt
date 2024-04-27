@@ -13,7 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.button.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.default_tag.MyDefaultTag
 
 @Immutable
@@ -42,6 +45,7 @@ public data class AccountsListItemContentEvents(
     val onLongClick: () -> Unit = {},
     val onEditClick: () -> Unit = {},
     val onDeleteClick: () -> Unit = {},
+    val onMoreOptionsIconButtonClick: (() -> Unit)? = null,
 )
 
 @Composable
@@ -60,9 +64,7 @@ public fun AccountsListItemContent(
             )
             .padding(
                 start = 16.dp,
-                end = 16.dp,
-                top = 8.dp,
-                bottom = 8.dp,
+                end = 8.dp,
             ),
     ) {
         data.icon?.let {
@@ -113,6 +115,14 @@ public fun AccountsListItemContent(
                             MaterialTheme.colorScheme.onBackground
                         },
                     ),
+            )
+        }
+        events.onMoreOptionsIconButtonClick?.let {
+            MyIconButton(
+                tint = MaterialTheme.colorScheme.onBackground,
+                imageVector = MyIcons.MoreVert,
+                contentDescriptionStringResourceId = R.string.account_list_item_more_options_content_description,
+                onClick = events.onMoreOptionsIconButtonClick,
             )
         }
     }
