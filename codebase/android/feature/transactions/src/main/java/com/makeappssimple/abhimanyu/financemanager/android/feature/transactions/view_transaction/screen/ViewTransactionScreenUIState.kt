@@ -34,7 +34,7 @@ public class ViewTransactionScreenUIState(
         unwrappedData?.refundTransactionListItemData,
     public val transactionListItemData: TransactionListItemData? = unwrappedData?.transactionListItemData,
     public val resetScreenBottomSheetType: () -> Unit = {
-        setScreenBottomSheetType(ViewTransactionScreenBottomSheetType.NONE)
+        setScreenBottomSheetType(ViewTransactionScreenBottomSheetType.None)
     },
 ) : ScreenUIState
 
@@ -42,11 +42,6 @@ public class ViewTransactionScreenUIState(
 public fun rememberViewTransactionScreenUIState(
     data: MyResult<ViewTransactionScreenUIData>?,
 ): ViewTransactionScreenUIState {
-    val (screenBottomSheetType, setScreenBottomSheetType) = remember {
-        mutableStateOf(
-            value = ViewTransactionScreenBottomSheetType.NONE,
-        )
-    }
     var transactionIdToDelete: Int? by remember {
         mutableStateOf(
             value = null,
@@ -55,6 +50,15 @@ public fun rememberViewTransactionScreenUIState(
     val setTransactionIdToDelete = { updatedTransactionIdToDelete: Int? ->
         transactionIdToDelete = updatedTransactionIdToDelete
     }
+    var screenBottomSheetType: ViewTransactionScreenBottomSheetType by remember {
+        mutableStateOf(
+            value = ViewTransactionScreenBottomSheetType.None,
+        )
+    }
+    val setScreenBottomSheetType =
+        { updatedViewTransactionScreenBottomSheetType: ViewTransactionScreenBottomSheetType ->
+            screenBottomSheetType = updatedViewTransactionScreenBottomSheetType
+        }
 
     return remember(
         data,

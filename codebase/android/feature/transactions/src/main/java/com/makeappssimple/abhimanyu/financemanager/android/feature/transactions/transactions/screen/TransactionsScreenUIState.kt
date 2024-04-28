@@ -2,8 +2,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orMin
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
@@ -54,7 +56,7 @@ public class TransactionsScreenUIState(
     public val searchText: String = unwrappedData?.searchText.orEmpty(),
     public val selectedSortOption: SortOption = unwrappedData?.selectedSortOption.orDefault(),
     public val resetScreenBottomSheetType: () -> Unit = {
-        setScreenBottomSheetType(TransactionsScreenBottomSheetType.NONE)
+        setScreenBottomSheetType(TransactionsScreenBottomSheetType.None)
     },
 ) : ScreenUIState
 
@@ -65,11 +67,15 @@ public fun rememberTransactionsScreenUIState(
     val (isInSelectionMode: Boolean, setIsInSelectionMode: (Boolean) -> Unit) = remember {
         mutableStateOf(false)
     }
-    val (screenBottomSheetType: TransactionsScreenBottomSheetType, setScreenBottomSheetType: (TransactionsScreenBottomSheetType) -> Unit) = remember {
+    var screenBottomSheetType: TransactionsScreenBottomSheetType by remember {
         mutableStateOf(
-            value = TransactionsScreenBottomSheetType.NONE,
+            value = TransactionsScreenBottomSheetType.None,
         )
     }
+    val setScreenBottomSheetType =
+        { updatedTransactionsScreenBottomSheetType: TransactionsScreenBottomSheetType ->
+            screenBottomSheetType = updatedTransactionsScreenBottomSheetType
+        }
 
     return remember(
         data,

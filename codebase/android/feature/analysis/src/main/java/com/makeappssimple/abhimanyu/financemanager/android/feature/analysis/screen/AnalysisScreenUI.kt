@@ -41,7 +41,7 @@ internal fun AnalysisScreenUI(
     handleUIEvents: (uiEvent: AnalysisScreenUIEvent) -> Unit = {},
 ) {
     BottomSheetHandler(
-        showModalBottomSheet = uiState.screenBottomSheetType != AnalysisScreenBottomSheetType.NONE,
+        showModalBottomSheet = uiState.screenBottomSheetType != AnalysisScreenBottomSheetType.None,
         screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
         modalBottomSheetState = state.modalBottomSheetState,
@@ -57,7 +57,7 @@ internal fun AnalysisScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
-                AnalysisScreenBottomSheetType.FILTERS -> {
+                AnalysisScreenBottomSheetType.Filters -> {
                     AnalysisFilterBottomSheet(
                         selectedFilter = uiState.selectedFilter,
                         headingTextStringResourceId = R.string.bottom_sheet_analysis_filter_transaction_date,
@@ -77,7 +77,7 @@ internal fun AnalysisScreenUI(
                     )
                 }
 
-                AnalysisScreenBottomSheetType.NONE -> {
+                AnalysisScreenBottomSheetType.None -> {
                     VerticalSpacer()
                 }
             }
@@ -92,8 +92,8 @@ internal fun AnalysisScreenUI(
             )
         },
         onClick = state.focusManager::clearFocus,
-        isModalBottomSheetVisible = uiState.screenBottomSheetType != AnalysisScreenBottomSheetType.NONE,
-        backHandlerEnabled = uiState.screenBottomSheetType != AnalysisScreenBottomSheetType.NONE,
+        isModalBottomSheetVisible = uiState.screenBottomSheetType != AnalysisScreenBottomSheetType.None,
+        backHandlerEnabled = uiState.screenBottomSheetType != AnalysisScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetScreenBottomSheetType,
     ) {
@@ -145,7 +145,7 @@ internal fun AnalysisScreenUI(
                         ),
                         events = ActionButtonEvents(
                             onClick = {
-                                uiState.setScreenBottomSheetType(AnalysisScreenBottomSheetType.FILTERS)
+                                uiState.setScreenBottomSheetType(AnalysisScreenBottomSheetType.Filters)
                             },
                         ),
                         modifier = Modifier

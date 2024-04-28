@@ -3,8 +3,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.categories.a
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
@@ -57,7 +59,7 @@ public class AddOrEditCategoryScreenUIState(
         R.string.screen_add_category_floating_action_button_content_description
     },
     public val resetScreenBottomSheetType: () -> Unit = {
-        setScreenBottomSheetType(AddOrEditCategoryScreenBottomSheetType.NONE)
+        setScreenBottomSheetType(AddOrEditCategoryScreenBottomSheetType.None)
     },
 ) : ScreenUIState
 
@@ -66,11 +68,15 @@ public fun rememberAddOrEditCategoryScreenUIState(
     data: MyResult<AddOrEditCategoryScreenUIData>?,
     isEdit: Boolean,
 ): AddOrEditCategoryScreenUIState {
-    val (screenBottomSheetType, setScreenBottomSheetType) = remember {
+    var screenBottomSheetType: AddOrEditCategoryScreenBottomSheetType by remember {
         mutableStateOf(
-            value = AddOrEditCategoryScreenBottomSheetType.NONE,
+            value = AddOrEditCategoryScreenBottomSheetType.None,
         )
     }
+    val setScreenBottomSheetType =
+        { updatedAddOrEditCategoryScreenBottomSheetType: AddOrEditCategoryScreenBottomSheetType ->
+            screenBottomSheetType = updatedAddOrEditCategoryScreenBottomSheetType
+        }
 
     return remember(
         data,

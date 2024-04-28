@@ -2,8 +2,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.ope
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
@@ -20,11 +22,11 @@ public class OpenSourceLicensesScreenUIState(
             null
         }
     },
-    public val screenBottomSheetType: OpenSourceLicensesScreenBottomSheetType = OpenSourceLicensesScreenBottomSheetType.NONE,
+    public val screenBottomSheetType: OpenSourceLicensesScreenBottomSheetType = OpenSourceLicensesScreenBottomSheetType.None,
     public val setScreenBottomSheetType: (OpenSourceLicensesScreenBottomSheetType) -> Unit = {},
     public val isLoading: Boolean = unwrappedData.isNull() || unwrappedData.isLoading,
     public val resetScreenBottomSheetType: () -> Unit = {
-        setScreenBottomSheetType(OpenSourceLicensesScreenBottomSheetType.NONE)
+        setScreenBottomSheetType(OpenSourceLicensesScreenBottomSheetType.None)
     },
 ) : ScreenUIState
 
@@ -32,11 +34,15 @@ public class OpenSourceLicensesScreenUIState(
 public fun rememberOpenSourceLicensesScreenUIState(
     data: MyResult<OpenSourceLicensesScreenUIData>?,
 ): OpenSourceLicensesScreenUIState {
-    val (screenBottomSheetType: OpenSourceLicensesScreenBottomSheetType, setScreenBottomSheetType: (OpenSourceLicensesScreenBottomSheetType) -> Unit) = remember {
+    var screenBottomSheetType: OpenSourceLicensesScreenBottomSheetType by remember {
         mutableStateOf(
-            value = OpenSourceLicensesScreenBottomSheetType.NONE,
+            value = OpenSourceLicensesScreenBottomSheetType.None,
         )
     }
+    val setScreenBottomSheetType =
+        { updatedOpenSourceLicensesScreenBottomSheetType: OpenSourceLicensesScreenBottomSheetType ->
+            screenBottomSheetType = updatedOpenSourceLicensesScreenBottomSheetType
+        }
 
     return remember(
         data,

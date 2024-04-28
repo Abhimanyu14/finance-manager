@@ -86,7 +86,7 @@ internal fun AddOrEditTransactionScreenUI(
     }
 
     BottomSheetHandler(
-        showModalBottomSheet = uiState.screenBottomSheetType != AddOrEditTransactionScreenBottomSheetType.NONE,
+        showModalBottomSheet = uiState.screenBottomSheetType != AddOrEditTransactionScreenBottomSheetType.None,
         screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
@@ -102,11 +102,11 @@ internal fun AddOrEditTransactionScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
-                AddOrEditTransactionScreenBottomSheetType.NONE -> {
+                AddOrEditTransactionScreenBottomSheetType.None -> {
                     VerticalSpacer()
                 }
 
-                AddOrEditTransactionScreenBottomSheetType.SELECT_CATEGORY -> {
+                AddOrEditTransactionScreenBottomSheetType.SelectCategory -> {
                     SelectCategoryBottomSheet(
                         data = SelectCategoryBottomSheetData(
                             filteredCategories = uiState.filteredCategories,
@@ -125,7 +125,7 @@ internal fun AddOrEditTransactionScreenUI(
                     )
                 }
 
-                AddOrEditTransactionScreenBottomSheetType.SELECT_ACCOUNT_FROM -> {
+                AddOrEditTransactionScreenBottomSheetType.SelectAccountFrom -> {
                     SelectAccountBottomSheet(
                         data = SelectAccountBottomSheetData(
                             accounts = uiState.accounts,
@@ -144,7 +144,7 @@ internal fun AddOrEditTransactionScreenUI(
                     )
                 }
 
-                AddOrEditTransactionScreenBottomSheetType.SELECT_ACCOUNT_TO -> {
+                AddOrEditTransactionScreenBottomSheetType.SelectAccountTo -> {
                     SelectAccountBottomSheet(
                         data = SelectAccountBottomSheetData(
                             accounts = uiState.accounts,
@@ -174,8 +174,8 @@ internal fun AddOrEditTransactionScreenUI(
             )
         },
         onClick = state.focusManager::clearFocus,
-        isModalBottomSheetVisible = uiState.screenBottomSheetType != AddOrEditTransactionScreenBottomSheetType.NONE,
-        backHandlerEnabled = uiState.screenBottomSheetType != AddOrEditTransactionScreenBottomSheetType.NONE,
+        isModalBottomSheetVisible = uiState.screenBottomSheetType != AddOrEditTransactionScreenBottomSheetType.None,
+        backHandlerEnabled = uiState.screenBottomSheetType != AddOrEditTransactionScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetScreenBottomSheetType,
     ) {
@@ -333,7 +333,7 @@ internal fun AddOrEditTransactionScreenUI(
                         onClick = {
                             clearFocus()
                             uiState.setScreenBottomSheetType(
-                                AddOrEditTransactionScreenBottomSheetType.SELECT_CATEGORY
+                                AddOrEditTransactionScreenBottomSheetType.SelectCategory
                             )
                         },
                     ),
@@ -493,7 +493,7 @@ internal fun AddOrEditTransactionScreenUI(
                         onClick = {
                             clearFocus()
                             uiState.setScreenBottomSheetType(
-                                AddOrEditTransactionScreenBottomSheetType.SELECT_ACCOUNT_FROM
+                                AddOrEditTransactionScreenBottomSheetType.SelectAccountFrom
                             )
                         },
                     ),
@@ -518,7 +518,7 @@ internal fun AddOrEditTransactionScreenUI(
                         onClick = {
                             clearFocus()
                             uiState.setScreenBottomSheetType(
-                                AddOrEditTransactionScreenBottomSheetType.SELECT_ACCOUNT_TO
+                                AddOrEditTransactionScreenBottomSheetType.SelectAccountTo
                             )
                         },
                     ),

@@ -2,8 +2,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.scr
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.rememberTextMeasurer
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
@@ -50,7 +52,7 @@ public class AnalysisScreenUIState(
         }
     },
     public val resetScreenBottomSheetType: () -> Unit = {
-        setScreenBottomSheetType(AnalysisScreenBottomSheetType.NONE)
+        setScreenBottomSheetType(AnalysisScreenBottomSheetType.None)
     },
 ) : ScreenUIState
 
@@ -58,12 +60,16 @@ public class AnalysisScreenUIState(
 public fun rememberAnalysisScreenUIState(
     data: MyResult<AnalysisScreenUIData>?,
 ): AnalysisScreenUIState {
-    val (screenBottomSheetType, setScreenBottomSheetType) = remember {
+    val textMeasurer: TextMeasurer = rememberTextMeasurer()
+    var screenBottomSheetType: AnalysisScreenBottomSheetType by remember {
         mutableStateOf(
-            value = AnalysisScreenBottomSheetType.NONE,
+            value = AnalysisScreenBottomSheetType.None,
         )
     }
-    val textMeasurer: TextMeasurer = rememberTextMeasurer()
+    val setScreenBottomSheetType =
+        { updatedAnalysisScreenBottomSheetType: AnalysisScreenBottomSheetType ->
+            screenBottomSheetType = updatedAnalysisScreenBottomSheetType
+        }
 
     return remember(
         data,

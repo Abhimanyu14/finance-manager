@@ -35,7 +35,7 @@ internal fun ViewTransactionScreenUI(
     handleUIEvents: (uiEvent: ViewTransactionScreenUIEvent) -> Unit = {},
 ) {
     BottomSheetHandler(
-        showModalBottomSheet = uiState.screenBottomSheetType != ViewTransactionScreenBottomSheetType.NONE,
+        showModalBottomSheet = uiState.screenBottomSheetType != ViewTransactionScreenBottomSheetType.None,
         screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
@@ -51,7 +51,7 @@ internal fun ViewTransactionScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
-                ViewTransactionScreenBottomSheetType.DELETE_CONFIRMATION -> {
+                ViewTransactionScreenBottomSheetType.DeleteConfirmation -> {
                     TransactionDeleteConfirmationBottomSheet(
                         transactionIdToDelete = uiState.transactionIdToDelete,
                         resetBottomSheetType = uiState.resetScreenBottomSheetType,
@@ -70,7 +70,7 @@ internal fun ViewTransactionScreenUI(
                     )
                 }
 
-                ViewTransactionScreenBottomSheetType.NONE -> {
+                ViewTransactionScreenBottomSheetType.None -> {
                     VerticalSpacer()
                 }
             }
@@ -85,8 +85,8 @@ internal fun ViewTransactionScreenUI(
             )
         },
         onClick = state.focusManager::clearFocus,
-        isModalBottomSheetVisible = uiState.screenBottomSheetType != ViewTransactionScreenBottomSheetType.NONE,
-        backHandlerEnabled = uiState.screenBottomSheetType != ViewTransactionScreenBottomSheetType.NONE,
+        isModalBottomSheetVisible = uiState.screenBottomSheetType != ViewTransactionScreenBottomSheetType.None,
+        backHandlerEnabled = uiState.screenBottomSheetType != ViewTransactionScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetScreenBottomSheetType,
     ) {
@@ -118,7 +118,7 @@ internal fun ViewTransactionScreenUI(
                             onDeleteButtonClick = {
                                 uiState.setTransactionIdToDelete(uiState.transactionListItemData.transactionId)
                                 uiState.setScreenBottomSheetType(
-                                    ViewTransactionScreenBottomSheetType.DELETE_CONFIRMATION
+                                    ViewTransactionScreenBottomSheetType.DeleteConfirmation
                                 )
                             },
                             onEditButtonClick = {
@@ -164,7 +164,7 @@ internal fun ViewTransactionScreenUI(
                             onDeleteButtonClick = {
                                 uiState.setTransactionIdToDelete(uiState.originalTransactionListItemData.transactionId)
                                 uiState.setScreenBottomSheetType(
-                                    ViewTransactionScreenBottomSheetType.DELETE_CONFIRMATION
+                                    ViewTransactionScreenBottomSheetType.DeleteConfirmation
                                 )
                             },
                             onEditButtonClick = {
@@ -217,7 +217,7 @@ internal fun ViewTransactionScreenUI(
                             onDeleteButtonClick = {
                                 uiState.setTransactionIdToDelete(transactionListItemData.transactionId)
                                 uiState.setScreenBottomSheetType(
-                                    ViewTransactionScreenBottomSheetType.DELETE_CONFIRMATION
+                                    ViewTransactionScreenBottomSheetType.DeleteConfirmation
                                 )
                             },
                             onEditButtonClick = {

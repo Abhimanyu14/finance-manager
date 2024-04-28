@@ -3,8 +3,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactions
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orMin
@@ -92,7 +94,7 @@ public class AddOrEditTransactionScreenUIState(
         }.orEmpty(),
     public val currentLocalDate: LocalDate = unwrappedData?.currentLocalDate.orMin(),
     public val resetScreenBottomSheetType: () -> Unit = {
-        setScreenBottomSheetType(AddOrEditTransactionScreenBottomSheetType.NONE)
+        setScreenBottomSheetType(AddOrEditTransactionScreenBottomSheetType.None)
     },
 ) : ScreenUIState
 
@@ -101,17 +103,21 @@ public fun rememberAddOrEditTransactionScreenUIState(
     data: MyResult<AddOrEditTransactionScreenUIData>?,
     isEdit: Boolean,
 ): AddOrEditTransactionScreenUIState {
-    val (screenBottomSheetType: AddOrEditTransactionScreenBottomSheetType, setScreenBottomSheetType: (AddOrEditTransactionScreenBottomSheetType) -> Unit) = remember {
-        mutableStateOf(
-            value = AddOrEditTransactionScreenBottomSheetType.NONE,
-        )
-    }
     val (isTransactionDatePickerDialogVisible, setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit) = remember {
         mutableStateOf(false)
     }
     val (isTransactionTimePickerDialogVisible, setIsTransactionTimePickerDialogVisible: (Boolean) -> Unit) = remember {
         mutableStateOf(false)
     }
+    var screenBottomSheetType: AddOrEditTransactionScreenBottomSheetType by remember {
+        mutableStateOf(
+            value = AddOrEditTransactionScreenBottomSheetType.None,
+        )
+    }
+    val setScreenBottomSheetType =
+        { updatedAddOrEditTransactionScreenBottomSheetType: AddOrEditTransactionScreenBottomSheetType ->
+            screenBottomSheetType = updatedAddOrEditTransactionScreenBottomSheetType
+        }
 
     return remember(
         data,

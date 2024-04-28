@@ -78,7 +78,7 @@ internal fun AddOrEditCategoryScreenUI(
     }
 
     BottomSheetHandler(
-        showModalBottomSheet = uiState.screenBottomSheetType != AddOrEditCategoryScreenBottomSheetType.NONE,
+        showModalBottomSheet = uiState.screenBottomSheetType != AddOrEditCategoryScreenBottomSheetType.None,
         screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
@@ -101,11 +101,11 @@ internal fun AddOrEditCategoryScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
-                AddOrEditCategoryScreenBottomSheetType.NONE -> {
+                AddOrEditCategoryScreenBottomSheetType.None -> {
                     VerticalSpacer()
                 }
 
-                AddOrEditCategoryScreenBottomSheetType.SELECT_EMOJI -> {
+                AddOrEditCategoryScreenBottomSheetType.SelectEmoji -> {
                     AddOrEditCategorySelectEmojiBottomSheet(
                         searchText = uiState.emojiSearchText,
                         resetBottomSheetType = uiState.resetScreenBottomSheetType,
@@ -129,11 +129,11 @@ internal fun AddOrEditCategoryScreenUI(
         },
         sheetState = state.modalBottomSheetState,
         sheetShape = when (uiState.screenBottomSheetType) {
-            AddOrEditCategoryScreenBottomSheetType.NONE -> {
+            AddOrEditCategoryScreenBottomSheetType.None -> {
                 BottomSheetShape
             }
 
-            AddOrEditCategoryScreenBottomSheetType.SELECT_EMOJI -> {
+            AddOrEditCategoryScreenBottomSheetType.SelectEmoji -> {
                 BottomSheetExpandedShape
             }
         },
@@ -146,8 +146,8 @@ internal fun AddOrEditCategoryScreenUI(
             )
         },
         onClick = state.focusManager::clearFocus,
-        isModalBottomSheetVisible = uiState.screenBottomSheetType != AddOrEditCategoryScreenBottomSheetType.NONE,
-        backHandlerEnabled = uiState.screenBottomSheetType != AddOrEditCategoryScreenBottomSheetType.NONE,
+        isModalBottomSheetVisible = uiState.screenBottomSheetType != AddOrEditCategoryScreenBottomSheetType.None,
+        backHandlerEnabled = uiState.screenBottomSheetType != AddOrEditCategoryScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetScreenBottomSheetType,
     ) {
@@ -201,7 +201,7 @@ internal fun AddOrEditCategoryScreenUI(
                     events = MyEmojiCircleEvents(
                         onClick = {
                             uiState.setScreenBottomSheetType(
-                                AddOrEditCategoryScreenBottomSheetType.SELECT_EMOJI
+                                AddOrEditCategoryScreenBottomSheetType.SelectEmoji
                             )
                         },
                     ),

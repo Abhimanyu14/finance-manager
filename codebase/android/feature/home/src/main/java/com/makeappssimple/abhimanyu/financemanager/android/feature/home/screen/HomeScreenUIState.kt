@@ -2,8 +2,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartData
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.data.PieChartItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
@@ -49,7 +51,7 @@ public class HomeScreenUIState(
         unwrappedData?.accountsTotalMinimumBalanceAmountValue.orZero(),
     public val overviewCardData: OverviewCardViewModelData = unwrappedData?.overviewCardData.orDefault(),
     public val resetScreenBottomSheetType: () -> Unit = {
-        setScreenBottomSheetType(HomeScreenBottomSheetType.NONE)
+        setScreenBottomSheetType(HomeScreenBottomSheetType.None)
     },
     public val setBalanceVisible: (Boolean) -> Unit,
     public val pieChartData: PieChartData = PieChartData(
@@ -77,11 +79,15 @@ public fun rememberHomeScreenUIState(
             value = false,
         )
     }
-    val (screenBottomSheetType: HomeScreenBottomSheetType, setScreenBottomSheetType: (HomeScreenBottomSheetType) -> Unit) = remember {
+    var screenBottomSheetType: HomeScreenBottomSheetType by remember {
         mutableStateOf(
-            value = HomeScreenBottomSheetType.NONE,
+            value = HomeScreenBottomSheetType.None,
         )
     }
+    val setScreenBottomSheetType =
+        { updatedHomeScreenBottomSheetType: HomeScreenBottomSheetType ->
+            screenBottomSheetType = updatedHomeScreenBottomSheetType
+        }
 
     return remember(
         data,

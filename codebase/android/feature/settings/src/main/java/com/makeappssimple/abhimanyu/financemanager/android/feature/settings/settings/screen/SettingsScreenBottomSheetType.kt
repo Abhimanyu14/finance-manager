@@ -2,6 +2,6 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.set
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenBottomSheetType
 
-public enum class SettingsScreenBottomSheetType : ScreenBottomSheetType {
-    NONE,
+public sealed class SettingsScreenBottomSheetType : ScreenBottomSheetType {
+    public data object None : SettingsScreenBottomSheetType()
 }

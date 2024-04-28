@@ -3,8 +3,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
@@ -69,7 +71,7 @@ public class AddOrEditAccountScreenUIState(
         unwrappedData?.minimumBalanceAmountValue.orEmpty(),
     public val name: TextFieldValue = unwrappedData?.name.orEmpty(),
     public val resetScreenBottomSheetType: () -> Unit = {
-        setScreenBottomSheetType(AddOrEditAccountScreenBottomSheetType.NONE)
+        setScreenBottomSheetType(AddOrEditAccountScreenBottomSheetType.None)
     },
     public val visibilityData: AddOrEditAccountScreenUIVisibilityData = AddOrEditAccountScreenUIVisibilityData(
         balanceAmountTextField = isEdit,
@@ -93,17 +95,21 @@ public fun rememberAddOrEditAccountScreenUIState(
     data: MyResult<AddOrEditAccountScreenUIData>?,
     isEdit: Boolean,
 ): AddOrEditAccountScreenUIState {
-    val (screenBottomSheetType, setScreenBottomSheetType) = remember {
-        mutableStateOf(
-            value = AddOrEditAccountScreenBottomSheetType.NONE,
-        )
-    }
     val nameTextFieldFocusRequester = remember {
         FocusRequester()
     }
     val balanceAmountTextFieldFocusRequester = remember {
         FocusRequester()
     }
+    var screenBottomSheetType: AddOrEditAccountScreenBottomSheetType by remember {
+        mutableStateOf(
+            value = AddOrEditAccountScreenBottomSheetType.None,
+        )
+    }
+    val setScreenBottomSheetType =
+        { updatedAddOrEditAccountScreenBottomSheetType: AddOrEditAccountScreenBottomSheetType ->
+            screenBottomSheetType = updatedAddOrEditAccountScreenBottomSheetType
+        }
 
     return remember(
         data,

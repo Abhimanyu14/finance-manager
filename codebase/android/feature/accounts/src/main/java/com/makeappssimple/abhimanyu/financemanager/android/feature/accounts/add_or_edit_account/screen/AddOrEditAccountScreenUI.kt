@@ -94,7 +94,7 @@ internal fun AddOrEditAccountScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
-                AddOrEditAccountScreenBottomSheetType.NONE -> {
+                AddOrEditAccountScreenBottomSheetType.None -> {
                     VerticalSpacer()
                 }
             }

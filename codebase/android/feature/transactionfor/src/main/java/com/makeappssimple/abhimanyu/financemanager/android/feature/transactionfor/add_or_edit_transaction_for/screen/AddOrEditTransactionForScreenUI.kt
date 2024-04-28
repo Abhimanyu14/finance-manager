@@ -66,7 +66,7 @@ internal fun AddOrEditTransactionForScreenUI(
     }
 
     BottomSheetHandler(
-        showModalBottomSheet = uiState.screenBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.NONE,
+        showModalBottomSheet = uiState.screenBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.None,
         screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
@@ -82,15 +82,15 @@ internal fun AddOrEditTransactionForScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
-                AddOrEditTransactionForScreenBottomSheetType.DELETE -> {
+                AddOrEditTransactionForScreenBottomSheetType.Delete -> {
                     VerticalSpacer()
                 }
 
-                AddOrEditTransactionForScreenBottomSheetType.EDIT -> {
+                AddOrEditTransactionForScreenBottomSheetType.Edit -> {
                     VerticalSpacer()
                 }
 
-                AddOrEditTransactionForScreenBottomSheetType.NONE -> {
+                AddOrEditTransactionForScreenBottomSheetType.None -> {
                     VerticalSpacer()
                 }
             }
@@ -105,8 +105,8 @@ internal fun AddOrEditTransactionForScreenUI(
             )
         },
         onClick = state.focusManager::clearFocus,
-        isModalBottomSheetVisible = uiState.screenBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.NONE,
-        backHandlerEnabled = uiState.screenBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.NONE,
+        isModalBottomSheetVisible = uiState.screenBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.None,
+        backHandlerEnabled = uiState.screenBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
         onBackPress = uiState.resetScreenBottomSheetType,
     ) {

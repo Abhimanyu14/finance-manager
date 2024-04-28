@@ -3,8 +3,10 @@ package com.makeappssimple.abhimanyu.financemanager.android.feature.transactionf
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.TextFieldValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
@@ -45,7 +47,7 @@ public class AddOrEditTransactionForScreenUIState(
     public val titleTextFieldErrorTextStringResourceId: Int? =
         unwrappedData?.titleTextFieldError?.textStringResourceId,
     public val resetScreenBottomSheetType: () -> Unit = {
-        setScreenBottomSheetType(AddOrEditTransactionForScreenBottomSheetType.NONE)
+        setScreenBottomSheetType(AddOrEditTransactionForScreenBottomSheetType.None)
     },
 ) : ScreenUIState
 
@@ -54,11 +56,15 @@ public fun rememberAddOrEditTransactionForScreenUIState(
     data: MyResult<AddOrEditTransactionForScreenUIData>?,
     isEdit: Boolean,
 ): AddOrEditTransactionForScreenUIState {
-    val (screenBottomSheetType, setScreenBottomSheetType) = remember {
+    var screenBottomSheetType: AddOrEditTransactionForScreenBottomSheetType by remember {
         mutableStateOf(
-            value = AddOrEditTransactionForScreenBottomSheetType.NONE,
+            value = AddOrEditTransactionForScreenBottomSheetType.None,
         )
     }
+    val setScreenBottomSheetType =
+        { updatedAddOrEditTransactionForScreenBottomSheetType: AddOrEditTransactionForScreenBottomSheetType ->
+            screenBottomSheetType = updatedAddOrEditTransactionForScreenBottomSheetType
+        }
 
     return remember(
         data,
