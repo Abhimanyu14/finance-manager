@@ -15,6 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defa
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defaultObjectStateIn
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetAllTransactionDataFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.UpdateTransactionsUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetAllTransactionForValuesFlowUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
@@ -41,6 +42,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class TransactionsScreenViewModelImpl @Inject constructor(
     getAllTransactionDataFlowUseCase: GetAllTransactionDataFlowUseCase,
+    getAllTransactionForValuesFlowUseCase: GetAllTransactionForValuesFlowUseCase,
     private val closeableCoroutineScope: CloseableCoroutineScope,
     private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
@@ -87,13 +89,10 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     }.defaultObjectStateIn(
         scope = closeableCoroutineScope,
     )
-    private val transactionForValues: StateFlow<List<TransactionFor>?> = allTransactionData.map {
-        it.map { transactionData ->
-            transactionData.transactionFor
-        }.distinct()
-    }.defaultObjectStateIn(
-        scope = closeableCoroutineScope,
-    )
+    private val transactionForValues: StateFlow<List<TransactionFor>> =
+        getAllTransactionForValuesFlowUseCase().defaultListStateIn(
+            scope = closeableCoroutineScope,
+        )
 
     // region Search
     private val searchText = MutableStateFlow(
