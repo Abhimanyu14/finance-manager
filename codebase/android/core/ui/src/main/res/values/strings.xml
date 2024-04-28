@@ -63,6 +63,11 @@
     <string name="bottom_sheet_select_transaction_for_title">Select Transaction For</string>
     <!-- endregion -->
 
+    <!-- region bottom sheet transactions menu -->
+    <string name="bottom_sheet_transactions_menu_update_transaction_for">Update Transaction For</string>
+    <string name="bottom_sheet_transactions_menu_select_all">Select All</string>
+    <!-- endregion -->
+
     <!-- region categories delete confirmation bottom sheet -->
     <string name="screen_categories_bottom_sheet_delete_title">Delete Category</string>
     <string name="screen_categories_bottom_sheet_delete_message">

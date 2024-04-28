@@ -6,7 +6,6 @@ import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -18,10 +17,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -29,12 +24,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_CONTENT_TRANSACTIONS
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_TRANSACTIONS
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyDropdownMenu
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyDropdownMenuData
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyDropdownMenuEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyDropdownMenuItemData
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyDropdownMenuItemDataAndEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyDropdownMenuItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyLinearProgressIndicator
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
@@ -57,6 +46,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bot
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactionfor.SelectTransactionForBottomSheetData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactionfor.SelectTransactionForBottomSheetEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactions.TransactionsFilterBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactions.TransactionsMenuBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactions.TransactionsMenuBottomSheetEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactions.TransactionsSortBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemEvents
@@ -136,6 +127,22 @@ internal fun TransactionsScreenUI(
                     )
                 }
 
+                TransactionsScreenBottomSheetType.Menu -> {
+                    TransactionsMenuBottomSheet(
+                        events = TransactionsMenuBottomSheetEvents(
+                            onSelectAllClick = {
+                                handleUIEvents(TransactionsScreenUIEvent.SelectAllTransactions)
+                            },
+                            onUpdateTransactionForClick = {
+                                uiState.setScreenBottomSheetType(
+                                    TransactionsScreenBottomSheetType.SelectTransactionFor
+                                )
+                            },
+                            resetBottomSheetType = uiState.resetScreenBottomSheetType,
+                        ),
+                    )
+                }
+
                 TransactionsScreenBottomSheetType.None -> {
                     VerticalSpacer()
                 }
@@ -177,6 +184,7 @@ internal fun TransactionsScreenUI(
         },
         sheetState = state.modalBottomSheetState,
         sheetShape = when (uiState.screenBottomSheetType) {
+            TransactionsScreenBottomSheetType.Menu,
             TransactionsScreenBottomSheetType.None,
             TransactionsScreenBottomSheetType.SelectTransactionFor,
             TransactionsScreenBottomSheetType.Sort,
@@ -192,55 +200,16 @@ internal fun TransactionsScreenUI(
             if (uiState.isInSelectionMode) {
                 MySelectionModeTopAppBar(
                     appBarActions = {
-                        var isDropDownVisible by remember {
-                            mutableStateOf(false)
-                        }
-                        Box {
-                            MyIconButton(
-                                tint = MaterialTheme.colorScheme.onBackground,
-                                imageVector = MyIcons.MoreVert,
-                                contentDescriptionStringResourceId = R.string.screen_transactions_selection_mode_appbar_menu_more_options,
-                                onClick = {
-                                    isDropDownVisible = true
-                                },
-                            )
-                            MyDropdownMenu(
-                                data = MyDropdownMenuData(
-                                    isExpanded = isDropDownVisible,
-                                    menuItemsDataAndEvents = listOf(
-                                        MyDropdownMenuItemDataAndEvents(
-                                            data = MyDropdownMenuItemData(
-                                                textStringResourceId = R.string.screen_transactions_selection_mode_appbar_menu_update_transaction_for,
-                                            ),
-                                            events = MyDropdownMenuItemEvents(
-                                                onClick = {
-                                                    isDropDownVisible = false
-                                                    uiState.setScreenBottomSheetType(
-                                                        TransactionsScreenBottomSheetType.SelectTransactionFor
-                                                    )
-                                                },
-                                            ),
-                                        ),
-                                        MyDropdownMenuItemDataAndEvents(
-                                            data = MyDropdownMenuItemData(
-                                                textStringResourceId = R.string.screen_transactions_selection_mode_appbar_menu_select_all,
-                                            ),
-                                            events = MyDropdownMenuItemEvents(
-                                                onClick = {
-                                                    isDropDownVisible = false
-                                                    handleUIEvents(TransactionsScreenUIEvent.SelectAllTransactions)
-                                                },
-                                            ),
-                                        ),
-                                    ),
-                                ),
-                                events = MyDropdownMenuEvents(
-                                    onDismissRequest = {
-                                        isDropDownVisible = false
-                                    },
-                                ),
-                            )
-                        }
+                        MyIconButton(
+                            tint = MaterialTheme.colorScheme.onBackground,
+                            imageVector = MyIcons.MoreVert,
+                            contentDescriptionStringResourceId = R.string.screen_transactions_selection_mode_appbar_menu_more_options,
+                            onClick = {
+                                uiState.setScreenBottomSheetType(
+                                    TransactionsScreenBottomSheetType.Menu
+                                )
+                            },
+                        )
                     },
                     navigationAction = resetSelectionMode,
                     title = {
