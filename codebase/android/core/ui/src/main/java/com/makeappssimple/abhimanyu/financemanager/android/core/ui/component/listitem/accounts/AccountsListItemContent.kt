@@ -12,9 +12,9 @@ import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.button.MyIconButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
@@ -69,7 +69,7 @@ public fun AccountsListItemContent(
             )
             .padding(
                 start = 16.dp,
-                end = 8.dp,
+                end = 16.dp,
             ),
     ) {
         data.icon?.let {
@@ -123,11 +123,16 @@ public fun AccountsListItemContent(
             )
         }
         events.onMoreOptionsIconButtonClick?.let {
-            MyIconButton(
-                tint = MaterialTheme.colorScheme.onBackground,
+            Icon(
                 imageVector = MyIcons.MoreVert,
-                contentDescriptionStringResourceId = R.string.account_list_item_more_options_content_description,
-                onClick = events.onMoreOptionsIconButtonClick,
+                contentDescription = stringResource(
+                    id = R.string.account_list_item_more_options_content_description,
+                ),
+                tint = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier
+                    .padding(
+                        start = 8.dp,
+                    ),
             )
         }
     }
