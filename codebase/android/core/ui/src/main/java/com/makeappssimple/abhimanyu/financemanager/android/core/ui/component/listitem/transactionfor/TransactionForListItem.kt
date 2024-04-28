@@ -16,6 +16,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumListItemHeight
 
 @Immutable
 public data class TransactionForListItemDataAndEvents(
@@ -44,7 +45,7 @@ public fun TransactionForListItem(
         modifier = modifier
             .fillMaxWidth()
             .defaultMinSize(
-                minHeight = 48.dp,
+                minHeight = minimumListItemHeight,
             )
             .conditionalClickable(
                 onClick = events.onClick,

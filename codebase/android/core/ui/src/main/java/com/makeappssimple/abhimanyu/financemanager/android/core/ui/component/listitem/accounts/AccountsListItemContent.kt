@@ -19,6 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ext
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.default_tag.MyDefaultTag
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumListItemHeight
 
 @Immutable
 public data class AccountsListItemContentDataAndEvents(
@@ -60,7 +61,7 @@ public fun AccountsListItemContent(
         modifier = modifier
             .fillMaxWidth()
             .defaultMinSize(
-                minHeight = 48.dp,
+                minHeight = minimumListItemHeight,
             )
             .conditionalClickable(
                 onClick = events.onClick,
