@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bo
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 
 @Composable
@@ -17,6 +18,7 @@ public fun AccountsMenuBottomSheet(
         if (isEditVisible) {
             add(
                 AccountsMenuBottomSheetItemData(
+                    imageVector = MyIcons.Edit,
                     text = stringResource(
                         id = R.string.bottom_sheet_accounts_menu_edit,
                     ),
@@ -27,6 +29,7 @@ public fun AccountsMenuBottomSheet(
         if (isSetAsDefaultVisible) {
             add(
                 AccountsMenuBottomSheetItemData(
+                    imageVector = MyIcons.CheckCircle,
                     text = stringResource(
                         id = R.string.bottom_sheet_accounts_menu_set_as_default_account,
                     ),
@@ -37,6 +40,7 @@ public fun AccountsMenuBottomSheet(
         if (isDeleteVisible) {
             add(
                 AccountsMenuBottomSheetItemData(
+                    imageVector = MyIcons.Delete,
                     text = stringResource(
                         id = R.string.bottom_sheet_accounts_menu_delete,
                     ),

@@ -6,10 +6,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
@@ -21,6 +24,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumB
 
 @Immutable
 public data class CategoryMenuBottomSheetItemData(
+    val imageVector: ImageVector? = null,
     val text: String,
     val onClick: () -> Unit,
 )
@@ -65,6 +69,7 @@ private fun CategoryMenuBottomSheetItem(
     data: CategoryMenuBottomSheetItemData,
 ) {
     Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
             .conditionalClickable(
@@ -76,6 +81,17 @@ private fun CategoryMenuBottomSheetItem(
                 all = 16.dp,
             ),
     ) {
+        data.imageVector?.let {
+            Icon(
+                imageVector = data.imageVector,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier
+                    .padding(
+                        end = 12.dp,
+                    ),
+            )
+        }
         MyText(
             modifier = Modifier,
             text = data.text,
