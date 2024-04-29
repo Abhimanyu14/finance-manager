@@ -2,37 +2,38 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ic
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowBack
+import androidx.compose.material.icons.automirrored.rounded.TextSnippet
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.outlined.Keyboard
+import androidx.compose.material.icons.outlined.Schedule
+import androidx.compose.material.icons.rounded.AccountBalance
+import androidx.compose.material.icons.rounded.AccountBalanceWallet
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material.icons.rounded.AttachMoney
+import androidx.compose.material.icons.rounded.Backup
+import androidx.compose.material.icons.rounded.Calculate
+import androidx.compose.material.icons.rounded.Category
 import androidx.compose.material.icons.rounded.CheckCircle
+import androidx.compose.material.icons.rounded.Checklist
+import androidx.compose.material.icons.rounded.ChevronLeft
+import androidx.compose.material.icons.rounded.ChevronRight
 import androidx.compose.material.icons.rounded.Clear
 import androidx.compose.material.icons.rounded.Close
+import androidx.compose.material.icons.rounded.CurrencyExchange
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Done
 import androidx.compose.material.icons.rounded.Edit
+import androidx.compose.material.icons.rounded.FilterAlt
+import androidx.compose.material.icons.rounded.Groups
 import androidx.compose.material.icons.rounded.Lock
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.material.icons.rounded.Notifications
+import androidx.compose.material.icons.rounded.RadioButtonUnchecked
+import androidx.compose.material.icons.rounded.Restore
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material.icons.rounded.SwapVert
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.imagevectors.AccountBalance
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.imagevectors.AccountBalanceWallet
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.imagevectors.AttachMoney
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.imagevectors.Backup
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.imagevectors.Calculate
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.imagevectors.Category
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.imagevectors.ChevronLeft
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.imagevectors.ChevronRight
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.imagevectors.CurrencyExchange
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.imagevectors.FilterAlt
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.imagevectors.Groups
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.imagevectors.Keyboard
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.imagevectors.RadioButtonUnchecked
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.imagevectors.Restore
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.imagevectors.Schedule
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.imagevectors.SwapVert
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.imagevectors.TextSnippet
 
 public object MyIcons {
     public val AccountBalance: ImageVector = Icons.Rounded.AccountBalance
@@ -45,6 +46,7 @@ public object MyIcons {
     public val Category: ImageVector = Icons.Rounded.Category
     public val Check: ImageVector = Icons.Filled.Check
     public val CheckCircle: ImageVector = Icons.Rounded.CheckCircle
+    public val Checklist: ImageVector = Icons.Rounded.Checklist
     public val ChevronLeft: ImageVector = Icons.Rounded.ChevronLeft
     public val ChevronRight: ImageVector = Icons.Rounded.ChevronRight
     public val Clear: ImageVector = Icons.Rounded.Clear

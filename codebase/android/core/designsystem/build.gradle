@@ -94,6 +94,9 @@ dependencies {
     // Jetpack compose material design
     implementation libs.compose.material3
 
+    // Jetpack compose material icons
+    implementation libs.compose.icons
+
     // Testing
 
     // JUnit
