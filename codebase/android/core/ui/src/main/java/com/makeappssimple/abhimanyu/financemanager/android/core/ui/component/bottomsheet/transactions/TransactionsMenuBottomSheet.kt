@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 
 @Immutable
@@ -22,6 +23,7 @@ public fun TransactionsMenuBottomSheet(
     val items = buildList {
         add(
             TransactionsMenuBottomSheetItemData(
+                imageVector = MyIcons.Edit,
                 text = stringResource(
                     id = R.string.bottom_sheet_transactions_menu_update_transaction_for,
                 ),
@@ -30,6 +32,7 @@ public fun TransactionsMenuBottomSheet(
         )
         add(
             TransactionsMenuBottomSheetItemData(
+                imageVector = MyIcons.Checklist,
                 text = stringResource(
                     id = R.string.bottom_sheet_transactions_menu_select_all,
                 ),

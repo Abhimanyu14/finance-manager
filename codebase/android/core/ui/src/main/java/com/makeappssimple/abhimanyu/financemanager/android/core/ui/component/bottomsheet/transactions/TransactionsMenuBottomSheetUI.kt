@@ -10,6 +10,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
@@ -69,6 +70,7 @@ private fun TransactionsMenuBottomSheetItem(
     data: TransactionsMenuBottomSheetItemData,
 ) {
     Row(
+        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
             .defaultMinSize(
@@ -91,7 +93,7 @@ private fun TransactionsMenuBottomSheetItem(
                 tint = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier
                     .padding(
-                        horizontal = 16.dp,
+                        end = 8.dp,
                     ),
             )
         }
