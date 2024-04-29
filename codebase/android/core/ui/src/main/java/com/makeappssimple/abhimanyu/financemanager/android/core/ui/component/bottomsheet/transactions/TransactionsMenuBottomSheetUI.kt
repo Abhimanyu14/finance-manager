@@ -6,10 +6,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
@@ -22,6 +24,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumL
 
 @Immutable
 public data class TransactionsMenuBottomSheetItemData(
+    val imageVector: ImageVector? = null,
     val text: String,
     val onClick: () -> Unit,
 )
@@ -81,6 +84,17 @@ private fun TransactionsMenuBottomSheetItem(
                 vertical = 12.dp,
             ),
     ) {
+        data.imageVector?.let {
+            Icon(
+                imageVector = data.imageVector,
+                contentDescription = null,
+                tint = MaterialTheme.colorScheme.onBackground,
+                modifier = Modifier
+                    .padding(
+                        horizontal = 16.dp,
+                    ),
+            )
+        }
         MyText(
             modifier = Modifier,
             text = data.text,
