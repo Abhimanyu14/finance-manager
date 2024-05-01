@@ -29,6 +29,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
+// TODO(Abhi): Remove interfaces for the use-cases and remove this module
 @Module
 @InstallIn(SingletonComponent::class)
 public class AccountUseCaseModule {
