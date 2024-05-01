@@ -21,7 +21,7 @@ buildscript {
          * Map according to to kotlin version from here,
          * https://developer.android.com/jetpack/androidx/releases/compose-kotlin
          */
-        jetpackComposeCompilerVersion = "1.5.12"
+        jetpackComposeCompilerVersion = "1.5.13"
     }
 }
 
