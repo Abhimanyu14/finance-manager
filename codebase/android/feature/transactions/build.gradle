@@ -102,9 +102,8 @@ dependencies {
     implementation libs.coroutines.android
 
     // Hilt
-    implementation libs.hilt.dagger
-    ksp libs.dagger.hilt.compiler
-    ksp libs.hilt.compiler
+    implementation libs.hilt.android
+    ksp libs.hilt.android.compiler
 
     // Jetpack compose
     implementation libs.compose.ui.androidx
