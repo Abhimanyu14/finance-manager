@@ -7,7 +7,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
-import javax.inject.Singleton
 
 @Module
 @TestInstallIn(
@@ -15,7 +14,6 @@ import javax.inject.Singleton
     replaces = [AppVersionUtilModule::class],
 )
 public class TestAppVersionUtilModule {
-    @Singleton
     @Provides
     public fun providesAppVersionUtil(): AppVersionUtil {
         return FakeAppVersionUtilImpl()

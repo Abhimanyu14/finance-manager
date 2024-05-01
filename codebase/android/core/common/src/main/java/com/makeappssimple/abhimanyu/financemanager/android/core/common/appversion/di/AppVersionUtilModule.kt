@@ -8,12 +8,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 public class AppVersionUtilModule {
-    @Singleton
     @Provides
     public fun providesAppVersionUtil(
         @ApplicationContext context: Context,

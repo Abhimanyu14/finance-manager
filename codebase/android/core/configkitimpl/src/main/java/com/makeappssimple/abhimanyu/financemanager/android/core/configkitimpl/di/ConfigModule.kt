@@ -9,7 +9,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 private object ConfigModuleConstants {
     const val SECONDS_IN_AN_HOUR = 3600L
@@ -18,7 +17,6 @@ private object ConfigModuleConstants {
 @Module
 @InstallIn(SingletonComponent::class)
 public class ConfigModule {
-    @Singleton
     @Provides
     public fun provideFirebaseRemoteConfigSettings(): FirebaseRemoteConfigSettings {/*
         // TODO(Abhi): Use this after adding dependency on debug build checks
@@ -34,7 +32,6 @@ public class ConfigModule {
             .build()
     }
 
-    @Singleton
     @Provides
     public fun provideFirebaseRemoteConfig(
         firebaseRemoteConfigSettings: FirebaseRemoteConfigSettings,

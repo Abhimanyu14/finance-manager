@@ -10,12 +10,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 public class NotificationKitModule {
-    @Singleton
     @Provides
     public fun providesNotificationKit(
         appKit: AppKit,
