@@ -8,10 +8,12 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 public class NavigatorModule {
+    @Singleton
     @Provides
     public fun providesNavigator(
         @ApplicationScope coroutineScope: CoroutineScope,

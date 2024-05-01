@@ -1,21 +1,18 @@
 package com.makeappssimple.abhimanyu.financemanager.android
 
+import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
+import androidx.compose.runtime.CompositionLocalProvider
+import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyAppTheme
 
 @Composable
 internal fun MyApp() {
-    val viewModelStoreOwner = checkNotNull(
-        value = LocalViewModelStoreOwner.current,
-    ) {
-        "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+    MyAppTheme {
+        // To remove overscroll effect globally
+        CompositionLocalProvider(
+            value = LocalOverscrollConfiguration provides null,
+        ) {
+            MyNavGraph()
+        }
     }
-    val activityViewModel = hiltViewModel<MainActivityViewModel>(
-        viewModelStoreOwner = viewModelStoreOwner,
-    )
-
-    MyAppUI(
-        activityViewModel = activityViewModel,
-    )
 }
