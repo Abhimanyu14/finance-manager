@@ -226,13 +226,11 @@ private object ManualDatabaseMigration {
             // Insert values
             db.execSQL("INSERT INTO transaction_for_table (id, title) VALUES (1, 'SELF'), (2, 'COMMON'), (3, 'OTHERS')")
 
-
             // Add column with a default value
             db.execSQL("ALTER TABLE transaction_table ADD COLUMN `transaction_for_id` INTEGER  DEFAULT -1 NOT NULL")
 
             // Update data
             db.execSQL("UPDATE transaction_table SET `transaction_for_id` = CASE transaction_for WHEN 'SELF' THEN 1 WHEN 'COMMON' THEN 2 WHEN 'OTHERS' THEN 3 END")
-
 
             // Create the new table
             db.execSQL("CREATE TABLE IF NOT EXISTS `transaction_table_new` (`amount` TEXT NOT NULL, `category_id` INTEGER, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `source_from_id` INTEGER, `source_to_id` INTEGER, `description` TEXT NOT NULL, `title` TEXT NOT NULL, `creation_timestamp` INTEGER NOT NULL, `transaction_timestamp` INTEGER NOT NULL, `transaction_for_id` INTEGER NOT NULL, `transaction_type` TEXT NOT NULL)")

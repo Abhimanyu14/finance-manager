@@ -54,7 +54,7 @@ public fun BackupCard(
 @Composable
 private fun BackupCardUI(
     modifier: Modifier,
-    events: BackupCardEvents
+    events: BackupCardEvents,
 ) {
     Card(
         modifier = modifier

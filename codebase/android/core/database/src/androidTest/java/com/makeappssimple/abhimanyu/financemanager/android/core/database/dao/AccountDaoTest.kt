@@ -33,9 +33,9 @@ internal class AccountDaoTest {
     fun setUp() {
         val context = ApplicationProvider.getApplicationContext<Context>()
         myRoomDatabase = Room.inMemoryDatabaseBuilder(
-                context = context,
-                klass = MyRoomDatabase::class.java,
-            ).build()
+            context = context,
+            klass = MyRoomDatabase::class.java,
+        ).build()
         accountDao = myRoomDatabase.accountDao()
     }
 

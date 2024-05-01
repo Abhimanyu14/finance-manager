@@ -70,7 +70,6 @@ public data class Amount(
         )
     }
 
-
     override fun compareTo(
         other: Amount,
     ): Int {

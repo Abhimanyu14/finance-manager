@@ -16,7 +16,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.chart.composepie.legend.Dot
 
-
 @Immutable
 public data class ActionButtonData(
     val isIndicatorVisible: Boolean = false,
