@@ -1,7 +1,7 @@
 [versions]
 androidx-core = "1.13.0"
 lifecycle-runtime = "2.7.0"
-appcompat = "1.7.0-alpha03"
+appcompat = "1.7.0-beta01"
 coroutines = "1.8.0"
 # manifest-merger = "26.0.1"
 serialization = "1.6.3"
