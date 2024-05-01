@@ -1,5 +1,5 @@
 [versions]
-androidx-core = "1.13.0"
+androidx-core = "1.13.1"
 lifecycle-runtime = "2.7.0"
 appcompat = "1.7.0-alpha03"
 coroutines = "1.8.0"
