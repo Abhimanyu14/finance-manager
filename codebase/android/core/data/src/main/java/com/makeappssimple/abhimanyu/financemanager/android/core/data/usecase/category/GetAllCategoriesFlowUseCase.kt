@@ -3,15 +3,12 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.ca
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.category.CategoryRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-public interface GetAllCategoriesFlowUseCase {
-    public operator fun invoke(): Flow<List<Category>>
-}
-
-public class GetAllCategoriesFlowUseCaseImpl(
+public class GetAllCategoriesFlowUseCase @Inject constructor(
     private val categoryRepository: CategoryRepository,
-) : GetAllCategoriesFlowUseCase {
-    override operator fun invoke(): Flow<List<Category>> {
+) {
+    public operator fun invoke(): Flow<List<Category>> {
         return categoryRepository.getAllCategoriesFlow()
     }
 }

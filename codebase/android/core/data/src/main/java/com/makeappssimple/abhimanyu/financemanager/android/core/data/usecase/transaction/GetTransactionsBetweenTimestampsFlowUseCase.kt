@@ -3,18 +3,12 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tr
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-public interface GetTransactionsBetweenTimestampsFlowUseCase {
-    public operator fun invoke(
-        startingTimestamp: Long,
-        endingTimestamp: Long,
-    ): Flow<List<Transaction>>
-}
-
-public class GetTransactionsBetweenTimestampsFlowUseCaseImpl(
+public class GetTransactionsBetweenTimestampsFlowUseCase @Inject constructor(
     private val transactionRepository: TransactionRepository,
-) : GetTransactionsBetweenTimestampsFlowUseCase {
-    override operator fun invoke(
+) {
+    public operator fun invoke(
         startingTimestamp: Long,
         endingTimestamp: Long,
     ): Flow<List<Transaction>> {

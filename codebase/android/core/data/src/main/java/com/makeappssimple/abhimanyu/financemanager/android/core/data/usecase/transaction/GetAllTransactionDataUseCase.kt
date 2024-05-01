@@ -2,15 +2,12 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tr
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
+import javax.inject.Inject
 
-public interface GetAllTransactionDataUseCase {
-    public suspend operator fun invoke(): List<TransactionData>
-}
-
-public class GetAllTransactionDataUseCaseImpl(
+public class GetAllTransactionDataUseCase @Inject constructor(
     private val transactionRepository: TransactionRepository,
-) : GetAllTransactionDataUseCase {
-    override suspend operator fun invoke(): List<TransactionData> {
+) {
+    public suspend operator fun invoke(): List<TransactionData> {
         return transactionRepository.getAllTransactionData()
     }
 }

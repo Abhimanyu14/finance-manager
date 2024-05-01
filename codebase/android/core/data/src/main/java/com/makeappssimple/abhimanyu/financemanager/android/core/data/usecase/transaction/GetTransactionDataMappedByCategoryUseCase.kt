@@ -3,17 +3,12 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tr
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionDataMappedByCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
+import javax.inject.Inject
 
-public interface GetTransactionDataMappedByCategoryUseCase {
-    public suspend operator fun invoke(
-        transactionType: TransactionType,
-    ): List<TransactionDataMappedByCategory>
-}
-
-public class GetTransactionDataMappedByCategoryUseCaseImpl(
+public class GetTransactionDataMappedByCategoryUseCase @Inject constructor(
     private val transactionRepository: TransactionRepository,
-) : GetTransactionDataMappedByCategoryUseCase {
-    override suspend operator fun invoke(
+) {
+    public suspend operator fun invoke(
         transactionType: TransactionType,
     ): List<TransactionDataMappedByCategory> {
         // TODO(Abhi): To handle refunds

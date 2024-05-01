@@ -2,18 +2,13 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.ca
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.category.CategoryRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
+import javax.inject.Inject
 
-public interface DeleteCategoryUseCase {
-    public suspend operator fun invoke(
-        id: Int,
-    ): Boolean
-}
-
-public class DeleteCategoryUseCaseImpl(
+public class DeleteCategoryUseCase @Inject constructor(
     private val categoryRepository: CategoryRepository,
     private val myPreferencesRepository: MyPreferencesRepository,
-) : DeleteCategoryUseCase {
-    override suspend operator fun invoke(
+) {
+    public suspend operator fun invoke(
         id: Int,
     ): Boolean {
         myPreferencesRepository.setLastDataChangeTimestamp()

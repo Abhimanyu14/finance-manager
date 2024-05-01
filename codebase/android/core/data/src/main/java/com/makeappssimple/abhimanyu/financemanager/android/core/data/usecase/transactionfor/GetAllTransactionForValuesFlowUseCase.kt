@@ -3,15 +3,12 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tr
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transactionfor.TransactionForRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-public interface GetAllTransactionForValuesFlowUseCase {
-    public operator fun invoke(): Flow<List<TransactionFor>>
-}
-
-public class GetAllTransactionForValuesFlowUseCaseImpl(
+public class GetAllTransactionForValuesFlowUseCase @Inject constructor(
     private val transactionForRepository: TransactionForRepository,
-) : GetAllTransactionForValuesFlowUseCase {
-    override operator fun invoke(): Flow<List<TransactionFor>> {
+) {
+    public operator fun invoke(): Flow<List<TransactionFor>> {
         return transactionForRepository.getAllTransactionForValuesFlow()
     }
 }

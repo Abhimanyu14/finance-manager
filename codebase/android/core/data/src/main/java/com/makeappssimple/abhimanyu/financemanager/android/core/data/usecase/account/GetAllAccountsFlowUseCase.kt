@@ -3,15 +3,12 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.ac
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.account.AccountRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-public interface GetAllAccountsFlowUseCase {
-    public operator fun invoke(): Flow<List<Account>>
-}
-
-public class GetAllAccountsFlowUseCaseImpl(
+public class GetAllAccountsFlowUseCase @Inject constructor(
     private val accountRepository: AccountRepository,
-) : GetAllAccountsFlowUseCase {
-    override operator fun invoke(): Flow<List<Account>> {
+) {
+    public operator fun invoke(): Flow<List<Account>> {
         return accountRepository.getAllAccountsFlow()
     }
 }

@@ -3,18 +3,15 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tr
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-public interface GetRecentTransactionDataFlowUseCase {
-    public operator fun invoke(
-        numberOfTransactions: Int = 10,
-    ): Flow<List<TransactionData>>
-}
+private const val defaultNumberOfRecentTransactions = 10
 
-public class GetRecentTransactionDataFlowUseCaseImpl(
+public class GetRecentTransactionDataFlowUseCase @Inject constructor(
     private val transactionRepository: TransactionRepository,
-) : GetRecentTransactionDataFlowUseCase {
-    override operator fun invoke(
-        numberOfTransactions: Int,
+) {
+    public operator fun invoke(
+        numberOfTransactions: Int = defaultNumberOfRecentTransactions,
     ): Flow<List<TransactionData>> {
         return transactionRepository.getRecentTransactionDataFlow(
             numberOfTransactions = numberOfTransactions,

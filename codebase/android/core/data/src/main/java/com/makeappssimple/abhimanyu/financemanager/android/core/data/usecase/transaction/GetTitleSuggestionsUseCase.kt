@@ -1,21 +1,16 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
+import javax.inject.Inject
 
-public interface GetTitleSuggestionsUseCase {
+private const val defaultNumberOfTitleSuggestions = 5
+
+public class GetTitleSuggestionsUseCase @Inject constructor(
+    private val transactionRepository: TransactionRepository,
+) {
     public suspend operator fun invoke(
         categoryId: Int,
-        numberOfSuggestions: Int = 5,
-        enteredTitle: String,
-    ): List<String>
-}
-
-public class GetTitleSuggestionsUseCaseImpl(
-    private val transactionRepository: TransactionRepository,
-) : GetTitleSuggestionsUseCase {
-    override suspend operator fun invoke(
-        categoryId: Int,
-        numberOfSuggestions: Int,
+        numberOfSuggestions: Int = defaultNumberOfTitleSuggestions,
         enteredTitle: String,
     ): List<String> {
         return transactionRepository.getTitleSuggestions(

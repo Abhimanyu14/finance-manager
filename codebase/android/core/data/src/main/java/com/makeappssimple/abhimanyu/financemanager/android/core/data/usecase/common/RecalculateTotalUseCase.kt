@@ -12,19 +12,16 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.updateBala
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import javax.inject.Inject
 
-public interface RecalculateTotalUseCase {
-    public suspend operator fun invoke()
-}
-
-public class RecalculateTotalUseCaseImpl(
+public class RecalculateTotalUseCase @Inject constructor(
     private val dispatcherProvider: DispatcherProvider,
     private val getAllAccountsUseCase: GetAllAccountsUseCase,
     private val getAllTransactionDataUseCase: GetAllTransactionDataUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val updateAccountsUseCase: UpdateAccountsUseCase,
-) : RecalculateTotalUseCase {
-    override suspend operator fun invoke() {
+) {
+    public suspend operator fun invoke() {
         coroutineScope {
             val deferredList = awaitAll(
                 async(

@@ -21,20 +21,15 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.serialization.json.Json
+import javax.inject.Inject
 
-public interface RestoreDataUseCase {
-    public suspend operator fun invoke(
-        uri: Uri,
-    ): Boolean
-}
-
-public class RestoreDataUseCaseImpl(
+public class RestoreDataUseCase @Inject constructor(
     private val myJsonReader: MyJsonReader,
     private val myLogger: MyLogger,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val transactionRepository: TransactionRepository,
-) : RestoreDataUseCase {
-    override suspend operator fun invoke(
+) {
+    public suspend operator fun invoke(
         uri: Uri,
     ): Boolean {
         val jsonString = myJsonReader.readJsonFromFile(

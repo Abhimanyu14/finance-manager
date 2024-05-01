@@ -1,15 +1,12 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.account.AccountRepository
+import javax.inject.Inject
 
-public interface GetAllAccountsCountUseCase {
-    public suspend operator fun invoke(): Int
-}
-
-public class GetAllAccountsCountUseCaseImpl(
+public class GetAllAccountsCountUseCase @Inject constructor(
     private val accountRepository: AccountRepository,
-) : GetAllAccountsCountUseCase {
-    override suspend operator fun invoke(): Int {
+) {
+    public suspend operator fun invoke(): Int {
         return accountRepository.getAllAccountsCount()
     }
 }

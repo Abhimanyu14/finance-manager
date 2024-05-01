@@ -26,14 +26,9 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import javax.inject.Inject
 
-public interface BackupDataUseCase {
-    public suspend operator fun invoke(
-        uri: Uri,
-    ): Boolean
-}
-
-public class BackupDataUseCaseImpl(
+public class BackupDataUseCase @Inject constructor(
     private val dateTimeUtil: DateTimeUtil,
     private val dispatcherProvider: DispatcherProvider,
     private val getAllCategoriesUseCase: GetAllCategoriesUseCase,
@@ -42,8 +37,8 @@ public class BackupDataUseCaseImpl(
     private val getAllTransactionsUseCase: GetAllTransactionsUseCase,
     private val myJsonWriter: MyJsonWriter,
     private val myPreferencesRepository: MyPreferencesRepository,
-) : BackupDataUseCase {
-    override suspend operator fun invoke(
+) {
+    public suspend operator fun invoke(
         uri: Uri,
     ): Boolean {
         return coroutineScope {

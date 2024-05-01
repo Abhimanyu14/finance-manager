@@ -2,18 +2,13 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.ac
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.account.AccountRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
+import javax.inject.Inject
 
-public interface UpdateAccountsBalanceAmountUseCase {
-    public suspend operator fun invoke(
-        accountsBalanceAmountChange: List<Pair<Int, Long>>,
-    ): Boolean
-}
-
-public class UpdateAccountsBalanceAmountUseCaseImpl(
+public class UpdateAccountsBalanceAmountUseCase @Inject constructor(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val accountRepository: AccountRepository,
-) : UpdateAccountsBalanceAmountUseCase {
-    override suspend operator fun invoke(
+) {
+    public suspend operator fun invoke(
         accountsBalanceAmountChange: List<Pair<Int, Long>>,
     ): Boolean {
         myPreferencesRepository.setLastDataChangeTimestamp()

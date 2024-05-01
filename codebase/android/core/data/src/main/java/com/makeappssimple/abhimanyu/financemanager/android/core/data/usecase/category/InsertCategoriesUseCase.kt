@@ -3,18 +3,13 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.ca
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.category.CategoryRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
+import javax.inject.Inject
 
-public interface InsertCategoriesUseCase {
-    public suspend operator fun invoke(
-        vararg categories: Category,
-    ): List<Long>
-}
-
-public class InsertCategoriesUseCaseImpl(
+public class InsertCategoriesUseCase @Inject constructor(
     private val categoryRepository: CategoryRepository,
     private val myPreferencesRepository: MyPreferencesRepository,
-) : InsertCategoriesUseCase {
-    override suspend operator fun invoke(
+) {
+    public suspend operator fun invoke(
         vararg categories: Category,
     ): List<Long> {
         myPreferencesRepository.setLastDataChangeTimestamp()

@@ -3,15 +3,12 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.ac
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.account.AccountRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
-public interface GetAccountsTotalBalanceAmountValueUseCase {
-    public operator fun invoke(): Flow<Long>
-}
-
-public class GetAccountsTotalBalanceAmountValueUseCaseImpl(
+public class GetAccountsTotalBalanceAmountValueUseCase @Inject constructor(
     private val accountRepository: AccountRepository,
-) : GetAccountsTotalBalanceAmountValueUseCase {
-    override operator fun invoke(): Flow<Long> {
+) {
+    public operator fun invoke(): Flow<Long> {
         return accountRepository.getAllAccountsFlow().map {
             it.sumOf { account ->
                 account.balanceAmount.value

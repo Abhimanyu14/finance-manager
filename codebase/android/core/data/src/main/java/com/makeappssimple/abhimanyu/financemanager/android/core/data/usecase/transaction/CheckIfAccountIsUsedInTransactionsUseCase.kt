@@ -1,17 +1,12 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
+import javax.inject.Inject
 
-public interface CheckIfAccountIsUsedInTransactionsUseCase {
-    public suspend operator fun invoke(
-        accountId: Int,
-    ): Boolean
-}
-
-public class CheckIfAccountIsUsedInTransactionsUseCaseImpl(
+public class CheckIfAccountIsUsedInTransactionsUseCase @Inject constructor(
     private val transactionRepository: TransactionRepository,
-) : CheckIfAccountIsUsedInTransactionsUseCase {
-    override suspend operator fun invoke(
+) {
+    public suspend operator fun invoke(
         accountId: Int,
     ): Boolean {
         return transactionRepository.checkIfAccountIsUsedInTransactions(

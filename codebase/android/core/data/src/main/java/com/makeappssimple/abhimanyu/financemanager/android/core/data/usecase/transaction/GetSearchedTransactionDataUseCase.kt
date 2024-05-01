@@ -2,17 +2,12 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tr
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
+import javax.inject.Inject
 
-public interface GetSearchedTransactionDataUseCase {
-    public suspend operator fun invoke(
-        searchText: String,
-    ): List<TransactionData>
-}
-
-public class GetSearchedTransactionDataUseCaseImpl(
+public class GetSearchedTransactionDataUseCase @Inject constructor(
     private val transactionRepository: TransactionRepository,
-) : GetSearchedTransactionDataUseCase {
-    override suspend operator fun invoke(
+) {
+    public suspend operator fun invoke(
         searchText: String,
     ): List<TransactionData> {
         return transactionRepository.getSearchedTransactionData(

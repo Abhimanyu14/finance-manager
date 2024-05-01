@@ -3,18 +3,13 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tr
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transactionfor.TransactionForRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
+import javax.inject.Inject
 
-public interface UpdateTransactionForValuesUseCase {
-    public suspend operator fun invoke(
-        vararg transactionForValues: TransactionFor,
-    ): Boolean
-}
-
-public class UpdateTransactionForValuesUseCaseImpl(
+public class UpdateTransactionForValuesUseCase @Inject constructor(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val transactionForRepository: TransactionForRepository,
-) : UpdateTransactionForValuesUseCase {
-    override suspend operator fun invoke(
+) {
+    public suspend operator fun invoke(
         vararg transactionForValues: TransactionFor,
     ): Boolean {
         myPreferencesRepository.setLastDataChangeTimestamp()

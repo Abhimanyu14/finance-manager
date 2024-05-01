@@ -4,21 +4,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
+import javax.inject.Inject
 
-public interface InsertTransactionUseCase {
-    public suspend operator fun invoke(
-        amountValue: Long,
-        accountFrom: Account?,
-        accountTo: Account?,
-        transaction: Transaction,
-    ): Long
-}
-
-public class InsertTransactionUseCaseImpl(
+public class InsertTransactionUseCase @Inject constructor(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val transactionRepository: TransactionRepository,
-) : InsertTransactionUseCase {
-    override suspend operator fun invoke(
+) {
+    public suspend operator fun invoke(
         amountValue: Long,
         accountFrom: Account?,
         accountTo: Account?,

@@ -2,18 +2,12 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.tr
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.transaction.TransactionRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
+import javax.inject.Inject
 
-public interface GetTransactionsBetweenTimestampsUseCase {
-    public suspend operator fun invoke(
-        startingTimestamp: Long,
-        endingTimestamp: Long,
-    ): List<Transaction>
-}
-
-public class GetTransactionsBetweenTimestampsUseCaseImpl(
+public class GetTransactionsBetweenTimestampsUseCase @Inject constructor(
     private val transactionRepository: TransactionRepository,
-) : GetTransactionsBetweenTimestampsUseCase {
-    override suspend operator fun invoke(
+) {
+    public suspend operator fun invoke(
         startingTimestamp: Long,
         endingTimestamp: Long,
     ): List<Transaction> {
