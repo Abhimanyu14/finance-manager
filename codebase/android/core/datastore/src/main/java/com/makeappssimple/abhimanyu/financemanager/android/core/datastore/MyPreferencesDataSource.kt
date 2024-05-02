@@ -1,6 +1,5 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.datastore
 
-import androidx.annotation.VisibleForTesting
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -23,8 +22,7 @@ public class MyPreferencesDataSource(
     private val dataStore: DataStore<Preferences>,
     private val myLogger: MyLogger,
 ) {
-    @VisibleForTesting
-    internal val preferences: Flow<Preferences> = dataStore.data
+    private val preferences: Flow<Preferences> = dataStore.data
         .catch { exception ->
             myLogger.logError(
                 message = "Error reading preferences. ${exception.localizedMessage}",
