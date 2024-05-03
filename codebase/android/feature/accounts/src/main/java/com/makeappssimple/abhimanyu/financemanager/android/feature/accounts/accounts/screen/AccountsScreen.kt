@@ -30,6 +30,7 @@ public fun AccountsScreen(
         key1 = viewModel,
     ) {
         { uiEvent: AccountsScreenUIEvent ->
+            @Suppress("UNUSED_EXPRESSION")
             when (uiEvent) {
                 else -> {
                     viewModel.handleUIEvents(

@@ -196,6 +196,7 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
         closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
+            @Suppress("UNUSED_VARIABLE")
             val result = myPreferencesRepository.setDefaultAccountId(
                 defaultAccountId = defaultAccountId,
             )

@@ -30,6 +30,7 @@ public fun OpenSourceLicensesScreen(
         key1 = viewModel,
     ) {
         { uiEvent: OpenSourceLicensesScreenUIEvent ->
+            @Suppress("UNUSED_EXPRESSION")
             when (uiEvent) {
                 else -> {
                     viewModel.handleUIEvents(

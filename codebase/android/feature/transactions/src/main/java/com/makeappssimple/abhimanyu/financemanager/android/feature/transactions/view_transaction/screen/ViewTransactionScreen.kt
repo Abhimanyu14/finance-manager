@@ -31,6 +31,7 @@ public fun ViewTransactionScreen(
         key1 = viewModel,
     ) {
         { uiEvent: ViewTransactionScreenUIEvent ->
+            @Suppress("UNUSED_EXPRESSION")
             when (uiEvent) {
                 else -> {
                     viewModel.handleUIEvents(

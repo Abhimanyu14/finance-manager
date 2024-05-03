@@ -30,6 +30,7 @@ public fun AnalysisScreen(
         key1 = viewModel,
     ) {
         { uiEvent: AnalysisScreenUIEvent ->
+            @Suppress("UNUSED_EXPRESSION")
             when (uiEvent) {
                 else -> {
                     viewModel.handleUIEvents(

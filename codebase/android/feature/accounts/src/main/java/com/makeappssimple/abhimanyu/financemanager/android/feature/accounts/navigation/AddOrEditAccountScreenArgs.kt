@@ -10,7 +10,7 @@ internal class AddOrEditAccountScreenArgs(
 ) : ScreenArgs {
     constructor(
         savedStateHandle: SavedStateHandle,
-        stringDecoder: StringDecoder,
+        @Suppress("UNUSED_PARAMETER") stringDecoder: StringDecoder,
     ) : this(
         originalAccountId = savedStateHandle.get<Int>(NavArgs.ACCOUNT_ID),
     )

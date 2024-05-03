@@ -10,7 +10,7 @@ public class UpdateTransactionUseCase @Inject constructor(
     private val transactionRepository: TransactionRepository,
 ) {
     public suspend operator fun invoke(
-        originalTransaction: Transaction,
+        @Suppress("UNUSED_PARAMETER") originalTransaction: Transaction,
         updatedTransaction: Transaction,
     ) {
         myPreferencesRepository.setLastDataChangeTimestamp()

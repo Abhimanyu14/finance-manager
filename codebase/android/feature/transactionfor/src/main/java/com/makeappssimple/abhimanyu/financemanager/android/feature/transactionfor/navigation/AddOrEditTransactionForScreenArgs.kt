@@ -10,7 +10,7 @@ internal class AddOrEditTransactionForScreenArgs(
 ) : ScreenArgs {
     constructor(
         savedStateHandle: SavedStateHandle,
-        stringDecoder: StringDecoder,
+        @Suppress("UNUSED_PARAMETER") stringDecoder: StringDecoder,
     ) : this(
         originalTransactionForId = savedStateHandle.get<Int>(NavArgs.TRANSACTION_FOR_ID),
     )

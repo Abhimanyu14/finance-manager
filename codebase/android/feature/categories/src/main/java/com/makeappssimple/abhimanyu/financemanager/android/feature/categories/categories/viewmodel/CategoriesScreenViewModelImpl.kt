@@ -245,6 +245,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
         closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
+            @Suppress("UNUSED_VARIABLE")
             val result = when (transactionType) {
                 TransactionType.EXPENSE -> {
                     myPreferencesRepository.setDefaultExpenseCategoryId(

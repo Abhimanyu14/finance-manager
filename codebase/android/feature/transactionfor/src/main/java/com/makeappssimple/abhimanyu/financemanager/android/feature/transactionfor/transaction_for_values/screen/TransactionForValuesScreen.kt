@@ -30,6 +30,7 @@ public fun TransactionForValuesScreen(
         key1 = viewModel,
     ) {
         { uiEvent: TransactionForValuesScreenUIEvent ->
+            @Suppress("UNUSED_EXPRESSION")
             when (uiEvent) {
                 else -> {
                     viewModel.handleUIEvents(
