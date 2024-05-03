@@ -12,7 +12,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 public class MainActivity : ComponentActivity() {
-
     @Inject
     public lateinit var myLogger: MyLogger
 

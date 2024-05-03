@@ -20,6 +20,9 @@
         <!-- Status bar color -->
         <item name="android:statusBarColor">@color/status_bar</item>
 
+        <!-- Status bar icon color -->
+        <item name="android:windowLightStatusBar">true</item>
+
     </style>
 
     <style name="Theme.MyApp.NoActionBar" parent="Theme.MyApp">
