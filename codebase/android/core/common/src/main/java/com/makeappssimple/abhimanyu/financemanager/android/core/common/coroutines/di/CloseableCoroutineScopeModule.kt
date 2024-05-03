@@ -7,6 +7,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 
+// TODO(Abhi): Check why this module is required instead of constructor injection
 @Module
 @InstallIn(SingletonComponent::class)
 public object CloseableCoroutineScopeModule {

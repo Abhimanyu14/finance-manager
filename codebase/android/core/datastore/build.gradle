@@ -60,8 +60,8 @@ android {
 
 dependencies {
     implementation project(":core:common")
-    implementation project(":core:model")
     implementation project(":core:logger")
+    implementation project(":core:model")
 
     testImplementation project(":core:testing")
 

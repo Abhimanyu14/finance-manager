@@ -77,6 +77,8 @@ android {
 dependencies {
     implementation project(":core:common")
     implementation project(":core:data")
+    implementation project(":core:database")
+    implementation project(":core:datastore")
     implementation project(":core:designsystem")
     implementation project(":core:logger")
     implementation project(":core:model")
@@ -104,6 +106,9 @@ dependencies {
     // Hilt
     implementation libs.hilt.android
     ksp libs.hilt.android.compiler
+
+    // Data store
+    implementation libs.datastore
 
     // Jetpack compose
     implementation libs.compose.ui.androidx

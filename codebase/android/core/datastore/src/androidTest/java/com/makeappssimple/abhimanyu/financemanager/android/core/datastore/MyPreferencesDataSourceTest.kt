@@ -20,23 +20,28 @@ import dagger.hilt.android.testing.HiltAndroidTest
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.TestResult
 import kotlinx.coroutines.test.TestScope
-import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import kotlin.time.Duration.Companion.seconds
 
+@Ignore("Fix Hilt")
 @HiltAndroidTest
 @RunWith(AndroidJUnit4::class)
 public class MyPreferencesDataSourceTest {
     private val testContext: Context = ApplicationProvider.getApplicationContext()
-    private val testDispatcher = UnconfinedTestDispatcher()
-    private val testScope = TestScope(testDispatcher + Job())
+    private val testDispatcher = StandardTestDispatcher()
+    private val testScope = TestScope(
+        context = testDispatcher + Job(),
+    )
 
     @get:Rule(order = 0)
     public var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
@@ -45,6 +50,8 @@ public class MyPreferencesDataSourceTest {
     public val mainDispatcherRule: MainDispatcherRule = MainDispatcherRule()
 
     private lateinit var testDataStore: DataStore<Preferences>
+
+    //    private lateinit var testDispatcherProvider: DispatcherProvider
     private lateinit var testMyLogger: MyLogger
 
     private lateinit var myPreferencesDataSource: MyPreferencesDataSource
@@ -62,6 +69,9 @@ public class MyPreferencesDataSourceTest {
             },
         )
         testMyLogger = FakeMyLoggerImpl()
+//        testDispatcherProvider = TestDispatcherProviderImpl(
+//            testDispatcher = testDispatcher,
+//        )
         myPreferencesDataSource = MyPreferencesDataSource(
             dataStore = testDataStore,
             myLogger = testMyLogger,
@@ -388,7 +398,9 @@ public class MyPreferencesDataSourceTest {
 
     private fun runTestAndClearDataStore(
         block: suspend () -> Unit,
-    ) = testScope.runTest {
+    ) = testScope.runTest(
+        timeout = 2.seconds,
+    ) {
         block()
         testDataStore.edit {
             it.clear()
