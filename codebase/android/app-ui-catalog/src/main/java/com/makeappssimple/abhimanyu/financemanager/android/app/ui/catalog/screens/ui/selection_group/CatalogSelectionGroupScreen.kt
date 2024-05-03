@@ -188,9 +188,6 @@ public fun CatalogSelectionGroupScreen(
                     text = "Item 6",
                 ),
             )
-            val selectedHorizontalScrollingSelectedGroupItemsIndices = remember {
-                mutableStateListOf<Int>()
-            }
             MyHorizontalScrollingSelectionGroup(
                 data = MyHorizontalScrollingSelectionGroupData(
                     items = horizontalScrollingSelectionGroupItems,
