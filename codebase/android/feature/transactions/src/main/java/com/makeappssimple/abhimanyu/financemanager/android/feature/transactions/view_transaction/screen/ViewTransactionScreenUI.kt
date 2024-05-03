@@ -51,7 +51,7 @@ internal fun ViewTransactionScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
-                ViewTransactionScreenBottomSheetType.DeleteConfirmation -> {
+                is ViewTransactionScreenBottomSheetType.DeleteConfirmation -> {
                     TransactionDeleteConfirmationBottomSheet(
                         transactionIdToDelete = uiState.transactionIdToDelete,
                         resetBottomSheetType = uiState.resetScreenBottomSheetType,
@@ -70,7 +70,7 @@ internal fun ViewTransactionScreenUI(
                     )
                 }
 
-                ViewTransactionScreenBottomSheetType.None -> {
+                is ViewTransactionScreenBottomSheetType.None -> {
                     VerticalSpacer()
                 }
             }

@@ -79,7 +79,7 @@ internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
                 )
             }
 
-            TransactionForValuesScreenUIEvent.NavigateToAddTransactionForScreen -> {
+            is TransactionForValuesScreenUIEvent.NavigateToAddTransactionForScreen -> {
                 navigateToAddTransactionForScreen()
             }
 
@@ -89,7 +89,7 @@ internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
                 )
             }
 
-            TransactionForValuesScreenUIEvent.NavigateUp -> {
+            is TransactionForValuesScreenUIEvent.NavigateUp -> {
                 navigateUp()
             }
         }

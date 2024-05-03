@@ -104,7 +104,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
                 navigateToViewTransactionScreen(uiEvent.transactionId)
             }
 
-            ViewTransactionScreenUIEvent.NavigateUp -> {
+            is ViewTransactionScreenUIEvent.NavigateUp -> {
                 navigateUp()
             }
         }

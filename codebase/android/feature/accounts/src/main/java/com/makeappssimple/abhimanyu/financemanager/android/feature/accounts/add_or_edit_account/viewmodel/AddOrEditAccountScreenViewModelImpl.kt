@@ -155,19 +155,19 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
         uiEvent: AddOrEditAccountScreenUIEvent,
     ) {
         when (uiEvent) {
-            AddOrEditAccountScreenUIEvent.ClearBalanceAmountValue -> {
+            is AddOrEditAccountScreenUIEvent.ClearBalanceAmountValue -> {
                 clearBalanceAmountValue()
             }
 
-            AddOrEditAccountScreenUIEvent.ClearMinimumAccountBalanceAmountValue -> {
+            is AddOrEditAccountScreenUIEvent.ClearMinimumAccountBalanceAmountValue -> {
                 clearMinimumAccountBalanceAmountValue()
             }
 
-            AddOrEditAccountScreenUIEvent.ClearName -> {
+            is AddOrEditAccountScreenUIEvent.ClearName -> {
                 clearName()
             }
 
-            AddOrEditAccountScreenUIEvent.NavigateUp -> {
+            is AddOrEditAccountScreenUIEvent.NavigateUp -> {
                 navigateUp()
             }
 

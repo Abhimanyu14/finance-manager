@@ -37,7 +37,7 @@ public fun EditAccountScreen(
     ) {
         { uiEvent: AddOrEditAccountScreenUIEvent ->
             when (uiEvent) {
-                AddOrEditAccountScreenUIEvent.OnCtaButtonClick -> {
+                is AddOrEditAccountScreenUIEvent.OnCtaButtonClick -> {
                     viewModel.updateAccount()
                 }
 

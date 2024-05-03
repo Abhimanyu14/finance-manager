@@ -31,7 +31,7 @@ internal class OpenSourceLicensesScreenViewModelImpl @Inject constructor(
         uiEvent: OpenSourceLicensesScreenUIEvent,
     ) {
         when (uiEvent) {
-            OpenSourceLicensesScreenUIEvent.NavigateUp -> {
+            is OpenSourceLicensesScreenUIEvent.NavigateUp -> {
                 navigateUp()
             }
         }

@@ -129,11 +129,11 @@ internal fun AddOrEditCategoryScreenUI(
         },
         sheetState = state.modalBottomSheetState,
         sheetShape = when (uiState.screenBottomSheetType) {
-            AddOrEditCategoryScreenBottomSheetType.None -> {
+            is AddOrEditCategoryScreenBottomSheetType.None -> {
                 BottomSheetShape
             }
 
-            AddOrEditCategoryScreenBottomSheetType.SelectEmoji -> {
+            is AddOrEditCategoryScreenBottomSheetType.SelectEmoji -> {
                 BottomSheetExpandedShape
             }
         },

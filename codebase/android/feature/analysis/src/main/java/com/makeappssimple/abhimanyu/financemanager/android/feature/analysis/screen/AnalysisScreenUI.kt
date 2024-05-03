@@ -57,7 +57,7 @@ internal fun AnalysisScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
-                AnalysisScreenBottomSheetType.Filters -> {
+                is AnalysisScreenBottomSheetType.Filters -> {
                     AnalysisFilterBottomSheet(
                         selectedFilter = uiState.selectedFilter,
                         headingTextStringResourceId = R.string.bottom_sheet_analysis_filter_transaction_date,
@@ -77,7 +77,7 @@ internal fun AnalysisScreenUI(
                     )
                 }
 
-                AnalysisScreenBottomSheetType.None -> {
+                is AnalysisScreenBottomSheetType.None -> {
                     VerticalSpacer()
                 }
             }

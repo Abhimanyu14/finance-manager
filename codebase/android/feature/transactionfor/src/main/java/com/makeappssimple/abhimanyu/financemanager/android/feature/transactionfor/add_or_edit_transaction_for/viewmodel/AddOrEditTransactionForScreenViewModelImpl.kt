@@ -110,11 +110,11 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
         uiEvent: AddOrEditTransactionForScreenUIEvent,
     ) {
         when (uiEvent) {
-            AddOrEditTransactionForScreenUIEvent.ClearTitle -> {
+            is AddOrEditTransactionForScreenUIEvent.ClearTitle -> {
                 clearTitle()
             }
 
-            AddOrEditTransactionForScreenUIEvent.NavigateUp -> {
+            is AddOrEditTransactionForScreenUIEvent.NavigateUp -> {
                 navigateUp()
             }
 

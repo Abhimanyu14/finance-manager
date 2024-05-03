@@ -82,15 +82,15 @@ internal fun AddOrEditTransactionForScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
-                AddOrEditTransactionForScreenBottomSheetType.Delete -> {
+                is AddOrEditTransactionForScreenBottomSheetType.Delete -> {
                     VerticalSpacer()
                 }
 
-                AddOrEditTransactionForScreenBottomSheetType.Edit -> {
+                is AddOrEditTransactionForScreenBottomSheetType.Edit -> {
                     VerticalSpacer()
                 }
 
-                AddOrEditTransactionForScreenBottomSheetType.None -> {
+                is AddOrEditTransactionForScreenBottomSheetType.None -> {
                     VerticalSpacer()
                 }
             }

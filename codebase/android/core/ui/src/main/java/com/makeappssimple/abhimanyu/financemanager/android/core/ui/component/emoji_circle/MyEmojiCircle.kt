@@ -110,15 +110,15 @@ private fun MyEmojiCircleLoadingUI(
         modifier = modifier
             .size(
                 size = when (emojiCircleSize) {
-                    EmojiCircleSize.Small -> {
+                    is EmojiCircleSize.Small -> {
                         28.dp
                     }
 
-                    EmojiCircleSize.Normal -> {
+                    is EmojiCircleSize.Normal -> {
                         38.dp
                     }
 
-                    EmojiCircleSize.Large -> {
+                    is EmojiCircleSize.Large -> {
                         42.dp
                     }
                 },

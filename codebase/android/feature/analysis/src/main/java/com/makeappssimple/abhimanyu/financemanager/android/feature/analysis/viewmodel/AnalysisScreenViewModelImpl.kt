@@ -117,7 +117,7 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
         uiEvent: AnalysisScreenUIEvent,
     ) {
         when (uiEvent) {
-            AnalysisScreenUIEvent.NavigateUp -> {
+            is AnalysisScreenUIEvent.NavigateUp -> {
                 navigateUp()
             }
 

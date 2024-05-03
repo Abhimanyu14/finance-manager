@@ -37,7 +37,7 @@ public fun AddTransactionScreen(
     ) {
         { uiEvent: AddOrEditTransactionScreenUIEvent ->
             when (uiEvent) {
-                AddOrEditTransactionScreenUIEvent.OnCtaButtonClick -> {
+                is AddOrEditTransactionScreenUIEvent.OnCtaButtonClick -> {
                     viewModel.insertTransaction()
                 }
 

@@ -37,7 +37,7 @@ public fun EditTransactionForScreen(
     ) {
         { uiEvent: AddOrEditTransactionForScreenUIEvent ->
             when (uiEvent) {
-                AddOrEditTransactionForScreenUIEvent.OnCtaButtonClick -> {
+                is AddOrEditTransactionForScreenUIEvent.OnCtaButtonClick -> {
                     viewModel.updateTransactionFor()
                 }
 

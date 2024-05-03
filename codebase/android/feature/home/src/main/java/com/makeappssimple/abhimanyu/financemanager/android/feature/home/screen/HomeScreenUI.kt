@@ -56,7 +56,7 @@ internal fun HomeScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
-                HomeScreenBottomSheetType.None -> {
+                is HomeScreenBottomSheetType.None -> {
                     VerticalSpacer()
                 }
             }

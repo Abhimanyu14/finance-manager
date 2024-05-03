@@ -232,23 +232,23 @@ internal class HomeScreenViewModelImpl @Inject constructor(
         uiEvent: HomeScreenUIEvent,
     ) {
         when (uiEvent) {
-            HomeScreenUIEvent.NavigateToAccountsScreen -> {
+            is HomeScreenUIEvent.NavigateToAccountsScreen -> {
                 navigateToAccountsScreen()
             }
 
-            HomeScreenUIEvent.NavigateToAddTransactionScreen -> {
+            is HomeScreenUIEvent.NavigateToAddTransactionScreen -> {
                 navigateToAddTransactionScreen()
             }
 
-            HomeScreenUIEvent.NavigateToAnalysisScreen -> {
+            is HomeScreenUIEvent.NavigateToAnalysisScreen -> {
                 navigateToAnalysisScreen()
             }
 
-            HomeScreenUIEvent.NavigateToSettingsScreen -> {
+            is HomeScreenUIEvent.NavigateToSettingsScreen -> {
                 navigateToSettingsScreen()
             }
 
-            HomeScreenUIEvent.NavigateToTransactionsScreen -> {
+            is HomeScreenUIEvent.NavigateToTransactionsScreen -> {
                 navigateToTransactionsScreen()
             }
 

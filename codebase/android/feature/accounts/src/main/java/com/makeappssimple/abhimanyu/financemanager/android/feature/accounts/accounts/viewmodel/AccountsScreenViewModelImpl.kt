@@ -140,7 +140,7 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
                 )
             }
 
-            AccountsScreenUIEvent.NavigateToAddAccountScreen -> {
+            is AccountsScreenUIEvent.NavigateToAddAccountScreen -> {
                 navigateToAddAccountScreen()
             }
 
@@ -150,7 +150,7 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
                 )
             }
 
-            AccountsScreenUIEvent.NavigateUp -> {
+            is AccountsScreenUIEvent.NavigateUp -> {
                 navigateUp()
             }
 

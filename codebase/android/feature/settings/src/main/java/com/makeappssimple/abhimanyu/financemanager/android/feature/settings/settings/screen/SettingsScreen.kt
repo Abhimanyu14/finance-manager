@@ -84,19 +84,19 @@ public fun SettingsScreen(
     ) {
         { uiEvent: SettingsScreenUIEvent ->
             when (uiEvent) {
-                SettingsScreenUIEvent.BackupData -> {
+                is SettingsScreenUIEvent.BackupData -> {
                     createDocumentResultLauncher.launch(MimeTypeConstants.JSON)
                 }
 
-                SettingsScreenUIEvent.RecalculateTotal -> {
+                is SettingsScreenUIEvent.RecalculateTotal -> {
                     viewModel.recalculateTotal()
                 }
 
-                SettingsScreenUIEvent.RestoreData -> {
+                is SettingsScreenUIEvent.RestoreData -> {
                     openDocumentResultLauncher.launch(arrayOf(MimeTypeConstants.JSON))
                 }
 
-                SettingsScreenUIEvent.ToggleReminder -> {
+                is SettingsScreenUIEvent.ToggleReminder -> {
                     if (uiState.isReminderEnabled.orFalse()) {
                         viewModel.disableReminder()
                     } else {
@@ -133,7 +133,7 @@ public fun SettingsScreen(
     ) {
         viewModel.event.collect {
             when (it) {
-                SettingsScreenEvent.RestoreDataFailed -> {
+                is SettingsScreenEvent.RestoreDataFailed -> {
                     coroutineScope.launch {
                         val result = uiState.snackbarHostState
                             .showSnackbar(

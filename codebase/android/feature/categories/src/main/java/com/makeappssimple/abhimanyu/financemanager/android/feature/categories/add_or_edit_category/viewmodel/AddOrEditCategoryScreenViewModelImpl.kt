@@ -165,11 +165,11 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         uiEvent: AddOrEditCategoryScreenUIEvent,
     ) {
         when (uiEvent) {
-            AddOrEditCategoryScreenUIEvent.ClearTitle -> {
+            is AddOrEditCategoryScreenUIEvent.ClearTitle -> {
                 clearTitle()
             }
 
-            AddOrEditCategoryScreenUIEvent.NavigateUp -> {
+            is AddOrEditCategoryScreenUIEvent.NavigateUp -> {
                 navigateUp()
             }
 

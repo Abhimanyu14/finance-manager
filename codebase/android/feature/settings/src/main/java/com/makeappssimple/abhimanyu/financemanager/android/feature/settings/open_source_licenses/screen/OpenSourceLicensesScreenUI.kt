@@ -30,7 +30,7 @@ internal fun OpenSourceLicensesScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
-                OpenSourceLicensesScreenBottomSheetType.None -> {
+                is OpenSourceLicensesScreenBottomSheetType.None -> {
                     VerticalSpacer()
                 }
             }

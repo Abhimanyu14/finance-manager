@@ -320,19 +320,19 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         uiEvent: AddOrEditTransactionScreenUIEvent,
     ) {
         when (uiEvent) {
-            AddOrEditTransactionScreenUIEvent.ClearAmount -> {
+            is AddOrEditTransactionScreenUIEvent.ClearAmount -> {
                 clearAmount()
             }
 
-            AddOrEditTransactionScreenUIEvent.ClearDescription -> {
+            is AddOrEditTransactionScreenUIEvent.ClearDescription -> {
                 clearDescription()
             }
 
-            AddOrEditTransactionScreenUIEvent.ClearTitle -> {
+            is AddOrEditTransactionScreenUIEvent.ClearTitle -> {
                 clearTitle()
             }
 
-            AddOrEditTransactionScreenUIEvent.NavigateUp -> {
+            is AddOrEditTransactionScreenUIEvent.NavigateUp -> {
                 navigateUp()
             }
 

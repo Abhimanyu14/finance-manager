@@ -417,11 +417,11 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 )
             }
 
-            TransactionsScreenUIEvent.ClearSelectedTransactions -> {
+            is TransactionsScreenUIEvent.ClearSelectedTransactions -> {
                 clearSelectedTransactions()
             }
 
-            TransactionsScreenUIEvent.NavigateToAddTransactionScreen -> {
+            is TransactionsScreenUIEvent.NavigateToAddTransactionScreen -> {
                 navigateToAddTransactionScreen()
             }
 
@@ -431,7 +431,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 )
             }
 
-            TransactionsScreenUIEvent.NavigateUp -> {
+            is TransactionsScreenUIEvent.NavigateUp -> {
                 navigateUp()
             }
 
@@ -441,7 +441,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 )
             }
 
-            TransactionsScreenUIEvent.SelectAllTransactions -> {
+            is TransactionsScreenUIEvent.SelectAllTransactions -> {
                 selectAllTransactions()
             }
 

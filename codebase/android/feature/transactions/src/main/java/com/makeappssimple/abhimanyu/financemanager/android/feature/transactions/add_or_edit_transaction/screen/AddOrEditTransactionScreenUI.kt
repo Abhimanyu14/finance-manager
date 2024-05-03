@@ -102,11 +102,11 @@ internal fun AddOrEditTransactionScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
-                AddOrEditTransactionScreenBottomSheetType.None -> {
+                is AddOrEditTransactionScreenBottomSheetType.None -> {
                     VerticalSpacer()
                 }
 
-                AddOrEditTransactionScreenBottomSheetType.SelectCategory -> {
+                is AddOrEditTransactionScreenBottomSheetType.SelectCategory -> {
                     SelectCategoryBottomSheet(
                         data = SelectCategoryBottomSheetData(
                             filteredCategories = uiState.filteredCategories,
@@ -125,7 +125,7 @@ internal fun AddOrEditTransactionScreenUI(
                     )
                 }
 
-                AddOrEditTransactionScreenBottomSheetType.SelectAccountFrom -> {
+                is AddOrEditTransactionScreenBottomSheetType.SelectAccountFrom -> {
                     SelectAccountBottomSheet(
                         data = SelectAccountBottomSheetData(
                             accounts = uiState.accounts,
@@ -144,7 +144,7 @@ internal fun AddOrEditTransactionScreenUI(
                     )
                 }
 
-                AddOrEditTransactionScreenBottomSheetType.SelectAccountTo -> {
+                is AddOrEditTransactionScreenBottomSheetType.SelectAccountTo -> {
                     SelectAccountBottomSheet(
                         data = SelectAccountBottomSheetData(
                             accounts = uiState.accounts,

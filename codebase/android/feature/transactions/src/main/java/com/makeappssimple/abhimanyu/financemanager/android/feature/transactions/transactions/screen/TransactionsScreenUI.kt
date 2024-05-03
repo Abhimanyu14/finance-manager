@@ -184,15 +184,15 @@ internal fun TransactionsScreenUI(
         },
         sheetState = state.modalBottomSheetState,
         sheetShape = when (uiState.screenBottomSheetType) {
-            TransactionsScreenBottomSheetType.Menu,
-            TransactionsScreenBottomSheetType.None,
-            TransactionsScreenBottomSheetType.SelectTransactionFor,
-            TransactionsScreenBottomSheetType.Sort,
+            is TransactionsScreenBottomSheetType.Menu,
+            is TransactionsScreenBottomSheetType.None,
+            is TransactionsScreenBottomSheetType.SelectTransactionFor,
+            is TransactionsScreenBottomSheetType.Sort,
             -> {
                 BottomSheetShape
             }
 
-            TransactionsScreenBottomSheetType.Filters -> {
+            is TransactionsScreenBottomSheetType.Filters -> {
                 BottomSheetExpandedShape
             }
         },

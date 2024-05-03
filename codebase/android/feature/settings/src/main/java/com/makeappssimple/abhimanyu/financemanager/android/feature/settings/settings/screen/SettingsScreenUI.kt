@@ -211,7 +211,7 @@ internal fun SettingsScreenUI(
             .fillMaxSize(),
         sheetContent = {
             when (uiState.screenBottomSheetType) {
-                SettingsScreenBottomSheetType.None -> {
+                is SettingsScreenBottomSheetType.None -> {
                     VerticalSpacer()
                 }
             }

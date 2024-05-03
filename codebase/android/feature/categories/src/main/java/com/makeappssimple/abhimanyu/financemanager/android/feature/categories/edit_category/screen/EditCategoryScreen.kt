@@ -37,7 +37,7 @@ public fun EditCategoryScreen(
     ) {
         { uiEvent: AddOrEditCategoryScreenUIEvent ->
             when (uiEvent) {
-                AddOrEditCategoryScreenUIEvent.OnCtaButtonClick -> {
+                is AddOrEditCategoryScreenUIEvent.OnCtaButtonClick -> {
                     viewModel.updateCategory()
                 }
 

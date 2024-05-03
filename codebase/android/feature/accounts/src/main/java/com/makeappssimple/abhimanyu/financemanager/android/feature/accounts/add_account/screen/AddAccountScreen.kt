@@ -43,7 +43,7 @@ public fun AddAccountScreen(
     ) {
         { uiEvent: AddOrEditAccountScreenUIEvent ->
             when (uiEvent) {
-                AddOrEditAccountScreenUIEvent.OnCtaButtonClick -> {
+                is AddOrEditAccountScreenUIEvent.OnCtaButtonClick -> {
                     viewModel.insertAccount()
                 }
 
