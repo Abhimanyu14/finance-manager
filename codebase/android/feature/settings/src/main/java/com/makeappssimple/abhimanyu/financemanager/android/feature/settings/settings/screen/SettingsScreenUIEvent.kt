@@ -5,13 +5,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Immutable
 public sealed class SettingsScreenUIEvent : ScreenUIEvent {
-    public data object BackupData : SettingsScreenUIEvent()
-    public data object NavigateToCategoriesScreen : SettingsScreenUIEvent()
-    public data object NavigateToAccountsScreen : SettingsScreenUIEvent()
-    public data object NavigateToOpenSourceLicensesScreen : SettingsScreenUIEvent()
-    public data object NavigateToTransactionForValuesScreen : SettingsScreenUIEvent()
+    public data object OnAccountsListItemClick : SettingsScreenUIEvent()
+    public data object OnBackupDataListItemClick : SettingsScreenUIEvent()
+    public data object OnCategoriesListItemClick : SettingsScreenUIEvent()
+    public data object OnOpenSourceLicensesListItemClick : SettingsScreenUIEvent()
+    public data object OnRecalculateTotalListItemClick : SettingsScreenUIEvent()
+    public data object OnRestoreDataListItemClick : SettingsScreenUIEvent()
+    public data object OnToggleReminder : SettingsScreenUIEvent()
     public data object OnTopAppBarNavigationButtonClick : SettingsScreenUIEvent()
-    public data object RecalculateTotal : SettingsScreenUIEvent()
-    public data object RestoreData : SettingsScreenUIEvent()
-    public data object ToggleReminder : SettingsScreenUIEvent()
+    public data object OnTransactionForListItemClick : SettingsScreenUIEvent()
 }

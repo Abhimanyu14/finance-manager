@@ -84,19 +84,19 @@ public fun SettingsScreen(
     ) {
         { uiEvent: SettingsScreenUIEvent ->
             when (uiEvent) {
-                is SettingsScreenUIEvent.BackupData -> {
+                is SettingsScreenUIEvent.OnBackupDataListItemClick -> {
                     createDocumentResultLauncher.launch(MimeTypeConstants.JSON)
                 }
 
-                is SettingsScreenUIEvent.RecalculateTotal -> {
+                is SettingsScreenUIEvent.OnRecalculateTotalListItemClick -> {
                     viewModel.recalculateTotal()
                 }
 
-                is SettingsScreenUIEvent.RestoreData -> {
+                is SettingsScreenUIEvent.OnRestoreDataListItemClick -> {
                     openDocumentResultLauncher.launch(arrayOf(MimeTypeConstants.JSON))
                 }
 
-                is SettingsScreenUIEvent.ToggleReminder -> {
+                is SettingsScreenUIEvent.OnToggleReminder -> {
                     if (uiState.isReminderEnabled.orFalse()) {
                         viewModel.disableReminder()
                     } else {

@@ -97,24 +97,28 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
         uiEvent: SettingsScreenUIEvent,
     ) {
         when (uiEvent) {
-            is SettingsScreenUIEvent.NavigateToAccountsScreen -> {
+            is SettingsScreenUIEvent.OnAccountsListItemClick -> {
                 navigateToAccountsScreen()
             }
 
-            is SettingsScreenUIEvent.NavigateToCategoriesScreen -> {
+            is SettingsScreenUIEvent.OnCategoriesListItemClick -> {
                 navigateToCategoriesScreen()
             }
 
-            is SettingsScreenUIEvent.NavigateToOpenSourceLicensesScreen -> {
+            is SettingsScreenUIEvent.OnOpenSourceLicensesListItemClick -> {
                 navigateToOpenSourceLicensesScreen()
             }
 
-            is SettingsScreenUIEvent.NavigateToTransactionForValuesScreen -> {
-                navigateToTransactionForValuesScreen()
+            is SettingsScreenUIEvent.OnRecalculateTotalListItemClick -> {
+                recalculateTotal()
             }
 
             is SettingsScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
                 navigateUp()
+            }
+
+            is SettingsScreenUIEvent.OnTransactionForListItemClick -> {
+                navigateToTransactionForValuesScreen()
             }
 
             else -> {

@@ -62,7 +62,7 @@ internal fun SettingsScreenUI(
             ),
             events = SettingsListItemContentEvents(
                 onClick = {
-                    handleUIEvents(SettingsScreenUIEvent.NavigateToCategoriesScreen)
+                    handleUIEvents(SettingsScreenUIEvent.OnCategoriesListItemClick)
                 },
             ),
         ),
@@ -74,7 +74,7 @@ internal fun SettingsScreenUI(
             ),
             events = SettingsListItemContentEvents(
                 onClick = {
-                    handleUIEvents(SettingsScreenUIEvent.NavigateToAccountsScreen)
+                    handleUIEvents(SettingsScreenUIEvent.OnAccountsListItemClick)
                 },
             ),
         ),
@@ -86,7 +86,7 @@ internal fun SettingsScreenUI(
             ),
             events = SettingsListItemContentEvents(
                 onClick = {
-                    handleUIEvents(SettingsScreenUIEvent.NavigateToTransactionForValuesScreen)
+                    handleUIEvents(SettingsScreenUIEvent.OnTransactionForListItemClick)
                 },
             ),
         ),
@@ -106,7 +106,7 @@ internal fun SettingsScreenUI(
             ),
             events = SettingsListItemContentEvents(
                 onClick = {
-                    handleUIEvents(SettingsScreenUIEvent.BackupData)
+                    handleUIEvents(SettingsScreenUIEvent.OnBackupDataListItemClick)
                 },
             ),
         ),
@@ -118,7 +118,7 @@ internal fun SettingsScreenUI(
             ),
             events = SettingsListItemContentEvents(
                 onClick = {
-                    handleUIEvents(SettingsScreenUIEvent.RestoreData)
+                    handleUIEvents(SettingsScreenUIEvent.OnRestoreDataListItemClick)
                 },
             ),
         ),
@@ -130,7 +130,7 @@ internal fun SettingsScreenUI(
             ),
             events = SettingsListItemContentEvents(
                 onClick = {
-                    handleUIEvents(SettingsScreenUIEvent.RecalculateTotal)
+                    handleUIEvents(SettingsScreenUIEvent.OnRecalculateTotalListItemClick)
                 },
             ),
         ),
@@ -151,10 +151,10 @@ internal fun SettingsScreenUI(
             ),
             events = SettingsListItemContentEvents(
                 onClick = {
-                    handleUIEvents(SettingsScreenUIEvent.ToggleReminder)
+                    handleUIEvents(SettingsScreenUIEvent.OnToggleReminder)
                 },
                 onCheckedChange = {
-                    handleUIEvents(SettingsScreenUIEvent.ToggleReminder)
+                    handleUIEvents(SettingsScreenUIEvent.OnToggleReminder)
                 },
             ),
         ),
@@ -186,7 +186,7 @@ internal fun SettingsScreenUI(
             ),
             events = SettingsListItemContentEvents(
                 onClick = {
-                    handleUIEvents(SettingsScreenUIEvent.NavigateToOpenSourceLicensesScreen)
+                    handleUIEvents(SettingsScreenUIEvent.OnOpenSourceLicensesListItemClick)
                 },
             ),
         ),
