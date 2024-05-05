@@ -6,13 +6,15 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Immutable
 public sealed class AnalysisScreenUIEvent : ScreenUIEvent {
-    public data object NavigateUp : AnalysisScreenUIEvent()
+    public data object OnTopAppBarNavigationButtonClick : AnalysisScreenUIEvent()
 
-    public data class UpdateSelectedFilter(
-        val updatedSelectedFilter: Filter,
-    ) : AnalysisScreenUIEvent()
+    public sealed class OnAnalysisFilterBottomSheet {
+        public data class PositiveButtonClick(
+            val updatedSelectedFilter: Filter,
+        ) : AnalysisScreenUIEvent()
+    }
 
-    public data class UpdateSelectedTransactionTypeIndex(
+    public data class OnTransactionTypeChange(
         val updatedSelectedTransactionTypeIndex: Int,
     ) : AnalysisScreenUIEvent()
 }

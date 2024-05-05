@@ -117,20 +117,24 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
         uiEvent: AnalysisScreenUIEvent,
     ) {
         when (uiEvent) {
-            is AnalysisScreenUIEvent.NavigateUp -> {
+            is AnalysisScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
                 navigateUp()
             }
 
-            is AnalysisScreenUIEvent.UpdateSelectedFilter -> {
+            is AnalysisScreenUIEvent.OnAnalysisFilterBottomSheet.PositiveButtonClick -> {
                 updateSelectedFilter(
                     updatedSelectedFilter = uiEvent.updatedSelectedFilter,
                 )
             }
 
-            is AnalysisScreenUIEvent.UpdateSelectedTransactionTypeIndex -> {
+            is AnalysisScreenUIEvent.OnTransactionTypeChange -> {
                 updateSelectedTransactionTypeIndex(
                     updatedSelectedTransactionTypeIndex = uiEvent.updatedSelectedTransactionTypeIndex,
                 )
+            }
+
+            else -> {
+                // Noop, should have been handled in Screen composable or invalid event
             }
         }
     }

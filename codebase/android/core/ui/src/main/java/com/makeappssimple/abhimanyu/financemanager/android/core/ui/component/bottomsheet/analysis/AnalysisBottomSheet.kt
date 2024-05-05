@@ -31,7 +31,7 @@ public fun AnalysisFilterBottomSheet(
     startOfMonthLocalDate: LocalDate,
     startOfYearLocalDate: LocalDate,
     onNegativeButtonClick: () -> Unit,
-    onPositiveButtonClick: (filter: Filter) -> Unit,
+    onPositiveButtonClick: (updatedFilter: Filter) -> Unit,
 ) {
     var fromSelectedLocalDate by remember {
         mutableStateOf(

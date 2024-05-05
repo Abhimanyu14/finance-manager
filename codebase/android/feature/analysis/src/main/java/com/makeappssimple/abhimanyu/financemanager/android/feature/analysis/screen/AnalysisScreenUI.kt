@@ -68,7 +68,7 @@ internal fun AnalysisScreenUI(
                         onNegativeButtonClick = {},
                         onPositiveButtonClick = {
                             handleUIEvents(
-                                AnalysisScreenUIEvent.UpdateSelectedFilter(
+                                AnalysisScreenUIEvent.OnAnalysisFilterBottomSheet.PositiveButtonClick(
                                     updatedSelectedFilter = it,
                                 )
                             )
@@ -87,7 +87,7 @@ internal fun AnalysisScreenUI(
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_analysis_appbar_title,
                 navigationAction = {
-                    handleUIEvents(AnalysisScreenUIEvent.NavigateUp)
+                    handleUIEvents(AnalysisScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
             )
         },
@@ -130,7 +130,7 @@ internal fun AnalysisScreenUI(
                         events = MyHorizontalScrollingRadioGroupEvents(
                             onSelectionChange = { updatedSelectedTransactionTypeIndex ->
                                 handleUIEvents(
-                                    AnalysisScreenUIEvent.UpdateSelectedTransactionTypeIndex(
+                                    AnalysisScreenUIEvent.OnTransactionTypeChange(
                                         updatedSelectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex,
                                     )
                                 )
