@@ -14,17 +14,17 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 
 @Stable
 public class AccountsScreenUIState(
-    public val clickedItemId: Int?,
-    public val accountIdToDelete: Int?,
     public val screenBottomSheetType: AccountsScreenBottomSheetType,
-    public val setClickedItemId: (Int?) -> Unit,
-    public val setAccountIdToDelete: (Int?) -> Unit,
-    public val setScreenBottomSheetType: (AccountsScreenBottomSheetType) -> Unit,
     public val isLoading: Boolean,
+    public val accountIdToDelete: Int?,
+    public val clickedItemId: Int?,
     public val accountsListItemDataList: List<AccountsListItemData>,
     public val accountsTotalBalanceAmountValue: Long,
     public val accountsTotalMinimumBalanceAmountValue: Long,
     public val resetScreenBottomSheetType: () -> Unit,
+    public val setAccountIdToDelete: (Int?) -> Unit,
+    public val setClickedItemId: (Int?) -> Unit,
+    public val setScreenBottomSheetType: (AccountsScreenBottomSheetType) -> Unit,
 ) : ScreenUIState
 
 @Composable
@@ -76,6 +76,7 @@ public fun rememberAccountsScreenUIState(
             }
         }
 
+        // TODO(Abhi): Can be reordered to match the class ordering
         AccountsScreenUIState(
             screenBottomSheetType = screenBottomSheetType,
             clickedItemId = clickedItemId,

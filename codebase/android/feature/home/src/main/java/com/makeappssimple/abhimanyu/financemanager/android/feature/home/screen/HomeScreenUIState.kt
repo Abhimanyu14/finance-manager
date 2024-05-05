@@ -21,19 +21,19 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ove
 
 @Stable
 public class HomeScreenUIState(
-    public val isBalanceVisible: Boolean,
-    public val screenBottomSheetType: HomeScreenBottomSheetType,
-    public val setScreenBottomSheetType: (HomeScreenBottomSheetType) -> Unit,
-    public val isLoading: Boolean,
     public val isBackupCardVisible: Boolean,
+    public val isBalanceVisible: Boolean,
+    public val isLoading: Boolean,
+    public val screenBottomSheetType: HomeScreenBottomSheetType,
     public val overviewTabSelectionIndex: Int,
     public val transactionListItemDataList: List<TransactionListItemData>,
     public val accountsTotalBalanceAmountValue: Long,
     public val accountsTotalMinimumBalanceAmountValue: Long,
     public val overviewCardData: OverviewCardViewModelData,
+    public val pieChartData: PieChartData,
     public val resetScreenBottomSheetType: () -> Unit,
     public val setBalanceVisible: (Boolean) -> Unit,
-    public val pieChartData: PieChartData,
+    public val setScreenBottomSheetType: (HomeScreenBottomSheetType) -> Unit,
 ) : ScreenUIState
 
 @Composable
@@ -78,6 +78,7 @@ public fun rememberHomeScreenUIState(
             value = unwrappedData?.overviewCardData?.expense?.toLong().orZero(),
         )
 
+        // TODO(Abhi): Can be reordered to match the class ordering
         HomeScreenUIState(
             isBalanceVisible = isBalanceVisible,
             screenBottomSheetType = screenBottomSheetType,

@@ -25,31 +25,31 @@ import java.time.LocalDate
 @Stable
 public class AddOrEditTransactionScreenUIState(
     public val screenBottomSheetType: AddOrEditTransactionScreenBottomSheetType,
-    public val isTransactionDatePickerDialogVisible: Boolean,
-    public val isTransactionTimePickerDialogVisible: Boolean,
-    public val setScreenBottomSheetType: (AddOrEditTransactionScreenBottomSheetType) -> Unit,
-    public val setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit,
-    public val setIsTransactionTimePickerDialogVisible: (Boolean) -> Unit,
-    public val isLoading: Boolean,
     public val uiState: AddOrEditTransactionScreenUiStateData,
     public val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState,
     public val isCtaButtonEnabled: Boolean,
-    @StringRes
-    public val appBarTitleTextStringResourceId: Int,
-    @StringRes
-    public val ctaButtonLabelTextStringResourceId: Int,
+    public val isLoading: Boolean,
+    public val isTransactionDatePickerDialogVisible: Boolean,
+    public val isTransactionTimePickerDialogVisible: Boolean,
     @StringRes
     public val accountFromTextFieldLabelTextStringResourceId: Int,
     @StringRes
     public val accountToTextFieldLabelTextStringResourceId: Int,
+    @StringRes
+    public val appBarTitleTextStringResourceId: Int,
+    @StringRes
+    public val ctaButtonLabelTextStringResourceId: Int,
+    public val accounts: List<Account>,
     public val filteredCategories: List<Category>,
+    public val titleSuggestionsChipUIData: List<ChipUIData>,
+    public val transactionForValuesChipUIData: List<ChipUIData>,
     public val transactionTypesForNewTransactionChipUIData: List<ChipUIData>,
     public val titleSuggestions: List<String>,
-    public val titleSuggestionsChipUIData: List<ChipUIData>,
-    public val accounts: List<Account>,
-    public val transactionForValuesChipUIData: List<ChipUIData>,
     public val currentLocalDate: LocalDate,
     public val resetScreenBottomSheetType: () -> Unit,
+    public val setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit,
+    public val setIsTransactionTimePickerDialogVisible: (Boolean) -> Unit,
+    public val setScreenBottomSheetType: (AddOrEditTransactionScreenBottomSheetType) -> Unit,
 ) : ScreenUIState
 
 @Composable
@@ -94,6 +94,7 @@ public fun rememberAddOrEditTransactionScreenUIState(
         }
         val titleSuggestions = unwrappedData?.titleSuggestions.orEmpty()
 
+        // TODO(Abhi): Can be reordered to match the class ordering
         AddOrEditTransactionScreenUIState(
             screenBottomSheetType = screenBottomSheetType,
             isTransactionDatePickerDialogVisible = isTransactionDatePickerDialogVisible,

@@ -18,19 +18,19 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.gri
 
 @Stable
 public class CategoriesScreenUIState(
+    public val isLoading: Boolean,
     public val screenBottomSheetType: CategoriesScreenBottomSheetType,
     public var categoryIdToDelete: Int?,
     public var clickedItemId: Int?,
+    public val selectedTabIndex: Int,
+    public val tabData: List<MyTabData>,
+    public val validTransactionTypes: List<TransactionType>,
+    public val categoriesGridItemDataMap: Map<TransactionType, List<CategoriesGridItemData>>,
     public val pagerState: PagerState,
-    public val setScreenBottomSheetType: (CategoriesScreenBottomSheetType) -> Unit,
+    public val resetScreenBottomSheetType: () -> Unit,
     public val setCategoryIdToDelete: (Int?) -> Unit,
     public val setClickedItemId: (Int?) -> Unit,
-    public val isLoading: Boolean,
-    public val selectedTabIndex: Int,
-    public val validTransactionTypes: List<TransactionType>,
-    public val tabData: List<MyTabData>,
-    public val categoriesGridItemDataMap: Map<TransactionType, List<CategoriesGridItemData>>,
-    public val resetScreenBottomSheetType: () -> Unit,
+    public val setScreenBottomSheetType: (CategoriesScreenBottomSheetType) -> Unit,
 ) : ScreenUIState
 
 @Composable
@@ -91,6 +91,7 @@ public fun rememberCategoriesScreenUIState(
             TransactionType.INVESTMENT,
         )
 
+        // TODO(Abhi): Can be reordered to match the class ordering
         CategoriesScreenUIState(
             screenBottomSheetType = screenBottomSheetType,
             categoryIdToDelete = categoryIdToDelete,

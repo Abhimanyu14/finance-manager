@@ -13,11 +13,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Stable
 public class SettingsScreenUIState(
-    public val screenBottomSheetType: SettingsScreenBottomSheetType,
-    public val snackbarHostState: SnackbarHostState,
-    public val setScreenBottomSheetType: (SettingsScreenBottomSheetType) -> Unit,
     public val isLoading: Boolean,
     public val isReminderEnabled: Boolean?,
+    public val screenBottomSheetType: SettingsScreenBottomSheetType,
+    public val snackbarHostState: SnackbarHostState,
     public val appVersion: String?,
     public val resetScreenBottomSheetType: () -> Unit,
 ) : ScreenUIState
@@ -55,10 +54,10 @@ public fun rememberSettingsScreenUIState(
             }
         }
 
+        // TODO(Abhi): Can be reordered to match the class ordering
         SettingsScreenUIState(
             screenBottomSheetType = screenBottomSheetType,
             snackbarHostState = snackbarHostState,
-            setScreenBottomSheetType = setScreenBottomSheetType,
             isLoading = unwrappedData.isNull() || unwrappedData.isLoading,
             isReminderEnabled = unwrappedData?.isReminderEnabled,
             appVersion = unwrappedData?.appVersion,

@@ -25,9 +25,6 @@ import java.time.LocalDate
 @Stable
 public class TransactionsScreenUIState(
     public val isInSelectionMode: Boolean,
-    public val screenBottomSheetType: TransactionsScreenBottomSheetType,
-    public val setIsInSelectionMode: (Boolean) -> Unit,
-    public val setScreenBottomSheetType: (TransactionsScreenBottomSheetType) -> Unit,
     public val isLoading: Boolean,
     public val selectedFilter: Filter,
     public val selectedTransactions: List<Int>,
@@ -38,13 +35,16 @@ public class TransactionsScreenUIState(
     public val incomeCategories: List<Category>,
     public val investmentCategories: List<Category>,
     public val transactionTypes: List<TransactionType>,
-    public val oldestTransactionLocalDate: LocalDate,
     public val currentLocalDate: LocalDate,
+    public val oldestTransactionLocalDate: LocalDate,
     public val currentTimeMillis: Long,
     public val transactionDetailsListItemViewData: Map<String, List<TransactionListItemData>>,
-    public val searchText: String,
     public val selectedSortOption: SortOption,
+    public val searchText: String,
+    public val screenBottomSheetType: TransactionsScreenBottomSheetType,
     public val resetScreenBottomSheetType: () -> Unit,
+    public val setIsInSelectionMode: (Boolean) -> Unit,
+    public val setScreenBottomSheetType: (TransactionsScreenBottomSheetType) -> Unit,
 ) : ScreenUIState
 
 @Composable
@@ -81,6 +81,7 @@ public fun rememberTransactionsScreenUIState(
             }
         }
 
+        // TODO(Abhi): Can be reordered to match the class ordering
         TransactionsScreenUIState(
             isInSelectionMode = isInSelectionMode,
             screenBottomSheetType = screenBottomSheetType,

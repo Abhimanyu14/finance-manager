@@ -13,14 +13,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Stable
 public class TransactionForValuesScreenUIState(
-    public val transactionForIdToDelete: Int?,
-    public val screenBottomSheetType: TransactionForValuesScreenBottomSheetType,
-    public val setTransactionForIdToDelete: (Int?) -> Unit,
-    public val setScreenBottomSheetType: (TransactionForValuesScreenBottomSheetType) -> Unit,
     public val isLoading: Boolean,
+    public val transactionForIdToDelete: Int?,
     public val transactionForValuesIsUsedInTransactions: List<Boolean>,
     public val transactionForValues: List<TransactionFor>,
+    public val screenBottomSheetType: TransactionForValuesScreenBottomSheetType,
     public val resetScreenBottomSheetType: () -> Unit,
+    public val setScreenBottomSheetType: (TransactionForValuesScreenBottomSheetType) -> Unit,
+    public val setTransactionForIdToDelete: (Int?) -> Unit,
 ) : ScreenUIState
 
 @Composable
@@ -62,6 +62,7 @@ public fun rememberTransactionForValuesScreenUIState(
             }
         }
 
+        // TODO(Abhi): Can be reordered to match the class ordering
         TransactionForValuesScreenUIState(
             transactionForIdToDelete = transactionForIdToDelete,
             screenBottomSheetType = screenBottomSheetType,

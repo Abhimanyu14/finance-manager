@@ -24,10 +24,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 @Stable
 public class AddOrEditAccountScreenUIState(
     public val screenBottomSheetType: AddOrEditAccountScreenBottomSheetType,
-    public val nameTextFieldFocusRequester: FocusRequester,
-    public val balanceAmountTextFieldFocusRequester: FocusRequester,
-    public val isLoading: Boolean,
+    public val visibilityData: AddOrEditAccountScreenUIVisibilityData,
     public val isCtaButtonEnabled: Boolean,
+    public val isLoading: Boolean,
+    public val balanceAmountTextFieldFocusRequester: FocusRequester,
+    public val nameTextFieldFocusRequester: FocusRequester,
     @StringRes
     public val appBarTitleTextStringResourceId: Int,
     @StringRes
@@ -40,7 +41,6 @@ public class AddOrEditAccountScreenUIState(
     public val minimumBalanceAmountValue: TextFieldValue,
     public val name: TextFieldValue,
     public val resetScreenBottomSheetType: () -> Unit,
-    public val visibilityData: AddOrEditAccountScreenUIVisibilityData,
 ) : ScreenUIState
 
 @Composable
@@ -84,7 +84,8 @@ public fun rememberAddOrEditAccountScreenUIState(
         val selectedAccount = unwrappedData?.accountTypes?.getOrNull(
             selectedAccountTypeIndex
         )
-        
+
+        // TODO(Abhi): Can be reordered to match the class ordering
         AddOrEditAccountScreenUIState(
             screenBottomSheetType = screenBottomSheetType,
             nameTextFieldFocusRequester = nameTextFieldFocusRequester,

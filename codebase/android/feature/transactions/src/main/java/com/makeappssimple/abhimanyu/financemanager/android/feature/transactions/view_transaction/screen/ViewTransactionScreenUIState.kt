@@ -13,15 +13,15 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 
 @Stable
 public class ViewTransactionScreenUIState(
-    public val transactionIdToDelete: Int?,
-    public val screenBottomSheetType: ViewTransactionScreenBottomSheetType,
-    public val setTransactionIdToDelete: (Int?) -> Unit,
-    public val setScreenBottomSheetType: (ViewTransactionScreenBottomSheetType) -> Unit,
     public val isLoading: Boolean,
-    public val originalTransactionListItemData: TransactionListItemData?,
+    public val transactionIdToDelete: Int?,
     public val refundTransactionListItemData: List<TransactionListItemData>?,
+    public val originalTransactionListItemData: TransactionListItemData?,
     public val transactionListItemData: TransactionListItemData?,
+    public val screenBottomSheetType: ViewTransactionScreenBottomSheetType,
     public val resetScreenBottomSheetType: () -> Unit,
+    public val setScreenBottomSheetType: (ViewTransactionScreenBottomSheetType) -> Unit,
+    public val setTransactionIdToDelete: (Int?) -> Unit,
 ) : ScreenUIState
 
 @Composable
@@ -63,6 +63,7 @@ public fun rememberViewTransactionScreenUIState(
             }
         }
 
+        // TODO(Abhi): Can be reordered to match the class ordering
         ViewTransactionScreenUIState(
             transactionIdToDelete = transactionIdToDelete,
             screenBottomSheetType = screenBottomSheetType,

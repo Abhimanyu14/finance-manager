@@ -12,10 +12,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Stable
 public class OpenSourceLicensesScreenUIState(
-    public val screenBottomSheetType: OpenSourceLicensesScreenBottomSheetType = OpenSourceLicensesScreenBottomSheetType.None,
-    public val setScreenBottomSheetType: (OpenSourceLicensesScreenBottomSheetType) -> Unit = {},
     public val isLoading: Boolean,
+    public val screenBottomSheetType: OpenSourceLicensesScreenBottomSheetType,
     public val resetScreenBottomSheetType: () -> Unit,
+    public val setScreenBottomSheetType: (OpenSourceLicensesScreenBottomSheetType) -> Unit,
 ) : ScreenUIState
 
 @Composable
@@ -47,6 +47,7 @@ public fun rememberOpenSourceLicensesScreenUIState(
             }
         }
 
+        // TODO(Abhi): Can be reordered to match the class ordering
         OpenSourceLicensesScreenUIState(
             screenBottomSheetType = screenBottomSheetType,
             setScreenBottomSheetType = setScreenBottomSheetType,

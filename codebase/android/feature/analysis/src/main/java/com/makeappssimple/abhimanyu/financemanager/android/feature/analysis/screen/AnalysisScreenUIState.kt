@@ -21,9 +21,9 @@ import java.time.LocalDate
 @Stable
 public class AnalysisScreenUIState(
     public val screenBottomSheetType: AnalysisScreenBottomSheetType,
-    public val setScreenBottomSheetType: (AnalysisScreenBottomSheetType) -> Unit,
     public val isLoading: Boolean,
     public val selectedFilter: Filter,
+    public val maxAmountTextWidth: Int,
     public val selectedTransactionTypeIndex: Int?,
     public val transactionDataMappedByCategory: List<AnalysisListItemData>,
     public val transactionTypesChipUIData: List<ChipUIData>,
@@ -31,8 +31,8 @@ public class AnalysisScreenUIState(
     public val defaultEndLocalDate: LocalDate,
     public val startOfMonthLocalDate: LocalDate,
     public val startOfYearLocalDate: LocalDate,
-    public val maxAmountTextWidth: Int,
     public val resetScreenBottomSheetType: () -> Unit,
+    public val setScreenBottomSheetType: (AnalysisScreenBottomSheetType) -> Unit,
 ) : ScreenUIState
 
 @Composable
@@ -68,6 +68,7 @@ public fun rememberAnalysisScreenUIState(
         val transactionDataMappedByCategory =
             unwrappedData?.transactionDataMappedByCategory.orEmpty()
 
+        // TODO(Abhi): Can be reordered to match the class ordering
         AnalysisScreenUIState(
             screenBottomSheetType = screenBottomSheetType,
             setScreenBottomSheetType = setScreenBottomSheetType,

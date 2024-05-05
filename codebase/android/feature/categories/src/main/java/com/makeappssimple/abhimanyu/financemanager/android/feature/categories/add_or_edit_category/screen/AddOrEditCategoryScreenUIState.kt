@@ -19,21 +19,21 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 @Stable
 public class AddOrEditCategoryScreenUIState(
     public val screenBottomSheetType: AddOrEditCategoryScreenBottomSheetType,
-    public val setScreenBottomSheetType: (AddOrEditCategoryScreenBottomSheetType) -> Unit,
-    public val isLoading: Boolean,
     public val isCtaButtonEnabled: Boolean,
+    public val isLoading: Boolean,
+    @StringRes
+    public val appBarTitleTextStringResourceId: Int,
+    @StringRes
+    public val ctaButtonLabelTextStringResourceId: Int,
+    @StringRes
+    public val titleTextFieldErrorTextStringResourceId: Int?,
     public val selectedTransactionTypeIndex: Int?,
     public val transactionTypesChipUIData: List<ChipUIData>,
     public val emoji: String,
     public val emojiSearchText: String,
     public val title: TextFieldValue,
-    @StringRes
-    public val titleTextFieldErrorTextStringResourceId: Int?,
-    @StringRes
-    public val appBarTitleTextStringResourceId: Int,
-    @StringRes
-    public val ctaButtonLabelTextStringResourceId: Int,
     public val resetScreenBottomSheetType: () -> Unit,
+    public val setScreenBottomSheetType: (AddOrEditCategoryScreenBottomSheetType) -> Unit,
 ) : ScreenUIState
 
 @Composable
@@ -67,6 +67,7 @@ public fun rememberAddOrEditCategoryScreenUIState(
             }
         }
 
+        // TODO(Abhi): Can be reordered to match the class ordering
         AddOrEditCategoryScreenUIState(
             screenBottomSheetType = screenBottomSheetType,
             setScreenBottomSheetType = setScreenBottomSheetType,
