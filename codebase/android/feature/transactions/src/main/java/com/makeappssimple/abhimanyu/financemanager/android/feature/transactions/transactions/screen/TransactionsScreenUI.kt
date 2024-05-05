@@ -229,7 +229,7 @@ internal fun TransactionsScreenUI(
                 MyTopAppBar(
                     titleTextStringResourceId = R.string.screen_transactions_appbar_title,
                     navigationAction = {
-                        handleUIEvents(TransactionsScreenUIEvent.NavigateUp)
+                        handleUIEvents(TransactionsScreenUIEvent.OnTopAppBarNavigationButtonClick)
                     },
                 )
             }

@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 public sealed class TransactionsScreenUIEvent : ScreenUIEvent {
     public data object ClearSelectedTransactions : TransactionsScreenUIEvent()
     public data object NavigateToAddTransactionScreen : TransactionsScreenUIEvent()
-    public data object NavigateUp : TransactionsScreenUIEvent()
+    public data object OnTopAppBarNavigationButtonClick : TransactionsScreenUIEvent()
     public data object SelectAllTransactions : TransactionsScreenUIEvent()
 
     public data class AddToSelectedTransactions(

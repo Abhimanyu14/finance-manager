@@ -167,7 +167,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
                 clearName()
             }
 
-            is AddOrEditAccountScreenUIEvent.NavigateUp -> {
+            is AddOrEditAccountScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
                 navigateUp()
             }
 

@@ -222,7 +222,7 @@ internal fun SettingsScreenUI(
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_settings_appbar_title,
                 navigationAction = {
-                    handleUIEvents(SettingsScreenUIEvent.NavigateUp)
+                    handleUIEvents(SettingsScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
             )
         },

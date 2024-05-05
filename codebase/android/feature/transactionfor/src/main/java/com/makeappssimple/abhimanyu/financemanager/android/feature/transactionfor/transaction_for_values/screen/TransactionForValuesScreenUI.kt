@@ -104,7 +104,7 @@ internal fun TransactionForValuesScreenUI(
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_transaction_for_values_appbar_title,
                 navigationAction = {
-                    handleUIEvents(TransactionForValuesScreenUIEvent.NavigateUp)
+                    handleUIEvents(TransactionForValuesScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
             )
         },

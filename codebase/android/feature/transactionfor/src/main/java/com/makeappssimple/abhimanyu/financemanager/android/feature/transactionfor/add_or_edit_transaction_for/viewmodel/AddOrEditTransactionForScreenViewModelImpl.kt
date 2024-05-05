@@ -114,7 +114,7 @@ internal class AddOrEditTransactionForScreenViewModelImpl @Inject constructor(
                 clearTitle()
             }
 
-            is AddOrEditTransactionForScreenUIEvent.NavigateUp -> {
+            is AddOrEditTransactionForScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
                 navigateUp()
             }
 

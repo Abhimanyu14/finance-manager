@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 @Immutable
 public sealed class AddOrEditCategoryScreenUIEvent : ScreenUIEvent {
     public data object ClearTitle : AddOrEditCategoryScreenUIEvent()
-    public data object NavigateUp : AddOrEditCategoryScreenUIEvent()
+    public data object OnTopAppBarNavigationButtonClick : AddOrEditCategoryScreenUIEvent()
     public data object OnCtaButtonClick : AddOrEditCategoryScreenUIEvent()
 
     public data class UpdateEmoji(

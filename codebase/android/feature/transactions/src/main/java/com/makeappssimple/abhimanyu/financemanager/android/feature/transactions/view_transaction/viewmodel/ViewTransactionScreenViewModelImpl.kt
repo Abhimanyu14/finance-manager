@@ -104,7 +104,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
                 navigateToViewTransactionScreen(uiEvent.transactionId)
             }
 
-            is ViewTransactionScreenUIEvent.NavigateUp -> {
+            is ViewTransactionScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
                 navigateUp()
             }
         }

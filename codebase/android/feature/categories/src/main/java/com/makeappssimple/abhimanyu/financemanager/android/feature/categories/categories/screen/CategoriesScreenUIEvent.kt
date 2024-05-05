@@ -6,7 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Immutable
 public sealed class CategoriesScreenUIEvent : ScreenUIEvent {
-    public data object NavigateUp : CategoriesScreenUIEvent()
+    public data object OnTopAppBarNavigationButtonClick : CategoriesScreenUIEvent()
 
     public data class DeleteCategory(
         val categoryId: Int,

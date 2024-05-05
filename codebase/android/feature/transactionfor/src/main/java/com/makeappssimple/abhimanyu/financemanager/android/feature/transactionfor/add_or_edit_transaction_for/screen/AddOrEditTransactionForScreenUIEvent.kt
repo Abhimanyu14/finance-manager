@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 @Immutable
 public sealed class AddOrEditTransactionForScreenUIEvent : ScreenUIEvent {
     public data object ClearTitle : AddOrEditTransactionForScreenUIEvent()
-    public data object NavigateUp : AddOrEditTransactionForScreenUIEvent()
+    public data object OnTopAppBarNavigationButtonClick : AddOrEditTransactionForScreenUIEvent()
     public data object OnCtaButtonClick : AddOrEditTransactionForScreenUIEvent()
     public data class UpdateTitle(
         val updatedTitle: TextFieldValue,

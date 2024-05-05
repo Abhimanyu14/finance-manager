@@ -113,7 +113,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
                 navigateToTransactionForValuesScreen()
             }
 
-            is SettingsScreenUIEvent.NavigateUp -> {
+            is SettingsScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
                 navigateUp()
             }
 

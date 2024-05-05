@@ -40,7 +40,7 @@ internal fun OpenSourceLicensesScreenUI(
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_open_source_licenses_appbar_title,
                 navigationAction = {
-                    handleUIEvents(OpenSourceLicensesScreenUIEvent.NavigateUp)
+                    handleUIEvents(OpenSourceLicensesScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
             )
         },

@@ -187,7 +187,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
                 )
             }
 
-            is CategoriesScreenUIEvent.NavigateUp -> {
+            is CategoriesScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
                 navigateUp()
             }
 

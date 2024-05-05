@@ -9,7 +9,7 @@ public sealed class AddOrEditAccountScreenUIEvent : ScreenUIEvent {
     public data object ClearBalanceAmountValue : AddOrEditAccountScreenUIEvent()
     public data object ClearMinimumAccountBalanceAmountValue : AddOrEditAccountScreenUIEvent()
     public data object ClearName : AddOrEditAccountScreenUIEvent()
-    public data object NavigateUp : AddOrEditAccountScreenUIEvent()
+    public data object OnTopAppBarNavigationButtonClick : AddOrEditAccountScreenUIEvent()
     public data object OnCtaButtonClick : AddOrEditAccountScreenUIEvent()
 
     public data class UpdateBalanceAmountValue(

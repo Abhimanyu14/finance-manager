@@ -142,7 +142,7 @@ internal fun CategoriesScreenUI(
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_categories_appbar_title,
                 navigationAction = {
-                    handleUIEvents(CategoriesScreenUIEvent.NavigateUp)
+                    handleUIEvents(CategoriesScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
             )
         },

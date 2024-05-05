@@ -100,7 +100,7 @@ internal fun AddOrEditTransactionForScreenUI(
             MyTopAppBar(
                 titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
                 navigationAction = {
-                    handleUIEvents(AddOrEditTransactionForScreenUIEvent.NavigateUp)
+                    handleUIEvents(AddOrEditTransactionForScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
             )
         },

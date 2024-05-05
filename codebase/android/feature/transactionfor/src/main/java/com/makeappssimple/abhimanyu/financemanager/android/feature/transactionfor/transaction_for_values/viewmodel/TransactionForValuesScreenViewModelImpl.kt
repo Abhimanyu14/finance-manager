@@ -89,7 +89,7 @@ internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
                 )
             }
 
-            is TransactionForValuesScreenUIEvent.NavigateUp -> {
+            is TransactionForValuesScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
                 navigateUp()
             }
         }

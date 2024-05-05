@@ -169,7 +169,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
                 clearTitle()
             }
 
-            is AddOrEditCategoryScreenUIEvent.NavigateUp -> {
+            is AddOrEditCategoryScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
                 navigateUp()
             }
 

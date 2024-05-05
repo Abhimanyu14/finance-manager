@@ -141,7 +141,7 @@ internal fun AddOrEditCategoryScreenUI(
             MyTopAppBar(
                 titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
                 navigationAction = {
-                    handleUIEvents(AddOrEditCategoryScreenUIEvent.NavigateUp)
+                    handleUIEvents(AddOrEditCategoryScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
             )
         },

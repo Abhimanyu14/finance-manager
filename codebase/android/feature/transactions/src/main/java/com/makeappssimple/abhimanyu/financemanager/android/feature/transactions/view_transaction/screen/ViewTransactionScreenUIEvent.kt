@@ -5,7 +5,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Immutable
 public sealed class ViewTransactionScreenUIEvent : ScreenUIEvent {
-    public data object NavigateUp : ViewTransactionScreenUIEvent()
+    public data object OnTopAppBarNavigationButtonClick : ViewTransactionScreenUIEvent()
 
     public data class DeleteTransaction(
         val transactionId: Int,

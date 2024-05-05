@@ -13,7 +13,7 @@ public sealed class AddOrEditTransactionScreenUIEvent : ScreenUIEvent {
     public data object ClearAmount : AddOrEditTransactionScreenUIEvent()
     public data object ClearDescription : AddOrEditTransactionScreenUIEvent()
     public data object ClearTitle : AddOrEditTransactionScreenUIEvent()
-    public data object NavigateUp : AddOrEditTransactionScreenUIEvent()
+    public data object OnTopAppBarNavigationButtonClick : AddOrEditTransactionScreenUIEvent()
     public data object OnCtaButtonClick : AddOrEditTransactionScreenUIEvent()
 
     public data class UpdateAmount(

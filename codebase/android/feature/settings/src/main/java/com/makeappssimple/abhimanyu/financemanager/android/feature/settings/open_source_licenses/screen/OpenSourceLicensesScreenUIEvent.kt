@@ -5,5 +5,5 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Immutable
 public sealed class OpenSourceLicensesScreenUIEvent : ScreenUIEvent {
-    public data object NavigateUp : OpenSourceLicensesScreenUIEvent()
+    public data object OnTopAppBarNavigationButtonClick : OpenSourceLicensesScreenUIEvent()
 }
