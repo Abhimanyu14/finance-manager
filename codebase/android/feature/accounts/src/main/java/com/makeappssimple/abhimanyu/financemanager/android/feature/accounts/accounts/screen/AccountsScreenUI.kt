@@ -59,19 +59,11 @@ internal fun AccountsScreenUI(
             when (uiState.screenBottomSheetType) {
                 is AccountsScreenBottomSheetType.DeleteConfirmation -> {
                     AccountsDeleteConfirmationBottomSheet(
-                        accountIdToDelete = uiState.accountIdToDelete,
-                        resetBottomSheetType = uiState.resetScreenBottomSheetType,
-                        resetAccountIdToDelete = {
-                            uiState.setAccountIdToDelete(null)
+                        onPositiveButtonClick = {
+                            handleUIEvents(AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.PositiveButtonClick)
                         },
-                        deleteAccount = {
-                            uiState.accountIdToDelete?.let { accountId ->
-                                handleUIEvents(
-                                    AccountsScreenUIEvent.DeleteAccount(
-                                        accountId = accountId,
-                                    )
-                                )
-                            }
+                        onNegativeButtonClick = {
+                            handleUIEvents(AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.NegativeButtonClick)
                         },
                     )
                 }
@@ -82,26 +74,17 @@ internal fun AccountsScreenUI(
 
                 is AccountsScreenBottomSheetType.SetAsDefaultConfirmation -> {
                     AccountsSetAsDefaultConfirmationBottomSheet(
-                        clickedItemId = uiState.clickedItemId,
-                        resetBottomSheetType = uiState.resetScreenBottomSheetType,
-                        resetClickedItemId = {
-                            uiState.setClickedItemId(null)
+                        onNegativeButtonClick = {
+                            handleUIEvents(AccountsScreenUIEvent.OnAccountsSetAsDefaultConfirmationBottomSheet.NegativeButtonClick)
                         },
-                        setDefaultAccountIdInDataStore = {
-                            uiState.clickedItemId?.let { clickedItemIdValue ->
-                                handleUIEvents(
-                                    AccountsScreenUIEvent.SetDefaultAccountIdInDataStore(
-                                        defaultAccountId = clickedItemIdValue,
-                                    )
-                                )
-                            }
+                        onPositiveButtonClick = {
+                            handleUIEvents(AccountsScreenUIEvent.OnAccountsSetAsDefaultConfirmationBottomSheet.PositiveButtonClick)
                         },
                     )
                 }
 
                 is AccountsScreenBottomSheetType.Menu -> {
-                    val bottomSheetData =
-                        uiState.screenBottomSheetType
+                    val bottomSheetData = uiState.screenBottomSheetType
 
                     AccountsMenuBottomSheet(
                         isDeleteVisible = bottomSheetData.isDeleteVisible,
@@ -114,7 +97,7 @@ internal fun AccountsScreenUI(
                         onEditClick = {
                             uiState.resetScreenBottomSheetType()
                             handleUIEvents(
-                                AccountsScreenUIEvent.NavigateToEditAccountScreen(
+                                AccountsScreenUIEvent.OnAccountsMenuBottomSheet.EditButtonClick(
                                     accountId = bottomSheetData.accountId,
                                 )
                             )
@@ -132,7 +115,7 @@ internal fun AccountsScreenUI(
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_accounts_appbar_title,
                 navigationAction = {
-                    handleUIEvents(AccountsScreenUIEvent.NavigateUp)
+                    handleUIEvents(AccountsScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
             )
         },
@@ -145,7 +128,7 @@ internal fun AccountsScreenUI(
                     id = R.string.screen_accounts_floating_action_button_content_description,
                 ),
                 onClick = {
-                    handleUIEvents(AccountsScreenUIEvent.NavigateToAddAccountScreen)
+                    handleUIEvents(AccountsScreenUIEvent.OnFloatingActionButtonClick)
                 },
             )
         },
@@ -187,45 +170,6 @@ internal fun AccountsScreenUI(
                             data = listItem,
                             events = AccountsListItemContentEvents(
                                 onClick = {
-                                    listItem.accountId?.let { accountId ->
-                                        uiState.setScreenBottomSheetType(
-                                            AccountsScreenBottomSheetType.Menu(
-                                                isDeleteVisible = listItem.isDeleteEnabled,
-                                                isEditVisible = true,
-                                                isSetAsDefaultVisible = !listItem.isDefault,
-                                                accountId = accountId,
-                                            )
-                                        )
-                                    }
-                                    uiState.setClickedItemId(listItem.accountId)
-                                },
-                                onLongClick = {
-                                    listItem.accountId?.let { accountId ->
-                                        uiState.setScreenBottomSheetType(
-                                            AccountsScreenBottomSheetType.Menu(
-                                                isDeleteVisible = listItem.isDeleteEnabled,
-                                                isEditVisible = true,
-                                                isSetAsDefaultVisible = !listItem.isDefault,
-                                                accountId = accountId,
-                                            )
-                                        )
-                                    }
-                                    uiState.setClickedItemId(listItem.accountId)
-                                },
-                                onEditClick = {
-                                    listItem.accountId?.let {
-                                        handleUIEvents(
-                                            AccountsScreenUIEvent.NavigateToEditAccountScreen(
-                                                accountId = it,
-                                            )
-                                        )
-                                    }
-                                },
-                                onDeleteClick = {
-                                    uiState.setAccountIdToDelete(listItem.accountId)
-                                    uiState.setScreenBottomSheetType(AccountsScreenBottomSheetType.DeleteConfirmation)
-                                },
-                                onMoreOptionsIconButtonClick = {
                                     listItem.accountId?.let { accountId ->
                                         uiState.setScreenBottomSheetType(
                                             AccountsScreenBottomSheetType.Menu(

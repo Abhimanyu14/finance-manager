@@ -5,18 +5,22 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Immutable
 public sealed class AccountsScreenUIEvent : ScreenUIEvent {
-    public data object NavigateToAddAccountScreen : AccountsScreenUIEvent()
-    public data object NavigateUp : AccountsScreenUIEvent()
+    public data object OnFloatingActionButtonClick : AccountsScreenUIEvent()
+    public data object OnTopAppBarNavigationButtonClick : AccountsScreenUIEvent()
 
-    public data class DeleteAccount(
-        val accountId: Int,
-    ) : AccountsScreenUIEvent()
+    public sealed class OnAccountsDeleteConfirmationBottomSheet {
+        public data object NegativeButtonClick : AccountsScreenUIEvent()
+        public data object PositiveButtonClick : AccountsScreenUIEvent()
+    }
 
-    public data class NavigateToEditAccountScreen(
-        val accountId: Int,
-    ) : AccountsScreenUIEvent()
+    public sealed class OnAccountsMenuBottomSheet {
+        public data class EditButtonClick(
+            val accountId: Int,
+        ) : AccountsScreenUIEvent()
+    }
 
-    public data class SetDefaultAccountIdInDataStore(
-        val defaultAccountId: Int,
-    ) : AccountsScreenUIEvent()
+    public sealed class OnAccountsSetAsDefaultConfirmationBottomSheet {
+        public data object NegativeButtonClick : AccountsScreenUIEvent()
+        public data object PositiveButtonClick : AccountsScreenUIEvent()
+    }
 }

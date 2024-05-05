@@ -7,10 +7,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bot
 
 @Composable
 public fun AccountsSetAsDefaultConfirmationBottomSheet(
-    clickedItemId: Int?,
-    resetBottomSheetType: () -> Unit,
-    resetClickedItemId: () -> Unit,
-    setDefaultAccountIdInDataStore: () -> Unit,
+    onNegativeButtonClick: () -> Unit,
+    onPositiveButtonClick: () -> Unit,
 ) {
     MyConfirmationBottomSheetUI(
         title = stringResource(
@@ -25,16 +23,7 @@ public fun AccountsSetAsDefaultConfirmationBottomSheet(
         negativeButtonText = stringResource(
             id = R.string.screen_accounts_bottom_sheet_set_as_default_negative_button_text,
         ),
-        onPositiveButtonClick = {
-            clickedItemId?.let {
-                setDefaultAccountIdInDataStore()
-                resetClickedItemId()
-            }
-            resetBottomSheetType()
-        },
-        onNegativeButtonClick = {
-            resetBottomSheetType()
-            resetClickedItemId()
-        },
+        onNegativeButtonClick = onNegativeButtonClick,
+        onPositiveButtonClick = onPositiveButtonClick,
     )
 }

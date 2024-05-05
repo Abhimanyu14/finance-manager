@@ -12,4 +12,12 @@ public interface AccountsScreenViewModel : ScreenViewModel {
     public fun handleUIEvents(
         uiEvent: AccountsScreenUIEvent,
     )
+
+    public fun deleteAccount(
+        accountId: Int,
+    )
+
+    public fun setDefaultAccountIdInDataStore(
+        defaultAccountId: Int,
+    )
 }

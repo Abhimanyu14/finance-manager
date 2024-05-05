@@ -34,6 +34,7 @@ public data class AccountsListItemContentData(
     val isDeleteEnabled: Boolean = false,
     val isHeading: Boolean = false,
     val isLowBalance: Boolean = false,
+    val isMoreOptionsIconButtonVisible: Boolean = false,
     val isSelected: Boolean = false,
     val icon: ImageVector? = null,
     val accountId: Int? = null,
@@ -44,10 +45,6 @@ public data class AccountsListItemContentData(
 @Immutable
 public data class AccountsListItemContentEvents(
     val onClick: () -> Unit,
-    val onLongClick: () -> Unit = {},
-    val onEditClick: () -> Unit = {},
-    val onDeleteClick: () -> Unit = {},
-    val onMoreOptionsIconButtonClick: (() -> Unit)? = null,
 )
 
 @Composable
@@ -65,7 +62,6 @@ public fun AccountsListItemContent(
             )
             .conditionalClickable(
                 onClick = events.onClick,
-                onLongClick = events.onLongClick,
             )
             .padding(
                 start = 16.dp,
@@ -122,7 +118,7 @@ public fun AccountsListItemContent(
                     ),
             )
         }
-        events.onMoreOptionsIconButtonClick?.let {
+        if (data.isMoreOptionsIconButtonVisible) {
             Icon(
                 imageVector = MyIcons.MoreVert,
                 contentDescription = stringResource(

@@ -102,6 +102,7 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
                                 account = account.name,
                             ) && deleteEnabled,
                             isLowBalance = account.balanceAmount < account.minimumAccountBalanceAmount.orEmpty(),
+                            isMoreOptionsIconButtonVisible = true,
                             icon = account.type.icon,
                             accountId = account.id,
                             balance = account.balanceAmount.toString(),
@@ -134,43 +135,49 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
         uiEvent: AccountsScreenUIEvent,
     ) {
         when (uiEvent) {
-            is AccountsScreenUIEvent.DeleteAccount -> {
-                deleteAccount(
-                    id = uiEvent.accountId,
-                )
-            }
-
-            is AccountsScreenUIEvent.NavigateToAddAccountScreen -> {
+            is AccountsScreenUIEvent.OnFloatingActionButtonClick -> {
                 navigateToAddAccountScreen()
             }
 
-            is AccountsScreenUIEvent.NavigateToEditAccountScreen -> {
+            is AccountsScreenUIEvent.OnAccountsMenuBottomSheet.EditButtonClick -> {
                 navigateToEditAccountScreen(
                     accountId = uiEvent.accountId,
                 )
             }
 
-            is AccountsScreenUIEvent.NavigateUp -> {
+            is AccountsScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
                 navigateUp()
             }
 
-            is AccountsScreenUIEvent.SetDefaultAccountIdInDataStore -> {
-                setDefaultAccountIdInDataStore(
-                    defaultAccountId = uiEvent.defaultAccountId,
-                )
+            else -> {
+                // Noop, should have been handled in Screen composable or invalid event
             }
         }
     }
 
-    private fun deleteAccount(
-        id: Int,
+    override fun deleteAccount(
+        accountId: Int,
     ) {
         closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             deleteAccountUseCase(
-                id = id,
+                id = accountId,
             )
+        }
+    }
+
+    override fun setDefaultAccountIdInDataStore(
+        defaultAccountId: Int,
+    ) {
+        closeableCoroutineScope.launch(
+            context = dispatcherProvider.io,
+        ) {
+            @Suppress("UNUSED_VARIABLE")
+            val result = myPreferencesRepository.setDefaultAccountId(
+                defaultAccountId = defaultAccountId,
+            )
+            // TODO(Abhi): Use the result to show snackbar
         }
     }
 
@@ -188,19 +195,5 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
 
     private fun navigateUp() {
         navigator.navigateUp()
-    }
-
-    private fun setDefaultAccountIdInDataStore(
-        defaultAccountId: Int,
-    ) {
-        closeableCoroutineScope.launch(
-            context = dispatcherProvider.io,
-        ) {
-            @Suppress("UNUSED_VARIABLE")
-            val result = myPreferencesRepository.setDefaultAccountId(
-                defaultAccountId = defaultAccountId,
-            )
-            // TODO(Abhi): Use the result to show snackbar
-        }
     }
 }

@@ -30,8 +30,37 @@ public fun AccountsScreen(
         key1 = viewModel,
     ) {
         { uiEvent: AccountsScreenUIEvent ->
-            @Suppress("UNUSED_EXPRESSION")
             when (uiEvent) {
+                is AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.NegativeButtonClick -> {
+                    uiState.resetScreenBottomSheetType()
+                    uiState.setAccountIdToDelete(null)
+                }
+
+                is AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.PositiveButtonClick -> {
+                    uiState.accountIdToDelete?.let { accountId ->
+                        viewModel.deleteAccount(
+                            accountId = accountId,
+                        )
+                        uiState.setAccountIdToDelete(null)
+                    }
+                    uiState.resetScreenBottomSheetType()
+                }
+
+                is AccountsScreenUIEvent.OnAccountsSetAsDefaultConfirmationBottomSheet.NegativeButtonClick -> {
+                    uiState.resetScreenBottomSheetType()
+                    uiState.setClickedItemId(null)
+                }
+
+                is AccountsScreenUIEvent.OnAccountsSetAsDefaultConfirmationBottomSheet.PositiveButtonClick -> {
+                    uiState.clickedItemId?.let { clickedItemIdValue ->
+                        viewModel.setDefaultAccountIdInDataStore(
+                            defaultAccountId = clickedItemIdValue,
+                        )
+                        uiState.setClickedItemId(null)
+                    }
+                    uiState.resetScreenBottomSheetType()
+                }
+
                 else -> {
                     viewModel.handleUIEvents(
                         uiEvent = uiEvent,

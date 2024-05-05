@@ -23,10 +23,10 @@ public fun MyConfirmationBottomSheetUI(
     modifier: Modifier = Modifier,
     title: String,
     message: String,
-    positiveButtonText: String,
     negativeButtonText: String,
-    onPositiveButtonClick: () -> Unit,
+    positiveButtonText: String,
     onNegativeButtonClick: () -> Unit,
+    onPositiveButtonClick: () -> Unit,
 ) {
     Column(
         modifier = modifier
