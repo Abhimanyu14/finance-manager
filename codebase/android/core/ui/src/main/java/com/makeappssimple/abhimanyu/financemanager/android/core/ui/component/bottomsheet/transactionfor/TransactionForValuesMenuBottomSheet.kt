@@ -8,10 +8,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 @Composable
 public fun TransactionForValuesMenuBottomSheet(
     isDeleteVisible: Boolean,
-    transactionForId: Int,
-    navigateToEditTransactionForScreen: (transactionForId: Int) -> Unit,
+    onEditClick: () -> Unit,
     onDeleteClick: () -> Unit,
-    resetBottomSheetType: () -> Unit,
 ) {
     val items = buildList {
         add(
@@ -21,8 +19,7 @@ public fun TransactionForValuesMenuBottomSheet(
                     id = R.string.bottom_sheet_transaction_for_values_menu_edit,
                 ),
                 onClick = {
-                    resetBottomSheetType()
-                    navigateToEditTransactionForScreen(transactionForId)
+                    onEditClick()
                 },
             ),
         )

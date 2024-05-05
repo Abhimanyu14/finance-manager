@@ -73,17 +73,17 @@ internal class TransactionForValuesScreenViewModelImpl @Inject constructor(
         uiEvent: TransactionForValuesScreenUIEvent,
     ) {
         when (uiEvent) {
-            is TransactionForValuesScreenUIEvent.DeleteTransactionFor -> {
+            is TransactionForValuesScreenUIEvent.OnTransactionForValuesDeleteConfirmationBottomSheet.PositiveButtonClick -> {
                 deleteTransactionFor(
                     id = uiEvent.transactionForId,
                 )
             }
 
-            is TransactionForValuesScreenUIEvent.NavigateToAddTransactionForScreen -> {
+            is TransactionForValuesScreenUIEvent.OnFloatingActionButtonClick -> {
                 navigateToAddTransactionForScreen()
             }
 
-            is TransactionForValuesScreenUIEvent.NavigateToEditTransactionForScreen -> {
+            is TransactionForValuesScreenUIEvent.OnTransactionForValuesMenuBottomSheet.EditButtonClick -> {
                 navigateToEditTransactionForScreen(
                     transactionForId = uiEvent.transactionForId,
                 )

@@ -55,20 +55,22 @@ internal fun TransactionForValuesScreenUI(
             when (uiState.screenBottomSheetType) {
                 is TransactionForValuesScreenBottomSheetType.DeleteConfirmation -> {
                     TransactionForValuesDeleteConfirmationBottomSheet(
-                        transactionForIdToDelete = uiState.transactionForIdToDelete,
-                        resetBottomSheetType = uiState.resetScreenBottomSheetType,
-                        resetTransactionForIdToDelete = {
+                        onNegativeButtonClick = {
+                            uiState.resetScreenBottomSheetType()
                             uiState.setTransactionForIdToDelete(null)
                         },
-                    ) {
-                        uiState.transactionForIdToDelete?.let { transactionForIdToDeleteValue ->
-                            handleUIEvents(
-                                TransactionForValuesScreenUIEvent.DeleteTransactionFor(
-                                    transactionForId = transactionForIdToDeleteValue,
+                        onPositiveButtonClick = {
+                            uiState.transactionForIdToDelete?.let { transactionForIdToDeleteValue ->
+                                handleUIEvents(
+                                    TransactionForValuesScreenUIEvent.OnTransactionForValuesDeleteConfirmationBottomSheet.PositiveButtonClick(
+                                        transactionForId = transactionForIdToDeleteValue,
+                                    )
                                 )
-                            )
-                        }
-                    }
+                                uiState.setTransactionForIdToDelete(null)
+                            }
+                            uiState.resetScreenBottomSheetType()
+                        },
+                    )
                 }
 
                 is TransactionForValuesScreenBottomSheetType.None -> {
@@ -80,11 +82,11 @@ internal fun TransactionForValuesScreenUI(
                         uiState.screenBottomSheetType
                     TransactionForValuesMenuBottomSheet(
                         isDeleteVisible = bottomSheetData.isDeleteVisible,
-                        transactionForId = bottomSheetData.transactionForId,
-                        navigateToEditTransactionForScreen = { transactionForId ->
+                        onEditClick = {
+                            uiState.resetScreenBottomSheetType()
                             handleUIEvents(
-                                TransactionForValuesScreenUIEvent.NavigateToEditTransactionForScreen(
-                                    transactionForId = transactionForId,
+                                TransactionForValuesScreenUIEvent.OnTransactionForValuesMenuBottomSheet.EditButtonClick(
+                                    transactionForId = bottomSheetData.transactionForId,
                                 )
                             )
                         },
@@ -94,7 +96,6 @@ internal fun TransactionForValuesScreenUI(
                                 TransactionForValuesScreenBottomSheetType.DeleteConfirmation
                             )
                         },
-                        resetBottomSheetType = uiState.resetScreenBottomSheetType,
                     )
                 }
             }
@@ -117,7 +118,7 @@ internal fun TransactionForValuesScreenUI(
                     id = R.string.screen_transaction_for_values_floating_action_button_content_description,
                 ),
                 onClick = {
-                    handleUIEvents(TransactionForValuesScreenUIEvent.NavigateToAddTransactionForScreen)
+                    handleUIEvents(TransactionForValuesScreenUIEvent.OnFloatingActionButtonClick)
                 },
             )
         },
