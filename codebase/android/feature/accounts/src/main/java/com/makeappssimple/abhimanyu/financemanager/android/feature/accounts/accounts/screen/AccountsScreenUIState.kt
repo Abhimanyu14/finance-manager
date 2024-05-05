@@ -13,22 +13,22 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemData
 
 @Stable
-public class AccountsScreenUIState(
-    public val screenBottomSheetType: AccountsScreenBottomSheetType,
-    public val isLoading: Boolean,
-    public val accountIdToDelete: Int?,
-    public val clickedItemId: Int?,
-    public val accountsListItemDataList: List<AccountsListItemData>,
-    public val accountsTotalBalanceAmountValue: Long,
-    public val accountsTotalMinimumBalanceAmountValue: Long,
-    public val resetScreenBottomSheetType: () -> Unit,
-    public val setAccountIdToDelete: (Int?) -> Unit,
-    public val setClickedItemId: (Int?) -> Unit,
-    public val setScreenBottomSheetType: (AccountsScreenBottomSheetType) -> Unit,
+internal class AccountsScreenUIState(
+    val screenBottomSheetType: AccountsScreenBottomSheetType,
+    val isLoading: Boolean,
+    val accountIdToDelete: Int?,
+    val clickedItemId: Int?,
+    val accountsListItemDataList: List<AccountsListItemData>,
+    val accountsTotalBalanceAmountValue: Long,
+    val accountsTotalMinimumBalanceAmountValue: Long,
+    val resetScreenBottomSheetType: () -> Unit,
+    val setAccountIdToDelete: (Int?) -> Unit,
+    val setClickedItemId: (Int?) -> Unit,
+    val setScreenBottomSheetType: (AccountsScreenBottomSheetType) -> Unit,
 ) : ScreenUIState
 
 @Composable
-public fun rememberAccountsScreenUIState(
+internal fun rememberAccountsScreenUIState(
     data: MyResult<AccountsScreenUIData>?,
 ): AccountsScreenUIState {
     var clickedItemId: Int? by remember {

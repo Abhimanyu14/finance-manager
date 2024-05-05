@@ -8,7 +8,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orMin
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
@@ -23,32 +22,31 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import java.time.LocalDate
 
 @Stable
-public class TransactionsScreenUIState(
-    public val isInSelectionMode: Boolean,
-    public val isLoading: Boolean,
-    public val selectedFilter: Filter,
-    public val selectedTransactions: List<Int>,
-    public val sortOptions: List<SortOption>,
-    public val transactionForValues: List<TransactionFor>,
-    public val accounts: List<Account>,
-    public val expenseCategories: List<Category>,
-    public val incomeCategories: List<Category>,
-    public val investmentCategories: List<Category>,
-    public val transactionTypes: List<TransactionType>,
-    public val currentLocalDate: LocalDate,
-    public val oldestTransactionLocalDate: LocalDate,
-    public val currentTimeMillis: Long,
-    public val transactionDetailsListItemViewData: Map<String, List<TransactionListItemData>>,
-    public val selectedSortOption: SortOption,
-    public val searchText: String,
-    public val screenBottomSheetType: TransactionsScreenBottomSheetType,
-    public val resetScreenBottomSheetType: () -> Unit,
-    public val setIsInSelectionMode: (Boolean) -> Unit,
-    public val setScreenBottomSheetType: (TransactionsScreenBottomSheetType) -> Unit,
+internal class TransactionsScreenUIState(
+    val isInSelectionMode: Boolean,
+    val isLoading: Boolean,
+    val selectedFilter: Filter,
+    val selectedTransactions: List<Int>,
+    val sortOptions: List<SortOption>,
+    val transactionForValues: List<TransactionFor>,
+    val accounts: List<Account>,
+    val expenseCategories: List<Category>,
+    val incomeCategories: List<Category>,
+    val investmentCategories: List<Category>,
+    val transactionTypes: List<TransactionType>,
+    val currentLocalDate: LocalDate,
+    val oldestTransactionLocalDate: LocalDate,
+    val transactionDetailsListItemViewData: Map<String, List<TransactionListItemData>>,
+    val selectedSortOption: SortOption,
+    val searchText: String,
+    val screenBottomSheetType: TransactionsScreenBottomSheetType,
+    val resetScreenBottomSheetType: () -> Unit,
+    val setIsInSelectionMode: (Boolean) -> Unit,
+    val setScreenBottomSheetType: (TransactionsScreenBottomSheetType) -> Unit,
 ) : ScreenUIState
 
 @Composable
-public fun rememberTransactionsScreenUIState(
+internal fun rememberTransactionsScreenUIState(
     data: MyResult<TransactionsScreenUIData>?,
 ): TransactionsScreenUIState {
     val (isInSelectionMode: Boolean, setIsInSelectionMode: (Boolean) -> Unit) = remember {
@@ -84,9 +82,6 @@ public fun rememberTransactionsScreenUIState(
         // TODO(Abhi): Can be reordered to match the class ordering
         TransactionsScreenUIState(
             isInSelectionMode = isInSelectionMode,
-            screenBottomSheetType = screenBottomSheetType,
-            setIsInSelectionMode = setIsInSelectionMode,
-            setScreenBottomSheetType = setScreenBottomSheetType,
             isLoading = unwrappedData.isNull() || unwrappedData.isLoading,
             selectedFilter = unwrappedData?.selectedFilter.orEmpty(),
             selectedTransactions = unwrappedData?.selectedTransactions.orEmpty(),
@@ -97,15 +92,17 @@ public fun rememberTransactionsScreenUIState(
             incomeCategories = unwrappedData?.incomeCategories.orEmpty(),
             investmentCategories = unwrappedData?.investmentCategories.orEmpty(),
             transactionTypes = unwrappedData?.transactionTypes.orEmpty(),
-            oldestTransactionLocalDate = unwrappedData?.oldestTransactionLocalDate.orMin(),
             currentLocalDate = unwrappedData?.currentLocalDate.orMin(),
-            currentTimeMillis = unwrappedData?.currentTimeMillis.orZero(),
+            oldestTransactionLocalDate = unwrappedData?.oldestTransactionLocalDate.orMin(),
             transactionDetailsListItemViewData = unwrappedData?.transactionDetailsListItemViewData.orEmpty(),
-            searchText = unwrappedData?.searchText.orEmpty(),
             selectedSortOption = unwrappedData?.selectedSortOption.orDefault(),
+            searchText = unwrappedData?.searchText.orEmpty(),
+            screenBottomSheetType = screenBottomSheetType,
             resetScreenBottomSheetType = {
                 setScreenBottomSheetType(TransactionsScreenBottomSheetType.None)
             },
+            setIsInSelectionMode = setIsInSelectionMode,
+            setScreenBottomSheetType = setScreenBottomSheetType,
         )
     }
 }

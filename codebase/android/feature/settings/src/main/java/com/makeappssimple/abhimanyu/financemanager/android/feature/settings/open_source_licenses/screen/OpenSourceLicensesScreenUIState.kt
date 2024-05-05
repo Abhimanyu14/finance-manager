@@ -6,20 +6,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 
 @Stable
-public class OpenSourceLicensesScreenUIState(
-    public val isLoading: Boolean,
-    public val screenBottomSheetType: OpenSourceLicensesScreenBottomSheetType,
-    public val resetScreenBottomSheetType: () -> Unit,
-    public val setScreenBottomSheetType: (OpenSourceLicensesScreenBottomSheetType) -> Unit,
+internal class OpenSourceLicensesScreenUIState(
+    val screenBottomSheetType: OpenSourceLicensesScreenBottomSheetType,
+    val resetScreenBottomSheetType: () -> Unit,
 ) : ScreenUIState
 
 @Composable
-public fun rememberOpenSourceLicensesScreenUIState(
+internal fun rememberOpenSourceLicensesScreenUIState(
     data: MyResult<OpenSourceLicensesScreenUIData>?,
 ): OpenSourceLicensesScreenUIState {
     var screenBottomSheetType: OpenSourceLicensesScreenBottomSheetType by remember {
@@ -50,8 +47,6 @@ public fun rememberOpenSourceLicensesScreenUIState(
         // TODO(Abhi): Can be reordered to match the class ordering
         OpenSourceLicensesScreenUIState(
             screenBottomSheetType = screenBottomSheetType,
-            setScreenBottomSheetType = setScreenBottomSheetType,
-            isLoading = unwrappedData.isNull() || unwrappedData.isLoading,
             resetScreenBottomSheetType = {
                 setScreenBottomSheetType(OpenSourceLicensesScreenBottomSheetType.None)
             },

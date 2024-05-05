@@ -12,17 +12,17 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 
 @Stable
-public class SettingsScreenUIState(
-    public val isLoading: Boolean,
-    public val isReminderEnabled: Boolean?,
-    public val screenBottomSheetType: SettingsScreenBottomSheetType,
-    public val snackbarHostState: SnackbarHostState,
-    public val appVersion: String?,
-    public val resetScreenBottomSheetType: () -> Unit,
+internal class SettingsScreenUIState(
+    val isLoading: Boolean,
+    val isReminderEnabled: Boolean?,
+    val screenBottomSheetType: SettingsScreenBottomSheetType,
+    val snackbarHostState: SnackbarHostState,
+    val appVersion: String?,
+    val resetScreenBottomSheetType: () -> Unit,
 ) : ScreenUIState
 
 @Composable
-public fun rememberSettingsScreenUIState(
+internal fun rememberSettingsScreenUIState(
     data: MyResult<SettingsScreenUIData>?,
 ): SettingsScreenUIState {
     val snackbarHostState: SnackbarHostState = remember {

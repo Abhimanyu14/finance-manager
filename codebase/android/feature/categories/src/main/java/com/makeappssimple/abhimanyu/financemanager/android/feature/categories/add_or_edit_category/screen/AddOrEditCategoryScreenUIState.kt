@@ -17,27 +17,24 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.or
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 
 @Stable
-public class AddOrEditCategoryScreenUIState(
-    public val screenBottomSheetType: AddOrEditCategoryScreenBottomSheetType,
-    public val isCtaButtonEnabled: Boolean,
-    public val isLoading: Boolean,
-    @StringRes
-    public val appBarTitleTextStringResourceId: Int,
-    @StringRes
-    public val ctaButtonLabelTextStringResourceId: Int,
-    @StringRes
-    public val titleTextFieldErrorTextStringResourceId: Int?,
-    public val selectedTransactionTypeIndex: Int?,
-    public val transactionTypesChipUIData: List<ChipUIData>,
-    public val emoji: String,
-    public val emojiSearchText: String,
-    public val title: TextFieldValue,
-    public val resetScreenBottomSheetType: () -> Unit,
-    public val setScreenBottomSheetType: (AddOrEditCategoryScreenBottomSheetType) -> Unit,
+internal class AddOrEditCategoryScreenUIState(
+    val screenBottomSheetType: AddOrEditCategoryScreenBottomSheetType,
+    val isCtaButtonEnabled: Boolean,
+    val isLoading: Boolean,
+    @StringRes val appBarTitleTextStringResourceId: Int,
+    @StringRes val ctaButtonLabelTextStringResourceId: Int,
+    @StringRes val titleTextFieldErrorTextStringResourceId: Int?,
+    val selectedTransactionTypeIndex: Int?,
+    val transactionTypesChipUIData: List<ChipUIData>,
+    val emoji: String,
+    val emojiSearchText: String,
+    val title: TextFieldValue,
+    val resetScreenBottomSheetType: () -> Unit,
+    val setScreenBottomSheetType: (AddOrEditCategoryScreenBottomSheetType) -> Unit,
 ) : ScreenUIState
 
 @Composable
-public fun rememberAddOrEditCategoryScreenUIState(
+internal fun rememberAddOrEditCategoryScreenUIState(
     data: MyResult<AddOrEditCategoryScreenUIData>?,
     isEdit: Boolean,
 ): AddOrEditCategoryScreenUIState {

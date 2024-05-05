@@ -14,22 +14,19 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
 
 @Stable
-public class AddOrEditTransactionForScreenUIState(
-    public val screenBottomSheetType: AddOrEditTransactionForScreenBottomSheetType,
-    public val isCtaButtonEnabled: Boolean?,
-    public val isLoading: Boolean,
-    @StringRes
-    public val appBarTitleTextStringResourceId: Int,
-    @StringRes
-    public val ctaButtonLabelTextStringResourceId: Int,
-    @StringRes
-    public val titleTextFieldErrorTextStringResourceId: Int?,
-    public val title: TextFieldValue?,
-    public val resetScreenBottomSheetType: () -> Unit,
+internal class AddOrEditTransactionForScreenUIState(
+    val screenBottomSheetType: AddOrEditTransactionForScreenBottomSheetType,
+    val isCtaButtonEnabled: Boolean?,
+    val isLoading: Boolean,
+    @StringRes val appBarTitleTextStringResourceId: Int,
+    @StringRes val ctaButtonLabelTextStringResourceId: Int,
+    @StringRes val titleTextFieldErrorTextStringResourceId: Int?,
+    val title: TextFieldValue?,
+    val resetScreenBottomSheetType: () -> Unit,
 ) : ScreenUIState
 
 @Composable
-public fun rememberAddOrEditTransactionForScreenUIState(
+internal fun rememberAddOrEditTransactionForScreenUIState(
     data: MyResult<AddOrEditTransactionForScreenUIData>?,
     isEdit: Boolean,
 ): AddOrEditTransactionForScreenUIState {

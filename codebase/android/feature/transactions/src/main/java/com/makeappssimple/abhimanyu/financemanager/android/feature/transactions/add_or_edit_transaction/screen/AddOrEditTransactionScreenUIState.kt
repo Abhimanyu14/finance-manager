@@ -23,37 +23,33 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import java.time.LocalDate
 
 @Stable
-public class AddOrEditTransactionScreenUIState(
-    public val screenBottomSheetType: AddOrEditTransactionScreenBottomSheetType,
-    public val uiState: AddOrEditTransactionScreenUiStateData,
-    public val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState,
-    public val isCtaButtonEnabled: Boolean,
-    public val isLoading: Boolean,
-    public val isTransactionDatePickerDialogVisible: Boolean,
-    public val isTransactionTimePickerDialogVisible: Boolean,
-    @StringRes
-    public val accountFromTextFieldLabelTextStringResourceId: Int,
-    @StringRes
-    public val accountToTextFieldLabelTextStringResourceId: Int,
-    @StringRes
-    public val appBarTitleTextStringResourceId: Int,
-    @StringRes
-    public val ctaButtonLabelTextStringResourceId: Int,
-    public val accounts: List<Account>,
-    public val filteredCategories: List<Category>,
-    public val titleSuggestionsChipUIData: List<ChipUIData>,
-    public val transactionForValuesChipUIData: List<ChipUIData>,
-    public val transactionTypesForNewTransactionChipUIData: List<ChipUIData>,
-    public val titleSuggestions: List<String>,
-    public val currentLocalDate: LocalDate,
-    public val resetScreenBottomSheetType: () -> Unit,
-    public val setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit,
-    public val setIsTransactionTimePickerDialogVisible: (Boolean) -> Unit,
-    public val setScreenBottomSheetType: (AddOrEditTransactionScreenBottomSheetType) -> Unit,
+internal class AddOrEditTransactionScreenUIState(
+    val screenBottomSheetType: AddOrEditTransactionScreenBottomSheetType,
+    val uiState: AddOrEditTransactionScreenUiStateData,
+    val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState,
+    val isCtaButtonEnabled: Boolean,
+    val isLoading: Boolean,
+    val isTransactionDatePickerDialogVisible: Boolean,
+    val isTransactionTimePickerDialogVisible: Boolean,
+    @StringRes val accountFromTextFieldLabelTextStringResourceId: Int,
+    @StringRes val accountToTextFieldLabelTextStringResourceId: Int,
+    @StringRes val appBarTitleTextStringResourceId: Int,
+    @StringRes val ctaButtonLabelTextStringResourceId: Int,
+    val accounts: List<Account>,
+    val filteredCategories: List<Category>,
+    val titleSuggestionsChipUIData: List<ChipUIData>,
+    val transactionForValuesChipUIData: List<ChipUIData>,
+    val transactionTypesForNewTransactionChipUIData: List<ChipUIData>,
+    val titleSuggestions: List<String>,
+    val currentLocalDate: LocalDate,
+    val resetScreenBottomSheetType: () -> Unit,
+    val setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit,
+    val setIsTransactionTimePickerDialogVisible: (Boolean) -> Unit,
+    val setScreenBottomSheetType: (AddOrEditTransactionScreenBottomSheetType) -> Unit,
 ) : ScreenUIState
 
 @Composable
-public fun rememberAddOrEditTransactionScreenUIState(
+internal fun rememberAddOrEditTransactionScreenUIState(
     data: MyResult<AddOrEditTransactionScreenUIData>?,
     isEdit: Boolean,
 ): AddOrEditTransactionScreenUIState {

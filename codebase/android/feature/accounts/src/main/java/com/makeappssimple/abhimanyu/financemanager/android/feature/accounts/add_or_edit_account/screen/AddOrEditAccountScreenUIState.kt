@@ -22,29 +22,26 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.or
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 
 @Stable
-public class AddOrEditAccountScreenUIState(
-    public val screenBottomSheetType: AddOrEditAccountScreenBottomSheetType,
-    public val visibilityData: AddOrEditAccountScreenUIVisibilityData,
-    public val isCtaButtonEnabled: Boolean,
-    public val isLoading: Boolean,
-    public val balanceAmountTextFieldFocusRequester: FocusRequester,
-    public val nameTextFieldFocusRequester: FocusRequester,
-    @StringRes
-    public val appBarTitleTextStringResourceId: Int,
-    @StringRes
-    public val ctaButtonLabelTextStringResourceId: Int,
-    @StringRes
-    public val nameTextFieldErrorTextStringResourceId: Int?,
-    public val selectedAccountTypeIndex: Int,
-    public val accountTypesChipUIDataList: List<ChipUIData>,
-    public val balanceAmountValue: TextFieldValue,
-    public val minimumBalanceAmountValue: TextFieldValue,
-    public val name: TextFieldValue,
-    public val resetScreenBottomSheetType: () -> Unit,
+internal class AddOrEditAccountScreenUIState(
+    val screenBottomSheetType: AddOrEditAccountScreenBottomSheetType,
+    val visibilityData: AddOrEditAccountScreenUIVisibilityData,
+    val isCtaButtonEnabled: Boolean,
+    val isLoading: Boolean,
+    val balanceAmountTextFieldFocusRequester: FocusRequester,
+    val nameTextFieldFocusRequester: FocusRequester,
+    @StringRes val appBarTitleTextStringResourceId: Int,
+    @StringRes val ctaButtonLabelTextStringResourceId: Int,
+    @StringRes val nameTextFieldErrorTextStringResourceId: Int?,
+    val selectedAccountTypeIndex: Int,
+    val accountTypesChipUIDataList: List<ChipUIData>,
+    val balanceAmountValue: TextFieldValue,
+    val minimumBalanceAmountValue: TextFieldValue,
+    val name: TextFieldValue,
+    val resetScreenBottomSheetType: () -> Unit,
 ) : ScreenUIState
 
 @Composable
-public fun rememberAddOrEditAccountScreenUIState(
+internal fun rememberAddOrEditAccountScreenUIState(
     data: MyResult<AddOrEditAccountScreenUIData>?,
     isEdit: Boolean,
 ): AddOrEditAccountScreenUIState {

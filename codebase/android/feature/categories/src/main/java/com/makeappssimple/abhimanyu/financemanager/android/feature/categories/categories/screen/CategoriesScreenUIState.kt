@@ -8,7 +8,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyTabData
@@ -17,24 +16,23 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
 
 @Stable
-public class CategoriesScreenUIState(
-    public val isLoading: Boolean,
-    public val screenBottomSheetType: CategoriesScreenBottomSheetType,
-    public var categoryIdToDelete: Int?,
-    public var clickedItemId: Int?,
-    public val selectedTabIndex: Int,
-    public val tabData: List<MyTabData>,
-    public val validTransactionTypes: List<TransactionType>,
-    public val categoriesGridItemDataMap: Map<TransactionType, List<CategoriesGridItemData>>,
-    public val pagerState: PagerState,
-    public val resetScreenBottomSheetType: () -> Unit,
-    public val setCategoryIdToDelete: (Int?) -> Unit,
-    public val setClickedItemId: (Int?) -> Unit,
-    public val setScreenBottomSheetType: (CategoriesScreenBottomSheetType) -> Unit,
+internal class CategoriesScreenUIState(
+    val screenBottomSheetType: CategoriesScreenBottomSheetType,
+    var categoryIdToDelete: Int?,
+    var clickedItemId: Int?,
+    val selectedTabIndex: Int,
+    val tabData: List<MyTabData>,
+    val validTransactionTypes: List<TransactionType>,
+    val categoriesGridItemDataMap: Map<TransactionType, List<CategoriesGridItemData>>,
+    val pagerState: PagerState,
+    val resetScreenBottomSheetType: () -> Unit,
+    val setCategoryIdToDelete: (Int?) -> Unit,
+    val setClickedItemId: (Int?) -> Unit,
+    val setScreenBottomSheetType: (CategoriesScreenBottomSheetType) -> Unit,
 ) : ScreenUIState
 
 @Composable
-public fun rememberCategoriesScreenUIState(
+internal fun rememberCategoriesScreenUIState(
     data: MyResult<CategoriesScreenUIData>?,
 ): CategoriesScreenUIState {
     var screenBottomSheetType: CategoriesScreenBottomSheetType by remember {
@@ -96,27 +94,26 @@ public fun rememberCategoriesScreenUIState(
             screenBottomSheetType = screenBottomSheetType,
             categoryIdToDelete = categoryIdToDelete,
             clickedItemId = clickedItemId,
-            pagerState = pagerState,
-            setScreenBottomSheetType = setScreenBottomSheetType,
-            setCategoryIdToDelete = setCategoryIdToDelete,
-            setClickedItemId = setClickedItemId,
-            isLoading = unwrappedData.isNull(),
             selectedTabIndex = unwrappedData?.selectedTabIndex.orZero(),
-            validTransactionTypes = listOf(
-                TransactionType.EXPENSE,
-                TransactionType.INCOME,
-                TransactionType.INVESTMENT,
-            ),
             tabData = validTransactionTypes.map {
                 MyTabData(
                     title = it.title,
                 )
             },
+            validTransactionTypes = listOf(
+                TransactionType.EXPENSE,
+                TransactionType.INCOME,
+                TransactionType.INVESTMENT,
+            ),
             categoriesGridItemDataMap =
             unwrappedData?.categoriesGridItemDataMap.orEmpty(),
+            pagerState = pagerState,
             resetScreenBottomSheetType = {
                 setScreenBottomSheetType(CategoriesScreenBottomSheetType.None)
             },
+            setCategoryIdToDelete = setCategoryIdToDelete,
+            setClickedItemId = setClickedItemId,
+            setScreenBottomSheetType = setScreenBottomSheetType,
         )
     }
 }

@@ -6,26 +6,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 
 @Stable
-public class ViewTransactionScreenUIState(
-    public val isLoading: Boolean,
-    public val transactionIdToDelete: Int?,
-    public val refundTransactionListItemData: List<TransactionListItemData>?,
-    public val originalTransactionListItemData: TransactionListItemData?,
-    public val transactionListItemData: TransactionListItemData?,
-    public val screenBottomSheetType: ViewTransactionScreenBottomSheetType,
-    public val resetScreenBottomSheetType: () -> Unit,
-    public val setScreenBottomSheetType: (ViewTransactionScreenBottomSheetType) -> Unit,
-    public val setTransactionIdToDelete: (Int?) -> Unit,
+internal class ViewTransactionScreenUIState(
+    val transactionIdToDelete: Int?,
+    val refundTransactionListItemData: List<TransactionListItemData>?,
+    val originalTransactionListItemData: TransactionListItemData?,
+    val transactionListItemData: TransactionListItemData?,
+    val screenBottomSheetType: ViewTransactionScreenBottomSheetType,
+    val resetScreenBottomSheetType: () -> Unit,
+    val setScreenBottomSheetType: (ViewTransactionScreenBottomSheetType) -> Unit,
+    val setTransactionIdToDelete: (Int?) -> Unit,
 ) : ScreenUIState
 
 @Composable
-public fun rememberViewTransactionScreenUIState(
+internal fun rememberViewTransactionScreenUIState(
     data: MyResult<ViewTransactionScreenUIData>?,
 ): ViewTransactionScreenUIState {
     var transactionIdToDelete: Int? by remember {
@@ -66,16 +64,15 @@ public fun rememberViewTransactionScreenUIState(
         // TODO(Abhi): Can be reordered to match the class ordering
         ViewTransactionScreenUIState(
             transactionIdToDelete = transactionIdToDelete,
-            screenBottomSheetType = screenBottomSheetType,
-            setTransactionIdToDelete = setTransactionIdToDelete,
-            setScreenBottomSheetType = setScreenBottomSheetType,
-            isLoading = unwrappedData.isNull(),
-            originalTransactionListItemData = unwrappedData?.originalTransactionListItemData,
             refundTransactionListItemData = unwrappedData?.refundTransactionListItemData,
+            originalTransactionListItemData = unwrappedData?.originalTransactionListItemData,
             transactionListItemData = unwrappedData?.transactionListItemData,
+            screenBottomSheetType = screenBottomSheetType,
             resetScreenBottomSheetType = {
                 setScreenBottomSheetType(ViewTransactionScreenBottomSheetType.None)
             },
+            setScreenBottomSheetType = setScreenBottomSheetType,
+            setTransactionIdToDelete = setTransactionIdToDelete,
         )
     }
 }

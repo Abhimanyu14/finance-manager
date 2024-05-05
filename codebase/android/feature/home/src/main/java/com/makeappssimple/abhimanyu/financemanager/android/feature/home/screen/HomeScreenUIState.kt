@@ -20,24 +20,23 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ove
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.orDefault
 
 @Stable
-public class HomeScreenUIState(
-    public val isBackupCardVisible: Boolean,
-    public val isBalanceVisible: Boolean,
-    public val isLoading: Boolean,
-    public val screenBottomSheetType: HomeScreenBottomSheetType,
-    public val overviewTabSelectionIndex: Int,
-    public val transactionListItemDataList: List<TransactionListItemData>,
-    public val accountsTotalBalanceAmountValue: Long,
-    public val accountsTotalMinimumBalanceAmountValue: Long,
-    public val overviewCardData: OverviewCardViewModelData,
-    public val pieChartData: PieChartData,
-    public val resetScreenBottomSheetType: () -> Unit,
-    public val setBalanceVisible: (Boolean) -> Unit,
-    public val setScreenBottomSheetType: (HomeScreenBottomSheetType) -> Unit,
+internal class HomeScreenUIState(
+    val isBackupCardVisible: Boolean,
+    val isBalanceVisible: Boolean,
+    val isLoading: Boolean,
+    val screenBottomSheetType: HomeScreenBottomSheetType,
+    val overviewTabSelectionIndex: Int,
+    val transactionListItemDataList: List<TransactionListItemData>,
+    val accountsTotalBalanceAmountValue: Long,
+    val accountsTotalMinimumBalanceAmountValue: Long,
+    val overviewCardData: OverviewCardViewModelData,
+    val pieChartData: PieChartData,
+    val resetScreenBottomSheetType: () -> Unit,
+    val setBalanceVisible: (Boolean) -> Unit,
 ) : ScreenUIState
 
 @Composable
-public fun rememberHomeScreenUIState(
+internal fun rememberHomeScreenUIState(
     data: MyResult<HomeScreenUIData>?,
 ): HomeScreenUIState {
     val (isBalanceVisible: Boolean, setBalanceVisible: (Boolean) -> Unit) = remember {
@@ -80,20 +79,15 @@ public fun rememberHomeScreenUIState(
 
         // TODO(Abhi): Can be reordered to match the class ordering
         HomeScreenUIState(
-            isBalanceVisible = isBalanceVisible,
-            screenBottomSheetType = screenBottomSheetType,
-            setScreenBottomSheetType = setScreenBottomSheetType,
-            setBalanceVisible = setBalanceVisible,
-            isLoading = unwrappedData.isNull(),
             isBackupCardVisible = unwrappedData?.isBackupCardVisible.orFalse(),
+            isBalanceVisible = isBalanceVisible,
+            isLoading = unwrappedData.isNull(),
+            screenBottomSheetType = screenBottomSheetType,
             overviewTabSelectionIndex = unwrappedData?.overviewTabSelectionIndex.orZero(),
             transactionListItemDataList = unwrappedData?.transactionListItemDataList.orEmpty(),
             accountsTotalBalanceAmountValue = unwrappedData?.accountsTotalBalanceAmountValue.orZero(),
             accountsTotalMinimumBalanceAmountValue = unwrappedData?.accountsTotalMinimumBalanceAmountValue.orZero(),
             overviewCardData = unwrappedData?.overviewCardData.orDefault(),
-            resetScreenBottomSheetType = {
-                setScreenBottomSheetType(HomeScreenBottomSheetType.None)
-            },
             pieChartData = PieChartData(
                 items = listOf(
                     PieChartItemData(
@@ -108,6 +102,10 @@ public fun rememberHomeScreenUIState(
                     ),
                 ),
             ),
+            resetScreenBottomSheetType = {
+                setScreenBottomSheetType(HomeScreenBottomSheetType.None)
+            },
+            setBalanceVisible = setBalanceVisible,
         )
     }
 }
