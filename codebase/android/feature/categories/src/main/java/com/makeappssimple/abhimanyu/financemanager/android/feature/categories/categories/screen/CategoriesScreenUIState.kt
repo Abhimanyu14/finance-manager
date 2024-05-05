@@ -18,16 +18,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.gri
 
 @Stable
 public class CategoriesScreenUIState(
-    data: MyResult<CategoriesScreenUIData>?,
-    private val unwrappedData: CategoriesScreenUIData? = when (data) {
-        is MyResult.Success -> {
-            data.data
-        }
-
-        else -> {
-            null
-        }
-    },
     public val screenBottomSheetType: CategoriesScreenBottomSheetType,
     public var categoryIdToDelete: Int?,
     public var clickedItemId: Int?,
@@ -35,23 +25,12 @@ public class CategoriesScreenUIState(
     public val setScreenBottomSheetType: (CategoriesScreenBottomSheetType) -> Unit,
     public val setCategoryIdToDelete: (Int?) -> Unit,
     public val setClickedItemId: (Int?) -> Unit,
-    public val isLoading: Boolean = unwrappedData.isNull(),
-    public val selectedTabIndex: Int = unwrappedData?.selectedTabIndex.orZero(),
-    public val validTransactionTypes: List<TransactionType> = listOf(
-        TransactionType.EXPENSE,
-        TransactionType.INCOME,
-        TransactionType.INVESTMENT,
-    ),
-    public val tabData: List<MyTabData> = validTransactionTypes.map {
-        MyTabData(
-            title = it.title,
-        )
-    },
-    public val categoriesGridItemDataMap: Map<TransactionType, List<CategoriesGridItemData>> =
-        unwrappedData?.categoriesGridItemDataMap.orEmpty(),
-    public val resetScreenBottomSheetType: () -> Unit = {
-        setScreenBottomSheetType(CategoriesScreenBottomSheetType.None)
-    },
+    public val isLoading: Boolean,
+    public val selectedTabIndex: Int,
+    public val validTransactionTypes: List<TransactionType>,
+    public val tabData: List<MyTabData>,
+    public val categoriesGridItemDataMap: Map<TransactionType, List<CategoriesGridItemData>>,
+    public val resetScreenBottomSheetType: () -> Unit,
 ) : ScreenUIState
 
 @Composable
@@ -97,8 +76,22 @@ public fun rememberCategoriesScreenUIState(
         setCategoryIdToDelete,
         setClickedItemId,
     ) {
+        val unwrappedData: CategoriesScreenUIData? = when (data) {
+            is MyResult.Success -> {
+                data.data
+            }
+
+            else -> {
+                null
+            }
+        }
+        val validTransactionTypes = listOf(
+            TransactionType.EXPENSE,
+            TransactionType.INCOME,
+            TransactionType.INVESTMENT,
+        )
+
         CategoriesScreenUIState(
-            data = data,
             screenBottomSheetType = screenBottomSheetType,
             categoryIdToDelete = categoryIdToDelete,
             clickedItemId = clickedItemId,
@@ -106,6 +99,23 @@ public fun rememberCategoriesScreenUIState(
             setScreenBottomSheetType = setScreenBottomSheetType,
             setCategoryIdToDelete = setCategoryIdToDelete,
             setClickedItemId = setClickedItemId,
+            isLoading = unwrappedData.isNull(),
+            selectedTabIndex = unwrappedData?.selectedTabIndex.orZero(),
+            validTransactionTypes = listOf(
+                TransactionType.EXPENSE,
+                TransactionType.INCOME,
+                TransactionType.INVESTMENT,
+            ),
+            tabData = validTransactionTypes.map {
+                MyTabData(
+                    title = it.title,
+                )
+            },
+            categoriesGridItemDataMap =
+            unwrappedData?.categoriesGridItemDataMap.orEmpty(),
+            resetScreenBottomSheetType = {
+                setScreenBottomSheetType(CategoriesScreenBottomSheetType.None)
+            },
         )
     }
 }

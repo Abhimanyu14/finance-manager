@@ -21,53 +21,19 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ove
 
 @Stable
 public class HomeScreenUIState(
-    data: MyResult<HomeScreenUIData>?,
-    private val unwrappedData: HomeScreenUIData? = when (data) {
-        is MyResult.Success -> {
-            data.data
-        }
-
-        else -> {
-            null
-        }
-    },
     public val isBalanceVisible: Boolean,
     public val screenBottomSheetType: HomeScreenBottomSheetType,
     public val setScreenBottomSheetType: (HomeScreenBottomSheetType) -> Unit,
-    private val totalIncomeAmount: Amount = Amount(
-        value = unwrappedData?.overviewCardData?.income?.toLong().orZero(),
-    ),
-    private val totalExpenseAmount: Amount = Amount(
-        value = unwrappedData?.overviewCardData?.expense?.toLong().orZero(),
-    ),
-    public val isLoading: Boolean = unwrappedData.isNull(),
-    public val isBackupCardVisible: Boolean = unwrappedData?.isBackupCardVisible.orFalse(),
-    public val overviewTabSelectionIndex: Int = unwrappedData?.overviewTabSelectionIndex.orZero(),
-    public val transactionListItemDataList: List<TransactionListItemData> =
-        unwrappedData?.transactionListItemDataList.orEmpty(),
-    public val accountsTotalBalanceAmountValue: Long =
-        unwrappedData?.accountsTotalBalanceAmountValue.orZero(),
-    public val accountsTotalMinimumBalanceAmountValue: Long =
-        unwrappedData?.accountsTotalMinimumBalanceAmountValue.orZero(),
-    public val overviewCardData: OverviewCardViewModelData = unwrappedData?.overviewCardData.orDefault(),
-    public val resetScreenBottomSheetType: () -> Unit = {
-        setScreenBottomSheetType(HomeScreenBottomSheetType.None)
-    },
+    public val isLoading: Boolean,
+    public val isBackupCardVisible: Boolean,
+    public val overviewTabSelectionIndex: Int,
+    public val transactionListItemDataList: List<TransactionListItemData>,
+    public val accountsTotalBalanceAmountValue: Long,
+    public val accountsTotalMinimumBalanceAmountValue: Long,
+    public val overviewCardData: OverviewCardViewModelData,
+    public val resetScreenBottomSheetType: () -> Unit,
     public val setBalanceVisible: (Boolean) -> Unit,
-    public val pieChartData: PieChartData = PieChartData(
-        items = listOf(
-            PieChartItemData(
-                value = unwrappedData?.overviewCardData?.income.orZero(),
-                text = "Income : $totalIncomeAmount", // TODO(Abhi): Move to string resources
-                color = MyColor.TERTIARY,
-            ),
-            PieChartItemData(
-                value = unwrappedData?.overviewCardData?.expense.orZero(),
-                text = "Expense : ${totalExpenseAmount.toNonSignedString()}", // TODO(Abhi): Move to string resources
-                color = MyColor.ERROR,
-            ),
-        ),
-    ),
+    public val pieChartData: PieChartData,
 ) : ScreenUIState
 
 @Composable
@@ -96,12 +62,51 @@ public fun rememberHomeScreenUIState(
         setBalanceVisible,
         setScreenBottomSheetType,
     ) {
+        val unwrappedData: HomeScreenUIData? = when (data) {
+            is MyResult.Success -> {
+                data.data
+            }
+
+            else -> {
+                null
+            }
+        }
+        val totalIncomeAmount = Amount(
+            value = unwrappedData?.overviewCardData?.income?.toLong().orZero(),
+        )
+        val totalExpenseAmount = Amount(
+            value = unwrappedData?.overviewCardData?.expense?.toLong().orZero(),
+        )
+
         HomeScreenUIState(
-            data = data,
             isBalanceVisible = isBalanceVisible,
             screenBottomSheetType = screenBottomSheetType,
             setScreenBottomSheetType = setScreenBottomSheetType,
             setBalanceVisible = setBalanceVisible,
+            isLoading = unwrappedData.isNull(),
+            isBackupCardVisible = unwrappedData?.isBackupCardVisible.orFalse(),
+            overviewTabSelectionIndex = unwrappedData?.overviewTabSelectionIndex.orZero(),
+            transactionListItemDataList = unwrappedData?.transactionListItemDataList.orEmpty(),
+            accountsTotalBalanceAmountValue = unwrappedData?.accountsTotalBalanceAmountValue.orZero(),
+            accountsTotalMinimumBalanceAmountValue = unwrappedData?.accountsTotalMinimumBalanceAmountValue.orZero(),
+            overviewCardData = unwrappedData?.overviewCardData.orDefault(),
+            resetScreenBottomSheetType = {
+                setScreenBottomSheetType(HomeScreenBottomSheetType.None)
+            },
+            pieChartData = PieChartData(
+                items = listOf(
+                    PieChartItemData(
+                        value = unwrappedData?.overviewCardData?.income.orZero(),
+                        text = "Income : $totalIncomeAmount", // TODO(Abhi): Move to string resources
+                        color = MyColor.TERTIARY,
+                    ),
+                    PieChartItemData(
+                        value = unwrappedData?.overviewCardData?.expense.orZero(),
+                        text = "Expense : ${totalExpenseAmount.toNonSignedString()}", // TODO(Abhi): Move to string resources
+                        color = MyColor.ERROR,
+                    ),
+                ),
+            ),
         )
     }
 }

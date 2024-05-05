@@ -18,49 +18,22 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 
 @Stable
 public class AddOrEditCategoryScreenUIState(
-    data: MyResult<AddOrEditCategoryScreenUIData>?,
-    private val unwrappedData: AddOrEditCategoryScreenUIData? = when (data) {
-        is MyResult.Success -> {
-            data.data
-        }
-
-        else -> {
-            null
-        }
-    },
-    isEdit: Boolean,
     public val screenBottomSheetType: AddOrEditCategoryScreenBottomSheetType,
     public val setScreenBottomSheetType: (AddOrEditCategoryScreenBottomSheetType) -> Unit,
-    public val isLoading: Boolean = unwrappedData.isNull(),
-    public val isCtaButtonEnabled: Boolean = unwrappedData?.isCtaButtonEnabled.orFalse(),
-    public val selectedTransactionTypeIndex: Int? = unwrappedData?.selectedTransactionTypeIndex,
-    public val transactionTypesChipUIData: List<ChipUIData> =
-        unwrappedData?.validTransactionTypes?.map { transactionType ->
-            ChipUIData(
-                text = transactionType.title,
-            )
-        }.orEmpty(),
-    public val emoji: String = unwrappedData?.emoji.orEmpty(),
-    public val emojiSearchText: String = unwrappedData?.emojiSearchText.orEmpty(),
-    public val title: TextFieldValue = unwrappedData?.title.orEmpty(),
+    public val isLoading: Boolean,
+    public val isCtaButtonEnabled: Boolean,
+    public val selectedTransactionTypeIndex: Int?,
+    public val transactionTypesChipUIData: List<ChipUIData>,
+    public val emoji: String,
+    public val emojiSearchText: String,
+    public val title: TextFieldValue,
     @StringRes
-    public val titleTextFieldErrorTextStringResourceId: Int? =
-        unwrappedData?.titleTextFieldError?.textStringResourceId,
+    public val titleTextFieldErrorTextStringResourceId: Int?,
     @StringRes
-    public val appBarTitleTextStringResourceId: Int = if (isEdit) {
-        R.string.screen_edit_category_appbar_title
-    } else {
-        R.string.screen_add_category_appbar_title
-    },
+    public val appBarTitleTextStringResourceId: Int,
     @StringRes
-    public val ctaButtonLabelTextStringResourceId: Int = if (isEdit) {
-        R.string.screen_edit_category_floating_action_button_content_description
-    } else {
-        R.string.screen_add_category_floating_action_button_content_description
-    },
-    public val resetScreenBottomSheetType: () -> Unit = {
-        setScreenBottomSheetType(AddOrEditCategoryScreenBottomSheetType.None)
-    },
+    public val ctaButtonLabelTextStringResourceId: Int,
+    public val resetScreenBottomSheetType: () -> Unit,
 ) : ScreenUIState
 
 @Composable
@@ -84,11 +57,44 @@ public fun rememberAddOrEditCategoryScreenUIState(
         screenBottomSheetType,
         setScreenBottomSheetType,
     ) {
+        val unwrappedData: AddOrEditCategoryScreenUIData? = when (data) {
+            is MyResult.Success -> {
+                data.data
+            }
+
+            else -> {
+                null
+            }
+        }
+
         AddOrEditCategoryScreenUIState(
-            data = data,
-            isEdit = isEdit,
             screenBottomSheetType = screenBottomSheetType,
             setScreenBottomSheetType = setScreenBottomSheetType,
+            isLoading = unwrappedData.isNull(),
+            isCtaButtonEnabled = unwrappedData?.isCtaButtonEnabled.orFalse(),
+            selectedTransactionTypeIndex = unwrappedData?.selectedTransactionTypeIndex,
+            transactionTypesChipUIData = unwrappedData?.validTransactionTypes?.map { transactionType ->
+                ChipUIData(
+                    text = transactionType.title,
+                )
+            }.orEmpty(),
+            emoji = unwrappedData?.emoji.orEmpty(),
+            emojiSearchText = unwrappedData?.emojiSearchText.orEmpty(),
+            title = unwrappedData?.title.orEmpty(),
+            titleTextFieldErrorTextStringResourceId = unwrappedData?.titleTextFieldError?.textStringResourceId,
+            appBarTitleTextStringResourceId = if (isEdit) {
+                R.string.screen_edit_category_appbar_title
+            } else {
+                R.string.screen_add_category_appbar_title
+            },
+            ctaButtonLabelTextStringResourceId = if (isEdit) {
+                R.string.screen_edit_category_floating_action_button_content_description
+            } else {
+                R.string.screen_add_category_floating_action_button_content_description
+            },
+            resetScreenBottomSheetType = {
+                setScreenBottomSheetType(AddOrEditCategoryScreenBottomSheetType.None)
+            },
         )
     }
 }

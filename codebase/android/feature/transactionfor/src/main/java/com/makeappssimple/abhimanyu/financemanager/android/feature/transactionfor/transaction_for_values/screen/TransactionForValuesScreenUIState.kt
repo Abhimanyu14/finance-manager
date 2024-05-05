@@ -13,27 +13,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Stable
 public class TransactionForValuesScreenUIState(
-    data: MyResult<TransactionForValuesScreenUIData>?,
-    private val unwrappedData: TransactionForValuesScreenUIData? = when (data) {
-        is MyResult.Success -> {
-            data.data
-        }
-
-        else -> {
-            null
-        }
-    },
     public val transactionForIdToDelete: Int?,
     public val screenBottomSheetType: TransactionForValuesScreenBottomSheetType,
     public val setTransactionForIdToDelete: (Int?) -> Unit,
     public val setScreenBottomSheetType: (TransactionForValuesScreenBottomSheetType) -> Unit,
-    public val isLoading: Boolean = unwrappedData.isNull(),
-    public val transactionForValuesIsUsedInTransactions: List<Boolean> =
-        unwrappedData?.transactionForValuesIsUsedInTransactions.orEmpty(),
-    public val transactionForValues: List<TransactionFor> = unwrappedData?.transactionForValues.orEmpty(),
-    public val resetScreenBottomSheetType: () -> Unit = {
-        setScreenBottomSheetType(TransactionForValuesScreenBottomSheetType.None)
-    },
+    public val isLoading: Boolean,
+    public val transactionForValuesIsUsedInTransactions: List<Boolean>,
+    public val transactionForValues: List<TransactionFor>,
+    public val resetScreenBottomSheetType: () -> Unit,
 ) : ScreenUIState
 
 @Composable
@@ -58,7 +45,6 @@ public fun rememberTransactionForValuesScreenUIState(
             screenBottomSheetType = updatedTransactionForValuesBottomSheetType
         }
 
-
     return remember(
         data,
         screenBottomSheetType,
@@ -66,12 +52,27 @@ public fun rememberTransactionForValuesScreenUIState(
         setTransactionForIdToDelete,
         setScreenBottomSheetType,
     ) {
+        val unwrappedData: TransactionForValuesScreenUIData? = when (data) {
+            is MyResult.Success -> {
+                data.data
+            }
+
+            else -> {
+                null
+            }
+        }
+
         TransactionForValuesScreenUIState(
-            data = data,
             transactionForIdToDelete = transactionForIdToDelete,
             screenBottomSheetType = screenBottomSheetType,
             setTransactionForIdToDelete = setTransactionForIdToDelete,
             setScreenBottomSheetType = setScreenBottomSheetType,
+            isLoading = unwrappedData.isNull(),
+            transactionForValuesIsUsedInTransactions = unwrappedData?.transactionForValuesIsUsedInTransactions.orEmpty(),
+            transactionForValues = unwrappedData?.transactionForValues.orEmpty(),
+            resetScreenBottomSheetType = {
+                setScreenBottomSheetType(TransactionForValuesScreenBottomSheetType.None)
+            },
         )
     }
 }

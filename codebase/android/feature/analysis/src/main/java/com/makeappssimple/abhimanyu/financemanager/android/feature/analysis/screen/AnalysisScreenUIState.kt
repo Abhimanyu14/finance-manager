@@ -20,40 +20,19 @@ import java.time.LocalDate
 
 @Stable
 public class AnalysisScreenUIState(
-    data: MyResult<AnalysisScreenUIData>?,
-    private val unwrappedData: AnalysisScreenUIData? = when (data) {
-        is MyResult.Success -> {
-            data.data
-        }
-
-        else -> {
-            null
-        }
-    },
-    textMeasurer: TextMeasurer,
     public val screenBottomSheetType: AnalysisScreenBottomSheetType,
     public val setScreenBottomSheetType: (AnalysisScreenBottomSheetType) -> Unit,
-    public val isLoading: Boolean = unwrappedData.isNull(),
-    public val selectedFilter: Filter = unwrappedData?.selectedFilter.orEmpty(),
-    public val selectedTransactionTypeIndex: Int? = unwrappedData?.selectedTransactionTypeIndex,
-    public val transactionDataMappedByCategory: List<AnalysisListItemData> =
-        unwrappedData?.transactionDataMappedByCategory.orEmpty(),
-    public val transactionTypesChipUIData: List<ChipUIData> =
-        unwrappedData?.transactionTypesChipUIData.orEmpty(),
-    public val defaultStartLocalDate: LocalDate = unwrappedData?.oldestTransactionLocalDate.orMin(),
-    public val defaultEndLocalDate: LocalDate = unwrappedData?.currentLocalDate.orMin(),
-    public val startOfMonthLocalDate: LocalDate = unwrappedData?.startOfMonthLocalDate.orMin(),
-    public val startOfYearLocalDate: LocalDate = unwrappedData?.startOfYearLocalDate.orMin(),
-    public val maxAmountTextWidth: Int = if (transactionDataMappedByCategory.isEmpty()) {
-        0
-    } else {
-        transactionDataMappedByCategory.maxOf {
-            textMeasurer.measure(it.amountText).size.width
-        }
-    },
-    public val resetScreenBottomSheetType: () -> Unit = {
-        setScreenBottomSheetType(AnalysisScreenBottomSheetType.None)
-    },
+    public val isLoading: Boolean,
+    public val selectedFilter: Filter,
+    public val selectedTransactionTypeIndex: Int?,
+    public val transactionDataMappedByCategory: List<AnalysisListItemData>,
+    public val transactionTypesChipUIData: List<ChipUIData>,
+    public val defaultStartLocalDate: LocalDate,
+    public val defaultEndLocalDate: LocalDate,
+    public val startOfMonthLocalDate: LocalDate,
+    public val startOfYearLocalDate: LocalDate,
+    public val maxAmountTextWidth: Int,
+    public val resetScreenBottomSheetType: () -> Unit,
 ) : ScreenUIState
 
 @Composable
@@ -77,11 +56,40 @@ public fun rememberAnalysisScreenUIState(
         textMeasurer,
         setScreenBottomSheetType,
     ) {
+        val unwrappedData: AnalysisScreenUIData? = when (data) {
+            is MyResult.Success -> {
+                data.data
+            }
+
+            else -> {
+                null
+            }
+        }
+        val transactionDataMappedByCategory =
+            unwrappedData?.transactionDataMappedByCategory.orEmpty()
+
         AnalysisScreenUIState(
-            data = data,
             screenBottomSheetType = screenBottomSheetType,
-            textMeasurer = textMeasurer,
             setScreenBottomSheetType = setScreenBottomSheetType,
+            isLoading = unwrappedData.isNull(),
+            selectedFilter = unwrappedData?.selectedFilter.orEmpty(),
+            selectedTransactionTypeIndex = unwrappedData?.selectedTransactionTypeIndex,
+            transactionDataMappedByCategory = unwrappedData?.transactionDataMappedByCategory.orEmpty(),
+            transactionTypesChipUIData = unwrappedData?.transactionTypesChipUIData.orEmpty(),
+            defaultStartLocalDate = unwrappedData?.oldestTransactionLocalDate.orMin(),
+            defaultEndLocalDate = unwrappedData?.currentLocalDate.orMin(),
+            startOfMonthLocalDate = unwrappedData?.startOfMonthLocalDate.orMin(),
+            startOfYearLocalDate = unwrappedData?.startOfYearLocalDate.orMin(),
+            maxAmountTextWidth = if (transactionDataMappedByCategory.isEmpty()) {
+                0
+            } else {
+                transactionDataMappedByCategory.maxOf {
+                    textMeasurer.measure(it.amountText).size.width
+                }
+            },
+            resetScreenBottomSheetType = {
+                setScreenBottomSheetType(AnalysisScreenBottomSheetType.None)
+            },
         )
     }
 }

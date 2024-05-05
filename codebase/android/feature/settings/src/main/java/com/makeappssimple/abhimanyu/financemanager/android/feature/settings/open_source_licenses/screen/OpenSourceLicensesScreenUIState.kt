@@ -12,22 +12,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Stable
 public class OpenSourceLicensesScreenUIState(
-    data: MyResult<OpenSourceLicensesScreenUIData>? = null,
-    private val unwrappedData: OpenSourceLicensesScreenUIData? = when (data) {
-        is MyResult.Success -> {
-            data.data
-        }
-
-        else -> {
-            null
-        }
-    },
     public val screenBottomSheetType: OpenSourceLicensesScreenBottomSheetType = OpenSourceLicensesScreenBottomSheetType.None,
     public val setScreenBottomSheetType: (OpenSourceLicensesScreenBottomSheetType) -> Unit = {},
-    public val isLoading: Boolean = unwrappedData.isNull() || unwrappedData.isLoading,
-    public val resetScreenBottomSheetType: () -> Unit = {
-        setScreenBottomSheetType(OpenSourceLicensesScreenBottomSheetType.None)
-    },
+    public val isLoading: Boolean,
+    public val resetScreenBottomSheetType: () -> Unit,
 ) : ScreenUIState
 
 @Composable
@@ -49,10 +37,23 @@ public fun rememberOpenSourceLicensesScreenUIState(
         screenBottomSheetType,
         setScreenBottomSheetType,
     ) {
+        val unwrappedData: OpenSourceLicensesScreenUIData? = when (data) {
+            is MyResult.Success -> {
+                data.data
+            }
+
+            else -> {
+                null
+            }
+        }
+
         OpenSourceLicensesScreenUIState(
-            data = data,
             screenBottomSheetType = screenBottomSheetType,
             setScreenBottomSheetType = setScreenBottomSheetType,
+            isLoading = unwrappedData.isNull() || unwrappedData.isLoading,
+            resetScreenBottomSheetType = {
+                setScreenBottomSheetType(OpenSourceLicensesScreenBottomSheetType.None)
+            },
         )
     }
 }

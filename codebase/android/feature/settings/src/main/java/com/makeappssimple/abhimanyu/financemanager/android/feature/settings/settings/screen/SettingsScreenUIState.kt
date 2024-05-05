@@ -13,25 +13,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Stable
 public class SettingsScreenUIState(
-    data: MyResult<SettingsScreenUIData>? = null,
-    private val unwrappedData: SettingsScreenUIData? = when (data) {
-        is MyResult.Success -> {
-            data.data
-        }
-
-        else -> {
-            null
-        }
-    },
-    public val screenBottomSheetType: SettingsScreenBottomSheetType = SettingsScreenBottomSheetType.None,
-    public val snackbarHostState: SnackbarHostState = SnackbarHostState(),
-    public val setScreenBottomSheetType: (SettingsScreenBottomSheetType) -> Unit = {},
-    public val isLoading: Boolean = unwrappedData.isNull() || unwrappedData.isLoading,
-    public val isReminderEnabled: Boolean? = unwrappedData?.isReminderEnabled,
-    public val appVersion: String? = unwrappedData?.appVersion,
-    public val resetScreenBottomSheetType: () -> Unit = {
-        setScreenBottomSheetType(SettingsScreenBottomSheetType.None)
-    },
+    public val screenBottomSheetType: SettingsScreenBottomSheetType,
+    public val snackbarHostState: SnackbarHostState,
+    public val setScreenBottomSheetType: (SettingsScreenBottomSheetType) -> Unit,
+    public val isLoading: Boolean,
+    public val isReminderEnabled: Boolean?,
+    public val appVersion: String?,
+    public val resetScreenBottomSheetType: () -> Unit,
 ) : ScreenUIState
 
 @Composable
@@ -57,11 +45,26 @@ public fun rememberSettingsScreenUIState(
         snackbarHostState,
         setScreenBottomSheetType,
     ) {
+        val unwrappedData: SettingsScreenUIData? = when (data) {
+            is MyResult.Success -> {
+                data.data
+            }
+
+            else -> {
+                null
+            }
+        }
+
         SettingsScreenUIState(
-            data = data,
             screenBottomSheetType = screenBottomSheetType,
             snackbarHostState = snackbarHostState,
             setScreenBottomSheetType = setScreenBottomSheetType,
+            isLoading = unwrappedData.isNull() || unwrappedData.isLoading,
+            isReminderEnabled = unwrappedData?.isReminderEnabled,
+            appVersion = unwrappedData?.appVersion,
+            resetScreenBottomSheetType = {
+                setScreenBottomSheetType(SettingsScreenBottomSheetType.None)
+            },
         )
     }
 }

@@ -24,78 +24,32 @@ import java.time.LocalDate
 
 @Stable
 public class AddOrEditTransactionScreenUIState(
-    data: MyResult<AddOrEditTransactionScreenUIData>?,
-    private val unwrappedData: AddOrEditTransactionScreenUIData? = when (data) {
-        is MyResult.Success -> {
-            data.data
-        }
-
-        else -> {
-            null
-        }
-    },
-    isEdit: Boolean,
     public val screenBottomSheetType: AddOrEditTransactionScreenBottomSheetType,
     public val isTransactionDatePickerDialogVisible: Boolean,
     public val isTransactionTimePickerDialogVisible: Boolean,
     public val setScreenBottomSheetType: (AddOrEditTransactionScreenBottomSheetType) -> Unit,
     public val setIsTransactionDatePickerDialogVisible: (Boolean) -> Unit,
     public val setIsTransactionTimePickerDialogVisible: (Boolean) -> Unit,
-    public val isLoading: Boolean = unwrappedData.isNull(),
-    public val uiState: AddOrEditTransactionScreenUiStateData = unwrappedData?.uiState.orDefault(),
-    public val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState =
-        unwrappedData?.uiVisibilityState.orDefault(),
-    public val isCtaButtonEnabled: Boolean = unwrappedData?.isCtaButtonEnabled.orFalse(),
+    public val isLoading: Boolean,
+    public val uiState: AddOrEditTransactionScreenUiStateData,
+    public val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState,
+    public val isCtaButtonEnabled: Boolean,
     @StringRes
-    public val appBarTitleTextStringResourceId: Int = if (isEdit) {
-        R.string.screen_edit_transaction_appbar_title
-    } else {
-        R.string.screen_add_transaction_appbar_title
-    },
+    public val appBarTitleTextStringResourceId: Int,
     @StringRes
-    public val ctaButtonLabelTextStringResourceId: Int = if (isEdit) {
-        R.string.screen_edit_transaction_floating_action_button_content_description
-    } else {
-        R.string.screen_add_transaction_floating_action_button_content_description
-    },
+    public val ctaButtonLabelTextStringResourceId: Int,
     @StringRes
-    public val accountFromTextFieldLabelTextStringResourceId: Int =
-        if (unwrappedData?.selectedTransactionType == TransactionType.TRANSFER) {
-            R.string.screen_add_or_edit_transaction_account_from
-        } else {
-            R.string.screen_add_or_edit_transaction_account
-        },
+    public val accountFromTextFieldLabelTextStringResourceId: Int,
     @StringRes
-    public val accountToTextFieldLabelTextStringResourceId: Int =
-        if (unwrappedData?.selectedTransactionType == TransactionType.TRANSFER) {
-            R.string.screen_add_or_edit_transaction_account_to
-        } else {
-            R.string.screen_add_or_edit_transaction_account
-        },
-    public val filteredCategories: List<Category> = unwrappedData?.filteredCategories.orEmpty(),
-    public val transactionTypesForNewTransactionChipUIData: List<ChipUIData> =
-        unwrappedData?.transactionTypesForNewTransaction?.map { transactionType ->
-            ChipUIData(
-                text = transactionType.title,
-            )
-        }.orEmpty(),
-    public val titleSuggestions: List<String> = unwrappedData?.titleSuggestions.orEmpty(),
-    public val titleSuggestionsChipUIData: List<ChipUIData> = titleSuggestions.map { title ->
-        ChipUIData(
-            text = title,
-        )
-    },
-    public val accounts: List<Account> = unwrappedData?.accounts.orEmpty(),
-    public val transactionForValuesChipUIData: List<ChipUIData> =
-        unwrappedData?.transactionForValues?.map { transactionFor ->
-            ChipUIData(
-                text = transactionFor.titleToDisplay,
-            )
-        }.orEmpty(),
-    public val currentLocalDate: LocalDate = unwrappedData?.currentLocalDate.orMin(),
-    public val resetScreenBottomSheetType: () -> Unit = {
-        setScreenBottomSheetType(AddOrEditTransactionScreenBottomSheetType.None)
-    },
+    public val accountToTextFieldLabelTextStringResourceId: Int,
+    public val filteredCategories: List<Category>,
+    public val transactionTypesForNewTransactionChipUIData: List<ChipUIData>,
+    public val titleSuggestions: List<String>,
+    public val titleSuggestionsChipUIData: List<ChipUIData>,
+    public val accounts: List<Account>,
+    public val transactionForValuesChipUIData: List<ChipUIData>,
+    public val currentLocalDate: LocalDate,
+    public val resetScreenBottomSheetType: () -> Unit,
 ) : ScreenUIState
 
 @Composable
@@ -129,15 +83,73 @@ public fun rememberAddOrEditTransactionScreenUIState(
         setIsTransactionDatePickerDialogVisible,
         setIsTransactionTimePickerDialogVisible,
     ) {
+        val unwrappedData: AddOrEditTransactionScreenUIData? = when (data) {
+            is MyResult.Success -> {
+                data.data
+            }
+
+            else -> {
+                null
+            }
+        }
+        val titleSuggestions = unwrappedData?.titleSuggestions.orEmpty()
+
         AddOrEditTransactionScreenUIState(
-            data = data,
-            isEdit = isEdit,
             screenBottomSheetType = screenBottomSheetType,
             isTransactionDatePickerDialogVisible = isTransactionDatePickerDialogVisible,
             isTransactionTimePickerDialogVisible = isTransactionTimePickerDialogVisible,
             setScreenBottomSheetType = setScreenBottomSheetType,
             setIsTransactionDatePickerDialogVisible = setIsTransactionDatePickerDialogVisible,
             setIsTransactionTimePickerDialogVisible = setIsTransactionTimePickerDialogVisible,
+            isLoading = unwrappedData.isNull(),
+            uiState = unwrappedData?.uiState.orDefault(),
+            uiVisibilityState = unwrappedData?.uiVisibilityState.orDefault(),
+            isCtaButtonEnabled = unwrappedData?.isCtaButtonEnabled.orFalse(),
+            appBarTitleTextStringResourceId = if (isEdit) {
+                R.string.screen_edit_transaction_appbar_title
+            } else {
+                R.string.screen_add_transaction_appbar_title
+            },
+            ctaButtonLabelTextStringResourceId = if (isEdit) {
+                R.string.screen_edit_transaction_floating_action_button_content_description
+            } else {
+                R.string.screen_add_transaction_floating_action_button_content_description
+            },
+            accountFromTextFieldLabelTextStringResourceId =
+            if (unwrappedData?.selectedTransactionType == TransactionType.TRANSFER) {
+                R.string.screen_add_or_edit_transaction_account_from
+            } else {
+                R.string.screen_add_or_edit_transaction_account
+            },
+            accountToTextFieldLabelTextStringResourceId =
+            if (unwrappedData?.selectedTransactionType == TransactionType.TRANSFER) {
+                R.string.screen_add_or_edit_transaction_account_to
+            } else {
+                R.string.screen_add_or_edit_transaction_account
+            },
+            filteredCategories = unwrappedData?.filteredCategories.orEmpty(),
+            transactionTypesForNewTransactionChipUIData = unwrappedData?.transactionTypesForNewTransaction?.map { transactionType ->
+                ChipUIData(
+                    text = transactionType.title,
+                )
+            }.orEmpty(),
+            titleSuggestions = unwrappedData?.titleSuggestions.orEmpty(),
+            titleSuggestionsChipUIData = titleSuggestions.map { title ->
+                ChipUIData(
+                    text = title,
+                )
+            },
+            accounts = unwrappedData?.accounts.orEmpty(),
+            transactionForValuesChipUIData =
+            unwrappedData?.transactionForValues?.map { transactionFor ->
+                ChipUIData(
+                    text = transactionFor.titleToDisplay,
+                )
+            }.orEmpty(),
+            currentLocalDate = unwrappedData?.currentLocalDate.orMin(),
+            resetScreenBottomSheetType = {
+                setScreenBottomSheetType(AddOrEditTransactionScreenBottomSheetType.None)
+            },
         )
     }
 }

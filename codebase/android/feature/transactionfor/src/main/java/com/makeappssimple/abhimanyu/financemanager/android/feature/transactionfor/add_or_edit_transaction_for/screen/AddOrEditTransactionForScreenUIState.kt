@@ -15,40 +15,17 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 
 @Stable
 public class AddOrEditTransactionForScreenUIState(
-    data: MyResult<AddOrEditTransactionForScreenUIData>?,
-    private val unwrappedData: AddOrEditTransactionForScreenUIData? = when (data) {
-        is MyResult.Success -> {
-            data.data
-        }
-
-        else -> {
-            null
-        }
-    },
-    isEdit: Boolean,
-    setScreenBottomSheetType: (AddOrEditTransactionForScreenBottomSheetType) -> Unit,
     public val screenBottomSheetType: AddOrEditTransactionForScreenBottomSheetType,
-    public val isLoading: Boolean = unwrappedData.isNull(),
-    public val isCtaButtonEnabled: Boolean? = unwrappedData?.isValidTransactionForData,
+    public val isLoading: Boolean,
+    public val isCtaButtonEnabled: Boolean?,
     @StringRes
-    public val appBarTitleTextStringResourceId: Int = if (isEdit) {
-        R.string.screen_edit_transaction_for_appbar_title
-    } else {
-        R.string.screen_add_transaction_for_appbar_title
-    },
+    public val appBarTitleTextStringResourceId: Int,
     @StringRes
-    public val ctaButtonLabelTextStringResourceId: Int = if (isEdit) {
-        R.string.screen_edit_transaction_for_floating_action_button_content_description
-    } else {
-        R.string.screen_add_transaction_for_floating_action_button_content_description
-    },
-    public val title: TextFieldValue? = unwrappedData?.title,
+    public val ctaButtonLabelTextStringResourceId: Int,
+    public val title: TextFieldValue?,
     @StringRes
-    public val titleTextFieldErrorTextStringResourceId: Int? =
-        unwrappedData?.titleTextFieldError?.textStringResourceId,
-    public val resetScreenBottomSheetType: () -> Unit = {
-        setScreenBottomSheetType(AddOrEditTransactionForScreenBottomSheetType.None)
-    },
+    public val titleTextFieldErrorTextStringResourceId: Int?,
+    public val resetScreenBottomSheetType: () -> Unit,
 ) : ScreenUIState
 
 @Composable
@@ -71,11 +48,35 @@ public fun rememberAddOrEditTransactionForScreenUIState(
         isEdit,
         screenBottomSheetType,
     ) {
+        val unwrappedData: AddOrEditTransactionForScreenUIData? = when (data) {
+            is MyResult.Success -> {
+                data.data
+            }
+
+            else -> {
+                null
+            }
+        }
+
         AddOrEditTransactionForScreenUIState(
-            data = data,
-            isEdit = isEdit,
             screenBottomSheetType = screenBottomSheetType,
-            setScreenBottomSheetType = setScreenBottomSheetType,
+            isLoading = unwrappedData.isNull(),
+            isCtaButtonEnabled = unwrappedData?.isValidTransactionForData,
+            appBarTitleTextStringResourceId = if (isEdit) {
+                R.string.screen_edit_transaction_for_appbar_title
+            } else {
+                R.string.screen_add_transaction_for_appbar_title
+            },
+            ctaButtonLabelTextStringResourceId = if (isEdit) {
+                R.string.screen_edit_transaction_for_floating_action_button_content_description
+            } else {
+                R.string.screen_add_transaction_for_floating_action_button_content_description
+            },
+            title = unwrappedData?.title,
+            titleTextFieldErrorTextStringResourceId = unwrappedData?.titleTextFieldError?.textStringResourceId,
+            resetScreenBottomSheetType = {
+                setScreenBottomSheetType(AddOrEditTransactionForScreenBottomSheetType.None)
+            },
         )
     }
 }

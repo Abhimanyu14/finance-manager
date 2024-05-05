@@ -13,29 +13,15 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 
 @Stable
 public class ViewTransactionScreenUIState(
-    data: MyResult<ViewTransactionScreenUIData>?,
-    private val unwrappedData: ViewTransactionScreenUIData? = when (data) {
-        is MyResult.Success -> {
-            data.data
-        }
-
-        else -> {
-            null
-        }
-    },
     public val transactionIdToDelete: Int?,
     public val screenBottomSheetType: ViewTransactionScreenBottomSheetType,
     public val setTransactionIdToDelete: (Int?) -> Unit,
     public val setScreenBottomSheetType: (ViewTransactionScreenBottomSheetType) -> Unit,
-    public val isLoading: Boolean = unwrappedData.isNull(),
-    public val originalTransactionListItemData: TransactionListItemData? =
-        unwrappedData?.originalTransactionListItemData,
-    public val refundTransactionListItemData: List<TransactionListItemData>? =
-        unwrappedData?.refundTransactionListItemData,
-    public val transactionListItemData: TransactionListItemData? = unwrappedData?.transactionListItemData,
-    public val resetScreenBottomSheetType: () -> Unit = {
-        setScreenBottomSheetType(ViewTransactionScreenBottomSheetType.None)
-    },
+    public val isLoading: Boolean,
+    public val originalTransactionListItemData: TransactionListItemData?,
+    public val refundTransactionListItemData: List<TransactionListItemData>?,
+    public val transactionListItemData: TransactionListItemData?,
+    public val resetScreenBottomSheetType: () -> Unit,
 ) : ScreenUIState
 
 @Composable
@@ -67,12 +53,28 @@ public fun rememberViewTransactionScreenUIState(
         setTransactionIdToDelete,
         setScreenBottomSheetType,
     ) {
+        val unwrappedData: ViewTransactionScreenUIData? = when (data) {
+            is MyResult.Success -> {
+                data.data
+            }
+
+            else -> {
+                null
+            }
+        }
+
         ViewTransactionScreenUIState(
-            data = data,
             transactionIdToDelete = transactionIdToDelete,
             screenBottomSheetType = screenBottomSheetType,
             setTransactionIdToDelete = setTransactionIdToDelete,
             setScreenBottomSheetType = setScreenBottomSheetType,
+            isLoading = unwrappedData.isNull(),
+            originalTransactionListItemData = unwrappedData?.originalTransactionListItemData,
+            refundTransactionListItemData = unwrappedData?.refundTransactionListItemData,
+            transactionListItemData = unwrappedData?.transactionListItemData,
+            resetScreenBottomSheetType = {
+                setScreenBottomSheetType(ViewTransactionScreenBottomSheetType.None)
+            },
         )
     }
 }

@@ -14,32 +14,17 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 
 @Stable
 public class AccountsScreenUIState(
-    data: MyResult<AccountsScreenUIData>?,
-    private val unwrappedData: AccountsScreenUIData? = when (data) {
-        is MyResult.Success -> {
-            data.data
-        }
-
-        else -> {
-            null
-        }
-    },
     public val clickedItemId: Int?,
     public val accountIdToDelete: Int?,
     public val screenBottomSheetType: AccountsScreenBottomSheetType,
     public val setClickedItemId: (Int?) -> Unit,
     public val setAccountIdToDelete: (Int?) -> Unit,
     public val setScreenBottomSheetType: (AccountsScreenBottomSheetType) -> Unit,
-    public val isLoading: Boolean = unwrappedData.isNull(),
-    public val accountsListItemDataList: List<AccountsListItemData> =
-        unwrappedData?.accountsListItemDataList.orEmpty(),
-    public val accountsTotalBalanceAmountValue: Long =
-        unwrappedData?.accountsTotalBalanceAmountValue.orZero(),
-    public val accountsTotalMinimumBalanceAmountValue: Long =
-        unwrappedData?.accountsTotalMinimumBalanceAmountValue.orZero(),
-    public val resetScreenBottomSheetType: () -> Unit = {
-        setScreenBottomSheetType(AccountsScreenBottomSheetType.None)
-    },
+    public val isLoading: Boolean,
+    public val accountsListItemDataList: List<AccountsListItemData>,
+    public val accountsTotalBalanceAmountValue: Long,
+    public val accountsTotalMinimumBalanceAmountValue: Long,
+    public val resetScreenBottomSheetType: () -> Unit,
 ) : ScreenUIState
 
 @Composable
@@ -81,14 +66,30 @@ public fun rememberAccountsScreenUIState(
         setAccountIdToDelete,
         setScreenBottomSheetType,
     ) {
+        val unwrappedData: AccountsScreenUIData? = when (data) {
+            is MyResult.Success -> {
+                data.data
+            }
+
+            else -> {
+                null
+            }
+        }
+
         AccountsScreenUIState(
-            data = data,
             screenBottomSheetType = screenBottomSheetType,
             clickedItemId = clickedItemId,
             accountIdToDelete = accountIdToDelete,
             setScreenBottomSheetType = setScreenBottomSheetType,
             setClickedItemId = setClickedItemId,
             setAccountIdToDelete = setAccountIdToDelete,
+            isLoading = unwrappedData.isNull(),
+            accountsListItemDataList = unwrappedData?.accountsListItemDataList.orEmpty(),
+            accountsTotalBalanceAmountValue = unwrappedData?.accountsTotalBalanceAmountValue.orZero(),
+            accountsTotalMinimumBalanceAmountValue = unwrappedData?.accountsTotalMinimumBalanceAmountValue.orZero(),
+            resetScreenBottomSheetType = {
+                setScreenBottomSheetType(AccountsScreenBottomSheetType.None)
+            },
         )
     }
 }
