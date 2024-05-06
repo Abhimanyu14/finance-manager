@@ -7,19 +7,23 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 public sealed class ViewTransactionScreenUIEvent : ScreenUIEvent {
     public data object OnTopAppBarNavigationButtonClick : ViewTransactionScreenUIEvent()
 
-    public data class DeleteTransaction(
-        val transactionId: Int,
-    ) : ViewTransactionScreenUIEvent()
+    public sealed class OnTransactionDeleteConfirmationBottomSheet {
+        public data class DeleteButtonClick(
+            val transactionId: Int,
+        ) : ViewTransactionScreenUIEvent()
+    }
 
-    public data class NavigateToAddTransactionScreen(
-        val transactionId: Int,
-    ) : ViewTransactionScreenUIEvent()
+    public sealed class OnTransactionListItem {
+        public data class RefundButtonClick(
+            val transactionId: Int,
+        ) : ViewTransactionScreenUIEvent()
 
-    public data class NavigateToEditTransactionScreen(
-        val transactionId: Int,
-    ) : ViewTransactionScreenUIEvent()
+        public data class EditButtonClick(
+            val transactionId: Int,
+        ) : ViewTransactionScreenUIEvent()
 
-    public data class NavigateToViewTransactionScreen(
-        val transactionId: Int,
-    ) : ViewTransactionScreenUIEvent()
+        public data class Click(
+            val transactionId: Int,
+        ) : ViewTransactionScreenUIEvent()
+    }
 }

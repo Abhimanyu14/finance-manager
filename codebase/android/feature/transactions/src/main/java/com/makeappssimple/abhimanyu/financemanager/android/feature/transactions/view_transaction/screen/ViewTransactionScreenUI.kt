@@ -61,7 +61,7 @@ internal fun ViewTransactionScreenUI(
                         deleteTransaction = {
                             uiState.transactionIdToDelete?.let { transactionIdToDeleteValue ->
                                 handleUIEvents(
-                                    ViewTransactionScreenUIEvent.DeleteTransaction(
+                                    ViewTransactionScreenUIEvent.OnTransactionDeleteConfirmationBottomSheet.DeleteButtonClick(
                                         transactionId = transactionIdToDeleteValue,
                                     )
                                 )
@@ -123,14 +123,14 @@ internal fun ViewTransactionScreenUI(
                             },
                             onEditButtonClick = {
                                 handleUIEvents(
-                                    ViewTransactionScreenUIEvent.NavigateToEditTransactionScreen(
+                                    ViewTransactionScreenUIEvent.OnTransactionListItem.EditButtonClick(
                                         transactionId = uiState.transactionListItemData.transactionId,
                                     )
                                 )
                             },
                             onRefundButtonClick = {
                                 handleUIEvents(
-                                    ViewTransactionScreenUIEvent.NavigateToAddTransactionScreen(
+                                    ViewTransactionScreenUIEvent.OnTransactionListItem.RefundButtonClick(
                                         transactionId = uiState.transactionListItemData.transactionId,
                                     )
                                 )
@@ -156,7 +156,7 @@ internal fun ViewTransactionScreenUI(
                         events = TransactionListItemEvents(
                             onClick = {
                                 handleUIEvents(
-                                    ViewTransactionScreenUIEvent.NavigateToViewTransactionScreen(
+                                    ViewTransactionScreenUIEvent.OnTransactionListItem.Click(
                                         transactionId = uiState.originalTransactionListItemData.transactionId,
                                     )
                                 )
@@ -169,14 +169,14 @@ internal fun ViewTransactionScreenUI(
                             },
                             onEditButtonClick = {
                                 handleUIEvents(
-                                    ViewTransactionScreenUIEvent.NavigateToEditTransactionScreen(
+                                    ViewTransactionScreenUIEvent.OnTransactionListItem.EditButtonClick(
                                         transactionId = uiState.originalTransactionListItemData.transactionId,
                                     )
                                 )
                             },
                             onRefundButtonClick = {
                                 handleUIEvents(
-                                    ViewTransactionScreenUIEvent.NavigateToAddTransactionScreen(
+                                    ViewTransactionScreenUIEvent.OnTransactionListItem.RefundButtonClick(
                                         transactionId = uiState.originalTransactionListItemData.transactionId,
                                     )
                                 )
@@ -209,7 +209,7 @@ internal fun ViewTransactionScreenUI(
                         events = TransactionListItemEvents(
                             onClick = {
                                 handleUIEvents(
-                                    ViewTransactionScreenUIEvent.NavigateToViewTransactionScreen(
+                                    ViewTransactionScreenUIEvent.OnTransactionListItem.Click(
                                         transactionId = transactionListItemData.transactionId,
                                     )
                                 )
@@ -222,7 +222,7 @@ internal fun ViewTransactionScreenUI(
                             },
                             onEditButtonClick = {
                                 handleUIEvents(
-                                    ViewTransactionScreenUIEvent.NavigateToEditTransactionScreen(
+                                    ViewTransactionScreenUIEvent.OnTransactionListItem.EditButtonClick(
                                         transactionId = transactionListItemData.transactionId,
                                     )
                                 )

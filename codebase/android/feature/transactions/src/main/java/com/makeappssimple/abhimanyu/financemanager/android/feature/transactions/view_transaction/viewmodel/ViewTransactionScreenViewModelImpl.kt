@@ -88,19 +88,21 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
         uiEvent: ViewTransactionScreenUIEvent,
     ) {
         when (uiEvent) {
-            is ViewTransactionScreenUIEvent.DeleteTransaction -> {
-                deleteTransaction(uiEvent.transactionId)
+            is ViewTransactionScreenUIEvent.OnTransactionDeleteConfirmationBottomSheet.DeleteButtonClick -> {
+                deleteTransaction(
+                    transactionId = uiEvent.transactionId,
+                )
             }
 
-            is ViewTransactionScreenUIEvent.NavigateToAddTransactionScreen -> {
+            is ViewTransactionScreenUIEvent.OnTransactionListItem.RefundButtonClick -> {
                 navigateToAddTransactionScreen(uiEvent.transactionId)
             }
 
-            is ViewTransactionScreenUIEvent.NavigateToEditTransactionScreen -> {
+            is ViewTransactionScreenUIEvent.OnTransactionListItem.EditButtonClick -> {
                 navigateToEditTransactionScreen(uiEvent.transactionId)
             }
 
-            is ViewTransactionScreenUIEvent.NavigateToViewTransactionScreen -> {
+            is ViewTransactionScreenUIEvent.OnTransactionListItem.Click -> {
                 navigateToViewTransactionScreen(uiEvent.transactionId)
             }
 
@@ -141,13 +143,13 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
     }
 
     private fun deleteTransaction(
-        id: Int,
+        transactionId: Int,
     ) {
         closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
             deleteTransactionUseCase(
-                id = id,
+                id = transactionId,
             )
             navigateUp()
         }
