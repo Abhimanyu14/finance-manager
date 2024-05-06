@@ -35,7 +35,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetExpandedShape
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.BottomSheetShape
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.BottomSheetHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
@@ -65,11 +64,6 @@ internal fun TransactionsScreenUI(
     state: CommonScreenUIState = rememberCommonScreenUIState(),
     handleUIEvents: (uiEvent: TransactionsScreenUIEvent) -> Unit = {},
 ) {
-    val resetSelectionMode = {
-        uiState.setIsInSelectionMode(false)
-        handleUIEvents(TransactionsScreenUIEvent.ClearSelectedTransactions)
-    }
-
     BottomSheetHandler(
         showModalBottomSheet = uiState.screenBottomSheetType != TransactionsScreenBottomSheetType.None,
         screenBottomSheetType = uiState.screenBottomSheetType,
@@ -80,21 +74,12 @@ internal fun TransactionsScreenUI(
     )
 
     BackHandler(
+        // TODO(Abhi): Move this logic outside the UI composable
         enabled = uiState.searchText.isNotEmpty() ||
                 uiState.selectedFilter.areFiltersSelected() ||
                 uiState.isInSelectionMode,
     ) {
-        handleUIEvents(
-            TransactionsScreenUIEvent.UpdateSearchText(
-                updatedSearchText = "",
-            )
-        )
-        handleUIEvents(
-            TransactionsScreenUIEvent.UpdateSelectedFilter(
-                updatedSelectedFilter = Filter(),
-            )
-        )
-        resetSelectionMode()
+        handleUIEvents(TransactionsScreenUIEvent.OnNavigationBackButtonClick)
     }
 
     MyScaffold(
@@ -118,7 +103,7 @@ internal fun TransactionsScreenUI(
                         selectedFilter = uiState.selectedFilter,
                         updateSelectedFilter = { updatedSelectedFilter ->
                             handleUIEvents(
-                                TransactionsScreenUIEvent.UpdateSelectedFilter(
+                                TransactionsScreenUIEvent.OnSelectedFilterUpdated(
                                     updatedSelectedFilter = updatedSelectedFilter,
                                 )
                             )
@@ -173,7 +158,7 @@ internal fun TransactionsScreenUI(
                         resetBottomSheetType = uiState.resetScreenBottomSheetType,
                         updateSelectedSortOption = { index ->
                             handleUIEvents(
-                                TransactionsScreenUIEvent.UpdateSelectedSortOption(
+                                TransactionsScreenUIEvent.OnSelectedSortOptionUpdated(
                                     updatedSelectedSortOption = uiState.sortOptions[index],
                                 )
                             )
@@ -211,7 +196,9 @@ internal fun TransactionsScreenUI(
                             },
                         )
                     },
-                    navigationAction = resetSelectionMode,
+                    navigationAction = {
+                        handleUIEvents(TransactionsScreenUIEvent.OnSelectionModeTopAppBarNavigationButtonClick)
+                    },
                     title = {
                         MyText(
                             text = stringResource(
@@ -316,7 +303,7 @@ internal fun TransactionsScreenUI(
                                 },
                                 onValueChange = { updatedSearchText ->
                                     handleUIEvents(
-                                        TransactionsScreenUIEvent.UpdateSearchText(
+                                        TransactionsScreenUIEvent.OnSearchTextUpdated(
                                             updatedSearchText = updatedSearchText,
                                         )
                                     )

@@ -17,6 +17,8 @@ public interface TransactionsScreenViewModel : ScreenViewModel {
         transactionId: Int,
     )
 
+    public fun clearSelectedTransactions()
+
     public fun navigateToViewTransactionScreen(
         transactionId: Int,
     )

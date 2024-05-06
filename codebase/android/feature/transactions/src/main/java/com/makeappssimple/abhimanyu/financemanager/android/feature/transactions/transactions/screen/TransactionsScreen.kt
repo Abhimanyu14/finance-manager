@@ -7,6 +7,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.Filter
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.TransactionsScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.viewmodel.TransactionsScreenViewModelImpl
 
@@ -31,6 +32,26 @@ public fun TransactionsScreen(
     ) {
         { uiEvent: TransactionsScreenUIEvent ->
             when (uiEvent) {
+                is TransactionsScreenUIEvent.OnSelectionModeTopAppBarNavigationButtonClick -> {
+                    uiState.setIsInSelectionMode(false)
+                    viewModel.clearSelectedTransactions()
+                }
+
+                is TransactionsScreenUIEvent.OnNavigationBackButtonClick -> {
+                    viewModel.handleUIEvents(
+                        TransactionsScreenUIEvent.OnSearchTextUpdated(
+                            updatedSearchText = "",
+                        )
+                    )
+                    viewModel.handleUIEvents(
+                        TransactionsScreenUIEvent.OnSelectedFilterUpdated(
+                            updatedSelectedFilter = Filter(),
+                        )
+                    )
+                    uiState.setIsInSelectionMode(false)
+                    viewModel.clearSelectedTransactions()
+                }
+
                 is TransactionsScreenUIEvent.OnTransactionListItem.Click -> {
                     if (uiEvent.isInSelectionMode) {
                         if (uiEvent.isSelected) {

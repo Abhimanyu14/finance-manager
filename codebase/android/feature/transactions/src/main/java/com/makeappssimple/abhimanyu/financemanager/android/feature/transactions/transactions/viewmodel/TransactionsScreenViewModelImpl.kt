@@ -411,10 +411,6 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         uiEvent: TransactionsScreenUIEvent,
     ) {
         when (uiEvent) {
-            is TransactionsScreenUIEvent.ClearSelectedTransactions -> {
-                clearSelectedTransactions()
-            }
-
             is TransactionsScreenUIEvent.OnFloatingActionButtonClick -> {
                 navigateToAddTransactionScreen()
             }
@@ -433,19 +429,19 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 )
             }
 
-            is TransactionsScreenUIEvent.UpdateSearchText -> {
+            is TransactionsScreenUIEvent.OnSearchTextUpdated -> {
                 updateSearchText(
                     updatedSearchText = uiEvent.updatedSearchText,
                 )
             }
 
-            is TransactionsScreenUIEvent.UpdateSelectedFilter -> {
+            is TransactionsScreenUIEvent.OnSelectedFilterUpdated -> {
                 updateSelectedFilter(
                     updatedSelectedFilter = uiEvent.updatedSelectedFilter,
                 )
             }
 
-            is TransactionsScreenUIEvent.UpdateSelectedSortOption -> {
+            is TransactionsScreenUIEvent.OnSelectedSortOptionUpdated -> {
                 updateSelectedSortOption(
                     updatedSelectedSortOption = uiEvent.updatedSelectedSortOption,
                 )
@@ -471,7 +467,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         }
     }
 
-    private fun clearSelectedTransactions() {
+    override fun clearSelectedTransactions() {
         selectedTransactions.update {
             emptyList()
         }
