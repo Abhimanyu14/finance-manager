@@ -8,24 +8,26 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 public sealed class CategoriesScreenUIEvent : ScreenUIEvent {
     public data object OnTopAppBarNavigationButtonClick : CategoriesScreenUIEvent()
 
-    public data class DeleteCategory(
-        val categoryId: Int,
-    ) : CategoriesScreenUIEvent()
-
-    public data class NavigateToAddCategoryScreen(
+    public data class OnFloatingActionButtonClick(
         val transactionType: String,
     ) : CategoriesScreenUIEvent()
 
-    public data class NavigateToEditCategoryScreen(
-        val categoryId: Int,
-    ) : CategoriesScreenUIEvent()
-
-    public data class SetDefaultCategoryIdInDataStore(
-        val defaultCategoryId: Int,
-        val transactionType: TransactionType,
-    ) : CategoriesScreenUIEvent()
-
-    public data class UpdateSelectedTabIndex(
+    public data class OnSelectedTabIndexUpdated(
         val updatedSelectedTabIndex: Int,
     ) : CategoriesScreenUIEvent()
+
+    public sealed class CategoriesDeleteConfirmationBottomSheet {
+        public data class DeleteButtonClick(
+            val categoryId: Int,
+        ) : CategoriesScreenUIEvent()
+
+        public data class EditButtonClick(
+            val categoryId: Int,
+        ) : CategoriesScreenUIEvent()
+
+        public data class SetAsDefaultCategoryButtonClick(
+            val defaultCategoryId: Int,
+            val transactionType: TransactionType,
+        ) : CategoriesScreenUIEvent()
+    }
 }

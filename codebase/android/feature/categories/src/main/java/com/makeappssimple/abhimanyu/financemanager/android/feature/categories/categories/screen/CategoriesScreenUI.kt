@@ -41,7 +41,7 @@ internal fun CategoriesScreenUI(
     LaunchedEffect(
         key1 = uiState.pagerState.currentPage,
     ) {
-        handleUIEvents(CategoriesScreenUIEvent.UpdateSelectedTabIndex(uiState.pagerState.currentPage))
+        handleUIEvents(CategoriesScreenUIEvent.OnSelectedTabIndexUpdated(uiState.pagerState.currentPage))
     }
 
     LaunchedEffect(
@@ -74,7 +74,7 @@ internal fun CategoriesScreenUI(
                         deleteCategory = {
                             uiState.categoryIdToDelete?.let { categoryIdToDeleteValue ->
                                 handleUIEvents(
-                                    CategoriesScreenUIEvent.DeleteCategory(
+                                    CategoriesScreenUIEvent.CategoriesDeleteConfirmationBottomSheet.DeleteButtonClick(
                                         categoryId = categoryIdToDeleteValue,
                                     )
                                 )
@@ -100,7 +100,7 @@ internal fun CategoriesScreenUI(
                     ) {
                         uiState.clickedItemId?.let { clickedItemIdValue ->
                             handleUIEvents(
-                                CategoriesScreenUIEvent.SetDefaultCategoryIdInDataStore(
+                                CategoriesScreenUIEvent.CategoriesDeleteConfirmationBottomSheet.SetAsDefaultCategoryButtonClick(
                                     defaultCategoryId = clickedItemIdValue,
                                     transactionType = uiState.validTransactionTypes[uiState.selectedTabIndex],
                                 )
@@ -124,7 +124,7 @@ internal fun CategoriesScreenUI(
                         onEditClick = {
                             uiState.resetScreenBottomSheetType()
                             handleUIEvents(
-                                CategoriesScreenUIEvent.NavigateToEditCategoryScreen(
+                                CategoriesScreenUIEvent.CategoriesDeleteConfirmationBottomSheet.EditButtonClick(
                                     categoryId = bottomSheetData.categoryId,
                                 )
                             )
@@ -156,7 +156,7 @@ internal fun CategoriesScreenUI(
                 ),
                 onClick = {
                     handleUIEvents(
-                        CategoriesScreenUIEvent.NavigateToAddCategoryScreen(
+                        CategoriesScreenUIEvent.OnFloatingActionButtonClick(
                             transactionType = when (uiState.selectedTabIndex) {
                                 0 -> {
                                     TransactionType.EXPENSE.title
@@ -194,7 +194,7 @@ internal fun CategoriesScreenUI(
                 tabDataList = uiState.tabData,
                 updateSelectedTabIndex = { updatedSelectedTabIndex ->
                     handleUIEvents(
-                        CategoriesScreenUIEvent.UpdateSelectedTabIndex(
+                        CategoriesScreenUIEvent.OnSelectedTabIndexUpdated(
                             updatedSelectedTabIndex = updatedSelectedTabIndex,
                         )
                     )

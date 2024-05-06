@@ -169,39 +169,39 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
         uiEvent: CategoriesScreenUIEvent,
     ) {
         when (uiEvent) {
-            is CategoriesScreenUIEvent.DeleteCategory -> {
+            is CategoriesScreenUIEvent.CategoriesDeleteConfirmationBottomSheet.DeleteButtonClick -> {
                 deleteCategory(
                     id = uiEvent.categoryId,
                 )
             }
 
-            is CategoriesScreenUIEvent.NavigateToAddCategoryScreen -> {
-                navigateToAddCategoryScreen(
-                    transactionType = uiEvent.transactionType,
-                )
-            }
-
-            is CategoriesScreenUIEvent.NavigateToEditCategoryScreen -> {
+            is CategoriesScreenUIEvent.CategoriesDeleteConfirmationBottomSheet.EditButtonClick -> {
                 navigateToEditCategoryScreen(
                     categoryId = uiEvent.categoryId,
                 )
             }
 
-            is CategoriesScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                navigateUp()
-            }
-
-            is CategoriesScreenUIEvent.SetDefaultCategoryIdInDataStore -> {
+            is CategoriesScreenUIEvent.CategoriesDeleteConfirmationBottomSheet.SetAsDefaultCategoryButtonClick -> {
                 setDefaultCategoryIdInDataStore(
                     defaultCategoryId = uiEvent.defaultCategoryId,
                     transactionType = uiEvent.transactionType,
                 )
             }
 
-            is CategoriesScreenUIEvent.UpdateSelectedTabIndex -> {
+            is CategoriesScreenUIEvent.OnFloatingActionButtonClick -> {
+                navigateToAddCategoryScreen(
+                    transactionType = uiEvent.transactionType,
+                )
+            }
+
+            is CategoriesScreenUIEvent.OnSelectedTabIndexUpdated -> {
                 updateSelectedTabIndex(
                     updatedSelectedTabIndex = uiEvent.updatedSelectedTabIndex,
                 )
+            }
+
+            is CategoriesScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
+                navigateUp()
             }
         }
     }
