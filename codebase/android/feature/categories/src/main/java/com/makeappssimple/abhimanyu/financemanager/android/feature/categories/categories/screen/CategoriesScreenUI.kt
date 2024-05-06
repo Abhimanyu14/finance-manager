@@ -74,7 +74,7 @@ internal fun CategoriesScreenUI(
                         deleteCategory = {
                             uiState.categoryIdToDelete?.let { categoryIdToDeleteValue ->
                                 handleUIEvents(
-                                    CategoriesScreenUIEvent.CategoriesDeleteConfirmationBottomSheet.DeleteButtonClick(
+                                    CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.DeleteButtonClick(
                                         categoryId = categoryIdToDeleteValue,
                                     )
                                 )
@@ -100,7 +100,7 @@ internal fun CategoriesScreenUI(
                     ) {
                         uiState.clickedItemId?.let { clickedItemIdValue ->
                             handleUIEvents(
-                                CategoriesScreenUIEvent.CategoriesDeleteConfirmationBottomSheet.SetAsDefaultCategoryButtonClick(
+                                CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.SetAsDefaultCategoryButtonClick(
                                     defaultCategoryId = clickedItemIdValue,
                                     transactionType = uiState.validTransactionTypes[uiState.selectedTabIndex],
                                 )
@@ -124,7 +124,7 @@ internal fun CategoriesScreenUI(
                         onEditClick = {
                             uiState.resetScreenBottomSheetType()
                             handleUIEvents(
-                                CategoriesScreenUIEvent.CategoriesDeleteConfirmationBottomSheet.EditButtonClick(
+                                CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.EditButtonClick(
                                     categoryId = bottomSheetData.categoryId,
                                 )
                             )

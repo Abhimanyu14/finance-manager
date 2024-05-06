@@ -169,19 +169,19 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
         uiEvent: CategoriesScreenUIEvent,
     ) {
         when (uiEvent) {
-            is CategoriesScreenUIEvent.CategoriesDeleteConfirmationBottomSheet.DeleteButtonClick -> {
+            is CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.DeleteButtonClick -> {
                 deleteCategory(
                     id = uiEvent.categoryId,
                 )
             }
 
-            is CategoriesScreenUIEvent.CategoriesDeleteConfirmationBottomSheet.EditButtonClick -> {
+            is CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.EditButtonClick -> {
                 navigateToEditCategoryScreen(
                     categoryId = uiEvent.categoryId,
                 )
             }
 
-            is CategoriesScreenUIEvent.CategoriesDeleteConfirmationBottomSheet.SetAsDefaultCategoryButtonClick -> {
+            is CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.SetAsDefaultCategoryButtonClick -> {
                 setDefaultCategoryIdInDataStore(
                     defaultCategoryId = uiEvent.defaultCategoryId,
                     transactionType = uiEvent.transactionType,

@@ -16,7 +16,7 @@ public sealed class CategoriesScreenUIEvent : ScreenUIEvent {
         val updatedSelectedTabIndex: Int,
     ) : CategoriesScreenUIEvent()
 
-    public sealed class CategoriesDeleteConfirmationBottomSheet {
+    public sealed class OnCategoriesDeleteConfirmationBottomSheet {
         public data class DeleteButtonClick(
             val categoryId: Int,
         ) : CategoriesScreenUIEvent()
