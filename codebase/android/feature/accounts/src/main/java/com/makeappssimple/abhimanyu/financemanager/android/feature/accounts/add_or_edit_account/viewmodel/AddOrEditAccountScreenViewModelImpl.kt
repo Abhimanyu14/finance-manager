@@ -155,15 +155,15 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
         uiEvent: AddOrEditAccountScreenUIEvent,
     ) {
         when (uiEvent) {
-            is AddOrEditAccountScreenUIEvent.ClearBalanceAmountValue -> {
+            is AddOrEditAccountScreenUIEvent.OnClearBalanceAmountValueButtonClick -> {
                 clearBalanceAmountValue()
             }
 
-            is AddOrEditAccountScreenUIEvent.ClearMinimumAccountBalanceAmountValue -> {
+            is AddOrEditAccountScreenUIEvent.OnClearMinimumAccountBalanceAmountValueButtonClick -> {
                 clearMinimumAccountBalanceAmountValue()
             }
 
-            is AddOrEditAccountScreenUIEvent.ClearName -> {
+            is AddOrEditAccountScreenUIEvent.OnClearNameButtonClick -> {
                 clearName()
             }
 
@@ -171,19 +171,19 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
                 navigateUp()
             }
 
-            is AddOrEditAccountScreenUIEvent.UpdateMinimumAccountBalanceAmountValue -> {
+            is AddOrEditAccountScreenUIEvent.OnMinimumAccountBalanceAmountValueUpdated -> {
                 updateMinimumAccountBalanceAmountValue(
                     updatedMinimumAccountBalanceAmountValue = uiEvent.updatedMinimumAccountBalanceAmountValue,
                 )
             }
 
-            is AddOrEditAccountScreenUIEvent.UpdateName -> {
+            is AddOrEditAccountScreenUIEvent.OnNameUpdated -> {
                 updateName(
                     updatedName = uiEvent.updatedName,
                 )
             }
 
-            is AddOrEditAccountScreenUIEvent.UpdateSelectedAccountTypeIndex -> {
+            is AddOrEditAccountScreenUIEvent.OnSelectedAccountTypeIndexUpdated -> {
                 updateSelectedAccountTypeIndex(
                     updatedIndex = uiEvent.updatedIndex,
                 )

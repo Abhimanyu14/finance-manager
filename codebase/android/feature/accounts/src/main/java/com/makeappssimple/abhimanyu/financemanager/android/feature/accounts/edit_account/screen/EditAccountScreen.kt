@@ -41,7 +41,7 @@ public fun EditAccountScreen(
                     viewModel.updateAccount()
                 }
 
-                is AddOrEditAccountScreenUIEvent.UpdateBalanceAmountValue -> {
+                is AddOrEditAccountScreenUIEvent.OnBalanceAmountValueUpdated -> {
                     viewModel.updateBalanceAmountValue(
                         updatedBalanceAmountValue = uiEvent.updatedBalanceAmountValue,
                     )

@@ -138,7 +138,7 @@ internal fun AddOrEditAccountScreenUI(
                     events = MyRadioGroupEvents(
                         onSelectionChange = { updatedIndex ->
                             handleUIEvents(
-                                AddOrEditAccountScreenUIEvent.UpdateSelectedAccountTypeIndex(
+                                AddOrEditAccountScreenUIEvent.OnSelectedAccountTypeIndexUpdated(
                                     updatedIndex = updatedIndex,
                                 )
                             )
@@ -200,11 +200,11 @@ internal fun AddOrEditAccountScreenUI(
                     ),
                     events = MyOutlinedTextFieldEvents(
                         onClickTrailingIcon = {
-                            handleUIEvents(AddOrEditAccountScreenUIEvent.ClearName)
+                            handleUIEvents(AddOrEditAccountScreenUIEvent.OnClearNameButtonClick)
                         },
                         onValueChange = { updatedName ->
                             handleUIEvents(
-                                AddOrEditAccountScreenUIEvent.UpdateName(
+                                AddOrEditAccountScreenUIEvent.OnNameUpdated(
                                     updatedName = updatedName,
                                 )
                             )
@@ -246,11 +246,11 @@ internal fun AddOrEditAccountScreenUI(
                     ),
                     events = MyOutlinedTextFieldEvents(
                         onClickTrailingIcon = {
-                            handleUIEvents(AddOrEditAccountScreenUIEvent.ClearBalanceAmountValue)
+                            handleUIEvents(AddOrEditAccountScreenUIEvent.OnClearBalanceAmountValueButtonClick)
                         },
                         onValueChange = { updatedBalanceAmountValue ->
                             handleUIEvents(
-                                AddOrEditAccountScreenUIEvent.UpdateBalanceAmountValue(
+                                AddOrEditAccountScreenUIEvent.OnBalanceAmountValueUpdated(
                                     updatedBalanceAmountValue = updatedBalanceAmountValue,
                                 )
                             )
@@ -284,11 +284,11 @@ internal fun AddOrEditAccountScreenUI(
                     ),
                     events = MyOutlinedTextFieldEvents(
                         onClickTrailingIcon = {
-                            handleUIEvents(AddOrEditAccountScreenUIEvent.ClearMinimumAccountBalanceAmountValue)
+                            handleUIEvents(AddOrEditAccountScreenUIEvent.OnClearMinimumAccountBalanceAmountValueButtonClick)
                         },
                         onValueChange = { updatedMinimumAccountBalanceAmountValue ->
                             handleUIEvents(
-                                AddOrEditAccountScreenUIEvent.UpdateMinimumAccountBalanceAmountValue(
+                                AddOrEditAccountScreenUIEvent.OnMinimumAccountBalanceAmountValueUpdated(
                                     updatedMinimumAccountBalanceAmountValue = updatedMinimumAccountBalanceAmountValue,
                                 )
                             )
