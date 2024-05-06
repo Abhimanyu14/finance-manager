@@ -65,7 +65,7 @@
 
     <!-- region bottom sheet transactions menu -->
     <string name="bottom_sheet_transactions_menu_update_transaction_for">Update Transaction For</string>
-    <string name="bottom_sheet_transactions_menu_select_all">Select All</string>
+    <string name="bottom_sheet_transactions_menu_select_all_transactions">Select All Transactions</string>
     <!-- endregion -->
 
     <!-- region categories delete confirmation bottom sheet -->

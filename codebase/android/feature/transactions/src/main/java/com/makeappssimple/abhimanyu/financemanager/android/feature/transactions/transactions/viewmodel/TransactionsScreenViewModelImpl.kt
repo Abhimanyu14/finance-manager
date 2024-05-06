@@ -421,7 +421,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 clearSelectedTransactions()
             }
 
-            is TransactionsScreenUIEvent.NavigateToAddTransactionScreen -> {
+            is TransactionsScreenUIEvent.OnFloatingActionButtonClick -> {
                 navigateToAddTransactionScreen()
             }
 
@@ -441,7 +441,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 )
             }
 
-            is TransactionsScreenUIEvent.SelectAllTransactions -> {
+            is TransactionsScreenUIEvent.OnTransactionsMenuBottomSheet.SelectAllTransactionsButtonClick -> {
                 selectAllTransactions()
             }
 

@@ -9,7 +9,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 
 @Immutable
 public data class TransactionsMenuBottomSheetEvents(
-    val onSelectAllClick: () -> Unit,
+    val onSelectAllTransactionsClick: () -> Unit,
     val onUpdateTransactionForClick: () -> Unit,
     val resetBottomSheetType: () -> Unit,
 )
@@ -34,10 +34,10 @@ public fun TransactionsMenuBottomSheet(
             TransactionsMenuBottomSheetItemData(
                 imageVector = MyIcons.Checklist,
                 text = stringResource(
-                    id = R.string.bottom_sheet_transactions_menu_select_all,
+                    id = R.string.bottom_sheet_transactions_menu_select_all_transactions,
                 ),
                 onClick = {
-                    events.onSelectAllClick()
+                    events.onSelectAllTransactionsClick()
                     events.resetBottomSheetType()
                 },
             )

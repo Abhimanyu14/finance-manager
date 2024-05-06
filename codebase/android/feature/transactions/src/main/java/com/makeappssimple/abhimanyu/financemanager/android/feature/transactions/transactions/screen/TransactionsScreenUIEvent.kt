@@ -8,9 +8,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 @Immutable
 public sealed class TransactionsScreenUIEvent : ScreenUIEvent {
     public data object ClearSelectedTransactions : TransactionsScreenUIEvent()
-    public data object NavigateToAddTransactionScreen : TransactionsScreenUIEvent()
+    public data object OnFloatingActionButtonClick : TransactionsScreenUIEvent()
     public data object OnTopAppBarNavigationButtonClick : TransactionsScreenUIEvent()
-    public data object SelectAllTransactions : TransactionsScreenUIEvent()
 
     public data class AddToSelectedTransactions(
         val transactionId: Int,
@@ -43,4 +42,8 @@ public sealed class TransactionsScreenUIEvent : ScreenUIEvent {
     public data class UpdateTransactionForValuesInTransactions(
         val updatedTransactionForValues: Int,
     ) : TransactionsScreenUIEvent()
+
+    public sealed class OnTransactionsMenuBottomSheet {
+        public data object SelectAllTransactionsButtonClick : TransactionsScreenUIEvent()
+    }
 }

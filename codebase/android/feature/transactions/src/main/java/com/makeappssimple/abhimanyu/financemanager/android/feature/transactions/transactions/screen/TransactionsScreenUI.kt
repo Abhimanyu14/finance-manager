@@ -130,8 +130,8 @@ internal fun TransactionsScreenUI(
                 TransactionsScreenBottomSheetType.Menu -> {
                     TransactionsMenuBottomSheet(
                         events = TransactionsMenuBottomSheetEvents(
-                            onSelectAllClick = {
-                                handleUIEvents(TransactionsScreenUIEvent.SelectAllTransactions)
+                            onSelectAllTransactionsClick = {
+                                handleUIEvents(TransactionsScreenUIEvent.OnTransactionsMenuBottomSheet.SelectAllTransactionsButtonClick)
                             },
                             onUpdateTransactionForClick = {
                                 uiState.setScreenBottomSheetType(
@@ -248,7 +248,7 @@ internal fun TransactionsScreenUI(
                         id = R.string.screen_transactions_floating_action_button_content_description,
                     ),
                     onClick = {
-                        handleUIEvents(TransactionsScreenUIEvent.NavigateToAddTransactionScreen)
+                        handleUIEvents(TransactionsScreenUIEvent.OnFloatingActionButtonClick)
                     },
                 )
             }
