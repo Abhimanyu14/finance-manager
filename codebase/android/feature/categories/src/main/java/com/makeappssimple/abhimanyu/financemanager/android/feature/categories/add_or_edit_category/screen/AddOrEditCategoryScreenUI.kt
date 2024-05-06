@@ -86,7 +86,7 @@ internal fun AddOrEditCategoryScreenUI(
         resetBottomSheetType = {
             uiState.resetScreenBottomSheetType()
             handleUIEvents(
-                AddOrEditCategoryScreenUIEvent.UpdateSearchText(
+                AddOrEditCategoryScreenUIEvent.OnEmojiBottomSheetSearchTextUpdated(
                     updatedSearchText = "",
                 )
             )
@@ -111,14 +111,14 @@ internal fun AddOrEditCategoryScreenUI(
                         resetBottomSheetType = uiState.resetScreenBottomSheetType,
                         updateEmoji = { updatedEmoji ->
                             handleUIEvents(
-                                AddOrEditCategoryScreenUIEvent.UpdateEmoji(
+                                AddOrEditCategoryScreenUIEvent.OnEmojiUpdated(
                                     updatedEmoji = updatedEmoji,
                                 )
                             )
                         },
                         updateSearchText = { updatedSearchText ->
                             handleUIEvents(
-                                AddOrEditCategoryScreenUIEvent.UpdateSearchText(
+                                AddOrEditCategoryScreenUIEvent.OnEmojiBottomSheetSearchTextUpdated(
                                     updatedSearchText = updatedSearchText,
                                 )
                             )
@@ -172,7 +172,7 @@ internal fun AddOrEditCategoryScreenUI(
                 events = MyRadioGroupEvents(
                     onSelectionChange = { updatedIndex ->
                         handleUIEvents(
-                            AddOrEditCategoryScreenUIEvent.UpdateSelectedTransactionTypeIndex(
+                            AddOrEditCategoryScreenUIEvent.OnSelectedTransactionTypeIndexUpdated(
                                 updatedIndex = updatedIndex,
                             )
                         )
@@ -251,11 +251,11 @@ internal fun AddOrEditCategoryScreenUI(
                     ),
                     events = MyOutlinedTextFieldEvents(
                         onClickTrailingIcon = {
-                            handleUIEvents(AddOrEditCategoryScreenUIEvent.ClearTitle)
+                            handleUIEvents(AddOrEditCategoryScreenUIEvent.OnClearTitleButtonClick)
                         },
                         onValueChange = { updatedTitle ->
                             handleUIEvents(
-                                AddOrEditCategoryScreenUIEvent.UpdateTitle(
+                                AddOrEditCategoryScreenUIEvent.OnTitleUpdated(
                                     updatedTitle = updatedTitle,
                                 )
                             )

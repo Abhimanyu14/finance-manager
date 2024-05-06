@@ -6,23 +6,23 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Immutable
 public sealed class AddOrEditCategoryScreenUIEvent : ScreenUIEvent {
-    public data object ClearTitle : AddOrEditCategoryScreenUIEvent()
-    public data object OnTopAppBarNavigationButtonClick : AddOrEditCategoryScreenUIEvent()
+    public data object OnClearTitleButtonClick : AddOrEditCategoryScreenUIEvent()
     public data object OnCtaButtonClick : AddOrEditCategoryScreenUIEvent()
+    public data object OnTopAppBarNavigationButtonClick : AddOrEditCategoryScreenUIEvent()
 
-    public data class UpdateEmoji(
-        val updatedEmoji: String,
-    ) : AddOrEditCategoryScreenUIEvent()
-
-    public data class UpdateSearchText(
+    public data class OnEmojiBottomSheetSearchTextUpdated(
         val updatedSearchText: String,
     ) : AddOrEditCategoryScreenUIEvent()
 
-    public data class UpdateSelectedTransactionTypeIndex(
+    public data class OnEmojiUpdated(
+        val updatedEmoji: String,
+    ) : AddOrEditCategoryScreenUIEvent()
+
+    public data class OnSelectedTransactionTypeIndexUpdated(
         val updatedIndex: Int,
     ) : AddOrEditCategoryScreenUIEvent()
 
-    public data class UpdateTitle(
+    public data class OnTitleUpdated(
         val updatedTitle: TextFieldValue,
     ) : AddOrEditCategoryScreenUIEvent()
 }

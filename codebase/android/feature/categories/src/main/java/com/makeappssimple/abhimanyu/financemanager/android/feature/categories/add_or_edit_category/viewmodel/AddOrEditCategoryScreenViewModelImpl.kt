@@ -165,7 +165,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         uiEvent: AddOrEditCategoryScreenUIEvent,
     ) {
         when (uiEvent) {
-            is AddOrEditCategoryScreenUIEvent.ClearTitle -> {
+            is AddOrEditCategoryScreenUIEvent.OnClearTitleButtonClick -> {
                 clearTitle()
             }
 
@@ -173,25 +173,25 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
                 navigateUp()
             }
 
-            is AddOrEditCategoryScreenUIEvent.UpdateEmoji -> {
+            is AddOrEditCategoryScreenUIEvent.OnEmojiUpdated -> {
                 updateEmoji(
                     updatedEmoji = uiEvent.updatedEmoji,
                 )
             }
 
-            is AddOrEditCategoryScreenUIEvent.UpdateSearchText -> {
+            is AddOrEditCategoryScreenUIEvent.OnEmojiBottomSheetSearchTextUpdated -> {
                 updateSearchText(
                     updatedSearchText = uiEvent.updatedSearchText,
                 )
             }
 
-            is AddOrEditCategoryScreenUIEvent.UpdateSelectedTransactionTypeIndex -> {
+            is AddOrEditCategoryScreenUIEvent.OnSelectedTransactionTypeIndexUpdated -> {
                 updateSelectedTransactionTypeIndex(
                     updatedIndex = uiEvent.updatedIndex,
                 )
             }
 
-            is AddOrEditCategoryScreenUIEvent.UpdateTitle -> {
+            is AddOrEditCategoryScreenUIEvent.OnTitleUpdated -> {
                 updateTitle(
                     updatedTitle = uiEvent.updatedTitle,
                 )
