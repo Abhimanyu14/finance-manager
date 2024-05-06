@@ -155,11 +155,11 @@ internal fun AddOrEditTransactionForScreenUI(
                 ),
                 events = MyOutlinedTextFieldEvents(
                     onClickTrailingIcon = {
-                        handleUIEvents(AddOrEditTransactionForScreenUIEvent.ClearTitle)
+                        handleUIEvents(AddOrEditTransactionForScreenUIEvent.OnClearTitleButtonClick)
                     },
                     onValueChange = { updatedTitle ->
                         handleUIEvents(
-                            AddOrEditTransactionForScreenUIEvent.UpdateTitle(
+                            AddOrEditTransactionForScreenUIEvent.OnTitleUpdated(
                                 updatedTitle = updatedTitle,
                             )
                         )
