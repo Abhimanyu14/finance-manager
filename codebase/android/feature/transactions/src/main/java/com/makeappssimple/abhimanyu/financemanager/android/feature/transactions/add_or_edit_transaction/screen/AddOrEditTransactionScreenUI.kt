@@ -116,7 +116,7 @@ internal fun AddOrEditTransactionScreenUI(
                             resetBottomSheetType = uiState.resetScreenBottomSheetType,
                             updateCategory = { updatedCategory ->
                                 handleUIEvents(
-                                    AddOrEditTransactionScreenUIEvent.UpdateCategory(
+                                    AddOrEditTransactionScreenUIEvent.OnCategoryUpdated(
                                         updatedCategory = updatedCategory,
                                     )
                                 )
@@ -135,7 +135,7 @@ internal fun AddOrEditTransactionScreenUI(
                             resetBottomSheetType = uiState.resetScreenBottomSheetType,
                             updateAccount = { updatedAccount ->
                                 handleUIEvents(
-                                    AddOrEditTransactionScreenUIEvent.UpdateAccountFrom(
+                                    AddOrEditTransactionScreenUIEvent.OnAccountFromUpdated(
                                         updatedAccountFrom = updatedAccount,
                                     )
                                 )
@@ -154,7 +154,7 @@ internal fun AddOrEditTransactionScreenUI(
                             resetBottomSheetType = uiState.resetScreenBottomSheetType,
                             updateAccount = { updatedAccount ->
                                 handleUIEvents(
-                                    AddOrEditTransactionScreenUIEvent.UpdateAccountTo(
+                                    AddOrEditTransactionScreenUIEvent.OnAccountToUpdated(
                                         updatedAccountTo = updatedAccount,
                                     )
                                 )
@@ -191,7 +191,7 @@ internal fun AddOrEditTransactionScreenUI(
                 },
                 onPositiveButtonClick = { updatedTransactionDate ->
                     handleUIEvents(
-                        AddOrEditTransactionScreenUIEvent.UpdateTransactionDate(
+                        AddOrEditTransactionScreenUIEvent.OnTransactionDateUpdated(
                             updatedTransactionDate = updatedTransactionDate,
                         )
                     )
@@ -210,7 +210,7 @@ internal fun AddOrEditTransactionScreenUI(
                 },
                 onPositiveButtonClick = { updatedTransactionTime ->
                     handleUIEvents(
-                        AddOrEditTransactionScreenUIEvent.UpdateTransactionTime(
+                        AddOrEditTransactionScreenUIEvent.OnTransactionTimeUpdated(
                             updatedTransactionTime = updatedTransactionTime,
                         )
                     )
@@ -247,7 +247,7 @@ internal fun AddOrEditTransactionScreenUI(
                     events = MyHorizontalScrollingRadioGroupEvents(
                         onSelectionChange = { updatedSelectedTransactionTypeIndex ->
                             handleUIEvents(
-                                AddOrEditTransactionScreenUIEvent.UpdateSelectedTransactionTypeIndex(
+                                AddOrEditTransactionScreenUIEvent.OnSelectedTransactionTypeIndexUpdated(
                                     updatedSelectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex,
                                 )
                             )
@@ -303,11 +303,11 @@ internal fun AddOrEditTransactionScreenUI(
                 ),
                 events = MyOutlinedTextFieldEvents(
                     onClickTrailingIcon = {
-                        handleUIEvents(AddOrEditTransactionScreenUIEvent.ClearAmount)
+                        handleUIEvents(AddOrEditTransactionScreenUIEvent.OnClearAmountButtonClick)
                     },
                     onValueChange = { updatedAmount ->
                         handleUIEvents(
-                            AddOrEditTransactionScreenUIEvent.UpdateAmount(
+                            AddOrEditTransactionScreenUIEvent.OnAmountUpdated(
                                 updatedAmount = updatedAmount,
                             )
                         )
@@ -366,11 +366,11 @@ internal fun AddOrEditTransactionScreenUI(
                     ),
                     events = MyOutlinedTextFieldEvents(
                         onClickTrailingIcon = {
-                            handleUIEvents(AddOrEditTransactionScreenUIEvent.ClearTitle)
+                            handleUIEvents(AddOrEditTransactionScreenUIEvent.OnClearTitleButtonClick)
                         },
                         onValueChange = { updatedTitle ->
                             handleUIEvents(
-                                AddOrEditTransactionScreenUIEvent.UpdateTitle(
+                                AddOrEditTransactionScreenUIEvent.OnTitleUpdated(
                                     updatedTitle = updatedTitle,
                                 ),
                             )
@@ -397,7 +397,7 @@ internal fun AddOrEditTransactionScreenUI(
                         onSelectionChange = { index ->
                             clearFocus()
                             handleUIEvents(
-                                AddOrEditTransactionScreenUIEvent.UpdateTitle(
+                                AddOrEditTransactionScreenUIEvent.OnTitleUpdated(
                                     updatedTitle = uiState.uiState.title.copy(
                                         text = uiState.titleSuggestions[index],
                                     ),
@@ -427,7 +427,7 @@ internal fun AddOrEditTransactionScreenUI(
                         onSelectionChange = { updatedSelectedTransactionForIndex ->
                             clearFocus()
                             handleUIEvents(
-                                AddOrEditTransactionScreenUIEvent.UpdateSelectedTransactionForIndex(
+                                AddOrEditTransactionScreenUIEvent.OnSelectedTransactionForIndexUpdated(
                                     updatedSelectedTransactionForIndex = updatedSelectedTransactionForIndex,
                                 )
                             )
@@ -462,11 +462,11 @@ internal fun AddOrEditTransactionScreenUI(
                     ),
                     events = MyOutlinedTextFieldEvents(
                         onClickTrailingIcon = {
-                            handleUIEvents(AddOrEditTransactionScreenUIEvent.ClearDescription)
+                            handleUIEvents(AddOrEditTransactionScreenUIEvent.OnClearDescriptionButtonClick)
                         },
                         onValueChange = { updatedDescription ->
                             handleUIEvents(
-                                AddOrEditTransactionScreenUIEvent.UpdateDescription(
+                                AddOrEditTransactionScreenUIEvent.OnDescriptionUpdated(
                                     updatedDescription = updatedDescription,
                                 )
                             )

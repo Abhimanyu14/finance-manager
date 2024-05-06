@@ -320,15 +320,15 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         uiEvent: AddOrEditTransactionScreenUIEvent,
     ) {
         when (uiEvent) {
-            is AddOrEditTransactionScreenUIEvent.ClearAmount -> {
+            is AddOrEditTransactionScreenUIEvent.OnClearAmountButtonClick -> {
                 clearAmount()
             }
 
-            is AddOrEditTransactionScreenUIEvent.ClearDescription -> {
+            is AddOrEditTransactionScreenUIEvent.OnClearDescriptionButtonClick -> {
                 clearDescription()
             }
 
-            is AddOrEditTransactionScreenUIEvent.ClearTitle -> {
+            is AddOrEditTransactionScreenUIEvent.OnClearTitleButtonClick -> {
                 clearTitle()
             }
 
@@ -336,61 +336,61 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
                 navigateUp()
             }
 
-            is AddOrEditTransactionScreenUIEvent.UpdateAccountFrom -> {
+            is AddOrEditTransactionScreenUIEvent.OnAccountFromUpdated -> {
                 updateAccountFrom(
                     updatedAccountFrom = uiEvent.updatedAccountFrom,
                 )
             }
 
-            is AddOrEditTransactionScreenUIEvent.UpdateAccountTo -> {
+            is AddOrEditTransactionScreenUIEvent.OnAccountToUpdated -> {
                 updateAccountTo(
                     updatedAccountTo = uiEvent.updatedAccountTo,
                 )
             }
 
-            is AddOrEditTransactionScreenUIEvent.UpdateAmount -> {
+            is AddOrEditTransactionScreenUIEvent.OnAmountUpdated -> {
                 updateAmount(
                     updatedAmount = uiEvent.updatedAmount,
                 )
             }
 
-            is AddOrEditTransactionScreenUIEvent.UpdateCategory -> {
+            is AddOrEditTransactionScreenUIEvent.OnCategoryUpdated -> {
                 updateCategory(
                     updatedCategory = uiEvent.updatedCategory,
                 )
             }
 
-            is AddOrEditTransactionScreenUIEvent.UpdateDescription -> {
+            is AddOrEditTransactionScreenUIEvent.OnDescriptionUpdated -> {
                 updateDescription(
                     updatedDescription = uiEvent.updatedDescription,
                 )
             }
 
-            is AddOrEditTransactionScreenUIEvent.UpdateSelectedTransactionForIndex -> {
+            is AddOrEditTransactionScreenUIEvent.OnSelectedTransactionForIndexUpdated -> {
                 updateSelectedTransactionForIndex(
                     updatedSelectedTransactionForIndex = uiEvent.updatedSelectedTransactionForIndex,
                 )
             }
 
-            is AddOrEditTransactionScreenUIEvent.UpdateSelectedTransactionTypeIndex -> {
+            is AddOrEditTransactionScreenUIEvent.OnSelectedTransactionTypeIndexUpdated -> {
                 updateSelectedTransactionTypeIndex(
                     updatedSelectedTransactionTypeIndex = uiEvent.updatedSelectedTransactionTypeIndex,
                 )
             }
 
-            is AddOrEditTransactionScreenUIEvent.UpdateTitle -> {
+            is AddOrEditTransactionScreenUIEvent.OnTitleUpdated -> {
                 updateTitle(
                     updatedTitle = uiEvent.updatedTitle,
                 )
             }
 
-            is AddOrEditTransactionScreenUIEvent.UpdateTransactionDate -> {
+            is AddOrEditTransactionScreenUIEvent.OnTransactionDateUpdated -> {
                 updateTransactionDate(
                     updatedTransactionDate = uiEvent.updatedTransactionDate,
                 )
             }
 
-            is AddOrEditTransactionScreenUIEvent.UpdateTransactionTime -> {
+            is AddOrEditTransactionScreenUIEvent.OnTransactionTimeUpdated -> {
                 updateTransactionTime(
                     updatedTransactionTime = uiEvent.updatedTransactionTime,
                 )
