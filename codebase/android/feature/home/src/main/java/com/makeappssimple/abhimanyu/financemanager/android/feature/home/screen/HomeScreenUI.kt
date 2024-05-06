@@ -71,7 +71,7 @@ internal fun HomeScreenUI(
                         imageVector = MyIcons.Settings,
                         contentDescriptionStringResourceId = R.string.screen_home_appbar_settings,
                         onClick = {
-                            handleUIEvents(HomeScreenUIEvent.NavigateToSettingsScreen)
+                            handleUIEvents(HomeScreenUIEvent.OnTopAppBarSettingsButtonClick)
                         },
                     )
                 },
@@ -86,7 +86,7 @@ internal fun HomeScreenUI(
                     id = R.string.screen_home_floating_action_button_content_description,
                 ),
                 onClick = {
-                    handleUIEvents(HomeScreenUIEvent.NavigateToAddTransactionScreen)
+                    handleUIEvents(HomeScreenUIEvent.OnFloatingActionButtonClick)
                 },
             )
         },
@@ -114,7 +114,7 @@ internal fun HomeScreenUI(
                 ),
                 events = TotalBalanceCardEvents(
                     onClick = {
-                        handleUIEvents(HomeScreenUIEvent.NavigateToAccountsScreen)
+                        handleUIEvents(HomeScreenUIEvent.OnTotalBalanceCardClick)
                     },
                     onViewBalanceClick = {
                         uiState.setBalanceVisible(true)
@@ -130,7 +130,7 @@ internal fun HomeScreenUI(
                     ),
                     events = BackupCardEvents(
                         onClick = {
-                            handleUIEvents(HomeScreenUIEvent.CreateDocument)
+                            handleUIEvents(HomeScreenUIEvent.OnBackupCardClick)
                         },
                     ),
                 )
@@ -144,13 +144,13 @@ internal fun HomeScreenUI(
                 ),
                 events = OverviewCardEvents(
                     onClick = {
-                        handleUIEvents(HomeScreenUIEvent.NavigateToAnalysisScreen)
+                        handleUIEvents(HomeScreenUIEvent.OnOverviewCard.Click)
                     },
                     onOverviewTabClick = {
-                        handleUIEvents(HomeScreenUIEvent.OnOverviewTabClick(it))
+                        handleUIEvents(HomeScreenUIEvent.OnOverviewCard.TabClick(it))
                     },
                     handleOverviewCardAction = {
-                        handleUIEvents(HomeScreenUIEvent.HandleOverviewCardAction(it))
+                        handleUIEvents(HomeScreenUIEvent.OnOverviewCard.Action(it))
                     },
                 ),
             )
@@ -160,7 +160,7 @@ internal fun HomeScreenUI(
                 ),
                 events = HomeRecentTransactionsEvents(
                     onClick = if (uiState.transactionListItemDataList.isNotEmpty()) {
-                        { handleUIEvents(HomeScreenUIEvent.NavigateToTransactionsScreen) }
+                        { handleUIEvents(HomeScreenUIEvent.OnHomeRecentTransactionsClick) }
                     } else {
                         null
                     },
@@ -172,7 +172,7 @@ internal fun HomeScreenUI(
                     events = TransactionListItemEvents(
                         onClick = {
                             handleUIEvents(
-                                HomeScreenUIEvent.NavigateToViewTransactionScreen(
+                                HomeScreenUIEvent.OnTransactionListItemClick(
                                     transactionId = listItem.transactionId,
                                 )
                             )

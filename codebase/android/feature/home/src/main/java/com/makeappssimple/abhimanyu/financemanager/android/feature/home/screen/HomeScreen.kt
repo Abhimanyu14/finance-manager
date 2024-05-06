@@ -47,7 +47,7 @@ public fun HomeScreen(
     ) {
         { uiEvent: HomeScreenUIEvent ->
             when (uiEvent) {
-                is HomeScreenUIEvent.CreateDocument -> {
+                is HomeScreenUIEvent.OnBackupCardClick -> {
                     createDocument.launch(MimeTypeConstants.JSON)
                 }
 

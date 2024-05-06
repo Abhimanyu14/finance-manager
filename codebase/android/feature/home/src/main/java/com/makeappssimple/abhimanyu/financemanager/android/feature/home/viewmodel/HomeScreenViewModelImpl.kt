@@ -232,39 +232,39 @@ internal class HomeScreenViewModelImpl @Inject constructor(
         uiEvent: HomeScreenUIEvent,
     ) {
         when (uiEvent) {
-            is HomeScreenUIEvent.NavigateToAccountsScreen -> {
+            is HomeScreenUIEvent.OnTotalBalanceCardClick -> {
                 navigateToAccountsScreen()
             }
 
-            is HomeScreenUIEvent.NavigateToAddTransactionScreen -> {
+            is HomeScreenUIEvent.OnFloatingActionButtonClick -> {
                 navigateToAddTransactionScreen()
             }
 
-            is HomeScreenUIEvent.NavigateToAnalysisScreen -> {
+            is HomeScreenUIEvent.OnOverviewCard.Click -> {
                 navigateToAnalysisScreen()
             }
 
-            is HomeScreenUIEvent.NavigateToSettingsScreen -> {
+            is HomeScreenUIEvent.OnTopAppBarSettingsButtonClick -> {
                 navigateToSettingsScreen()
             }
 
-            is HomeScreenUIEvent.NavigateToTransactionsScreen -> {
+            is HomeScreenUIEvent.OnHomeRecentTransactionsClick -> {
                 navigateToTransactionsScreen()
             }
 
-            is HomeScreenUIEvent.NavigateToViewTransactionScreen -> {
+            is HomeScreenUIEvent.OnTransactionListItemClick -> {
                 navigateToViewTransactionScreen(
                     transactionId = uiEvent.transactionId,
                 )
             }
 
-            is HomeScreenUIEvent.HandleOverviewCardAction -> {
+            is HomeScreenUIEvent.OnOverviewCard.Action -> {
                 handleOverviewCardAction(
                     overviewCardAction = uiEvent.overviewCardAction,
                 )
             }
 
-            is HomeScreenUIEvent.OnOverviewTabClick -> {
+            is HomeScreenUIEvent.OnOverviewCard.TabClick -> {
                 setOverviewTabSelectionIndex(
                     updatedOverviewTabSelectionIndex = uiEvent.index,
                 )

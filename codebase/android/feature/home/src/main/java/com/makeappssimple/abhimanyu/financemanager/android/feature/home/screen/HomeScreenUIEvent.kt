@@ -6,22 +6,25 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ove
 
 @Immutable
 public sealed class HomeScreenUIEvent : ScreenUIEvent {
-    public data object CreateDocument : HomeScreenUIEvent()
-    public data object NavigateToAccountsScreen : HomeScreenUIEvent()
-    public data object NavigateToAddTransactionScreen : HomeScreenUIEvent()
-    public data object NavigateToAnalysisScreen : HomeScreenUIEvent()
-    public data object NavigateToSettingsScreen : HomeScreenUIEvent()
-    public data object NavigateToTransactionsScreen : HomeScreenUIEvent()
+    public data object OnBackupCardClick : HomeScreenUIEvent()
+    public data object OnFloatingActionButtonClick : HomeScreenUIEvent()
+    public data object OnHomeRecentTransactionsClick : HomeScreenUIEvent()
+    public data object OnTopAppBarSettingsButtonClick : HomeScreenUIEvent()
+    public data object OnTotalBalanceCardClick : HomeScreenUIEvent()
 
-    public data class NavigateToViewTransactionScreen(
+    public data class OnTransactionListItemClick(
         val transactionId: Int,
     ) : HomeScreenUIEvent()
 
-    public data class HandleOverviewCardAction(
-        val overviewCardAction: OverviewCardAction,
-    ) : HomeScreenUIEvent()
+    public sealed class OnOverviewCard {
+        public data object Click : HomeScreenUIEvent()
 
-    public data class OnOverviewTabClick(
-        val index: Int,
-    ) : HomeScreenUIEvent()
+        public data class Action(
+            val overviewCardAction: OverviewCardAction,
+        ) : HomeScreenUIEvent()
+
+        public data class TabClick(
+            val index: Int,
+        ) : HomeScreenUIEvent()
+    }
 }
