@@ -411,12 +411,6 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         uiEvent: TransactionsScreenUIEvent,
     ) {
         when (uiEvent) {
-            is TransactionsScreenUIEvent.AddToSelectedTransactions -> {
-                addToSelectedTransactions(
-                    transactionId = uiEvent.transactionId,
-                )
-            }
-
             is TransactionsScreenUIEvent.ClearSelectedTransactions -> {
                 clearSelectedTransactions()
             }
@@ -425,20 +419,8 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 navigateToAddTransactionScreen()
             }
 
-            is TransactionsScreenUIEvent.NavigateToViewTransactionScreen -> {
-                navigateToViewTransactionScreen(
-                    transactionId = uiEvent.transactionId,
-                )
-            }
-
             is TransactionsScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
                 navigateUp()
-            }
-
-            is TransactionsScreenUIEvent.RemoveFromSelectedTransactions -> {
-                removeFromSelectedTransactions(
-                    transactionId = uiEvent.transactionId,
-                )
             }
 
             is TransactionsScreenUIEvent.OnTransactionsMenuBottomSheet.SelectAllTransactionsButtonClick -> {
@@ -474,10 +456,14 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                     transactionForId = uiEvent.updatedTransactionForValues,
                 )
             }
+
+            else -> {
+                // Noop, should have been handled in Screen composable or invalid event
+            }
         }
     }
 
-    private fun addToSelectedTransactions(
+    override fun addToSelectedTransactions(
         transactionId: Int,
     ) {
         selectedTransactions.update {
@@ -495,7 +481,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         navigator.navigateToAddTransactionScreen()
     }
 
-    private fun navigateToViewTransactionScreen(
+    override fun navigateToViewTransactionScreen(
         transactionId: Int,
     ) {
         navigator.navigateToViewTransactionScreen(
@@ -507,7 +493,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         navigator.navigateUp()
     }
 
-    private fun removeFromSelectedTransactions(
+    override fun removeFromSelectedTransactions(
         transactionId: Int,
     ) {
         selectedTransactions.update {

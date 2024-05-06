@@ -396,51 +396,22 @@ internal fun TransactionsScreenUI(
                             ),
                             events = TransactionListItemEvents(
                                 onClick = {
-                                    if (uiState.isInSelectionMode) {
-                                        if (isSelected) {
-                                            handleUIEvents(
-                                                TransactionsScreenUIEvent.RemoveFromSelectedTransactions(
-                                                    transactionId = listItem.transactionId,
-                                                )
-                                            )
-                                        } else {
-                                            handleUIEvents(
-                                                TransactionsScreenUIEvent.AddToSelectedTransactions(
-                                                    transactionId = listItem.transactionId,
-                                                )
-                                            )
-                                        }
-                                    } else {
-                                        handleUIEvents(
-                                            TransactionsScreenUIEvent.NavigateToViewTransactionScreen(
-                                                transactionId = listItem.transactionId,
-                                            )
+                                    handleUIEvents(
+                                        TransactionsScreenUIEvent.OnTransactionListItem.Click(
+                                            isInSelectionMode = uiState.isInSelectionMode,
+                                            isSelected = isSelected,
+                                            transactionId = listItem.transactionId,
                                         )
-                                    }
+                                    )
                                 },
                                 onLongClick = {
-                                    if (uiState.isInSelectionMode) {
-                                        if (isSelected) {
-                                            handleUIEvents(
-                                                TransactionsScreenUIEvent.RemoveFromSelectedTransactions(
-                                                    transactionId = listItem.transactionId,
-                                                )
-                                            )
-                                        } else {
-                                            handleUIEvents(
-                                                TransactionsScreenUIEvent.AddToSelectedTransactions(
-                                                    transactionId = listItem.transactionId,
-                                                )
-                                            )
-                                        }
-                                    } else {
-                                        uiState.setIsInSelectionMode(it)
-                                        handleUIEvents(
-                                            TransactionsScreenUIEvent.AddToSelectedTransactions(
-                                                transactionId = listItem.transactionId,
-                                            )
+                                    handleUIEvents(
+                                        TransactionsScreenUIEvent.OnTransactionListItem.LongClick(
+                                            isInSelectionMode = uiState.isInSelectionMode,
+                                            isSelected = isSelected,
+                                            transactionId = listItem.transactionId,
                                         )
-                                    }
+                                    )
                                 },
                             ),
                         )

@@ -30,8 +30,44 @@ public fun TransactionsScreen(
         key1 = viewModel,
     ) {
         { uiEvent: TransactionsScreenUIEvent ->
-            @Suppress("UNUSED_EXPRESSION")
             when (uiEvent) {
+                is TransactionsScreenUIEvent.OnTransactionListItem.Click -> {
+                    if (uiEvent.isInSelectionMode) {
+                        if (uiEvent.isSelected) {
+                            viewModel.removeFromSelectedTransactions(
+                                transactionId = uiEvent.transactionId,
+                            )
+                        } else {
+                            viewModel.addToSelectedTransactions(
+                                transactionId = uiEvent.transactionId,
+                            )
+                        }
+                    } else {
+                        viewModel.navigateToViewTransactionScreen(
+                            transactionId = uiEvent.transactionId,
+                        )
+                    }
+                }
+
+                is TransactionsScreenUIEvent.OnTransactionListItem.LongClick -> {
+                    if (uiEvent.isInSelectionMode) {
+                        if (uiEvent.isSelected) {
+                            viewModel.removeFromSelectedTransactions(
+                                transactionId = uiEvent.transactionId,
+                            )
+                        } else {
+                            viewModel.addToSelectedTransactions(
+                                transactionId = uiEvent.transactionId,
+                            )
+                        }
+                    } else {
+                        uiState.setIsInSelectionMode(true)
+                        viewModel.addToSelectedTransactions(
+                            transactionId = uiEvent.transactionId,
+                        )
+                    }
+                }
+
                 else -> {
                     viewModel.handleUIEvents(
                         uiEvent = uiEvent,

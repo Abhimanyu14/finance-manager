@@ -12,4 +12,16 @@ public interface TransactionsScreenViewModel : ScreenViewModel {
     public fun handleUIEvents(
         uiEvent: TransactionsScreenUIEvent,
     )
+
+    public fun addToSelectedTransactions(
+        transactionId: Int,
+    )
+
+    public fun navigateToViewTransactionScreen(
+        transactionId: Int,
+    )
+
+    public fun removeFromSelectedTransactions(
+        transactionId: Int,
+    )
 }

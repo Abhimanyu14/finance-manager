@@ -11,18 +11,6 @@ public sealed class TransactionsScreenUIEvent : ScreenUIEvent {
     public data object OnFloatingActionButtonClick : TransactionsScreenUIEvent()
     public data object OnTopAppBarNavigationButtonClick : TransactionsScreenUIEvent()
 
-    public data class AddToSelectedTransactions(
-        val transactionId: Int,
-    ) : TransactionsScreenUIEvent()
-
-    public data class NavigateToViewTransactionScreen(
-        val transactionId: Int,
-    ) : TransactionsScreenUIEvent()
-
-    public data class RemoveFromSelectedTransactions(
-        val transactionId: Int,
-    ) : TransactionsScreenUIEvent()
-
     public data class ToggleTransactionSelection(
         val transactionId: Int,
     ) : TransactionsScreenUIEvent()
@@ -42,6 +30,20 @@ public sealed class TransactionsScreenUIEvent : ScreenUIEvent {
     public data class UpdateTransactionForValuesInTransactions(
         val updatedTransactionForValues: Int,
     ) : TransactionsScreenUIEvent()
+
+    public sealed class OnTransactionListItem {
+        public data class Click(
+            val isInSelectionMode: Boolean,
+            val isSelected: Boolean,
+            val transactionId: Int,
+        ) : TransactionsScreenUIEvent()
+
+        public data class LongClick(
+            val isInSelectionMode: Boolean,
+            val isSelected: Boolean,
+            val transactionId: Int,
+        ) : TransactionsScreenUIEvent()
+    }
 
     public sealed class OnTransactionsMenuBottomSheet {
         public data object SelectAllTransactionsButtonClick : TransactionsScreenUIEvent()
