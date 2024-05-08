@@ -26,7 +26,7 @@ public fun AccountsScreen(
     val uiState = rememberAccountsScreenUIState(
         data = screenUIData,
     )
-    val handleUIEvents = remember(
+    val handleUIEvent = remember(
         key1 = viewModel,
     ) {
         { uiEvent: AccountsScreenUIEvent ->
@@ -62,7 +62,7 @@ public fun AccountsScreen(
                 }
 
                 else -> {
-                    viewModel.handleUIEvents(
+                    viewModel.handleUIEvent(
                         uiEvent = uiEvent,
                     )
                 }
@@ -72,6 +72,6 @@ public fun AccountsScreen(
 
     AccountsScreenUI(
         uiState = uiState,
-        handleUIEvents = handleUIEvents,
+        handleUIEvent = handleUIEvent,
     )
 }

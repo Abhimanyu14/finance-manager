@@ -131,7 +131,7 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
         scope = closeableCoroutineScope,
     )
 
-    override fun handleUIEvents(
+    override fun handleUIEvent(
         uiEvent: AccountsScreenUIEvent,
     ) {
         when (uiEvent) {

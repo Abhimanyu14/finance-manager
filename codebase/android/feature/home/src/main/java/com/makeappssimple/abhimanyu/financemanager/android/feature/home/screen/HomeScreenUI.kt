@@ -46,7 +46,7 @@ private val bottomContentPadding = 100.dp
 internal fun HomeScreenUI(
     uiState: HomeScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: HomeScreenUIEvent) -> Unit = {},
+    handleUIEvent: (uiEvent: HomeScreenUIEvent) -> Unit = {},
 ) {
     MyScaffold(
         modifier = Modifier
@@ -71,7 +71,7 @@ internal fun HomeScreenUI(
                         imageVector = MyIcons.Settings,
                         contentDescriptionStringResourceId = R.string.screen_home_appbar_settings,
                         onClick = {
-                            handleUIEvents(HomeScreenUIEvent.OnTopAppBarSettingsButtonClick)
+                            handleUIEvent(HomeScreenUIEvent.OnTopAppBarSettingsButtonClick)
                         },
                     )
                 },
@@ -86,7 +86,7 @@ internal fun HomeScreenUI(
                     id = R.string.screen_home_floating_action_button_content_description,
                 ),
                 onClick = {
-                    handleUIEvents(HomeScreenUIEvent.OnFloatingActionButtonClick)
+                    handleUIEvent(HomeScreenUIEvent.OnFloatingActionButtonClick)
                 },
             )
         },
@@ -114,7 +114,7 @@ internal fun HomeScreenUI(
                 ),
                 events = TotalBalanceCardEvents(
                     onClick = {
-                        handleUIEvents(HomeScreenUIEvent.OnTotalBalanceCardClick)
+                        handleUIEvent(HomeScreenUIEvent.OnTotalBalanceCardClick)
                     },
                     onViewBalanceClick = {
                         uiState.setBalanceVisible(true)
@@ -130,7 +130,7 @@ internal fun HomeScreenUI(
                     ),
                     events = BackupCardEvents(
                         onClick = {
-                            handleUIEvents(HomeScreenUIEvent.OnBackupCardClick)
+                            handleUIEvent(HomeScreenUIEvent.OnBackupCardClick)
                         },
                     ),
                 )
@@ -144,13 +144,13 @@ internal fun HomeScreenUI(
                 ),
                 events = OverviewCardEvents(
                     onClick = {
-                        handleUIEvents(HomeScreenUIEvent.OnOverviewCard.Click)
+                        handleUIEvent(HomeScreenUIEvent.OnOverviewCard.Click)
                     },
                     onOverviewTabClick = {
-                        handleUIEvents(HomeScreenUIEvent.OnOverviewCard.TabClick(it))
+                        handleUIEvent(HomeScreenUIEvent.OnOverviewCard.TabClick(it))
                     },
                     handleOverviewCardAction = {
-                        handleUIEvents(HomeScreenUIEvent.OnOverviewCard.Action(it))
+                        handleUIEvent(HomeScreenUIEvent.OnOverviewCard.Action(it))
                     },
                 ),
             )
@@ -160,7 +160,7 @@ internal fun HomeScreenUI(
                 ),
                 events = HomeRecentTransactionsEvents(
                     onClick = if (uiState.transactionListItemDataList.isNotEmpty()) {
-                        { handleUIEvents(HomeScreenUIEvent.OnHomeRecentTransactionsClick) }
+                        { handleUIEvent(HomeScreenUIEvent.OnHomeRecentTransactionsClick) }
                     } else {
                         null
                     },
@@ -171,7 +171,7 @@ internal fun HomeScreenUI(
                     data = listItem,
                     events = TransactionListItemEvents(
                         onClick = {
-                            handleUIEvents(
+                            handleUIEvent(
                                 HomeScreenUIEvent.OnTransactionListItemClick(
                                     transactionId = listItem.transactionId,
                                 )

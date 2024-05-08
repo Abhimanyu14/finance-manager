@@ -27,7 +27,7 @@ public fun TransactionsScreen(
     val uiState = rememberTransactionsScreenUIState(
         data = screenUIData,
     )
-    val handleUIEvents = remember(
+    val handleUIEvent = remember(
         key1 = viewModel,
     ) {
         { uiEvent: TransactionsScreenUIEvent ->
@@ -38,12 +38,12 @@ public fun TransactionsScreen(
                 }
 
                 is TransactionsScreenUIEvent.OnNavigationBackButtonClick -> {
-                    viewModel.handleUIEvents(
+                    viewModel.handleUIEvent(
                         TransactionsScreenUIEvent.OnSearchTextUpdated(
                             updatedSearchText = "",
                         )
                     )
-                    viewModel.handleUIEvents(
+                    viewModel.handleUIEvent(
                         TransactionsScreenUIEvent.OnSelectedFilterUpdated(
                             updatedSelectedFilter = Filter(),
                         )
@@ -90,7 +90,7 @@ public fun TransactionsScreen(
                 }
 
                 else -> {
-                    viewModel.handleUIEvents(
+                    viewModel.handleUIEvent(
                         uiEvent = uiEvent,
                     )
                 }
@@ -100,6 +100,6 @@ public fun TransactionsScreen(
 
     TransactionsScreenUI(
         uiState = uiState,
-        handleUIEvents = handleUIEvents,
+        handleUIEvent = handleUIEvent,
     )
 }

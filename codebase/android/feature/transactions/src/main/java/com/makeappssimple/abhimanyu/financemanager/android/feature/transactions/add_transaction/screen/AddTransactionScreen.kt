@@ -32,7 +32,7 @@ public fun AddTransactionScreen(
         data = screenUIData,
         isEdit = false,
     )
-    val handleUIEvents = remember(
+    val handleUIEvent = remember(
         key1 = viewModel,
     ) {
         { uiEvent: AddOrEditTransactionScreenUIEvent ->
@@ -42,7 +42,7 @@ public fun AddTransactionScreen(
                 }
 
                 else -> {
-                    viewModel.handleUIEvents(
+                    viewModel.handleUIEvent(
                         uiEvent = uiEvent,
                     )
                 }
@@ -58,6 +58,6 @@ public fun AddTransactionScreen(
 
     AddOrEditTransactionScreenUI(
         uiState = uiState,
-        handleUIEvents = handleUIEvents,
+        handleUIEvent = handleUIEvent,
     )
 }

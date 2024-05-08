@@ -84,7 +84,7 @@ internal class ViewTransactionScreenViewModelImpl @Inject constructor(
         scope = closeableCoroutineScope,
     )
 
-    override fun handleUIEvents(
+    override fun handleUIEvent(
         uiEvent: ViewTransactionScreenUIEvent,
     ) {
         when (uiEvent) {

@@ -70,7 +70,7 @@ public data class AddOrEditAccountScreenUIErrorData(
 internal fun AddOrEditAccountScreenUI(
     uiState: AddOrEditAccountScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: AddOrEditAccountScreenUIEvent) -> Unit = {},
+    handleUIEvent: (uiEvent: AddOrEditAccountScreenUIEvent) -> Unit = {},
 ) {
     if (!uiState.isLoading) {
         LaunchedEffect(
@@ -104,7 +104,7 @@ internal fun AddOrEditAccountScreenUI(
             MyTopAppBar(
                 titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
                 navigationAction = {
-                    handleUIEvents(AddOrEditAccountScreenUIEvent.OnTopAppBarNavigationButtonClick)
+                    handleUIEvent(AddOrEditAccountScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
             )
         },
@@ -137,7 +137,7 @@ internal fun AddOrEditAccountScreenUI(
                     ),
                     events = MyRadioGroupEvents(
                         onSelectionChange = { updatedIndex ->
-                            handleUIEvents(
+                            handleUIEvent(
                                 AddOrEditAccountScreenUIEvent.OnSelectedAccountTypeIndexUpdated(
                                     updatedIndex = updatedIndex,
                                 )
@@ -200,10 +200,10 @@ internal fun AddOrEditAccountScreenUI(
                     ),
                     events = MyOutlinedTextFieldEvents(
                         onClickTrailingIcon = {
-                            handleUIEvents(AddOrEditAccountScreenUIEvent.OnClearNameButtonClick)
+                            handleUIEvent(AddOrEditAccountScreenUIEvent.OnClearNameButtonClick)
                         },
                         onValueChange = { updatedName ->
-                            handleUIEvents(
+                            handleUIEvent(
                                 AddOrEditAccountScreenUIEvent.OnNameUpdated(
                                     updatedName = updatedName,
                                 )
@@ -246,10 +246,10 @@ internal fun AddOrEditAccountScreenUI(
                     ),
                     events = MyOutlinedTextFieldEvents(
                         onClickTrailingIcon = {
-                            handleUIEvents(AddOrEditAccountScreenUIEvent.OnClearBalanceAmountValueButtonClick)
+                            handleUIEvent(AddOrEditAccountScreenUIEvent.OnClearBalanceAmountValueButtonClick)
                         },
                         onValueChange = { updatedBalanceAmountValue ->
-                            handleUIEvents(
+                            handleUIEvent(
                                 AddOrEditAccountScreenUIEvent.OnBalanceAmountValueUpdated(
                                     updatedBalanceAmountValue = updatedBalanceAmountValue,
                                 )
@@ -284,10 +284,10 @@ internal fun AddOrEditAccountScreenUI(
                     ),
                     events = MyOutlinedTextFieldEvents(
                         onClickTrailingIcon = {
-                            handleUIEvents(AddOrEditAccountScreenUIEvent.OnClearMinimumAccountBalanceAmountValueButtonClick)
+                            handleUIEvent(AddOrEditAccountScreenUIEvent.OnClearMinimumAccountBalanceAmountValueButtonClick)
                         },
                         onValueChange = { updatedMinimumAccountBalanceAmountValue ->
-                            handleUIEvents(
+                            handleUIEvent(
                                 AddOrEditAccountScreenUIEvent.OnMinimumAccountBalanceAmountValueUpdated(
                                     updatedMinimumAccountBalanceAmountValue = updatedMinimumAccountBalanceAmountValue,
                                 )
@@ -308,7 +308,7 @@ internal fun AddOrEditAccountScreenUI(
                 ),
                 events = SaveButtonEvents(
                     onClick = {
-                        handleUIEvents(AddOrEditAccountScreenUIEvent.OnCtaButtonClick)
+                        handleUIEvent(AddOrEditAccountScreenUIEvent.OnCtaButtonClick)
                     },
                 ),
             )

@@ -27,7 +27,7 @@ internal class OpenSourceLicensesScreenViewModelImpl @Inject constructor(
             scope = closeableCoroutineScope,
         )
 
-    override fun handleUIEvents(
+    override fun handleUIEvent(
         uiEvent: OpenSourceLicensesScreenUIEvent,
     ) {
         when (uiEvent) {

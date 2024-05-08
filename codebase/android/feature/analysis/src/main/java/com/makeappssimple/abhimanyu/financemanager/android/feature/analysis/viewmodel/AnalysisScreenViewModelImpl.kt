@@ -113,7 +113,7 @@ internal class AnalysisScreenViewModelImpl @Inject constructor(
         scope = closeableCoroutineScope,
     )
 
-    override fun handleUIEvents(
+    override fun handleUIEvent(
         uiEvent: AnalysisScreenUIEvent,
     ) {
         when (uiEvent) {

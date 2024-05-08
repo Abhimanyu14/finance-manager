@@ -20,7 +20,7 @@ import com.mikepenz.aboutlibraries.ui.compose.LibraryDefaults
 internal fun OpenSourceLicensesScreenUI(
     uiState: OpenSourceLicensesScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: OpenSourceLicensesScreenUIEvent) -> Unit = {},
+    handleUIEvent: (uiEvent: OpenSourceLicensesScreenUIEvent) -> Unit = {},
 ) {
     MyScaffold(
         modifier = Modifier
@@ -40,7 +40,7 @@ internal fun OpenSourceLicensesScreenUI(
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_open_source_licenses_appbar_title,
                 navigationAction = {
-                    handleUIEvents(OpenSourceLicensesScreenUIEvent.OnTopAppBarNavigationButtonClick)
+                    handleUIEvent(OpenSourceLicensesScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
             )
         },

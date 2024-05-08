@@ -38,7 +38,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 internal fun AccountsScreenUI(
     uiState: AccountsScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: AccountsScreenUIEvent) -> Unit = {},
+    handleUIEvent: (uiEvent: AccountsScreenUIEvent) -> Unit = {},
 ) {
     BottomSheetHandler(
         showModalBottomSheet = uiState.screenBottomSheetType != AccountsScreenBottomSheetType.None,
@@ -60,10 +60,10 @@ internal fun AccountsScreenUI(
                 is AccountsScreenBottomSheetType.DeleteConfirmation -> {
                     AccountsDeleteConfirmationBottomSheet(
                         onPositiveButtonClick = {
-                            handleUIEvents(AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.PositiveButtonClick)
+                            handleUIEvent(AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.PositiveButtonClick)
                         },
                         onNegativeButtonClick = {
-                            handleUIEvents(AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.NegativeButtonClick)
+                            handleUIEvent(AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.NegativeButtonClick)
                         },
                     )
                 }
@@ -75,10 +75,10 @@ internal fun AccountsScreenUI(
                 is AccountsScreenBottomSheetType.SetAsDefaultConfirmation -> {
                     AccountsSetAsDefaultConfirmationBottomSheet(
                         onNegativeButtonClick = {
-                            handleUIEvents(AccountsScreenUIEvent.OnAccountsSetAsDefaultConfirmationBottomSheet.NegativeButtonClick)
+                            handleUIEvent(AccountsScreenUIEvent.OnAccountsSetAsDefaultConfirmationBottomSheet.NegativeButtonClick)
                         },
                         onPositiveButtonClick = {
-                            handleUIEvents(AccountsScreenUIEvent.OnAccountsSetAsDefaultConfirmationBottomSheet.PositiveButtonClick)
+                            handleUIEvent(AccountsScreenUIEvent.OnAccountsSetAsDefaultConfirmationBottomSheet.PositiveButtonClick)
                         },
                     )
                 }
@@ -96,7 +96,7 @@ internal fun AccountsScreenUI(
                         },
                         onEditClick = {
                             uiState.resetScreenBottomSheetType()
-                            handleUIEvents(
+                            handleUIEvent(
                                 AccountsScreenUIEvent.OnAccountsMenuBottomSheet.EditButtonClick(
                                     accountId = bottomSheetData.accountId,
                                 )
@@ -115,7 +115,7 @@ internal fun AccountsScreenUI(
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_accounts_appbar_title,
                 navigationAction = {
-                    handleUIEvents(AccountsScreenUIEvent.OnTopAppBarNavigationButtonClick)
+                    handleUIEvent(AccountsScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
             )
         },
@@ -128,7 +128,7 @@ internal fun AccountsScreenUI(
                     id = R.string.screen_accounts_floating_action_button_content_description,
                 ),
                 onClick = {
-                    handleUIEvents(AccountsScreenUIEvent.OnFloatingActionButtonClick)
+                    handleUIEvent(AccountsScreenUIEvent.OnFloatingActionButtonClick)
                 },
             )
         },

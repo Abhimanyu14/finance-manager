@@ -41,7 +41,7 @@ public fun HomeScreen(
     val uiState = rememberHomeScreenUIState(
         data = screenUIData,
     )
-    val handleUIEvents = remember(
+    val handleUIEvent = remember(
         key1 = viewModel,
         key2 = createDocument,
     ) {
@@ -52,7 +52,7 @@ public fun HomeScreen(
                 }
 
                 else -> {
-                    viewModel.handleUIEvents(
+                    viewModel.handleUIEvent(
                         uiEvent = uiEvent,
                     )
                 }
@@ -62,6 +62,6 @@ public fun HomeScreen(
 
     HomeScreenUI(
         uiState = uiState,
-        handleUIEvents = handleUIEvents,
+        handleUIEvent = handleUIEvent,
     )
 }

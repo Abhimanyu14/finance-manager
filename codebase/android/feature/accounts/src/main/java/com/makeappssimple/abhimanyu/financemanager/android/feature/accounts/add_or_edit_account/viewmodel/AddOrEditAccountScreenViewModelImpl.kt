@@ -151,7 +151,7 @@ internal class AddOrEditAccountScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun handleUIEvents(
+    override fun handleUIEvent(
         uiEvent: AddOrEditAccountScreenUIEvent,
     ) {
         when (uiEvent) {

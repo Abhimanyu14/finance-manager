@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 public interface AnalysisScreenViewModel : ScreenViewModel {
     public val screenUIData: StateFlow<MyResult<AnalysisScreenUIData>?>
 
-    public fun handleUIEvents(
+    public fun handleUIEvent(
         uiEvent: AnalysisScreenUIEvent,
     )
 }

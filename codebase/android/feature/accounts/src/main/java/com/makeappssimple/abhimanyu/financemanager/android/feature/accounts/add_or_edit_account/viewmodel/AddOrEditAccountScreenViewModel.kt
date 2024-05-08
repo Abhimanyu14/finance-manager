@@ -12,7 +12,7 @@ public interface AddOrEditAccountScreenViewModel : ScreenViewModel {
 
     public fun initViewModel()
 
-    public fun handleUIEvents(
+    public fun handleUIEvent(
         uiEvent: AddOrEditAccountScreenUIEvent,
     )
 

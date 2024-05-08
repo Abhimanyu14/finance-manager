@@ -11,7 +11,7 @@ public interface AddOrEditCategoryScreenViewModel : ScreenViewModel {
 
     public fun initViewModel()
 
-    public fun handleUIEvents(
+    public fun handleUIEvent(
         uiEvent: AddOrEditCategoryScreenUIEvent,
     )
 

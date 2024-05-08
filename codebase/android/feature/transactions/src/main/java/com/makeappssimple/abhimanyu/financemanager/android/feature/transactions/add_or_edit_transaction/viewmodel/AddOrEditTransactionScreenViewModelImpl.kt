@@ -316,7 +316,7 @@ internal class AddOrEditTransactionScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun handleUIEvents(
+    override fun handleUIEvent(
         uiEvent: AddOrEditTransactionScreenUIEvent,
     ) {
         when (uiEvent) {

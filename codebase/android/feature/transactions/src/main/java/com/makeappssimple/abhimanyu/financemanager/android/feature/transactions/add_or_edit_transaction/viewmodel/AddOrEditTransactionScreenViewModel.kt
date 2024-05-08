@@ -11,7 +11,7 @@ public interface AddOrEditTransactionScreenViewModel : ScreenViewModel {
 
     public fun initViewModel()
 
-    public fun handleUIEvents(
+    public fun handleUIEvent(
         uiEvent: AddOrEditTransactionScreenUIEvent,
     )
 

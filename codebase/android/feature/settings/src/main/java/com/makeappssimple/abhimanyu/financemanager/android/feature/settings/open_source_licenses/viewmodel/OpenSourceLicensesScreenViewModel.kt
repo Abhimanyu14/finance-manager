@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 public interface OpenSourceLicensesScreenViewModel : ScreenViewModel {
     public val screenUIData: StateFlow<MyResult<OpenSourceLicensesScreenUIData>?>
 
-    public fun handleUIEvents(
+    public fun handleUIEvent(
         uiEvent: OpenSourceLicensesScreenUIEvent,
     )
 }

@@ -34,7 +34,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 internal fun TransactionForValuesScreenUI(
     uiState: TransactionForValuesScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: TransactionForValuesScreenUIEvent) -> Unit = {},
+    handleUIEvent: (uiEvent: TransactionForValuesScreenUIEvent) -> Unit = {},
 ) {
     BottomSheetHandler(
         showModalBottomSheet = uiState.screenBottomSheetType != TransactionForValuesScreenBottomSheetType.None,
@@ -61,7 +61,7 @@ internal fun TransactionForValuesScreenUI(
                         },
                         onPositiveButtonClick = {
                             uiState.transactionForIdToDelete?.let { transactionForIdToDeleteValue ->
-                                handleUIEvents(
+                                handleUIEvent(
                                     TransactionForValuesScreenUIEvent.OnTransactionForValuesDeleteConfirmationBottomSheet.PositiveButtonClick(
                                         transactionForId = transactionForIdToDeleteValue,
                                     )
@@ -84,7 +84,7 @@ internal fun TransactionForValuesScreenUI(
                         isDeleteVisible = bottomSheetData.isDeleteVisible,
                         onEditClick = {
                             uiState.resetScreenBottomSheetType()
-                            handleUIEvents(
+                            handleUIEvent(
                                 TransactionForValuesScreenUIEvent.OnTransactionForValuesMenuBottomSheet.EditButtonClick(
                                     transactionForId = bottomSheetData.transactionForId,
                                 )
@@ -105,7 +105,7 @@ internal fun TransactionForValuesScreenUI(
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_transaction_for_values_appbar_title,
                 navigationAction = {
-                    handleUIEvents(TransactionForValuesScreenUIEvent.OnTopAppBarNavigationButtonClick)
+                    handleUIEvent(TransactionForValuesScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
             )
         },
@@ -118,7 +118,7 @@ internal fun TransactionForValuesScreenUI(
                     id = R.string.screen_transaction_for_values_floating_action_button_content_description,
                 ),
                 onClick = {
-                    handleUIEvents(TransactionForValuesScreenUIEvent.OnFloatingActionButtonClick)
+                    handleUIEvent(TransactionForValuesScreenUIEvent.OnFloatingActionButtonClick)
                 },
             )
         },

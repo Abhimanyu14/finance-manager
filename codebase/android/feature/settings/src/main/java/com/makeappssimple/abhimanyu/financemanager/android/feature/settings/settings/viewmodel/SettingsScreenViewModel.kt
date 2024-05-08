@@ -21,7 +21,7 @@ public interface SettingsScreenViewModel : ScreenViewModel {
 
     public fun enableReminder()
 
-    public fun handleUIEvents(
+    public fun handleUIEvent(
         uiEvent: SettingsScreenUIEvent,
     )
 

@@ -54,7 +54,7 @@ public enum class AddOrEditTransactionForScreenUIError(
 internal fun AddOrEditTransactionForScreenUI(
     uiState: AddOrEditTransactionForScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: AddOrEditTransactionForScreenUIEvent) -> Unit = {},
+    handleUIEvent: (uiEvent: AddOrEditTransactionForScreenUIEvent) -> Unit = {},
 ) {
     if (!uiState.isLoading) {
         LaunchedEffect(
@@ -100,7 +100,7 @@ internal fun AddOrEditTransactionForScreenUI(
             MyTopAppBar(
                 titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
                 navigationAction = {
-                    handleUIEvents(AddOrEditTransactionForScreenUIEvent.OnTopAppBarNavigationButtonClick)
+                    handleUIEvent(AddOrEditTransactionForScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
             )
         },
@@ -145,7 +145,7 @@ internal fun AddOrEditTransactionForScreenUI(
                     keyboardActions = KeyboardActions(
                         onDone = {
                             state.focusManager.clearFocus()
-                            handleUIEvents(AddOrEditTransactionForScreenUIEvent.OnCtaButtonClick)
+                            handleUIEvent(AddOrEditTransactionForScreenUIEvent.OnCtaButtonClick)
                         },
                     ),
                     keyboardOptions = KeyboardOptions(
@@ -155,10 +155,10 @@ internal fun AddOrEditTransactionForScreenUI(
                 ),
                 events = MyOutlinedTextFieldEvents(
                     onClickTrailingIcon = {
-                        handleUIEvents(AddOrEditTransactionForScreenUIEvent.OnClearTitleButtonClick)
+                        handleUIEvent(AddOrEditTransactionForScreenUIEvent.OnClearTitleButtonClick)
                     },
                     onValueChange = { updatedTitle ->
-                        handleUIEvents(
+                        handleUIEvent(
                             AddOrEditTransactionForScreenUIEvent.OnTitleUpdated(
                                 updatedTitle = updatedTitle,
                             )
@@ -183,7 +183,7 @@ internal fun AddOrEditTransactionForScreenUI(
                 ),
                 events = SaveButtonEvents(
                     onClick = {
-                        handleUIEvents(AddOrEditTransactionForScreenUIEvent.OnCtaButtonClick)
+                        handleUIEvent(AddOrEditTransactionForScreenUIEvent.OnCtaButtonClick)
                     },
                 ),
             )

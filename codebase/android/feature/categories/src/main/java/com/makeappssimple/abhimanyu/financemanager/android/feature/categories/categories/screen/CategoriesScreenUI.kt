@@ -36,12 +36,12 @@ import kotlinx.coroutines.launch
 internal fun CategoriesScreenUI(
     uiState: CategoriesScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: CategoriesScreenUIEvent) -> Unit = {},
+    handleUIEvent: (uiEvent: CategoriesScreenUIEvent) -> Unit = {},
 ) {
     LaunchedEffect(
         key1 = uiState.pagerState.currentPage,
     ) {
-        handleUIEvents(CategoriesScreenUIEvent.OnSelectedTabIndexUpdated(uiState.pagerState.currentPage))
+        handleUIEvent(CategoriesScreenUIEvent.OnSelectedTabIndexUpdated(uiState.pagerState.currentPage))
     }
 
     LaunchedEffect(
@@ -73,7 +73,7 @@ internal fun CategoriesScreenUI(
                     CategoriesDeleteConfirmationBottomSheet(
                         deleteCategory = {
                             uiState.categoryIdToDelete?.let { categoryIdToDeleteValue ->
-                                handleUIEvents(
+                                handleUIEvent(
                                     CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.DeleteButtonClick(
                                         categoryId = categoryIdToDeleteValue,
                                     )
@@ -99,7 +99,7 @@ internal fun CategoriesScreenUI(
                         },
                     ) {
                         uiState.clickedItemId?.let { clickedItemIdValue ->
-                            handleUIEvents(
+                            handleUIEvent(
                                 CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.SetAsDefaultCategoryButtonClick(
                                     defaultCategoryId = clickedItemIdValue,
                                     transactionType = uiState.validTransactionTypes[uiState.selectedTabIndex],
@@ -123,7 +123,7 @@ internal fun CategoriesScreenUI(
                         },
                         onEditClick = {
                             uiState.resetScreenBottomSheetType()
-                            handleUIEvents(
+                            handleUIEvent(
                                 CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.EditButtonClick(
                                     categoryId = bottomSheetData.categoryId,
                                 )
@@ -142,7 +142,7 @@ internal fun CategoriesScreenUI(
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_categories_appbar_title,
                 navigationAction = {
-                    handleUIEvents(CategoriesScreenUIEvent.OnTopAppBarNavigationButtonClick)
+                    handleUIEvent(CategoriesScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
             )
         },
@@ -155,7 +155,7 @@ internal fun CategoriesScreenUI(
                     id = R.string.screen_categories_floating_action_button_content_description,
                 ),
                 onClick = {
-                    handleUIEvents(
+                    handleUIEvent(
                         CategoriesScreenUIEvent.OnFloatingActionButtonClick(
                             transactionType = when (uiState.selectedTabIndex) {
                                 0 -> {
@@ -193,7 +193,7 @@ internal fun CategoriesScreenUI(
                 selectedTabIndex = uiState.selectedTabIndex,
                 tabDataList = uiState.tabData,
                 updateSelectedTabIndex = { updatedSelectedTabIndex ->
-                    handleUIEvents(
+                    handleUIEvent(
                         CategoriesScreenUIEvent.OnSelectedTabIndexUpdated(
                             updatedSelectedTabIndex = updatedSelectedTabIndex,
                         )

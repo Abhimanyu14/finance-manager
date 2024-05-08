@@ -26,14 +26,14 @@ public fun AnalysisScreen(
     val uiState = rememberAnalysisScreenUIState(
         data = screenUIData,
     )
-    val handleUIEvents = remember(
+    val handleUIEvent = remember(
         key1 = viewModel,
     ) {
         { uiEvent: AnalysisScreenUIEvent ->
             @Suppress("UNUSED_EXPRESSION")
             when (uiEvent) {
                 else -> {
-                    viewModel.handleUIEvents(
+                    viewModel.handleUIEvent(
                         uiEvent = uiEvent,
                     )
                 }
@@ -43,6 +43,6 @@ public fun AnalysisScreen(
 
     AnalysisScreenUI(
         uiState = uiState,
-        handleUIEvents = handleUIEvents,
+        handleUIEvent = handleUIEvent,
     )
 }

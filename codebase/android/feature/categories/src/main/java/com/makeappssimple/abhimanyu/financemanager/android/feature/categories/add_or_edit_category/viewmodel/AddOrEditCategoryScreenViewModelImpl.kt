@@ -161,7 +161,7 @@ internal class AddOrEditCategoryScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun handleUIEvents(
+    override fun handleUIEvent(
         uiEvent: AddOrEditCategoryScreenUIEvent,
     ) {
         when (uiEvent) {

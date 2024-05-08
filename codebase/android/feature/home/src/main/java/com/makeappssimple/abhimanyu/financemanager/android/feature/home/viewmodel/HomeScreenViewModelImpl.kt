@@ -228,7 +228,7 @@ internal class HomeScreenViewModelImpl @Inject constructor(
         }
     }
 
-    override fun handleUIEvents(
+    override fun handleUIEvent(
         uiEvent: HomeScreenUIEvent,
     ) {
         when (uiEvent) {

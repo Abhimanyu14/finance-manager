@@ -165,7 +165,7 @@ internal class CategoriesScreenViewModelImpl @Inject constructor(
         scope = closeableCoroutineScope,
     )
 
-    override fun handleUIEvents(
+    override fun handleUIEvent(
         uiEvent: CategoriesScreenUIEvent,
     ) {
         when (uiEvent) {

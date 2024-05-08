@@ -14,7 +14,7 @@ public interface HomeScreenViewModel : ScreenViewModel {
         uri: Uri,
     )
 
-    public fun handleUIEvents(
+    public fun handleUIEvent(
         uiEvent: HomeScreenUIEvent,
     )
 }

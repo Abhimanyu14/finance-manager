@@ -45,7 +45,7 @@ public data class SettingsScreenListItemData(
 internal fun SettingsScreenUI(
     uiState: SettingsScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: SettingsScreenUIEvent) -> Unit = {},
+    handleUIEvent: (uiEvent: SettingsScreenUIEvent) -> Unit = {},
 ) {
     val context = LocalContext.current
     val listItemsData: List<SettingsScreenListItemData> = listOf(
@@ -62,7 +62,7 @@ internal fun SettingsScreenUI(
             ),
             events = SettingsListItemContentEvents(
                 onClick = {
-                    handleUIEvents(SettingsScreenUIEvent.OnCategoriesListItemClick)
+                    handleUIEvent(SettingsScreenUIEvent.OnCategoriesListItemClick)
                 },
             ),
         ),
@@ -74,7 +74,7 @@ internal fun SettingsScreenUI(
             ),
             events = SettingsListItemContentEvents(
                 onClick = {
-                    handleUIEvents(SettingsScreenUIEvent.OnAccountsListItemClick)
+                    handleUIEvent(SettingsScreenUIEvent.OnAccountsListItemClick)
                 },
             ),
         ),
@@ -86,7 +86,7 @@ internal fun SettingsScreenUI(
             ),
             events = SettingsListItemContentEvents(
                 onClick = {
-                    handleUIEvents(SettingsScreenUIEvent.OnTransactionForListItemClick)
+                    handleUIEvent(SettingsScreenUIEvent.OnTransactionForListItemClick)
                 },
             ),
         ),
@@ -106,7 +106,7 @@ internal fun SettingsScreenUI(
             ),
             events = SettingsListItemContentEvents(
                 onClick = {
-                    handleUIEvents(SettingsScreenUIEvent.OnBackupDataListItemClick)
+                    handleUIEvent(SettingsScreenUIEvent.OnBackupDataListItemClick)
                 },
             ),
         ),
@@ -118,7 +118,7 @@ internal fun SettingsScreenUI(
             ),
             events = SettingsListItemContentEvents(
                 onClick = {
-                    handleUIEvents(SettingsScreenUIEvent.OnRestoreDataListItemClick)
+                    handleUIEvent(SettingsScreenUIEvent.OnRestoreDataListItemClick)
                 },
             ),
         ),
@@ -130,7 +130,7 @@ internal fun SettingsScreenUI(
             ),
             events = SettingsListItemContentEvents(
                 onClick = {
-                    handleUIEvents(SettingsScreenUIEvent.OnRecalculateTotalListItemClick)
+                    handleUIEvent(SettingsScreenUIEvent.OnRecalculateTotalListItemClick)
                 },
             ),
         ),
@@ -151,10 +151,10 @@ internal fun SettingsScreenUI(
             ),
             events = SettingsListItemContentEvents(
                 onClick = {
-                    handleUIEvents(SettingsScreenUIEvent.OnToggleReminder)
+                    handleUIEvent(SettingsScreenUIEvent.OnToggleReminder)
                 },
                 onCheckedChange = {
-                    handleUIEvents(SettingsScreenUIEvent.OnToggleReminder)
+                    handleUIEvent(SettingsScreenUIEvent.OnToggleReminder)
                 },
             ),
         ),
@@ -186,7 +186,7 @@ internal fun SettingsScreenUI(
             ),
             events = SettingsListItemContentEvents(
                 onClick = {
-                    handleUIEvents(SettingsScreenUIEvent.OnOpenSourceLicensesListItemClick)
+                    handleUIEvent(SettingsScreenUIEvent.OnOpenSourceLicensesListItemClick)
                 },
             ),
         ),
@@ -222,7 +222,7 @@ internal fun SettingsScreenUI(
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_settings_appbar_title,
                 navigationAction = {
-                    handleUIEvents(SettingsScreenUIEvent.OnTopAppBarNavigationButtonClick)
+                    handleUIEvent(SettingsScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
             )
         },

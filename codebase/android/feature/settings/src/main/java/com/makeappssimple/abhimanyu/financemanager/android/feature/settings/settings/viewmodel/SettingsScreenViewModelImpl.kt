@@ -93,7 +93,7 @@ internal class SettingsScreenViewModelImpl @Inject constructor(
         alarmKit.enableReminder()
     }
 
-    override fun handleUIEvents(
+    override fun handleUIEvent(
         uiEvent: SettingsScreenUIEvent,
     ) {
         when (uiEvent) {

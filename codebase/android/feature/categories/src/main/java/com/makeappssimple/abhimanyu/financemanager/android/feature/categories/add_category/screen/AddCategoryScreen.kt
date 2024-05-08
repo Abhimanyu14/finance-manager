@@ -32,7 +32,7 @@ public fun AddCategoryScreen(
         data = screenUIData,
         isEdit = false,
     )
-    val handleUIEvents = remember(
+    val handleUIEvent = remember(
         key1 = viewModel,
     ) {
         { uiEvent: AddOrEditCategoryScreenUIEvent ->
@@ -42,7 +42,7 @@ public fun AddCategoryScreen(
                 }
 
                 else -> {
-                    viewModel.handleUIEvents(
+                    viewModel.handleUIEvent(
                         uiEvent = uiEvent,
                     )
                 }
@@ -58,6 +58,6 @@ public fun AddCategoryScreen(
 
     AddOrEditCategoryScreenUI(
         uiState = uiState,
-        handleUIEvents = handleUIEvents,
+        handleUIEvent = handleUIEvent,
     )
 }

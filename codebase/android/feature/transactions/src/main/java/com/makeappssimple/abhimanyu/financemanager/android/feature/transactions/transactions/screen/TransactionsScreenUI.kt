@@ -62,7 +62,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 internal fun TransactionsScreenUI(
     uiState: TransactionsScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: TransactionsScreenUIEvent) -> Unit = {},
+    handleUIEvent: (uiEvent: TransactionsScreenUIEvent) -> Unit = {},
 ) {
     BottomSheetHandler(
         showModalBottomSheet = uiState.screenBottomSheetType != TransactionsScreenBottomSheetType.None,
@@ -79,7 +79,7 @@ internal fun TransactionsScreenUI(
                 uiState.selectedFilter.areFiltersSelected() ||
                 uiState.isInSelectionMode,
     ) {
-        handleUIEvents(TransactionsScreenUIEvent.OnNavigationBackButtonClick)
+        handleUIEvent(TransactionsScreenUIEvent.OnNavigationBackButtonClick)
     }
 
     MyScaffold(
@@ -102,7 +102,7 @@ internal fun TransactionsScreenUI(
                         defaultMaxDate = uiState.currentLocalDate,
                         selectedFilter = uiState.selectedFilter,
                         updateSelectedFilter = { updatedSelectedFilter ->
-                            handleUIEvents(
+                            handleUIEvent(
                                 TransactionsScreenUIEvent.OnSelectedFilterUpdated(
                                     updatedSelectedFilter = updatedSelectedFilter,
                                 )
@@ -116,7 +116,7 @@ internal fun TransactionsScreenUI(
                     TransactionsMenuBottomSheet(
                         events = TransactionsMenuBottomSheetEvents(
                             onSelectAllTransactionsClick = {
-                                handleUIEvents(TransactionsScreenUIEvent.OnTransactionsMenuBottomSheet.SelectAllTransactionsButtonClick)
+                                handleUIEvent(TransactionsScreenUIEvent.OnTransactionsMenuBottomSheet.SelectAllTransactionsButtonClick)
                             },
                             onUpdateTransactionForClick = {
                                 uiState.setScreenBottomSheetType(
@@ -140,7 +140,7 @@ internal fun TransactionsScreenUI(
                         events = SelectTransactionForBottomSheetEvents(
                             onItemClick = {
                                 uiState.setIsInSelectionMode(false)
-                                handleUIEvents(
+                                handleUIEvent(
                                     TransactionsScreenUIEvent.OnSelectTransactionForBottomSheet.ItemClick(
                                         updatedTransactionForValues = it.id,
                                     )
@@ -157,7 +157,7 @@ internal fun TransactionsScreenUI(
                         sortOptions = uiState.sortOptions.toList(),
                         resetBottomSheetType = uiState.resetScreenBottomSheetType,
                         updateSelectedSortOption = { index ->
-                            handleUIEvents(
+                            handleUIEvent(
                                 TransactionsScreenUIEvent.OnSelectedSortOptionUpdated(
                                     updatedSelectedSortOption = uiState.sortOptions[index],
                                 )
@@ -197,7 +197,7 @@ internal fun TransactionsScreenUI(
                         )
                     },
                     navigationAction = {
-                        handleUIEvents(TransactionsScreenUIEvent.OnSelectionModeTopAppBarNavigationButtonClick)
+                        handleUIEvent(TransactionsScreenUIEvent.OnSelectionModeTopAppBarNavigationButtonClick)
                     },
                     title = {
                         MyText(
@@ -216,7 +216,7 @@ internal fun TransactionsScreenUI(
                 MyTopAppBar(
                     titleTextStringResourceId = R.string.screen_transactions_appbar_title,
                     navigationAction = {
-                        handleUIEvents(TransactionsScreenUIEvent.OnTopAppBarNavigationButtonClick)
+                        handleUIEvent(TransactionsScreenUIEvent.OnTopAppBarNavigationButtonClick)
                     },
                 )
             }
@@ -235,7 +235,7 @@ internal fun TransactionsScreenUI(
                         id = R.string.screen_transactions_floating_action_button_content_description,
                     ),
                     onClick = {
-                        handleUIEvents(TransactionsScreenUIEvent.OnFloatingActionButtonClick)
+                        handleUIEvent(TransactionsScreenUIEvent.OnFloatingActionButtonClick)
                     },
                 )
             }
@@ -304,7 +304,7 @@ internal fun TransactionsScreenUI(
                                     }
 
                                     is MySearchBarEvent.OnSearchTextChange -> {
-                                        handleUIEvents(
+                                        handleUIEvent(
                                             TransactionsScreenUIEvent.OnSearchTextUpdated(
                                                 updatedSearchText = events.updatedSearchText,
                                             )
@@ -386,7 +386,7 @@ internal fun TransactionsScreenUI(
                             ),
                             events = TransactionListItemEvents(
                                 onClick = {
-                                    handleUIEvents(
+                                    handleUIEvent(
                                         TransactionsScreenUIEvent.OnTransactionListItem.Click(
                                             isInSelectionMode = uiState.isInSelectionMode,
                                             isSelected = isSelected,
@@ -395,7 +395,7 @@ internal fun TransactionsScreenUI(
                                     )
                                 },
                                 onLongClick = {
-                                    handleUIEvents(
+                                    handleUIEvent(
                                         TransactionsScreenUIEvent.OnTransactionListItem.LongClick(
                                             isInSelectionMode = uiState.isInSelectionMode,
                                             isSelected = isSelected,

@@ -75,7 +75,7 @@ public fun SettingsScreen(
     val uiState = rememberSettingsScreenUIState(
         data = screenUIData,
     )
-    val handleUIEvents = remember(
+    val handleUIEvent = remember(
         viewModel,
         uiState,
         createDocumentResultLauncher,
@@ -117,7 +117,7 @@ public fun SettingsScreen(
                 }
 
                 else -> {
-                    viewModel.handleUIEvents(
+                    viewModel.handleUIEvent(
                         uiEvent = uiEvent,
                     )
                 }
@@ -151,6 +151,6 @@ public fun SettingsScreen(
 
     SettingsScreenUI(
         uiState = uiState,
-        handleUIEvents = handleUIEvents,
+        handleUIEvent = handleUIEvent,
     )
 }

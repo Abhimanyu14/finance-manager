@@ -38,7 +38,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.R
 internal fun AnalysisScreenUI(
     uiState: AnalysisScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: AnalysisScreenUIEvent) -> Unit = {},
+    handleUIEvent: (uiEvent: AnalysisScreenUIEvent) -> Unit = {},
 ) {
     BottomSheetHandler(
         showModalBottomSheet = uiState.screenBottomSheetType != AnalysisScreenBottomSheetType.None,
@@ -67,7 +67,7 @@ internal fun AnalysisScreenUI(
                         startOfYearLocalDate = uiState.startOfYearLocalDate,
                         onNegativeButtonClick = {},
                         onPositiveButtonClick = {
-                            handleUIEvents(
+                            handleUIEvent(
                                 AnalysisScreenUIEvent.OnAnalysisFilterBottomSheet.PositiveButtonClick(
                                     updatedSelectedFilter = it,
                                 )
@@ -87,7 +87,7 @@ internal fun AnalysisScreenUI(
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_analysis_appbar_title,
                 navigationAction = {
-                    handleUIEvents(AnalysisScreenUIEvent.OnTopAppBarNavigationButtonClick)
+                    handleUIEvent(AnalysisScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
             )
         },
@@ -129,7 +129,7 @@ internal fun AnalysisScreenUI(
                         ),
                         events = MyHorizontalScrollingRadioGroupEvents(
                             onSelectionChange = { updatedSelectedTransactionTypeIndex ->
-                                handleUIEvents(
+                                handleUIEvent(
                                     AnalysisScreenUIEvent.OnTransactionTypeChange(
                                         updatedSelectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex,
                                     )

@@ -26,14 +26,14 @@ public fun OpenSourceLicensesScreen(
     val uiState = rememberOpenSourceLicensesScreenUIState(
         data = screenUIData,
     )
-    val handleUIEvents = remember(
+    val handleUIEvent = remember(
         key1 = viewModel,
     ) {
         { uiEvent: OpenSourceLicensesScreenUIEvent ->
             @Suppress("UNUSED_EXPRESSION")
             when (uiEvent) {
                 else -> {
-                    viewModel.handleUIEvents(
+                    viewModel.handleUIEvent(
                         uiEvent = uiEvent,
                     )
                 }
@@ -43,6 +43,6 @@ public fun OpenSourceLicensesScreen(
 
     OpenSourceLicensesScreenUI(
         uiState = uiState,
-        handleUIEvents = handleUIEvents,
+        handleUIEvent = handleUIEvent,
     )
 }

@@ -66,7 +66,7 @@ public enum class AddOrEditCategoryScreenUIError(
 internal fun AddOrEditCategoryScreenUI(
     uiState: AddOrEditCategoryScreenUIState,
     state: CommonScreenUIState = rememberCommonScreenUIState(),
-    handleUIEvents: (uiEvent: AddOrEditCategoryScreenUIEvent) -> Unit = {},
+    handleUIEvent: (uiEvent: AddOrEditCategoryScreenUIEvent) -> Unit = {},
 ) {
     if (!uiState.isLoading) {
         LaunchedEffect(
@@ -85,7 +85,7 @@ internal fun AddOrEditCategoryScreenUI(
         modalBottomSheetState = state.modalBottomSheetState,
         resetBottomSheetType = {
             uiState.resetScreenBottomSheetType()
-            handleUIEvents(
+            handleUIEvent(
                 AddOrEditCategoryScreenUIEvent.OnEmojiBottomSheetSearchTextUpdated(
                     updatedSearchText = "",
                 )
@@ -110,14 +110,14 @@ internal fun AddOrEditCategoryScreenUI(
                         searchText = uiState.emojiSearchText,
                         resetBottomSheetType = uiState.resetScreenBottomSheetType,
                         updateEmoji = { updatedEmoji ->
-                            handleUIEvents(
+                            handleUIEvent(
                                 AddOrEditCategoryScreenUIEvent.OnEmojiUpdated(
                                     updatedEmoji = updatedEmoji,
                                 )
                             )
                         },
                         updateSearchText = { updatedSearchText ->
-                            handleUIEvents(
+                            handleUIEvent(
                                 AddOrEditCategoryScreenUIEvent.OnEmojiBottomSheetSearchTextUpdated(
                                     updatedSearchText = updatedSearchText,
                                 )
@@ -141,7 +141,7 @@ internal fun AddOrEditCategoryScreenUI(
             MyTopAppBar(
                 titleTextStringResourceId = uiState.appBarTitleTextStringResourceId,
                 navigationAction = {
-                    handleUIEvents(AddOrEditCategoryScreenUIEvent.OnTopAppBarNavigationButtonClick)
+                    handleUIEvent(AddOrEditCategoryScreenUIEvent.OnTopAppBarNavigationButtonClick)
                 },
             )
         },
@@ -171,7 +171,7 @@ internal fun AddOrEditCategoryScreenUI(
                 ),
                 events = MyRadioGroupEvents(
                     onSelectionChange = { updatedIndex ->
-                        handleUIEvents(
+                        handleUIEvent(
                             AddOrEditCategoryScreenUIEvent.OnSelectedTransactionTypeIndexUpdated(
                                 updatedIndex = updatedIndex,
                             )
@@ -251,10 +251,10 @@ internal fun AddOrEditCategoryScreenUI(
                     ),
                     events = MyOutlinedTextFieldEvents(
                         onClickTrailingIcon = {
-                            handleUIEvents(AddOrEditCategoryScreenUIEvent.OnClearTitleButtonClick)
+                            handleUIEvent(AddOrEditCategoryScreenUIEvent.OnClearTitleButtonClick)
                         },
                         onValueChange = { updatedTitle ->
-                            handleUIEvents(
+                            handleUIEvent(
                                 AddOrEditCategoryScreenUIEvent.OnTitleUpdated(
                                     updatedTitle = updatedTitle,
                                 )
@@ -275,7 +275,7 @@ internal fun AddOrEditCategoryScreenUI(
                 ),
                 events = SaveButtonEvents(
                     onClick = {
-                        handleUIEvents(AddOrEditCategoryScreenUIEvent.OnCtaButtonClick)
+                        handleUIEvent(AddOrEditCategoryScreenUIEvent.OnCtaButtonClick)
                     },
                 ),
             )

@@ -407,7 +407,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     }
     // endregion
 
-    override fun handleUIEvents(
+    override fun handleUIEvent(
         uiEvent: TransactionsScreenUIEvent,
     ) {
         when (uiEvent) {

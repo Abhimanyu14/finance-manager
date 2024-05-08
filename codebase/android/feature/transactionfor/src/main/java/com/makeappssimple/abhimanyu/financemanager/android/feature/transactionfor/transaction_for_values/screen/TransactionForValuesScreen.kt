@@ -26,14 +26,14 @@ public fun TransactionForValuesScreen(
     val uiState = rememberTransactionForValuesScreenUIState(
         data = screenUIData,
     )
-    val handleUIEvents = remember(
+    val handleUIEvent = remember(
         key1 = viewModel,
     ) {
         { uiEvent: TransactionForValuesScreenUIEvent ->
             @Suppress("UNUSED_EXPRESSION")
             when (uiEvent) {
                 else -> {
-                    viewModel.handleUIEvents(
+                    viewModel.handleUIEvent(
                         uiEvent = uiEvent,
                     )
                 }
@@ -43,6 +43,6 @@ public fun TransactionForValuesScreen(
 
     TransactionForValuesScreenUI(
         uiState = uiState,
-        handleUIEvents = handleUIEvents,
+        handleUIEvent = handleUIEvent,
     )
 }

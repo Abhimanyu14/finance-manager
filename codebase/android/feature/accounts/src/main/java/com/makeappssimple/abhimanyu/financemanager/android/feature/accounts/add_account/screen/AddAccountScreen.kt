@@ -38,7 +38,7 @@ public fun AddAccountScreen(
         data = screenUIData,
         isEdit = false,
     )
-    val handleUIEvents = remember(
+    val handleUIEvent = remember(
         key1 = viewModel,
     ) {
         { uiEvent: AddOrEditAccountScreenUIEvent ->
@@ -52,7 +52,7 @@ public fun AddAccountScreen(
                 }
 
                 else -> {
-                    viewModel.handleUIEvents(
+                    viewModel.handleUIEvent(
                         uiEvent = uiEvent,
                     )
                 }
@@ -76,6 +76,6 @@ public fun AddAccountScreen(
 
     AddOrEditAccountScreenUI(
         uiState = uiState,
-        handleUIEvents = handleUIEvents,
+        handleUIEvent = handleUIEvent,
     )
 }
