@@ -53,7 +53,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MySearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MySearchBarData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MySearchBarEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MySearchBarEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MySelectionModeTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
@@ -297,18 +297,21 @@ internal fun TransactionsScreenUI(
                                 ),
                                 searchText = uiState.searchText,
                             ),
-                            events = MySearchBarEvents(
-                                onSearch = {
-                                    state.focusManager.clearFocus()
-                                },
-                                onValueChange = { updatedSearchText ->
-                                    handleUIEvents(
-                                        TransactionsScreenUIEvent.OnSearchTextUpdated(
-                                            updatedSearchText = updatedSearchText,
+                            handleEvent = { events ->
+                                when (events) {
+                                    is MySearchBarEvent.OnSearch -> {
+                                        state.focusManager.clearFocus()
+                                    }
+
+                                    is MySearchBarEvent.OnSearchTextChange -> {
+                                        handleUIEvents(
+                                            TransactionsScreenUIEvent.OnSearchTextUpdated(
+                                                updatedSearchText = events.updatedSearchText,
+                                            )
                                         )
-                                    )
-                                },
-                            ),
+                                    }
+                                }
+                            },
                         )
                     }
                     ActionButton(

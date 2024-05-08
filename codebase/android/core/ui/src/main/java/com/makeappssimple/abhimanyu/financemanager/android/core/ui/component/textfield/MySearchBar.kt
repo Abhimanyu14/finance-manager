@@ -41,16 +41,18 @@ public data class MySearchBarData(
 )
 
 @Immutable
-public data class MySearchBarEvents(
-    val onSearch: (() -> Unit)? = null,
-    val onValueChange: (updatedSearchText: String) -> Unit = {},
-)
+public sealed class MySearchBarEvent {
+    public data object OnSearch : MySearchBarEvent()
+    public data class OnSearchTextChange(
+        val updatedSearchText: String,
+    ) : MySearchBarEvent()
+}
 
 @Composable
 public fun MySearchBar(
     modifier: Modifier = Modifier,
     data: MySearchBarData,
-    events: MySearchBarEvents = MySearchBarEvents(),
+    handleEvent: (event: MySearchBarEvent) -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
     val focusRequester: FocusRequester = remember {
@@ -67,7 +69,13 @@ public fun MySearchBar(
 
     BasicTextField(
         value = data.searchText,
-        onValueChange = events.onValueChange,
+        onValueChange = {
+            handleEvent(
+                MySearchBarEvent.OnSearchTextChange(
+                    updatedSearchText = it,
+                )
+            )
+        },
         modifier = modifier
             .fillMaxWidth()
             .height(
@@ -85,7 +93,7 @@ public fun MySearchBar(
         ),
         keyboardActions = KeyboardActions(
             onSearch = {
-                events.onSearch?.invoke()
+                handleEvent(MySearchBarEvent.OnSearch)
             },
         ),
         singleLine = true,
@@ -97,7 +105,7 @@ public fun MySearchBar(
                 enabled = true,
                 singleLine = true,
                 visualTransformation = VisualTransformation.None,
-                interactionSource = remember<MutableInteractionSource> {
+                interactionSource = remember {
                     MutableInteractionSource()
                 },
                 placeholder = {
@@ -133,7 +141,11 @@ public fun MySearchBar(
                                 )
                                 .clickable {
                                     focusManager.clearFocus()
-                                    events.onValueChange("")
+                                    handleEvent(
+                                        MySearchBarEvent.OnSearchTextChange(
+                                            updatedSearchText = "",
+                                        )
+                                    )
                                 }
                                 .padding(
                                     all = 6.dp,

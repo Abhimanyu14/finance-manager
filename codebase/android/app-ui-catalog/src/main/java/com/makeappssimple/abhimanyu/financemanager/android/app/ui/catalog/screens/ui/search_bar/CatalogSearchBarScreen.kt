@@ -14,7 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sca
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MySearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MySearchBarContainer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MySearchBarData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MySearchBarEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MySearchBarEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 
 @Composable
@@ -50,9 +50,14 @@ public fun CatalogSearchBarScreen(
                         placeholderText = "Placeholder",
                         searchText = searchText,
                     ),
-                    events = MySearchBarEvents(
-                        onValueChange = setSearchText,
-                    ),
+                    handleEvent = { event ->
+                        when (event) {
+                            is MySearchBarEvent.OnSearch -> {}
+                            is MySearchBarEvent.OnSearchTextChange -> {
+                                setSearchText(event.updatedSearchText)
+                            }
+                        }
+                    },
                 )
             }
         }
