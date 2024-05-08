@@ -11,7 +11,6 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButtonData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButtonEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 
@@ -49,18 +48,12 @@ public fun CatalogSaveButtonScreen(
                     isEnabled = false,
                     textStringResourceId = R.string.screen_save_button_label,
                 ),
-                events = SaveButtonEvents(
-                    onClick = {},
-                ),
             )
             SaveButton(
                 modifier = Modifier,
                 data = SaveButtonData(
                     isEnabled = true,
                     textStringResourceId = R.string.screen_save_button_label,
-                ),
-                events = SaveButtonEvents(
-                    onClick = {},
                 ),
             )
             SaveButton(
@@ -69,9 +62,6 @@ public fun CatalogSaveButtonScreen(
                     isEnabled = true,
                     isLoading = true,
                     textStringResourceId = R.string.screen_save_button_label,
-                ),
-                events = SaveButtonEvents(
-                    onClick = {},
                 ),
             )
         }

@@ -48,7 +48,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.dat
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButtonData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButtonEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButtonEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupData
@@ -572,11 +572,13 @@ internal fun AddOrEditTransactionScreenUI(
                     isLoading = uiState.isLoading,
                     textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
                 ),
-                events = SaveButtonEvents(
-                    onClick = {
-                        handleUIEvent(AddOrEditTransactionScreenUIEvent.OnCtaButtonClick)
-                    },
-                ),
+                handleEvent = { event ->
+                    when (event) {
+                        is SaveButtonEvent.OnClick -> {
+                            handleUIEvent(AddOrEditTransactionScreenUIEvent.OnCtaButtonClick)
+                        }
+                    }
+                },
             )
             NavigationBarsAndImeSpacer()
         }

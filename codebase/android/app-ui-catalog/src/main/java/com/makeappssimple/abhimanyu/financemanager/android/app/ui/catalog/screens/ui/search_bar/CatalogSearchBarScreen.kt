@@ -53,6 +53,7 @@ public fun CatalogSearchBarScreen(
                     handleEvent = { event ->
                         when (event) {
                             is MySearchBarEvent.OnSearch -> {}
+                            
                             is MySearchBarEvent.OnSearchTextChange -> {
                                 setSearchText(event.updatedSearchText)
                             }

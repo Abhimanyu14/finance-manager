@@ -32,7 +32,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Common
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButtonData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButtonEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButtonEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldData
@@ -181,11 +181,13 @@ internal fun AddOrEditTransactionForScreenUI(
                     isLoading = uiState.isLoading,
                     textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
                 ),
-                events = SaveButtonEvents(
-                    onClick = {
-                        handleUIEvent(AddOrEditTransactionForScreenUIEvent.OnCtaButtonClick)
-                    },
-                ),
+                handleEvent = { event ->
+                    when (event) {
+                        is SaveButtonEvent.OnClick -> {
+                            handleUIEvent(AddOrEditTransactionForScreenUIEvent.OnCtaButtonClick)
+                        }
+                    }
+                },
             )
         }
     }

@@ -32,7 +32,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Common
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButtonData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButtonEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButtonEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroupData
@@ -306,11 +306,13 @@ internal fun AddOrEditAccountScreenUI(
                     isLoading = uiState.isLoading,
                     textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
                 ),
-                events = SaveButtonEvents(
-                    onClick = {
-                        handleUIEvent(AddOrEditAccountScreenUIEvent.OnCtaButtonClick)
-                    },
-                ),
+                handleEvent = { event ->
+                    when (event) {
+                        is SaveButtonEvent.OnClick -> {
+                            handleUIEvent(AddOrEditAccountScreenUIEvent.OnCtaButtonClick)
+                        }
+                    }
+                },
             )
         }
     }

@@ -42,7 +42,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emo
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircleEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButtonData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButtonEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButtonEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroupData
@@ -273,11 +273,13 @@ internal fun AddOrEditCategoryScreenUI(
                     isLoading = uiState.isLoading,
                     textStringResourceId = uiState.ctaButtonLabelTextStringResourceId,
                 ),
-                events = SaveButtonEvents(
-                    onClick = {
-                        handleUIEvent(AddOrEditCategoryScreenUIEvent.OnCtaButtonClick)
-                    },
-                ),
+                handleEvent = { event ->
+                    when (event) {
+                        is SaveButtonEvent.OnClick -> {
+                            handleUIEvent(AddOrEditCategoryScreenUIEvent.OnCtaButtonClick)
+                        }
+                    }
+                },
             )
             NavigationBarsAndImeSpacer()
         }

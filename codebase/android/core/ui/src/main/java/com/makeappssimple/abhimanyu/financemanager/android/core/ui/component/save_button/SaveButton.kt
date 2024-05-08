@@ -25,15 +25,15 @@ public data class SaveButtonData(
 )
 
 @Immutable
-public data class SaveButtonEvents(
-    val onClick: () -> Unit = {},
-)
+public sealed class SaveButtonEvent {
+    public data object OnClick : SaveButtonEvent()
+}
 
 @Composable
 public fun SaveButton(
     modifier: Modifier = Modifier,
     data: SaveButtonData,
-    events: SaveButtonEvents = SaveButtonEvents(),
+    handleEvent: (event: SaveButtonEvent) -> Unit = {},
 ) {
     if (data.isLoading) {
         SaveButtonLoadingUI(
@@ -43,7 +43,7 @@ public fun SaveButton(
         SaveButtonUI(
             modifier = modifier,
             data = data,
-            events = events,
+            handleEvent = handleEvent,
         )
     }
 }
@@ -52,11 +52,13 @@ public fun SaveButton(
 private fun SaveButtonUI(
     modifier: Modifier,
     data: SaveButtonData,
-    events: SaveButtonEvents,
+    handleEvent: (event: SaveButtonEvent) -> Unit = {},
 ) {
     ElevatedButton(
         modifier = modifier,
-        onClick = events.onClick,
+        onClick = {
+            handleEvent(SaveButtonEvent.OnClick)
+        },
         enabled = data.isEnabled,
         colors = ButtonDefaults
             .buttonColors(
