@@ -27,7 +27,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bac
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCardEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.home_recent_transactions.HomeRecentTransactions
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.home_recent_transactions.HomeRecentTransactionsData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.home_recent_transactions.HomeRecentTransactionsEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.home_recent_transactions.HomeRecentTransactionsEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCard
@@ -175,13 +175,15 @@ internal fun HomeScreenUI(
                 data = HomeRecentTransactionsData(
                     isTrailingTextVisible = uiState.transactionListItemDataList.isNotEmpty(),
                 ),
-                events = HomeRecentTransactionsEvents(
-                    onClick = if (uiState.transactionListItemDataList.isNotEmpty()) {
-                        { handleUIEvent(HomeScreenUIEvent.OnHomeRecentTransactionsClick) }
-                    } else {
-                        null
-                    },
-                ),
+                handleEvent = { event ->
+                    when (event) {
+                        is HomeRecentTransactionsEvent.OnClick -> {
+                            if (uiState.transactionListItemDataList.isNotEmpty()) {
+                                handleUIEvent(HomeScreenUIEvent.OnHomeRecentTransactionsClick)
+                            }
+                        }
+                    }
+                },
             )
             uiState.transactionListItemDataList.map { listItem ->
                 TransactionListItem(

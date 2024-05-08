@@ -22,15 +22,15 @@ public data class HomeRecentTransactionsData(
 )
 
 @Immutable
-public data class HomeRecentTransactionsEvents(
-    val onClick: (() -> Unit)? = null,
-)
+public sealed class HomeRecentTransactionsEvent {
+    public data object OnClick : HomeRecentTransactionsEvent()
+}
 
 @Composable
 public fun HomeRecentTransactions(
     modifier: Modifier = Modifier,
     data: HomeRecentTransactionsData,
-    events: HomeRecentTransactionsEvents = HomeRecentTransactionsEvents(),
+    handleEvent: (event: HomeRecentTransactionsEvent) -> Unit = {},
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -49,7 +49,9 @@ public fun HomeRecentTransactions(
                 onClickLabel = stringResource(
                     id = R.string.screen_home_view_all_transactions,
                 ),
-                onClick = events.onClick,
+                onClick = {
+                    handleEvent(HomeRecentTransactionsEvent.OnClick)
+                },
             )
             .padding(
                 top = 12.dp,
