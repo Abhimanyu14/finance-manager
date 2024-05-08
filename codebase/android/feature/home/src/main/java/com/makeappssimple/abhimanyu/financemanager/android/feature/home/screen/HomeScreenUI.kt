@@ -24,7 +24,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Common
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCardData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCardEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.backup_card.BackupCardEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.home_recent_transactions.HomeRecentTransactions
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.home_recent_transactions.HomeRecentTransactionsData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.home_recent_transactions.HomeRecentTransactionsEvents
@@ -131,11 +131,13 @@ internal fun HomeScreenUI(
                     data = BackupCardData(
                         isLoading = uiState.isLoading,
                     ),
-                    events = BackupCardEvents(
-                        onClick = {
-                            handleUIEvent(HomeScreenUIEvent.OnBackupCardClick)
-                        },
-                    ),
+                    handleEvent = { event ->
+                        when (event) {
+                            is BackupCardEvent.OnClick -> {
+                                handleUIEvent(HomeScreenUIEvent.OnBackupCardClick)
+                            }
+                        }
+                    },
                 )
             }
             OverviewCard(

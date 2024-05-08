@@ -29,15 +29,15 @@ public data class BackupCardData(
 )
 
 @Immutable
-public data class BackupCardEvents(
-    val onClick: () -> Unit = {},
-)
+public sealed class BackupCardEvent {
+    public data object OnClick : BackupCardEvent()
+}
 
 @Composable
 public fun BackupCard(
     modifier: Modifier = Modifier,
     data: BackupCardData,
-    events: BackupCardEvents = BackupCardEvents(),
+    handleEvent: (event: BackupCardEvent) -> Unit = {},
 ) {
     if (data.isLoading) {
         BackupCardLoadingUI(
@@ -46,7 +46,7 @@ public fun BackupCard(
     } else {
         BackupCardUI(
             modifier = modifier,
-            events = events,
+            handleEvent = handleEvent,
         )
     }
 }
@@ -54,7 +54,7 @@ public fun BackupCard(
 @Composable
 private fun BackupCardUI(
     modifier: Modifier,
-    events: BackupCardEvents,
+    handleEvent: (event: BackupCardEvent) -> Unit = {},
 ) {
     Card(
         modifier = modifier
@@ -67,7 +67,9 @@ private fun BackupCardUI(
                 MaterialTheme.shapes.medium,
             )
             .conditionalClickable(
-                onClick = events.onClick,
+                onClick = {
+                    handleEvent(BackupCardEvent.OnClick)
+                },
             ),
     ) {
         Row(

@@ -198,8 +198,8 @@ internal fun AddOrEditCategoryScreenUI(
                         emojiCircleSize = EmojiCircleSize.Normal,
                         emoji = uiState.emoji,
                     ),
-                    handleEvent = {
-                        when (it) {
+                    handleEvent = { event ->
+                        when (event) {
                             is MyEmojiCircleEvent.OnClick -> {
                                 uiState.setScreenBottomSheetType(
                                     AddOrEditCategoryScreenBottomSheetType.SelectEmoji
