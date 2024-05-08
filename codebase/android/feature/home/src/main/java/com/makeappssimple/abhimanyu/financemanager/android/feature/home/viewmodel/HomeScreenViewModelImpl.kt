@@ -271,7 +271,7 @@ internal class HomeScreenViewModelImpl @Inject constructor(
             }
 
             else -> {
-                // Noop, should have been handled in Screen composable or invalid event
+                // No-op, should have been handled in Screen composable or invalid event
             }
         }
     }

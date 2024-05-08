@@ -25,7 +25,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemAppVersionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemContent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemContentData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemContentEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemContentEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemDivider
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.settings.SettingsListItemDividerData
@@ -38,7 +38,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
 @Immutable
 public data class SettingsScreenListItemData(
     val data: SettingsListItemData,
-    val events: SettingsListItemContentEvents = SettingsListItemContentEvents(),
+    val handleEvent: (event: SettingsListItemContentEvent) -> Unit = {},
 )
 
 @Composable
@@ -56,39 +56,57 @@ internal fun SettingsScreenUI(
         ),
         SettingsScreenListItemData(
             data = SettingsListItemContentData(
-                isEnabled = uiState.isLoading,
+                isEnabled = !uiState.isLoading,
                 imageVector = MyIcons.Category,
                 textStringResourceId = R.string.screen_settings_categories,
             ),
-            events = SettingsListItemContentEvents(
-                onClick = {
-                    handleUIEvent(SettingsScreenUIEvent.OnCategoriesListItemClick)
-                },
-            ),
+            handleEvent = { event ->
+                when (event) {
+                    is SettingsListItemContentEvent.OnClick -> {
+                        handleUIEvent(SettingsScreenUIEvent.OnCategoriesListItemClick)
+                    }
+
+                    else -> {
+                        // No-op
+                    }
+                }
+            },
         ),
         SettingsScreenListItemData(
             data = SettingsListItemContentData(
-                isEnabled = uiState.isLoading,
+                isEnabled = !uiState.isLoading,
                 imageVector = MyIcons.AccountBalance,
                 textStringResourceId = R.string.screen_settings_accounts,
             ),
-            events = SettingsListItemContentEvents(
-                onClick = {
-                    handleUIEvent(SettingsScreenUIEvent.OnAccountsListItemClick)
-                },
-            ),
+            handleEvent = { event ->
+                when (event) {
+                    is SettingsListItemContentEvent.OnClick -> {
+                        handleUIEvent(SettingsScreenUIEvent.OnAccountsListItemClick)
+                    }
+
+                    else -> {
+                        // No-op
+                    }
+                }
+            },
         ),
         SettingsScreenListItemData(
             data = SettingsListItemContentData(
-                isEnabled = uiState.isLoading,
+                isEnabled = !uiState.isLoading,
                 imageVector = MyIcons.Groups,
                 textStringResourceId = R.string.screen_settings_transaction_for,
             ),
-            events = SettingsListItemContentEvents(
-                onClick = {
-                    handleUIEvent(SettingsScreenUIEvent.OnTransactionForListItemClick)
-                },
-            ),
+            handleEvent = { event ->
+                when (event) {
+                    is SettingsListItemContentEvent.OnClick -> {
+                        handleUIEvent(SettingsScreenUIEvent.OnTransactionForListItemClick)
+                    }
+
+                    else -> {
+                        // No-op
+                    }
+                }
+            },
         ),
         SettingsScreenListItemData(
             data = SettingsListItemDividerData(),
@@ -100,39 +118,57 @@ internal fun SettingsScreenUI(
         ),
         SettingsScreenListItemData(
             data = SettingsListItemContentData(
-                isEnabled = uiState.isLoading,
+                isEnabled = !uiState.isLoading,
                 imageVector = MyIcons.Backup,
                 textStringResourceId = R.string.screen_settings_backup,
             ),
-            events = SettingsListItemContentEvents(
-                onClick = {
-                    handleUIEvent(SettingsScreenUIEvent.OnBackupDataListItemClick)
-                },
-            ),
+            handleEvent = { event ->
+                when (event) {
+                    is SettingsListItemContentEvent.OnClick -> {
+                        handleUIEvent(SettingsScreenUIEvent.OnBackupDataListItemClick)
+                    }
+
+                    else -> {
+                        // No-op
+                    }
+                }
+            },
         ),
         SettingsScreenListItemData(
             data = SettingsListItemContentData(
-                isEnabled = uiState.isLoading,
+                isEnabled = !uiState.isLoading,
                 imageVector = MyIcons.Restore,
                 textStringResourceId = R.string.screen_settings_restore,
             ),
-            events = SettingsListItemContentEvents(
-                onClick = {
-                    handleUIEvent(SettingsScreenUIEvent.OnRestoreDataListItemClick)
-                },
-            ),
+            handleEvent = { event ->
+                when (event) {
+                    is SettingsListItemContentEvent.OnClick -> {
+                        handleUIEvent(SettingsScreenUIEvent.OnRestoreDataListItemClick)
+                    }
+
+                    else -> {
+                        // No-op
+                    }
+                }
+            },
         ),
         SettingsScreenListItemData(
             data = SettingsListItemContentData(
-                isEnabled = uiState.isLoading,
+                isEnabled = !uiState.isLoading,
                 imageVector = MyIcons.Calculate,
                 textStringResourceId = R.string.screen_settings_recalculate_total,
             ),
-            events = SettingsListItemContentEvents(
-                onClick = {
-                    handleUIEvent(SettingsScreenUIEvent.OnRecalculateTotalListItemClick)
-                },
-            ),
+            handleEvent = { event ->
+                when (event) {
+                    is SettingsListItemContentEvent.OnClick -> {
+                        handleUIEvent(SettingsScreenUIEvent.OnRecalculateTotalListItemClick)
+                    }
+
+                    else -> {
+                        // No-op
+                    }
+                }
+            },
         ),
         SettingsScreenListItemData(
             data = SettingsListItemDividerData(),
@@ -145,18 +181,22 @@ internal fun SettingsScreenUI(
         SettingsScreenListItemData(
             data = SettingsListItemContentData(
                 isChecked = uiState.isReminderEnabled.orFalse(),
-                isEnabled = uiState.isLoading,
+                isEnabled = !uiState.isLoading,
+                hasToggle = true,
                 imageVector = MyIcons.Notifications,
                 textStringResourceId = R.string.screen_settings_reminder,
             ),
-            events = SettingsListItemContentEvents(
-                onClick = {
-                    handleUIEvent(SettingsScreenUIEvent.OnToggleReminder)
-                },
-                onCheckedChange = {
-                    handleUIEvent(SettingsScreenUIEvent.OnToggleReminder)
-                },
-            ),
+            handleEvent = { event ->
+                when (event) {
+                    is SettingsListItemContentEvent.OnCheckedChange -> {
+                        handleUIEvent(SettingsScreenUIEvent.OnToggleReminder)
+                    }
+
+                    is SettingsListItemContentEvent.OnClick -> {
+                        handleUIEvent(SettingsScreenUIEvent.OnToggleReminder)
+                    }
+                }
+            },
         ),
         SettingsScreenListItemData(
             data = SettingsListItemDividerData(),
@@ -168,27 +208,39 @@ internal fun SettingsScreenUI(
         ),
         SettingsScreenListItemData(
             data = SettingsListItemContentData(
-                isEnabled = uiState.isLoading,
+                isEnabled = !uiState.isLoading,
                 imageVector = MyIcons.TextSnippet,
                 textStringResourceId = R.string.screen_settings_credits,
             ),
-            events = SettingsListItemContentEvents(
-                onClick = {
-                    Toast.makeText(context, "Not Yet Implemented", Toast.LENGTH_SHORT).show()
-                },
-            ),
+            handleEvent = { event ->
+                when (event) {
+                    is SettingsListItemContentEvent.OnClick -> {
+                        Toast.makeText(context, "Not Yet Implemented", Toast.LENGTH_SHORT).show()
+                    }
+
+                    else -> {
+                        // No-op
+                    }
+                }
+            },
         ),
         SettingsScreenListItemData(
             data = SettingsListItemContentData(
-                isEnabled = uiState.isLoading,
+                isEnabled = !uiState.isLoading,
                 imageVector = MyIcons.TextSnippet,
                 textStringResourceId = R.string.screen_settings_open_source_licenses,
             ),
-            events = SettingsListItemContentEvents(
-                onClick = {
-                    handleUIEvent(SettingsScreenUIEvent.OnOpenSourceLicensesListItemClick)
-                },
-            ),
+            handleEvent = { event ->
+                when (event) {
+                    is SettingsListItemContentEvent.OnClick -> {
+                        handleUIEvent(SettingsScreenUIEvent.OnOpenSourceLicensesListItemClick)
+                    }
+
+                    else -> {
+                        // No-op
+                    }
+                }
+            },
         ),
         SettingsScreenListItemData(
             data = SettingsListItemDividerData(),
@@ -303,7 +355,7 @@ internal fun SettingsScreenUI(
                                     tag = "Item $index",
                                 ),
                             data = it.data,
-                            events = it.events,
+                            handleEvent = it.handleEvent,
                         )
                     }
 

@@ -12,7 +12,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
@@ -23,21 +22,22 @@ public data class SettingsListItemContentData(
     override val type: SettingsListItemType = SettingsListItemType.CONTENT,
     val isChecked: Boolean? = null,
     val isEnabled: Boolean = false,
+    val hasToggle: Boolean = false,
     val imageVector: ImageVector? = null,
     @StringRes val textStringResourceId: Int,
 ) : SettingsListItemData
 
 @Immutable
-public data class SettingsListItemContentEvents(
-    val onClick: () -> Unit = {},
-    val onCheckedChange: ((Boolean) -> Unit)? = null,
-)
+public sealed class SettingsListItemContentEvent {
+    public data object OnClick : SettingsListItemContentEvent()
+    public data object OnCheckedChange : SettingsListItemContentEvent()
+}
 
 @Composable
 public fun SettingsListItemContent(
     modifier: Modifier = Modifier,
     data: SettingsListItemContentData,
-    events: SettingsListItemContentEvents,
+    handleEvent: (event: SettingsListItemContentEvent) -> Unit = {},
 ) {
     ListItem(
         leadingContent = if (data.imageVector == null) {
@@ -62,13 +62,16 @@ public fun SettingsListItemContent(
                     ),
             )
         },
-        trailingContent = if (events.onCheckedChange.isNull()) {
-            null
-        } else {
+        trailingContent = if (data.hasToggle) {
             {
+                // TODO(Abhi): Create a wrapper for this M3 component
                 Switch(
                     checked = data.isChecked.orFalse(),
-                    onCheckedChange = events.onCheckedChange,
+                    onCheckedChange = {
+                        handleEvent(
+                            SettingsListItemContentEvent.OnCheckedChange
+                        )
+                    },
                     thumbContent = if (data.isChecked.orFalse()) {
                         {
                             Icon(
@@ -85,13 +88,17 @@ public fun SettingsListItemContent(
                     ),
                 )
             }
+        } else {
+            null
         },
         modifier = modifier
             .conditionalClickable(
                 onClick = if (data.isEnabled) {
-                    null
+                    {
+                        handleEvent(SettingsListItemContentEvent.OnClick)
+                    }
                 } else {
-                    events.onClick
+                    null
                 },
             ),
     )
