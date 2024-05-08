@@ -37,7 +37,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sca
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.R
 
 private val bottomContentPadding = 100.dp
@@ -112,14 +112,17 @@ internal fun HomeScreenUI(
                     totalBalanceAmount = uiState.accountsTotalBalanceAmountValue,
                     totalMinimumBalanceAmount = uiState.accountsTotalMinimumBalanceAmountValue,
                 ),
-                events = TotalBalanceCardEvents(
-                    onClick = {
-                        handleUIEvent(HomeScreenUIEvent.OnTotalBalanceCardClick)
-                    },
-                    onViewBalanceClick = {
-                        uiState.setBalanceVisible(true)
-                    },
-                ),
+                handleEvent = { event ->
+                    when (event) {
+                        is TotalBalanceCardEvent.OnClick -> {
+                            handleUIEvent(HomeScreenUIEvent.OnTotalBalanceCardClick)
+                        }
+
+                        is TotalBalanceCardEvent.OnViewBalanceClick -> {
+                            uiState.setBalanceVisible(true)
+                        }
+                    }
+                },
             )
             AnimatedVisibility(
                 visible = uiState.isBackupCardVisible,

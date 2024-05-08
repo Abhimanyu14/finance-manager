@@ -16,7 +16,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCardEvents
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Before
@@ -88,9 +87,6 @@ public class TotalBalanceCardTest {
                 TotalBalanceCard(
                     data = TotalBalanceCardData(
                         totalBalanceAmount = TEST_TOTAL_BALANCE_AMOUNT,
-                    ),
-                    events = TotalBalanceCardEvents(
-                        onClick = {},
                     ),
                 )
             }

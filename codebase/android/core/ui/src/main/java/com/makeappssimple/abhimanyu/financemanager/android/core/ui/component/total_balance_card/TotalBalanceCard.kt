@@ -22,7 +22,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.COMPONENT_TOTAL_BALANCE_CARD
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
@@ -49,11 +48,10 @@ public data class TotalBalanceCardData(
 )
 
 @Immutable
-public data class TotalBalanceCardEvents(
-    val onClick: (() -> Unit)? = null,
-    val onLongClick: (() -> Unit)? = null,
-    val onViewBalanceClick: (() -> Unit)? = null,
-)
+public sealed class TotalBalanceCardEvent {
+    public data object OnClick : TotalBalanceCardEvent()
+    public data object OnViewBalanceClick : TotalBalanceCardEvent()
+}
 
 /**
  * This is coupled with [Amount]
@@ -62,7 +60,7 @@ public data class TotalBalanceCardEvents(
 public fun TotalBalanceCard(
     modifier: Modifier = Modifier,
     data: TotalBalanceCardData,
-    events: TotalBalanceCardEvents = TotalBalanceCardEvents(),
+    handleEvent: (event: TotalBalanceCardEvent) -> Unit = {},
 ) {
     val modifierWithTestTag = modifier
         .testTag(
@@ -76,7 +74,7 @@ public fun TotalBalanceCard(
         TotalBalanceCardUI(
             modifier = modifierWithTestTag,
             data = data,
-            events = events,
+            handleEvent = handleEvent,
         )
     }
 }
@@ -85,7 +83,7 @@ public fun TotalBalanceCard(
 private fun TotalBalanceCardUI(
     modifier: Modifier = Modifier,
     data: TotalBalanceCardData,
-    events: TotalBalanceCardEvents,
+    handleEvent: (event: TotalBalanceCardEvent) -> Unit = {},
 ) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -102,7 +100,9 @@ private fun TotalBalanceCardUI(
                 color = MaterialTheme.colorScheme.tertiary,
             )
             .conditionalClickable(
-                onClick = events.onClick,
+                onClick = {
+                    handleEvent(TotalBalanceCardEvent.OnClick)
+                },
             )
             .padding(
                 all = 16.dp,
@@ -169,7 +169,9 @@ private fun TotalBalanceCardUI(
                     ),
                 ),
                 events = ChipUIEvents(
-                    onClick = events.onViewBalanceClick.orEmpty(),
+                    onClick = {
+                        handleEvent(TotalBalanceCardEvent.OnViewBalanceClick)
+                    },
                 ),
             )
         }
