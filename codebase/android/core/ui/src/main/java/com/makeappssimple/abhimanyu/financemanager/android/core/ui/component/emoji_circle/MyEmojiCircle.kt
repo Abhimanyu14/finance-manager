@@ -53,16 +53,15 @@ public data class MyEmojiCircleData(
 )
 
 @Immutable
-public data class MyEmojiCircleEvents(
-    val onClick: (() -> Unit)? = null,
-    val onLongClick: (() -> Unit)? = null,
-)
+public sealed class MyEmojiCircleEvent {
+    public data object OnClick : MyEmojiCircleEvent()
+}
 
 @Composable
 public fun MyEmojiCircle(
     modifier: Modifier = Modifier,
     data: MyEmojiCircleData,
-    events: MyEmojiCircleEvents = MyEmojiCircleEvents(),
+    handleEvent: (event: MyEmojiCircleEvent) -> Unit = {},
 ) {
     if (data.isLoading) {
         MyEmojiCircleLoadingUI(
@@ -77,8 +76,9 @@ public fun MyEmojiCircle(
                     shape = CircleShape,
                 )
                 .conditionalClickable(
-                    onClick = events.onClick,
-                    onLongClick = events.onLongClick,
+                    onClick = {
+                        handleEvent(MyEmojiCircleEvent.OnClick)
+                    },
                 )
                 .background(
                     color = data.backgroundColor,

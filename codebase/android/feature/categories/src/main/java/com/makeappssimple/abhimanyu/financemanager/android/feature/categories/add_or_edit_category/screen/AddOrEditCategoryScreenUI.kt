@@ -39,7 +39,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bot
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.EmojiCircleSize
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircleData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircleEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircleEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButtonData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButtonEvent
@@ -198,13 +198,15 @@ internal fun AddOrEditCategoryScreenUI(
                         emojiCircleSize = EmojiCircleSize.Normal,
                         emoji = uiState.emoji,
                     ),
-                    events = MyEmojiCircleEvents(
-                        onClick = {
-                            uiState.setScreenBottomSheetType(
-                                AddOrEditCategoryScreenBottomSheetType.SelectEmoji
-                            )
-                        },
-                    ),
+                    handleEvent = {
+                        when (it) {
+                            is MyEmojiCircleEvent.OnClick -> {
+                                uiState.setScreenBottomSheetType(
+                                    AddOrEditCategoryScreenBottomSheetType.SelectEmoji
+                                )
+                            }
+                        }
+                    },
                 )
                 MyOutlinedTextField(
                     modifier = Modifier
