@@ -32,7 +32,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.total_balance_card.TotalBalanceCard
@@ -147,17 +147,29 @@ internal fun HomeScreenUI(
                     pieChartData = uiState.pieChartData,
                     title = uiState.overviewCardData.title,
                 ),
-                events = OverviewCardEvents(
-                    onClick = {
-                        handleUIEvent(HomeScreenUIEvent.OnOverviewCard.Click)
-                    },
-                    onOverviewTabClick = {
-                        handleUIEvent(HomeScreenUIEvent.OnOverviewCard.TabClick(it))
-                    },
-                    handleOverviewCardAction = {
-                        handleUIEvent(HomeScreenUIEvent.OnOverviewCard.Action(it))
-                    },
-                ),
+                handleEvent = { event ->
+                    when (event) {
+                        is OverviewCardEvent.OnClick -> {
+                            handleUIEvent(HomeScreenUIEvent.OnOverviewCard.Click)
+                        }
+
+                        is OverviewCardEvent.OnOverviewCardAction -> {
+                            handleUIEvent(
+                                HomeScreenUIEvent.OnOverviewCard.Action(
+                                    overviewCardAction = event.overviewCardAction,
+                                )
+                            )
+                        }
+
+                        is OverviewCardEvent.OnOverviewTabClick -> {
+                            handleUIEvent(
+                                HomeScreenUIEvent.OnOverviewCard.TabClick(
+                                    index = event.index,
+                                )
+                            )
+                        }
+                    }
+                },
             )
             HomeRecentTransactions(
                 data = HomeRecentTransactionsData(

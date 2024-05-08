@@ -39,11 +39,17 @@ public data class OverviewCardData(
 )
 
 @Immutable
-public data class OverviewCardEvents(
-    val onClick: (() -> Unit)? = null,
-    val onOverviewTabClick: (index: Int) -> Unit = {},
-    val handleOverviewCardAction: (overviewCardAction: OverviewCardAction) -> Unit = {},
-)
+public sealed class OverviewCardEvent {
+    public data object OnClick : OverviewCardEvent()
+
+    public data class OnOverviewTabClick(
+        val index: Int,
+    ) : OverviewCardEvent()
+
+    public data class OnOverviewCardAction(
+        val overviewCardAction: OverviewCardAction,
+    ) : OverviewCardEvent()
+}
 
 public enum class OverviewTabOption(
     public val title: String,
@@ -86,7 +92,7 @@ public fun OverviewCardViewModelData?.orDefault(): OverviewCardViewModelData {
 public fun OverviewCard(
     modifier: Modifier = Modifier,
     data: OverviewCardData,
-    events: OverviewCardEvents = OverviewCardEvents(),
+    handleEvent: (event: OverviewCardEvent) -> Unit = {},
 ) {
     val modifierWithTestTag = modifier
         .testTag(
@@ -99,8 +105,8 @@ public fun OverviewCard(
     } else {
         OverviewCardUI(
             modifier = modifierWithTestTag,
-            events = events,
             data = data,
+            handleEvent = handleEvent,
         )
     }
 }
@@ -108,8 +114,8 @@ public fun OverviewCard(
 @Composable
 private fun OverviewCardUI(
     modifier: Modifier,
-    events: OverviewCardEvents,
     data: OverviewCardData,
+    handleEvent: (event: OverviewCardEvent) -> Unit = {},
 ) {
     ElevatedCard(
         modifier = modifier
@@ -122,7 +128,9 @@ private fun OverviewCardUI(
                 shape = MaterialTheme.shapes.medium,
             )
             .conditionalClickable(
-                onClick = events.onClick,
+                onClick = {
+                    handleEvent(OverviewCardEvent.OnClick)
+                },
             ),
     ) {
         Column(
@@ -146,7 +154,13 @@ private fun OverviewCardUI(
                     selectedItemIndex = data.overviewTabSelectionIndex,
                 ),
                 events = OverviewTabEvents(
-                    onClick = events.onOverviewTabClick,
+                    onClick = {
+                        handleEvent(
+                            OverviewCardEvent.OnOverviewTabClick(
+                                index = it,
+                            )
+                        )
+                    },
                 ),
             )
             VerticalSpacer(
@@ -163,7 +177,11 @@ private fun OverviewCardUI(
                     imageVector = MyIcons.ChevronLeft,
                     contentDescriptionStringResourceId = R.string.overview_card_previous_button_content_description,
                     onClick = {
-                        events.handleOverviewCardAction(OverviewCardAction.PREV)
+                        handleEvent(
+                            OverviewCardEvent.OnOverviewCardAction(
+                                overviewCardAction = OverviewCardAction.PREV,
+                            )
+                        )
                     },
                 )
                 MyText(
@@ -187,7 +205,11 @@ private fun OverviewCardUI(
                     imageVector = MyIcons.ChevronRight,
                     contentDescriptionStringResourceId = R.string.overview_card_next_button_content_description,
                     onClick = {
-                        events.handleOverviewCardAction(OverviewCardAction.NEXT)
+                        handleEvent(
+                            OverviewCardEvent.OnOverviewCardAction(
+                                overviewCardAction = OverviewCardAction.NEXT,
+                            )
+                        )
                     },
                 )
             }
