@@ -45,7 +45,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bot
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category.SelectCategoryBottomSheetEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePicker
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButtonData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.save_button.SaveButtonEvent
@@ -185,19 +185,22 @@ internal fun AddOrEditTransactionScreenUI(
                 endLocalDate = uiState.currentLocalDate,
                 selectedLocalDate = uiState.uiState.transactionDate,
             ),
-            events = MyDatePickerEvents(
-                onNegativeButtonClick = {
-                    uiState.setIsTransactionDatePickerDialogVisible(false)
-                },
-                onPositiveButtonClick = { updatedTransactionDate ->
-                    handleUIEvent(
-                        AddOrEditTransactionScreenUIEvent.OnTransactionDateUpdated(
-                            updatedTransactionDate = updatedTransactionDate,
+            handleEvent = { event ->
+                when (event) {
+                    is MyDatePickerEvent.OnNegativeButtonClick -> {
+                        uiState.setIsTransactionDatePickerDialogVisible(false)
+                    }
+
+                    is MyDatePickerEvent.OnPositiveButtonClick -> {
+                        handleUIEvent(
+                            AddOrEditTransactionScreenUIEvent.OnTransactionDateUpdated(
+                                updatedTransactionDate = event.selectedDate,
+                            )
                         )
-                    )
-                    uiState.setIsTransactionDatePickerDialogVisible(false)
-                },
-            )
+                        uiState.setIsTransactionDatePickerDialogVisible(false)
+                    }
+                }
+            },
         )
         MyTimePicker(
             data = MyTimePickerData(

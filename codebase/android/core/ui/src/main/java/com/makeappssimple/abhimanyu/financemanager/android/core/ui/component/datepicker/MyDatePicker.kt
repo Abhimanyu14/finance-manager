@@ -30,16 +30,18 @@ public data class MyDatePickerData(
 )
 
 @Immutable
-public data class MyDatePickerEvents(
-    val onNegativeButtonClick: () -> Unit = {},
-    val onPositiveButtonClick: (LocalDate) -> Unit = {},
-)
+public sealed class MyDatePickerEvent {
+    public data object OnNegativeButtonClick : MyDatePickerEvent()
+    public data class OnPositiveButtonClick(
+        val selectedDate: LocalDate,
+    ) : MyDatePickerEvent()
+}
 
 @Composable
 public fun MyDatePicker(
     modifier: Modifier = Modifier,
     data: MyDatePickerData,
-    events: MyDatePickerEvents = MyDatePickerEvents(),
+    handleEvent: (event: MyDatePickerEvent) -> Unit = {},
 ) {
     if (data.isVisible) {
         val datePickerState = rememberDatePickerState(
@@ -85,14 +87,20 @@ public fun MyDatePicker(
         }
         DatePickerDialog(
             modifier = modifier,
-            onDismissRequest = events.onNegativeButtonClick,
+            onDismissRequest = {
+                handleEvent(MyDatePickerEvent.OnNegativeButtonClick)
+            },
             confirmButton = {
                 TextButton(
                     onClick = {
                         val startOfDayTimestamp: LocalDate = getLocalDate(
                             timestamp = datePickerState.selectedDateMillis.orZero(),
                         )
-                        events.onPositiveButtonClick(startOfDayTimestamp)
+                        handleEvent(
+                            MyDatePickerEvent.OnPositiveButtonClick(
+                                selectedDate = startOfDayTimestamp,
+                            )
+                        )
                     },
                     enabled = confirmEnabled.value,
                 ) {
@@ -103,7 +111,9 @@ public fun MyDatePicker(
             },
             dismissButton = {
                 TextButton(
-                    onClick = events.onNegativeButtonClick,
+                    onClick = {
+                        handleEvent(MyDatePickerEvent.OnNegativeButtonClick)
+                    },
                 ) {
                     MyText(
                         textStringResourceId = R.string.date_picker_negative_button,

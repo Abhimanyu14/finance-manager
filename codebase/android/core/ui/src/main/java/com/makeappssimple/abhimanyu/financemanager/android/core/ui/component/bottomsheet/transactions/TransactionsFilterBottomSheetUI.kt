@@ -49,7 +49,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePicker
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MySelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MySelectionGroupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MySelectionGroupEvents
@@ -543,15 +543,18 @@ public fun TransactionFilterBottomSheetDateFilter(
             selectedLocalDate = fromDate,
             startLocalDate = minDate,
         ),
-        events = MyDatePickerEvents(
-            onPositiveButtonClick = {
-                updateFromDate(it)
-                isFromDatePickerDialogVisible = false
-            },
-            onNegativeButtonClick = {
-                isFromDatePickerDialogVisible = false
-            },
-        )
+        handleEvent = { event ->
+            when (event) {
+                is MyDatePickerEvent.OnNegativeButtonClick -> {
+                    isFromDatePickerDialogVisible = false
+                }
+
+                is MyDatePickerEvent.OnPositiveButtonClick -> {
+                    updateFromDate(event.selectedDate)
+                    isFromDatePickerDialogVisible = false
+                }
+            }
+        },
     )
     MyDatePicker(
         data = MyDatePickerData(
@@ -560,15 +563,18 @@ public fun TransactionFilterBottomSheetDateFilter(
             selectedLocalDate = toDate,
             startLocalDate = fromDate,
         ),
-        events = MyDatePickerEvents(
-            onPositiveButtonClick = {
-                updateToDate(it)
-                isToDatePickerDialogVisible = false
-            },
-            onNegativeButtonClick = {
-                isToDatePickerDialogVisible = false
-            },
-        )
+        handleEvent = { event ->
+            when (event) {
+                is MyDatePickerEvent.OnNegativeButtonClick -> {
+                    isToDatePickerDialogVisible = false
+                }
+
+                is MyDatePickerEvent.OnPositiveButtonClick -> {
+                    updateToDate(event.selectedDate)
+                    isToDatePickerDialogVisible = false
+                }
+            }
+        },
     )
     Column(
         modifier = Modifier
