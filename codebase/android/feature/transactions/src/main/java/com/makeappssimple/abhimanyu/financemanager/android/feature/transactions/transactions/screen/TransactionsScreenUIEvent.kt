@@ -24,13 +24,11 @@ public sealed class TransactionsScreenUIEvent : ScreenUIEvent {
         val updatedSelectedSortOption: SortOption,
     ) : TransactionsScreenUIEvent()
 
-    public data class ToggleTransactionSelection(
-        val transactionId: Int,
-    ) : TransactionsScreenUIEvent()
-
-    public data class UpdateTransactionForValuesInTransactions(
-        val updatedTransactionForValues: Int,
-    ) : TransactionsScreenUIEvent()
+    public sealed class OnSelectTransactionForBottomSheet {
+        public data class ItemClick(
+            val updatedTransactionForValues: Int,
+        ) : TransactionsScreenUIEvent()
+    }
 
     public sealed class OnTransactionListItem {
         public data class Click(

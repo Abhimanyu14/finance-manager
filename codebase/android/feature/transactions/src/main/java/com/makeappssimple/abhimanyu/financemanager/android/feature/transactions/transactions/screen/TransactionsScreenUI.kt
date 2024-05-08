@@ -141,7 +141,7 @@ internal fun TransactionsScreenUI(
                             onItemClick = {
                                 uiState.setIsInSelectionMode(false)
                                 handleUIEvents(
-                                    TransactionsScreenUIEvent.UpdateTransactionForValuesInTransactions(
+                                    TransactionsScreenUIEvent.OnSelectTransactionForBottomSheet.ItemClick(
                                         updatedTransactionForValues = it.id,
                                     )
                                 )

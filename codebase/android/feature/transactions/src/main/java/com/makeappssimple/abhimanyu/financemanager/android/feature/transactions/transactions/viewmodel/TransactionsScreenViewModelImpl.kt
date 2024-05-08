@@ -423,12 +423,6 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 selectAllTransactions()
             }
 
-            is TransactionsScreenUIEvent.ToggleTransactionSelection -> {
-                toggleTransactionSelection(
-                    transactionId = uiEvent.transactionId,
-                )
-            }
-
             is TransactionsScreenUIEvent.OnSearchTextUpdated -> {
                 updateSearchText(
                     updatedSearchText = uiEvent.updatedSearchText,
@@ -447,7 +441,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                 )
             }
 
-            is TransactionsScreenUIEvent.UpdateTransactionForValuesInTransactions -> {
+            is TransactionsScreenUIEvent.OnSelectTransactionForBottomSheet.ItemClick -> {
                 updateTransactionForValuesInTransactions(
                     transactionForId = uiEvent.updatedTransactionForValues,
                 )
@@ -504,20 +498,6 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
                     transactionListItemData.transactionId
                 }
             }.orEmpty()
-        }
-    }
-
-    private fun toggleTransactionSelection(
-        transactionId: Int,
-    ) {
-        if (selectedTransactions.value.contains(transactionId)) {
-            selectedTransactions.update {
-                it - transactionId
-            }
-        } else {
-            selectedTransactions.update {
-                it + transactionId
-            }
         }
     }
 
