@@ -30,7 +30,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroupEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MySelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MySelectionGroupData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MySelectionGroupEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MySelectionGroupEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 
 @Composable
@@ -91,11 +91,15 @@ public fun CatalogSelectionGroupScreen(
                     items = selectionGroupItems,
                     selectedItemsIndices = selectedSelectedGroupItemsIndices,
                 ),
-                events = MySelectionGroupEvents(
-                    onSelectionChange = {
-                        selectedSelectedGroupItemsIndices.addIfDoesNotContainItemElseRemove(it)
-                    },
-                ),
+                handleEvent = { event ->
+                    when (event) {
+                        is MySelectionGroupEvent.OnSelectionChange -> {
+                            selectedSelectedGroupItemsIndices.addIfDoesNotContainItemElseRemove(
+                                event.index
+                            )
+                        }
+                    }
+                },
             )
 
             val radioGroupItems = listOf(

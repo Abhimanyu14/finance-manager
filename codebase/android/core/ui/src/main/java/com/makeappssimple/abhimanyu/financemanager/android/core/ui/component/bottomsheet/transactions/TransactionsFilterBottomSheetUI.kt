@@ -52,7 +52,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.dat
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MySelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MySelectionGroupData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MySelectionGroupEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MySelectionGroupEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldEvents
@@ -512,11 +512,13 @@ private fun TransactionFilterBottomSheetFilterGroup(
                     items = items,
                     selectedItemsIndices = selectedItemsIndices,
                 ),
-                events = MySelectionGroupEvents(
-                    onSelectionChange = { index ->
-                        onItemClick(index)
-                    },
-                ),
+                handleEvent = { event ->
+                    when (event) {
+                        is MySelectionGroupEvent.OnSelectionChange -> {
+                            onItemClick(event.index)
+                        }
+                    }
+                },
             )
         }
     }

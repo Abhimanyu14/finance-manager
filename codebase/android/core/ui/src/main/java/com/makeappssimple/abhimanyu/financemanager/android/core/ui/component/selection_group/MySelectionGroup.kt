@@ -17,15 +17,17 @@ public data class MySelectionGroupData(
 )
 
 @Immutable
-public data class MySelectionGroupEvents(
-    val onSelectionChange: (index: Int) -> Unit = {},
-)
+public sealed class MySelectionGroupEvent {
+    public data class OnSelectionChange(
+        val index: Int,
+    ) : MySelectionGroupEvent()
+}
 
 @Composable
 public fun MySelectionGroup(
     modifier: Modifier = Modifier,
     data: MySelectionGroupData,
-    events: MySelectionGroupEvents = MySelectionGroupEvents(),
+    handleEvent: (event: MySelectionGroupEvent) -> Unit = {},
 ) {
     FlowRow(
         modifier = modifier,
@@ -41,7 +43,11 @@ public fun MySelectionGroup(
                     handleEvent = { event ->
                         when (event) {
                             is ChipUIEvent.OnClick -> {
-                                events.onSelectionChange(index)
+                                handleEvent(
+                                    MySelectionGroupEvent.OnSelectionChange(
+                                        index = index,
+                                    )
+                                )
                             }
                         }
                     },
