@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.R
 import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.navigation.CatalogScreen
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.common.MyListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.common.MyListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.common.MyListItemEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.common.MyListItemEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.common.MyListItemSectionTitle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.common.MyListItemSectionTitleData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
@@ -55,11 +55,13 @@ public fun CatalogHomeScreen(
                     data = MyListItemData(
                         textStringResourceId = R.string.screen_color,
                     ),
-                    events = MyListItemEvents(
-                        onClick = {
-                            navigateTo(CatalogScreen.Color.route)
-                        },
-                    )
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyListItemEvent.OnClick -> {
+                                navigateTo(CatalogScreen.Color.route)
+                            }
+                        }
+                    },
                 )
             }
             item {
@@ -67,11 +69,13 @@ public fun CatalogHomeScreen(
                     data = MyListItemData(
                         textStringResourceId = R.string.screen_text,
                     ),
-                    events = MyListItemEvents(
-                        onClick = {
-                            navigateTo(CatalogScreen.Text.route)
-                        },
-                    )
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyListItemEvent.OnClick -> {
+                                navigateTo(CatalogScreen.Text.route)
+                            }
+                        }
+                    },
                 )
             }
             item {
@@ -86,11 +90,13 @@ public fun CatalogHomeScreen(
                     data = MyListItemData(
                         textStringResourceId = R.string.screen_default_tag,
                     ),
-                    events = MyListItemEvents(
-                        onClick = {
-                            navigateTo(CatalogScreen.DefaultTag.route)
-                        },
-                    )
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyListItemEvent.OnClick -> {
+                                navigateTo(CatalogScreen.DefaultTag.route)
+                            }
+                        }
+                    },
                 )
             }
             item {
@@ -98,11 +104,13 @@ public fun CatalogHomeScreen(
                     data = MyListItemData(
                         textStringResourceId = R.string.screen_emoji_circle,
                     ),
-                    events = MyListItemEvents(
-                        onClick = {
-                            navigateTo(CatalogScreen.EmojiCircle.route)
-                        },
-                    )
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyListItemEvent.OnClick -> {
+                                navigateTo(CatalogScreen.EmojiCircle.route)
+                            }
+                        }
+                    },
                 )
             }
             item {
@@ -110,11 +118,13 @@ public fun CatalogHomeScreen(
                     data = MyListItemData(
                         textStringResourceId = R.string.screen_navigation_back_button,
                     ),
-                    events = MyListItemEvents(
-                        onClick = {
-                            navigateTo(CatalogScreen.NavigationBackButton.route)
-                        },
-                    )
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyListItemEvent.OnClick -> {
+                                navigateTo(CatalogScreen.NavigationBackButton.route)
+                            }
+                        }
+                    },
                 )
             }
             item {
@@ -122,11 +132,13 @@ public fun CatalogHomeScreen(
                     data = MyListItemData(
                         textStringResourceId = R.string.screen_outlined_text_field,
                     ),
-                    events = MyListItemEvents(
-                        onClick = {
-                            navigateTo(CatalogScreen.OutlinedTextField.route)
-                        },
-                    )
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyListItemEvent.OnClick -> {
+                                navigateTo(CatalogScreen.OutlinedTextField.route)
+                            }
+                        }
+                    },
                 )
             }
             item {
@@ -134,11 +146,13 @@ public fun CatalogHomeScreen(
                     data = MyListItemData(
                         textStringResourceId = R.string.screen_overview_card,
                     ),
-                    events = MyListItemEvents(
-                        onClick = {
-                            navigateTo(CatalogScreen.OverviewCard.route)
-                        },
-                    )
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyListItemEvent.OnClick -> {
+                                navigateTo(CatalogScreen.OverviewCard.route)
+                            }
+                        }
+                    },
                 )
             }
             item {
@@ -146,11 +160,13 @@ public fun CatalogHomeScreen(
                     data = MyListItemData(
                         textStringResourceId = R.string.screen_overview_tab,
                     ),
-                    events = MyListItemEvents(
-                        onClick = {
-                            navigateTo(CatalogScreen.OverviewTab.route)
-                        },
-                    )
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyListItemEvent.OnClick -> {
+                                navigateTo(CatalogScreen.OverviewTab.route)
+                            }
+                        }
+                    },
                 )
             }
             item {
@@ -158,11 +174,13 @@ public fun CatalogHomeScreen(
                     data = MyListItemData(
                         textStringResourceId = R.string.screen_save_button,
                     ),
-                    events = MyListItemEvents(
-                        onClick = {
-                            navigateTo(CatalogScreen.SaveButton.route)
-                        },
-                    )
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyListItemEvent.OnClick -> {
+                                navigateTo(CatalogScreen.SaveButton.route)
+                            }
+                        }
+                    },
                 )
             }
             item {
@@ -170,11 +188,13 @@ public fun CatalogHomeScreen(
                     data = MyListItemData(
                         textStringResourceId = R.string.screen_search_bar,
                     ),
-                    events = MyListItemEvents(
-                        onClick = {
-                            navigateTo(CatalogScreen.SearchBar.route)
-                        },
-                    )
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyListItemEvent.OnClick -> {
+                                navigateTo(CatalogScreen.SearchBar.route)
+                            }
+                        }
+                    },
                 )
             }
             item {
@@ -182,11 +202,13 @@ public fun CatalogHomeScreen(
                     data = MyListItemData(
                         textStringResourceId = R.string.screen_selection_group,
                     ),
-                    events = MyListItemEvents(
-                        onClick = {
-                            navigateTo(CatalogScreen.SelectionGroup.route)
-                        },
-                    )
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyListItemEvent.OnClick -> {
+                                navigateTo(CatalogScreen.SelectionGroup.route)
+                            }
+                        }
+                    },
                 )
             }
             item {
@@ -194,11 +216,13 @@ public fun CatalogHomeScreen(
                     data = MyListItemData(
                         textStringResourceId = R.string.screen_top_app_bar,
                     ),
-                    events = MyListItemEvents(
-                        onClick = {
-                            navigateTo(CatalogScreen.TopAppBar.route)
-                        },
-                    )
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyListItemEvent.OnClick -> {
+                                navigateTo(CatalogScreen.TopAppBar.route)
+                            }
+                        }
+                    },
                 )
             }
             item {
@@ -206,11 +230,13 @@ public fun CatalogHomeScreen(
                     data = MyListItemData(
                         textStringResourceId = R.string.screen_total_balance_card,
                     ),
-                    events = MyListItemEvents(
-                        onClick = {
-                            navigateTo(CatalogScreen.TotalBalanceCard.route)
-                        },
-                    )
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyListItemEvent.OnClick -> {
+                                navigateTo(CatalogScreen.TotalBalanceCard.route)
+                            }
+                        }
+                    },
                 )
             }
         }

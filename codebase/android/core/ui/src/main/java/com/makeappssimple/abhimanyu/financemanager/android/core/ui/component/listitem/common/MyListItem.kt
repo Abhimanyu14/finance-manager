@@ -14,7 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ext
 @Immutable
 public data class MyListItemDataAndEvents(
     val data: MyListItemData,
-    val events: MyListItemEvents,
+    val handleEvent: (event: MyListItemEvent) -> Unit = {},
 )
 
 @Immutable
@@ -23,21 +23,23 @@ public data class MyListItemData(
 )
 
 @Immutable
-public data class MyListItemEvents(
-    val onClick: () -> Unit,
-)
+public sealed class MyListItemEvent {
+    public data object OnClick : MyListItemEvent()
+}
 
 @Composable
 public fun MyListItem(
     modifier: Modifier = Modifier,
     data: MyListItemData,
-    events: MyListItemEvents,
+    handleEvent: (event: MyListItemEvent) -> Unit = {},
 ) {
     MyText(
         modifier = modifier
             .fillMaxWidth()
             .conditionalClickable(
-                onClick = events.onClick,
+                onClick = {
+                    handleEvent(MyListItemEvent.OnClick)
+                },
             )
             .padding(
                 horizontal = 16.dp,
