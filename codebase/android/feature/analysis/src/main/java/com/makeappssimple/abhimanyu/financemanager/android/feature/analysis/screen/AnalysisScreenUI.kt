@@ -24,7 +24,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Common
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButtonData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButtonEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButtonEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.analysis.AnalysisFilterBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.analysis.AnalysisListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
@@ -143,11 +143,13 @@ internal fun AnalysisScreenUI(
                             imageVector = MyIcons.FilterAlt,
                             contentDescriptionStringResourceId = R.string.screen_analysis_filter_button_content_description,
                         ),
-                        events = ActionButtonEvents(
-                            onClick = {
-                                uiState.setScreenBottomSheetType(AnalysisScreenBottomSheetType.Filters)
-                            },
-                        ),
+                        handleEvent = { event ->
+                            when (event) {
+                                is ActionButtonEvent.OnClick -> {
+                                    uiState.setScreenBottomSheetType(AnalysisScreenBottomSheetType.Filters)
+                                }
+                            }
+                        },
                         modifier = Modifier
                             .padding(
                                 horizontal = 16.dp,

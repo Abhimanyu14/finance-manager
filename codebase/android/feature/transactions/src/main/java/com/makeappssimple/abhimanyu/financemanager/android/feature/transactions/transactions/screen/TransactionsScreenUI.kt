@@ -40,7 +40,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Common
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButton
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButtonData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButtonEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButtonEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactionfor.SelectTransactionForBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactionfor.SelectTransactionForBottomSheetData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactionfor.SelectTransactionForBottomSheetEvents
@@ -319,13 +319,15 @@ internal fun TransactionsScreenUI(
                             imageVector = MyIcons.SwapVert,
                             contentDescriptionStringResourceId = R.string.screen_transactions_sort_button_content_description,
                         ),
-                        events = ActionButtonEvents(
-                            onClick = {
-                                uiState.setScreenBottomSheetType(
-                                    TransactionsScreenBottomSheetType.Sort
-                                )
-                            },
-                        ),
+                        handleEvent = { event ->
+                            when (event) {
+                                is ActionButtonEvent.OnClick -> {
+                                    uiState.setScreenBottomSheetType(
+                                        TransactionsScreenBottomSheetType.Sort
+                                    )
+                                }
+                            }
+                        },
                     )
                     ActionButton(
                         data = ActionButtonData(
@@ -333,13 +335,15 @@ internal fun TransactionsScreenUI(
                             imageVector = MyIcons.FilterAlt,
                             contentDescriptionStringResourceId = R.string.screen_transactions_filter_button_content_description,
                         ),
-                        events = ActionButtonEvents(
-                            onClick = {
-                                uiState.setScreenBottomSheetType(
-                                    TransactionsScreenBottomSheetType.Filters
-                                )
-                            },
-                        ),
+                        handleEvent = { event ->
+                            when (event) {
+                                is ActionButtonEvent.OnClick -> {
+                                    uiState.setScreenBottomSheetType(
+                                        TransactionsScreenBottomSheetType.Filters
+                                    )
+                                }
+                            }
+                        },
                     )
                 }
             }
