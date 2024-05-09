@@ -29,7 +29,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUI
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.matchrowsize.matchRowSize
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
 
@@ -168,11 +168,13 @@ private fun TotalBalanceCardUI(
                         id = R.string.total_balance_card_view_balance,
                     ),
                 ),
-                events = ChipUIEvents(
-                    onClick = {
-                        handleEvent(TotalBalanceCardEvent.OnViewBalanceClick)
-                    },
-                ),
+                handleEvent = { event ->
+                    when (event) {
+                        is ChipUIEvent.OnClick -> {
+                            handleEvent(TotalBalanceCardEvent.OnViewBalanceClick)
+                        }
+                    }
+                },
             )
         }
     }

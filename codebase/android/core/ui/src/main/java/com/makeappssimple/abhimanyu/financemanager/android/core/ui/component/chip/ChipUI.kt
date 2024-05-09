@@ -34,15 +34,16 @@ public data class ChipUIData(
 )
 
 @Immutable
-public data class ChipUIEvents(
-    val onClick: () -> Unit = {},
-)
+public sealed class ChipUIEvent {
+    public data object OnClick : ChipUIEvent()
+}
 
 @Composable
 public fun ChipUI(
     modifier: Modifier = Modifier,
     data: ChipUIData,
-    events: ChipUIEvents = ChipUIEvents(),
+    handleEvent: (event: ChipUIEvent) -> Unit = {},
+    // TODO(Abhi): Remove this "isSelected" from here
     isSelected: Boolean = false,
 ) {
     val shape = CircleShape
@@ -74,7 +75,9 @@ public fun ChipUI(
                     shape = shape,
                 )
                 .conditionalClickable(
-                    onClick = events.onClick,
+                    onClick = {
+                        handleEvent(ChipUIEvent.OnClick)
+                    },
                 )
                 .background(
                     if (isSelected) {
