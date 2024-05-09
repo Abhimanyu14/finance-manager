@@ -196,6 +196,7 @@ internal fun AddOrEditCategoryScreenUI(
             ) {
                 MyEmojiCircle(
                     data = MyEmojiCircleData(
+                        isClickable = true,
                         isLoading = uiState.isLoading,
                         emojiCircleSize = EmojiCircleSize.Normal,
                         emoji = uiState.emoji,

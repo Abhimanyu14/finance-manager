@@ -46,6 +46,7 @@ public sealed class EmojiCircleSize(
 
 @Immutable
 public data class MyEmojiCircleData(
+    val isClickable: Boolean = false,
     val isLoading: Boolean = false,
     val backgroundColor: Color = Transparent,
     val emojiCircleSize: EmojiCircleSize = EmojiCircleSize.Small,
@@ -76,8 +77,12 @@ public fun MyEmojiCircle(
                     shape = CircleShape,
                 )
                 .conditionalClickable(
-                    onClick = {
-                        handleEvent(MyEmojiCircleEvent.OnClick)
+                    onClick = if (data.isClickable) {
+                        {
+                            handleEvent(MyEmojiCircleEvent.OnClick)
+                        }
+                    } else {
+                        null
                     },
                 )
                 .background(
