@@ -29,7 +29,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.hom
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.home_recent_transactions.HomeRecentTransactionsData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.home_recent_transactions.HomeRecentTransactionsEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItem
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCard
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewCardEvent
@@ -188,15 +188,25 @@ internal fun HomeScreenUI(
             uiState.transactionListItemDataList.map { listItem ->
                 TransactionListItem(
                     data = listItem,
-                    events = TransactionListItemEvents(
-                        onClick = {
-                            handleUIEvent(
-                                HomeScreenUIEvent.OnTransactionListItemClick(
-                                    transactionId = listItem.transactionId,
+                    handleEvent = {
+                        when (it) {
+                            is TransactionListItemEvent.OnClick -> {
+                                handleUIEvent(
+                                    HomeScreenUIEvent.OnTransactionListItemClick(
+                                        transactionId = listItem.transactionId,
+                                    )
                                 )
-                            )
-                        },
-                    ),
+                            }
+
+                            is TransactionListItemEvent.OnDeleteButtonClick -> {}
+
+                            is TransactionListItemEvent.OnEditButtonClick -> {}
+
+                            is TransactionListItemEvent.OnLongClick -> {}
+
+                            is TransactionListItemEvent.OnRefundButtonClick -> {}
+                        }
+                    },
                 )
             }
         }

@@ -49,7 +49,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bot
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactions.TransactionsMenuBottomSheetEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactions.TransactionsSortBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItem
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MySearchBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MySearchBarData
@@ -384,26 +384,35 @@ internal fun TransactionsScreenUI(
                                 isInSelectionMode = uiState.isInSelectionMode,
                                 isSelected = isSelected,
                             ),
-                            events = TransactionListItemEvents(
-                                onClick = {
-                                    handleUIEvent(
-                                        TransactionsScreenUIEvent.OnTransactionListItem.Click(
-                                            isInSelectionMode = uiState.isInSelectionMode,
-                                            isSelected = isSelected,
-                                            transactionId = listItem.transactionId,
+                            handleEvent = {
+                                when (it) {
+                                    is TransactionListItemEvent.OnClick -> {
+                                        handleUIEvent(
+                                            TransactionsScreenUIEvent.OnTransactionListItem.Click(
+                                                isInSelectionMode = uiState.isInSelectionMode,
+                                                isSelected = isSelected,
+                                                transactionId = listItem.transactionId,
+                                            )
                                         )
-                                    )
-                                },
-                                onLongClick = {
-                                    handleUIEvent(
-                                        TransactionsScreenUIEvent.OnTransactionListItem.LongClick(
-                                            isInSelectionMode = uiState.isInSelectionMode,
-                                            isSelected = isSelected,
-                                            transactionId = listItem.transactionId,
+                                    }
+
+                                    is TransactionListItemEvent.OnDeleteButtonClick -> {}
+
+                                    is TransactionListItemEvent.OnEditButtonClick -> {}
+
+                                    is TransactionListItemEvent.OnLongClick -> {
+                                        handleUIEvent(
+                                            TransactionsScreenUIEvent.OnTransactionListItem.LongClick(
+                                                isInSelectionMode = uiState.isInSelectionMode,
+                                                isSelected = isSelected,
+                                                transactionId = listItem.transactionId,
+                                            )
                                         )
-                                    )
-                                },
-                            ),
+                                    }
+
+                                    is TransactionListItemEvent.OnRefundButtonClick -> {}
+                                }
+                            },
                         )
                     }
                 }

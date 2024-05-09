@@ -53,19 +53,19 @@ public data class TransactionListItemData(
 )
 
 @Immutable
-public data class TransactionListItemEvents(
-    val onClick: (() -> Unit)? = null,
-    val onDeleteButtonClick: () -> Unit = {},
-    val onEditButtonClick: () -> Unit = {},
-    val onLongClick: (Boolean) -> Unit = {},
-    val onRefundButtonClick: () -> Unit = {},
-)
+public sealed class TransactionListItemEvent {
+    public data object OnClick : TransactionListItemEvent()
+    public data object OnDeleteButtonClick : TransactionListItemEvent()
+    public data object OnEditButtonClick : TransactionListItemEvent()
+    public data object OnLongClick : TransactionListItemEvent()
+    public data object OnRefundButtonClick : TransactionListItemEvent()
+}
 
 @Composable
 public fun TransactionListItem(
     modifier: Modifier = Modifier,
     data: TransactionListItemData,
-    events: TransactionListItemEvents = TransactionListItemEvents(),
+    handleEvent: (event: TransactionListItemEvent) -> Unit = {},
 ) {
     val accountText: String = if (
         data.accountFromName.isNotNull() &&
@@ -100,9 +100,11 @@ public fun TransactionListItem(
                     },
                 )
                 .conditionalClickable(
-                    onClick = events.onClick,
+                    onClick = {
+                        handleEvent(TransactionListItemEvent.OnClick)
+                    },
                     onLongClick = {
-                        events.onLongClick(true)
+                        handleEvent(TransactionListItemEvent.OnLongClick)
                     },
                 )
                 .padding(
@@ -280,7 +282,9 @@ public fun TransactionListItem(
                             id = R.string.transaction_list_item_edit,
                         ),
                         enabled = true,
-                        onClick = events.onEditButtonClick,
+                        onClick = {
+                            handleEvent(TransactionListItemEvent.OnEditButtonClick)
+                        },
                     )
                 }
                 if (data.isRefundButtonVisible) {
@@ -294,7 +298,9 @@ public fun TransactionListItem(
                             id = R.string.transaction_list_item_refund,
                         ),
                         enabled = true,
-                        onClick = events.onRefundButtonClick,
+                        onClick = {
+                            handleEvent(TransactionListItemEvent.OnRefundButtonClick)
+                        },
                     )
                 }
                 if (data.isDeleteButtonVisible) {
@@ -308,7 +314,9 @@ public fun TransactionListItem(
                             id = R.string.transaction_list_item_delete,
                         ),
                         enabled = data.isDeleteButtonEnabled,
-                        onClick = events.onDeleteButtonClick,
+                        onClick = {
+                            handleEvent(TransactionListItemEvent.OnDeleteButtonClick)
+                        },
                     )
                 }
             }
