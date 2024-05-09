@@ -17,15 +17,17 @@ public data class MyRadioGroupData(
 )
 
 @Immutable
-public data class MyRadioGroupEvents(
-    val onSelectionChange: (index: Int) -> Unit = {},
-)
+public sealed class MyRadioGroupEvent {
+    public data class OnSelectionChange(
+        val index: Int,
+    ) : MyRadioGroupEvent()
+}
 
 @Composable
 public fun MyRadioGroup(
     modifier: Modifier = Modifier,
     data: MyRadioGroupData,
-    events: MyRadioGroupEvents = MyRadioGroupEvents(),
+    handleEvent: (event: MyRadioGroupEvent) -> Unit = {},
 ) {
     FlowRow(
         modifier = modifier,
@@ -41,7 +43,11 @@ public fun MyRadioGroup(
                     handleEvent = { event ->
                         when (event) {
                             is ChipUIEvent.OnClick -> {
-                                events.onSelectionChange(index)
+                                handleEvent(
+                                    MyRadioGroupEvent.OnSelectionChange(
+                                        index = index,
+                                    )
+                                )
                             }
                         }
                     },

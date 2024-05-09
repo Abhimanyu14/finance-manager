@@ -27,7 +27,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingSelectionGroupEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroupData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroupEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroupEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MySelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MySelectionGroupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MySelectionGroupEvent
@@ -130,11 +130,13 @@ public fun CatalogSelectionGroupScreen(
                     items = radioGroupItems,
                     selectedItemIndex = selectedRadioGroupItemIndex,
                 ),
-                events = MyRadioGroupEvents(
-                    onSelectionChange = {
-                        selectedRadioGroupItemIndex = it
-                    },
-                ),
+                handleEvent = { event ->
+                    when (event) {
+                        is MyRadioGroupEvent.OnSelectionChange -> {
+                            selectedRadioGroupItemIndex = event.index
+                        }
+                    }
+                },
             )
 
             val horizontalScrollingRadioGroupItems = listOf(

@@ -36,7 +36,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sav
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroupData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroupEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroupEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldEvents
@@ -135,15 +135,17 @@ internal fun AddOrEditAccountScreenUI(
                         items = uiState.accountTypesChipUIDataList,
                         selectedItemIndex = uiState.selectedAccountTypeIndex,
                     ),
-                    events = MyRadioGroupEvents(
-                        onSelectionChange = { updatedIndex ->
-                            handleUIEvent(
-                                AddOrEditAccountScreenUIEvent.OnSelectedAccountTypeIndexUpdated(
-                                    updatedIndex = updatedIndex,
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyRadioGroupEvent.OnSelectionChange -> {
+                                handleUIEvent(
+                                    AddOrEditAccountScreenUIEvent.OnSelectedAccountTypeIndexUpdated(
+                                        updatedIndex = event.index,
+                                    )
                                 )
-                            )
-                        },
-                    ),
+                            }
+                        }
+                    },
                 )
             }
             if (uiState.visibilityData.nameTextField) {

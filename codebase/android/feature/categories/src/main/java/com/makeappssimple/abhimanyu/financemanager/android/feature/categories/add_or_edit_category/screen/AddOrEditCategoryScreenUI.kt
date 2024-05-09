@@ -46,7 +46,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sav
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroupData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroupEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroupEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldEvents
@@ -169,15 +169,17 @@ internal fun AddOrEditCategoryScreenUI(
                     items = uiState.transactionTypesChipUIData,
                     selectedItemIndex = uiState.selectedTransactionTypeIndex,
                 ),
-                events = MyRadioGroupEvents(
-                    onSelectionChange = { updatedIndex ->
-                        handleUIEvent(
-                            AddOrEditCategoryScreenUIEvent.OnSelectedTransactionTypeIndexUpdated(
-                                updatedIndex = updatedIndex,
+                handleEvent = { event ->
+                    when (event) {
+                        is MyRadioGroupEvent.OnSelectionChange -> {
+                            handleUIEvent(
+                                AddOrEditCategoryScreenUIEvent.OnSelectedTransactionTypeIndexUpdated(
+                                    updatedIndex = event.index,
+                                )
                             )
-                        )
-                    },
-                ),
+                        }
+                    }
+                },
                 modifier = Modifier
                     .padding(
                         horizontal = 8.dp,
