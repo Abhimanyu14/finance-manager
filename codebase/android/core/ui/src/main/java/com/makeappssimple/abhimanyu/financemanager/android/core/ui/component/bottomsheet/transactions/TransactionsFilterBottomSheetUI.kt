@@ -62,7 +62,7 @@ import java.time.LocalDate
 @Immutable
 internal data class TransactionsFiltersBottomSheetData(
     val data: TransactionFilterBottomSheetFilterGroupData,
-    val events: TransactionFilterBottomSheetFilterGroupEvents,
+    val handleEvent: (event: TransactionFilterBottomSheetFilterGroupEvent) -> Unit = {},
 )
 
 @Immutable
@@ -73,9 +73,9 @@ internal data class TransactionFilterBottomSheetFilterGroupData(
 )
 
 @Immutable
-internal data class TransactionFilterBottomSheetFilterGroupEvents(
-    val onClearButtonClick: () -> Unit,
-)
+internal sealed class TransactionFilterBottomSheetFilterGroupEvent {
+    data object OnClearButtonClick : TransactionFilterBottomSheetFilterGroupEvent()
+}
 
 @Composable
 public fun TransactionsFiltersBottomSheetUI(
@@ -157,11 +157,13 @@ public fun TransactionsFiltersBottomSheetUI(
                         },
                         selectedItemsIndices = selectedExpenseCategoryIndicesValue,
                     ),
-                    events = TransactionFilterBottomSheetFilterGroupEvents(
-                        onClearButtonClick = {
-                            selectedExpenseCategoryIndicesValue.clear()
-                        },
-                    ),
+                    handleEvent = { event ->
+                        when (event) {
+                            is TransactionFilterBottomSheetFilterGroupEvent.OnClearButtonClick -> {
+                                selectedExpenseCategoryIndicesValue.clear()
+                            }
+                        }
+                    },
                 )
             )
         }
@@ -177,11 +179,13 @@ public fun TransactionsFiltersBottomSheetUI(
                         },
                         selectedItemsIndices = selectedIncomeCategoryIndicesValue,
                     ),
-                    events = TransactionFilterBottomSheetFilterGroupEvents(
-                        onClearButtonClick = {
-                            selectedIncomeCategoryIndicesValue.clear()
-                        },
-                    ),
+                    handleEvent = { event ->
+                        when (event) {
+                            is TransactionFilterBottomSheetFilterGroupEvent.OnClearButtonClick -> {
+                                selectedIncomeCategoryIndicesValue.clear()
+                            }
+                        }
+                    },
                 )
             )
         }
@@ -197,11 +201,13 @@ public fun TransactionsFiltersBottomSheetUI(
                         },
                         selectedItemsIndices = selectedInvestmentCategoryIndicesValue,
                     ),
-                    events = TransactionFilterBottomSheetFilterGroupEvents(
-                        onClearButtonClick = {
-                            selectedInvestmentCategoryIndicesValue.clear()
-                        },
-                    ),
+                    handleEvent = { event ->
+                        when (event) {
+                            is TransactionFilterBottomSheetFilterGroupEvent.OnClearButtonClick -> {
+                                selectedInvestmentCategoryIndicesValue.clear()
+                            }
+                        }
+                    },
                 )
             )
         }
@@ -217,11 +223,13 @@ public fun TransactionsFiltersBottomSheetUI(
                         },
                         selectedItemsIndices = selectedAccountIndicesValue,
                     ),
-                    events = TransactionFilterBottomSheetFilterGroupEvents(
-                        onClearButtonClick = {
-                            selectedAccountIndicesValue.clear()
-                        },
-                    ),
+                    handleEvent = { event ->
+                        when (event) {
+                            is TransactionFilterBottomSheetFilterGroupEvent.OnClearButtonClick -> {
+                                selectedAccountIndicesValue.clear()
+                            }
+                        }
+                    },
                 )
             )
         }
@@ -237,11 +245,13 @@ public fun TransactionsFiltersBottomSheetUI(
                         },
                         selectedItemsIndices = selectedTransactionForValuesIndicesValue,
                     ),
-                    events = TransactionFilterBottomSheetFilterGroupEvents(
-                        onClearButtonClick = {
-                            selectedTransactionForValuesIndicesValue.clear()
-                        },
-                    ),
+                    handleEvent = { event ->
+                        when (event) {
+                            is TransactionFilterBottomSheetFilterGroupEvent.OnClearButtonClick -> {
+                                selectedTransactionForValuesIndicesValue.clear()
+                            }
+                        }
+                    },
                 )
             )
         }
@@ -257,11 +267,13 @@ public fun TransactionsFiltersBottomSheetUI(
                         },
                         selectedItemsIndices = selectedTransactionTypeIndicesValue,
                     ),
-                    events = TransactionFilterBottomSheetFilterGroupEvents(
-                        onClearButtonClick = {
-                            selectedTransactionTypeIndicesValue.clear()
-                        },
-                    ),
+                    handleEvent = { event ->
+                        when (event) {
+                            is TransactionFilterBottomSheetFilterGroupEvent.OnClearButtonClick -> {
+                                selectedTransactionTypeIndicesValue.clear()
+                            }
+                        }
+                    },
                 )
             )
         }
@@ -296,7 +308,9 @@ public fun TransactionsFiltersBottomSheetUI(
                     headingTextStringResourceId = listItem.data.headingTextStringResourceId,
                     items = listItem.data.items,
                     selectedItemsIndices = listItem.data.selectedItemsIndices,
-                    onClearButtonClick = listItem.events.onClearButtonClick,
+                    onClearButtonClick = {
+                        listItem.handleEvent(TransactionFilterBottomSheetFilterGroupEvent.OnClearButtonClick)
+                    },
                     onExpandButtonClick = {
                         expandedItemsIndices[index] = !expandedItemsIndices[index]
                     },
