@@ -42,7 +42,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bot
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account.SelectAccountBottomSheetEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category.SelectCategoryBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category.SelectCategoryBottomSheetData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category.SelectCategoryBottomSheetEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category.SelectCategoryBottomSheetEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePicker
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerEvent
@@ -112,16 +112,21 @@ internal fun AddOrEditTransactionScreenUI(
                             filteredCategories = uiState.filteredCategories,
                             selectedCategoryId = uiState.uiState.category?.id,
                         ),
-                        events = SelectCategoryBottomSheetEvents(
-                            resetBottomSheetType = uiState.resetScreenBottomSheetType,
-                            updateCategory = { updatedCategory ->
-                                handleUIEvent(
-                                    AddOrEditTransactionScreenUIEvent.OnCategoryUpdated(
-                                        updatedCategory = updatedCategory,
+                        handleEvent = { event ->
+                            when (event) {
+                                is SelectCategoryBottomSheetEvent.ResetBottomSheetType -> {
+                                    uiState.resetScreenBottomSheetType()
+                                }
+
+                                is SelectCategoryBottomSheetEvent.UpdateCategory -> {
+                                    handleUIEvent(
+                                        AddOrEditTransactionScreenUIEvent.OnCategoryUpdated(
+                                            updatedCategory = event.updatedCategory,
+                                        )
                                     )
-                                )
-                            },
-                        ),
+                                }
+                            }
+                        },
                     )
                 }
 

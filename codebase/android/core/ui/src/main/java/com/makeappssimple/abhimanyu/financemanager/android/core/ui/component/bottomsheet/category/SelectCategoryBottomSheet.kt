@@ -12,16 +12,18 @@ public data class SelectCategoryBottomSheetData(
 )
 
 @Immutable
-public data class SelectCategoryBottomSheetEvents(
-    val resetBottomSheetType: () -> Unit = {},
-    val updateCategory: (Category?) -> Unit = {},
-)
+public sealed class SelectCategoryBottomSheetEvent {
+    public data object ResetBottomSheetType : SelectCategoryBottomSheetEvent()
+    public data class UpdateCategory(
+        val updatedCategory: Category,
+    ) : SelectCategoryBottomSheetEvent()
+}
 
 @Composable
 public fun SelectCategoryBottomSheet(
     modifier: Modifier = Modifier,
     data: SelectCategoryBottomSheetData,
-    events: SelectCategoryBottomSheetEvents,
+    handleEvent: (event: SelectCategoryBottomSheetEvent) -> Unit = {},
 ) {
     SelectCategoryBottomSheetUI(
         modifier = modifier,
@@ -31,8 +33,12 @@ public fun SelectCategoryBottomSheet(
                     category = category,
                     isSelected = category.id == data.selectedCategoryId,
                     onClick = {
-                        events.updateCategory(category)
-                        events.resetBottomSheetType()
+                        handleEvent(
+                            SelectCategoryBottomSheetEvent.UpdateCategory(
+                                updatedCategory = category,
+                            )
+                        )
+                        handleEvent(SelectCategoryBottomSheetEvent.ResetBottomSheetType)
                     },
                 )
             },
