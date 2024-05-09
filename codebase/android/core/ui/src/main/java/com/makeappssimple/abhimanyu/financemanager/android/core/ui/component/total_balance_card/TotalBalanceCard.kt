@@ -42,6 +42,7 @@ private object TotalBalanceCardConstants {
 @Immutable
 public data class TotalBalanceCardData(
     val isBalanceVisible: Boolean = false,
+    val isClickable: Boolean = false,
     val isLoading: Boolean = false,
     val totalBalanceAmount: Long = 0L,
     val totalMinimumBalanceAmount: Long = 0L,
@@ -100,8 +101,12 @@ private fun TotalBalanceCardUI(
                 color = MaterialTheme.colorScheme.tertiary,
             )
             .conditionalClickable(
-                onClick = {
-                    handleEvent(TotalBalanceCardEvent.OnClick)
+                onClick = if (data.isClickable) {
+                    {
+                        handleEvent(TotalBalanceCardEvent.OnClick)
+                    }
+                } else {
+                    null
                 },
             )
             .padding(
