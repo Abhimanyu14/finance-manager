@@ -18,7 +18,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ext
 @Immutable
 public data class MyBottomSheetListItemDataAndEvents(
     val data: MyBottomSheetListItemData,
-    val events: MyBottomSheetListItemEvents,
+    val handleEvent: (event: MyBottomSheetListItemEvent) -> Unit = {},
 )
 
 @Immutable
@@ -28,15 +28,15 @@ public data class MyBottomSheetListItemData(
 )
 
 @Immutable
-public data class MyBottomSheetListItemEvents(
-    val onClick: () -> Unit,
-)
+public sealed class MyBottomSheetListItemEvent {
+    public data object OnClick : MyBottomSheetListItemEvent()
+}
 
 @Composable
 public fun MyBottomSheetListItem(
     modifier: Modifier = Modifier,
     data: MyBottomSheetListItemData,
-    events: MyBottomSheetListItemEvents,
+    handleEvent: (event: MyBottomSheetListItemEvent) -> Unit = {},
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -45,7 +45,9 @@ public fun MyBottomSheetListItem(
             .conditionalClickable(
                 onClickLabel = data.text,
                 role = Role.Button,
-                onClick = events.onClick,
+                onClick = {
+                    handleEvent(MyBottomSheetListItemEvent.OnClick)
+                },
             )
             .padding(
                 all = 16.dp,

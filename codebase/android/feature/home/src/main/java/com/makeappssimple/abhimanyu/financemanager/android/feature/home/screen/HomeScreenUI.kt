@@ -188,8 +188,8 @@ internal fun HomeScreenUI(
             uiState.transactionListItemDataList.map { listItem ->
                 TransactionListItem(
                     data = listItem,
-                    handleEvent = {
-                        when (it) {
+                    handleEvent = { event ->
+                        when (event) {
                             is TransactionListItemEvent.OnClick -> {
                                 handleUIEvent(
                                     HomeScreenUIEvent.OnTransactionListItemClick(

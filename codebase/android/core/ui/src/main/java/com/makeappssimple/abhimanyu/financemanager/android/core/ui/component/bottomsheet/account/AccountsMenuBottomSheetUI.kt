@@ -7,7 +7,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetListData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetListItemDataAndEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetListItemEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetListItemEvent
 
 @Immutable
 public data class AccountsMenuBottomSheetItemData(
@@ -30,9 +30,13 @@ public fun AccountsMenuBottomSheetUI(
                         imageVector = it.imageVector,
                         text = it.text,
                     ),
-                    events = MyBottomSheetListItemEvents(
-                        onClick = it.onClick,
-                    ),
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyBottomSheetListItemEvent.OnClick -> {
+                                it.onClick()
+                            }
+                        }
+                    },
                 )
             },
         ),

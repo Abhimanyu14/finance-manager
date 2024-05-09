@@ -39,7 +39,7 @@ public fun MyBottomSheetListData(
         ) { listItem ->
             MyBottomSheetListItem(
                 data = listItem.data,
-                events = listItem.events,
+                handleEvent = listItem.handleEvent,
             )
         }
         item {

@@ -394,8 +394,8 @@ internal fun TransactionsScreenUI(
                                 isInSelectionMode = uiState.isInSelectionMode,
                                 isSelected = isSelected,
                             ),
-                            handleEvent = {
-                                when (it) {
+                            handleEvent = { event ->
+                                when (event) {
                                     is TransactionListItemEvent.OnClick -> {
                                         handleUIEvent(
                                             TransactionsScreenUIEvent.OnTransactionListItem.Click(

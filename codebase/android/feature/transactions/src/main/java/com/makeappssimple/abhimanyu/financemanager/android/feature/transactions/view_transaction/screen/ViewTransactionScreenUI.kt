@@ -114,8 +114,8 @@ internal fun ViewTransactionScreenUI(
                                 bottom = 8.dp,
                             ),
                         data = uiState.transactionListItemData,
-                        handleEvent = {
-                            when (it) {
+                        handleEvent = { event ->
+                            when (event) {
                                 is TransactionListItemEvent.OnClick -> {}
 
                                 is TransactionListItemEvent.OnDeleteButtonClick -> {
@@ -161,8 +161,8 @@ internal fun ViewTransactionScreenUI(
                                 bottom = 8.dp,
                             ),
                         data = uiState.originalTransactionListItemData,
-                        handleEvent = {
-                            when (it) {
+                        handleEvent = { event ->
+                            when (event) {
                                 is TransactionListItemEvent.OnClick -> {
                                     handleUIEvent(
                                         ViewTransactionScreenUIEvent.OnTransactionListItem.Click(
@@ -221,8 +221,8 @@ internal fun ViewTransactionScreenUI(
                                 bottom = 8.dp,
                             ),
                         data = transactionListItemData,
-                        handleEvent = {
-                            when (it) {
+                        handleEvent = { event ->
+                            when (event) {
                                 is TransactionListItemEvent.OnClick -> {
                                     handleUIEvent(
                                         ViewTransactionScreenUIEvent.OnTransactionListItem.Click(
