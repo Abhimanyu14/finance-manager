@@ -45,16 +45,18 @@ public data class MyTimePickerData(
 )
 
 @Immutable
-public data class MyTimePickerEvents(
-    val onNegativeButtonClick: () -> Unit = {},
-    val onPositiveButtonClick: (LocalTime) -> Unit = {},
-)
+public sealed class MyTimePickerEvent {
+    public data object OnNegativeButtonClick : MyTimePickerEvent()
+    public data class OnPositiveButtonClick(
+        val selectedTime: LocalTime,
+    ) : MyTimePickerEvent()
+}
 
 @Composable
 public fun MyTimePicker(
     modifier: Modifier = Modifier,
     data: MyTimePickerData,
-    events: MyTimePickerEvents = MyTimePickerEvents(),
+    handleEvent: (event: MyTimePickerEvent) -> Unit = {},
 ) {
     val configuration = LocalConfiguration.current
     val state = rememberTimePickerState(
@@ -74,10 +76,15 @@ public fun MyTimePicker(
                     R.string.time_picker_text_input_title
                 }
             ),
-            onCancel = events.onNegativeButtonClick,
+            onCancel = {
+                handleEvent(MyTimePickerEvent.OnNegativeButtonClick)
+            },
             onConfirm = {
-                val localTime = LocalTime.of(state.hour, state.minute)
-                events.onPositiveButtonClick(localTime)
+                handleEvent(
+                    MyTimePickerEvent.OnPositiveButtonClick(
+                        selectedTime = LocalTime.of(state.hour, state.minute),
+                    )
+                )
             },
             toggle = {
                 if (configuration.screenHeightDp > 400) {

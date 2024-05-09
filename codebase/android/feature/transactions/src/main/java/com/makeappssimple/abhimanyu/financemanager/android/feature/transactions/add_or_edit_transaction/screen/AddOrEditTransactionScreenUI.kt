@@ -35,7 +35,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Bottom
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.MyTimePicker
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.MyTimePickerData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.MyTimePickerEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.MyTimePickerEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account.SelectAccountBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account.SelectAccountBottomSheetData
@@ -207,19 +207,22 @@ internal fun AddOrEditTransactionScreenUI(
                 isVisible = uiState.isTransactionTimePickerDialogVisible,
                 selectedLocalDate = uiState.uiState.transactionTime,
             ),
-            events = MyTimePickerEvents(
-                onNegativeButtonClick = {
-                    uiState.setIsTransactionTimePickerDialogVisible(false)
-                },
-                onPositiveButtonClick = { updatedTransactionTime ->
-                    handleUIEvent(
-                        AddOrEditTransactionScreenUIEvent.OnTransactionTimeUpdated(
-                            updatedTransactionTime = updatedTransactionTime,
+            handleEvent = { event ->
+                when (event) {
+                    is MyTimePickerEvent.OnNegativeButtonClick -> {
+                        uiState.setIsTransactionTimePickerDialogVisible(false)
+                    }
+
+                    is MyTimePickerEvent.OnPositiveButtonClick -> {
+                        handleUIEvent(
+                            AddOrEditTransactionScreenUIEvent.OnTransactionTimeUpdated(
+                                updatedTransactionTime = event.selectedTime,
+                            )
                         )
-                    )
-                    uiState.setIsTransactionTimePickerDialogVisible(false)
-                },
-            ),
+                        uiState.setIsTransactionTimePickerDialogVisible(false)
+                    }
+                }
+            },
         )
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
