@@ -27,7 +27,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingSelectionGroupEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldEvent
 import java.time.LocalDate
 
 @Composable
@@ -154,9 +154,13 @@ public fun AnalysisFilterBottomSheetUI(
                     value = fromDateText,
                     labelTextStringResourceId = R.string.bottom_sheet_analysis_filter_from_date,
                 ),
-                events = MyReadOnlyTextFieldEvents(
-                    onClick = onFromDateTextFieldClick,
-                ),
+                handleEvent = { event ->
+                    when (event) {
+                        MyReadOnlyTextFieldEvent.OnClick -> {
+                            onFromDateTextFieldClick()
+                        }
+                    }
+                },
             )
             MyReadOnlyTextField(
                 modifier = Modifier
@@ -170,9 +174,13 @@ public fun AnalysisFilterBottomSheetUI(
                     value = toDateText,
                     labelTextStringResourceId = R.string.bottom_sheet_analysis_filter_to_date,
                 ),
-                events = MyReadOnlyTextFieldEvents(
-                    onClick = onToDateTextFieldClick,
-                ),
+                handleEvent = { event ->
+                    when (event) {
+                        MyReadOnlyTextFieldEvent.OnClick -> {
+                            onToDateTextFieldClick()
+                        }
+                    }
+                },
             )
         }
         MyHorizontalScrollingSelectionGroup(

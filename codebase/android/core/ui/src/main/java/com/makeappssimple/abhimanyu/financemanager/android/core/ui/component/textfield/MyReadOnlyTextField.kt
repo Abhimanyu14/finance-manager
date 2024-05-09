@@ -13,7 +13,6 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
-
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.shimmer.shimmer
 
 @Immutable
@@ -24,15 +23,15 @@ public data class MyReadOnlyTextFieldData(
 )
 
 @Immutable
-public data class MyReadOnlyTextFieldEvents(
-    val onClick: () -> Unit = {},
-)
+public sealed class MyReadOnlyTextFieldEvent {
+    public data object OnClick : MyReadOnlyTextFieldEvent()
+}
 
 @Composable
 public fun MyReadOnlyTextField(
     modifier: Modifier = Modifier,
     data: MyReadOnlyTextFieldData,
-    events: MyReadOnlyTextFieldEvents = MyReadOnlyTextFieldEvents(),
+    handleEvent: (event: MyReadOnlyTextFieldEvent) -> Unit = {},
 ) {
     if (data.isLoading) {
         MyReadOnlyTextFieldLoadingUI(
@@ -60,7 +59,9 @@ public fun MyReadOnlyTextField(
                         alpha = 0F,
                     )
                     .conditionalClickable(
-                        onClick = events.onClick,
+                        onClick = {
+                            handleEvent(MyReadOnlyTextFieldEvent.OnClick)
+                        },
                     ),
             )
         }

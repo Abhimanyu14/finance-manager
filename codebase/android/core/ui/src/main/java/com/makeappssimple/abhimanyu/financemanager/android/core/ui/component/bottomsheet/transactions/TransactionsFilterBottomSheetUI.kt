@@ -55,7 +55,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MySelectionGroupEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
 import java.time.LocalDate
 
@@ -681,11 +681,13 @@ public fun TransactionFilterBottomSheetDateFilter(
                         value = fromDate.formattedDate(),
                         labelTextStringResourceId = R.string.bottom_sheet_transactions_filter_from_date,
                     ),
-                    events = MyReadOnlyTextFieldEvents(
-                        onClick = {
-                            isFromDatePickerDialogVisible = true
-                        },
-                    ),
+                    handleEvent = { event ->
+                        when (event) {
+                            MyReadOnlyTextFieldEvent.OnClick -> {
+                                isFromDatePickerDialogVisible = true
+                            }
+                        }
+                    },
                 )
                 MyReadOnlyTextField(
                     modifier = Modifier
@@ -699,11 +701,13 @@ public fun TransactionFilterBottomSheetDateFilter(
                         value = toDate.formattedDate(),
                         labelTextStringResourceId = R.string.bottom_sheet_transactions_filter_to_date,
                     ),
-                    events = MyReadOnlyTextFieldEvents(
-                        onClick = {
-                            isToDatePickerDialogVisible = true
-                        },
-                    ),
+                    handleEvent = { event ->
+                        when (event) {
+                            MyReadOnlyTextFieldEvent.OnClick -> {
+                                isToDatePickerDialogVisible = true
+                            }
+                        }
+                    },
                 )
             }
         }

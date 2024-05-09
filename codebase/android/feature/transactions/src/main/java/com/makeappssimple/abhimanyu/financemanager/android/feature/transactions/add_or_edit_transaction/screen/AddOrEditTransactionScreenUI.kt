@@ -61,7 +61,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 import kotlinx.coroutines.delay
@@ -350,14 +350,16 @@ internal fun AddOrEditTransactionScreenUI(
                         value = uiState.uiState.category?.title.orEmpty(),
                         labelTextStringResourceId = R.string.screen_add_or_edit_transaction_category,
                     ),
-                    events = MyReadOnlyTextFieldEvents(
-                        onClick = {
-                            clearFocus()
-                            uiState.setScreenBottomSheetType(
-                                AddOrEditTransactionScreenBottomSheetType.SelectCategory
-                            )
-                        },
-                    ),
+                    handleEvent = { event ->
+                        when (event) {
+                            MyReadOnlyTextFieldEvent.OnClick -> {
+                                clearFocus()
+                                uiState.setScreenBottomSheetType(
+                                    AddOrEditTransactionScreenBottomSheetType.SelectCategory
+                                )
+                            }
+                        }
+                    },
                 )
             }
             AnimatedVisibility(
@@ -510,14 +512,16 @@ internal fun AddOrEditTransactionScreenUI(
                         value = uiState.uiState.accountFrom?.name.orEmpty(),
                         labelTextStringResourceId = uiState.accountFromTextFieldLabelTextStringResourceId,
                     ),
-                    events = MyReadOnlyTextFieldEvents(
-                        onClick = {
-                            clearFocus()
-                            uiState.setScreenBottomSheetType(
-                                AddOrEditTransactionScreenBottomSheetType.SelectAccountFrom
-                            )
-                        },
-                    ),
+                    handleEvent = { event ->
+                        when (event) {
+                            MyReadOnlyTextFieldEvent.OnClick -> {
+                                clearFocus()
+                                uiState.setScreenBottomSheetType(
+                                    AddOrEditTransactionScreenBottomSheetType.SelectAccountFrom
+                                )
+                            }
+                        }
+                    },
                 )
             }
             AnimatedVisibility(
@@ -535,14 +539,16 @@ internal fun AddOrEditTransactionScreenUI(
                         value = uiState.uiState.accountTo?.name.orEmpty(),
                         labelTextStringResourceId = uiState.accountToTextFieldLabelTextStringResourceId,
                     ),
-                    events = MyReadOnlyTextFieldEvents(
-                        onClick = {
-                            clearFocus()
-                            uiState.setScreenBottomSheetType(
-                                AddOrEditTransactionScreenBottomSheetType.SelectAccountTo
-                            )
-                        },
-                    ),
+                    handleEvent = { event ->
+                        when (event) {
+                            MyReadOnlyTextFieldEvent.OnClick -> {
+                                clearFocus()
+                                uiState.setScreenBottomSheetType(
+                                    AddOrEditTransactionScreenBottomSheetType.SelectAccountTo
+                                )
+                            }
+                        }
+                    },
                 )
             }
             MyReadOnlyTextField(
@@ -557,12 +563,14 @@ internal fun AddOrEditTransactionScreenUI(
                     value = uiState.uiState.transactionDate.formattedDate(),
                     labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_date,
                 ),
-                events = MyReadOnlyTextFieldEvents(
-                    onClick = {
-                        clearFocus()
-                        uiState.setIsTransactionDatePickerDialogVisible(true)
-                    },
-                ),
+                handleEvent = { event ->
+                    when (event) {
+                        MyReadOnlyTextFieldEvent.OnClick -> {
+                            clearFocus()
+                            uiState.setIsTransactionDatePickerDialogVisible(true)
+                        }
+                    }
+                },
             )
             MyReadOnlyTextField(
                 modifier = Modifier
@@ -576,12 +584,14 @@ internal fun AddOrEditTransactionScreenUI(
                     value = uiState.uiState.transactionTime.formattedTime(),
                     labelTextStringResourceId = R.string.screen_add_or_edit_transaction_transaction_time,
                 ),
-                events = MyReadOnlyTextFieldEvents(
-                    onClick = {
-                        clearFocus()
-                        uiState.setIsTransactionTimePickerDialogVisible(true)
-                    },
-                ),
+                handleEvent = { event ->
+                    when (event) {
+                        MyReadOnlyTextFieldEvent.OnClick -> {
+                            clearFocus()
+                            uiState.setIsTransactionTimePickerDialogVisible(true)
+                        }
+                    }
+                },
             )
             SaveButton(
                 modifier = Modifier
