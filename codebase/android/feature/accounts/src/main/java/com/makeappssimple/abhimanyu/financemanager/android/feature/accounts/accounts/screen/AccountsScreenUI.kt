@@ -25,7 +25,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bot
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account.AccountsSetAsDefaultConfirmationBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemHeader
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemHeaderData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
@@ -168,21 +168,23 @@ internal fun AccountsScreenUI(
                     is AccountsListItemContentData -> {
                         AccountsListItemContent(
                             data = listItem,
-                            events = AccountsListItemContentEvents(
-                                onClick = {
-                                    listItem.accountId?.let { accountId ->
-                                        uiState.setScreenBottomSheetType(
-                                            AccountsScreenBottomSheetType.Menu(
-                                                isDeleteVisible = listItem.isDeleteEnabled,
-                                                isEditVisible = true,
-                                                isSetAsDefaultVisible = !listItem.isDefault,
-                                                accountId = accountId,
+                            handleEvent = { event ->
+                                when (event) {
+                                    is AccountsListItemContentEvent.OnClick -> {
+                                        listItem.accountId?.let { accountId ->
+                                            uiState.setScreenBottomSheetType(
+                                                AccountsScreenBottomSheetType.Menu(
+                                                    isDeleteVisible = listItem.isDeleteEnabled,
+                                                    isEditVisible = true,
+                                                    isSetAsDefaultVisible = !listItem.isDefault,
+                                                    accountId = accountId,
+                                                )
                                             )
-                                        )
+                                        }
+                                        uiState.setClickedItemId(listItem.accountId)
                                     }
-                                    uiState.setClickedItemId(listItem.accountId)
-                                },
-                            ),
+                                }
+                            },
                         )
                     }
 

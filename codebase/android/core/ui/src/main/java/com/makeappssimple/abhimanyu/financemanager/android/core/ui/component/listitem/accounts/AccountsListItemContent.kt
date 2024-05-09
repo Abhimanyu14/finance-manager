@@ -24,7 +24,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumL
 @Immutable
 public data class AccountsListItemContentDataAndEvents(
     val data: AccountsListItemContentData,
-    val events: AccountsListItemContentEvents,
+    val handleEvent: (event: AccountsListItemContentEvent) -> Unit = {},
 )
 
 @Immutable
@@ -43,15 +43,15 @@ public data class AccountsListItemContentData(
 ) : AccountsListItemData
 
 @Immutable
-public data class AccountsListItemContentEvents(
-    val onClick: () -> Unit,
-)
+public sealed class AccountsListItemContentEvent {
+    public data object OnClick : AccountsListItemContentEvent()
+}
 
 @Composable
 public fun AccountsListItemContent(
     modifier: Modifier = Modifier,
     data: AccountsListItemContentData,
-    events: AccountsListItemContentEvents,
+    handleEvent: (event: AccountsListItemContentEvent) -> Unit = {},
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -61,7 +61,9 @@ public fun AccountsListItemContent(
                 minHeight = minimumListItemHeight,
             )
             .conditionalClickable(
-                onClick = events.onClick,
+                onClick = {
+                    handleEvent(AccountsListItemContentEvent.OnClick)
+                },
             )
             .padding(
                 start = 16.dp,

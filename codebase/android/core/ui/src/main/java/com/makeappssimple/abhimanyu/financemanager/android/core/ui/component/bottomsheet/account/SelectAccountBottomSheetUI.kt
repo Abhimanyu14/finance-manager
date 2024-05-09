@@ -45,7 +45,7 @@ internal fun SelectAccountBottomSheetUI(
         ) { listItem ->
             AccountsListItemContent(
                 data = listItem.data,
-                events = listItem.events,
+                handleEvent = listItem.handleEvent,
             )
         }
         item {

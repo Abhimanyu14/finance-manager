@@ -8,7 +8,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentDataAndEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 
 @Immutable
@@ -46,16 +46,18 @@ public fun SelectAccountBottomSheet(
                             balance = account.balanceAmount.toString(),
                             name = account.name,
                         ),
-                        events = AccountsListItemContentEvents(
-                            onClick = {
-                                handleEvent(
-                                    SelectAccountBottomSheetEvent.UpdateAccount(
-                                        updatedAccount = account,
+                        handleEvent = { event ->
+                            when (event) {
+                                is AccountsListItemContentEvent.OnClick -> {
+                                    handleEvent(
+                                        SelectAccountBottomSheetEvent.UpdateAccount(
+                                            updatedAccount = account,
+                                        )
                                     )
-                                )
-                                handleEvent(SelectAccountBottomSheetEvent.ResetBottomSheetType)
-                            },
-                        ),
+                                    handleEvent(SelectAccountBottomSheetEvent.ResetBottomSheetType)
+                                }
+                            }
+                        },
                     )
                 }
                 .toList(),
