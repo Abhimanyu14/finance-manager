@@ -39,7 +39,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.MyTime
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account.SelectAccountBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account.SelectAccountBottomSheetData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account.SelectAccountBottomSheetEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account.SelectAccountBottomSheetEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category.SelectCategoryBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category.SelectCategoryBottomSheetData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category.SelectCategoryBottomSheetEvents
@@ -131,16 +131,21 @@ internal fun AddOrEditTransactionScreenUI(
                             accounts = uiState.accounts,
                             selectedAccountId = uiState.uiState.accountFrom?.id,
                         ),
-                        events = SelectAccountBottomSheetEvents(
-                            resetBottomSheetType = uiState.resetScreenBottomSheetType,
-                            updateAccount = { updatedAccount ->
-                                handleUIEvent(
-                                    AddOrEditTransactionScreenUIEvent.OnAccountFromUpdated(
-                                        updatedAccountFrom = updatedAccount,
+                        handleEvent = { event ->
+                            when (event) {
+                                is SelectAccountBottomSheetEvent.ResetBottomSheetType -> {
+                                    uiState.resetScreenBottomSheetType()
+                                }
+
+                                is SelectAccountBottomSheetEvent.UpdateAccount -> {
+                                    handleUIEvent(
+                                        AddOrEditTransactionScreenUIEvent.OnAccountFromUpdated(
+                                            updatedAccountFrom = event.updatedAccount,
+                                        )
                                     )
-                                )
-                            },
-                        ),
+                                }
+                            }
+                        },
                     )
                 }
 
@@ -150,16 +155,26 @@ internal fun AddOrEditTransactionScreenUI(
                             accounts = uiState.accounts,
                             selectedAccountId = uiState.uiState.accountTo?.id,
                         ),
-                        events = SelectAccountBottomSheetEvents(
-                            resetBottomSheetType = uiState.resetScreenBottomSheetType,
-                            updateAccount = { updatedAccount ->
-                                handleUIEvent(
-                                    AddOrEditTransactionScreenUIEvent.OnAccountToUpdated(
-                                        updatedAccountTo = updatedAccount,
+                        handleEvent = { event ->
+                            when (event) {
+                                is SelectAccountBottomSheetEvent.ResetBottomSheetType -> {
+                                    uiState.resetScreenBottomSheetType()
+                                }
+
+                                is SelectAccountBottomSheetEvent.UpdateAccount -> {
+                                    handleUIEvent(
+                                        AddOrEditTransactionScreenUIEvent.OnAccountToUpdated(
+                                            updatedAccountTo = event.updatedAccount,
+                                        )
                                     )
-                                )
-                            },
-                        ),
+                                    handleUIEvent(
+                                        AddOrEditTransactionScreenUIEvent.OnAccountFromUpdated(
+                                            updatedAccountFrom = event.updatedAccount,
+                                        )
+                                    )
+                                }
+                            }
+                        },
                     )
                 }
             }

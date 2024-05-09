@@ -18,16 +18,18 @@ public data class SelectAccountBottomSheetData(
 )
 
 @Immutable
-public data class SelectAccountBottomSheetEvents(
-    val resetBottomSheetType: () -> Unit = {},
-    val updateAccount: (Account?) -> Unit = {},
-)
+public sealed class SelectAccountBottomSheetEvent {
+    public data object ResetBottomSheetType : SelectAccountBottomSheetEvent()
+    public data class UpdateAccount(
+        val updatedAccount: Account?,
+    ) : SelectAccountBottomSheetEvent()
+}
 
 @Composable
 public fun SelectAccountBottomSheet(
     modifier: Modifier = Modifier,
     data: SelectAccountBottomSheetData,
-    events: SelectAccountBottomSheetEvents,
+    handleEvent: (event: SelectAccountBottomSheetEvent) -> Unit = {},
 ) {
     SelectAccountBottomSheetUI(
         modifier = modifier,
@@ -46,12 +48,15 @@ public fun SelectAccountBottomSheet(
                         ),
                         events = AccountsListItemContentEvents(
                             onClick = {
-                                events.updateAccount(account)
-                                events.resetBottomSheetType()
+                                handleEvent(
+                                    SelectAccountBottomSheetEvent.UpdateAccount(
+                                        updatedAccount = account,
+                                    )
+                                )
+                                handleEvent(SelectAccountBottomSheetEvent.ResetBottomSheetType)
                             },
                         ),
                     )
-
                 }
                 .toList(),
         ),
