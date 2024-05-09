@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.app.ui.catalog.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewTab
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewTabData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewTabEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewTabEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewTabOption
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
@@ -75,11 +75,13 @@ public fun CatalogOverviewTabScreen(
                         },
                     selectedItemIndex = selectedIndex,
                 ),
-                events = OverviewTabEvents(
-                    onClick = {
-                        selectedIndex = it
-                    },
-                ),
+                handleEvent = { event ->
+                    when (event) {
+                        is OverviewTabEvent.OnClick -> {
+                            selectedIndex = event.index
+                        }
+                    }
+                },
             )
         }
     }

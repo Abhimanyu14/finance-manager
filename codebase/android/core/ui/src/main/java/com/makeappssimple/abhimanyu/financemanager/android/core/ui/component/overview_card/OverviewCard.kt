@@ -153,15 +153,17 @@ private fun OverviewCardUI(
                         },
                     selectedItemIndex = data.overviewTabSelectionIndex,
                 ),
-                events = OverviewTabEvents(
-                    onClick = {
-                        handleEvent(
-                            OverviewCardEvent.OnOverviewTabClick(
-                                index = it,
+                handleEvent = { event ->
+                    when (event) {
+                        is OverviewTabEvent.OnClick -> {
+                            handleEvent(
+                                OverviewCardEvent.OnOverviewTabClick(
+                                    index = event.index,
+                                )
                             )
-                        )
-                    },
-                ),
+                        }
+                    }
+                },
             )
             VerticalSpacer(
                 height = 8.dp,

@@ -56,6 +56,13 @@ public data class OverviewTabData(
 )
 
 @Immutable
+public sealed class OverviewTabEvent {
+    public data class OnClick(
+        val index: Int,
+    ) : OverviewTabEvent()
+}
+
+@Immutable
 public data class OverviewTabEvents(
     val onClick: (index: Int) -> Unit = {},
 )
@@ -64,7 +71,7 @@ public data class OverviewTabEvents(
 public fun OverviewTab(
     modifier: Modifier = Modifier,
     data: OverviewTabData,
-    events: OverviewTabEvents = OverviewTabEvents(),
+    handleEvent: (event: OverviewTabEvent) -> Unit = {},
 ) {
     val textStyle = MaterialTheme.typography.labelLarge
 
@@ -97,7 +104,11 @@ public fun OverviewTab(
                     textStyle = textStyle,
                     isSelected = index == data.selectedItemIndex,
                     onClick = {
-                        events.onClick(index)
+                        handleEvent(
+                            OverviewTabEvent.OnClick(
+                                index = index,
+                            )
+                        )
                     },
                 )
             }
@@ -279,11 +290,13 @@ private fun OverviewSelectionPreview() {
                     ),
                     selectedItemIndex = selectedIndex,
                 ),
-                events = OverviewTabEvents(
-                    onClick = {
-                        selectedIndex = it
-                    },
-                ),
+                handleEvent = { event ->
+                    when (event) {
+                        is OverviewTabEvent.OnClick -> {
+                            selectedIndex = event.index
+                        }
+                    }
+                },
             )
         }
     }
