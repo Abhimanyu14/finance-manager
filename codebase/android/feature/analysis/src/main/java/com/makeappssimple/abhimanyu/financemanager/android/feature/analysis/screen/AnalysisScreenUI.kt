@@ -30,7 +30,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.R
 
@@ -127,15 +127,17 @@ internal fun AnalysisScreenUI(
                             items = uiState.transactionTypesChipUIData,
                             selectedItemIndex = uiState.selectedTransactionTypeIndex,
                         ),
-                        events = MyHorizontalScrollingRadioGroupEvents(
-                            onSelectionChange = { updatedSelectedTransactionTypeIndex ->
-                                handleUIEvent(
-                                    AnalysisScreenUIEvent.OnTransactionTypeChange(
-                                        updatedSelectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex,
+                        handleEvent = { event ->
+                            when (event) {
+                                is MyHorizontalScrollingRadioGroupEvent.OnSelectionChange -> {
+                                    handleUIEvent(
+                                        AnalysisScreenUIEvent.OnTransactionTypeChange(
+                                            updatedSelectedTransactionTypeIndex = event.index,
+                                        )
                                     )
-                                )
-                            },
-                        ),
+                                }
+                            }
+                        },
                     )
                     ActionButton(
                         data = ActionButtonData(

@@ -21,15 +21,17 @@ public data class MyHorizontalScrollingRadioGroupData(
 )
 
 @Immutable
-public data class MyHorizontalScrollingRadioGroupEvents(
-    val onSelectionChange: (index: Int) -> Unit,
-)
+public sealed class MyHorizontalScrollingRadioGroupEvent {
+    public data class OnSelectionChange(
+        val index: Int,
+    ) : MyHorizontalScrollingRadioGroupEvent()
+}
 
 @Composable
 public fun MyHorizontalScrollingRadioGroup(
     modifier: Modifier = Modifier,
     data: MyHorizontalScrollingRadioGroupData,
-    events: MyHorizontalScrollingRadioGroupEvents,
+    handleEvent: (event: MyHorizontalScrollingRadioGroupEvent) -> Unit = {},
 ) {
     LazyRow(
         horizontalArrangement = data.horizontalArrangement,
@@ -62,7 +64,11 @@ public fun MyHorizontalScrollingRadioGroup(
                     handleEvent = { event ->
                         when (event) {
                             is ChipUIEvent.OnClick -> {
-                                events.onSelectionChange(index)
+                                handleEvent(
+                                    MyHorizontalScrollingRadioGroupEvent.OnSelectionChange(
+                                        index = index,
+                                    )
+                                )
                             }
                         }
                     },

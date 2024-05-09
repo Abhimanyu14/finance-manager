@@ -52,10 +52,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sav
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingSelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingSelectionGroupData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingSelectionGroupEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingSelectionGroupEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldEvents
@@ -265,15 +265,17 @@ internal fun AddOrEditTransactionScreenUI(
                         items = uiState.transactionTypesForNewTransactionChipUIData,
                         selectedItemIndex = uiState.uiState.selectedTransactionTypeIndex,
                     ),
-                    events = MyHorizontalScrollingRadioGroupEvents(
-                        onSelectionChange = { updatedSelectedTransactionTypeIndex ->
-                            handleUIEvent(
-                                AddOrEditTransactionScreenUIEvent.OnSelectedTransactionTypeIndexUpdated(
-                                    updatedSelectedTransactionTypeIndex = updatedSelectedTransactionTypeIndex,
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyHorizontalScrollingRadioGroupEvent.OnSelectionChange -> {
+                                handleUIEvent(
+                                    AddOrEditTransactionScreenUIEvent.OnSelectedTransactionTypeIndexUpdated(
+                                        updatedSelectedTransactionTypeIndex = event.index,
+                                    )
                                 )
-                            )
-                        },
-                    ),
+                            }
+                        }
+                    },
                 )
             }
             MyOutlinedTextField(
@@ -416,18 +418,20 @@ internal fun AddOrEditTransactionScreenUI(
                         isLoading = uiState.isLoading,
                         items = uiState.titleSuggestionsChipUIData,
                     ),
-                    events = MyHorizontalScrollingSelectionGroupEvents(
-                        onSelectionChange = { index ->
-                            clearFocus()
-                            handleUIEvent(
-                                AddOrEditTransactionScreenUIEvent.OnTitleUpdated(
-                                    updatedTitle = uiState.uiState.title.copy(
-                                        text = uiState.titleSuggestions[index],
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyHorizontalScrollingSelectionGroupEvent.OnSelectionChange -> {
+                                clearFocus()
+                                handleUIEvent(
+                                    AddOrEditTransactionScreenUIEvent.OnTitleUpdated(
+                                        updatedTitle = uiState.uiState.title.copy(
+                                            text = uiState.titleSuggestions[event.index],
+                                        ),
                                     ),
-                                ),
-                            )
-                        },
-                    ),
+                                )
+                            }
+                        }
+                    },
                 )
             }
             AnimatedVisibility(
@@ -446,16 +450,18 @@ internal fun AddOrEditTransactionScreenUI(
                         items = uiState.transactionForValuesChipUIData,
                         selectedItemIndex = uiState.uiState.selectedTransactionForIndex,
                     ),
-                    events = MyHorizontalScrollingRadioGroupEvents(
-                        onSelectionChange = { updatedSelectedTransactionForIndex ->
-                            clearFocus()
-                            handleUIEvent(
-                                AddOrEditTransactionScreenUIEvent.OnSelectedTransactionForIndexUpdated(
-                                    updatedSelectedTransactionForIndex = updatedSelectedTransactionForIndex,
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyHorizontalScrollingRadioGroupEvent.OnSelectionChange -> {
+                                clearFocus()
+                                handleUIEvent(
+                                    AddOrEditTransactionScreenUIEvent.OnSelectedTransactionForIndexUpdated(
+                                        updatedSelectedTransactionForIndex = event.index,
+                                    )
                                 )
-                            )
-                        },
-                    ),
+                            }
+                        }
+                    },
                 )
             }
             AnimatedVisibility(

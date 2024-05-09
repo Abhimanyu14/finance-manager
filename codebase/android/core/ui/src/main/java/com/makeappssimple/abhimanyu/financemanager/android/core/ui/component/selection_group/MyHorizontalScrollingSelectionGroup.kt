@@ -19,15 +19,17 @@ public data class MyHorizontalScrollingSelectionGroupData(
 )
 
 @Immutable
-public data class MyHorizontalScrollingSelectionGroupEvents(
-    val onSelectionChange: (index: Int) -> Unit,
-)
+public sealed class MyHorizontalScrollingSelectionGroupEvent {
+    public data class OnSelectionChange(
+        val index: Int,
+    ) : MyHorizontalScrollingSelectionGroupEvent()
+}
 
 @Composable
 public fun MyHorizontalScrollingSelectionGroup(
     modifier: Modifier = Modifier,
     data: MyHorizontalScrollingSelectionGroupData,
-    events: MyHorizontalScrollingSelectionGroupEvents,
+    handleEvent: (event: MyHorizontalScrollingSelectionGroupEvent) -> Unit = {},
 ) {
     LazyRow(
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -60,7 +62,11 @@ public fun MyHorizontalScrollingSelectionGroup(
                     handleEvent = { event ->
                         when (event) {
                             is ChipUIEvent.OnClick -> {
-                                events.onSelectionChange(index)
+                                handleEvent(
+                                    MyHorizontalScrollingSelectionGroupEvent.OnSelectionChange(
+                                        index = index,
+                                    )
+                                )
                             }
                         }
                     },

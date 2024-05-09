@@ -24,7 +24,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.dat
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.datepicker.MyDatePickerEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingSelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingSelectionGroupData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingSelectionGroupEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingSelectionGroupEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldEvent
@@ -196,11 +196,13 @@ public fun AnalysisFilterBottomSheetUI(
                     )
                 },
             ),
-            events = MyHorizontalScrollingSelectionGroupEvents(
-                onSelectionChange = { index ->
-                    onDateRangeOptionClick(DateRangeOptions.entries[index])
-                },
-            ),
+            handleEvent = { event ->
+                when (event) {
+                    is MyHorizontalScrollingSelectionGroupEvent.OnSelectionChange -> {
+                        onDateRangeOptionClick(DateRangeOptions.entries[event.index])
+                    }
+                }
+            },
         )
         Row(
             modifier = Modifier

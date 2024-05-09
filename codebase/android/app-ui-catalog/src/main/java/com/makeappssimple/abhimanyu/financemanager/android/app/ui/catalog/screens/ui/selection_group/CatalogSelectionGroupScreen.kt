@@ -21,10 +21,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chi
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroupEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingSelectionGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingSelectionGroupData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingSelectionGroupEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingSelectionGroupEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroup
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroupData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroupEvent
@@ -167,11 +167,13 @@ public fun CatalogSelectionGroupScreen(
                     items = horizontalScrollingRadioGroupItems,
                     selectedItemIndex = selectedHorizontalScrollingRadioGroupItemIndex,
                 ),
-                events = MyHorizontalScrollingRadioGroupEvents(
-                    onSelectionChange = {
-                        selectedHorizontalScrollingRadioGroupItemIndex = it
-                    },
-                ),
+                handleEvent = { event ->
+                    when (event) {
+                        is MyHorizontalScrollingRadioGroupEvent.OnSelectionChange -> {
+                            selectedHorizontalScrollingRadioGroupItemIndex = event.index
+                        }
+                    }
+                },
             )
 
             val horizontalScrollingSelectionGroupItems = listOf(
@@ -198,15 +200,17 @@ public fun CatalogSelectionGroupScreen(
                 data = MyHorizontalScrollingSelectionGroupData(
                     items = horizontalScrollingSelectionGroupItems,
                 ),
-                events = MyHorizontalScrollingSelectionGroupEvents(
-                    onSelectionChange = {
-                        Toast.makeText(
-                            context,
-                            "Selected ${horizontalScrollingSelectionGroupItems[it].text}",
-                            Toast.LENGTH_SHORT,
-                        ).show()
-                    },
-                ),
+                handleEvent = { event ->
+                    when (event) {
+                        is MyHorizontalScrollingSelectionGroupEvent.OnSelectionChange -> {
+                            Toast.makeText(
+                                context,
+                                "Selected ${horizontalScrollingSelectionGroupItems[event.index].text}",
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                        }
+                    }
+                },
             )
         }
     }
