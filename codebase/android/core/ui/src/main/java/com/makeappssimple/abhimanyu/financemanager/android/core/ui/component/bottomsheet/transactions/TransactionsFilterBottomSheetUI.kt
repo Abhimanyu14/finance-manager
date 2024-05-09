@@ -683,7 +683,7 @@ public fun TransactionFilterBottomSheetDateFilter(
                     ),
                     handleEvent = { event ->
                         when (event) {
-                            MyReadOnlyTextFieldEvent.OnClick -> {
+                            is MyReadOnlyTextFieldEvent.OnClick -> {
                                 isFromDatePickerDialogVisible = true
                             }
                         }
@@ -703,7 +703,7 @@ public fun TransactionFilterBottomSheetDateFilter(
                     ),
                     handleEvent = { event ->
                         when (event) {
-                            MyReadOnlyTextFieldEvent.OnClick -> {
+                            is MyReadOnlyTextFieldEvent.OnClick -> {
                                 isToDatePickerDialogVisible = true
                             }
                         }

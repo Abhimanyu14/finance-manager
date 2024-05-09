@@ -9,7 +9,7 @@ public sealed class AddOrEditTransactionForScreenUIEvent : ScreenUIEvent {
     public data object OnClearTitleButtonClick : AddOrEditTransactionForScreenUIEvent()
     public data object OnCtaButtonClick : AddOrEditTransactionForScreenUIEvent()
     public data object OnTopAppBarNavigationButtonClick : AddOrEditTransactionForScreenUIEvent()
-    
+
     public data class OnTitleUpdated(
         val updatedTitle: TextFieldValue,
     ) : AddOrEditTransactionForScreenUIEvent()

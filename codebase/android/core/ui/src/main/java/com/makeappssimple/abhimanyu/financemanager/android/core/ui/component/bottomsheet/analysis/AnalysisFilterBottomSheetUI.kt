@@ -156,7 +156,7 @@ public fun AnalysisFilterBottomSheetUI(
                 ),
                 handleEvent = { event ->
                     when (event) {
-                        MyReadOnlyTextFieldEvent.OnClick -> {
+                        is MyReadOnlyTextFieldEvent.OnClick -> {
                             onFromDateTextFieldClick()
                         }
                     }
@@ -176,7 +176,7 @@ public fun AnalysisFilterBottomSheetUI(
                 ),
                 handleEvent = { event ->
                     when (event) {
-                        MyReadOnlyTextFieldEvent.OnClick -> {
+                        is MyReadOnlyTextFieldEvent.OnClick -> {
                             onToDateTextFieldClick()
                         }
                     }
