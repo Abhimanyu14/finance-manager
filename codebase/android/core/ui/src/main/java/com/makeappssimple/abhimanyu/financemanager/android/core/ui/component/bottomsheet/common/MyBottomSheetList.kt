@@ -17,18 +17,10 @@ public data class MyBottomSheetListData(
     val items: List<MyBottomSheetListItemDataAndEvents>,
 )
 
-/*
-@Immutable
-public data class MyBottomSheetListEvents(
-    val onClick: () -> Unit,
-)
-*/
-
 @Composable
 public fun MyBottomSheetListData(
     modifier: Modifier = Modifier,
     data: MyBottomSheetListData,
-    // events: MyBottomSheetListEvents,
 ) {
     LazyColumn(
         modifier = modifier
