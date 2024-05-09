@@ -14,8 +14,8 @@ public fun SelectionGroupLoadingUI(
         ChipUI(
             data = ChipUIData(
                 isLoading = true,
+                isSelected = false,
             ),
-            isSelected = false,
         )
     }
 }

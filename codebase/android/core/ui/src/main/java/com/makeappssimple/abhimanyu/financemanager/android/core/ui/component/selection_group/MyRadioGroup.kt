@@ -39,7 +39,9 @@ public fun MyRadioGroup(
         } else {
             data.items.mapIndexed { index, chipUIData ->
                 ChipUI(
-                    data = chipUIData,
+                    data = chipUIData.copy(
+                        isSelected = index == data.selectedItemIndex,
+                    ),
                     handleEvent = { event ->
                         when (event) {
                             is ChipUIEvent.OnClick -> {
@@ -51,7 +53,6 @@ public fun MyRadioGroup(
                             }
                         }
                     },
-                    isSelected = index == data.selectedItemIndex,
                 )
             }
         }

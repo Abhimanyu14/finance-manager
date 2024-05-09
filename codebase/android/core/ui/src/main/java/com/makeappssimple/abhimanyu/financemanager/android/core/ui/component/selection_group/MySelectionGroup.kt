@@ -39,7 +39,9 @@ public fun MySelectionGroup(
         } else {
             data.items.mapIndexed { index, chipUIData ->
                 ChipUI(
-                    data = chipUIData,
+                    data = chipUIData.copy(
+                        isSelected = data.selectedItemsIndices.contains(index),
+                    ),
                     handleEvent = { event ->
                         when (event) {
                             is ChipUIEvent.OnClick -> {
@@ -51,7 +53,6 @@ public fun MySelectionGroup(
                             }
                         }
                     },
-                    isSelected = data.selectedItemsIndices.contains(index),
                 )
             }
         }

@@ -27,6 +27,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.sh
 @Immutable
 public data class ChipUIData(
     val isLoading: Boolean = false,
+    val isSelected: Boolean = false,
     val borderColor: Color? = null,
     val textColor: Color? = null,
     val text: String = "",
@@ -43,8 +44,6 @@ public fun ChipUI(
     modifier: Modifier = Modifier,
     data: ChipUIData,
     handleEvent: (event: ChipUIEvent) -> Unit = {},
-    // TODO(Abhi): Remove this "isSelected" from here
-    isSelected: Boolean = false,
 ) {
     val shape = CircleShape
 
@@ -67,7 +66,7 @@ public fun ChipUI(
                     width = 1.dp,
                     color = if (data.borderColor != null) {
                         data.borderColor
-                    } else if (isSelected) {
+                    } else if (data.isSelected) {
                         MaterialTheme.colorScheme.primary
                     } else {
                         MaterialTheme.colorScheme.outline
@@ -80,7 +79,7 @@ public fun ChipUI(
                     },
                 )
                 .background(
-                    if (isSelected) {
+                    if (data.isSelected) {
                         MaterialTheme.colorScheme.primary
                     } else {
                         Color.Transparent
@@ -91,7 +90,7 @@ public fun ChipUI(
                 Icon(
                     imageVector = it,
                     contentDescription = null,
-                    tint = if (isSelected) {
+                    tint = if (data.isSelected) {
                         MaterialTheme.colorScheme.onPrimary
                     } else {
                         MaterialTheme.colorScheme.primary
@@ -125,7 +124,7 @@ public fun ChipUI(
                     .copy(
                         color = if (data.textColor != null) {
                             data.textColor
-                        } else if (isSelected) {
+                        } else if (data.isSelected) {
                             MaterialTheme.colorScheme.onPrimary
                         } else {
                             MaterialTheme.colorScheme.onBackground
