@@ -18,12 +18,14 @@ public fun TransactionsSortBottomSheet(
                         sortOption = sortOption,
                         isSelected = index == selectedSortOptionIndex,
                     ),
-                    events = TransactionsSortBottomSheetItemEvents(
-                        onClick = {
-                            updateSelectedSortOption(index)
-                            resetBottomSheetType()
-                        },
-                    ),
+                    handleEvent = { event ->
+                        when (event) {
+                            is TransactionsSortBottomSheetItemEvent.OnClick -> {
+                                updateSelectedSortOption(index)
+                                resetBottomSheetType()
+                            }
+                        }
+                    },
                 )
             }
             .toList(),

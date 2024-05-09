@@ -28,7 +28,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumB
 @Immutable
 public data class TransactionsSortBottomSheetData(
     val data: TransactionsSortBottomSheetItemData,
-    val events: TransactionsSortBottomSheetItemEvents,
+    val handleEvent: (event: TransactionsSortBottomSheetItemEvent) -> Unit = {},
 )
 
 @Immutable
@@ -38,9 +38,9 @@ public data class TransactionsSortBottomSheetItemData(
 )
 
 @Immutable
-public data class TransactionsSortBottomSheetItemEvents(
-    val onClick: () -> Unit,
-)
+public sealed class TransactionsSortBottomSheetItemEvent {
+    public data object OnClick : TransactionsSortBottomSheetItemEvent()
+}
 
 @Composable
 public fun TransactionsSortBottomSheetUI(
@@ -66,7 +66,7 @@ public fun TransactionsSortBottomSheetUI(
         ) { listItem ->
             TransactionsSortBottomSheetItem(
                 data = listItem.data,
-                events = listItem.events,
+                handleEvent = listItem.handleEvent,
             )
         }
         item {
@@ -83,7 +83,7 @@ public fun TransactionsSortBottomSheetUI(
 @Composable
 private fun TransactionsSortBottomSheetItem(
     data: TransactionsSortBottomSheetItemData,
-    events: TransactionsSortBottomSheetItemEvents,
+    handleEvent: (event: TransactionsSortBottomSheetItemEvent) -> Unit = {},
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -92,7 +92,9 @@ private fun TransactionsSortBottomSheetItem(
             .conditionalClickable(
                 onClickLabel = data.sortOption.title,
                 role = Role.Button,
-                onClick = events.onClick,
+                onClick = {
+                    handleEvent(TransactionsSortBottomSheetItemEvent.OnClick)
+                },
             )
             .padding(
                 horizontal = 16.dp,
