@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetListData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetListItemDataAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetListItemDataAndEventHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetListItemEvent
 
 @Immutable
@@ -25,7 +25,7 @@ public fun CategoryMenuBottomSheetUI(
         modifier = modifier,
         data = MyBottomSheetListData(
             items = items.map {
-                MyBottomSheetListItemDataAndEvents(
+                MyBottomSheetListItemDataAndEventHandler(
                     data = MyBottomSheetListItemData(
                         imageVector = it.imageVector,
                         text = it.text,

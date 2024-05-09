@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 
 @Immutable
-public data class MyListItemDataAndEvents(
+public data class MyListItemDataAndEventHandler(
     val data: MyListItemData,
     val handleEvent: (event: MyListItemEvent) -> Unit = {},
 )

@@ -14,7 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumB
 
 @Immutable
 public data class MyBottomSheetListData(
-    val items: List<MyBottomSheetListItemDataAndEvents>,
+    val items: List<MyBottomSheetListItemDataAndEventHandler>,
 )
 
 @Composable

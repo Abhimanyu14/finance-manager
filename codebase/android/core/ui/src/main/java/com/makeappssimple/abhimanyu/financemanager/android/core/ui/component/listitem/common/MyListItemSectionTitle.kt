@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
 @Immutable
-public data class MyListItemSectionTitleDataAndEvents(
+public data class MyListItemSectionTitleDataAndEventHandler(
     val data: MyListItemSectionTitleData,
 )
 

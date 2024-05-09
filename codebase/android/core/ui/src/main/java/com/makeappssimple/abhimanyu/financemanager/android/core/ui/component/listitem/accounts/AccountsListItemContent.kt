@@ -22,7 +22,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.def
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumListItemHeight
 
 @Immutable
-public data class AccountsListItemContentDataAndEvents(
+public data class AccountsListItemContentDataAndEventHandler(
     val data: AccountsListItemContentData,
     val handleEvent: (event: AccountsListItemContentEvent) -> Unit = {},
 )

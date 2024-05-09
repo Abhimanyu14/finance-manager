@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentDataAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentDataAndEventHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 
@@ -37,7 +37,7 @@ public fun SelectAccountBottomSheet(
             titleTextStringResourceId = R.string.bottom_sheet_select_account_title,
             data = data.accounts
                 .map { account ->
-                    AccountsListItemContentDataAndEvents(
+                    AccountsListItemContentDataAndEventHandler(
                         data = AccountsListItemContentData(
                             isLowBalance = account.balanceAmount < account.minimumAccountBalanceAmount.orEmpty(),
                             isSelected = account.id == data.selectedAccountId,

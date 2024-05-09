@@ -16,7 +16,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 
 @Immutable
-public data class MyBottomSheetListItemDataAndEvents(
+public data class MyBottomSheetListItemDataAndEventHandler(
     val data: MyBottomSheetListItemData,
     val handleEvent: (event: MyBottomSheetListItemEvent) -> Unit = {},
 )
