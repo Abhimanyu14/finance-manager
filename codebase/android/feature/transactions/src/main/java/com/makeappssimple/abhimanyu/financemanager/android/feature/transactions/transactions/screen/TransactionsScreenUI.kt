@@ -46,7 +46,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bot
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactionfor.SelectTransactionForBottomSheetEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactions.TransactionsFilterBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactions.TransactionsMenuBottomSheet
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactions.TransactionsMenuBottomSheetEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactions.TransactionsMenuBottomSheetEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactions.TransactionsSortBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemEvent
@@ -114,17 +114,23 @@ internal fun TransactionsScreenUI(
 
                 TransactionsScreenBottomSheetType.Menu -> {
                     TransactionsMenuBottomSheet(
-                        events = TransactionsMenuBottomSheetEvents(
-                            onSelectAllTransactionsClick = {
-                                handleUIEvent(TransactionsScreenUIEvent.OnTransactionsMenuBottomSheet.SelectAllTransactionsButtonClick)
-                            },
-                            onUpdateTransactionForClick = {
-                                uiState.setScreenBottomSheetType(
-                                    TransactionsScreenBottomSheetType.SelectTransactionFor
-                                )
-                            },
-                            resetBottomSheetType = uiState.resetScreenBottomSheetType,
-                        ),
+                        handleEvent = { event ->
+                            when (event) {
+                                is TransactionsMenuBottomSheetEvent.OnSelectAllTransactionsClick -> {
+                                    handleUIEvent(TransactionsScreenUIEvent.OnTransactionsMenuBottomSheet.SelectAllTransactionsButtonClick)
+                                }
+
+                                is TransactionsMenuBottomSheetEvent.OnUpdateTransactionForClick -> {
+                                    uiState.setScreenBottomSheetType(
+                                        TransactionsScreenBottomSheetType.SelectTransactionFor
+                                    )
+                                }
+
+                                is TransactionsMenuBottomSheetEvent.ResetBottomSheetType -> {
+                                    uiState.resetScreenBottomSheetType()
+                                }
+                            }
+                        },
                     )
                 }
 

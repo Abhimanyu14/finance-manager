@@ -8,17 +8,17 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ico
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 
 @Immutable
-public data class TransactionsMenuBottomSheetEvents(
-    val onSelectAllTransactionsClick: () -> Unit,
-    val onUpdateTransactionForClick: () -> Unit,
-    val resetBottomSheetType: () -> Unit,
-)
+public sealed class TransactionsMenuBottomSheetEvent {
+    public data object OnSelectAllTransactionsClick : TransactionsMenuBottomSheetEvent()
+    public data object OnUpdateTransactionForClick : TransactionsMenuBottomSheetEvent()
+    public data object ResetBottomSheetType : TransactionsMenuBottomSheetEvent()
+}
 
 @Composable
 public fun TransactionsMenuBottomSheet(
     modifier: Modifier = Modifier,
     // data: TransactionsMenuBottomSheetData,
-    events: TransactionsMenuBottomSheetEvents,
+    handleEvent: (event: TransactionsMenuBottomSheetEvent) -> Unit = {},
 ) {
     val items = buildList {
         add(
@@ -27,7 +27,9 @@ public fun TransactionsMenuBottomSheet(
                 text = stringResource(
                     id = R.string.bottom_sheet_transactions_menu_update_transaction_for,
                 ),
-                onClick = events.onUpdateTransactionForClick,
+                onClick = {
+                    handleEvent(TransactionsMenuBottomSheetEvent.OnUpdateTransactionForClick)
+                },
             )
         )
         add(
@@ -37,8 +39,8 @@ public fun TransactionsMenuBottomSheet(
                     id = R.string.bottom_sheet_transactions_menu_select_all_transactions,
                 ),
                 onClick = {
-                    events.onSelectAllTransactionsClick()
-                    events.resetBottomSheetType()
+                    handleEvent(TransactionsMenuBottomSheetEvent.OnSelectAllTransactionsClick)
+                    handleEvent(TransactionsMenuBottomSheetEvent.ResetBottomSheetType)
                 },
             )
         )
