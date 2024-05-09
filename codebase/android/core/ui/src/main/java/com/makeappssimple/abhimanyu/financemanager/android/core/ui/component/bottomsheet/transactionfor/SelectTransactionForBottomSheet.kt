@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transactionfor.TransactionForListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transactionfor.TransactionForListItemDataAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transactionfor.TransactionForListItemDataAndEventHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transactionfor.TransactionForListItemEvent
 
 @Immutable
@@ -33,7 +33,7 @@ public fun SelectTransactionForBottomSheet(
             titleTextStringResourceId = R.string.bottom_sheet_select_transaction_for_title,
             data = data.transactionForValues
                 .map { transactionFor ->
-                    TransactionForListItemDataAndEvents(
+                    TransactionForListItemDataAndEventHandler(
                         data = TransactionForListItemData(
                             title = transactionFor.titleToDisplay,
                         ),

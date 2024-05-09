@@ -19,7 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumListItemHeight
 
 @Immutable
-public data class TransactionForListItemDataAndEvents(
+public data class TransactionForListItemDataAndEventHandler(
     val data: TransactionForListItemData,
     val handleEvent: (event: TransactionForListItemEvent) -> Unit = {},
 )
