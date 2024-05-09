@@ -49,7 +49,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroupEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 import kotlinx.coroutines.delay
@@ -253,18 +253,21 @@ internal fun AddOrEditCategoryScreenUI(
                             imeAction = ImeAction.Done,
                         ),
                     ),
-                    events = MyOutlinedTextFieldEvents(
-                        onClickTrailingIcon = {
-                            handleUIEvent(AddOrEditCategoryScreenUIEvent.OnClearTitleButtonClick)
-                        },
-                        onValueChange = { updatedTitle ->
-                            handleUIEvent(
-                                AddOrEditCategoryScreenUIEvent.OnTitleUpdated(
-                                    updatedTitle = updatedTitle,
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyOutlinedTextFieldEvent.OnClickTrailingIcon -> {
+                                handleUIEvent(AddOrEditCategoryScreenUIEvent.OnClearTitleButtonClick)
+                            }
+
+                            is MyOutlinedTextFieldEvent.OnValueChange -> {
+                                handleUIEvent(
+                                    AddOrEditCategoryScreenUIEvent.OnTitleUpdated(
+                                        updatedTitle = event.updatedValue,
+                                    )
                                 )
-                            )
-                        },
-                    ),
+                            }
+                        }
+                    },
                 )
             }
             SaveButton(

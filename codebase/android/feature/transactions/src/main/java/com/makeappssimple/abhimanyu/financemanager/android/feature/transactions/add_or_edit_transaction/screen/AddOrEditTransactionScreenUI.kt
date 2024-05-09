@@ -58,7 +58,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingSelectionGroupEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldEvent
@@ -324,18 +324,21 @@ internal fun AddOrEditTransactionScreenUI(
                         imeAction = ImeAction.Done,
                     ),
                 ),
-                events = MyOutlinedTextFieldEvents(
-                    onClickTrailingIcon = {
-                        handleUIEvent(AddOrEditTransactionScreenUIEvent.OnClearAmountButtonClick)
-                    },
-                    onValueChange = { updatedAmount ->
-                        handleUIEvent(
-                            AddOrEditTransactionScreenUIEvent.OnAmountUpdated(
-                                updatedAmount = updatedAmount,
+                handleEvent = { event ->
+                    when (event) {
+                        is MyOutlinedTextFieldEvent.OnClickTrailingIcon -> {
+                            handleUIEvent(AddOrEditTransactionScreenUIEvent.OnClearAmountButtonClick)
+                        }
+
+                        is MyOutlinedTextFieldEvent.OnValueChange -> {
+                            handleUIEvent(
+                                AddOrEditTransactionScreenUIEvent.OnAmountUpdated(
+                                    updatedAmount = event.updatedValue,
+                                )
                             )
-                        )
-                    },
-                ),
+                        }
+                    }
+                },
             )
             AnimatedVisibility(
                 visible = uiState.uiVisibilityState.isCategoryTextFieldVisible,
@@ -389,18 +392,21 @@ internal fun AddOrEditTransactionScreenUI(
                             imeAction = ImeAction.Done,
                         ),
                     ),
-                    events = MyOutlinedTextFieldEvents(
-                        onClickTrailingIcon = {
-                            handleUIEvent(AddOrEditTransactionScreenUIEvent.OnClearTitleButtonClick)
-                        },
-                        onValueChange = { updatedTitle ->
-                            handleUIEvent(
-                                AddOrEditTransactionScreenUIEvent.OnTitleUpdated(
-                                    updatedTitle = updatedTitle,
-                                ),
-                            )
-                        },
-                    ),
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyOutlinedTextFieldEvent.OnClickTrailingIcon -> {
+                                handleUIEvent(AddOrEditTransactionScreenUIEvent.OnClearTitleButtonClick)
+                            }
+
+                            is MyOutlinedTextFieldEvent.OnValueChange -> {
+                                handleUIEvent(
+                                    AddOrEditTransactionScreenUIEvent.OnTitleUpdated(
+                                        updatedTitle = event.updatedValue,
+                                    ),
+                                )
+                            }
+                        }
+                    },
                 )
             }
             AnimatedVisibility(
@@ -489,18 +495,21 @@ internal fun AddOrEditTransactionScreenUI(
                             imeAction = ImeAction.Done,
                         ),
                     ),
-                    events = MyOutlinedTextFieldEvents(
-                        onClickTrailingIcon = {
-                            handleUIEvent(AddOrEditTransactionScreenUIEvent.OnClearDescriptionButtonClick)
-                        },
-                        onValueChange = { updatedDescription ->
-                            handleUIEvent(
-                                AddOrEditTransactionScreenUIEvent.OnDescriptionUpdated(
-                                    updatedDescription = updatedDescription,
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyOutlinedTextFieldEvent.OnClickTrailingIcon -> {
+                                handleUIEvent(AddOrEditTransactionScreenUIEvent.OnClearDescriptionButtonClick)
+                            }
+
+                            is MyOutlinedTextFieldEvent.OnValueChange -> {
+                                handleUIEvent(
+                                    AddOrEditTransactionScreenUIEvent.OnDescriptionUpdated(
+                                        updatedDescription = event.updatedValue,
+                                    )
                                 )
-                            )
-                        },
-                    ),
+                            }
+                        }
+                    },
                 )
             }
             AnimatedVisibility(

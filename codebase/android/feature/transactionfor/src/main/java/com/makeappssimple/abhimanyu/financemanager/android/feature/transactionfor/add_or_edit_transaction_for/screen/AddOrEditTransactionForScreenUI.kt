@@ -36,7 +36,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sav
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.R
@@ -153,18 +153,21 @@ internal fun AddOrEditTransactionForScreenUI(
                         imeAction = ImeAction.Done,
                     ),
                 ),
-                events = MyOutlinedTextFieldEvents(
-                    onClickTrailingIcon = {
-                        handleUIEvent(AddOrEditTransactionForScreenUIEvent.OnClearTitleButtonClick)
-                    },
-                    onValueChange = { updatedTitle ->
-                        handleUIEvent(
-                            AddOrEditTransactionForScreenUIEvent.OnTitleUpdated(
-                                updatedTitle = updatedTitle,
+                handleEvent = { event ->
+                    when (event) {
+                        is MyOutlinedTextFieldEvent.OnClickTrailingIcon -> {
+                            handleUIEvent(AddOrEditTransactionForScreenUIEvent.OnClearTitleButtonClick)
+                        }
+
+                        is MyOutlinedTextFieldEvent.OnValueChange -> {
+                            handleUIEvent(
+                                AddOrEditTransactionForScreenUIEvent.OnTitleUpdated(
+                                    updatedTitle = event.updatedValue,
+                                )
                             )
-                        )
-                    },
-                ),
+                        }
+                    }
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .focusRequester(

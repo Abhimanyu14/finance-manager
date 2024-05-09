@@ -39,7 +39,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.sel
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyRadioGroupEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextField
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyOutlinedTextFieldEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.R
 
@@ -200,18 +200,21 @@ internal fun AddOrEditAccountScreenUI(
                             },
                         ),
                     ),
-                    events = MyOutlinedTextFieldEvents(
-                        onClickTrailingIcon = {
-                            handleUIEvent(AddOrEditAccountScreenUIEvent.OnClearNameButtonClick)
-                        },
-                        onValueChange = { updatedName ->
-                            handleUIEvent(
-                                AddOrEditAccountScreenUIEvent.OnNameUpdated(
-                                    updatedName = updatedName,
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyOutlinedTextFieldEvent.OnClickTrailingIcon -> {
+                                handleUIEvent(AddOrEditAccountScreenUIEvent.OnClearNameButtonClick)
+                            }
+
+                            is MyOutlinedTextFieldEvent.OnValueChange -> {
+                                handleUIEvent(
+                                    AddOrEditAccountScreenUIEvent.OnNameUpdated(
+                                        updatedName = event.updatedValue,
+                                    )
                                 )
-                            )
-                        },
-                    ),
+                            }
+                        }
+                    },
                 )
             }
             if (uiState.visibilityData.balanceAmountTextField) {
@@ -246,18 +249,21 @@ internal fun AddOrEditAccountScreenUI(
                             imeAction = ImeAction.Done,
                         ),
                     ),
-                    events = MyOutlinedTextFieldEvents(
-                        onClickTrailingIcon = {
-                            handleUIEvent(AddOrEditAccountScreenUIEvent.OnClearBalanceAmountValueButtonClick)
-                        },
-                        onValueChange = { updatedBalanceAmountValue ->
-                            handleUIEvent(
-                                AddOrEditAccountScreenUIEvent.OnBalanceAmountValueUpdated(
-                                    updatedBalanceAmountValue = updatedBalanceAmountValue,
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyOutlinedTextFieldEvent.OnClickTrailingIcon -> {
+                                handleUIEvent(AddOrEditAccountScreenUIEvent.OnClearBalanceAmountValueButtonClick)
+                            }
+
+                            is MyOutlinedTextFieldEvent.OnValueChange -> {
+                                handleUIEvent(
+                                    AddOrEditAccountScreenUIEvent.OnBalanceAmountValueUpdated(
+                                        updatedBalanceAmountValue = event.updatedValue,
+                                    )
                                 )
-                            )
-                        },
-                    ),
+                            }
+                        }
+                    },
                 )
             }
             if (uiState.visibilityData.minimumBalanceAmountTextField) {
@@ -284,18 +290,21 @@ internal fun AddOrEditAccountScreenUI(
                             imeAction = ImeAction.Done,
                         ),
                     ),
-                    events = MyOutlinedTextFieldEvents(
-                        onClickTrailingIcon = {
-                            handleUIEvent(AddOrEditAccountScreenUIEvent.OnClearMinimumAccountBalanceAmountValueButtonClick)
-                        },
-                        onValueChange = { updatedMinimumAccountBalanceAmountValue ->
-                            handleUIEvent(
-                                AddOrEditAccountScreenUIEvent.OnMinimumAccountBalanceAmountValueUpdated(
-                                    updatedMinimumAccountBalanceAmountValue = updatedMinimumAccountBalanceAmountValue,
+                    handleEvent = { event ->
+                        when (event) {
+                            is MyOutlinedTextFieldEvent.OnClickTrailingIcon -> {
+                                handleUIEvent(AddOrEditAccountScreenUIEvent.OnClearMinimumAccountBalanceAmountValueButtonClick)
+                            }
+
+                            is MyOutlinedTextFieldEvent.OnValueChange -> {
+                                handleUIEvent(
+                                    AddOrEditAccountScreenUIEvent.OnMinimumAccountBalanceAmountValueUpdated(
+                                        updatedMinimumAccountBalanceAmountValue = event.updatedValue,
+                                    )
                                 )
-                            )
-                        },
-                    ),
+                            }
+                        }
+                    },
                 )
             }
             SaveButton(

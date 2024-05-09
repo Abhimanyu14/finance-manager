@@ -41,16 +41,18 @@ public data class MyOutlinedTextFieldData(
 )
 
 @Immutable
-public data class MyOutlinedTextFieldEvents(
-    val onClickTrailingIcon: () -> Unit = {},
-    val onValueChange: (updatedValue: TextFieldValue) -> Unit = {},
-)
+public sealed class MyOutlinedTextFieldEvent {
+    public data object OnClickTrailingIcon : MyOutlinedTextFieldEvent()
+    public data class OnValueChange(
+        val updatedValue: TextFieldValue,
+    ) : MyOutlinedTextFieldEvent()
+}
 
 @Composable
 public fun MyOutlinedTextField(
     modifier: Modifier = Modifier,
     data: MyOutlinedTextFieldData,
-    events: MyOutlinedTextFieldEvents = MyOutlinedTextFieldEvents(),
+    handleEvent: (event: MyOutlinedTextFieldEvent) -> Unit = {},
 ) {
     if (data.isLoading) {
         MyOutlinedTextFieldLoadingUI(
@@ -77,7 +79,9 @@ public fun MyOutlinedTextField(
                             tint = MaterialTheme.colorScheme.onBackground,
                             imageVector = MyIcons.Clear,
                             contentDescriptionStringResourceId = data.trailingIconContentDescriptionTextStringResourceId,
-                            onClick = events.onClickTrailingIcon,
+                            onClick = {
+                                handleEvent(MyOutlinedTextFieldEvent.OnClickTrailingIcon)
+                            },
                             modifier = Modifier
                                 .padding(
                                     end = 4.dp,
@@ -85,7 +89,13 @@ public fun MyOutlinedTextField(
                         )
                     }
                 },
-                onValueChange = events.onValueChange,
+                onValueChange = {
+                    handleEvent(
+                        MyOutlinedTextFieldEvent.OnValueChange(
+                            updatedValue = it,
+                        )
+                    )
+                },
                 supportingText = data.supportingText,
                 isError = data.isError,
                 visualTransformation = data.visualTransformation,
