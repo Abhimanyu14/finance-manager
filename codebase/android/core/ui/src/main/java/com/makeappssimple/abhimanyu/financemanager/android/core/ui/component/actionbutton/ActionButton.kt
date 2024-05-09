@@ -24,11 +24,6 @@ public data class ActionButtonData(
 )
 
 @Immutable
-public data class ActionButtonEvents(
-    val onClick: () -> Unit = {},
-)
-
-@Immutable
 public sealed class ActionButtonEvent {
     public data object OnClick : ActionButtonEvent()
 }

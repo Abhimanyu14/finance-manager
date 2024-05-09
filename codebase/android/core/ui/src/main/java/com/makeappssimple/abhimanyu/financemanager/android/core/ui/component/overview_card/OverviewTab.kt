@@ -62,11 +62,6 @@ public sealed class OverviewTabEvent {
     ) : OverviewTabEvent()
 }
 
-@Immutable
-public data class OverviewTabEvents(
-    val onClick: (index: Int) -> Unit = {},
-)
-
 @Composable
 public fun OverviewTab(
     modifier: Modifier = Modifier,
