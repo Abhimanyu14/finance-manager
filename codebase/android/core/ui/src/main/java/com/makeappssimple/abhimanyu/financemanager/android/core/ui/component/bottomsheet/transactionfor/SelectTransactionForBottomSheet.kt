@@ -37,8 +37,8 @@ public fun SelectTransactionForBottomSheet(
                         data = TransactionForListItemData(
                             title = transactionFor.titleToDisplay,
                         ),
-                        handleEvent = {
-                            when (it) {
+                        handleEvent = { event ->
+                            when (event) {
                                 is TransactionForListItemEvent.OnClick -> {
                                     handleEvent(
                                         SelectTransactionForBottomSheetEvent.OnItemClick(
