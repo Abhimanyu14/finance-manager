@@ -21,7 +21,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
-import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.extensions.conditionalClickable
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircleData
 
@@ -35,16 +34,10 @@ public data class AnalysisListItemData(
     val title: String,
 )
 
-@Immutable
-public data class AnalysisListItemEvents(
-    val onClick: (() -> Unit)? = null,
-)
-
 @Composable
 public fun AnalysisListItem(
     modifier: Modifier = Modifier,
     data: AnalysisListItemData,
-    events: AnalysisListItemEvents = AnalysisListItemEvents(),
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -52,9 +45,6 @@ public fun AnalysisListItem(
             .fillMaxWidth()
             .clip(
                 shape = MaterialTheme.shapes.large,
-            )
-            .conditionalClickable(
-                onClick = events.onClick,
             )
             .padding(
                 start = 16.dp,
