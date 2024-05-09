@@ -7,7 +7,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transactionfor.TransactionForListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transactionfor.TransactionForListItemDataAndEvents
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transactionfor.TransactionForListItemEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transactionfor.TransactionForListItemEvent
 
 @Immutable
 public data class SelectTransactionForBottomSheetData(
@@ -35,11 +35,15 @@ public fun SelectTransactionForBottomSheet(
                         data = TransactionForListItemData(
                             title = transactionFor.titleToDisplay,
                         ),
-                        events = TransactionForListItemEvents(
-                            onClick = {
-                                events.onItemClick(transactionFor)
-                            },
-                        ),
+                        handleEvent = {
+                            when (it) {
+                                is TransactionForListItemEvent.OnClick -> {
+                                    events.onItemClick(transactionFor)
+                                }
+
+                                is TransactionForListItemEvent.OnMoreOptionsIconButtonClick -> {}
+                            }
+                        },
                     )
                 }
                 .toList(),

@@ -45,7 +45,7 @@ internal fun SelectTransactionForBottomSheetUI(
         ) { listItem ->
             TransactionForListItem(
                 data = listItem.data,
-                events = listItem.events,
+                handleEvent = listItem.handleEvent,
             )
         }
         item {

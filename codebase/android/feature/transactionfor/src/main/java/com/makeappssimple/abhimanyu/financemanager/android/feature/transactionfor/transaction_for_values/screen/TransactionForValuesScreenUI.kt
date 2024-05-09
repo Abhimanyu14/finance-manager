@@ -24,7 +24,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bot
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactionfor.TransactionForValuesMenuBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transactionfor.TransactionForListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transactionfor.TransactionForListItemData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transactionfor.TransactionForListItemEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transactionfor.TransactionForListItemEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultTransactionFor
@@ -149,25 +149,29 @@ internal fun TransactionForValuesScreenUI(
                 TransactionForListItem(
                     data = TransactionForListItemData(
                         title = listItem.title.capitalizeWords(),
+                        isMoreOptionsIconButtonVisible = true,
                     ),
-                    events = TransactionForListItemEvents(
-                        onClick = {
-                            uiState.setScreenBottomSheetType(
-                                TransactionForValuesScreenBottomSheetType.Menu(
-                                    isDeleteVisible = isDeleteVisible,
-                                    transactionForId = listItem.id,
+                    handleEvent = { event ->
+                        when (event) {
+                            is TransactionForListItemEvent.OnClick -> {
+                                uiState.setScreenBottomSheetType(
+                                    TransactionForValuesScreenBottomSheetType.Menu(
+                                        isDeleteVisible = isDeleteVisible,
+                                        transactionForId = listItem.id,
+                                    )
                                 )
-                            )
-                        },
-                        onMoreOptionsIconButtonClick = {
-                            uiState.setScreenBottomSheetType(
-                                TransactionForValuesScreenBottomSheetType.Menu(
-                                    isDeleteVisible = isDeleteVisible,
-                                    transactionForId = listItem.id,
+                            }
+
+                            is TransactionForListItemEvent.OnMoreOptionsIconButtonClick -> {
+                                uiState.setScreenBottomSheetType(
+                                    TransactionForValuesScreenBottomSheetType.Menu(
+                                        isDeleteVisible = isDeleteVisible,
+                                        transactionForId = listItem.id,
+                                    )
                                 )
-                            )
-                        },
-                    ),
+                            }
+                        }
+                    },
                 )
             }
             item {

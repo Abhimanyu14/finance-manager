@@ -21,25 +21,26 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumL
 @Immutable
 public data class TransactionForListItemDataAndEvents(
     val data: TransactionForListItemData,
-    val events: TransactionForListItemEvents,
+    val handleEvent: (event: TransactionForListItemEvent) -> Unit = {},
 )
 
 @Immutable
 public data class TransactionForListItemData(
+    val isMoreOptionsIconButtonVisible: Boolean = false,
     val title: String,
 )
 
 @Immutable
-public data class TransactionForListItemEvents(
-    val onClick: () -> Unit,
-    val onMoreOptionsIconButtonClick: (() -> Unit)? = null,
-)
+public sealed class TransactionForListItemEvent {
+    public data object OnClick : TransactionForListItemEvent()
+    public data object OnMoreOptionsIconButtonClick : TransactionForListItemEvent()
+}
 
 @Composable
 public fun TransactionForListItem(
     modifier: Modifier = Modifier,
     data: TransactionForListItemData,
-    events: TransactionForListItemEvents,
+    handleEvent: (event: TransactionForListItemEvent) -> Unit = {},
 ) {
     Row(
         modifier = modifier
@@ -48,7 +49,9 @@ public fun TransactionForListItem(
                 minHeight = minimumListItemHeight,
             )
             .conditionalClickable(
-                onClick = events.onClick,
+                onClick = {
+                    handleEvent(TransactionForListItemEvent.OnClick)
+                },
             )
             .padding(
                 start = 16.dp,
@@ -64,12 +67,14 @@ public fun TransactionForListItem(
                     color = MaterialTheme.colorScheme.onBackground,
                 ),
         )
-        events.onMoreOptionsIconButtonClick?.let {
+        if (data.isMoreOptionsIconButtonVisible) {
             MyIconButton(
                 tint = MaterialTheme.colorScheme.onBackground,
                 imageVector = MyIcons.MoreVert,
                 contentDescriptionStringResourceId = R.string.transaction_for_list_item_more_options_content_description,
-                onClick = events.onMoreOptionsIconButtonClick,
+                onClick = {
+                    handleEvent(TransactionForListItemEvent.OnMoreOptionsIconButtonClick)
+                },
             )
         }
     }
