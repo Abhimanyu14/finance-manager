@@ -43,7 +43,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.act
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButtonEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactionfor.SelectTransactionForBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactionfor.SelectTransactionForBottomSheetData
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactionfor.SelectTransactionForBottomSheetEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactionfor.SelectTransactionForBottomSheetEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactions.TransactionsFilterBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactions.TransactionsMenuBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactions.TransactionsMenuBottomSheetEvent
@@ -143,17 +143,19 @@ internal fun TransactionsScreenUI(
                         data = SelectTransactionForBottomSheetData(
                             transactionForValues = uiState.transactionForValues,
                         ),
-                        events = SelectTransactionForBottomSheetEvents(
-                            onItemClick = {
-                                uiState.setIsInSelectionMode(false)
-                                handleUIEvent(
-                                    TransactionsScreenUIEvent.OnSelectTransactionForBottomSheet.ItemClick(
-                                        updatedTransactionForValues = it.id,
+                        handleEvent = { event ->
+                            when (event) {
+                                is SelectTransactionForBottomSheetEvent.OnItemClick -> {
+                                    uiState.setIsInSelectionMode(false)
+                                    handleUIEvent(
+                                        TransactionsScreenUIEvent.OnSelectTransactionForBottomSheet.ItemClick(
+                                            updatedTransactionForValues = event.selectedTransactionFor.id,
+                                        )
                                     )
-                                )
-                                uiState.resetScreenBottomSheetType()
-                            },
-                        ),
+                                    uiState.resetScreenBottomSheetType()
+                                }
+                            }
+                        },
                     )
                 }
 

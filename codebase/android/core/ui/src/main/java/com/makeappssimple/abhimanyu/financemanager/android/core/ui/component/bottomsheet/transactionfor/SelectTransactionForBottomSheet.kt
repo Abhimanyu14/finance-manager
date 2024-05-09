@@ -15,15 +15,17 @@ public data class SelectTransactionForBottomSheetData(
 )
 
 @Immutable
-public data class SelectTransactionForBottomSheetEvents(
-    val onItemClick: (TransactionFor) -> Unit = {},
-)
+public sealed class SelectTransactionForBottomSheetEvent {
+    public data class OnItemClick(
+        val selectedTransactionFor: TransactionFor,
+    ) : SelectTransactionForBottomSheetEvent()
+}
 
 @Composable
 public fun SelectTransactionForBottomSheet(
     modifier: Modifier = Modifier,
     data: SelectTransactionForBottomSheetData,
-    events: SelectTransactionForBottomSheetEvents,
+    handleEvent: (event: SelectTransactionForBottomSheetEvent) -> Unit = {},
 ) {
     SelectTransactionForBottomSheetUI(
         modifier = modifier,
@@ -38,7 +40,11 @@ public fun SelectTransactionForBottomSheet(
                         handleEvent = {
                             when (it) {
                                 is TransactionForListItemEvent.OnClick -> {
-                                    events.onItemClick(transactionFor)
+                                    handleEvent(
+                                        SelectTransactionForBottomSheetEvent.OnItemClick(
+                                            selectedTransactionFor = transactionFor,
+                                        )
+                                    )
                                 }
 
                                 is TransactionForListItemEvent.OnMoreOptionsIconButtonClick -> {}
