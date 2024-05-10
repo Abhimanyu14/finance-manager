@@ -125,13 +125,7 @@ internal fun TransactionsScreenUI(
                                 }
 
                                 is TransactionsMenuBottomSheetEvent.OnUpdateTransactionForClick -> {
-                                    uiState.setScreenBottomSheetType(
-                                        TransactionsScreenBottomSheetType.SelectTransactionFor
-                                    )
-                                }
-
-                                is TransactionsMenuBottomSheetEvent.ResetBottomSheetType -> {
-                                    uiState.resetScreenBottomSheetType()
+                                    handleUIEvent(TransactionsScreenUIEvent.OnTransactionsMenuBottomSheet.UpdateTransactionForButtonClick)
                                 }
                             }
                         },
@@ -150,13 +144,11 @@ internal fun TransactionsScreenUI(
                         handleEvent = { event ->
                             when (event) {
                                 is SelectTransactionForBottomSheetEvent.OnItemClick -> {
-                                    uiState.setIsInSelectionMode(false)
                                     handleUIEvent(
                                         TransactionsScreenUIEvent.OnSelectTransactionForBottomSheet.ItemClick(
                                             updatedTransactionForValues = event.selectedTransactionFor.id,
                                         )
                                     )
-                                    uiState.resetScreenBottomSheetType()
                                 }
                             }
                         },
@@ -204,9 +196,7 @@ internal fun TransactionsScreenUI(
                             imageVector = MyIcons.MoreVert,
                             contentDescriptionStringResourceId = R.string.screen_transactions_selection_mode_appbar_menu_more_options,
                             onClick = {
-                                uiState.setScreenBottomSheetType(
-                                    TransactionsScreenBottomSheetType.Menu
-                                )
+                                handleUIEvent(TransactionsScreenUIEvent.OnSelectionModeTopAppBarMoreOptionsButtonClick)
                             },
                         )
                     },
@@ -338,9 +328,7 @@ internal fun TransactionsScreenUI(
                         handleEvent = { event ->
                             when (event) {
                                 is ActionButtonEvent.OnClick -> {
-                                    uiState.setScreenBottomSheetType(
-                                        TransactionsScreenBottomSheetType.Sort
-                                    )
+                                    handleUIEvent(TransactionsScreenUIEvent.OnSortActionButtonClick)
                                 }
                             }
                         },
@@ -354,9 +342,7 @@ internal fun TransactionsScreenUI(
                         handleEvent = { event ->
                             when (event) {
                                 is ActionButtonEvent.OnClick -> {
-                                    uiState.setScreenBottomSheetType(
-                                        TransactionsScreenBottomSheetType.Filters
-                                    )
+                                    handleUIEvent(TransactionsScreenUIEvent.OnFilterActionButtonClick)
                                 }
                             }
                         },

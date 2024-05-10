@@ -107,8 +107,11 @@ internal fun AccountsScreenUI(
                             )
                         },
                         onSetAsDefaultClick = {
-                            uiState.setClickedItemId(bottomSheetData.accountId)
-                            uiState.setScreenBottomSheetType(AccountsScreenBottomSheetType.SetAsDefaultConfirmation)
+                            handleUIEvent(
+                                AccountsScreenUIEvent.OnAccountsMenuBottomSheet.SetAsDefaultButtonClick(
+                                    accountId = bottomSheetData.accountId,
+                                )
+                            )
                         },
                     )
                 }
@@ -177,17 +180,13 @@ internal fun AccountsScreenUI(
                             handleEvent = { event ->
                                 when (event) {
                                     is AccountsListItemContentEvent.OnClick -> {
-                                        listItem.accountId?.let { accountId ->
-                                            uiState.setScreenBottomSheetType(
-                                                AccountsScreenBottomSheetType.Menu(
-                                                    isDeleteVisible = listItem.isDeleteEnabled,
-                                                    isEditVisible = true,
-                                                    isSetAsDefaultVisible = !listItem.isDefault,
-                                                    accountId = accountId,
-                                                )
+                                        handleUIEvent(
+                                            AccountsScreenUIEvent.OnAccountsListItemContent.Click(
+                                                isDeleteEnabled = listItem.isDeleteEnabled,
+                                                isDefault = listItem.isDefault,
+                                                accountId = listItem.accountId,
                                             )
-                                        }
-                                        uiState.setClickedItemId(listItem.accountId)
+                                        )
                                     }
                                 }
                             },

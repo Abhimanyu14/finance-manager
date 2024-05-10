@@ -71,6 +71,13 @@ public fun ViewTransactionScreen(
                     )
                 }
 
+                is ViewTransactionScreenUIEvent.OnTransactionListItem.DeleteButtonClick -> {
+                    uiState.setTransactionIdToDelete(uiEvent.transactionId)
+                    uiState.setScreenBottomSheetType(
+                        ViewTransactionScreenBottomSheetType.DeleteConfirmation
+                    )
+                }
+
                 is ViewTransactionScreenUIEvent.OnTransactionListItem.RefundButtonClick -> {
                     viewModel.navigateToAddTransactionScreen(
                         transactionId = uiEvent.transactionId,

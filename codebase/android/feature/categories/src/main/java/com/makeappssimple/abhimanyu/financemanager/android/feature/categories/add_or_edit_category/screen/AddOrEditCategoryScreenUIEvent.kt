@@ -11,6 +11,7 @@ public sealed class AddOrEditCategoryScreenUIEvent : ScreenUIEvent {
     public data object OnClearTitleButtonClick : AddOrEditCategoryScreenUIEvent()
     public data object OnCtaButtonClick : AddOrEditCategoryScreenUIEvent()
     public data object OnTopAppBarNavigationButtonClick : AddOrEditCategoryScreenUIEvent()
+    public data object OnEmojiCircleClick : AddOrEditCategoryScreenUIEvent()
 
     public data class OnEmojiBottomSheetSearchTextUpdated(
         val updatedSearchText: String,

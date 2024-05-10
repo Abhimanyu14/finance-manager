@@ -36,9 +36,27 @@ public fun TransactionsScreen(
                     uiState.resetScreenBottomSheetType()
                 }
 
+                is TransactionsScreenUIEvent.OnSelectionModeTopAppBarMoreOptionsButtonClick -> {
+                    uiState.setScreenBottomSheetType(
+                        TransactionsScreenBottomSheetType.Menu
+                    )
+                }
+
                 is TransactionsScreenUIEvent.OnSelectionModeTopAppBarNavigationButtonClick -> {
                     uiState.setIsInSelectionMode(false)
                     viewModel.clearSelectedTransactions()
+                }
+
+                is TransactionsScreenUIEvent.OnFilterActionButtonClick -> {
+                    uiState.setScreenBottomSheetType(
+                        TransactionsScreenBottomSheetType.Filters
+                    )
+                }
+
+                is TransactionsScreenUIEvent.OnSortActionButtonClick -> {
+                    uiState.setScreenBottomSheetType(
+                        TransactionsScreenBottomSheetType.Sort
+                    )
                 }
 
                 is TransactionsScreenUIEvent.OnNavigationBackButtonClick -> {
@@ -99,7 +117,14 @@ public fun TransactionsScreen(
                 }
 
                 is TransactionsScreenUIEvent.OnTransactionsMenuBottomSheet.SelectAllTransactionsButtonClick -> {
+                    uiState.resetScreenBottomSheetType()
                     viewModel.selectAllTransactions()
+                }
+
+                is TransactionsScreenUIEvent.OnTransactionsMenuBottomSheet.UpdateTransactionForButtonClick -> {
+                    uiState.setScreenBottomSheetType(
+                        TransactionsScreenBottomSheetType.SelectTransactionFor
+                    )
                 }
 
                 is TransactionsScreenUIEvent.OnSearchTextUpdated -> {
@@ -121,6 +146,8 @@ public fun TransactionsScreen(
                 }
 
                 is TransactionsScreenUIEvent.OnSelectTransactionForBottomSheet.ItemClick -> {
+                    uiState.setIsInSelectionMode(false)
+                    uiState.resetScreenBottomSheetType()
                     viewModel.updateTransactionForValuesInTransactions(
                         transactionForId = uiEvent.updatedTransactionForValues,
                     )

@@ -35,10 +35,19 @@ public fun TransactionForValuesScreen(
                     uiState.resetScreenBottomSheetType()
                 }
 
+                is TransactionForValuesScreenUIEvent.OnTransactionForValuesDeleteConfirmationBottomSheet.NegativeButtonClick -> {
+                    uiState.resetScreenBottomSheetType()
+                    uiState.setTransactionForIdToDelete(null)
+                }
+
                 is TransactionForValuesScreenUIEvent.OnTransactionForValuesDeleteConfirmationBottomSheet.PositiveButtonClick -> {
-                    viewModel.deleteTransactionFor(
-                        id = uiEvent.transactionForId,
-                    )
+                    uiState.transactionForIdToDelete?.let { transactionForIdToDeleteValue ->
+                        viewModel.deleteTransactionFor(
+                            id = transactionForIdToDeleteValue,
+                        )
+                        uiState.setTransactionForIdToDelete(null)
+                    }
+                    uiState.resetScreenBottomSheetType()
                 }
 
                 is TransactionForValuesScreenUIEvent.OnNavigationBackButtonClick -> {
@@ -49,10 +58,42 @@ public fun TransactionForValuesScreen(
                     viewModel.navigateToAddTransactionForScreen()
                 }
 
+                is TransactionForValuesScreenUIEvent.OnTransactionForValuesMenuBottomSheet.DeleteButtonClick -> {
+                    uiState.setTransactionForIdToDelete(uiEvent.transactionForId)
+                    uiState.setScreenBottomSheetType(
+                        TransactionForValuesScreenBottomSheetType.DeleteConfirmation
+                    )
+                }
+
                 is TransactionForValuesScreenUIEvent.OnTransactionForValuesMenuBottomSheet.EditButtonClick -> {
+                    uiState.resetScreenBottomSheetType()
                     viewModel.navigateToEditTransactionForScreen(
                         transactionForId = uiEvent.transactionForId,
                     )
+                }
+
+                is TransactionForValuesScreenUIEvent.OnTransactionForListItem.Click -> {
+                    uiEvent.transactionForId?.let {
+                        uiState.setScreenBottomSheetType(
+                            TransactionForValuesScreenBottomSheetType.Menu(
+                                isDeleteVisible = uiEvent.isDeleteVisible,
+                                transactionForId = uiEvent.transactionForId,
+                            )
+                        )
+                    }
+                    Unit
+                }
+
+                is TransactionForValuesScreenUIEvent.OnTransactionForListItem.MoreOptionsIconButtonClick -> {
+                    uiEvent.transactionForId?.let {
+                        uiState.setScreenBottomSheetType(
+                            TransactionForValuesScreenBottomSheetType.Menu(
+                                isDeleteVisible = uiEvent.isDeleteVisible,
+                                transactionForId = uiEvent.transactionForId,
+                            )
+                        )
+                    }
+                    Unit
                 }
 
                 is TransactionForValuesScreenUIEvent.OnTopAppBarNavigationButtonClick -> {

@@ -64,6 +64,23 @@ public fun CategoriesScreen(
                     )
                 }
 
+                is CategoriesScreenUIEvent.OnCategoriesGridItemClick -> {
+                    uiEvent.categoryId?.let {
+                        if (uiEvent.isEditVisible || uiEvent.isSetAsDefaultVisible || uiEvent.isDeleteVisible) {
+                            uiState.setScreenBottomSheetType(
+                                CategoriesScreenBottomSheetType.Menu(
+                                    isDeleteVisible = uiEvent.isDeleteVisible,
+                                    isEditVisible = uiEvent.isEditVisible,
+                                    isSetAsDefaultVisible = uiEvent.isSetAsDefaultVisible,
+                                    categoryId = uiEvent.categoryId,
+                                )
+                            )
+                            uiState.setClickedItemId(uiEvent.categoryId)
+                        }
+                    }
+                    Unit
+                }
+
                 is CategoriesScreenUIEvent.OnSelectedTabIndexUpdated -> {
                     viewModel.updateSelectedTabIndex(
                         updatedSelectedTabIndex = uiEvent.updatedSelectedTabIndex,

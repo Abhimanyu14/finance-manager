@@ -9,9 +9,12 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 public sealed class TransactionsScreenUIEvent : ScreenUIEvent {
     public data object OnBottomSheetDismissed : TransactionsScreenUIEvent()
     public data object OnSelectionModeTopAppBarNavigationButtonClick : TransactionsScreenUIEvent()
+    public data object OnSelectionModeTopAppBarMoreOptionsButtonClick : TransactionsScreenUIEvent()
     public data object OnFloatingActionButtonClick : TransactionsScreenUIEvent()
     public data object OnTopAppBarNavigationButtonClick : TransactionsScreenUIEvent()
     public data object OnNavigationBackButtonClick : TransactionsScreenUIEvent()
+    public data object OnSortActionButtonClick : TransactionsScreenUIEvent()
+    public data object OnFilterActionButtonClick : TransactionsScreenUIEvent()
 
     public data class OnSearchTextUpdated(
         val updatedSearchText: String,
@@ -47,5 +50,6 @@ public sealed class TransactionsScreenUIEvent : ScreenUIEvent {
 
     public sealed class OnTransactionsMenuBottomSheet {
         public data object SelectAllTransactionsButtonClick : TransactionsScreenUIEvent()
+        public data object UpdateTransactionForButtonClick : TransactionsScreenUIEvent()
     }
 }

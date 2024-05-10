@@ -51,6 +51,11 @@ public fun AccountsScreen(
                     )
                 }
 
+                is AccountsScreenUIEvent.OnAccountsMenuBottomSheet.SetAsDefaultButtonClick -> {
+                    uiState.setClickedItemId(uiEvent.accountId)
+                    uiState.setScreenBottomSheetType(AccountsScreenBottomSheetType.SetAsDefaultConfirmation)
+                }
+
                 is AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.NegativeButtonClick -> {
                     uiState.resetScreenBottomSheetType()
                     uiState.setAccountIdToDelete(null)
@@ -69,6 +74,20 @@ public fun AccountsScreen(
                 is AccountsScreenUIEvent.OnAccountsSetAsDefaultConfirmationBottomSheet.NegativeButtonClick -> {
                     uiState.resetScreenBottomSheetType()
                     uiState.setClickedItemId(null)
+                }
+
+                is AccountsScreenUIEvent.OnAccountsListItemContent.Click -> {
+                    uiEvent.accountId?.let { accountId ->
+                        uiState.setScreenBottomSheetType(
+                            AccountsScreenBottomSheetType.Menu(
+                                isDeleteVisible = uiEvent.isDeleteEnabled,
+                                isEditVisible = true,
+                                isSetAsDefaultVisible = !uiEvent.isDefault,
+                                accountId = accountId,
+                            )
+                        )
+                    }
+                    uiState.setClickedItemId(uiEvent.accountId)
                 }
 
                 is AccountsScreenUIEvent.OnAccountsSetAsDefaultConfirmationBottomSheet.PositiveButtonClick -> {

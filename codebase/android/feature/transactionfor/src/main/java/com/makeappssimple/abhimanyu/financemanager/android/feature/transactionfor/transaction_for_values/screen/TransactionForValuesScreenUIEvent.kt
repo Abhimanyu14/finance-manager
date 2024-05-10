@@ -11,14 +11,29 @@ public sealed class TransactionForValuesScreenUIEvent : ScreenUIEvent {
     public data object OnTopAppBarNavigationButtonClick : TransactionForValuesScreenUIEvent()
 
     public sealed class OnTransactionForValuesDeleteConfirmationBottomSheet {
-        public data class PositiveButtonClick(
+        public data object NegativeButtonClick : TransactionForValuesScreenUIEvent()
+        public data object PositiveButtonClick : TransactionForValuesScreenUIEvent()
+    }
+
+    public sealed class OnTransactionForValuesMenuBottomSheet {
+        public data class DeleteButtonClick(
+            val transactionForId: Int,
+        ) : TransactionForValuesScreenUIEvent()
+
+        public data class EditButtonClick(
             val transactionForId: Int,
         ) : TransactionForValuesScreenUIEvent()
     }
 
-    public sealed class OnTransactionForValuesMenuBottomSheet {
-        public data class EditButtonClick(
-            val transactionForId: Int,
+    public sealed class OnTransactionForListItem {
+        public data class Click(
+            val isDeleteVisible: Boolean,
+            val transactionForId: Int?,
+        ) : TransactionForValuesScreenUIEvent()
+
+        public data class MoreOptionsIconButtonClick(
+            val isDeleteVisible: Boolean,
+            val transactionForId: Int?,
         ) : TransactionForValuesScreenUIEvent()
     }
 }

@@ -18,6 +18,13 @@ public sealed class CategoriesScreenUIEvent : ScreenUIEvent {
         val updatedSelectedTabIndex: Int,
     ) : CategoriesScreenUIEvent()
 
+    public data class OnCategoriesGridItemClick(
+        val isDeleteVisible: Boolean,
+        val isEditVisible: Boolean,
+        val isSetAsDefaultVisible: Boolean,
+        val categoryId: Int?,
+    ) : CategoriesScreenUIEvent()
+
     public sealed class OnCategoriesSetAsDefaultConfirmationBottomSheet {
         public data object NegativeButtonClick : CategoriesScreenUIEvent()
         public data object PositiveButtonClick : CategoriesScreenUIEvent()

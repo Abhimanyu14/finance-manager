@@ -115,9 +115,10 @@ internal fun ViewTransactionScreenUI(
                                 is TransactionListItemEvent.OnClick -> {}
 
                                 is TransactionListItemEvent.OnDeleteButtonClick -> {
-                                    uiState.setTransactionIdToDelete(uiState.transactionListItemData.transactionId)
-                                    uiState.setScreenBottomSheetType(
-                                        ViewTransactionScreenBottomSheetType.DeleteConfirmation
+                                    handleUIEvent(
+                                        ViewTransactionScreenUIEvent.OnTransactionListItem.DeleteButtonClick(
+                                            transactionId = uiState.transactionListItemData.transactionId,
+                                        )
                                     )
                                 }
 
@@ -168,9 +169,10 @@ internal fun ViewTransactionScreenUI(
                                 }
 
                                 is TransactionListItemEvent.OnDeleteButtonClick -> {
-                                    uiState.setTransactionIdToDelete(uiState.originalTransactionListItemData.transactionId)
-                                    uiState.setScreenBottomSheetType(
-                                        ViewTransactionScreenBottomSheetType.DeleteConfirmation
+                                    handleUIEvent(
+                                        ViewTransactionScreenUIEvent.OnTransactionListItem.DeleteButtonClick(
+                                            transactionId = uiState.originalTransactionListItemData.transactionId,
+                                        )
                                     )
                                 }
 
@@ -228,9 +230,10 @@ internal fun ViewTransactionScreenUI(
                                 }
 
                                 is TransactionListItemEvent.OnDeleteButtonClick -> {
-                                    uiState.setTransactionIdToDelete(transactionListItemData.transactionId)
-                                    uiState.setScreenBottomSheetType(
-                                        ViewTransactionScreenBottomSheetType.DeleteConfirmation
+                                    handleUIEvent(
+                                        ViewTransactionScreenUIEvent.OnTransactionListItem.DeleteButtonClick(
+                                            transactionId = transactionListItemData.transactionId,
+                                        )
                                     )
                                 }
 

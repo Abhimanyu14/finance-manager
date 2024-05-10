@@ -217,23 +217,23 @@ internal fun CategoriesScreenUI(
                     topPadding = 8.dp,
                     categoriesGridItemDataList = categoriesGridItemDataList,
                     onItemClick = { index ->
+
+                        // TODO(Abhi): Move this logic outside the UI composable
                         val isDeleteVisible =
                             categoriesGridItemDataList[index].isDeleteVisible ?: false
                         val isEditVisible = categoriesGridItemDataList[index].isEditVisible ?: false
                         val isSetAsDefaultVisible =
                             categoriesGridItemDataList[index].isSetAsDefaultVisible ?: false
+                        val categoryId = categoriesGridItemDataList[index].category.id
 
-                        if (isEditVisible || isSetAsDefaultVisible || isDeleteVisible) {
-                            uiState.setScreenBottomSheetType(
-                                CategoriesScreenBottomSheetType.Menu(
-                                    isDeleteVisible = isDeleteVisible,
-                                    isEditVisible = isEditVisible,
-                                    isSetAsDefaultVisible = isSetAsDefaultVisible,
-                                    categoryId = categoriesGridItemDataList[index].category.id,
-                                )
+                        handleUIEvent(
+                            CategoriesScreenUIEvent.OnCategoriesGridItemClick(
+                                isDeleteVisible = isDeleteVisible,
+                                isEditVisible = isEditVisible,
+                                isSetAsDefaultVisible = isSetAsDefaultVisible,
+                                categoryId = categoryId,
                             )
-                            uiState.setClickedItemId(categoriesGridItemDataList[index].category.id)
-                        }
+                        )
                     },
                 )
             }

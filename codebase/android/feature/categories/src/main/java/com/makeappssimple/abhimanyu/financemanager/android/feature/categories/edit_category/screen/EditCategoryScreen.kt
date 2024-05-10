@@ -8,6 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUIEvent
@@ -54,6 +55,12 @@ public fun EditCategoryScreen(
 
                 is AddOrEditCategoryScreenUIEvent.OnClearTitleButtonClick -> {
                     viewModel.clearTitle()
+                }
+
+                is AddOrEditCategoryScreenUIEvent.OnEmojiCircleClick -> {
+                    uiState.setScreenBottomSheetType(
+                        AddOrEditCategoryScreenBottomSheetType.SelectEmoji
+                    )
                 }
 
                 is AddOrEditCategoryScreenUIEvent.OnTopAppBarNavigationButtonClick -> {

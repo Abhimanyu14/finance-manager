@@ -11,7 +11,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 public sealed class TransactionsMenuBottomSheetEvent {
     public data object OnSelectAllTransactionsClick : TransactionsMenuBottomSheetEvent()
     public data object OnUpdateTransactionForClick : TransactionsMenuBottomSheetEvent()
-    public data object ResetBottomSheetType : TransactionsMenuBottomSheetEvent()
 }
 
 @Composable
@@ -40,7 +39,6 @@ public fun TransactionsMenuBottomSheet(
                 ),
                 onClick = {
                     handleEvent(TransactionsMenuBottomSheetEvent.OnSelectAllTransactionsClick)
-                    handleEvent(TransactionsMenuBottomSheetEvent.ResetBottomSheetType)
                 },
             )
         )

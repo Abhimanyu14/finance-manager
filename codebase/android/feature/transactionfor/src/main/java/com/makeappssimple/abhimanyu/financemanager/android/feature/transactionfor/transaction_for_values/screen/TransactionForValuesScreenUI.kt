@@ -58,19 +58,10 @@ internal fun TransactionForValuesScreenUI(
                 is TransactionForValuesScreenBottomSheetType.DeleteConfirmation -> {
                     TransactionForValuesDeleteConfirmationBottomSheet(
                         onNegativeButtonClick = {
-                            uiState.resetScreenBottomSheetType()
-                            uiState.setTransactionForIdToDelete(null)
+                            handleUIEvent(TransactionForValuesScreenUIEvent.OnTransactionForValuesDeleteConfirmationBottomSheet.NegativeButtonClick)
                         },
                         onPositiveButtonClick = {
-                            uiState.transactionForIdToDelete?.let { transactionForIdToDeleteValue ->
-                                handleUIEvent(
-                                    TransactionForValuesScreenUIEvent.OnTransactionForValuesDeleteConfirmationBottomSheet.PositiveButtonClick(
-                                        transactionForId = transactionForIdToDeleteValue,
-                                    )
-                                )
-                                uiState.setTransactionForIdToDelete(null)
-                            }
-                            uiState.resetScreenBottomSheetType()
+                            handleUIEvent(TransactionForValuesScreenUIEvent.OnTransactionForValuesDeleteConfirmationBottomSheet.PositiveButtonClick)
                         },
                     )
                 }
@@ -85,7 +76,6 @@ internal fun TransactionForValuesScreenUI(
                     TransactionForValuesMenuBottomSheet(
                         isDeleteVisible = bottomSheetData.isDeleteVisible,
                         onEditClick = {
-                            uiState.resetScreenBottomSheetType()
                             handleUIEvent(
                                 TransactionForValuesScreenUIEvent.OnTransactionForValuesMenuBottomSheet.EditButtonClick(
                                     transactionForId = bottomSheetData.transactionForId,
@@ -93,9 +83,10 @@ internal fun TransactionForValuesScreenUI(
                             )
                         },
                         onDeleteClick = {
-                            uiState.setTransactionForIdToDelete(bottomSheetData.transactionForId)
-                            uiState.setScreenBottomSheetType(
-                                TransactionForValuesScreenBottomSheetType.DeleteConfirmation
+                            handleUIEvent(
+                                TransactionForValuesScreenUIEvent.OnTransactionForValuesMenuBottomSheet.DeleteButtonClick(
+                                    transactionForId = bottomSheetData.transactionForId,
+                                )
                             )
                         },
                     )
@@ -158,8 +149,8 @@ internal fun TransactionForValuesScreenUI(
                     handleEvent = { event ->
                         when (event) {
                             is TransactionForListItemEvent.OnClick -> {
-                                uiState.setScreenBottomSheetType(
-                                    TransactionForValuesScreenBottomSheetType.Menu(
+                                handleUIEvent(
+                                    TransactionForValuesScreenUIEvent.OnTransactionForListItem.Click(
                                         isDeleteVisible = isDeleteVisible,
                                         transactionForId = listItem.id,
                                     )
@@ -167,8 +158,8 @@ internal fun TransactionForValuesScreenUI(
                             }
 
                             is TransactionForListItemEvent.OnMoreOptionsIconButtonClick -> {
-                                uiState.setScreenBottomSheetType(
-                                    TransactionForValuesScreenBottomSheetType.Menu(
+                                handleUIEvent(
+                                    TransactionForValuesScreenUIEvent.OnTransactionForListItem.MoreOptionsIconButtonClick(
                                         isDeleteVisible = isDeleteVisible,
                                         transactionForId = listItem.id,
                                     )

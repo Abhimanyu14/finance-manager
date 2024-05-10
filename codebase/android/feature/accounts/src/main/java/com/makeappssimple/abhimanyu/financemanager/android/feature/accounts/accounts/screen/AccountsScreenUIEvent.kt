@@ -23,10 +23,22 @@ public sealed class AccountsScreenUIEvent : ScreenUIEvent {
         public data class EditButtonClick(
             val accountId: Int,
         ) : AccountsScreenUIEvent()
+
+        public data class SetAsDefaultButtonClick(
+            val accountId: Int,
+        ) : AccountsScreenUIEvent()
     }
 
     public sealed class OnAccountsSetAsDefaultConfirmationBottomSheet {
         public data object NegativeButtonClick : AccountsScreenUIEvent()
         public data object PositiveButtonClick : AccountsScreenUIEvent()
+    }
+
+    public sealed class OnAccountsListItemContent {
+        public data class Click(
+            val isDeleteEnabled: Boolean,
+            val isDefault: Boolean,
+            val accountId: Int?,
+        ) : AccountsScreenUIEvent()
     }
 }

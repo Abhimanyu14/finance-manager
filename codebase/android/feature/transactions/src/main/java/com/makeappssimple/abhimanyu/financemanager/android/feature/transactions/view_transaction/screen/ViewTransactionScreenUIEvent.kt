@@ -19,6 +19,10 @@ public sealed class ViewTransactionScreenUIEvent : ScreenUIEvent {
             val transactionId: Int,
         ) : ViewTransactionScreenUIEvent()
 
+        public data class DeleteButtonClick(
+            val transactionId: Int,
+        ) : ViewTransactionScreenUIEvent()
+
         public data class EditButtonClick(
             val transactionId: Int,
         ) : ViewTransactionScreenUIEvent()
