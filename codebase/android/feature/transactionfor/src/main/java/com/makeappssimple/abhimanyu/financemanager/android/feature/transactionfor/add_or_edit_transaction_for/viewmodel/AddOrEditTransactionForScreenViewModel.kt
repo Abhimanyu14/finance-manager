@@ -21,7 +21,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIError
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.navigation.AddOrEditTransactionForScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -104,17 +103,6 @@ public class AddOrEditTransactionForScreenViewModel @Inject constructor(
         ) {
             getAllTransactionForValues()
             getOriginalTransactionFor()
-        }
-    }
-
-    public fun handleUIEvent(
-        uiEvent: AddOrEditTransactionForScreenUIEvent,
-    ) {
-        when (uiEvent) {
-
-            else -> {
-                // No-op, should have been handled in Screen composable or invalid event
-            }
         }
     }
 
