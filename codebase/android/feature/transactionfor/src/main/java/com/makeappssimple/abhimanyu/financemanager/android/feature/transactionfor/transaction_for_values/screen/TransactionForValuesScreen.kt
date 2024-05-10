@@ -30,12 +30,25 @@ public fun TransactionForValuesScreen(
         key2 = uiState,
     ) {
         { uiEvent: TransactionForValuesScreenUIEvent ->
-            @Suppress("UNUSED_EXPRESSION")
             when (uiEvent) {
-                else -> {
-                    viewModel.handleUIEvent(
-                        uiEvent = uiEvent,
+                is TransactionForValuesScreenUIEvent.OnTransactionForValuesDeleteConfirmationBottomSheet.PositiveButtonClick -> {
+                    viewModel.deleteTransactionFor(
+                        id = uiEvent.transactionForId,
                     )
+                }
+
+                is TransactionForValuesScreenUIEvent.OnFloatingActionButtonClick -> {
+                    viewModel.navigateToAddTransactionForScreen()
+                }
+
+                is TransactionForValuesScreenUIEvent.OnTransactionForValuesMenuBottomSheet.EditButtonClick -> {
+                    viewModel.navigateToEditTransactionForScreen(
+                        transactionForId = uiEvent.transactionForId,
+                    )
+                }
+
+                is TransactionForValuesScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
+                    viewModel.navigateUp()
                 }
             }
         }

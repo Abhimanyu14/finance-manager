@@ -14,7 +14,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.screen.TransactionForValuesScreenUIData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.transaction_for_values.screen.TransactionForValuesScreenUIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -70,33 +69,7 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
         scope = closeableCoroutineScope,
     )
 
-    public fun handleUIEvent(
-        uiEvent: TransactionForValuesScreenUIEvent,
-    ) {
-        when (uiEvent) {
-            is TransactionForValuesScreenUIEvent.OnTransactionForValuesDeleteConfirmationBottomSheet.PositiveButtonClick -> {
-                deleteTransactionFor(
-                    id = uiEvent.transactionForId,
-                )
-            }
-
-            is TransactionForValuesScreenUIEvent.OnFloatingActionButtonClick -> {
-                navigateToAddTransactionForScreen()
-            }
-
-            is TransactionForValuesScreenUIEvent.OnTransactionForValuesMenuBottomSheet.EditButtonClick -> {
-                navigateToEditTransactionForScreen(
-                    transactionForId = uiEvent.transactionForId,
-                )
-            }
-
-            is TransactionForValuesScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                navigateUp()
-            }
-        }
-    }
-
-    private fun deleteTransactionFor(
+    public fun deleteTransactionFor(
         id: Int,
     ) {
         closeableCoroutineScope.launch(
@@ -108,11 +81,11 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
         }
     }
 
-    private fun navigateToAddTransactionForScreen() {
+    public fun navigateToAddTransactionForScreen() {
         navigator.navigateToAddTransactionForScreen()
     }
 
-    private fun navigateToEditTransactionForScreen(
+    public fun navigateToEditTransactionForScreen(
         transactionForId: Int,
     ) {
         navigator.navigateToEditTransactionForScreen(
@@ -120,7 +93,7 @@ public class TransactionForValuesScreenViewModel @Inject constructor(
         )
     }
 
-    private fun navigateUp() {
+    public fun navigateUp() {
         navigator.navigateUp()
     }
 }
