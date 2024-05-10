@@ -51,7 +51,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultIncomeCategory
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUIData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.navigation.AddOrEditTransactionScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -314,17 +313,6 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
             context = dispatcherProvider.io,
         ) {
             fetchData()
-        }
-    }
-
-    public fun handleUIEvent(
-        uiEvent: AddOrEditTransactionScreenUIEvent,
-    ) {
-        when (uiEvent) {
-
-            else -> {
-                // No-op, should have been handled in Screen composable or invalid event
-            }
         }
     }
 
