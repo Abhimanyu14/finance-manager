@@ -32,11 +32,32 @@ public fun ViewTransactionScreen(
         key2 = uiState,
     ) {
         { uiEvent: ViewTransactionScreenUIEvent ->
-            @Suppress("UNUSED_EXPRESSION")
             when (uiEvent) {
-                else -> {
-                    viewModel.handleUIEvent(
-                        uiEvent = uiEvent,
+                is ViewTransactionScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
+                    viewModel.navigateUp()
+                }
+
+                is ViewTransactionScreenUIEvent.OnTransactionDeleteConfirmationBottomSheet.DeleteButtonClick -> {
+                    viewModel.deleteTransaction(
+                        transactionId = uiEvent.transactionId,
+                    )
+                }
+
+                is ViewTransactionScreenUIEvent.OnTransactionListItem.Click -> {
+                    viewModel.navigateToViewTransactionScreen(
+                        transactionId = uiEvent.transactionId,
+                    )
+                }
+
+                is ViewTransactionScreenUIEvent.OnTransactionListItem.EditButtonClick -> {
+                    viewModel.navigateToEditTransactionScreen(
+                        transactionId = uiEvent.transactionId,
+                    )
+                }
+
+                is ViewTransactionScreenUIEvent.OnTransactionListItem.RefundButtonClick -> {
+                    viewModel.navigateToAddTransactionScreen(
+                        transactionId = uiEvent.transactionId,
                     )
                 }
             }
