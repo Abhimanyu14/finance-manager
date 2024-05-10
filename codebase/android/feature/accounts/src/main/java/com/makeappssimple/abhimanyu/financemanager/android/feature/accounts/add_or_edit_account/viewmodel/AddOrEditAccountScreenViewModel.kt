@@ -32,7 +32,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIError
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIErrorData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.navigation.AddOrEditAccountScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -152,50 +151,6 @@ public class AddOrEditAccountScreenViewModel @Inject constructor(
         }
     }
 
-    public fun handleUIEvent(
-        uiEvent: AddOrEditAccountScreenUIEvent,
-    ) {
-        when (uiEvent) {
-            is AddOrEditAccountScreenUIEvent.OnClearBalanceAmountValueButtonClick -> {
-                clearBalanceAmountValue()
-            }
-
-            is AddOrEditAccountScreenUIEvent.OnClearMinimumAccountBalanceAmountValueButtonClick -> {
-                clearMinimumAccountBalanceAmountValue()
-            }
-
-            is AddOrEditAccountScreenUIEvent.OnClearNameButtonClick -> {
-                clearName()
-            }
-
-            is AddOrEditAccountScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                navigateUp()
-            }
-
-            is AddOrEditAccountScreenUIEvent.OnMinimumAccountBalanceAmountValueUpdated -> {
-                updateMinimumAccountBalanceAmountValue(
-                    updatedMinimumAccountBalanceAmountValue = uiEvent.updatedMinimumAccountBalanceAmountValue,
-                )
-            }
-
-            is AddOrEditAccountScreenUIEvent.OnNameUpdated -> {
-                updateName(
-                    updatedName = uiEvent.updatedName,
-                )
-            }
-
-            is AddOrEditAccountScreenUIEvent.OnSelectedAccountTypeIndexUpdated -> {
-                updateSelectedAccountTypeIndex(
-                    updatedIndex = uiEvent.updatedIndex,
-                )
-            }
-
-            else -> {
-                // No-op, should have been handled in Screen composable or invalid event
-            }
-        }
-    }
-
     public fun updateAccount() {
         val originalAccountValue = originalAccount.value ?: return
         val amountChangeValue =
@@ -302,17 +257,17 @@ public class AddOrEditAccountScreenViewModel @Inject constructor(
         }
     }
 
-    private fun clearName() {
+    public fun clearName() {
         updateName(
             updatedName = name.value.copy(""),
         )
     }
 
-    private fun navigateUp() {
+    public fun navigateUp() {
         navigator.navigateUp()
     }
 
-    private fun updateName(
+    public fun updateName(
         updatedName: TextFieldValue,
     ) {
         name.update {
@@ -320,7 +275,7 @@ public class AddOrEditAccountScreenViewModel @Inject constructor(
         }
     }
 
-    private fun clearBalanceAmountValue() {
+    public fun clearBalanceAmountValue() {
         updateBalanceAmountValue(
             updatedBalanceAmountValue = balanceAmountValue.value.copy(
                 text = "",
@@ -328,7 +283,7 @@ public class AddOrEditAccountScreenViewModel @Inject constructor(
         )
     }
 
-    private fun clearMinimumAccountBalanceAmountValue() {
+    public fun clearMinimumAccountBalanceAmountValue() {
         updateMinimumAccountBalanceAmountValue(
             updatedMinimumAccountBalanceAmountValue = minimumAccountBalanceAmountValue.value.copy(
                 text = "",
@@ -336,7 +291,7 @@ public class AddOrEditAccountScreenViewModel @Inject constructor(
         )
     }
 
-    private fun updateMinimumAccountBalanceAmountValue(
+    public fun updateMinimumAccountBalanceAmountValue(
         updatedMinimumAccountBalanceAmountValue: TextFieldValue,
     ) {
         minimumAccountBalanceAmountValue.update {
@@ -346,7 +301,7 @@ public class AddOrEditAccountScreenViewModel @Inject constructor(
         }
     }
 
-    private fun updateSelectedAccountTypeIndex(
+    public fun updateSelectedAccountTypeIndex(
         updatedIndex: Int,
     ) {
         selectedAccountTypeIndex.update {

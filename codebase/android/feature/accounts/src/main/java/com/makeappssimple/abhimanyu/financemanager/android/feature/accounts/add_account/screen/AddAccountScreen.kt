@@ -49,9 +49,37 @@ public fun AddAccountScreen(
 
                 is AddOrEditAccountScreenUIEvent.OnBalanceAmountValueUpdated -> {}
 
-                else -> {
-                    viewModel.handleUIEvent(
-                        uiEvent = uiEvent,
+                is AddOrEditAccountScreenUIEvent.OnClearBalanceAmountValueButtonClick -> {
+                    viewModel.clearBalanceAmountValue()
+                }
+
+                is AddOrEditAccountScreenUIEvent.OnClearMinimumAccountBalanceAmountValueButtonClick -> {
+                    viewModel.clearMinimumAccountBalanceAmountValue()
+                }
+
+                is AddOrEditAccountScreenUIEvent.OnClearNameButtonClick -> {
+                    viewModel.clearName()
+                }
+
+                is AddOrEditAccountScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
+                    viewModel.navigateUp()
+                }
+
+                is AddOrEditAccountScreenUIEvent.OnMinimumAccountBalanceAmountValueUpdated -> {
+                    viewModel.updateMinimumAccountBalanceAmountValue(
+                        updatedMinimumAccountBalanceAmountValue = uiEvent.updatedMinimumAccountBalanceAmountValue,
+                    )
+                }
+
+                is AddOrEditAccountScreenUIEvent.OnNameUpdated -> {
+                    viewModel.updateName(
+                        updatedName = uiEvent.updatedName,
+                    )
+                }
+
+                is AddOrEditAccountScreenUIEvent.OnSelectedAccountTypeIndexUpdated -> {
+                    viewModel.updateSelectedAccountTypeIndex(
+                        updatedIndex = uiEvent.updatedIndex,
                     )
                 }
             }
