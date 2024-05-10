@@ -30,11 +30,20 @@ public fun AnalysisScreen(
         key2 = uiState,
     ) {
         { uiEvent: AnalysisScreenUIEvent ->
-            @Suppress("UNUSED_EXPRESSION")
             when (uiEvent) {
-                else -> {
-                    viewModel.handleUIEvent(
-                        uiEvent = uiEvent,
+                is AnalysisScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
+                    viewModel.navigateUp()
+                }
+
+                is AnalysisScreenUIEvent.OnAnalysisFilterBottomSheet.PositiveButtonClick -> {
+                    viewModel.updateSelectedFilter(
+                        updatedSelectedFilter = uiEvent.updatedSelectedFilter,
+                    )
+                }
+
+                is AnalysisScreenUIEvent.OnTransactionTypeChange -> {
+                    viewModel.updateSelectedTransactionTypeIndex(
+                        updatedSelectedTransactionTypeIndex = uiEvent.updatedSelectedTransactionTypeIndex,
                     )
                 }
             }

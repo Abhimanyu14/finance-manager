@@ -22,7 +22,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenVi
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.chip.ChipUIData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.analysis.AnalysisListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen.AnalysisScreenUIData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.analysis.screen.AnalysisScreenUIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -114,37 +113,11 @@ public class AnalysisScreenViewModel @Inject constructor(
         scope = closeableCoroutineScope,
     )
 
-    public fun handleUIEvent(
-        uiEvent: AnalysisScreenUIEvent,
-    ) {
-        when (uiEvent) {
-            is AnalysisScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                navigateUp()
-            }
-
-            is AnalysisScreenUIEvent.OnAnalysisFilterBottomSheet.PositiveButtonClick -> {
-                updateSelectedFilter(
-                    updatedSelectedFilter = uiEvent.updatedSelectedFilter,
-                )
-            }
-
-            is AnalysisScreenUIEvent.OnTransactionTypeChange -> {
-                updateSelectedTransactionTypeIndex(
-                    updatedSelectedTransactionTypeIndex = uiEvent.updatedSelectedTransactionTypeIndex,
-                )
-            }
-
-            else -> {
-                // No-op, should have been handled in Screen composable or invalid event
-            }
-        }
-    }
-
-    private fun navigateUp() {
+    public fun navigateUp() {
         navigator.navigateUp()
     }
 
-    private fun updateSelectedFilter(
+    public fun updateSelectedFilter(
         updatedSelectedFilter: Filter,
     ) {
         selectedFilter.update {
@@ -152,7 +125,7 @@ public class AnalysisScreenViewModel @Inject constructor(
         }
     }
 
-    private fun updateSelectedTransactionTypeIndex(
+    public fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
     ) {
         selectedTransactionTypeIndex.update {
