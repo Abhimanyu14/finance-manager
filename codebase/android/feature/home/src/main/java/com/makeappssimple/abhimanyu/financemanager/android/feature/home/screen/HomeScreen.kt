@@ -13,11 +13,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.document.CreateJsonDocument
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmodel.HomeScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.feature.home.viewmodel.HomeScreenViewModelImpl
 
 @Composable
 public fun HomeScreen(
-    screenViewModel: HomeScreenViewModel = hiltViewModel<HomeScreenViewModelImpl>(),
+    screenViewModel: HomeScreenViewModel = hiltViewModel(),
 ) {
     val viewModel = remember {
         screenViewModel

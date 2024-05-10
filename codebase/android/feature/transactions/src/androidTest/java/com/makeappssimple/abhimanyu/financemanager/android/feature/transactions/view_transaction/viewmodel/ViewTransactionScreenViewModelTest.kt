@@ -35,7 +35,7 @@ import javax.inject.Inject
 
 @RunWith(AndroidJUnit4::class)
 @HiltAndroidTest
-public class ViewTransactionScreenViewModelImplTest {
+public class ViewTransactionScreenViewModelTest {
     @get:Rule(order = 0)
     public var hiltRule: HiltAndroidRule = HiltAndroidRule(this)
 
@@ -57,7 +57,7 @@ public class ViewTransactionScreenViewModelImplTest {
     @Inject
     public lateinit var closeableCoroutineScope: CloseableCoroutineScope
 
-    private lateinit var viewTransactionScreenViewModelImpl: ViewTransactionScreenViewModelImpl
+    private lateinit var viewTransactionScreenViewModel: ViewTransactionScreenViewModel
 
     @Before
     public fun setUp() {
@@ -95,7 +95,7 @@ public class ViewTransactionScreenViewModelImplTest {
         turbineScope {
             // viewTransactionScreenViewModelImpl.navigateUp()
 
-            val receiver = viewTransactionScreenViewModelImpl.navigator.command.testIn(
+            val receiver = viewTransactionScreenViewModel.navigator.command.testIn(
                 scope = backgroundScope,
             )
 
@@ -108,7 +108,7 @@ public class ViewTransactionScreenViewModelImplTest {
     }
 
     private fun initViewModel() {
-        viewTransactionScreenViewModelImpl = ViewTransactionScreenViewModelImpl(
+        viewTransactionScreenViewModel = ViewTransactionScreenViewModel(
             savedStateHandle = savedStateHandle,
             stringDecoder = stringDecoder,
             closeableCoroutineScope = closeableCoroutineScope,

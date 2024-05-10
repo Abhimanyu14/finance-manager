@@ -25,12 +25,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.docu
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.R
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.viewmodel.SettingsScreenViewModel
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.viewmodel.SettingsScreenViewModelImpl
 import kotlinx.coroutines.launch
 
 @Composable
 public fun SettingsScreen(
-    screenViewModel: SettingsScreenViewModel = hiltViewModel<SettingsScreenViewModelImpl>(),
+    screenViewModel: SettingsScreenViewModel = hiltViewModel(),
 ) {
     val viewModel = remember {
         screenViewModel
