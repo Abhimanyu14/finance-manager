@@ -51,9 +51,41 @@ public fun HomeScreen(
                     createDocument.launch(MimeTypeConstants.JSON)
                 }
 
-                else -> {
-                    viewModel.handleUIEvent(
-                        uiEvent = uiEvent,
+                is HomeScreenUIEvent.OnTotalBalanceCardClick -> {
+                    viewModel.navigateToAccountsScreen()
+                }
+
+                is HomeScreenUIEvent.OnFloatingActionButtonClick -> {
+                    viewModel.navigateToAddTransactionScreen()
+                }
+
+                is HomeScreenUIEvent.OnOverviewCard.Click -> {
+                    viewModel.navigateToAnalysisScreen()
+                }
+
+                is HomeScreenUIEvent.OnTopAppBarSettingsButtonClick -> {
+                    viewModel.navigateToSettingsScreen()
+                }
+
+                is HomeScreenUIEvent.OnHomeRecentTransactionsClick -> {
+                    viewModel.navigateToTransactionsScreen()
+                }
+
+                is HomeScreenUIEvent.OnTransactionListItemClick -> {
+                    viewModel.navigateToViewTransactionScreen(
+                        transactionId = uiEvent.transactionId,
+                    )
+                }
+
+                is HomeScreenUIEvent.OnOverviewCard.Action -> {
+                    viewModel.handleOverviewCardAction(
+                        overviewCardAction = uiEvent.overviewCardAction,
+                    )
+                }
+
+                is HomeScreenUIEvent.OnOverviewCard.TabClick -> {
+                    viewModel.setOverviewTabSelectionIndex(
+                        updatedOverviewTabSelectionIndex = uiEvent.index,
                     )
                 }
             }

@@ -30,7 +30,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.ove
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.OverviewTabOption
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen.HomeScreenUIData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.home.screen.HomeScreenUIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -229,55 +228,7 @@ public class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    public fun handleUIEvent(
-        uiEvent: HomeScreenUIEvent,
-    ) {
-        when (uiEvent) {
-            is HomeScreenUIEvent.OnTotalBalanceCardClick -> {
-                navigateToAccountsScreen()
-            }
-
-            is HomeScreenUIEvent.OnFloatingActionButtonClick -> {
-                navigateToAddTransactionScreen()
-            }
-
-            is HomeScreenUIEvent.OnOverviewCard.Click -> {
-                navigateToAnalysisScreen()
-            }
-
-            is HomeScreenUIEvent.OnTopAppBarSettingsButtonClick -> {
-                navigateToSettingsScreen()
-            }
-
-            is HomeScreenUIEvent.OnHomeRecentTransactionsClick -> {
-                navigateToTransactionsScreen()
-            }
-
-            is HomeScreenUIEvent.OnTransactionListItemClick -> {
-                navigateToViewTransactionScreen(
-                    transactionId = uiEvent.transactionId,
-                )
-            }
-
-            is HomeScreenUIEvent.OnOverviewCard.Action -> {
-                handleOverviewCardAction(
-                    overviewCardAction = uiEvent.overviewCardAction,
-                )
-            }
-
-            is HomeScreenUIEvent.OnOverviewCard.TabClick -> {
-                setOverviewTabSelectionIndex(
-                    updatedOverviewTabSelectionIndex = uiEvent.index,
-                )
-            }
-
-            else -> {
-                // No-op, should have been handled in Screen composable or invalid event
-            }
-        }
-    }
-
-    private fun handleOverviewCardAction(
+    public fun handleOverviewCardAction(
         overviewCardAction: OverviewCardAction,
     ) {
         val overviewTabOption = OverviewTabOption.entries[overviewTabSelectionIndex.value]
@@ -340,27 +291,27 @@ public class HomeScreenViewModel @Inject constructor(
         }
     }
 
-    private fun navigateToAnalysisScreen() {
+    public fun navigateToAnalysisScreen() {
         navigator.navigateToAnalysisScreen()
     }
 
-    private fun navigateToAddTransactionScreen() {
+    public fun navigateToAddTransactionScreen() {
         navigator.navigateToAddTransactionScreen()
     }
 
-    private fun navigateToSettingsScreen() {
+    public fun navigateToSettingsScreen() {
         navigator.navigateToSettingsScreen()
     }
 
-    private fun navigateToAccountsScreen() {
+    public fun navigateToAccountsScreen() {
         navigator.navigateToAccountsScreen()
     }
 
-    private fun navigateToTransactionsScreen() {
+    public fun navigateToTransactionsScreen() {
         navigator.navigateToTransactionsScreen()
     }
 
-    private fun navigateToViewTransactionScreen(
+    public fun navigateToViewTransactionScreen(
         transactionId: Int,
     ) {
         navigator.navigateToViewTransactionScreen(
@@ -368,7 +319,7 @@ public class HomeScreenViewModel @Inject constructor(
         )
     }
 
-    private fun setOverviewTabSelectionIndex(
+    public fun setOverviewTabSelectionIndex(
         updatedOverviewTabSelectionIndex: Int,
     ) {
         overviewTabSelectionIndex.value = updatedOverviewTabSelectionIndex
