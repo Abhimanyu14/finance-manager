@@ -321,81 +321,6 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
         uiEvent: AddOrEditTransactionScreenUIEvent,
     ) {
         when (uiEvent) {
-            is AddOrEditTransactionScreenUIEvent.OnClearAmountButtonClick -> {
-                clearAmount()
-            }
-
-            is AddOrEditTransactionScreenUIEvent.OnClearDescriptionButtonClick -> {
-                clearDescription()
-            }
-
-            is AddOrEditTransactionScreenUIEvent.OnClearTitleButtonClick -> {
-                clearTitle()
-            }
-
-            is AddOrEditTransactionScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                navigateUp()
-            }
-
-            is AddOrEditTransactionScreenUIEvent.OnAccountFromUpdated -> {
-                updateAccountFrom(
-                    updatedAccountFrom = uiEvent.updatedAccountFrom,
-                )
-            }
-
-            is AddOrEditTransactionScreenUIEvent.OnAccountToUpdated -> {
-                updateAccountTo(
-                    updatedAccountTo = uiEvent.updatedAccountTo,
-                )
-            }
-
-            is AddOrEditTransactionScreenUIEvent.OnAmountUpdated -> {
-                updateAmount(
-                    updatedAmount = uiEvent.updatedAmount,
-                )
-            }
-
-            is AddOrEditTransactionScreenUIEvent.OnCategoryUpdated -> {
-                updateCategory(
-                    updatedCategory = uiEvent.updatedCategory,
-                )
-            }
-
-            is AddOrEditTransactionScreenUIEvent.OnDescriptionUpdated -> {
-                updateDescription(
-                    updatedDescription = uiEvent.updatedDescription,
-                )
-            }
-
-            is AddOrEditTransactionScreenUIEvent.OnSelectedTransactionForIndexUpdated -> {
-                updateSelectedTransactionForIndex(
-                    updatedSelectedTransactionForIndex = uiEvent.updatedSelectedTransactionForIndex,
-                )
-            }
-
-            is AddOrEditTransactionScreenUIEvent.OnSelectedTransactionTypeIndexUpdated -> {
-                updateSelectedTransactionTypeIndex(
-                    updatedSelectedTransactionTypeIndex = uiEvent.updatedSelectedTransactionTypeIndex,
-                )
-            }
-
-            is AddOrEditTransactionScreenUIEvent.OnTitleUpdated -> {
-                updateTitle(
-                    updatedTitle = uiEvent.updatedTitle,
-                )
-            }
-
-            is AddOrEditTransactionScreenUIEvent.OnTransactionDateUpdated -> {
-                updateTransactionDate(
-                    updatedTransactionDate = uiEvent.updatedTransactionDate,
-                )
-            }
-
-            is AddOrEditTransactionScreenUIEvent.OnTransactionTimeUpdated -> {
-                updateTransactionTime(
-                    updatedTransactionTime = uiEvent.updatedTransactionTime,
-                )
-            }
 
             else -> {
                 // No-op, should have been handled in Screen composable or invalid event
@@ -759,7 +684,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
     }
 
     // region UI changes
-    private fun updateSelectedTransactionTypeIndex(
+    public fun updateSelectedTransactionTypeIndex(
         updatedSelectedTransactionTypeIndex: Int,
     ) {
         updateAddOrEditTransactionScreenUiState(
@@ -772,7 +697,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    private fun updateAmount(
+    public fun updateAmount(
         updatedAmount: TextFieldValue,
     ) {
         updateAddOrEditTransactionScreenUiState(
@@ -784,7 +709,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    private fun clearAmount() {
+    public fun clearAmount() {
         updateAmount(
             updatedAmount = uiState.value.amount.copy(
                 text = "",
@@ -792,11 +717,11 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    private fun navigateUp() {
+    public fun navigateUp() {
         navigator.navigateUp()
     }
 
-    private fun updateTitle(
+    public fun updateTitle(
         updatedTitle: TextFieldValue,
     ) {
         updateAddOrEditTransactionScreenUiState(
@@ -806,7 +731,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    private fun clearTitle() {
+    public fun clearTitle() {
         updateTitle(
             updatedTitle = uiState.value.title.copy(
                 text = "",
@@ -814,7 +739,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    private fun updateDescription(
+    public fun updateDescription(
         updatedDescription: TextFieldValue,
     ) {
         updateAddOrEditTransactionScreenUiState(
@@ -824,7 +749,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    private fun clearDescription() {
+    public fun clearDescription() {
         updateDescription(
             updatedDescription = uiState.value.description.copy(
                 text = "",
@@ -832,7 +757,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    private fun updateCategory(
+    public fun updateCategory(
         updatedCategory: Category?,
     ) {
         updateAddOrEditTransactionScreenUiState(
@@ -842,7 +767,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    private fun updateSelectedTransactionForIndex(
+    public fun updateSelectedTransactionForIndex(
         updatedSelectedTransactionForIndex: Int,
     ) {
         updateAddOrEditTransactionScreenUiState(
@@ -852,7 +777,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    private fun updateAccountFrom(
+    public fun updateAccountFrom(
         updatedAccountFrom: Account?,
     ) {
         updateAddOrEditTransactionScreenUiState(
@@ -862,7 +787,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    private fun updateAccountTo(
+    public fun updateAccountTo(
         updatedAccountTo: Account?,
     ) {
         updateAddOrEditTransactionScreenUiState(
@@ -872,7 +797,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    private fun updateTransactionDate(
+    public fun updateTransactionDate(
         updatedTransactionDate: LocalDate,
     ) {
         updateAddOrEditTransactionScreenUiState(
@@ -882,7 +807,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    private fun updateTransactionTime(
+    public fun updateTransactionTime(
         updatedTransactionTime: LocalTime,
     ) {
         updateAddOrEditTransactionScreenUiState(
@@ -892,7 +817,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
         )
     }
 
-    private fun updateAddOrEditTransactionScreenUiState(
+    public fun updateAddOrEditTransactionScreenUiState(
         updatedAddOrEditTransactionScreenUiStateData: AddOrEditTransactionScreenUiStateData,
     ) {
         uiState.update {

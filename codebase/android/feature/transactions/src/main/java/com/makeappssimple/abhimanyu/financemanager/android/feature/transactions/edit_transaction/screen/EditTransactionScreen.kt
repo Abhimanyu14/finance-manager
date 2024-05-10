@@ -41,9 +41,79 @@ public fun EditTransactionScreen(
                     viewModel.updateTransaction()
                 }
 
-                else -> {
-                    viewModel.handleUIEvent(
-                        uiEvent = uiEvent,
+                is AddOrEditTransactionScreenUIEvent.OnClearAmountButtonClick -> {
+                    viewModel.clearAmount()
+                }
+
+                is AddOrEditTransactionScreenUIEvent.OnClearDescriptionButtonClick -> {
+                    viewModel.clearDescription()
+                }
+
+                is AddOrEditTransactionScreenUIEvent.OnClearTitleButtonClick -> {
+                    viewModel.clearTitle()
+                }
+
+                is AddOrEditTransactionScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
+                    viewModel.navigateUp()
+                }
+
+                is AddOrEditTransactionScreenUIEvent.OnAccountFromUpdated -> {
+                    viewModel.updateAccountFrom(
+                        updatedAccountFrom = uiEvent.updatedAccountFrom,
+                    )
+                }
+
+                is AddOrEditTransactionScreenUIEvent.OnAccountToUpdated -> {
+                    viewModel.updateAccountTo(
+                        updatedAccountTo = uiEvent.updatedAccountTo,
+                    )
+                }
+
+                is AddOrEditTransactionScreenUIEvent.OnAmountUpdated -> {
+                    viewModel.updateAmount(
+                        updatedAmount = uiEvent.updatedAmount,
+                    )
+                }
+
+                is AddOrEditTransactionScreenUIEvent.OnCategoryUpdated -> {
+                    viewModel.updateCategory(
+                        updatedCategory = uiEvent.updatedCategory,
+                    )
+                }
+
+                is AddOrEditTransactionScreenUIEvent.OnDescriptionUpdated -> {
+                    viewModel.updateDescription(
+                        updatedDescription = uiEvent.updatedDescription,
+                    )
+                }
+
+                is AddOrEditTransactionScreenUIEvent.OnSelectedTransactionForIndexUpdated -> {
+                    viewModel.updateSelectedTransactionForIndex(
+                        updatedSelectedTransactionForIndex = uiEvent.updatedSelectedTransactionForIndex,
+                    )
+                }
+
+                is AddOrEditTransactionScreenUIEvent.OnSelectedTransactionTypeIndexUpdated -> {
+                    viewModel.updateSelectedTransactionTypeIndex(
+                        updatedSelectedTransactionTypeIndex = uiEvent.updatedSelectedTransactionTypeIndex,
+                    )
+                }
+
+                is AddOrEditTransactionScreenUIEvent.OnTitleUpdated -> {
+                    viewModel.updateTitle(
+                        updatedTitle = uiEvent.updatedTitle,
+                    )
+                }
+
+                is AddOrEditTransactionScreenUIEvent.OnTransactionDateUpdated -> {
+                    viewModel.updateTransactionDate(
+                        updatedTransactionDate = uiEvent.updatedTransactionDate,
+                    )
+                }
+
+                is AddOrEditTransactionScreenUIEvent.OnTransactionTimeUpdated -> {
+                    viewModel.updateTransactionTime(
+                        updatedTransactionTime = uiEvent.updatedTransactionTime,
                     )
                 }
             }
