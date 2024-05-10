@@ -14,6 +14,10 @@ public sealed class AccountsScreenUIEvent : ScreenUIEvent {
     }
 
     public sealed class OnAccountsMenuBottomSheet {
+        public data class DeleteButtonClick(
+            val accountId: Int,
+        ) : AccountsScreenUIEvent()
+
         public data class EditButtonClick(
             val accountId: Int,
         ) : AccountsScreenUIEvent()

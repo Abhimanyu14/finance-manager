@@ -91,11 +91,13 @@ internal fun AccountsScreenUI(
                         isEditVisible = bottomSheetData.isEditVisible,
                         isSetAsDefaultVisible = bottomSheetData.isSetAsDefaultVisible,
                         onDeleteClick = {
-                            uiState.setAccountIdToDelete(bottomSheetData.accountId)
-                            uiState.setScreenBottomSheetType(AccountsScreenBottomSheetType.DeleteConfirmation)
+                            handleUIEvent(
+                                AccountsScreenUIEvent.OnAccountsMenuBottomSheet.DeleteButtonClick(
+                                    accountId = bottomSheetData.accountId,
+                                )
+                            )
                         },
                         onEditClick = {
-                            uiState.resetScreenBottomSheetType()
                             handleUIEvent(
                                 AccountsScreenUIEvent.OnAccountsMenuBottomSheet.EditButtonClick(
                                     accountId = bottomSheetData.accountId,

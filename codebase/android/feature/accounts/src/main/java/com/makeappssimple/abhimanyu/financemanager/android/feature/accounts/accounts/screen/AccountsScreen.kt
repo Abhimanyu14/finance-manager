@@ -32,6 +32,18 @@ public fun AccountsScreen(
     ) {
         { uiEvent: AccountsScreenUIEvent ->
             when (uiEvent) {
+                is AccountsScreenUIEvent.OnAccountsMenuBottomSheet.DeleteButtonClick -> {
+                    uiState.setAccountIdToDelete(uiEvent.accountId)
+                    uiState.setScreenBottomSheetType(AccountsScreenBottomSheetType.DeleteConfirmation)
+                }
+
+                is AccountsScreenUIEvent.OnAccountsMenuBottomSheet.EditButtonClick -> {
+                    uiState.resetScreenBottomSheetType()
+                    viewModel.navigateToEditAccountScreen(
+                        accountId = uiEvent.accountId,
+                    )
+                }
+
                 is AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.NegativeButtonClick -> {
                     uiState.resetScreenBottomSheetType()
                     uiState.setAccountIdToDelete(null)
@@ -62,10 +74,12 @@ public fun AccountsScreen(
                     uiState.resetScreenBottomSheetType()
                 }
 
-                else -> {
-                    viewModel.handleUIEvent(
-                        uiEvent = uiEvent,
-                    )
+                is AccountsScreenUIEvent.OnFloatingActionButtonClick -> {
+                    viewModel.navigateToAddAccountScreen()
+                }
+
+                is AccountsScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
+                    viewModel.navigateUp()
                 }
             }
         }

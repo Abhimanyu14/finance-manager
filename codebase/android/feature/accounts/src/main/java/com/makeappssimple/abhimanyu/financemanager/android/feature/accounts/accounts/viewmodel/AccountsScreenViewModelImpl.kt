@@ -24,7 +24,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.icon
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultAccount
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.screen.AccountsScreenUIData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.accounts.screen.AccountsScreenUIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
@@ -131,30 +130,6 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
         scope = closeableCoroutineScope,
     )
 
-    override fun handleUIEvent(
-        uiEvent: AccountsScreenUIEvent,
-    ) {
-        when (uiEvent) {
-            is AccountsScreenUIEvent.OnFloatingActionButtonClick -> {
-                navigateToAddAccountScreen()
-            }
-
-            is AccountsScreenUIEvent.OnAccountsMenuBottomSheet.EditButtonClick -> {
-                navigateToEditAccountScreen(
-                    accountId = uiEvent.accountId,
-                )
-            }
-
-            is AccountsScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                navigateUp()
-            }
-
-            else -> {
-                // No-op, should have been handled in Screen composable or invalid event
-            }
-        }
-    }
-
     override fun deleteAccount(
         accountId: Int,
     ) {
@@ -165,6 +140,22 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
                 id = accountId,
             )
         }
+    }
+
+    override fun navigateToAddAccountScreen() {
+        navigator.navigateToAddAccountScreen()
+    }
+
+    override fun navigateToEditAccountScreen(
+        accountId: Int,
+    ) {
+        navigator.navigateToEditAccountScreen(
+            accountId = accountId,
+        )
+    }
+
+    override fun navigateUp() {
+        navigator.navigateUp()
     }
 
     override fun setDefaultAccountIdInDataStore(
@@ -179,21 +170,5 @@ internal class AccountsScreenViewModelImpl @Inject constructor(
             )
             // TODO(Abhi): Use the result to show snackbar
         }
-    }
-
-    private fun navigateToAddAccountScreen() {
-        navigator.navigateToAddAccountScreen()
-    }
-
-    private fun navigateToEditAccountScreen(
-        accountId: Int,
-    ) {
-        navigator.navigateToEditAccountScreen(
-            accountId = accountId,
-        )
-    }
-
-    private fun navigateUp() {
-        navigator.navigateUp()
     }
 }
