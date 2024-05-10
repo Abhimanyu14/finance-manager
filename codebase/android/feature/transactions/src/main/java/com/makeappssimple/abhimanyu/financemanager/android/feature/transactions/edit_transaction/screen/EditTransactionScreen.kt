@@ -37,6 +37,14 @@ public fun EditTransactionScreen(
     ) {
         { uiEvent: AddOrEditTransactionScreenUIEvent ->
             when (uiEvent) {
+                is AddOrEditTransactionScreenUIEvent.OnBottomSheetDismissed -> {
+                    uiState.resetScreenBottomSheetType()
+                }
+
+                is AddOrEditTransactionScreenUIEvent.OnNavigationBackButtonClick -> {
+                    uiState.resetScreenBottomSheetType()
+                }
+
                 is AddOrEditTransactionScreenUIEvent.OnCtaButtonClick -> {
                     viewModel.updateTransaction()
                 }

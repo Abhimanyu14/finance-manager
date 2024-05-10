@@ -40,7 +40,9 @@ internal fun ViewTransactionScreenUI(
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = uiState.resetScreenBottomSheetType,
+        resetBottomSheetType = {
+            handleUIEvent(ViewTransactionScreenUIEvent.OnBottomSheetDismissed)
+        },
     )
 
     MyScaffold(
@@ -53,19 +55,11 @@ internal fun ViewTransactionScreenUI(
             when (uiState.screenBottomSheetType) {
                 is ViewTransactionScreenBottomSheetType.DeleteConfirmation -> {
                     TransactionDeleteConfirmationBottomSheet(
-                        transactionIdToDelete = uiState.transactionIdToDelete,
-                        resetBottomSheetType = uiState.resetScreenBottomSheetType,
-                        resetTransactionIdToDelete = {
-                            uiState.setTransactionIdToDelete(null)
+                        onNegativeButtonClick = {
+                            handleUIEvent(ViewTransactionScreenUIEvent.OnTransactionDeleteConfirmationBottomSheet.NegativeButtonClick)
                         },
-                        deleteTransaction = {
-                            uiState.transactionIdToDelete?.let { transactionIdToDeleteValue ->
-                                handleUIEvent(
-                                    ViewTransactionScreenUIEvent.OnTransactionDeleteConfirmationBottomSheet.DeleteButtonClick(
-                                        transactionId = transactionIdToDeleteValue,
-                                    )
-                                )
-                            }
+                        onPositiveButtonClick = {
+                            handleUIEvent(ViewTransactionScreenUIEvent.OnTransactionDeleteConfirmationBottomSheet.PositiveButtonClick)
                         },
                     )
                 }
@@ -88,7 +82,9 @@ internal fun ViewTransactionScreenUI(
         isModalBottomSheetVisible = uiState.screenBottomSheetType != ViewTransactionScreenBottomSheetType.None,
         backHandlerEnabled = uiState.screenBottomSheetType != ViewTransactionScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetScreenBottomSheetType,
+        onBackPress = {
+            handleUIEvent(ViewTransactionScreenUIEvent.OnNavigationBackButtonClick)
+        },
     ) {
         LazyColumn(
             modifier = Modifier

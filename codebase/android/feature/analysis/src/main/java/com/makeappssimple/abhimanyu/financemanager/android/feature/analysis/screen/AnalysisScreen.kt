@@ -31,6 +31,18 @@ public fun AnalysisScreen(
     ) {
         { uiEvent: AnalysisScreenUIEvent ->
             when (uiEvent) {
+                is AnalysisScreenUIEvent.OnBottomSheetDismissed -> {
+                    uiState.resetScreenBottomSheetType()
+                }
+
+                is AnalysisScreenUIEvent.OnFilterActionButtonClick -> {
+                    uiState.setScreenBottomSheetType(AnalysisScreenBottomSheetType.Filters)
+                }
+
+                is AnalysisScreenUIEvent.OnNavigationBackButtonClick -> {
+                    uiState.resetScreenBottomSheetType()
+                }
+
                 is AnalysisScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
                     viewModel.navigateUp()
                 }
@@ -39,6 +51,7 @@ public fun AnalysisScreen(
                     viewModel.updateSelectedFilter(
                         updatedSelectedFilter = uiEvent.updatedSelectedFilter,
                     )
+                    uiState.resetScreenBottomSheetType()
                 }
 
                 is AnalysisScreenUIEvent.OnTransactionTypeChange -> {

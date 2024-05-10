@@ -71,7 +71,9 @@ internal fun AddOrEditTransactionForScreenUI(
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = uiState.resetScreenBottomSheetType,
+        resetBottomSheetType = {
+            handleUIEvent(AddOrEditTransactionForScreenUIEvent.OnBottomSheetDismissed)
+        },
     )
 
     MyScaffold(
@@ -108,7 +110,9 @@ internal fun AddOrEditTransactionForScreenUI(
         isModalBottomSheetVisible = uiState.screenBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.None,
         backHandlerEnabled = uiState.screenBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetScreenBottomSheetType,
+        onBackPress = {
+            handleUIEvent(AddOrEditTransactionForScreenUIEvent.OnNavigationBackButtonClick)
+        },
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

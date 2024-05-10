@@ -8,6 +8,7 @@ public sealed class SettingsScreenUIEvent : ScreenUIEvent {
     public data object OnAccountsListItemClick : SettingsScreenUIEvent()
     public data object OnBackupDataListItemClick : SettingsScreenUIEvent()
     public data object OnCategoriesListItemClick : SettingsScreenUIEvent()
+    public data object OnNavigationBackButtonClick : SettingsScreenUIEvent()
     public data object OnOpenSourceLicensesListItemClick : SettingsScreenUIEvent()
     public data object OnRecalculateTotalListItemClick : SettingsScreenUIEvent()
     public data object OnRestoreDataListItemClick : SettingsScreenUIEvent()

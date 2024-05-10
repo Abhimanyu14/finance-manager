@@ -280,7 +280,9 @@ internal fun SettingsScreenUI(
         },
         onClick = state.focusManager::clearFocus,
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetScreenBottomSheetType,
+        onBackPress = {
+            handleUIEvent(SettingsScreenUIEvent.OnNavigationBackButtonClick)
+        },
     ) {
         LazyColumn(
             horizontalAlignment = Alignment.Start,

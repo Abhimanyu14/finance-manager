@@ -58,7 +58,9 @@ internal fun CategoriesScreenUI(
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = uiState.resetScreenBottomSheetType,
+        resetBottomSheetType = {
+            handleUIEvent(CategoriesScreenUIEvent.OnBottomSheetDismissed)
+        },
     )
 
     MyScaffold(
@@ -71,7 +73,11 @@ internal fun CategoriesScreenUI(
             when (uiState.screenBottomSheetType) {
                 is CategoriesScreenBottomSheetType.DeleteConfirmation -> {
                     CategoriesDeleteConfirmationBottomSheet(
-                        deleteCategory = {
+                        onNegativeButtonClick = {
+                            uiState.setCategoryIdToDelete(null)
+                            handleUIEvent(CategoriesScreenUIEvent.OnBottomSheetDismissed)
+                        },
+                        onPositiveButtonClick = {
                             uiState.categoryIdToDelete?.let { categoryIdToDeleteValue ->
                                 handleUIEvent(
                                     CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.DeleteButtonClick(
@@ -79,11 +85,10 @@ internal fun CategoriesScreenUI(
                                     )
                                 )
                             }
+                            uiState.setCategoryIdToDelete(null)
+                            handleUIEvent(CategoriesScreenUIEvent.OnBottomSheetDismissed)
                         },
-                        resetBottomSheetType = uiState.resetScreenBottomSheetType,
-                    ) {
-                        uiState.setCategoryIdToDelete(null)
-                    }
+                    )
                 }
 
                 is CategoriesScreenBottomSheetType.None -> {
@@ -93,20 +98,13 @@ internal fun CategoriesScreenUI(
                 is CategoriesScreenBottomSheetType.SetAsDefaultConfirmation -> {
                     CategoriesSetAsDefaultConfirmationBottomSheet(
                         transactionType = uiState.validTransactionTypes[uiState.selectedTabIndex],
-                        resetBottomSheetType = uiState.resetScreenBottomSheetType,
-                        resetClickedItemId = {
-                            uiState.setClickedItemId(null)
+                        onNegativeButtonClick = {
+                            handleUIEvent(CategoriesScreenUIEvent.OnCategoriesSetAsDefaultConfirmationBottomSheet.NegativeButtonClick)
                         },
-                    ) {
-                        uiState.clickedItemId?.let { clickedItemIdValue ->
-                            handleUIEvent(
-                                CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.SetAsDefaultCategoryButtonClick(
-                                    defaultCategoryId = clickedItemIdValue,
-                                    transactionType = uiState.validTransactionTypes[uiState.selectedTabIndex],
-                                )
-                            )
-                        }
-                    }
+                        onPositiveButtonClick = {
+                            handleUIEvent(CategoriesScreenUIEvent.OnCategoriesSetAsDefaultConfirmationBottomSheet.PositiveButtonClick)
+                        },
+                    )
                 }
 
                 is CategoriesScreenBottomSheetType.Menu -> {
@@ -179,7 +177,9 @@ internal fun CategoriesScreenUI(
         isModalBottomSheetVisible = uiState.screenBottomSheetType != CategoriesScreenBottomSheetType.None,
         backHandlerEnabled = uiState.screenBottomSheetType != CategoriesScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetScreenBottomSheetType,
+        onBackPress = {
+            handleUIEvent(CategoriesScreenUIEvent.OnNavigationBackButtonClick)
+        },
     ) {
         Column(
             modifier = Modifier

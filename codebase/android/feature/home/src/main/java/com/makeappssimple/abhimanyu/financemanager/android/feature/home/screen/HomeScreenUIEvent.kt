@@ -9,8 +9,10 @@ public sealed class HomeScreenUIEvent : ScreenUIEvent {
     public data object OnBackupCardClick : HomeScreenUIEvent()
     public data object OnFloatingActionButtonClick : HomeScreenUIEvent()
     public data object OnHomeRecentTransactionsClick : HomeScreenUIEvent()
+    public data object OnNavigationBackButtonClick : HomeScreenUIEvent()
     public data object OnTopAppBarSettingsButtonClick : HomeScreenUIEvent()
     public data object OnTotalBalanceCardClick : HomeScreenUIEvent()
+    public data object OnTotalBalanceCardViewBalanceClick : HomeScreenUIEvent()
 
     public data class OnTransactionListItemClick(
         val transactionId: Int,

@@ -37,6 +37,17 @@ public fun EditCategoryScreen(
     ) {
         { uiEvent: AddOrEditCategoryScreenUIEvent ->
             when (uiEvent) {
+                is AddOrEditCategoryScreenUIEvent.OnBottomSheetDismissed -> {
+                    uiState.resetScreenBottomSheetType()
+                    viewModel.updateSearchText(
+                        updatedSearchText = "",
+                    )
+                }
+
+                is AddOrEditCategoryScreenUIEvent.OnNavigationBackButtonClick -> {
+                    uiState.resetScreenBottomSheetType()
+                }
+
                 is AddOrEditCategoryScreenUIEvent.OnCtaButtonClick -> {
                     viewModel.updateCategory()
                 }

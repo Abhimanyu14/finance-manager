@@ -42,7 +42,9 @@ internal fun TransactionForValuesScreenUI(
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = uiState.resetScreenBottomSheetType,
+        resetBottomSheetType = {
+            handleUIEvent(TransactionForValuesScreenUIEvent.OnBottomSheetDismissed)
+        },
     )
 
     MyScaffold(
@@ -126,7 +128,9 @@ internal fun TransactionForValuesScreenUI(
         isModalBottomSheetVisible = uiState.screenBottomSheetType != TransactionForValuesScreenBottomSheetType.None,
         backHandlerEnabled = uiState.screenBottomSheetType != TransactionForValuesScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetScreenBottomSheetType,
+        onBackPress = {
+            handleUIEvent(TransactionForValuesScreenUIEvent.OnNavigationBackButtonClick)
+        },
     ) {
         LazyColumn(
             modifier = Modifier

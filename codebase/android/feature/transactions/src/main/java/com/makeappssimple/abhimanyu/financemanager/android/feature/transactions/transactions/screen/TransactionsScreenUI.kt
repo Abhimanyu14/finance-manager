@@ -70,7 +70,9 @@ internal fun TransactionsScreenUI(
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = uiState.resetScreenBottomSheetType,
+        resetBottomSheetType = {
+            handleUIEvent(TransactionsScreenUIEvent.OnBottomSheetDismissed)
+        },
     )
 
     BackHandler(
@@ -108,7 +110,9 @@ internal fun TransactionsScreenUI(
                                 )
                             )
                         },
-                        resetBottomSheetType = uiState.resetScreenBottomSheetType,
+                        resetBottomSheetType = {
+                            handleUIEvent(TransactionsScreenUIEvent.OnBottomSheetDismissed)
+                        },
                     )
                 }
 
@@ -163,7 +167,9 @@ internal fun TransactionsScreenUI(
                     TransactionsSortBottomSheet(
                         selectedSortOptionIndex = uiState.sortOptions.indexOf(uiState.selectedSortOption),
                         sortOptions = uiState.sortOptions.toList(),
-                        resetBottomSheetType = uiState.resetScreenBottomSheetType,
+                        resetBottomSheetType = {
+                            handleUIEvent(TransactionsScreenUIEvent.OnBottomSheetDismissed)
+                        },
                         updateSelectedSortOption = { index ->
                             handleUIEvent(
                                 TransactionsScreenUIEvent.OnSelectedSortOptionUpdated(
@@ -252,7 +258,9 @@ internal fun TransactionsScreenUI(
         isModalBottomSheetVisible = uiState.screenBottomSheetType != TransactionsScreenBottomSheetType.None,
         backHandlerEnabled = uiState.screenBottomSheetType != TransactionsScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetScreenBottomSheetType,
+        onBackPress = {
+            handleUIEvent(TransactionsScreenUIEvent.OnNavigationBackButtonClick)
+        },
     ) {
         Column(
             modifier = Modifier

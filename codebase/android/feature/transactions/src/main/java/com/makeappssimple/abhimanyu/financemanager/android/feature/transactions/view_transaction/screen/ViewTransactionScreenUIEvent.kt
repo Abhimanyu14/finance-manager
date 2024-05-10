@@ -5,12 +5,13 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Immutable
 public sealed class ViewTransactionScreenUIEvent : ScreenUIEvent {
+    public data object OnBottomSheetDismissed : ViewTransactionScreenUIEvent()
+    public data object OnNavigationBackButtonClick : ViewTransactionScreenUIEvent()
     public data object OnTopAppBarNavigationButtonClick : ViewTransactionScreenUIEvent()
 
     public sealed class OnTransactionDeleteConfirmationBottomSheet {
-        public data class DeleteButtonClick(
-            val transactionId: Int,
-        ) : ViewTransactionScreenUIEvent()
+        public data object NegativeButtonClick : ViewTransactionScreenUIEvent()
+        public data object PositiveButtonClick : ViewTransactionScreenUIEvent()
     }
 
     public sealed class OnTransactionListItem {

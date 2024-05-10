@@ -6,6 +6,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Immutable
 public sealed class AddOrEditAccountScreenUIEvent : ScreenUIEvent {
+    public data object OnNavigationBackButtonClick : AddOrEditAccountScreenUIEvent()
     public data object OnClearBalanceAmountValueButtonClick : AddOrEditAccountScreenUIEvent()
     public data object OnClearMinimumAccountBalanceAmountValueButtonClick :
         AddOrEditAccountScreenUIEvent()

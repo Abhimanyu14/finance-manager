@@ -7,9 +7,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bot
 
 @Composable
 public fun CategoriesDeleteConfirmationBottomSheet(
-    deleteCategory: () -> Unit,
-    resetBottomSheetType: () -> Unit,
-    resetCategoryIdToDelete: () -> Unit,
+    onNegativeButtonClick: () -> Unit,
+    onPositiveButtonClick: () -> Unit,
 ) {
     MyConfirmationBottomSheetUI(
         title = stringResource(
@@ -24,14 +23,7 @@ public fun CategoriesDeleteConfirmationBottomSheet(
         negativeButtonText = stringResource(
             id = R.string.screen_categories_bottom_sheet_delete_negative_button_text,
         ),
-        onPositiveButtonClick = {
-            deleteCategory()
-            resetCategoryIdToDelete()
-            resetBottomSheetType()
-        },
-        onNegativeButtonClick = {
-            resetCategoryIdToDelete()
-            resetBottomSheetType()
-        },
+        onNegativeButtonClick = onPositiveButtonClick,
+        onPositiveButtonClick = onNegativeButtonClick,
     )
 }

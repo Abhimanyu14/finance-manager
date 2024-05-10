@@ -31,10 +31,18 @@ public fun TransactionForValuesScreen(
     ) {
         { uiEvent: TransactionForValuesScreenUIEvent ->
             when (uiEvent) {
+                is TransactionForValuesScreenUIEvent.OnBottomSheetDismissed -> {
+                    uiState.resetScreenBottomSheetType()
+                }
+
                 is TransactionForValuesScreenUIEvent.OnTransactionForValuesDeleteConfirmationBottomSheet.PositiveButtonClick -> {
                     viewModel.deleteTransactionFor(
                         id = uiEvent.transactionForId,
                     )
+                }
+
+                is TransactionForValuesScreenUIEvent.OnNavigationBackButtonClick -> {
+                    uiState.resetScreenBottomSheetType()
                 }
 
                 is TransactionForValuesScreenUIEvent.OnFloatingActionButtonClick -> {

@@ -93,7 +93,9 @@ internal fun HomeScreenUI(
         onClick = state.focusManager::clearFocus,
         contentTestTag = SCREEN_CONTENT_HOME,
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetScreenBottomSheetType,
+        onBackPress = {
+            handleUIEvent(HomeScreenUIEvent.OnNavigationBackButtonClick)
+        },
     ) {
         Column(
             modifier = Modifier
@@ -120,7 +122,7 @@ internal fun HomeScreenUI(
                         }
 
                         is TotalBalanceCardEvent.OnViewBalanceClick -> {
-                            uiState.setBalanceVisible(true)
+                            handleUIEvent(HomeScreenUIEvent.OnTotalBalanceCardViewBalanceClick)
                         }
                     }
                 },

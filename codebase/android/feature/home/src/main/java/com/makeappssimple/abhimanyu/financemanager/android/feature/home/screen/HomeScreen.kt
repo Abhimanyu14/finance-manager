@@ -55,6 +55,10 @@ public fun HomeScreen(
                     viewModel.navigateToAccountsScreen()
                 }
 
+                is HomeScreenUIEvent.OnTotalBalanceCardViewBalanceClick -> {
+                    uiState.setBalanceVisible(true)
+                }
+
                 is HomeScreenUIEvent.OnFloatingActionButtonClick -> {
                     viewModel.navigateToAddTransactionScreen()
                 }
@@ -69,6 +73,10 @@ public fun HomeScreen(
 
                 is HomeScreenUIEvent.OnHomeRecentTransactionsClick -> {
                     viewModel.navigateToTransactionsScreen()
+                }
+
+                is HomeScreenUIEvent.OnNavigationBackButtonClick -> {
+                    uiState.resetScreenBottomSheetType()
                 }
 
                 is HomeScreenUIEvent.OnTransactionListItemClick -> {

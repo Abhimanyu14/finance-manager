@@ -91,7 +91,9 @@ internal fun AddOrEditTransactionScreenUI(
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = uiState.resetScreenBottomSheetType,
+        resetBottomSheetType = {
+            handleUIEvent(AddOrEditTransactionScreenUIEvent.OnBottomSheetDismissed)
+        },
     )
 
     MyScaffold(
@@ -197,7 +199,9 @@ internal fun AddOrEditTransactionScreenUI(
         isModalBottomSheetVisible = uiState.screenBottomSheetType != AddOrEditTransactionScreenBottomSheetType.None,
         backHandlerEnabled = uiState.screenBottomSheetType != AddOrEditTransactionScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetScreenBottomSheetType,
+        onBackPress = {
+            handleUIEvent(AddOrEditTransactionScreenUIEvent.OnNavigationBackButtonClick)
+        },
     ) {
         MyDatePicker(
             data = MyDatePickerData(

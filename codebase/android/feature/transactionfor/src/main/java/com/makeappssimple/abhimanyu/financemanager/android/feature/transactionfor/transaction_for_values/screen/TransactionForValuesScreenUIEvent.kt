@@ -5,7 +5,9 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Immutable
 public sealed class TransactionForValuesScreenUIEvent : ScreenUIEvent {
+    public data object OnBottomSheetDismissed : TransactionForValuesScreenUIEvent()
     public data object OnFloatingActionButtonClick : TransactionForValuesScreenUIEvent()
+    public data object OnNavigationBackButtonClick : TransactionForValuesScreenUIEvent()
     public data object OnTopAppBarNavigationButtonClick : TransactionForValuesScreenUIEvent()
 
     public sealed class OnTransactionForValuesDeleteConfirmationBottomSheet {

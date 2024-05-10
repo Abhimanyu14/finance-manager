@@ -7,10 +7,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bot
 
 @Composable
 public fun TransactionDeleteConfirmationBottomSheet(
-    transactionIdToDelete: Int?,
-    resetBottomSheetType: () -> Unit,
-    resetTransactionIdToDelete: () -> Unit,
-    deleteTransaction: () -> Unit,
+    onNegativeButtonClick: () -> Unit,
+    onPositiveButtonClick: () -> Unit,
 ) {
     MyConfirmationBottomSheetUI(
         title = stringResource(
@@ -25,16 +23,7 @@ public fun TransactionDeleteConfirmationBottomSheet(
         negativeButtonText = stringResource(
             id = R.string.screen_transactions_bottom_sheet_delete_negative_button_text,
         ),
-        onPositiveButtonClick = {
-            transactionIdToDelete?.let {
-                deleteTransaction()
-                resetTransactionIdToDelete()
-            }
-            resetBottomSheetType()
-        },
-        onNegativeButtonClick = {
-            resetBottomSheetType()
-            resetTransactionIdToDelete()
-        },
+        onNegativeButtonClick = onNegativeButtonClick,
+        onPositiveButtonClick = onPositiveButtonClick,
     )
 }

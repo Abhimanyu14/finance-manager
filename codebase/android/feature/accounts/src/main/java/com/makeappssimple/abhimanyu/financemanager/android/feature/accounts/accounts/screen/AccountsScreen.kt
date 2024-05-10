@@ -31,6 +31,14 @@ public fun AccountsScreen(
     ) {
         { uiEvent: AccountsScreenUIEvent ->
             when (uiEvent) {
+                is AccountsScreenUIEvent.OnBottomSheetDismissed -> {
+                    uiState.resetScreenBottomSheetType()
+                }
+
+                is AccountsScreenUIEvent.OnNavigationBackButtonClick -> {
+                    uiState.resetScreenBottomSheetType()
+                }
+
                 is AccountsScreenUIEvent.OnAccountsMenuBottomSheet.DeleteButtonClick -> {
                     uiState.setAccountIdToDelete(uiEvent.accountId)
                     uiState.setScreenBottomSheetType(AccountsScreenBottomSheetType.DeleteConfirmation)

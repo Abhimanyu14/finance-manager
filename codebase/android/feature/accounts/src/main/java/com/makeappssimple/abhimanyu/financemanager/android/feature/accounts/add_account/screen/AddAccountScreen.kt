@@ -49,6 +49,10 @@ public fun AddAccountScreen(
 
                 is AddOrEditAccountScreenUIEvent.OnBalanceAmountValueUpdated -> {}
 
+                is AddOrEditAccountScreenUIEvent.OnNavigationBackButtonClick -> {
+                    uiState.resetScreenBottomSheetType()
+                }
+
                 is AddOrEditAccountScreenUIEvent.OnClearBalanceAmountValueButtonClick -> {
                     viewModel.clearBalanceAmountValue()
                 }

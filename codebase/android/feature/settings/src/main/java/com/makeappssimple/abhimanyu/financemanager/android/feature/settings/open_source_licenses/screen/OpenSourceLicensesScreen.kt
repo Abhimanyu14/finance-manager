@@ -31,6 +31,10 @@ public fun OpenSourceLicensesScreen(
     ) {
         { uiEvent: OpenSourceLicensesScreenUIEvent ->
             when (uiEvent) {
+                is OpenSourceLicensesScreenUIEvent.OnNavigationBackButtonClick -> {
+                    uiState.resetScreenBottomSheetType()
+                }
+
                 is OpenSourceLicensesScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
                     viewModel.navigateUp()
                 }

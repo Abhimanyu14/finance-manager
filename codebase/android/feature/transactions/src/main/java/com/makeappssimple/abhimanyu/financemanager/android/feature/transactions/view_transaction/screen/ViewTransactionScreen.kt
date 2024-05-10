@@ -32,14 +32,31 @@ public fun ViewTransactionScreen(
     ) {
         { uiEvent: ViewTransactionScreenUIEvent ->
             when (uiEvent) {
+                is ViewTransactionScreenUIEvent.OnBottomSheetDismissed -> {
+                    uiState.resetScreenBottomSheetType()
+                }
+
+                is ViewTransactionScreenUIEvent.OnNavigationBackButtonClick -> {
+                    uiState.resetScreenBottomSheetType()
+                }
+
                 is ViewTransactionScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
                     viewModel.navigateUp()
                 }
 
-                is ViewTransactionScreenUIEvent.OnTransactionDeleteConfirmationBottomSheet.DeleteButtonClick -> {
-                    viewModel.deleteTransaction(
-                        transactionId = uiEvent.transactionId,
-                    )
+                is ViewTransactionScreenUIEvent.OnTransactionDeleteConfirmationBottomSheet.NegativeButtonClick -> {
+                    uiState.resetScreenBottomSheetType()
+                    uiState.setTransactionIdToDelete(null)
+                }
+
+                is ViewTransactionScreenUIEvent.OnTransactionDeleteConfirmationBottomSheet.PositiveButtonClick -> {
+                    uiState.transactionIdToDelete?.let { transactionIdToDeleteValue ->
+                        viewModel.deleteTransaction(
+                            transactionId = transactionIdToDeleteValue,
+                        )
+                        uiState.setTransactionIdToDelete(null)
+                    }
+                    uiState.resetScreenBottomSheetType()
                 }
 
                 is ViewTransactionScreenUIEvent.OnTransactionListItem.Click -> {

@@ -46,7 +46,9 @@ internal fun AccountsScreenUI(
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
-        resetBottomSheetType = uiState.resetScreenBottomSheetType,
+        resetBottomSheetType = {
+            handleUIEvent(AccountsScreenUIEvent.OnBottomSheetDismissed)
+        },
     )
 
     MyScaffold(
@@ -138,7 +140,9 @@ internal fun AccountsScreenUI(
         isModalBottomSheetVisible = uiState.screenBottomSheetType != AccountsScreenBottomSheetType.None,
         backHandlerEnabled = uiState.screenBottomSheetType != AccountsScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetScreenBottomSheetType,
+        onBackPress = {
+            handleUIEvent(AccountsScreenUIEvent.OnNavigationBackButtonClick)
+        },
     ) {
         LazyColumn(
             modifier = Modifier

@@ -31,6 +31,14 @@ public fun CategoriesScreen(
     ) {
         { uiEvent: CategoriesScreenUIEvent ->
             when (uiEvent) {
+                is CategoriesScreenUIEvent.OnBottomSheetDismissed -> {
+                    uiState.resetScreenBottomSheetType()
+                }
+
+                is CategoriesScreenUIEvent.OnNavigationBackButtonClick -> {
+                    uiState.resetScreenBottomSheetType()
+                }
+
                 is CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.DeleteButtonClick -> {
                     viewModel.deleteCategory(
                         id = uiEvent.categoryId,
@@ -60,6 +68,22 @@ public fun CategoriesScreen(
                     viewModel.updateSelectedTabIndex(
                         updatedSelectedTabIndex = uiEvent.updatedSelectedTabIndex,
                     )
+                }
+
+                is CategoriesScreenUIEvent.OnCategoriesSetAsDefaultConfirmationBottomSheet.NegativeButtonClick -> {
+                    uiState.setClickedItemId(null)
+                    uiState.resetScreenBottomSheetType()
+                }
+
+                is CategoriesScreenUIEvent.OnCategoriesSetAsDefaultConfirmationBottomSheet.PositiveButtonClick -> {
+                    uiState.clickedItemId?.let { clickedItemIdValue ->
+                        viewModel.setDefaultCategoryIdInDataStore(
+                            defaultCategoryId = clickedItemIdValue,
+                            transactionType = uiState.validTransactionTypes[uiState.selectedTabIndex],
+                        )
+                    }
+                    uiState.setClickedItemId(null)
+                    uiState.resetScreenBottomSheetType()
                 }
 
                 is CategoriesScreenUIEvent.OnTopAppBarNavigationButtonClick -> {

@@ -32,6 +32,10 @@ public fun TransactionsScreen(
     ) {
         { uiEvent: TransactionsScreenUIEvent ->
             when (uiEvent) {
+                is TransactionsScreenUIEvent.OnBottomSheetDismissed -> {
+                    uiState.resetScreenBottomSheetType()
+                }
+
                 is TransactionsScreenUIEvent.OnSelectionModeTopAppBarNavigationButtonClick -> {
                     uiState.setIsInSelectionMode(false)
                     viewModel.clearSelectedTransactions()
@@ -46,6 +50,7 @@ public fun TransactionsScreen(
                     )
                     uiState.setIsInSelectionMode(false)
                     viewModel.clearSelectedTransactions()
+                    uiState.resetScreenBottomSheetType()
                 }
 
                 is TransactionsScreenUIEvent.OnTransactionListItem.Click -> {

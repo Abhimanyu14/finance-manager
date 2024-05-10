@@ -123,6 +123,10 @@ public fun SettingsScreen(
                     viewModel.navigateToCategoriesScreen()
                 }
 
+                is SettingsScreenUIEvent.OnNavigationBackButtonClick -> {
+                    uiState.resetScreenBottomSheetType()
+                }
+
                 is SettingsScreenUIEvent.OnOpenSourceLicensesListItemClick -> {
                     viewModel.navigateToOpenSourceLicensesScreen()
                 }

@@ -6,6 +6,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUI
 
 @Immutable
 public sealed class CategoriesScreenUIEvent : ScreenUIEvent {
+    public data object OnBottomSheetDismissed : CategoriesScreenUIEvent()
+    public data object OnNavigationBackButtonClick : CategoriesScreenUIEvent()
     public data object OnTopAppBarNavigationButtonClick : CategoriesScreenUIEvent()
 
     public data class OnFloatingActionButtonClick(
@@ -15,6 +17,11 @@ public sealed class CategoriesScreenUIEvent : ScreenUIEvent {
     public data class OnSelectedTabIndexUpdated(
         val updatedSelectedTabIndex: Int,
     ) : CategoriesScreenUIEvent()
+
+    public sealed class OnCategoriesSetAsDefaultConfirmationBottomSheet {
+        public data object NegativeButtonClick : CategoriesScreenUIEvent()
+        public data object PositiveButtonClick : CategoriesScreenUIEvent()
+    }
 
     public sealed class OnCategoriesDeleteConfirmationBottomSheet {
         public data class DeleteButtonClick(

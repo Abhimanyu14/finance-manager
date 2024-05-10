@@ -84,12 +84,7 @@ internal fun AddOrEditCategoryScreenUI(
         keyboardController = state.keyboardController,
         modalBottomSheetState = state.modalBottomSheetState,
         resetBottomSheetType = {
-            uiState.resetScreenBottomSheetType()
-            handleUIEvent(
-                AddOrEditCategoryScreenUIEvent.OnEmojiBottomSheetSearchTextUpdated(
-                    updatedSearchText = "",
-                )
-            )
+            handleUIEvent(AddOrEditCategoryScreenUIEvent.OnBottomSheetDismissed)
         },
     )
 
@@ -108,7 +103,9 @@ internal fun AddOrEditCategoryScreenUI(
                 AddOrEditCategoryScreenBottomSheetType.SelectEmoji -> {
                     AddOrEditCategorySelectEmojiBottomSheet(
                         searchText = uiState.emojiSearchText,
-                        resetBottomSheetType = uiState.resetScreenBottomSheetType,
+                        resetBottomSheetType = {
+                            handleUIEvent(AddOrEditCategoryScreenUIEvent.OnBottomSheetDismissed)
+                        },
                         updateEmoji = { updatedEmoji ->
                             handleUIEvent(
                                 AddOrEditCategoryScreenUIEvent.OnEmojiUpdated(
@@ -149,7 +146,9 @@ internal fun AddOrEditCategoryScreenUI(
         isModalBottomSheetVisible = uiState.screenBottomSheetType != AddOrEditCategoryScreenBottomSheetType.None,
         backHandlerEnabled = uiState.screenBottomSheetType != AddOrEditCategoryScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetScreenBottomSheetType,
+        onBackPress = {
+            handleUIEvent(AddOrEditCategoryScreenUIEvent.OnNavigationBackButtonClick)
+        },
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,

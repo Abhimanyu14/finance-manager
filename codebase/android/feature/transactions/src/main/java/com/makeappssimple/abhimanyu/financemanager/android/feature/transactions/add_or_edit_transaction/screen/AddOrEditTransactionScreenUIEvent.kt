@@ -10,6 +10,8 @@ import java.time.LocalTime
 
 @Immutable
 public sealed class AddOrEditTransactionScreenUIEvent : ScreenUIEvent {
+    public data object OnBottomSheetDismissed : AddOrEditTransactionScreenUIEvent()
+    public data object OnNavigationBackButtonClick : AddOrEditTransactionScreenUIEvent()
     public data object OnClearAmountButtonClick : AddOrEditTransactionScreenUIEvent()
     public data object OnClearDescriptionButtonClick : AddOrEditTransactionScreenUIEvent()
     public data object OnClearTitleButtonClick : AddOrEditTransactionScreenUIEvent()

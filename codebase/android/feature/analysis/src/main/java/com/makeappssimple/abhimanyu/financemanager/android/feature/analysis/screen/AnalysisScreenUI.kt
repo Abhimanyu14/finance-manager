@@ -46,7 +46,9 @@ internal fun AnalysisScreenUI(
         coroutineScope = state.coroutineScope,
         modalBottomSheetState = state.modalBottomSheetState,
         keyboardController = state.keyboardController,
-        resetBottomSheetType = uiState.resetScreenBottomSheetType,
+        resetBottomSheetType = {
+            handleUIEvent(AnalysisScreenUIEvent.OnBottomSheetDismissed)
+        },
     )
 
     MyScaffold(
@@ -72,7 +74,6 @@ internal fun AnalysisScreenUI(
                                     updatedSelectedFilter = it,
                                 )
                             )
-                            uiState.resetScreenBottomSheetType()
                         },
                     )
                 }
@@ -95,7 +96,9 @@ internal fun AnalysisScreenUI(
         isModalBottomSheetVisible = uiState.screenBottomSheetType != AnalysisScreenBottomSheetType.None,
         backHandlerEnabled = uiState.screenBottomSheetType != AnalysisScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onBackPress = uiState.resetScreenBottomSheetType,
+        onBackPress = {
+            handleUIEvent(AnalysisScreenUIEvent.OnNavigationBackButtonClick)
+        },
     ) {
         LazyColumn(
             horizontalAlignment = Alignment.Start,
@@ -148,7 +151,7 @@ internal fun AnalysisScreenUI(
                         handleEvent = { event ->
                             when (event) {
                                 is ActionButtonEvent.OnClick -> {
-                                    uiState.setScreenBottomSheetType(AnalysisScreenBottomSheetType.Filters)
+                                    handleUIEvent(AnalysisScreenUIEvent.OnFilterActionButtonClick)
                                 }
                             }
                         },
