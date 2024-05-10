@@ -111,19 +111,6 @@ public class AddOrEditTransactionForScreenViewModel @Inject constructor(
         uiEvent: AddOrEditTransactionForScreenUIEvent,
     ) {
         when (uiEvent) {
-            is AddOrEditTransactionForScreenUIEvent.OnClearTitleButtonClick -> {
-                clearTitle()
-            }
-
-            is AddOrEditTransactionForScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                navigateUp()
-            }
-
-            is AddOrEditTransactionForScreenUIEvent.OnTitleUpdated -> {
-                updateTitle(
-                    updatedTitle = uiEvent.updatedTitle,
-                )
-            }
 
             else -> {
                 // No-op, should have been handled in Screen composable or invalid event
@@ -158,7 +145,7 @@ public class AddOrEditTransactionForScreenViewModel @Inject constructor(
         }
     }
 
-    private fun clearTitle() {
+    public fun clearTitle() {
         updateTitle(
             updatedTitle = title.value.copy(
                 text = "",
@@ -166,11 +153,11 @@ public class AddOrEditTransactionForScreenViewModel @Inject constructor(
         )
     }
 
-    private fun navigateUp() {
+    public fun navigateUp() {
         navigator.navigateUp()
     }
 
-    private fun updateTitle(
+    public fun updateTitle(
         updatedTitle: TextFieldValue,
     ) {
         title.update {

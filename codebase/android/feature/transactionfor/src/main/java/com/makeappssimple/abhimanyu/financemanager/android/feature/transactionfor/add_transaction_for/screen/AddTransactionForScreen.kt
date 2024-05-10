@@ -41,9 +41,17 @@ public fun AddTransactionForScreen(
                     viewModel.insertTransactionFor()
                 }
 
-                else -> {
-                    viewModel.handleUIEvent(
-                        uiEvent = uiEvent,
+                is AddOrEditTransactionForScreenUIEvent.OnClearTitleButtonClick -> {
+                    viewModel.clearTitle()
+                }
+
+                is AddOrEditTransactionForScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
+                    viewModel.navigateUp()
+                }
+
+                is AddOrEditTransactionForScreenUIEvent.OnTitleUpdated -> {
+                    viewModel.updateTitle(
+                        updatedTitle = uiEvent.updatedTitle,
                     )
                 }
             }
