@@ -59,11 +59,11 @@ internal fun AccountsScreenUI(
             when (uiState.screenBottomSheetType) {
                 is AccountsScreenBottomSheetType.DeleteConfirmation -> {
                     AccountsDeleteConfirmationBottomSheet(
-                        onPositiveButtonClick = {
-                            handleUIEvent(AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.PositiveButtonClick)
-                        },
                         onNegativeButtonClick = {
                             handleUIEvent(AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.NegativeButtonClick)
+                        },
+                        onPositiveButtonClick = {
+                            handleUIEvent(AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.PositiveButtonClick)
                         },
                     )
                 }
