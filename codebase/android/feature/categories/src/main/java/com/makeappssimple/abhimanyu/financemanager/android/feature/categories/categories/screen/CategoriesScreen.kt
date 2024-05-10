@@ -28,6 +28,7 @@ public fun CategoriesScreen(
     )
     val handleUIEvent = remember(
         key1 = viewModel,
+        key2 = uiState,
     ) {
         { uiEvent: CategoriesScreenUIEvent ->
             @Suppress("UNUSED_EXPRESSION")

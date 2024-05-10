@@ -34,6 +34,7 @@ public fun EditCategoryScreen(
     )
     val handleUIEvent = remember(
         key1 = viewModel,
+        key2 = uiState,
     ) {
         { uiEvent: AddOrEditCategoryScreenUIEvent ->
             when (uiEvent) {

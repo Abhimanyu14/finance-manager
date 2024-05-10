@@ -43,7 +43,8 @@ public fun HomeScreen(
     )
     val handleUIEvent = remember(
         key1 = viewModel,
-        key2 = createDocument,
+        key2 = uiState,
+        key3 = createDocument,
     ) {
         { uiEvent: HomeScreenUIEvent ->
             when (uiEvent) {

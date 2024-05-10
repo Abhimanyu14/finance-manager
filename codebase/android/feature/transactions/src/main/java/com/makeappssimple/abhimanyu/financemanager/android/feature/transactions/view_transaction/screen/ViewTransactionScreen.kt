@@ -29,6 +29,7 @@ public fun ViewTransactionScreen(
     )
     val handleUIEvent = remember(
         key1 = viewModel,
+        key2 = uiState,
     ) {
         { uiEvent: ViewTransactionScreenUIEvent ->
             @Suppress("UNUSED_EXPRESSION")

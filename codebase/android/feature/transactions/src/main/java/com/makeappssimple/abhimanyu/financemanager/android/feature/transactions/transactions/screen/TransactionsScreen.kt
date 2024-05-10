@@ -29,6 +29,7 @@ public fun TransactionsScreen(
     )
     val handleUIEvent = remember(
         key1 = viewModel,
+        key2 = uiState,
     ) {
         { uiEvent: TransactionsScreenUIEvent ->
             when (uiEvent) {

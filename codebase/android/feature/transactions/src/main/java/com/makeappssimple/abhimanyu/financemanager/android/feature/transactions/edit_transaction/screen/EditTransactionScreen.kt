@@ -34,6 +34,7 @@ public fun EditTransactionScreen(
     )
     val handleUIEvent = remember(
         key1 = viewModel,
+        key2 = uiState,
     ) {
         { uiEvent: AddOrEditTransactionScreenUIEvent ->
             when (uiEvent) {

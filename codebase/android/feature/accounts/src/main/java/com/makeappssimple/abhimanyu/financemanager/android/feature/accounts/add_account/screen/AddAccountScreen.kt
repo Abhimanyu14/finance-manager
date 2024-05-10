@@ -40,6 +40,7 @@ public fun AddAccountScreen(
     )
     val handleUIEvent = remember(
         key1 = viewModel,
+        key2 = uiState,
     ) {
         { uiEvent: AddOrEditAccountScreenUIEvent ->
             when (uiEvent) {
@@ -47,9 +48,7 @@ public fun AddAccountScreen(
                     viewModel.insertAccount()
                 }
 
-                is AddOrEditAccountScreenUIEvent.OnBalanceAmountValueUpdated -> {
-
-                }
+                is AddOrEditAccountScreenUIEvent.OnBalanceAmountValueUpdated -> {}
 
                 else -> {
                     viewModel.handleUIEvent(

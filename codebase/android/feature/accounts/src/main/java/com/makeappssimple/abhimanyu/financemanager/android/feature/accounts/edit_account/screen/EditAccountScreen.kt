@@ -34,6 +34,7 @@ public fun EditAccountScreen(
     )
     val handleUIEvent = remember(
         key1 = viewModel,
+        key2 = uiState,
     ) {
         { uiEvent: AddOrEditAccountScreenUIEvent ->
             when (uiEvent) {

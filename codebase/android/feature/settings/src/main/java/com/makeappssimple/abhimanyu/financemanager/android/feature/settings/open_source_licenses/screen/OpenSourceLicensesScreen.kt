@@ -28,6 +28,7 @@ public fun OpenSourceLicensesScreen(
     )
     val handleUIEvent = remember(
         key1 = viewModel,
+        key2 = uiState,
     ) {
         { uiEvent: OpenSourceLicensesScreenUIEvent ->
             @Suppress("UNUSED_EXPRESSION")
