@@ -39,15 +39,11 @@ public fun TransactionsScreen(
                 }
 
                 is TransactionsScreenUIEvent.OnNavigationBackButtonClick -> {
-                    viewModel.handleUIEvent(
-                        TransactionsScreenUIEvent.OnSearchTextUpdated(
-                            updatedSearchText = "",
-                        )
+                    viewModel.updateSearchText(
+                        updatedSearchText = "",
                     )
-                    viewModel.handleUIEvent(
-                        TransactionsScreenUIEvent.OnSelectedFilterUpdated(
-                            updatedSelectedFilter = Filter(),
-                        )
+                    viewModel.updateSelectedFilter(
+                        updatedSelectedFilter = Filter(),
                     )
                     uiState.setIsInSelectionMode(false)
                     viewModel.clearSelectedTransactions()
@@ -90,9 +86,39 @@ public fun TransactionsScreen(
                     }
                 }
 
-                else -> {
-                    viewModel.handleUIEvent(
-                        uiEvent = uiEvent,
+                is TransactionsScreenUIEvent.OnFloatingActionButtonClick -> {
+                    viewModel.navigateToAddTransactionScreen()
+                }
+
+                is TransactionsScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
+                    viewModel.navigateUp()
+                }
+
+                is TransactionsScreenUIEvent.OnTransactionsMenuBottomSheet.SelectAllTransactionsButtonClick -> {
+                    viewModel.selectAllTransactions()
+                }
+
+                is TransactionsScreenUIEvent.OnSearchTextUpdated -> {
+                    viewModel.updateSearchText(
+                        updatedSearchText = uiEvent.updatedSearchText,
+                    )
+                }
+
+                is TransactionsScreenUIEvent.OnSelectedFilterUpdated -> {
+                    viewModel.updateSelectedFilter(
+                        updatedSelectedFilter = uiEvent.updatedSelectedFilter,
+                    )
+                }
+
+                is TransactionsScreenUIEvent.OnSelectedSortOptionUpdated -> {
+                    viewModel.updateSelectedSortOption(
+                        updatedSelectedSortOption = uiEvent.updatedSelectedSortOption,
+                    )
+                }
+
+                is TransactionsScreenUIEvent.OnSelectTransactionForBottomSheet.ItemClick -> {
+                    viewModel.updateTransactionForValuesInTransactions(
+                        transactionForId = uiEvent.updatedTransactionForValues,
                     )
                 }
             }

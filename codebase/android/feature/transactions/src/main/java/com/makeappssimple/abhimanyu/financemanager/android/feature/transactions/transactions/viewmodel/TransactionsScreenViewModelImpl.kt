@@ -27,7 +27,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transaction.TransactionListItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.extensions.getAmountTextColor
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen.TransactionsScreenUIData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.transactions.screen.TransactionsScreenUIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -382,7 +381,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     )
 
     // region Search
-    private fun updateSearchText(
+    override fun updateSearchText(
         updatedSearchText: String,
     ) {
         searchText.value = updatedSearchText
@@ -390,7 +389,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     // endregion
 
     // region Filter
-    private fun updateSelectedFilter(
+    override fun updateSelectedFilter(
         updatedSelectedFilter: Filter,
     ) {
         selectedFilter.update {
@@ -400,58 +399,12 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
     // endregion
 
     // region Sort
-    private fun updateSelectedSortOption(
+    override fun updateSelectedSortOption(
         updatedSelectedSortOption: SortOption,
     ) {
         selectedSortOption.value = updatedSelectedSortOption
     }
     // endregion
-
-    override fun handleUIEvent(
-        uiEvent: TransactionsScreenUIEvent,
-    ) {
-        when (uiEvent) {
-            is TransactionsScreenUIEvent.OnFloatingActionButtonClick -> {
-                navigateToAddTransactionScreen()
-            }
-
-            is TransactionsScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                navigateUp()
-            }
-
-            is TransactionsScreenUIEvent.OnTransactionsMenuBottomSheet.SelectAllTransactionsButtonClick -> {
-                selectAllTransactions()
-            }
-
-            is TransactionsScreenUIEvent.OnSearchTextUpdated -> {
-                updateSearchText(
-                    updatedSearchText = uiEvent.updatedSearchText,
-                )
-            }
-
-            is TransactionsScreenUIEvent.OnSelectedFilterUpdated -> {
-                updateSelectedFilter(
-                    updatedSelectedFilter = uiEvent.updatedSelectedFilter,
-                )
-            }
-
-            is TransactionsScreenUIEvent.OnSelectedSortOptionUpdated -> {
-                updateSelectedSortOption(
-                    updatedSelectedSortOption = uiEvent.updatedSelectedSortOption,
-                )
-            }
-
-            is TransactionsScreenUIEvent.OnSelectTransactionForBottomSheet.ItemClick -> {
-                updateTransactionForValuesInTransactions(
-                    transactionForId = uiEvent.updatedTransactionForValues,
-                )
-            }
-
-            else -> {
-                // No-op, should have been handled in Screen composable or invalid event
-            }
-        }
-    }
 
     override fun addToSelectedTransactions(
         transactionId: Int,
@@ -467,7 +420,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         }
     }
 
-    private fun navigateToAddTransactionScreen() {
+    override fun navigateToAddTransactionScreen() {
         navigator.navigateToAddTransactionScreen()
     }
 
@@ -479,7 +432,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         )
     }
 
-    private fun navigateUp() {
+    override fun navigateUp() {
         navigator.navigateUp()
     }
 
@@ -491,7 +444,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         }
     }
 
-    private fun selectAllTransactions() {
+    override fun selectAllTransactions() {
         selectedTransactions.update {
             transactionDetailsListItemViewData.value?.values?.flatMap {
                 it.map { transactionListItemData ->
@@ -501,7 +454,7 @@ internal class TransactionsScreenViewModelImpl @Inject constructor(
         }
     }
 
-    private fun updateTransactionForValuesInTransactions(
+    override fun updateTransactionForValuesInTransactions(
         transactionForId: Int,
     ) {
         closeableCoroutineScope.launch(
