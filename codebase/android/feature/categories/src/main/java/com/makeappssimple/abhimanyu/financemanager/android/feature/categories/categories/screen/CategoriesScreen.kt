@@ -30,12 +30,40 @@ public fun CategoriesScreen(
         key2 = uiState,
     ) {
         { uiEvent: CategoriesScreenUIEvent ->
-            @Suppress("UNUSED_EXPRESSION")
             when (uiEvent) {
-                else -> {
-                    viewModel.handleUIEvent(
-                        uiEvent = uiEvent,
+                is CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.DeleteButtonClick -> {
+                    viewModel.deleteCategory(
+                        id = uiEvent.categoryId,
                     )
+                }
+
+                is CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.EditButtonClick -> {
+                    viewModel.navigateToEditCategoryScreen(
+                        categoryId = uiEvent.categoryId,
+                    )
+                }
+
+                is CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.SetAsDefaultCategoryButtonClick -> {
+                    viewModel.setDefaultCategoryIdInDataStore(
+                        defaultCategoryId = uiEvent.defaultCategoryId,
+                        transactionType = uiEvent.transactionType,
+                    )
+                }
+
+                is CategoriesScreenUIEvent.OnFloatingActionButtonClick -> {
+                    viewModel.navigateToAddCategoryScreen(
+                        transactionType = uiEvent.transactionType,
+                    )
+                }
+
+                is CategoriesScreenUIEvent.OnSelectedTabIndexUpdated -> {
+                    viewModel.updateSelectedTabIndex(
+                        updatedSelectedTabIndex = uiEvent.updatedSelectedTabIndex,
+                    )
+                }
+
+                is CategoriesScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
+                    viewModel.navigateUp()
                 }
             }
         }
