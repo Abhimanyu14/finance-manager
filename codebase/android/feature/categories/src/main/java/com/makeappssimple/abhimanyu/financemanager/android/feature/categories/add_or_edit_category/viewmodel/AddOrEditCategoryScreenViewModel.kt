@@ -26,7 +26,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaul
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.isDefaultInvestmentCategory
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUIError
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUIEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.navigation.AddOrEditCategoryScreenArgs
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
@@ -162,48 +161,6 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
         }
     }
 
-    public fun handleUIEvent(
-        uiEvent: AddOrEditCategoryScreenUIEvent,
-    ) {
-        when (uiEvent) {
-            is AddOrEditCategoryScreenUIEvent.OnClearTitleButtonClick -> {
-                clearTitle()
-            }
-
-            is AddOrEditCategoryScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                navigateUp()
-            }
-
-            is AddOrEditCategoryScreenUIEvent.OnEmojiUpdated -> {
-                updateEmoji(
-                    updatedEmoji = uiEvent.updatedEmoji,
-                )
-            }
-
-            is AddOrEditCategoryScreenUIEvent.OnEmojiBottomSheetSearchTextUpdated -> {
-                updateSearchText(
-                    updatedSearchText = uiEvent.updatedSearchText,
-                )
-            }
-
-            is AddOrEditCategoryScreenUIEvent.OnSelectedTransactionTypeIndexUpdated -> {
-                updateSelectedTransactionTypeIndex(
-                    updatedIndex = uiEvent.updatedIndex,
-                )
-            }
-
-            is AddOrEditCategoryScreenUIEvent.OnTitleUpdated -> {
-                updateTitle(
-                    updatedTitle = uiEvent.updatedTitle,
-                )
-            }
-
-            else -> {
-                // No-op, should have been handled in Screen composable or invalid event
-            }
-        }
-    }
-
     public fun insertCategory() {
         val emojiValue = emoji.value ?: return
         closeableCoroutineScope.launch(
@@ -239,7 +196,7 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
         }
     }
 
-    private fun clearTitle() {
+    public fun clearTitle() {
         updateTitle(
             updatedTitle = title.value.copy(
                 text = "",
@@ -247,11 +204,11 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
         )
     }
 
-    private fun navigateUp() {
+    public fun navigateUp() {
         navigator.navigateUp()
     }
 
-    private fun updateTitle(
+    public fun updateTitle(
         updatedTitle: TextFieldValue,
     ) {
         closeableCoroutineScope.launch(
@@ -263,19 +220,19 @@ public class AddOrEditCategoryScreenViewModel @Inject constructor(
         }
     }
 
-    private fun updateSelectedTransactionTypeIndex(
+    public fun updateSelectedTransactionTypeIndex(
         updatedIndex: Int,
     ) {
         selectedTransactionTypeIndex.value = updatedIndex
     }
 
-    private fun updateEmoji(
+    public fun updateEmoji(
         updatedEmoji: String,
     ) {
         emoji.value = updatedEmoji
     }
 
-    private fun updateSearchText(
+    public fun updateSearchText(
         updatedSearchText: String,
     ) {
         searchText.value = updatedSearchText

@@ -41,9 +41,35 @@ public fun AddCategoryScreen(
                     viewModel.insertCategory()
                 }
 
-                else -> {
-                    viewModel.handleUIEvent(
-                        uiEvent = uiEvent,
+                is AddOrEditCategoryScreenUIEvent.OnClearTitleButtonClick -> {
+                    viewModel.clearTitle()
+                }
+
+                is AddOrEditCategoryScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
+                    viewModel.navigateUp()
+                }
+
+                is AddOrEditCategoryScreenUIEvent.OnEmojiUpdated -> {
+                    viewModel.updateEmoji(
+                        updatedEmoji = uiEvent.updatedEmoji,
+                    )
+                }
+
+                is AddOrEditCategoryScreenUIEvent.OnEmojiBottomSheetSearchTextUpdated -> {
+                    viewModel.updateSearchText(
+                        updatedSearchText = uiEvent.updatedSearchText,
+                    )
+                }
+
+                is AddOrEditCategoryScreenUIEvent.OnSelectedTransactionTypeIndexUpdated -> {
+                    viewModel.updateSelectedTransactionTypeIndex(
+                        updatedIndex = uiEvent.updatedIndex,
+                    )
+                }
+
+                is AddOrEditCategoryScreenUIEvent.OnTitleUpdated -> {
+                    viewModel.updateTitle(
+                        updatedTitle = uiEvent.updatedTitle,
                     )
                 }
             }
