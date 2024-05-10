@@ -30,12 +30,9 @@ public fun OpenSourceLicensesScreen(
         key2 = uiState,
     ) {
         { uiEvent: OpenSourceLicensesScreenUIEvent ->
-            @Suppress("UNUSED_EXPRESSION")
             when (uiEvent) {
-                else -> {
-                    viewModel.handleUIEvent(
-                        uiEvent = uiEvent,
-                    )
+                is OpenSourceLicensesScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
+                    viewModel.navigateUp()
                 }
             }
         }
