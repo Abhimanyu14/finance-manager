@@ -115,10 +115,24 @@ public fun SettingsScreen(
                     }
                 }
 
-                else -> {
-                    viewModel.handleUIEvent(
-                        uiEvent = uiEvent,
-                    )
+                is SettingsScreenUIEvent.OnAccountsListItemClick -> {
+                    viewModel.navigateToAccountsScreen()
+                }
+
+                is SettingsScreenUIEvent.OnCategoriesListItemClick -> {
+                    viewModel.navigateToCategoriesScreen()
+                }
+
+                is SettingsScreenUIEvent.OnOpenSourceLicensesListItemClick -> {
+                    viewModel.navigateToOpenSourceLicensesScreen()
+                }
+
+                is SettingsScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
+                    viewModel.navigateUp()
+                }
+
+                is SettingsScreenUIEvent.OnTransactionForListItemClick -> {
+                    viewModel.navigateToTransactionForValuesScreen()
                 }
             }
         }

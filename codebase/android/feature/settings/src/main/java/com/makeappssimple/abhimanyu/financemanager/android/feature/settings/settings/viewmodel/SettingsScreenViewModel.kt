@@ -18,7 +18,6 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navig
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenEvent
 import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIData
-import com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen.SettingsScreenUIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
@@ -94,57 +93,23 @@ public class SettingsScreenViewModel @Inject constructor(
         alarmKit.enableReminder()
     }
 
-    public fun handleUIEvent(
-        uiEvent: SettingsScreenUIEvent,
-    ) {
-        when (uiEvent) {
-            is SettingsScreenUIEvent.OnAccountsListItemClick -> {
-                navigateToAccountsScreen()
-            }
-
-            is SettingsScreenUIEvent.OnCategoriesListItemClick -> {
-                navigateToCategoriesScreen()
-            }
-
-            is SettingsScreenUIEvent.OnOpenSourceLicensesListItemClick -> {
-                navigateToOpenSourceLicensesScreen()
-            }
-
-            is SettingsScreenUIEvent.OnRecalculateTotalListItemClick -> {
-                recalculateTotal()
-            }
-
-            is SettingsScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
-                navigateUp()
-            }
-
-            is SettingsScreenUIEvent.OnTransactionForListItemClick -> {
-                navigateToTransactionForValuesScreen()
-            }
-
-            else -> {
-                // No-op, should have been handled in Screen composable or invalid event
-            }
-        }
-    }
-
-    private fun navigateToCategoriesScreen() {
+    public fun navigateToCategoriesScreen() {
         navigator.navigateToCategoriesScreen()
     }
 
-    private fun navigateToAccountsScreen() {
+    public fun navigateToAccountsScreen() {
         navigator.navigateToAccountsScreen()
     }
 
-    private fun navigateToOpenSourceLicensesScreen() {
+    public fun navigateToOpenSourceLicensesScreen() {
         navigator.navigateToOpenSourceLicensesScreen()
     }
 
-    private fun navigateToTransactionForValuesScreen() {
+    public fun navigateToTransactionForValuesScreen() {
         navigator.navigateToTransactionForValuesScreen()
     }
 
-    private fun navigateUp() {
+    public fun navigateUp() {
         navigator.navigateUp()
     }
 
