@@ -39,25 +39,3 @@ public fun MyExpandableItemUIWrapper(
         content = content,
     )
 }
-
-@Composable
-public fun MyItemViewWrapper(
-    modifier: Modifier = Modifier,
-    content: ColumnScopedComposableContent,
-) {
-    Column(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(
-                horizontal = 8.dp,
-            )
-            .clip(
-                shape = MaterialTheme.shapes.large,
-            )
-            .background(
-                color = MaterialTheme.colorScheme.background,
-            )
-            .animateContentSize(),
-        content = content,
-    )
-}
