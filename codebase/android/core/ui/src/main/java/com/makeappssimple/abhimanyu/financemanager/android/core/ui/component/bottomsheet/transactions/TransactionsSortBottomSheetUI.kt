@@ -23,6 +23,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.ico
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.SortOption
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetTitle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetTitleData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
 
 @Immutable
@@ -55,7 +56,9 @@ public fun TransactionsSortBottomSheetUI(
     ) {
         stickyHeader {
             MyBottomSheetTitle(
-                textStringResourceId = R.string.bottom_sheet_transactions_sort_title,
+                data = MyBottomSheetTitleData(
+                    textStringResourceId = R.string.bottom_sheet_transactions_sort_title,
+                )
             )
         }
         items(

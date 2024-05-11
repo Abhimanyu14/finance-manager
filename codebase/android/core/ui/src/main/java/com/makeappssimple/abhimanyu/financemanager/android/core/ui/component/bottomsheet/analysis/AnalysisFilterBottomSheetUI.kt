@@ -11,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
@@ -30,20 +31,25 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.tex
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.textfield.MyReadOnlyTextFieldEvent
 import java.time.LocalDate
 
+@Immutable
+public data class AnalysisFilterBottomSheetUIData(
+    val isFromDatePickerDialogVisible: Boolean,
+    val isToDatePickerDialogVisible: Boolean,
+    @StringRes val headingTextStringResourceId: Int,
+    val fromDatePickerEndLocalDate: LocalDate,
+    val fromDatePickerSelectedLocalDate: LocalDate,
+    val fromDatePickerStartLocalDate: LocalDate,
+    val toDatePickerEndLocalDate: LocalDate,
+    val toDatePickerSelectedLocalDate: LocalDate,
+    val toDatePickerStartLocalDate: LocalDate,
+    val fromDateText: String,
+    val toDateText: String,
+)
+
 @Composable
 public fun AnalysisFilterBottomSheetUI(
     modifier: Modifier = Modifier,
-    isFromDatePickerDialogVisible: Boolean,
-    isToDatePickerDialogVisible: Boolean,
-    @StringRes headingTextStringResourceId: Int,
-    fromDatePickerEndLocalDate: LocalDate,
-    fromDatePickerSelectedLocalDate: LocalDate,
-    fromDatePickerStartLocalDate: LocalDate,
-    toDatePickerEndLocalDate: LocalDate,
-    toDatePickerSelectedLocalDate: LocalDate,
-    toDatePickerStartLocalDate: LocalDate,
-    fromDateText: String,
-    toDateText: String,
+    data: AnalysisFilterBottomSheetUIData,
     onClearButtonClick: () -> Unit,
     onDateRangeOptionClick: (dateRangeOption: DateRangeOptions) -> Unit,
     onFromDateSelected: (LocalDate) -> Unit,
@@ -57,10 +63,10 @@ public fun AnalysisFilterBottomSheetUI(
 ) {
     MyDatePicker(
         data = MyDatePickerData(
-            isVisible = isFromDatePickerDialogVisible,
-            endLocalDate = fromDatePickerEndLocalDate,
-            selectedLocalDate = fromDatePickerSelectedLocalDate,
-            startLocalDate = fromDatePickerStartLocalDate,
+            isVisible = data.isFromDatePickerDialogVisible,
+            endLocalDate = data.fromDatePickerEndLocalDate,
+            selectedLocalDate = data.fromDatePickerSelectedLocalDate,
+            startLocalDate = data.fromDatePickerStartLocalDate,
         ),
         handleEvent = { event ->
             when (event) {
@@ -77,10 +83,10 @@ public fun AnalysisFilterBottomSheetUI(
     )
     MyDatePicker(
         data = MyDatePickerData(
-            isVisible = isToDatePickerDialogVisible,
-            endLocalDate = toDatePickerEndLocalDate,
-            selectedLocalDate = toDatePickerSelectedLocalDate,
-            startLocalDate = toDatePickerStartLocalDate,
+            isVisible = data.isToDatePickerDialogVisible,
+            endLocalDate = data.toDatePickerEndLocalDate,
+            selectedLocalDate = data.toDatePickerSelectedLocalDate,
+            startLocalDate = data.toDatePickerStartLocalDate,
         ),
         handleEvent = { event ->
             when (event) {
@@ -115,7 +121,7 @@ public fun AnalysisFilterBottomSheetUI(
                     .weight(
                         weight = 1F,
                     ),
-                textStringResourceId = headingTextStringResourceId,
+                textStringResourceId = data.headingTextStringResourceId,
                 style = MaterialTheme.typography.headlineLarge
                     .copy(
                         color = MaterialTheme.colorScheme.onBackground,
@@ -151,7 +157,7 @@ public fun AnalysisFilterBottomSheetUI(
                         horizontal = 8.dp,
                     ),
                 data = MyReadOnlyTextFieldData(
-                    value = fromDateText,
+                    value = data.fromDateText,
                     labelTextStringResourceId = R.string.bottom_sheet_analysis_filter_from_date,
                 ),
                 handleEvent = { event ->
@@ -171,7 +177,7 @@ public fun AnalysisFilterBottomSheetUI(
                         horizontal = 8.dp,
                     ),
                 data = MyReadOnlyTextFieldData(
-                    value = toDateText,
+                    value = data.toDateText,
                     labelTextStringResourceId = R.string.bottom_sheet_analysis_filter_to_date,
                 ),
                 handleEvent = { event ->

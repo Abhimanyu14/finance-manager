@@ -148,8 +148,8 @@ public fun SettingsScreen(
     LaunchedEffect(
         key1 = Unit,
     ) {
-        viewModel.event.collect {
-            when (it) {
+        viewModel.event.collect { event ->
+            when (event) {
                 is SettingsScreenEvent.RestoreDataFailed -> {
                     coroutineScope.launch {
                         val result = uiState.snackbarHostState

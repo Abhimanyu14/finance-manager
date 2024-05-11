@@ -12,6 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typealiases.ComposableContent
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typealiases.NullableComposableContent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.navigation_back_button.MyNavigationBackButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.navigation_back_button.MyNavigationBackButtonEvents
 
 @Composable
 public fun MyTopAppBar(
@@ -29,8 +30,12 @@ public fun MyTopAppBar(
         appBarActions = appBarActions,
         navigationBackButton = {
             MyNavigationBackButton(
-                onClick = {
-                    navigationAction?.invoke()
+                handleEvent = { events ->
+                    when (events) {
+                        is MyNavigationBackButtonEvents.OnClick -> {
+                            navigationAction?.invoke()
+                        }
+                    }
                 },
             )
         },

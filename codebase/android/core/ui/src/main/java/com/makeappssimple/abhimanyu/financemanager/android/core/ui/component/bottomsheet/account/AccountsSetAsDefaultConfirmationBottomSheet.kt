@@ -1,29 +1,48 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
-import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyConfirmationBottomSheetUI
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyConfirmationBottomSheetData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyConfirmationBottomSheetEvent
+
+@Immutable
+public sealed class AccountsSetAsDefaultConfirmationBottomSheetEvent {
+    public data object OnNegativeButtonClick : AccountsSetAsDefaultConfirmationBottomSheetEvent()
+    public data object OnPositiveButtonClick : AccountsSetAsDefaultConfirmationBottomSheetEvent()
+}
 
 @Composable
 public fun AccountsSetAsDefaultConfirmationBottomSheet(
-    onNegativeButtonClick: () -> Unit,
-    onPositiveButtonClick: () -> Unit,
+    handleEvent: (event: AccountsSetAsDefaultConfirmationBottomSheetEvent) -> Unit = {},
 ) {
-    MyConfirmationBottomSheetUI(
-        title = stringResource(
-            id = R.string.screen_accounts_bottom_sheet_set_as_default_title,
+    MyConfirmationBottomSheet(
+        data = MyConfirmationBottomSheetData(
+            message = stringResource(
+                id = R.string.screen_accounts_bottom_sheet_set_as_default_message,
+            ),
+            negativeButtonText = stringResource(
+                id = R.string.screen_accounts_bottom_sheet_set_as_default_negative_button_text,
+            ),
+            positiveButtonText = stringResource(
+                id = R.string.screen_accounts_bottom_sheet_set_as_default_positive_button_text,
+            ),
+            title = stringResource(
+                id = R.string.screen_accounts_bottom_sheet_set_as_default_title,
+            ),
         ),
-        message = stringResource(
-            id = R.string.screen_accounts_bottom_sheet_set_as_default_message,
-        ),
-        positiveButtonText = stringResource(
-            id = R.string.screen_accounts_bottom_sheet_set_as_default_positive_button_text,
-        ),
-        negativeButtonText = stringResource(
-            id = R.string.screen_accounts_bottom_sheet_set_as_default_negative_button_text,
-        ),
-        onNegativeButtonClick = onNegativeButtonClick,
-        onPositiveButtonClick = onPositiveButtonClick,
+        handleEvent = { event ->
+            when (event) {
+                is MyConfirmationBottomSheetEvent.OnNegativeButtonClick -> {
+                    handleEvent(AccountsSetAsDefaultConfirmationBottomSheetEvent.OnNegativeButtonClick)
+                }
+
+                is MyConfirmationBottomSheetEvent.OnPositiveButtonClick -> {
+                    handleEvent(AccountsSetAsDefaultConfirmationBottomSheetEvent.OnPositiveButtonClick)
+                }
+            }
+        },
     )
 }

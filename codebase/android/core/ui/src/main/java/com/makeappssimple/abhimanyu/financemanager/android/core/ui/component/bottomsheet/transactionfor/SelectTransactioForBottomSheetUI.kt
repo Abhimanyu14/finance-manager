@@ -11,6 +11,7 @@ import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.VerticalSpacer
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetTitle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetTitleData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transactionfor.TransactionForListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transactionfor.TransactionForListItemDataAndEventHandler
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
@@ -34,7 +35,9 @@ internal fun SelectTransactionForBottomSheetUI(
     ) {
         stickyHeader {
             MyBottomSheetTitle(
-                textStringResourceId = data.titleTextStringResourceId,
+                data = MyBottomSheetTitleData(
+                    textStringResourceId = data.titleTextStringResourceId,
+                )
             )
         }
         items(

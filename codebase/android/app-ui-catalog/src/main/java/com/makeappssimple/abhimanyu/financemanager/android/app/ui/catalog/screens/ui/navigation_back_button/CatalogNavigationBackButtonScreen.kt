@@ -35,9 +35,7 @@ public fun CatalogNavigationBackButtonScreen(
             horizontalArrangement = Arrangement.Center,
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            MyNavigationBackButton(
-                onClick = {},
-            )
+            MyNavigationBackButton()
         }
     }
 }

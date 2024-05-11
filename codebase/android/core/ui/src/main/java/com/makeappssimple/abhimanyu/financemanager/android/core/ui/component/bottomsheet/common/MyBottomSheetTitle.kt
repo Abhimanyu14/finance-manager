@@ -6,14 +6,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
+@Immutable
+public data class MyBottomSheetTitleData(
+    @StringRes val textStringResourceId: Int,
+)
+
 @Composable
 public fun MyBottomSheetTitle(
+    data: MyBottomSheetTitleData,
     modifier: Modifier = Modifier,
-    @StringRes textStringResourceId: Int,
 ) {
     MyText(
         modifier = modifier
@@ -24,7 +30,7 @@ public fun MyBottomSheetTitle(
             .padding(
                 all = 16.dp,
             ),
-        textStringResourceId = textStringResourceId,
+        textStringResourceId = data.textStringResourceId,
         style = MaterialTheme.typography.headlineLarge
             .copy(
                 color = MaterialTheme.colorScheme.onBackground,

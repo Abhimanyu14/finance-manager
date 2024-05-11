@@ -7,57 +7,57 @@ import kotlin.math.abs
 public fun sanitizeTransactions(
     transactions: List<TransactionEntity>,
 ): List<TransactionEntity> {
-    return transactions.map {
-        when (it.transactionType) {
+    return transactions.map { transaction ->
+        when (transaction.transactionType) {
             TransactionType.INCOME -> {
-                it.copy(
+                transaction.copy(
                     accountFromId = null,
                 )
             }
 
             TransactionType.EXPENSE -> {
-                it.copy(
+                transaction.copy(
                     accountToId = null,
-                    amount = it.amount.copy(
-                        value = abs(it.amount.value),
+                    amount = transaction.amount.copy(
+                        value = abs(transaction.amount.value),
                     ),
                 )
             }
 
             TransactionType.TRANSFER -> {
-                it.copy(
+                transaction.copy(
                     categoryId = null,
                 )
             }
 
             TransactionType.ADJUSTMENT -> {
-                val accountId = it.accountToId
-                it.copy(
+                val accountId = transaction.accountToId
+                transaction.copy(
                     categoryId = null,
-                    accountFromId = if (it.amount.value < 0) {
+                    accountFromId = if (transaction.amount.value < 0) {
                         accountId
                     } else {
-                        it.accountFromId
+                        transaction.accountFromId
                     },
-                    accountToId = if (it.amount.value < 0) {
+                    accountToId = if (transaction.amount.value < 0) {
                         null
                     } else {
-                        it.accountToId
+                        transaction.accountToId
                     },
-                    amount = it.amount.copy(
-                        value = abs(it.amount.value),
+                    amount = transaction.amount.copy(
+                        value = abs(transaction.amount.value),
                     ),
                 )
             }
 
             TransactionType.INVESTMENT -> {
-                it.copy(
+                transaction.copy(
                     accountToId = null,
                 )
             }
 
             TransactionType.REFUND -> {
-                it.copy(
+                transaction.copy(
                     accountFromId = null,
                 )
             }

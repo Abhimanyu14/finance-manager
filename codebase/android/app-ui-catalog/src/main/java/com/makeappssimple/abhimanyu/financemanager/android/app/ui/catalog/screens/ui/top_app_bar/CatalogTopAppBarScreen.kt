@@ -41,9 +41,7 @@ public fun CatalogTopAppBarScreen(
                 titleText = "Title",
                 appBarActions = {},
                 navigationBackButton = {
-                    MyNavigationBackButton(
-                        onClick = {},
-                    )
+                    MyNavigationBackButton()
                 },
             )
             MyTopAppBarUI(
@@ -51,9 +49,7 @@ public fun CatalogTopAppBarScreen(
                 titleText = "Title",
                 appBarActions = {},
                 navigationBackButton = {
-                    MyNavigationBackButton(
-                        onClick = {},
-                    )
+                    MyNavigationBackButton()
                 },
             )
         }

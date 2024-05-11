@@ -23,7 +23,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Bottom
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category.CategoriesDeleteConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category.CategoriesDeleteConfirmationBottomSheetEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category.CategoriesSetAsDefaultConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category.CategoriesSetAsDefaultConfirmationBottomSheetData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category.CategoriesSetAsDefaultConfirmationBottomSheetEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category.CategoryMenuBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid.CategoriesGrid
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
@@ -73,20 +76,25 @@ internal fun CategoriesScreenUI(
             when (uiState.screenBottomSheetType) {
                 is CategoriesScreenBottomSheetType.DeleteConfirmation -> {
                     CategoriesDeleteConfirmationBottomSheet(
-                        onNegativeButtonClick = {
-                            uiState.setCategoryIdToDelete(null)
-                            handleUIEvent(CategoriesScreenUIEvent.OnBottomSheetDismissed)
-                        },
-                        onPositiveButtonClick = {
-                            uiState.categoryIdToDelete?.let { categoryIdToDeleteValue ->
-                                handleUIEvent(
-                                    CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.DeleteButtonClick(
-                                        categoryId = categoryIdToDeleteValue,
-                                    )
-                                )
+                        handleEvent = { event ->
+                            when (event) {
+                                CategoriesDeleteConfirmationBottomSheetEvent.OnNegativeButtonClick -> {
+                                    uiState.setCategoryIdToDelete(null)
+                                    handleUIEvent(CategoriesScreenUIEvent.OnBottomSheetDismissed)
+                                }
+
+                                CategoriesDeleteConfirmationBottomSheetEvent.OnPositiveButtonClick -> {
+                                    uiState.categoryIdToDelete?.let { categoryIdToDeleteValue ->
+                                        handleUIEvent(
+                                            CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.DeleteButtonClick(
+                                                categoryId = categoryIdToDeleteValue,
+                                            )
+                                        )
+                                    }
+                                    uiState.setCategoryIdToDelete(null)
+                                    handleUIEvent(CategoriesScreenUIEvent.OnBottomSheetDismissed)
+                                }
                             }
-                            uiState.setCategoryIdToDelete(null)
-                            handleUIEvent(CategoriesScreenUIEvent.OnBottomSheetDismissed)
                         },
                     )
                 }
@@ -97,12 +105,19 @@ internal fun CategoriesScreenUI(
 
                 is CategoriesScreenBottomSheetType.SetAsDefaultConfirmation -> {
                     CategoriesSetAsDefaultConfirmationBottomSheet(
-                        transactionType = uiState.validTransactionTypes[uiState.selectedTabIndex],
-                        onNegativeButtonClick = {
-                            handleUIEvent(CategoriesScreenUIEvent.OnCategoriesSetAsDefaultConfirmationBottomSheet.NegativeButtonClick)
-                        },
-                        onPositiveButtonClick = {
-                            handleUIEvent(CategoriesScreenUIEvent.OnCategoriesSetAsDefaultConfirmationBottomSheet.PositiveButtonClick)
+                        data = CategoriesSetAsDefaultConfirmationBottomSheetData(
+                            transactionType = uiState.validTransactionTypes[uiState.selectedTabIndex],
+                        ),
+                        handleEvent = { event ->
+                            when (event) {
+                                CategoriesSetAsDefaultConfirmationBottomSheetEvent.OnNegativeButtonClick -> {
+                                    handleUIEvent(CategoriesScreenUIEvent.OnCategoriesSetAsDefaultConfirmationBottomSheet.NegativeButtonClick)
+                                }
+
+                                CategoriesSetAsDefaultConfirmationBottomSheetEvent.OnPositiveButtonClick -> {
+                                    handleUIEvent(CategoriesScreenUIEvent.OnCategoriesSetAsDefaultConfirmationBottomSheet.PositiveButtonClick)
+                                }
+                            }
                         },
                     )
                 }

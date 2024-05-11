@@ -2,6 +2,7 @@ package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bo
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,25 +23,30 @@ public enum class DateRangeOptions(
     ),
 }
 
+@Immutable
+public data class AnalysisFilterBottomSheetData(
+    val selectedFilter: Filter,
+    @StringRes val headingTextStringResourceId: Int,
+    val endLocalDate: LocalDate,
+    val startLocalDate: LocalDate,
+    val startOfMonthLocalDate: LocalDate,
+    val startOfYearLocalDate: LocalDate,
+)
+
 @Composable
 public fun AnalysisFilterBottomSheet(
-    selectedFilter: Filter,
-    @StringRes headingTextStringResourceId: Int,
-    endLocalDate: LocalDate,
-    startLocalDate: LocalDate,
-    startOfMonthLocalDate: LocalDate,
-    startOfYearLocalDate: LocalDate,
+    data: AnalysisFilterBottomSheetData,
     onNegativeButtonClick: () -> Unit,
     onPositiveButtonClick: (updatedFilter: Filter) -> Unit,
 ) {
     var fromSelectedLocalDate by remember {
         mutableStateOf(
-            value = selectedFilter.fromLocalDate ?: startLocalDate,
+            value = data.selectedFilter.fromLocalDate ?: data.startLocalDate,
         )
     }
     var toSelectedLocalDate by remember {
         mutableStateOf(
-            value = selectedFilter.toLocalDate ?: endLocalDate,
+            value = data.selectedFilter.toLocalDate ?: data.endLocalDate,
         )
     }
     var isFromDatePickerDialogVisible by remember {
@@ -51,31 +57,33 @@ public fun AnalysisFilterBottomSheet(
     }
 
     AnalysisFilterBottomSheetUI(
-        isFromDatePickerDialogVisible = isFromDatePickerDialogVisible,
-        isToDatePickerDialogVisible = isToDatePickerDialogVisible,
-        headingTextStringResourceId = headingTextStringResourceId,
-        fromDatePickerEndLocalDate = toSelectedLocalDate,
-        fromDatePickerSelectedLocalDate = fromSelectedLocalDate,
-        fromDatePickerStartLocalDate = startLocalDate,
-        toDatePickerEndLocalDate = endLocalDate,
-        toDatePickerSelectedLocalDate = toSelectedLocalDate,
-        toDatePickerStartLocalDate = fromSelectedLocalDate,
-        fromDateText = fromSelectedLocalDate.formattedDate(),
-        toDateText = toSelectedLocalDate.formattedDate(),
+        data = AnalysisFilterBottomSheetUIData(
+            isFromDatePickerDialogVisible = isFromDatePickerDialogVisible,
+            isToDatePickerDialogVisible = isToDatePickerDialogVisible,
+            headingTextStringResourceId = data.headingTextStringResourceId,
+            fromDatePickerEndLocalDate = toSelectedLocalDate,
+            fromDatePickerSelectedLocalDate = fromSelectedLocalDate,
+            fromDatePickerStartLocalDate = data.startLocalDate,
+            toDatePickerEndLocalDate = data.endLocalDate,
+            toDatePickerSelectedLocalDate = toSelectedLocalDate,
+            toDatePickerStartLocalDate = fromSelectedLocalDate,
+            fromDateText = fromSelectedLocalDate.formattedDate(),
+            toDateText = toSelectedLocalDate.formattedDate(),
+        ),
         onClearButtonClick = {
-            fromSelectedLocalDate = startLocalDate
-            toSelectedLocalDate = endLocalDate
+            fromSelectedLocalDate = data.startLocalDate
+            toSelectedLocalDate = data.endLocalDate
         },
-        onDateRangeOptionClick = {
-            when (it) {
+        onDateRangeOptionClick = { dateRangeOptions ->
+            when (dateRangeOptions) {
                 DateRangeOptions.THIS_MONTH -> {
-                    fromSelectedLocalDate = startOfMonthLocalDate
-                    toSelectedLocalDate = endLocalDate
+                    fromSelectedLocalDate = data.startOfMonthLocalDate
+                    toSelectedLocalDate = data.endLocalDate
                 }
 
                 DateRangeOptions.THIS_YEAR -> {
-                    fromSelectedLocalDate = startOfYearLocalDate
-                    toSelectedLocalDate = endLocalDate
+                    fromSelectedLocalDate = data.startOfYearLocalDate
+                    toSelectedLocalDate = data.endLocalDate
                 }
             }
         },
@@ -86,13 +94,13 @@ public fun AnalysisFilterBottomSheet(
             isFromDatePickerDialogVisible = true
         },
         onNegativeButtonClick = {
-            fromSelectedLocalDate = startLocalDate
-            toSelectedLocalDate = endLocalDate
+            fromSelectedLocalDate = data.startLocalDate
+            toSelectedLocalDate = data.endLocalDate
             onNegativeButtonClick()
         },
         onPositiveButtonClick = {
-            val isFromDateSameAsOldestTransactionDate = fromSelectedLocalDate == startLocalDate
-            val isToDateSameAsCurrentDayDate = toSelectedLocalDate == endLocalDate
+            val isFromDateSameAsOldestTransactionDate = fromSelectedLocalDate == data.startLocalDate
+            val isToDateSameAsCurrentDayDate = toSelectedLocalDate == data.endLocalDate
             val isDateFilterCleared = isFromDateSameAsOldestTransactionDate &&
                     isToDateSameAsCurrentDayDate
             onPositiveButtonClick(

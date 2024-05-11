@@ -21,6 +21,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Bottom
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactionfor.TransactionForValuesDeleteConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactionfor.TransactionForValuesDeleteConfirmationBottomSheetEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactionfor.TransactionForValuesMenuBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transactionfor.TransactionForListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.transactionfor.TransactionForListItemData
@@ -57,11 +58,16 @@ internal fun TransactionForValuesScreenUI(
             when (uiState.screenBottomSheetType) {
                 is TransactionForValuesScreenBottomSheetType.DeleteConfirmation -> {
                     TransactionForValuesDeleteConfirmationBottomSheet(
-                        onNegativeButtonClick = {
-                            handleUIEvent(TransactionForValuesScreenUIEvent.OnTransactionForValuesDeleteConfirmationBottomSheet.NegativeButtonClick)
-                        },
-                        onPositiveButtonClick = {
-                            handleUIEvent(TransactionForValuesScreenUIEvent.OnTransactionForValuesDeleteConfirmationBottomSheet.PositiveButtonClick)
+                        handleEvent = { event ->
+                            when (event) {
+                                TransactionForValuesDeleteConfirmationBottomSheetEvent.OnNegativeButtonClick -> {
+                                    handleUIEvent(TransactionForValuesScreenUIEvent.OnTransactionForValuesDeleteConfirmationBottomSheet.NegativeButtonClick)
+                                }
+
+                                TransactionForValuesDeleteConfirmationBottomSheetEvent.OnPositiveButtonClick -> {
+                                    handleUIEvent(TransactionForValuesScreenUIEvent.OnTransactionForValuesDeleteConfirmationBottomSheet.PositiveButtonClick)
+                                }
+                            }
                         },
                     )
                 }

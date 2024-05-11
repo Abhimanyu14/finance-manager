@@ -326,8 +326,8 @@ internal fun SettingsScreenUI(
                         }
                     }
                 },
-            ) { index, it ->
-                when (it.data) {
+            ) { index, listItemData ->
+                when (listItemData.data) {
                     is SettingsListItemAppVersionData -> {
                         uiState.appVersion?.let {
                             SettingsListItemAppVersion(
@@ -356,8 +356,8 @@ internal fun SettingsScreenUI(
                                 .testTag(
                                     tag = "Item $index",
                                 ),
-                            data = it.data,
-                            handleEvent = it.handleEvent,
+                            data = listItemData.data,
+                            handleEvent = listItemData.handleEvent,
                         )
                     }
 
@@ -367,7 +367,7 @@ internal fun SettingsScreenUI(
                                 .testTag(
                                     tag = "Item $index",
                                 ),
-                            data = it.data,
+                            data = listItemData.data,
                         )
                     }
                 }

@@ -21,8 +21,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.Bottom
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.CommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.common.rememberCommonScreenUIState
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account.AccountsDeleteConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account.AccountsDeleteConfirmationBottomSheetEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account.AccountsMenuBottomSheet
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account.AccountsSetAsDefaultConfirmationBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.account.AccountsSetAsDefaultConfirmationBottomSheetEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.accounts.AccountsListItemContentEvent
@@ -61,11 +63,16 @@ internal fun AccountsScreenUI(
             when (uiState.screenBottomSheetType) {
                 is AccountsScreenBottomSheetType.DeleteConfirmation -> {
                     AccountsDeleteConfirmationBottomSheet(
-                        onNegativeButtonClick = {
-                            handleUIEvent(AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.NegativeButtonClick)
-                        },
-                        onPositiveButtonClick = {
-                            handleUIEvent(AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.PositiveButtonClick)
+                        handleEvent = { event ->
+                            when (event) {
+                                AccountsDeleteConfirmationBottomSheetEvent.OnNegativeButtonClick -> {
+                                    handleUIEvent(AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.NegativeButtonClick)
+                                }
+
+                                AccountsDeleteConfirmationBottomSheetEvent.OnPositiveButtonClick -> {
+                                    handleUIEvent(AccountsScreenUIEvent.OnAccountsDeleteConfirmationBottomSheet.PositiveButtonClick)
+                                }
+                            }
                         },
                     )
                 }
@@ -76,11 +83,16 @@ internal fun AccountsScreenUI(
 
                 is AccountsScreenBottomSheetType.SetAsDefaultConfirmation -> {
                     AccountsSetAsDefaultConfirmationBottomSheet(
-                        onNegativeButtonClick = {
-                            handleUIEvent(AccountsScreenUIEvent.OnAccountsSetAsDefaultConfirmationBottomSheet.NegativeButtonClick)
-                        },
-                        onPositiveButtonClick = {
-                            handleUIEvent(AccountsScreenUIEvent.OnAccountsSetAsDefaultConfirmationBottomSheet.PositiveButtonClick)
+                        handleEvent = { event ->
+                            when (event) {
+                                AccountsSetAsDefaultConfirmationBottomSheetEvent.OnNegativeButtonClick -> {
+                                    handleUIEvent(AccountsScreenUIEvent.OnAccountsSetAsDefaultConfirmationBottomSheet.NegativeButtonClick)
+                                }
+
+                                AccountsSetAsDefaultConfirmationBottomSheetEvent.OnPositiveButtonClick -> {
+                                    handleUIEvent(AccountsScreenUIEvent.OnAccountsSetAsDefaultConfirmationBottomSheet.PositiveButtonClick)
+                                }
+                            }
                         },
                     )
                 }

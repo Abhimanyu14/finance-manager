@@ -18,7 +18,7 @@ public data class MyBottomSheetListData(
 )
 
 @Composable
-public fun MyBottomSheetListData(
+public fun MyBottomSheetList(
     modifier: Modifier = Modifier,
     data: MyBottomSheetListData,
 ) {

@@ -12,6 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.com
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetTitle
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.common.MyBottomSheetTitleData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid.CategoriesGrid
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.util.minimumBottomSheetHeight
@@ -35,7 +36,9 @@ internal fun SelectCategoryBottomSheetUI(
             ),
     ) {
         MyBottomSheetTitle(
-            textStringResourceId = R.string.bottom_sheet_select_category_title,
+            data = MyBottomSheetTitleData(
+                textStringResourceId = R.string.bottom_sheet_select_category_title,
+            )
         )
         CategoriesGrid(
             categoriesGridItemDataList = items.map {
