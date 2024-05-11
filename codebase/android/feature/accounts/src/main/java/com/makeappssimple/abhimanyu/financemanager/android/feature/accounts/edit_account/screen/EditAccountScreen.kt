@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLo
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIEvent
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.rememberAddOrEditAccountScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.rememberAddOrEditAccountScreenUIStateAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.viewmodel.AddOrEditAccountScreenViewModel
 
 @Composable
@@ -27,7 +27,7 @@ public fun EditAccountScreen(
     )
 
     val screenUIData: MyResult<AddOrEditAccountScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
-    val uiState = rememberAddOrEditAccountScreenUIState(
+    val uiState = rememberAddOrEditAccountScreenUIStateAndEvents(
         data = screenUIData,
         isEdit = true,
     )
@@ -48,7 +48,7 @@ public fun EditAccountScreen(
                 }
 
                 is AddOrEditAccountScreenUIEvent.OnNavigationBackButtonClick -> {
-                    uiState.resetScreenBottomSheetType()
+                    uiState.events.resetScreenBottomSheetType()
                 }
 
                 is AddOrEditAccountScreenUIEvent.OnClearBalanceAmountValueButtonClick -> {
@@ -95,7 +95,7 @@ public fun EditAccountScreen(
     }
 
     AddOrEditAccountScreenUI(
-        uiState = uiState,
+        uiState = uiState.state,
         handleUIEvent = handleUIEvent,
     )
 }

@@ -11,6 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orZero
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 
 @Stable
 internal class AccountsScreenUIStateAndEvents(
@@ -24,7 +25,7 @@ internal data class AccountsScreenUIStateEvents(
     val setAccountIdToDelete: (Int?) -> Unit,
     val setClickedItemId: (Int?) -> Unit,
     val setScreenBottomSheetType: (AccountsScreenBottomSheetType) -> Unit,
-)
+) : ScreenUIStateEvents
 
 @Composable
 internal fun rememberAccountsScreenUIStateAndEvents(

@@ -15,6 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.MyColor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Amount
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.overview_card.orDefault
 
 @Stable
@@ -27,7 +28,7 @@ internal class HomeScreenUIStateAndEvents(
 internal class HomeScreenUIStateEvents(
     val resetScreenBottomSheetType: () -> Unit,
     val setBalanceVisible: (Boolean) -> Unit,
-)
+) : ScreenUIStateEvents
 
 @Composable
 internal fun rememberHomeScreenUIStateAndEvents(

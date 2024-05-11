@@ -12,6 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.My
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.orDefault
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.orEmpty
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 
 @Stable
 internal class TransactionsScreenUIStateAndEvents(
@@ -24,7 +25,7 @@ internal class TransactionsScreenUIStateEvents(
     val resetScreenBottomSheetType: () -> Unit,
     val setIsInSelectionMode: (Boolean) -> Unit,
     val setScreenBottomSheetType: (TransactionsScreenBottomSheetType) -> Unit,
-)
+) : ScreenUIStateEvents
 
 @Composable
 internal fun rememberTransactionsScreenUIStateAndEvents(

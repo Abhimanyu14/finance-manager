@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUIEvent
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.rememberAddOrEditTransactionScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.rememberAddOrEditTransactionScreenUIStateAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.viewmodel.AddOrEditTransactionScreenViewModel
 
 @Composable
@@ -28,22 +28,22 @@ public fun EditTransactionScreen(
     )
 
     val screenUIData: MyResult<AddOrEditTransactionScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
-    val uiState = rememberAddOrEditTransactionScreenUIState(
+    val uiStateAndEvents = rememberAddOrEditTransactionScreenUIStateAndEvents(
         data = screenUIData,
         isEdit = true,
     )
     val handleUIEvent = remember(
         key1 = viewModel,
-        key2 = uiState,
+        key2 = uiStateAndEvents,
     ) {
         { uiEvent: AddOrEditTransactionScreenUIEvent ->
             when (uiEvent) {
                 is AddOrEditTransactionScreenUIEvent.OnBottomSheetDismissed -> {
-                    uiState.resetScreenBottomSheetType()
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
                 is AddOrEditTransactionScreenUIEvent.OnNavigationBackButtonClick -> {
-                    uiState.resetScreenBottomSheetType()
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
                 is AddOrEditTransactionScreenUIEvent.OnCtaButtonClick -> {
@@ -63,27 +63,27 @@ public fun EditTransactionScreen(
                 }
 
                 is AddOrEditTransactionScreenUIEvent.OnAccountFromTextFieldClick -> {
-                    uiState.setScreenBottomSheetType(
+                    uiStateAndEvents.events.setScreenBottomSheetType(
                         AddOrEditTransactionScreenBottomSheetType.SelectAccountFrom
                     )
                 }
 
                 is AddOrEditTransactionScreenUIEvent.OnAccountToTextFieldClick -> {
-                    uiState.setScreenBottomSheetType(
+                    uiStateAndEvents.events.setScreenBottomSheetType(
                         AddOrEditTransactionScreenBottomSheetType.SelectAccountTo
                     )
                 }
 
                 is AddOrEditTransactionScreenUIEvent.OnTransactionTimeTextFieldClick -> {
-                    uiState.setIsTransactionTimePickerDialogVisible(true)
+                    uiStateAndEvents.events.setIsTransactionTimePickerDialogVisible(true)
                 }
 
                 is AddOrEditTransactionScreenUIEvent.OnTransactionDateTextFieldClick -> {
-                    uiState.setIsTransactionDatePickerDialogVisible(true)
+                    uiStateAndEvents.events.setIsTransactionDatePickerDialogVisible(true)
                 }
 
                 is AddOrEditTransactionScreenUIEvent.OnCategoryTextFieldClick -> {
-                    uiState.setScreenBottomSheetType(
+                    uiStateAndEvents.events.setScreenBottomSheetType(
                         AddOrEditTransactionScreenBottomSheetType.SelectCategory
                     )
                 }
@@ -135,11 +135,11 @@ public fun EditTransactionScreen(
                 }
 
                 is AddOrEditTransactionScreenUIEvent.OnTransactionTimePickerDismissed -> {
-                    uiState.setIsTransactionTimePickerDialogVisible(false)
+                    uiStateAndEvents.events.setIsTransactionTimePickerDialogVisible(false)
                 }
 
                 is AddOrEditTransactionScreenUIEvent.OnTransactionDatePickerDismissed -> {
-                    uiState.setIsTransactionDatePickerDialogVisible(false)
+                    uiStateAndEvents.events.setIsTransactionDatePickerDialogVisible(false)
                 }
 
                 is AddOrEditTransactionScreenUIEvent.OnTitleUpdated -> {
@@ -152,14 +152,14 @@ public fun EditTransactionScreen(
                     viewModel.updateTransactionDate(
                         updatedTransactionDate = uiEvent.updatedTransactionDate,
                     )
-                    uiState.setIsTransactionDatePickerDialogVisible(false)
+                    uiStateAndEvents.events.setIsTransactionDatePickerDialogVisible(false)
                 }
 
                 is AddOrEditTransactionScreenUIEvent.OnTransactionTimeUpdated -> {
                     viewModel.updateTransactionTime(
                         updatedTransactionTime = uiEvent.updatedTransactionTime,
                     )
-                    uiState.setIsTransactionTimePickerDialogVisible(false)
+                    uiStateAndEvents.events.setIsTransactionTimePickerDialogVisible(false)
                 }
             }
         }
@@ -172,7 +172,7 @@ public fun EditTransactionScreen(
     }
 
     AddOrEditTransactionScreenUI(
-        uiState = uiState,
+        uiState = uiStateAndEvents.state,
         handleUIEvent = handleUIEvent,
     )
 }

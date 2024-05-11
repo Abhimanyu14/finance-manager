@@ -11,7 +11,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLo
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.AddOrEditTransactionForScreenUIEvent
-import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.rememberAddOrEditTransactionForScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.screen.rememberAddOrEditTransactionForScreenUIStateAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfor.add_or_edit_transaction_for.viewmodel.AddOrEditTransactionForScreenViewModel
 
 @Composable
@@ -27,22 +27,22 @@ public fun AddTransactionForScreen(
     )
 
     val screenUIData: MyResult<AddOrEditTransactionForScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
-    val uiState = rememberAddOrEditTransactionForScreenUIState(
+    val uiStateAndEvents = rememberAddOrEditTransactionForScreenUIStateAndEvents(
         data = screenUIData,
         isEdit = false,
     )
     val handleUIEvent = remember(
         key1 = viewModel,
-        key2 = uiState,
+        key2 = uiStateAndEvents,
     ) {
         { uiEvent: AddOrEditTransactionForScreenUIEvent ->
             when (uiEvent) {
                 is AddOrEditTransactionForScreenUIEvent.OnNavigationBackButtonClick -> {
-                    uiState.resetScreenBottomSheetType()
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
                 is AddOrEditTransactionForScreenUIEvent.OnBottomSheetDismissed -> {
-                    uiState.resetScreenBottomSheetType()
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
                 is AddOrEditTransactionForScreenUIEvent.OnCtaButtonClick -> {
@@ -73,7 +73,7 @@ public fun AddTransactionForScreen(
     }
 
     AddOrEditTransactionForScreenUI(
-        uiState = uiState,
+        uiState = uiStateAndEvents.state,
         handleUIEvent = handleUIEvent,
     )
 }

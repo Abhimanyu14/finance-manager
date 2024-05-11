@@ -22,25 +22,25 @@ public fun AnalysisScreen(
     )
 
     val screenUIData: MyResult<AnalysisScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
-    val uiState = rememberAnalysisScreenUIState(
+    val uiStateAndEvents = rememberAnalysisScreenUIStateAndEvents(
         data = screenUIData,
     )
     val handleUIEvent = remember(
         key1 = viewModel,
-        key2 = uiState,
+        key2 = uiStateAndEvents,
     ) {
         { uiEvent: AnalysisScreenUIEvent ->
             when (uiEvent) {
                 is AnalysisScreenUIEvent.OnBottomSheetDismissed -> {
-                    uiState.resetScreenBottomSheetType()
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
                 is AnalysisScreenUIEvent.OnFilterActionButtonClick -> {
-                    uiState.setScreenBottomSheetType(AnalysisScreenBottomSheetType.Filters)
+                    uiStateAndEvents.events.setScreenBottomSheetType(AnalysisScreenBottomSheetType.Filters)
                 }
 
                 is AnalysisScreenUIEvent.OnNavigationBackButtonClick -> {
-                    uiState.resetScreenBottomSheetType()
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
                 is AnalysisScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
@@ -51,7 +51,7 @@ public fun AnalysisScreen(
                     viewModel.updateSelectedFilter(
                         updatedSelectedFilter = uiEvent.updatedSelectedFilter,
                     )
-                    uiState.resetScreenBottomSheetType()
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
                 is AnalysisScreenUIEvent.OnTransactionTypeChange -> {
@@ -64,7 +64,7 @@ public fun AnalysisScreen(
     }
 
     AnalysisScreenUI(
-        uiState = uiState,
+        uiState = uiStateAndEvents.state,
         handleUIEvent = handleUIEvent,
     )
 }

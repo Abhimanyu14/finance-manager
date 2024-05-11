@@ -12,7 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.ad
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.AddOrEditCategoryScreenUIEvent
-import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.rememberAddOrEditCategoryScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.screen.rememberAddOrEditCategoryScreenUIStateAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.add_or_edit_category.viewmodel.AddOrEditCategoryScreenViewModel
 
 @Composable
@@ -28,25 +28,25 @@ public fun AddCategoryScreen(
     )
 
     val screenUIData: MyResult<AddOrEditCategoryScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
-    val uiState = rememberAddOrEditCategoryScreenUIState(
+    val uiStateAndEvents = rememberAddOrEditCategoryScreenUIStateAndEvents(
         data = screenUIData,
         isEdit = false,
     )
     val handleUIEvent = remember(
         key1 = viewModel,
-        key2 = uiState,
+        key2 = uiStateAndEvents,
     ) {
         { uiEvent: AddOrEditCategoryScreenUIEvent ->
             when (uiEvent) {
                 is AddOrEditCategoryScreenUIEvent.OnBottomSheetDismissed -> {
-                    uiState.resetScreenBottomSheetType()
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                     viewModel.updateSearchText(
                         updatedSearchText = "",
                     )
                 }
 
                 is AddOrEditCategoryScreenUIEvent.OnNavigationBackButtonClick -> {
-                    uiState.resetScreenBottomSheetType()
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
                 is AddOrEditCategoryScreenUIEvent.OnCtaButtonClick -> {
@@ -58,7 +58,7 @@ public fun AddCategoryScreen(
                 }
 
                 is AddOrEditCategoryScreenUIEvent.OnEmojiCircleClick -> {
-                    uiState.setScreenBottomSheetType(
+                    uiStateAndEvents.events.setScreenBottomSheetType(
                         AddOrEditCategoryScreenBottomSheetType.SelectEmoji
                     )
                 }
@@ -101,7 +101,7 @@ public fun AddCategoryScreen(
     }
 
     AddOrEditCategoryScreenUI(
-        uiState = uiState,
+        uiState = uiStateAndEvents.state,
         handleUIEvent = handleUIEvent,
     )
 }

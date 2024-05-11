@@ -8,6 +8,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateAndEvents
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenUIStateEvents
 
 @Stable
 internal class OpenSourceLicensesScreenUIStateAndEvents(
@@ -18,7 +19,7 @@ internal class OpenSourceLicensesScreenUIStateAndEvents(
 @Stable
 internal class OpenSourceLicensesScreenUIStateEvents(
     val resetScreenBottomSheetType: () -> Unit,
-)
+) : ScreenUIStateEvents
 
 @Composable
 internal fun rememberOpenSourceLicensesScreenUIStateAndEvents(

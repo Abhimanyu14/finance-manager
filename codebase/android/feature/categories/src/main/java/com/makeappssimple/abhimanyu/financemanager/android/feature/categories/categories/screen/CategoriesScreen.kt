@@ -22,40 +22,21 @@ public fun CategoriesScreen(
     )
 
     val screenUIData: MyResult<CategoriesScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
-    val uiState = rememberCategoriesScreenUIState(
+    val uiStateAndEvents = rememberCategoriesScreenUIStateAndEvents(
         data = screenUIData,
     )
     val handleUIEvent = remember(
         key1 = viewModel,
-        key2 = uiState,
+        key2 = uiStateAndEvents,
     ) {
         { uiEvent: CategoriesScreenUIEvent ->
             when (uiEvent) {
                 is CategoriesScreenUIEvent.OnBottomSheetDismissed -> {
-                    uiState.resetScreenBottomSheetType()
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
                 is CategoriesScreenUIEvent.OnNavigationBackButtonClick -> {
-                    uiState.resetScreenBottomSheetType()
-                }
-
-                is CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.DeleteButtonClick -> {
-                    viewModel.deleteCategory(
-                        id = uiEvent.categoryId,
-                    )
-                }
-
-                is CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.EditButtonClick -> {
-                    viewModel.navigateToEditCategoryScreen(
-                        categoryId = uiEvent.categoryId,
-                    )
-                }
-
-                is CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.SetAsDefaultCategoryButtonClick -> {
-                    viewModel.setDefaultCategoryIdInDataStore(
-                        defaultCategoryId = uiEvent.defaultCategoryId,
-                        transactionType = uiEvent.transactionType,
-                    )
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
                 is CategoriesScreenUIEvent.OnFloatingActionButtonClick -> {
@@ -67,7 +48,7 @@ public fun CategoriesScreen(
                 is CategoriesScreenUIEvent.OnCategoriesGridItemClick -> {
                     uiEvent.categoryId?.let {
                         if (uiEvent.isEditVisible || uiEvent.isSetAsDefaultVisible || uiEvent.isDeleteVisible) {
-                            uiState.setScreenBottomSheetType(
+                            uiStateAndEvents.events.setScreenBottomSheetType(
                                 CategoriesScreenBottomSheetType.Menu(
                                     isDeleteVisible = uiEvent.isDeleteVisible,
                                     isEditVisible = uiEvent.isEditVisible,
@@ -75,7 +56,7 @@ public fun CategoriesScreen(
                                     categoryId = uiEvent.categoryId,
                                 )
                             )
-                            uiState.setClickedItemId(uiEvent.categoryId)
+                            uiStateAndEvents.events.setClickedItemId(uiEvent.categoryId)
                         }
                     }
                     Unit
@@ -88,30 +69,62 @@ public fun CategoriesScreen(
                 }
 
                 is CategoriesScreenUIEvent.OnCategoriesSetAsDefaultConfirmationBottomSheet.NegativeButtonClick -> {
-                    uiState.setClickedItemId(null)
-                    uiState.resetScreenBottomSheetType()
+                    uiStateAndEvents.events.setClickedItemId(null)
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
                 is CategoriesScreenUIEvent.OnCategoriesSetAsDefaultConfirmationBottomSheet.PositiveButtonClick -> {
-                    uiState.clickedItemId?.let { clickedItemIdValue ->
+                    uiStateAndEvents.state.clickedItemId?.let { clickedItemIdValue ->
                         viewModel.setDefaultCategoryIdInDataStore(
                             defaultCategoryId = clickedItemIdValue,
-                            transactionType = uiState.validTransactionTypes[uiState.selectedTabIndex],
+                            transactionType = uiStateAndEvents.state.validTransactionTypes[uiStateAndEvents.state.selectedTabIndex],
                         )
                     }
-                    uiState.setClickedItemId(null)
-                    uiState.resetScreenBottomSheetType()
+                    uiStateAndEvents.events.setClickedItemId(null)
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
+                }
+
+                is CategoriesScreenUIEvent.OnCategoryMenuBottomSheet.DeleteButtonClick -> {
+                    uiStateAndEvents.events.setCategoryIdToDelete(uiEvent.categoryId)
+                    uiStateAndEvents.events.setScreenBottomSheetType(CategoriesScreenBottomSheetType.DeleteConfirmation)
+                }
+
+                is CategoriesScreenUIEvent.OnCategoryMenuBottomSheet.EditButtonClick -> {
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
+                    viewModel.navigateToEditCategoryScreen(
+                        categoryId = uiEvent.categoryId,
+                    )
+                }
+
+                is CategoriesScreenUIEvent.OnCategoryMenuBottomSheet.SetAsDefaultButtonClick -> {
+                    uiStateAndEvents.events.setClickedItemId(uiEvent.categoryId)
+                    uiStateAndEvents.events.setScreenBottomSheetType(CategoriesScreenBottomSheetType.SetAsDefaultConfirmation)
                 }
 
                 is CategoriesScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
                     viewModel.navigateUp()
+                }
+
+                is CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.NegativeButtonClick -> {
+                    uiStateAndEvents.events.setCategoryIdToDelete(null)
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
+                }
+
+                is CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.PositiveButtonClick -> {
+                    uiStateAndEvents.state.categoryIdToDelete?.let { categoryIdToDeleteValue ->
+                        viewModel.deleteCategory(
+                            id = categoryIdToDeleteValue,
+                        )
+                    }
+                    uiStateAndEvents.events.setCategoryIdToDelete(null)
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
             }
         }
     }
 
     CategoriesScreenUI(
-        uiState = uiState,
+        uiState = uiStateAndEvents.state,
         handleUIEvent = handleUIEvent,
     )
 }

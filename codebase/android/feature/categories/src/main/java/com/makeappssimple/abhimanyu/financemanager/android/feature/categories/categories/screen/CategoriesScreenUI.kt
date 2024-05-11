@@ -80,20 +80,11 @@ internal fun CategoriesScreenUI(
                         handleEvent = { event ->
                             when (event) {
                                 CategoriesDeleteConfirmationBottomSheetEvent.OnNegativeButtonClick -> {
-                                    uiState.setCategoryIdToDelete(null)
-                                    handleUIEvent(CategoriesScreenUIEvent.OnBottomSheetDismissed)
+                                    handleUIEvent(CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.NegativeButtonClick)
                                 }
 
                                 CategoriesDeleteConfirmationBottomSheetEvent.OnPositiveButtonClick -> {
-                                    uiState.categoryIdToDelete?.let { categoryIdToDeleteValue ->
-                                        handleUIEvent(
-                                            CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.DeleteButtonClick(
-                                                categoryId = categoryIdToDeleteValue,
-                                            )
-                                        )
-                                    }
-                                    uiState.setCategoryIdToDelete(null)
-                                    handleUIEvent(CategoriesScreenUIEvent.OnBottomSheetDismissed)
+                                    handleUIEvent(CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.PositiveButtonClick)
                                 }
                             }
                         },
@@ -132,20 +123,25 @@ internal fun CategoriesScreenUI(
                             isSetAsDefaultVisible = bottomSheetData.isSetAsDefaultVisible,
                         ),
                         onDeleteClick = {
-                            uiState.setCategoryIdToDelete(bottomSheetData.categoryId)
-                            uiState.setScreenBottomSheetType(CategoriesScreenBottomSheetType.DeleteConfirmation)
+                            handleUIEvent(
+                                CategoriesScreenUIEvent.OnCategoryMenuBottomSheet.DeleteButtonClick(
+                                    categoryId = bottomSheetData.categoryId,
+                                )
+                            )
                         },
                         onEditClick = {
-                            uiState.resetScreenBottomSheetType()
                             handleUIEvent(
-                                CategoriesScreenUIEvent.OnCategoriesDeleteConfirmationBottomSheet.EditButtonClick(
+                                CategoriesScreenUIEvent.OnCategoryMenuBottomSheet.EditButtonClick(
                                     categoryId = bottomSheetData.categoryId,
                                 )
                             )
                         },
                         onSetAsDefaultClick = {
-                            uiState.setClickedItemId(bottomSheetData.categoryId)
-                            uiState.setScreenBottomSheetType(CategoriesScreenBottomSheetType.SetAsDefaultConfirmation)
+                            handleUIEvent(
+                                CategoriesScreenUIEvent.OnCategoryMenuBottomSheet.SetAsDefaultButtonClick(
+                                    categoryId = bottomSheetData.categoryId,
+                                )
+                            )
                         },
                     )
                 }

@@ -14,7 +14,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLo
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.AddOrEditAccountScreenUIEvent
-import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.rememberAddOrEditAccountScreenUIState
+import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.screen.rememberAddOrEditAccountScreenUIStateAndEvents
 import com.makeappssimple.abhimanyu.financemanager.android.feature.accounts.add_or_edit_account.viewmodel.AddOrEditAccountScreenViewModel
 
 @Composable
@@ -33,13 +33,13 @@ public fun AddAccountScreen(
     val isKeyboardOpen = WindowInsets.isImeVisible
 
     val screenUIData: MyResult<AddOrEditAccountScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
-    val uiState = rememberAddOrEditAccountScreenUIState(
+    val uiStateAndEvents = rememberAddOrEditAccountScreenUIStateAndEvents(
         data = screenUIData,
         isEdit = false,
     )
     val handleUIEvent = remember(
         key1 = viewModel,
-        key2 = uiState,
+        key2 = uiStateAndEvents,
     ) {
         { uiEvent: AddOrEditAccountScreenUIEvent ->
             when (uiEvent) {
@@ -50,7 +50,7 @@ public fun AddAccountScreen(
                 is AddOrEditAccountScreenUIEvent.OnBalanceAmountValueUpdated -> {}
 
                 is AddOrEditAccountScreenUIEvent.OnNavigationBackButtonClick -> {
-                    uiState.resetScreenBottomSheetType()
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
                 is AddOrEditAccountScreenUIEvent.OnClearBalanceAmountValueButtonClick -> {
@@ -105,7 +105,7 @@ public fun AddAccountScreen(
     }
 
     AddOrEditAccountScreenUI(
-        uiState = uiState,
+        uiState = uiStateAndEvents.state,
         handleUIEvent = handleUIEvent,
     )
 }
