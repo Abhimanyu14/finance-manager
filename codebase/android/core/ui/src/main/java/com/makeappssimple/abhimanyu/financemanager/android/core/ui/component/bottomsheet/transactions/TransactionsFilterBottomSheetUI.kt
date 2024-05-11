@@ -304,7 +304,7 @@ public fun TransactionsFiltersBottomSheetUI(
                 },
             ) { index, listItem ->
                 TransactionFilterBottomSheetFilterGroup(
-                    expanded = expandedItemsIndices[index],
+                    isExpanded = expandedItemsIndices[index],
                     headingTextStringResourceId = listItem.data.headingTextStringResourceId,
                     items = listItem.data.items,
                     selectedItemsIndices = listItem.data.selectedItemsIndices,
@@ -323,7 +323,7 @@ public fun TransactionsFiltersBottomSheetUI(
             }
             item {
                 TransactionFilterBottomSheetDateFilter(
-                    expanded = expandedItemsIndices[filters.lastIndex + 1],
+                    isExpanded = expandedItemsIndices[filters.lastIndex + 1],
                     headingTextStringResourceId = R.string.bottom_sheet_transactions_filter_transaction_date,
                     onClearButtonClick = {
                         fromDate = defaultMinDate
@@ -418,7 +418,7 @@ public fun TransactionsFiltersBottomSheetUI(
 
 @Composable
 private fun TransactionFilterBottomSheetFilterGroup(
-    expanded: Boolean,
+    isExpanded: Boolean,
     @StringRes headingTextStringResourceId: Int,
     items: List<ChipUIData>,
     selectedItemsIndices: List<Int>,
@@ -427,7 +427,7 @@ private fun TransactionFilterBottomSheetFilterGroup(
     onItemClick: (index: Int) -> Unit,
 ) {
     val chevronDegrees: Float by animateFloatAsState(
-        targetValue = if (expanded) {
+        targetValue = if (isExpanded) {
             90F
         } else {
             0F
@@ -461,7 +461,7 @@ private fun TransactionFilterBottomSheetFilterGroup(
                 MyIconButton(
                     imageVector = MyIcons.ChevronRight,
                     tint = MaterialTheme.colorScheme.onBackground,
-                    contentDescriptionStringResourceId = if (expanded) {
+                    contentDescriptionStringResourceId = if (isExpanded) {
                         R.string.bottom_sheet_transactions_filter_collapse_group
                     } else {
                         R.string.bottom_sheet_transactions_filter_expand_group
@@ -501,7 +501,7 @@ private fun TransactionFilterBottomSheetFilterGroup(
                 )
             }
         }
-        if (expanded) {
+        if (isExpanded) {
             MySelectionGroup(
                 modifier = Modifier
                     .padding(
@@ -526,7 +526,7 @@ private fun TransactionFilterBottomSheetFilterGroup(
 
 @Composable
 public fun TransactionFilterBottomSheetDateFilter(
-    expanded: Boolean,
+    isExpanded: Boolean,
     @StringRes headingTextStringResourceId: Int,
     onClearButtonClick: () -> Unit,
     onExpandButtonClick: () -> Unit,
@@ -538,7 +538,7 @@ public fun TransactionFilterBottomSheetDateFilter(
     updateToDate: (updatedToDate: LocalDate) -> Unit,
 ) {
     val chevronDegrees: Float by animateFloatAsState(
-        targetValue = if (expanded) {
+        targetValue = if (isExpanded) {
             90F
         } else {
             0F
@@ -622,7 +622,7 @@ public fun TransactionFilterBottomSheetDateFilter(
                         },
                     tint = MaterialTheme.colorScheme.onBackground,
                     imageVector = MyIcons.ChevronRight,
-                    contentDescriptionStringResourceId = if (expanded) {
+                    contentDescriptionStringResourceId = if (isExpanded) {
                         R.string.bottom_sheet_transactions_filter_collapse_group
                     } else {
                         R.string.bottom_sheet_transactions_filter_expand_group
@@ -660,7 +660,7 @@ public fun TransactionFilterBottomSheetDateFilter(
                 )
             }
         }
-        if (expanded) {
+        if (isExpanded) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
