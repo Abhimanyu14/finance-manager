@@ -82,7 +82,7 @@ public fun MyScaffold(
     content: ColumnScopedComposableContent,
 ) {
     BottomSheetBackHandler(
-        enabled = backHandlerEnabled,
+        isEnabled = backHandlerEnabled,
         coroutineScope = coroutineScope,
         modalBottomSheetState = sheetState,
         resetBottomSheetType = onBackPress,

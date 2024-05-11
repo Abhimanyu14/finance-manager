@@ -25,16 +25,16 @@ public fun AccountsMenuBottomSheetUI(
     MyBottomSheetList(
         modifier = modifier,
         data = MyBottomSheetListData(
-            items = items.map {
+            items = items.map { itemData ->
                 MyBottomSheetListItemDataAndEventHandler(
                     data = MyBottomSheetListItemData(
-                        imageVector = it.imageVector,
-                        text = it.text,
+                        imageVector = itemData.imageVector,
+                        text = itemData.text,
                     ),
                     handleEvent = { event ->
                         when (event) {
                             is MyBottomSheetListItemEvent.OnClick -> {
-                                it.onClick()
+                                itemData.onClick()
                             }
                         }
                     },

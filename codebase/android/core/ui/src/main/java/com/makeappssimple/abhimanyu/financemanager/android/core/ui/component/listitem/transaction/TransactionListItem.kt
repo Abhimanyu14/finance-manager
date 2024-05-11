@@ -28,6 +28,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.the
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.theme.getComposeColor
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemIconButton
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemIconButtonData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemIconButtonEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.MyExpandableItemUIWrapper
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircle
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.emoji_circle.MyEmojiCircleData
@@ -273,50 +275,71 @@ public fun TransactionListItem(
             ) {
                 if (data.isEditButtonVisible) {
                     MyExpandableItemIconButton(
-                        iconImageVector = MyIcons.Edit,
+                        data = MyExpandableItemIconButtonData(
+                            isClickable = true,
+                            isEnabled = true,
+                            iconImageVector = MyIcons.Edit,
+                            labelText = stringResource(
+                                id = R.string.transaction_list_item_edit,
+                            ),
+                        ),
+                        handleEvent = { event ->
+                            when (event) {
+                                is MyExpandableItemIconButtonEvent.OnClick -> {
+                                    handleEvent(TransactionListItemEvent.OnEditButtonClick)
+                                }
+                            }
+                        },
                         modifier = Modifier
                             .weight(
                                 weight = 1F,
                             ),
-                        labelText = stringResource(
-                            id = R.string.transaction_list_item_edit,
-                        ),
-                        enabled = true,
-                        onClick = {
-                            handleEvent(TransactionListItemEvent.OnEditButtonClick)
-                        },
                     )
                 }
                 if (data.isRefundButtonVisible) {
                     MyExpandableItemIconButton(
-                        iconImageVector = MyIcons.CurrencyExchange,
+                        data = MyExpandableItemIconButtonData(
+                            isClickable = true,
+                            isEnabled = true,
+                            iconImageVector = MyIcons.CurrencyExchange,
+                            labelText = stringResource(
+                                id = R.string.transaction_list_item_refund,
+                            ),
+                        ),
+                        handleEvent = { event ->
+                            when (event) {
+                                is MyExpandableItemIconButtonEvent.OnClick -> {
+                                    handleEvent(TransactionListItemEvent.OnRefundButtonClick)
+                                }
+                            }
+                        },
                         modifier = Modifier
                             .weight(
                                 weight = 1F,
                             ),
-                        labelText = stringResource(
-                            id = R.string.transaction_list_item_refund,
-                        ),
-                        enabled = true,
-                        onClick = {
-                            handleEvent(TransactionListItemEvent.OnRefundButtonClick)
-                        },
                     )
                 }
                 if (data.isDeleteButtonVisible) {
                     MyExpandableItemIconButton(
+                        data = MyExpandableItemIconButtonData(
+                            isClickable = true,
+                            isEnabled = data.isDeleteButtonEnabled,
+                            iconImageVector = MyIcons.Delete,
+                            labelText = stringResource(
+                                id = R.string.transaction_list_item_delete,
+                            ),
+                        ),
+                        handleEvent = { event ->
+                            when (event) {
+                                is MyExpandableItemIconButtonEvent.OnClick -> {
+                                    handleEvent(TransactionListItemEvent.OnDeleteButtonClick)
+                                }
+                            }
+                        },
                         modifier = Modifier
                             .weight(
                                 weight = 1F,
                             ),
-                        iconImageVector = MyIcons.Delete,
-                        labelText = stringResource(
-                            id = R.string.transaction_list_item_delete,
-                        ),
-                        enabled = data.isDeleteButtonEnabled,
-                        onClick = {
-                            handleEvent(TransactionListItemEvent.OnDeleteButtonClick)
-                        },
                     )
                 }
             }

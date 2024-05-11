@@ -16,33 +16,28 @@ public sealed class TransactionsMenuBottomSheetEvent {
 @Composable
 public fun TransactionsMenuBottomSheet(
     modifier: Modifier = Modifier,
-    // data: TransactionsMenuBottomSheetData,
     handleEvent: (event: TransactionsMenuBottomSheetEvent) -> Unit = {},
 ) {
-    val items = buildList {
-        add(
-            TransactionsMenuBottomSheetItemData(
-                imageVector = MyIcons.Edit,
-                text = stringResource(
-                    id = R.string.bottom_sheet_transactions_menu_update_transaction_for,
-                ),
-                onClick = {
-                    handleEvent(TransactionsMenuBottomSheetEvent.OnUpdateTransactionForClick)
-                },
-            )
+    val items = listOf(
+        TransactionsMenuBottomSheetItemData(
+            imageVector = MyIcons.Edit,
+            text = stringResource(
+                id = R.string.bottom_sheet_transactions_menu_update_transaction_for,
+            ),
+            onClick = {
+                handleEvent(TransactionsMenuBottomSheetEvent.OnUpdateTransactionForClick)
+            },
+        ),
+        TransactionsMenuBottomSheetItemData(
+            imageVector = MyIcons.Checklist,
+            text = stringResource(
+                id = R.string.bottom_sheet_transactions_menu_select_all_transactions,
+            ),
+            onClick = {
+                handleEvent(TransactionsMenuBottomSheetEvent.OnSelectAllTransactionsClick)
+            },
         )
-        add(
-            TransactionsMenuBottomSheetItemData(
-                imageVector = MyIcons.Checklist,
-                text = stringResource(
-                    id = R.string.bottom_sheet_transactions_menu_select_all_transactions,
-                ),
-                onClick = {
-                    handleEvent(TransactionsMenuBottomSheetEvent.OnSelectAllTransactionsClick)
-                },
-            )
-        )
-    }
+    )
 
     TransactionsMenuBottomSheetUI(
         modifier = modifier,

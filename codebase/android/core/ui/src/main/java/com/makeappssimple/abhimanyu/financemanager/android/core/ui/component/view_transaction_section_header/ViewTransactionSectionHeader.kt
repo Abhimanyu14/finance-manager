@@ -5,14 +5,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 
+@Immutable
+public data class ViewTransactionSectionHeaderData(
+    @StringRes val textStringResourceId: Int,
+)
+
 @Composable
 public fun ViewTransactionSectionHeader(
     modifier: Modifier = Modifier,
-    @StringRes textStringResourceId: Int,
+    data: ViewTransactionSectionHeaderData,
 ) {
     MyText(
         modifier = modifier
@@ -21,7 +27,7 @@ public fun ViewTransactionSectionHeader(
                 start = 16.dp,
             )
             .fillMaxWidth(),
-        textStringResourceId = textStringResourceId,
+        textStringResourceId = data.textStringResourceId,
         style = MaterialTheme.typography.headlineMedium
             .copy(
                 color = MaterialTheme.colorScheme.onBackground,

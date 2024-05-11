@@ -1,21 +1,27 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.ui.res.stringResource
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.icons.MyIcons
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 
+@Immutable
+public data class CategoryMenuBottomSheetData(
+    val isDeleteVisible: Boolean,
+    val isEditVisible: Boolean,
+    val isSetAsDefaultVisible: Boolean,
+)
+
 @Composable
 public fun CategoryMenuBottomSheet(
-    isDeleteVisible: Boolean,
-    isEditVisible: Boolean,
-    isSetAsDefaultVisible: Boolean,
+    data: CategoryMenuBottomSheetData,
     onDeleteClick: () -> Unit,
     onEditClick: () -> Unit,
     onSetAsDefaultClick: () -> Unit,
 ) {
     val items = buildList {
-        if (isEditVisible) {
+        if (data.isEditVisible) {
             add(
                 CategoryMenuBottomSheetItemData(
                     imageVector = MyIcons.Edit,
@@ -26,7 +32,7 @@ public fun CategoryMenuBottomSheet(
                 )
             )
         }
-        if (isSetAsDefaultVisible) {
+        if (data.isSetAsDefaultVisible) {
             add(
                 CategoryMenuBottomSheetItemData(
                     imageVector = MyIcons.CheckCircle,
@@ -37,7 +43,7 @@ public fun CategoryMenuBottomSheet(
                 )
             )
         }
-        if (isDeleteVisible) {
+        if (data.isDeleteVisible) {
             add(
                 CategoryMenuBottomSheetItemData(
                     imageVector = MyIcons.Delete,

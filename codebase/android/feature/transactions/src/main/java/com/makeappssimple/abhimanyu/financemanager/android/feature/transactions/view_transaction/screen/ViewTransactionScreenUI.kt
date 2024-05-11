@@ -27,6 +27,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.top_app_bar.MyTopAppBar
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.view_transaction_section_header.ViewTransactionSectionHeader
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.view_transaction_section_header.ViewTransactionSectionHeaderData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.R
 
 @Composable
@@ -153,7 +154,9 @@ internal fun ViewTransactionScreenUI(
             if (uiState.originalTransactionListItemData.isNotNull()) {
                 item {
                     ViewTransactionSectionHeader(
-                        textStringResourceId = R.string.screen_view_transaction_original_transaction,
+                        data = ViewTransactionSectionHeaderData(
+                            textStringResourceId = R.string.screen_view_transaction_original_transaction,
+                        ),
                     )
                 }
                 item {
@@ -209,7 +212,9 @@ internal fun ViewTransactionScreenUI(
             ) {
                 item {
                     ViewTransactionSectionHeader(
-                        textStringResourceId = R.string.screen_view_transaction_refund_transactions,
+                        data = ViewTransactionSectionHeaderData(
+                            textStringResourceId = R.string.screen_view_transaction_refund_transactions,
+                        )
                     )
                 }
                 items(

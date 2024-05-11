@@ -78,13 +78,13 @@ private fun BottomSheetTypeChangeHandler(
 
 @Composable
 internal fun BottomSheetBackHandler(
-    enabled: Boolean,
+    isEnabled: Boolean,
     coroutineScope: CoroutineScope,
     modalBottomSheetState: SheetState,
     resetBottomSheetType: () -> Unit,
 ) {
     BackHandler(
-        enabled = enabled,
+        enabled = isEnabled,
     ) {
         hideModalBottomSheet(
             coroutineScope = coroutineScope,

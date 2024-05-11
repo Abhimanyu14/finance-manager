@@ -16,7 +16,6 @@ public data class SettingsListItemDividerData(
 @Composable
 public fun SettingsListItemDivider(
     modifier: Modifier = Modifier,
-    // data: SettingsListItemDividerData,
 ) {
     HorizontalDivider(
         modifier = modifier

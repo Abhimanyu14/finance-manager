@@ -28,6 +28,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bot
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category.CategoriesSetAsDefaultConfirmationBottomSheetData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category.CategoriesSetAsDefaultConfirmationBottomSheetEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category.CategoryMenuBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.category.CategoryMenuBottomSheetData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.grid.CategoriesGrid
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.griditem.CategoriesGridItemData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
@@ -124,11 +125,12 @@ internal fun CategoriesScreenUI(
 
                 is CategoriesScreenBottomSheetType.Menu -> {
                     val bottomSheetData = uiState.screenBottomSheetType
-
                     CategoryMenuBottomSheet(
-                        isDeleteVisible = bottomSheetData.isDeleteVisible,
-                        isEditVisible = bottomSheetData.isEditVisible,
-                        isSetAsDefaultVisible = bottomSheetData.isSetAsDefaultVisible,
+                        data = CategoryMenuBottomSheetData(
+                            isDeleteVisible = bottomSheetData.isDeleteVisible,
+                            isEditVisible = bottomSheetData.isEditVisible,
+                            isSetAsDefaultVisible = bottomSheetData.isSetAsDefaultVisible,
+                        ),
                         onDeleteClick = {
                             uiState.setCategoryIdToDelete(bottomSheetData.categoryId)
                             uiState.setScreenBottomSheetType(CategoriesScreenBottomSheetType.DeleteConfirmation)
