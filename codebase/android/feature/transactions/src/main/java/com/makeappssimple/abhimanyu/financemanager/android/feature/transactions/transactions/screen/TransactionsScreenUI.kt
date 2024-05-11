@@ -349,7 +349,7 @@ internal fun TransactionsScreenUI(
                     bottom = 72.dp,
                 ),
             ) {
-                uiState.transactionDetailsListItemViewData.map { (date, listItemData) ->
+                uiState.transactionDetailsListItemViewData.forEach { (date, listItemData) ->
                     if (date.isNotBlank()) {
                         stickyHeader {
                             MyText(

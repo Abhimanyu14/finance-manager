@@ -63,7 +63,7 @@ public fun TransactionsSortBottomSheetUI(
                 textStringResourceId = R.string.bottom_sheet_transactions_sort_title,
             )
         )
-        data.map { listItem ->
+        data.forEach { listItem ->
             TransactionsSortBottomSheetItem(
                 data = listItem.data,
                 handleEvent = listItem.handleEvent,
