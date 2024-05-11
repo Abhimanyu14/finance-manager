@@ -26,6 +26,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.act
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButtonData
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.actionbutton.ActionButtonEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.analysis.AnalysisFilterBottomSheet
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.analysis.AnalysisFilterBottomSheetData
+import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.analysis.AnalysisFilterBottomSheetEvent
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.listitem.analysis.AnalysisListItem
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.scaffold.MyScaffold
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.selection_group.MyHorizontalScrollingRadioGroup
@@ -61,19 +63,25 @@ internal fun AnalysisScreenUI(
             when (uiState.screenBottomSheetType) {
                 is AnalysisScreenBottomSheetType.Filters -> {
                     AnalysisFilterBottomSheet(
-                        selectedFilter = uiState.selectedFilter,
-                        headingTextStringResourceId = R.string.bottom_sheet_analysis_filter_transaction_date,
-                        endLocalDate = uiState.defaultEndLocalDate,
-                        startLocalDate = uiState.defaultStartLocalDate,
-                        startOfMonthLocalDate = uiState.startOfMonthLocalDate,
-                        startOfYearLocalDate = uiState.startOfYearLocalDate,
-                        onNegativeButtonClick = {},
-                        onPositiveButtonClick = {
-                            handleUIEvent(
-                                AnalysisScreenUIEvent.OnAnalysisFilterBottomSheet.PositiveButtonClick(
-                                    updatedSelectedFilter = it,
-                                )
-                            )
+                        data = AnalysisFilterBottomSheetData(
+                            selectedFilter = uiState.selectedFilter,
+                            headingTextStringResourceId = R.string.bottom_sheet_analysis_filter_transaction_date,
+                            endLocalDate = uiState.defaultEndLocalDate,
+                            startLocalDate = uiState.defaultStartLocalDate,
+                            startOfMonthLocalDate = uiState.startOfMonthLocalDate,
+                            startOfYearLocalDate = uiState.startOfYearLocalDate,
+                        ),
+                        handleEvent = { event ->
+                            when (event) {
+                                is AnalysisFilterBottomSheetEvent.OnNegativeButtonClick -> {}
+                                is AnalysisFilterBottomSheetEvent.OnPositiveButtonClick -> {
+                                    handleUIEvent(
+                                        AnalysisScreenUIEvent.OnAnalysisFilterBottomSheet.PositiveButtonClick(
+                                            updatedSelectedFilter = event.updatedFilter,
+                                        )
+                                    )
+                                }
+                            }
                         },
                     )
                 }

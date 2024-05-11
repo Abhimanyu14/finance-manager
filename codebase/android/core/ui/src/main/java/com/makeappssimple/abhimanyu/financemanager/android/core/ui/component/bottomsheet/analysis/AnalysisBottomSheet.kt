@@ -8,7 +8,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.formattedDate
-
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.feature.analysis.Filter
 import java.time.LocalDate
 
@@ -33,11 +32,18 @@ public data class AnalysisFilterBottomSheetData(
     val startOfYearLocalDate: LocalDate,
 )
 
+@Immutable
+public sealed class AnalysisFilterBottomSheetEvent {
+    public data object OnNegativeButtonClick : AnalysisFilterBottomSheetEvent()
+    public data class OnPositiveButtonClick(
+        val updatedFilter: Filter,
+    ) : AnalysisFilterBottomSheetEvent()
+}
+
 @Composable
 public fun AnalysisFilterBottomSheet(
     data: AnalysisFilterBottomSheetData,
-    onNegativeButtonClick: () -> Unit,
-    onPositiveButtonClick: (updatedFilter: Filter) -> Unit,
+    handleEvent: (event: AnalysisFilterBottomSheetEvent) -> Unit = {},
 ) {
     var fromSelectedLocalDate by remember {
         mutableStateOf(
@@ -96,21 +102,23 @@ public fun AnalysisFilterBottomSheet(
         onNegativeButtonClick = {
             fromSelectedLocalDate = data.startLocalDate
             toSelectedLocalDate = data.endLocalDate
-            onNegativeButtonClick()
+            handleEvent(AnalysisFilterBottomSheetEvent.OnNegativeButtonClick)
         },
         onPositiveButtonClick = {
             val isFromDateSameAsOldestTransactionDate = fromSelectedLocalDate == data.startLocalDate
             val isToDateSameAsCurrentDayDate = toSelectedLocalDate == data.endLocalDate
             val isDateFilterCleared = isFromDateSameAsOldestTransactionDate &&
                     isToDateSameAsCurrentDayDate
-            onPositiveButtonClick(
-                Filter(
-                    fromLocalDate = fromSelectedLocalDate,
-                    toLocalDate = if (isDateFilterCleared) {
-                        null
-                    } else {
-                        toSelectedLocalDate
-                    },
+            handleEvent(
+                AnalysisFilterBottomSheetEvent.OnPositiveButtonClick(
+                    updatedFilter = Filter(
+                        fromLocalDate = fromSelectedLocalDate,
+                        toLocalDate = if (isDateFilterCleared) {
+                            null
+                        } else {
+                            toSelectedLocalDate
+                        },
+                    ),
                 )
             )
         },
