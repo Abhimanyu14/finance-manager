@@ -1,10 +1,12 @@
 package com.makeappssimple.abhimanyu.financemanager.android.feature.settings.settings.screen
 
 import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.ui.Alignment
@@ -284,50 +286,31 @@ internal fun SettingsScreenUI(
             handleUIEvent(SettingsScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {
-        LazyColumn(
+        Column(
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
                 .testTag(
                     tag = SCREEN_CONTENT_SETTINGS,
                 )
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .verticalScroll(
+                    state = rememberScrollState(),
+                ),
         ) {
-            // TODO(Abhi): Check why AnimatedVisibility is not working
-            if (uiState.isLoading) {
-                item {
-                    MyLinearProgressIndicator(
-                        modifier = Modifier
-                            .testTag(
-                                tag = stringResource(
-                                    id = R.string.screen_settings_linear_progress_indicator_test_tag,
-                                ),
+            AnimatedVisibility(
+                visible = uiState.isLoading,
+            ) {
+                MyLinearProgressIndicator(
+                    modifier = Modifier
+                        .testTag(
+                            tag = stringResource(
+                                id = R.string.screen_settings_linear_progress_indicator_test_tag,
                             ),
-                    )
-                }
+                        ),
+                )
             }
-            itemsIndexed(
-                items = listItemsData,
-                key = { index, listItem ->
-                    when (listItem.data) {
-                        is SettingsListItemAppVersionData -> {
-                            "${listItem.data.type.title}_$index"
-                        }
-
-                        is SettingsListItemDividerData -> {
-                            "${listItem.data.type.title}_$index"
-                        }
-
-                        is SettingsListItemContentData -> {
-                            "${listItem.data.textStringResourceId}"
-                        }
-
-                        is SettingsListItemHeaderData -> {
-                            "${listItem.data.textStringResourceId}"
-                        }
-                    }
-                },
-            ) { index, listItemData ->
-                when (listItemData.data) {
+            listItemsData.mapIndexed { index, settingsScreenListItemData ->
+                when (settingsScreenListItemData.data) {
                     is SettingsListItemAppVersionData -> {
                         uiState.appVersion?.let {
                             SettingsListItemAppVersion(
@@ -356,8 +339,8 @@ internal fun SettingsScreenUI(
                                 .testTag(
                                     tag = "Item $index",
                                 ),
-                            data = listItemData.data,
-                            handleEvent = listItemData.handleEvent,
+                            data = settingsScreenListItemData.data,
+                            handleEvent = settingsScreenListItemData.handleEvent,
                         )
                     }
 
@@ -367,14 +350,12 @@ internal fun SettingsScreenUI(
                                 .testTag(
                                     tag = "Item $index",
                                 ),
-                            data = listItemData.data,
+                            data = settingsScreenListItemData.data,
                         )
                     }
                 }
             }
-            item {
-                NavigationBarsAndImeSpacer()
-            }
+            NavigationBarsAndImeSpacer()
         }
     }
 }

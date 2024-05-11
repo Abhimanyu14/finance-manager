@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import org.jetbrains.annotations.VisibleForTesting
 import javax.inject.Inject
 
@@ -119,7 +120,11 @@ public class SettingsScreenViewModel @Inject constructor(
         closeableCoroutineScope.launch(
             context = dispatcherProvider.io,
         ) {
-            isLoading.value = true
+            withContext(
+                context = dispatcherProvider.mainImmediate,
+            ) {
+                isLoading.value = true
+            }
             delay(5000)
             if (restoreDataUseCase(
                     uri = uri,
@@ -127,7 +132,11 @@ public class SettingsScreenViewModel @Inject constructor(
             ) {
                 navigator.navigateUp()
             } else {
-                isLoading.value = false
+                withContext(
+                    context = dispatcherProvider.mainImmediate,
+                ) {
+                    isLoading.value = false
+                }
                 _event.emit(
                     value = SettingsScreenEvent.RestoreDataFailed,
                 )
@@ -140,6 +149,7 @@ public class SettingsScreenViewModel @Inject constructor(
             context = dispatcherProvider.io,
         ) {
             isLoading.value = true
+            delay(5000)
             recalculateTotalUseCase()
             navigator.navigateUp()
         }
