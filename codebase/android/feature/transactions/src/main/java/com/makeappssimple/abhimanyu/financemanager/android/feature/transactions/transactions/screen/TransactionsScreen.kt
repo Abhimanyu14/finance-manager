@@ -23,38 +23,38 @@ public fun TransactionsScreen(
     )
 
     val screenUIData: MyResult<TransactionsScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
-    val uiState = rememberTransactionsScreenUIState(
+    val uiStateAndEvents = rememberTransactionsScreenUIStateAndEvents(
         data = screenUIData,
     )
     val handleUIEvent = remember(
         key1 = viewModel,
-        key2 = uiState,
+        key2 = uiStateAndEvents,
     ) {
         { uiEvent: TransactionsScreenUIEvent ->
             when (uiEvent) {
                 is TransactionsScreenUIEvent.OnBottomSheetDismissed -> {
-                    uiState.resetScreenBottomSheetType()
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
                 is TransactionsScreenUIEvent.OnSelectionModeTopAppBarMoreOptionsButtonClick -> {
-                    uiState.setScreenBottomSheetType(
+                    uiStateAndEvents.events.setScreenBottomSheetType(
                         TransactionsScreenBottomSheetType.Menu
                     )
                 }
 
                 is TransactionsScreenUIEvent.OnSelectionModeTopAppBarNavigationButtonClick -> {
-                    uiState.setIsInSelectionMode(false)
+                    uiStateAndEvents.events.setIsInSelectionMode(false)
                     viewModel.clearSelectedTransactions()
                 }
 
                 is TransactionsScreenUIEvent.OnFilterActionButtonClick -> {
-                    uiState.setScreenBottomSheetType(
+                    uiStateAndEvents.events.setScreenBottomSheetType(
                         TransactionsScreenBottomSheetType.Filters
                     )
                 }
 
                 is TransactionsScreenUIEvent.OnSortActionButtonClick -> {
-                    uiState.setScreenBottomSheetType(
+                    uiStateAndEvents.events.setScreenBottomSheetType(
                         TransactionsScreenBottomSheetType.Sort
                     )
                 }
@@ -66,9 +66,9 @@ public fun TransactionsScreen(
                     viewModel.updateSelectedFilter(
                         updatedSelectedFilter = Filter(),
                     )
-                    uiState.setIsInSelectionMode(false)
+                    uiStateAndEvents.events.setIsInSelectionMode(false)
                     viewModel.clearSelectedTransactions()
-                    uiState.resetScreenBottomSheetType()
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
                 is TransactionsScreenUIEvent.OnTransactionListItem.Click -> {
@@ -101,7 +101,7 @@ public fun TransactionsScreen(
                             )
                         }
                     } else {
-                        uiState.setIsInSelectionMode(true)
+                        uiStateAndEvents.events.setIsInSelectionMode(true)
                         viewModel.addToSelectedTransactions(
                             transactionId = uiEvent.transactionId,
                         )
@@ -117,12 +117,12 @@ public fun TransactionsScreen(
                 }
 
                 is TransactionsScreenUIEvent.OnTransactionsMenuBottomSheet.SelectAllTransactionsButtonClick -> {
-                    uiState.resetScreenBottomSheetType()
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                     viewModel.selectAllTransactions()
                 }
 
                 is TransactionsScreenUIEvent.OnTransactionsMenuBottomSheet.UpdateTransactionForButtonClick -> {
-                    uiState.setScreenBottomSheetType(
+                    uiStateAndEvents.events.setScreenBottomSheetType(
                         TransactionsScreenBottomSheetType.SelectTransactionFor
                     )
                 }
@@ -146,8 +146,8 @@ public fun TransactionsScreen(
                 }
 
                 is TransactionsScreenUIEvent.OnSelectTransactionForBottomSheet.ItemClick -> {
-                    uiState.setIsInSelectionMode(false)
-                    uiState.resetScreenBottomSheetType()
+                    uiStateAndEvents.events.setIsInSelectionMode(false)
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                     viewModel.updateTransactionForValuesInTransactions(
                         transactionForId = uiEvent.updatedTransactionForValues,
                     )
@@ -157,7 +157,7 @@ public fun TransactionsScreen(
     }
 
     TransactionsScreenUI(
-        uiState = uiState,
+        uiState = uiStateAndEvents.state,
         handleUIEvent = handleUIEvent,
     )
 }

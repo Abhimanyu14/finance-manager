@@ -37,12 +37,12 @@ public fun HomeScreen(
         }
 
     val screenUIData: MyResult<HomeScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
-    val uiState = rememberHomeScreenUIState(
+    val uiStateAndEvents = rememberHomeScreenUIStateAndEvents(
         data = screenUIData,
     )
     val handleUIEvent = remember(
         key1 = viewModel,
-        key2 = uiState,
+        key2 = uiStateAndEvents,
         key3 = createDocument,
     ) {
         { uiEvent: HomeScreenUIEvent ->
@@ -56,7 +56,7 @@ public fun HomeScreen(
                 }
 
                 is HomeScreenUIEvent.OnTotalBalanceCardViewBalanceClick -> {
-                    uiState.setBalanceVisible(true)
+                    uiStateAndEvents.events.setBalanceVisible(true)
                 }
 
                 is HomeScreenUIEvent.OnFloatingActionButtonClick -> {
@@ -76,7 +76,7 @@ public fun HomeScreen(
                 }
 
                 is HomeScreenUIEvent.OnNavigationBackButtonClick -> {
-                    uiState.resetScreenBottomSheetType()
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
                 is HomeScreenUIEvent.OnTransactionListItemClick -> {
@@ -101,7 +101,7 @@ public fun HomeScreen(
     }
 
     HomeScreenUI(
-        uiState = uiState,
+        uiState = uiStateAndEvents.state,
         handleUIEvent = handleUIEvent,
     )
 }

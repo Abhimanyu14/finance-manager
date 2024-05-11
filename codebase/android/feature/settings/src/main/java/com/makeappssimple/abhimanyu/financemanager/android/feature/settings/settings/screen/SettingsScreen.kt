@@ -71,12 +71,12 @@ public fun SettingsScreen(
     )
 
     val screenUIData: MyResult<SettingsScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
-    val uiState = rememberSettingsScreenUIState(
+    val uiStateAndEvents = rememberSettingsScreenUIStateAndEvents(
         data = screenUIData,
     )
     val handleUIEvent = remember(
         viewModel,
-        uiState,
+        uiStateAndEvents,
         createDocumentResultLauncher,
         openDocumentResultLauncher,
         notificationsPermissionLauncher,
@@ -96,7 +96,7 @@ public fun SettingsScreen(
                 }
 
                 is SettingsScreenUIEvent.OnToggleReminder -> {
-                    if (uiState.isReminderEnabled.orFalse()) {
+                    if (uiStateAndEvents.state.isReminderEnabled.orFalse()) {
                         viewModel.disableReminder()
                     } else {
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -124,7 +124,7 @@ public fun SettingsScreen(
                 }
 
                 is SettingsScreenUIEvent.OnNavigationBackButtonClick -> {
-                    uiState.resetScreenBottomSheetType()
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
                 is SettingsScreenUIEvent.OnOpenSourceLicensesListItemClick -> {
@@ -152,7 +152,7 @@ public fun SettingsScreen(
             when (event) {
                 is SettingsScreenEvent.RestoreDataFailed -> {
                     coroutineScope.launch {
-                        val result = uiState.snackbarHostState
+                        val result = uiStateAndEvents.state.snackbarHostState
                             .showSnackbar(
                                 message = restoreErrorMessage,
                             )
@@ -167,7 +167,7 @@ public fun SettingsScreen(
     }
 
     SettingsScreenUI(
-        uiState = uiState,
+        uiState = uiStateAndEvents.state,
         handleUIEvent = handleUIEvent,
     )
 }

@@ -22,17 +22,17 @@ public fun OpenSourceLicensesScreen(
     )
 
     val screenUIData: MyResult<OpenSourceLicensesScreenUIData>? by viewModel.screenUIData.collectAsStateWithLifecycle()
-    val uiState = rememberOpenSourceLicensesScreenUIState(
+    val uiStateAndEvents = rememberOpenSourceLicensesScreenUIStateAndEvents(
         data = screenUIData,
     )
     val handleUIEvent = remember(
         key1 = viewModel,
-        key2 = uiState,
+        key2 = uiStateAndEvents,
     ) {
         { uiEvent: OpenSourceLicensesScreenUIEvent ->
             when (uiEvent) {
                 is OpenSourceLicensesScreenUIEvent.OnNavigationBackButtonClick -> {
-                    uiState.resetScreenBottomSheetType()
+                    uiStateAndEvents.events.resetScreenBottomSheetType()
                 }
 
                 is OpenSourceLicensesScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
@@ -43,7 +43,7 @@ public fun OpenSourceLicensesScreen(
     }
 
     OpenSourceLicensesScreenUI(
-        uiState = uiState,
+        uiState = uiStateAndEvents.state,
         handleUIEvent = handleUIEvent,
     )
 }
