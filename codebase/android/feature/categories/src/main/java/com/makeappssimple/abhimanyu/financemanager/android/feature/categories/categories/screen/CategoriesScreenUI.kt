@@ -108,8 +108,7 @@ internal fun CategoriesScreenUI(
                 }
 
                 is CategoriesScreenBottomSheetType.Menu -> {
-                    val bottomSheetData =
-                        uiState.screenBottomSheetType
+                    val bottomSheetData = uiState.screenBottomSheetType
 
                     CategoryMenuBottomSheet(
                         isDeleteVisible = bottomSheetData.isDeleteVisible,
