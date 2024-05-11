@@ -17,6 +17,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.gri
 
 @Stable
 internal class CategoriesScreenUIState(
+    val isBottomSheetVisible: Boolean,
     val screenBottomSheetType: CategoriesScreenBottomSheetType,
     var categoryIdToDelete: Int?,
     var clickedItemId: Int?,
@@ -91,6 +92,7 @@ internal fun rememberCategoriesScreenUIState(
 
         // TODO(Abhi): Can be reordered to match the class ordering
         CategoriesScreenUIState(
+            isBottomSheetVisible = screenBottomSheetType != CategoriesScreenBottomSheetType.None,
             screenBottomSheetType = screenBottomSheetType,
             categoryIdToDelete = categoryIdToDelete,
             clickedItemId = clickedItemId,

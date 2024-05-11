@@ -57,7 +57,7 @@ internal fun CategoriesScreenUI(
     }
 
     BottomSheetHandler(
-        showModalBottomSheet = uiState.screenBottomSheetType != CategoriesScreenBottomSheetType.None,
+        showModalBottomSheet = uiState.isBottomSheetVisible,
         screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,

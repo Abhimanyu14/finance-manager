@@ -65,7 +65,7 @@ internal fun TransactionsScreenUI(
     handleUIEvent: (uiEvent: TransactionsScreenUIEvent) -> Unit = {},
 ) {
     BottomSheetHandler(
-        showModalBottomSheet = uiState.screenBottomSheetType != TransactionsScreenBottomSheetType.None,
+        showModalBottomSheet = uiState.isBottomSheetVisible,
         screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,

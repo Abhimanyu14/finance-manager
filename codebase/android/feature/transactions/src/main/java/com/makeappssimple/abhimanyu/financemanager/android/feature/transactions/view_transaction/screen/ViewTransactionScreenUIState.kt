@@ -12,6 +12,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 
 @Stable
 internal class ViewTransactionScreenUIState(
+    val isBottomSheetVisible: Boolean,
     val transactionIdToDelete: Int?,
     val refundTransactionListItemData: List<TransactionListItemData>?,
     val originalTransactionListItemData: TransactionListItemData?,
@@ -63,6 +64,7 @@ internal fun rememberViewTransactionScreenUIState(
 
         // TODO(Abhi): Can be reordered to match the class ordering
         ViewTransactionScreenUIState(
+            isBottomSheetVisible = screenBottomSheetType != ViewTransactionScreenBottomSheetType.None,
             transactionIdToDelete = transactionIdToDelete,
             refundTransactionListItemData = unwrappedData?.refundTransactionListItemData,
             originalTransactionListItemData = unwrappedData?.originalTransactionListItemData,

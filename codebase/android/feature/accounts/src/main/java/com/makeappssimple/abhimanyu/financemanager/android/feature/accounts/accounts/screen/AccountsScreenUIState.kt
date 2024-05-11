@@ -15,6 +15,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.lis
 @Stable
 internal class AccountsScreenUIState(
     val screenBottomSheetType: AccountsScreenBottomSheetType,
+    val isBottomSheetVisible: Boolean,
     val isLoading: Boolean,
     val accountIdToDelete: Int?,
     val clickedItemId: Int?,
@@ -79,6 +80,7 @@ internal fun rememberAccountsScreenUIState(
         // TODO(Abhi): Can be reordered to match the class ordering
         AccountsScreenUIState(
             screenBottomSheetType = screenBottomSheetType,
+            isBottomSheetVisible = screenBottomSheetType != AccountsScreenBottomSheetType.None,
             clickedItemId = clickedItemId,
             accountIdToDelete = accountIdToDelete,
             setScreenBottomSheetType = setScreenBottomSheetType,

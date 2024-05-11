@@ -66,7 +66,7 @@ internal fun AddOrEditTransactionForScreenUI(
     }
 
     BottomSheetHandler(
-        showModalBottomSheet = uiState.screenBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.None,
+        showModalBottomSheet = uiState.isBottomSheetVisible,
         screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
         keyboardController = state.keyboardController,

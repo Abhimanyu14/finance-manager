@@ -20,6 +20,7 @@ import java.time.LocalDate
 @Stable
 internal class AnalysisScreenUIState(
     val screenBottomSheetType: AnalysisScreenBottomSheetType,
+    val isBottomSheetVisible: Boolean,
     val selectedFilter: Filter,
     val maxAmountTextWidth: Int,
     val selectedTransactionTypeIndex: Int?,
@@ -69,6 +70,7 @@ internal fun rememberAnalysisScreenUIState(
         // TODO(Abhi): Can be reordered to match the class ordering
         AnalysisScreenUIState(
             screenBottomSheetType = screenBottomSheetType,
+            isBottomSheetVisible = screenBottomSheetType != AnalysisScreenBottomSheetType.None,
             selectedFilter = unwrappedData?.selectedFilter.orEmpty(),
             maxAmountTextWidth = if (transactionDataMappedByCategory.isEmpty()) {
                 0

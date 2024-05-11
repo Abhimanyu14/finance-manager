@@ -16,6 +16,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.transactionfo
 @Stable
 internal class AddOrEditTransactionForScreenUIState(
     val screenBottomSheetType: AddOrEditTransactionForScreenBottomSheetType,
+    val isBottomSheetVisible: Boolean,
     val isCtaButtonEnabled: Boolean?,
     val isLoading: Boolean,
     @StringRes val appBarTitleTextStringResourceId: Int,
@@ -58,6 +59,7 @@ internal fun rememberAddOrEditTransactionForScreenUIState(
         // TODO(Abhi): Can be reordered to match the class ordering
         AddOrEditTransactionForScreenUIState(
             screenBottomSheetType = screenBottomSheetType,
+            isBottomSheetVisible = screenBottomSheetType != AddOrEditTransactionForScreenBottomSheetType.None,
             isLoading = unwrappedData.isNull(),
             isCtaButtonEnabled = unwrappedData?.isValidTransactionForData,
             appBarTitleTextStringResourceId = if (isEdit) {

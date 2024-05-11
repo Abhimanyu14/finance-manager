@@ -19,6 +19,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.feature.categories.R
 @Stable
 internal class AddOrEditCategoryScreenUIState(
     val screenBottomSheetType: AddOrEditCategoryScreenBottomSheetType,
+    val isBottomSheetVisible: Boolean,
     val isCtaButtonEnabled: Boolean,
     val isLoading: Boolean,
     @StringRes val appBarTitleTextStringResourceId: Int,
@@ -67,6 +68,7 @@ internal fun rememberAddOrEditCategoryScreenUIState(
         // TODO(Abhi): Can be reordered to match the class ordering
         AddOrEditCategoryScreenUIState(
             screenBottomSheetType = screenBottomSheetType,
+            isBottomSheetVisible = screenBottomSheetType != AddOrEditCategoryScreenBottomSheetType.None,
             setScreenBottomSheetType = setScreenBottomSheetType,
             isLoading = unwrappedData.isNull(),
             isCtaButtonEnabled = unwrappedData?.isCtaButtonEnabled.orFalse(),

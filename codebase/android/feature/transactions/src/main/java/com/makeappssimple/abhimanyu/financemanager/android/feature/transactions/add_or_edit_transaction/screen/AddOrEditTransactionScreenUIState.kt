@@ -27,6 +27,7 @@ internal class AddOrEditTransactionScreenUIState(
     val screenBottomSheetType: AddOrEditTransactionScreenBottomSheetType,
     val uiState: AddOrEditTransactionScreenUiStateData,
     val uiVisibilityState: AddOrEditTransactionScreenUiVisibilityState,
+    val isBottomSheetVisible: Boolean,
     val isCtaButtonEnabled: Boolean,
     val isLoading: Boolean,
     val isTransactionDatePickerDialogVisible: Boolean,
@@ -101,6 +102,7 @@ internal fun rememberAddOrEditTransactionScreenUIState(
             isLoading = unwrappedData.isNull(),
             uiState = unwrappedData?.uiState.orDefault(),
             uiVisibilityState = unwrappedData?.uiVisibilityState.orDefault(),
+            isBottomSheetVisible = screenBottomSheetType != AddOrEditTransactionScreenBottomSheetType.None,
             isCtaButtonEnabled = unwrappedData?.isCtaButtonEnabled.orFalse(),
             appBarTitleTextStringResourceId = if (isEdit) {
                 R.string.screen_edit_transaction_appbar_title

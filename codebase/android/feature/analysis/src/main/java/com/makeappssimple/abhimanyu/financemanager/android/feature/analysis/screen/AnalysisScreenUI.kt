@@ -43,7 +43,7 @@ internal fun AnalysisScreenUI(
     handleUIEvent: (uiEvent: AnalysisScreenUIEvent) -> Unit = {},
 ) {
     BottomSheetHandler(
-        showModalBottomSheet = uiState.screenBottomSheetType != AnalysisScreenBottomSheetType.None,
+        showModalBottomSheet = uiState.isBottomSheetVisible,
         screenBottomSheetType = uiState.screenBottomSheetType,
         coroutineScope = state.coroutineScope,
         modalBottomSheetState = state.modalBottomSheetState,

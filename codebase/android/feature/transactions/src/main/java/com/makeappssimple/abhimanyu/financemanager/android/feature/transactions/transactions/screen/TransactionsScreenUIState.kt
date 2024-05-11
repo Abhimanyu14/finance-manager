@@ -23,6 +23,7 @@ import java.time.LocalDate
 
 @Stable
 internal class TransactionsScreenUIState(
+    val isBottomSheetVisible: Boolean,
     val isInSelectionMode: Boolean,
     val isLoading: Boolean,
     val selectedFilter: Filter,
@@ -81,6 +82,7 @@ internal fun rememberTransactionsScreenUIState(
 
         // TODO(Abhi): Can be reordered to match the class ordering
         TransactionsScreenUIState(
+            isBottomSheetVisible = screenBottomSheetType != TransactionsScreenBottomSheetType.None,
             isInSelectionMode = isInSelectionMode,
             isLoading = unwrappedData.isNull() || unwrappedData.isLoading,
             selectedFilter = unwrappedData?.selectedFilter.orEmpty(),
