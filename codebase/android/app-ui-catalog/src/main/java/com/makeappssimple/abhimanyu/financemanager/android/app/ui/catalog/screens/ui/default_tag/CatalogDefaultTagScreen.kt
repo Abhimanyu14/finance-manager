@@ -22,7 +22,7 @@ public fun CatalogDefaultTagScreen(
         sheetContent = {},
         onClick = { },
         coroutineScope = coroutineScope,
-        onBackPress = { },
+        onNavigationBackButtonClick = { },
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_default_tag,

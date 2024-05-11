@@ -190,10 +190,10 @@ internal fun CategoriesScreenUI(
             )
         },
         onClick = state.focusManager::clearFocus,
-        isModalBottomSheetVisible = uiState.screenBottomSheetType != CategoriesScreenBottomSheetType.None,
-        backHandlerEnabled = uiState.screenBottomSheetType != CategoriesScreenBottomSheetType.None,
+        isModalBottomSheetVisible = uiState.isBottomSheetVisible,
+        isBackHandlerEnabled = uiState.screenBottomSheetType != CategoriesScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onBackPress = {
+        onNavigationBackButtonClick = {
             handleUIEvent(CategoriesScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {

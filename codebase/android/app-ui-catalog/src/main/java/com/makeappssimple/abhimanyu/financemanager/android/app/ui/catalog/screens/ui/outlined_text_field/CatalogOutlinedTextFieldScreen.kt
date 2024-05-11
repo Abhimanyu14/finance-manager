@@ -24,7 +24,7 @@ public fun CatalogOutlinedTextFieldScreen(
         sheetContent = {},
         onClick = { },
         coroutineScope = coroutineScope,
-        onBackPress = { },
+        onNavigationBackButtonClick = { },
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_outlined_text_field,

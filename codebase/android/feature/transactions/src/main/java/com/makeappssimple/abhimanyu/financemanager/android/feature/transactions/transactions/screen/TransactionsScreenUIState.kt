@@ -26,6 +26,7 @@ internal class TransactionsScreenUIState(
     val isBottomSheetVisible: Boolean,
     val isInSelectionMode: Boolean,
     val isLoading: Boolean,
+    val isSearchSortAndFilterVisible: Boolean,
     val selectedFilter: Filter,
     val selectedTransactions: List<Int>,
     val sortOptions: List<SortOption>,
@@ -85,6 +86,11 @@ internal fun rememberTransactionsScreenUIState(
             isBottomSheetVisible = screenBottomSheetType != TransactionsScreenBottomSheetType.None,
             isInSelectionMode = isInSelectionMode,
             isLoading = unwrappedData.isNull() || unwrappedData.isLoading,
+            isSearchSortAndFilterVisible = isInSelectionMode.not() && (
+                    unwrappedData?.transactionDetailsListItemViewData.orEmpty().isNotEmpty() ||
+                            unwrappedData?.searchText.orEmpty().isNotEmpty() ||
+                            unwrappedData?.selectedFilter.orEmpty().areFiltersSelected()
+                    ),
             selectedFilter = unwrappedData?.selectedFilter.orEmpty(),
             selectedTransactions = unwrappedData?.selectedTransactions.orEmpty(),
             sortOptions = unwrappedData?.sortOptions.orEmpty(),

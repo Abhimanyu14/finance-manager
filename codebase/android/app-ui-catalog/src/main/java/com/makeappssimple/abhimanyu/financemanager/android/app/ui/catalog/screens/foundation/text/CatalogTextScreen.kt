@@ -23,7 +23,7 @@ public fun CatalogTextScreen(
         sheetContent = {},
         onClick = { },
         coroutineScope = coroutineScope,
-        onBackPress = { },
+        onNavigationBackButtonClick = { },
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_text,

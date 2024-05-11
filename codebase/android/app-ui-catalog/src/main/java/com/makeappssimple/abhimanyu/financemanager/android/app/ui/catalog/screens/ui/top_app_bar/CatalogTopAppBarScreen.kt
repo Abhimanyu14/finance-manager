@@ -22,7 +22,7 @@ public fun CatalogTopAppBarScreen(
         sheetContent = {},
         onClick = { },
         coroutineScope = coroutineScope,
-        onBackPress = { },
+        onNavigationBackButtonClick = { },
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_top_app_bar,

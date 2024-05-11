@@ -89,9 +89,8 @@ internal fun BottomSheetBackHandler(
         hideModalBottomSheet(
             coroutineScope = coroutineScope,
             modalBottomSheetState = modalBottomSheetState,
-        ) {
-            resetBottomSheetType()
-        }
+            action = resetBottomSheetType,
+        )
     }
 }
 

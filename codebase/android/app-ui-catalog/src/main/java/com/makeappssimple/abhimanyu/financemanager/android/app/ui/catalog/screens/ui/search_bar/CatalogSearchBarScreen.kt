@@ -26,7 +26,7 @@ public fun CatalogSearchBarScreen(
         sheetContent = {},
         onClick = { },
         coroutineScope = coroutineScope,
-        onBackPress = { },
+        onNavigationBackButtonClick = { },
         topBar = {
             MyTopAppBar(
                 titleTextStringResourceId = R.string.screen_search_bar,
@@ -53,7 +53,7 @@ public fun CatalogSearchBarScreen(
                     handleEvent = { event ->
                         when (event) {
                             is MySearchBarEvent.OnSearch -> {}
-                            
+
                             is MySearchBarEvent.OnSearchTextChange -> {
                                 setSearchText(event.updatedSearchText)
                             }

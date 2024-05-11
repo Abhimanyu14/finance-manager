@@ -24,6 +24,7 @@ internal class HomeScreenUIState(
     val isBackupCardVisible: Boolean,
     val isBalanceVisible: Boolean,
     val isLoading: Boolean,
+    val isRecentTransactionsTrailingTextVisible: Boolean,
     val screenBottomSheetType: HomeScreenBottomSheetType,
     val overviewTabSelectionIndex: Int,
     val transactionListItemDataList: List<TransactionListItemData>,
@@ -82,6 +83,8 @@ internal fun rememberHomeScreenUIState(
             isBackupCardVisible = unwrappedData?.isBackupCardVisible.orFalse(),
             isBalanceVisible = isBalanceVisible,
             isLoading = unwrappedData.isNull(),
+            isRecentTransactionsTrailingTextVisible = unwrappedData?.transactionListItemDataList.orEmpty()
+                .isNotEmpty(),
             screenBottomSheetType = screenBottomSheetType,
             overviewTabSelectionIndex = unwrappedData?.overviewTabSelectionIndex.orZero(),
             transactionListItemDataList = unwrappedData?.transactionListItemDataList.orEmpty(),

@@ -101,10 +101,10 @@ internal fun AnalysisScreenUI(
             )
         },
         onClick = state.focusManager::clearFocus,
-        isModalBottomSheetVisible = uiState.screenBottomSheetType != AnalysisScreenBottomSheetType.None,
-        backHandlerEnabled = uiState.screenBottomSheetType != AnalysisScreenBottomSheetType.None,
+        isModalBottomSheetVisible = uiState.isBottomSheetVisible,
+        isBackHandlerEnabled = uiState.screenBottomSheetType != AnalysisScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onBackPress = {
+        onNavigationBackButtonClick = {
             handleUIEvent(AnalysisScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {

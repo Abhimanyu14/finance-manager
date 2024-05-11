@@ -110,7 +110,7 @@ internal fun AddOrEditAccountScreenUI(
         },
         onClick = state.focusManager::clearFocus,
         coroutineScope = state.coroutineScope,
-        onBackPress = {
+        onNavigationBackButtonClick = {
             handleUIEvent(AddOrEditAccountScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {

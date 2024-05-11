@@ -245,10 +245,10 @@ internal fun TransactionsScreenUI(
             }
         },
         onClick = state.focusManager::clearFocus,
-        isModalBottomSheetVisible = uiState.screenBottomSheetType != TransactionsScreenBottomSheetType.None,
-        backHandlerEnabled = uiState.screenBottomSheetType != TransactionsScreenBottomSheetType.None,
+        isModalBottomSheetVisible = uiState.isBottomSheetVisible,
+        isBackHandlerEnabled = uiState.screenBottomSheetType != TransactionsScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onBackPress = {
+        onNavigationBackButtonClick = {
             handleUIEvent(TransactionsScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {
@@ -266,12 +266,7 @@ internal fun TransactionsScreenUI(
                 MyLinearProgressIndicator()
             }
             AnimatedVisibility(
-                // TODO(Abhi): Move logic to UI state
-                visible = uiState.isInSelectionMode.not() && (
-                        uiState.transactionDetailsListItemViewData.isNotEmpty() ||
-                                uiState.searchText.isNotEmpty() ||
-                                uiState.selectedFilter.areFiltersSelected()
-                        )
+                visible = uiState.isSearchSortAndFilterVisible,
             ) {
                 Row(
                     horizontalArrangement = Arrangement.End,
@@ -354,7 +349,7 @@ internal fun TransactionsScreenUI(
                     bottom = 72.dp,
                 ),
             ) {
-                uiState.transactionDetailsListItemViewData.forEach { (date, listItemData) ->
+                uiState.transactionDetailsListItemViewData.map { (date, listItemData) ->
                     if (date.isNotBlank()) {
                         stickyHeader {
                             MyText(

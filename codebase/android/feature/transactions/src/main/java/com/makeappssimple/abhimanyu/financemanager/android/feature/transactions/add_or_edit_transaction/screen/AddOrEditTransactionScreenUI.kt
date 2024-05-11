@@ -191,10 +191,10 @@ internal fun AddOrEditTransactionScreenUI(
             )
         },
         onClick = state.focusManager::clearFocus,
-        isModalBottomSheetVisible = uiState.screenBottomSheetType != AddOrEditTransactionScreenBottomSheetType.None,
-        backHandlerEnabled = uiState.screenBottomSheetType != AddOrEditTransactionScreenBottomSheetType.None,
+        isModalBottomSheetVisible = uiState.isBottomSheetVisible,
+        isBackHandlerEnabled = uiState.screenBottomSheetType != AddOrEditTransactionScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onBackPress = {
+        onNavigationBackButtonClick = {
             handleUIEvent(AddOrEditTransactionScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {

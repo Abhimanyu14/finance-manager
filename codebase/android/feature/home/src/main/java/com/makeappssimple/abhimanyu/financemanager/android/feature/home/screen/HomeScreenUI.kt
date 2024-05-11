@@ -93,7 +93,7 @@ internal fun HomeScreenUI(
         onClick = state.focusManager::clearFocus,
         contentTestTag = SCREEN_CONTENT_HOME,
         coroutineScope = state.coroutineScope,
-        onBackPress = {
+        onNavigationBackButtonClick = {
             handleUIEvent(HomeScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {
@@ -176,12 +176,12 @@ internal fun HomeScreenUI(
             )
             HomeRecentTransactions(
                 data = HomeRecentTransactionsData(
-                    isTrailingTextVisible = uiState.transactionListItemDataList.isNotEmpty(),
+                    isTrailingTextVisible = uiState.isRecentTransactionsTrailingTextVisible,
                 ),
                 handleEvent = { event ->
                     when (event) {
                         is HomeRecentTransactionsEvent.OnClick -> {
-                            if (uiState.transactionListItemDataList.isNotEmpty()) {
+                            if (uiState.isRecentTransactionsTrailingTextVisible) {
                                 handleUIEvent(HomeScreenUIEvent.OnHomeRecentTransactionsClick)
                             }
                         }

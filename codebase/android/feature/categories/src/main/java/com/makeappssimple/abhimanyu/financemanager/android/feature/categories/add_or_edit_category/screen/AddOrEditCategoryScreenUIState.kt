@@ -8,6 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.TextFieldValue
+import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
@@ -22,6 +23,7 @@ internal class AddOrEditCategoryScreenUIState(
     val isBottomSheetVisible: Boolean,
     val isCtaButtonEnabled: Boolean,
     val isLoading: Boolean,
+    val isSupportingTextVisible: Boolean,
     @StringRes val appBarTitleTextStringResourceId: Int,
     @StringRes val ctaButtonLabelTextStringResourceId: Int,
     @StringRes val titleTextFieldErrorTextStringResourceId: Int?,
@@ -71,6 +73,7 @@ internal fun rememberAddOrEditCategoryScreenUIState(
             isBottomSheetVisible = screenBottomSheetType != AddOrEditCategoryScreenBottomSheetType.None,
             setScreenBottomSheetType = setScreenBottomSheetType,
             isLoading = unwrappedData.isNull(),
+            isSupportingTextVisible = unwrappedData?.titleTextFieldError?.textStringResourceId.isNotNull(),
             isCtaButtonEnabled = unwrappedData?.isCtaButtonEnabled.orFalse(),
             selectedTransactionTypeIndex = unwrappedData?.selectedTransactionTypeIndex,
             transactionTypesChipUIData = unwrappedData?.validTransactionTypes?.map { transactionType ->

@@ -24,7 +24,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_ADD_OR_EDIT_CATEGORY
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.constants.TestTags.SCREEN_CONTENT_ADD_OR_EDIT_CATEGORY
-import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotNull
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.orFalse
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.MyText
 import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.component.NavigationBarsAndImeSpacer
@@ -143,10 +142,10 @@ internal fun AddOrEditCategoryScreenUI(
             )
         },
         onClick = state.focusManager::clearFocus,
-        isModalBottomSheetVisible = uiState.screenBottomSheetType != AddOrEditCategoryScreenBottomSheetType.None,
-        backHandlerEnabled = uiState.screenBottomSheetType != AddOrEditCategoryScreenBottomSheetType.None,
+        isModalBottomSheetVisible = uiState.isBottomSheetVisible,
+        isBackHandlerEnabled = uiState.screenBottomSheetType != AddOrEditCategoryScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onBackPress = {
+        onNavigationBackButtonClick = {
             handleUIEvent(AddOrEditCategoryScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {
@@ -222,16 +221,18 @@ internal fun AddOrEditCategoryScreenUI(
                         textFieldValue = uiState.title,
                         labelTextStringResourceId = R.string.screen_add_or_edit_category_title,
                         trailingIconContentDescriptionTextStringResourceId = R.string.screen_add_or_edit_category_clear_title,
-                        supportingText = if (uiState.titleTextFieldErrorTextStringResourceId.isNotNull()) {
+                        supportingText = if (uiState.isSupportingTextVisible) {
                             {
-                                MyText(
-                                    text = stringResource(
-                                        id = uiState.titleTextFieldErrorTextStringResourceId,
-                                    ),
-                                    style = MaterialTheme.typography.bodySmall.copy(
-                                        color = MaterialTheme.colorScheme.error,
-                                    ),
-                                )
+                                uiState.titleTextFieldErrorTextStringResourceId?.let { titleTextFieldErrorTextStringResourceId ->
+                                    MyText(
+                                        text = stringResource(
+                                            id = titleTextFieldErrorTextStringResourceId,
+                                        ),
+                                        style = MaterialTheme.typography.bodySmall.copy(
+                                            color = MaterialTheme.colorScheme.error,
+                                        ),
+                                    )
+                                }
                             }
                         } else {
                             null

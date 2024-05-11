@@ -86,10 +86,10 @@ internal fun ViewTransactionScreenUI(
             )
         },
         onClick = state.focusManager::clearFocus,
-        isModalBottomSheetVisible = uiState.screenBottomSheetType != ViewTransactionScreenBottomSheetType.None,
-        backHandlerEnabled = uiState.screenBottomSheetType != ViewTransactionScreenBottomSheetType.None,
+        isModalBottomSheetVisible = uiState.isBottomSheetVisible,
+        isBackHandlerEnabled = uiState.screenBottomSheetType != ViewTransactionScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onBackPress = {
+        onNavigationBackButtonClick = {
             handleUIEvent(ViewTransactionScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {

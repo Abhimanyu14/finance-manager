@@ -280,7 +280,7 @@ internal fun SettingsScreenUI(
         },
         onClick = state.focusManager::clearFocus,
         coroutineScope = state.coroutineScope,
-        onBackPress = {
+        onNavigationBackButtonClick = {
             handleUIEvent(SettingsScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {

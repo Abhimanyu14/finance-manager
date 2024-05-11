@@ -75,17 +75,17 @@ public fun MyScaffold(
 
     // BottomSheetBackHandler
     isModalBottomSheetVisible: Boolean = false,
-    backHandlerEnabled: Boolean = false,
+    isBackHandlerEnabled: Boolean = false,
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    onBackPress: () -> Unit = {},
+    onNavigationBackButtonClick: () -> Unit = {},
 
     content: ColumnScopedComposableContent,
 ) {
     BottomSheetBackHandler(
-        isEnabled = backHandlerEnabled,
+        isEnabled = isBackHandlerEnabled,
         coroutineScope = coroutineScope,
         modalBottomSheetState = sheetState,
-        resetBottomSheetType = onBackPress,
+        resetBottomSheetType = onNavigationBackButtonClick,
     )
 
     Scaffold(
@@ -123,7 +123,7 @@ public fun MyScaffold(
             tonalElevation = 0.dp,
             dragHandle = {},
             scrimColor = scrimColor,
-            onDismissRequest = onBackPress,
+            onDismissRequest = onNavigationBackButtonClick,
             windowInsets = WindowInsets.systemBars.only(WindowInsetsSides.Bottom),
         ) {
             val screenHeight = LocalConfiguration.current.screenHeightDp.dp

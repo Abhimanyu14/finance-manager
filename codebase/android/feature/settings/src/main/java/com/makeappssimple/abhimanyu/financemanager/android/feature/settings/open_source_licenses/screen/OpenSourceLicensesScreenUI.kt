@@ -46,7 +46,7 @@ internal fun OpenSourceLicensesScreenUI(
         },
         onClick = state.focusManager::clearFocus,
         coroutineScope = state.coroutineScope,
-        onBackPress = {
+        onNavigationBackButtonClick = {
             handleUIEvent(OpenSourceLicensesScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {

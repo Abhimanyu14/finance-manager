@@ -152,10 +152,10 @@ internal fun AccountsScreenUI(
             )
         },
         onClick = state.focusManager::clearFocus,
-        isModalBottomSheetVisible = uiState.screenBottomSheetType != AccountsScreenBottomSheetType.None,
-        backHandlerEnabled = uiState.screenBottomSheetType != AccountsScreenBottomSheetType.None,
+        isModalBottomSheetVisible = uiState.isBottomSheetVisible,
+        isBackHandlerEnabled = uiState.screenBottomSheetType != AccountsScreenBottomSheetType.None,
         coroutineScope = state.coroutineScope,
-        onBackPress = {
+        onNavigationBackButtonClick = {
             handleUIEvent(AccountsScreenUIEvent.OnNavigationBackButtonClick)
         },
     ) {
