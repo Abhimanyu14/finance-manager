@@ -1,12 +1,13 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.bottomsheet.transactions
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -48,38 +49,30 @@ public fun TransactionsSortBottomSheetUI(
     modifier: Modifier = Modifier,
     data: List<TransactionsSortBottomSheetData>,
 ) {
-    LazyColumn(
+    Column(
         modifier = modifier
+            .verticalScroll(
+                state = rememberScrollState(),
+            )
             .defaultMinSize(
                 minHeight = minimumBottomSheetHeight,
             ),
     ) {
-        stickyHeader {
-            MyBottomSheetTitle(
-                data = MyBottomSheetTitleData(
-                    textStringResourceId = R.string.bottom_sheet_transactions_sort_title,
-                )
+        MyBottomSheetTitle(
+            data = MyBottomSheetTitleData(
+                textStringResourceId = R.string.bottom_sheet_transactions_sort_title,
             )
-        }
-        items(
-            items = data,
-            key = { listItem ->
-                listItem.hashCode()
-            },
-        ) { listItem ->
+        )
+        data.map { listItem ->
             TransactionsSortBottomSheetItem(
                 data = listItem.data,
                 handleEvent = listItem.handleEvent,
             )
         }
-        item {
-            NavigationBarsAndImeSpacer()
-        }
-        item {
-            VerticalSpacer(
-                height = 16.dp,
-            )
-        }
+        NavigationBarsAndImeSpacer()
+        VerticalSpacer(
+            height = 16.dp,
+        )
     }
 }
 
