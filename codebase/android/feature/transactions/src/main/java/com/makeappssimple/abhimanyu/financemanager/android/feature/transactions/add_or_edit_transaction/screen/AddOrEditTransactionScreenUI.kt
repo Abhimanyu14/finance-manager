@@ -174,11 +174,6 @@ internal fun AddOrEditTransactionScreenUI(
                                             updatedAccountTo = event.updatedAccount,
                                         )
                                     )
-                                    handleUIEvent(
-                                        AddOrEditTransactionScreenUIEvent.OnAccountFromUpdated(
-                                            updatedAccountFrom = event.updatedAccount,
-                                        )
-                                    )
                                 }
                             }
                         },
