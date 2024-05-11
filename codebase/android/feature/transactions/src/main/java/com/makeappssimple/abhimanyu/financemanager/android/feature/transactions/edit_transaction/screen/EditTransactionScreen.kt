@@ -8,6 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.result.MyResult
 import com.makeappssimple.abhimanyu.financemanager.android.core.logger.LocalMyLogger
+import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenBottomSheetType
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUI
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUIData
 import com.makeappssimple.abhimanyu.financemanager.android.feature.transactions.add_or_edit_transaction.screen.AddOrEditTransactionScreenUIEvent
@@ -61,6 +62,32 @@ public fun EditTransactionScreen(
                     viewModel.clearTitle()
                 }
 
+                is AddOrEditTransactionScreenUIEvent.OnAccountFromTextFieldClick -> {
+                    uiState.setScreenBottomSheetType(
+                        AddOrEditTransactionScreenBottomSheetType.SelectAccountFrom
+                    )
+                }
+
+                is AddOrEditTransactionScreenUIEvent.OnAccountToTextFieldClick -> {
+                    uiState.setScreenBottomSheetType(
+                        AddOrEditTransactionScreenBottomSheetType.SelectAccountTo
+                    )
+                }
+
+                is AddOrEditTransactionScreenUIEvent.OnTransactionTimeTextFieldClick -> {
+                    uiState.setIsTransactionTimePickerDialogVisible(true)
+                }
+
+                is AddOrEditTransactionScreenUIEvent.OnTransactionDateTextFieldClick -> {
+                    uiState.setIsTransactionDatePickerDialogVisible(true)
+                }
+
+                is AddOrEditTransactionScreenUIEvent.OnCategoryTextFieldClick -> {
+                    uiState.setScreenBottomSheetType(
+                        AddOrEditTransactionScreenBottomSheetType.SelectCategory
+                    )
+                }
+
                 is AddOrEditTransactionScreenUIEvent.OnTopAppBarNavigationButtonClick -> {
                     viewModel.navigateUp()
                 }
@@ -107,6 +134,14 @@ public fun EditTransactionScreen(
                     )
                 }
 
+                is AddOrEditTransactionScreenUIEvent.OnTransactionTimePickerDismissed -> {
+                    uiState.setIsTransactionTimePickerDialogVisible(false)
+                }
+
+                is AddOrEditTransactionScreenUIEvent.OnTransactionDatePickerDismissed -> {
+                    uiState.setIsTransactionDatePickerDialogVisible(false)
+                }
+
                 is AddOrEditTransactionScreenUIEvent.OnTitleUpdated -> {
                     viewModel.updateTitle(
                         updatedTitle = uiEvent.updatedTitle,
@@ -117,12 +152,14 @@ public fun EditTransactionScreen(
                     viewModel.updateTransactionDate(
                         updatedTransactionDate = uiEvent.updatedTransactionDate,
                     )
+                    uiState.setIsTransactionDatePickerDialogVisible(false)
                 }
 
                 is AddOrEditTransactionScreenUIEvent.OnTransactionTimeUpdated -> {
                     viewModel.updateTransactionTime(
                         updatedTransactionTime = uiEvent.updatedTransactionTime,
                     )
+                    uiState.setIsTransactionTimePickerDialogVisible(false)
                 }
             }
         }

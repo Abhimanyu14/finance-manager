@@ -117,7 +117,7 @@ internal fun AddOrEditTransactionScreenUI(
                         handleEvent = { event ->
                             when (event) {
                                 is SelectCategoryBottomSheetEvent.ResetBottomSheetType -> {
-                                    uiState.resetScreenBottomSheetType()
+                                    handleUIEvent(AddOrEditTransactionScreenUIEvent.OnBottomSheetDismissed)
                                 }
 
                                 is SelectCategoryBottomSheetEvent.UpdateCategory -> {
@@ -141,7 +141,7 @@ internal fun AddOrEditTransactionScreenUI(
                         handleEvent = { event ->
                             when (event) {
                                 is SelectAccountBottomSheetEvent.ResetBottomSheetType -> {
-                                    uiState.resetScreenBottomSheetType()
+                                    handleUIEvent(AddOrEditTransactionScreenUIEvent.OnBottomSheetDismissed)
                                 }
 
                                 is SelectAccountBottomSheetEvent.UpdateAccount -> {
@@ -165,7 +165,7 @@ internal fun AddOrEditTransactionScreenUI(
                         handleEvent = { event ->
                             when (event) {
                                 is SelectAccountBottomSheetEvent.ResetBottomSheetType -> {
-                                    uiState.resetScreenBottomSheetType()
+                                    handleUIEvent(AddOrEditTransactionScreenUIEvent.OnBottomSheetDismissed)
                                 }
 
                                 is SelectAccountBottomSheetEvent.UpdateAccount -> {
@@ -207,7 +207,7 @@ internal fun AddOrEditTransactionScreenUI(
             handleEvent = { event ->
                 when (event) {
                     is MyDatePickerEvent.OnNegativeButtonClick -> {
-                        uiState.setIsTransactionDatePickerDialogVisible(false)
+                        handleUIEvent(AddOrEditTransactionScreenUIEvent.OnTransactionDatePickerDismissed)
                     }
 
                     is MyDatePickerEvent.OnPositiveButtonClick -> {
@@ -216,7 +216,6 @@ internal fun AddOrEditTransactionScreenUI(
                                 updatedTransactionDate = event.selectedDate,
                             )
                         )
-                        uiState.setIsTransactionDatePickerDialogVisible(false)
                     }
                 }
             },
@@ -229,7 +228,7 @@ internal fun AddOrEditTransactionScreenUI(
             handleEvent = { event ->
                 when (event) {
                     is MyTimePickerEvent.OnNegativeButtonClick -> {
-                        uiState.setIsTransactionTimePickerDialogVisible(false)
+                        handleUIEvent(AddOrEditTransactionScreenUIEvent.OnTransactionTimePickerDismissed)
                     }
 
                     is MyTimePickerEvent.OnPositiveButtonClick -> {
@@ -238,7 +237,6 @@ internal fun AddOrEditTransactionScreenUI(
                                 updatedTransactionTime = event.selectedTime,
                             )
                         )
-                        uiState.setIsTransactionTimePickerDialogVisible(false)
                     }
                 }
             },
@@ -363,9 +361,7 @@ internal fun AddOrEditTransactionScreenUI(
                         when (event) {
                             is MyReadOnlyTextFieldEvent.OnClick -> {
                                 clearFocus()
-                                uiState.setScreenBottomSheetType(
-                                    AddOrEditTransactionScreenBottomSheetType.SelectCategory
-                                )
+                                handleUIEvent(AddOrEditTransactionScreenUIEvent.OnCategoryTextFieldClick)
                             }
                         }
                     },
@@ -535,9 +531,7 @@ internal fun AddOrEditTransactionScreenUI(
                         when (event) {
                             is MyReadOnlyTextFieldEvent.OnClick -> {
                                 clearFocus()
-                                uiState.setScreenBottomSheetType(
-                                    AddOrEditTransactionScreenBottomSheetType.SelectAccountFrom
-                                )
+                                handleUIEvent(AddOrEditTransactionScreenUIEvent.OnAccountFromTextFieldClick)
                             }
                         }
                     },
@@ -562,9 +556,7 @@ internal fun AddOrEditTransactionScreenUI(
                         when (event) {
                             is MyReadOnlyTextFieldEvent.OnClick -> {
                                 clearFocus()
-                                uiState.setScreenBottomSheetType(
-                                    AddOrEditTransactionScreenBottomSheetType.SelectAccountTo
-                                )
+                                handleUIEvent(AddOrEditTransactionScreenUIEvent.OnAccountToTextFieldClick)
                             }
                         }
                     },
@@ -586,7 +578,7 @@ internal fun AddOrEditTransactionScreenUI(
                     when (event) {
                         is MyReadOnlyTextFieldEvent.OnClick -> {
                             clearFocus()
-                            uiState.setIsTransactionDatePickerDialogVisible(true)
+                            handleUIEvent(AddOrEditTransactionScreenUIEvent.OnTransactionDateTextFieldClick)
                         }
                     }
                 },
@@ -607,7 +599,7 @@ internal fun AddOrEditTransactionScreenUI(
                     when (event) {
                         MyReadOnlyTextFieldEvent.OnClick -> {
                             clearFocus()
-                            uiState.setIsTransactionTimePickerDialogVisible(true)
+                            handleUIEvent(AddOrEditTransactionScreenUIEvent.OnTransactionTimeTextFieldClick)
                         }
                     }
                 },

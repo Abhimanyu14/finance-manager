@@ -17,6 +17,13 @@ public sealed class AddOrEditTransactionScreenUIEvent : ScreenUIEvent {
     public data object OnClearTitleButtonClick : AddOrEditTransactionScreenUIEvent()
     public data object OnCtaButtonClick : AddOrEditTransactionScreenUIEvent()
     public data object OnTopAppBarNavigationButtonClick : AddOrEditTransactionScreenUIEvent()
+    public data object OnCategoryTextFieldClick : AddOrEditTransactionScreenUIEvent()
+    public data object OnTransactionDateTextFieldClick : AddOrEditTransactionScreenUIEvent()
+    public data object OnTransactionTimeTextFieldClick : AddOrEditTransactionScreenUIEvent()
+    public data object OnAccountFromTextFieldClick : AddOrEditTransactionScreenUIEvent()
+    public data object OnAccountToTextFieldClick : AddOrEditTransactionScreenUIEvent()
+    public data object OnTransactionDatePickerDismissed : AddOrEditTransactionScreenUIEvent()
+    public data object OnTransactionTimePickerDismissed : AddOrEditTransactionScreenUIEvent()
 
     public data class OnAmountUpdated(
         val updatedAmount: TextFieldValue,
