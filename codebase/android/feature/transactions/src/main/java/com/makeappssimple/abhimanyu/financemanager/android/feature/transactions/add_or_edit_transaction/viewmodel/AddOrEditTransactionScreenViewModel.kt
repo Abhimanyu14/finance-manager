@@ -28,7 +28,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.util.defa
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsCountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.GetAllAccountsUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.UpdateAccountsBalanceAmountUseCase
+import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.account.UpdateAccountBalanceAmountUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.GetAllCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetTitleSuggestionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetTransactionDataUseCase
@@ -86,7 +86,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
     private val insertTransactionUseCase: InsertTransactionUseCase,
     private val myPreferencesRepository: MyPreferencesRepository,
     private val navigator: Navigator,
-    private val updateAccountsBalanceAmountUseCase: UpdateAccountsBalanceAmountUseCase,
+    private val updateAccountBalanceAmountUseCase: UpdateAccountBalanceAmountUseCase,
     private val updateTransactionUseCase: UpdateTransactionUseCase,
 ) : ScreenViewModel, ViewModel(closeableCoroutineScope) {
     private val screenArgs = AddOrEditTransactionScreenArgs(
@@ -660,7 +660,7 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
                         accountBalanceAmountChangeMap[accountTo.id] =
                             accountBalanceAmountChangeMap[accountTo.id].orZero() + uiState.value.amount.text.toLongOrZero()
                     }
-                    updateAccountsBalanceAmountUseCase(
+                    updateAccountBalanceAmountUseCase(
                         accountsBalanceAmountChange = accountBalanceAmountChangeMap.toList(),
                     )
                     // endregion

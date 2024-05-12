@@ -4,7 +4,7 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.repository.preferences.MyPreferencesRepository
 import javax.inject.Inject
 
-public class UpdateAccountsBalanceAmountUseCase @Inject constructor(
+public class UpdateAccountBalanceAmountUseCase @Inject constructor(
     private val myPreferencesRepository: MyPreferencesRepository,
     private val accountRepository: AccountRepository,
 ) {

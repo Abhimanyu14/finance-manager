@@ -348,7 +348,7 @@ naming:
     parameterPattern: '[a-z][A-Za-z0-9]*|_'
   MatchingDeclarationName:
     active: true
-    mustBeFirst: true
+    mustBeFirst: false
   MemberNameEqualsClassName:
     active: true
     ignoreOverridden: true
