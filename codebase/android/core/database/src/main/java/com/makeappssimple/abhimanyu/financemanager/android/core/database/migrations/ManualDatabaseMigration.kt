@@ -37,20 +37,20 @@ private object ManualDatabaseMigration {
             // Add column with a default value
             db.execSQL(
                 """
-                ALTER TABLE account_table 
-                ADD COLUMN `minimum_account_balance_amount` TEXT  DEFAULT NULL
-            """.trimIndent()
+                    ALTER TABLE account_table 
+                    ADD COLUMN `minimum_account_balance_amount` TEXT  DEFAULT NULL
+                """.trimIndent()
             )
 
             // Update data
             db.execSQL(
                 """
-                UPDATE account_table 
-                SET `minimum_account_balance_amount` = CASE type 
-                WHEN 'BANK' THEN '{"currency":"INR","value":0}' 
-                ELSE NULL
-                END
-            """.trimIndent()
+                    UPDATE account_table 
+                    SET `minimum_account_balance_amount` = CASE type 
+                    WHEN 'BANK' THEN '{"currency":"INR","value":0}' 
+                    ELSE NULL
+                    END
+                """.trimIndent()
             )
         }
     }
@@ -72,22 +72,22 @@ private object ManualDatabaseMigration {
             // Create the new table
             db.execSQL(
                 """
-                CREATE TABLE IF NOT EXISTS `account_table` (
-                    `balance_amount` TEXT NOT NULL, 
-                    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-                    `type` TEXT NOT NULL, 
-                    `name` TEXT NOT NULL
-                 )
-            """.trimIndent()
+                    CREATE TABLE IF NOT EXISTS `account_table` (
+                        `balance_amount` TEXT NOT NULL, 
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+                        `type` TEXT NOT NULL, 
+                        `name` TEXT NOT NULL
+                     )
+                """.trimIndent()
             )
 
             // Copy the data
             db.execSQL(
                 """
-                INSERT INTO account_table (balance_amount, id, type, name) 
-                SELECT balance_amount, id, type, name 
-                FROM source_table
-            """.trimIndent()
+                    INSERT INTO account_table (balance_amount, id, type, name) 
+                    SELECT balance_amount, id, type, name 
+                    FROM source_table
+                """.trimIndent()
             )
 
             // Remove the old table
@@ -100,57 +100,57 @@ private object ManualDatabaseMigration {
             // Create the new table
             db.execSQL(
                 """
-                CREATE TABLE IF NOT EXISTS `transaction_table_new` (
-                    `amount` TEXT NOT NULL, 
-                    `category_id` INTEGER, 
-                    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-                    `original_transaction_id` INTEGER, 
-                    `account_from_id` INTEGER, 
-                    `account_to_id` INTEGER, 
-                    `transaction_for_id` INTEGER NOT NULL, 
-                    `refund_transaction_ids` TEXT, 
-                    `creation_timestamp` INTEGER NOT NULL, 
-                    `transaction_timestamp` INTEGER NOT NULL, 
-                    `description` TEXT NOT NULL, 
-                    `title` TEXT NOT NULL, 
-                    `transaction_type` TEXT NOT NULL
-                )
-            """.trimIndent()
+                    CREATE TABLE IF NOT EXISTS `transaction_table_new` (
+                        `amount` TEXT NOT NULL, 
+                        `category_id` INTEGER, 
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+                        `original_transaction_id` INTEGER, 
+                        `account_from_id` INTEGER, 
+                        `account_to_id` INTEGER, 
+                        `transaction_for_id` INTEGER NOT NULL, 
+                        `refund_transaction_ids` TEXT, 
+                        `creation_timestamp` INTEGER NOT NULL, 
+                        `transaction_timestamp` INTEGER NOT NULL, 
+                        `description` TEXT NOT NULL, 
+                        `title` TEXT NOT NULL, 
+                        `transaction_type` TEXT NOT NULL
+                    )
+                """.trimIndent()
             )
 
             // Copy the data
             db.execSQL(
                 """
-                INSERT INTO transaction_table_new (
-                    amount, 
-                    category_id, 
-                    id, 
-                    original_transaction_id, 
-                    account_from_id, 
-                    account_to_id, 
-                    transaction_for_id, 
-                    refund_transaction_ids, 
-                    creation_timestamp, 
-                    transaction_timestamp, 
-                    description, 
-                    title, 
-                    transaction_type
-                ) 
-                SELECT amount, 
-                    category_id, 
-                    id, 
-                    original_transaction_id, 
-                    source_from_id, 
-                    source_to_id, 
-                    transaction_for_id, 
-                    refund_transaction_ids, 
-                    creation_timestamp, 
-                    transaction_timestamp, 
-                    description, 
-                    title, 
-                    transaction_type 
-                FROM transaction_table
-            """.trimIndent()
+                    INSERT INTO transaction_table_new (
+                        amount, 
+                        category_id, 
+                        id, 
+                        original_transaction_id, 
+                        account_from_id, 
+                        account_to_id, 
+                        transaction_for_id, 
+                        refund_transaction_ids, 
+                        creation_timestamp, 
+                        transaction_timestamp, 
+                        description, 
+                        title, 
+                        transaction_type
+                    ) 
+                    SELECT amount, 
+                        category_id, 
+                        id, 
+                        original_transaction_id, 
+                        source_from_id, 
+                        source_to_id, 
+                        transaction_for_id, 
+                        refund_transaction_ids, 
+                        creation_timestamp, 
+                        transaction_timestamp, 
+                        description, 
+                        title, 
+                        transaction_type 
+                    FROM transaction_table
+                """.trimIndent()
             )
 
             // Remove the old table
@@ -176,35 +176,35 @@ private object ManualDatabaseMigration {
             // Create the new table
             db.execSQL(
                 """
-                CREATE TABLE IF NOT EXISTS `transaction_table_new` (
-                    `amount` TEXT NOT NULL, 
-                    `category_id` INTEGER, 
-                    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-                    `original_transaction_id` INTEGER, 
-                    `source_from_id` INTEGER, 
-                    `source_to_id` INTEGER, 
-                    `transaction_for_id` INTEGER NOT NULL, 
-                    `refund_transaction_ids` TEXT, 
-                    `creation_timestamp` INTEGER NOT NULL, 
-                    `transaction_timestamp` INTEGER NOT NULL, 
-                    `description` TEXT NOT NULL, 
-                    `title` TEXT NOT NULL, 
-                    `transaction_type` TEXT NOT NULL
-                )
-            """.trimIndent()
+                    CREATE TABLE IF NOT EXISTS `transaction_table_new` (
+                        `amount` TEXT NOT NULL, 
+                        `category_id` INTEGER, 
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+                        `original_transaction_id` INTEGER, 
+                        `source_from_id` INTEGER, 
+                        `source_to_id` INTEGER, 
+                        `transaction_for_id` INTEGER NOT NULL, 
+                        `refund_transaction_ids` TEXT, 
+                        `creation_timestamp` INTEGER NOT NULL, 
+                        `transaction_timestamp` INTEGER NOT NULL, 
+                        `description` TEXT NOT NULL, 
+                        `title` TEXT NOT NULL, 
+                        `transaction_type` TEXT NOT NULL
+                    )
+                """.trimIndent()
             )
 
             // Copy the data
             db.execSQL(
                 """
-                INSERT INTO transaction_table_new (
-                    amount, category_id, id, source_from_id, source_to_id, transaction_for_id, 
-                    creation_timestamp, transaction_timestamp, description, title, 
-                    transaction_type
-                    ) SELECT amount, category_id, id, source_from_id, source_to_id, 
-                    transaction_for_id, creation_timestamp, transaction_timestamp, description, 
-                    title, transaction_type FROM transaction_table
-            """.trimIndent()
+                    INSERT INTO transaction_table_new (
+                        amount, category_id, id, source_from_id, source_to_id, transaction_for_id, 
+                        creation_timestamp, transaction_timestamp, description, title, 
+                        transaction_type
+                        ) SELECT amount, category_id, id, source_from_id, source_to_id, 
+                        transaction_for_id, creation_timestamp, transaction_timestamp, description, 
+                        title, transaction_type FROM transaction_table
+                """.trimIndent()
             )
 
             // Remove the old table
@@ -254,32 +254,53 @@ private object ManualDatabaseMigration {
             // Update data
             db.execSQL(
                 """
-                UPDATE transaction_table SET `transaction_for_id` = CASE transaction_for 
-                WHEN 'SELF' THEN 1 WHEN 'COMMON' THEN 2 WHEN 'OTHERS' THEN 3 END
-            """.trimIndent()
+                    UPDATE transaction_table SET `transaction_for_id` = CASE transaction_for 
+                    WHEN 'SELF' THEN 1 WHEN 'COMMON' THEN 2 WHEN 'OTHERS' THEN 3 END
+                """.trimIndent()
             )
 
             // Create the new table
             db.execSQL(
                 """
-                CREATE TABLE IF NOT EXISTS `transaction_table_new` (`amount` TEXT NOT NULL, 
-                `category_id` INTEGER, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-                `source_from_id` INTEGER, `source_to_id` INTEGER, `description` TEXT NOT NULL, 
-                `title` TEXT NOT NULL, `creation_timestamp` INTEGER NOT NULL, 
-                `transaction_timestamp` INTEGER NOT NULL, `transaction_for_id` INTEGER NOT NULL, 
-                `transaction_type` TEXT NOT NULL)
-            """.trimIndent()
+                    CREATE TABLE IF NOT EXISTS `transaction_table_new` (`amount` TEXT NOT NULL, 
+                    `category_id` INTEGER, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+                    `source_from_id` INTEGER, `source_to_id` INTEGER, `description` TEXT NOT NULL, 
+                    `title` TEXT NOT NULL, `creation_timestamp` INTEGER NOT NULL, 
+                    `transaction_timestamp` INTEGER NOT NULL, `transaction_for_id` INTEGER NOT NULL, 
+                    `transaction_type` TEXT NOT NULL)
+                """.trimIndent()
             )
 
             // Copy the data
             db.execSQL(
                 """
-                INSERT INTO transaction_table_new (amount, category_id, id, source_from_id, 
-                source_to_id, description, title, creation_timestamp, transaction_timestamp, 
-                transaction_for_id, transaction_type) SELECT amount, category_id, id, 
-                source_from_id, source_to_id, description, title, creation_timestamp, 
-                transaction_timestamp, transaction_for_id, transaction_type FROM transaction_table
-            """.trimIndent()
+                    INSERT INTO transaction_table_new (
+                        amount, 
+                        category_id, 
+                        id, 
+                        source_from_id, 
+                        source_to_id, 
+                        description, 
+                        title, 
+                        creation_timestamp, 
+                        transaction_timestamp, 
+                        transaction_for_id, 
+                        transaction_type
+                    ) 
+                    SELECT 
+                    amount, 
+                    category_id, 
+                    id, 
+                    source_from_id, 
+                    source_to_id, 
+                    description, 
+                    title, 
+                    creation_timestamp, 
+                    transaction_timestamp, 
+                    transaction_for_id, 
+                    transaction_type 
+                    FROM transaction_table
+                """.trimIndent()
             )
 
             // Remove the old table
@@ -304,24 +325,24 @@ private object ManualDatabaseMigration {
             // Create the new table
             db.execSQL(
                 """
-                CREATE TABLE IF NOT EXISTS `transaction_table_new` (`amount` TEXT NOT NULL, 
-                `category_id` INTEGER, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-                `source_from_id` INTEGER, `source_to_id` INTEGER, `description` TEXT NOT NULL, 
-                `title` TEXT NOT NULL, `creation_timestamp` INTEGER NOT NULL, 
-                `transaction_timestamp` INTEGER NOT NULL, `transaction_for` TEXT NOT NULL, 
-                `transaction_type` TEXT NOT NULL)
-            """.trimIndent()
+                    CREATE TABLE IF NOT EXISTS `transaction_table_new` (`amount` TEXT NOT NULL, 
+                    `category_id` INTEGER, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+                    `source_from_id` INTEGER, `source_to_id` INTEGER, `description` TEXT NOT NULL, 
+                    `title` TEXT NOT NULL, `creation_timestamp` INTEGER NOT NULL, 
+                    `transaction_timestamp` INTEGER NOT NULL, `transaction_for` TEXT NOT NULL, 
+                    `transaction_type` TEXT NOT NULL)
+                """.trimIndent()
             )
 
             // Copy the data
             db.execSQL(
                 """
-                INSERT INTO transaction_table_new (amount, category_id, id, source_from_id, 
-                source_to_id, description, title, creation_timestamp, transaction_timestamp, 
-                transaction_for, transaction_type) SELECT amount, category_id, id, 
-                source_from_id, source_to_id, description, title, creation_timestamp, 
-                transaction_timestamp, transaction_for, transaction_type FROM transaction_table
-            """.trimIndent()
+                    INSERT INTO transaction_table_new (amount, category_id, id, source_from_id, 
+                    source_to_id, description, title, creation_timestamp, transaction_timestamp, 
+                    transaction_for, transaction_type) SELECT amount, category_id, id, 
+                    source_from_id, source_to_id, description, title, creation_timestamp, 
+                    transaction_timestamp, transaction_for, transaction_type FROM transaction_table
+                """.trimIndent()
             )
 
             // Remove the old table
@@ -344,25 +365,25 @@ private object ManualDatabaseMigration {
             // Create the new table
             db.execSQL(
                 """
-                CREATE TABLE IF NOT EXISTS `transaction_table_new` (`amount` TEXT NOT NULL, 
-                `category_id` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-                `source_from_id` INTEGER NOT NULL, `source_to_id` INTEGER NOT NULL, 
-                `description` TEXT NOT NULL, `title` TEXT NOT NULL, 
-                `creation_timestamp` INTEGER NOT NULL, 
-                `transaction_timestamp` INTEGER NOT NULL, 
-                `transaction_for` TEXT NOT NULL, `transaction_type` TEXT NOT NULL)
-            """.trimIndent()
+                    CREATE TABLE IF NOT EXISTS `transaction_table_new` (`amount` TEXT NOT NULL, 
+                    `category_id` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+                    `source_from_id` INTEGER NOT NULL, `source_to_id` INTEGER NOT NULL, 
+                    `description` TEXT NOT NULL, `title` TEXT NOT NULL, 
+                    `creation_timestamp` INTEGER NOT NULL, 
+                    `transaction_timestamp` INTEGER NOT NULL, 
+                    `transaction_for` TEXT NOT NULL, `transaction_type` TEXT NOT NULL)
+                """.trimIndent()
             )
 
             // Copy the data
             db.execSQL(
                 """
-                INSERT INTO transaction_table_new (amount, category_id, id, source_from_id, 
-                source_to_id, description, title, creation_timestamp, transaction_timestamp, 
-                transaction_for, transaction_type) SELECT amount, category_id, id, 
-                source_from_id, source_to_id, description, title, creation_timestamp, 
-                transaction_timestamp, transaction_for, transaction_type FROM transaction_table
-            """.trimIndent()
+                    INSERT INTO transaction_table_new (amount, category_id, id, source_from_id, 
+                    source_to_id, description, title, creation_timestamp, transaction_timestamp, 
+                    transaction_for, transaction_type) SELECT amount, category_id, id, 
+                    source_from_id, source_to_id, description, title, creation_timestamp, 
+                    transaction_timestamp, transaction_for, transaction_type FROM transaction_table
+                """.trimIndent()
             )
 
             // Remove the old table
@@ -383,8 +404,8 @@ private object ManualDatabaseMigration {
             // Add column with a default value
             db.execSQL(
                 """
-                ALTER TABLE category_table ADD COLUMN `emoji` TEXT  DEFAULT '😟' NOT NULL
-            """.trimIndent()
+                    ALTER TABLE category_table ADD COLUMN `emoji` TEXT  DEFAULT '😟' NOT NULL
+                """.trimIndent()
             )
         }
     }
@@ -398,10 +419,10 @@ private object ManualDatabaseMigration {
         ) {
             db.execSQL(
                 """
-                CREATE TABLE IF NOT EXISTS `emoji_table` (`character` TEXT NOT NULL, 
-                `code_point` TEXT NOT NULL, `group` TEXT NOT NULL, 
-                `unicode_name` TEXT NOT NULL, PRIMARY KEY(`character`))
-            """.trimIndent()
+                    CREATE TABLE IF NOT EXISTS `emoji_table` (`character` TEXT NOT NULL, 
+                    `code_point` TEXT NOT NULL, `group` TEXT NOT NULL, 
+                    `unicode_name` TEXT NOT NULL, PRIMARY KEY(`character`))
+                """.trimIndent()
             )
         }
     }
@@ -431,20 +452,24 @@ private object ManualDatabaseMigration {
             // Create the new table
             db.execSQL(
                 """
-                CREATE TABLE IF NOT EXISTS `category_table_new` (`parent_category` INTEGER, 
-                `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sub_categories` TEXT, 
-                `description` TEXT NOT NULL, `title` TEXT NOT NULL, 
-                `transaction_type` TEXT NOT NULL)
-            """.trimIndent()
+                    CREATE TABLE IF NOT EXISTS `category_table_new` (
+                        `parent_category` INTEGER, 
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+                        `sub_categories` TEXT, 
+                        `description` TEXT NOT NULL, 
+                        `title` TEXT NOT NULL, 
+                        `transaction_type` TEXT NOT NULL
+                    )
+                """.trimIndent()
             )
 
             // Copy the data
             db.execSQL(
                 """
-                INSERT INTO category_table_new (id, sub_categories, description, title, 
-                transaction_type) SELECT id, sub_categories, description, title, 
-                transaction_type FROM category_table
-            """.trimIndent()
+                    INSERT INTO category_table_new (id, sub_categories, description, title, 
+                    transaction_type) SELECT id, sub_categories, description, title, 
+                    transaction_type FROM category_table
+                """.trimIndent()
             )
 
             // Remove the old table
@@ -465,9 +490,9 @@ private object ManualDatabaseMigration {
             // Add column with a default value
             db.execSQL(
                 """
-                ALTER TABLE category_table 
-                ADD COLUMN transaction_type TEXT DEFAULT 'EXPENSE' NOT NULL
-            """.trimIndent()
+                    ALTER TABLE category_table 
+                    ADD COLUMN transaction_type TEXT DEFAULT 'EXPENSE' NOT NULL
+                """.trimIndent()
             )
         }
     }
@@ -480,7 +505,11 @@ private object ManualDatabaseMigration {
             db: SupportSQLiteDatabase,
         ) {
             // Add column with a default value
-            db.execSQL("ALTER TABLE transaction_table ADD COLUMN source_id INTEGER  DEFAULT 0 NOT NULL")
+            db.execSQL(
+                """
+                    ALTER TABLE transaction_table ADD COLUMN source_id INTEGER  DEFAULT 0 NOT NULL
+                """.trimIndent()
+            )
         }
     }
 
@@ -494,22 +523,22 @@ private object ManualDatabaseMigration {
             // Create the new table
             db.execSQL(
                 """
-                CREATE TABLE IF NOT EXISTS `transaction_table_new` (`amount` TEXT NOT NULL, 
-                `categoryId` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-                `description` TEXT NOT NULL, `title` TEXT NOT NULL, 
-                `creation_timestamp` INTEGER NOT NULL, `transaction_timestamp` INTEGER NOT NULL, 
-                `transaction_for` TEXT NOT NULL, `transaction_type` TEXT NOT NULL)
-            """.trimIndent()
+                    CREATE TABLE IF NOT EXISTS `transaction_table_new` (`amount` TEXT NOT NULL, 
+                    `categoryId` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+                    `description` TEXT NOT NULL, `title` TEXT NOT NULL, 
+                    `creation_timestamp` INTEGER NOT NULL, `transaction_timestamp` INTEGER NOT NULL, 
+                    `transaction_for` TEXT NOT NULL, `transaction_type` TEXT NOT NULL)
+                """.trimIndent()
             )
 
             // Copy the data
             db.execSQL(
                 """
-                INSERT INTO transaction_table_new (amount, id, description, title, 
-                creation_timestamp, transaction_timestamp, transaction_for, transaction_type) 
-                SELECT amount, id, description, title, creation_timestamp, transaction_timestamp, 
-                transaction_for, transaction_type FROM transaction_table
-            """.trimIndent()
+                    INSERT INTO transaction_table_new (amount, id, description, title, 
+                    creation_timestamp, transaction_timestamp, transaction_for, transaction_type) 
+                    SELECT amount, id, description, title, creation_timestamp, transaction_timestamp, 
+                    transaction_for, transaction_type FROM transaction_table
+                """.trimIndent()
             )
 
             // Remove the old table
@@ -526,12 +555,12 @@ private object ManualDatabaseMigration {
         ) {
             db.execSQL(
                 """
-                CREATE TABLE IF NOT EXISTS `transaction_table` (`amount` TEXT NOT NULL, 
-                `category` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-                `description` TEXT NOT NULL, `title` TEXT NOT NULL, 
-                `creation_timestamp` REAL NOT NULL, `transaction_timestamp` REAL NOT NULL, 
-                `transaction_for` TEXT NOT NULL, `transaction_type` TEXT NOT NULL)
-            """.trimIndent()
+                    CREATE TABLE IF NOT EXISTS `transaction_table` (`amount` TEXT NOT NULL, 
+                    `category` TEXT NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+                    `description` TEXT NOT NULL, `title` TEXT NOT NULL, 
+                    `creation_timestamp` REAL NOT NULL, `transaction_timestamp` REAL NOT NULL, 
+                    `transaction_for` TEXT NOT NULL, `transaction_type` TEXT NOT NULL)
+                """.trimIndent()
             )
         }
     }
@@ -545,14 +574,14 @@ private object ManualDatabaseMigration {
         ) {
             db.execSQL(
                 """
-                CREATE TABLE IF NOT EXISTS `category_table` (
-                    `parent_category` TEXT, 
-                    `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
-                    `sub_categories` TEXT, 
-                    `description` TEXT NOT NULL, 
-                    `title` TEXT NOT NULL
-                )
-            """.trimIndent()
+                    CREATE TABLE IF NOT EXISTS `category_table` (
+                        `parent_category` TEXT, 
+                        `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, 
+                        `sub_categories` TEXT, 
+                        `description` TEXT NOT NULL, 
+                        `title` TEXT NOT NULL
+                    )
+                """.trimIndent()
             )
         }
     }
