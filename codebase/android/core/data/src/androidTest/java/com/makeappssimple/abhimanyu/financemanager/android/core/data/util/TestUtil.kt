@@ -1,3 +1,5 @@
+@file:Suppress("TopLevelPropertyNaming")
+
 package com.makeappssimple.abhimanyu.financemanager.android.core.data.util
 
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
