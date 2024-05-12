@@ -38,6 +38,10 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.designsystem.typ
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.R
 import java.time.LocalTime
 
+private object MyTimePickerConstants {
+    const val MIN_SCREEN_HEIGHT_REQUIRED_FOR_TIMEPICKER = 400
+}
+
 @Immutable
 public data class MyTimePickerData(
     val isVisible: Boolean = false,
@@ -122,7 +126,7 @@ public fun MyTimePicker(
             )
 
             TimePickerTheme {
-                if (showingPicker.value && configuration.screenHeightDp > 400) {
+                if (showingPicker.value && configuration.screenHeightDp > MyTimePickerConstants.MIN_SCREEN_HEIGHT_REQUIRED_FOR_TIMEPICKER) {
                     TimePicker(
                         state = state,
                         colors = colors,

@@ -32,6 +32,10 @@ import kotlinx.coroutines.flow.update
 import java.time.LocalDate
 import javax.inject.Inject
 
+private object AnalysisScreenViewModelConstants {
+    const val FULL_PERCENTAGE = 100
+}
+
 @HiltViewModel
 public class AnalysisScreenViewModel @Inject constructor(
     closeableCoroutineScope: CloseableCoroutineScope,
@@ -174,9 +178,10 @@ public class AnalysisScreenViewModel @Inject constructor(
                 ).toString(),
                 emoji = it.category.emoji,
                 percentage = percentage,
-                percentageText = "%.2f".format((percentage * 100)).let { formattedPercentage ->
-                    "$formattedPercentage%"
-                },
+                percentageText = "%.2f".format((percentage * AnalysisScreenViewModelConstants.FULL_PERCENTAGE))
+                    .let { formattedPercentage ->
+                        "$formattedPercentage%"
+                    },
                 title = it.category.title,
             )
         }

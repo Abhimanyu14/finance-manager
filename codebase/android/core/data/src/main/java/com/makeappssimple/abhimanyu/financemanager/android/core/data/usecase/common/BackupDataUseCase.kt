@@ -12,16 +12,11 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.acc
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.category.GetAllCategoriesUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transaction.GetAllTransactionsUseCase
 import com.makeappssimple.abhimanyu.financemanager.android.core.data.usecase.transactionfor.GetAllTransactionForValuesUseCase
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Account
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Category
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DataTimestamp
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.DefaultDataId
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.InitialDataVersionNumber
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.Reminder
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transaction
-import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import kotlinx.coroutines.async
-import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.first
 import kotlinx.serialization.encodeToString
@@ -41,65 +36,52 @@ public class BackupDataUseCase @Inject constructor(
     public suspend operator fun invoke(
         uri: Uri,
     ): Boolean {
-        return coroutineScope {
-            val deferredDatabaseData = awaitAll(
-                async(
-                    context = dispatcherProvider.io,
-                ) {
-                    getAllCategoriesUseCase()
-                },
-                async(
-                    context = dispatcherProvider.io,
-                ) {
-                    getAllAccountsUseCase()
-                },
-                async(
-                    context = dispatcherProvider.io,
-                ) {
-                    getAllTransactionForValuesUseCase()
-                },
-                async(
-                    context = dispatcherProvider.io,
-                ) {
-                    getAllTransactionsUseCase()
-                },
-            )
-
-            val backupData = BackupData(
-                lastBackupTime = dateTimeUtil.getReadableDateAndTime(),
-                lastBackupTimestamp = dateTimeUtil.getCurrentTimeMillis().toString(),
-                databaseData = getDatabaseData(
-                    deferredDatabaseData = deferredDatabaseData,
-                ),
-                datastoreData = getDatastoreData(),
-            )
-            val jsonString = Json.encodeToString(
-                value = backupData,
-            )
-            myPreferencesRepository.setLastDataBackupTimestamp()
-            myJsonWriter.writeJsonToFile(
-                uri = uri,
-                jsonString = jsonString,
-            )
-        }
+        val backupData = BackupData(
+            lastBackupTime = dateTimeUtil.getReadableDateAndTime(),
+            lastBackupTimestamp = dateTimeUtil.getCurrentTimeMillis().toString(),
+            databaseData = getDatabaseData(),
+            datastoreData = getDatastoreData(),
+        )
+        val jsonString = Json.encodeToString(
+            value = backupData,
+        )
+        myPreferencesRepository.setLastDataBackupTimestamp()
+        return myJsonWriter.writeJsonToFile(
+            uri = uri,
+            jsonString = jsonString,
+        )
     }
 
-    private fun getDatabaseData(
-        deferredDatabaseData: List<List<Any>>,
-    ): DatabaseData {
-        val categories: List<Category> = deferredDatabaseData[0].filterIsInstance<Category>()
-        val accounts: List<Account> = deferredDatabaseData[1].filterIsInstance<Account>()
-        val transactionForValues: List<TransactionFor> =
-            deferredDatabaseData[2].filterIsInstance<TransactionFor>()
-        val transactions: List<Transaction> =
-            deferredDatabaseData[3].filterIsInstance<Transaction>()
-        val databaseData = DatabaseData(
-            categories = categories,
-            accounts = accounts,
-            transactionForValues = transactionForValues,
-            transactions = transactions,
-        )
-        return databaseData
+    private suspend fun getDatabaseData(): DatabaseData {
+        return coroutineScope {
+            val categories = async(
+                context = dispatcherProvider.io,
+            ) {
+                getAllCategoriesUseCase()
+            }
+            val accounts = async(
+                context = dispatcherProvider.io,
+            ) {
+                getAllAccountsUseCase()
+            }
+            val transactionForValues = async(
+                context = dispatcherProvider.io,
+            ) {
+                getAllTransactionForValuesUseCase()
+            }
+            val transactions = async(
+                context = dispatcherProvider.io,
+            ) {
+                getAllTransactionsUseCase()
+            }
+
+            DatabaseData(
+                categories = categories.await(),
+                accounts = accounts.await(),
+                transactionForValues = transactionForValues.await(),
+                transactions = transactions.await(),
+            )
+        }
     }
 
     private suspend fun getDatastoreData(): DatastoreData {

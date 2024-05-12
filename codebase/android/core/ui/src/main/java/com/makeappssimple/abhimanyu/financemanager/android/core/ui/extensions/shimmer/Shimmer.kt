@@ -24,8 +24,11 @@ import androidx.compose.ui.layout.onSizeChanged
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-private const val DEFAULT_SHIMMER_DURATION = 1500
-private const val DEFAULT_SHIMMER_DELAY = 100
+private object ShimmerConstants {
+    const val DEFAULT_SHIMMER_DURATION = 1500
+    const val DEFAULT_SHIMMER_DELAY = 100
+    const val SHIMMER_SIZE_MULTIPLIER = 3
+}
 
 public fun Modifier.shimmer(
     isShimmerVisible: Boolean = true,
@@ -46,14 +49,13 @@ public fun Modifier.shimmer(
         this.then(
             other = Modifier
                 .onSizeChanged {
-                    val newTargetValue =
-                        3 * sqrt(
-                            it.height
-                                .toFloat()
-                                .pow(2) + it.width
-                                .toFloat()
-                                .pow(2)
-                        )
+                    val newTargetValue = ShimmerConstants.SHIMMER_SIZE_MULTIPLIER * sqrt(
+                        it.height
+                            .toFloat()
+                            .pow(2) + it.width
+                            .toFloat()
+                            .pow(2)
+                    )
                     if (targetValue != newTargetValue) {
                         targetValue = newTargetValue
                     }
@@ -93,8 +95,8 @@ public fun rememberShimmerBrush(
         targetValue = targetValue,
         animationSpec = infiniteRepeatable(
             animation = tween(
-                durationMillis = DEFAULT_SHIMMER_DURATION,
-                delayMillis = DEFAULT_SHIMMER_DELAY,
+                durationMillis = ShimmerConstants.DEFAULT_SHIMMER_DURATION,
+                delayMillis = ShimmerConstants.DEFAULT_SHIMMER_DELAY,
                 easing = LinearEasing,
             ),
             repeatMode = RepeatMode.Restart,

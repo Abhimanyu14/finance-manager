@@ -13,9 +13,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNotZero
 
+private object FadingEdgeConstants {
+    const val DEFAULT_PERCENTAGE = 0.1F
+    val defaultStart = 8.dp
+    val defaultEnd = 8.dp
+}
+
 public fun Modifier.fadingEdge(
-    start: Dp = 8.dp,
-    end: Dp = 8.dp,
+    start: Dp = FadingEdgeConstants.defaultStart,
+    end: Dp = FadingEdgeConstants.defaultEnd,
 ): Modifier {
     return composed {
         val density = LocalDensity.current
@@ -33,12 +39,12 @@ public fun Modifier.fadingEdge(
                 val startPercentage = if (size.width.isNotZero()) {
                     start / widthInDp
                 } else {
-                    0.1F
+                    FadingEdgeConstants.DEFAULT_PERCENTAGE
                 }
                 val endPercentage = if (size.width.isNotZero()) {
                     end / widthInDp
                 } else {
-                    0.1F
+                    FadingEdgeConstants.DEFAULT_PERCENTAGE
                 }
                 val brush = Brush.horizontalGradient(
                     0F to Color.Transparent,

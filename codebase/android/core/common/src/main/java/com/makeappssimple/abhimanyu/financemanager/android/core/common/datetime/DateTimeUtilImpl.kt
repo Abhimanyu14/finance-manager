@@ -17,6 +17,8 @@ import java.time.YearMonth
 import java.time.ZoneId
 import javax.inject.Inject
 
+private const val lastMonthOfYear = 12
+
 public class DateTimeUtilImpl @Inject constructor() : DateTimeUtil {
     override fun getCurrentLocalDate(): LocalDate {
         return LocalDate.now()
@@ -296,7 +298,7 @@ public class DateTimeUtilImpl @Inject constructor() : DateTimeUtil {
                 zoneId = zoneId,
             )
             .toLocalDate()
-            .withMonth(12)
+            .withMonth(lastMonthOfYear)
         val localDate: LocalDate = YearMonth
             .from(localDateTime)
             .atEndOfMonth()
