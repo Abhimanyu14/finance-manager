@@ -249,8 +249,9 @@ exceptions:
     active: false
   ObjectExtendsThrowable:
     active: false
+  # TODO(Abhi): Enable this later
   PrintStackTrace:
-    active: true
+    active: false
   RethrowCaughtException:
     active: true
   ReturnFromFinally:
