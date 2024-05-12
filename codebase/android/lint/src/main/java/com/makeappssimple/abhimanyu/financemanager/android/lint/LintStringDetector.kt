@@ -1,22 +1,10 @@
 package com.makeappssimple.abhimanyu.financemanager.android.lint
 
-import com.android.tools.lint.client.api.UElementHandler
-import com.android.tools.lint.detector.api.Category
-import com.android.tools.lint.detector.api.Detector
-import com.android.tools.lint.detector.api.Detector.UastScanner
-import com.android.tools.lint.detector.api.Implementation
-import com.android.tools.lint.detector.api.Issue
-import com.android.tools.lint.detector.api.JavaContext
-import com.android.tools.lint.detector.api.Scope
-import com.android.tools.lint.detector.api.Severity
-import org.jetbrains.uast.UElement
-import org.jetbrains.uast.ULiteralExpression
-import org.jetbrains.uast.evaluateString
-
 /**
  * Sample detector showing how to analyze Kotlin/Java code. This example
  * flags all string literals in the code that contain the word "lint".
  */
+/*
 class LintStringDetector : Detector(), UastScanner {
     override fun getApplicableUastTypes(): List<Class<out UElement?>> {
         return listOf(ULiteralExpression::class.java)
@@ -64,9 +52,11 @@ class LintStringDetector : Detector(), UastScanner {
     }
 
     companion object {
-        /**
-         * Issue describing the problem and pointing to the detector implementation.
-         */
+        */
+/**
+ * Issue describing the problem and pointing to the detector implementation.
+ *//*
+
         @JvmField
         val ISSUE_LINT_STRING: Issue = Issue.create(
             // ID: used in @SuppressLint warnings etc
@@ -87,3 +77,4 @@ class LintStringDetector : Detector(), UastScanner {
         )
     }
 }
+*/

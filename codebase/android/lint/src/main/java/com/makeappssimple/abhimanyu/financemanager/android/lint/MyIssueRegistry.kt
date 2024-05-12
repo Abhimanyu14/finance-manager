@@ -10,7 +10,7 @@ import com.android.tools.lint.detector.api.CURRENT_API
 class MyIssueRegistry : IssueRegistry() {
     override val issues = listOf(
         DesignSystemDetector.ISSUE_DESIGN_SYSTEM,
-        LintStringDetector.ISSUE_LINT_STRING,
+        // LintStringDetector.ISSUE_LINT_STRING,
         TrailingLambdaDetector.ISSUE_TRAILING_LAMBDA,
     )
 
