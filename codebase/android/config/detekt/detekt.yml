@@ -545,7 +545,7 @@ style:
       - 'to'
     allowOperators: false
   DataClassShouldBeImmutable:
-    active: false
+    active: true
   # TODO(Abhi): Enable this later
   DestructuringDeclarationWithTooManyEntries:
     active: false

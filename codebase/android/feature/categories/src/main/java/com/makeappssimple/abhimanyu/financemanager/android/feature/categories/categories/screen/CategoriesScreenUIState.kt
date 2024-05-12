@@ -11,8 +11,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.ui.component.gri
 internal data class CategoriesScreenUIState(
     val isBottomSheetVisible: Boolean,
     val screenBottomSheetType: CategoriesScreenBottomSheetType,
-    var categoryIdToDelete: Int?,
-    var clickedItemId: Int?,
+    val categoryIdToDelete: Int?,
+    val clickedItemId: Int?,
     val selectedTabIndex: Int,
     val tabData: List<MyTabData>,
     val validTransactionTypes: List<TransactionType>,
