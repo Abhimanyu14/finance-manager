@@ -1,13 +1,11 @@
 package com.makeappssimple.abhimanyu.financemanager.android.core.common.util
 
-import java.time.ZoneId
-
 public class DateTimeUtilTest {
+    /*
+    // TODO(Abhi): Fix tests
     private val testTimestamp = 1680144857890
     private val testZoneId = ZoneId.of("Asia/Kolkata")
 
-    /*
-    // TODO(Abhi): Fix tests
     @Test
     public fun getCurrentLocalDate() {
     }
