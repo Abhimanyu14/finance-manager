@@ -43,6 +43,8 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.model.Transactio
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionData
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionFor
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.TransactionType
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.minus
+import com.makeappssimple.abhimanyu.financemanager.android.core.model.plus
 import com.makeappssimple.abhimanyu.financemanager.android.core.model.sortOrder
 import com.makeappssimple.abhimanyu.financemanager.android.core.navigation.Navigator
 import com.makeappssimple.abhimanyu.financemanager.android.core.ui.base.ScreenViewModel
@@ -1195,14 +1197,14 @@ public class AddOrEditTransactionScreenViewModel @Inject constructor(
                     id = it,
                 )?.transaction?.amount?.let { prevRefundedTransactionAmount ->
                     refundedAmountCalculated = refundedAmountCalculated?.run {
-                        this + prevRefundedTransactionAmount
+                        this.plus(prevRefundedTransactionAmount)
                     } ?: prevRefundedTransactionAmount
                 }
             }
         }
         transactionDataToRefund?.transaction?.amount?.let { originalTransactionAmount ->
             maxRefundAmount.value = if (refundedAmountCalculated.isNotNull()) {
-                originalTransactionAmount - (refundedAmountCalculated ?: Amount())
+                originalTransactionAmount.minus((refundedAmountCalculated ?: Amount()))
             } else {
                 originalTransactionAmount
             }

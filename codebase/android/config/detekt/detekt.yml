@@ -536,11 +536,11 @@ style:
     active: true
     includeElvis: true
   ClassOrdering:
-    active: false
+    active: true
   CollapsibleIfStatements:
-    active: false
+    active: true
   DataClassContainsFunctions:
-    active: false
+    active: true
     conversionFunctionPrefix:
       - 'to'
     allowOperators: false

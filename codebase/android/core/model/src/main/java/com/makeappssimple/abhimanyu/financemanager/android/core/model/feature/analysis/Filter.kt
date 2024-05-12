@@ -4,14 +4,14 @@ import com.makeappssimple.abhimanyu.financemanager.android.core.common.extension
 import com.makeappssimple.abhimanyu.financemanager.android.core.common.extensions.isNull
 import java.time.LocalDate
 
-public data class Filter(
-    val selectedExpenseCategoryIndices: List<Int> = emptyList(),
-    val selectedIncomeCategoryIndices: List<Int> = emptyList(),
-    val selectedInvestmentCategoryIndices: List<Int> = emptyList(),
-    val selectedAccountsIndices: List<Int> = emptyList(),
-    val selectedTransactionTypeIndices: List<Int> = emptyList(),
-    val fromLocalDate: LocalDate? = null,
-    val toLocalDate: LocalDate? = null,
+public class Filter(
+    private val selectedExpenseCategoryIndices: List<Int> = emptyList(),
+    private val selectedIncomeCategoryIndices: List<Int> = emptyList(),
+    private val selectedInvestmentCategoryIndices: List<Int> = emptyList(),
+    private val selectedAccountsIndices: List<Int> = emptyList(),
+    private val selectedTransactionTypeIndices: List<Int> = emptyList(),
+    public val fromLocalDate: LocalDate? = null,
+    public val toLocalDate: LocalDate? = null,
 ) {
     public fun areFiltersSelected(): Boolean {
         return selectedExpenseCategoryIndices.isNotEmpty() ||

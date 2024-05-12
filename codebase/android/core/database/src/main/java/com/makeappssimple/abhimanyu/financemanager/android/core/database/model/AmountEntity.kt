@@ -13,34 +13,11 @@ import kotlin.math.abs
 public data class AmountEntity(
     @EncodeDefault
     @Serializable(CurrencySerializer::class)
-    val currency: Currency = Currency.getInstance(CurrencyCodeConstants.INR),
+    public val currency: Currency = Currency.getInstance(CurrencyCodeConstants.INR),
 
     @EncodeDefault
-    val value: Long = 0,
+    public val value: Long = 0,
 ) {
-    public fun toNonSignedString(): String {
-        return toSignedString(
-            isPositive = false,
-            isNegative = false
-        )
-    }
-
-    public fun toSignedString(
-        isPositive: Boolean = false,
-        isNegative: Boolean = false,
-    ): String {
-        val formattedValue = formattedCurrencyValue(
-            value = abs(value),
-        )
-        if (isPositive) {
-            return "+ ${currency.symbol}$formattedValue"
-        }
-        if (isNegative) {
-            return "- ${currency.symbol}$formattedValue"
-        }
-        return "${currency.symbol}$formattedValue"
-    }
-
     override fun toString(): String {
         val formattedValue = formattedCurrencyValue(
             value = abs(value),
@@ -51,24 +28,47 @@ public data class AmountEntity(
             "- ${currency.symbol}$formattedValue"
         }
     }
+}
 
-    public operator fun plus(
-        amount: AmountEntity,
-    ): AmountEntity {
-        return AmountEntity(
-            currency = currency,
-            value = value + amount.value,
-        )
-    }
+public fun AmountEntity.toNonSignedString(): String {
+    return toSignedString(
+        isPositive = false,
+        isNegative = false
+    )
+}
 
-    public operator fun minus(
-        amount: AmountEntity,
-    ): AmountEntity {
-        return AmountEntity(
-            currency = currency,
-            value = value - amount.value,
-        )
+public fun AmountEntity.toSignedString(
+    isPositive: Boolean = false,
+    isNegative: Boolean = false,
+): String {
+    val formattedValue = formattedCurrencyValue(
+        value = abs(value),
+    )
+    if (isPositive) {
+        return "+ ${currency.symbol}$formattedValue"
     }
+    if (isNegative) {
+        return "- ${currency.symbol}$formattedValue"
+    }
+    return "${currency.symbol}$formattedValue"
+}
+
+public operator fun AmountEntity.plus(
+    amount: AmountEntity,
+): AmountEntity {
+    return AmountEntity(
+        currency = currency,
+        value = value + amount.value,
+    )
+}
+
+public operator fun AmountEntity.minus(
+    amount: AmountEntity,
+): AmountEntity {
+    return AmountEntity(
+        currency = currency,
+        value = value - amount.value,
+    )
 }
 
 public fun AmountEntity.asExternalModel(): Amount {

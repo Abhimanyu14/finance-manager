@@ -13,34 +13,11 @@ import kotlin.math.abs
 public data class Amount(
     @EncodeDefault
     @Serializable(CurrencySerializer::class)
-    val currency: Currency = Currency.getInstance(CurrencyCodeConstants.INR),
+    public val currency: Currency = Currency.getInstance(CurrencyCodeConstants.INR),
 
     @EncodeDefault
-    val value: Long = 0,
+    public val value: Long = 0,
 ) : Comparable<Amount> {
-    public fun toNonSignedString(): String {
-        return toSignedString(
-            isPositive = false,
-            isNegative = false
-        )
-    }
-
-    public fun toSignedString(
-        isPositive: Boolean = false,
-        isNegative: Boolean = false,
-    ): String {
-        val formattedValue = formattedCurrencyValue(
-            value = abs(value),
-        )
-        if (isPositive) {
-            return "+ ${currency.symbol}$formattedValue"
-        }
-        if (isNegative) {
-            return "- ${currency.symbol}$formattedValue"
-        }
-        return "${currency.symbol}$formattedValue"
-    }
-
     override fun toString(): String {
         val formattedValue = formattedCurrencyValue(
             value = abs(value),
@@ -52,29 +29,52 @@ public data class Amount(
         }
     }
 
-    public operator fun plus(
-        amount: Amount,
-    ): Amount {
-        return Amount(
-            currency = currency,
-            value = value + amount.value,
-        )
-    }
-
-    public operator fun minus(
-        amount: Amount,
-    ): Amount {
-        return Amount(
-            currency = currency,
-            value = value - amount.value,
-        )
-    }
-
     override fun compareTo(
         other: Amount,
     ): Int {
         return (value - other.value).toInt()
     }
+}
+
+public fun Amount.toNonSignedString(): String {
+    return toSignedString(
+        isPositive = false,
+        isNegative = false
+    )
+}
+
+public fun Amount.toSignedString(
+    isPositive: Boolean = false,
+    isNegative: Boolean = false,
+): String {
+    val formattedValue = formattedCurrencyValue(
+        value = abs(value),
+    )
+    if (isPositive) {
+        return "+ ${currency.symbol}$formattedValue"
+    }
+    if (isNegative) {
+        return "- ${currency.symbol}$formattedValue"
+    }
+    return "${currency.symbol}$formattedValue"
+}
+
+public operator fun Amount.plus(
+    amount: Amount,
+): Amount {
+    return Amount(
+        currency = currency,
+        value = value + amount.value,
+    )
+}
+
+public operator fun Amount.minus(
+    amount: Amount,
+): Amount {
+    return Amount(
+        currency = currency,
+        value = value - amount.value,
+    )
 }
 
 public fun Amount?.orEmpty(): Amount {
