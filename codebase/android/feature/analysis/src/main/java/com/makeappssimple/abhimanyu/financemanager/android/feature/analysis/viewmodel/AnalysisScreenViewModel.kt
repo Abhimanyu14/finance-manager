@@ -202,6 +202,6 @@ public class AnalysisScreenViewModel @Inject constructor(
         val toDateStartOfDayTimestamp = endLocalDate
             .atEndOfDay()
             .toEpochMilli()
-        return transactionData.transaction.transactionTimestamp in (fromDateStartOfDayTimestamp) until toDateStartOfDayTimestamp
+        return transactionData.transaction.transactionTimestamp in fromDateStartOfDayTimestamp until toDateStartOfDayTimestamp
     }
 }
