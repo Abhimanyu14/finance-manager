@@ -147,7 +147,7 @@ complexity:
     active: false
     threshold: 6
   NamedArguments:
-    active: false
+    active: true
     threshold: 3
     ignoreArgumentsMatchingNames: false
   # TODO(Abhi): Enable this later
@@ -189,7 +189,7 @@ complexity:
 coroutines:
   active: true
   GlobalCoroutineUsage:
-    active: false
+    active: true
   InjectDispatcher:
     active: true
     dispatcherNames:
@@ -201,9 +201,9 @@ coroutines:
   SleepInsteadOfDelay:
     active: true
   SuspendFunSwallowedCancellation:
-    active: false
+    active: true
   SuspendFunWithCoroutineScopeReceiver:
-    active: false
+    active: true
   SuspendFunWithFlowReturnType:
     active: true
 
