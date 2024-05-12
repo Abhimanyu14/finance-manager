@@ -49,8 +49,121 @@ internal fun SettingsScreenUI(
     state: CommonScreenUIState = rememberCommonScreenUIState(),
     handleUIEvent: (uiEvent: SettingsScreenUIEvent) -> Unit = {},
 ) {
+    val listItemsData: List<SettingsScreenListItemData> = getSettingsListItemData(
+        uiState = uiState,
+        handleUIEvent = handleUIEvent,
+    )
+
+    MyScaffold(
+        modifier = Modifier
+            .testTag(
+                tag = SCREEN_SETTINGS,
+            )
+            .fillMaxSize(),
+        sheetContent = {
+            when (uiState.screenBottomSheetType) {
+                is SettingsScreenBottomSheetType.None -> {
+                    VerticalSpacer()
+                }
+            }
+        },
+        sheetState = state.modalBottomSheetState,
+        snackbarHostState = uiState.snackbarHostState,
+        topBar = {
+            MyTopAppBar(
+                titleTextStringResourceId = R.string.screen_settings_appbar_title,
+                navigationAction = {
+                    handleUIEvent(SettingsScreenUIEvent.OnTopAppBarNavigationButtonClick)
+                },
+            )
+        },
+        onClick = state.focusManager::clearFocus,
+        coroutineScope = state.coroutineScope,
+        onNavigationBackButtonClick = {
+            handleUIEvent(SettingsScreenUIEvent.OnNavigationBackButtonClick)
+        },
+    ) {
+        Column(
+            horizontalAlignment = Alignment.Start,
+            modifier = Modifier
+                .testTag(
+                    tag = SCREEN_CONTENT_SETTINGS,
+                )
+                .fillMaxWidth()
+                .verticalScroll(
+                    state = rememberScrollState(),
+                ),
+        ) {
+            AnimatedVisibility(
+                visible = uiState.isLoading,
+            ) {
+                MyLinearProgressIndicator(
+                    modifier = Modifier
+                        .testTag(
+                            tag = stringResource(
+                                id = R.string.screen_settings_linear_progress_indicator_test_tag,
+                            ),
+                        ),
+                )
+            }
+            listItemsData.mapIndexed { index, settingsScreenListItemData ->
+                when (settingsScreenListItemData.data) {
+                    is SettingsListItemAppVersionData -> {
+                        uiState.appVersion?.let {
+                            SettingsListItemAppVersion(
+                                data = SettingsListItemAppVersionData(
+                                    appVersionText = stringResource(
+                                        id = R.string.screen_settings_app_version,
+                                        it,
+                                    ),
+                                ),
+                            )
+                        }
+                    }
+
+                    is SettingsListItemDividerData -> {
+                        SettingsListItemDivider(
+                            modifier = Modifier
+                                .testTag(
+                                    tag = "Item $index",
+                                ),
+                        )
+                    }
+
+                    is SettingsListItemContentData -> {
+                        SettingsListItemContent(
+                            modifier = Modifier
+                                .testTag(
+                                    tag = "Item $index",
+                                ),
+                            data = settingsScreenListItemData.data,
+                            handleEvent = settingsScreenListItemData.handleEvent,
+                        )
+                    }
+
+                    is SettingsListItemHeaderData -> {
+                        SettingsListItemHeader(
+                            modifier = Modifier
+                                .testTag(
+                                    tag = "Item $index",
+                                ),
+                            data = settingsScreenListItemData.data,
+                        )
+                    }
+                }
+            }
+            NavigationBarsAndImeSpacer()
+        }
+    }
+}
+
+@Composable
+private fun getSettingsListItemData(
+    uiState: SettingsScreenUIState,
+    handleUIEvent: (uiEvent: SettingsScreenUIEvent) -> Unit,
+): List<SettingsScreenListItemData> {
     val context = LocalContext.current
-    val listItemsData: List<SettingsScreenListItemData> = listOf(
+    return listOf(
         SettingsScreenListItemData(
             data = SettingsListItemHeaderData(
                 textStringResourceId = R.string.screen_settings_data,
@@ -256,106 +369,4 @@ internal fun SettingsScreenUI(
             ),
         ),
     )
-
-    MyScaffold(
-        modifier = Modifier
-            .testTag(
-                tag = SCREEN_SETTINGS,
-            )
-            .fillMaxSize(),
-        sheetContent = {
-            when (uiState.screenBottomSheetType) {
-                is SettingsScreenBottomSheetType.None -> {
-                    VerticalSpacer()
-                }
-            }
-        },
-        sheetState = state.modalBottomSheetState,
-        snackbarHostState = uiState.snackbarHostState,
-        topBar = {
-            MyTopAppBar(
-                titleTextStringResourceId = R.string.screen_settings_appbar_title,
-                navigationAction = {
-                    handleUIEvent(SettingsScreenUIEvent.OnTopAppBarNavigationButtonClick)
-                },
-            )
-        },
-        onClick = state.focusManager::clearFocus,
-        coroutineScope = state.coroutineScope,
-        onNavigationBackButtonClick = {
-            handleUIEvent(SettingsScreenUIEvent.OnNavigationBackButtonClick)
-        },
-    ) {
-        Column(
-            horizontalAlignment = Alignment.Start,
-            modifier = Modifier
-                .testTag(
-                    tag = SCREEN_CONTENT_SETTINGS,
-                )
-                .fillMaxWidth()
-                .verticalScroll(
-                    state = rememberScrollState(),
-                ),
-        ) {
-            AnimatedVisibility(
-                visible = uiState.isLoading,
-            ) {
-                MyLinearProgressIndicator(
-                    modifier = Modifier
-                        .testTag(
-                            tag = stringResource(
-                                id = R.string.screen_settings_linear_progress_indicator_test_tag,
-                            ),
-                        ),
-                )
-            }
-            listItemsData.mapIndexed { index, settingsScreenListItemData ->
-                when (settingsScreenListItemData.data) {
-                    is SettingsListItemAppVersionData -> {
-                        uiState.appVersion?.let {
-                            SettingsListItemAppVersion(
-                                data = SettingsListItemAppVersionData(
-                                    appVersionText = stringResource(
-                                        id = R.string.screen_settings_app_version,
-                                        it,
-                                    ),
-                                ),
-                            )
-                        }
-                    }
-
-                    is SettingsListItemDividerData -> {
-                        SettingsListItemDivider(
-                            modifier = Modifier
-                                .testTag(
-                                    tag = "Item $index",
-                                ),
-                        )
-                    }
-
-                    is SettingsListItemContentData -> {
-                        SettingsListItemContent(
-                            modifier = Modifier
-                                .testTag(
-                                    tag = "Item $index",
-                                ),
-                            data = settingsScreenListItemData.data,
-                            handleEvent = settingsScreenListItemData.handleEvent,
-                        )
-                    }
-
-                    is SettingsListItemHeaderData -> {
-                        SettingsListItemHeader(
-                            modifier = Modifier
-                                .testTag(
-                                    tag = "Item $index",
-                                ),
-                            data = settingsScreenListItemData.data,
-                        )
-                    }
-                }
-            }
-            NavigationBarsAndImeSpacer()
-        }
-    }
 }
